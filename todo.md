@@ -154,3 +154,16 @@
 - [ ] Add design notes section to ProjectDetail page
 - [ ] Add production details and credits sections to ProjectDetail page
 - [ ] Test full project creation and display workflow
+
+## Complete Project Form and Detail Pages
+- [x] Add uploadImage tRPC mutation to projects router
+- [x] Fix Uint8Array iteration TypeScript errors in ProjectForm
+- [x] Update projects.create endpoint to accept designNotes, creativeTeam, images
+- [x] Update projects.update endpoint to accept designNotes, creativeTeam, images
+- [x] Update db.ts helper functions for new fields
+- [x] Rebuild ProjectDetail page with image gallery component
+- [x] Add design notes section with "Read More" to ProjectDetail
+- [x] Add creative team credits section to ProjectDetail
+- [x] Add video embed support to ProjectDetail gallery
+- [x] Test creating a project with multiple images through admin
+- [x] Test project display on public detail page

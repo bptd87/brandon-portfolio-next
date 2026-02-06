@@ -250,6 +250,13 @@ export async function deleteProjectImage(id: number) {
   await db.delete(projectImages).where(eq(projectImages.id, id));
 }
 
+export async function deleteProjectImages(projectId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db.delete(projectImages).where(eq(projectImages.projectId, projectId));
+}
+
 export async function getProjectTags(projectId: number) {
   const db = await getDb();
   if (!db) return [];

@@ -146,6 +146,7 @@ export const appRouter = router({
         slug: z.string().min(1).max(255),
         excerpt: z.string().optional(),
         description: z.string().optional(),
+        designNotes: z.string().optional(),
         categoryId: z.number().optional(),
         coverImageUrl: z.string().optional(),
         coverImageKey: z.string().optional(),
@@ -154,14 +155,24 @@ export const appRouter = router({
         year: z.number().optional(),
         status: z.enum(['draft', 'published', 'archived']).default('draft'),
         featured: z.boolean().default(false),
+        creativeTeam: z.any().optional(),
         metadata: z.any().optional(),
         seoTitle: z.string().max(255).optional(),
         seoDescription: z.string().optional(),
         seoKeywords: z.string().optional(),
         tagIds: z.array(z.number()).optional(),
+        images: z.array(z.object({
+          imageUrl: z.string().optional(),
+          imageKey: z.string().optional(),
+          videoUrl: z.string().optional(),
+          imageType: z.enum(['production', 'rendering', 'video']),
+          caption: z.string().optional(),
+          altText: z.string().optional(),
+          sortOrder: z.number(),
+        })).optional(),
       }))
       .mutation(async ({ input }) => {
-        const { tagIds, ...projectData } = input;
+        const { tagIds, images, ...projectData } = input;
         
         const dataToInsert = {
           ...projectData,
@@ -174,6 +185,12 @@ export const appRouter = router({
           await db.setProjectTags(id, tagIds);
         }
         
+        if (images && images.length > 0) {
+          for (const image of images) {
+            await db.addProjectImage({ projectId: id, ...image });
+          }
+        }
+        
         return { id };
       }),
     
@@ -184,6 +201,7 @@ export const appRouter = router({
         slug: z.string().min(1).max(255).optional(),
         excerpt: z.string().optional(),
         description: z.string().optional(),
+        designNotes: z.string().optional(),
         categoryId: z.number().optional(),
         coverImageUrl: z.string().optional(),
         coverImageKey: z.string().optional(),
@@ -192,14 +210,24 @@ export const appRouter = router({
         year: z.number().optional(),
         status: z.enum(['draft', 'published', 'archived']).optional(),
         featured: z.boolean().optional(),
+        creativeTeam: z.any().optional(),
         metadata: z.any().optional(),
         seoTitle: z.string().max(255).optional(),
         seoDescription: z.string().optional(),
         seoKeywords: z.string().optional(),
         tagIds: z.array(z.number()).optional(),
+        images: z.array(z.object({
+          imageUrl: z.string().optional(),
+          imageKey: z.string().optional(),
+          videoUrl: z.string().optional(),
+          imageType: z.enum(['production', 'rendering', 'video']),
+          caption: z.string().optional(),
+          altText: z.string().optional(),
+          sortOrder: z.number(),
+        })).optional(),
       }))
       .mutation(async ({ input }) => {
-        const { id, tagIds, ...projectData } = input;
+        const { id, tagIds, images, ...projectData } = input;
         
         const currentProject = await db.getProjectById(id);
         const dataToUpdate = {
@@ -213,6 +241,14 @@ export const appRouter = router({
         
         if (tagIds !== undefined) {
           await db.setProjectTags(id, tagIds);
+        }
+        
+        if (images !== undefined) {
+          // Delete existing images and add new ones
+          await db.deleteProjectImages(id);
+          for (const image of images) {
+            await db.addProjectImage({ projectId: id, ...image });
+          }
         }
         
         return { success: true };
@@ -244,6 +280,19 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         await db.deleteProjectImage(input.id);
         return { success: true };
+      }),
+    
+    uploadImage: adminProcedure
+      .input(z.object({
+        filename: z.string(),
+        contentType: z.string(),
+        data: z.string(), // base64 encoded
+      }))
+      .mutation(async ({ input }) => {
+        const buffer = Buffer.from(input.data, 'base64');
+        const key = `projects/${Date.now()}-${input.filename}`;
+        const result = await storagePut(key, buffer, input.contentType);
+        return { url: result.url, key: result.key };
       }),
   }),
 

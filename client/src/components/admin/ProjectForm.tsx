@@ -190,7 +190,7 @@ export function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
       
       if (coverImage?.file) {
         const buffer = await coverImage.file.arrayBuffer();
-        const base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
+        const base64 = btoa(String.fromCharCode(...Array.from(new Uint8Array(buffer))));
         const result = await uploadImage.mutateAsync({
           filename: coverImage.file.name,
           contentType: coverImage.file.type,
@@ -205,7 +205,7 @@ export function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
         galleryImages.map(async (img) => {
           if (img.file) {
             const buffer = await img.file.arrayBuffer();
-            const base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
+            const base64 = btoa(String.fromCharCode(...Array.from(new Uint8Array(buffer))));
             const result = await uploadImage.mutateAsync({
               filename: img.file.name,
               contentType: img.file.type,
