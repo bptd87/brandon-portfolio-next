@@ -1,17 +1,11 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, json, boolean, index } from "drizzle-orm/mysql-core";
+import { relations } from "drizzle-orm";
 
 /**
  * Core user table backing auth flow.
- * Extend this file with additional tables as your product grows.
- * Columns use camelCase to match both database fields and generated types.
  */
 export const users = mysqlTable("users", {
-  /**
-   * Surrogate primary key. Auto-incremented numeric value managed by the database.
-   * Use this for relations between tables.
-   */
   id: int("id").autoincrement().primaryKey(),
-  /** Manus OAuth identifier (openId) returned from the OAuth callback. Unique per user. */
   openId: varchar("openId", { length: 64 }).notNull().unique(),
   name: text("name"),
   email: varchar("email", { length: 320 }),
@@ -25,4 +19,267 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
-// TODO: Add your tables here
+/**
+ * Categories for organizing portfolio projects, news, and articles
+ */
+export const categories = mysqlTable("categories", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 100 }).notNull().unique(),
+  slug: varchar("slug", { length: 100 }).notNull().unique(),
+  type: mysqlEnum("type", ["project", "news", "article"]).notNull(),
+  description: text("description"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  typeIdx: index("type_idx").on(table.type),
+}));
+
+export type Category = typeof categories.$inferSelect;
+export type InsertCategory = typeof categories.$inferInsert;
+
+/**
+ * Tags for content tagging across all content types
+ */
+export const tags = mysqlTable("tags", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 100 }).notNull().unique(),
+  slug: varchar("slug", { length: 100 }).notNull().unique(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type Tag = typeof tags.$inferSelect;
+export type InsertTag = typeof tags.$inferInsert;
+
+/**
+ * Portfolio projects with rich metadata
+ */
+export const projects = mysqlTable("projects", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  excerpt: text("excerpt"),
+  description: text("description"),
+  categoryId: int("categoryId").references(() => categories.id),
+  coverImageUrl: text("coverImageUrl"),
+  coverImageKey: text("coverImageKey"),
+  location: varchar("location", { length: 255 }),
+  client: varchar("client", { length: 255 }),
+  year: int("year"),
+  status: mysqlEnum("status", ["draft", "published", "archived"]).default("draft").notNull(),
+  featured: boolean("featured").default(false).notNull(),
+  metadata: json("metadata").$type<{
+    venue?: string;
+    director?: string;
+    collaborators?: string[];
+    awards?: string[];
+    dimensions?: string;
+    materials?: string[];
+    [key: string]: any;
+  }>(),
+  seoTitle: varchar("seoTitle", { length: 255 }),
+  seoDescription: text("seoDescription"),
+  seoKeywords: text("seoKeywords"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  publishedAt: timestamp("publishedAt"),
+}, (table) => ({
+  statusIdx: index("status_idx").on(table.status),
+  featuredIdx: index("featured_idx").on(table.featured),
+  slugIdx: index("slug_idx").on(table.slug),
+}));
+
+export type Project = typeof projects.$inferSelect;
+export type InsertProject = typeof projects.$inferInsert;
+
+/**
+ * Project images gallery
+ */
+export const projectImages = mysqlTable("projectImages", {
+  id: int("id").autoincrement().primaryKey(),
+  projectId: int("projectId").notNull().references(() => projects.id, { onDelete: "cascade" }),
+  imageUrl: text("imageUrl").notNull(),
+  imageKey: text("imageKey").notNull(),
+  caption: text("caption"),
+  altText: text("altText"),
+  sortOrder: int("sortOrder").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  projectIdx: index("project_idx").on(table.projectId),
+}));
+
+export type ProjectImage = typeof projectImages.$inferSelect;
+export type InsertProjectImage = typeof projectImages.$inferInsert;
+
+/**
+ * Project tags junction table
+ */
+export const projectTags = mysqlTable("projectTags", {
+  projectId: int("projectId").notNull().references(() => projects.id, { onDelete: "cascade" }),
+  tagId: int("tagId").notNull().references(() => tags.id, { onDelete: "cascade" }),
+}, (table) => ({
+  projectIdx: index("project_idx").on(table.projectId),
+  tagIdx: index("tag_idx").on(table.tagId),
+}));
+
+/**
+ * News items with flexible block content
+ */
+export const news = mysqlTable("news", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  excerpt: text("excerpt").notNull(),
+  categoryId: int("categoryId").references(() => categories.id),
+  coverImageUrl: text("coverImageUrl"),
+  coverImageKey: text("coverImageKey"),
+  location: varchar("location", { length: 255 }),
+  date: timestamp("date").notNull(),
+  blocks: json("blocks").$type<Array<
+    | { type: 'text'; content: string }
+    | { type: 'gallery'; images: { url: string; caption?: string }[] }
+    | { type: 'team'; title: string; members: { role: string; name: string }[] }
+    | { type: 'details'; title: string; items: { label: string; value: string }[] }
+    | { type: 'link'; url: string; label: string }
+    | { type: 'quote'; text: string; author?: string; source?: string }
+  >>(),
+  status: mysqlEnum("status", ["draft", "published", "archived"]).default("draft").notNull(),
+  featured: boolean("featured").default(false).notNull(),
+  seoTitle: varchar("seoTitle", { length: 255 }),
+  seoDescription: text("seoDescription"),
+  seoKeywords: text("seoKeywords"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  publishedAt: timestamp("publishedAt"),
+}, (table) => ({
+  statusIdx: index("status_idx").on(table.status),
+  featuredIdx: index("featured_idx").on(table.featured),
+  dateIdx: index("date_idx").on(table.date),
+  slugIdx: index("slug_idx").on(table.slug),
+}));
+
+export type News = typeof news.$inferSelect;
+export type InsertNews = typeof news.$inferInsert;
+
+/**
+ * News tags junction table
+ */
+export const newsTags = mysqlTable("newsTags", {
+  newsId: int("newsId").notNull().references(() => news.id, { onDelete: "cascade" }),
+  tagId: int("tagId").notNull().references(() => tags.id, { onDelete: "cascade" }),
+}, (table) => ({
+  newsIdx: index("news_idx").on(table.newsId),
+  tagIdx: index("tag_idx").on(table.tagId),
+}));
+
+/**
+ * Articles and blog posts with rich text content
+ */
+export const articles = mysqlTable("articles", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  excerpt: text("excerpt").notNull(),
+  content: text("content").notNull(),
+  categoryId: int("categoryId").references(() => categories.id),
+  coverImageUrl: text("coverImageUrl"),
+  coverImageKey: text("coverImageKey"),
+  authorId: int("authorId").references(() => users.id),
+  readTime: int("readTime"),
+  status: mysqlEnum("status", ["draft", "published", "archived"]).default("draft").notNull(),
+  featured: boolean("featured").default(false).notNull(),
+  seoTitle: varchar("seoTitle", { length: 255 }),
+  seoDescription: text("seoDescription"),
+  seoKeywords: text("seoKeywords"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  publishedAt: timestamp("publishedAt"),
+}, (table) => ({
+  statusIdx: index("status_idx").on(table.status),
+  featuredIdx: index("featured_idx").on(table.featured),
+  slugIdx: index("slug_idx").on(table.slug),
+  authorIdx: index("author_idx").on(table.authorId),
+}));
+
+export type Article = typeof articles.$inferSelect;
+export type InsertArticle = typeof articles.$inferInsert;
+
+/**
+ * Article tags junction table
+ */
+export const articleTags = mysqlTable("articleTags", {
+  articleId: int("articleId").notNull().references(() => articles.id, { onDelete: "cascade" }),
+  tagId: int("tagId").notNull().references(() => tags.id, { onDelete: "cascade" }),
+}, (table) => ({
+  articleIdx: index("article_idx").on(table.articleId),
+  tagIdx: index("tag_idx").on(table.tagId),
+}));
+
+// Relations
+export const projectsRelations = relations(projects, ({ one, many }) => ({
+  category: one(categories, {
+    fields: [projects.categoryId],
+    references: [categories.id],
+  }),
+  images: many(projectImages),
+  tags: many(projectTags),
+}));
+
+export const projectImagesRelations = relations(projectImages, ({ one }) => ({
+  project: one(projects, {
+    fields: [projectImages.projectId],
+    references: [projects.id],
+  }),
+}));
+
+export const projectTagsRelations = relations(projectTags, ({ one }) => ({
+  project: one(projects, {
+    fields: [projectTags.projectId],
+    references: [projects.id],
+  }),
+  tag: one(tags, {
+    fields: [projectTags.tagId],
+    references: [tags.id],
+  }),
+}));
+
+export const newsRelations = relations(news, ({ one, many }) => ({
+  category: one(categories, {
+    fields: [news.categoryId],
+    references: [categories.id],
+  }),
+  tags: many(newsTags),
+}));
+
+export const newsTagsRelations = relations(newsTags, ({ one }) => ({
+  news: one(news, {
+    fields: [newsTags.newsId],
+    references: [news.id],
+  }),
+  tag: one(tags, {
+    fields: [newsTags.tagId],
+    references: [tags.id],
+  }),
+}));
+
+export const articlesRelations = relations(articles, ({ one, many }) => ({
+  category: one(categories, {
+    fields: [articles.categoryId],
+    references: [categories.id],
+  }),
+  author: one(users, {
+    fields: [articles.authorId],
+    references: [users.id],
+  }),
+  tags: many(articleTags),
+}));
+
+export const articleTagsRelations = relations(articleTags, ({ one }) => ({
+  article: one(articles, {
+    fields: [articleTags.articleId],
+    references: [articles.id],
+  }),
+  tag: one(tags, {
+    fields: [articleTags.tagId],
+    references: [tags.id],
+  }),
+}));

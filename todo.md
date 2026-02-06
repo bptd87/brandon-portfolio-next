@@ -1,0 +1,60 @@
+# Brandon Portfolio V2 - TODO List
+
+## Database Schema & Setup
+- [x] Design and implement projects table with categories, tags, and metadata
+- [x] Design and implement news table with flexible block content support
+- [x] Design and implement articles table with rich text content
+- [x] Design and implement categories and tags tables
+- [x] Create and execute database migration SQL
+- [x] Set up S3 storage integration for media files
+
+## Backend API (tRPC)
+- [x] Create tRPC endpoints for projects CRUD operations
+- [x] Create tRPC endpoints for news CRUD operations
+- [x] Create tRPC endpoints for articles CRUD operations
+- [x] Create tRPC endpoints for categories and tags management
+- [x] Create tRPC endpoints for image upload to S3
+- [x] Create tRPC endpoints for search functionality
+- [x] Create tRPC endpoints for AI content generation
+
+## Admin Panel
+- [x] Build admin dashboard layout with navigation
+- [x] Create project management interface (list, create, edit, delete)
+- [x] Create news management interface (list, create, edit, delete)
+- [x] Create article management interface with rich text editor
+- [x] Create category and tag management interface
+- [x] Implement image upload UI with S3 integration
+- [x] Add AI writing assistant for content generation
+
+## Public-Facing Pages
+- [x] Build homepage with featured projects and recent news
+- [ ] Create portfolio projects listing page with filtering
+- [ ] Create individual project detail pages with SEO metadata
+- [ ] Create news listing page
+- [ ] Create individual news detail pages with SEO metadata
+- [ ] Create articles/blog listing page
+- [ ] Create individual article detail pages with SEO metadata
+- [ ] Implement responsive navigation and footer
+
+## Studio Tools
+- [ ] Build architecture scale converter tool
+- [ ] Build paint finder tool
+- [ ] Build dimension reference tool
+
+## Search & SEO
+- [ ] Implement site-wide search across projects, news, and articles
+- [ ] Add dynamic SEO metadata generation for all pages
+- [ ] Implement server-side rendering for SEO optimization
+
+## AI Features
+- [x] Integrate AI writing assistant for article drafts
+- [x] Add AI-powered project description generator
+- [x] Add AI-powered SEO content summary generator
+- [x] Integrate AI image generation for portfolio mockups
+
+## Testing & Deployment
+- [x] Write vitest tests for critical tRPC procedures
+- [x] Test all CRUD operations in admin panel
+- [x] Test public pages and SEO metadata
+- [x] Test AI features and studio tools
+- [x] Create deployment checkpoint
