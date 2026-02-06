@@ -28,6 +28,8 @@ export function registerOAuthRoutes(app: Express) {
         return;
       }
 
+      console.log('[OAuth] User info received:', { openId: userInfo.openId, name: userInfo.name, email: userInfo.email });
+      
       await db.upsertUser({
         openId: userInfo.openId,
         name: userInfo.name || null,
@@ -35,6 +37,8 @@ export function registerOAuthRoutes(app: Express) {
         loginMethod: userInfo.loginMethod ?? userInfo.platform ?? null,
         lastSignedIn: new Date(),
       });
+      
+      console.log('[OAuth] User upserted successfully');
 
       const sessionToken = await sdk.createSessionToken(userInfo.openId, {
         name: userInfo.name || "",
@@ -42,7 +46,9 @@ export function registerOAuthRoutes(app: Express) {
       });
 
       const cookieOptions = getSessionCookieOptions(req);
+      console.log('[OAuth] Setting cookie with options:', cookieOptions);
       res.cookie(COOKIE_NAME, sessionToken, { ...cookieOptions, maxAge: ONE_YEAR_MS });
+      console.log('[OAuth] Cookie set successfully');
 
       // Parse state to get the original redirect URI or return path
       let redirectPath = "/";
@@ -58,7 +64,12 @@ export function registerOAuthRoutes(app: Express) {
         // If state parsing fails, default to homepage
       }
 
-      res.redirect(302, redirectPath);
+      // For browsers that block third-party cookies, pass token in URL
+      // The client will store it in localStorage as a fallback
+      const redirectUrl = new URL(redirectPath, `${req.protocol}://${req.get('host')}`);
+      redirectUrl.searchParams.set('session_token', sessionToken);
+      
+      res.redirect(302, redirectUrl.pathname + redirectUrl.search);
     } catch (error) {
       console.error("[OAuth] Callback failed", error);
       res.status(500).json({ error: "OAuth callback failed" });

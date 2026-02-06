@@ -6,7 +6,11 @@ import { createRoot } from "react-dom/client";
 import superjson from "superjson";
 import App from "./App";
 import { getLoginUrl } from "./const";
+import { handleSessionToken, getStoredSessionToken } from "./lib/sessionHandler";
 import "./index.css";
+
+// Handle session token from URL (for browsers that block third-party cookies)
+handleSessionToken();
 
 const queryClient = new QueryClient();
 
@@ -43,9 +47,18 @@ const trpcClient = trpc.createClient({
       url: "/api/trpc",
       transformer: superjson,
       fetch(input, init) {
+        // Add session token from localStorage if cookies are blocked
+        const storedToken = getStoredSessionToken();
+        const headers = new Headers(init?.headers);
+        
+        if (storedToken && !headers.has('Cookie')) {
+          headers.set('Authorization', `Bearer ${storedToken}`);
+        }
+        
         return globalThis.fetch(input, {
           ...(init ?? {}),
           credentials: "include",
+          headers,
         });
       },
     }),
