@@ -23,34 +23,32 @@ export default function Home() {
       <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-sm">
         <div className="container py-4">
           <nav className="flex items-center justify-between">
-            <Link href="/">
-              <a className="flex items-center gap-2">
-                <span className="text-2xl font-bold">B</span>
-                <div className="flex flex-col leading-tight">
-                  <span className="text-xs font-semibold tracking-wider">BRANDON PT DAVIS</span>
-                  <span className="text-[10px] text-muted-foreground tracking-wider">SCENIC DESIGNER</span>
-                </div>
-              </a>
+            <Link href="/" className="flex items-center gap-2">
+              <span className="text-2xl font-bold">B</span>
+              <div className="flex flex-col leading-tight">
+                <span className="text-xs font-semibold tracking-wider">BRANDON PT DAVIS</span>
+                <span className="text-[10px] text-muted-foreground tracking-wider">SCENIC DESIGNER</span>
+              </div>
             </Link>
             <div className="flex items-center gap-6">
-              <Link href="/projects">
-                <a className="text-xs font-medium tracking-wider hover:text-primary transition-colors">PORTFOLIO</a>
+              <Link href="/projects" className="text-xs font-medium tracking-wider hover:text-primary transition-colors">
+                PORTFOLIO
               </Link>
-              <Link href="/news">
-                <a className="text-xs font-medium tracking-wider hover:text-primary transition-colors">NEWS</a>
+              <Link href="/news" className="text-xs font-medium tracking-wider hover:text-primary transition-colors">
+                NEWS
               </Link>
-              <Link href="/about">
-                <a className="text-xs font-medium tracking-wider hover:text-primary transition-colors">ABOUT</a>
+              <Link href="/about" className="text-xs font-medium tracking-wider hover:text-primary transition-colors">
+                ABOUT
               </Link>
-              <Link href="/articles">
-                <a className="text-xs font-medium tracking-wider hover:text-primary transition-colors">ARTICLES</a>
+              <Link href="/articles" className="text-xs font-medium tracking-wider hover:text-primary transition-colors">
+                ARTICLES
               </Link>
-              <Link href="/studio">
-                <a className="text-xs font-medium tracking-wider hover:text-primary transition-colors">STUDIO</a>
+              <Link href="/studio" className="text-xs font-medium tracking-wider hover:text-primary transition-colors">
+                STUDIO
               </Link>
               {user?.role === 'admin' && (
-                <Link href="/admin">
-                  <a className="text-xs font-medium tracking-wider hover:text-primary transition-colors">ADMIN</a>
+                <Link href="/admin" className="text-xs font-medium tracking-wider hover:text-primary transition-colors">
+                  ADMIN
                 </Link>
               )}
               <Link href="/contact">
@@ -211,17 +209,17 @@ export default function Home() {
             <div>
               <h4 className="font-semibold mb-4 text-sm tracking-wider">PORTFOLIO</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link href="/projects"><a className="text-muted-foreground hover:text-foreground transition-colors">Projects</a></Link></li>
-                <li><Link href="/news"><a className="text-muted-foreground hover:text-foreground transition-colors">News</a></Link></li>
-                <li><Link href="/articles"><a className="text-muted-foreground hover:text-foreground transition-colors">Articles</a></Link></li>
+                <li><Link href="/projects" className="text-muted-foreground hover:text-foreground transition-colors">Projects</Link></li>
+                <li><Link href="/news" className="text-muted-foreground hover:text-foreground transition-colors">News</Link></li>
+                <li><Link href="/articles" className="text-muted-foreground hover:text-foreground transition-colors">Articles</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4 text-sm tracking-wider">RESOURCES</h4>
               <ul className="space-y-2 text-sm">
-                <li><Link href="/studio"><a className="text-muted-foreground hover:text-foreground transition-colors">Studio Tools</a></Link></li>
-                <li><Link href="/about"><a className="text-muted-foreground hover:text-foreground transition-colors">About</a></Link></li>
-                <li><Link href="/contact"><a className="text-muted-foreground hover:text-foreground transition-colors">Contact</a></Link></li>
+                <li><Link href="/studio" className="text-muted-foreground hover:text-foreground transition-colors">Studio Tools</Link></li>
+                <li><Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors">About</Link></li>
+                <li><Link href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">Contact</Link></li>
               </ul>
             </div>
             <div>

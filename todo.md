@@ -91,3 +91,8 @@
 - [x] Add original images and assets from repo
 - [x] Recreate original news/articles layout
 - [x] Match original project cards and grid layout
+
+## Bug Fixes
+- [x] Fix API query error on /projects page (string pattern mismatch)
+- [x] Fix nested anchor tag errors in project cards
+- [x] Test all pages after fixes
