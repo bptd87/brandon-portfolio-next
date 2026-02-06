@@ -61,10 +61,16 @@ export default function ArticleDetail() {
     );
   }
 
-  // Parse content sections
-  const contentSections = typeof article.content === 'string' 
-    ? JSON.parse(article.content) 
-    : article.content || [];
+  // Parse content sections - handle both JSON and plain text
+  let contentSections: any[] = [];
+  try {
+    contentSections = typeof article.content === 'string' 
+      ? JSON.parse(article.content) 
+      : article.content || [];
+  } catch (e) {
+    // If content is plain text, wrap it in a paragraph object
+    contentSections = [{ type: 'paragraph', content: article.content }];
+  }
 
   // Get related articles (exclude current)
   const related = relatedArticles?.filter(a => a.id !== article.id).slice(0, 3) || [];
@@ -283,8 +289,8 @@ export default function ArticleDetail() {
             <h2 className="text-3xl font-semibold mb-8">Continue Reading</h2>
             <div className="grid md:grid-cols-3 gap-6">
               {related.map((item) => (
-                <Link key={item.id} href={`/articles/${item.slug}`}>
-                  <Card className="overflow-hidden hover:shadow-lg transition-shadow h-full">
+                <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow h-full">
+                  <Link href={`/articles/${item.slug}`} className="block">
                     {item.coverImageUrl && (
                       <div className="aspect-video overflow-hidden">
                         <img 
@@ -306,8 +312,8 @@ export default function ArticleDetail() {
                         <p className="text-sm text-muted-foreground line-clamp-2">{item.excerpt}</p>
                       )}
                     </CardContent>
-                  </Card>
-                </Link>
+                  </Link>
+                </Card>
               ))}
             </div>
           </div>

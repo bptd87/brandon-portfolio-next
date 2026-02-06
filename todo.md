@@ -117,3 +117,7 @@
 - [ ] Recreate About page with actual bio, photos, and content
 - [ ] Analyze original Studio tools functionality
 - [ ] Recreate Studio tools with exact calculations and UI
+
+## Bug Fixes - Article Detail
+- [x] Fix JSON parse error in ArticleDetail (content is plain text, not JSON)
+- [x] Fix nested anchor tags in ArticleDetail related articles section
