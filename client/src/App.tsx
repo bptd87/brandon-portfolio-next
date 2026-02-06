@@ -13,6 +13,8 @@ import Admin from "./pages/Admin";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Studio from "./pages/Studio";
+import NewsDetail from "./pages/NewsDetail";
+import ArticleDetail from "./pages/ArticleDetail";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -22,7 +24,9 @@ function Router() {
       <Route path={"/projects"} component={Projects} />
       <Route path={"/projects/:slug"} component={ProjectDetail} />
       <Route path={"/news"} component={News} />
+      <Route path={"/news/:slug"} component={NewsDetail} />
       <Route path={"/articles"} component={Articles} />
+      <Route path={"/articles/:slug"} component={ArticleDetail} />
       <Route path={"/about"} component={About} />
       <Route path={"/contact"} component={Contact} />
       <Route path={"/studio"} component={Studio} />
