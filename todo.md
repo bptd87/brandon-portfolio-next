@@ -121,3 +121,10 @@
 ## Bug Fixes - Article Detail
 - [x] Fix JSON parse error in ArticleDetail (content is plain text, not JSON)
 - [x] Fix nested anchor tags in ArticleDetail related articles section
+
+## Supabase Data Import
+- [ ] Access Supabase configuration from original portfolio
+- [ ] Extract real project data from Supabase
+- [ ] Import projects with actual photos and descriptions
+- [x] Create admin panel user guide
+- [x] Document how to add/edit projects, news, and articles
