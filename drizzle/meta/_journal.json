@@ -15,6 +15,13 @@
       "when": 1770379400413,
       "tag": "0001_bizarre_corsair",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1770410635061,
+      "tag": "0002_light_marvex",
+      "breakpoints": true
     }
   ]
 }

@@ -141,3 +141,16 @@
 - [x] Check if owner OpenID is matching ENV variable
 - [x] Verify admin role is being assigned in database
 - [x] Test authentication flow end-to-end
+
+## Rebuild with Full Original Complexity
+- [x] Analyze original project pages structure (galleries, design notes, metadata)
+- [x] Redesign projects table to support multiple images per project
+- [x] Add design notes field with rich text/markdown support
+- [x] Add production details, venue info, team credits fields
+- [x] Rebuild ProjectForm to handle image galleries (multiple uploads)
+- [x] Add design notes editor to ProjectForm
+- [x] Add all metadata fields to ProjectForm
+- [ ] Rebuild ProjectDetail page with image gallery component
+- [ ] Add design notes section to ProjectDetail page
+- [ ] Add production details and credits sections to ProjectDetail page
+- [ ] Test full project creation and display workflow

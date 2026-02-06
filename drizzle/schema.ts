@@ -59,7 +59,20 @@ export const projects = mysqlTable("projects", {
   slug: varchar("slug", { length: 255 }).notNull().unique(),
   excerpt: text("excerpt"),
   description: text("description"),
+  designNotes: text("designNotes"),
   categoryId: int("categoryId").references(() => categories.id),
+  creativeTeam: json("creativeTeam").$type<{
+    director?: string;
+    associateDirector?: string;
+    musicDirector?: string;
+    coScenicDesigner?: string;
+    costumeDesigner?: string;
+    lightingDesigner?: string;
+    soundDesigner?: string;
+    [key: string]: any;
+  }>(),
+  viewCount: int("viewCount").default(0).notNull(),
+  likeCount: int("likeCount").default(0).notNull(),
   coverImageUrl: text("coverImageUrl"),
   coverImageKey: text("coverImageKey"),
   location: varchar("location", { length: 255 }),
@@ -97,8 +110,10 @@ export type InsertProject = typeof projects.$inferInsert;
 export const projectImages = mysqlTable("projectImages", {
   id: int("id").autoincrement().primaryKey(),
   projectId: int("projectId").notNull().references(() => projects.id, { onDelete: "cascade" }),
-  imageUrl: text("imageUrl").notNull(),
-  imageKey: text("imageKey").notNull(),
+  imageUrl: text("imageUrl"),
+  imageKey: text("imageKey"),
+  videoUrl: text("videoUrl"),
+  imageType: mysqlEnum("imageType", ["production", "rendering", "video"]).default("production").notNull(),
   caption: text("caption"),
   altText: text("altText"),
   sortOrder: int("sortOrder").default(0).notNull(),
