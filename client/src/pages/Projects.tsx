@@ -1,9 +1,10 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { MapPin, Calendar } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
-import { MapPin, Calendar } from "lucide-react";
 import { Link } from "wouter";
+import Header from "@/components/Header";
 
 export default function Projects() {
   const { data: projects, isLoading } = trpc.projects.list.useQuery({ status: 'published' });
@@ -14,30 +15,7 @@ export default function Projects() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border">
-        <div className="container py-6">
-          <nav className="flex items-center justify-between">
-            <Link href="/" className="text-2xl font-bold tracking-tight">
-              Brandon Davis
-            </Link>
-            <div className="flex items-center gap-6">
-              <Link href="/projects" className="text-sm font-medium text-primary">
-                Projects
-              </Link>
-              <Link href="/news" className="text-sm font-medium hover:text-primary transition-colors">
-                News
-              </Link>
-              <Link href="/articles" className="text-sm font-medium hover:text-primary transition-colors">
-                Articles
-              </Link>
-              <Link href="/studio" className="text-sm font-medium hover:text-primary transition-colors">
-                Studio
-              </Link>
-            </div>
-          </nav>
-        </div>
-      </header>
+      <Header />
 
       {/* Page Header */}
       <section className="py-16 border-b border-border">

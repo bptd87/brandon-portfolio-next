@@ -10,6 +10,9 @@ import Articles from "./pages/Articles";
 import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
 import Admin from "./pages/Admin";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Studio from "./pages/Studio";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -20,6 +23,9 @@ function Router() {
       <Route path={"/projects/:slug"} component={ProjectDetail} />
       <Route path={"/news"} component={News} />
       <Route path={"/articles"} component={Articles} />
+      <Route path={"/about"} component={About} />
+      <Route path={"/contact"} component={Contact} />
+      <Route path={"/studio"} component={Studio} />
       <Route path={"/admin"} component={Admin} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}

@@ -99,3 +99,11 @@
 
 ## Additional Bug Fixes
 - [x] Fix nested anchor tag error in ProjectDetail page
+
+## New Features
+- [x] Create shared Header component
+- [x] Replace header in all pages with shared component
+- [x] Build About page with bio and CV
+- [x] Build Contact page with contact form
+- [x] Build Studio page with interactive tools (scale converter, paint finder, dimension reference)
+- [x] Add routes for new pages in App.tsx
