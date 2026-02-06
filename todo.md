@@ -73,3 +73,11 @@
 - [x] Port original styling and CSS
 - [ ] Add original images to S3 storage
 - [x] Test all pages and functionality
+
+## Project Import and Pages
+- [x] Extract project data from original Supabase database
+- [x] Create sample projects or import from data files
+- [x] Build projects listing page with filtering
+- [x] Build individual project detail pages with galleries
+- [x] Add project categories and tags
+- [x] Test project pages functionality

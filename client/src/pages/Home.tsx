@@ -7,6 +7,7 @@ import { Link } from "wouter";
 
 export default function Home() {
   const { user } = useAuth();
+  const { data: projects, isLoading: projectsLoading } = trpc.projects.list.useQuery({ featured: true, status: 'published' });
   const { data: newsItems, isLoading: newsLoading } = trpc.news.list.useQuery({});
   const { data: articles, isLoading: articlesLoading } = trpc.articles.list.useQuery({});
 
@@ -84,22 +85,44 @@ export default function Home() {
             </Link>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => (
-              <Card key={i} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="aspect-[4/3] bg-muted" />
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">Project Title {i}</h3>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Brief description of the project and its key features.
-                  </p>
-                  <Button variant="link" className="p-0 h-auto gap-2">
-                    View Project <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          {projectsLoading ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">Loading projects...</p>
+            </div>
+          ) : projects && projects.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {projects.slice(0, 3).map((project) => (
+                <Link key={project.id} href={`/projects/${project.slug}`}>
+                  <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
+                    {project.coverImageUrl ? (
+                      <div className="aspect-[4/3] overflow-hidden">
+                        <img 
+                          src={project.coverImageUrl} 
+                          alt={project.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    ) : (
+                      <div className="aspect-[4/3] bg-muted" />
+                    )}
+                    <CardContent className="p-6">
+                      <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
+                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                        {project.excerpt}
+                      </p>
+                      <Button variant="link" className="p-0 h-auto gap-2">
+                        View Project <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">No featured projects yet.</p>
+            </div>
+          )}
         </div>
       </section>
 
