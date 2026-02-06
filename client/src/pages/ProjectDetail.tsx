@@ -39,21 +39,21 @@ export default function ProjectDetail() {
       <header className="border-b border-border">
         <div className="container py-6">
           <nav className="flex items-center justify-between">
-            <Link href="/">
-              <a className="text-2xl font-bold tracking-tight">Brandon Davis</a>
+            <Link href="/" className="text-2xl font-bold tracking-tight">
+              Brandon Davis
             </Link>
             <div className="flex items-center gap-6">
-              <Link href="/projects">
-                <a className="text-sm font-medium text-primary">Projects</a>
+              <Link href="/projects" className="text-sm font-medium text-primary">
+                Projects
               </Link>
-              <Link href="/news">
-                <a className="text-sm font-medium hover:text-primary transition-colors">News</a>
+              <Link href="/news" className="text-sm font-medium hover:text-primary transition-colors">
+                News
               </Link>
-              <Link href="/articles">
-                <a className="text-sm font-medium hover:text-primary transition-colors">Articles</a>
+              <Link href="/articles" className="text-sm font-medium hover:text-primary transition-colors">
+                Articles
               </Link>
-              <Link href="/studio">
-                <a className="text-sm font-medium hover:text-primary transition-colors">Studio</a>
+              <Link href="/studio" className="text-sm font-medium hover:text-primary transition-colors">
+                Studio
               </Link>
             </div>
           </nav>

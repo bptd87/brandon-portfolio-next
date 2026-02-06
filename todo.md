@@ -96,3 +96,6 @@
 - [x] Fix API query error on /projects page (string pattern mismatch)
 - [x] Fix nested anchor tag errors in project cards
 - [x] Test all pages after fixes
+
+## Additional Bug Fixes
+- [x] Fix nested anchor tag error in ProjectDetail page
