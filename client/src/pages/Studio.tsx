@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -69,7 +70,8 @@ export default function Studio() {
             A collection of practical tools for scenic designers, technical directors, and theatre professionals. 
             Calculate scales, convert dimensions, and reference common measurements.
           </p>
-        </div>
+        <Footer />
+    </div>
       </section>
 
       {/* Tools Grid */}
@@ -86,8 +88,10 @@ export default function Studio() {
                   <CardDescription>
                     Convert real-world measurements to scale for drafting and model building
                   </CardDescription>
-                </div>
-              </div>
+                <Footer />
+    </div>
+              <Footer />
+    </div>
             </CardHeader>
             <CardContent>
               <div className="grid md:grid-cols-3 gap-6">
@@ -100,7 +104,8 @@ export default function Studio() {
                     value={realMeasurement}
                     onChange={(e) => setRealMeasurement(e.target.value)}
                   />
-                </div>
+                <Footer />
+    </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="scale">Scale</Label>
@@ -115,7 +120,8 @@ export default function Studio() {
                       <SelectItem value="1">1" = 1'-0"</SelectItem>
                     </SelectContent>
                   </Select>
-                </div>
+                <Footer />
+    </div>
 
                 <div className="space-y-2">
                   <Label>Result</Label>
@@ -127,9 +133,12 @@ export default function Studio() {
                       className="bg-muted"
                     />
                     <Button onClick={calculateScale}>Calculate</Button>
-                  </div>
-                </div>
-              </div>
+                  <Footer />
+    </div>
+                <Footer />
+    </div>
+              <Footer />
+    </div>
 
               <Separator className="my-6" />
 
@@ -141,7 +150,8 @@ export default function Studio() {
                   <li>• <strong>1/8" = 1'-0"</strong> - Site plans and large venues</li>
                   <li>• <strong>1" = 1'-0"</strong> - Full-scale details</li>
                 </ul>
-              </div>
+              <Footer />
+    </div>
             </CardContent>
           </Card>
 
@@ -155,8 +165,10 @@ export default function Studio() {
                   <CardDescription>
                     Convert between feet, inches, meters, and centimeters
                   </CardDescription>
-                </div>
-              </div>
+                <Footer />
+    </div>
+              <Footer />
+    </div>
             </CardHeader>
             <CardContent>
               <div className="grid md:grid-cols-3 gap-6">
@@ -169,7 +181,8 @@ export default function Studio() {
                     value={feet}
                     onChange={(e) => setFeet(e.target.value)}
                   />
-                </div>
+                <Footer />
+    </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="inches">Inches</Label>
@@ -180,20 +193,24 @@ export default function Studio() {
                     value={inches}
                     onChange={(e) => setInches(e.target.value)}
                   />
-                </div>
+                <Footer />
+    </div>
 
                 <div className="space-y-2">
                   <Label>&nbsp;</Label>
                   <Button onClick={convertDimensions} className="w-full">
                     Convert
                   </Button>
-                </div>
-              </div>
+                <Footer />
+    </div>
+              <Footer />
+    </div>
 
               {dimensionResult && (
                 <div className="mt-6 p-4 bg-muted rounded-lg">
                   <p className="text-sm font-medium">{dimensionResult}</p>
-                </div>
+                <Footer />
+    </div>
               )}
 
               <Separator className="my-6" />
@@ -211,8 +228,10 @@ export default function Studio() {
                     <li>• 1 meter = 39.3701 inches</li>
                     <li>• 1 centimeter = 0.393701 inches</li>
                   </ul>
-                </div>
-              </div>
+                <Footer />
+    </div>
+              <Footer />
+    </div>
             </CardContent>
           </Card>
 
@@ -226,8 +245,10 @@ export default function Studio() {
                   <CardDescription>
                     Common scenic paint colors and mixing ratios
                   </CardDescription>
-                </div>
-              </div>
+                <Footer />
+    </div>
+              <Footer />
+    </div>
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
@@ -235,27 +256,37 @@ export default function Studio() {
                   <h4 className="font-semibold mb-3">Base Coat Colors</h4>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                     <div className="p-3 border rounded-lg">
-                      <div className="h-12 bg-white border mb-2 rounded"></div>
+                      <div className="h-12 bg-white border mb-2 rounded"><Footer />
+    </div>
                       <p className="text-sm font-medium">White</p>
                       <p className="text-xs text-muted-foreground">Base coat</p>
-                    </div>
+                    <Footer />
+    </div>
                     <div className="p-3 border rounded-lg">
-                      <div className="h-12 bg-black mb-2 rounded"></div>
+                      <div className="h-12 bg-black mb-2 rounded"><Footer />
+    </div>
                       <p className="text-sm font-medium">Black</p>
                       <p className="text-xs text-muted-foreground">Shadows</p>
-                    </div>
+                    <Footer />
+    </div>
                     <div className="p-3 border rounded-lg">
-                      <div className="h-12 bg-red-600 mb-2 rounded"></div>
+                      <div className="h-12 bg-red-600 mb-2 rounded"><Footer />
+    </div>
                       <p className="text-sm font-medium">Red</p>
                       <p className="text-xs text-muted-foreground">Primary</p>
-                    </div>
+                    <Footer />
+    </div>
                     <div className="p-3 border rounded-lg">
-                      <div className="h-12 bg-blue-600 mb-2 rounded"></div>
+                      <div className="h-12 bg-blue-600 mb-2 rounded"><Footer />
+    </div>
                       <p className="text-sm font-medium">Blue</p>
                       <p className="text-xs text-muted-foreground">Primary</p>
-                    </div>
-                  </div>
-                </div>
+                    <Footer />
+    </div>
+                  <Footer />
+    </div>
+                <Footer />
+    </div>
 
                 <Separator />
 
@@ -265,21 +296,27 @@ export default function Studio() {
                     <div className="p-3 bg-muted rounded-lg">
                       <p className="font-medium">Stone/Concrete Gray</p>
                       <p className="text-muted-foreground">White + Black (10:1) + touch of Raw Umber</p>
-                    </div>
+                    <Footer />
+    </div>
                     <div className="p-3 bg-muted rounded-lg">
                       <p className="font-medium">Aged Wood</p>
                       <p className="text-muted-foreground">Raw Umber + Burnt Sienna (3:1) + touch of Black</p>
-                    </div>
+                    <Footer />
+    </div>
                     <div className="p-3 bg-muted rounded-lg">
                       <p className="font-medium">Brick Red</p>
                       <p className="text-muted-foreground">Red + Raw Umber (2:1) + touch of Yellow Ochre</p>
-                    </div>
+                    <Footer />
+    </div>
                     <div className="p-3 bg-muted rounded-lg">
                       <p className="font-medium">Sky Blue</p>
                       <p className="text-muted-foreground">White + Ultramarine Blue (20:1) + tiny touch of Black</p>
-                    </div>
-                  </div>
-                </div>
+                    <Footer />
+    </div>
+                  <Footer />
+    </div>
+                <Footer />
+    </div>
 
                 <Separator />
 
@@ -292,8 +329,10 @@ export default function Studio() {
                     <li>• Add water gradually to achieve desired consistency</li>
                     <li>• Colors dry darker - account for this in your mixing</li>
                   </ul>
-                </div>
-              </div>
+                <Footer />
+    </div>
+              <Footer />
+    </div>
             </CardContent>
           </Card>
 
@@ -331,7 +370,8 @@ export default function Studio() {
                       <span className="text-muted-foreground">29" - 30"</span>
                     </li>
                   </ul>
-                </div>
+                <Footer />
+    </div>
 
                 <div>
                   <h4 className="font-semibold mb-3">Door & Window</h4>
@@ -357,7 +397,8 @@ export default function Studio() {
                       <span className="text-muted-foreground">36"</span>
                     </li>
                   </ul>
-                </div>
+                <Footer />
+    </div>
 
                 <div>
                   <h4 className="font-semibold mb-3">Human Dimensions</h4>
@@ -379,7 +420,8 @@ export default function Studio() {
                       <span className="text-muted-foreground">30" - 36"</span>
                     </li>
                   </ul>
-                </div>
+                <Footer />
+    </div>
 
                 <div>
                   <h4 className="font-semibold mb-3">Stage Elements</h4>
@@ -401,13 +443,17 @@ export default function Studio() {
                       <span className="text-muted-foreground">4' x 8'</span>
                     </li>
                   </ul>
-                </div>
-              </div>
+                <Footer />
+    </div>
+              <Footer />
+    </div>
             </CardContent>
           </Card>
 
-        </div>
+        <Footer />
+    </div>
       </section>
+    <Footer />
     </div>
   );
 }

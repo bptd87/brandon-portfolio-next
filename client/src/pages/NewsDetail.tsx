@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -33,8 +34,10 @@ export default function NewsDetail() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div>
-      </div>
+        <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"><Footer />
+    </div>
+      <Footer />
+    </div>
     );
   }
 
@@ -48,8 +51,10 @@ export default function NewsDetail() {
           <Link href="/news">
             <Button>Back to News</Button>
           </Link>
-        </div>
-      </div>
+        <Footer />
+    </div>
+      <Footer />
+    </div>
     );
   }
 
@@ -72,10 +77,12 @@ export default function NewsDetail() {
             className="absolute inset-0 w-full h-full object-cover opacity-60"
           />
         ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-background"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-background"><Footer />
+    </div>
         )}
         
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"><Footer />
+    </div>
         
         <div className="relative h-full container flex flex-col justify-end pb-16">
           <div className="max-w-4xl">
@@ -96,15 +103,19 @@ export default function NewsDetail() {
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
                 <span>{new Date(newsItem.publishedAt || newsItem.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-              </div>
+              <Footer />
+    </div>
               {newsItem.location && (
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4" />
                   <span>{newsItem.location}</span>
-                </div>
+                <Footer />
+    </div>
               )}
-            </div>
-          </div>
+            <Footer />
+    </div>
+          <Footer />
+    </div>
           
           <Button 
             onClick={handleShare}
@@ -114,7 +125,8 @@ export default function NewsDetail() {
           >
             <Share2 className="h-4 w-4 text-white" />
           </Button>
-        </div>
+        <Footer />
+    </div>
       </section>
 
       {/* Content Section */}
@@ -128,7 +140,8 @@ export default function NewsDetail() {
                   return (
                     <div key={index} className="prose prose-lg prose-invert max-w-none mb-8">
                       <p className="text-white/90 leading-relaxed">{block.content}</p>
-                    </div>
+                    <Footer />
+    </div>
                   );
                 
                 case 'link':
@@ -145,7 +158,8 @@ export default function NewsDetail() {
                           <ExternalLink className="ml-2 h-4 w-4" />
                         </Button>
                       </a>
-                    </div>
+                    <Footer />
+    </div>
                   );
                 
                 case 'gallery':
@@ -159,7 +173,8 @@ export default function NewsDetail() {
                           className="w-full h-48 object-cover rounded-lg"
                         />
                       ))}
-                    </div>
+                    <Footer />
+    </div>
                   );
                 
                 case 'quote':
@@ -191,11 +206,15 @@ export default function NewsDetail() {
                       {tag.name}
                     </span>
                   ))}
-                </div>
-              </div>
+                <Footer />
+    </div>
+              <Footer />
+    </div>
             )}
-          </div>
-        </div>
+          <Footer />
+    </div>
+        <Footer />
+    </div>
       </section>
 
       {/* Related News Section */}
@@ -207,7 +226,8 @@ export default function NewsDetail() {
               <Link href="/news">
                 <Button variant="outline">View Archive</Button>
               </Link>
-            </div>
+            <Footer />
+    </div>
             <div className="grid md:grid-cols-3 gap-6">
               {related.map((item) => (
                 <Link key={item.id} href={`/news/${item.slug}`}>
@@ -219,7 +239,8 @@ export default function NewsDetail() {
                           alt={item.title}
                           className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                         />
-                      </div>
+                      <Footer />
+    </div>
                     )}
                     <CardContent className="p-6">
                       <div className="flex items-center gap-2 mb-3">
@@ -229,7 +250,8 @@ export default function NewsDetail() {
                         <span className="text-xs text-muted-foreground">
                           {new Date(item.publishedAt || item.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                         </span>
-                      </div>
+                      <Footer />
+    </div>
                       <h3 className="font-semibold mb-2 line-clamp-2">{item.title}</h3>
                       {item.excerpt && (
                         <p className="text-sm text-muted-foreground line-clamp-2">{item.excerpt}</p>
@@ -238,10 +260,13 @@ export default function NewsDetail() {
                   </Card>
                 </Link>
               ))}
-            </div>
-          </div>
+            <Footer />
+    </div>
+          <Footer />
+    </div>
         </section>
       )}
+    <Footer />
     </div>
   );
 }

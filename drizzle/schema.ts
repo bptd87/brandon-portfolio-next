@@ -60,6 +60,8 @@ export const projects = mysqlTable("projects", {
   excerpt: text("excerpt"),
   description: text("description"),
   designNotes: text("designNotes"),
+  discipline: mysqlEnum("discipline", ["scenic_design", "experiential_design", "rendering", "scenic_models"]).default("scenic_design").notNull(),
+  subcategory: varchar("subcategory", { length: 100 }),
   categoryId: int("categoryId").references(() => categories.id),
   creativeTeam: json("creativeTeam").$type<{
     director?: string;
@@ -99,6 +101,7 @@ export const projects = mysqlTable("projects", {
   statusIdx: index("status_idx").on(table.status),
   featuredIdx: index("featured_idx").on(table.featured),
   slugIdx: index("slug_idx").on(table.slug),
+  disciplineIdx: index("discipline_idx").on(table.discipline),
 }));
 
 export type Project = typeof projects.$inferSelect;
@@ -237,6 +240,7 @@ export const projectsRelations = relations(projects, ({ one, many }) => ({
   }),
   images: many(projectImages),
   tags: many(projectTags),
+  teamMembers: many(projectTeamMembers),
 }));
 
 export const projectImagesRelations = relations(projectImages, ({ one }) => ({
@@ -296,5 +300,51 @@ export const articleTagsRelations = relations(articleTags, ({ one }) => ({
   tag: one(tags, {
     fields: [articleTags.tagId],
     references: [tags.id],
+  }),
+}));
+
+/**
+ * Team members for flexible team management
+ */
+export const teamMembers = mysqlTable("team_members", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  role: varchar("role", { length: 255 }).notNull(),
+  bio: text("bio"),
+  imageUrl: text("imageUrl"),
+  imageKey: text("imageKey"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type TeamMember = typeof teamMembers.$inferSelect;
+export type InsertTeamMember = typeof teamMembers.$inferInsert;
+
+/**
+ * Project team members junction table
+ */
+export const projectTeamMembers = mysqlTable("project_team_members", {
+  projectId: int("projectId").notNull().references(() => projects.id, { onDelete: "cascade" }),
+  teamMemberId: int("teamMemberId").notNull().references(() => teamMembers.id, { onDelete: "cascade" }),
+  customRole: varchar("customRole", { length: 255 }),
+  sortOrder: int("sortOrder").default(0).notNull(),
+}, (table) => ({
+  projectIdx: index("project_idx").on(table.projectId),
+  teamMemberIdx: index("team_member_idx").on(table.teamMemberId),
+}));
+
+// Team relations
+export const teamMembersRelations = relations(teamMembers, ({ many }) => ({
+  projects: many(projectTeamMembers),
+}));
+
+export const projectTeamMembersRelations = relations(projectTeamMembers, ({ one }) => ({
+  project: one(projects, {
+    fields: [projectTeamMembers.projectId],
+    references: [projects.id],
+  }),
+  teamMember: one(teamMembers, {
+    fields: [projectTeamMembers.teamMemberId],
+    references: [teamMembers.id],
   }),
 }));

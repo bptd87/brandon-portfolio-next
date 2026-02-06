@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -18,7 +19,8 @@ export default function ProjectDetail() {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <p className="text-muted-foreground">Loading project...</p>
-      </div>
+      <Footer />
+    </div>
     );
   }
 
@@ -30,8 +32,10 @@ export default function ProjectDetail() {
           <Link href="/projects">
             <Button variant="outline">Back to Projects</Button>
           </Link>
-        </div>
-      </div>
+        <Footer />
+    </div>
+      <Footer />
+    </div>
     );
   }
 
@@ -60,7 +64,8 @@ export default function ProjectDetail() {
             Back to Projects
           </Button>
         </Link>
-      </div>
+      <Footer />
+    </div>
 
       {/* Hero Image */}
       {project.coverImageUrl && (
@@ -71,8 +76,10 @@ export default function ProjectDetail() {
               alt={project.title}
               className="w-full h-full object-cover"
             />
-          </div>
-        </div>
+          <Footer />
+    </div>
+        <Footer />
+    </div>
       )}
 
       {/* Project Content */}
@@ -87,12 +94,14 @@ export default function ProjectDetail() {
                     {project.metadata.subcategory}
                   </Badge>
                 )}
-              </div>
+              <Footer />
+    </div>
               <div className="flex items-center gap-4 text-sm text-muted-foreground">
                 <div className="flex items-center gap-1">
                   <Eye className="h-4 w-4" />
                   <span>{project.viewCount || 0}</span>
-                </div>
+                <Footer />
+    </div>
                 <button 
                   onClick={() => setLiked(!liked)}
                   className="flex items-center gap-1 hover:text-red-500 transition-colors"
@@ -100,8 +109,10 @@ export default function ProjectDetail() {
                   <Heart className={`h-4 w-4 ${liked ? 'fill-red-500 text-red-500' : ''}`} />
                   <span>{(project.likeCount || 0) + (liked ? 1 : 0)}</span>
                 </button>
-              </div>
-            </div>
+              <Footer />
+    </div>
+            <Footer />
+    </div>
             <h1 className="text-5xl font-serif mb-6">{project.title}</h1>
             <p className="text-xl text-muted-foreground mb-6">{project.excerpt}</p>
             
@@ -111,31 +122,45 @@ export default function ProjectDetail() {
                 <div className="flex items-start gap-3">
                   <User className="h-5 w-5 text-muted-foreground mt-0.5" />
                   <div>
-                    <div className="text-sm font-medium">Client</div>
-                    <div className="text-sm text-muted-foreground">{project.client}</div>
-                  </div>
-                </div>
+                    <div className="text-sm font-medium">Client<Footer />
+    </div>
+                    <div className="text-sm text-muted-foreground">{project.client}<Footer />
+    </div>
+                  <Footer />
+    </div>
+                <Footer />
+    </div>
               )}
               {project.location && (
                 <div className="flex items-start gap-3">
                   <MapPin className="h-5 w-5 text-muted-foreground mt-0.5" />
                   <div>
-                    <div className="text-sm font-medium">Location</div>
-                    <div className="text-sm text-muted-foreground">{project.location}</div>
-                  </div>
-                </div>
+                    <div className="text-sm font-medium">Location<Footer />
+    </div>
+                    <div className="text-sm text-muted-foreground">{project.location}<Footer />
+    </div>
+                  <Footer />
+    </div>
+                <Footer />
+    </div>
               )}
               {project.year && (
                 <div className="flex items-start gap-3">
                   <Calendar className="h-5 w-5 text-muted-foreground mt-0.5" />
                   <div>
-                    <div className="text-sm font-medium">Year</div>
-                    <div className="text-sm text-muted-foreground">{project.year}</div>
-                  </div>
-                </div>
+                    <div className="text-sm font-medium">Year<Footer />
+    </div>
+                    <div className="text-sm text-muted-foreground">{project.year}<Footer />
+    </div>
+                  <Footer />
+    </div>
+                <Footer />
+    </div>
               )}
-            </div>
-          </div>
+            <Footer />
+    </div>
+          <Footer />
+    </div>
 
           <Separator className="my-8" />
 
@@ -145,8 +170,10 @@ export default function ProjectDetail() {
               <h2 className="text-3xl font-serif mb-6">About This Project</h2>
               <div className="prose prose-lg dark:prose-invert max-w-none">
                 <p className="text-foreground/90 leading-relaxed text-lg">{project.description}</p>
-              </div>
-            </div>
+              <Footer />
+    </div>
+            <Footer />
+    </div>
           )}
 
           {/* Design Notes */}
@@ -166,8 +193,10 @@ export default function ProjectDetail() {
                     {showFullNotes ? 'Show Less' : 'Read More'}
                   </Button>
                 )}
-              </div>
-            </div>
+              <Footer />
+    </div>
+            <Footer />
+    </div>
           )}
 
           {/* Production Photos Gallery */}
@@ -183,14 +212,18 @@ export default function ProjectDetail() {
                         alt={image.altText || image.caption || project.title}
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                       />
-                    </div>
+                    <Footer />
+    </div>
                     {image.caption && (
                       <p className="text-sm text-muted-foreground mt-3 italic">{image.caption}</p>
                     )}
-                  </div>
+                  <Footer />
+    </div>
                 ))}
-              </div>
-            </div>
+              <Footer />
+    </div>
+            <Footer />
+    </div>
           )}
 
           {/* Renderings Gallery */}
@@ -206,14 +239,18 @@ export default function ProjectDetail() {
                         alt={image.altText || image.caption || project.title}
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                       />
-                    </div>
+                    <Footer />
+    </div>
                     {image.caption && (
                       <p className="text-sm text-muted-foreground mt-3 italic">{image.caption}</p>
                     )}
-                  </div>
+                  <Footer />
+    </div>
                 ))}
-              </div>
-            </div>
+              <Footer />
+    </div>
+            <Footer />
+    </div>
           )}
 
           {/* Video Embeds */}
@@ -233,14 +270,18 @@ export default function ProjectDetail() {
                           allowFullScreen
                         />
                       )}
-                    </div>
+                    <Footer />
+    </div>
                     {video.caption && (
                       <p className="text-sm text-muted-foreground mt-3 italic">{video.caption}</p>
                     )}
-                  </div>
+                  <Footer />
+    </div>
                 ))}
-              </div>
-            </div>
+              <Footer />
+    </div>
+            <Footer />
+    </div>
           )}
 
           {/* Creative Team */}
@@ -252,56 +293,82 @@ export default function ProjectDetail() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {creativeTeam.director && (
                       <div>
-                        <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-1">Director</div>
-                        <div className="text-base">{creativeTeam.director}</div>
-                      </div>
+                        <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-1">Director<Footer />
+    </div>
+                        <div className="text-base">{creativeTeam.director}<Footer />
+    </div>
+                      <Footer />
+    </div>
                     )}
                     {creativeTeam.coScenicDesigner && (
                       <div>
-                        <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-1">Co-Scenic Designer</div>
-                        <div className="text-base">{creativeTeam.coScenicDesigner}</div>
-                      </div>
+                        <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-1">Co-Scenic Designer<Footer />
+    </div>
+                        <div className="text-base">{creativeTeam.coScenicDesigner}<Footer />
+    </div>
+                      <Footer />
+    </div>
                     )}
                     {creativeTeam.costumeDesigner && (
                       <div>
-                        <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-1">Costume Designer</div>
-                        <div className="text-base">{creativeTeam.costumeDesigner}</div>
-                      </div>
+                        <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-1">Costume Designer<Footer />
+    </div>
+                        <div className="text-base">{creativeTeam.costumeDesigner}<Footer />
+    </div>
+                      <Footer />
+    </div>
                     )}
                     {creativeTeam.lightingDesigner && (
                       <div>
-                        <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-1">Lighting Designer</div>
-                        <div className="text-base">{creativeTeam.lightingDesigner}</div>
-                      </div>
+                        <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-1">Lighting Designer<Footer />
+    </div>
+                        <div className="text-base">{creativeTeam.lightingDesigner}<Footer />
+    </div>
+                      <Footer />
+    </div>
                     )}
                     {creativeTeam.soundDesigner && (
                       <div>
-                        <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-1">Sound Designer</div>
-                        <div className="text-base">{creativeTeam.soundDesigner}</div>
-                      </div>
+                        <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-1">Sound Designer<Footer />
+    </div>
+                        <div className="text-base">{creativeTeam.soundDesigner}<Footer />
+    </div>
+                      <Footer />
+    </div>
                     )}
                     {creativeTeam.musicDirector && (
                       <div>
-                        <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-1">Music Director</div>
-                        <div className="text-base">{creativeTeam.musicDirector}</div>
-                      </div>
+                        <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-1">Music Director<Footer />
+    </div>
+                        <div className="text-base">{creativeTeam.musicDirector}<Footer />
+    </div>
+                      <Footer />
+    </div>
                     )}
                     {creativeTeam.choreographer && (
                       <div>
-                        <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-1">Choreographer</div>
-                        <div className="text-base">{creativeTeam.choreographer}</div>
-                      </div>
+                        <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-1">Choreographer<Footer />
+    </div>
+                        <div className="text-base">{creativeTeam.choreographer}<Footer />
+    </div>
+                      <Footer />
+    </div>
                     )}
                     {creativeTeam.projectionDesigner && (
                       <div>
-                        <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-1">Projection Designer</div>
-                        <div className="text-base">{creativeTeam.projectionDesigner}</div>
-                      </div>
+                        <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-1">Projection Designer<Footer />
+    </div>
+                        <div className="text-base">{creativeTeam.projectionDesigner}<Footer />
+    </div>
+                      <Footer />
+    </div>
                     )}
-                  </div>
+                  <Footer />
+    </div>
                 </CardContent>
               </Card>
-            </div>
+            <Footer />
+    </div>
           )}
 
           {/* Tags */}
@@ -314,8 +381,10 @@ export default function ProjectDetail() {
                     {tag.name}
                   </Badge>
                 ))}
-              </div>
-            </div>
+              <Footer />
+    </div>
+            <Footer />
+    </div>
           )}
 
           {/* Navigation */}
@@ -330,9 +399,13 @@ export default function ProjectDetail() {
             <Link href="/contact">
               <Button>Discuss Your Project</Button>
             </Link>
-          </div>
-        </div>
-      </div>
+          <Footer />
+    </div>
+        <Footer />
+    </div>
+      <Footer />
+    </div>
+    <Footer />
     </div>
   );
 }

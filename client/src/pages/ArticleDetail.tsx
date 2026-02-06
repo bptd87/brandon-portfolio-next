@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -41,8 +42,10 @@ export default function ArticleDetail() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div>
-      </div>
+        <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"><Footer />
+    </div>
+      <Footer />
+    </div>
     );
   }
 
@@ -56,8 +59,10 @@ export default function ArticleDetail() {
           <Link href="/articles">
             <Button>Back to Articles</Button>
           </Link>
-        </div>
-      </div>
+        <Footer />
+    </div>
+      <Footer />
+    </div>
     );
   }
 
@@ -93,7 +98,8 @@ export default function ArticleDetail() {
                 alt={article.title}
                 className="w-full h-auto object-cover"
               />
-            </div>
+            <Footer />
+    </div>
           )}
 
           <div className="max-w-3xl mx-auto">
@@ -109,13 +115,16 @@ export default function ArticleDetail() {
               <div className="flex items-center gap-2">
                 <Calendar className="h-3 w-3" />
                 <span>{new Date(article.publishedAt || article.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-              </div>
+              <Footer />
+    </div>
               <span>|</span>
               <div className="flex items-center gap-2">
                 <Clock className="h-3 w-3" />
                 <span>{readTime} MIN READ</span>
-              </div>
-            </div>
+              <Footer />
+    </div>
+            <Footer />
+    </div>
 
             <h1 className="text-5xl md:text-6xl font-['Playfair_Display'] italic font-normal mb-6 leading-tight">
               {article.title}
@@ -131,7 +140,8 @@ export default function ArticleDetail() {
               <div>
                 <p className="font-semibold text-sm uppercase tracking-wider">By Brandon PT Davis</p>
                 <p className="text-sm text-muted-foreground">Scenic + Experiential Designer</p>
-              </div>
+              <Footer />
+    </div>
               <div className="flex items-center gap-2">
                 <Button 
                   onClick={handleLike}
@@ -148,10 +158,14 @@ export default function ArticleDetail() {
                 >
                   <Share2 className="h-4 w-4" />
                 </Button>
-              </div>
-            </div>
-          </div>
-        </div>
+              <Footer />
+    </div>
+            <Footer />
+    </div>
+          <Footer />
+    </div>
+        <Footer />
+    </div>
       </section>
 
       {/* Article Content */}
@@ -179,7 +193,8 @@ export default function ArticleDetail() {
                       return null;
                     })}
                   </nav>
-                </div>
+                <Footer />
+    </div>
               </aside>
             )}
 
@@ -245,7 +260,8 @@ export default function ArticleDetail() {
 
               {/* FAQ Section - TODO: Add FAQ data structure if needed */}
             </article>
-          </div>
+          <Footer />
+    </div>
 
           {/* Author Bio */}
           <Card className="mt-16 max-w-3xl mx-auto">
@@ -274,12 +290,16 @@ export default function ArticleDetail() {
                         <Mail className="h-4 w-4" />
                       </Button>
                     </a>
-                  </div>
-                </div>
-              </div>
+                  <Footer />
+    </div>
+                <Footer />
+    </div>
+              <Footer />
+    </div>
             </CardContent>
           </Card>
-        </div>
+        <Footer />
+    </div>
       </section>
 
       {/* Related Articles */}
@@ -298,7 +318,8 @@ export default function ArticleDetail() {
                           alt={item.title}
                           className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                         />
-                      </div>
+                      <Footer />
+    </div>
                     )}
                     <CardContent className="p-6">
                       <div className="flex items-center gap-2 mb-3 text-xs text-muted-foreground uppercase tracking-wider">
@@ -306,7 +327,8 @@ export default function ArticleDetail() {
                           {item.categoryId}
                         </Badge>
                         <span>{new Date(item.publishedAt || item.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-                      </div>
+                      <Footer />
+    </div>
                       <h3 className="font-semibold mb-2 line-clamp-2">{item.title}</h3>
                       {item.excerpt && (
                         <p className="text-sm text-muted-foreground line-clamp-2">{item.excerpt}</p>
@@ -315,10 +337,13 @@ export default function ArticleDetail() {
                   </Link>
                 </Card>
               ))}
-            </div>
-          </div>
+            <Footer />
+    </div>
+          <Footer />
+    </div>
         </section>
       )}
+    <Footer />
     </div>
   );
 }

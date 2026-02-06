@@ -51,6 +51,8 @@ export function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
     excerpt: "",
     description: "",
     designNotes: "",
+    discipline: "scenic_design" as "scenic_design" | "experiential_design" | "rendering" | "scenic_models",
+    subcategory: "",
     status: "draft" as "draft" | "published" | "archived",
     featured: false,
     year: new Date().getFullYear(),
@@ -106,6 +108,8 @@ export function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
         excerpt: project.excerpt || "",
         description: project.description || "",
         designNotes: project.designNotes || "",
+        discipline: project.discipline || "scenic_design",
+        subcategory: project.subcategory || "",
         status: project.status || "draft",
         featured: project.featured || false,
         year: project.year || new Date().getFullYear(),
@@ -249,6 +253,8 @@ export function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
         excerpt: formData.excerpt || undefined,
         description: formData.description || undefined,
         designNotes: formData.designNotes || undefined,
+        discipline: formData.discipline,
+        subcategory: formData.subcategory || undefined,
         categoryId: formData.categoryId || undefined,
         coverImageUrl: coverImageUrl || undefined,
         coverImageKey: coverImageKey || undefined,
@@ -352,6 +358,36 @@ export function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
                   rows={3}
                   placeholder="Brief summary..."
                 />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="discipline">Discipline *</Label>
+                  <Select
+                    value={formData.discipline}
+                    onValueChange={(value: any) => setFormData({ ...formData, discipline: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select discipline" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="scenic_design">Scenic Design</SelectItem>
+                      <SelectItem value="experiential_design">Experiential Design</SelectItem>
+                      <SelectItem value="rendering">Rendering</SelectItem>
+                      <SelectItem value="scenic_models">Scenic Models</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="subcategory">Subcategory</Label>
+                  <Input
+                    id="subcategory"
+                    value={formData.subcategory}
+                    onChange={(e) => setFormData({ ...formData, subcategory: e.target.value })}
+                    placeholder="e.g., Musical Theatre, Comedy, Drama"
+                  />
+                </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">

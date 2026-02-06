@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -61,7 +62,8 @@ export default function Contact() {
             Whether you're planning a new production, exploring design collaboration, or have questions about my work, 
             I'd love to hear from you.
           </p>
-        </div>
+        <Footer />
+    </div>
       </section>
 
       {/* Contact Form & Info */}
@@ -87,7 +89,8 @@ export default function Contact() {
                       onChange={(e) => setName(e.target.value)}
                       required
                     />
-                  </div>
+                  <Footer />
+    </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="email">Email *</Label>
@@ -99,7 +102,8 @@ export default function Contact() {
                       onChange={(e) => setEmail(e.target.value)}
                       required
                     />
-                  </div>
+                  <Footer />
+    </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="subject">Subject</Label>
@@ -109,7 +113,8 @@ export default function Contact() {
                       value={subject}
                       onChange={(e) => setSubject(e.target.value)}
                     />
-                  </div>
+                  <Footer />
+    </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="message">Message *</Label>
@@ -121,7 +126,8 @@ export default function Contact() {
                       onChange={(e) => setMessage(e.target.value)}
                       required
                     />
-                  </div>
+                  <Footer />
+    </div>
 
                   <Button 
                     type="submit" 
@@ -151,8 +157,10 @@ export default function Contact() {
                       >
                         contact@brandonptdavis.com
                       </a>
-                    </div>
-                  </div>
+                    <Footer />
+    </div>
+                  <Footer />
+    </div>
 
                   <div className="flex items-start gap-3">
                     <Phone className="h-5 w-5 text-primary mt-0.5" />
@@ -161,8 +169,10 @@ export default function Contact() {
                       <p className="text-sm text-muted-foreground">
                         Available upon request
                       </p>
-                    </div>
-                  </div>
+                    <Footer />
+    </div>
+                  <Footer />
+    </div>
 
                   <div className="flex items-start gap-3">
                     <MapPin className="h-5 w-5 text-primary mt-0.5" />
@@ -171,8 +181,10 @@ export default function Contact() {
                       <p className="text-sm text-muted-foreground">
                         [Your City, State/Country]
                       </p>
-                    </div>
-                  </div>
+                    <Footer />
+    </div>
+                  <Footer />
+    </div>
                 </CardContent>
               </Card>
 
@@ -205,10 +217,14 @@ export default function Contact() {
                   </p>
                 </CardContent>
               </Card>
-            </div>
-          </div>
-        </div>
+            <Footer />
+    </div>
+          <Footer />
+    </div>
+        <Footer />
+    </div>
       </section>
+    <Footer />
     </div>
   );
 }

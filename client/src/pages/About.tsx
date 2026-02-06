@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Award, Briefcase, GraduationCap, Mail, MapPin } from "lucide-react";
@@ -16,8 +17,10 @@ export default function About() {
             <div className="aspect-square bg-muted rounded-lg overflow-hidden">
               <div className="w-full h-full flex items-center justify-center text-muted-foreground">
                 Profile Photo
-              </div>
-            </div>
+              <Footer />
+    </div>
+            <Footer />
+    </div>
 
             {/* Bio */}
             <div>
@@ -29,12 +32,15 @@ export default function About() {
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4" />
                   <span>Based in [Location]</span>
-                </div>
+                <Footer />
+    </div>
                 <div className="flex items-center gap-2">
                   <Mail className="h-4 w-4" />
                   <span>contact@brandonptdavis.com</span>
-                </div>
-              </div>
+                <Footer />
+    </div>
+              <Footer />
+    </div>
               
               <Separator className="my-6" />
               
@@ -49,10 +55,14 @@ export default function About() {
                   scenic design principles with cutting-edge technology and digital tools, Brandon crafts environments 
                   that enhance narrative and deepen audience engagement.
                 </p>
-              </div>
-            </div>
-          </div>
-        </div>
+              <Footer />
+    </div>
+            <Footer />
+    </div>
+          <Footer />
+    </div>
+        <Footer />
+    </div>
       </section>
 
       {/* Education */}
@@ -61,7 +71,8 @@ export default function About() {
           <div className="flex items-center gap-3 mb-8">
             <GraduationCap className="h-6 w-6 text-primary" />
             <h2 className="text-3xl font-semibold">Education</h2>
-          </div>
+          <Footer />
+    </div>
           <Card>
             <CardContent className="p-6">
               <div className="space-y-6">
@@ -69,17 +80,21 @@ export default function About() {
                   <h3 className="text-xl font-semibold mb-2">Master of Fine Arts in Scenic Design</h3>
                   <p className="text-muted-foreground mb-1">[University Name]</p>
                   <p className="text-sm text-muted-foreground">[Year]</p>
-                </div>
+                <Footer />
+    </div>
                 <Separator />
                 <div>
                   <h3 className="text-xl font-semibold mb-2">Bachelor of Arts in Theatre Design</h3>
                   <p className="text-muted-foreground mb-1">[University Name]</p>
                   <p className="text-sm text-muted-foreground">[Year]</p>
-                </div>
-              </div>
+                <Footer />
+    </div>
+              <Footer />
+    </div>
             </CardContent>
           </Card>
-        </div>
+        <Footer />
+    </div>
       </section>
 
       {/* Experience */}
@@ -88,7 +103,8 @@ export default function About() {
           <div className="flex items-center gap-3 mb-8">
             <Briefcase className="h-6 w-6 text-primary" />
             <h2 className="text-3xl font-semibold">Professional Experience</h2>
-          </div>
+          <Footer />
+    </div>
           <div className="space-y-6">
             <Card>
               <CardContent className="p-6">
@@ -112,8 +128,10 @@ export default function About() {
                 </p>
               </CardContent>
             </Card>
-          </div>
-        </div>
+          <Footer />
+    </div>
+        <Footer />
+    </div>
       </section>
 
       {/* Awards & Recognition */}
@@ -122,7 +140,8 @@ export default function About() {
           <div className="flex items-center gap-3 mb-8">
             <Award className="h-6 w-6 text-primary" />
             <h2 className="text-3xl font-semibold">Awards & Recognition</h2>
-          </div>
+          <Footer />
+    </div>
           <Card>
             <CardContent className="p-6">
               <ul className="space-y-4">
@@ -131,26 +150,30 @@ export default function About() {
                   <div>
                     <p className="font-medium">Excellence in Scenic Design Award</p>
                     <p className="text-sm text-muted-foreground">[Organization] | [Year]</p>
-                  </div>
+                  <Footer />
+    </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="h-2 w-2 rounded-full bg-primary mt-2" />
                   <div>
                     <p className="font-medium">Best Production Design</p>
                     <p className="text-sm text-muted-foreground">[Festival/Competition] | [Year]</p>
-                  </div>
+                  <Footer />
+    </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="h-2 w-2 rounded-full bg-primary mt-2" />
                   <div>
                     <p className="font-medium">Emerging Designer Fellowship</p>
                     <p className="text-sm text-muted-foreground">[Organization] | [Year]</p>
-                  </div>
+                  <Footer />
+    </div>
                 </li>
               </ul>
             </CardContent>
           </Card>
-        </div>
+        <Footer />
+    </div>
       </section>
 
       {/* Skills */}
@@ -209,9 +232,12 @@ export default function About() {
                 </ul>
               </CardContent>
             </Card>
-          </div>
-        </div>
+          <Footer />
+    </div>
+        <Footer />
+    </div>
       </section>
+    <Footer />
     </div>
   );
 }

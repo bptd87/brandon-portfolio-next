@@ -167,3 +167,42 @@
 - [x] Add video embed support to ProjectDetail gallery
 - [x] Test creating a project with multiple images through admin
 - [x] Test project display on public detail page
+
+## Modern Premium Redesign
+- [x] Implement glassmorphism effects (frosted glass cards, backdrop blur)
+- [x] Add smooth animations and transitions throughout site
+- [x] Redesign color palette for premium, sophisticated feel
+- [ ] Add micro-interactions and hover effects
+- [ ] Implement smooth scroll animations
+- [x] Add gradient overlays and modern typography
+
+## Navigation & Footer Redesign
+- [x] Rebuild Header component with Portfolio dropdown menu
+- [x] Add 4 discipline options to Portfolio dropdown (Scenic Design, Experiential Design, Renderings, Scenic Models)
+- [x] Create Footer component matching original design
+- [x] Add "Other Portfolios" section above footer with 4 discipline cards
+- [x] Add social links and footer columns
+- [x] Replace footer in all pages with new component
+
+## Flexible Team Management
+- [x] Create team_members table with dynamic roles
+- [x] Add project_team_members junction table
+- [ ] Build dynamic team member add/remove UI in admin
+- [ ] Update ProjectDetail to display dynamic team list
+- [ ] Add custom role input for each team member
+
+## Multiple Design Disciplines
+- [x] Add discipline field to projects table (scenic_design, experiential_design, rendering, scenic_models)
+- [x] Add subcategory field to projects for filtering within disciplines
+- [x] Update Projects page to filter by discipline from URL params
+- [x] Add subcategory filter tabs on Projects page
+- [x] Add discipline badges to project cards
+- [x] Update ProjectForm to include discipline and subcategory selects
+
+## Supabase Migration
+- [x] Create comprehensive migration checklist document
+- [x] Build data export script from Supabase
+- [x] Create data import script for new database
+- [x] Map Supabase schema to current schema
+- [ ] Test migration with sample data
+- [x] Document image/asset migration process

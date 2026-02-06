@@ -50,10 +50,12 @@ function App() {
         defaultTheme="dark"
         switchable
       >
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
+        <div className="min-h-screen bg-gradient-premium">
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+          </TooltipProvider>
+        </div>
       </ThemeProvider>
     </ErrorBoundary>
   );

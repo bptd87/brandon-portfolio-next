@@ -172,7 +172,12 @@ export async function deleteTag(id: number) {
 
 // ============ PROJECT OPERATIONS ============
 
-export async function getAllProjects(filters?: { status?: 'draft' | 'published' | 'archived'; featured?: boolean; categoryId?: number }) {
+export async function getAllProjects(filters?: { 
+  status?: 'draft' | 'published' | 'archived'; 
+  featured?: boolean; 
+  categoryId?: number;
+  discipline?: 'scenic_design' | 'experiential_design' | 'rendering' | 'scenic_models';
+}) {
   const db = await getDb();
   if (!db) return [];
 
@@ -182,6 +187,7 @@ export async function getAllProjects(filters?: { status?: 'draft' | 'published' 
   if (filters?.status) conditions.push(eq(projects.status, filters.status));
   if (filters?.featured !== undefined) conditions.push(eq(projects.featured, filters.featured));
   if (filters?.categoryId) conditions.push(eq(projects.categoryId, filters.categoryId));
+  if (filters?.discipline) conditions.push(eq(projects.discipline, filters.discipline));
 
   if (conditions.length > 0) {
     query = query.where(and(...conditions));

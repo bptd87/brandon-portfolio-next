@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import Footer from "@/components/Footer";
 import { trpc } from "@/lib/trpc";
 import { Newspaper } from "lucide-react";
 import { Link } from "wouter";
@@ -28,9 +29,11 @@ export default function News() {
               <Link href="/studio">
                 <a className="text-sm font-medium hover:text-primary transition-colors">Studio</a>
               </Link>
-            </div>
+            <Footer />
+    </div>
           </nav>
-        </div>
+        <Footer />
+    </div>
       </header>
 
       {/* Page Header */}
@@ -40,7 +43,8 @@ export default function News() {
           <p className="text-xl text-muted-foreground max-w-2xl">
             Latest announcements, project launches, and career milestones.
           </p>
-        </div>
+        <Footer />
+    </div>
       </section>
 
       {/* News Grid */}
@@ -49,7 +53,8 @@ export default function News() {
           {isLoading ? (
             <div className="text-center py-12">
               <p className="text-muted-foreground">Loading news...</p>
-            </div>
+            <Footer />
+    </div>
           ) : newsItems && newsItems.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {newsItems.map((item) => (
@@ -62,7 +67,8 @@ export default function News() {
                           alt={item.title}
                           className="w-full h-full object-cover"
                         />
-                      </div>
+                      <Footer />
+    </div>
                     )}
                     <CardContent className="p-6">
                       <div className="flex items-center gap-2 mb-3">
@@ -74,7 +80,8 @@ export default function News() {
                             day: 'numeric' 
                           })}
                         </span>
-                      </div>
+                      <Footer />
+    </div>
                       <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
                       {item.location && (
                         <p className="text-sm text-muted-foreground mb-2">📍 {item.location}</p>
@@ -84,14 +91,18 @@ export default function News() {
                   </Card>
                 </Link>
               ))}
-            </div>
+            <Footer />
+    </div>
           ) : (
             <div className="text-center py-12">
               <p className="text-muted-foreground">No news items yet. Check back soon!</p>
-            </div>
+            <Footer />
+    </div>
           )}
-        </div>
+        <Footer />
+    </div>
       </section>
+    <Footer />
     </div>
   );
 }

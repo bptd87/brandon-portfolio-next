@@ -107,6 +107,7 @@ export const appRouter = router({
         status: z.enum(['draft', 'published', 'archived']).optional(),
         featured: z.boolean().optional(),
         categoryId: z.number().optional(),
+        discipline: z.enum(['scenic_design', 'experiential_design', 'rendering', 'scenic_models']).optional(),
       }).optional())
       .query(async ({ input }) => {
         return await db.getAllProjects(input);
@@ -147,6 +148,8 @@ export const appRouter = router({
         excerpt: z.string().optional(),
         description: z.string().optional(),
         designNotes: z.string().optional(),
+        discipline: z.enum(['scenic_design', 'experiential_design', 'rendering', 'scenic_models']).default('scenic_design'),
+        subcategory: z.string().max(100).optional(),
         categoryId: z.number().optional(),
         coverImageUrl: z.string().optional(),
         coverImageKey: z.string().optional(),
@@ -202,6 +205,8 @@ export const appRouter = router({
         excerpt: z.string().optional(),
         description: z.string().optional(),
         designNotes: z.string().optional(),
+        discipline: z.enum(['scenic_design', 'experiential_design', 'rendering', 'scenic_models']).optional(),
+        subcategory: z.string().max(100).optional(),
         categoryId: z.number().optional(),
         coverImageUrl: z.string().optional(),
         coverImageKey: z.string().optional(),
