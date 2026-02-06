@@ -31,7 +31,7 @@ export default function Admin() {
           </CardHeader>
           <CardContent>
             <Button asChild className="w-full">
-              <a href={getLoginUrl()}>Sign In</a>
+              <a href={getLoginUrl("/admin")}>Sign In</a>
             </Button>
           </CardContent>
         </Card>
