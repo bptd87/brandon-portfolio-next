@@ -11,6 +11,9 @@ import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
 import Admin from "./pages/Admin";
 import About from "./pages/About";
+import TeachingPhilosophy from "./pages/TeachingPhilosophy";
+import Resume from "./pages/Resume";
+import CreativeStatement from "./pages/CreativeStatement";
 import Contact from "./pages/Contact";
 import Studio from "./pages/Studio";
 import NewsDetail from "./pages/NewsDetail";
@@ -28,6 +31,9 @@ function Router() {
       <Route path={"/articles"} component={Articles} />
       <Route path={"/articles/:slug"} component={ArticleDetail} />
       <Route path={"/about"} component={About} />
+      <Route path={"/about/teaching-philosophy"} component={TeachingPhilosophy} />
+      <Route path={"/about/resume"} component={Resume} />
+      <Route path={"/about/creative-statement"} component={CreativeStatement} />
       <Route path={"/contact"} component={Contact} />
       <Route path={"/studio"} component={Studio} />
       <Route path={"/admin"} component={Admin} />
