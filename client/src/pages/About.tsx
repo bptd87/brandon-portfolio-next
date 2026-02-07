@@ -14,9 +14,11 @@ export default function About() {
         <div className="max-w-4xl mx-auto">
           <div className="grid md:grid-cols-[300px_1fr] gap-12 items-start mb-16">
             <div className="aspect-square bg-muted rounded-lg overflow-hidden">
-              <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                Profile Photo
-              </div>
+              <img 
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/naIhLlhRSRfxDbaW.webp" 
+                alt="Brandon PT Davis - Scenic Designer" 
+                className="w-full h-full object-cover"
+              />
             </div>
 
             <div>

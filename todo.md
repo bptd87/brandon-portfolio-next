@@ -396,3 +396,8 @@
 ## Fix Resume Sidebar Spacing
 - [x] Increase spacing between Key Stats, Affiliations, and Contact cards (space-y-8 to space-y-12)
 - [x] Test improved visual balance and readability
+
+## Add Profile Photo to About Page
+- [x] Upload profile photo to S3 using manus-upload-file
+- [x] Update About.tsx to use uploaded photo URL
+- [x] Test About page with profile photo
