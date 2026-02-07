@@ -736,3 +736,8 @@
 - [x] Add read times from WordPress export data to database
 - [x] Fix publish dates to match WordPress export data exactly
 - [x] Verify all data displays correctly on articles listing page
+
+## Fix Article Publish Dates
+- [x] Compare current article dates with WordPress export data
+- [x] Update database with correct publish dates
+- [x] Verify dates display correctly on articles landing page
