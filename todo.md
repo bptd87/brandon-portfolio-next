@@ -1024,3 +1024,9 @@
 - [x] Add RSS feed link to news page
 - [x] Test search and filtering
 - [x] Test RSS feed validity
+
+## New Swan Theatre Festival 2026 News Article
+- [x] Upload cover image to S3
+- [x] Create news article in database
+- [x] Add external link to New Swan website
+- [x] Test article display and SEO metadata
