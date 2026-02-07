@@ -263,4 +263,17 @@
 - [x] Update discipline for archive/collection projects
 - [x] Change project card layout to landscape format
 - [x] Test scenic design portfolio page
-- [ ] Verify all 4 discipline pages show correct projects
+- [x] Verify all 4 discipline pages show correct projects
+- [x] Fix discipline parameter reading with useSearch hook
+- [x] Test Scenic Design portfolio (25 projects)
+- [x] Test Experiential Design portfolio (7 projects)
+- [x] Test Rendering portfolio (2 projects)
+- [x] Test Scenic Models portfolio (2 projects)
+
+## Rebuild Portfolio with Masonry Grid
+- [x] Change from landscape cards to masonry grid (3 columns)
+- [x] Remove glass effects and borders from cards
+- [x] Add image overlay with gradient for text readability
+- [x] Display project title, client, and year on image overlay
+- [x] Match original design spacing and typography
+- [x] Test masonry layout responsiveness

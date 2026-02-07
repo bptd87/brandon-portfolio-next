@@ -2,14 +2,14 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MapPin, Calendar } from "lucide-react";
 import { trpc } from "@/lib/trpc";
-import { Link, useLocation } from "wouter";
+import { Link, useLocation, useSearch } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useState, useMemo } from "react";
 
 export default function Projects() {
-  const [location] = useLocation();
-  const searchParams = new URLSearchParams(location.split('?')[1]);
+  const search = useSearch();
+  const searchParams = new URLSearchParams(search);
   const disciplineParam = searchParams.get('discipline') || 'scenic_design';
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>('all');
 
@@ -91,8 +91,8 @@ export default function Projects() {
                 >
                   {cat?.toUpperCase()}
                 </Button>
-              ))}
-            </div>
+                  ))}
+                </div>
           </div>
         </section>
       )}
@@ -109,43 +109,39 @@ export default function Projects() {
           {filteredProjects && filteredProjects.length > 0 ? (
             <section className="py-16">
               <div className="container">
-                <div className="flex flex-col gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredProjects.map((project) => (
                     <Link key={project.id} href={`/projects/${project.slug}`}>
-                      <div className="glass hover-lift rounded-2xl overflow-hidden transition-smooth cursor-pointer group flex flex-col md:flex-row">
+                      <div className="relative overflow-hidden rounded-lg cursor-pointer group aspect-[4/3]">
                         {project.coverImageUrl ? (
-                          <div className="md:w-2/5 aspect-[16/10] md:aspect-auto overflow-hidden flex-shrink-0">
+                          <>
                             <img 
                               src={project.coverImageUrl} 
                               alt={project.title}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                             />
-                          </div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                            <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                              {project.subcategory && (
+                                <p className="text-xs tracking-widest mb-2 opacity-80">
+                                  {project.subcategory.toUpperCase()}
+                                </p>
+                              )}
+                              <h3 className="text-2xl md:text-3xl font-['Playfair_Display'] italic mb-2">
+                                {project.title}
+                              </h3>
+                              {project.client && project.year && (
+                                <p className="text-sm opacity-80">
+                                  {project.client} · {project.year}
+                                </p>
+                              )}
+                            </div>
+                          </>
                         ) : (
-                          <div className="aspect-[4/3] bg-muted flex items-center justify-center">
+                          <div className="w-full h-full bg-muted flex items-center justify-center">
                             <p className="text-muted-foreground">No image</p>
                           </div>
                         )}
-                        <div className="p-6 md:p-8 flex-1 flex flex-col justify-center">
-                          {project.subcategory && (
-                            <Badge variant="secondary" className="mb-3">
-                              {project.subcategory.toUpperCase()}
-                            </Badge>
-                          )}
-                          <h3 className="text-2xl font-['Playfair_Display'] mb-2 group-hover:text-primary transition-colors">
-                            {project.title}
-                          </h3>
-                          {project.client && (
-                            <p className="text-sm text-muted-foreground mb-2">
-                              {project.client} · {project.year}
-                            </p>
-                          )}
-                          {project.excerpt && (
-                            <p className="text-sm text-muted-foreground line-clamp-2">
-                              {project.excerpt}
-                            </p>
-                          )}
-                        </div>
                       </div>
                     </Link>
                   ))}
