@@ -191,7 +191,7 @@ export default function Contact() {
                 <img 
                   src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/sTGFAGStMbEkLyGw.png"
                   alt="Brandon at desk with cat"
-                  className="w-full rounded-2xl transition-all duration-500 rainbow-glow-hover-strong"
+                  className="w-3/4 mx-auto rounded-2xl transition-all duration-500 rainbow-glow-hover-strong"
                   style={{
                     filter: 'drop-shadow(0 10px 40px rgba(0,0,0,0.3))'
                   }}
@@ -199,12 +199,12 @@ export default function Contact() {
               </div>
 
               {/* Contact Methods & Stats - High Contrast */}
-              <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6">
-                {/* Contact Methods */}
-                <div>
+              <div>
                 <h3 className="text-2xl font-['Playfair_Display'] italic font-normal mb-6 text-foreground">
                   Other Ways to Reach Me
                 </h3>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                 <div className="space-y-3">
                   <a 
