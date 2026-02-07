@@ -77,30 +77,39 @@ export default function ArticleDetail() {
 
   // Track scroll progress and active heading
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      // Calculate read progress
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight - windowHeight;
-      const scrolled = window.scrollY;
-      const progress = (scrolled / documentHeight) * 100;
-      setReadProgress(Math.min(progress, 100));
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          // Calculate read progress
+          const windowHeight = window.innerHeight;
+          const documentHeight = document.documentElement.scrollHeight - windowHeight;
+          const scrolled = window.scrollY;
+          const progress = (scrolled / documentHeight) * 100;
+          setReadProgress(Math.min(progress, 100));
 
-      // Find active heading
-      const headingElements = headings.map(h => document.getElementById(h.id)).filter(Boolean);
-      const current = headingElements.find((el, index) => {
-        const next = headingElements[index + 1];
-        const rect = el!.getBoundingClientRect();
-        if (!next) return rect.top <= 200;
-        const nextRect = next.getBoundingClientRect();
-        return rect.top <= 200 && nextRect.top > 200;
-      });
-      
-      if (current) {
-        setActiveHeading(current.id);
+          // Find active heading
+          const headingElements = headings.map(h => document.getElementById(h.id)).filter(Boolean);
+          const current = headingElements.find((el, index) => {
+            const next = headingElements[index + 1];
+            const rect = el!.getBoundingClientRect();
+            if (!next) return rect.top <= 200;
+            const nextRect = next.getBoundingClientRect();
+            return rect.top <= 200 && nextRect.top > 200;
+          });
+          
+          if (current) {
+            setActiveHeading(current.id);
+          }
+          
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [headings]);
 

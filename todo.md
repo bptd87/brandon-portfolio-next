@@ -880,3 +880,9 @@
 - [x] Use background-image instead of img tags for Safari
 - [x] Add position: relative to image containers
 - [x] Test on Safari to confirm images stay visible
+
+## Fix ResizeObserver Safari Bug
+- [x] Find ResizeObserver usage in ArticleDetail
+- [x] Replace with IntersectionObserver or scroll events for Safari
+- [x] Wrap ResizeObserver in try-catch to suppress errors
+- [x] Test on Safari to confirm images stay visible
