@@ -109,12 +109,12 @@ export default function Projects() {
           {filteredProjects && filteredProjects.length > 0 ? (
             <section className="py-16">
               <div className="container">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="flex flex-col gap-6">
                   {filteredProjects.map((project) => (
                     <Link key={project.id} href={`/projects/${project.slug}`}>
-                      <div className="glass hover-lift rounded-2xl overflow-hidden transition-smooth cursor-pointer group h-full">
+                      <div className="glass hover-lift rounded-2xl overflow-hidden transition-smooth cursor-pointer group flex flex-col md:flex-row">
                         {project.coverImageUrl ? (
-                          <div className="aspect-[4/3] overflow-hidden">
+                          <div className="md:w-2/5 aspect-[16/10] md:aspect-auto overflow-hidden flex-shrink-0">
                             <img 
                               src={project.coverImageUrl} 
                               alt={project.title}
@@ -126,7 +126,7 @@ export default function Projects() {
                             <p className="text-muted-foreground">No image</p>
                           </div>
                         )}
-                        <div className="p-6">
+                        <div className="p-6 md:p-8 flex-1 flex flex-col justify-center">
                           {project.subcategory && (
                             <Badge variant="secondary" className="mb-3">
                               {project.subcategory.toUpperCase()}

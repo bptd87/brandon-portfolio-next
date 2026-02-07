@@ -257,3 +257,10 @@
 - [x] Verify they have images, team credits, and design notes
 - [x] Fix portfolio grid cover image display issue (status field)
 - [x] Test all projects display correctly on /projects page
+
+## Fix Portfolio Page Issues
+- [x] Identify projects incorrectly categorized as scenic_design
+- [x] Update discipline for archive/collection projects
+- [x] Change project card layout to landscape format
+- [x] Test scenic design portfolio page
+- [ ] Verify all 4 discipline pages show correct projects
