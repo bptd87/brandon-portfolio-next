@@ -940,3 +940,10 @@
 - [x] Implement contact form with validation
 - [x] Add social media links and contact methods
 - [x] Test form submission and hover effects
+
+## Contact Page Redesign v2
+- [x] Make form the hero/focal point
+- [x] Smaller illustration placement
+- [x] Pixel-perfect glow using drop-shadow filter
+- [x] Bold, eye-catching layout with wow factor
+- [x] Test hover glow on PNG pixels only
