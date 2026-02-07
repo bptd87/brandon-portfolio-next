@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { trpc } from "@/lib/trpc";
 import { Newspaper } from "lucide-react";
@@ -9,42 +10,17 @@ export default function News() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border">
-        <div className="container py-6">
-          <nav className="flex items-center justify-between">
-            <Link href="/">
-              <a className="text-2xl font-bold tracking-tight">Brandon Davis</a>
-            </Link>
-            <div className="flex items-center gap-6">
-              <Link href="/projects">
-                <a className="text-sm font-medium hover:text-primary transition-colors">Projects</a>
-              </Link>
-              <Link href="/news">
-                <a className="text-sm font-medium text-primary">News</a>
-              </Link>
-              <Link href="/articles">
-                <a className="text-sm font-medium hover:text-primary transition-colors">Articles</a>
-              </Link>
-              <Link href="/studio">
-                <a className="text-sm font-medium hover:text-primary transition-colors">Studio</a>
-              </Link>
-            <Footer />
-    </div>
-          </nav>
-        <Footer />
-    </div>
-      </header>
+      <Header />
 
       {/* Page Header */}
-      <section className="py-16 border-b border-border">
+      <section className="py-20 border-b border-border">
         <div className="container">
+          <p className="text-xs tracking-widest text-muted-foreground mb-4">NEWS</p>
           <h1 className="mb-4">News & Updates</h1>
           <p className="text-xl text-muted-foreground max-w-2xl">
             Latest announcements, project launches, and career milestones.
           </p>
-        <Footer />
-    </div>
+        </div>
       </section>
 
       {/* News Grid */}
@@ -53,8 +29,7 @@ export default function News() {
           {isLoading ? (
             <div className="text-center py-12">
               <p className="text-muted-foreground">Loading news...</p>
-            <Footer />
-    </div>
+            </div>
           ) : newsItems && newsItems.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {newsItems.map((item) => (
@@ -67,8 +42,7 @@ export default function News() {
                           alt={item.title}
                           className="w-full h-full object-cover"
                         />
-                      <Footer />
-    </div>
+                      </div>
                     )}
                     <CardContent className="p-6">
                       <div className="flex items-center gap-2 mb-3">
@@ -80,8 +54,7 @@ export default function News() {
                             day: 'numeric' 
                           })}
                         </span>
-                      <Footer />
-    </div>
+                      </div>
                       <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
                       {item.location && (
                         <p className="text-sm text-muted-foreground mb-2">📍 {item.location}</p>
@@ -91,18 +64,16 @@ export default function News() {
                   </Card>
                 </Link>
               ))}
-            <Footer />
-    </div>
+            </div>
           ) : (
             <div className="text-center py-12">
               <p className="text-muted-foreground">No news items yet. Check back soon!</p>
-            <Footer />
-    </div>
+            </div>
           )}
-        <Footer />
-    </div>
+        </div>
       </section>
-    <Footer />
+
+      <Footer />
     </div>
   );
 }

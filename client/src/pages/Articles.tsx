@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { trpc } from "@/lib/trpc";
@@ -10,42 +11,17 @@ export default function Articles() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border">
-        <div className="container py-6">
-          <nav className="flex items-center justify-between">
-            <Link href="/">
-              <a className="text-2xl font-bold tracking-tight">Brandon Davis</a>
-            </Link>
-            <div className="flex items-center gap-6">
-              <Link href="/projects">
-                <a className="text-sm font-medium hover:text-primary transition-colors">Projects</a>
-              </Link>
-              <Link href="/news">
-                <a className="text-sm font-medium hover:text-primary transition-colors">News</a>
-              </Link>
-              <Link href="/articles">
-                <a className="text-sm font-medium text-primary">Articles</a>
-              </Link>
-              <Link href="/studio">
-                <a className="text-sm font-medium hover:text-primary transition-colors">Studio</a>
-              </Link>
-            <Footer />
-    </div>
-          </nav>
-        <Footer />
-    </div>
-      </header>
+      <Header />
 
       {/* Page Header */}
-      <section className="py-16 border-b border-border">
+      <section className="py-20 border-b border-border">
         <div className="container">
+          <p className="text-xs tracking-widest text-muted-foreground mb-4">ARTICLES</p>
           <h1 className="mb-4">Scenic Insights</h1>
           <p className="text-xl text-muted-foreground max-w-2xl">
             Articles on design philosophy, process, and the craft of scenic design.
           </p>
-        <Footer />
-    </div>
+        </div>
       </section>
 
       {/* Articles Grid */}
@@ -54,8 +30,7 @@ export default function Articles() {
           {isLoading ? (
             <div className="text-center py-12">
               <p className="text-muted-foreground">Loading articles...</p>
-            <Footer />
-    </div>
+            </div>
           ) : articles && articles.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {articles.map((article) => (
@@ -68,8 +43,7 @@ export default function Articles() {
                           alt={article.title}
                           className="w-full h-full object-cover"
                         />
-                      <Footer />
-    </div>
+                      </div>
                     )}
                     <CardContent className="p-6">
                       <div className="flex items-center gap-2 mb-3">
@@ -80,8 +54,7 @@ export default function Articles() {
                         {article.featured && (
                           <Badge variant="secondary" className="ml-auto">Featured</Badge>
                         )}
-                      <Footer />
-    </div>
+                      </div>
                       <h3 className="text-xl font-semibold mb-2">{article.title}</h3>
                       <p className="text-sm text-muted-foreground line-clamp-3">{article.excerpt}</p>
                       <div className="mt-4 text-xs text-muted-foreground">
@@ -90,24 +63,21 @@ export default function Articles() {
                           month: 'long', 
                           day: 'numeric' 
                         })}
-                      <Footer />
-    </div>
+                      </div>
                     </CardContent>
                   </Card>
                 </Link>
               ))}
-            <Footer />
-    </div>
+            </div>
           ) : (
             <div className="text-center py-12">
               <p className="text-muted-foreground">No articles yet. Check back soon!</p>
-            <Footer />
-    </div>
+            </div>
           )}
-        <Footer />
-    </div>
+        </div>
       </section>
-    <Footer />
+
+      <Footer />
     </div>
   );
 }

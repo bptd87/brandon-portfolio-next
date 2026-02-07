@@ -283,3 +283,11 @@
 - [x] Update projects.list endpoint to sort by year descending (newest first)
 - [x] Test ordering on all 4 discipline pages
 - [x] Verify projects display in correct chronological order
+
+## Fix Navigation and Footer Consistency
+- [x] Audit all pages to check which have Header component
+- [x] Audit all pages to check which have Footer component
+- [x] Add Header to pages missing it (News.tsx, Articles.tsx)
+- [x] Add Footer to pages missing it (News.tsx, Articles.tsx)
+- [x] Test navigation consistency across all pages
+- [x] Verify footer displays on all pages
