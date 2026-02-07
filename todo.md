@@ -482,3 +482,7 @@
 - [x] Redesign footer with bolder, more impactful visual design
 - [x] Ensure footer matches portfolio aesthetic (vibrant colors, bold typography)
 - [x] Test all footer links work correctly
+
+## Fix Footer Page Navigation Scroll
+- [x] Add scroll-to-top functionality when clicking footer links
+- [x] Test that pages scroll to top on navigation
