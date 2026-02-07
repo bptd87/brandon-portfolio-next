@@ -807,3 +807,9 @@
 - [x] Display comments list with nested replies
 - [x] Integrate comment system into ArticleDetail page
 - [x] Test comment creation, replies, and deletion
+
+## Article Page UX Fixes
+- [x] Move comments section to better location (after tags, before author profile)
+- [x] Optimize article image loading and lazy loading
+- [x] Remove "+" icon from FAQ accordion items
+- [x] Test all fixes on article detail page
