@@ -154,12 +154,12 @@ export default function ArticleDetail() {
           const question = (current.text || '').replace(/\+$/, ''); // Remove trailing +
           i++;
           
-          // Collect answer paragraphs until next heading
+          // Collect answer text/paragraphs until next heading
           const answerParts: string[] = [];
           while (i < contentSections.length && 
                  !(contentSections[i].type === 'heading')) {
-            if (contentSections[i].type === 'paragraph') {
-              answerParts.push(contentSections[i].content || '');
+            if (contentSections[i].type === 'paragraph' || contentSections[i].type === 'text') {
+              answerParts.push(contentSections[i].content || contentSections[i].text || '');
             }
             i++;
           }
@@ -415,7 +415,8 @@ export default function ArticleDetail() {
                       return (
                         <div 
                           key={index}
-                          dangerouslySetInnerHTML={{ __html: section.content?.text || section.content }}
+                          className="article-html-content"
+                          dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(section.content) }}
                         />
                       );
                     

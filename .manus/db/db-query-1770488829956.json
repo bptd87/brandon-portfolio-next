@@ -1,0 +1,14 @@
+{
+  "query": "SELECT title, LEFT(content, 500) as content_preview FROM articles WHERE slug = 'framing-the-martyr-scenic-design-as-memory-work-in-romero' LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT title, LEFT(content, 500) as content_preview FROM articles WHERE slug = 'framing-the-martyr-scenic-design-as-memory-work-in-romero' LIMIT 1;",
+  "rows": [
+    {
+      "title": "Framing the Martyr: Scenic Design as Memory Work in Romero",
+      "content_preview": "[{\"type\":\"text\",\"content\":\"\\n<p>When I first read Xiomara Cornejo’s Romero, I was struck by how urgently it demanded space—space for memory, resistance, grief, and faith. This was more than a historical play. It was a haunting. A chorus of the disappeared. A story where time bends and ghosts speak directly to the living.</p>\\n\\n\\n\\n<p>As a scenic designer, I’m always looking for the emotional logic behind a play’s visual world. With Romero, that logic wasn’t realism—it was ritual. The design had"
+    }
+  ],
+  "messages": [],
+  "stdout": "title\tcontent_preview\nFraming the Martyr: Scenic Design as Memory Work in Romero\t[{\"type\":\"text\",\"content\":\"\\n<p>When I first read Xiomara Cornejo’s Romero, I was struck by how urgently it demanded space—space for memory, resistance, grief, and faith. This was more than a historical play. It was a haunting. A chorus of the disappeared. A story where time bends and ghosts speak directly to the living.</p>\\n\\n\\n\\n<p>As a scenic designer, I’m always looking for the emotional logic behind a play’s visual world. With Romero, that logic wasn’t realism—it was ritual. The design had\n",
+  "stderr": "",
+  "execution_time_ms": 409
+}

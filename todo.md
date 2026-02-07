@@ -628,3 +628,11 @@
 - [x] Add accordion component for FAQ sections (using shadcn/ui Accordion)
 - [x] Update ArticleDetail to render FAQ accordions (auto-detect FAQ sections and render as accordions)
 - [x] Test headers and accordions display correctly (verified on Modern Portfolio article)
+
+## Fix Article Display Issues
+- [x] Debug why FAQ answers are not showing in accordions (fixed to collect 'text' blocks)
+- [ ] Fix image rendering (images not displaying in articles)
+- [ ] Fix video embedding (videos not showing)
+- [ ] Redesign H2 styling (remove italic Playfair, make bold and impactful)
+- [ ] Implement category-based accent colors throughout articles
+- [ ] Test all fixes across multiple articles
