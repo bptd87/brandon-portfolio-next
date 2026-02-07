@@ -373,3 +373,10 @@
 - [x] Move "Courses Taught" section to right sidebar (below Teaching Experience)
 - [x] Set left body copy to text-align: justify
 - [x] Test refined spacing and layout
+
+## Populate Resume/CV Page from Website
+- [x] Extract resume/CV content from https://www.brandonptdavis.com/cv
+- [x] Design Resume/CV page with glass morphism sidebar (matching Teaching Philosophy layout)
+- [x] Populate Resume page with real data from website (education, experience, productions, skills)
+- [x] Fix import statements for Header, Footer, AboutNav
+- [x] Test Resume/CV page display
