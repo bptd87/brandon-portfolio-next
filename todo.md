@@ -686,3 +686,10 @@
 - [x] Add tags display to article pages
 - [ ] Fix spacing and typography issues
 - [ ] Test all article page fixes
+
+## Article Page UX Improvements
+- [x] Remove image fade animation on scroll (images disappearing/reappearing)
+- [x] Make videos full-width to match text content width
+- [x] Add beveled edges to videos (match image bevel effect)
+- [x] Make TOC always visible on desktop (already implemented with sticky positioning)
+- [x] Test all UX fixes

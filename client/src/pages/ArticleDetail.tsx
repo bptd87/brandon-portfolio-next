@@ -389,6 +389,8 @@ export default function ArticleDetail() {
                   prose-img:rounded-2xl prose-img:my-12 prose-img:shadow-xl
                   prose-figure:my-12
                   prose-figcaption:text-sm prose-figcaption:text-muted-foreground prose-figcaption:text-center prose-figcaption:mt-4
+                  [&_iframe]:w-full [&_iframe]:max-w-[65ch] [&_iframe]:mx-auto [&_iframe]:my-12 [&_iframe]:rounded-2xl [&_iframe]:shadow-xl [&_iframe]:aspect-video
+                  [&_video]:w-full [&_video]:max-w-[65ch] [&_video]:mx-auto [&_video]:my-12 [&_video]:rounded-2xl [&_video]:shadow-xl
                   [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased]"
               >
                 {Array.isArray(processedSections) && processedSections.map((section: any, index: number) => {
@@ -428,8 +430,7 @@ export default function ArticleDetail() {
                             className="w-full cursor-pointer hover:scale-[1.02] transition-transform"
                             onClick={() => window.open(section.url, '_blank')}
                             loading="lazy"
-                            onLoad={(e) => e.currentTarget.style.opacity = '1'}
-                            style={{ opacity: 0, transition: 'opacity 0.3s ease-in' }}
+
                           />
                           {section.caption && (
                             <figcaption>
@@ -451,8 +452,7 @@ export default function ArticleDetail() {
                                   className="w-full h-[400px] object-cover rounded-2xl shadow-xl cursor-pointer hover:scale-[1.02] transition-transform"
                                   onClick={() => window.open(img.url, '_blank')}
                                   loading="lazy"
-                                  onLoad={(e) => e.currentTarget.style.opacity = '1'}
-                                  style={{ opacity: 0, transition: 'opacity 0.3s ease-in' }}
+
                                 />
                                 {img.caption && (
                                   <figcaption className="text-sm text-muted-foreground mt-4 text-center">
@@ -547,8 +547,7 @@ export default function ArticleDetail() {
                                 alt={decodeHTMLEntities(relatedArticle.title)}
                                 className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                                 loading="lazy"
-                                onLoad={(e) => e.currentTarget.style.opacity = '1'}
-                                style={{ opacity: 0, transition: 'opacity 0.3s ease-in' }}
+
                               />
                             </div>
                           )}
