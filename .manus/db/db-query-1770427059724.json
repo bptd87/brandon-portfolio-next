@@ -1,0 +1,30 @@
+{
+  "query": "SELECT id, videoUrl, caption FROM projectImages WHERE imageType = 'video' LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT id, videoUrl, caption FROM projectImages WHERE imageType = 'video' LIMIT 5;",
+  "rows": [
+    {
+      "id": "60065",
+      "videoUrl": "https://youtu.be/qI5cri-yUMg",
+      "caption": "NULL"
+    },
+    {
+      "id": "60233",
+      "videoUrl": "https://youtu.be/pVnlt9f1ftY",
+      "caption": "NULL"
+    },
+    {
+      "id": "60255",
+      "videoUrl": "https://youtu.be/8crPwdAxKxc",
+      "caption": "NULL"
+    },
+    {
+      "id": "60279",
+      "videoUrl": "https://youtu.be/XMi4Z9oLiNk",
+      "caption": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tvideoUrl\tcaption\n60065\thttps://youtu.be/qI5cri-yUMg\tNULL\n60233\thttps://youtu.be/pVnlt9f1ftY\tNULL\n60255\thttps://youtu.be/8crPwdAxKxc\tNULL\n60279\thttps://youtu.be/XMi4Z9oLiNk\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 378
+}
