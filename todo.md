@@ -1037,3 +1037,10 @@
 - [x] Implement dynamic pixelated gradient backgrounds from image colors
 - [x] Redesign news cards with bold typography
 - [x] Test visual impact and performance
+
+## News Timeline Redesign
+- [x] Remove pixelated gradients from news landing page
+- [x] Create timeline layout organized by year
+- [x] Add visual timeline markers and year headers
+- [x] Group news items under respective years
+- [x] Test timeline navigation and responsiveness
