@@ -891,3 +891,9 @@
 - [x] Add global error handler to suppress ResizeObserver loop errors
 - [x] Search for all ResizeObserver usage in components
 - [x] Test on Safari to verify fix
+
+## Re-enable Lazy Loading
+- [x] Update ProgressiveImage component to support lazy loading prop
+- [x] Update ArticleDetail to use lazy loading for content images (not cover)
+- [x] Test lazy loading on Safari
+- [x] Test lazy loading on Chrome

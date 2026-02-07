@@ -503,16 +503,14 @@ export default function ArticleDetail() {
                     case 'image':
                       return (
                         <figure key={index} className="rounded-xl overflow-hidden">
-                          <div
-                            className="w-full aspect-video bg-cover bg-center cursor-pointer hover:scale-[1.02] transition-transform"
+                          <ProgressiveImage
+                            src={section.url}
+                            alt={section.alt || section.caption || ''}
+                            loading="lazy"
+                            aspectRatio="16/9"
+                            objectFit="cover"
+                            className="cursor-pointer hover:scale-[1.02] transition-transform"
                             onClick={() => window.open(section.url, '_blank')}
-                            style={{ 
-                              backgroundImage: `url(${section.url})`,
-                              minHeight: '400px',
-                              position: 'relative'
-                            }}
-                            role="img"
-                            aria-label={section.alt || section.caption || ''}
                           />
                           {section.caption && (
                             <figcaption>
@@ -528,15 +526,14 @@ export default function ArticleDetail() {
                           <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-primary scrollbar-track-muted">
                             {section.images?.map((img: any, imgIndex: number) => (
                               <figure key={imgIndex} className="flex-none w-[80%] md:w-[60%] snap-center rounded-2xl overflow-hidden shadow-xl">
-                                <div
-                                  className="w-full h-[400px] bg-cover bg-center cursor-pointer hover:scale-[1.02] transition-transform"
+                                <ProgressiveImage
+                                  src={img.url}
+                                  alt={img.alt || img.caption || ''}
+                                  loading="lazy"
+                                  aspectRatio="16/9"
+                                  objectFit="cover"
+                                  className="cursor-pointer hover:scale-[1.02] transition-transform h-[400px]"
                                   onClick={() => window.open(img.url, '_blank')}
-                                  style={{ 
-                                    backgroundImage: `url(${img.url})`,
-                                    position: 'relative'
-                                  }}
-                                  role="img"
-                                  aria-label={img.alt || img.caption || ''}
                                 />
                                 {img.caption && (
                                   <figcaption className="text-sm text-muted-foreground mt-4 text-center">
