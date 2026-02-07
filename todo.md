@@ -813,3 +813,9 @@
 - [x] Optimize article image loading and lazy loading
 - [x] Remove "+" icon from FAQ accordion items
 - [x] Test all fixes on article detail page
+
+## Fix Article Image Loading
+- [x] Investigate weird image loading behavior
+- [x] Add aspect ratio preservation to prevent layout shift
+- [x] Add loading skeleton/placeholder for images
+- [x] Test image loading across different articles

@@ -363,13 +363,14 @@ export default function ArticleDetail() {
 
                 {/* Cover Image */}
                 {article.coverImageUrl && (
-                  <div className="mt-12 -mx-4 md:mx-0">
+                  <div className="mt-12 -mx-4 md:mx-0 relative aspect-video bg-muted/20 rounded-2xl overflow-hidden">
                     <img 
                       src={article.coverImageUrl} 
                       alt={article.title}
-                      className="w-full rounded-2xl shadow-2xl"
+                      className="w-full h-full object-cover shadow-2xl"
                       loading="eager"
                       decoding="async"
+                      style={{ aspectRatio: '16/9' }}
                     />
                   </div>
                 )}
@@ -483,11 +484,11 @@ export default function ArticleDetail() {
                     
                     case 'image':
                       return (
-                        <figure key={index}>
+                        <figure key={index} className="relative w-full bg-muted/20 rounded-xl overflow-hidden">
                           <img 
                             src={section.url} 
                             alt={section.alt || section.caption || ''}
-                            className="w-full cursor-pointer hover:scale-[1.02] transition-transform"
+                            className="w-full h-auto object-contain cursor-pointer hover:scale-[1.02] transition-transform"
                             onClick={() => window.open(section.url, '_blank')}
                             loading="lazy"
                             decoding="async"
@@ -505,11 +506,11 @@ export default function ArticleDetail() {
                         <div key={index} className="my-12 -mx-4 md:mx-0">
                           <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-primary scrollbar-track-muted">
                             {section.images?.map((img: any, imgIndex: number) => (
-                              <figure key={imgIndex} className="flex-none w-[80%] md:w-[60%] snap-center">
+                              <figure key={imgIndex} className="flex-none w-[80%] md:w-[60%] snap-center relative bg-muted/20 rounded-2xl overflow-hidden">
                                 <img 
                                   src={img.url} 
                                   alt={img.alt || img.caption || ''}
-                                  className="w-full h-[400px] object-cover rounded-2xl shadow-xl cursor-pointer hover:scale-[1.02] transition-transform"
+                                  className="w-full h-[400px] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition-transform"
                                   onClick={() => window.open(img.url, '_blank')}
                                   loading="lazy"
                                   decoding="async"
