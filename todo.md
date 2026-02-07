@@ -573,3 +573,19 @@
 - [x] Improve article layout to match site aesthetic (clean, focused reading experience)
 - [x] Add proper spacing and visual hierarchy (prose classes with custom styling)
 - [x] Test with multiple articles to verify design consistency
+
+## Premium Article Design Overhaul
+- [x] Create proper reading column (narrower, ~65ch optimal line length)
+- [x] Add sticky table of contents sidebar with scroll spy
+- [x] Implement horizontal scrolling galleries with beveled images
+- [x] Add beveled/rounded corners to all article images (rounded-2xl with shadow)
+- [x] Design reading progress bar at top
+- [x] Add estimated read time and progress indicator
+- [x] Implement social sharing buttons (Twitter, LinkedIn, Email, Copy)
+- [x] Add "Continue Reading" section with related articles
+- [x] Create drop cap for first paragraph
+- [x] Add pull quotes styling (Playfair Display, 2xl)
+- [x] Implement image lightbox/zoom on click
+- [ ] Add copy link button for headings
+- [x] Style blockquotes with bold design
+- [x] Test responsive design on mobile (verified layout, TOC hidden on mobile, galleries scroll)

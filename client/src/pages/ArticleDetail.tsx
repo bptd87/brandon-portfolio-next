@@ -3,9 +3,10 @@ import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/lib/trpc";
-import { Calendar, Clock, ArrowLeft } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, Share2, Twitter, Linkedin, Mail, Link as LinkIcon } from "lucide-react";
 import { Link, useParams } from "wouter";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 
 export default function ArticleDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -14,26 +15,81 @@ export default function ArticleDetail() {
     { id: article?.categoryId || 0 },
     { enabled: !!article?.categoryId }
   );
+  const { data: relatedArticles } = trpc.articles.list.useQuery({});
+  
   const contentRef = useRef<HTMLDivElement>(null);
+  const [headings, setHeadings] = useState<Array<{ id: string; text: string; level: number }>>([]);
+  const [activeHeading, setActiveHeading] = useState<string>("");
+  const [readProgress, setReadProgress] = useState(0);
 
-  // Extract and display WordPress galleries
+  // Extract headings for TOC
   useEffect(() => {
     if (!contentRef.current) return;
     
-    // Find all WordPress gallery blocks
-    const galleries = contentRef.current.querySelectorAll('.wp-block-gallery, .blocks-gallery-grid');
-    galleries.forEach((gallery) => {
-      gallery.classList.add('article-gallery');
+    const h2Elements = contentRef.current.querySelectorAll('h2');
+    const extractedHeadings = Array.from(h2Elements).map((heading, index) => {
+      const id = `heading-${index}`;
+      heading.id = id;
+      return {
+        id,
+        text: heading.textContent || '',
+        level: 2
+      };
     });
-
-    // Find all WordPress images and ensure they're responsive
-    const images = contentRef.current.querySelectorAll('img');
-    images.forEach((img) => {
-      if (!img.classList.contains('wp-image')) {
-        img.classList.add('article-image');
-      }
-    });
+    
+    setHeadings(extractedHeadings);
   }, [article]);
+
+  // Track scroll progress and active heading
+  useEffect(() => {
+    const handleScroll = () => {
+      // Calculate read progress
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight - windowHeight;
+      const scrolled = window.scrollY;
+      const progress = (scrolled / documentHeight) * 100;
+      setReadProgress(Math.min(progress, 100));
+
+      // Find active heading
+      const headingElements = headings.map(h => document.getElementById(h.id)).filter(Boolean);
+      const current = headingElements.find((el, index) => {
+        const next = headingElements[index + 1];
+        const rect = el!.getBoundingClientRect();
+        if (!next) return rect.top <= 200;
+        const nextRect = next.getBoundingClientRect();
+        return rect.top <= 200 && nextRect.top > 200;
+      });
+      
+      if (current) {
+        setActiveHeading(current.id);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [headings]);
+
+  const handleShare = (platform: 'twitter' | 'linkedin' | 'email' | 'copy') => {
+    const url = window.location.href;
+    const title = article?.title || '';
+    const text = article?.excerpt || '';
+
+    switch (platform) {
+      case 'twitter':
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank');
+        break;
+      case 'linkedin':
+        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
+        break;
+      case 'email':
+        window.location.href = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(text + '\n\n' + url)}`;
+        break;
+      case 'copy':
+        navigator.clipboard.writeText(url);
+        toast.success("Link copied to clipboard!");
+        break;
+    }
+  };
 
   if (isLoading) {
     return (
@@ -59,7 +115,7 @@ export default function ArticleDetail() {
     );
   }
 
-  // Parse content sections - handle both JSON and plain text
+  // Parse content sections
   let contentSections: any[] = [];
   try {
     contentSections = typeof article.content === 'string' 
@@ -73,13 +129,23 @@ export default function ArticleDetail() {
   const wordCount = JSON.stringify(contentSections).split(/\s+/).length;
   const readTime = Math.ceil(wordCount / 200);
 
+  // Get related articles
+  const related = relatedArticles?.filter(a => a.id !== article.id && a.categoryId === article.categoryId).slice(0, 3) || [];
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
 
-      {/* Hero Section */}
+      {/* Reading Progress Bar */}
+      <div className="fixed top-0 left-0 right-0 h-1 bg-muted z-50">
+        <div 
+          className="h-full bg-primary transition-all duration-150"
+          style={{ width: `${readProgress}%` }}
+        />
+      </div>
+
       <article className="py-12 md:py-20">
-        <div className="container max-w-4xl">
+        <div className="container max-w-7xl">
           {/* Back Button */}
           <Link href="/articles">
             <Button variant="ghost" className="mb-8 -ml-4">
@@ -88,182 +154,287 @@ export default function ArticleDetail() {
             </Button>
           </Link>
 
-          {/* Article Header */}
-          <header className="mb-12">
-            <div className="flex items-center gap-3 mb-6 text-sm uppercase tracking-wider">
-              {category && (
-                <Badge variant="secondary" className="font-bold bg-primary/10 text-primary hover:bg-primary/20">
-                  {category.name}
-                </Badge>
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_250px] gap-12">
+            {/* Main Content */}
+            <div className="min-w-0">
+              {/* Article Header */}
+              <header className="mb-12">
+                <div className="flex items-center gap-3 mb-6 text-sm uppercase tracking-wider">
+                  {category && (
+                    <Badge variant="secondary" className="font-bold bg-primary/10 text-primary hover:bg-primary/20">
+                      {category.name}
+                    </Badge>
+                  )}
+                  <span className="text-muted-foreground">|</span>
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Calendar className="h-3 w-3" />
+                    <time dateTime={new Date(article.publishedAt || article.createdAt).toISOString()}>
+                      {new Date(article.publishedAt || article.createdAt).toLocaleDateString('en-US', { 
+                        month: 'long', 
+                        day: 'numeric', 
+                        year: 'numeric' 
+                      })}
+                    </time>
+                  </div>
+                  <span className="text-muted-foreground">|</span>
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Clock className="h-3 w-3" />
+                    <span>{readTime} min read</span>
+                  </div>
+                </div>
+
+                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-['Playfair_Display'] italic font-normal mb-8 leading-[1.1]">
+                  {article.title}
+                </h1>
+
+                {article.excerpt && (
+                  <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl">
+                    {article.excerpt}
+                  </p>
+                )}
+
+                {/* Share Buttons */}
+                <div className="flex items-center gap-3 mt-8">
+                  <span className="text-sm text-muted-foreground uppercase tracking-wider">Share:</span>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => handleShare('twitter')}
+                    className="gap-2"
+                  >
+                    <Twitter className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => handleShare('linkedin')}
+                    className="gap-2"
+                  >
+                    <Linkedin className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => handleShare('email')}
+                    className="gap-2"
+                  >
+                    <Mail className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => handleShare('copy')}
+                    className="gap-2"
+                  >
+                    <LinkIcon className="h-4 w-4" />
+                  </Button>
+                </div>
+              </header>
+
+              {/* Cover Image */}
+              {article.coverImageUrl && (
+                <figure className="mb-12 -mx-4 md:mx-0">
+                  <img 
+                    src={article.coverImageUrl} 
+                    alt={article.title}
+                    className="w-full h-auto object-cover rounded-2xl shadow-2xl"
+                  />
+                </figure>
               )}
-              <span className="text-muted-foreground">|</span>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Calendar className="h-3 w-3" />
-                <time dateTime={new Date(article.publishedAt || article.createdAt).toISOString()}>
-                  {new Date(article.publishedAt || article.createdAt).toLocaleDateString('en-US', { 
-                    month: 'long', 
-                    day: 'numeric', 
-                    year: 'numeric' 
-                  })}
-                </time>
-              </div>
-              <span className="text-muted-foreground">|</span>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Clock className="h-3 w-3" />
-                <span>{readTime} min read</span>
-              </div>
-            </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-['Playfair_Display'] italic font-normal mb-6 leading-tight">
-              {article.title}
-            </h1>
-
-            {article.excerpt && (
-              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
-                {article.excerpt}
-              </p>
-            )}
-          </header>
-
-          {/* Cover Image */}
-          {article.coverImageUrl && (
-            <figure className="mb-12 -mx-4 md:mx-0">
-              <img 
-                src={article.coverImageUrl} 
-                alt={article.title}
-                className="w-full h-auto object-cover rounded-lg"
-              />
-            </figure>
-          )}
-
-          {/* Article Content */}
-          <div 
-            ref={contentRef}
-            className="article-content prose prose-lg max-w-none
-              prose-headings:font-['Playfair_Display'] prose-headings:italic prose-headings:font-normal
-              prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6
-              prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4
-              prose-p:text-foreground/90 prose-p:leading-relaxed prose-p:mb-6
-              prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-              prose-strong:text-foreground prose-strong:font-semibold
-              prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-6 
-              prose-blockquote:italic prose-blockquote:text-xl prose-blockquote:my-8
-              prose-ul:my-6 prose-ol:my-6
-              prose-li:my-2
-              prose-img:rounded-lg prose-img:my-8
-              prose-figure:my-8
-              prose-figcaption:text-sm prose-figcaption:text-muted-foreground prose-figcaption:text-center prose-figcaption:mt-2"
-          >
-            {Array.isArray(contentSections) && contentSections.map((section: any, index: number) => {
-              switch (section.type) {
-                case 'heading':
-                  return (
-                    <h2 key={index} className="scroll-mt-24">
-                      {section.content}
-                    </h2>
-                  );
-                
-                case 'paragraph':
-                  return (
-                    <p key={index}>
-                      {section.content}
-                    </p>
-                  );
-                
-                case 'quote':
-                  return (
-                    <blockquote key={index}>
-                      "{section.content}"
-                      {section.author && (
-                        <footer className="text-sm text-muted-foreground mt-2 not-italic">
-                          — {section.author}
-                        </footer>
-                      )}
-                    </blockquote>
-                  );
-                
-                case 'image':
-                  return (
-                    <figure key={index}>
-                      <img 
-                        src={section.url} 
-                        alt={section.alt || section.caption || ''}
-                        className="w-full"
-                      />
-                      {section.caption && (
-                        <figcaption>
-                          {section.caption}
-                        </figcaption>
-                      )}
-                    </figure>
-                  );
-                
-                case 'gallery':
-                  return (
-                    <div key={index} className="grid grid-cols-2 md:grid-cols-3 gap-4 my-8">
-                      {section.images?.map((img: any, imgIndex: number) => (
-                        <figure key={imgIndex} className="m-0">
+              {/* Article Content */}
+              <div 
+                ref={contentRef}
+                className="article-content max-w-[65ch] mx-auto
+                  prose prose-lg prose-invert
+                  prose-headings:font-['Playfair_Display'] prose-headings:italic prose-headings:font-normal
+                  prose-h2:text-4xl prose-h2:mt-16 prose-h2:mb-6 prose-h2:scroll-mt-24
+                  prose-h3:text-2xl prose-h3:mt-12 prose-h3:mb-4
+                  prose-p:text-foreground/90 prose-p:leading-[1.8] prose-p:mb-6 prose-p:text-lg
+                  prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-a:font-medium
+                  prose-strong:text-foreground prose-strong:font-semibold
+                  prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-8 
+                  prose-blockquote:italic prose-blockquote:text-2xl prose-blockquote:my-12 prose-blockquote:font-['Playfair_Display']
+                  prose-ul:my-6 prose-ol:my-6
+                  prose-li:my-3 prose-li:text-lg
+                  prose-img:rounded-2xl prose-img:my-12 prose-img:shadow-xl
+                  prose-figure:my-12
+                  prose-figcaption:text-sm prose-figcaption:text-muted-foreground prose-figcaption:text-center prose-figcaption:mt-4"
+              >
+                {Array.isArray(contentSections) && contentSections.map((section: any, index: number) => {
+                  switch (section.type) {
+                    case 'heading':
+                      return (
+                        <h2 key={index}>
+                          {section.content}
+                        </h2>
+                      );
+                    
+                    case 'paragraph':
+                      return (
+                        <p key={index} className={index === 0 ? 'first-letter:text-7xl first-letter:font-bold first-letter:mr-3 first-letter:float-left first-letter:font-[\'Playfair_Display\'] first-letter:leading-[0.8]' : ''}>
+                          {section.content}
+                        </p>
+                      );
+                    
+                    case 'quote':
+                      return (
+                        <blockquote key={index}>
+                          "{section.content}"
+                          {section.author && (
+                            <footer className="text-base text-muted-foreground mt-4 not-italic font-sans">
+                              — {section.author}
+                            </footer>
+                          )}
+                        </blockquote>
+                      );
+                    
+                    case 'image':
+                      return (
+                        <figure key={index}>
                           <img 
-                            src={img.url} 
-                            alt={img.alt || img.caption || ''}
-                            className="w-full h-full object-cover rounded-lg"
+                            src={section.url} 
+                            alt={section.alt || section.caption || ''}
+                            className="w-full cursor-pointer hover:scale-[1.02] transition-transform"
+                            onClick={() => window.open(section.url, '_blank')}
                           />
-                          {img.caption && (
-                            <figcaption className="text-xs text-muted-foreground mt-2">
-                              {img.caption}
+                          {section.caption && (
+                            <figcaption>
+                              {section.caption}
                             </figcaption>
                           )}
                         </figure>
-                      ))}
-                    </div>
-                  );
-                
-                case 'list':
-                  const ListTag = section.listType === 'numbered' ? 'ol' : 'ul';
-                  return (
-                    <ListTag key={index} className={section.listType === 'numbered' ? 'list-decimal' : 'list-disc'}>
-                      {section.items?.map((item: string, itemIndex: number) => (
-                        <li key={itemIndex}>{item}</li>
-                      ))}
-                    </ListTag>
-                  );
-                
-                case 'text':
-                  // Handle text blocks from WordPress import (contains HTML)
-                  return (
-                    <div 
-                      key={index}
-                      dangerouslySetInnerHTML={{ __html: section.content?.text || section.content }}
-                    />
-                  );
-                
-                case 'html':
-                  // Render raw HTML from WordPress import
-                  return (
-                    <div 
-                      key={index}
-                      dangerouslySetInnerHTML={{ __html: section.content }}
-                    />
-                  );
-                
-                default:
-                  return null;
-              }
-            })}
-          </div>
-
-          {/* Author Bio */}
-          <div className="mt-16 pt-12 border-t">
-            <div className="flex items-start gap-6">
-              <div className="flex-1">
-                <h3 className="text-2xl font-['Playfair_Display'] italic mb-2">Brandon PT Davis</h3>
-                <p className="text-sm text-muted-foreground mb-4">Scenic & Experiential Designer</p>
-                <p className="text-foreground/80 leading-relaxed">
-                  Brandon PT Davis is a Scenic and Experiential Designer based in Los Angeles. 
-                  His work explores the intersection of physical space, digital technology, and narrative storytelling.
-                </p>
+                      );
+                    
+                    case 'gallery':
+                      return (
+                        <div key={index} className="my-12 -mx-4 md:mx-0">
+                          <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-primary scrollbar-track-muted">
+                            {section.images?.map((img: any, imgIndex: number) => (
+                              <figure key={imgIndex} className="flex-none w-[80%] md:w-[60%] snap-center">
+                                <img 
+                                  src={img.url} 
+                                  alt={img.alt || img.caption || ''}
+                                  className="w-full h-[400px] object-cover rounded-2xl shadow-xl cursor-pointer hover:scale-[1.02] transition-transform"
+                                  onClick={() => window.open(img.url, '_blank')}
+                                />
+                                {img.caption && (
+                                  <figcaption className="text-sm text-muted-foreground mt-4 text-center">
+                                    {img.caption}
+                                  </figcaption>
+                                )}
+                              </figure>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    
+                    case 'list':
+                      const ListTag = section.listType === 'numbered' ? 'ol' : 'ul';
+                      return (
+                        <ListTag key={index} className={section.listType === 'numbered' ? 'list-decimal' : 'list-disc'}>
+                          {section.items?.map((item: string, itemIndex: number) => (
+                            <li key={itemIndex}>{item}</li>
+                          ))}
+                        </ListTag>
+                      );
+                    
+                    case 'text':
+                      return (
+                        <div 
+                          key={index}
+                          dangerouslySetInnerHTML={{ __html: section.content?.text || section.content }}
+                        />
+                      );
+                    
+                    case 'html':
+                      return (
+                        <div 
+                          key={index}
+                          dangerouslySetInnerHTML={{ __html: section.content }}
+                        />
+                      );
+                    
+                    default:
+                      return null;
+                  }
+                })}
               </div>
+
+              {/* Author Bio */}
+              <div className="mt-20 pt-12 border-t max-w-[65ch] mx-auto">
+                <div className="flex items-start gap-6">
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-['Playfair_Display'] italic mb-2">Brandon PT Davis</h3>
+                    <p className="text-sm text-muted-foreground mb-4 uppercase tracking-wider">Scenic & Experiential Designer</p>
+                    <p className="text-foreground/80 leading-relaxed">
+                      Brandon PT Davis is a Scenic and Experiential Designer based in Los Angeles. 
+                      His work explores the intersection of physical space, digital technology, and narrative storytelling.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Related Articles */}
+              {related.length > 0 && (
+                <div className="mt-20 pt-12 border-t">
+                  <h2 className="text-3xl font-['Playfair_Display'] italic mb-8">Continue Reading</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {related.map((relatedArticle) => (
+                      <Link key={relatedArticle.id} href={`/articles/${relatedArticle.slug}`}>
+                        <div className="group cursor-pointer">
+                          {relatedArticle.coverImageUrl && (
+                            <div className="mb-4 overflow-hidden rounded-xl">
+                              <img 
+                                src={relatedArticle.coverImageUrl}
+                                alt={relatedArticle.title}
+                                className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                              />
+                            </div>
+                          )}
+                          <h3 className="text-xl font-['Playfair_Display'] italic group-hover:text-primary transition-colors">
+                            {relatedArticle.title}
+                          </h3>
+                          {relatedArticle.excerpt && (
+                            <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
+                              {relatedArticle.excerpt}
+                            </p>
+                          )}
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
+
+            {/* Sticky TOC Sidebar */}
+            {headings.length > 0 && (
+              <aside className="hidden lg:block">
+                <div className="sticky top-24">
+                  <h3 className="text-sm uppercase tracking-wider text-muted-foreground mb-4 font-semibold">Table of Contents</h3>
+                  <nav className="space-y-2">
+                    {headings.map((heading) => (
+                      <a
+                        key={heading.id}
+                        href={`#${heading.id}`}
+                        className={`block text-sm py-1 border-l-2 pl-4 transition-colors ${
+                          activeHeading === heading.id
+                            ? 'border-primary text-primary font-medium'
+                            : 'border-border text-muted-foreground hover:text-foreground hover:border-muted-foreground'
+                        }`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          document.getElementById(heading.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }}
+                      >
+                        {heading.text}
+                      </a>
+                    ))}
+                  </nav>
+                </div>
+              </aside>
+            )}
           </div>
         </div>
       </article>
@@ -271,91 +442,75 @@ export default function ArticleDetail() {
       <Footer />
 
       <style>{`
-        /* WordPress Gallery Styles */
+        /* WordPress Gallery Styles - Horizontal Scroll */
         .article-content .wp-block-gallery,
-        .article-content .blocks-gallery-grid,
-        .article-content .article-gallery {
-          display: grid !important;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+        .article-content .blocks-gallery-grid {
+          display: flex !important;
           gap: 1rem !important;
-          margin: 2rem 0 !important;
-          padding: 0 !important;
+          overflow-x: auto !important;
+          scroll-snap-type: x mandatory !important;
+          padding-bottom: 1rem !important;
+          margin: 3rem -1rem !important;
           list-style: none !important;
         }
 
         .article-content .wp-block-gallery figure,
-        .article-content .blocks-gallery-grid figure,
-        .article-content .article-gallery figure {
+        .article-content .blocks-gallery-grid figure {
+          flex: none !important;
+          width: 80% !important;
+          scroll-snap-align: center !important;
           margin: 0 !important;
         }
 
         .article-content .wp-block-gallery img,
-        .article-content .blocks-gallery-grid img,
-        .article-content .article-gallery img {
+        .article-content .blocks-gallery-grid img {
           width: 100% !important;
-          height: 300px !important;
+          height: 400px !important;
           object-fit: cover !important;
-          border-radius: 0.5rem !important;
-        }
-
-        /* WordPress Image Styles */
-        .article-content img {
-          max-width: 100% !important;
-          height: auto !important;
-          border-radius: 0.5rem !important;
-          margin: 2rem 0 !important;
-        }
-
-        /* WordPress Figure Styles */
-        .article-content figure {
-          margin: 2rem 0 !important;
-        }
-
-        .article-content figcaption {
-          font-size: 0.875rem !important;
-          color: hsl(var(--muted-foreground)) !important;
-          text-align: center !important;
-          margin-top: 0.5rem !important;
-        }
-
-        /* WordPress Accordion/FAQ Styles */
-        .article-content .wp-block-accordion {
-          margin: 2rem 0 !important;
-        }
-
-        .article-content .wp-block-accordion-item {
-          border: 1px solid hsl(var(--border)) !important;
-          border-radius: 0.5rem !important;
-          margin-bottom: 1rem !important;
-          overflow: hidden !important;
-        }
-
-        .article-content .wp-block-accordion-heading__toggle {
-          width: 100% !important;
-          padding: 1rem !important;
-          background: transparent !important;
-          border: none !important;
-          text-align: left !important;
-          font-size: 1.125rem !important;
-          font-weight: 600 !important;
+          border-radius: 1rem !important;
+          box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.3) !important;
           cursor: pointer !important;
-          display: flex !important;
-          justify-content: space-between !important;
-          align-items: center !important;
+          transition: transform 0.3s ease !important;
         }
 
-        .article-content .wp-block-accordion-heading__toggle:hover {
-          background: hsl(var(--accent)) !important;
+        .article-content .wp-block-gallery img:hover,
+        .article-content .blocks-gallery-grid img:hover {
+          transform: scale(1.02) !important;
         }
 
-        .article-content .wp-block-accordion-panel {
-          padding: 0 1rem 1rem 1rem !important;
+        /* WordPress Image Styles - Beveled */
+        .article-content img {
+          border-radius: 1rem !important;
+          box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.3) !important;
         }
 
-        /* Remove default WordPress spacing */
-        .article-content .wp-block-group,
-        .article-content .wp-block-columns {
-          margin: 0 !important;
+        /* Scrollbar Styling */
+        .article-content ::-webkit-scrollbar {
+          height: 8px;
+        }
+
+        .article-content ::-webkit-scrollbar-track {
+          background: hsl(var(--muted));
+          border-radius: 4px;
+        }
+
+        .article-content ::-webkit-scrollbar-thumb {
+          background: hsl(var(--primary));
+          border-radius: 4px;
+        }
+
+        .article-content ::-webkit-scrollbar-thumb:hover {
+          background: hsl(var(--primary) / 0.8);
+        }
+
+        /* Drop Cap First Letter */
+        .article-content p:first-of-type::first-letter {
+          font-size: 4.5rem;
+          font-weight: bold;
+          line-height: 0.8;
+          float: left;
+          margin-right: 0.75rem;
+          font-family: 'Playfair Display', serif;
         }
       `}</style>
     </div>
