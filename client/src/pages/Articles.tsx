@@ -1,10 +1,11 @@
 
+import React from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { trpc } from "@/lib/trpc";
 import { getCategoryBadgeClasses, getCategoryColor } from "@/lib/categoryColors";
-import { BookOpen, ArrowRight } from "lucide-react";
+import { Search } from "lucide-react";
 import { Link } from "wouter";
 
 // Decode HTML entities
@@ -16,6 +17,43 @@ const decodeHTMLEntities = (text: string): string => {
 
 export default function Articles() {
   const { data: articles, isLoading } = trpc.articles.list.useQuery({});
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [selectedCategory, setSelectedCategory] = React.useState<string | null>(null);
+
+  // Get unique categories
+  const categories = React.useMemo(() => {
+    if (!articles) return [];
+    const uniqueCategories = new Set<string>();
+    articles.forEach(article => {
+      if (article.category?.name) {
+        uniqueCategories.add(article.category.name);
+      }
+    });
+    return Array.from(uniqueCategories).sort();
+  }, [articles]);
+
+  // Filter articles by search and category
+  const filteredArticles = React.useMemo(() => {
+    if (!articles) return [];
+
+    let filtered = articles;
+
+    // Filter by category
+    if (selectedCategory) {
+      filtered = filtered.filter(article => article.category?.name === selectedCategory);
+    }
+
+    // Filter by search query
+    if (searchQuery) {
+      const searchLower = searchQuery.toLowerCase();
+      filtered = filtered.filter(article => (
+        article.title.toLowerCase().includes(searchLower) ||
+        (article.excerpt && article.excerpt.toLowerCase().includes(searchLower))
+      ));
+    }
+
+    return filtered;
+  }, [articles, searchQuery, selectedCategory]);
   
 
 
@@ -31,6 +69,63 @@ export default function Articles() {
           <p className="text-xl text-muted-foreground max-w-2xl">
             Articles on design philosophy, process, and the craft of scenic design.
           </p>
+
+          {/* Search and Category Filter */}
+          <div className="mt-8 space-y-6">
+            {/* Search Input */}
+            <div className="relative max-w-md">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Search articles..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+              />
+            </div>
+
+            {/* Category Filter Badges */}
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => setSelectedCategory(null)}
+                className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${
+                  selectedCategory === null
+                    ? 'bg-primary text-primary-foreground shadow-lg'
+                    : 'bg-background border border-border text-muted-foreground hover:border-primary hover:text-foreground'
+                }`}
+              >
+                All Articles
+              </button>
+              {categories.map(category => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${
+                    selectedCategory === category
+                      ? 'shadow-lg'
+                      : 'bg-background border border-border hover:shadow-md'
+                  }`}
+                  style={{
+                    backgroundColor: selectedCategory === category ? getCategoryColor(category).hex : undefined,
+                    color: selectedCategory === category ? '#000' : undefined,
+                    borderColor: selectedCategory !== category ? getCategoryColor(category).hex + '40' : undefined,
+                  }}
+                  onMouseEnter={(e) => {
+                    if (selectedCategory !== category) {
+                      e.currentTarget.style.borderColor = getCategoryColor(category).hex;
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (selectedCategory !== category) {
+                      e.currentTarget.style.borderColor = getCategoryColor(category).hex + '40';
+                    }
+                  }}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -41,9 +136,9 @@ export default function Articles() {
             <div className="text-center py-12">
               <p className="text-muted-foreground">Loading articles...</p>
             </div>
-          ) : articles && articles.length > 0 ? (
+          ) : filteredArticles && filteredArticles.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {articles.map((article) => (
+              {filteredArticles.map((article) => (
                 <Link key={article.id} href={`/articles/${article.slug}`}>
                   <div 
                     className="group relative h-[400px] rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer"
@@ -88,12 +183,7 @@ export default function Articles() {
                       </div>
                     )}
                     
-                    {/* Arrow Icon */}
-                    <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="bg-primary text-primary-foreground rounded-full p-2">
-                        <ArrowRight className="h-5 w-5" />
-                      </div>
-                    </div>
+
                     
                     {/* Content Overlay */}
                     <div className="absolute bottom-0 left-0 right-0 p-6">
@@ -118,6 +208,10 @@ export default function Articles() {
                   </div>
                 </Link>
               ))}
+            </div>
+          ) : searchQuery ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">No articles found matching "{searchQuery}". Try a different search term.</p>
             </div>
           ) : (
             <div className="text-center py-12">

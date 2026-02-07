@@ -748,3 +748,9 @@
 - [x] Apply accent colors to read time, date, and category text
 - [x] Add 1pt accent-colored outline to article cards
 - [x] Add accent-colored glow effect on card hover
+
+## Article Page Sort and Search
+- [x] Remove arrow icon on hover from article cards
+- [x] Replace sort dropdown with modern category filter badges
+- [x] Add search input to filter articles by title and excerpt
+- [x] Implement category filtering logic that works with search
