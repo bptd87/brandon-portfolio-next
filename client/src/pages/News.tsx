@@ -12,7 +12,12 @@ import { Link } from "wouter";
 
 export default function News() {
   const { data: newsItems = [], isLoading } = trpc.news.list.useQuery({});
-  const { data: categories = [] } = trpc.categories.list.useQuery({});
+  const { data: allCategories = [] } = trpc.categories.list.useQuery({});
+  
+  // Filter to show only news categories
+  const newsCategories = useMemo(() => {
+    return allCategories.filter(cat => cat.type === 'news');
+  }, [allCategories]);
   
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -102,12 +107,12 @@ export default function News() {
                 />
               </div>
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger className="w-full md:w-[200px] h-12 text-lg">
+                <SelectTrigger className="w-full md:w-[250px] h-12 text-lg">
                   <SelectValue placeholder="All Categories" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Categories</SelectItem>
-                  {categories.map((cat) => (
+                  {newsCategories.map((cat) => (
                     <SelectItem key={cat.id} value={cat.id.toString()}>
                       {cat.name}
                     </SelectItem>
@@ -210,7 +215,7 @@ export default function News() {
                     <div className="space-y-12">
                       {items.map((item, itemIndex) => {
                         const isLeft = itemIndex % 2 === 0;
-                        const category = categories.find(c => c.id === item.categoryId);
+                        const category = newsCategories.find(c => c.id === item.categoryId);
                         
                         return (
                           <div 

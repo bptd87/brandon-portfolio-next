@@ -1044,3 +1044,8 @@
 - [x] Add visual timeline markers and year headers
 - [x] Group news items under respective years
 - [x] Test timeline navigation and responsiveness
+
+## News Category Dropdown Fixes
+- [x] Make category dropdown same size as search input
+- [x] Filter categories to show only news categories (not article categories)
+- [x] Test dropdown sizing and category filtering
