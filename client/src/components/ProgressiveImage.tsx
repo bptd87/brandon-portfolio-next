@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 interface ProgressiveImageProps {
   src: string;
@@ -15,24 +15,19 @@ export function ProgressiveImage({
   alt,
   className = '',
   onClick,
-  loading = 'lazy',
+  loading = 'eager', // Changed default to eager to prevent lazy loading flashing
   aspectRatio,
   objectFit = 'cover',
 }: ProgressiveImageProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
 
-  useEffect(() => {
-    setImageLoaded(false);
-    setImageError(false);
-  }, [src]);
-
   return (
     <div 
       className="relative overflow-hidden bg-muted/10"
       style={aspectRatio ? { aspectRatio } : undefined}
     >
-      {/* Skeleton loader with pixelated blur effect */}
+      {/* Skeleton loader - shown while loading */}
       {!imageLoaded && !imageError && (
         <div className="absolute inset-0">
           <div 
@@ -50,7 +45,7 @@ export function ProgressiveImage({
         </div>
       )}
 
-      {/* Actual image - no animation, just opacity */}
+      {/* Actual image - NO transitions at all */}
       <img
         src={src}
         alt={alt}
@@ -60,6 +55,7 @@ export function ProgressiveImage({
           ${imageLoaded ? 'opacity-100' : 'opacity-0'}
           ${className}
         `}
+        style={{ transition: 'none' }} // Explicitly disable all transitions
         onClick={onClick}
         loading={loading}
         decoding="async"

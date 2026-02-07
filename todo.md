@@ -841,3 +841,10 @@
 - [x] Remove blur-up animation from ProgressiveImage
 - [x] Use simple skeleton loader placeholder instead
 - [x] Test that images don't flash when scrolling
+
+## Debug Image Flashing Root Cause
+- [x] Check browser console for errors or warnings
+- [x] Investigate if native lazy loading is causing issues
+- [x] Check if CSS transitions are triggering
+- [x] Test with loading="eager" to isolate lazy loading
+- [x] Implement proper fix based on findings
