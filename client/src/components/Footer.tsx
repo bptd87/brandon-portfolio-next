@@ -176,7 +176,7 @@ export default function Footer() {
               <Youtube className="w-5 h-5" />
             </a>
             <a
-              href="mailto:hello@brandonptdavis.com"
+              href="mailto:info@brandonptdavis.com"
               className="w-10 h-10 rounded-full glass flex items-center justify-center hover-lift transition-smooth hover:text-primary"
               title="Email Me"
             >

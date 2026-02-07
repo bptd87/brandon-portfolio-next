@@ -18,6 +18,11 @@ import Contact from "./pages/Contact";
 import Studio from "./pages/Studio";
 import NewsDetail from "./pages/NewsDetail";
 import ArticleDetail from "./pages/ArticleDetail";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
+import FAQ from "./pages/FAQ";
+import Accessibility from "./pages/Accessibility";
+import Sitemap from "./pages/Sitemap";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -37,6 +42,11 @@ function Router() {
       <Route path={"/contact"} component={Contact} />
       <Route path={"/studio"} component={Studio} />
       <Route path={"/admin"} component={Admin} />
+      <Route path={"/privacy"} component={Privacy} />
+      <Route path={"/terms"} component={Terms} />
+      <Route path={"/faq"} component={FAQ} />
+      <Route path={"/accessibility"} component={Accessibility} />
+      <Route path={"/sitemap"} component={Sitemap} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
