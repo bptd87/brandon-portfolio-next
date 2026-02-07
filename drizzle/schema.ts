@@ -27,6 +27,7 @@ export const categories = mysqlTable("categories", {
   name: varchar("name", { length: 100 }).notNull().unique(),
   slug: varchar("slug", { length: 100 }).notNull().unique(),
   type: mysqlEnum("type", ["project", "news", "article"]).notNull(),
+  color: varchar("color", { length: 7 }).default("#FF5722").notNull(), // Hex color code
   description: text("description"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),

@@ -48,6 +48,7 @@ export const appRouter = router({
         name: z.string().min(1).max(100),
         slug: z.string().min(1).max(100),
         type: z.enum(['project', 'news', 'article']),
+        color: z.string().regex(/^#[0-9A-F]{6}$/i).optional(),
         description: z.string().optional(),
       }))
       .mutation(async ({ input }) => {
@@ -60,6 +61,7 @@ export const appRouter = router({
         id: z.number(),
         name: z.string().min(1).max(100).optional(),
         slug: z.string().min(1).max(100).optional(),
+        color: z.string().regex(/^#[0-9A-F]{6}$/i).optional(),
         description: z.string().optional(),
       }))
       .mutation(async ({ input }) => {

@@ -498,3 +498,14 @@
 - [x] Update Header to show hamburger on mobile, desktop nav on larger screens
 - [x] Style mobile menu with bold aesthetic (vibrant colors, smooth animations)
 - [x] Test mobile navigation on different screen sizes
+
+## Build Article & News Management System
+- [x] Design database schema for articles, news, categories with custom colors
+- [x] Create category management (name, color picker, slug)
+- [ ] Build article creation/editing interface with rich text editor
+- [ ] Build news creation/editing interface
+- [ ] Add support for accordions, galleries, videos in articles
+- [ ] Implement SEO metadata fields (title, description, keywords, OG tags)
+- [ ] Add Article and NewsArticle schema markup
+- [ ] Create WordPress import functionality
+- [ ] Test content management and display
