@@ -1,14 +1,38 @@
+import { useState, useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { trpc } from "@/lib/trpc";
-import { Calendar, MapPin, ArrowRight } from "lucide-react";
+import { Calendar, MapPin, ArrowRight, Search, Rss } from "lucide-react";
 import { Link } from "wouter";
 
 export default function News() {
   const { data: newsItems, isLoading } = trpc.news.list.useQuery({});
+  const { data: categories } = trpc.categories.list.useQuery({});
+  
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  
+  // Filter news based on search and category
+  const filteredNews = useMemo(() => {
+    if (!newsItems) return [];
+    
+    return newsItems.filter(item => {
+      const matchesSearch = searchQuery === "" || 
+        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.excerpt?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.location?.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      const matchesCategory = selectedCategory === "all" || 
+        item.categoryId?.toString() === selectedCategory;
+      
+      return matchesSearch && matchesCategory;
+    });
+  }, [newsItems, searchQuery, selectedCategory]);
 
   if (isLoading) {
     return (
@@ -23,8 +47,8 @@ export default function News() {
     );
   }
 
-  const featuredNews = newsItems?.[0];
-  const remainingNews = newsItems?.slice(1) || [];
+  const featuredNews = filteredNews?.[0];
+  const remainingNews = filteredNews?.slice(1) || [];
 
   return (
     <div className="min-h-screen bg-background">
@@ -38,9 +62,42 @@ export default function News() {
             <h1 className="text-5xl md:text-6xl font-['Playfair_Display'] italic font-normal mb-6">
               Latest Announcements
             </h1>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-xl text-muted-foreground mb-8">
               Project launches, career milestones, press features, and industry recognition.
             </p>
+            
+            {/* Search and Filter */}
+            <div className="flex flex-col md:flex-row gap-4 mt-8">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <Input
+                  type="search"
+                  placeholder="Search news by title, location, or keywords..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 h-12 text-base"
+                />
+              </div>
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger className="w-full md:w-[200px] h-12">
+                  <SelectValue placeholder="All Categories" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Categories</SelectItem>
+                  {categories?.map((cat) => (
+                    <SelectItem key={cat.id} value={cat.id.toString()}>
+                      {cat.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <a href="/api/news/rss" target="_blank" rel="noopener noreferrer">
+                <Button variant="outline" className="h-12 w-full md:w-auto">
+                  <Rss className="h-4 w-4 mr-2" />
+                  RSS Feed
+                </Button>
+              </a>
+            </div>
           </div>
         </div>
       </section>

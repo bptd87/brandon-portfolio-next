@@ -1015,3 +1015,12 @@
 - [x] Add structured data (JSON-LD schema)
 - [x] Add social sharing buttons
 - [x] Test SEO optimization and metadata
+
+## News Filtering & RSS Feed
+- [x] Add search input to news landing page
+- [x] Add category filter dropdown
+- [x] Implement client-side filtering logic
+- [x] Create RSS feed generation endpoint
+- [x] Add RSS feed link to news page
+- [x] Test search and filtering
+- [x] Test RSS feed validity
