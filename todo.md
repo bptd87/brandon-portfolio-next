@@ -819,3 +819,11 @@
 - [x] Add aspect ratio preservation to prevent layout shift
 - [x] Add loading skeleton/placeholder for images
 - [x] Test image loading across different articles
+
+## Progressive Image Loading (Blur-up Effect)
+- [x] Create ProgressiveImage component with blur-up effect
+- [x] Add image load state tracking (loading, loaded, error)
+- [x] Implement smooth transition from blur to sharp
+- [x] Integrate into ArticleDetail cover image
+- [x] Integrate into ArticleDetail content images
+- [x] Test blur-up effect on slow connections

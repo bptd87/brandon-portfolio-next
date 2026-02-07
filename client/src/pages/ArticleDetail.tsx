@@ -1,7 +1,9 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Badge } from "@/components/ui/badge";
+import { Card } from '@/components/ui/card';
+import { ProgressiveImage } from '@/components/ProgressiveImage';
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { trpc } from "@/lib/trpc";
 import { Calendar, Clock, ArrowLeft, Share2, Twitter, Linkedin, Mail, Link as LinkIcon, Heart, Eye, User } from "lucide-react";
@@ -363,14 +365,13 @@ export default function ArticleDetail() {
 
                 {/* Cover Image */}
                 {article.coverImageUrl && (
-                  <div className="mt-12 -mx-4 md:mx-0 relative aspect-video bg-muted/20 rounded-2xl overflow-hidden">
-                    <img 
-                      src={article.coverImageUrl} 
+                  <div className="mt-12 -mx-4 md:mx-0 rounded-2xl overflow-hidden shadow-2xl">
+                    <ProgressiveImage
+                      src={article.coverImageUrl}
                       alt={article.title}
-                      className="w-full h-full object-cover shadow-2xl"
                       loading="eager"
-                      decoding="async"
-                      style={{ aspectRatio: '16/9' }}
+                      aspectRatio="16/9"
+                      objectFit="cover"
                     />
                   </div>
                 )}
@@ -484,14 +485,14 @@ export default function ArticleDetail() {
                     
                     case 'image':
                       return (
-                        <figure key={index} className="relative w-full bg-muted/20 rounded-xl overflow-hidden">
-                          <img 
-                            src={section.url} 
+                        <figure key={index} className="rounded-xl overflow-hidden">
+                          <ProgressiveImage
+                            src={section.url}
                             alt={section.alt || section.caption || ''}
-                            className="w-full h-auto object-contain cursor-pointer hover:scale-[1.02] transition-transform"
+                            className="cursor-pointer hover:scale-[1.02] transition-transform"
                             onClick={() => window.open(section.url, '_blank')}
                             loading="lazy"
-                            decoding="async"
+                            objectFit="contain"
                           />
                           {section.caption && (
                             <figcaption>
@@ -506,14 +507,14 @@ export default function ArticleDetail() {
                         <div key={index} className="my-12 -mx-4 md:mx-0">
                           <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-primary scrollbar-track-muted">
                             {section.images?.map((img: any, imgIndex: number) => (
-                              <figure key={imgIndex} className="flex-none w-[80%] md:w-[60%] snap-center relative bg-muted/20 rounded-2xl overflow-hidden">
-                                <img 
-                                  src={img.url} 
+                              <figure key={imgIndex} className="flex-none w-[80%] md:w-[60%] snap-center rounded-2xl overflow-hidden shadow-xl">
+                                <ProgressiveImage
+                                  src={img.url}
                                   alt={img.alt || img.caption || ''}
-                                  className="w-full h-[400px] object-cover shadow-xl cursor-pointer hover:scale-[1.02] transition-transform"
+                                  className="cursor-pointer hover:scale-[1.02] transition-transform h-[400px]"
                                   onClick={() => window.open(img.url, '_blank')}
                                   loading="lazy"
-                                  decoding="async"
+                                  objectFit="cover"
                                 />
                                 {img.caption && (
                                   <figcaption className="text-sm text-muted-foreground mt-4 text-center">
