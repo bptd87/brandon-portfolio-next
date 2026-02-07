@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
+import PageTransition from "./components/PageTransition";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import News from "./pages/News";
@@ -35,7 +36,8 @@ function Router() {
   
   // make sure to consider if you need authentication for certain routes
   return (
-    <Switch>
+    <PageTransition>
+      <Switch>
       <Route path={"/"} component={Home} />
       <Route path={"/projects"} component={Projects} />
       <Route path={"/projects/:slug"} component={ProjectDetail} />
@@ -58,7 +60,8 @@ function Router() {
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
-    </Switch>
+      </Switch>
+    </PageTransition>
   );
 }
 

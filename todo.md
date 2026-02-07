@@ -486,3 +486,8 @@
 ## Fix Footer Page Navigation Scroll
 - [x] Add scroll-to-top functionality when clicking footer links
 - [x] Test that pages scroll to top on navigation
+
+## Add Fade-in Page Transitions
+- [x] Create PageTransition component with fade-in animation
+- [x] Wrap routes with PageTransition component
+- [x] Test smooth transitions between pages
