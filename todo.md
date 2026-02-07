@@ -855,3 +855,10 @@
 - [x] Remove ALL lazy loading and opacity transitions
 - [x] Ensure images stay visible permanently once loaded
 - [x] Test scrolling up and down extensively
+
+## Fix Images Disappearing DURING Scroll
+- [x] Check for CSS transitions or opacity changes on scroll
+- [x] Look for scroll event handlers that might affect image visibility
+- [x] Check ProgressiveImage component for any scroll-related logic
+- [x] Remove any code that changes image visibility during scroll
+- [x] Verify images stay visible while actively scrolling

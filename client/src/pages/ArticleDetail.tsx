@@ -486,12 +486,13 @@ export default function ArticleDetail() {
                     case 'image':
                       return (
                         <figure key={index} className="rounded-xl overflow-hidden">
-                          <ProgressiveImage
+                          <img
                             src={section.url}
                             alt={section.alt || section.caption || ''}
-                            className="cursor-pointer hover:scale-[1.02] transition-transform"
+                            className="w-full h-auto cursor-pointer hover:scale-[1.02] transition-transform"
                             onClick={() => window.open(section.url, '_blank')}
-                            objectFit="contain"
+                            loading="eager"
+                            decoding="sync"
                           />
                           {section.caption && (
                             <figcaption>
@@ -507,12 +508,13 @@ export default function ArticleDetail() {
                           <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-primary scrollbar-track-muted">
                             {section.images?.map((img: any, imgIndex: number) => (
                               <figure key={imgIndex} className="flex-none w-[80%] md:w-[60%] snap-center rounded-2xl overflow-hidden shadow-xl">
-                                <ProgressiveImage
+                                <img
                                   src={img.url}
                                   alt={img.alt || img.caption || ''}
-                                  className="cursor-pointer hover:scale-[1.02] transition-transform h-[400px]"
+                                  className="w-full h-[400px] object-cover cursor-pointer hover:scale-[1.02] transition-transform"
                                   onClick={() => window.open(img.url, '_blank')}
-                                  objectFit="cover"
+                                  loading="eager"
+                                  decoding="sync"
                                 />
                                 {img.caption && (
                                   <figcaption className="text-sm text-muted-foreground mt-4 text-center">
