@@ -491,7 +491,6 @@ export default function ArticleDetail() {
                             alt={section.alt || section.caption || ''}
                             className="cursor-pointer hover:scale-[1.02] transition-transform"
                             onClick={() => window.open(section.url, '_blank')}
-                            loading="lazy"
                             objectFit="contain"
                           />
                           {section.caption && (
@@ -513,7 +512,6 @@ export default function ArticleDetail() {
                                   alt={img.alt || img.caption || ''}
                                   className="cursor-pointer hover:scale-[1.02] transition-transform h-[400px]"
                                   onClick={() => window.open(img.url, '_blank')}
-                                  loading="lazy"
                                   objectFit="cover"
                                 />
                                 {img.caption && (

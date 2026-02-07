@@ -848,3 +848,10 @@
 - [x] Check if CSS transitions are triggering
 - [x] Test with loading="eager" to isolate lazy loading
 - [x] Implement proper fix based on findings
+
+## URGENT: Fix Images Disappearing on Scroll
+- [x] Read ArticleDetail.tsx to see how images are actually rendered
+- [x] Check if there's any conditional rendering or visibility logic
+- [x] Remove ALL lazy loading and opacity transitions
+- [x] Ensure images stay visible permanently once loaded
+- [x] Test scrolling up and down extensively
