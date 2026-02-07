@@ -710,7 +710,7 @@ export default function ArticleDetail() {
             {/* Table of Contents - Desktop - Sticky Position */}
             {headings.length > 0 && (
               <div className="hidden lg:block lg:w-64 flex-shrink-0">
-                <div className="sticky top-28 bottom-12 w-64 space-y-1 max-h-[calc(100vh-8rem)] overflow-y-auto">
+                <div className="sticky top-28 w-64 space-y-1 max-h-[calc(100vh-8rem)] overflow-y-auto">
                   <h3 className="text-sm uppercase tracking-wider text-muted-foreground mb-4 font-semibold">Table of Contents</h3>
                   <nav className="space-y-2">
                     {headings.map((heading) => (

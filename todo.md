@@ -914,3 +914,10 @@
 - [x] Fix TOC click navigation (should scroll to sections)
 - [x] Test TOC sticky behavior
 - [x] Test TOC click-to-scroll functionality
+
+## Fix TOC Sticky Behavior
+- [x] Investigate why TOC is stuck at top instead of following scroll
+- [x] Fix sticky positioning to travel with article
+- [x] Ensure TOC is hidden on mobile (already has hidden lg:block)
+- [x] Test TOC sticky behavior on desktop
+- [x] Test TOC is hidden on mobile
