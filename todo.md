@@ -543,3 +543,17 @@
 - [x] Test import with sample articles
 - [x] Run full article migration (10 articles imported successfully)
 - [x] Verify all articles imported correctly
+
+## Fix Article Pages
+- [x] Review current article page design and identify issues
+- [x] Design article detail page layout
+- [x] Build article content rendering with block support
+- [x] Add article metadata display (date, category, tags)
+- [x] Style article typography and spacing
+- [x] Test article pages with imported content
+
+## Complete WordPress Import
+- [x] Fix import script to fetch ALL articles (not just 10)
+- [x] Add cover image fetching and import
+- [x] Re-run import to get remaining articles
+- [x] Verify all articles imported with images (22 articles with cover images)

@@ -3,8 +3,6 @@ import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { trpc } from "@/lib/trpc";
 import { Calendar, Clock, Heart, Share2, Linkedin, Instagram, Mail } from "lucide-react";
 import { Link, useParams } from "wouter";
@@ -42,10 +40,8 @@ export default function ArticleDetail() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"><Footer />
-    </div>
-      <Footer />
-    </div>
+        <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div>
+      </div>
     );
   }
 
@@ -59,10 +55,9 @@ export default function ArticleDetail() {
           <Link href="/articles">
             <Button>Back to Articles</Button>
           </Link>
+        </div>
         <Footer />
-    </div>
-      <Footer />
-    </div>
+      </div>
     );
   }
 
@@ -73,8 +68,8 @@ export default function ArticleDetail() {
       ? JSON.parse(article.content) 
       : article.content || [];
   } catch (e) {
-    // If content is plain text, wrap it in a paragraph object
-    contentSections = [{ type: 'paragraph', content: article.content }];
+    // If content is plain text HTML, wrap it in a text block
+    contentSections = [{ type: 'html', content: article.content }];
   }
 
   // Get related articles (exclude current)
@@ -88,7 +83,7 @@ export default function ArticleDetail() {
     <div className="min-h-screen bg-background">
       <Header />
 
-      {/* Hero Section - Light Background */}
+      {/* Hero Section */}
       <section className="py-16 bg-background">
         <div className="container max-w-5xl">
           {article.coverImageUrl && (
@@ -98,8 +93,7 @@ export default function ArticleDetail() {
                 alt={article.title}
                 className="w-full h-auto object-cover"
               />
-            <Footer />
-    </div>
+            </div>
           )}
 
           <div className="max-w-3xl mx-auto">
@@ -115,16 +109,13 @@ export default function ArticleDetail() {
               <div className="flex items-center gap-2">
                 <Calendar className="h-3 w-3" />
                 <span>{new Date(article.publishedAt || article.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-              <Footer />
-    </div>
+              </div>
               <span>|</span>
               <div className="flex items-center gap-2">
                 <Clock className="h-3 w-3" />
                 <span>{readTime} MIN READ</span>
-              <Footer />
-    </div>
-            <Footer />
-    </div>
+              </div>
+            </div>
 
             <h1 className="text-5xl md:text-6xl font-['Playfair_Display'] italic font-normal mb-6 leading-tight">
               {article.title}
@@ -140,8 +131,7 @@ export default function ArticleDetail() {
               <div>
                 <p className="font-semibold text-sm uppercase tracking-wider">By Brandon PT Davis</p>
                 <p className="text-sm text-muted-foreground">Scenic + Experiential Designer</p>
-              <Footer />
-    </div>
+              </div>
               <div className="flex items-center gap-2">
                 <Button 
                   onClick={handleLike}
@@ -158,14 +148,10 @@ export default function ArticleDetail() {
                 >
                   <Share2 className="h-4 w-4" />
                 </Button>
-              <Footer />
-    </div>
-            <Footer />
-    </div>
-          <Footer />
-    </div>
-        <Footer />
-    </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Article Content */}
@@ -193,13 +179,12 @@ export default function ArticleDetail() {
                       return null;
                     })}
                   </nav>
-                <Footer />
-    </div>
+                </div>
               </aside>
             )}
 
             {/* Main Content */}
-            <article className="prose prose-lg max-w-none">
+            <article className="prose prose-lg max-w-none prose-headings:font-['Playfair_Display'] prose-headings:italic prose-p:text-foreground/90 prose-p:leading-relaxed">
               {Array.isArray(contentSections) && contentSections.map((section: any, index: number) => {
                 switch (section.type) {
                   case 'heading':
@@ -233,7 +218,7 @@ export default function ArticleDetail() {
                       <figure key={index} className="my-8">
                         <img 
                           src={section.url} 
-                          alt={section.caption || ''}
+                          alt={section.alt || section.caption || ''}
                           className="w-full rounded-lg"
                         />
                         {section.caption && (
@@ -244,24 +229,52 @@ export default function ArticleDetail() {
                       </figure>
                     );
                   
-                  case 'list':
+                  case 'gallery':
                     return (
-                      <ul key={index} className="list-disc pl-6 mb-6 space-y-2">
+                      <div key={index} className="my-8 grid grid-cols-2 md:grid-cols-3 gap-4">
+                        {section.images?.map((img: any, imgIndex: number) => (
+                          <figure key={imgIndex}>
+                            <img 
+                              src={img.url} 
+                              alt={img.alt || img.caption || ''}
+                              className="w-full rounded-lg"
+                            />
+                            {img.caption && (
+                              <figcaption className="text-xs text-muted-foreground mt-1">
+                                {img.caption}
+                              </figcaption>
+                            )}
+                          </figure>
+                        ))}
+                      </div>
+                    );
+                  
+                  case 'list':
+                    const ListTag = section.listType === 'numbered' ? 'ol' : 'ul';
+                    return (
+                      <ListTag key={index} className={`${section.listType === 'numbered' ? 'list-decimal' : 'list-disc'} pl-6 mb-6 space-y-2`}>
                         {section.items?.map((item: string, itemIndex: number) => (
                           <li key={itemIndex}>{item}</li>
                         ))}
-                      </ul>
+                      </ListTag>
+                    );
+                  
+                  case 'html':
+                    // Render raw HTML from WordPress import
+                    return (
+                      <div 
+                        key={index} 
+                        className="article-content"
+                        dangerouslySetInnerHTML={{ __html: section.content }}
+                      />
                     );
                   
                   default:
                     return null;
                 }
               })}
-
-              {/* FAQ Section - TODO: Add FAQ data structure if needed */}
             </article>
-          <Footer />
-    </div>
+          </div>
 
           {/* Author Bio */}
           <Card className="mt-16 max-w-3xl mx-auto">
@@ -290,16 +303,12 @@ export default function ArticleDetail() {
                         <Mail className="h-4 w-4" />
                       </Button>
                     </a>
-                  <Footer />
-    </div>
-                <Footer />
-    </div>
-              <Footer />
-    </div>
+                  </div>
+                </div>
+              </div>
             </CardContent>
           </Card>
-        <Footer />
-    </div>
+        </div>
       </section>
 
       {/* Related Articles */}
@@ -318,8 +327,7 @@ export default function ArticleDetail() {
                           alt={item.title}
                           className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                         />
-                      <Footer />
-    </div>
+                      </div>
                     )}
                     <CardContent className="p-6">
                       <div className="flex items-center gap-2 mb-3 text-xs text-muted-foreground uppercase tracking-wider">
@@ -327,8 +335,7 @@ export default function ArticleDetail() {
                           {item.categoryId}
                         </Badge>
                         <span>{new Date(item.publishedAt || item.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-                      <Footer />
-    </div>
+                      </div>
                       <h3 className="font-semibold mb-2 line-clamp-2">{item.title}</h3>
                       {item.excerpt && (
                         <p className="text-sm text-muted-foreground line-clamp-2">{item.excerpt}</p>
@@ -337,13 +344,12 @@ export default function ArticleDetail() {
                   </Link>
                 </Card>
               ))}
-            <Footer />
-    </div>
-          <Footer />
-    </div>
+            </div>
+          </div>
         </section>
       )}
-    <Footer />
+
+      <Footer />
     </div>
   );
 }

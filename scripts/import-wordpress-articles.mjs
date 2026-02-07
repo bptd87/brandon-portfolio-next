@@ -27,20 +27,35 @@ function convertHtmlToBlocks(htmlContent) {
   return blocks;
 }
 
-// Fetch all articles from WordPress
+// Fetch all articles from WordPress with pagination
 async function fetchWordPressArticles() {
   console.log('Fetching articles from WordPress...');
   
   try {
-    const response = await fetch(`${WP_API_BASE}/articles?per_page=100`);
+    let allArticles = [];
+    let page = 1;
+    let hasMore = true;
     
-    if (!response.ok) {
-      throw new Error(`WordPress API error: ${response.status} ${response.statusText}`);
+    while (hasMore) {
+      const response = await fetch(`${WP_API_BASE}/articles?per_page=100&page=${page}`);
+      
+      if (!response.ok) {
+        throw new Error(`WordPress API error: ${response.status} ${response.statusText}`);
+      }
+      
+      const articles = await response.json();
+      allArticles = allArticles.concat(articles);
+      
+      // Check if there are more pages
+      const totalPages = parseInt(response.headers.get('X-WP-TotalPages') || '1');
+      hasMore = page < totalPages;
+      page++;
+      
+      console.log(`Fetched page ${page - 1}, total articles so far: ${allArticles.length}`);
     }
     
-    const articles = await response.json();
-    console.log(`Found ${articles.length} articles`);
-    return articles;
+    console.log(`Found ${allArticles.length} total articles`);
+    return allArticles;
   } catch (error) {
     console.error('Error fetching articles:', error.message);
     throw error;
@@ -169,8 +184,20 @@ async function importArticles(wpArticles, categoryMap, tagMap) {
       // Map category
       const categoryId = wpArticle.article_catagory?.[0] ? categoryMap.get(wpArticle.article_catagory[0]) : null;
       
-      // Get featured image URL if available (skip for now to speed up import)
+      // Get featured image URL if available
       let coverImageUrl = null;
+      if (wpArticle.featured_media) {
+        try {
+          const mediaResponse = await fetch(`${WP_API_BASE}/media/${wpArticle.featured_media}`);
+          if (mediaResponse.ok) {
+            const media = await mediaResponse.json();
+            coverImageUrl = media.source_url;
+            console.log(`  Fetched cover image: ${coverImageUrl}`);
+          }
+        } catch (error) {
+          console.log(`  Could not fetch featured image for article ${wpArticle.id}`);
+        }
+      }
       
       // Create article
       const result = await db.insert(articles).values({
@@ -189,7 +216,19 @@ async function importArticles(wpArticles, categoryMap, tagMap) {
         updatedAt: new Date(wpArticle.modified)
       });
       
-      const newArticleId = Number(result.insertId);
+      // Get the inserted article ID
+      let newArticleId;
+      if (result.insertId) {
+        newArticleId = Number(result.insertId);
+      } else {
+        // Fallback: query for the article we just inserted
+        const [inserted] = await db.select().from(articles).where(eq(articles.slug, wpArticle.slug)).limit(1);
+        newArticleId = inserted?.id;
+      }
+      
+      if (!newArticleId) {
+        throw new Error('Failed to get article ID after insert');
+      }
       
       // Map and create article tags
       if (wpArticle.article_tags && wpArticle.article_tags.length > 0) {
