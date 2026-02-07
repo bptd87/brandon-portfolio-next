@@ -486,14 +486,16 @@ export default function ArticleDetail() {
                     case 'image':
                       return (
                         <figure key={index} className="rounded-xl overflow-hidden">
-                          <img
-                            src={section.url}
-                            alt={section.alt || section.caption || ''}
-                            className="w-full h-auto cursor-pointer hover:scale-[1.02] transition-transform"
+                          <div
+                            className="w-full aspect-video bg-cover bg-center cursor-pointer hover:scale-[1.02] transition-transform"
                             onClick={() => window.open(section.url, '_blank')}
-                            loading="eager"
-                            decoding="sync"
-                            style={{ willChange: 'transform', transform: 'translateZ(0)', WebkitTransform: 'translateZ(0)', backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
+                            style={{ 
+                              backgroundImage: `url(${section.url})`,
+                              minHeight: '400px',
+                              position: 'relative'
+                            }}
+                            role="img"
+                            aria-label={section.alt || section.caption || ''}
                           />
                           {section.caption && (
                             <figcaption>
@@ -509,14 +511,15 @@ export default function ArticleDetail() {
                           <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-primary scrollbar-track-muted">
                             {section.images?.map((img: any, imgIndex: number) => (
                               <figure key={imgIndex} className="flex-none w-[80%] md:w-[60%] snap-center rounded-2xl overflow-hidden shadow-xl">
-                                <img
-                                  src={img.url}
-                                  alt={img.alt || img.caption || ''}
-                                  className="w-full h-[400px] object-cover cursor-pointer hover:scale-[1.02] transition-transform"
+                                <div
+                                  className="w-full h-[400px] bg-cover bg-center cursor-pointer hover:scale-[1.02] transition-transform"
                                   onClick={() => window.open(img.url, '_blank')}
-                                  loading="eager"
-                                  decoding="sync"
-                                  style={{ willChange: 'transform', transform: 'translateZ(0)', WebkitTransform: 'translateZ(0)', backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
+                                  style={{ 
+                                    backgroundImage: `url(${img.url})`,
+                                    position: 'relative'
+                                  }}
+                                  role="img"
+                                  aria-label={img.alt || img.caption || ''}
                                 />
                                 {img.caption && (
                                   <figcaption className="text-sm text-muted-foreground mt-4 text-center">

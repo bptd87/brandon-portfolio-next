@@ -874,3 +874,9 @@
 - [x] Add -webkit-transform for Safari compatibility
 - [x] Add backface-visibility: hidden for Safari
 - [x] Test on Safari to verify images stay visible during scroll
+
+## Safari Alternative Rendering Fix
+- [x] Add explicit width/height attributes to prevent layout shift
+- [x] Use background-image instead of img tags for Safari
+- [x] Add position: relative to image containers
+- [x] Test on Safari to confirm images stay visible
