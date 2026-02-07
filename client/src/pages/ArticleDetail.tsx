@@ -63,8 +63,12 @@ export default function ArticleDetail() {
     
     const h2Elements = contentRef.current.querySelectorAll('h2');
     const extractedHeadings = Array.from(h2Elements).map((heading, index) => {
-      const id = `heading-${index}`;
-      heading.id = id;
+      // Use existing ID if present, otherwise create one
+      let id = heading.id;
+      if (!id) {
+        id = `heading-${index}`;
+        heading.id = id;
+      }
       return {
         id,
         text: heading.textContent || '',

@@ -908,3 +908,9 @@
 - [x] Add bottom constraint to TOC sticky positioning
 - [x] Ensure TOC stops before footer section
 - [x] Test TOC follows scroll but stops at article end
+
+## Debug TOC Issues
+- [x] Fix TOC stuck at top (should follow scroll)
+- [x] Fix TOC click navigation (should scroll to sections)
+- [x] Test TOC sticky behavior
+- [x] Test TOC click-to-scroll functionality
