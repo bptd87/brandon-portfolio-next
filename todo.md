@@ -832,3 +832,12 @@
 - [x] Fix ProgressiveImage component state management to prevent re-render flash
 - [x] Use useRef to track loaded state persistently
 - [x] Test scrolling up and down to verify no flashing
+
+## Fix Lazy-Loaded Image Flash
+- [ ] Update ProgressiveImage to skip blur animation for already-loaded images
+- [ ] Test scrolling down and back up to verify no flash on lazy images
+
+## Replace Blur-up with Skeleton Loaders
+- [x] Remove blur-up animation from ProgressiveImage
+- [x] Use simple skeleton loader placeholder instead
+- [x] Test that images don't flash when scrolling

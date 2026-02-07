@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 interface ProgressiveImageProps {
   src: string;
@@ -21,64 +21,49 @@ export function ProgressiveImage({
 }: ProgressiveImageProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
-  const loadedRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
-    // If this image was already loaded, show it immediately
-    if (loadedRef.current.has(src)) {
-      setImageLoaded(true);
-      return;
-    }
-
-    // Reset state for new image
     setImageLoaded(false);
     setImageError(false);
-
-    // Preload the image
-    const img = new Image();
-    img.src = src;
-    img.onload = () => {
-      loadedRef.current.add(src);
-      setImageLoaded(true);
-    };
-    img.onerror = () => {
-      setImageError(true);
-    };
-
-    return () => {
-      img.onload = null;
-      img.onerror = null;
-    };
   }, [src]);
 
   return (
     <div 
-      className="relative overflow-hidden bg-muted/20"
+      className="relative overflow-hidden bg-muted/10"
       style={aspectRatio ? { aspectRatio } : undefined}
     >
-      {/* Blur placeholder - shown while loading */}
+      {/* Skeleton loader with pixelated blur effect */}
       {!imageLoaded && !imageError && (
-        <div className="absolute inset-0 bg-gradient-to-br from-muted/40 via-muted/20 to-muted/40 animate-pulse" />
+        <div className="absolute inset-0">
+          <div 
+            className="w-full h-full animate-pulse"
+            style={{
+              backgroundImage: `
+                linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px)
+              `,
+              backgroundColor: 'hsl(var(--muted) / 0.2)',
+              filter: 'blur(1px)',
+            }}
+          />
+        </div>
       )}
 
-      {/* Actual image */}
+      {/* Actual image - no animation, just opacity */}
       <img
         src={src}
         alt={alt}
         className={`
           w-full h-full 
           ${objectFit === 'cover' ? 'object-cover' : 'object-contain'}
-          transition-all duration-500 ease-out
-          ${imageLoaded ? 'opacity-100 scale-100 blur-0' : 'opacity-0 scale-105 blur-lg'}
+          ${imageLoaded ? 'opacity-100' : 'opacity-0'}
           ${className}
         `}
         onClick={onClick}
         loading={loading}
         decoding="async"
-        onLoad={() => {
-          loadedRef.current.add(src);
-          setImageLoaded(true);
-        }}
+        onLoad={() => setImageLoaded(true)}
         onError={() => setImageError(true)}
       />
 
