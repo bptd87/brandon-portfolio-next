@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { trpc } from "@/lib/trpc";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { Link } from "wouter";
+import { AnimatedSection } from "@/components/AnimatedSection";
 
 export default function Home() {
   const { user } = useAuth();
@@ -107,6 +108,7 @@ export default function Home() {
               )}
 
               {/* Huge Project Showcase */}
+              <AnimatedSection>
               <Link href={`/projects/${project.slug}`}>
                 <div className="group cursor-pointer relative overflow-hidden">
                   {/* Full-width, tall image */}
@@ -167,6 +169,7 @@ export default function Home() {
                   </div>
                 </div>
               </Link>
+              </AnimatedSection>
             </div>
           ))}
         </section>

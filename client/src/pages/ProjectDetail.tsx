@@ -2,11 +2,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { trpc } from "@/lib/trpc";
-import { ArrowLeft, ArrowRight, MapPin, Calendar, Heart, Eye, ChevronDown, ChevronUp } from "lucide-react";
+import { ArrowLeft, ArrowRight, MapPin, Calendar, ChevronDown, ChevronUp } from "lucide-react";
 import { Link, useParams, useLocation } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useState } from "react";
+import { AnimatedSection } from "@/components/AnimatedSection";
 
 // Convert YouTube/Vimeo URLs to embed format
 function getEmbedUrl(url: string): string {
@@ -28,6 +29,9 @@ function getEmbedUrl(url: string): string {
   return url;
 }
 
+// Color rotation for consistency with homepage
+const ACCENT_COLORS = ['#FF5722', '#00E5FF', '#FF1744'];
+
 export default function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
   const [, setLocation] = useLocation();
@@ -38,7 +42,6 @@ export default function ProjectDetail() {
   );
   const relatedProjects = allRelatedProjects?.slice(0, 10);
   const [showFullNotes, setShowFullNotes] = useState(false);
-  const [liked, setLiked] = useState(false);
   const [galleryOpen, setGalleryOpen] = useState(true);
   const [renderingsOpen, setRenderingsOpen] = useState(true);
   const [teamOpen, setTeamOpen] = useState(true);
@@ -95,347 +98,350 @@ export default function ProjectDetail() {
   const prevProject = currentIndex > 0 ? relatedProjects?.[currentIndex - 1] : null;
   const nextProject = currentIndex >= 0 && currentIndex < (relatedProjects?.length ?? 0) - 1 ? relatedProjects?.[currentIndex + 1] : null;
 
+  // Determine accent color based on project index
+  const accentColor = ACCENT_COLORS[currentIndex % 3] || ACCENT_COLORS[0];
+
   return (
-    <div className="min-h-screen relative">
-      {/* Fixed Blurred Background */}
-      <div className="fixed inset-0 z-0">
-        {project.coverImageUrl ? (
-          <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ 
-              backgroundImage: `url(${project.coverImageUrl})`,
-              filter: 'blur(20px) brightness(0.4)',
-              transform: 'scale(1.2)'
-            }}
-          />
-        ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-background/90" />
-        )}
-      </div>
+    <div className="min-h-screen bg-background">
+      <Header />
 
       {/* Sticky Navigation Arrows */}
       {prevProject && (
         <button
           onClick={() => setLocation(`/projects/${prevProject.slug}`)}
-          className="fixed left-4 top-1/2 -translate-y-1/2 z-50 backdrop-blur-md bg-white/10 border border-white/20 text-white hover:bg-white/20 p-4 rounded-full transition-all hover:scale-110"
+          className="fixed left-4 top-1/2 -translate-y-1/2 z-50 backdrop-blur-md bg-background/80 border-2 hover:bg-background p-4 rounded-full transition-all hover:scale-110"
+          style={{ borderColor: accentColor }}
           aria-label="Previous project"
         >
-          <ArrowLeft className="h-6 w-6" />
+          <ArrowLeft className="h-6 w-6" style={{ color: accentColor }} />
         </button>
       )}
       
       {nextProject && (
         <button
           onClick={() => setLocation(`/projects/${nextProject.slug}`)}
-          className="fixed right-4 top-1/2 -translate-y-1/2 z-50 backdrop-blur-md bg-white/10 border border-white/20 text-white hover:bg-white/20 p-4 rounded-full transition-all hover:scale-110"
+          className="fixed right-4 top-1/2 -translate-y-1/2 z-50 backdrop-blur-md bg-background/80 border-2 hover:bg-background p-4 rounded-full transition-all hover:scale-110"
+          style={{ borderColor: accentColor }}
           aria-label="Next project"
         >
-          <ArrowRight className="h-6 w-6" />
+          <ArrowRight className="h-6 w-6" style={{ color: accentColor }} />
         </button>
       )}
 
-      {/* Content Layer */}
-      <div className="relative z-10">
-        <Header />
+      {/* Full-Screen Hero Section */}
+      <section className="relative h-[85vh] overflow-hidden">
+        {project.coverImageUrl ? (
+          <img 
+            src={project.coverImageUrl} 
+            alt={project.title}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="w-full h-full bg-muted flex items-center justify-center">
+            <p className="text-muted-foreground text-2xl">No cover image</p>
+          </div>
+        )}
+        
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+        
+        {/* Color accent overlay */}
+        <div 
+          className="absolute inset-0 mix-blend-multiply opacity-10"
+          style={{ backgroundColor: accentColor }}
+        />
 
-        {/* Hero Section - Same width as content */}
-        <div className="container max-w-3xl py-20">
-          <div className="backdrop-blur-sm bg-background/10 rounded-2xl p-8 md:p-12 border border-white/10 text-center">
-            {project.metadata?.subcategory && (
-              <p className="text-xs font-pixel text-white/80 mb-4">
-                {project.metadata.subcategory}
-              </p>
-            )}
+        {/* Project info overlay - bottom positioned */}
+        <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16 lg:p-24">
+          <div className="container max-w-5xl">
+            <div className="flex items-center gap-4 mb-6">
+              <Badge 
+                variant="outline" 
+                className="text-sm tracking-wider font-semibold bg-background/80 backdrop-blur-sm px-4 py-2 border-2"
+                style={{
+                  borderColor: accentColor,
+                  color: accentColor
+                }}
+              >
+                {project.discipline?.toUpperCase() || 'PROJECT'}
+              </Badge>
+              {project.year && (
+                <span className="text-sm text-foreground/80 font-pixel">{project.year}</span>
+              )}
+            </div>
             
-            <h1 className="text-5xl md:text-6xl font-serif italic text-white mb-6">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-6 leading-tight">
               {project.title}
             </h1>
-            
-            <div className="flex items-center gap-6 text-white/90 justify-center flex-wrap text-sm">
+
+            <div className="flex items-center gap-6 text-foreground/90 flex-wrap text-base mb-8">
               {project.client && (
                 <div className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4" />
+                  <MapPin className="h-5 w-5" />
                   <span>{project.client}</span>
                 </div>
               )}
               {project.location && (
-                <span>· {project.location}</span>
+                <div className="flex items-center gap-2">
+                  <span>•</span>
+                  <span>{project.location}</span>
+                </div>
               )}
               {project.year && (
                 <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
+                  <Calendar className="h-5 w-5" />
                   <span>{project.year}</span>
                 </div>
               )}
             </div>
+
+            <Link href="/projects">
+              <Button 
+                variant="outline" 
+                size="lg"
+                className="gap-2 font-semibold text-base px-8 py-6 border-2"
+              >
+                <ArrowLeft className="h-5 w-5" />
+                BACK TO PROJECTS
+              </Button>
+            </Link>
           </div>
         </div>
+      </section>
 
-        {/* Engagement Section */}
-        <div className="container max-w-3xl py-8">
-          <div className="backdrop-blur-md bg-background/40 rounded-2xl p-6 border border-white/10 shadow-2xl">
-            <div className="flex items-center justify-center gap-8 text-white/90">
-              <button 
-                onClick={() => setLiked(!liked)}
-                className="flex items-center gap-2 hover:text-red-400 transition-colors"
-              >
-                <Heart className={`h-5 w-5 ${liked ? 'fill-red-400 text-red-400' : ''}`} />
-                <span className="text-sm">{(project.likeCount || 0) + (liked ? 1 : 0)} Likes</span>
-              </button>
-              
-              <div className="flex items-center gap-2">
-                <Eye className="h-5 w-5" />
-                <span className="text-sm">{project.viewCount || 0} Views</span>
-              </div>
-              
-              <button 
-                onClick={() => {
-                  if (navigator.share) {
-                    navigator.share({
-                      title: project.title,
-                      text: `Check out ${project.title} by Brandon PT Davis`,
-                      url: window.location.href
-                    });
-                  } else {
-                    navigator.clipboard.writeText(window.location.href);
-                    alert('Link copied to clipboard!');
-                  }
-                }}
-                className="flex items-center gap-2 hover:text-blue-400 transition-colors"
-              >
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                </svg>
-                <span className="text-sm">Share</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Content with Glass Morphism */}
-        <div className="container max-w-3xl pb-16">
-          {/* Design Notes - Glass Card */}
-          {designNotes && (
-            <div className="mb-12 backdrop-blur-md bg-background/40 rounded-2xl p-8 md:p-12 border border-white/10 shadow-2xl">
-              <h2 className="text-xs font-pixel text-white/60 mb-6">
-                PROJECT OVERVIEW
+      {/* Content Sections */}
+      <div className="container max-w-5xl py-16 space-y-16">
+        
+        {/* Design Notes */}
+        {designNotes && (
+          <AnimatedSection>
+            <div className="prose prose-lg max-w-none">
+              <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: accentColor }}>
+                Design Notes
               </h2>
-              <div className="prose prose-lg prose-invert max-w-none">
-                <p className="text-white/90 leading-relaxed whitespace-pre-wrap text-lg">
-                  {showFullNotes ? designNotes : notesPreview}
-                </p>
-                {shouldShowReadMore && (
-                  <Button 
-                    variant="link" 
-                    onClick={() => setShowFullNotes(!showFullNotes)}
-                    className="px-0 mt-4 text-white/80 hover:text-white"
-                  >
-                    {showFullNotes ? '...Show Less' : '...Read More'}
-                  </Button>
-                )}
+              <div className="text-foreground/80 leading-relaxed whitespace-pre-wrap">
+                {showFullNotes ? designNotes : notesPreview}
               </div>
+              {shouldShowReadMore && (
+                <Button
+                  variant="ghost"
+                  onClick={() => setShowFullNotes(!showFullNotes)}
+                  className="mt-4 gap-2"
+                  style={{ color: accentColor }}
+                >
+                  {showFullNotes ? (
+                    <>Show Less <ChevronUp className="h-4 w-4" /></>
+                  ) : (
+                    <>Read More <ChevronDown className="h-4 w-4" /></>
+                  )}
+                </Button>
+              )}
             </div>
-          )}
+          </AnimatedSection>
+        )}
 
-          {/* Gallery Section - Full Width Images */}
-          {productionPhotos.length > 0 && (
-            <div className="mb-12 backdrop-blur-md bg-background/40 rounded-2xl p-8 md:p-12 border border-white/10 shadow-2xl">
+        {/* Production Photos Gallery */}
+        {productionPhotos.length > 0 && (
+          <AnimatedSection>
+            <div>
               <button
                 onClick={() => setGalleryOpen(!galleryOpen)}
-                className="flex items-center justify-between w-full mb-6 group"
+                className="flex items-center justify-between w-full mb-8 group"
               >
-                <h2 className="text-xs font-pixel text-white/60">
-                  GALLERY ({productionPhotos.length})
+                <h2 className="text-4xl font-black tracking-tighter" style={{ color: accentColor }}>
+                  Production Photos
+                  <span className="ml-4 text-muted-foreground text-lg">({productionPhotos.length})</span>
                 </h2>
                 {galleryOpen ? (
-                  <ChevronUp className="h-5 w-5 text-white/60 group-hover:text-white transition-colors" />
+                  <ChevronUp className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
                 ) : (
-                  <ChevronDown className="h-5 w-5 text-white/60 group-hover:text-white transition-colors" />
+                  <ChevronDown className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
                 )}
               </button>
               
               {galleryOpen && (
-                <div className="grid grid-cols-1 gap-6">
-                  {productionPhotos.map((image) => (
-                    <div key={image.id} className="group">
-                      <div className="aspect-[16/10] overflow-hidden rounded-lg bg-black border border-white/5">
-                        <img 
-                          src={image.imageUrl || ''} 
-                          alt={image.altText || image.caption || project.title}
-                          className="w-full h-full object-contain transition-transform duration-500"
-                        />
-                      </div>
-                      {image.caption && (
-                        <p className="text-sm text-white/60 mt-3 italic">{image.caption}</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {productionPhotos.map((img) => (
+                    <div key={img.id} className="group relative overflow-hidden rounded-lg border-2 border-border hover:border-foreground/20 transition-all">
+                      <img
+                        src={img.imageUrl || ''}
+                        alt={img.caption || project.title}
+                        className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                      {img.caption && (
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/90 to-transparent p-4">
+                          <p className="text-sm text-foreground/90">{img.caption}</p>
+                        </div>
                       )}
                     </div>
                   ))}
                 </div>
               )}
             </div>
-          )}
+          </AnimatedSection>
+        )}
 
-          {/* Renderings Section - Full Width */}
-          {renderings.length > 0 && (
-            <div className="mb-12 backdrop-blur-md bg-background/40 rounded-2xl p-8 md:p-12 border border-white/10 shadow-2xl">
+        {/* Renderings */}
+        {renderings.length > 0 && (
+          <AnimatedSection>
+            <div>
               <button
                 onClick={() => setRenderingsOpen(!renderingsOpen)}
-                className="flex items-center justify-between w-full mb-6 group"
+                className="flex items-center justify-between w-full mb-8 group"
               >
-                <h2 className="text-xs font-pixel text-white/60">
-                  RENDERINGS ({renderings.length})
+                <h2 className="text-4xl font-black tracking-tighter" style={{ color: accentColor }}>
+                  Renderings
+                  <span className="ml-4 text-muted-foreground text-lg">({renderings.length})</span>
                 </h2>
                 {renderingsOpen ? (
-                  <ChevronUp className="h-5 w-5 text-white/60 group-hover:text-white transition-colors" />
+                  <ChevronUp className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
                 ) : (
-                  <ChevronDown className="h-5 w-5 text-white/60 group-hover:text-white transition-colors" />
+                  <ChevronDown className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
                 )}
               </button>
               
               {renderingsOpen && (
-                <div className="grid grid-cols-1 gap-6">
-                  {renderings.map((image) => (
-                    <div key={image.id} className="group">
-                      <div className="aspect-[16/10] overflow-hidden rounded-lg bg-black border border-white/5">
-                        <img 
-                          src={image.imageUrl || ''} 
-                          alt={image.altText || image.caption || project.title}
-                          className="w-full h-full object-contain transition-transform duration-500"
-                        />
-                      </div>
-                      {image.caption && (
-                        <p className="text-sm text-white/60 mt-3 italic">{image.caption}</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {renderings.map((img) => (
+                    <div key={img.id} className="group relative overflow-hidden rounded-lg border-2 border-border hover:border-foreground/20 transition-all">
+                      <img
+                        src={img.imageUrl || ''}
+                        alt={img.caption || project.title}
+                        className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                      {img.caption && (
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/90 to-transparent p-4">
+                          <p className="text-sm text-foreground/90">{img.caption}</p>
+                        </div>
                       )}
                     </div>
                   ))}
                 </div>
               )}
             </div>
-          )}
+          </AnimatedSection>
+        )}
 
-          {/* Video Embeds - Glass Card */}
-          {videos.length > 0 && (
-            <div className="mb-12 backdrop-blur-md bg-background/40 rounded-2xl p-8 md:p-12 border border-white/10 shadow-2xl">
+        {/* Videos */}
+        {videos.length > 0 && (
+          <AnimatedSection>
+            <div>
               <button
                 onClick={() => setVideosOpen(!videosOpen)}
-                className="flex items-center justify-between w-full mb-6 group"
+                className="flex items-center justify-between w-full mb-8 group"
               >
-                <h2 className="text-xs font-pixel text-white/60">
-                  VIDEOS ({videos.length})
+                <h2 className="text-4xl font-black tracking-tighter" style={{ color: accentColor }}>
+                  Videos
+                  <span className="ml-4 text-muted-foreground text-lg">({videos.length})</span>
                 </h2>
                 {videosOpen ? (
-                  <ChevronUp className="h-5 w-5 text-white/60 group-hover:text-white transition-colors" />
+                  <ChevronUp className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
                 ) : (
-                  <ChevronDown className="h-5 w-5 text-white/60 group-hover:text-white transition-colors" />
+                  <ChevronDown className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
                 )}
               </button>
               
               {videosOpen && (
                 <div className="grid grid-cols-1 gap-8">
                   {videos.map((video) => (
-                    <div key={video.id} className="group">
-                      <div className="aspect-video overflow-hidden rounded-lg bg-black/20 backdrop-blur-sm border border-white/5">
-                        {video.videoUrl && (
-                          <iframe
-                            src={getEmbedUrl(video.videoUrl)}
-                            title={video.caption || project.title}
-                            className="w-full h-full"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                          />
-                        )}
+                    <div key={video.id} className="relative rounded-lg overflow-hidden border-2 border-border">
+                      <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                        <iframe
+                          src={getEmbedUrl(video.videoUrl || '')}
+                          className="absolute inset-0 w-full h-full"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
                       </div>
                       {video.caption && (
-                        <p className="text-sm text-white/60 mt-3 italic">{video.caption}</p>
+                        <div className="p-4 bg-muted">
+                          <p className="text-sm text-foreground/90">{video.caption}</p>
+                        </div>
                       )}
                     </div>
                   ))}
                 </div>
               )}
             </div>
-          )}
+          </AnimatedSection>
+        )}
 
-          {/* Creative Team - Glass Card */}
-          {creativeTeamArray.length > 0 && (
-            <div className="mb-12 backdrop-blur-md bg-background/40 rounded-2xl p-8 md:p-12 border border-white/10 shadow-2xl">
+        {/* Creative Team */}
+        {creativeTeamArray.length > 0 && (
+          <AnimatedSection>
+            <div>
               <button
                 onClick={() => setTeamOpen(!teamOpen)}
-                className="flex items-center justify-between w-full mb-6 group"
+                className="flex items-center justify-between w-full mb-8 group"
               >
-                <h2 className="text-xs font-pixel text-white/60">
-                  CREATIVE TEAM
+                <h2 className="text-4xl font-black tracking-tighter" style={{ color: accentColor }}>
+                  Creative Team
                 </h2>
                 {teamOpen ? (
-                  <ChevronUp className="h-5 w-5 text-white/60 group-hover:text-white transition-colors" />
+                  <ChevronUp className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
                 ) : (
-                  <ChevronDown className="h-5 w-5 text-white/60 group-hover:text-white transition-colors" />
+                  <ChevronDown className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
                 )}
               </button>
               
               {teamOpen && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
-                  {creativeTeamArray.map((member, index) => (
-                    <div key={index} className="flex justify-between items-baseline border-b border-white/10 pb-2">
-                      <span className="text-sm text-white/60">{member.role}</span>
-                      <span className="text-base text-white/90">{member.name}</span>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {creativeTeamArray.map((member, idx) => (
+                    <div key={idx} className="flex items-start gap-4 p-4 rounded-lg bg-muted/50 border border-border">
+                      <div className="flex-1">
+                        <p className="font-semibold text-foreground">{member.name}</p>
+                        <p className="text-sm text-muted-foreground">{member.role}</p>
+                      </div>
                     </div>
                   ))}
                 </div>
               )}
             </div>
-          )}
+          </AnimatedSection>
+        )}
 
+        <Separator className="my-16" />
 
-
-          {/* Related Projects */}
-          {relatedProjectsFiltered.length > 0 && (
-            <div className="mb-12 backdrop-blur-md bg-background/40 rounded-2xl p-8 md:p-12 border border-white/10 shadow-2xl">
-              <h2 className="text-xs font-pixel text-white/60 mb-8">
-                MORE FROM {project.discipline?.replace('_', ' ').toUpperCase()}
+        {/* Related Projects */}
+        {relatedProjectsFiltered.length > 0 && (
+          <AnimatedSection>
+            <div>
+              <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: accentColor }}>
+                More {project.discipline} Projects
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {relatedProjectsFiltered.map((relatedProject) => (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {relatedProjectsFiltered.map((relatedProject, idx) => (
                   <Link key={relatedProject.id} href={`/projects/${relatedProject.slug}`}>
                     <div className="group cursor-pointer">
-                      <div className="aspect-[4/3] overflow-hidden rounded-lg bg-black/20 backdrop-blur-sm border border-white/5 mb-3">
-                        {relatedProject.coverImageUrl && (
-                          <img 
-                            src={relatedProject.coverImageUrl} 
+                      <div className="relative overflow-hidden rounded-lg mb-4 border-2 border-border hover:border-foreground/20 transition-all">
+                        {relatedProject.coverImageUrl ? (
+                          <img
+                            src={relatedProject.coverImageUrl}
                             alt={relatedProject.title}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-700"
                           />
+                        ) : (
+                          <div className="w-full h-64 bg-muted flex items-center justify-center">
+                            <p className="text-muted-foreground">No image</p>
+                          </div>
                         )}
                       </div>
-                      <h3 className="text-white font-serif italic text-lg group-hover:text-white/80 transition-colors">
+                      <h3 className="text-xl font-bold mb-2 group-hover:text-foreground/70 transition-colors">
                         {relatedProject.title}
                       </h3>
-                      {relatedProject.year && (
-                        <p className="text-white/60 text-sm">{relatedProject.year}</p>
-                      )}
+                      <p className="text-sm text-muted-foreground">
+                        {relatedProject.year} • {relatedProject.client}
+                      </p>
                     </div>
                   </Link>
                 ))}
               </div>
             </div>
-          )}
-
-          {/* Back to Portfolio */}
-          <div className="flex justify-center mt-16">
-            <Link href={`/projects?discipline=${project.discipline}`}>
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="gap-2 backdrop-blur-md bg-white/10 border-white/20 text-white hover:bg-white/20 hover:text-white"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                BACK TO PORTFOLIO
-              </Button>
-            </Link>
-          </div>
-        </div>
-        
-        <Footer />
+          </AnimatedSection>
+        )}
       </div>
+
+      <Footer />
     </div>
   );
 }
