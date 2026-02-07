@@ -693,3 +693,18 @@
 - [x] Add beveled edges to videos (match image bevel effect)
 - [x] Make TOC always visible on desktop (already implemented with sticky positioning)
 - [x] Test all UX fixes
+
+## Fix Article Content Display
+- [x] Fix missing bullet points (ul/li) in article content
+- [x] Fix missing numbered lists (ol/li) in article content
+- [x] Verify list styling matches site design
+
+## Redesign Article Cards
+- [x] Redesign article cards to match reference design
+- [x] Add large cover image filling the card
+- [x] Add category badge overlay in top-left corner
+- [x] Add title overlay on image (white italic serif font)
+- [x] Add date and read time at bottom
+- [x] Add hover effects with arrow icon
+- [x] Add rounded corners and shadow effects
+- [x] Test article card redesign

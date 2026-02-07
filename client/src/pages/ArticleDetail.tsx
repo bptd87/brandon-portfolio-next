@@ -384,8 +384,8 @@ export default function ArticleDetail() {
                   prose-strong:text-foreground prose-strong:font-semibold
                   prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-8 
                   prose-blockquote:italic prose-blockquote:text-2xl prose-blockquote:my-12 prose-blockquote:font-['Playfair_Display'] prose-blockquote:leading-[1.6]
-                  prose-ul:my-8 prose-ol:my-8 prose-ul:leading-[2] prose-ol:leading-[2]
-                  prose-li:my-2 prose-li:text-[1.125rem] prose-li:leading-[2]
+                  prose-ul:my-8 prose-ol:my-8 prose-ul:leading-[2] prose-ol:leading-[2] prose-ul:list-disc prose-ol:list-decimal prose-ul:pl-6 prose-ol:pl-6
+                  prose-li:my-2 prose-li:text-[1.125rem] prose-li:leading-[2] prose-li:marker:text-primary
                   prose-img:rounded-2xl prose-img:my-12 prose-img:shadow-xl
                   prose-figure:my-12
                   prose-figcaption:text-sm prose-figcaption:text-muted-foreground prose-figcaption:text-center prose-figcaption:mt-4
