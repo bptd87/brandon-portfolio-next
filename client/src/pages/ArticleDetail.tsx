@@ -393,13 +393,14 @@ export default function ArticleDetail() {
                   prose-strong:text-foreground prose-strong:font-semibold
                   prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-8 
                   prose-blockquote:italic prose-blockquote:text-2xl prose-blockquote:my-12 prose-blockquote:font-['Playfair_Display'] prose-blockquote:leading-[1.6]
-                  prose-ul:my-8 prose-ol:my-8 prose-ul:leading-[2] prose-ol:leading-[2] prose-ul:list-disc prose-ol:list-decimal prose-ul:pl-6 prose-ol:pl-6
-                  prose-li:my-2 prose-li:text-[1.125rem] prose-li:leading-[2] prose-li:marker:text-primary
+                  prose-ul:my-8 prose-ol:my-8 prose-ul:leading-[2] prose-ol:leading-[2] prose-ul:list-disc prose-ol:list-decimal prose-ul:pl-8 prose-ol:pl-8
+                  prose-li:my-2 prose-li:text-[1.125rem] prose-li:leading-[2] prose-li:marker:text-primary prose-li:ml-0
+                  [&_ul]:list-disc [&_ol]:list-decimal [&_li]:list-item [&_li]:ml-0
                   prose-img:rounded-2xl prose-img:my-12 prose-img:shadow-xl
                   prose-figure:my-12
                   prose-figcaption:text-sm prose-figcaption:text-muted-foreground prose-figcaption:text-center prose-figcaption:mt-4
-                  [&_iframe]:w-full [&_iframe]:max-w-[65ch] [&_iframe]:mx-auto [&_iframe]:my-12 [&_iframe]:rounded-2xl [&_iframe]:shadow-xl [&_iframe]:aspect-video
-                  [&_video]:w-full [&_video]:max-w-[65ch] [&_video]:mx-auto [&_video]:my-12 [&_video]:rounded-2xl [&_video]:shadow-xl
+                  [&_iframe]:w-full [&_iframe]:max-w-[65ch] [&_iframe]:mx-auto [&_iframe]:my-12 [&_iframe]:rounded-2xl [&_iframe]:shadow-xl [&_iframe]:aspect-[16/9] [&_iframe]:h-auto
+                  [&_video]:w-full [&_video]:max-w-[65ch] [&_video]:mx-auto [&_video]:my-12 [&_video]:rounded-2xl [&_video]:shadow-xl [&_video]:aspect-[16/9]
                   [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased]"
               >
                 {Array.isArray(processedSections) && processedSections.map((section: any, index: number) => {
@@ -582,8 +583,8 @@ export default function ArticleDetail() {
 
             {/* Table of Contents - Desktop */}
             {headings.length > 0 && (
-              <aside className="hidden lg:block">
-                <div className="sticky top-24 space-y-1">
+              <aside className="hidden lg:block lg:w-64 flex-shrink-0">
+                <div className="sticky top-28 space-y-1 max-h-[calc(100vh-8rem)] overflow-y-auto">
                   <h3 className="text-sm uppercase tracking-wider text-muted-foreground mb-4 font-semibold">Table of Contents</h3>
                   <nav className="space-y-2">
                     {headings.map((heading) => (

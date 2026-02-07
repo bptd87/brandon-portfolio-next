@@ -754,3 +754,19 @@
 - [x] Replace sort dropdown with modern category filter badges
 - [x] Add search input to filter articles by title and excerpt
 - [x] Implement category filtering logic that works with search
+
+## Article Detail Page Improvements
+- [ ] Fix video embeds to use 16:9 aspect ratio
+- [ ] Make TOC sticky so it follows scroll position
+- [ ] Ensure bullet points display correctly in article content
+- [ ] Create relevant tags for all articles
+- [ ] Assign tags to all 24 articles in database
+- [ ] Display tags on article detail pages
+
+## Article Detail Page Improvements (Completed)
+- [x] Fix video aspect ratio to 16:9
+- [x] Make TOC sticky to follow scroll position
+- [x] Ensure bullet points are visible in article content
+- [x] Create relevant tags for all articles (24 tags created)
+- [x] Assign tags to all articles in database (70 tag assignments)
+- [x] Display tags on article detail pages
