@@ -408,3 +408,35 @@
 - [x] Redesign About page to be more professional
 - [x] Redesign Resume page to be more professional
 - [x] Test navigation dropdown and improved page designs
+
+## "Designer of Tomorrow" Interactive Experience
+- [ ] Implement liquid cursor (spotlight/blob effect that illuminates details)
+- [ ] Add variable typography that "breathes" with mouse movement
+- [ ] Create scroll-jacking theatrical experience with Act I/II structure
+- [ ] Build 3D-rendered curtain that parts on scroll revealing kinetic typography
+- [ ] Implement "Scrub-to-Reveal" effect (Vectorworks drafting morphs into real photo)
+- [ ] Add parallax 3D space for "in the wild" photos
+- [ ] Create AR-style HUD callouts on photo hover (measurements, notations)
+- [ ] Implement WebGL transitions between pages (fold/melt effects)
+- [ ] Add noise texture overlay and chromatic aberration on hover
+- [ ] Apply dark mode high contrast aesthetic
+- [ ] Add high-momentum animations (fast starts, smooth stops)
+- [ ] Implement "heavy" click feedback with haptic-style animations
+
+## Compete with dionpieters.dev - Phase 1: Homepage Transformation
+- [x] Redesign homepage hero with massive, oversized typography (viewport-filling)
+- [x] Add vibrant color accents (electric orange, hot pink, cyan) to dark base
+- [x] Simplify homepage layout - remove information density, focus on impact
+- [x] Add bold sans-serif font for hero (consider Inter, Space Grotesk, or similar)
+- [x] Create confident, art-directed first impression
+- [x] Ensure typography scales properly on mobile
+
+## Theatrical Stage Framing Hero (Inspired by Bear Design)
+- [x] Create wireframe proscenium arch with classical columns
+- [x] Add large featured design image/render as centerpiece
+- [x] Implement dramatic stage lighting effects (red/cyan beams)
+- [x] Convert typography to outline/hollow style
+- [x] Add technical grid floor element
+- [x] Create "Currently Designing" status indicator with project name
+- [x] Add particle/sparkle effects around centerpiece
+- [x] Implement theatrical curtain or frame elements
