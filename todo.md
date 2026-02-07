@@ -564,3 +564,12 @@
 - [x] Ensure HTML content from WordPress displays properly
 - [x] Test with multiple articles to verify all content types render
 - [x] Verify images, text, headings, lists, quotes all display correctly
+
+## Redesign Article Pages
+- [x] Fix table of contents layout (removed sidebar TOC for cleaner design)
+- [x] Ensure all content stays within proper text boundaries (max-w-4xl container)
+- [x] Extract and display WordPress image galleries properly (added gallery styles)
+- [x] Align article typography with portfolio design (Playfair Display, editorial spacing)
+- [x] Improve article layout to match site aesthetic (clean, focused reading experience)
+- [x] Add proper spacing and visual hierarchy (prose classes with custom styling)
+- [x] Test with multiple articles to verify design consistency
