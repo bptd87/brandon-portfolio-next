@@ -2,8 +2,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { trpc } from "@/lib/trpc";
-import { ArrowLeft, MapPin, Calendar, Heart, Eye, ChevronDown, ChevronUp } from "lucide-react";
-import { Link, useParams } from "wouter";
+import { ArrowLeft, ArrowRight, MapPin, Calendar, Heart, Eye, ChevronDown, ChevronUp } from "lucide-react";
+import { Link, useParams, useLocation } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useState } from "react";
@@ -30,7 +30,13 @@ function getEmbedUrl(url: string): string {
 
 export default function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
+  const [, setLocation] = useLocation();
   const { data: project, isLoading } = trpc.projects.getBySlug.useQuery({ slug: slug! });
+  const { data: allRelatedProjects } = trpc.projects.list.useQuery(
+    { discipline: project?.discipline },
+    { enabled: !!project?.discipline }
+  );
+  const relatedProjects = allRelatedProjects?.slice(0, 10);
   const [showFullNotes, setShowFullNotes] = useState(false);
   const [liked, setLiked] = useState(false);
   const [galleryOpen, setGalleryOpen] = useState(true);
@@ -81,6 +87,14 @@ export default function ProjectDetail() {
   const notesPreview = designNotes.length > 800 ? designNotes.substring(0, 800) + '...' : designNotes;
   const shouldShowReadMore = designNotes.length > 800;
 
+  // Get related projects excluding current one
+  const relatedProjectsFiltered = relatedProjects?.filter(p => p.id !== project.id).slice(0, 3) || [];
+  
+  // Find prev/next projects from related projects
+  const currentIndex = relatedProjects?.findIndex(p => p.id === project.id) ?? -1;
+  const prevProject = currentIndex > 0 ? relatedProjects?.[currentIndex - 1] : null;
+  const nextProject = currentIndex >= 0 && currentIndex < (relatedProjects?.length ?? 0) - 1 ? relatedProjects?.[currentIndex + 1] : null;
+
   return (
     <div className="min-h-screen relative">
       {/* Fixed Blurred Background */}
@@ -103,20 +117,20 @@ export default function ProjectDetail() {
       <div className="relative z-10">
         <Header />
 
-        {/* Hero Section */}
-        <div className="relative min-h-[50vh] flex flex-col items-center justify-center text-center px-4 py-20">
-          <div className="backdrop-blur-sm bg-background/10 rounded-2xl p-12 border border-white/10">
+        {/* Hero Section - Same width as content */}
+        <div className="container max-w-3xl py-20">
+          <div className="backdrop-blur-sm bg-background/10 rounded-2xl p-8 md:p-12 border border-white/10 text-center">
             {project.metadata?.subcategory && (
               <p className="text-xs font-pixel text-white/80 mb-4">
                 {project.metadata.subcategory}
               </p>
             )}
             
-            <h1 className="text-6xl md:text-7xl font-serif italic text-white mb-6">
+            <h1 className="text-5xl md:text-6xl font-serif italic text-white mb-6">
               {project.title}
             </h1>
             
-            <div className="flex items-center gap-6 text-white/90 justify-center flex-wrap">
+            <div className="flex items-center gap-6 text-white/90 justify-center flex-wrap text-sm">
               {project.client && (
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4" />
@@ -151,7 +165,7 @@ export default function ProjectDetail() {
         </div>
 
         {/* Main Content with Glass Morphism */}
-        <div className="container max-w-3xl py-16">
+        <div className="container max-w-3xl pb-16">
           {/* Design Notes - Glass Card */}
           {designNotes && (
             <div className="mb-12 backdrop-blur-md bg-background/40 rounded-2xl p-8 md:p-12 border border-white/10 shadow-2xl">
@@ -175,7 +189,7 @@ export default function ProjectDetail() {
             </div>
           )}
 
-          {/* Gallery Section - Glass Card */}
+          {/* Gallery Section - Full Width Images */}
           {productionPhotos.length > 0 && (
             <div className="mb-12 backdrop-blur-md bg-background/40 rounded-2xl p-8 md:p-12 border border-white/10 shadow-2xl">
               <button
@@ -193,10 +207,10 @@ export default function ProjectDetail() {
               </button>
               
               {galleryOpen && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 gap-6">
                   {productionPhotos.map((image) => (
                     <div key={image.id} className="group">
-                      <div className="aspect-[4/3] overflow-hidden rounded-lg bg-black/20 backdrop-blur-sm border border-white/5">
+                      <div className="aspect-[16/10] overflow-hidden rounded-lg bg-black/20 backdrop-blur-sm border border-white/5">
                         <img 
                           src={image.imageUrl || ''} 
                           alt={image.altText || image.caption || project.title}
@@ -213,7 +227,7 @@ export default function ProjectDetail() {
             </div>
           )}
 
-          {/* Renderings Section - Glass Card */}
+          {/* Renderings Section - Full Width */}
           {renderings.length > 0 && (
             <div className="mb-12 backdrop-blur-md bg-background/40 rounded-2xl p-8 md:p-12 border border-white/10 shadow-2xl">
               <button
@@ -231,10 +245,10 @@ export default function ProjectDetail() {
               </button>
               
               {renderingsOpen && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 gap-6">
                   {renderings.map((image) => (
                     <div key={image.id} className="group">
-                      <div className="aspect-[4/3] overflow-hidden rounded-lg bg-black/20 backdrop-blur-sm border border-white/5">
+                      <div className="aspect-[16/10] overflow-hidden rounded-lg bg-black/20 backdrop-blur-sm border border-white/5">
                         <img 
                           src={image.imageUrl || ''} 
                           alt={image.altText || image.caption || project.title}
@@ -323,7 +337,66 @@ export default function ProjectDetail() {
             </div>
           )}
 
-          {/* Navigation */}
+          {/* Navigation Arrows */}
+          <div className="flex items-center justify-between mb-12">
+            {prevProject ? (
+              <button
+                onClick={() => setLocation(`/projects/${prevProject.slug}`)}
+                className="flex items-center gap-2 backdrop-blur-md bg-white/10 border border-white/20 text-white hover:bg-white/20 px-6 py-3 rounded-lg transition-colors"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                <span className="text-sm">Previous</span>
+              </button>
+            ) : (
+              <div />
+            )}
+            
+            {nextProject ? (
+              <button
+                onClick={() => setLocation(`/projects/${nextProject.slug}`)}
+                className="flex items-center gap-2 backdrop-blur-md bg-white/10 border border-white/20 text-white hover:bg-white/20 px-6 py-3 rounded-lg transition-colors"
+              >
+                <span className="text-sm">Next</span>
+                <ArrowRight className="h-4 w-4" />
+              </button>
+            ) : (
+              <div />
+            )}
+          </div>
+
+          {/* Related Projects */}
+          {relatedProjectsFiltered.length > 0 && (
+            <div className="mb-12 backdrop-blur-md bg-background/40 rounded-2xl p-8 md:p-12 border border-white/10 shadow-2xl">
+              <h2 className="text-xs font-pixel text-white/60 mb-8">
+                MORE FROM {project.discipline?.replace('_', ' ').toUpperCase()}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {relatedProjectsFiltered.map((relatedProject) => (
+                  <Link key={relatedProject.id} href={`/projects/${relatedProject.slug}`}>
+                    <div className="group cursor-pointer">
+                      <div className="aspect-[4/3] overflow-hidden rounded-lg bg-black/20 backdrop-blur-sm border border-white/5 mb-3">
+                        {relatedProject.coverImageUrl && (
+                          <img 
+                            src={relatedProject.coverImageUrl} 
+                            alt={relatedProject.title}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          />
+                        )}
+                      </div>
+                      <h3 className="text-white font-serif italic text-lg group-hover:text-white/80 transition-colors">
+                        {relatedProject.title}
+                      </h3>
+                      {relatedProject.year && (
+                        <p className="text-white/60 text-sm">{relatedProject.year}</p>
+                      )}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Back to Portfolio */}
           <div className="flex justify-center mt-16">
             <Link href={`/projects?discipline=${project.discipline}`}>
               <Button 

@@ -305,3 +305,10 @@
 - [x] Make content container narrower (reduce max-width)
 - [x] Apply pixel font to "PROJECT OVERVIEW", section headers, and labels
 - [x] Test refined typography and layout
+
+## Enhance Project Detail Page Layout
+- [x] Match hero section width to content width (both max-w-3xl)
+- [x] Change gallery images from 2-column to full-width single column
+- [x] Add related scenic design projects section at bottom
+- [x] Add left/right navigation arrows for prev/next project
+- [x] Test navigation and related projects display
