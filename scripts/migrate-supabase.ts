@@ -10,18 +10,13 @@ const projectsData = JSON.parse(
   fs.readFileSync(path.join(dataDir, 'portfolio_projects.json'), 'utf-8')
 );
 
-console.log('🧪 TEST MIGRATION - First 2 projects (1 Scenic Design, 1 Experiential)');
+console.log('🚀 FULL MIGRATION - All 37 projects from Supabase');
 console.log('✅ Connected to database\n');
 
-// Get one Scenic Design and one Experiential Design project for testing
-const scenicProject = projectsData.find((p: any) => p.category === 'Scenic Design');
-const experientialProject = projectsData.find((p: any) => p.category === 'Experiential Design');
-const testProjects = [scenicProject, experientialProject].filter(Boolean);
+// Use all projects
+const allProjects = projectsData;
 
-console.log(`📦 Testing with ${testProjects.length} projects:`);
-testProjects.forEach((p: any, i: number) => {
-  console.log(`   ${i + 1}. ${p.title} (${p.category})`);
-});
+console.log(`📦 Migrating ${allProjects.length} projects`);
 console.log('');
 
 // Map category to discipline
@@ -111,26 +106,30 @@ if (!db) {
 }
 
 // Migrate projects
-for (const supaProject of testProjects) {
+let successCount = 0;
+let errorCount = 0;
+
+for (const supaProject of allProjects) {
   console.log(`🎨 ${supaProject.title}`);
   
-  const discipline = mapDiscipline(supaProject.category);
-  console.log(`   Category: ${supaProject.category} → ${discipline}`);
-  
-  // Upload cover image
-  console.log(`   Cover image:`);
-  const coverImageUrl = await migrateImage(supaProject.card_image);
-  
-  // Map creative team
-  const creativeTeam = supaProject.credits || [];
-  
-  // Map design notes (array to string)
-  const designNotes = Array.isArray(supaProject.design_notes) 
-    ? supaProject.design_notes.join('\n\n')
-    : (supaProject.design_notes || '');
-  
-  // Create project
-  const [newProject] = await db.insert(projects).values({
+  try {
+    const discipline = mapDiscipline(supaProject.category);
+    console.log(`   Category: ${supaProject.category} → ${discipline}`);
+    
+    // Upload cover image
+    console.log(`   Cover image:`);
+    const coverImageUrl = await migrateImage(supaProject.card_image);
+    
+    // Map creative team
+    const creativeTeam = supaProject.credits || [];
+    
+    // Map design notes (array to string)
+    const designNotes = Array.isArray(supaProject.design_notes) 
+      ? supaProject.design_notes.join('\n\n')
+      : (supaProject.design_notes || '');
+    
+    // Create project
+    const [newProject] = await db.insert(projects).values({
     title: supaProject.title,
     slug: supaProject.slug,
     discipline,
@@ -222,13 +221,26 @@ for (const supaProject of testProjects) {
     }
   }
   
-  const totalImages = imageOrder;
-  console.log(`   ✅ Imported ${totalImages} images/videos\n`);
+    const totalImages = imageOrder;
+    console.log(`   ✅ Imported ${totalImages} images/videos\n`);
+    successCount++;
+  } catch (error) {
+    if (error.code === 'ER_DUP_ENTRY') {
+      console.log(`   ⚠️  Skipped (already exists)\n`);
+      errorCount++;
+    } else {
+      console.error(`   ❌ Error: ${error.message}\n`);
+      errorCount++;
+    }
+  }
 }
 
-console.log('✨ Test Migration Complete!');
-console.log('==================');
-console.log(`✅ Imported: ${testProjects.length} projects`);
-console.log('🎉 Success! Check your portfolio at /projects');
+console.log('\n✨ FULL MIGRATION COMPLETE!');
+console.log('==========================================');
+console.log(`✅ Successfully imported: ${successCount} projects`);
+if (errorCount > 0) {
+  console.log(`❌ Failed: ${errorCount} projects`);
+}
+console.log('🎉 Check your portfolio at /projects');
 
 process.exit(0);

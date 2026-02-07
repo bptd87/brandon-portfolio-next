@@ -1,0 +1,18 @@
+{
+  "query": "SELECT discipline, COUNT(*) as count FROM projects GROUP BY discipline ORDER BY discipline;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT discipline, COUNT(*) as count FROM projects GROUP BY discipline ORDER BY discipline;",
+  "rows": [
+    {
+      "discipline": "scenic_design",
+      "count": "16"
+    },
+    {
+      "discipline": "experiential_design",
+      "count": "3"
+    }
+  ],
+  "messages": [],
+  "stdout": "discipline\tcount\nscenic_design\t16\nexperiential_design\t3\n",
+  "stderr": "",
+  "execution_time_ms": 346
+}
