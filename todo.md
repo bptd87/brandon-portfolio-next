@@ -392,3 +392,7 @@
 - [x] Improve typography and visual hierarchy (pixel font dates, serif titles)
 - [x] Add better spacing between positions
 - [x] Test improved readability and design
+
+## Fix Resume Sidebar Spacing
+- [x] Increase spacing between Key Stats, Affiliations, and Contact cards (space-y-8 to space-y-12)
+- [x] Test improved visual balance and readability

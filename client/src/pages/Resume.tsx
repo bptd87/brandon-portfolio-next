@@ -382,7 +382,7 @@ export default function Resume() {
             </div>
 
             {/* Right Sidebar */}
-            <div className="space-y-8 lg:sticky lg:top-24 lg:self-start">
+            <div className="space-y-12 lg:sticky lg:top-24 lg:self-start">
               
               {/* Key Stats */}
               <div>
