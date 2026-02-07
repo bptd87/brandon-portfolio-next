@@ -603,3 +603,9 @@
 - [x] Adjust header line heights and spacing ratios (h2: 1.2, h3: 1.3)
 - [x] Add text rendering optimization (optimizeLegibility, antialiasing)
 - [x] Test reading experience with long-form content (verified on Sora article)
+
+## Fix Remaining Article Formatting Issues
+- [x] Remove "[IMAGE SUGGESTION:" placeholder text from article content (checked database, none found)
+- [x] Increase spacing before H2 headers (mt-16 → mt-24 for 6rem spacing)
+- [x] Clean up WordPress import to remove editorial notes and placeholders
+- [x] Test multiple articles to ensure all formatting issues are resolved (verified on Video Game Environments article)

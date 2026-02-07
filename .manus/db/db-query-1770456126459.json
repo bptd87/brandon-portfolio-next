@@ -1,0 +1,9 @@
+{
+  "query": "UPDATE articles SET content = REPLACE(content, '[IMAGE SUGGESTION: Skyrim or Elden Ring ruin — wide shot emphasizing texture, scale, and light]', '') WHERE content LIKE '%IMAGE SUGGESTION%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute UPDATE articles SET content = REPLACE(content, '[IMAGE SUGGESTION: Skyrim or Elden Ring ruin — wide shot emphasizing texture, scale, and light]', '') WHERE content LIKE '%IMAGE SUGGESTION%';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 388
+}

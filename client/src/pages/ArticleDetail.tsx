@@ -258,7 +258,7 @@ export default function ArticleDetail() {
                 className="article-content max-w-[65ch] mx-auto
                   prose prose-lg prose-invert
                   prose-headings:font-['Playfair_Display'] prose-headings:italic prose-headings:font-normal prose-headings:leading-[1.2]
-                  prose-h2:text-[2.5rem] prose-h2:mt-16 prose-h2:mb-6 prose-h2:scroll-mt-24 prose-h2:leading-[1.2]
+                  prose-h2:text-[2.5rem] prose-h2:mt-24 prose-h2:mb-6 prose-h2:scroll-mt-24 prose-h2:leading-[1.2]
                   prose-h3:text-[1.75rem] prose-h3:mt-12 prose-h3:mb-4 prose-h3:leading-[1.3]
                   prose-p:text-foreground/90 prose-p:leading-[2] prose-p:mb-8 prose-p:text-[1.125rem] prose-p:font-normal prose-p:tracking-normal
                   prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-a:font-medium
