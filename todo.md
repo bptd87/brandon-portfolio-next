@@ -609,3 +609,15 @@
 - [x] Increase spacing before H2 headers (mt-16 → mt-24 for 6rem spacing)
 - [x] Clean up WordPress import to remove editorial notes and placeholders
 - [x] Test multiple articles to ensure all formatting issues are resolved (verified on Video Game Environments article)
+
+## Extract and Rebuild WordPress Articles with Proper Image Handling
+- [x] Create script to extract all WordPress articles with full HTML content (25 articles extracted)
+- [x] Parse HTML to identify all images (inline, galleries, featured) (189 images found)
+- [x] Download all article images from WordPress (189 downloaded)
+- [x] Upload images to S3 and get CDN URLs (189 uploaded successfully)
+- [x] Convert HTML content to clean block format (text, image, gallery, quote blocks)
+- [x] Clear existing articles from database
+- [x] Rebuild articles with proper block structure and S3 image URLs (25 articles rebuilt successfully)
+- [x] Verify all articles display correctly with images (25 articles rebuilt with proper block structure)
+- [x] Create markdown-based workflow documentation for future content (CONTENT-WORKFLOW.md)
+- [x] Build markdown-to-article import script for future use (import-markdown-content.mjs)

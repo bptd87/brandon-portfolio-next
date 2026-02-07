@@ -291,7 +291,7 @@ export default function ArticleDetail() {
                     case 'quote':
                       return (
                         <blockquote key={index}>
-                          "{decodeHTMLEntities(section.content)}"
+                          "{decodeHTMLEntities(section.text || section.content || '')}"
                           {section.author && (
                             <footer className="text-base text-muted-foreground mt-4 not-italic font-sans">
                               — {decodeHTMLEntities(section.author)}
