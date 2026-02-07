@@ -1,0 +1,16 @@
+{
+  "query": "SELECT id, title, JSON_EXTRACT(content, '$[0]') as first_block, JSON_EXTRACT(content, '$[1]') as second_block FROM articles LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT id, title, JSON_EXTRACT(content, '$[0]') as first_block, JSON_EXTRACT(content, '$[1]') as second_block FROM articles LIMIT 1;",
+  "rows": [
+    {
+      "id": "30106",
+      "title": "dfs",
+      "first_block": "{\"content\": \"dfsf\", \"type\": \"text\"}",
+      "second_block": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tfirst_block\tsecond_block\n30106\tdfs\t{\"content\": \"dfsf\", \"type\": \"text\"}\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 381
+}

@@ -621,3 +621,10 @@
 - [x] Verify all articles display correctly with images (25 articles rebuilt with proper block structure)
 - [x] Create markdown-based workflow documentation for future content (CONTENT-WORKFLOW.md)
 - [x] Build markdown-to-article import script for future use (import-markdown-content.mjs)
+
+## Fix Article Headers and FAQ Accordions
+- [x] Fix header text extraction (currently showing "undefined" in TOC)
+- [x] Rebuild articles with proper header texts (fixed ArticleDetail to use section.text)
+- [x] Add accordion component for FAQ sections (using shadcn/ui Accordion)
+- [x] Update ArticleDetail to render FAQ accordions (auto-detect FAQ sections and render as accordions)
+- [x] Test headers and accordions display correctly (verified on Modern Portfolio article)

@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { trpc } from "@/lib/trpc";
 import { Calendar, Clock, ArrowLeft, Share2, Twitter, Linkedin, Mail, Link as LinkIcon } from "lucide-react";
 import { Link, useParams } from "wouter";
@@ -130,6 +131,60 @@ export default function ArticleDetail() {
       : article.content || [];
   } catch (e) {
     contentSections = [{ type: 'html', content: article.content }];
+  }
+
+  // Detect and group FAQ sections
+  const processedSections: any[] = [];
+  let i = 0;
+  while (i < contentSections.length) {
+    const section = contentSections[i];
+    
+    // Check if this is an FAQ heading
+    if (section.type === 'heading' && section.level === 2 && 
+        (section.text || '').toLowerCase().includes('frequently asked questions')) {
+      // Collect all FAQ items (H3 questions followed by paragraphs)
+      const faqItems: Array<{ question: string; answer: string }> = [];
+      i++; // Move past FAQ heading
+      
+      while (i < contentSections.length) {
+        const current = contentSections[i];
+        
+        // FAQ question (H3 ending with ?)
+        if (current.type === 'heading' && current.level === 3) {
+          const question = (current.text || '').replace(/\+$/, ''); // Remove trailing +
+          i++;
+          
+          // Collect answer paragraphs until next heading
+          const answerParts: string[] = [];
+          while (i < contentSections.length && 
+                 !(contentSections[i].type === 'heading')) {
+            if (contentSections[i].type === 'paragraph') {
+              answerParts.push(contentSections[i].content || '');
+            }
+            i++;
+          }
+          
+          faqItems.push({ question, answer: answerParts.join('\n\n') });
+          
+          // If we hit another H2, break out of FAQ section
+          if (i < contentSections.length && 
+              contentSections[i].type === 'heading' && 
+              contentSections[i].level === 2) {
+            break;
+          }
+        } else {
+          break;
+        }
+      }
+      
+      if (faqItems.length > 0) {
+        processedSections.push({ type: 'faq', items: faqItems });
+      }
+      continue; // Don't increment i, already moved past FAQ
+    }
+    
+    processedSections.push(section);
+    i++;
   }
 
   // Calculate read time
@@ -272,12 +327,12 @@ export default function ArticleDetail() {
                   prose-figcaption:text-sm prose-figcaption:text-muted-foreground prose-figcaption:text-center prose-figcaption:mt-4
                   [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased]"
               >
-                {Array.isArray(contentSections) && contentSections.map((section: any, index: number) => {
+                {Array.isArray(processedSections) && processedSections.map((section: any, index: number) => {
                   switch (section.type) {
                     case 'heading':
                       return (
                         <h2 key={index}>
-                          {decodeHTMLEntities(section.content)}
+                          {decodeHTMLEntities(section.text || section.content || '')}
                         </h2>
                       );
                     
@@ -370,6 +425,25 @@ export default function ArticleDetail() {
                           key={index}
                           dangerouslySetInnerHTML={{ __html: section.content }}
                         />
+                      );
+                    
+                    case 'faq':
+                      return (
+                        <div key={index} className="my-16">
+                          <h2 className="text-3xl font-['Playfair_Display'] italic mb-8">Frequently Asked Questions</h2>
+                          <Accordion type="single" collapsible className="space-y-4">
+                            {section.items?.map((item: any, faqIndex: number) => (
+                              <AccordionItem key={faqIndex} value={`faq-${faqIndex}`} className="border border-border rounded-lg px-6">
+                                <AccordionTrigger className="text-lg font-semibold hover:no-underline py-6">
+                                  {decodeHTMLEntities(item.question)}
+                                </AccordionTrigger>
+                                <AccordionContent className="text-muted-foreground pb-6">
+                                  <div dangerouslySetInnerHTML={{ __html: item.answer }} />
+                                </AccordionContent>
+                              </AccordionItem>
+                            ))}
+                          </Accordion>
+                        </div>
                       );
                     
                     default:
