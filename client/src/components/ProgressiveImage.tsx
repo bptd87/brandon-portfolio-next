@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface ProgressiveImageProps {
   src: string;
@@ -21,17 +21,34 @@ export function ProgressiveImage({
 }: ProgressiveImageProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const loadedRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
-    // Reset state when src changes
+    // If this image was already loaded, show it immediately
+    if (loadedRef.current.has(src)) {
+      setImageLoaded(true);
+      return;
+    }
+
+    // Reset state for new image
     setImageLoaded(false);
     setImageError(false);
 
     // Preload the image
     const img = new Image();
     img.src = src;
-    img.onload = () => setImageLoaded(true);
-    img.onerror = () => setImageError(true);
+    img.onload = () => {
+      loadedRef.current.add(src);
+      setImageLoaded(true);
+    };
+    img.onerror = () => {
+      setImageError(true);
+    };
+
+    return () => {
+      img.onload = null;
+      img.onerror = null;
+    };
   }, [src]);
 
   return (
@@ -58,7 +75,10 @@ export function ProgressiveImage({
         onClick={onClick}
         loading={loading}
         decoding="async"
-        onLoad={() => setImageLoaded(true)}
+        onLoad={() => {
+          loadedRef.current.add(src);
+          setImageLoaded(true);
+        }}
         onError={() => setImageError(true)}
       />
 

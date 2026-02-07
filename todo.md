@@ -827,3 +827,8 @@
 - [x] Integrate into ArticleDetail cover image
 - [x] Integrate into ArticleDetail content images
 - [x] Test blur-up effect on slow connections
+
+## Fix Image Flash on Scroll
+- [x] Fix ProgressiveImage component state management to prevent re-render flash
+- [x] Use useRef to track loaded state persistently
+- [x] Test scrolling up and down to verify no flashing
