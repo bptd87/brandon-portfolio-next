@@ -921,3 +921,9 @@
 - [x] Ensure TOC is hidden on mobile (already has hidden lg:block)
 - [x] Test TOC sticky behavior on desktop
 - [x] Test TOC is hidden on mobile
+
+## Debug TOC Not Following Scroll
+- [x] Visually inspect TOC in browser
+- [x] Identify why sticky positioning isn't working
+- [x] Fix TOC to travel with article scroll
+- [x] Verify TOC follows scroll correctly
