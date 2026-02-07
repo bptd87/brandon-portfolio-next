@@ -999,3 +999,9 @@
 - [x] Arrange stats and contact methods as supporting elements
 - [x] Apply bold, confident design decisions
 - [x] Test overall composition and flow
+
+## Contact Page - Reposition Stats
+- [x] Move Response Time and Reply Rate out of 'Other Ways to Reach Me'
+- [x] Position stats as separate credibility section
+- [x] Keep only Email, LinkedIn, Instagram in contact methods
+- [x] Test overall information architecture

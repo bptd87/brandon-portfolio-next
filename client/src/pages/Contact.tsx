@@ -156,13 +156,63 @@ export function Contact() {
 
         </div>
 
-        {/* Bottom Section: Stats & Contact Methods */}
-        <div className="max-w-6xl mx-auto">
+        {/* Stats Section */}
+        <div className="max-w-4xl mx-auto mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            {/* Response Time */}
+            <div className="flex flex-col items-center gap-3 p-8 rounded-2xl border-2 border-primary/50 bg-card/50 backdrop-blur">
+              <div className="h-20 w-20 relative">
+                <div className="absolute inset-0 rounded-full border-4 border-primary/20"></div>
+                <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-primary animate-spin" style={{ animationDuration: '2s' }}></div>
+                <div className="absolute top-1/2 left-1/2 w-1 h-6 bg-primary origin-bottom -translate-x-1/2 -translate-y-full rounded-full" 
+                  style={{ animation: 'spin 60s linear infinite', transformOrigin: 'bottom center' }}></div>
+                <div className="absolute top-1/2 left-1/2 w-1 h-7 bg-primary origin-bottom -translate-x-1/2 -translate-y-full rounded-full" 
+                  style={{ animation: 'spin 5s linear infinite', transformOrigin: 'bottom center' }}></div>
+                <div className="absolute top-1/2 left-1/2 w-2 h-2 bg-primary rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-['Playfair_Display'] italic text-primary mb-1">24-48h</div>
+                <div className="text-sm text-muted-foreground">Response Time</div>
+              </div>
+            </div>
+
+            {/* Reply Rate */}
+            <div className="flex flex-col items-center gap-3 p-8 rounded-2xl border-2 border-transparent bg-card/50 backdrop-blur"
+              style={{ borderImage: 'linear-gradient(135deg, rgb(6 182 212), rgb(168 85 247)) 1' }}>
+              <div className="h-20 w-20 relative flex items-center justify-center">
+                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500 to-purple-500 opacity-20 animate-ping"></div>
+                <CheckCircle2 className="h-14 w-14 relative z-10" 
+                  style={{
+                    stroke: 'url(#checkGradient)',
+                    strokeWidth: 2
+                  }}
+                />
+                <svg width="0" height="0">
+                  <defs>
+                    <linearGradient id="checkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="rgb(6 182 212)" />
+                      <stop offset="100%" stopColor="rgb(168 85 247)" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-['Playfair_Display'] italic bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent mb-1">100%</div>
+                <div className="text-sm text-muted-foreground">Reply Rate</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Contact Methods Section */}
+        <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-['Playfair_Display'] italic font-normal mb-8 text-center text-foreground">
             Other Ways to Reach Me
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
             {/* Email */}
             <a 
@@ -210,48 +260,7 @@ export function Contact() {
               </div>
             </a>
 
-            {/* Response Time */}
-            <div className="flex flex-col items-center gap-3 p-6 rounded-2xl border-2 border-primary/50 bg-card/50 backdrop-blur">
-              <div className="h-16 w-16 relative">
-                <div className="absolute inset-0 rounded-full border-4 border-primary/20"></div>
-                <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-primary animate-spin" style={{ animationDuration: '2s' }}></div>
-                <div className="absolute top-1/2 left-1/2 w-1 h-5 bg-primary origin-bottom -translate-x-1/2 -translate-y-full rounded-full" 
-                  style={{ animation: 'spin 60s linear infinite', transformOrigin: 'bottom center' }}></div>
-                <div className="absolute top-1/2 left-1/2 w-1 h-6 bg-primary origin-bottom -translate-x-1/2 -translate-y-full rounded-full" 
-                  style={{ animation: 'spin 5s linear infinite', transformOrigin: 'bottom center' }}></div>
-                <div className="absolute top-1/2 left-1/2 w-2 h-2 bg-primary rounded-full -translate-x-1/2 -translate-y-1/2"></div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-['Playfair_Display'] italic text-primary mb-1">24-48h</div>
-                <div className="text-sm text-muted-foreground">Response Time</div>
-              </div>
-            </div>
 
-            {/* Reply Rate */}
-            <div className="flex flex-col items-center gap-3 p-6 rounded-2xl border-2 border-transparent bg-card/50 backdrop-blur"
-              style={{ borderImage: 'linear-gradient(135deg, rgb(6 182 212), rgb(168 85 247)) 1' }}>
-              <div className="h-16 w-16 relative flex items-center justify-center">
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500 to-purple-500 opacity-20 animate-ping"></div>
-                <CheckCircle2 className="h-12 w-12 relative z-10" 
-                  style={{
-                    stroke: 'url(#checkGradient)',
-                    strokeWidth: 2
-                  }}
-                />
-                <svg width="0" height="0">
-                  <defs>
-                    <linearGradient id="checkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="rgb(6 182 212)" />
-                      <stop offset="100%" stopColor="rgb(168 85 247)" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-['Playfair_Display'] italic bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent mb-1">100%</div>
-                <div className="text-sm text-muted-foreground">Reply Rate</div>
-              </div>
-            </div>
 
           </div>
         </div>
