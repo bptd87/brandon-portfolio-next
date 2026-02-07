@@ -1,0 +1,53 @@
+{
+  "query": "\nSELECT 'projects' as table_name, COUNT(*) as count FROM projects\nUNION ALL\nSELECT 'categories', COUNT(*) FROM categories\nUNION ALL\nSELECT 'news', COUNT(*) FROM news\nUNION ALL\nSELECT 'articles', COUNT(*) FROM articles\nUNION ALL\nSELECT 'projectImages', COUNT(*) FROM projectImages;\n\nSELECT id, title, slug FROM projects ORDER BY id;\n\nSELECT id, name FROM categories ORDER BY id;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute \nSELECT 'projects' as table_name, COUNT(*) as count FROM projects\nUNION ALL\nSELECT 'categories', COUNT(*) FROM categories\nUNION ALL\nSELECT 'news', COUNT(*) FROM news\nUNION ALL\nSELECT 'articles', COUNT(*) FROM articles\nUNION ALL\nSELECT 'projectImages', COUNT(*) FROM projectImages;\n\nSELECT id, title, slug FROM projects ORDER BY id;\n\nSELECT id, name FROM categories ORDER BY id;\n",
+  "rows": [
+    {
+      "table_name": "projects",
+      "count": "9"
+    },
+    {
+      "table_name": "categories",
+      "count": "2"
+    },
+    {
+      "table_name": "news",
+      "count": "5"
+    },
+    {
+      "table_name": "articles",
+      "count": "4"
+    },
+    {
+      "table_name": "projectImages",
+      "count": "23"
+    },
+    {
+      "table_name": "id",
+      "count": "name"
+    },
+    {
+      "table_name": "1",
+      "count": "Test Project Category"
+    },
+    {
+      "table_name": "3",
+      "count": "Scenic Design"
+    }
+  ],
+  "messages": [
+    "id\ttitle\tslug",
+    "1\tTest Project\ttest-project-unique",
+    "3\tMillion Dollar Quartet\tmillion-dollar-quartet",
+    "4\tMuch Ado About Nothing\tmuch-ado-about-nothing",
+    "5\tAll's Well That Ends Well\talls-well-that-ends-well",
+    "6\tRomero\tromero",
+    "7\tDeathtrap\tdeathtrap",
+    "30001\tThe Tempest\tthe-tempest",
+    "60005\tThe Merry Wives of Windsor\tthe-merry-wives-of-windsor",
+    "60006\tUrinetown\turinetown"
+  ],
+  "stdout": "table_name\tcount\nprojects\t9\ncategories\t2\nnews\t5\narticles\t4\nprojectImages\t23\nid\ttitle\tslug\n1\tTest Project\ttest-project-unique\n3\tMillion Dollar Quartet\tmillion-dollar-quartet\n4\tMuch Ado About Nothing\tmuch-ado-about-nothing\n5\tAll's Well That Ends Well\talls-well-that-ends-well\n6\tRomero\tromero\n7\tDeathtrap\tdeathtrap\n30001\tThe Tempest\tthe-tempest\n60005\tThe Merry Wives of Windsor\tthe-merry-wives-of-windsor\n60006\tUrinetown\turinetown\nid\tname\n1\tTest Project Category\n3\tScenic Design\n",
+  "stderr": "",
+  "execution_time_ms": 2339
+}

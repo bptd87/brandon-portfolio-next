@@ -206,3 +206,29 @@
 - [x] Map Supabase schema to current schema
 - [ ] Test migration with sample data
 - [x] Document image/asset migration process
+
+## Supabase Data Migration - Correct Mapping
+- [x] Analyze Supabase data structure
+- [x] Document gallery mapping differences by discipline
+- [x] Update migration script with discipline-specific gallery mapping
+- [x] Map card_image to coverImageUrl
+- [x] Map credits array to creativeTeam JSON
+- [x] Map design_notes array to designNotes string
+- [x] Handle youtube_videos as video type images
+- [x] Test migration with 2 projects (1 Scenic Design, 1 Experiential)
+- [x] Verify galleries display correctly for each discipline
+- [ ] Run full migration of all 37 projects
+
+## Fix ProjectDetail Page Display
+- [ ] Parse and display creativeTeam JSON properly
+- [ ] Show venue, location, year prominently in header
+- [ ] Clean up layout and spacing
+- [ ] Fix Production Photos / Renderings section titles
+- [ ] Improve overall page design
+
+## Dynamic Team Management in Admin
+- [ ] Add dynamic team member add/remove UI to ProjectForm
+- [ ] Allow custom role input for each team member
+- [ ] Pre-populate with default roles (Playwright, Director, Scenic Design, etc.)
+- [ ] Save team as JSON array to creativeTeam field
+- [ ] Test adding/removing team members

@@ -1,0 +1,152 @@
+[
+  {
+    "id": "8e5706e4-63b6-4df5-8f4f-403220de22c5",
+    "name": "Scenic Design",
+    "slug": "scenic-design",
+    "color": "#3B82F6",
+    "type": "portfolio",
+    "created_at": "2025-12-22T03:28:13.984628+00:00",
+    "updated_at": "2025-12-22T03:28:13.984628+00:00",
+    "display_order": 1
+  },
+  {
+    "id": "45d7d2b6-e66d-449d-b394-c04d10d431ce",
+    "name": "Experiential Design",
+    "slug": "experiential-design",
+    "color": "#F59E0B",
+    "type": "portfolio",
+    "created_at": "2025-12-22T03:28:13.984628+00:00",
+    "updated_at": "2025-12-22T03:28:13.984628+00:00",
+    "display_order": 2
+  },
+  {
+    "id": "f1b81f41-d2fa-49ad-b6ed-ee3568beb626",
+    "name": "Rendering & Visualization",
+    "slug": "rendering-visualization",
+    "color": "#8B5CF6",
+    "type": "portfolio",
+    "created_at": "2025-12-22T03:28:13.984628+00:00",
+    "updated_at": "2025-12-22T03:28:13.984628+00:00",
+    "display_order": 3
+  },
+  {
+    "id": "f7ffae66-6537-4c33-b327-14977c2daa8f",
+    "name": "Design Documentation",
+    "slug": "design-documentation",
+    "color": "#10B981",
+    "type": "portfolio",
+    "created_at": "2025-12-22T03:28:13.984628+00:00",
+    "updated_at": "2025-12-22T03:28:13.984628+00:00",
+    "display_order": 4
+  },
+  {
+    "id": "6e06592e-ec16-4958-8698-0db18b0f05e2",
+    "name": "Design Philosophy & Scenic Insights",
+    "slug": "design-philosophy",
+    "color": "#3B82F6",
+    "type": "articles",
+    "created_at": "2025-12-22T04:01:15.935277+00:00",
+    "updated_at": "2025-12-22T04:01:15.935277+00:00",
+    "display_order": 1
+  },
+  {
+    "id": "5d2fb41e-068a-4c38-8e6c-0af45ab5e5e1",
+    "name": "Scenic Design Process & Highlights",
+    "slug": "scenic-design-process",
+    "color": "#10B981",
+    "type": "articles",
+    "created_at": "2025-12-22T04:01:15.935277+00:00",
+    "updated_at": "2025-12-22T04:01:15.935277+00:00",
+    "display_order": 2
+  },
+  {
+    "id": "544b1347-1d29-46d9-9023-ad8fb0d18ed5",
+    "name": "Technology & Tutorials",
+    "slug": "technology-tutorials",
+    "color": "#7c48f4",
+    "type": "articles",
+    "created_at": "2025-12-22T04:01:15.935277+00:00",
+    "updated_at": "2025-12-22T04:01:15.935277+00:00",
+    "display_order": 3
+  },
+  {
+    "id": "eba03f75-cde3-4ac9-9f6e-bce2ad61a171",
+    "name": "Career Milestone",
+    "slug": "career-milestone",
+    "color": "#3B82F6",
+    "type": "news",
+    "created_at": "2025-12-22T03:20:21.799217+00:00",
+    "updated_at": "2025-12-22T03:20:21.799217+00:00",
+    "display_order": 1
+  },
+  {
+    "id": "3ba94b2f-f884-4365-b8b4-93734a72f581",
+    "name": "Experiential Design",
+    "slug": "experiential",
+    "color": "#d58400",
+    "type": "articles",
+    "created_at": "2026-01-06T10:20:19.453796+00:00",
+    "updated_at": "2026-01-06T10:20:19.453796+00:00",
+    "display_order": 0
+  },
+  {
+    "id": "f9ce9cde-0a41-4739-b1cc-a71555f0370b",
+    "name": "Project Launch",
+    "slug": "project-launch",
+    "color": "#e32400",
+    "type": "news",
+    "created_at": "2026-01-08T23:24:05.820215+00:00",
+    "updated_at": "2026-01-08T23:24:05.820215+00:00",
+    "display_order": 0
+  },
+  {
+    "id": "b3eb13f0-ad18-4cbc-83df-7cf68d12ba7d",
+    "name": "Project Update",
+    "slug": "project-update",
+    "color": "#9929bd",
+    "type": "news",
+    "created_at": "2026-01-08T23:24:45.664769+00:00",
+    "updated_at": "2026-01-08T23:24:45.664769+00:00",
+    "display_order": 0
+  },
+  {
+    "id": "7a53716b-5542-4229-a063-9a1e427865b1",
+    "name": "Publication",
+    "slug": "publication",
+    "color": "#371a94",
+    "type": "news",
+    "created_at": "2025-12-22T03:20:21.799217+00:00",
+    "updated_at": "2025-12-22T03:20:21.799217+00:00",
+    "display_order": 2
+  },
+  {
+    "id": "11162d0d-2aaf-43db-bbd2-70fb312e747a",
+    "name": "Assistant Scenic Design",
+    "slug": "assistant-scenic-design",
+    "color": "#d29d00",
+    "type": "news",
+    "created_at": "2026-01-08T23:25:11.649163+00:00",
+    "updated_at": "2026-01-08T23:25:11.649163+00:00",
+    "display_order": 0
+  },
+  {
+    "id": "9ac6d525-4ee3-42a7-81bd-3cb38d1669e1",
+    "name": "Life Updates",
+    "slug": "life-updates",
+    "color": "#40b715",
+    "type": "news",
+    "created_at": "2026-01-24T10:46:08.631829+00:00",
+    "updated_at": "2026-01-24T10:46:08.631829+00:00",
+    "display_order": 0
+  },
+  {
+    "id": "3cc90833-c302-4e71-837c-8bed05086dbb",
+    "name": "Musical Theatre & Cinema",
+    "slug": "musical-theatre-cinema",
+    "color": "#e70808",
+    "type": "articles",
+    "created_at": "2026-01-26T08:46:36.496273+00:00",
+    "updated_at": "2026-01-26T08:46:36.496273+00:00",
+    "display_order": 0
+  }
+]
