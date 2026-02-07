@@ -927,3 +927,8 @@
 - [x] Identify why sticky positioning isn't working
 - [x] Fix TOC to travel with article scroll
 - [x] Verify TOC follows scroll correctly
+
+## Verify TOC Sticky Behavior
+- [x] Test TOC in browser on desktop
+- [x] Confirm TOC stays visible while scrolling
+- [x] Adjust if TOC is still scrolling away

@@ -707,9 +707,9 @@ export default function ArticleDetail() {
               )}
             </div>
 
-            {/* Table of Contents - Desktop - Sticky Position */}
+            {/* Table of Contents - Desktop - Fixed Position */}
             {headings.length > 0 && (
-              <div className="hidden lg:block lg:w-64 flex-shrink-0 sticky top-28 self-start">
+              <div className="hidden lg:block lg:w-64 flex-shrink-0 fixed top-28 right-8 xl:right-[calc((100vw-1280px)/2+2rem)]">
                 <div className="w-64 space-y-1 max-h-[calc(100vh-8rem)] overflow-y-auto">
                   <h3 className="text-sm uppercase tracking-wider text-muted-foreground mb-4 font-semibold">Table of Contents</h3>
                   <nav className="space-y-2">
