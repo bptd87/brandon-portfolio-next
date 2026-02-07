@@ -147,7 +147,7 @@ export default function Contact() {
               </form>
 
               {/* Animated Quick Stats */}
-              <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Animated Clock - Stronger Animation */}
                 <div className="bg-card/90 backdrop-blur-xl border-2 border-primary/50 rounded-2xl p-6 relative overflow-hidden group hover:scale-105 hover:border-primary transition-all duration-300">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -212,24 +212,6 @@ export default function Contact() {
                   </div>
                 </div>
 
-                {/* Instagram Card */}
-                <a 
-                  href="https://instagram.com/brandonptdavis"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-card/90 backdrop-blur-xl border-2 border-purple-500/50 rounded-2xl p-6 relative overflow-hidden group hover:scale-105 hover:border-purple-500 transition-all duration-300"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="relative z-10">
-                    <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
-                      <div className="h-20 w-20 rounded-full bg-purple-500 flex items-center justify-center shadow-lg shadow-purple-500/30 group-hover:scale-110 transition-transform">
-                        <Instagram className="h-10 w-10 text-white" />
-                      </div>
-                    </div>
-                    <div className="text-2xl font-['Playfair_Display'] italic font-normal mb-2 text-center text-purple-500">Instagram</div>
-                    <div className="text-muted-foreground text-center font-medium">@brandonptdavis</div>
-                  </div>
-                </a>
               </div>
             </div>
 
@@ -280,40 +262,58 @@ export default function Contact() {
               </div>
 
               {/* Contact Methods - High Contrast */}
-              <div className="space-y-3">
+              <div>
                 <h3 className="text-2xl font-['Playfair_Display'] italic font-normal mb-6 text-foreground">
                   Other Ways to Reach Me
                 </h3>
 
-                <a 
-                  href="mailto:info@brandonptdavis.com"
-                  className="flex items-center gap-4 p-4 rounded-xl border-2 border-primary/30 bg-card/80 hover:border-primary hover:bg-card transition-all group"
-                >
-                  <div className="h-12 w-12 rounded-full bg-primary flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform shadow-lg shadow-primary/30">
-                    <Mail className="h-6 w-6 text-primary-foreground" />
-                  </div>
-                  <div className="min-w-0">
-                    <div className="text-sm text-muted-foreground">Email</div>
-                    <div className="font-medium text-foreground truncate">info@brandonptdavis.com</div>
-                  </div>
-                  <ArrowRight className="h-5 w-5 ml-auto opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 text-primary" />
-                </a>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <a 
+                    href="mailto:info@brandonptdavis.com"
+                    className="flex items-center gap-4 p-4 rounded-xl border-2 border-primary/30 bg-card/80 hover:border-primary hover:bg-card transition-all group"
+                  >
+                    <div className="h-12 w-12 rounded-full bg-primary flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform shadow-lg shadow-primary/30">
+                      <Mail className="h-6 w-6 text-primary-foreground" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-sm text-muted-foreground">Email</div>
+                      <div className="font-medium text-foreground truncate">info@brandonptdavis.com</div>
+                    </div>
+                    <ArrowRight className="h-5 w-5 ml-auto opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 text-primary" />
+                  </a>
 
-                <a 
-                  href="https://linkedin.com/in/brandonptdavis"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 rounded-xl border-2 border-cyan-500/30 bg-card/80 hover:border-cyan-500 hover:bg-card transition-all group"
-                >
-                  <div className="h-12 w-12 rounded-full bg-cyan-500 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform shadow-lg shadow-cyan-500/30">
-                    <Linkedin className="h-6 w-6 text-white" />
-                  </div>
-                  <div className="min-w-0">
-                    <div className="text-sm text-muted-foreground">LinkedIn</div>
-                    <div className="font-medium text-foreground">@brandonptdavis</div>
-                  </div>
-                  <ArrowRight className="h-5 w-5 ml-auto opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 text-cyan-500" />
-                </a>
+                  <a 
+                    href="https://linkedin.com/in/brandonptdavis"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 p-4 rounded-xl border-2 border-cyan-500/30 bg-card/80 hover:border-cyan-500 hover:bg-card transition-all group"
+                  >
+                    <div className="h-12 w-12 rounded-full bg-cyan-500 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform shadow-lg shadow-cyan-500/30">
+                      <Linkedin className="h-6 w-6 text-white" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-sm text-muted-foreground">LinkedIn</div>
+                      <div className="font-medium text-foreground">@brandonptdavis</div>
+                    </div>
+                    <ArrowRight className="h-5 w-5 ml-auto opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 text-cyan-500" />
+                  </a>
+
+                  <a 
+                    href="https://instagram.com/brandonptdavis"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 p-4 rounded-xl border-2 border-purple-500/30 bg-card/80 hover:border-purple-500 hover:bg-card transition-all group"
+                  >
+                    <div className="h-12 w-12 rounded-full bg-purple-500 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform shadow-lg shadow-purple-500/30">
+                      <Instagram className="h-6 w-6 text-white" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-sm text-muted-foreground">Instagram</div>
+                      <div className="font-medium text-foreground">@brandonptdavis</div>
+                    </div>
+                    <ArrowRight className="h-5 w-5 ml-auto opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 text-purple-500" />
+                  </a>
+                </div>
 
 
               </div>

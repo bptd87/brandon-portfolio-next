@@ -973,3 +973,9 @@
 - [x] Move Instagram card to stats row (3-column grid)
 - [x] Add stronger bounce animation to Brandon illustration
 - [x] Test responsive layout with 3 stat cards
+
+## Contact Page - Contact Methods Inline
+- [x] Remove Instagram from stats row
+- [x] Restore Instagram to contact methods section
+- [x] Make Email, LinkedIn, Instagram display inline (horizontal row)
+- [x] Keep stats row as 2 columns (Response Time + Reply Rate)
