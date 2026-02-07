@@ -107,7 +107,7 @@ export default function ProjectDetail() {
         <div className="relative min-h-[50vh] flex flex-col items-center justify-center text-center px-4 py-20">
           <div className="backdrop-blur-sm bg-background/10 rounded-2xl p-12 border border-white/10">
             {project.metadata?.subcategory && (
-              <p className="text-sm uppercase tracking-widest text-white/80 mb-4">
+              <p className="text-xs font-pixel text-white/80 mb-4">
                 {project.metadata.subcategory}
               </p>
             )}
@@ -151,11 +151,11 @@ export default function ProjectDetail() {
         </div>
 
         {/* Main Content with Glass Morphism */}
-        <div className="container max-w-5xl py-16">
+        <div className="container max-w-3xl py-16">
           {/* Design Notes - Glass Card */}
           {designNotes && (
             <div className="mb-12 backdrop-blur-md bg-background/40 rounded-2xl p-8 md:p-12 border border-white/10 shadow-2xl">
-              <h2 className="text-sm uppercase tracking-widest text-white/60 mb-6">
+              <h2 className="text-xs font-pixel text-white/60 mb-6">
                 PROJECT OVERVIEW
               </h2>
               <div className="prose prose-lg prose-invert max-w-none">
@@ -182,7 +182,7 @@ export default function ProjectDetail() {
                 onClick={() => setGalleryOpen(!galleryOpen)}
                 className="flex items-center justify-between w-full mb-6 group"
               >
-                <h2 className="text-sm uppercase tracking-widest text-white/60">
+                <h2 className="text-xs font-pixel text-white/60">
                   GALLERY ({productionPhotos.length})
                 </h2>
                 {galleryOpen ? (
@@ -220,7 +220,7 @@ export default function ProjectDetail() {
                 onClick={() => setRenderingsOpen(!renderingsOpen)}
                 className="flex items-center justify-between w-full mb-6 group"
               >
-                <h2 className="text-sm uppercase tracking-widest text-white/60">
+                <h2 className="text-xs font-pixel text-white/60">
                   RENDERINGS ({renderings.length})
                 </h2>
                 {renderingsOpen ? (
@@ -258,7 +258,7 @@ export default function ProjectDetail() {
                 onClick={() => setVideosOpen(!videosOpen)}
                 className="flex items-center justify-between w-full mb-6 group"
               >
-                <h2 className="text-sm uppercase tracking-widest text-white/60">
+                <h2 className="text-xs font-pixel text-white/60">
                   VIDEOS ({videos.length})
                 </h2>
                 {videosOpen ? (
@@ -300,7 +300,7 @@ export default function ProjectDetail() {
                 onClick={() => setTeamOpen(!teamOpen)}
                 className="flex items-center justify-between w-full mb-6 group"
               >
-                <h2 className="text-sm uppercase tracking-widest text-white/60">
+                <h2 className="text-xs font-pixel text-white/60">
                   CREATIVE TEAM
                 </h2>
                 {teamOpen ? (

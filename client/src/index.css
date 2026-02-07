@@ -210,6 +210,13 @@
     @apply cursor-pointer;
   }
   
+  /* Pixel Font for Labels */
+  .font-pixel {
+    font-family: 'Press Start 2P', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
   /* Typography Hierarchy */
   h1 {
     font-family: 'Playfair Display', serif;

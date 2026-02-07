@@ -299,3 +299,9 @@
 - [x] Add glass morphism overlay on project detail pages
 - [x] Test video playback on project pages
 - [x] Verify stunning visual design matches scenic design aesthetic
+
+## Refine Project Detail Page Design
+- [x] Add 8-bit pixel font (Press Start 2P or similar) for labels
+- [x] Make content container narrower (reduce max-width)
+- [x] Apply pixel font to "PROJECT OVERVIEW", section headers, and labels
+- [x] Test refined typography and layout
