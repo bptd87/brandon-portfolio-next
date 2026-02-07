@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import AboutNav from "@/components/AboutNav";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -8,6 +9,7 @@ export default function About() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <AboutNav />
 
       <section className="container py-20">
         <div className="max-w-4xl mx-auto">

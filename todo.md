@@ -335,3 +335,11 @@
 - [x] Create Creative Statement page
 - [x] Add routes for About sub-pages in App.tsx
 - [x] Test all About section pages
+
+## Add About Section Navigation
+- [x] Create AboutNav component with links to all 4 About pages
+- [x] Add AboutNav to About.tsx
+- [x] Add AboutNav to TeachingPhilosophy.tsx
+- [x] Add AboutNav to Resume.tsx
+- [x] Add AboutNav to CreativeStatement.tsx
+- [x] Test navigation between all About pages
