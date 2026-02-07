@@ -25,7 +25,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 
-type BlockType = "text" | "heading" | "image" | "gallery" | "video" | "accordion";
+type BlockType = "text" | "heading" | "image" | "gallery" | "video" | "accordion" | "quote" | "list";
 
 interface Block {
   id: string;
@@ -86,6 +86,10 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
         return { url: "", caption: "" };
       case "accordion":
         return { items: [{ title: "", content: "" }] };
+      case "quote":
+        return { text: "", author: "" };
+      case "list":
+        return { type: "bullet", items: [""] };
       default:
         return {};
     }
@@ -347,6 +351,138 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                   </div>
                 )}
 
+                {block.type === "gallery" && (
+                  <div className="space-y-2">
+                    {block.content.images.map((img: any, idx: number) => (
+                      <div key={idx} className="border p-3 rounded space-y-2">
+                        <Input
+                          value={img.url || ""}
+                          onChange={(e) => {
+                            const newImages = [...block.content.images];
+                            newImages[idx] = { ...newImages[idx], url: e.target.value };
+                            updateBlock(block.id, { images: newImages });
+                          }}
+                          placeholder="Image URL"
+                        />
+                        <Input
+                          value={img.caption || ""}
+                          onChange={(e) => {
+                            const newImages = [...block.content.images];
+                            newImages[idx] = { ...newImages[idx], caption: e.target.value };
+                            updateBlock(block.id, { images: newImages });
+                          }}
+                          placeholder="Caption"
+                        />
+                        <Input
+                          value={img.alt || ""}
+                          onChange={(e) => {
+                            const newImages = [...block.content.images];
+                            newImages[idx] = { ...newImages[idx], alt: e.target.value };
+                            updateBlock(block.id, { images: newImages });
+                          }}
+                          placeholder="Alt text"
+                        />
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => {
+                            const newImages = block.content.images.filter((_: any, i: number) => i !== idx);
+                            updateBlock(block.id, { images: newImages });
+                          }}
+                        >
+                          Remove
+                        </Button>
+                      </div>
+                    ))}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() =>
+                        updateBlock(block.id, {
+                          images: [...block.content.images, { url: "", caption: "", alt: "" }],
+                        })
+                      }
+                    >
+                      Add Image
+                    </Button>
+                  </div>
+                )}
+
+                {block.type === "quote" && (
+                  <div className="space-y-2">
+                    <Textarea
+                      value={block.content.text}
+                      onChange={(e) =>
+                        updateBlock(block.id, { ...block.content, text: e.target.value })
+                      }
+                      placeholder="Quote text..."
+                      rows={3}
+                      className="text-xl italic"
+                    />
+                    <Input
+                      value={block.content.author}
+                      onChange={(e) =>
+                        updateBlock(block.id, { ...block.content, author: e.target.value })
+                      }
+                      placeholder="Author (optional)"
+                    />
+                  </div>
+                )}
+
+                {block.type === "list" && (
+                  <div className="space-y-2">
+                    <Select
+                      value={block.content.type}
+                      onValueChange={(v) =>
+                        updateBlock(block.id, { ...block.content, type: v })
+                      }
+                    >
+                      <SelectTrigger className="w-40">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="bullet">Bullet List</SelectItem>
+                        <SelectItem value="numbered">Numbered List</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    {block.content.items.map((item: string, idx: number) => (
+                      <div key={idx} className="flex gap-2">
+                        <Input
+                          value={item}
+                          onChange={(e) => {
+                            const newItems = [...block.content.items];
+                            newItems[idx] = e.target.value;
+                            updateBlock(block.id, { ...block.content, items: newItems });
+                          }}
+                          placeholder="List item..."
+                        />
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => {
+                            const newItems = block.content.items.filter((_: string, i: number) => i !== idx);
+                            updateBlock(block.id, { ...block.content, items: newItems });
+                          }}
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ))}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() =>
+                        updateBlock(block.id, {
+                          ...block.content,
+                          items: [...block.content.items, ""],
+                        })
+                      }
+                    >
+                      Add Item
+                    </Button>
+                  </div>
+                )}
+
                 {block.type === "accordion" && (
                   <div className="space-y-2">
                     {block.content.items.map((item: any, idx: number) => (
@@ -410,6 +546,18 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
             <Button variant="outline" size="sm" onClick={() => addBlock("accordion")}>
               <ChevronDown className="w-4 h-4 mr-2" />
               Accordion
+            </Button>
+            <Button variant="outline" size="sm" onClick={() => addBlock("gallery")}>
+              <ImageIcon className="w-4 h-4 mr-2" />
+              Gallery
+            </Button>
+            <Button variant="outline" size="sm" onClick={() => addBlock("quote")}>
+              <Type className="w-4 h-4 mr-2" />
+              Quote
+            </Button>
+            <Button variant="outline" size="sm" onClick={() => addBlock("list")}>
+              <List className="w-4 h-4 mr-2" />
+              List
             </Button>
           </div>
 

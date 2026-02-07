@@ -528,3 +528,9 @@
 - [ ] Integrate AI for tag suggestions based on content
 - [ ] Integrate AI for image alt text generation
 - [ ] Test complete block editor workflow
+
+## Add Missing Blocks to Article Editor
+- [x] Build Gallery block (multiple images in grid layout)
+- [x] Build Quote/Pullquote block (highlighted quotes)
+- [x] Build List block (bullet points and numbered lists)
+- [x] Test all new blocks work correctly
