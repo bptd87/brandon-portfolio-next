@@ -232,3 +232,13 @@
 - [ ] Pre-populate with default roles (Playwright, Director, Scenic Design, etc.)
 - [ ] Save team as JSON array to creativeTeam field
 - [ ] Test adding/removing team members
+
+## Redesign Project Detail Page - Minimalist Aesthetic
+- [x] Study original site's project detail page design
+- [x] Remove glass/card effects from project detail
+- [x] Match original minimalist layout and spacing
+- [x] Remove "About This Project" section (description is SEO only)
+- [x] Add collapsible gallery and renderings sections
+- [x] Ensure design notes and creative team display correctly
+- [x] Match original typography and hierarchy
+- [x] Add hero section with blurred background image
