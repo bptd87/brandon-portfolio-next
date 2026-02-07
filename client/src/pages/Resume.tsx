@@ -217,6 +217,85 @@ export default function Resume() {
                 Over 130 realized productions since 2009. Complete production history available upon request.
               </p>
 
+              {/* Assistant Scenic Design */}
+              <h2 className="text-3xl font-serif mt-16 mb-8">Assistant Scenic Design</h2>
+              <p className="text-foreground/80 mb-6">Selected assisting credits working with established designers</p>
+              
+              <div className="overflow-x-auto mb-12">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-border">
+                      <th className="text-left py-3 px-2 font-semibold">Production</th>
+                      <th className="text-left py-3 px-2 font-semibold">Director</th>
+                      <th className="text-left py-3 px-2 font-semibold">Company</th>
+                      <th className="text-left py-3 px-2 font-semibold">Year</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-border/50">
+                      <td className="py-3 px-2">The Play that Goes Wrong</td>
+                      <td className="py-3 px-2 text-foreground/70">Tom Buderwitz</td>
+                      <td className="py-3 px-2 text-foreground/70">Seattle Rep</td>
+                      <td className="py-3 px-2 text-foreground/70">2025</td>
+                    </tr>
+                    <tr className="border-b border-border/50">
+                      <td className="py-3 px-2">The Importance of Being Earnest</td>
+                      <td className="py-3 px-2 text-foreground/70">Jo Winiarski</td>
+                      <td className="py-3 px-2 text-foreground/70">Utah Shakespeare Festival</td>
+                      <td className="py-3 px-2 text-foreground/70">2025</td>
+                    </tr>
+                    <tr className="border-b border-border/50">
+                      <td className="py-3 px-2">A Gentlemen's Guide to Love and Murder</td>
+                      <td className="py-3 px-2 text-foreground/70">Jo Winiarski</td>
+                      <td className="py-3 px-2 text-foreground/70">Utah Shakespeare Festival</td>
+                      <td className="py-3 px-2 text-foreground/70">2025</td>
+                    </tr>
+                    <tr className="border-b border-border/50">
+                      <td className="py-3 px-2">Steel Magnolias</td>
+                      <td className="py-3 px-2 text-foreground/70">Jo Winiarski</td>
+                      <td className="py-3 px-2 text-foreground/70">Utah Shakespeare Festival</td>
+                      <td className="py-3 px-2 text-foreground/70">2025</td>
+                    </tr>
+                    <tr className="border-b border-border/50">
+                      <td className="py-3 px-2">The Book Club Play</td>
+                      <td className="py-3 px-2 text-foreground/70">Jo Winiarski</td>
+                      <td className="py-3 px-2 text-foreground/70">Cincinnati Playhouse in the Park</td>
+                      <td className="py-3 px-2 text-foreground/70">2025</td>
+                    </tr>
+                    <tr className="border-b border-border/50">
+                      <td className="py-3 px-2">Souvenir</td>
+                      <td className="py-3 px-2 text-foreground/70">Jo Winiarski</td>
+                      <td className="py-3 px-2 text-foreground/70">Pioneer Theatre</td>
+                      <td className="py-3 px-2 text-foreground/70">2024</td>
+                    </tr>
+                    <tr className="border-b border-border/50">
+                      <td className="py-3 px-2">Ragtime</td>
+                      <td className="py-3 px-2 text-foreground/70">Jo Winiarski</td>
+                      <td className="py-3 px-2 text-foreground/70">The Ruth: Hale Orem</td>
+                      <td className="py-3 px-2 text-foreground/70">2024</td>
+                    </tr>
+                    <tr className="border-b border-border/50">
+                      <td className="py-3 px-2">Natasha, Pierre, and the Great Comet of 1812</td>
+                      <td className="py-3 px-2 text-foreground/70">Jo Winiarski</td>
+                      <td className="py-3 px-2 text-foreground/70">Pioneer Theatre Company</td>
+                      <td className="py-3 px-2 text-foreground/70">2024</td>
+                    </tr>
+                    <tr className="border-b border-border/50">
+                      <td className="py-3 px-2">Jersey Boys</td>
+                      <td className="py-3 px-2 text-foreground/70">Jo Winiarski</td>
+                      <td className="py-3 px-2 text-foreground/70">Pioneer Theatre Company</td>
+                      <td className="py-3 px-2 text-foreground/70">2024</td>
+                    </tr>
+                    <tr className="border-b border-border/50">
+                      <td className="py-3 px-2">Matilda</td>
+                      <td className="py-3 px-2 text-foreground/70">Jo Winiarski</td>
+                      <td className="py-3 px-2 text-foreground/70">Pioneer Theatre Company</td>
+                      <td className="py-3 px-2 text-foreground/70">2023</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
               {/* Technical Proficiencies */}
               <h2 className="text-3xl font-serif mt-16 mb-8">Technical Proficiencies</h2>
               

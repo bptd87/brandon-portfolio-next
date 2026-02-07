@@ -380,3 +380,9 @@
 - [x] Populate Resume page with real data from website (education, experience, productions, skills)
 - [x] Fix import statements for Header, Footer, AboutNav
 - [x] Test Resume/CV page display
+
+## Improve Resume/CV Page Design
+- [x] Add missing Assisting Credits section from CV (10 productions)
+- [x] Improve overall design and visual hierarchy
+- [x] Enhance typography and spacing
+- [x] Test improved Resume page
