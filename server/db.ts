@@ -407,7 +407,7 @@ export async function getAllArticles(filters?: { status?: 'draft' | 'published' 
     query = query.where(and(...conditions));
   }
 
-  return await query.orderBy(desc(articles.createdAt));
+  return await query.orderBy(desc(articles.publishedAt));
 }
 
 export async function getArticleById(id: number) {

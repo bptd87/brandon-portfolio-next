@@ -741,3 +741,10 @@
 - [x] Compare current article dates with WordPress export data
 - [x] Update database with correct publish dates
 - [x] Verify dates display correctly on articles landing page
+
+## Article Card Styling Improvements
+- [x] Reverse article sort order to show most recent first
+- [x] Remove bubble backgrounds from category badges
+- [x] Apply accent colors to read time, date, and category text
+- [x] Add 1pt accent-colored outline to article cards
+- [x] Add accent-colored glow effect on card hover

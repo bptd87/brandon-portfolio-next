@@ -45,7 +45,21 @@ export default function Articles() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {articles.map((article) => (
                 <Link key={article.id} href={`/articles/${article.slug}`}>
-                  <div className="group relative h-[400px] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer">
+                  <div 
+                    className="group relative h-[400px] rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer"
+                    style={{
+                      border: article.category ? `1px solid ${getCategoryColor(article.category.name).hex}` : '1px solid rgb(55, 65, 81)',
+                      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (article.category) {
+                        e.currentTarget.style.boxShadow = `0 0 30px ${getCategoryColor(article.category.name).hex}80, 0 10px 15px -3px rgba(0, 0, 0, 0.1)`;
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)';
+                    }}
+                  >
                     {/* Cover Image */}
                     {article.coverImageUrl && (
                       <img 
@@ -65,7 +79,10 @@ export default function Articles() {
                     {/* Category Badge */}
                     {article.category && (
                       <div className="absolute top-4 left-4">
-                        <span className={getCategoryBadgeClasses(article.category.name)}>
+                        <span 
+                          className="text-xs font-semibold uppercase tracking-wider"
+                          style={{ color: getCategoryColor(article.category.name).hex }}
+                        >
                           {article.category.name}
                         </span>
                       </div>
@@ -84,16 +101,18 @@ export default function Articles() {
                         {decodeHTMLEntities(article.title)}
                       </h3>
                       
-                      <div className="flex items-center gap-4 text-xs text-white/80 uppercase tracking-wider">
-                        <span>
+                      <div className="flex items-center gap-4 text-xs uppercase tracking-wider">
+                        <span style={{ color: article.category ? getCategoryColor(article.category.name).hex : '#9CA3AF' }}>
                           {article.publishedAt && new Date(article.publishedAt).toLocaleDateString('en-US', { 
                             month: 'numeric', 
                             day: 'numeric',
                             year: 'numeric'
                           })}
                         </span>
-                        <span>|</span>
-                        <span>{article.readTime} min read</span>
+                        <span className="text-white/40">|</span>
+                        <span style={{ color: article.category ? getCategoryColor(article.category.name).hex : '#9CA3AF' }}>
+                          {article.readTime} min read
+                        </span>
                       </div>
                     </div>
                   </div>
