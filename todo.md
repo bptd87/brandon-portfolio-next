@@ -589,3 +589,10 @@
 - [ ] Add copy link button for headings
 - [x] Style blockquotes with bold design
 - [x] Test responsive design on mobile (verified layout, TOC hidden on mobile, galleries scroll)
+
+## Fix Critical Article Issues
+- [x] Decode HTML entities in article titles and content (&#8217; → ')
+- [x] Fix header and paragraph spacing (h2: mt-20 mb-8, h3: mt-16 mb-6, p: mb-8)
+- [x] Fix image flickering on load (opacity transition on load)
+- [x] Improve typography rhythm and vertical spacing
+- [x] Test with multiple articles to verify fixes (verified on Sora article and listing page)

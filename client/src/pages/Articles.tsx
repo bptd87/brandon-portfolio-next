@@ -6,6 +6,13 @@ import { trpc } from "@/lib/trpc";
 import { BookOpen } from "lucide-react";
 import { Link } from "wouter";
 
+// Decode HTML entities
+const decodeHTMLEntities = (text: string): string => {
+  const textarea = document.createElement('textarea');
+  textarea.innerHTML = text;
+  return textarea.value;
+};
+
 export default function Articles() {
   const { data: articles, isLoading } = trpc.articles.list.useQuery({});
 
@@ -40,8 +47,11 @@ export default function Articles() {
                       <div className="aspect-[16/9] overflow-hidden">
                         <img 
                           src={article.coverImageUrl} 
-                          alt={article.title}
+                          alt={decodeHTMLEntities(article.title)}
                           className="w-full h-full object-cover"
+                          loading="lazy"
+                          onLoad={(e) => e.currentTarget.style.opacity = '1'}
+                          style={{ opacity: 0, transition: 'opacity 0.3s ease-in' }}
                         />
                       </div>
                     )}
@@ -55,8 +65,8 @@ export default function Articles() {
                           <Badge variant="secondary" className="ml-auto">Featured</Badge>
                         )}
                       </div>
-                      <h3 className="text-xl font-semibold mb-2">{article.title}</h3>
-                      <p className="text-sm text-muted-foreground line-clamp-3">{article.excerpt}</p>
+                      <h3 className="text-xl font-semibold mb-2">{decodeHTMLEntities(article.title)}</h3>
+                      <p className="text-sm text-muted-foreground line-clamp-3">{article.excerpt ? decodeHTMLEntities(article.excerpt) : ''}</p>
                       <div className="mt-4 text-xs text-muted-foreground">
                         {article.publishedAt && new Date(article.publishedAt).toLocaleDateString('en-US', { 
                           year: 'numeric', 

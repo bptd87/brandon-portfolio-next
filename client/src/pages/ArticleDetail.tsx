@@ -8,6 +8,13 @@ import { Link, useParams } from "wouter";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
+// Decode HTML entities
+const decodeHTMLEntities = (text: string): string => {
+  const textarea = document.createElement('textarea');
+  textarea.innerHTML = text;
+  return textarea.value;
+};
+
 export default function ArticleDetail() {
   const { slug } = useParams<{ slug: string }>();
   const { data: article, isLoading } = trpc.articles.getBySlug.useQuery({ slug: slug! });
@@ -184,12 +191,12 @@ export default function ArticleDetail() {
                 </div>
 
                 <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-['Playfair_Display'] italic font-normal mb-8 leading-[1.1]">
-                  {article.title}
+                  {decodeHTMLEntities(article.title)}
                 </h1>
 
                 {article.excerpt && (
                   <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl">
-                    {article.excerpt}
+                    {decodeHTMLEntities(article.excerpt)}
                   </p>
                 )}
 
@@ -236,8 +243,11 @@ export default function ArticleDetail() {
                 <figure className="mb-12 -mx-4 md:mx-0">
                   <img 
                     src={article.coverImageUrl} 
-                    alt={article.title}
+                    alt={decodeHTMLEntities(article.title)}
                     className="w-full h-auto object-cover rounded-2xl shadow-2xl"
+                    loading="eager"
+                    onLoad={(e) => e.currentTarget.style.opacity = '1'}
+                    style={{ opacity: 0, transition: 'opacity 0.3s ease-in' }}
                   />
                 </figure>
               )}
@@ -248,9 +258,9 @@ export default function ArticleDetail() {
                 className="article-content max-w-[65ch] mx-auto
                   prose prose-lg prose-invert
                   prose-headings:font-['Playfair_Display'] prose-headings:italic prose-headings:font-normal
-                  prose-h2:text-4xl prose-h2:mt-16 prose-h2:mb-6 prose-h2:scroll-mt-24
-                  prose-h3:text-2xl prose-h3:mt-12 prose-h3:mb-4
-                  prose-p:text-foreground/90 prose-p:leading-[1.8] prose-p:mb-6 prose-p:text-lg
+                  prose-h2:text-4xl prose-h2:mt-20 prose-h2:mb-8 prose-h2:scroll-mt-24
+                  prose-h3:text-2xl prose-h3:mt-16 prose-h3:mb-6
+                  prose-p:text-foreground/90 prose-p:leading-[1.8] prose-p:mb-8 prose-p:text-lg
                   prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-a:font-medium
                   prose-strong:text-foreground prose-strong:font-semibold
                   prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-8 
@@ -266,24 +276,24 @@ export default function ArticleDetail() {
                     case 'heading':
                       return (
                         <h2 key={index}>
-                          {section.content}
+                          {decodeHTMLEntities(section.content)}
                         </h2>
                       );
                     
                     case 'paragraph':
                       return (
                         <p key={index} className={index === 0 ? 'first-letter:text-7xl first-letter:font-bold first-letter:mr-3 first-letter:float-left first-letter:font-[\'Playfair_Display\'] first-letter:leading-[0.8]' : ''}>
-                          {section.content}
+                          {decodeHTMLEntities(section.content)}
                         </p>
                       );
                     
                     case 'quote':
                       return (
                         <blockquote key={index}>
-                          "{section.content}"
+                          "{decodeHTMLEntities(section.content)}"
                           {section.author && (
                             <footer className="text-base text-muted-foreground mt-4 not-italic font-sans">
-                              — {section.author}
+                              — {decodeHTMLEntities(section.author)}
                             </footer>
                           )}
                         </blockquote>
@@ -297,10 +307,13 @@ export default function ArticleDetail() {
                             alt={section.alt || section.caption || ''}
                             className="w-full cursor-pointer hover:scale-[1.02] transition-transform"
                             onClick={() => window.open(section.url, '_blank')}
+                            loading="lazy"
+                            onLoad={(e) => e.currentTarget.style.opacity = '1'}
+                            style={{ opacity: 0, transition: 'opacity 0.3s ease-in' }}
                           />
                           {section.caption && (
                             <figcaption>
-                              {section.caption}
+                              {decodeHTMLEntities(section.caption)}
                             </figcaption>
                           )}
                         </figure>
@@ -317,10 +330,13 @@ export default function ArticleDetail() {
                                   alt={img.alt || img.caption || ''}
                                   className="w-full h-[400px] object-cover rounded-2xl shadow-xl cursor-pointer hover:scale-[1.02] transition-transform"
                                   onClick={() => window.open(img.url, '_blank')}
+                                  loading="lazy"
+                                  onLoad={(e) => e.currentTarget.style.opacity = '1'}
+                                  style={{ opacity: 0, transition: 'opacity 0.3s ease-in' }}
                                 />
                                 {img.caption && (
                                   <figcaption className="text-sm text-muted-foreground mt-4 text-center">
-                                    {img.caption}
+                                    {decodeHTMLEntities(img.caption)}
                                   </figcaption>
                                 )}
                               </figure>
@@ -334,7 +350,7 @@ export default function ArticleDetail() {
                       return (
                         <ListTag key={index} className={section.listType === 'numbered' ? 'list-decimal' : 'list-disc'}>
                           {section.items?.map((item: string, itemIndex: number) => (
-                            <li key={itemIndex}>{item}</li>
+                            <li key={itemIndex}>{decodeHTMLEntities(item)}</li>
                           ))}
                         </ListTag>
                       );
@@ -387,17 +403,20 @@ export default function ArticleDetail() {
                             <div className="mb-4 overflow-hidden rounded-xl">
                               <img 
                                 src={relatedArticle.coverImageUrl}
-                                alt={relatedArticle.title}
+                                alt={decodeHTMLEntities(relatedArticle.title)}
                                 className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                                loading="lazy"
+                                onLoad={(e) => e.currentTarget.style.opacity = '1'}
+                                style={{ opacity: 0, transition: 'opacity 0.3s ease-in' }}
                               />
                             </div>
                           )}
                           <h3 className="text-xl font-['Playfair_Display'] italic group-hover:text-primary transition-colors">
-                            {relatedArticle.title}
+                            {decodeHTMLEntities(relatedArticle.title)}
                           </h3>
                           {relatedArticle.excerpt && (
                             <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
-                              {relatedArticle.excerpt}
+                              {decodeHTMLEntities(relatedArticle.excerpt)}
                             </p>
                           )}
                         </div>
