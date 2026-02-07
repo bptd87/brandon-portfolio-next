@@ -367,3 +367,9 @@
 - [x] Move Teaching Experience glass card to right sidebar
 - [x] Keep main content (philosophy text) on the left
 - [x] Test two-column responsive layout
+
+## Refine Teaching Philosophy Layout
+- [x] Fix text overlap - prevent left content from crossing into Core Principles section
+- [x] Move "Courses Taught" section to right sidebar (below Teaching Experience)
+- [x] Set left body copy to text-align: justify
+- [x] Test refined spacing and layout
