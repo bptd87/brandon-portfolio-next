@@ -513,3 +513,18 @@
 ## Fix React Quill Compatibility Error
 - [x] Replace React Quill with Tiptap (React 19 compatible)
 - [x] Test article editor works without errors
+
+## Rebuild Article Editor with Block-Based WordPress Features
+- [x] Design block-based editor architecture (add/remove/reorder blocks)
+- [x] Build Text block (rich text paragraph)
+- [x] Build Heading block (H2, H3, H4)
+- [x] Build Image block (upload/URL with caption and AI alt text)
+- [ ] Build Gallery block (multiple images in grid)
+- [x] Build Video block (embed YouTube/Vimeo or upload)
+- [x] Build Accordion block (collapsible sections)
+- [x] Add full-screen writing mode
+- [x] Add cover image upload/preview (prominent)
+- [x] Build tag management (create, assign, AI suggestions)
+- [ ] Integrate AI for tag suggestions based on content
+- [ ] Integrate AI for image alt text generation
+- [ ] Test complete block editor workflow
