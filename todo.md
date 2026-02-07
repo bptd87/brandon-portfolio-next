@@ -1030,3 +1030,10 @@
 - [x] Create news article in database
 - [x] Add external link to New Swan website
 - [x] Test article display and SEO metadata
+
+## News Pages Redesign
+- [x] Separate News, Articles, Portfolio, Categories in navigation
+- [x] Add title overlays on news hero images
+- [x] Implement dynamic pixelated gradient backgrounds from image colors
+- [x] Redesign news cards with bold typography
+- [x] Test visual impact and performance
