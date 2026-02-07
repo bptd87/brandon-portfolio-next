@@ -16,7 +16,7 @@ import About from "./pages/About";
 import TeachingPhilosophy from "./pages/TeachingPhilosophy";
 import Resume from "./pages/Resume";
 import CreativeStatement from "./pages/CreativeStatement";
-import Contact from "./pages/Contact";
+import { Contact } from "./pages/Contact";
 import Studio from "./pages/Studio";
 import NewsDetail from "./pages/NewsDetail";
 import ArticleDetail from "./pages/ArticleDetail";
