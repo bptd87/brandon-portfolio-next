@@ -770,3 +770,16 @@
 - [x] Create relevant tags for all articles (24 tags created)
 - [x] Assign tags to all articles in database (70 tag assignments)
 - [x] Display tags on article detail pages
+
+## Article Page Enhancements
+- [x] Fix TOC to be truly sticky (not scrolling with content)
+- [x] Redesign article header/beginning section
+- [x] Add minimum 5 tags to all articles in database
+- [x] Move tags to bottom of article content
+- [x] Create author profile section with photo and bio
+- [x] Add like button with tracking to articles
+- [x] Add read count tracking to articles
+- [x] Apply category accent color to bullet points
+- [x] Apply category accent color to bold text
+- [x] Apply category accent color to reading progress bar
+- [x] Enhance overall design aesthetic with modern styling

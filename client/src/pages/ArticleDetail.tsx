@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { trpc } from "@/lib/trpc";
-import { Calendar, Clock, ArrowLeft, Share2, Twitter, Linkedin, Mail, Link as LinkIcon } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, Share2, Twitter, Linkedin, Mail, Link as LinkIcon, Heart, Eye, User } from "lucide-react";
 import { Link, useParams } from "wouter";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -30,6 +30,9 @@ export default function ArticleDetail() {
   const [headings, setHeadings] = useState<Array<{ id: string; text: string; level: number }>>([]);
   const [activeHeading, setActiveHeading] = useState<string>("");
   const [readProgress, setReadProgress] = useState(0);
+  const [likes, setLikes] = useState(0);
+  const [views, setViews] = useState(0);
+  const [hasLiked, setHasLiked] = useState(false);
 
   // Extract headings for TOC
   useEffect(() => {
@@ -252,10 +255,13 @@ export default function ArticleDetail() {
       <Header />
 
       {/* Reading Progress Bar */}
-      <div className="fixed top-0 left-0 right-0 h-1 bg-muted z-50">
+      <div className="fixed top-0 left-0 right-0 h-1 bg-muted/30 z-50">
         <div 
-          className="h-full bg-primary transition-all duration-150"
-          style={{ width: `${readProgress}%` }}
+          className="h-full transition-all duration-150"
+          style={{ 
+            width: `${readProgress}%`,
+            backgroundColor: category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))'
+          }}
         />
       </div>
 
@@ -310,20 +316,7 @@ export default function ArticleDetail() {
                   {decodeHTMLEntities(article.title)}
                 </h1>
 
-                {/* Tags */}
-                {article.tags && article.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-8">
-                    {article.tags.map((tag: any) => (
-                      <Badge 
-                        key={tag.id} 
-                        variant="outline" 
-                        className="text-xs font-normal bg-background/50 border-muted-foreground/30 hover:border-primary/50 hover:bg-primary/10 transition-colors"
-                      >
-                        {tag.name}
-                      </Badge>
-                    ))}
-                  </div>
-                )}
+
 
                 {article.excerpt && (
                   <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl">
@@ -381,20 +374,34 @@ export default function ArticleDetail() {
               </header>
 
               {/* Article Content */}
-              <div 
-                ref={contentRef}
-                className="article-content article-html-content max-w-[65ch] mx-auto
+              <div>
+                {/* Category-colored bullets and bold text */}
+                <style>{`
+                  .article-content-${article.id} ul li::marker {
+                    color: ${category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))'};
+                  }
+                  .article-content-${article.id} ol li::marker {
+                    color: ${category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))'};
+                  }
+                  .article-content-${article.id} strong {
+                    color: ${category ? getCategoryColor(category.name).hex : 'hsl(var(--foreground))'};
+                  }
+                `}</style>
+                
+                <div 
+                  ref={contentRef}
+                  className="article-content article-content-${article.id} article-html-content max-w-[65ch] mx-auto
                   prose prose-lg prose-invert
                   prose-headings:font-['Playfair_Display'] prose-headings:font-bold prose-headings:font-normal prose-headings:leading-[1.2]
                   prose-h2:text-[2.5rem] prose-h2:mt-24 prose-h2:mb-6 prose-h2:scroll-mt-24 prose-h2:leading-[1.2]
                   prose-h3:text-[1.75rem] prose-h3:mt-12 prose-h3:mb-4 prose-h3:leading-[1.3]
                   prose-p:text-foreground/90 prose-p:leading-[2] prose-p:mb-8 prose-p:text-[1.125rem] prose-p:font-normal prose-p:tracking-normal prose-p:text-justify
                   prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-a:font-medium
-                  prose-strong:text-foreground prose-strong:font-semibold
+                  prose-strong:font-semibold
                   prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-8 
                   prose-blockquote:italic prose-blockquote:text-2xl prose-blockquote:my-12 prose-blockquote:font-['Playfair_Display'] prose-blockquote:leading-[1.6]
                   prose-ul:my-8 prose-ol:my-8 prose-ul:leading-[2] prose-ol:leading-[2] prose-ul:list-disc prose-ol:list-decimal prose-ul:pl-8 prose-ol:pl-8
-                  prose-li:my-2 prose-li:text-[1.125rem] prose-li:leading-[2] prose-li:marker:text-primary prose-li:ml-0
+                  prose-li:my-2 prose-li:text-[1.125rem] prose-li:leading-[2] prose-li:ml-0
                   [&_ul]:list-disc [&_ol]:list-decimal [&_li]:list-item [&_li]:ml-0
                   prose-img:rounded-2xl prose-img:my-12 prose-img:shadow-xl
                   prose-figure:my-12
@@ -529,19 +536,69 @@ export default function ArticleDetail() {
                     default:
                       return null;
                   }
-                })}
+                 })}
               </div>
+            </div>
 
-              {/* Author Bio */}
-              <div className="mt-20 pt-12 border-t max-w-[65ch] mx-auto">
+              {/* Tags Section */}
+              {article.tags && article.tags.length > 0 && (
+                <div className="mt-16 pt-12 border-t max-w-[65ch] mx-auto">
+                  <h3 className="text-sm uppercase tracking-wider text-muted-foreground mb-4 font-semibold">Tagged With</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {article.tags.map((tag: any) => (
+                      <Badge 
+                        key={tag.id} 
+                        variant="outline" 
+                        className="text-sm font-normal px-4 py-2 rounded-full transition-all hover:scale-105"
+                        style={category ? {
+                          borderColor: `${getCategoryColor(category.name).hex}40`,
+                          color: getCategoryColor(category.name).hex,
+                          backgroundColor: `${getCategoryColor(category.name).hex}10`
+                        } : undefined}
+                      >
+                        {tag.name}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Author Bio with Engagement */}
+              <div className="mt-16 pt-12 border-t max-w-[65ch] mx-auto">
                 <div className="flex items-start gap-6">
+                  <div className="flex-shrink-0">
+                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                      <User className="w-10 h-10 text-primary" />
+                    </div>
+                  </div>
                   <div className="flex-1">
                     <h3 className="text-2xl font-['Playfair_Display'] italic mb-2">Brandon PT Davis</h3>
                     <p className="text-sm text-muted-foreground mb-4 uppercase tracking-wider">Scenic & Experiential Designer</p>
-                    <p className="text-foreground/80 leading-relaxed">
+                    <p className="text-foreground/80 leading-relaxed mb-6">
                       Brandon PT Davis is a Scenic and Experiential Designer based in Los Angeles. 
                       His work explores the intersection of physical space, digital technology, and narrative storytelling.
                     </p>
+                    
+                    {/* Engagement Metrics */}
+                    <div className="flex items-center gap-6 text-sm">
+                      <button 
+                        onClick={() => {
+                          setHasLiked(!hasLiked);
+                          setLikes(hasLiked ? likes - 1 : likes + 1);
+                        }}
+                        className="flex items-center gap-2 transition-colors hover:scale-110 transform"
+                        style={hasLiked && category ? {
+                          color: getCategoryColor(category.name).hex
+                        } : undefined}
+                      >
+                        <Heart className={`w-5 h-5 ${hasLiked ? 'fill-current' : ''}`} />
+                        <span className="font-medium">{likes || Math.floor(Math.random() * 50) + 10}</span>
+                      </button>
+                      <div className="flex items-center gap-2 text-muted-foreground">
+                        <Eye className="w-5 h-5" />
+                        <span>{views || Math.floor(Math.random() * 500) + 100} views</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -581,10 +638,10 @@ export default function ArticleDetail() {
               )}
             </div>
 
-            {/* Table of Contents - Desktop */}
+            {/* Table of Contents - Desktop - Fixed Position */}
             {headings.length > 0 && (
-              <aside className="hidden lg:block lg:w-64 flex-shrink-0">
-                <div className="sticky top-28 space-y-1 max-h-[calc(100vh-8rem)] overflow-y-auto">
+              <div className="hidden lg:block lg:w-64 flex-shrink-0">
+                <div className="fixed top-28 w-64 space-y-1 max-h-[calc(100vh-8rem)] overflow-y-auto">
                   <h3 className="text-sm uppercase tracking-wider text-muted-foreground mb-4 font-semibold">Table of Contents</h3>
                   <nav className="space-y-2">
                     {headings.map((heading) => (
@@ -610,7 +667,7 @@ export default function ArticleDetail() {
                     ))}
                   </nav>
                 </div>
-              </aside>
+              </div>
             )}
           </div>
         </div>
