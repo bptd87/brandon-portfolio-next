@@ -862,3 +862,9 @@
 - [x] Check ProgressiveImage component for any scroll-related logic
 - [x] Remove any code that changes image visibility during scroll
 - [x] Verify images stay visible while actively scrolling
+
+## Force Browser to Keep Images Rendered
+- [x] Add will-change: transform to images to create compositor layer
+- [x] Add contain: layout style paint to prevent browser optimization
+- [x] Remove any content-visibility CSS that might be hiding images
+- [x] Test scrolling to verify images never disappear
