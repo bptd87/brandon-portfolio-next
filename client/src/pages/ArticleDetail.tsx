@@ -30,9 +30,29 @@ export default function ArticleDetail() {
   const [headings, setHeadings] = useState<Array<{ id: string; text: string; level: number }>>([]);
   const [activeHeading, setActiveHeading] = useState<string>("");
   const [readProgress, setReadProgress] = useState(0);
-  const [likes, setLikes] = useState(0);
-  const [views, setViews] = useState(0);
   const [hasLiked, setHasLiked] = useState(false);
+  
+  const incrementViews = trpc.articles.incrementViews.useMutation();
+  const toggleLikeMutation = trpc.articles.toggleLike.useMutation();
+  
+  // Track view on page load
+  useEffect(() => {
+    if (article?.id) {
+      incrementViews.mutate({ id: article.id });
+    }
+  }, [article?.id]);
+  
+  const handleLikeToggle = async () => {
+    if (!article?.id) return;
+    
+    const newLikedState = !hasLiked;
+    setHasLiked(newLikedState);
+    
+    await toggleLikeMutation.mutateAsync({ 
+      id: article.id, 
+      liked: newLikedState 
+    });
+  };
 
   // Extract headings for TOC
   useEffect(() => {
@@ -310,6 +330,22 @@ export default function ArticleDetail() {
                     <Clock className="h-3 w-3" />
                     <span>{readTime} min read</span>
                   </div>
+                  <span className="text-muted-foreground">|</span>
+                  <button 
+                    onClick={handleLikeToggle}
+                    className="flex items-center gap-2 transition-colors hover:scale-110 transform"
+                    style={hasLiked && category ? {
+                      color: getCategoryColor(category.name).hex
+                    } : undefined}
+                  >
+                    <Heart className={`h-3 w-3 ${hasLiked ? 'fill-current' : ''}`} />
+                    <span>{article.likes || 0}</span>
+                  </button>
+                  <span className="text-muted-foreground">|</span>
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Eye className="h-3 w-3" />
+                    <span>{article.views || 0}</span>
+                  </div>
                 </div>
 
                 <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-['Playfair_Display'] italic font-normal mb-8 leading-[1.15] tracking-tight">
@@ -582,21 +618,18 @@ export default function ArticleDetail() {
                     {/* Engagement Metrics */}
                     <div className="flex items-center gap-6 text-sm">
                       <button 
-                        onClick={() => {
-                          setHasLiked(!hasLiked);
-                          setLikes(hasLiked ? likes - 1 : likes + 1);
-                        }}
+                        onClick={handleLikeToggle}
                         className="flex items-center gap-2 transition-colors hover:scale-110 transform"
                         style={hasLiked && category ? {
                           color: getCategoryColor(category.name).hex
                         } : undefined}
                       >
                         <Heart className={`w-5 h-5 ${hasLiked ? 'fill-current' : ''}`} />
-                        <span className="font-medium">{likes || Math.floor(Math.random() * 50) + 10}</span>
+                        <span className="font-medium">{article?.likes || 0}</span>
                       </button>
                       <div className="flex items-center gap-2 text-muted-foreground">
                         <Eye className="w-5 h-5" />
-                        <span>{views || Math.floor(Math.random() * 500) + 100} views</span>
+                        <span>{article?.views || 0} views</span>
                       </div>
                     </div>
                   </div>

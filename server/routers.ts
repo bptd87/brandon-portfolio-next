@@ -530,6 +530,22 @@ export const appRouter = router({
         return { success: true };
       }),
     
+    incrementViews: publicProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await db.incrementArticleViews(input.id);
+        const article = await db.getArticleById(input.id);
+        return { views: article?.views || 0 };
+      }),
+    
+    toggleLike: publicProcedure
+      .input(z.object({ id: z.number(), liked: z.boolean() }))
+      .mutation(async ({ input }) => {
+        await db.toggleArticleLike(input.id, input.liked);
+        const article = await db.getArticleById(input.id);
+        return { likes: article?.likes || 0 };
+      }),
+    
     convertFaqToAccordion: adminProcedure
       .input(z.object({ slug: z.string() }))
       .mutation(async ({ input }) => {

@@ -204,6 +204,8 @@ export const articles = mysqlTable("articles", {
   coverImageKey: text("coverImageKey"),
   authorId: int("authorId").references(() => users.id),
   readTime: int("readTime"),
+  likes: int("likes").default(0).notNull(),
+  views: int("views").default(0).notNull(),
   status: mysqlEnum("status", ["draft", "published", "archived"]).default("draft").notNull(),
   featured: boolean("featured").default(false).notNull(),
   seoTitle: varchar("seoTitle", { length: 255 }),

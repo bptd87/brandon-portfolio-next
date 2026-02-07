@@ -783,3 +783,14 @@
 - [x] Apply category accent color to bold text
 - [x] Apply category accent color to reading progress bar
 - [x] Enhance overall design aesthetic with modern styling
+
+## Real Likes and Views Tracking
+- [x] Add likes and views columns to articles table
+- [x] Create database migration SQL for new columns
+- [x] Create tRPC mutation for incrementing article views
+- [x] Create tRPC mutation for toggling article likes
+- [x] Move likes and views to article header (top section)
+- [x] Connect likes/views to real database data
+- [x] Implement view tracking on page load
+- [x] Implement like toggle with optimistic updates
+- [x] Test likes and views tracking functionality

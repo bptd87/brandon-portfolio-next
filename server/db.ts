@@ -472,6 +472,30 @@ export async function setArticleTags(articleId: number, tagIds: number[]) {
   }
 }
 
+export async function incrementArticleViews(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db.update(articles)
+    .set({ views: sql`${articles.views} + 1` })
+    .where(eq(articles.id, id));
+}
+
+export async function toggleArticleLike(id: number, liked: boolean) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  if (liked) {
+    await db.update(articles)
+      .set({ likes: sql`${articles.likes} + 1` })
+      .where(eq(articles.id, id));
+  } else {
+    await db.update(articles)
+      .set({ likes: sql`GREATEST(${articles.likes} - 1, 0)` })
+      .where(eq(articles.id, id));
+  }
+}
+
 // ============ SEARCH OPERATIONS ============
 
 export async function searchContent(query: string) {
