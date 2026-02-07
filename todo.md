@@ -932,3 +932,11 @@
 - [x] Test TOC in browser on desktop
 - [x] Confirm TOC stays visible while scrolling
 - [x] Adjust if TOC is still scrolling away
+
+## Contact Page Redesign
+- [x] Upload Brandon illustration to S3
+- [x] Create Contact page component with modern layout
+- [x] Add hover glow effect to illustration
+- [x] Implement contact form with validation
+- [x] Add social media links and contact methods
+- [x] Test form submission and hover effects
