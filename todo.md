@@ -440,3 +440,11 @@
 - [x] Create "Currently Designing" status indicator with project name
 - [x] Add particle/sparkle effects around centerpiece
 - [x] Implement theatrical curtain or frame elements
+
+## Homepage Redesign - Big Featured Work Focus
+- [x] Remove theatrical framing and "Currently Designing" status
+- [x] Create huge, full-width featured project showcases
+- [x] Integrate articles/news that "spark in" between featured work
+- [x] Make projects the hero - massive images, bold typography
+- [x] Create dynamic, magazine-style flowing layout
+- [x] Remove pressure elements and focus on completed work
