@@ -631,6 +631,8 @@
 
 ## Fix Article Display Issues
 - [x] Debug why FAQ answers are not showing in accordions (fixed to collect 'text' blocks)
+- [x] Fix paragraph spacing in HTML content blocks (added mb-8 spacing to all p tags)
+- [x] Ensure FAQ sections render as interactive accordions (already working correctly)
 - [ ] Fix image rendering (images not displaying in articles)
 - [ ] Fix video embedding (videos not showing)
 - [ ] Redesign H2 styling (remove italic Playfair, make bold and impactful)

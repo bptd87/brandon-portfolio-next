@@ -426,7 +426,7 @@ export default function ArticleDetail() {
                       return (
                         <div 
                           key={index}
-                          className="article-html-content"
+                          className="article-html-content [&_p]:mb-8 [&_p]:leading-[2] [&_p]:text-justify"
                           dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(section.content) }}
                         />
                       );
@@ -435,6 +435,7 @@ export default function ArticleDetail() {
                       return (
                         <div 
                           key={index}
+                          className="[&_p]:mb-8 [&_p]:leading-[2] [&_p]:text-justify"
                           dangerouslySetInnerHTML={{ __html: section.content }}
                         />
                       );
