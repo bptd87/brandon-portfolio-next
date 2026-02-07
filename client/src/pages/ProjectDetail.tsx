@@ -113,6 +113,27 @@ export default function ProjectDetail() {
         )}
       </div>
 
+      {/* Sticky Navigation Arrows */}
+      {prevProject && (
+        <button
+          onClick={() => setLocation(`/projects/${prevProject.slug}`)}
+          className="fixed left-4 top-1/2 -translate-y-1/2 z-50 backdrop-blur-md bg-white/10 border border-white/20 text-white hover:bg-white/20 p-4 rounded-full transition-all hover:scale-110"
+          aria-label="Previous project"
+        >
+          <ArrowLeft className="h-6 w-6" />
+        </button>
+      )}
+      
+      {nextProject && (
+        <button
+          onClick={() => setLocation(`/projects/${nextProject.slug}`)}
+          className="fixed right-4 top-1/2 -translate-y-1/2 z-50 backdrop-blur-md bg-white/10 border border-white/20 text-white hover:bg-white/20 p-4 rounded-full transition-all hover:scale-110"
+          aria-label="Next project"
+        >
+          <ArrowRight className="h-6 w-6" />
+        </button>
+      )}
+
       {/* Content Layer */}
       <div className="relative z-10">
         <Header />
@@ -210,11 +231,11 @@ export default function ProjectDetail() {
                 <div className="grid grid-cols-1 gap-6">
                   {productionPhotos.map((image) => (
                     <div key={image.id} className="group">
-                      <div className="aspect-[16/10] overflow-hidden rounded-lg bg-black/20 backdrop-blur-sm border border-white/5">
+                      <div className="aspect-[16/10] overflow-hidden rounded-lg bg-black border border-white/5">
                         <img 
                           src={image.imageUrl || ''} 
                           alt={image.altText || image.caption || project.title}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full object-contain transition-transform duration-500"
                         />
                       </div>
                       {image.caption && (
@@ -248,11 +269,11 @@ export default function ProjectDetail() {
                 <div className="grid grid-cols-1 gap-6">
                   {renderings.map((image) => (
                     <div key={image.id} className="group">
-                      <div className="aspect-[16/10] overflow-hidden rounded-lg bg-black/20 backdrop-blur-sm border border-white/5">
+                      <div className="aspect-[16/10] overflow-hidden rounded-lg bg-black border border-white/5">
                         <img 
                           src={image.imageUrl || ''} 
                           alt={image.altText || image.caption || project.title}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full object-contain transition-transform duration-500"
                         />
                       </div>
                       {image.caption && (
@@ -337,32 +358,7 @@ export default function ProjectDetail() {
             </div>
           )}
 
-          {/* Navigation Arrows */}
-          <div className="flex items-center justify-between mb-12">
-            {prevProject ? (
-              <button
-                onClick={() => setLocation(`/projects/${prevProject.slug}`)}
-                className="flex items-center gap-2 backdrop-blur-md bg-white/10 border border-white/20 text-white hover:bg-white/20 px-6 py-3 rounded-lg transition-colors"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                <span className="text-sm">Previous</span>
-              </button>
-            ) : (
-              <div />
-            )}
-            
-            {nextProject ? (
-              <button
-                onClick={() => setLocation(`/projects/${nextProject.slug}`)}
-                className="flex items-center gap-2 backdrop-blur-md bg-white/10 border border-white/20 text-white hover:bg-white/20 px-6 py-3 rounded-lg transition-colors"
-              >
-                <span className="text-sm">Next</span>
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            ) : (
-              <div />
-            )}
-          </div>
+
 
           {/* Related Projects */}
           {relatedProjectsFiltered.length > 0 && (

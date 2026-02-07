@@ -312,3 +312,9 @@
 - [x] Add related scenic design projects section at bottom
 - [x] Add left/right navigation arrows for prev/next project
 - [x] Test navigation and related projects display
+
+## Add Letterboxing and Sticky Navigation
+- [x] Add letterboxing to gallery images (object-contain with black background)
+- [x] Create sticky left/right arrow navigation fixed at center of viewport
+- [x] Make arrows stay visible while scrolling
+- [x] Test navigation arrows and letterboxed images
