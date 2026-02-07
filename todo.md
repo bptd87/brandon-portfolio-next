@@ -979,3 +979,9 @@
 - [x] Restore Instagram to contact methods section
 - [x] Make Email, LinkedIn, Instagram display inline (horizontal row)
 - [x] Keep stats row as 2 columns (Response Time + Reply Rate)
+
+## Contact Page - Correct Layout & Animation
+- [x] Stack contact methods vertically (Email, LinkedIn, Instagram)
+- [x] Move stats (Response Time + Reply Rate) inline with contact methods
+- [x] Add constant floating animation to cat illustration
+- [x] Rainbow glow only appears on hover (not constant)

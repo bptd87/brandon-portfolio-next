@@ -146,73 +146,7 @@ export default function Contact() {
                 </Button>
               </form>
 
-              {/* Animated Quick Stats */}
-              <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Animated Clock - Stronger Animation */}
-                <div className="bg-card/90 backdrop-blur-xl border-2 border-primary/50 rounded-2xl p-6 relative overflow-hidden group hover:scale-105 hover:border-primary transition-all duration-300">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="relative z-10">
-                    {/* Animated Clock with Unified Colors */}
-                    <div className="w-20 h-20 mx-auto mb-4 relative">
-                      {/* Outer ring */}
-                      <div className="absolute inset-0 rounded-full border-4 border-primary/20"></div>
-                      {/* Spinning ring */}
-                      <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-primary animate-spin" style={{ animationDuration: '2s' }}></div>
-                      {/* Hour hand */}
-                      <div className="absolute top-1/2 left-1/2 w-1.5 h-7 bg-primary origin-bottom -translate-x-1/2 -translate-y-full rounded-full" 
-                        style={{ 
-                          animation: 'spin 60s linear infinite',
-                          transformOrigin: 'bottom center'
-                        }}></div>
-                      {/* Minute hand */}
-                      <div className="absolute top-1/2 left-1/2 w-1.5 h-9 bg-primary origin-bottom -translate-x-1/2 -translate-y-full rounded-full" 
-                        style={{ 
-                          animation: 'spin 5s linear infinite',
-                          transformOrigin: 'bottom center'
-                        }}></div>
-                      {/* Center dot */}
-                      <div className="absolute top-1/2 left-1/2 w-3 h-3 bg-primary rounded-full -translate-x-1/2 -translate-y-1/2 shadow-lg shadow-primary/50"></div>
-                    </div>
-                    <div className="text-4xl font-['Playfair_Display'] italic font-normal mb-2 text-center text-primary">24-48h</div>
-                    <div className="text-muted-foreground text-center font-medium">Response Time</div>
-                  </div>
-                </div>
 
-                {/* Animated Reply Rate with Checkmark - Cyan to Purple Gradient */}
-                <div className="bg-card/90 backdrop-blur-xl border-2 border-transparent rounded-2xl p-6 relative overflow-hidden group hover:scale-105 transition-all duration-300"
-                  style={{
-                    borderImage: 'linear-gradient(135deg, rgb(6 182 212), rgb(168 85 247)) 1'
-                  }}>
-                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-purple-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="relative z-10">
-                    {/* Animated Checkmark with Pulse */}
-                    <div className="w-20 h-20 mx-auto mb-4 relative flex items-center justify-center">
-                      {/* Pulsing rings */}
-                      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500 to-purple-500 opacity-20 animate-ping"></div>
-                      <div className="absolute inset-2 rounded-full bg-gradient-to-br from-cyan-500 to-purple-500 opacity-40 animate-pulse"></div>
-                      {/* Checkmark */}
-                      <CheckCircle2 className="h-16 w-16 relative z-10" 
-                        style={{
-                          stroke: 'url(#checkGradient)',
-                          strokeWidth: 2,
-                          animation: 'bounce 2s ease-in-out infinite'
-                        }}
-                      />
-                      <svg width="0" height="0">
-                        <defs>
-                          <linearGradient id="checkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stopColor="rgb(6 182 212)" />
-                            <stop offset="100%" stopColor="rgb(168 85 247)" />
-                          </linearGradient>
-                        </defs>
-                      </svg>
-                    </div>
-                    <div className="text-4xl font-['Playfair_Display'] italic font-normal mb-2 text-center bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent">100%</div>
-                    <div className="text-muted-foreground text-center font-medium">Reply Rate</div>
-                  </div>
-                </div>
-
-              </div>
             </div>
 
             {/* RIGHT: Sidebar with Illustration & Contact Info */}
@@ -243,12 +177,15 @@ export default function Contact() {
                               drop-shadow(0 10px 40px rgba(0,0,0,0.3)); 
                     }
                   }
-                  .rainbow-glow-hover-strong:hover {
-                    animation: rainbow-glow-strong 1.5s ease-in-out infinite, bounce-strong 0.6s ease-in-out infinite;
+                  @keyframes float-gentle {
+                    0%, 100% { transform: translateY(0); }
+                    50% { transform: translateY(-10px); }
                   }
-                  @keyframes bounce-strong {
-                    0%, 100% { transform: translateY(0) scale(1.05); }
-                    50% { transform: translateY(-20px) scale(1.08); }
+                  .rainbow-glow-hover-strong {
+                    animation: float-gentle 3s ease-in-out infinite;
+                  }
+                  .rainbow-glow-hover-strong:hover {
+                    animation: float-gentle 3s ease-in-out infinite, rainbow-glow-strong 1.5s ease-in-out infinite;
                   }
                 `}</style>
                 <img 
@@ -261,13 +198,15 @@ export default function Contact() {
                 />
               </div>
 
-              {/* Contact Methods - High Contrast */}
-              <div>
+              {/* Contact Methods & Stats - High Contrast */}
+              <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6">
+                {/* Contact Methods */}
+                <div>
                 <h3 className="text-2xl font-['Playfair_Display'] italic font-normal mb-6 text-foreground">
                   Other Ways to Reach Me
                 </h3>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="space-y-3">
                   <a 
                     href="mailto:info@brandonptdavis.com"
                     className="flex items-center gap-4 p-4 rounded-xl border-2 border-primary/30 bg-card/80 hover:border-primary hover:bg-card transition-all group"
@@ -314,7 +253,74 @@ export default function Contact() {
                     <ArrowRight className="h-5 w-5 ml-auto opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 text-purple-500" />
                   </a>
                 </div>
+                </div>
 
+                {/* Animated Quick Stats */}
+                <div className="space-y-3">
+                  {/* Animated Clock - Stronger Animation */}
+                  <div className="bg-card/90 backdrop-blur-xl border-2 border-primary/50 rounded-2xl p-6 relative overflow-hidden group hover:scale-105 hover:border-primary transition-all duration-300">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="relative z-10">
+                      {/* Animated Clock with Unified Colors */}
+                      <div className="w-20 h-20 mx-auto mb-4 relative">
+                        {/* Outer ring */}
+                        <div className="absolute inset-0 rounded-full border-4 border-primary/20"></div>
+                        {/* Spinning ring */}
+                        <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-primary animate-spin" style={{ animationDuration: '2s' }}></div>
+                        {/* Hour hand */}
+                        <div className="absolute top-1/2 left-1/2 w-1.5 h-7 bg-primary origin-bottom -translate-x-1/2 -translate-y-full rounded-full" 
+                          style={{ 
+                            animation: 'spin 60s linear infinite',
+                            transformOrigin: 'bottom center'
+                          }}></div>
+                        {/* Minute hand */}
+                        <div className="absolute top-1/2 left-1/2 w-1.5 h-9 bg-primary origin-bottom -translate-x-1/2 -translate-y-full rounded-full" 
+                          style={{ 
+                            animation: 'spin 5s linear infinite',
+                            transformOrigin: 'bottom center'
+                          }}></div>
+                        {/* Center dot */}
+                        <div className="absolute top-1/2 left-1/2 w-3 h-3 bg-primary rounded-full -translate-x-1/2 -translate-y-1/2 shadow-lg shadow-primary/50"></div>
+                      </div>
+                      <div className="text-4xl font-['Playfair_Display'] italic font-normal mb-2 text-center text-primary">24-48h</div>
+                      <div className="text-muted-foreground text-center font-medium">Response Time</div>
+                    </div>
+                  </div>
+
+                  {/* Animated Reply Rate with Checkmark - Cyan to Purple Gradient */}
+                  <div className="bg-card/90 backdrop-blur-xl border-2 border-transparent rounded-2xl p-6 relative overflow-hidden group hover:scale-105 transition-all duration-300"
+                    style={{
+                      borderImage: 'linear-gradient(135deg, rgb(6 182 212), rgb(168 85 247)) 1'
+                    }}>
+                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-purple-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="relative z-10">
+                      {/* Animated Checkmark with Pulse */}
+                      <div className="w-20 h-20 mx-auto mb-4 relative flex items-center justify-center">
+                        {/* Pulsing rings */}
+                        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500 to-purple-500 opacity-20 animate-ping"></div>
+                        <div className="absolute inset-2 rounded-full bg-gradient-to-br from-cyan-500 to-purple-500 opacity-40 animate-pulse"></div>
+                        {/* Checkmark */}
+                        <CheckCircle2 className="h-16 w-16 relative z-10" 
+                          style={{
+                            stroke: 'url(#checkGradient)',
+                            strokeWidth: 2,
+                            animation: 'bounce 2s ease-in-out infinite'
+                          }}
+                        />
+                        <svg width="0" height="0">
+                          <defs>
+                            <linearGradient id="checkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                              <stop offset="0%" stopColor="rgb(6 182 212)" />
+                              <stop offset="100%" stopColor="rgb(168 85 247)" />
+                            </linearGradient>
+                          </defs>
+                        </svg>
+                      </div>
+                      <div className="text-4xl font-['Playfair_Display'] italic font-normal mb-2 text-center bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent">100%</div>
+                      <div className="text-muted-foreground text-center font-medium">Reply Rate</div>
+                    </div>
+                  </div>
+                </div>
 
               </div>
 
