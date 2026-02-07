@@ -596,3 +596,10 @@
 - [x] Fix image flickering on load (opacity transition on load)
 - [x] Improve typography rhythm and vertical spacing
 - [x] Test with multiple articles to verify fixes (verified on Sora article and listing page)
+
+## Refine Article Typography for Reading
+- [x] Increase body text line height for comfortable reading (1.8 → 2.0)
+- [x] Improve paragraph spacing for better text flow
+- [x] Adjust header line heights and spacing ratios (h2: 1.2, h3: 1.3)
+- [x] Add text rendering optimization (optimizeLegibility, antialiasing)
+- [x] Test reading experience with long-form content (verified on Sora article)

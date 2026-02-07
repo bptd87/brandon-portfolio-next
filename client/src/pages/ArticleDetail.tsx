@@ -190,7 +190,7 @@ export default function ArticleDetail() {
                   </div>
                 </div>
 
-                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-['Playfair_Display'] italic font-normal mb-8 leading-[1.1]">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-['Playfair_Display'] italic font-normal mb-8 leading-[1.15] tracking-tight">
                   {decodeHTMLEntities(article.title)}
                 </h1>
 
@@ -257,19 +257,20 @@ export default function ArticleDetail() {
                 ref={contentRef}
                 className="article-content max-w-[65ch] mx-auto
                   prose prose-lg prose-invert
-                  prose-headings:font-['Playfair_Display'] prose-headings:italic prose-headings:font-normal
-                  prose-h2:text-4xl prose-h2:mt-20 prose-h2:mb-8 prose-h2:scroll-mt-24
-                  prose-h3:text-2xl prose-h3:mt-16 prose-h3:mb-6
-                  prose-p:text-foreground/90 prose-p:leading-[1.8] prose-p:mb-8 prose-p:text-lg
+                  prose-headings:font-['Playfair_Display'] prose-headings:italic prose-headings:font-normal prose-headings:leading-[1.2]
+                  prose-h2:text-[2.5rem] prose-h2:mt-16 prose-h2:mb-6 prose-h2:scroll-mt-24 prose-h2:leading-[1.2]
+                  prose-h3:text-[1.75rem] prose-h3:mt-12 prose-h3:mb-4 prose-h3:leading-[1.3]
+                  prose-p:text-foreground/90 prose-p:leading-[2] prose-p:mb-8 prose-p:text-[1.125rem] prose-p:font-normal prose-p:tracking-normal
                   prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-a:font-medium
                   prose-strong:text-foreground prose-strong:font-semibold
                   prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-8 
-                  prose-blockquote:italic prose-blockquote:text-2xl prose-blockquote:my-12 prose-blockquote:font-['Playfair_Display']
-                  prose-ul:my-6 prose-ol:my-6
-                  prose-li:my-3 prose-li:text-lg
+                  prose-blockquote:italic prose-blockquote:text-2xl prose-blockquote:my-12 prose-blockquote:font-['Playfair_Display'] prose-blockquote:leading-[1.6]
+                  prose-ul:my-8 prose-ol:my-8 prose-ul:leading-[2] prose-ol:leading-[2]
+                  prose-li:my-2 prose-li:text-[1.125rem] prose-li:leading-[2]
                   prose-img:rounded-2xl prose-img:my-12 prose-img:shadow-xl
                   prose-figure:my-12
-                  prose-figcaption:text-sm prose-figcaption:text-muted-foreground prose-figcaption:text-center prose-figcaption:mt-4"
+                  prose-figcaption:text-sm prose-figcaption:text-muted-foreground prose-figcaption:text-center prose-figcaption:mt-4
+                  [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased]"
               >
                 {Array.isArray(contentSections) && contentSections.map((section: any, index: number) => {
                   switch (section.type) {
