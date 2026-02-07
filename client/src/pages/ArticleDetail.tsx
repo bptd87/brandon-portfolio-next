@@ -703,17 +703,17 @@ export default function ArticleDetail() {
               )}
             </div>
 
-            {/* Table of Contents - Desktop - Fixed Position */}
+            {/* Table of Contents - Desktop - Sticky Position */}
             {headings.length > 0 && (
               <div className="hidden lg:block lg:w-64 flex-shrink-0">
-                <div className="fixed top-28 w-64 space-y-1 max-h-[calc(100vh-8rem)] overflow-y-auto">
+                <div className="sticky top-28 w-64 space-y-1 max-h-[calc(100vh-8rem)] overflow-y-auto">
                   <h3 className="text-sm uppercase tracking-wider text-muted-foreground mb-4 font-semibold">Table of Contents</h3>
                   <nav className="space-y-2">
                     {headings.map((heading) => (
                       <a
                         key={heading.id}
                         href={`#${heading.id}`}
-                        className={`block text-sm py-1 border-l-2 pl-4 transition-colors ${
+                        className={`block text-sm py-1 border-l-2 pl-4 transition-colors cursor-pointer ${
                           activeHeading === heading.id
                             ? 'font-medium'
                             : 'border-border text-muted-foreground hover:text-foreground hover:border-muted-foreground'
@@ -724,7 +724,12 @@ export default function ArticleDetail() {
                         } : undefined}
                         onClick={(e) => {
                           e.preventDefault();
-                          document.getElementById(heading.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                          const element = document.getElementById(heading.id);
+                          if (element) {
+                            const yOffset = -100; // Offset for fixed header
+                            const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                            window.scrollTo({ top: y, behavior: 'smooth' });
+                          }
                         }}
                       >
                         {heading.text}

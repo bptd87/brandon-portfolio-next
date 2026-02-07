@@ -897,3 +897,9 @@
 - [x] Update ArticleDetail to use lazy loading for content images (not cover)
 - [x] Test lazy loading on Safari
 - [x] Test lazy loading on Chrome
+
+## Fix TOC Navigation
+- [x] Make TOC links clickable and scroll to sections
+- [x] Add sticky positioning with bottom boundary
+- [x] Prevent TOC from scrolling into footer
+- [x] Test TOC navigation and sticky behavior
