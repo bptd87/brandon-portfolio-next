@@ -104,7 +104,7 @@ export default function ProjectDetail() {
             className="absolute inset-0 bg-cover bg-center"
             style={{ 
               backgroundImage: `url(${project.coverImageUrl})`,
-              filter: 'blur(40px) brightness(0.3)',
+              filter: 'blur(20px) brightness(0.4)',
               transform: 'scale(1.2)'
             }}
           />
@@ -168,19 +168,46 @@ export default function ProjectDetail() {
                 </div>
               )}
             </div>
+          </div>
+        </div>
 
-            <div className="flex items-center gap-4 mt-6 text-white/80 justify-center">
+        {/* Engagement Section */}
+        <div className="container max-w-3xl py-8">
+          <div className="backdrop-blur-md bg-background/40 rounded-2xl p-6 border border-white/10 shadow-2xl">
+            <div className="flex items-center justify-center gap-8 text-white/90">
               <button 
                 onClick={() => setLiked(!liked)}
-                className="flex items-center gap-1 hover:text-red-400 transition-colors"
+                className="flex items-center gap-2 hover:text-red-400 transition-colors"
               >
                 <Heart className={`h-5 w-5 ${liked ? 'fill-red-400 text-red-400' : ''}`} />
-                <span>{(project.likeCount || 0) + (liked ? 1 : 0)}</span>
+                <span className="text-sm">{(project.likeCount || 0) + (liked ? 1 : 0)} Likes</span>
               </button>
-              <div className="flex items-center gap-1">
+              
+              <div className="flex items-center gap-2">
                 <Eye className="h-5 w-5" />
-                <span>{project.viewCount || 0}</span>
+                <span className="text-sm">{project.viewCount || 0} Views</span>
               </div>
+              
+              <button 
+                onClick={() => {
+                  if (navigator.share) {
+                    navigator.share({
+                      title: project.title,
+                      text: `Check out ${project.title} by Brandon PT Davis`,
+                      url: window.location.href
+                    });
+                  } else {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert('Link copied to clipboard!');
+                  }
+                }}
+                className="flex items-center gap-2 hover:text-blue-400 transition-colors"
+              >
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                </svg>
+                <span className="text-sm">Share</span>
+              </button>
             </div>
           </div>
         </div>

@@ -318,3 +318,10 @@
 - [x] Create sticky left/right arrow navigation fixed at center of viewport
 - [x] Make arrows stay visible while scrolling
 - [x] Test navigation arrows and letterboxed images
+
+## Refine Project Detail Engagement and Background
+- [x] Move likes and views to dedicated engagement section
+- [x] Reduce background blur intensity (from 40px to 20px)
+- [x] Test visibility of background details
+- [x] Verify engagement section layout
+- [x] Add share functionality to engagement section
