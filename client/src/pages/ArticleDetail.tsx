@@ -77,6 +77,14 @@ export default function ArticleDetail() {
 
   // Track scroll progress and active heading
   useEffect(() => {
+    // Detect Safari
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    
+    // Skip scroll tracking on Safari to prevent ResizeObserver errors
+    if (isSafari) {
+      return;
+    }
+    
     let ticking = false;
     
     const handleScroll = () => {
