@@ -729,3 +729,10 @@
 - [ ] Apply category colors to H2 headings in article content
 - [ ] Apply category colors to TOC active states
 - [ ] Test all category color implementations
+
+## WordPress Article Data Fixes
+- [x] Check WordPress export for actual category assignments per article
+- [x] Fix article categories to match WordPress export data exactly
+- [x] Add read times from WordPress export data to database
+- [x] Fix publish dates to match WordPress export data exactly
+- [x] Verify all data displays correctly on articles listing page
