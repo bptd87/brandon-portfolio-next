@@ -1,0 +1,60 @@
+{
+  "query": "SELECT title, discipline, slug FROM projects LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT title, discipline, slug FROM projects LIMIT 10;",
+  "rows": [
+    {
+      "title": "Test Project",
+      "discipline": "scenic_design",
+      "slug": "test-project-unique"
+    },
+    {
+      "title": "Red Bull Jukebox",
+      "discipline": "experiential_design",
+      "slug": "red-bull-jukebox"
+    },
+    {
+      "title": "Rab Bothy Activation",
+      "discipline": "experiential_design",
+      "slug": "rab-bothy-activation"
+    },
+    {
+      "title": "¡LOTERIA: GAME ON!",
+      "discipline": "scenic_design",
+      "slug": "loteria-game-on"
+    },
+    {
+      "title": "The Glass Menagerie",
+      "discipline": "scenic_design",
+      "slug": "the-glass-menagerie"
+    },
+    {
+      "title": "First Bank Lollipop Pop Up",
+      "discipline": "experiential_design",
+      "slug": "first-bank-lollipop-pop-up"
+    },
+    {
+      "title": "New Swan Venue File",
+      "discipline": "scenic_design",
+      "slug": "new-swan-venue-file"
+    },
+    {
+      "title": "Ashes of the Underworld",
+      "discipline": "scenic_design",
+      "slug": "ashes-of-the-underworld"
+    },
+    {
+      "title": "Angel Food Cake",
+      "discipline": "scenic_design",
+      "slug": "angel-food-cake"
+    },
+    {
+      "title": "Isolation",
+      "discipline": "scenic_design",
+      "slug": "isolation"
+    }
+  ],
+  "messages": [],
+  "stdout": "title\tdiscipline\tslug\nTest Project\tscenic_design\ttest-project-unique\nRed Bull Jukebox\texperiential_design\tred-bull-jukebox\nRab Bothy Activation\texperiential_design\trab-bothy-activation\n¡LOTERIA: GAME ON!\tscenic_design\tloteria-game-on\nThe Glass Menagerie\tscenic_design\tthe-glass-menagerie\nFirst Bank Lollipop Pop Up\texperiential_design\tfirst-bank-lollipop-pop-up\nNew Swan Venue File\tscenic_design\tnew-swan-venue-file\nAshes of the Underworld\tscenic_design\tashes-of-the-underworld\nAngel Food Cake\tscenic_design\tangel-food-cake\nIsolation\tscenic_design\tisolation\n",
+  "stderr": "",
+  "execution_time_ms": 349
+}

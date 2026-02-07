@@ -250,3 +250,10 @@
 - [x] Verify all images uploaded to S3
 - [ ] Test portfolio pages with full content
 - [ ] Check all 4 disciplines have projects
+
+## Fix Incomplete Starter Projects
+- [x] Delete 4 incomplete projects (Million Dollar Quartet, Much Ado, All's Well, Romero)
+- [x] Re-run migration to import them with full Supabase data
+- [x] Verify they have images, team credits, and design notes
+- [x] Fix portfolio grid cover image display issue (status field)
+- [x] Test all projects display correctly on /projects page
