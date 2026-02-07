@@ -48,29 +48,53 @@ export default function Resume() {
               {/* Professional Experience */}
               <h2 className="text-3xl font-serif mt-16 mb-8">Professional Experience</h2>
               
-              <div className="space-y-6 mb-12">
-                <div>
-                  <h3 className="text-xl font-semibold">Brandon PT Davis Design LLC</h3>
-                  <p className="text-foreground/70">Scenic & Experiential Designer</p>
-                  <p className="text-sm text-muted-foreground">2024–Present</p>
+              <div className="space-y-6 mb-16">
+                {/* Brandon PT Davis Design LLC */}
+                <div className="backdrop-blur-md bg-card/30 border border-border/50 rounded-xl p-6">
+                  <div className="flex items-start justify-between mb-3">
+                    <h3 className="text-2xl font-serif">Brandon PT Davis Design LLC</h3>
+                    <span className="text-sm text-muted-foreground font-pixel">2024–PRESENT</span>
+                  </div>
+                  <p className="text-lg text-foreground/80 mb-2">Scenic & Experiential Designer</p>
+                  <p className="text-foreground/70 text-sm leading-relaxed">
+                    Independent design practice specializing in theatrical scenic design and experiential environments
+                  </p>
                 </div>
 
-                <div>
-                  <h3 className="text-xl font-semibold">Adaptive Design Services</h3>
-                  <p className="text-foreground/70">Sr. Scenic & Experiential Designer</p>
-                  <p className="text-sm text-muted-foreground">2022–Present</p>
+                {/* Adaptive Design Services */}
+                <div className="backdrop-blur-md bg-card/30 border border-border/50 rounded-xl p-6">
+                  <div className="flex items-start justify-between mb-3">
+                    <h3 className="text-2xl font-serif">Adaptive Design Services</h3>
+                    <span className="text-sm text-muted-foreground font-pixel">2022–PRESENT</span>
+                  </div>
+                  <p className="text-lg text-foreground/80 mb-2">Sr. Scenic & Experiential Designer</p>
+                  <p className="text-foreground/70 text-sm leading-relaxed">
+                    Senior design role creating immersive environments and experiential activations for brands and events
+                  </p>
                 </div>
 
-                <div>
-                  <h3 className="text-xl font-semibold">Academic Appointments</h3>
-                  <p className="text-foreground/70">Various Institutions</p>
-                  <p className="text-sm text-muted-foreground">2017–2025</p>
+                {/* Academic Appointments */}
+                <div className="backdrop-blur-md bg-card/30 border border-border/50 rounded-xl p-6">
+                  <div className="flex items-start justify-between mb-3">
+                    <h3 className="text-2xl font-serif">Academic Appointments</h3>
+                    <span className="text-sm text-muted-foreground font-pixel">2017–2025</span>
+                  </div>
+                  <p className="text-lg text-foreground/80 mb-2">Various Institutions</p>
+                  <p className="text-foreground/70 text-sm leading-relaxed">
+                    Teaching positions at Stephens College, University of Missouri, and other institutions. Courses include Scenic Design, Digital Design Tools, and Production Design.
+                  </p>
                 </div>
 
-                <div>
-                  <h3 className="text-xl font-semibold">Regional Theatre Positions</h3>
-                  <p className="text-foreground/70">Various Theatres</p>
-                  <p className="text-sm text-muted-foreground">2012–2017</p>
+                {/* Regional Theatre */}
+                <div className="backdrop-blur-md bg-card/30 border border-border/50 rounded-xl p-6">
+                  <div className="flex items-start justify-between mb-3">
+                    <h3 className="text-2xl font-serif">Regional Theatre Positions</h3>
+                    <span className="text-sm text-muted-foreground font-pixel">2012–2017</span>
+                  </div>
+                  <p className="text-lg text-foreground/80 mb-2">Various Theatres</p>
+                  <p className="text-foreground/70 text-sm leading-relaxed">
+                    Resident and guest scenic designer positions at regional theatres across the United States
+                  </p>
                 </div>
               </div>
 
