@@ -152,10 +152,10 @@ export default function Contact() {
                     <div>
                       <p className="font-medium">Email</p>
                       <a 
-                        href="mailto:contact@brandonptdavis.com" 
+                        href="mailto:info@brandonptdavis.com" 
                         className="text-sm text-muted-foreground hover:text-primary transition-colors"
                       >
-                        contact@brandonptdavis.com
+                        info@brandonptdavis.com
                       </a>
                     <Footer />
     </div>

@@ -285,7 +285,7 @@ export default function ArticleDetail() {
                         <Instagram className="h-4 w-4" />
                       </Button>
                     </a>
-                    <a href="mailto:contact@brandonptdavis.com">
+                    <a href="mailto:info@brandonptdavis.com">
                       <Button size="icon" variant="outline">
                         <Mail className="h-4 w-4" />
                       </Button>

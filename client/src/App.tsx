@@ -31,9 +31,9 @@ function Router() {
       <Route path={"/articles"} component={Articles} />
       <Route path={"/articles/:slug"} component={ArticleDetail} />
       <Route path={"/about"} component={About} />
-      <Route path={"/about/teaching-philosophy"} component={TeachingPhilosophy} />
-      <Route path={"/about/resume"} component={Resume} />
-      <Route path={"/about/creative-statement"} component={CreativeStatement} />
+      <Route path={"/teaching-philosophy"} component={TeachingPhilosophy} />
+      <Route path={"/resume"} component={Resume} />
+      <Route path={"/creative-statement"} component={CreativeStatement} />
       <Route path={"/contact"} component={Contact} />
       <Route path={"/studio"} component={Studio} />
       <Route path={"/admin"} component={Admin} />
