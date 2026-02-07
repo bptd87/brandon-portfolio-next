@@ -493,7 +493,7 @@ export default function ArticleDetail() {
                             onClick={() => window.open(section.url, '_blank')}
                             loading="eager"
                             decoding="sync"
-                            style={{ willChange: 'transform', contain: 'layout style paint', transform: 'translateZ(0)' }}
+                            style={{ willChange: 'transform', transform: 'translateZ(0)', WebkitTransform: 'translateZ(0)', backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
                           />
                           {section.caption && (
                             <figcaption>
@@ -516,7 +516,7 @@ export default function ArticleDetail() {
                                   onClick={() => window.open(img.url, '_blank')}
                                   loading="eager"
                                   decoding="sync"
-                                  style={{ willChange: 'transform', contain: 'layout style paint', transform: 'translateZ(0)' }}
+                                  style={{ willChange: 'transform', transform: 'translateZ(0)', WebkitTransform: 'translateZ(0)', backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
                                 />
                                 {img.caption && (
                                   <figcaption className="text-sm text-muted-foreground mt-4 text-center">

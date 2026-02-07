@@ -868,3 +868,9 @@
 - [x] Add contain: layout style paint to prevent browser optimization
 - [x] Remove any content-visibility CSS that might be hiding images
 - [x] Test scrolling to verify images never disappear
+
+## Fix Safari Image Disappearing Bug
+- [x] Remove contain property (Safari doesn't handle it well)
+- [x] Add -webkit-transform for Safari compatibility
+- [x] Add backface-visibility: hidden for Safari
+- [x] Test on Safari to verify images stay visible during scroll
