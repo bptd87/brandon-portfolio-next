@@ -277,3 +277,9 @@
 - [x] Display project title, client, and year on image overlay
 - [x] Match original design spacing and typography
 - [x] Test masonry layout responsiveness
+
+## Fix Project Ordering
+- [x] Investigate current project sorting logic in tRPC router
+- [x] Update projects.list endpoint to sort by year descending (newest first)
+- [x] Test ordering on all 4 discipline pages
+- [x] Verify projects display in correct chronological order

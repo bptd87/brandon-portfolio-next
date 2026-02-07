@@ -193,7 +193,7 @@ export async function getAllProjects(filters?: {
     query = query.where(and(...conditions));
   }
 
-  return await query.orderBy(desc(projects.createdAt));
+  return await query.orderBy(desc(projects.year));
 }
 
 export async function getProjectById(id: number) {

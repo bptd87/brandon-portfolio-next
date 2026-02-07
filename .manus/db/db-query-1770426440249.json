@@ -1,0 +1,60 @@
+{
+  "query": "SELECT title, year, discipline FROM projects WHERE discipline = 'scenic_design' AND status = 'published' ORDER BY year DESC LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT title, year, discipline FROM projects WHERE discipline = 'scenic_design' AND status = 'published' ORDER BY year DESC LIMIT 10;",
+  "rows": [
+    {
+      "title": "Million Dollar Quartet",
+      "year": "2025",
+      "discipline": "scenic_design"
+    },
+    {
+      "title": "All's Well That Ends Well",
+      "year": "2025",
+      "discipline": "scenic_design"
+    },
+    {
+      "title": "Much Ado About Nothing",
+      "year": "2025",
+      "discipline": "scenic_design"
+    },
+    {
+      "title": "Bell, Book, and Candle",
+      "year": "2025",
+      "discipline": "scenic_design"
+    },
+    {
+      "title": "The Glass Menagerie",
+      "year": "2025",
+      "discipline": "scenic_design"
+    },
+    {
+      "title": "Romero",
+      "year": "2025",
+      "discipline": "scenic_design"
+    },
+    {
+      "title": "Guys on Ice",
+      "year": "2025",
+      "discipline": "scenic_design"
+    },
+    {
+      "title": "Barefoot in the Park",
+      "year": "2024",
+      "discipline": "scenic_design"
+    },
+    {
+      "title": "Freaky Friday",
+      "year": "2024",
+      "discipline": "scenic_design"
+    },
+    {
+      "title": "Urinetown",
+      "year": "2024",
+      "discipline": "scenic_design"
+    }
+  ],
+  "messages": [],
+  "stdout": "title\tyear\tdiscipline\nMillion Dollar Quartet\t2025\tscenic_design\nAll's Well That Ends Well\t2025\tscenic_design\nMuch Ado About Nothing\t2025\tscenic_design\nBell, Book, and Candle\t2025\tscenic_design\nThe Glass Menagerie\t2025\tscenic_design\nRomero\t2025\tscenic_design\nGuys on Ice\t2025\tscenic_design\nBarefoot in the Park\t2024\tscenic_design\nFreaky Friday\t2024\tscenic_design\nUrinetown\t2024\tscenic_design\n",
+  "stderr": "",
+  "execution_time_ms": 372
+}
