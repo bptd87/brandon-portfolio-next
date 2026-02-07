@@ -8,6 +8,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useState } from "react";
 import { AnimatedSection } from "@/components/AnimatedSection";
+import { Lightbox } from "@/components/Lightbox";
 
 // Convert YouTube/Vimeo URLs to embed format
 function getEmbedUrl(url: string): string {
@@ -36,6 +37,10 @@ export default function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
   const [, setLocation] = useLocation();
   const { data: project, isLoading } = trpc.projects.getBySlug.useQuery({ slug: slug! });
+  // Fetch ALL projects for navigation
+  const { data: allProjects } = trpc.projects.list.useQuery({});
+  
+  // Fetch related projects (same discipline) for "More Projects" section
   const { data: allRelatedProjects } = trpc.projects.list.useQuery(
     { discipline: project?.discipline },
     { enabled: !!project?.discipline }
@@ -46,6 +51,9 @@ export default function ProjectDetail() {
   const [renderingsOpen, setRenderingsOpen] = useState(true);
   const [teamOpen, setTeamOpen] = useState(true);
   const [videosOpen, setVideosOpen] = useState(true);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [lightboxImages, setLightboxImages] = useState<Array<{imageUrl: string | null; caption: string | null; altText: string | null}>>([]);
 
   if (isLoading) {
     return (
@@ -93,10 +101,10 @@ export default function ProjectDetail() {
   // Get related projects excluding current one
   const relatedProjectsFiltered = relatedProjects?.filter(p => p.id !== project.id).slice(0, 3) || [];
   
-  // Find prev/next projects from related projects
-  const currentIndex = relatedProjects?.findIndex(p => p.id === project.id) ?? -1;
-  const prevProject = currentIndex > 0 ? relatedProjects?.[currentIndex - 1] : null;
-  const nextProject = currentIndex >= 0 && currentIndex < (relatedProjects?.length ?? 0) - 1 ? relatedProjects?.[currentIndex + 1] : null;
+  // Find prev/next projects from ALL projects (not just same discipline)
+  const currentIndex = allProjects?.findIndex(p => p.id === project.id) ?? -1;
+  const prevProject = currentIndex > 0 ? allProjects?.[currentIndex - 1] : null;
+  const nextProject = currentIndex >= 0 && currentIndex < (allProjects?.length ?? 0) - 1 ? allProjects?.[currentIndex + 1] : null;
 
   // Determine accent color based on project index
   const accentColor = ACCENT_COLORS[currentIndex % 3] || ACCENT_COLORS[0];
@@ -260,20 +268,37 @@ export default function ProjectDetail() {
               </button>
               
               {galleryOpen && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {productionPhotos.map((img) => (
-                    <div key={img.id} className="group relative overflow-hidden rounded-lg border-2 border-border hover:border-foreground/20 transition-all">
-                      <img
-                        src={img.imageUrl || ''}
-                        alt={img.caption || project.title}
-                        className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
-                      {img.caption && (
-                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/90 to-transparent p-4">
-                          <p className="text-sm text-foreground/90">{img.caption}</p>
+                <div className="space-y-8">
+                  {productionPhotos.map((img, idx) => (
+                    <AnimatedSection key={img.id} delay={idx * 50}>
+                      <div 
+                        className="group relative overflow-hidden rounded-lg cursor-pointer"
+                        onClick={() => {
+                          setLightboxImages(productionPhotos);
+                          setLightboxIndex(idx);
+                          setLightboxOpen(true);
+                        }}
+                      >
+                        <img
+                          src={img.imageUrl || ''}
+                          alt={img.caption || project.title}
+                          className="w-full h-auto object-cover group-hover:scale-102 group-hover:brightness-110 transition-all duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        
+                        {img.caption && (
+                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/95 via-background/70 to-transparent p-6">
+                            <p className="text-sm text-foreground/90">{img.caption}</p>
+                          </div>
+                        )}
+                        
+                        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <div className="px-3 py-1.5 rounded-full bg-background/90 backdrop-blur-sm border border-border">
+                            <p className="text-xs font-semibold">Click to expand</p>
+                          </div>
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    </AnimatedSection>
                   ))}
                 </div>
               )}
@@ -301,20 +326,37 @@ export default function ProjectDetail() {
               </button>
               
               {renderingsOpen && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {renderings.map((img) => (
-                    <div key={img.id} className="group relative overflow-hidden rounded-lg border-2 border-border hover:border-foreground/20 transition-all">
-                      <img
-                        src={img.imageUrl || ''}
-                        alt={img.caption || project.title}
-                        className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
-                      {img.caption && (
-                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/90 to-transparent p-4">
-                          <p className="text-sm text-foreground/90">{img.caption}</p>
+                <div className="space-y-8">
+                  {renderings.map((img, idx) => (
+                    <AnimatedSection key={img.id} delay={idx * 50}>
+                      <div 
+                        className="group relative overflow-hidden rounded-lg cursor-pointer"
+                        onClick={() => {
+                          setLightboxImages(renderings);
+                          setLightboxIndex(idx);
+                          setLightboxOpen(true);
+                        }}
+                      >
+                        <img
+                          src={img.imageUrl || ''}
+                          alt={img.caption || project.title}
+                          className="w-full h-auto object-cover group-hover:scale-102 group-hover:brightness-110 transition-all duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        
+                        {img.caption && (
+                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/95 via-background/70 to-transparent p-6">
+                            <p className="text-sm text-foreground/90">{img.caption}</p>
+                          </div>
+                        )}
+                        
+                        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <div className="px-3 py-1.5 rounded-full bg-background/90 backdrop-blur-sm border border-border">
+                            <p className="text-xs font-semibold">Click to expand</p>
+                          </div>
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    </AnimatedSection>
                   ))}
                 </div>
               )}
@@ -442,6 +484,17 @@ export default function ProjectDetail() {
       </div>
 
       <Footer />
+
+      {/* Lightbox */}
+      {lightboxOpen && (
+        <Lightbox
+          images={lightboxImages}
+          currentIndex={lightboxIndex}
+          onClose={() => setLightboxOpen(false)}
+          onNext={() => setLightboxIndex((prev) => Math.min(prev + 1, lightboxImages.length - 1))}
+          onPrev={() => setLightboxIndex((prev) => Math.max(prev - 1, 0))}
+        />
+      )}
     </div>
   );
 }

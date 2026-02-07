@@ -456,3 +456,7 @@
 - [x] Optimize mobile responsiveness for huge showcases (70-90vh)
 - [x] Test animations and mobile layouts
 - [x] Ensure all interactive elements work smoothly
+
+## Fix Project Navigation Arrows
+- [x] Change navigation to browse ALL projects instead of just same discipline
+- [x] Test navigation works continuously across entire portfolio
