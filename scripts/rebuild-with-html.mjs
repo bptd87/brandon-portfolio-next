@@ -52,7 +52,7 @@ for (const article of articlesData) {
       slug: article.slug,
       content: JSON.stringify(contentBlocks),
       excerpt: article.excerpt || '',
-      coverImage: article.coverImage || null,
+      coverImageUrl: article.featuredImage?.url || null,
       publishedAt: article.publishedAt ? new Date(article.publishedAt) : new Date(),
       status: 'published',
       categoryId: null,

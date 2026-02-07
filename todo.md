@@ -636,3 +636,9 @@
 - [ ] Redesign H2 styling (remove italic Playfair, make bold and impactful)
 - [ ] Implement category-based accent colors throughout articles
 - [ ] Test all fixes across multiple articles
+
+## Article Display Refinements
+- [x] Add cover images to article detail pages
+- [x] Set article text to justify alignment (prose-p:text-justify)
+- [x] Make table of contents sticky on scroll (sticky top-24)
+- [ ] Test all three fixes together

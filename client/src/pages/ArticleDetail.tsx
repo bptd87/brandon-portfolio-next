@@ -255,6 +255,17 @@ export default function ArticleDetail() {
                   </p>
                 )}
 
+                {/* Cover Image */}
+                {article.coverImageUrl && (
+                  <div className="mt-12 -mx-4 md:mx-0">
+                    <img 
+                      src={article.coverImageUrl} 
+                      alt={article.title}
+                      className="w-full rounded-2xl shadow-2xl"
+                    />
+                  </div>
+                )}
+
                 {/* Share Buttons */}
                 <div className="flex items-center gap-3 mt-8">
                   <span className="text-sm text-muted-foreground uppercase tracking-wider">Share:</span>
@@ -310,12 +321,12 @@ export default function ArticleDetail() {
               {/* Article Content */}
               <div 
                 ref={contentRef}
-                className="article-content max-w-[65ch] mx-auto
+                className="article-content article-html-content max-w-[65ch] mx-auto
                   prose prose-lg prose-invert
-                  prose-headings:font-['Playfair_Display'] prose-headings:italic prose-headings:font-normal prose-headings:leading-[1.2]
+                  prose-headings:font-['Playfair_Display'] prose-headings:font-bold prose-headings:font-normal prose-headings:leading-[1.2]
                   prose-h2:text-[2.5rem] prose-h2:mt-24 prose-h2:mb-6 prose-h2:scroll-mt-24 prose-h2:leading-[1.2]
                   prose-h3:text-[1.75rem] prose-h3:mt-12 prose-h3:mb-4 prose-h3:leading-[1.3]
-                  prose-p:text-foreground/90 prose-p:leading-[2] prose-p:mb-8 prose-p:text-[1.125rem] prose-p:font-normal prose-p:tracking-normal
+                  prose-p:text-foreground/90 prose-p:leading-[2] prose-p:mb-8 prose-p:text-[1.125rem] prose-p:font-normal prose-p:tracking-normal prose-p:text-justify
                   prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-a:font-medium
                   prose-strong:text-foreground prose-strong:font-semibold
                   prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-8 
@@ -503,10 +514,10 @@ export default function ArticleDetail() {
               )}
             </div>
 
-            {/* Sticky TOC Sidebar */}
+            {/* Table of Contents - Desktop */}
             {headings.length > 0 && (
               <aside className="hidden lg:block">
-                <div className="sticky top-24">
+                <div className="sticky top-24 space-y-1">
                   <h3 className="text-sm uppercase tracking-wider text-muted-foreground mb-4 font-semibold">Table of Contents</h3>
                   <nav className="space-y-2">
                     {headings.map((heading) => (

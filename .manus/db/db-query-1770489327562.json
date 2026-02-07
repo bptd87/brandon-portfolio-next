@@ -1,0 +1,35 @@
+{
+  "query": "SELECT id, title, coverImageUrl FROM articles LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT id, title, coverImageUrl FROM articles LIMIT 5;",
+  "rows": [
+    {
+      "id": "60101",
+      "title": "dfs",
+      "coverImageUrl": "NULL"
+    },
+    {
+      "id": "60102",
+      "title": "The Modern Theatrical Design Portfolio: A Guide for 2026",
+      "coverImageUrl": "NULL"
+    },
+    {
+      "id": "60103",
+      "title": "Video Game Environments: Lessons for Scenic Design",
+      "coverImageUrl": "NULL"
+    },
+    {
+      "id": "60104",
+      "title": "Becoming a Scenic Designer: A Comprehensive Guide",
+      "coverImageUrl": "NULL"
+    },
+    {
+      "id": "60105",
+      "title": "Framing the Martyr: Scenic Design as Memory Work in Romero",
+      "coverImageUrl": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tcoverImageUrl\n60101\tdfs\tNULL\n60102\tThe Modern Theatrical Design Portfolio: A Guide for 2026\tNULL\n60103\tVideo Game Environments: Lessons for Scenic Design\tNULL\n60104\tBecoming a Scenic Designer: A Comprehensive Guide\tNULL\n60105\tFraming the Martyr: Scenic Design as Memory Work in Romero\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 349
+}
