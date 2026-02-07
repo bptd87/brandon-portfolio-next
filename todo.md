@@ -886,3 +886,8 @@
 - [x] Replace with IntersectionObserver or scroll events for Safari
 - [x] Wrap ResizeObserver in try-catch to suppress errors
 - [x] Test on Safari to confirm images stay visible
+
+## Suppress ResizeObserver Errors Globally
+- [x] Add global error handler to suppress ResizeObserver loop errors
+- [x] Search for all ResizeObserver usage in components
+- [x] Test on Safari to verify fix

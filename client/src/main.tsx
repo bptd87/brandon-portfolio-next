@@ -12,6 +12,15 @@ import "./index.css";
 // Handle session token from URL (for browsers that block third-party cookies)
 handleSessionToken();
 
+// Suppress ResizeObserver loop errors (known Safari bug)
+const resizeObserverErr = window.console.error;
+window.console.error = (...args: any[]) => {
+  if (args[0]?.toString().includes('ResizeObserver loop')) {
+    return;
+  }
+  resizeObserverErr(...args);
+};
+
 const queryClient = new QueryClient();
 
 const redirectToLoginIfUnauthorized = (error: unknown) => {
