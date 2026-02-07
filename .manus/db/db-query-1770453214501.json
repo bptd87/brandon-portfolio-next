@@ -1,0 +1,70 @@
+{
+  "query": "SELECT id, title, status, createdAt FROM articles ORDER BY createdAt DESC LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT id, title, status, createdAt FROM articles ORDER BY createdAt DESC LIMIT 10;",
+  "rows": [
+    {
+      "id": "3",
+      "title": "Becoming a Scenic Designer: A Comprehensive Guide",
+      "status": "published",
+      "createdAt": "2026-02-06 12:18:26"
+    },
+    {
+      "id": "2",
+      "title": "Artistic Vision in Scenic Design: Finding My Creative Voice",
+      "status": "published",
+      "createdAt": "2026-02-06 12:18:26"
+    },
+    {
+      "id": "4",
+      "title": "The Scenic Design Process: From Script to Stage",
+      "status": "published",
+      "createdAt": "2026-02-06 12:18:26"
+    },
+    {
+      "id": "30002",
+      "title": "The Modern Theatrical Design Portfolio: A Guide for 2026",
+      "status": "published",
+      "createdAt": "2026-01-16 02:55:19"
+    },
+    {
+      "id": "30003",
+      "title": "Video Game Environments: Lessons for Scenic Design",
+      "status": "published",
+      "createdAt": "2026-01-11 15:33:00"
+    },
+    {
+      "id": "30004",
+      "title": "Becoming a Scenic Designer: A Comprehensive Guide",
+      "status": "published",
+      "createdAt": "2025-09-15 14:42:00"
+    },
+    {
+      "id": "30005",
+      "title": "Framing the Martyr: Scenic Design as Memory Work in Romero",
+      "status": "published",
+      "createdAt": "2025-05-21 15:07:00"
+    },
+    {
+      "id": "30006",
+      "title": "What Makes a Good Scenic Design Rendering?",
+      "status": "published",
+      "createdAt": "2025-05-04 14:51:00"
+    },
+    {
+      "id": "30007",
+      "title": "The Lights Were Already On: Maude Adams&#8217; Legacy at Stephens College",
+      "status": "published",
+      "createdAt": "2025-04-26 14:58:00"
+    },
+    {
+      "id": "30008",
+      "title": "The Evolution of Themed Entertainment: From Ancient Gardens to Modern Immersive Experienceses Everything",
+      "status": "published",
+      "createdAt": "2025-03-22 15:14:00"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tstatus\tcreatedAt\n3\tBecoming a Scenic Designer: A Comprehensive Guide\tpublished\t2026-02-06 12:18:26\n2\tArtistic Vision in Scenic Design: Finding My Creative Voice\tpublished\t2026-02-06 12:18:26\n4\tThe Scenic Design Process: From Script to Stage\tpublished\t2026-02-06 12:18:26\n30002\tThe Modern Theatrical Design Portfolio: A Guide for 2026\tpublished\t2026-01-16 02:55:19\n30003\tVideo Game Environments: Lessons for Scenic Design\tpublished\t2026-01-11 15:33:00\n30004\tBecoming a Scenic Designer: A Comprehensive Guide\tpublished\t2025-09-15 14:42:00\n30005\tFraming the Martyr: Scenic Design as Memory Work in Romero\tpublished\t2025-05-21 15:07:00\n30006\tWhat Makes a Good Scenic Design Rendering?\tpublished\t2025-05-04 14:51:00\n30007\tThe Lights Were Already On: Maude Adams&#8217; Legacy at Stephens College\tpublished\t2025-04-26 14:58:00\n30008\tThe Evolution of Themed Entertainment: From Ancient Gardens to Modern Immersive Experienceses Everything\tpublished\t2025-03-22 15:14:00\n",
+  "stderr": "",
+  "execution_time_ms": 383
+}

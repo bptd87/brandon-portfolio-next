@@ -534,3 +534,12 @@
 - [x] Build Quote/Pullquote block (highlighted quotes)
 - [x] Build List block (bullet points and numbered lists)
 - [x] Test all new blocks work correctly
+
+## WordPress Article Import
+- [x] Build WordPress REST API import script
+- [x] Convert WordPress HTML content to block format
+- [x] Map WordPress categories and tags
+- [ ] Import featured images as cover images (skipped for speed)
+- [x] Test import with sample articles
+- [x] Run full article migration (10 articles imported successfully)
+- [x] Verify all articles imported correctly
