@@ -8,6 +8,7 @@ import { Calendar, Clock, ArrowLeft, Share2, Twitter, Linkedin, Mail, Link as Li
 import { Link, useParams } from "wouter";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { getCategoryColor } from "@/lib/categoryColors";
 
 // Decode HTML entities
 const decodeHTMLEntities = (text: string): string => {
@@ -275,7 +276,15 @@ export default function ArticleDetail() {
               <header className="mb-12">
                 <div className="flex items-center gap-3 mb-6 text-sm uppercase tracking-wider">
                   {category && (
-                    <Badge variant="secondary" className="font-bold bg-primary/10 text-primary hover:bg-primary/20">
+                    <Badge 
+                      variant="secondary" 
+                      className="font-bold"
+                      style={{
+                        backgroundColor: `${getCategoryColor(category.name).hex}20`,
+                        color: getCategoryColor(category.name).hex,
+                        borderColor: `${getCategoryColor(category.name).hex}40`
+                      }}
+                    >
                       {category.name}
                     </Badge>
                   )}
@@ -396,8 +405,12 @@ export default function ArticleDetail() {
                 {Array.isArray(processedSections) && processedSections.map((section: any, index: number) => {
                   switch (section.type) {
                     case 'heading':
+                      const categoryColorObj = category ? getCategoryColor(category.name) : undefined;
                       return (
-                        <h2 key={index}>
+                        <h2 
+                          key={index}
+                          style={categoryColorObj ? { color: `${categoryColorObj.hex} !important` } : undefined}
+                        >
                           {decodeHTMLEntities(section.text || section.content || '')}
                         </h2>
                       );
@@ -579,9 +592,13 @@ export default function ArticleDetail() {
                         href={`#${heading.id}`}
                         className={`block text-sm py-1 border-l-2 pl-4 transition-colors ${
                           activeHeading === heading.id
-                            ? 'border-primary text-primary font-medium'
+                            ? 'font-medium'
                             : 'border-border text-muted-foreground hover:text-foreground hover:border-muted-foreground'
                         }`}
+                        style={activeHeading === heading.id && category ? {
+                          borderColor: getCategoryColor(category.name).hex,
+                          color: getCategoryColor(category.name).hex
+                        } : undefined}
                         onClick={(e) => {
                           e.preventDefault();
                           document.getElementById(heading.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -601,6 +618,11 @@ export default function ArticleDetail() {
       <Footer />
 
       <style>{`
+        /* Category-specific H2 colors */
+        .article-content h2 {
+          color: ${category ? getCategoryColor(category.name).hex : 'inherit'} !important;
+        }
+        
         /* WordPress Gallery Styles - Horizontal Scroll */
         .article-content .wp-block-gallery,
         .article-content .blocks-gallery-grid {

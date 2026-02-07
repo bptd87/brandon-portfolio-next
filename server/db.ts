@@ -375,7 +375,27 @@ export async function getAllArticles(filters?: { status?: 'draft' | 'published' 
   const db = await getDb();
   if (!db) return [];
 
-  let query = db.select().from(articles).$dynamic();
+  let query = db.select({
+    id: articles.id,
+    title: articles.title,
+    slug: articles.slug,
+    excerpt: articles.excerpt,
+    content: articles.content,
+    categoryId: articles.categoryId,
+    coverImageUrl: articles.coverImageUrl,
+    coverImageKey: articles.coverImageKey,
+    authorId: articles.authorId,
+    status: articles.status,
+    featured: articles.featured,
+    readTime: articles.readTime,
+    seoTitle: articles.seoTitle,
+    seoDescription: articles.seoDescription,
+    seoKeywords: articles.seoKeywords,
+    createdAt: articles.createdAt,
+    updatedAt: articles.updatedAt,
+    publishedAt: articles.publishedAt,
+    category: categories,
+  }).from(articles).leftJoin(categories, eq(articles.categoryId, categories.id)).$dynamic();
 
   const conditions = [];
   if (filters?.status) conditions.push(eq(articles.status, filters.status));

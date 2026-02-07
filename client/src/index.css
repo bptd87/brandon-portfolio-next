@@ -46,6 +46,19 @@
   --color-accent-news: var(--accent-news);
   --color-accent-articles: var(--accent-articles);
   --color-accent-brand: var(--accent-brand);
+  
+  /* Category Accent Colors */
+  --color-coral-50: 255 241 240;
+  --color-coral-100: 255 225 222;
+  --color-coral-200: 255 199 194;
+  --color-coral-300: 255 161 152;
+  --color-coral-400: 255 107 107;
+  --color-coral-500: 255 68 68;
+  --color-coral-600: 237 28 36;
+  --color-coral-700: 200 21 28;
+  --color-coral-800: 165 21 27;
+  --color-coral-900: 136 24 29;
+  --color-coral-950: 74 8 11;
 }
 
 :root {

@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
 import { trpc } from "@/lib/trpc";
+import { getCategoryBadgeClasses, getCategoryColor } from "@/lib/categoryColors";
 import { BookOpen, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 
@@ -15,6 +16,8 @@ const decodeHTMLEntities = (text: string): string => {
 
 export default function Articles() {
   const { data: articles, isLoading } = trpc.articles.list.useQuery({});
+  
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -60,12 +63,11 @@ export default function Articles() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 group-hover:from-black/95 transition-all duration-300" />
                     
                     {/* Category Badge */}
-                    {article.categoryId && (
+                    {article.category && (
                       <div className="absolute top-4 left-4">
-                        <Badge className="bg-primary/90 text-primary-foreground backdrop-blur-sm font-semibold uppercase tracking-wider text-[10px] px-3 py-1">
-                          {/* Category name will be fetched separately if needed */}
-                          Article
-                        </Badge>
+                        <span className={getCategoryBadgeClasses(article.category.name)}>
+                          {article.category.name}
+                        </span>
                       </div>
                     )}
                     

@@ -708,3 +708,24 @@
 - [x] Add hover effects with arrow icon
 - [x] Add rounded corners and shadow effects
 - [x] Test article card redesign
+
+## Implement Category Accent Colors
+- [ ] Query database to identify all article categories
+- [ ] Define color palette for each category (coral for Design Process, cyan for Technology, amber for History, etc.)
+- [ ] Apply category colors to article card badges
+- [ ] Apply category colors to article card hover effects
+- [ ] Apply category colors to article detail page category badges
+- [ ] Apply category colors to H2 headings in article content
+- [ ] Apply category colors to TOC active states
+- [ ] Test all category colors across the site
+
+## Implement Category Accent Colors
+- [x] Query database to identify all article categories
+- [x] Define color palette for each category (coral, cyan, amber, etc.)
+- [x] Create category color mapping utility
+- [x] Assign categories to all 24 articles in database
+- [x] Apply category colors to article card badges
+- [ ] Apply category colors to article detail page badges
+- [ ] Apply category colors to H2 headings in article content
+- [ ] Apply category colors to TOC active states
+- [ ] Test all category color implementations
