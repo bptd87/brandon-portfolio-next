@@ -456,3 +456,18 @@
 - [x] Optimize mobile responsiveness for huge showcases (70-90vh)
 - [x] Test animations and mobile layouts
 - [x] Ensure all interactive elements work smoothly
+
+## Redesign Gallery as Art Showcase
+- [x] Change gallery layout from 2-column grid to single-column full-width
+- [x] Remove heavy borders, let images breathe
+- [x] Add morphism scroll effects (scale, blur, parallax) as images enter viewport
+- [x] Implement lightbox/modal viewer for full-screen image viewing
+- [x] Add gallery navigation (prev/next arrows, thumbnails, close button)
+- [x] Apply to production photos, renderings, and all image galleries
+- [x] Test lightbox functionality and scroll effects
+
+## 3D Wheel Scroll Effect
+- [x] Add 3D perspective transform to gallery images
+- [x] Implement rotation effect where images rotate up from below as you scroll
+- [x] Create "wheel of content" carousel effect
+- [x] Test smooth 3D transitions

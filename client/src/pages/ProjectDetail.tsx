@@ -8,6 +8,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useState } from "react";
 import { AnimatedSection } from "@/components/AnimatedSection";
+import { WheelAnimatedSection } from "@/components/WheelAnimatedSection";
+import { Lightbox } from "@/components/Lightbox";
 
 // Convert YouTube/Vimeo URLs to embed format
 function getEmbedUrl(url: string): string {
@@ -46,6 +48,9 @@ export default function ProjectDetail() {
   const [renderingsOpen, setRenderingsOpen] = useState(true);
   const [teamOpen, setTeamOpen] = useState(true);
   const [videosOpen, setVideosOpen] = useState(true);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [lightboxImages, setLightboxImages] = useState<Array<{imageUrl: string | null; caption: string | null; altText: string | null}>>([]);
 
   if (isLoading) {
     return (
@@ -260,20 +265,39 @@ export default function ProjectDetail() {
               </button>
               
               {galleryOpen && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {productionPhotos.map((img) => (
-                    <div key={img.id} className="group relative overflow-hidden rounded-lg border-2 border-border hover:border-foreground/20 transition-all">
-                      <img
-                        src={img.imageUrl || ''}
-                        alt={img.caption || project.title}
-                        className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
-                      {img.caption && (
-                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/90 to-transparent p-4">
-                          <p className="text-sm text-foreground/90">{img.caption}</p>
+                <div className="space-y-12" style={{ perspective: '1500px', perspectiveOrigin: 'center bottom' }}>
+                  {productionPhotos.map((img, idx) => (
+                    <WheelAnimatedSection key={img.id}>
+                      <div 
+                        className="group relative overflow-hidden rounded-lg cursor-pointer"
+                        onClick={() => {
+                          setLightboxImages(productionPhotos);
+                          setLightboxIndex(idx);
+                          setLightboxOpen(true);
+                        }}
+                      >
+                        <img
+                          src={img.imageUrl || ''}
+                          alt={img.caption || project.title}
+                          className="w-full h-auto object-cover group-hover:scale-105 group-hover:brightness-110 transition-all duration-1000"
+                        />
+                        {/* Subtle overlay on hover */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                        
+                        {img.caption && (
+                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/95 via-background/80 to-transparent p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                            <p className="text-base text-foreground/90">{img.caption}</p>
+                          </div>
+                        )}
+                        
+                        {/* Click hint */}
+                        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <div className="px-4 py-2 rounded-full bg-background/90 backdrop-blur-sm border border-border">
+                            <p className="text-xs font-semibold">Click to expand</p>
+                          </div>
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    </WheelAnimatedSection>
                   ))}
                 </div>
               )}
@@ -301,20 +325,37 @@ export default function ProjectDetail() {
               </button>
               
               {renderingsOpen && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {renderings.map((img) => (
-                    <div key={img.id} className="group relative overflow-hidden rounded-lg border-2 border-border hover:border-foreground/20 transition-all">
-                      <img
-                        src={img.imageUrl || ''}
-                        alt={img.caption || project.title}
-                        className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
-                      {img.caption && (
-                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/90 to-transparent p-4">
-                          <p className="text-sm text-foreground/90">{img.caption}</p>
+                <div className="space-y-12" style={{ perspective: '1500px', perspectiveOrigin: 'center bottom' }}>
+                  {renderings.map((img, idx) => (
+                    <WheelAnimatedSection key={img.id}>
+                      <div 
+                        className="group relative overflow-hidden rounded-lg cursor-pointer"
+                        onClick={() => {
+                          setLightboxImages(renderings);
+                          setLightboxIndex(idx);
+                          setLightboxOpen(true);
+                        }}
+                      >
+                        <img
+                          src={img.imageUrl || ''}
+                          alt={img.caption || project.title}
+                          className="w-full h-auto object-cover group-hover:scale-105 group-hover:brightness-110 transition-all duration-1000"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                        
+                        {img.caption && (
+                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/95 via-background/80 to-transparent p-8 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                            <p className="text-base text-foreground/90">{img.caption}</p>
+                          </div>
+                        )}
+                        
+                        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <div className="px-4 py-2 rounded-full bg-background/90 backdrop-blur-sm border border-border">
+                            <p className="text-xs font-semibold">Click to expand</p>
+                          </div>
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    </WheelAnimatedSection>
                   ))}
                 </div>
               )}
@@ -442,6 +483,17 @@ export default function ProjectDetail() {
       </div>
 
       <Footer />
+
+      {/* Lightbox */}
+      {lightboxOpen && (
+        <Lightbox
+          images={lightboxImages}
+          currentIndex={lightboxIndex}
+          onClose={() => setLightboxOpen(false)}
+          onNext={() => setLightboxIndex((prev) => Math.min(prev + 1, lightboxImages.length - 1))}
+          onPrev={() => setLightboxIndex((prev) => Math.max(prev - 1, 0))}
+        />
+      )}
     </div>
   );
 }
