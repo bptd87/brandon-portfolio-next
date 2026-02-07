@@ -1,6 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { useState, useRef, useEffect } from "react";
-import { ChevronDown, Search, Sun, Moon } from "lucide-react";
+import { ChevronDown, Sun, Moon } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 
 export default function Header() {
@@ -32,64 +32,56 @@ export default function Header() {
   }, []);
 
   const disciplines = [
-    { name: "Scenic Design", slug: "scenic_design", description: "Spatial Storytelling & Environments" },
-    { name: "Experiential Design", slug: "experiential_design", description: "Immersive Brand Activations" },
-    { name: "Renderings", slug: "rendering", description: "Visualization & Concept" },
-    { name: "Scenic Models", slug: "scenic_models", description: "Scale Model Archive" },
+    { name: "Scenic Design", slug: "scenic_design" },
+    { name: "Experiential", slug: "experiential_design" },
+    { name: "Renderings", slug: "rendering" },
+    { name: "Models", slug: "scenic_models" },
   ];
 
   const aboutPages = [
-    { name: "About", slug: "/about", description: "Biography & Experience" },
-    { name: "Teaching Philosophy", slug: "/teaching-philosophy", description: "Educational Approach" },
-    { name: "Resume / CV", slug: "/resume", description: "Professional History" },
-    { name: "Creative Statement", slug: "/creative-statement", description: "Artistic Vision" },
+    { name: "About", slug: "/about" },
+    { name: "Resume", slug: "/resume" },
+    { name: "Philosophy", slug: "/teaching-philosophy" },
+    { name: "Statement", slug: "/creative-statement" },
   ];
 
   return (
-    <header className="glass-strong sticky top-0 z-50 border-b border-border">
-      <div className="container py-6">
+    <header className="sticky top-0 z-50 border-b border-border/50 bg-background/95 backdrop-blur-xl">
+      <div className="container py-4">
         <nav className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="text-2xl font-bold tracking-tight hover:text-primary transition-smooth">
-            <span className="font-['Playfair_Display']">B</span> BRANDON PT DAVIS
-            <span className="block text-xs font-normal tracking-widest text-muted-foreground mt-1">
+          <Link href="/" className="text-xl font-black tracking-tighter hover:opacity-70 transition-opacity">
+            BRANDON PT DAVIS
+            <span className="block text-[10px] font-normal tracking-[0.2em] text-muted-foreground mt-0.5">
               SCENIC DESIGNER
             </span>
           </Link>
 
           {/* Navigation */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-8">
             {/* Portfolio Dropdown */}
             <div className="relative" ref={portfolioDropdownRef}>
               <button
                 onClick={() => setPortfolioOpen(!portfolioOpen)}
-                className={`text-sm font-medium transition-smooth flex items-center gap-1 ${
-                  isActive("/projects") ? "text-primary" : "hover:text-primary"
+                className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-[#FF5722] ${
+                  isActive("/projects") ? "text-[#FF5722]" : ""
                 }`}
               >
-                PORTFOLIO
-                <ChevronDown className={`w-4 h-4 transition-transform ${portfolioOpen ? "rotate-180" : ""}`} />
+                WORK
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${portfolioOpen ? "rotate-180" : ""}`} />
               </button>
 
               {/* Dropdown Menu */}
               {portfolioOpen && (
-                <div className="absolute top-full left-0 mt-4 w-64 glass-strong rounded-xl overflow-hidden shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
-                  {disciplines.map((discipline, index) => (
+                <div className="absolute top-full right-0 mt-3 w-48 bg-background border border-border/50 rounded-lg overflow-hidden shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
+                  {disciplines.map((discipline) => (
                     <Link
                       key={discipline.slug}
                       href={`/projects?discipline=${discipline.slug}`}
                       onClick={() => setPortfolioOpen(false)}
-                      className={`block px-6 py-4 transition-smooth hover:bg-accent/50 ${
-                        index !== disciplines.length - 1 ? "border-b border-border" : ""
-                      }`}
+                      className="block px-5 py-3 text-sm font-semibold hover:bg-[#FF5722]/10 hover:text-[#FF5722] transition-all border-b border-border/30 last:border-0"
                     >
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <div className="font-medium text-sm">{discipline.name}</div>
-                          <div className="text-xs text-muted-foreground mt-0.5">{discipline.description}</div>
-                        </div>
-                        <span className="text-muted-foreground">→</span>
-                      </div>
+                      {discipline.name}
                     </Link>
                   ))}
                 </div>
@@ -98,8 +90,8 @@ export default function Header() {
 
             <Link 
               href="/news" 
-              className={`text-sm font-medium transition-smooth ${
-                isActive("/news") ? "text-primary" : "hover:text-primary"
+              className={`text-sm font-bold tracking-wide transition-all hover:text-[#00E5FF] ${
+                isActive("/news") ? "text-[#00E5FF]" : ""
               }`}
             >
               NEWS
@@ -109,76 +101,62 @@ export default function Header() {
             <div className="relative" ref={aboutDropdownRef}>
               <button
                 onClick={() => setAboutOpen(!aboutOpen)}
-                className={`text-sm font-medium transition-smooth flex items-center gap-1 ${
-                  isActive("/about") || isActive("/teaching-philosophy") || isActive("/resume") || isActive("/creative-statement") ? "text-primary" : "hover:text-primary"
+                className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-[#FF1744] ${
+                  isActive("/about") || isActive("/teaching-philosophy") || isActive("/resume") || isActive("/creative-statement") ? "text-[#FF1744]" : ""
                 }`}
               >
                 ABOUT
-                <ChevronDown className={`w-4 h-4 transition-transform ${aboutOpen ? "rotate-180" : ""}`} />
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${aboutOpen ? "rotate-180" : ""}`} />
               </button>
 
               {/* Dropdown Menu */}
               {aboutOpen && (
-                <div className="absolute top-full left-0 mt-4 w-64 glass-strong rounded-xl overflow-hidden shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
-                  {aboutPages.map((page, index) => (
+                <div className="absolute top-full right-0 mt-3 w-48 bg-background border border-border/50 rounded-lg overflow-hidden shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
+                  {aboutPages.map((page) => (
                     <Link
                       key={page.slug}
                       href={page.slug}
                       onClick={() => setAboutOpen(false)}
-                      className={`block px-6 py-4 transition-smooth hover:bg-accent/50 ${
-                        index !== aboutPages.length - 1 ? "border-b border-border" : ""
-                      }`}
+                      className="block px-5 py-3 text-sm font-semibold hover:bg-[#FF1744]/10 hover:text-[#FF1744] transition-all border-b border-border/30 last:border-0"
                     >
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <div className="font-medium text-sm">{page.name}</div>
-                          <div className="text-xs text-muted-foreground mt-0.5">{page.description}</div>
-                        </div>
-                        <span className="text-muted-foreground">→</span>
-                      </div>
+                      {page.name}
                     </Link>
                   ))}
                 </div>
               )}
             </div>
+
             <Link 
               href="/articles" 
-              className={`text-sm font-medium transition-smooth ${
-                isActive("/articles") ? "text-primary" : "hover:text-primary"
+              className={`text-sm font-bold tracking-wide transition-all hover:text-[#FF5722] ${
+                isActive("/articles") ? "text-[#FF5722]" : ""
               }`}
             >
               ARTICLES
             </Link>
+
             <Link 
               href="/studio" 
-              className={`text-sm font-medium transition-smooth ${
-                isActive("/studio") ? "text-primary" : "hover:text-primary"
+              className={`text-sm font-bold tracking-wide transition-all hover:text-[#00E5FF] ${
+                isActive("/studio") ? "text-[#00E5FF]" : ""
               }`}
             >
               STUDIO
             </Link>
 
-            {/* Search Icon */}
-            <button
-              className="text-sm font-medium hover:text-primary transition-smooth"
-              title="Toggle search"
-            >
-              <Search className="w-5 h-5" />
-            </button>
-
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="text-sm font-medium hover:text-primary transition-smooth"
+              className="text-sm font-medium hover:text-[#FF5722] transition-all p-1"
               title="Toggle theme"
             >
-              {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
 
             {/* Contact Button */}
             <Link 
               href="/contact" 
-              className="text-sm font-medium bg-primary text-primary-foreground px-4 py-2 rounded-xl hover:bg-primary/90 transition-smooth hover-lift"
+              className="text-sm font-black tracking-wide bg-[#FF5722] text-white px-6 py-2.5 rounded-full hover:bg-[#FF5722]/90 hover:scale-105 transition-all"
             >
               CONTACT
             </Link>
