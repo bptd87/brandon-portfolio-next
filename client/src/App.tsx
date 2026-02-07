@@ -20,6 +20,7 @@ import Contact from "./pages/Contact";
 import Studio from "./pages/Studio";
 import NewsDetail from "./pages/NewsDetail";
 import ArticleDetail from "./pages/ArticleDetail";
+import AdminFaqConvert from "./pages/AdminFaqConvert";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import FAQ from "./pages/FAQ";
@@ -45,6 +46,7 @@ function Router() {
       <Route path={"/news/:slug"} component={NewsDetail} />
       <Route path={"/articles"} component={Articles} />
       <Route path={"/articles/:slug"} component={ArticleDetail} />
+      <Route path={"/admin/faq-convert"} component={AdminFaqConvert} />
       <Route path={"/about"} component={About} />
       <Route path={"/teaching-philosophy"} component={TeachingPhilosophy} />
       <Route path={"/resume"} component={Resume} />

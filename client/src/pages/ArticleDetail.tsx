@@ -183,6 +183,58 @@ export default function ArticleDetail() {
       continue; // Don't increment i, already moved past FAQ
     }
     
+    // Check for plain-text FAQ format in HTML content (Q: and A: pattern)
+    if (section.type === 'html' && section.content) {
+      const htmlContent = section.content;
+      
+      
+      // Extract text content from HTML to find Q&A pairs
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = htmlContent;
+      const textContent = tempDiv.textContent || '';
+      
+      // Look for Q: and A: pattern in the text content
+      const lines = textContent.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+      const faqItems: Array<{ question: string; answer: string }> = [];
+      
+
+      let qCount = 0;
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        if (line.startsWith('Q:')) {
+          qCount++;
+          const question = line.substring(2).trim();
+          // Look for the corresponding A: on the next line
+          if (i + 1 < lines.length && lines[i + 1].startsWith('A:')) {
+            const answer = lines[i + 1].substring(2).trim();
+            faqItems.push({ question, answer });
+            i++; // Skip the answer line
+          }
+        }
+      }
+      
+      
+      // If we found FAQ items (at least 3 Q&A pairs), convert this section to FAQ accordion
+      if (faqItems.length >= 3) {
+
+        
+        // Check if there's an FAQ heading in this section
+        const faqHeadingMatch = htmlContent.match(/<h2[^>]*>.*?FAQ.*?<\/h2>/i);
+        if (faqHeadingMatch) {
+          const faqHeadingIndex = htmlContent.indexOf(faqHeadingMatch[0]);
+          const beforeFaq = htmlContent.substring(0, faqHeadingIndex).trim();
+          if (beforeFaq) {
+            processedSections.push({ type: 'html', content: beforeFaq });
+          }
+        }
+        
+        // FAQ accordion
+        processedSections.push({ type: 'faq', items: faqItems });
+        
+        continue;
+      }
+    }
+    
     processedSections.push(section);
     i++;
   }
