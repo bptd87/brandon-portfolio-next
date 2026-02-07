@@ -65,105 +65,101 @@ export default function TeachingPhilosophy() {
 
           {/* Core Principles */}
           <div className="mb-12">
-            <h2 className="text-3xl font-serif mb-8">Core Principles</h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              <Card>
-                <CardContent className="p-6">
-                  <Target className="w-8 h-8 mb-4 text-primary" />
+            <p className="text-xs uppercase tracking-widest text-muted-foreground mb-6 font-pixel">CORE PRINCIPLES</p>
+            <div className="bg-card/30 backdrop-blur-md border border-border/50 rounded-3xl p-8 space-y-6">
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <Target className="w-6 h-6 text-muted-foreground" />
+                </div>
+                <div>
                   <h3 className="text-lg font-semibold mb-2">Industry Readiness</h3>
-                  <p className="text-sm text-foreground/70">
+                  <p className="text-sm text-muted-foreground leading-relaxed">
                     Preparing students for careers across theatre, film, TV, events, and themed entertainment
                   </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6">
-                  <Laptop className="w-8 h-8 mb-4 text-primary" />
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <Laptop className="w-6 h-6 text-muted-foreground" />
+                </div>
+                <div>
                   <h3 className="text-lg font-semibold mb-2">Traditional + Digital</h3>
-                  <p className="text-sm text-foreground/70">
+                  <p className="text-sm text-muted-foreground leading-relaxed">
                     Balancing hand-drafting, painting, and sketching with Vectorworks, Twinmotion, and AI tools
                   </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6">
-                  <Users className="w-8 h-8 mb-4 text-primary" />
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <Users className="w-6 h-6 text-muted-foreground" />
+                </div>
+                <div>
                   <h3 className="text-lg font-semibold mb-2">Collaboration Culture</h3>
-                  <p className="text-sm text-foreground/70">
+                  <p className="text-sm text-muted-foreground leading-relaxed">
                     Creating shared studio spaces and collaborative projects that build community
                   </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6">
-                  <BookOpen className="w-8 h-8 mb-4 text-primary" />
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <BookOpen className="w-6 h-6 text-muted-foreground" />
+                </div>
+                <div>
                   <h3 className="text-lg font-semibold mb-2">Accessible Learning</h3>
-                  <p className="text-sm text-foreground/70">
+                  <p className="text-sm text-muted-foreground leading-relaxed">
                     Versatile teaching strategies with digital platforms and hybrid assignments
                   </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6">
-                  <Lightbulb className="w-8 h-8 mb-4 text-primary" />
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <Lightbulb className="w-6 h-6 text-muted-foreground" />
+                </div>
+                <div>
                   <h3 className="text-lg font-semibold mb-2">Self-Advocacy</h3>
-                  <p className="text-sm text-foreground/70">
+                  <p className="text-sm text-muted-foreground leading-relaxed">
                     Guiding students toward resilience, confidence, and effective self-promotion
                   </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6">
-                  <FlaskConical className="w-8 h-8 mb-4 text-primary" />
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <FlaskConical className="w-6 h-6 text-muted-foreground" />
+                </div>
+                <div>
                   <h3 className="text-lg font-semibold mb-2">Teaching as Research</h3>
-                  <p className="text-sm text-foreground/70">
+                  <p className="text-sm text-muted-foreground leading-relaxed">
                     Continuously exploring emerging technologies and industry practices
                   </p>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </div>
           </div>
 
           {/* Teaching Experience */}
           <div className="mb-12">
-            <h2 className="text-3xl font-serif mb-8">Teaching Experience</h2>
-            <div className="space-y-4">
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-lg font-semibold">Stephens College</h3>
-                    <span className="text-sm text-muted-foreground">2024 – 2025</span>
-                  </div>
-                  <p className="text-sm text-foreground/70">Lecturer (Remote)</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-lg font-semibold">Stephens College</h3>
-                    <span className="text-sm text-muted-foreground">2021 – 2024</span>
-                  </div>
-                  <p className="text-sm text-foreground/70">Lecturer</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-lg font-semibold">University of Texas at El Paso</h3>
-                    <span className="text-sm text-muted-foreground">2021</span>
-                  </div>
-                  <p className="text-sm text-foreground/70">Visiting Assistant Professor</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-lg font-semibold">University of California, Irvine</h3>
-                    <span className="text-sm text-muted-foreground">2017 – 2020</span>
-                  </div>
-                  <p className="text-sm text-foreground/70">Adjunct Lecturer & TA</p>
-                </CardContent>
-              </Card>
+            <p className="text-xs uppercase tracking-widest text-muted-foreground mb-6 font-pixel">TEACHING EXPERIENCE</p>
+            <div className="bg-card/30 backdrop-blur-md border border-border/50 rounded-3xl p-8 space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold">Stephens College</h3>
+                <p className="text-sm text-muted-foreground">Lecturer (Remote)</p>
+                <p className="text-sm text-muted-foreground">2024 – 2025</p>
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold">Stephens College</h3>
+                <p className="text-sm text-muted-foreground">Lecturer</p>
+                <p className="text-sm text-muted-foreground">2021 – 2024</p>
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold">University of Texas at El Paso</h3>
+                <p className="text-sm text-muted-foreground">Visiting Assistant Professor</p>
+                <p className="text-sm text-muted-foreground">2021</p>
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold">University of California, Irvine</h3>
+                <p className="text-sm text-muted-foreground">Adjunct Lecturer & TA</p>
+                <p className="text-sm text-muted-foreground">2017 – 2020</p>
+              </div>
             </div>
           </div>
 
