@@ -968,3 +968,8 @@
 - [x] Remove Currently Accepting section
 - [x] Reduce vertical spacing/padding
 - [x] Make page more compact overall
+
+## Contact Page - Stats Row & Bounce
+- [x] Move Instagram card to stats row (3-column grid)
+- [x] Add stronger bounce animation to Brandon illustration
+- [x] Test responsive layout with 3 stat cards

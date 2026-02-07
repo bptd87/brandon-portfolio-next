@@ -147,7 +147,7 @@ export default function Contact() {
               </form>
 
               {/* Animated Quick Stats */}
-              <div className="mt-16 grid grid-cols-2 gap-8">
+              <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Animated Clock - Stronger Animation */}
                 <div className="bg-card/90 backdrop-blur-xl border-2 border-primary/50 rounded-2xl p-6 relative overflow-hidden group hover:scale-105 hover:border-primary transition-all duration-300">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -211,6 +211,25 @@ export default function Contact() {
                     <div className="text-muted-foreground text-center font-medium">Reply Rate</div>
                   </div>
                 </div>
+
+                {/* Instagram Card */}
+                <a 
+                  href="https://instagram.com/brandonptdavis"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-card/90 backdrop-blur-xl border-2 border-purple-500/50 rounded-2xl p-6 relative overflow-hidden group hover:scale-105 hover:border-purple-500 transition-all duration-300"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="relative z-10">
+                    <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                      <div className="h-20 w-20 rounded-full bg-purple-500 flex items-center justify-center shadow-lg shadow-purple-500/30 group-hover:scale-110 transition-transform">
+                        <Instagram className="h-10 w-10 text-white" />
+                      </div>
+                    </div>
+                    <div className="text-2xl font-['Playfair_Display'] italic font-normal mb-2 text-center text-purple-500">Instagram</div>
+                    <div className="text-muted-foreground text-center font-medium">@brandonptdavis</div>
+                  </div>
+                </a>
               </div>
             </div>
 
@@ -243,13 +262,17 @@ export default function Contact() {
                     }
                   }
                   .rainbow-glow-hover-strong:hover {
-                    animation: rainbow-glow-strong 1.5s ease-in-out infinite;
+                    animation: rainbow-glow-strong 1.5s ease-in-out infinite, bounce-strong 0.6s ease-in-out infinite;
+                  }
+                  @keyframes bounce-strong {
+                    0%, 100% { transform: translateY(0) scale(1.05); }
+                    50% { transform: translateY(-20px) scale(1.08); }
                   }
                 `}</style>
                 <img 
                   src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/sTGFAGStMbEkLyGw.png"
                   alt="Brandon at desk with cat"
-                  className="w-full rounded-2xl transition-all duration-500 rainbow-glow-hover-strong transform group-hover:scale-105"
+                  className="w-full rounded-2xl transition-all duration-500 rainbow-glow-hover-strong"
                   style={{
                     filter: 'drop-shadow(0 10px 40px rgba(0,0,0,0.3))'
                   }}
@@ -292,21 +315,7 @@ export default function Contact() {
                   <ArrowRight className="h-5 w-5 ml-auto opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 text-cyan-500" />
                 </a>
 
-                <a 
-                  href="https://instagram.com/brandonptdavis"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 rounded-xl border-2 border-purple-500/30 bg-card/80 hover:border-purple-500 hover:bg-card transition-all group"
-                >
-                  <div className="h-12 w-12 rounded-full bg-purple-500 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform shadow-lg shadow-purple-500/30">
-                    <Instagram className="h-6 w-6 text-white" />
-                  </div>
-                  <div className="min-w-0">
-                    <div className="text-sm text-muted-foreground">Instagram</div>
-                    <div className="font-medium text-foreground">@brandonptdavis</div>
-                  </div>
-                  <ArrowRight className="h-5 w-5 ml-auto opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 text-purple-500" />
-                </a>
+
               </div>
 
 
