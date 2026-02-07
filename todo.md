@@ -360,3 +360,10 @@
 - [x] Add icons to each principle (target, laptop, users, book, lightbulb, flask)
 - [x] Apply same aesthetic to Teaching Experience section
 - [x] Test Teaching Philosophy page design
+
+## Fix Teaching Philosophy Layout - Right Sidebar
+- [x] Change layout from full-width to two-column (content left, sidebar right)
+- [x] Move Core Principles glass card to right sidebar
+- [x] Move Teaching Experience glass card to right sidebar
+- [x] Keep main content (philosophy text) on the left
+- [x] Test two-column responsive layout
