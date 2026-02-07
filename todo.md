@@ -647,3 +647,20 @@
 - [x] Set article text to justify alignment (prose-p:text-justify)
 - [x] Make table of contents sticky on scroll (sticky top-24)
 - [ ] Test all three fixes together
+
+## Fix Image Issues and Accessibility
+- [ ] Investigate and fix duplicate cover images on articles page
+- [ ] Fix broken images not loading (verify all image URLs)
+- [ ] Add descriptive alt text to all article cover images
+- [ ] Add descriptive alt text to all project images
+- [ ] Add descriptive alt text to all news images
+- [ ] Add descriptive alt text to all UI images across the site
+- [ ] Test all image fixes and accessibility improvements
+
+## Image Accessibility Improvements
+- [x] Investigate and fix duplicate cover images on articles page (no duplicates found)
+- [x] Fix broken image URLs and verify all images load correctly (3 articles fixed with Cloudinary URLs)
+- [x] Verify all 24 article cover images load correctly (confirmed via browser console)
+- [ ] Audit all images across the site and identify missing or generic alt text
+- [ ] Add contextual alt text based on article content and image purpose
+- [ ] Test accessibility improvements

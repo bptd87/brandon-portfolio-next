@@ -44,13 +44,17 @@ export default function Articles() {
                 <Link key={article.id} href={`/articles/${article.slug}`}>
                   <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
                     {article.coverImageUrl && (
-                      <div className="aspect-[16/9] overflow-hidden">
+                      <div className="aspect-[16/9] overflow-hidden bg-muted">
                         <img 
                           src={article.coverImageUrl} 
-                          alt={decodeHTMLEntities(article.title)}
+                          alt={`Cover image for article: ${decodeHTMLEntities(article.title)}`}
                           className="w-full h-full object-cover"
                           loading="lazy"
                           onLoad={(e) => e.currentTarget.style.opacity = '1'}
+                          onError={(e) => {
+                            e.currentTarget.style.opacity = '1';
+                            e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="225"%3E%3Crect fill="%23374151" width="400" height="225"/%3E%3Ctext fill="%239CA3AF" font-family="sans-serif" font-size="18" x="50%25" y="50%25" text-anchor="middle" dominant-baseline="middle"%3EImage not available%3C/text%3E%3C/svg%3E';
+                          }}
                           style={{ opacity: 0, transition: 'opacity 0.3s ease-in' }}
                         />
                       </div>

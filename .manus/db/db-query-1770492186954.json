@@ -1,0 +1,154 @@
+{
+  "query": "SELECT id, title, slug, coverImageUrl FROM articles ORDER BY createdAt DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT id, title, slug, coverImageUrl FROM articles ORDER BY createdAt DESC;",
+  "rows": [
+    {
+      "id": "60144",
+      "title": "Understanding Computer Hardware: Why Scenic Designers (and All Theatre Designers) Need to Care",
+      "slug": "computer-hardware-why-scenic-designers-and-all-theatre-designers-need-to-care",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/AiDrDqTFPUZMlSPW.webp"
+    },
+    {
+      "id": "60148",
+      "title": "Empowering Theatre Production Students with Computer Literacy",
+      "slug": "empowering-theatre-students-with-computer-literacy",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/KVgjpoGDIhdDPGOD.webp"
+    },
+    {
+      "id": "60147",
+      "title": "Navigating the Scenic Design Process: A Comprehensive Guide",
+      "slug": "scenic-design-process",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/LRstVYucSLJdGuvi.png"
+    },
+    {
+      "id": "60146",
+      "title": "Lighting Styles in AI Models: How Lighting Changes Everything",
+      "slug": "lighting-styles-in-ai-models",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/bkKfiNJJceVeUhEi.jpeg"
+    },
+    {
+      "id": "60145",
+      "title": "The Art of Presenting Theatre Design: A Guide for Designers",
+      "slug": "the-art-of-presenting-theatre-design-a-guide-for-designers",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/LfOSWYlxcXFYGHXx.webp"
+    },
+    {
+      "id": "60137",
+      "title": "The Golden Age of Broadway: A Defining Era in Musical Theatre",
+      "slug": "the-golden-age-of-broadway-a-defining-era-in-musical-theatre",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/ZUJhBbvvbBdMgHix.jpeg"
+    },
+    {
+      "id": "60139",
+      "title": "Opera&#8217;s Foundations: The First Act in American Entertainment",
+      "slug": "operas-foundations-the-evolution-of-scenic-design-in-opera",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/BBrTGkplknqegRyp.png"
+    },
+    {
+      "id": "60132",
+      "title": "The Evolution of Themed Entertainment: From Ancient Gardens to Modern Immersive Experienceses Everything",
+      "slug": "the-evolution-of-themed-entertainment-from-ancient-gardens-to-modern-immersive-experienceses-everything",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/NZRfTtpiMsujLSlY.jpeg"
+    },
+    {
+      "id": "60133",
+      "title": "Designing the Keller Home: A Look Back at All My Sons",
+      "slug": "designing-the-keller-home-a-look-back-at-all-my-sons",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/DDACSAKhIAOguatM.webp"
+    },
+    {
+      "id": "60134",
+      "title": "The 1960s Musical Revolution: When Hollywood&#8217;s Golden Formula Met Rock and Rebellion",
+      "slug": "the-1960s-musical-revolution-when-hollywoods-golden-formula-met-rock-and-rebellion",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/XvzMyeIVvMZQttsF.jpeg"
+    },
+    {
+      "id": "60135",
+      "title": "Artistic Vision in Scenic Design: Finding My Creative Voice",
+      "slug": "artistic-vision-in-scenic-design-finding-my-creative-voice",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/UvkDHSwBWSTnwkzs.webp"
+    },
+    {
+      "id": "60136",
+      "title": "The Golden Age of Cinema: Musicals in the Spotlight",
+      "slug": "the-golden-age-of-cinema-musicals-in-the-spotlight",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/XVsRgaxodJNsasoZ.jpeg"
+    },
+    {
+      "id": "60129",
+      "title": "Framing the Martyr: Scenic Design as Memory Work in Romero",
+      "slug": "framing-the-martyr-scenic-design-as-memory-work-in-romero",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/SxXyEAQTMPOzTjEc.webp"
+    },
+    {
+      "id": "60138",
+      "title": "Building the Visual World: Art Direction in Film &amp; Television",
+      "slug": "building-the-visual-world-art-direction-in-film-television",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/ottQGLCFFvsIQQcF.jpeg"
+    },
+    {
+      "id": "60131",
+      "title": "The Lights Were Already On: Maude Adams&#8217; Legacy at Stephens College",
+      "slug": "the-lights-were-already-on-maude-adams-legacy-at-stephens-college",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/JKVVUxRXgzwUVmDE.webp"
+    },
+    {
+      "id": "60140",
+      "title": "Minimalist Scenic Design: Dominating Regional Theatres in 2025",
+      "slug": "minimalist-scenic-design-dominating-regional-theatres-in-2025",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/lPVZBpnkgEptaiur.png"
+    },
+    {
+      "id": "60141",
+      "title": "Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar",
+      "slug": "urinetown-scenic-design-building-a-dystopia-that-feels-uncomfortably-familiar",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/gdLIabrjmToOiCRg.png"
+    },
+    {
+      "id": "60142",
+      "title": "You&#8217;re Wasting My Time&#8221; — A Scenic Design Lesson in Growth and Revision",
+      "slug": "youre-wasting-my-time-a-scenic-design-lesson-in-growth-and-revision",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/tblloZTHrWVMlshh.webp"
+    },
+    {
+      "id": "60143",
+      "title": "Sora in the Studio: Testing AI&#8217;s Potential for Theatrical Design",
+      "slug": "sora-in-the-studio-testing-ais-potential-for-theatrical-design",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/HehouLCJbBlNdiAX.webp"
+    },
+    {
+      "id": "60130",
+      "title": "What Makes a Good Scenic Design Rendering?",
+      "slug": "what-makes-a-good-scenic-design-rendering",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/gAwrAzlncjPHAEET.png"
+    },
+    {
+      "id": "60125",
+      "title": "dfs",
+      "slug": "dfs",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/letrYpYoKAjHkpDf.jpg"
+    },
+    {
+      "id": "60128",
+      "title": "Becoming a Scenic Designer: A Comprehensive Guide",
+      "slug": "becoming-a-scenic-designer-a-comprehensive-guide",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/LjLEAMEcdClMKwKb.jpeg"
+    },
+    {
+      "id": "60127",
+      "title": "Video Game Environments: Lessons for Scenic Design",
+      "slug": "video-game-environments-lessons-for-scenic-design",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/zxSkzdlcosewXezA.png"
+    },
+    {
+      "id": "60126",
+      "title": "The Modern Theatrical Design Portfolio: A Guide for 2026",
+      "slug": "online-portfolio-theatrical-design-2026",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/yrWsygcmAOxLQRNd.png"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tslug\tcoverImageUrl\n60144\tUnderstanding Computer Hardware: Why Scenic Designers (and All Theatre Designers) Need to Care\tcomputer-hardware-why-scenic-designers-and-all-theatre-designers-need-to-care\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/AiDrDqTFPUZMlSPW.webp\n60148\tEmpowering Theatre Production Students with Computer Literacy\tempowering-theatre-students-with-computer-literacy\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/KVgjpoGDIhdDPGOD.webp\n60147\tNavigating the Scenic Design Process: A Comprehensive Guide\tscenic-design-process\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/LRstVYucSLJdGuvi.png\n60146\tLighting Styles in AI Models: How Lighting Changes Everything\tlighting-styles-in-ai-models\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/bkKfiNJJceVeUhEi.jpeg\n60145\tThe Art of Presenting Theatre Design: A Guide for Designers\tthe-art-of-presenting-theatre-design-a-guide-for-designers\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/LfOSWYlxcXFYGHXx.webp\n60137\tThe Golden Age of Broadway: A Defining Era in Musical Theatre\tthe-golden-age-of-broadway-a-defining-era-in-musical-theatre\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/ZUJhBbvvbBdMgHix.jpeg\n60139\tOpera&#8217;s Foundations: The First Act in American Entertainment\toperas-foundations-the-evolution-of-scenic-design-in-opera\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/BBrTGkplknqegRyp.png\n60132\tThe Evolution of Themed Entertainment: From Ancient Gardens to Modern Immersive Experienceses Everything\tthe-evolution-of-themed-entertainment-from-ancient-gardens-to-modern-immersive-experienceses-everything\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/NZRfTtpiMsujLSlY.jpeg\n60133\tDesigning the Keller Home: A Look Back at All My Sons\tdesigning-the-keller-home-a-look-back-at-all-my-sons\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/DDACSAKhIAOguatM.webp\n60134\tThe 1960s Musical Revolution: When Hollywood&#8217;s Golden Formula Met Rock and Rebellion\tthe-1960s-musical-revolution-when-hollywoods-golden-formula-met-rock-and-rebellion\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/XvzMyeIVvMZQttsF.jpeg\n60135\tArtistic Vision in Scenic Design: Finding My Creative Voice\tartistic-vision-in-scenic-design-finding-my-creative-voice\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/UvkDHSwBWSTnwkzs.webp\n60136\tThe Golden Age of Cinema: Musicals in the Spotlight\tthe-golden-age-of-cinema-musicals-in-the-spotlight\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/XVsRgaxodJNsasoZ.jpeg\n60129\tFraming the Martyr: Scenic Design as Memory Work in Romero\tframing-the-martyr-scenic-design-as-memory-work-in-romero\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/SxXyEAQTMPOzTjEc.webp\n60138\tBuilding the Visual World: Art Direction in Film &amp; Television\tbuilding-the-visual-world-art-direction-in-film-television\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/ottQGLCFFvsIQQcF.jpeg\n60131\tThe Lights Were Already On: Maude Adams&#8217; Legacy at Stephens College\tthe-lights-were-already-on-maude-adams-legacy-at-stephens-college\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/JKVVUxRXgzwUVmDE.webp\n60140\tMinimalist Scenic Design: Dominating Regional Theatres in 2025\tminimalist-scenic-design-dominating-regional-theatres-in-2025\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/lPVZBpnkgEptaiur.png\n60141\tUrinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar\turinetown-scenic-design-building-a-dystopia-that-feels-uncomfortably-familiar\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/gdLIabrjmToOiCRg.png\n60142\tYou&#8217;re Wasting My Time&#8221; — A Scenic Design Lesson in Growth and Revision\tyoure-wasting-my-time-a-scenic-design-lesson-in-growth-and-revision\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/tblloZTHrWVMlshh.webp\n60143\tSora in the Studio: Testing AI&#8217;s Potential for Theatrical Design\tsora-in-the-studio-testing-ais-potential-for-theatrical-design\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/HehouLCJbBlNdiAX.webp\n60130\tWhat Makes a Good Scenic Design Rendering?\twhat-makes-a-good-scenic-design-rendering\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/gAwrAzlncjPHAEET.png\n60125\tdfs\tdfs\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/letrYpYoKAjHkpDf.jpg\n60128\tBecoming a Scenic Designer: A Comprehensive Guide\tbecoming-a-scenic-designer-a-comprehensive-guide\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/LjLEAMEcdClMKwKb.jpeg\n60127\tVideo Game Environments: Lessons for Scenic Design\tvideo-game-environments-lessons-for-scenic-design\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/zxSkzdlcosewXezA.png\n60126\tThe Modern Theatrical Design Portfolio: A Guide for 2026\tonline-portfolio-theatrical-design-2026\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/yrWsygcmAOxLQRNd.png\n",
+  "stderr": "",
+  "execution_time_ms": 375
+}
