@@ -1,0 +1,15 @@
+{
+  "query": "SELECT title, slug, content FROM articles WHERE title LIKE '%vision%' OR title LIKE '%philosophy%' OR title LIKE '%creative%' LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT title, slug, content FROM articles WHERE title LIKE '%vision%' OR title LIKE '%philosophy%' OR title LIKE '%creative%' LIMIT 5;",
+  "rows": [
+    {
+      "title": "Artistic Vision in Scenic Design: Finding My Creative Voice",
+      "slug": "artistic-vision-finding-creative-voice",
+      "content": "A reflection on artistic identity, creative independence, and building a scenic design career driven by authenticity rather than algorithmic validation."
+    }
+  ],
+  "messages": [],
+  "stdout": "title\tslug\tcontent\nArtistic Vision in Scenic Design: Finding My Creative Voice\tartistic-vision-finding-creative-voice\tA reflection on artistic identity, creative independence, and building a scenic design career driven by authenticity rather than algorithmic validation.\n",
+  "stderr": "",
+  "execution_time_ms": 370
+}

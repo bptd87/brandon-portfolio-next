@@ -343,3 +343,14 @@
 - [x] Add AboutNav to Resume.tsx
 - [x] Add AboutNav to CreativeStatement.tsx
 - [x] Test navigation between all About pages
+
+## Extract Content and Redesign Creative Statement
+- [x] Find existing content on website (bio, philosophy, resume, creative statement)
+- [x] Extract content from https://www.brandonptdavis.com/about
+- [x] Extract content from https://www.brandonptdavis.com/teaching-philosophy
+- [x] Extract content from https://www.brandonptdavis.com/creative-statement
+- [x] Populate About page with real bio and education content
+- [x] Populate Teaching Philosophy page with real content
+- [x] Redesign Creative Statement as minimalist Apple-style product page
+- [x] Add smooth scrolling sections with colorful keywords to Creative Statement
+- [x] Test all About pages with real content
