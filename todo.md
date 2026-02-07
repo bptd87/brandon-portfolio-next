@@ -955,3 +955,11 @@
 - [x] Multi-color pulsing glow on illustration hover
 - [x] Colorful form elements and accents
 - [x] Fill black space with energy and color
+
+## Contact Page - Contrast & Polish v4
+- [x] Fix contrast issues (white text on dark backgrounds)
+- [x] Remove gradient from H1 and button
+- [x] Better thought-out color scheme
+- [x] Stronger, more visible animations
+- [x] Keep cyan-purple gradient on reply rate
+- [x] Unified clock hand colors
