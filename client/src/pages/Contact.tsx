@@ -59,9 +59,9 @@ export default function Contact() {
 
       <Header />
 
-      <div className="container py-12 md:py-20 relative z-10">
+      <div className="container py-8 md:py-12 relative z-10">
         {/* Hero Title - Solid Color, No Gradient */}
-        <div className="max-w-5xl mx-auto mb-16 text-center">
+        <div className="max-w-5xl mx-auto mb-12 text-center">
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-['Playfair_Display'] italic font-normal mb-6 leading-[1.05] text-foreground">
             Let's Talk
           </h1>
@@ -72,7 +72,7 @@ export default function Contact() {
 
         {/* Main Content Grid */}
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-16 items-start">
+          <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-12 items-start">
             
             {/* LEFT: Contact Form (Hero) */}
             <div>
@@ -215,7 +215,7 @@ export default function Contact() {
             </div>
 
             {/* RIGHT: Sidebar with Illustration & Contact Info */}
-            <div className="space-y-8 lg:sticky lg:top-28">
+            <div className="space-y-6 lg:sticky lg:top-28">
               
               {/* Illustration with Rainbow Pulsing Glow - Stronger Effect */}
               <div className="relative group">
@@ -257,7 +257,7 @@ export default function Contact() {
               </div>
 
               {/* Contact Methods - High Contrast */}
-              <div className="space-y-4">
+              <div className="space-y-3">
                 <h3 className="text-2xl font-['Playfair_Display'] italic font-normal mb-6 text-foreground">
                   Other Ways to Reach Me
                 </h3>
@@ -309,37 +309,7 @@ export default function Contact() {
                 </a>
               </div>
 
-              {/* Currently Accepting - High Contrast */}
-              <div className="bg-card/90 backdrop-blur-xl rounded-2xl p-6 border-2 border-primary/30 relative overflow-hidden group hover:border-primary transition-colors">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="relative z-10">
-                  <h3 className="text-xl font-['Playfair_Display'] italic font-normal mb-4 text-foreground">
-                    Currently Accepting
-                  </h3>
-                  <ul className="space-y-2 text-sm text-foreground">
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary mt-1 text-lg">●</span>
-                      <span>Theatrical Productions</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary mt-1 text-lg">●</span>
-                      <span>Opera & Musical Theatre</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary mt-1 text-lg">●</span>
-                      <span>Immersive Experiences</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary mt-1 text-lg">●</span>
-                      <span>Educational Workshops</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary mt-1 text-lg">●</span>
-                      <span>Design Consultations</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+
             </div>
 
           </div>

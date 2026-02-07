@@ -963,3 +963,8 @@
 - [x] Stronger, more visible animations
 - [x] Keep cyan-purple gradient on reply rate
 - [x] Unified clock hand colors
+
+## Contact Page - Compact Layout
+- [x] Remove Currently Accepting section
+- [x] Reduce vertical spacing/padding
+- [x] Make page more compact overall
