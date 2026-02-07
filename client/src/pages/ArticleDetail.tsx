@@ -301,6 +301,21 @@ export default function ArticleDetail() {
                   {decodeHTMLEntities(article.title)}
                 </h1>
 
+                {/* Tags */}
+                {article.tags && article.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mb-8">
+                    {article.tags.map((tag: any) => (
+                      <Badge 
+                        key={tag.id} 
+                        variant="outline" 
+                        className="text-xs font-normal bg-background/50 border-muted-foreground/30 hover:border-primary/50 hover:bg-primary/10 transition-colors"
+                      >
+                        {tag.name}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+
                 {article.excerpt && (
                   <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl">
                     {decodeHTMLEntities(article.excerpt)}
@@ -355,20 +370,6 @@ export default function ArticleDetail() {
                   </Button>
                 </div>
               </header>
-
-              {/* Cover Image */}
-              {article.coverImageUrl && (
-                <figure className="mb-12 -mx-4 md:mx-0">
-                  <img 
-                    src={article.coverImageUrl} 
-                    alt={decodeHTMLEntities(article.title)}
-                    className="w-full h-auto object-cover rounded-2xl shadow-2xl"
-                    loading="eager"
-                    onLoad={(e) => e.currentTarget.style.opacity = '1'}
-                    style={{ opacity: 0, transition: 'opacity 0.3s ease-in' }}
-                  />
-                </figure>
-              )}
 
               {/* Article Content */}
               <div 

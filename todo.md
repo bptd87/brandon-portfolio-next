@@ -664,3 +664,25 @@
 - [ ] Audit all images across the site and identify missing or generic alt text
 - [ ] Add contextual alt text based on article content and image purpose
 - [ ] Test accessibility improvements
+
+## Complete Independence from WordPress and Cloudinary
+- [ ] Audit all 24 articles to identify external image dependencies (Cloudinary, WordPress, Manus CDN)
+- [ ] Download all article cover images from external sources
+- [ ] Upload all cover images to Manus S3 using manus-upload-file
+- [ ] Update database coverImageUrl for all articles with new S3 URLs
+- [ ] Audit all inline images within article content
+- [ ] Download and migrate all inline images to Manus S3
+- [ ] Update article content HTML to use new S3 image URLs
+- [ ] Rewrite and reformat all 24 articles for improved quality and consistency
+- [ ] Add contextual alt text to all migrated images
+- [ ] Test all articles to verify no external dependencies remain
+- [ ] Verify site is fully independent from WordPress and Cloudinary
+
+## Fix Article Page Design and Layout
+- [x] Audit article detail page to identify all layout and design issues
+- [x] Remove duplicate cover images on article pages
+- [ ] Redesign article pages to match site's premium aesthetic (match project pages)
+- [x] Add category badges to article header (already implemented)
+- [x] Add tags display to article pages
+- [ ] Fix spacing and typography issues
+- [ ] Test all article page fixes
