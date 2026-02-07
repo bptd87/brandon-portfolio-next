@@ -259,6 +259,16 @@ export default function ArticleDetail() {
                       </ListTag>
                     );
                   
+                  case 'text':
+                    // Handle text blocks from WordPress import (contains HTML)
+                    return (
+                      <div 
+                        key={index} 
+                        className="article-content"
+                        dangerouslySetInnerHTML={{ __html: section.content?.text || section.content }}
+                      />
+                    );
+                  
                   case 'html':
                     // Render raw HTML from WordPress import
                     return (
