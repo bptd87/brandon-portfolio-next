@@ -6,7 +6,8 @@ import {
   tags, InsertTag,
   projects, InsertProject, projectImages, InsertProjectImage, projectTags,
   news, InsertNews, newsTags,
-  articles, InsertArticle, articleTags
+  articles, InsertArticle, articleTags,
+  comments, InsertComment
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -541,4 +542,53 @@ export async function searchContent(query: string) {
     news: newsResults,
     articles: articleResults
   };
+}
+
+// ============ COMMENT OPERATIONS ============
+
+export async function getArticleComments(articleId: number) {
+  const db = await getDb();
+  if (!db) return [];
+
+  const result = await db
+    .select({
+      comment: comments,
+      user: {
+        id: users.id,
+        name: users.name,
+        email: users.email,
+      },
+    })
+    .from(comments)
+    .leftJoin(users, eq(comments.userId, users.id))
+    .where(eq(comments.articleId, articleId))
+    .orderBy(asc(comments.createdAt));
+
+  return result.map(r => ({
+    ...r.comment,
+    user: r.user,
+  }));
+}
+
+export async function createComment(comment: InsertComment) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db.insert(comments).values(comment);
+  return Number(result[0].insertId);
+}
+
+export async function deleteComment(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db.delete(comments).where(eq(comments.id, id));
+}
+
+export async function getCommentById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db.select().from(comments).where(eq(comments.id, id)).limit(1);
+  return result[0];
 }

@@ -235,6 +235,26 @@ export const articleTags = mysqlTable("articleTags", {
   tagIdx: index("tag_idx").on(table.tagId),
 }));
 
+/**
+ * Article comments table
+ */
+export const comments = mysqlTable("comments", {
+  id: int("id").primaryKey().autoincrement(),
+  articleId: int("articleId").notNull().references(() => articles.id, { onDelete: "cascade" }),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  parentId: int("parentId"), // For nested replies
+  content: text("content").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  articleIdx: index("article_idx").on(table.articleId),
+  userIdx: index("user_idx").on(table.userId),
+  parentIdx: index("parent_idx").on(table.parentId),
+}));
+
+export type Comment = typeof comments.$inferSelect;
+export type InsertComment = typeof comments.$inferInsert;
+
 // Relations
 export const projectsRelations = relations(projects, ({ one, many }) => ({
   category: one(categories, {

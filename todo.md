@@ -794,3 +794,16 @@
 - [x] Implement view tracking on page load
 - [x] Implement like toggle with optimistic updates
 - [x] Test likes and views tracking functionality
+
+## Article Comment System
+- [x] Create comments table schema with nested reply support
+- [x] Generate and apply database migration for comments table
+- [x] Create tRPC query to fetch comments for an article
+- [x] Create tRPC mutation to add new comments
+- [x] Create tRPC mutation to add replies to comments
+- [x] Create tRPC mutation to delete comments (author or admin only)
+- [x] Design comment UI component with reply functionality
+- [x] Add comment form with authentication check
+- [x] Display comments list with nested replies
+- [x] Integrate comment system into ArticleDetail page
+- [x] Test comment creation, replies, and deletion

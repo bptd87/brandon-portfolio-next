@@ -640,6 +640,45 @@ export const appRouter = router({
       }),
   }),
 
+  // ============ COMMENTS ============
+  comments: router({    list: publicProcedure
+      .input(z.object({ articleId: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getArticleComments(input.articleId);
+      }),
+    
+    create: protectedProcedure
+      .input(z.object({
+        articleId: z.number(),
+        content: z.string().min(1).max(5000),
+        parentId: z.number().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const id = await db.createComment({
+          ...input,
+          userId: ctx.user.id,
+        });
+        return { id };
+      }),
+    
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        const comment = await db.getCommentById(input.id);
+        if (!comment) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Comment not found' });
+        }
+        
+        // Only allow deletion by comment author or admin
+        if (comment.userId !== ctx.user.id && ctx.user.role !== 'admin') {
+          throw new TRPCError({ code: 'FORBIDDEN', message: 'Not authorized to delete this comment' });
+        }
+        
+        await db.deleteComment(input.id);
+        return { success: true };
+      }),
+  }),
+
   // ============ SEARCH ============
   search: router({
     query: publicProcedure

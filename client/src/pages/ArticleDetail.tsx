@@ -9,6 +9,7 @@ import { Link, useParams } from "wouter";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { getCategoryColor } from "@/lib/categoryColors";
+import Comments from "@/components/Comments";
 
 // Decode HTML entities
 const decodeHTMLEntities = (text: string): string => {
@@ -705,6 +706,14 @@ export default function ArticleDetail() {
           </div>
         </div>
       </article>
+
+      {/* Comments Section */}
+      <div className="container max-w-4xl py-12">
+        <Comments 
+          articleId={article.id} 
+          accentColor={category ? getCategoryColor(category.name).hex : '#06B6D4'} 
+        />
+      </div>
 
       <Footer />
 

@@ -36,6 +36,13 @@
       "when": 1770450683004,
       "tag": "0004_rare_zaran",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1770498702605,
+      "tag": "0005_tired_lyja",
+      "breakpoints": true
     }
   ]
 }
