@@ -1177,3 +1177,5 @@
 - [x] Redesign tabs with better quality (spacing, borders, active states, typography)
 - [x] Add rounded corners to video player for better UX
 - [x] Overall quality check - professional polish on all sections
+
+- [x] Add short description/subtitle under tutorial title for quick overview

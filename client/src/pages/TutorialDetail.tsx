@@ -15,6 +15,7 @@ export default function TutorialDetail() {
     id: 1,
     slug: "navigating-user-interface",
     title: "Vectorworks Tutorial: Navigating the User Interface for Scenic Designers",
+    description: "Master the Vectorworks workspace, palettes, and coordinate system to build an efficient scenic design workflow.",
     youtubeId: "jRI33g1oSt0",
     category: "Getting Started",
     difficulty: "Beginner",
@@ -186,6 +187,7 @@ Finally, the tutorial explores view controls, zoom functions, and workspace cust
           </div>
 
           <h1 className="mb-4 text-4xl md:text-5xl font-bold leading-tight text-foreground">{tutorial.title}</h1>
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl">{tutorial.description}</p>
         </div>
       </section>
 
