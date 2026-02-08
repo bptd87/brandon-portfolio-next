@@ -181,6 +181,19 @@ export default function StudioTutorials() {
       publishDate: "Feb 05, 2021",
       thumbnailUrl: `https://img.youtube.com/vi/XeBfq6Kv1LY/maxresdefault.jpg`,
     },
+    {
+      id: 14,
+      title: "Vectorworks Tutorial: Basics of Textures",
+      slug: "basics-of-textures",
+      youtubeId: "9iApEa1XTug",
+      youtubeUrl: "https://www.youtube.com/watch?v=9iApEa1XTug",
+      description: "Learn how to apply, edit, and create custom Renderworks textures to bring life to your 3D models in Vectorworks.",
+      category: "3d-modeling",
+      difficultyLevel: "intermediate",
+      duration: 801, // 13:21 in seconds
+      publishDate: "Feb 08, 2021",
+      thumbnailUrl: `https://img.youtube.com/vi/9iApEa1XTug/maxresdefault.jpg`,
+    },
   ];
 
   const categories = [
