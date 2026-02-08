@@ -295,6 +295,23 @@ export default function NewsDetail() {
       <section className="py-16 bg-background">
         <div className="container">
           <div className="max-w-4xl mx-auto">
+            {/* External Link Button */}
+            {newsItem.externalLink && (
+              <div className="mb-12">
+                <a 
+                  href={newsItem.externalLink} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-block"
+                >
+                  <Button size="lg" className="bg-[#FF5722] hover:bg-[#FF5722]/90 text-white font-bold">
+                    <ExternalLink className="mr-2 h-5 w-5" />
+                    Visit {newsItem.location || 'Link'}
+                  </Button>
+                </a>
+              </div>
+            )}
+
             {/* Render Content Blocks */}
             {Array.isArray(contentBlocks) && contentBlocks.length > 0 ? (
               contentBlocks.map((block: any, index: number) => {
@@ -362,6 +379,30 @@ export default function NewsDetail() {
             ) : (
               <p className="text-muted-foreground text-center py-12">No content available.</p>
             )}
+
+            {/* Tags */}
+            {(() => {
+              try {
+                const parsedTags = newsItem.tags ? (typeof newsItem.tags === 'string' ? JSON.parse(newsItem.tags) : newsItem.tags) : [];
+                if (Array.isArray(parsedTags) && parsedTags.length > 0) {
+                  return (
+                    <div className="mt-16 pt-8 border-t border-border">
+                      <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">Tags</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {parsedTags.map((tag: string, index: number) => (
+                          <Badge key={index} variant="secondary" className="text-sm px-3 py-1">
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                }
+              } catch (e) {
+                return null;
+              }
+              return null;
+            })()}
           </div>
         </div>
       </section>

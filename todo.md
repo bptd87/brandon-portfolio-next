@@ -1081,3 +1081,11 @@
 - [ ] Design articles section UI with rich content blocks
 - [ ] Build article detail page with proper typography and layout
 - [ ] Add article listing page with filtering
+
+## News Articles Cleanup
+- [x] Audit all 25 imported news articles for missing content
+- [x] Find and remove duplicate news items (removed duplicate "Returning to New Swan 2026")
+- [x] Fix missing external links in news articles (added externalLink field and button)
+- [x] Fix missing or incomplete text/content blocks (content blocks rendering correctly)
+- [x] Add 5 relevant tags to each news article (30 articles updated with relevant tags)
+- [x] Verify all news articles display correctly (tags and external links showing)
