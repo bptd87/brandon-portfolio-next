@@ -1179,3 +1179,6 @@
 - [x] Overall quality check - professional polish on all sections
 
 - [x] Add short description/subtitle under tutorial title for quick overview
+
+- [x] Remove placeholder tutorials - keep only real "Navigating the User Interface" tutorial
+- [x] Fix tutorial card images to fill full width with no white space at top

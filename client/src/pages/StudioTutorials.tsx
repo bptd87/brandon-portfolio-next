@@ -24,61 +24,6 @@ export default function StudioTutorials() {
       duration: 634, // 10:34 in seconds
       thumbnailUrl: `https://img.youtube.com/vi/jRI33g1oSt0/maxresdefault.jpg`,
     },
-    {
-      id: 2,
-      title: "Vectorworks 2: Classes and Layers",
-      youtubeId: "VIDEO_ID_2",
-      youtubeUrl: "https://www.youtube.com/watch?v=VIDEO_ID_2",
-      description: "Master the organization system in Vectorworks using classes and layers to manage complex scenic drawings efficiently.",
-      category: "getting-started",
-      difficultyLevel: "beginner",
-      duration: 720,
-      thumbnailUrl: `https://img.youtube.com/vi/VIDEO_ID_2/maxresdefault.jpg`,
-    },
-    {
-      id: 3,
-      title: "Vectorworks 5: 2D Theater Ground Plan",
-      youtubeId: "HsF_dDOF2-A",
-      youtubeUrl: "https://www.youtube.com/watch?v=HsF_dDOF2-A",
-      description: "Create professional 2D theater ground plans with accurate measurements and theatrical conventions.",
-      category: "2d-drafting",
-      difficultyLevel: "intermediate",
-      duration: 1200,
-      thumbnailUrl: `https://img.youtube.com/vi/HsF_dDOF2-A/maxresdefault.jpg`,
-    },
-    {
-      id: 4,
-      title: "Vectorworks 8: 3D Theater Build",
-      youtubeId: "_tMx1V4tzMw",
-      youtubeUrl: "https://www.youtube.com/watch?v=_tMx1V4tzMw",
-      description: "Build complete 3D theater environments from ground plans, including walls, platforms, and scenic elements.",
-      category: "3d-modeling",
-      difficultyLevel: "intermediate",
-      duration: 1500,
-      thumbnailUrl: `https://img.youtube.com/vi/_tMx1V4tzMw/maxresdefault.jpg`,
-    },
-    {
-      id: 5,
-      title: "Understanding Classes in Vectorworks",
-      youtubeId: "VIDEO_ID_5",
-      youtubeUrl: "https://www.brandonptdavis.com/tutorials/vectorworks-tutorial-understanding-classes",
-      description: "Deep dive into using classes to control visibility, manage graphic attributes, and organize scenic drawings.",
-      category: "getting-started",
-      difficultyLevel: "beginner",
-      duration: 600,
-      thumbnailUrl: `https://img.youtube.com/vi/VIDEO_ID_5/maxresdefault.jpg`,
-    },
-    {
-      id: 6,
-      title: "Construction Drawings for Scenic Flats",
-      youtubeId: "y0BanihkMqE",
-      youtubeUrl: "https://www.youtube.com/watch?v=y0BanihkMqE",
-      description: "Learn how to create detailed construction drawings for scenic flats using Vectorworks drafting tools.",
-      category: "2d-drafting",
-      difficultyLevel: "advanced",
-      duration: 1800,
-      thumbnailUrl: `https://img.youtube.com/vi/y0BanihkMqE/maxresdefault.jpg`,
-    },
   ];
 
   const categories = [
@@ -197,7 +142,7 @@ export default function StudioTutorials() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredTutorials.map(tutorial => (
             <Link key={tutorial.id} href={tutorial.slug ? `/studio/tutorials/${tutorial.slug}` : tutorial.youtubeUrl}>
-            <Card className="group hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 hover:border-[#2196F3]/50 h-full">
+            <Card className="group hover:shadow-2xl transition-all duration-300 overflow-hidden border-0 h-full">
               {/* Thumbnail */}
               <div className="relative aspect-video bg-muted overflow-hidden">
                 <img 
