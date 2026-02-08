@@ -23,6 +23,7 @@ import StudioTutorials from "./pages/StudioTutorials";
 import StudioApps from "./pages/StudioApps";
 import StudioDirectory from "./pages/StudioDirectory";
 import ScaleCalculator from "./pages/ScaleCalculator";
+import DimensionReference from "./pages/DimensionReference";
 import TutorialDetail from "./pages/TutorialDetail";
 import NewsDetail from "./pages/NewsDetail";
 import ArticleDetail from "./pages/ArticleDetail";
@@ -65,8 +66,9 @@ function Router() {
       <Route path={"/contact"} component={Contact} />
       <Route path={"/studio/tutorials/:slug"} component={TutorialDetail} />
       <Route path={"/studio/tutorials"} component={StudioTutorials} />
-      <Route path={"/studio/apps"} component={StudioApps} />
       <Route path={"/studio/apps/scale-calculator"} component={ScaleCalculator} />
+      <Route path={"/studio/apps/dimension-reference"} component={DimensionReference} />
+      <Route path={"/studio/apps"} component={StudioApps} />
       <Route path={"/studio/directory"} component={StudioDirectory} />
       <Route path={"/studio"} component={Studio} />
       <Route path={"/admin"} component={Admin} />

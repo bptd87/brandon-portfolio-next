@@ -1454,3 +1454,22 @@
 - [x] Upload scale-header.webp to S3
 - [x] Update Scale Calculator with correct S3 URL
 - [x] Test image loads correctly
+
+## Create App Page Rebuild Skill
+- [x] Understand skill requirements and examples
+- [x] Plan reusable contents (scripts, references, templates)
+- [x] Initialize skill with init_skill.py
+- [x] Write SKILL.md with instructions
+- [x] Add bundled resources (design-checklist.md, app-page-template.tsx, upload_images.sh)
+- [x] Validate skill
+- [x] Deliver skill to user
+
+## Dimension Reference App Rebuild
+- [x] Examine original code and understand database structure
+- [ ] Upload dimension-abstract.webp to S3
+- [ ] Create DimensionReference.tsx from template
+- [ ] Implement dimension database with categories
+- [ ] Add search and filtering functionality
+- [ ] Apply design checklist (header, tabs, mobile)
+- [ ] Test implementation
+- [ ] Save checkpoint
