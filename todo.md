@@ -1141,3 +1141,14 @@
 - [x] Fix dropdown retraction timing - add delay so users can click items
 
 - [x] Fix ARTICLES dropdown to show actual article categories from database
+
+## Studio Redesign
+- [x] Research Vectorworks tutorials and find similar educational videos
+- [x] Design Studio landing page with 4 sections (Tutorials, App Studio, Vault, Scenic Directory)
+- [x] Build Tutorials page with YouTube videos and enhanced educational content
+- [x] Build App Studio page with interactive tools (migrate from old codebase)
+- [ ] Build Vault page for sharing Vectorworks assets (2D drafting, 3D models) - POSTPONED
+- [x] Build Scenic Directory page with categorized resources (already have data)
+- [x] Create/source card images for Studio landing page (camera lens, grid ruler, library, network)
+- [x] Create database schema for tutorials, apps, vault items if needed
+- [x] Test all Studio pages and navigation

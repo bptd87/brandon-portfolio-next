@@ -373,3 +373,53 @@ export const projectTeamMembersRelations = relations(projectTeamMembers, ({ one 
     references: [teamMembers.id],
   }),
 }));
+
+/**
+ * Tutorials table for Vectorworks educational content
+ */
+export const tutorials = mysqlTable("tutorials", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  youtubeUrl: varchar("youtubeUrl", { length: 500 }).notNull(),
+  youtubeId: varchar("youtubeId", { length: 50 }),
+  description: text("description"),
+  category: mysqlEnum("category", ["getting-started", "2d-drafting", "3d-modeling", "rendering", "advanced"]).default("getting-started").notNull(),
+  difficultyLevel: mysqlEnum("difficultyLevel", ["beginner", "intermediate", "advanced"]).default("beginner").notNull(),
+  duration: int("duration"), // in seconds
+  thumbnailUrl: varchar("thumbnailUrl", { length: 500 }),
+  displayOrder: int("displayOrder").default(0).notNull(),
+  views: int("views").default(0).notNull(),
+  likes: int("likes").default(0).notNull(),
+  enabled: boolean("enabled").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  categoryIdx: index("category_idx").on(table.category),
+  difficultyIdx: index("difficulty_idx").on(table.difficultyLevel),
+  enabledIdx: index("enabled_idx").on(table.enabled),
+}));
+
+export type Tutorial = typeof tutorials.$inferSelect;
+export type InsertTutorial = typeof tutorials.$inferInsert;
+
+/**
+ * Scenic Directory - curated resources for scenic designers
+ */
+export const scenicDirectory = mysqlTable("scenicDirectory", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  url: varchar("url", { length: 500 }).notNull(),
+  description: text("description").notNull(),
+  categorySlug: varchar("categorySlug", { length: 100 }).notNull(), // industry, research, software, modeling, supplies
+  enabled: boolean("enabled").default(true).notNull(),
+  displayOrder: int("displayOrder").default(0).notNull(),
+  likes: int("likes").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  categoryIdx: index("category_idx").on(table.categorySlug),
+  enabledIdx: index("enabled_idx").on(table.enabled),
+}));
+
+export type ScenicDirectoryItem = typeof scenicDirectory.$inferSelect;
+export type InsertScenicDirectoryItem = typeof scenicDirectory.$inferInsert;

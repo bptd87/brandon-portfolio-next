@@ -1,459 +1,183 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
-import { Calculator, Palette, Ruler } from "lucide-react";
-import { useState } from "react";
+import { Link } from "wouter";
+import { PlayCircle, Grid3x3, Archive, Compass, ArrowRight } from "lucide-react";
+
+// Custom theatrical icons for each section
+const TutorialsIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-[#2196F3]">
+    <circle cx="12" cy="12" r="10" />
+    <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" opacity="0.3" />
+    <path d="M12 2v2M12 20v2M2 12h2M20 12h2" strokeOpacity="0.5" />
+  </svg>
+);
+
+const AppsIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-[#FF5722]">
+    <rect x="3" y="3" width="7" height="7" rx="1" />
+    <rect x="14" y="3" width="7" height="7" rx="1" />
+    <rect x="3" y="14" width="7" height="7" rx="1" />
+    <rect x="14" y="14" width="7" height="7" rx="1" />
+    <circle cx="6.5" cy="6.5" r="1" fill="currentColor" />
+    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
+    <circle cx="6.5" cy="17.5" r="1" fill="currentColor" />
+    <circle cx="17.5" cy="17.5" r="1" fill="currentColor" />
+  </svg>
+);
+
+const VaultIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-[#9C27B0]">
+    <rect x="3" y="4" width="18" height="16" rx="2" />
+    <circle cx="12" cy="12" r="3" />
+    <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+    <path d="M7 4V2M17 4V2M3 8h18" strokeOpacity="0.5" />
+  </svg>
+);
+
+const DirectoryIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-[#F44336]">
+    <circle cx="12" cy="12" r="10" />
+    <path d="M12 2v20M2 12h20" strokeOpacity="0.3" />
+    <path d="M12 8l3 4-3 4-3-4 3-4z" fill="currentColor" opacity="0.2" />
+    <circle cx="12" cy="12" r="2" fill="currentColor" />
+  </svg>
+);
 
 export default function Studio() {
-  // Scale Converter State
-  const [realMeasurement, setRealMeasurement] = useState("");
-  const [scale, setScale] = useState("1/4");
-  const [scaleResult, setScaleResult] = useState("");
-
-  // Dimension Reference State
-  const [feet, setFeet] = useState("");
-  const [inches, setInches] = useState("");
-  const [dimensionResult, setDimensionResult] = useState("");
-
-  const calculateScale = () => {
-    if (!realMeasurement) return;
-    
-    const measurement = parseFloat(realMeasurement);
-    const scales: Record<string, number> = {
-      "1/4": 0.25,
-      "1/2": 0.5,
-      "1/8": 0.125,
-      "1": 1,
-    };
-
-    const scaleFactor = scales[scale] || 0.25;
-    const result = measurement * scaleFactor;
-    
-    const resultInches = result % 12;
-    const resultFeet = Math.floor(result / 12);
-    
-    if (resultFeet > 0) {
-      setScaleResult(`${resultFeet}' ${resultInches.toFixed(2)}"`);
-    } else {
-      setScaleResult(`${resultInches.toFixed(2)}"`);
-    }
-  };
-
-  const convertDimensions = () => {
-    const feetNum = parseFloat(feet) || 0;
-    const inchesNum = parseFloat(inches) || 0;
-    
-    const totalInches = (feetNum * 12) + inchesNum;
-    const totalFeet = totalInches / 12;
-    const meters = totalInches * 0.0254;
-    const centimeters = totalInches * 2.54;
-    
-    setDimensionResult(
-      `Total: ${totalFeet.toFixed(2)} ft | ${totalInches.toFixed(2)} in | ${meters.toFixed(2)} m | ${centimeters.toFixed(2)} cm`
-    );
-  };
+  const sections = [
+    {
+      title: "Tutorials",
+      description: "Video walkthroughs on Vectorworks, 3D modeling, and project breakdowns.",
+      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/glkMbWtRSBKanCOl.jpg",
+      href: "/studio/tutorials",
+      textColor: "text-[#2196F3]",
+      available: true,
+    },
+    {
+      title: "App Studio",
+      description: "Free web apps—scale calculators, dimension references, paint mixers.",
+      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/tSaXMqrtcUgnIQCF.jpg",
+      href: "/studio/apps",
+      textColor: "text-[#FF5722]",
+      available: true,
+    },
+    {
+      title: "Vault",
+      description: "Vectorworks library—venue files, furniture, props, hardware, architectural elements...",
+      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/RWSBCIIYxitqYRjK.jpg",
+      href: "#",
+      textColor: "text-[#9C27B0]",
+      available: false,
+      comingSoon: true,
+    },
+    {
+      title: "Scenic Directory",
+      description: "Curated links to organizations, software, suppliers, and archives.",
+      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/dPlaaiwbIXjywSPw.jpg",
+      href: "/studio/directory",
+      textColor: "text-[#F44336]",
+      available: true,
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
 
       {/* Hero Section */}
-      <section className="container py-20">
+      <section className="container py-20 border-b border-border">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="mb-6">Studio Tools</h1>
+          <p className="text-xs tracking-widest text-muted-foreground mb-4">STUDIO</p>
+          <h1 className="mb-6">Design Resources & Tools</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            A collection of practical tools for scenic designers, technical directors, and theatre professionals. 
-            Calculate scales, convert dimensions, and reference common measurements.
+            A comprehensive collection of tutorials, interactive tools, assets, and curated resources 
+            to support your scenic design workflow.
           </p>
-        <Footer />
-    </div>
+        </div>
       </section>
 
-      {/* Tools Grid */}
+      {/* Studio Sections Grid */}
+      <section className="container py-24">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8">
+          {sections.map((section) => (
+            <Link
+              key={section.title}
+              href={section.available ? section.href : "#"}
+              className={`block group ${!section.available ? "cursor-not-allowed" : ""}`}
+            >
+              <Card 
+                className={`h-full border-2 border-border ${section.available ? "hover:border-primary" : ""} transition-all duration-300 ${section.available ? "hover:shadow-2xl" : "opacity-60"} relative overflow-hidden bg-black`}
+              >
+                {section.comingSoon && (
+                  <div className="absolute top-4 right-4 bg-muted text-muted-foreground text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider z-10">
+                    Coming Soon
+                  </div>
+                )}
+                
+                {/* Card Image */}
+                <div className="relative h-64 overflow-hidden">
+                  <img 
+                    src={section.image} 
+                    alt={section.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                </div>
+
+                <CardContent className="relative -mt-20 z-10 pb-6">
+                  <h3 className="text-2xl font-bold mb-2 text-white">{section.title}</h3>
+                  <p className="text-sm text-gray-300 mb-4 leading-relaxed">
+                    {section.description}
+                  </p>
+                  
+                  {section.available ? (
+                    <div className={`inline-flex items-center gap-2 ${section.textColor} font-semibold text-sm group-hover:gap-3 transition-all duration-300`}>
+                      Explore <ArrowRight className="w-4 h-4" />
+                    </div>
+                  ) : (
+                    <div className="text-muted-foreground font-semibold text-sm">
+                      Available Soon
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Quick Stats or Info Section */}
       <section className="container pb-24">
-        <div className="max-w-5xl mx-auto space-y-8">
-          
-          {/* Scale Converter */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Calculator className="h-6 w-6 text-primary" />
-                <div>
-                  <CardTitle>Architecture Scale Converter</CardTitle>
-                  <CardDescription>
-                    Convert real-world measurements to scale for drafting and model building
-                  </CardDescription>
-                <Footer />
-    </div>
-              <Footer />
-    </div>
-            </CardHeader>
-            <CardContent>
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="space-y-2">
-                  <Label htmlFor="realMeasurement">Real Measurement (inches)</Label>
-                  <Input
-                    id="realMeasurement"
-                    type="number"
-                    placeholder="e.g., 120"
-                    value={realMeasurement}
-                    onChange={(e) => setRealMeasurement(e.target.value)}
-                  />
-                <Footer />
-    </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="scale">Scale</Label>
-                  <Select value={scale} onValueChange={setScale}>
-                    <SelectTrigger id="scale">
-                      <SelectValue placeholder="Select scale" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1/4">1/4" = 1'-0"</SelectItem>
-                      <SelectItem value="1/2">1/2" = 1'-0"</SelectItem>
-                      <SelectItem value="1/8">1/8" = 1'-0"</SelectItem>
-                      <SelectItem value="1">1" = 1'-0"</SelectItem>
-                    </SelectContent>
-                  </Select>
-                <Footer />
-    </div>
-
-                <div className="space-y-2">
-                  <Label>Result</Label>
-                  <div className="flex gap-2">
-                    <Input
-                      value={scaleResult}
-                      readOnly
-                      placeholder="Scaled measurement"
-                      className="bg-muted"
-                    />
-                    <Button onClick={calculateScale}>Calculate</Button>
-                  <Footer />
-    </div>
-                <Footer />
-    </div>
-              <Footer />
-    </div>
-
-              <Separator className="my-6" />
-
-              <div className="text-sm text-muted-foreground">
-                <p className="font-medium mb-2">Common Scales:</p>
-                <ul className="space-y-1">
-                  <li>• <strong>1/4" = 1'-0"</strong> - Most common for ground plans and elevations</li>
-                  <li>• <strong>1/2" = 1'-0"</strong> - Detailed drawings and sections</li>
-                  <li>• <strong>1/8" = 1'-0"</strong> - Site plans and large venues</li>
-                  <li>• <strong>1" = 1'-0"</strong> - Full-scale details</li>
-                </ul>
-              <Footer />
-    </div>
-            </CardContent>
-          </Card>
-
-          {/* Dimension Reference */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Ruler className="h-6 w-6 text-primary" />
-                <div>
-                  <CardTitle>Dimension Reference</CardTitle>
-                  <CardDescription>
-                    Convert between feet, inches, meters, and centimeters
-                  </CardDescription>
-                <Footer />
-    </div>
-              <Footer />
-    </div>
-            </CardHeader>
-            <CardContent>
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="space-y-2">
-                  <Label htmlFor="feet">Feet</Label>
-                  <Input
-                    id="feet"
-                    type="number"
-                    placeholder="0"
-                    value={feet}
-                    onChange={(e) => setFeet(e.target.value)}
-                  />
-                <Footer />
-    </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="inches">Inches</Label>
-                  <Input
-                    id="inches"
-                    type="number"
-                    placeholder="0"
-                    value={inches}
-                    onChange={(e) => setInches(e.target.value)}
-                  />
-                <Footer />
-    </div>
-
-                <div className="space-y-2">
-                  <Label>&nbsp;</Label>
-                  <Button onClick={convertDimensions} className="w-full">
-                    Convert
-                  </Button>
-                <Footer />
-    </div>
-              <Footer />
-    </div>
-
-              {dimensionResult && (
-                <div className="mt-6 p-4 bg-muted rounded-lg">
-                  <p className="text-sm font-medium">{dimensionResult}</p>
-                <Footer />
-    </div>
-              )}
-
-              <Separator className="my-6" />
-
-              <div className="text-sm text-muted-foreground">
-                <p className="font-medium mb-2">Quick Reference:</p>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <ul className="space-y-1">
-                    <li>• 1 foot = 12 inches</li>
-                    <li>• 1 inch = 2.54 centimeters</li>
-                    <li>• 1 foot = 0.3048 meters</li>
-                  </ul>
-                  <ul className="space-y-1">
-                    <li>• 1 meter = 3.28084 feet</li>
-                    <li>• 1 meter = 39.3701 inches</li>
-                    <li>• 1 centimeter = 0.393701 inches</li>
-                  </ul>
-                <Footer />
-    </div>
-              <Footer />
-    </div>
-            </CardContent>
-          </Card>
-
-          {/* Paint Finder */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Palette className="h-6 w-6 text-primary" />
-                <div>
-                  <CardTitle>Scenic Paint Reference</CardTitle>
-                  <CardDescription>
-                    Common scenic paint colors and mixing ratios
-                  </CardDescription>
-                <Footer />
-    </div>
-              <Footer />
-    </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold mb-3">Base Coat Colors</h4>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <div className="p-3 border rounded-lg">
-                      <div className="h-12 bg-white border mb-2 rounded"><Footer />
-    </div>
-                      <p className="text-sm font-medium">White</p>
-                      <p className="text-xs text-muted-foreground">Base coat</p>
-                    <Footer />
-    </div>
-                    <div className="p-3 border rounded-lg">
-                      <div className="h-12 bg-black mb-2 rounded"><Footer />
-    </div>
-                      <p className="text-sm font-medium">Black</p>
-                      <p className="text-xs text-muted-foreground">Shadows</p>
-                    <Footer />
-    </div>
-                    <div className="p-3 border rounded-lg">
-                      <div className="h-12 bg-red-600 mb-2 rounded"><Footer />
-    </div>
-                      <p className="text-sm font-medium">Red</p>
-                      <p className="text-xs text-muted-foreground">Primary</p>
-                    <Footer />
-    </div>
-                    <div className="p-3 border rounded-lg">
-                      <div className="h-12 bg-blue-600 mb-2 rounded"><Footer />
-    </div>
-                      <p className="text-sm font-medium">Blue</p>
-                      <p className="text-xs text-muted-foreground">Primary</p>
-                    <Footer />
-    </div>
-                  <Footer />
-    </div>
-                <Footer />
-    </div>
-
-                <Separator />
-
-                <div>
-                  <h4 className="font-semibold mb-3">Common Mixing Ratios</h4>
-                  <div className="space-y-3 text-sm">
-                    <div className="p-3 bg-muted rounded-lg">
-                      <p className="font-medium">Stone/Concrete Gray</p>
-                      <p className="text-muted-foreground">White + Black (10:1) + touch of Raw Umber</p>
-                    <Footer />
-    </div>
-                    <div className="p-3 bg-muted rounded-lg">
-                      <p className="font-medium">Aged Wood</p>
-                      <p className="text-muted-foreground">Raw Umber + Burnt Sienna (3:1) + touch of Black</p>
-                    <Footer />
-    </div>
-                    <div className="p-3 bg-muted rounded-lg">
-                      <p className="font-medium">Brick Red</p>
-                      <p className="text-muted-foreground">Red + Raw Umber (2:1) + touch of Yellow Ochre</p>
-                    <Footer />
-    </div>
-                    <div className="p-3 bg-muted rounded-lg">
-                      <p className="font-medium">Sky Blue</p>
-                      <p className="text-muted-foreground">White + Ultramarine Blue (20:1) + tiny touch of Black</p>
-                    <Footer />
-    </div>
-                  <Footer />
-    </div>
-                <Footer />
-    </div>
-
-                <Separator />
-
-                <div className="text-sm text-muted-foreground">
-                  <p className="font-medium mb-2">Pro Tips:</p>
-                  <ul className="space-y-1">
-                    <li>• Always mix more paint than you think you'll need</li>
-                    <li>• Test colors on scrap material before applying to scenery</li>
-                    <li>• Keep detailed records of your mixing ratios</li>
-                    <li>• Add water gradually to achieve desired consistency</li>
-                    <li>• Colors dry darker - account for this in your mixing</li>
-                  </ul>
-                <Footer />
-    </div>
-              <Footer />
-    </div>
-            </CardContent>
-          </Card>
-
-          {/* Standard Dimensions Reference */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Standard Theatre Dimensions</CardTitle>
-              <CardDescription>
-                Common measurements for scenic elements and stage furniture
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="font-semibold mb-3">Furniture Heights</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex justify-between">
-                      <span>Chair seat</span>
-                      <span className="text-muted-foreground">17" - 18"</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Table (dining)</span>
-                      <span className="text-muted-foreground">29" - 30"</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Counter height</span>
-                      <span className="text-muted-foreground">36"</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Bar height</span>
-                      <span className="text-muted-foreground">42"</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Desk height</span>
-                      <span className="text-muted-foreground">29" - 30"</span>
-                    </li>
-                  </ul>
-                <Footer />
-    </div>
-
-                <div>
-                  <h4 className="font-semibold mb-3">Door & Window</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex justify-between">
-                      <span>Standard door</span>
-                      <span className="text-muted-foreground">6'8" x 3'0"</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Interior door</span>
-                      <span className="text-muted-foreground">6'8" x 2'6"</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Window sill</span>
-                      <span className="text-muted-foreground">36" - 42"</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Window head</span>
-                      <span className="text-muted-foreground">6'8" - 7'0"</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Doorknob height</span>
-                      <span className="text-muted-foreground">36"</span>
-                    </li>
-                  </ul>
-                <Footer />
-    </div>
-
-                <div>
-                  <h4 className="font-semibold mb-3">Human Dimensions</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex justify-between">
-                      <span>Average height</span>
-                      <span className="text-muted-foreground">5'6" - 5'10"</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Eye level (standing)</span>
-                      <span className="text-muted-foreground">5'0" - 5'6"</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Shoulder width</span>
-                      <span className="text-muted-foreground">18" - 24"</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Arm reach</span>
-                      <span className="text-muted-foreground">30" - 36"</span>
-                    </li>
-                  </ul>
-                <Footer />
-    </div>
-
-                <div>
-                  <h4 className="font-semibold mb-3">Stage Elements</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex justify-between">
-                      <span>Step riser</span>
-                      <span className="text-muted-foreground">6" - 8"</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Step tread</span>
-                      <span className="text-muted-foreground">11" - 12"</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Handrail height</span>
-                      <span className="text-muted-foreground">34" - 38"</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Platform standard</span>
-                      <span className="text-muted-foreground">4' x 8'</span>
-                    </li>
-                  </ul>
-                <Footer />
-    </div>
-              <Footer />
-    </div>
-            </CardContent>
-          </Card>
-
-        <Footer />
-    </div>
+        <div className="max-w-6xl mx-auto bg-gradient-to-br from-primary/5 to-primary/0 border border-border rounded-2xl p-12 text-center">
+          <h2 className="text-3xl font-bold mb-4">Built for Scenic Designers</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+            Every tool, tutorial, and resource in the Studio is designed specifically for theatrical 
+            and experiential design professionals. From beginner-friendly Vectorworks tutorials to 
+            advanced production calculators, find everything you need in one place.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-12">
+            <div>
+              <div className="text-4xl font-black text-[#2196F3] mb-2">20+</div>
+              <div className="text-sm text-muted-foreground uppercase tracking-wider">Video Tutorials</div>
+            </div>
+            <div>
+              <div className="text-4xl font-black text-[#FF5722] mb-2">10+</div>
+              <div className="text-sm text-muted-foreground uppercase tracking-wider">Interactive Tools</div>
+            </div>
+            <div>
+              <div className="text-4xl font-black text-[#9C27B0] mb-2">Soon</div>
+              <div className="text-sm text-muted-foreground uppercase tracking-wider">Vault Assets</div>
+            </div>
+            <div>
+              <div className="text-4xl font-black text-[#F44336] mb-2">50+</div>
+              <div className="text-sm text-muted-foreground uppercase tracking-wider">Curated Resources</div>
+            </div>
+          </div>
+        </div>
       </section>
-    <Footer />
+
+      <Footer />
     </div>
   );
 }
