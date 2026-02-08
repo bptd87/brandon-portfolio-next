@@ -1117,3 +1117,4 @@
 - [ ] Categorize all existing articles
 - [ ] Add category filter UI to news page
 - [ ] Test category filtering functionality
+- [ ] Add cover images to 26 remaining news articles

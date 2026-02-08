@@ -1,0 +1,190 @@
+{
+  "query": "SELECT id, title, slug, coverImageUrl FROM news ORDER BY date DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT id, title, slug, coverImageUrl FROM news ORDER BY date DESC;",
+  "rows": [
+    {
+      "id": "30001",
+      "title": "Returning to New Swan Theatre Festival in 2026",
+      "slug": "returning-to-new-swan-theatre-festival-2026",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/FlARIIXPqvRDxDht.webp"
+    },
+    {
+      "id": "30005",
+      "title": "The Orange Curtain Review Praises Million Dollar Quartet at South Coast Repertory",
+      "slug": "the-orange-curtain-review-praises-million-dollar-quartet-at-south-coast-repertory",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/reQXymMKKfaPJSqC.webp"
+    },
+    {
+      "id": "1",
+      "title": "Making My SCR Debut: Million Dollar Quartet (2025)",
+      "slug": "million-dollar-quartet-scr-debut",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/pOtllUHbMSKjInbH.jpg"
+    },
+    {
+      "id": "2",
+      "title": "Assisting Tom Buderwitz on The Play That Goes Wrong at Seattle Rep",
+      "slug": "assisting-the-play-that-goes-wrong",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/JwePmolmRzgieJpB.jpg"
+    },
+    {
+      "id": "3",
+      "title": "40 Productions at Okoboji Summer Theatre",
+      "slug": "40-productions-at-okoboji-summer-theatre",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/VdzeUUFSZsbCQGuM.jpg"
+    },
+    {
+      "id": "30009",
+      "title": "Opening Night: Deathtrap at Okoboji Summer Theatre",
+      "slug": "deathtrap-opening-ost",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/LdwNZzDjwNHBlZSb.webp"
+    },
+    {
+      "id": "4",
+      "title": "Fifth Season Assisting Jo Winiarski — Utah Shakespeare Festival",
+      "slug": "fifth-season-utah-shakespeare-festival",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/JqtQtRNJCNeNogNY.jpg"
+    },
+    {
+      "id": "30011",
+      "title": "My Season as Scenic Designer for New Swan Shakespeare Festival (2025)",
+      "slug": "new-swan-season-2025",
+      "coverImageUrl": "NULL"
+    },
+    {
+      "id": "30012",
+      "title": "Opening Night: Romero at University of Missouri",
+      "slug": "romero-opening-university-of-missouri",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YXLYUSOVNdnGHAjU.webp"
+    },
+    {
+      "id": "30013",
+      "title": "Scenic Design for Okoboji Summer Theatre — Summer 2025 Season",
+      "slug": "okoboji-summer-2025-season",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/XZfGcqlGSZOaNlgR.webp"
+    },
+    {
+      "id": "30014",
+      "title": "Shut Up, Sherlock Praised in SLO Review",
+      "slug": "shut-up-sherlock-praised",
+      "coverImageUrl": "NULL"
+    },
+    {
+      "id": "30015",
+      "title": "Opening Night: How to Succeed in Business Without Really Trying at OST",
+      "slug": "how-to-succeed-opening-ost",
+      "coverImageUrl": "NULL"
+    },
+    {
+      "id": "30016",
+      "title": "Guys on Ice Receives Praise in SLO Review",
+      "slug": "guys-on-ice-slo-review",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/CuiMXLUfGrJuaeiR.webp"
+    },
+    {
+      "id": "30017",
+      "title": "Freaky Friday at Okoboji Summer Theatre Receives Praise",
+      "slug": "freaky-friday-review",
+      "coverImageUrl": "NULL"
+    },
+    {
+      "id": "5",
+      "title": "Joining United Scenic Artists, Local USA 829",
+      "slug": "united-scenic-artists-local-usa-829",
+      "coverImageUrl": "NULL"
+    },
+    {
+      "id": "30019",
+      "title": "Forum at Theatre SilCo Featured in Summit Daily",
+      "slug": "forum-review",
+      "coverImageUrl": "NULL"
+    },
+    {
+      "id": "30020",
+      "title": "2024 Okoboji Summer Theatre Season – Scenic Designs Announced",
+      "slug": "okoboji-summer-2024-season",
+      "coverImageUrl": "NULL"
+    },
+    {
+      "id": "30021",
+      "title": "Scenic Design for ¡Lotería: Game On! at Theatre SilCo",
+      "slug": "loteria-theatre-silco",
+      "coverImageUrl": "NULL"
+    },
+    {
+      "id": "30022",
+      "title": "Assisting My First Off-Broadway Show — The Fears (April–May 2023)",
+      "slug": "assisting-the-fears",
+      "coverImageUrl": "NULL"
+    },
+    {
+      "id": "30023",
+      "title": "Stephens College Update: Looking Ahead to Spring 2022",
+      "slug": "stephens-college-update-spring-2022",
+      "coverImageUrl": "NULL"
+    },
+    {
+      "id": "30024",
+      "title": "Returning to Stephens College as Assistant Professor of Scenic Design",
+      "slug": "returning-to-stephens-college",
+      "coverImageUrl": "NULL"
+    },
+    {
+      "id": "30025",
+      "title": "Scenic Design for Lysistrata at UTEP — Spring 2021",
+      "slug": "lysistrata-utep-spring-2021",
+      "coverImageUrl": "NULL"
+    },
+    {
+      "id": "30026",
+      "title": "Graduating from UCI in the Middle of a Pandemic",
+      "slug": "graduating-from-uci-pandemic",
+      "coverImageUrl": "NULL"
+    },
+    {
+      "id": "30027",
+      "title": "New Role at UTEP — Assistant Professor of Scenic Design & Technology",
+      "slug": "new-role-utep",
+      "coverImageUrl": "NULL"
+    },
+    {
+      "id": "30028",
+      "title": "Company at UC Irvine Highlighted in StageSceneLA",
+      "slug": "company-review",
+      "coverImageUrl": "NULL"
+    },
+    {
+      "id": "30029",
+      "title": "The Pajama Game Receives Praise from StageSceneLA",
+      "slug": "the-pajama-game-stagescenela",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/blSEAtCJloHtPkxN.webp"
+    },
+    {
+      "id": "30030",
+      "title": "Scenic Design for Parliament Square — California Premiere at UCI",
+      "slug": "parliament-square-california-premiere",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/cRdKYfExKDqPaGvh.webp"
+    },
+    {
+      "id": "30031",
+      "title": "American Idiot at UC Irvine Reviewed in The Show Report",
+      "slug": "american-idiot-review",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/AoweLILNCphSBRXw.webp"
+    },
+    {
+      "id": "30032",
+      "title": "Heading to UC Irvine for My MFA",
+      "slug": "heading-to-uc-irvine",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/yYsXKdUcuXvdJWaV.webp"
+    },
+    {
+      "id": "30033",
+      "title": "The Foreigner Praised in The Tribune",
+      "slug": "the-foreigner-review",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/oyICUWbrsrEkiZDx.webp"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tslug\tcoverImageUrl\n30001\tReturning to New Swan Theatre Festival in 2026\treturning-to-new-swan-theatre-festival-2026\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/FlARIIXPqvRDxDht.webp\n30005\tThe Orange Curtain Review Praises Million Dollar Quartet at South Coast Repertory\tthe-orange-curtain-review-praises-million-dollar-quartet-at-south-coast-repertory\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/reQXymMKKfaPJSqC.webp\n1\tMaking My SCR Debut: Million Dollar Quartet (2025)\tmillion-dollar-quartet-scr-debut\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/pOtllUHbMSKjInbH.jpg\n2\tAssisting Tom Buderwitz on The Play That Goes Wrong at Seattle Rep\tassisting-the-play-that-goes-wrong\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/JwePmolmRzgieJpB.jpg\n3\t40 Productions at Okoboji Summer Theatre\t40-productions-at-okoboji-summer-theatre\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/VdzeUUFSZsbCQGuM.jpg\n30009\tOpening Night: Deathtrap at Okoboji Summer Theatre\tdeathtrap-opening-ost\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/LdwNZzDjwNHBlZSb.webp\n4\tFifth Season Assisting Jo Winiarski — Utah Shakespeare Festival\tfifth-season-utah-shakespeare-festival\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/JqtQtRNJCNeNogNY.jpg\n30011\tMy Season as Scenic Designer for New Swan Shakespeare Festival (2025)\tnew-swan-season-2025\tNULL\n30012\tOpening Night: Romero at University of Missouri\tromero-opening-university-of-missouri\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YXLYUSOVNdnGHAjU.webp\n30013\tScenic Design for Okoboji Summer Theatre — Summer 2025 Season\tokoboji-summer-2025-season\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/XZfGcqlGSZOaNlgR.webp\n30014\tShut Up, Sherlock Praised in SLO Review\tshut-up-sherlock-praised\tNULL\n30015\tOpening Night: How to Succeed in Business Without Really Trying at OST\thow-to-succeed-opening-ost\tNULL\n30016\tGuys on Ice Receives Praise in SLO Review\tguys-on-ice-slo-review\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/CuiMXLUfGrJuaeiR.webp\n30017\tFreaky Friday at Okoboji Summer Theatre Receives Praise\tfreaky-friday-review\tNULL\n5\tJoining United Scenic Artists, Local USA 829\tunited-scenic-artists-local-usa-829\tNULL\n30019\tForum at Theatre SilCo Featured in Summit Daily\tforum-review\tNULL\n30020\t2024 Okoboji Summer Theatre Season – Scenic Designs Announced\tokoboji-summer-2024-season\tNULL\n30021\tScenic Design for ¡Lotería: Game On! at Theatre SilCo\tloteria-theatre-silco\tNULL\n30022\tAssisting My First Off-Broadway Show — The Fears (April–May 2023)\tassisting-the-fears\tNULL\n30023\tStephens College Update: Looking Ahead to Spring 2022\tstephens-college-update-spring-2022\tNULL\n30024\tReturning to Stephens College as Assistant Professor of Scenic Design\treturning-to-stephens-college\tNULL\n30025\tScenic Design for Lysistrata at UTEP — Spring 2021\tlysistrata-utep-spring-2021\tNULL\n30026\tGraduating from UCI in the Middle of a Pandemic\tgraduating-from-uci-pandemic\tNULL\n30027\tNew Role at UTEP — Assistant Professor of Scenic Design & Technology\tnew-role-utep\tNULL\n30028\tCompany at UC Irvine Highlighted in StageSceneLA\tcompany-review\tNULL\n30029\tThe Pajama Game Receives Praise from StageSceneLA\tthe-pajama-game-stagescenela\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/blSEAtCJloHtPkxN.webp\n30030\tScenic Design for Parliament Square — California Premiere at UCI\tparliament-square-california-premiere\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/cRdKYfExKDqPaGvh.webp\n30031\tAmerican Idiot at UC Irvine Reviewed in The Show Report\tamerican-idiot-review\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/AoweLILNCphSBRXw.webp\n30032\tHeading to UC Irvine for My MFA\theading-to-uc-irvine\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/yYsXKdUcuXvdJWaV.webp\n30033\tThe Foreigner Praised in The Tribune\tthe-foreigner-review\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/oyICUWbrsrEkiZDx.webp\n",
+  "stderr": "",
+  "execution_time_ms": 351
+}
