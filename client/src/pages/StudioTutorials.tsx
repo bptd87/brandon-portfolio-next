@@ -168,6 +168,19 @@ export default function StudioTutorials() {
       publishDate: "Feb 03, 2021",
       thumbnailUrl: `https://img.youtube.com/vi/Jjz1zXDXafs/maxresdefault.jpg`,
     },
+    {
+      id: 13,
+      title: "Vectorworks Tutorial: Hybrid Symbols",
+      slug: "hybrid-symbols",
+      youtubeId: "XeBfq6Kv1LY",
+      youtubeUrl: "https://www.youtube.com/watch?v=XeBfq6Kv1LY",
+      description: "Learn how to create hybrid symbols that combine 2D and 3D representations, including manual tracing and auto-generation methods for Top/Plan views.",
+      category: "3d-modeling",
+      difficultyLevel: "intermediate",
+      duration: 306, // 5:06 in seconds
+      publishDate: "Feb 05, 2021",
+      thumbnailUrl: `https://img.youtube.com/vi/XeBfq6Kv1LY/maxresdefault.jpg`,
+    },
   ];
 
   const categories = [

@@ -1228,3 +1228,5 @@
 - [x] Add tutorial 11: 2D Annotations and Dimensioning with comprehensive educational content and pre-formatted transcript
 - [x] Fix tutorial 11 not displaying on tutorials page (verified it displays correctly)
 - [x] Add tutorial 12: 3D Modeling Basics with comprehensive educational content and pre-formatted transcript
+- [ ] Add tutorial 13: Hybrid Symbols with comprehensive educational content and pre-formatted transcript
+- [x] Add tutorial 13: Hybrid Symbols with comprehensive educational content and pre-formatted transcript
