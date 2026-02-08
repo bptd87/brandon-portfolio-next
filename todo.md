@@ -1388,3 +1388,15 @@
 - [x] Implement Article schema on news detail pages
 - [x] Include author, publish date, featured image, word count
 - [x] Test Article schema with Google Rich Results Test
+
+## Studio Landing Page Redesign
+- [x] Upload all Studio images to S3
+- [x] Create hero section with "Everything you need to design better"
+- [x] Implement 4 large portrait cards (Tutorials, App Studio, Vault, Scenic Directory)
+- [x] Create "Quick access to tools" section
+- [x] Implement 6 tool cards grid (Scale Calculator, Dimension Reference, Paint Calculator, Design History, Classical Orders, Paint Finder)
+- [x] Apply modern design system (bold typography, accent colors, rounded corners)
+- [x] Add hover effects and animations to cards
+- [x] Create App Studio landing page for individual apps
+- [x] Link cards to appropriate pages
+- [x] Test responsive layout on mobile/tablet
