@@ -339,9 +339,205 @@ Finally, the tutorial explores layer viewing options that control whether you ca
       ],
 
       relatedTutorials: [
-        { title: "Vectorworks Tutorial: Understanding Classes", slug: "understanding-classes" },
         { title: "Vectorworks Tutorial: Navigating the User Interface", slug: "navigating-user-interface" },
-        { title: "Vectorworks 4: Basic 2D Tools", slug: "basic-2d-tools" },
+        { title: "Vectorworks Tutorial: Understanding Classes", slug: "understanding-classes" },
+        { title: "Vectorworks Tutorial: Understanding Design Layers", slug: "understanding-design-layers" },
+      ],
+    },
+    "installing-workspace-template": {
+      id: 4,
+      slug: "installing-workspace-template",
+      title: "Vectorworks Tutorial: Installing a Workspace and Template",
+      description: "Learn how to properly install and configure a Vectorworks workspace and template provided by your organization or company to ensure standardized communication and workflow.",
+      youtubeId: "CXBfG2L3ZmI",
+      category: "Getting Started",
+      difficulty: "Beginner",
+      duration: 340, // 5:40 in seconds
+      uploadDate: "2021-01-25",
+      
+      learningObjectives: [
+        "Understand the purpose of workspaces and templates in Vectorworks",
+        "Locate and install a Vectorworks User Folder",
+        "Configure Vectorworks preferences to use custom workspaces",
+        "Remove default workspaces to streamline your workflow",
+        "Set up organizational templates for consistent project standards",
+      ],
+
+      overview: `This tutorial walks you through the complete process of installing a custom Vectorworks workspace and template provided by an organization. Workspaces and templates are essential tools for standardizing communication when working as part of a company or design team.
+
+The tutorial covers copying the Vectorworks User Folder to your documents, accessing and modifying Vectorworks preferences, removing default workspaces from the application folder, and opening organizational templates. This setup process ensures that all team members work with consistent tools, palettes, and document standards.`,
+
+      keyConcepts: [
+        {
+          title: "VECTORWORKS USER FOLDER",
+          content: "The Vectorworks User Folder contains custom workspaces, templates, libraries, and preferences specific to an organization. Installing this folder ensures you have access to standardized tools and settings used by your team.",
+        },
+        {
+          title: "WORKSPACES",
+          content: "Workspaces control the arrangement of tool palettes, menus, and interface elements in Vectorworks. Custom workspaces streamline workflows by providing only the tools relevant to your discipline (scenic design, lighting, architecture, etc.).",
+        },
+        {
+          title: "TEMPLATES",
+          content: "Templates are pre-configured Vectorworks files that include standard layers, classes, sheet borders, title blocks, and other document settings. Using organizational templates ensures all team drawings follow the same standards.",
+        },
+      ],
+
+      proTips: [
+        "Copy the Vectorworks User Folder to your Documents directory before installing it. This keeps the original folder intact in case you need to reinstall or share it with colleagues.",
+        "Deleting default workspaces from the application folder prevents confusion and ensures you only see the workspace provided by your organization. This is especially helpful for students or new team members.",
+        "After installing a new workspace, always open the organizational template to verify everything installed correctly. Check that tool palettes appear in the expected locations and that templates load properly.",
+      ],
+
+      shortcuts: [],
+
+      commonPitfalls: [
+        "Installing the User Folder to the wrong location (must go in Documents, not inside Vectorworks application)",
+        "Selecting a subfolder instead of the top-level User Folder when changing preferences",
+        "Forgetting to restart Vectorworks after changing the User Folder location",
+        "Not having administrator privileges to delete default workspaces from Program Files (Windows)",
+        "Choosing 'Yes' when asked to copy existing preferences (should choose 'No' for clean install)",
+      ],
+
+      transcript: [
+        { time: "0:00", text: "Hello, I'm Brandon PT Davis, theatrical scenic designer. Today I'm going to share with you a Vectorworks tutorial on the installation of a workspace and template." },
+        { time: "0:16", text: "Workspaces and templates are used to standardize communication when working in Vectorworks as a company or organization. If you obtain a Vectorworks User Folder from an organization—in this case, this is the Vectorworks 2021 User Folder for the University of Texas in El Paso—I recommend that you copy the folder and place it in your Documents." },
+        { time: "1:00", text: "After installing Vectorworks 2021, open the software. You need to access the Vectorworks Preferences. The quickest way to access Vectorworks Preferences is to click the arrow icon here. Vectorworks Preferences is on the bottom. Now click this icon saying 'Changing the user data and preference folder may require restart of Vectorworks. You will be given the opportunity to save unsaved documents. Are you sure you want to continue?' Click Yes." },
+        { time: "1:56", text: "Next you need to access the Vectorworks User Folder that you placed in your Documents. So I'm going to go to Documents, scroll until I find the Vectorworks folder. Do not go into the folder—make sure that you are on the topmost where it says 'Folder Vectorworks 2021 User Folder.' Select the folder." },
+        { time: "2:29", text: "The first question: 'Would you like to copy the contents of the existing user data and preference folder to a new location in order to retain all your preferences and content?' Click No. It says now, 'Do you want to save the changes you made in the document Untitled 2?' Click No. Vectorworks will shut down. Press OK." },
+        { time: "2:59", text: "Now that Vectorworks has closed, we are going to go back into the File Explorer. We're going to go to the C drive, Program Files, Vectorworks 2021, and Workspaces." },
+        { time: "3:26", text: "If you're using a Mac, you will do a similar process, but instead you will find the Vectorworks 2021 application folder, still going to the Workspace folder within the application folder." },
+        { time: "3:41", text: "We are going to delete all of the Vectorworks workspaces that are default to the software. Deleting the Vectorworks default workspaces will streamline your workflow when only having the workspace that is provided by your company or organization." },
+        { time: "4:18", text: "Now I'm going to close and reopen Vectorworks 2021. Now that we have opened the Vectorworks software, we see that all of the tools and palettes are in the proper place." },
+        { time: "4:39", text: "The next order of business is to go to File, New, scroll down and open the UTEP Basic—or whichever basic template your company has provided. Press OK." },
+        { time: "4:59", text: "That completes the tutorial. If you have any questions, feel free to ask. Thank you." },
+      ],
+
+      relatedResources: [
+        { title: "Vectorworks University - Workspaces", url: "https://university.vectorworks.net/", description: "Official training on workspace customization" },
+        { title: "Vectorworks Help - User Folder", url: "https://app-help.vectorworks.net/", description: "Documentation on User Folder structure" },
+        { title: "Vectorworks Forum - Workspace Setup", url: "https://forum.vectorworks.net/", description: "Community discussions on workspace configuration" },
+      ],
+
+      relatedTutorials: [
+        { title: "Vectorworks Tutorial: Navigating the User Interface", slug: "navigating-user-interface" },
+        { title: "Vectorworks Tutorial: Understanding Classes", slug: "understanding-classes" },
+        { title: "Vectorworks Tutorial: Understanding Design Layers", slug: "understanding-design-layers" },
+      ],
+    },
+    "basics-tool-palette": {
+      id: 5,
+      slug: "basics-tool-palette",
+      title: "Vectorworks Tutorial: Basics Tool Palette",
+      description: "Master the essential 2D drawing tools in the Basics Tool Palette, including selection, drawing, and modification tools that form the foundation of scenic design drafting in Vectorworks.",
+      youtubeId: "orjqcNYveOg",
+      category: "Getting Started",
+      difficulty: "Beginner",
+      duration: 897, // 14:57 in seconds
+      uploadDate: "2021-01-27",
+      
+      learningObjectives: [
+        "Navigate and use the Selection tool to modify objects",
+        "Use Pan and Zoom tools to navigate your workspace",
+        "Create text annotations with the Text tool",
+        "Place reference points with the 2D Locus tool",
+        "Draw lines, rectangles, circles, and polygons",
+        "Create organic shapes with Polyline and Freehand tools",
+        "Apply Fillet and Chamfer modifications to corners",
+      ],
+
+      overview: `This comprehensive tutorial introduces the Basics Tool Palette, located in the top left corner of the Vectorworks workspace. You'll learn how to access each tool using both icon clicks and keyboard shortcuts, understand the different modes available for each tool, and apply these tools to 2D drafting workflows.
+
+The tutorial covers 15+ essential tools organized into categories: navigation tools (Selection, Pan, Zoom), annotation tools (Text, 2D Locus), basic shape tools (Line, Rectangle, Circle), advanced shape tools (Polyline, Polygon), and modification tools (Fillet, Chamfer). Each tool section explains multiple drawing modes and practical applications for scenic design.`,
+
+      keyConcepts: [
+        {
+          title: "SELECTION TOOL (X)",
+          content: "The Selection tool is your primary interface for interacting with drawn objects. It allows you to move, modify, and access snapping points on shapes. Without the Selection tool active, you cannot manipulate existing geometry.",
+        },
+        {
+          title: "DRAWING MODES",
+          content: "Most drawing tools in Vectorworks offer multiple modes that change how the tool behaves. For example, the Rectangle tool can draw corner-to-corner, corner-to-middle, midpoint-to-midpoint, or using three points. Learning to switch between modes (hotkey: U) dramatically increases efficiency.",
+        },
+        {
+          title: "POLYLINE VS POLYGON",
+          content: "Polylines create open or closed paths with editable vertices, ideal for organic shapes that may need modification. Polygons create closed shapes and offer special modes like 'Intersecting' and 'Outer Boundary' that can combine or trace around multiple objects.",
+        },
+        {
+          title: "2D LOCUS",
+          content: "A 2D Locus is a reference point that appears on screen but doesn't print. Scenic designers commonly place a red locus at 0,0 (centerline) as a visual reference point for the entire drawing.",
+        },
+      ],
+
+      proTips: [
+        "Learn the keyboard shortcuts for your most-used tools. Hitting 'X' for Selection, '2' for Line, '4' for Rectangle, and '5' for Polyline will dramatically speed up your workflow compared to clicking icons.",
+        "When drawing with the Polyline tool, you can change modes mid-drawing by hitting 'U'. This lets you combine straight lines, curves, and arcs in a single continuous shape without switching tools.",
+        "The Double Line Polygon tool (Alt+8) is perfect for quickly drafting walls in floor plans. Set the separation to your wall thickness and draw the entire floor plan outline in one continuous operation.",
+        "Use the 'I' hotkey to quickly cycle through drawing modes for any tool. This is faster than clicking the mode dropdown in the Object Info Palette.",
+      ],
+
+      shortcuts: [
+        { keys: "X", action: "Selection Tool" },
+        { keys: "H", action: "Pan Tool (think 'Hand')" },
+        { keys: "C", action: "Zoom Tool" },
+        { keys: "Z", action: "Zoom to fit all objects" },
+        { keys: "1", action: "Text Tool" },
+        { keys: "0", action: "2D Locus Tool" },
+        { keys: "2", action: "Line Tool" },
+        { keys: "Alt+2", action: "Double Line Tool" },
+        { keys: "4", action: "Rectangle Tool (think '4 sides')" },
+        { keys: "6", action: "Circle Tool" },
+        { keys: "Alt+6", action: "Oval Tool" },
+        { keys: "5", action: "Polyline Tool" },
+        { keys: "8", action: "2D Polygon Tool" },
+        { keys: "Alt+8", action: "Double Line Polygon Tool" },
+        { keys: "7", action: "Fillet Tool" },
+        { keys: "U", action: "Cycle through tool modes" },
+        { keys: "I", action: "Cycle through drawing modes" },
+      ],
+
+      commonPitfalls: [
+        "Forgetting to switch back to Selection tool (X) after drawing—you can't modify objects while a drawing tool is active",
+        "Not understanding that snapping points only appear when Selection tool is active and an object is selected",
+        "Drawing with the wrong mode active (e.g., Rectangle corner-to-corner when you meant three-point mode)",
+        "Confusing Polyline (open/closed editable paths) with Polygon (closed shapes with special combining modes)",
+        "Not setting the Double Line separation before drawing walls, resulting in incorrect wall thickness",
+        "Trying to print 2D Locus points—they're reference-only and won't appear on printed sheets",
+      ],
+
+      transcript: [
+        { time: "0:00", text: "Hello, this is Brandon PT Davis, theatrical scenic designer. This Vectorworks tutorial is going to cover the Basics Tool Palette and how it's applied to two-dimensional drawing." },
+        { time: "0:20", text: "The Basics Tool Palette is located in the top left corner of my Vectorworks workspace. If you aren't familiar with the Vectorworks icon, you can hover over each icon and a text button will pop up. You can also click the down arrow and change from icons to icons and text. In this tutorial, I'm going to use Vectorworks view tools as icons." },
+        { time: "0:50", text: "The first tool we will talk about is the Selection tool. The Selection tool is what allows users to move or modify objects on the screen. You can access this by clicking on the icon or hitting the letter X. Now that I have the Selection icon, I can hover over this object and note that it will highlight around the perimeter. By clicking once, I now have access to the snapping points. Because I have the snapping highlight point turned on, with the snapping points I can modify the shape." },
+        { time: "1:43", text: "The next tool we will cover is the Pan tool. By clicking on the Pan tool, you are able to pan throughout your work area. Note the hotkey for the Pan tool is the letter H—think letter H for hand. In the icon of the Pan tool, you will notice a black arrow in the corner. If you click and hold on any of the icons with the black arrow, you can have additional features. This additional feature in this example is Move Page. In our workspace we do not have an active page, so we will not worry about this feature." },
+        { time: "2:25", text: "The Zoom tool is the magnifying glass icon. When clicking on this, you can zoom with or with the Zoom Marquee mode by making a selection and click once. You can also access the Zoom tool with a three-button mouse. A hotkey for the Zoom tool is the letter C." },
+        { time: "2:51", text: "When adding text to your document, you can access the Text tool by hitting the number 1 or clicking on the icon. You can apply the text just by clicking and starting and typing your text. To change the text style, font, or size, you can access these items in the Object Info Palette. You can also change the text in the Text dropdown menu." },
+        { time: "3:32", text: "A 2D Locus tool, which is the icon that looks like the letter X, is located here. A 2D Locus is simply a reference point that can be used in Vectorworks when drawing. This document contains a red 2D Locus at 0,0, as this reference is very common when working in theatrical practice. The benefit of a 2D Locus is it allows you to have a point that's viewable on the screen but not printable on the page. The hotkey for the 2D Locus is the letter zero." },
+        { time: "4:11", text: "One of the most common tools you will use in Vectorworks is the Line tool. The Line tool simply draws a 2D line. You can access the Line tool by clicking the icon or pressing the number 2 on the keyboard." },
+        { time: "4:26", text: "In addition to the 2D Line tool, you also have the Double Line tool. You can access the Double Line tool by clicking on the icon or hitting Alt+2. A Double Line tool allows the user to draw two lines with a separation. This separation is currently set to one inch. I can click and change the separation to four inches. You also have the ability to click on the Preferences and change the options from creating polygons (which is a four-sided shape) to creating simply just lines. You can also change the mode of the 2D Line tool. Currently it's on the top control line mode. Additionally, you can change this tool from top to accessing through the center. A hotkey to quickly adjust which mode you're working in is by hitting the letter I." },
+        { time: "5:49", text: "The next tool is the Rectangle tool. The Rectangle tool will draw a four-sided shape with 90-degree angles. The hotkey for the Rectangle tool is the number 4—think four sides. The Rectangle tool also has a series of modes. The primary mode is corner to corner. You can also change it to corner to middle, midpoint to midpoint mode, and my second favorite, the three-point rectangle mode." },
+        { time: "6:38", text: "The next tool that's related to the Rectangle tool is the Rounded Rectangle tool. This is the icon of the rectangle with the rounded edges. This mode allows you to draw a four-sided shape with an eased edge. By clicking on the Preferences, you can change the proportional corners to symmetrical corners, as well as adjust the diameter of the quarter corners in which you are drawing." },
+        { time: "7:14", text: "A Circle tool, which is the icon of the circle, allows you to draw a circle. The current mode for the circle is the radius mode, which is center point to the outer edge. You can also adjust to diameter mode, three-point mode, circle from three lines mode (requires that you have drawn three lines—once you select the circle with hotkey 6, you can select your three points and a circle will be drawn to fit within those three points), point to center mode, and tangent and center mode. Please note you can adjust the modes by hitting the letter U." },
+        { time: "8:21", text: "Next to the Circle tool icon, you will find the Oval tool. The Oval tool allows the user to draw an oval. Box mode is the first mode—the box mode is similar to drawing a rectangle with an oval inside. Following the box mode is the height and width mode—I can draw the width and then the height to create the oval. And the third mode is from the center mode. The hotkey for the Oval tool is Alt+6." },
+        { time: "9:06", text: "Next to the Oval tool is the Arc tool. Arc tool allows you to draw an arc. The most common arc tool mode that I use is the arc radius mode. This mode allows you to draw two points and then create the arc from the first point as the center. I use this tool when drawing the graphic for a door swing. Other modes in the Arc tool are three-point mode, tangent to line mode, sensor mode, as well as specified radius mode where you can manually enter the radius." },
+        { time: "10:13", text: "The Freehand tool, hotkey Alt+5, allows the user to draw an organic shape. With one click, the shape will be smoothed." },
+        { time: "10:25", text: "A tool that's more common for drawing organic shapes is the Polyline tool. The Polyline tool has many different modes when it comes to drawing a polyline. The first mode is the corner vertex mode—this mode will keep all the lines within the shape you're creating at 3. You can also draw in the Bezier vertex mode, the cubic vertex mode, the tangent arc mode, point on arc mode. The last mode in Polyline tools is the arc vertex fillet mode. You can adjust the arc by clicking on the fillet settings and changing the radius. Now when I draw, each corner will be a six-inch radius fillet. You can access the Polyline tool by hitting hotkey 5. Please note that when drawing a polyline, you can actually change the modes while you're drawing by hitting the hotkey letter U. This is how you can create a more organic shape but with having control within the software." },
+        { time: "12:14", text: "Next to the Polyline tool, you will find the 2D Polygon tool. The 2D Polygon tool has a similar mode as the Polyline tool, where you can draw a shape using straight lines. A Polygon tool can be accessed by hitting the hotkey 8. The 2D Polygon mode has some interesting features. In order to show you how they function, I have drawn two identical clusters of rectangles. If I click where these two rectangles intersect, it will create another shape. By holding Shift, I can continue to create upon that shape. And the outer boundary mode, I can make the selection around this cluster of squares, and you'll see that it's in a way grouped them together. But if I have to move them, you will see that the original shapes are behind the new shape." },
+        { time: "13:24", text: "The Double Line Polygon tool is very similar in function to the Double Line tool. The difference is that we have a separation between the two lines. This tool is great if you are trying to create walls in a 2D application. The hotkey for the 2D Double Line Polygon tool is Alt+8. We can modify the separation as well as go into the Preferences and change the options to create lines, create polygons, and create lines and polygons." },
+        { time: "14:07", text: "The Fillet tool, which is located here, allows you to take a right angle and soften the edges with a fillet. You can adjust the fillet with the fillet radius here. There's a number of modes of the fillet—there's standard mode, split mode, and trim mode. The hotkey for the fillet mode is 7." },
+        { time: "14:37", text: "Similar to the Fillet mode is Chamfer mode. Chamfer mode allows you to take two right angles and create a chamfer." },
+      ],
+
+      relatedResources: [
+        { title: "Vectorworks University - Basic Tools", url: "https://university.vectorworks.net/", description: "Official training on tool usage" },
+        { title: "Vectorworks Help - 2D Tools", url: "https://app-help.vectorworks.net/", description: "Complete documentation on all 2D drawing tools" },
+        { title: "Vectorworks Forum - Tool Tips", url: "https://forum.vectorworks.net/", description: "Community discussions on efficient tool usage" },
+      ],
+
+      relatedTutorials: [
+        { title: "Vectorworks Tutorial: Navigating the User Interface", slug: "navigating-user-interface" },
+        { title: "Vectorworks Tutorial: Understanding Classes", slug: "understanding-classes" },
+        { title: "Vectorworks Tutorial: Understanding Design Layers", slug: "understanding-design-layers" },
+        { title: "Vectorworks Tutorial: Installing a Workspace and Template", slug: "installing-workspace-template" },
       ],
     },
   };
