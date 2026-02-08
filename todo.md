@@ -1304,3 +1304,15 @@
 - [x] Generate default Open Graph image (1200×630px)
 - [x] Add image to public directory
 - [x] Update meta tag references
+
+## Alt Text Migration
+- [ ] Extract alt text from original Supabase data
+- [ ] Map original images to new project images
+- [ ] Update projectImages table with alt text
+- [ ] Verify alt text displays correctly
+
+## AI Alt Text Generation
+- [x] Fetch all project images from database with project metadata
+- [x] Generate alt text using LLM with format: "[Production] - Scenic design by Brandon PT Davis. [Description]"
+- [x] Update projectImages table with generated alt text
+- [x] Verify alt text displays correctly on project pages
