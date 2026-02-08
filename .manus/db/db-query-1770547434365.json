@@ -1,0 +1,16 @@
+{
+  "query": "SELECT id, title, slug, LEFT(content, 500) as content_preview FROM articles WHERE slug = 'empowering-theatre-students-with-computer-literacy' LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT id, title, slug, LEFT(content, 500) as content_preview FROM articles WHERE slug = 'empowering-theatre-students-with-computer-literacy' LIMIT 1;",
+  "rows": [
+    {
+      "id": "60148",
+      "title": "Empowering Theatre Production Students with Computer Literacy",
+      "slug": "empowering-theatre-students-with-computer-literacy",
+      "content_preview": "[{\"type\":\"text\",\"content\":\"\\n<p>If your students call you a tech guru, you know the flood of emails asking, \\\"Which computer should I buy?\\\" It's a rite of passage. The array of options, each tailored to a specific budget, can make anyone feel a slight sense of anxiety. But fear not! We must teach our students to thrive in today's digital world. Incorporating computer literacy into our curricula is paramount, and here's why.</p>\\n\\n\\n\\n<h2 class=\\\"wp-block-heading is-style-default\\\" id=\\\"heading"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tslug\tcontent_preview\n60148\tEmpowering Theatre Production Students with Computer Literacy\tempowering-theatre-students-with-computer-literacy\t[{\"type\":\"text\",\"content\":\"\\n<p>If your students call you a tech guru, you know the flood of emails asking, \\\"Which computer should I buy?\\\" It's a rite of passage. The array of options, each tailored to a specific budget, can make anyone feel a slight sense of anxiety. But fear not! We must teach our students to thrive in today's digital world. Incorporating computer literacy into our curricula is paramount, and here's why.</p>\\n\\n\\n\\n<h2 class=\\\"wp-block-heading is-style-default\\\" id=\\\"heading\n",
+  "stderr": "",
+  "execution_time_ms": 344
+}

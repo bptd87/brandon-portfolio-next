@@ -1246,3 +1246,23 @@
 - [x] Implement backend tRPC procedures for marking tutorials as watched and fetching progress
 - [x] Add frontend UI for marking tutorials as watched with persistent checkmarks
 - [x] Display completion percentage on tutorials page
+
+## Article Enhancement Project
+- [ ] Review all existing articles and document current state
+- [ ] Enhance article listing page design to match tutorial quality
+- [ ] Improve article detail page formatting and typography
+- [ ] Add hero images to articles
+- [ ] Add inline images and visual elements to article content
+- [ ] Improve article metadata display (date, read time, categories)
+- [ ] Add article navigation (previous/next articles)
+- [ ] Test all articles on different screen sizes
+
+## Computer Literacy Article Fixes
+- [x] Fix inconsistent formatting (drop cap, weird middle formatting)
+- [x] Remove FAQ section from article
+- [x] Add inline images throughout article (3-4 relevant images)
+- [x] Add visual callout boxes for key insights (pull quotes)
+- [ ] Add previous/next article navigation
+- [ ] Add reading progress indicator
+- [x] Ensure consistent typography throughout
+- [ ] Test article on mobile and desktop
