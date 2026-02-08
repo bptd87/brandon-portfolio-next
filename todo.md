@@ -1496,3 +1496,18 @@
 - [x] Update dimension items with new wireframe URLs
 - [x] Remove padding from image container to allow full fill
 - [x] Test uniform appearance across all wireframe cards
+
+## Design History Timeline App Enhancement (User Requested - Feb 8, 2026)
+- [x] Search and collect high-quality Wikipedia images for all 30 design periods (interior/exterior architecture)
+- [x] Replace Unsplash URLs with Wikipedia image URLs in DESIGN_PERIODS data
+- [x] Integrate Header and Footer components for consistency with portfolio
+- [x] Update styling to match portfolio design system (colors, fonts, spacing)
+- [x] Add route to Studio apps section (/studio/apps/design-history-timeline)
+- [x] Update Studio apps index to include Design History Timeline card
+- [x] Optimize timeline animations for better performance
+- [x] Improve mobile responsiveness (compact timeline dots, better card layout)
+- [ ] Add era grouping feature (Ancient, Medieval, Renaissance, Modern, Contemporary)
+- [ ] Add sorting options (chronological, alphabetical, by region)
+- [ ] Add filter by region functionality
+- [x] Test all features on mobile and desktop
+- [x] Verify all Wikipedia images load correctly

@@ -24,6 +24,7 @@ import StudioApps from "./pages/StudioApps";
 import StudioDirectory from "./pages/StudioDirectory";
 import ScaleCalculator from "./pages/ScaleCalculator";
 import DimensionReference from "./pages/DimensionReference";
+import DesignHistoryTimeline from "./pages/DesignHistoryTimeline";
 import TutorialDetail from "./pages/TutorialDetail";
 import NewsDetail from "./pages/NewsDetail";
 import ArticleDetail from "./pages/ArticleDetail";
@@ -68,6 +69,7 @@ function Router() {
       <Route path={"/studio/tutorials"} component={StudioTutorials} />
       <Route path={"/studio/apps/scale-calculator"} component={ScaleCalculator} />
       <Route path={"/studio/apps/dimension-reference"} component={DimensionReference} />
+      <Route path={"/studio/apps/design-history-timeline"} component={DesignHistoryTimeline} />
       <Route path={"/studio/apps"} component={StudioApps} />
       <Route path={"/studio/directory"} component={StudioDirectory} />
       <Route path={"/studio"} component={Studio} />

@@ -35,10 +35,10 @@ export default function StudioApps() {
       category: "Calculator",
     },
     {
-      title: "Design History",
-      description: "Timeline of theatrical design movements and influential designers.",
+      title: "Design History Timeline",
+      description: "Explore 30 major design periods from Ancient Egypt to Contemporary architecture with detailed information, color palettes, and key figures.",
       image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/JWtmSLqTxNiBvvea.webp",
-      href: "/studio/apps/design-history",
+      href: "/studio/apps/design-history-timeline",
       accentColor: "#FFEA00",
       category: "Reference",
     },
