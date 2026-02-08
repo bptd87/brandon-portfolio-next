@@ -451,7 +451,7 @@ export default function NewsDetail() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {related.map((item) => (
                 <Link key={item.id} href={`/news/${item.slug}`}>
-                  <Card className="h-full hover:shadow-xl transition-all duration-300 group cursor-pointer">
+                  <Card className="h-full hover:shadow-xl transition-all duration-300 group cursor-pointer p-0">
                     {item.coverImageUrl && (
                       <div className="aspect-[16/9] overflow-hidden">
                         <img 
