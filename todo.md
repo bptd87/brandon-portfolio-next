@@ -1188,3 +1188,5 @@
 - [x] Add rounded corners to tutorial card images
 - [x] Restore card border/outline
 - [x] Ensure image fills card properly with rounded corners
+
+- [x] Redesign tutorial cards to large feature-style layout with full-width thumbnail and overlaid content

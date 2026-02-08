@@ -139,12 +139,12 @@ export default function StudioTutorials() {
 
       {/* Tutorials Grid */}
       <section className="container py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="max-w-4xl mx-auto space-y-8">
           {filteredTutorials.map(tutorial => (
             <Link key={tutorial.id} href={tutorial.slug ? `/studio/tutorials/${tutorial.slug}` : tutorial.youtubeUrl}>
-            <Card className="group hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 border-border hover:border-[#2196F3]/50 h-full">
+            <Card className="group hover:shadow-2xl transition-all duration-300 overflow-hidden border border-border hover:border-[#2196F3]/50 rounded-2xl bg-card">
               {/* Thumbnail */}
-              <div className="relative aspect-video bg-muted overflow-hidden rounded-t-lg">
+              <div className="relative aspect-video bg-muted overflow-hidden rounded-t-2xl">
                 <img 
                   src={tutorial.thumbnailUrl} 
                   alt={tutorial.title}
@@ -156,40 +156,32 @@ export default function StudioTutorials() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <PlayCircle className="w-16 h-16 text-white drop-shadow-lg" />
+                  <div className="w-20 h-20 rounded-full bg-white flex items-center justify-center">
+                    <PlayCircle className="w-12 h-12 text-black fill-white" />
+                  </div>
                 </div>
                 
                 {/* Duration badge */}
-                <div className="absolute top-3 right-3 bg-black/80 backdrop-blur-sm text-white text-xs font-semibold px-2 py-1 rounded flex items-center gap-1">
-                  <Clock className="w-3 h-3" />
+                <div className="absolute bottom-6 right-6 bg-black/90 backdrop-blur-sm text-white text-sm font-bold px-3 py-2 rounded-lg flex items-center gap-2">
+                  <Clock className="w-4 h-4" />
                   {formatDuration(tutorial.duration)}
                 </div>
               </div>
 
-              <CardContent className="p-6 pt-4 space-y-4">
-                {/* Badges */}
-                <div className="flex flex-wrap gap-2">
-                  <Badge className={`${getCategoryColor(tutorial.category)} border`}>
-                    {categories.find(c => c.slug === tutorial.category)?.name}
-                  </Badge>
-                  <Badge variant="outline" className="capitalize">
-                    {tutorial.difficultyLevel}
-                  </Badge>
-                </div>
-
+              <CardContent className="p-8 space-y-6 bg-card">
                 {/* Title */}
-                <h3 className="font-bold text-lg leading-tight group-hover:text-[#2196F3] transition-colors">
+                <h3 className="font-bold text-3xl leading-tight group-hover:text-[#2196F3] transition-colors">
                   {tutorial.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-sm text-muted-foreground line-clamp-2">
+                <p className="text-lg text-muted-foreground leading-relaxed">
                   {tutorial.description}
                 </p>
 
-                {/* Watch button */}
-                <div className="inline-flex items-center gap-2 text-[#2196F3] font-semibold text-sm group-hover:gap-3 transition-all duration-300">
-                  {tutorial.slug ? 'View Tutorial' : 'Watch on YouTube'} <ArrowRight className="w-4 h-4" />
+                {/* Date */}
+                <div className="text-sm text-muted-foreground">
+                  Dec 21, 2025
                 </div>
               </CardContent>
             </Card>
