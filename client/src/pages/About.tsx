@@ -1,14 +1,9 @@
 import AboutNav from "@/components/AboutNav";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { ArrowRight, Mail, MapPin, Sparkles } from "lucide-react";
-import { trpc } from "@/lib/trpc";
-import { Link } from "wouter";
+import { Mail, MapPin, Sparkles } from "lucide-react";
 
 export default function About() {
-  // Fetch some featured projects to showcase design work
-  const { data: projects } = trpc.projects.list.useQuery({});
-
   const galleryImages = [
     { url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/TsVdekRTdTHOgGda.JPG", alt: "Teaching scenic design to students" },
     { url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/sgcZKfoZzxPeTUel.JPG", alt: "UC Irvine graduate school days" },
@@ -86,119 +81,37 @@ export default function About() {
         </div>
       </section>
 
-      {/* Design Work Showcase - 4 FEATURED PROJECTS */}
-      {projects && projects.length > 0 && (
-        <section className="py-32 bg-gradient-to-b from-background to-muted/30">
-          <div className="container">
-            <div className="max-w-7xl mx-auto mb-16 animate-in fade-in slide-in-from-bottom duration-700">
-              <h2 className="text-xs uppercase tracking-[0.3em] text-primary mb-4 font-pixel">SELECTED WORK</h2>
-              <h3 className="text-5xl md:text-7xl font-serif mb-6">Design in Action</h3>
-              <p className="text-xl text-foreground/70 max-w-3xl">
-                From intimate black box theatres to grand regional stages, each project tells a unique visual story.
-              </p>
-            </div>
-
-            {/* Large Image Grid - Only 4 projects */}
-            <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 mb-12">
-              {projects.slice(0, 4).map((project, index) => (
-                <div 
-                  key={project.id} 
-                  className={`group relative overflow-hidden rounded-3xl ${
-                    index === 0 ? 'md:col-span-2 aspect-[21/9]' : 'aspect-[4/3]'
-                  } animate-in fade-in slide-in-from-bottom duration-700`}
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  {project.coverImageUrl && (
-                    <>
-                      <img 
-                        src={project.coverImageUrl} 
-                        alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-500" />
-                      <div className="absolute bottom-0 left-0 right-0 p-8 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <p className="text-sm font-pixel uppercase tracking-wider text-primary mb-2">{project.year || 'Recent'}</p>
-                        <h4 className="text-3xl md:text-4xl font-serif mb-2">{project.title}</h4>
-                        {project.location && (
-                          <p className="text-lg text-white/80">{project.location}</p>
-                        )}
-                      </div>
-                    </>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {/* CTA to see all work */}
-            <div className="max-w-7xl mx-auto text-center">
-              <Link href="/work">
-                <a className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 hover:scale-105 text-lg font-medium shadow-lg hover:shadow-xl hover:shadow-primary/30">
-                  View All Projects
-                  <ArrowRight className="w-5 h-5" />
-                </a>
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Philosophy Section - BRIEF */}
+      {/* Bio Section */}
       <section className="container py-32">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto">
           <div className="animate-in fade-in slide-in-from-bottom duration-700">
-            <h2 className="text-5xl md:text-7xl font-serif mb-12 leading-tight bg-gradient-to-br from-foreground to-primary bg-clip-text text-transparent">
-              Design as Storytelling
-            </h2>
-            <div className="prose prose-xl dark:prose-invert max-w-none space-y-6">
-              <p className="text-xl text-foreground/90 leading-relaxed">
+            <div className="prose prose-xl dark:prose-invert max-w-none space-y-8">
+              <p className="text-2xl text-foreground/90 leading-relaxed first-letter:text-7xl first-letter:font-serif first-letter:text-primary first-letter:mr-3 first-letter:float-left">
                 I believe scenic design is a form of storytelling—one that starts before the actors speak and lingers after the final bow. My work lives at the intersection of craft and concept, using physical space to shape emotion, tension, and rhythm.
               </p>
-              <p className="text-xl text-foreground/90 leading-relaxed">
-                With over 15 years of experience in theatre and immersive environments, I've designed 130+ productions across the country, collaborated with inspiring creatives, and mentored the next generation of designers. As a proud member of United Scenic Artists Local 829, I bring both rigor and play to every project.
+              
+              <p className="text-xl text-foreground/80 leading-relaxed">
+                With over 15 years of experience in theatre and immersive environments, I've designed 130+ productions across the country, from intimate black box theatres to grand regional stages. Each project is an opportunity to collaborate with inspiring directors, actors, and technicians—creative partnerships that push the boundaries of what a theatrical space can be.
               </p>
-            </div>
-
-            {/* CTAs to sub-pages */}
-            <div className="grid md:grid-cols-3 gap-6 mt-16">
-              <Link href="/about/resume">
-                <a className="group backdrop-blur-md bg-gradient-to-br from-primary/10 to-primary/5 border-2 border-primary/20 rounded-2xl p-8 hover:shadow-xl hover:shadow-primary/20 transition-all duration-500 hover:-translate-y-2">
-                  <h3 className="text-2xl font-serif mb-3 group-hover:text-primary transition-colors">Resume / CV</h3>
-                  <p className="text-foreground/70 mb-4">Education, experience, and professional recognition</p>
-                  <div className="flex items-center gap-2 text-primary">
-                    <span className="text-sm font-medium">View Details</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </a>
-              </Link>
-
-              <Link href="/about/teaching">
-                <a className="group backdrop-blur-md bg-gradient-to-br from-accent/10 to-accent/5 border-2 border-accent/20 rounded-2xl p-8 hover:shadow-xl hover:shadow-accent/20 transition-all duration-500 hover:-translate-y-2">
-                  <h3 className="text-2xl font-serif mb-3 group-hover:text-accent transition-colors">Teaching Philosophy</h3>
-                  <p className="text-foreground/70 mb-4">Mentoring the next generation of designers</p>
-                  <div className="flex items-center gap-2 text-accent">
-                    <span className="text-sm font-medium">Read More</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </a>
-              </Link>
-
-              <Link href="/about/philosophy">
-                <a className="group backdrop-blur-md bg-gradient-to-br from-blue-500/10 to-blue-500/5 border-2 border-blue-500/20 rounded-2xl p-8 hover:shadow-xl hover:shadow-blue-500/20 transition-all duration-500 hover:-translate-y-2">
-                  <h3 className="text-2xl font-serif mb-3 group-hover:text-blue-500 transition-colors">Creative Statement</h3>
-                  <p className="text-foreground/70 mb-4">Process, approach, and artistic vision</p>
-                  <div className="flex items-center gap-2 text-blue-500">
-                    <span className="text-sm font-medium">Explore</span>
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </a>
-              </Link>
+              
+              <p className="text-xl text-foreground/80 leading-relaxed">
+                As a proud member of United Scenic Artists Local 829, I bring both rigor and play to every project. My training includes an MFA in Scenic Design from UC Irvine and a BFA in Theatre Arts from Stephens College, where I learned that great design comes from equal parts vision and technical mastery.
+              </p>
+              
+              <p className="text-xl text-foreground/80 leading-relaxed">
+                Beyond the theatre, I work as a Senior Scenic and Experiential Designer at Adaptive Design Services, bringing theatrical storytelling techniques to branded events, theme parks, and immersive installations. I also teach scenic design, mentoring the next generation of designers and helping them navigate the complex, rewarding path of a creative career.
+              </p>
+              
+              <p className="text-xl text-foreground/80 leading-relaxed">
+                Whether I'm designing a musical, a contemporary drama, or an experiential activation, my goal is always the same: to create spaces that feel inevitable—as if the story could only happen here, in this world, at this moment.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Personal Gallery - AT BOTTOM */}
-      <section className="bg-background py-32">
+      {/* Personal Gallery */}
+      <section className="bg-gradient-to-b from-background to-muted/30 py-32">
         <div className="container">
           <div className="max-w-7xl mx-auto mb-16">
             <h2 className="text-5xl md:text-7xl font-serif mb-6">Behind the Scenes</h2>
