@@ -116,6 +116,19 @@ export default function StudioTutorials() {
       publishDate: "Jan 29, 2021",
       thumbnailUrl: `https://img.youtube.com/vi/8lTla9cvIPk/maxresdefault.jpg`,
     },
+    {
+      id: 9,
+      title: "Vectorworks Tutorial: Resource Manager Basics",
+      slug: "resource-manager-basics",
+      youtubeId: "Y7trPdHxRxM",
+      youtubeUrl: "https://www.youtube.com/watch?v=Y7trPdHxRxM",
+      description: "Learn how to create, apply, and manage resources in Vectorworks using the Resource Manager, including textures, symbols, and custom libraries.",
+      category: "getting-started",
+      difficultyLevel: "beginner",
+      duration: 348, // 5:48 in seconds
+      publishDate: "Jan 30, 2021",
+      thumbnailUrl: `https://img.youtube.com/vi/Y7trPdHxRxM/maxresdefault.jpg`,
+    },
   ];
 
   const categories = [

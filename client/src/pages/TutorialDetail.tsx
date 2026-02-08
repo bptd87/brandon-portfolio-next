@@ -862,6 +862,102 @@ The final section introduces the powerful Duplicate Along Path feature, which al
         { title: "Vectorworks Tutorial: Understanding Classes", slug: "understanding-classes" },
       ],
     },
+    "resource-manager-basics": {
+      id: 9,
+      title: "Vectorworks Tutorial: Resource Manager Basics",
+      slug: "resource-manager-basics",
+      youtubeEmbed: "https://www.youtube.com/embed/Y7trPdHxRxM",
+      duration: "5:48",
+      publishDate: "Jan 30, 2021",
+      category: "Getting Started",
+      difficulty: "Beginner",
+      description: "Learn how to create, apply, and manage resources in Vectorworks using the Resource Manager, including textures, symbols, and custom libraries.",
+      overview: "This tutorial introduces the Resource Manager, Vectorworks' central hub for creating, applying, and managing resources such as textures, symbols, and custom libraries. You'll learn how to navigate the File Browser and Resource Viewer panes, access hundreds of built-in libraries, create custom resources, organize resources into folders, and search across all available libraries. The tutorial demonstrates how to create new Renderworks textures, manage resource folders, and import cloud-based resources from Vectorworks libraries. You'll also learn how to modify downloaded resources for your specific project needs while preserving the original library versions.",
+      learningObjectives: [
+        "Navigate the Resource Manager interface including File Browser and Resource Viewer panes",
+        "Access and browse hundreds of built-in Vectorworks libraries and custom Favorites",
+        "Create new resources including Renderworks textures with custom properties",
+        "Organize resources into folders and manage resource hierarchies",
+        "Search for resources across all libraries using filters and resource type dropdowns",
+        "Import cloud-based resources and modify them for project-specific needs",
+      ],
+      keyConcepts: [
+        {
+          title: "Resource Manager",
+          content: "Central interface for creating, applying, and managing all reusable resources in Vectorworks including textures, symbols, hatches, and custom libraries.",
+        },
+        {
+          title: "File Browser Pane",
+          content: "Left panel that provides access to hundreds of custom Vectorworks libraries, Workgroup libraries, Favorites, and the active file's resources.",
+        },
+        {
+          title: "Resource Viewer Pane",
+          content: "Center panel that displays resources from the selected location, showing thumbnails, names, types, and allowing organization into folders.",
+        },
+        {
+          title: "Renderworks Texture",
+          content: "Material resource that defines surface appearance including color, reflectivity, transparency, and bump mapping for realistic rendering.",
+        },
+        {
+          title: "Resource Folders",
+          content: "Organizational containers within the Resource Manager that group related resources by type (symbols, textures, etc.) for easier navigation.",
+        },
+        {
+          title: "Cloud-Based Resources",
+          content: "Vectorworks library resources stored online that are downloaded on-demand when accessed, providing access to extensive content libraries without local storage.",
+        },
+      ],
+      proTips: [
+        "Pin the Resource Manager open using the push pin icon to keep it accessible while working, or let it auto-hide by hovering when unpinned.",
+        "Use the view mode icons to switch between Top/Plan, Right Isometric, Wireframe, and OpenGL views to quickly understand 3D resource geometry.",
+        "Create a Favorites folder to store your most-used resources for quick access across all projects without searching through libraries.",
+        "Use the resource type dropdown filter when searching to narrow results to specific types like Renderworks Textures, Symbols, or Hatches.",
+        "Organize resources into folders immediately after creation to maintain a clean, navigable resource structure as your project grows.",
+        "Modifications to downloaded library resources only affect your current file—the original library resource remains unchanged for future projects.",
+        "Use the history arrows to navigate back and forward through recently viewed resource locations and folders.",
+        "Double-click a resource to apply it directly, or drag and drop it into your drawing for more precise placement control.",
+      ],
+      shortcuts: [
+        { keys: ["Hover"], action: "Open Resource Manager (when unpinned)" },
+        { keys: ["Double-click"], action: "Apply resource to selection or create new instance" },
+      ],
+      commonPitfalls: [
+        "Forgetting to pin the Resource Manager open, causing it to close when you move away—use the push pin for persistent access.",
+        "Not organizing resources into folders as you create them, leading to cluttered resource lists that are difficult to navigate.",
+        "Searching without using the resource type filter, resulting in overwhelming search results across all resource types.",
+        "Assuming modifications to library resources affect the original library—changes only apply to the current file's copy.",
+        "Not creating a Favorites folder for frequently-used resources, wasting time searching through libraries repeatedly.",
+      ],
+      transcript: [
+        { time: "0:04", text: "Hello, this is Brandon PT Davis, theatrical scenic designer, and this Vectorworks tutorial is on the Resource Manager." },
+        { time: "0:13", text: "The Resource Manager allows you to create, apply, and manage resources in the current file, as well as access resources from other files." },
+        { time: "0:24", text: "In this Vectorworks workspace, the Resource Manager is located in the top corner. By clicking the push pin, I can keep the Resource Manager open. When the push pin is not enabled, I can access it by hovering." },
+        { time: "0:43", text: "For the purpose of this tutorial, I'm going to pin the Resource Manager open on the left side. You'll notice a File Browser pane. In the File Browser pane, you have access to hundreds of custom libraries throughout the Vectorworks software. You can also create and modify your own resources and store them in Favorites." },
+        { time: "0:59", text: "At the center, you'll see the Resource Viewer pane. Currently, the Resource Viewer pane is looking at resources in the active file: LOST – Set for Living on Love, Okoboji Summer Theatre." },
+        { time: "1:32", text: "In this view, I have resource folders where I've grouped resources by type. I can click through the history arrows to go back and forward. I currently have three resources that are not in folders. The first two resources are symbols, and the third is a texture." },
+        { time: "1:56", text: "I can select the texture and place it into its Set Texture folder. These two resources are symbols. You can modify the way you view an item by clicking the icons here. I can change from Top/Plan view to Right Isometric view, and change from Wireframe to OpenGL to quickly understand what the resource is." },
+        { time: "2:33", text: "In the Resource Viewer, you can also see the name of the resource and the resource type. I'm now going to place these two resources into their proper folder." },
+        { time: "2:52", text: "To create a new resource, go to the bottom and click New Resource. Here, you can select the resource type. I'm going to create a texture. To do this, click Renderworks Texture and press Create." },
+        { time: "3:12", text: "You'll want to give your texture a name. I'm going to call this texture Wall Black. You can modify the color, reflectivity, transparency, and bump. I'll cover how to create textures in more detail in another video. For the sake of this tutorial, I'm just going to apply a color." },
+        { time: "3:49", text: "Now that I've created the texture, I can place it into its proper folder. To create a folder, click New Folder. This process is similar to creating a resource: select the folder type, name the folder, and press OK." },
+        { time: "4:20", text: "Using the search box, you can search for resources throughout the Vectorworks libraries, Workgroup libraries, your Favorites, or within the active file. I'm going to search for a glass texture by typing glass." },
+        { time: "4:40", text: "As you can see, there are glass symbols, glass tiles, glass materials, and many different resource types. To narrow the search to Renderworks Textures, I'll select Renderworks Textures from the resource dropdown menu. This filters the search results to only glass textures." },
+        { time: "5:09", text: "You can double-click a resource to apply it as a texture, or you can drag and drop the resource directly into your open file. Many of these resources are cloud-based and will be downloaded from the internet." },
+        { time: "5:32", text: "Once the glass texture has been added, I can edit the attributes of the resource. Any modifications you make to a downloaded resource will only affect the resource within the current file and will not change the resource in its original library location." },
+        { time: "5:48", text: "This concludes my introduction to the Resource Manager. If you have any questions, feel free to ask. Thank you." },
+      ],
+      relatedResources: [
+        { title: "Vectorworks Resource Manager Documentation", url: "https://app-help.vectorworks.net/2024/eng/VW2024_Guide/ResourceManager/Resource_Manager.htm", description: "Official documentation on Resource Manager functionality" },
+        { title: "Vectorworks University - Resource Manager", url: "https://university.vectorworks.net/", description: "Official training on resource creation and management" },
+        { title: "Vectorworks Forum - Resources Discussion", url: "https://forum.vectorworks.net/", description: "Community discussions about resource libraries and best practices" },
+      ],
+
+      relatedTutorials: [
+        { title: "Vectorworks Tutorial: Understanding Classes", slug: "understanding-classes" },
+        { title: "Vectorworks Tutorial: Understanding Design Layers", slug: "understanding-design-layers" },
+        { title: "Vectorworks Tutorial: Sheet Layers", slug: "sheet-layers" },
+      ],
+    },
   };
 
   const tutorial = slug ? tutorials[slug] : null;
