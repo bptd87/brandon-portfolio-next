@@ -353,8 +353,8 @@ Finally, the tutorial explores layer viewing options that control whether you ca
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Tutorial Not Found</h1>
-          <Link href="/studio/tutorials">
-            <a className="text-[#2196F3] hover:underline">← Back to Tutorials</a>
+          <Link href="/studio/tutorials" className="text-[#2196F3] hover:underline">
+            ← Back to Tutorials
           </Link>
         </div>
       </div>

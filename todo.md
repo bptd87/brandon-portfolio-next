@@ -1200,3 +1200,10 @@
 - [x] Generate educational content from "Understanding Design Layers" tutorial script
 - [x] Add "Understanding Design Layers" tutorial to StudioTutorials page
 - [x] Create detail page for "Understanding Design Layers" tutorial
+
+## Re-apply Tutorial Additions (After Sandbox Reset)
+- [x] Re-add tutorials 4-5 to StudioTutorials.tsx list
+- [x] Fix nested anchor tag error in TutorialDetail.tsx
+- [ ] Add tutorial 4 (Installing Workspace) detail content to TutorialDetail.tsx
+- [ ] Add tutorial 5 (Basics Tool Palette) detail content to TutorialDetail.tsx
+- [ ] Update all tutorial dates to correct YouTube publish dates (Jan 24-27, 2021)

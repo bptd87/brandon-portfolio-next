@@ -48,6 +48,30 @@ export default function StudioTutorials() {
       duration: 474, // 7:54 in seconds
       thumbnailUrl: `https://img.youtube.com/vi/CwCxmhQAFwI/maxresdefault.jpg`,
     },
+    {
+      id: 4,
+      title: "Vectorworks Tutorial: Installing a Workspace and Template",
+      slug: "installing-workspace-template",
+      youtubeId: "CXBfG2L3ZmI",
+      youtubeUrl: "https://www.youtube.com/watch?v=CXBfG2L3ZmI",
+      description: "Learn how to properly install and configure a Vectorworks workspace and template provided by your organization to ensure standardized communication and workflow.",
+      category: "getting-started",
+      difficultyLevel: "beginner",
+      duration: 340, // 5:40 in seconds
+      thumbnailUrl: `https://img.youtube.com/vi/CXBfG2L3ZmI/maxresdefault.jpg`,
+    },
+    {
+      id: 5,
+      title: "Vectorworks Tutorial: Basics Tool Palette",
+      slug: "basics-tool-palette",
+      youtubeId: "orjqcNYveOg",
+      youtubeUrl: "https://www.youtube.com/watch?v=orjqcNYveOg",
+      description: "Master the essential 2D drawing tools including selection, drawing, and modification tools that form the foundation of scenic design drafting in Vectorworks.",
+      category: "2d-drafting",
+      difficultyLevel: "beginner",
+      duration: 897, // 14:57 in seconds
+      thumbnailUrl: `https://img.youtube.com/vi/orjqcNYveOg/maxresdefault.jpg`,
+    },
   ];
 
   const categories = [
