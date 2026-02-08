@@ -91,7 +91,7 @@ export default function Home() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                       {articles.slice(0, 2).map((article) => (
                         <Link key={article.id} href={`/articles/${article.slug}`}>
-                          <Card className="h-full hover:shadow-2xl transition-all hover:scale-[1.02] cursor-pointer border-2 bg-background">
+                          <Card className="h-full hover:shadow-2xl transition-all hover:scale-[1.02] cursor-pointer border-2 bg-background p-0">
                             <CardContent className="p-10">
                               <h3 className="text-2xl font-bold mb-4 line-clamp-2">{article.title}</h3>
                               <p className="text-base text-muted-foreground line-clamp-3 leading-relaxed">{article.excerpt}</p>
@@ -188,7 +188,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {newsItems.slice(0, 3).map((item) => (
                 <Link key={item.id} href={`/news/${item.slug}`}>
-                  <Card className="h-full hover:shadow-2xl transition-all hover:scale-[1.02] cursor-pointer border-2">
+                  <Card className="h-full hover:shadow-2xl transition-all hover:scale-[1.02] cursor-pointer border-2 p-0">
                     <CardContent className="p-8">
                       <Badge variant="outline" className="mb-4 text-xs tracking-wider font-semibold border-[#00E5FF] text-[#00E5FF]">
                         {item.categoryId && categories ? 
@@ -234,7 +234,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {articles.slice(2, 5).map((article) => (
                 <Link key={article.id} href={`/articles/${article.slug}`}>
-                  <Card className="h-full hover:shadow-2xl transition-all hover:scale-[1.02] cursor-pointer border-2 bg-background">
+                  <Card className="h-full hover:shadow-2xl transition-all hover:scale-[1.02] cursor-pointer border-2 bg-background p-0">
                     <CardContent className="p-8">
                       <h3 className="text-xl font-bold mb-3 line-clamp-2">{article.title}</h3>
                       <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed">{article.excerpt}</p>
