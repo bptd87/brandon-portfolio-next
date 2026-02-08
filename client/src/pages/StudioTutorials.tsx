@@ -90,6 +90,19 @@ export default function StudioTutorials() {
       publishDate: "Jan 27, 2021",
       thumbnailUrl: `https://img.youtube.com/vi/D4AXwNQgdBI/maxresdefault.jpg`,
     },
+    {
+      id: 7,
+      title: "Vectorworks Quick Tip: Creating Trim Profiles with the Polyline Tool",
+      slug: "creating-trim-profiles-polyline",
+      youtubeId: "EZB5O-Wmsk4",
+      youtubeUrl: "https://www.youtube.com/watch?v=EZB5O-Wmsk4",
+      description: "Learn how to quickly create accurate trim and molding profiles by tracing reference images using the polyline tool and converting them to reusable 2D symbols.",
+      category: "2d-drafting",
+      difficultyLevel: "intermediate",
+      duration: 374, // 6:14 in seconds
+      publishDate: "Jan 28, 2021",
+      thumbnailUrl: `https://img.youtube.com/vi/EZB5O-Wmsk4/maxresdefault.jpg`,
+    },
   ];
 
   const categories = [

@@ -1219,3 +1219,4 @@
 - [x] Fix missing navbar on contact page
 - [x] Add tutorial 6: Sheet Layers with comprehensive educational content
 - [x] Fix blank key concepts in tutorial 6 Sheet Layers Concepts tab
+- [x] Add tutorial 7: Creating Trim Profiles with Polyline Tool with comprehensive educational content
