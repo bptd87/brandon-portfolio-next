@@ -246,6 +246,19 @@ export default function StudioTutorials() {
       publishDate: "Feb 15, 2021",
       thumbnailUrl: `https://img.youtube.com/vi/Jp4eG5n3esc/maxresdefault.jpg`,
     },
+    {
+      id: 19,
+      title: "Vectorworks Tutorial: Creating 2D Drafting from 3D Models",
+      slug: "creating-2d-drafting-from-3d",
+      youtubeId: "Q-oM0jkKuS0",
+      youtubeUrl: "https://www.youtube.com/watch?v=Q-oM0jkKuS0",
+      description: "Master the complete workflow for generating professional construction drawings from 3D models, including viewports, sections, details, and dimensioning.",
+      category: "2d-drafting",
+      difficultyLevel: "advanced",
+      duration: 1440, // 24:00 in seconds
+      publishDate: "Feb 18, 2021",
+      thumbnailUrl: `https://img.youtube.com/vi/Q-oM0jkKuS0/maxresdefault.jpg`,
+    },
   ];
 
   const categories = [
