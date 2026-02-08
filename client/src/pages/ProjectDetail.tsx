@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import { useState } from "react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Lightbox } from "@/components/Lightbox";
+import { SEO } from "@/components/SEO";
 
 // Convert YouTube/Vimeo URLs to embed format
 function getEmbedUrl(url: string): string {
@@ -111,6 +112,13 @@ export default function ProjectDetail() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title={`${project.title} | Brandon PT Davis`}
+        description={project.excerpt || project.description || `${project.title} - Scenic design project by Brandon PT Davis`}
+        image={project.coverImageUrl || undefined}
+        url={`https://www.brandonptdavis.com/projects/${project.slug}`}
+        type="website"
+      />
       <Header />
 
       {/* Sticky Navigation Arrows */}

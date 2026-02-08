@@ -1291,3 +1291,11 @@
 - [x] Add keywords meta tag
 - [x] Optimize title to 30-60 characters
 - [x] Add description meta tag (50-160 characters)
+
+## Open Graph & Twitter Card Implementation
+- [x] Add static OG/Twitter tags to homepage
+- [x] Add dynamic OG/Twitter tags to project detail pages
+- [x] Add dynamic OG/Twitter tags to article detail pages
+- [x] Add dynamic OG/Twitter tags to news detail pages
+- [ ] Add static OG/Twitter tags to About, Contact, Studio pages
+- [x] Test social media sharing previews

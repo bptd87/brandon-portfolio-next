@@ -8,6 +8,7 @@ import { trpc } from "@/lib/trpc";
 import { Calendar, ExternalLink, MapPin, Share2, ArrowLeft } from "lucide-react";
 import { Link, useParams } from "wouter";
 import { toast } from "sonner";
+import { SEO } from "@/components/SEO";
 
 // Helper function to create pixelated gradient from image
 function createPixelatedGradient(imageUrl: string, callback: (gradient: string) => void) {
@@ -199,6 +200,15 @@ export default function NewsDetail() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title={`${newsItem.title} | Brandon PT Davis`}
+        description={newsItem.excerpt || `${newsItem.title} - News from Brandon PT Davis`}
+        image={newsItem.coverImageUrl || undefined}
+        url={`https://www.brandonptdavis.com/news/${newsItem.slug}`}
+        type="article"
+        publishedTime={newsItem.date?.toISOString()}
+        modifiedTime={newsItem.updatedAt?.toISOString()}
+      />
       <Header />
 
       {/* Hero Section with Title Overlay */}

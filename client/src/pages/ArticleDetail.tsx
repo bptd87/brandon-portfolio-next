@@ -12,6 +12,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { getCategoryColor } from "@/lib/categoryColors";
 import Comments from "@/components/Comments";
+import { SEO } from "@/components/SEO";
 
 // Decode HTML entities
 const decodeHTMLEntities = (text: string): string => {
@@ -296,6 +297,16 @@ export default function ArticleDetail() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title={`${article.title} | Brandon PT Davis`}
+        description={article.excerpt || `${article.title} - Article by Brandon PT Davis`}
+        image={article.coverImageUrl || undefined}
+        url={`https://www.brandonptdavis.com/articles/${article.slug}`}
+        type="article"
+        author="Brandon PT Davis"
+        publishedTime={article.publishedAt?.toISOString()}
+        modifiedTime={article.updatedAt?.toISOString()}
+      />
       <Header />
 
       {/* Reading Progress Bar */}
