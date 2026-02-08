@@ -1413,3 +1413,9 @@
 - [x] Add left/right navigation arrows for desktop scrolling
 - [x] Test navigation arrows and horizontal scroll on desktop
 - [x] Ensure mobile touch scrolling still works
+
+## Scroll and Content Visibility Fixes
+- [x] Fix scroll jump issue in Quick Access section
+- [x] Fix hidden content in expanded cards
+- [x] Ensure all card content is visible when clicked/expanded
+- [x] Test scroll behavior across all sections

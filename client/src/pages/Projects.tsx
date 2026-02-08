@@ -107,9 +107,9 @@ export default function Projects() {
         <>
           {/* Projects Grid */}
           {filteredProjects && filteredProjects.length > 0 ? (
-            <section className="py-16">
-              <div className="container">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <section className="py-16 overflow-visible">
+              <div className="container overflow-visible">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-visible">
                   {filteredProjects.map((project) => (
                     <Link key={project.id} href={`/projects/${project.slug}`}>
                       <div className="relative overflow-hidden rounded-lg cursor-pointer group aspect-[4/3]">

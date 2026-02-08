@@ -223,9 +223,8 @@ export default function Studio() {
           <div id="tool-cards-scroll" className="overflow-x-auto scrollbar-hide">
             <div className="container">
               <div className="flex gap-4 pb-4">
-              {toolCards.map((tool, index) => (
-                <AnimatedSection key={tool.title} delay={index * 80}>
-                  <Link href={tool.href} className="block group flex-shrink-0">
+              {toolCards.map((tool) => (
+                  <Link key={tool.title} href={tool.href} className="block group flex-shrink-0">
                     <Card className="w-[320px] aspect-[16/9] border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden rounded-2xl relative">
                       {/* Full Card Background Image */}
                       <div className="absolute inset-0">
@@ -258,7 +257,6 @@ export default function Studio() {
                       </CardContent>
                     </Card>
                   </Link>
-                </AnimatedSection>
               ))}
               </div>
             </div>
