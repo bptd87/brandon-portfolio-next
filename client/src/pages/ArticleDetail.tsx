@@ -479,6 +479,7 @@ export default function ArticleDetail() {
                       return (
                         <h2 
                           key={index}
+                          className="mt-12 mb-8"
                           style={categoryColorObj ? { color: `${categoryColorObj.hex} !important` } : undefined}
                         >
                           {decodeHTMLEntities(section.text || section.content || '')}
@@ -487,14 +488,14 @@ export default function ArticleDetail() {
                     
                     case 'paragraph':
                       return (
-                        <p key={index}>
+                        <p key={index} className="mb-6 leading-relaxed">
                           {decodeHTMLEntities(section.content)}
                         </p>
                       );
                     
                     case 'quote':
                       return (
-                        <blockquote key={index}>
+                        <blockquote key={index} className="my-8">
                           "{decodeHTMLEntities(section.text || section.content || '')}"
                           {section.author && (
                             <footer className="text-base text-muted-foreground mt-4 not-italic font-sans">
@@ -553,9 +554,9 @@ export default function ArticleDetail() {
                     case 'list':
                       const ListTag = section.listType === 'numbered' ? 'ol' : 'ul';
                       return (
-                        <ListTag key={index} className={section.listType === 'numbered' ? 'list-decimal' : 'list-disc'}>
+                        <ListTag key={index} className={`my-6 space-y-3 ml-6 ${section.listType === 'numbered' ? 'list-decimal' : 'list-disc'}`}>
                           {section.items?.map((item: string, itemIndex: number) => (
-                            <li key={itemIndex}>{decodeHTMLEntities(item)}</li>
+                            <li key={itemIndex} className="leading-relaxed">{decodeHTMLEntities(item)}</li>
                           ))}
                         </ListTag>
                       );
