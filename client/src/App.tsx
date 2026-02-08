@@ -13,6 +13,7 @@ import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
 import Admin from "./pages/Admin";
 import About from "./pages/About";
+import AboutResume from "./pages/AboutResume";
 import TeachingPhilosophy from "./pages/TeachingPhilosophy";
 import Resume from "./pages/Resume";
 import CreativeStatement from "./pages/CreativeStatement";
@@ -50,6 +51,9 @@ function Router() {
       <Route path={"/admin/faq-convert"} component={AdminFaqConvert} />
       <Route path={"/admin/import-news"} component={AdminImportNews} />
       <Route path={"/about"} component={About} />
+      <Route path={"/about/resume"} component={AboutResume} />
+      <Route path={"/about/teaching"} component={TeachingPhilosophy} />
+      <Route path={"/about/philosophy"} component={CreativeStatement} />
       <Route path={"/teaching-philosophy"} component={TeachingPhilosophy} />
       <Route path={"/resume"} component={Resume} />
       <Route path={"/creative-statement"} component={CreativeStatement} />

@@ -1120,3 +1120,4 @@
 - [ ] Add cover images to 26 remaining news articles
 - [x] Redesign About pages with bold, art-based aesthetic (larger typography, striking visuals)
 - [ ] Fix About page: add profile picture at top, design work images, vibrant colors, animations, move personal gallery to bottom
+- [x] Simplify About page - remove excessive content, keep hero + 3-4 projects + brief philosophy + gallery
