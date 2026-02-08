@@ -372,6 +372,40 @@ export default function NewsDetail() {
                       </div>
                     );
                   
+                  case 'details':
+                    return (
+                      <div key={index} className="mb-12">
+                        {block.title && (
+                          <h3 className="text-2xl font-bold mb-6 text-foreground">{block.title}</h3>
+                        )}
+                        <div className="space-y-2">
+                          {block.items?.map((item: any, itemIndex: number) => (
+                            <div key={itemIndex} className="flex justify-between items-start py-2 border-b border-border/50 last:border-0">
+                              <span className="text-foreground/90 font-medium">{item.label}</span>
+                              <span className="text-muted-foreground text-right ml-4">{item.value}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  
+                  case 'team':
+                    return (
+                      <div key={index} className="mb-12">
+                        {block.title && (
+                          <h3 className="text-2xl font-bold mb-6 text-foreground">{block.title}</h3>
+                        )}
+                        <div className="space-y-3">
+                          {block.members?.map((member: any, memberIndex: number) => (
+                            <div key={memberIndex} className="flex justify-between items-center py-2">
+                              <span className="text-muted-foreground font-medium">{member.role}</span>
+                              <span className="text-foreground font-semibold">{member.name}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  
                   default:
                     return null;
                 }

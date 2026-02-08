@@ -1102,3 +1102,12 @@
 - [x] Find "40 Productions at Okoboji" article and add cover image (40 production collage)
 - [x] Find "Fifth Season at Utah Shakespeare" article and add cover image (The Importance of Being Earnest)
 - [x] Verify all four articles display with proper cards on news page
+
+## Extract Full Content for 4 News Articles
+- [ ] Access brandonptdavis.com/news and find the 4 articles
+- [ ] Extract full content for "Making My SCR Debut"
+- [ ] Extract full content for "Assisting Tom Buderwitz"
+- [ ] Extract full content for "40 Productions at Okoboji"
+- [ ] Extract full content for "Fifth Season at Utah Shakespeare"
+- [ ] Update database with complete content blocks
+- [ ] Verify all 4 articles display with full content and images
