@@ -3,7 +3,8 @@ import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
-import { PlayCircle, Clock, TrendingUp } from "lucide-react";
+import { PlayCircle, Clock, TrendingUp, ArrowRight } from "lucide-react";
+import { Link } from "wouter";
 
 export default function StudioTutorials() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -13,14 +14,15 @@ export default function StudioTutorials() {
   const tutorials = [
     {
       id: 1,
-      title: "Vectorworks 1: Intro, Basics, and Workspace",
-      youtubeId: "VIDEO_ID_1",
-      youtubeUrl: "https://www.youtube.com/watch?v=VIDEO_ID_1",
+      title: "Vectorworks Tutorial: Navigating the User Interface",
+      slug: "navigating-user-interface",
+      youtubeId: "jRI33g1oSt0",
+      youtubeUrl: "https://www.youtube.com/watch?v=jRI33g1oSt0",
       description: "Learn the fundamentals of Vectorworks interface, workspace setup, and essential navigation tools for scenic design.",
       category: "getting-started",
       difficultyLevel: "beginner",
-      duration: 900, // 15 minutes in seconds
-      thumbnailUrl: `https://img.youtube.com/vi/VIDEO_ID_1/maxresdefault.jpg`,
+      duration: 634, // 10:34 in seconds
+      thumbnailUrl: `https://img.youtube.com/vi/jRI33g1oSt0/maxresdefault.jpg`,
     },
     {
       id: 2,
@@ -194,7 +196,8 @@ export default function StudioTutorials() {
       <section className="container py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredTutorials.map(tutorial => (
-            <Card key={tutorial.id} className="group hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 hover:border-[#2196F3]/50">
+            <Link key={tutorial.id} href={tutorial.slug ? `/studio/tutorials/${tutorial.slug}` : tutorial.youtubeUrl}>
+            <Card className="group hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 hover:border-[#2196F3]/50 h-full">
               {/* Thumbnail */}
               <div className="relative aspect-video bg-muted overflow-hidden">
                 <img 
@@ -240,16 +243,12 @@ export default function StudioTutorials() {
                 </p>
 
                 {/* Watch button */}
-                <a
-                  href={tutorial.youtubeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-[#2196F3] font-semibold text-sm hover:gap-3 transition-all duration-300"
-                >
-                  Watch Tutorial <PlayCircle className="w-4 h-4" />
-                </a>
+                <div className="inline-flex items-center gap-2 text-[#2196F3] font-semibold text-sm group-hover:gap-3 transition-all duration-300">
+                  {tutorial.slug ? 'View Tutorial' : 'Watch on YouTube'} <ArrowRight className="w-4 h-4" />
+                </div>
               </CardContent>
             </Card>
+            </Link>
           ))}
         </div>
 

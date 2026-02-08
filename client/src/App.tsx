@@ -22,6 +22,7 @@ import Studio from "./pages/Studio";
 import StudioTutorials from "./pages/StudioTutorials";
 import StudioApps from "./pages/StudioApps";
 import StudioDirectory from "./pages/StudioDirectory";
+import TutorialDetail from "./pages/TutorialDetail";
 import NewsDetail from "./pages/NewsDetail";
 import ArticleDetail from "./pages/ArticleDetail";
 import AdminFaqConvert from "./pages/AdminFaqConvert";
@@ -61,6 +62,7 @@ function Router() {
       <Route path={"/resume"} component={Resume} />
       <Route path={"/creative-statement"} component={CreativeStatement} />
       <Route path={"/contact"} component={Contact} />
+      <Route path={"/studio/tutorials/:slug"} component={TutorialDetail} />
       <Route path={"/studio/tutorials"} component={StudioTutorials} />
       <Route path={"/studio/apps"} component={StudioApps} />
       <Route path={"/studio/directory"} component={StudioDirectory} />

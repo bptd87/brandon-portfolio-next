@@ -1152,3 +1152,15 @@
 - [x] Create/source card images for Studio landing page (camera lens, grid ruler, library, network)
 - [x] Create database schema for tutorials, apps, vault items if needed
 - [x] Test all Studio pages and navigation
+
+## Studio Redesign - FIX QUALITY ISSUES
+- [ ] Generate AI images for Studio cards matching theatrical neon aesthetic (not stock photos)
+- [ ] Redesign Studio landing page to match reference design quality
+- [ ] Restructure App Studio - create individual pages for each tool (not one page with all tools)
+- [ ] Create App Studio landing page showing all available apps
+
+## Tutorial Content Generation
+- [x] Review existing StudioTutorials page structure
+- [x] Generate educational content from "Navigating the User Interface" tutorial script
+- [x] Create tutorial detail page with video embed, transcript, key concepts, timestamps
+- [x] Add tutorial to StudioTutorials list with proper metadata
