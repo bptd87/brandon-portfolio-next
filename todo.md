@@ -1316,3 +1316,21 @@
 - [x] Generate alt text using LLM with format: "[Production] - Scenic design by Brandon PT Davis. [Description]"
 - [x] Update projectImages table with generated alt text
 - [x] Verify alt text displays correctly on project pages
+
+## XML Sitemaps Implementation
+- [x] Create sitemap generation utilities and Express routes
+- [x] Implement main sitemap with all pages (homepage, projects, articles, news, static pages)
+- [x] Implement image sitemap with all 248 project images and alt text
+- [x] Implement video sitemap with project videos and metadata
+- [x] Create sitemap index linking to main, image, and video sitemaps
+- [x] Create robots.txt pointing to sitemap index
+- [x] Test all sitemap URLs and verify XML format
+- [x] Verify sitemaps accessible and properly formatted
+
+## RSS Feeds Implementation
+- [x] Create RSS feed generation utilities
+- [x] Implement articles RSS feed with full content
+- [x] Implement news RSS feed with full content
+- [x] Add RSS feed links to HTML head tags
+- [x] Test RSS feeds in feed readers
+- [x] Verify RSS feeds validate against RSS 2.0 spec
