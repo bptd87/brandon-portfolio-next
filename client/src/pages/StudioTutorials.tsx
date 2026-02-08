@@ -220,6 +220,19 @@ export default function StudioTutorials() {
       publishDate: "Feb 10, 2021",
       thumbnailUrl: `https://img.youtube.com/vi/Gd9_hB5USkQ/maxresdefault.jpg`,
     },
+    {
+      id: 17,
+      title: "Vectorworks Tutorial: Modeling a Table",
+      slug: "modeling-a-table",
+      youtubeId: "TdZeKdL-DVc",
+      youtubeUrl: "https://www.youtube.com/watch?v=TdZeKdL-DVc",
+      description: "Master the complete workflow for 3D modeling furniture from a reference image, including scaling, drafting profiles, creating sweeps, solid modeling operations, texturing, and creating hybrid symbols.",
+      category: "3d-modeling",
+      difficultyLevel: "advanced",
+      duration: 2268, // 37:48 in seconds
+      publishDate: "Feb 12, 2021",
+      thumbnailUrl: `https://img.youtube.com/vi/TdZeKdL-DVc/maxresdefault.jpg`,
+    },
   ];
 
   const categories = [
