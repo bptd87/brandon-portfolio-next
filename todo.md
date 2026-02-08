@@ -1052,3 +1052,14 @@
 
 ## Bug Fix - Project Detail Page Error
 - [x] Fix API query error on /projects/bell-book-and-candle (pattern matching error)
+
+## Bug Fixes - Images and Discipline Separation
+- [x] Fix missing images for Bell, Book and Candle project
+- [ ] Ensure projects don't cross over disciplines (Scenic, Experiential, Rendering, Models should be completely separate)
+
+## Image Optimization Feature
+- [x] Add Sharp library for image processing
+- [x] Implement WebP conversion for uploaded images
+- [x] Add automatic resizing (max 2000px width for full size)
+- [x] Add compression (85% quality)
+- [x] Upload Bell Book and Candle images with proper alt text

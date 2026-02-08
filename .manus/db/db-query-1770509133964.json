@@ -1,0 +1,38 @@
+{
+  "query": "\nSELECT discipline, COUNT(*) as count FROM projects GROUP BY discipline;\n\nSELECT id, title, discipline, subcategory FROM projects WHERE discipline != 'scenic_design' LIMIT 10;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute \nSELECT discipline, COUNT(*) as count FROM projects GROUP BY discipline;\n\nSELECT id, title, discipline, subcategory FROM projects WHERE discipline != 'scenic_design' LIMIT 10;\n",
+  "rows": [
+    {
+      "discipline": "scenic_design",
+      "count": "26"
+    },
+    {
+      "discipline": "experiential_design",
+      "count": "7"
+    },
+    {
+      "discipline": "rendering",
+      "count": "2"
+    },
+    {
+      "discipline": "scenic_models",
+      "count": "1"
+    }
+  ],
+  "messages": [
+    "id\ttitle\tdiscipline\tsubcategory",
+    "90007\tRed Bull Jukebox\texperiential_design\tConcert",
+    "90008\tRab Bothy Activation\texperiential_design\tNULL",
+    "90011\tFirst Bank Lollipop Pop Up\texperiential_design\tComercial",
+    "90013\tAshes of the Underworld\trendering\tConcept Rendering",
+    "90015\tIsolation\trendering\tIndependent Project",
+    "90035\tSouthside Bethel Baptist Church\texperiential_design\tSacred Architecture",
+    "90037\tRed Line Café\texperiential_design\tInterior Designer",
+    "90047\tScenic Models\tscenic_models\tScenic Models",
+    "90055\tLysistrata\texperiential_design\tOutdoor Theatre",
+    "90057\tPark & Shop\texperiential_design\tCommercial"
+  ],
+  "stdout": "discipline\tcount\nscenic_design\t26\nexperiential_design\t7\nrendering\t2\nscenic_models\t1\nid\ttitle\tdiscipline\tsubcategory\n90007\tRed Bull Jukebox\texperiential_design\tConcert\n90008\tRab Bothy Activation\texperiential_design\tNULL\n90011\tFirst Bank Lollipop Pop Up\texperiential_design\tComercial\n90013\tAshes of the Underworld\trendering\tConcept Rendering\n90015\tIsolation\trendering\tIndependent Project\n90035\tSouthside Bethel Baptist Church\texperiential_design\tSacred Architecture\n90037\tRed Line Café\texperiential_design\tInterior Designer\n90047\tScenic Models\tscenic_models\tScenic Models\n90055\tLysistrata\texperiential_design\tOutdoor Theatre\n90057\tPark & Shop\texperiential_design\tCommercial\n",
+  "stderr": "",
+  "execution_time_ms": 402
+}

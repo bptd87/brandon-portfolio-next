@@ -296,10 +296,34 @@ export const appRouter = router({
         data: z.string(), // base64 encoded
       }))
       .mutation(async ({ input }) => {
+        const { optimizeImage } = await import('./imageOptimizer.js');
+        
         const buffer = Buffer.from(input.data, 'base64');
-        const key = `projects/${Date.now()}-${input.filename}`;
-        const result = await storagePut(key, buffer, input.contentType);
-        return { url: result.url, key: result.key };
+        
+        // Optimize image (convert to WebP, resize, compress)
+        const optimized = await optimizeImage(buffer, {
+          maxWidth: 2000,
+          maxHeight: 2000,
+          quality: 85,
+          format: 'webp',
+        });
+        
+        // Generate filename with .webp extension
+        const baseFilename = input.filename.replace(/\.[^.]+$/, '');
+        const key = `projects/${Date.now()}-${baseFilename}.webp`;
+        
+        const result = await storagePut(key, optimized.buffer, 'image/webp');
+        return { 
+          url: result.url, 
+          key: result.key,
+          optimized: {
+            originalSize: buffer.length,
+            optimizedSize: optimized.size,
+            savings: Math.round((1 - optimized.size / buffer.length) * 100),
+            width: optimized.width,
+            height: optimized.height,
+          }
+        };
       }),
   }),
 
