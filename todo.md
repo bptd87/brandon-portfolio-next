@@ -1334,3 +1334,10 @@
 - [x] Add RSS feed links to HTML head tags
 - [x] Test RSS feeds in feed readers
 - [x] Verify RSS feeds validate against RSS 2.0 spec
+
+## Tutorials Sitemap & RSS
+- [x] Add tutorials listing page to main sitemap
+- [x] Add individual tutorial detail pages to main sitemap
+- [x] Create tutorials RSS feed
+- [x] Add tutorials RSS feed link to HTML head
+- [x] Test tutorials sitemap and RSS endpoints

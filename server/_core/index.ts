@@ -118,6 +118,17 @@ async function startServer() {
       res.status(500).send("Error generating news RSS");
     }
   });
+  
+  app.get("/studio/tutorials/rss.xml", (req, res) => {
+    try {
+      const xml = sitemap.generateTutorialsRSS();
+      res.header("Content-Type", "application/rss+xml");
+      res.send(xml);
+    } catch (error) {
+      console.error("Error generating tutorials RSS:", error);
+      res.status(500).send("Error generating tutorials RSS");
+    }
+  });
   // tRPC API
   app.use(
     "/api/trpc",
