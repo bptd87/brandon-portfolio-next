@@ -1482,3 +1482,9 @@
 - [x] Add wireframe rendering to dimension cards with gradient background
 - [x] Test category scrolling and button visibility
 - [x] Verify wireframe images display properly without transparency artifacts
+
+## Dimension Reference UX Fixes (User Reported - Feb 8, 2026 Round 2)
+- [x] Fix category button scrolling - buttons still overlapping, need proper horizontal scroll
+- [x] Fix wireframe image layout - images should fill card width, not be centered 200px squares
+- [x] Test category button scrolling functionality
+- [x] Test wireframe image responsive layout

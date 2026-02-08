@@ -329,12 +329,10 @@ export default function DimensionReference() {
           
           <div 
             id="category-scroll"
-            className="flex gap-2 overflow-x-auto scrollbar-hide px-10"
+            className="flex flex-nowrap gap-2 overflow-x-auto scrollbar-hide px-10"
             style={{ 
               scrollbarWidth: 'none', 
-              msOverflowStyle: 'none',
-              flexWrap: 'nowrap',
-              WebkitOverflowScrolling: 'touch'
+              msOverflowStyle: 'none'
             }}
           >
             {CATEGORIES.map((category) => {
@@ -345,7 +343,7 @@ export default function DimensionReference() {
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
+                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-colors shrink-0 ${
                     isActive
                       ? 'bg-[#9C27B0] text-white'
                       : 'bg-card border border-border text-muted-foreground hover:bg-accent'
@@ -382,11 +380,11 @@ export default function DimensionReference() {
             >
               {/* Wireframe Image */}
               {item.wireframe && (
-                <div className="bg-gradient-to-br from-[#9C27B0]/10 to-[#2196F3]/10 p-6 flex items-center justify-center">
+                <div className="bg-gradient-to-br from-[#9C27B0]/10 to-[#2196F3]/10 aspect-[16/9] overflow-hidden flex items-center justify-center">
                   <img 
                     src={item.wireframe} 
                     alt={`Wireframe diagram of ${item.name}`}
-                    className="w-full max-w-[200px] h-auto opacity-90"
+                    className="w-full h-full object-contain opacity-90 p-4"
                   />
                 </div>
               )}
