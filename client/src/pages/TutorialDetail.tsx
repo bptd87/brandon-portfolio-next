@@ -155,7 +155,7 @@ Finally, the tutorial explores view controls, zoom functions, and workspace cust
       category: "Getting Started",
       difficulty: "Beginner",
       duration: 587, // 9:47 in seconds
-      uploadDate: "2020-08-15",
+      uploadDate: "2021-01-24",
       
       learningObjectives: [
         "Understand what classes are and how they differ from design layers",
@@ -239,7 +239,7 @@ Finally, the tutorial explores how grouping objects interacts with class visibil
       category: "Getting Started",
       difficulty: "Beginner",
       duration: 474, // 7:54 in seconds
-      uploadDate: "2020-08-15",
+      uploadDate: "2021-01-25",
       
       learningObjectives: [
         "Understand what design layers are and how they organize drawing information",
@@ -663,7 +663,7 @@ The tutorial covers 15+ essential tools organized into categories: navigation to
               <div className="border border-border rounded-lg p-8 bg-card">
                 <h2 className="text-2xl font-bold mb-6 text-[#2196F3] uppercase tracking-wider">What You'll Learn</h2>
                 <div className="space-y-3 mb-12">
-                  {tutorial.learningObjectives.map((objective, index) => (
+                  {tutorial.learningObjectives.map((objective: string, index: number) => (
                     <div key={index} className="flex items-start gap-3 group">
                       <div className="w-1.5 h-1.5 bg-[#2196F3] mt-2 flex-shrink-0 group-hover:w-3 transition-all"></div>
                       <span className="text-foreground leading-relaxed">{objective}</span>
@@ -674,7 +674,7 @@ The tutorial covers 15+ essential tools organized into categories: navigation to
                 <div className="border-t border-[#2196F3] pt-8">
                   <h3 className="text-xl font-bold mb-4 uppercase tracking-wider text-foreground">Tutorial Overview</h3>
                   <div className="space-y-4">
-                    {tutorial.overview.split('\n\n').map((paragraph, index) => (
+                    {tutorial.overview.split('\n\n').map((paragraph: string, index: number) => (
                       <p key={index} className="text-muted-foreground leading-relaxed">
                         {paragraph}
                       </p>
@@ -689,7 +689,7 @@ The tutorial covers 15+ essential tools organized into categories: navigation to
               <div className="border border-border rounded-lg p-8 bg-card">
                 <h2 className="text-2xl font-bold mb-8 text-[#FF5722] uppercase tracking-wider">Key Concepts</h2>
                 <div className="space-y-8">
-                  {tutorial.keyConcepts.map((concept, index) => (
+                  {tutorial.keyConcepts.map((concept: any, index: number) => (
                     <div key={index} className="border-l-4 border-[#FF5722] pl-6 py-4 bg-[#FF5722]/10 rounded-r">
                       <div className="flex items-start gap-3 mb-3">
                         <Lightbulb className="w-6 h-6 text-[#FF5722] flex-shrink-0 mt-1" />
@@ -705,7 +705,7 @@ The tutorial covers 15+ essential tools organized into categories: navigation to
                 <div className="border-t border-[#FF5722] mt-12 pt-8">
                   <h3 className="text-xl font-bold mb-6 text-[#FF5722] uppercase tracking-wider">Pro Tips</h3>
                   <div className="grid md:grid-cols-2 gap-6">
-                    {tutorial.proTips.map((tip, index) => (
+                    {tutorial.proTips.map((tip: string, index: number) => (
                       <div key={index} className="border border-[#FF5722] rounded-lg p-4 bg-[#FF5722]/10">
                         <p className="text-sm text-foreground leading-relaxed">
                           <span className="font-bold text-[#FF5722] block mb-2 uppercase tracking-wider">PRO TIP</span>
@@ -729,7 +729,7 @@ The tutorial covers 15+ essential tools organized into categories: navigation to
                       Essential Shortcuts
                     </h3>
                     <div className="space-y-4">
-                      {tutorial.shortcuts.map((shortcut, index) => (
+                      {tutorial.shortcuts.map((shortcut: any, index: number) => (
                         <div key={index} className="border border-[#9C27B0] rounded-lg p-4 bg-[#9C27B0]/10">
                           <code className="text-sm font-mono text-[#9C27B0] font-bold block mb-2">
                             {shortcut.keys}
@@ -749,7 +749,7 @@ The tutorial covers 15+ essential tools organized into categories: navigation to
                       Common Pitfalls
                     </h3>
                     <div className="space-y-3">
-                      {tutorial.commonPitfalls.map((pitfall, index) => (
+                      {tutorial.commonPitfalls.map((pitfall: string, index: number) => (
                         <div key={index} className="flex items-start gap-3 border-l-4 border-[#9C27B0] pl-4 py-2 bg-[#9C27B0]/5 rounded-r">
                           <span className="text-[#9C27B0] flex-shrink-0 font-bold">×</span>
                           <span className="text-sm text-foreground">{pitfall}</span>
@@ -766,7 +766,7 @@ The tutorial covers 15+ essential tools organized into categories: navigation to
               <div className="border border-border rounded-lg p-8 bg-card">
                 <h2 className="text-2xl font-bold mb-8 text-[#F44336] uppercase tracking-wider">Full Transcript</h2>
                 <div className="space-y-4 font-mono text-sm">
-                  {tutorial.transcript.map((entry, index) => (
+                  {tutorial.transcript.map((entry: any, index: number) => (
                     <div key={index} className="flex gap-6 hover:bg-[#F44336]/10 p-3 rounded transition-colors border-l-2 border-transparent hover:border-[#F44336]">
                       <span className="text-[#F44336] flex-shrink-0 w-16 font-bold">
                         {entry.time}
@@ -786,7 +786,7 @@ The tutorial covers 15+ essential tools organized into categories: navigation to
                 <h2 className="text-2xl font-bold mb-8 text-[#00BCD4] uppercase tracking-wider">Related Resources</h2>
                 
                 <div className="space-y-4 mb-12">
-                  {tutorial.relatedResources.map((resource, index) => (
+                  {tutorial.relatedResources.map((resource: any, index: number) => (
                     <a
                       key={index}
                       href={resource.url}
@@ -814,7 +814,7 @@ The tutorial covers 15+ essential tools organized into categories: navigation to
                 <div className="border-t border-[#00BCD4] pt-8">
                   <h3 className="text-xl font-bold mb-6 uppercase tracking-wider text-foreground">Continue Learning</h3>
                   <div className="grid md:grid-cols-3 gap-6">
-                    {tutorial.relatedTutorials.map((related, index) => (
+                    {tutorial.relatedTutorials.map((related: any, index: number) => (
                       <Link key={index} href={`/studio/tutorials/${related.slug}`}>
                         <div className="border border-border hover:border-[#00BCD4] rounded-lg p-6 transition-all group bg-card hover:bg-[#00BCD4]/10 h-full">
                           <h4 className="font-semibold mb-3 group-hover:text-[#00BCD4] transition-colors text-foreground">

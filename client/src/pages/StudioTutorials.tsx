@@ -22,6 +22,7 @@ export default function StudioTutorials() {
       category: "getting-started",
       difficultyLevel: "beginner",
       duration: 634, // 10:34 in seconds
+      publishDate: "Jan 24, 2021",
       thumbnailUrl: `https://img.youtube.com/vi/jRI33g1oSt0/maxresdefault.jpg`,
     },
     {
@@ -34,6 +35,7 @@ export default function StudioTutorials() {
       category: "getting-started",
       difficultyLevel: "beginner",
       duration: 587, // 9:47 in seconds
+      publishDate: "Jan 24, 2021",
       thumbnailUrl: `https://img.youtube.com/vi/tXQcTdGiwT4/maxresdefault.jpg`,
     },
     {
@@ -46,6 +48,7 @@ export default function StudioTutorials() {
       category: "getting-started",
       difficultyLevel: "beginner",
       duration: 474, // 7:54 in seconds
+      publishDate: "Jan 25, 2021",
       thumbnailUrl: `https://img.youtube.com/vi/CwCxmhQAFwI/maxresdefault.jpg`,
     },
     {
@@ -58,6 +61,7 @@ export default function StudioTutorials() {
       category: "getting-started",
       difficultyLevel: "beginner",
       duration: 340, // 5:40 in seconds
+      publishDate: "Jan 25, 2021",
       thumbnailUrl: `https://img.youtube.com/vi/CXBfG2L3ZmI/maxresdefault.jpg`,
     },
     {
@@ -70,6 +74,7 @@ export default function StudioTutorials() {
       category: "2d-drafting",
       difficultyLevel: "beginner",
       duration: 897, // 14:57 in seconds
+      publishDate: "Jan 27, 2021",
       thumbnailUrl: `https://img.youtube.com/vi/orjqcNYveOg/maxresdefault.jpg`,
     },
   ];
@@ -187,12 +192,12 @@ export default function StudioTutorials() {
 
       {/* Tutorials Grid */}
       <section className="container py-16">
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredTutorials.map(tutorial => (
             <Link key={tutorial.id} href={tutorial.slug ? `/studio/tutorials/${tutorial.slug}` : tutorial.youtubeUrl}>
-            <Card className="group hover:shadow-2xl transition-all duration-300 overflow-hidden border border-border hover:border-[#2196F3]/50 rounded-2xl bg-card">
+            <Card className="group hover:shadow-xl transition-all duration-300 overflow-hidden border border-border hover:border-[#2196F3]/50 rounded-lg bg-card">
               {/* Thumbnail */}
-              <div className="relative aspect-video bg-muted overflow-hidden rounded-t-2xl">
+              <div className="relative aspect-video bg-muted overflow-hidden rounded-t-lg">
                 <img 
                   src={tutorial.thumbnailUrl} 
                   alt={tutorial.title}
@@ -204,32 +209,32 @@ export default function StudioTutorials() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="w-20 h-20 rounded-full bg-white flex items-center justify-center">
-                    <PlayCircle className="w-12 h-12 text-black fill-white" />
+                  <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center">
+                    <PlayCircle className="w-8 h-8 text-black fill-white" />
                   </div>
                 </div>
                 
                 {/* Duration badge */}
-                <div className="absolute bottom-6 right-6 bg-black/90 backdrop-blur-sm text-white text-sm font-bold px-3 py-2 rounded-lg flex items-center gap-2">
-                  <Clock className="w-4 h-4" />
+                <div className="absolute bottom-3 right-3 bg-black/90 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded flex items-center gap-1.5">
+                  <Clock className="w-3 h-3" />
                   {formatDuration(tutorial.duration)}
                 </div>
               </div>
 
-              <CardContent className="p-8 space-y-6 bg-card">
+              <CardContent className="p-4 space-y-3 bg-card">
                 {/* Title */}
-                <h3 className="font-bold text-3xl leading-tight group-hover:text-[#2196F3] transition-colors">
+                <h3 className="font-bold text-base leading-tight group-hover:text-[#2196F3] transition-colors line-clamp-2">
                   {tutorial.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-lg text-muted-foreground leading-relaxed">
+                <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
                   {tutorial.description}
                 </p>
 
                 {/* Date */}
-                <div className="text-sm text-muted-foreground">
-                  Dec 21, 2025
+                <div className="text-xs text-muted-foreground">
+                  {tutorial.publishDate}
                 </div>
               </CardContent>
             </Card>

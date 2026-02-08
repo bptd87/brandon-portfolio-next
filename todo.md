@@ -1207,3 +1207,7 @@
 - [ ] Add tutorial 4 (Installing Workspace) detail content to TutorialDetail.tsx
 - [ ] Add tutorial 5 (Basics Tool Palette) detail content to TutorialDetail.tsx
 - [ ] Update all tutorial dates to correct YouTube publish dates (Jan 24-27, 2021)
+
+## Tutorial Landing Page Fixes
+- [x] Update all tutorial dates to match YouTube publish dates (Jan 24-27, 2021)
+- [x] Change tutorial cards layout from single-column to 4-wide grid
