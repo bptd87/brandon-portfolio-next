@@ -1488,3 +1488,11 @@
 - [x] Fix wireframe image layout - images should fill card width, not be centered 200px squares
 - [x] Test category button scrolling functionality
 - [x] Test wireframe image responsive layout
+
+## Dimension Reference Wireframe Image Redesign (User Reported - Feb 8, 2026 Round 3)
+- [x] Regenerate all 5 wireframe images in 16:9 aspect ratio to fill entire card space
+- [x] Bake gradient background into images for uniform appearance
+- [x] Upload new 16:9 wireframes to S3
+- [x] Update dimension items with new wireframe URLs
+- [x] Remove padding from image container to allow full fill
+- [x] Test uniform appearance across all wireframe cards
