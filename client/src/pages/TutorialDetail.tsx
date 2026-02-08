@@ -217,6 +217,18 @@ Finally, the tutorial explores how grouping objects interacts with class visibil
         { time: "7:40", text: "Now that I've shown you how I can change the visibility of class, I'm going to show you how a group can add to the effectiveness of the visibility with classes." },
         { time: "9:38", text: "This concludes the portion of the tutorial covering classes. The next section of this tutorial will be on the design layer aspect of Vectorworks." },
       ],
+
+      relatedResources: [
+        { title: "Vectorworks University: Classes", url: "https://university.vectorworks.net/course/index.php?mycourses=0&tagfilter%5Bcategory%5D=0&tagfilter%5Btype%5D=0&tagfilter%5Bdifficulty%5D=0&categorysort=default&mycourses=&search=classes", description: "Official Vectorworks training on class organization" },
+        { title: "Vectorworks Forum: Classes Discussion", url: "https://forum.vectorworks.net/index.php?/forum/22-classes-layers-views/", description: "Community discussions about classes and layers" },
+        { title: "Vectorworks Help: Classes", url: "https://app-help.vectorworks.net/2024/eng/VW2024_Guide/Attributes/Classes.htm", description: "Official documentation on class functionality" },
+      ],
+
+      relatedTutorials: [
+        { title: "Vectorworks Tutorial: Navigating the User Interface", slug: "navigating-user-interface" },
+        { title: "Vectorworks 3: Design Layers", slug: "design-layers" },
+        { title: "Vectorworks 4: Basic 2D Tools", slug: "basic-2d-tools" },
+      ],
     },
   };
 
