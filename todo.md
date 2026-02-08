@@ -1419,3 +1419,15 @@
 - [x] Fix hidden content in expanded cards
 - [x] Ensure all card content is visible when clicked/expanded
 - [x] Test scroll behavior across all sections
+
+## Scale Calculator App Rebuild
+- [x] Examine existing Scale Calculator code and functionality
+- [x] Design mobile-first responsive layout (app-like interface)
+- [x] Implement scale conversion logic for 3D printing
+- [x] Add architectural scale conversions
+- [x] Add bidirectional conversion (Real→Scale and Scale→Real)
+- [x] Add scrollable scale ruler with navigation arrows
+- [x] Add copy to clipboard functionality
+- [x] Test calculator on mobile devices
+- [x] Test calculator on desktop
+- [x] Ensure smooth touch interactions for mobile
