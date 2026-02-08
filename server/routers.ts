@@ -130,7 +130,7 @@ export const appRouter = router({
       }),
     
     getBySlug: publicProcedure
-      .input(z.object({ slug: z.string() }))
+      .input(z.object({ slug: z.string().min(1).max(255).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/) }))
       .query(async ({ input }) => {
         const project = await db.getProjectBySlug(input.slug);
         if (!project) return null;
@@ -326,7 +326,7 @@ export const appRouter = router({
       }),
     
     getBySlug: publicProcedure
-      .input(z.object({ slug: z.string() }))
+      .input(z.object({ slug: z.string().min(1).max(255).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/) }))
       .query(async ({ input }) => {
         const newsItem = await db.getNewsBySlug(input.slug);
         if (!newsItem) return null;
@@ -441,7 +441,7 @@ export const appRouter = router({
       }),
     
     getBySlug: publicProcedure
-      .input(z.object({ slug: z.string() }))
+      .input(z.object({ slug: z.string().min(1).max(255).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/) }))
       .query(async ({ input }) => {
         const article = await db.getArticleBySlug(input.slug);
         if (!article) return null;

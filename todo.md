@@ -1049,3 +1049,6 @@
 - [x] Make category dropdown same size as search input
 - [x] Filter categories to show only news categories (not article categories)
 - [x] Test dropdown sizing and category filtering
+
+## Bug Fix - Project Detail Page Error
+- [x] Fix API query error on /projects/bell-book-and-candle (pattern matching error)
