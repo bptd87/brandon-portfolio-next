@@ -476,6 +476,10 @@ export default function ArticleDetail() {
                   [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased]"
               >
                 {Array.isArray(processedSections) && processedSections.map((section: any, index: number) => {
+                  // Track if this is the first paragraph (for drop cap)
+                  const isFirstParagraph = section.type === 'paragraph' && 
+                    !processedSections.slice(0, index).some((s: any) => s.type === 'paragraph');
+                  
                   switch (section.type) {
                     case 'update_note':
                       return (
@@ -512,7 +516,7 @@ export default function ArticleDetail() {
                       return (
                         <p 
                           key={index} 
-                          className="mb-6 leading-relaxed [&_strong]:font-bold [&_strong]:text-[1.125rem]"
+                          className={`mb-6 leading-relaxed [&_strong]:font-bold [&_strong]:text-[1.125rem] ${isFirstParagraph ? 'first-paragraph-drop-cap' : ''}`}
                           style={{
                             ['--strong-color' as any]: categoryColor
                           }}
@@ -851,8 +855,8 @@ export default function ArticleDetail() {
           background: hsl(var(--primary) / 0.8);
         }
 
-        /* Drop Cap First Letter */
-        .article-content p:first-of-type::first-letter {
+        /* Drop Cap First Letter - only on first paragraph, not update notes */
+        .article-content .first-paragraph-drop-cap::first-letter {
           font-size: 4.5rem;
           font-weight: bold;
           line-height: 0.8;
