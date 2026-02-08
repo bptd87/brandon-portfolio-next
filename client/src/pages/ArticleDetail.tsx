@@ -477,6 +477,19 @@ export default function ArticleDetail() {
               >
                 {Array.isArray(processedSections) && processedSections.map((section: any, index: number) => {
                   switch (section.type) {
+                    case 'update_note':
+                      return (
+                        <div key={index} className="mb-12 p-6 rounded-xl border-2 border-primary/30 bg-primary/5 backdrop-blur-sm">
+                          <div className="flex items-start gap-3">
+                            <div className="flex-shrink-0 w-2 h-2 rounded-full bg-primary mt-2 animate-pulse" />
+                            <p 
+                              className="text-sm leading-relaxed text-foreground/80 [&_strong]:font-bold [&_strong]:text-primary [&_strong]:text-base"
+                              dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(section.text || section.content || '') }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    
                     case 'heading':
                       const categoryColorObj = category ? getCategoryColor(category.name) : undefined;
                       const level = section.level || 2;
