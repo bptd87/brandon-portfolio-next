@@ -1456,9 +1456,12 @@ The final section introduces the powerful Duplicate Along Path feature, which al
     );
   }
 
-  const formatDuration = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
+  const formatDuration = (duration: string | number) => {
+    // If already a string like "21:14", return as-is
+    if (typeof duration === 'string') return duration;
+    // Otherwise convert seconds to MM:SS format
+    const mins = Math.floor(duration / 60);
+    const secs = duration % 60;
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
@@ -1492,7 +1495,7 @@ The final section introduces the powerful Duplicate Along Path feature, which al
             </Badge>
             <Badge className="bg-transparent text-foreground border border-border flex items-center gap-1.5 uppercase tracking-wider font-bold px-4 py-1.5 text-xs">
               <Calendar className="w-3.5 h-3.5" />
-              {formatDate(tutorial.uploadDate)}
+              {formatDate(tutorial.publishDate)}
             </Badge>
           </div>
 

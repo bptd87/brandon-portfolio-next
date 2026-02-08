@@ -1230,3 +1230,4 @@
 - [x] Add tutorial 12: 3D Modeling Basics with comprehensive educational content and pre-formatted transcript
 - [ ] Add tutorial 13: Hybrid Symbols with comprehensive educational content and pre-formatted transcript
 - [x] Add tutorial 13: Hybrid Symbols with comprehensive educational content and pre-formatted transcript
+- [x] Fix timestamp and date display issues on tutorial detail pages
