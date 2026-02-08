@@ -191,22 +191,50 @@ export default function Studio() {
           </AnimatedSection>
         </div>
 
-        {/* Horizontal Scrollable Tool Cards */}
-        <div className="overflow-x-auto scrollbar-hide">
-          <div className="container">
-            <div className="flex gap-4 pb-4">
+        {/* Horizontal Scrollable Tool Cards with Navigation */}
+        <div className="relative">
+          {/* Navigation Arrows - Desktop Only */}
+          <button 
+            onClick={() => {
+              const container = document.getElementById('tool-cards-scroll');
+              if (container) container.scrollBy({ left: -300, behavior: 'smooth' });
+            }}
+            className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 items-center justify-center bg-background/90 backdrop-blur-sm border-2 border-border rounded-full hover:border-primary transition-all duration-300 hover:scale-110 shadow-xl"
+            aria-label="Scroll left"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          
+          <button 
+            onClick={() => {
+              const container = document.getElementById('tool-cards-scroll');
+              if (container) container.scrollBy({ left: 300, behavior: 'smooth' });
+            }}
+            className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 items-center justify-center bg-background/90 backdrop-blur-sm border-2 border-border rounded-full hover:border-primary transition-all duration-300 hover:scale-110 shadow-xl"
+            aria-label="Scroll right"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+
+          <div id="tool-cards-scroll" className="overflow-x-auto scrollbar-hide">
+            <div className="container">
+              <div className="flex gap-4 pb-4">
               {toolCards.map((tool, index) => (
                 <AnimatedSection key={tool.title} delay={index * 80}>
                   <Link href={tool.href} className="block group flex-shrink-0">
-                    <Card className="w-[280px] border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden rounded-2xl">
-                      {/* Tool Image */}
-                      <div className="relative aspect-[4/3] overflow-hidden">
+                    <Card className="w-[320px] aspect-[16/9] border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden rounded-2xl relative">
+                      {/* Full Card Background Image */}
+                      <div className="absolute inset-0">
                         <img 
                           src={tool.image} 
                           alt={tool.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent"></div>
                         
                         {/* Color accent */}
                         <div 
@@ -215,12 +243,12 @@ export default function Studio() {
                         />
                       </div>
 
-                      {/* Tool Content */}
-                      <CardContent className="p-4">
+                      {/* Tool Content Overlay */}
+                      <CardContent className="absolute bottom-0 left-0 right-0 p-4 z-10">
                         <h3 className="text-lg font-black tracking-tight mb-1" style={{ color: tool.accentColor }}>
                           {tool.title}
                         </h3>
-                        <p className="text-xs text-muted-foreground mb-3 line-clamp-2">
+                        <p className="text-xs text-foreground/80 mb-2 line-clamp-1">
                           {tool.description}
                         </p>
                         
@@ -232,6 +260,7 @@ export default function Studio() {
                   </Link>
                 </AnimatedSection>
               ))}
+              </div>
             </div>
           </div>
         </div>

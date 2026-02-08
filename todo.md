@@ -1406,3 +1406,10 @@
 - [x] Convert tool cards from grid to horizontal scrollable row
 - [x] Make tool cards smaller for better scrolling experience
 - [x] Test horizontal scroll on mobile and desktop
+
+## Tool Cards Improvements
+- [x] Change tool cards to landscape aspect ratio (16:9)
+- [x] Fill entire tool card area with images (remove gaps)
+- [x] Add left/right navigation arrows for desktop scrolling
+- [x] Test navigation arrows and horizontal scroll on desktop
+- [x] Ensure mobile touch scrolling still works
