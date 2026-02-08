@@ -34,7 +34,7 @@ export default function About() {
                   <span className="text-sm font-pixel uppercase tracking-wider text-primary">Scenic Designer</span>
                 </div>
                 
-                <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif leading-[0.9] bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">
+                <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif leading-[0.9] bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">
                   Brandon<br />PT Davis
                 </h1>
                 

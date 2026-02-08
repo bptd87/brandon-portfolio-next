@@ -1122,3 +1122,4 @@
 - [ ] Fix About page: add profile picture at top, design work images, vibrant colors, animations, move personal gallery to bottom
 - [x] Simplify About page - remove excessive content, keep hero + 3-4 projects + brief philosophy + gallery
 - [x] Strip About page to simple bio - remove Design in Action, remove CTA cards, keep only hero + bio + gallery
+- [x] Fix About page name typography - reduce font size so full name fits without wrapping
