@@ -153,6 +153,8 @@ export const news = mysqlTable("news", {
   coverImageKey: text("coverImageKey"),
   location: varchar("location", { length: 255 }),
   date: timestamp("date").notNull(),
+  externalLink: text("externalLink"),
+  tags: text("tags"),
   blocks: json("blocks").$type<Array<
     | { type: 'text'; content: string }
     | { type: 'gallery'; images: { url: string; caption?: string }[] }

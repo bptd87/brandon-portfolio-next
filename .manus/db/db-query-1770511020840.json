@@ -1,0 +1,35 @@
+{
+  "query": "SELECT id, name, slug FROM categories WHERE type = 'news' ORDER BY name;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT id, name, slug FROM categories WHERE type = 'news' ORDER BY name;",
+  "rows": [
+    {
+      "id": "3",
+      "name": "Career Milestone",
+      "slug": "career_milestone"
+    },
+    {
+      "id": "4",
+      "name": "Collaboration",
+      "slug": "collaboration"
+    },
+    {
+      "id": "6",
+      "name": "Life Update",
+      "slug": "life_update"
+    },
+    {
+      "id": "5",
+      "name": "Project Update",
+      "slug": "project_update"
+    },
+    {
+      "id": "2",
+      "name": "Publication",
+      "slug": "publication"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\tslug\n3\tCareer Milestone\tcareer_milestone\n4\tCollaboration\tcollaboration\n6\tLife Update\tlife_update\n5\tProject Update\tproject_update\n2\tPublication\tpublication\n",
+  "stderr": "",
+  "execution_time_ms": 364
+}

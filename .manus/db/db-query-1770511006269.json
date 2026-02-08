@@ -1,0 +1,60 @@
+{
+  "query": "SELECT * FROM categories WHERE type = 'news';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT * FROM categories WHERE type = 'news';",
+  "rows": [
+    {
+      "id": "2",
+      "name": "Publication",
+      "slug": "publication",
+      "type": "news",
+      "description": "Publication news articles",
+      "createdAt": "2026-02-08 00:33:12",
+      "updatedAt": "2026-02-08 00:33:12",
+      "color": "#FF5722"
+    },
+    {
+      "id": "3",
+      "name": "Career Milestone",
+      "slug": "career_milestone",
+      "type": "news",
+      "description": "Career Milestone news articles",
+      "createdAt": "2026-02-08 00:33:12",
+      "updatedAt": "2026-02-08 00:33:12",
+      "color": "#FF5722"
+    },
+    {
+      "id": "4",
+      "name": "Collaboration",
+      "slug": "collaboration",
+      "type": "news",
+      "description": "Collaboration news articles",
+      "createdAt": "2026-02-08 00:33:12",
+      "updatedAt": "2026-02-08 00:33:12",
+      "color": "#FF5722"
+    },
+    {
+      "id": "5",
+      "name": "Project Update",
+      "slug": "project_update",
+      "type": "news",
+      "description": "Project Update news articles",
+      "createdAt": "2026-02-08 00:33:12",
+      "updatedAt": "2026-02-08 00:33:12",
+      "color": "#FF5722"
+    },
+    {
+      "id": "6",
+      "name": "Life Update",
+      "slug": "life_update",
+      "type": "news",
+      "description": "Life Update news articles",
+      "createdAt": "2026-02-08 00:33:12",
+      "updatedAt": "2026-02-08 00:33:12",
+      "color": "#FF5722"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\tslug\ttype\tdescription\tcreatedAt\tupdatedAt\tcolor\n2\tPublication\tpublication\tnews\tPublication news articles\t2026-02-08 00:33:12\t2026-02-08 00:33:12\t#FF5722\n3\tCareer Milestone\tcareer_milestone\tnews\tCareer Milestone news articles\t2026-02-08 00:33:12\t2026-02-08 00:33:12\t#FF5722\n4\tCollaboration\tcollaboration\tnews\tCollaboration news articles\t2026-02-08 00:33:12\t2026-02-08 00:33:12\t#FF5722\n5\tProject Update\tproject_update\tnews\tProject Update news articles\t2026-02-08 00:33:12\t2026-02-08 00:33:12\t#FF5722\n6\tLife Update\tlife_update\tnews\tLife Update news articles\t2026-02-08 00:33:12\t2026-02-08 00:33:12\t#FF5722\n",
+  "stderr": "",
+  "execution_time_ms": 451
+}

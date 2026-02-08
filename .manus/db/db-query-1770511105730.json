@@ -1,0 +1,46 @@
+{
+  "query": "SELECT id, name, slug, type FROM categories ORDER BY type, name;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT id, name, slug, type FROM categories ORDER BY type, name;",
+  "rows": [
+    {
+      "id": "60004",
+      "name": "Design Philosophy",
+      "slug": "design-philosophy",
+      "type": "project"
+    },
+    {
+      "id": "60005",
+      "name": "Musical Theatre & Cinema",
+      "slug": "musical-theatre-cinema",
+      "type": "project"
+    },
+    {
+      "id": "60009",
+      "name": "Project Launch",
+      "slug": "project-launch",
+      "type": "project"
+    },
+    {
+      "id": "60006",
+      "name": "Scenic Design Process",
+      "slug": "scenic-design-process",
+      "type": "project"
+    },
+    {
+      "id": "60007",
+      "name": "Technology & Tutorials",
+      "slug": "technology-tutorials",
+      "type": "project"
+    },
+    {
+      "id": "60008",
+      "name": "Themed Entertainment",
+      "slug": "themed-entertainment",
+      "type": "project"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\tslug\ttype\n60004\tDesign Philosophy\tdesign-philosophy\tproject\n60005\tMusical Theatre & Cinema\tmusical-theatre-cinema\tproject\n60009\tProject Launch\tproject-launch\tproject\n60006\tScenic Design Process\tscenic-design-process\tproject\n60007\tTechnology & Tutorials\ttechnology-tutorials\tproject\n60008\tThemed Entertainment\tthemed-entertainment\tproject\n",
+  "stderr": "",
+  "execution_time_ms": 362
+}

@@ -439,6 +439,68 @@ export const appRouter = router({
         await db.deleteNews(input.id);
         return { success: true };
       }),
+    
+    bulkImport: publicProcedure
+      .mutation(async () => {
+        const newsData = await import('./newsData.json');
+        const imageMap = await import('./newsImageMap.json');
+        
+        const categoryMap: Record<string, number | null> = {
+          'Project Launch': null,
+          'Publication': null,
+          'Career Milestone': null,
+          'Collaboration': null,
+          'Project Update': null,
+          'Assistant Scenic Design': null,
+          'Life Updates': null,
+          'Publication/Feature': null,
+        };
+        
+        function blocksToJson(content: any): any[] {
+          if (!content) return [];
+          if (typeof content === 'string') return [{ type: 'text', content }];
+          
+          const blocks = [];
+          for (const block of content) {
+            if (block.type === 'paragraph' && block.content) {
+              const cleaned = block.content.replace(/\u00a0/g, ' ');
+              blocks.push({ type: 'text', content: cleaned });
+            }
+          }
+          return blocks;
+        }
+        
+        let inserted = 0;
+        const articles = newsData.default || newsData;
+        const images: Record<string, string> = imageMap.default || imageMap;
+        
+        for (let idx = 0; idx < articles.length; idx++) {
+          const article = articles[idx];
+          
+          try {
+            const id = await db.createNews({
+              slug: article.slug,
+              title: article.title,
+              excerpt: article.excerpt,
+              blocks: blocksToJson(article.content),
+              coverImageUrl: images[article.slug] || undefined,
+              categoryId: categoryMap[article.category] || undefined,
+              date: article.date ? new Date(article.date) : new Date(),
+              externalLink: article.link || undefined,
+              location: article.location || undefined,
+              tags: article.tags ? article.tags.slice(0, 5).join(', ') : undefined,
+              featured: idx === 0,
+              status: 'published',
+              publishedAt: article.date ? new Date(article.date) : new Date(),
+            });
+            inserted++;
+          } catch (e: any) {
+            console.error(`Failed to insert ${article.title}:`, e.message);
+          }
+        }
+        
+        return { inserted, total: articles.length };
+      }),
   }),
 
   // ============ ARTICLE MANAGEMENT ============

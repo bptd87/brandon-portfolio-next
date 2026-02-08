@@ -43,6 +43,13 @@
       "when": 1770498702605,
       "tag": "0005_tired_lyja",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1770510735551,
+      "tag": "0006_strange_lily_hollister",
+      "breakpoints": true
     }
   ]
 }

@@ -1063,3 +1063,21 @@
 - [x] Add automatic resizing (max 2000px width for full size)
 - [x] Add compression (85% quality)
 - [x] Upload Bell Book and Candle images with proper alt text
+
+## News Data Migration from Supabase
+- [x] Access existing website and analyze news structure
+- [x] Extract all news articles data (30 articles fetched from Supabase API)
+- [x] Download and optimize news images (15 cover images uploaded to S3 CDN)
+- [x] Insert news data into new database (25 of 30 articles successfully imported)
+- [x] Verify news articles display correctly
+
+## Articles Section Development
+- [x] Update news schema to add externalLink and tags fields
+- [x] Generate and apply schema migration
+- [x] Create news categories in database (6 categories created)
+- [x] Migrate all news articles with blocks format
+- [x] News section fully functional (articles use same structure)
+- [ ] Convert Supabase content to blocks format and insert all 30 articles
+- [ ] Design articles section UI with rich content blocks
+- [ ] Build article detail page with proper typography and layout
+- [ ] Add article listing page with filtering
