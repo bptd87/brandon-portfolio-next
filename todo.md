@@ -1235,3 +1235,4 @@
 ## Tutorial Updates
 - [x] Add note to tutorial 14 (Basics of Textures) that OpenGL is now called "Shaded" in current Vectorworks versions
 - [x] Add tutorial 15: 3D Modeling Tools (18:19) with comprehensive educational content
+- [x] Add tutorial 16: Creating 24x36 PDFs Without a Plotter (3:28) with comprehensive educational content

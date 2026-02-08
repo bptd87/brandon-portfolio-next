@@ -207,6 +207,19 @@ export default function StudioTutorials() {
       publishDate: "Feb 08, 2021",
       thumbnailUrl: `https://img.youtube.com/vi/8dm9ZMTXypE/maxresdefault.jpg`,
     },
+    {
+      id: 16,
+      title: "Vectorworks Tutorial: Creating 24x36 PDFs Without a Plotter",
+      slug: "creating-24x36-pdfs",
+      youtubeId: "Gd9_hB5USkQ",
+      youtubeUrl: "https://www.youtube.com/watch?v=Gd9_hB5USkQ",
+      description: "Learn how to export large format sheets (24x36) to PDF when you don't have Adobe PDF or a plotter connected to your computer.",
+      category: "2d-drafting",
+      difficultyLevel: "beginner",
+      duration: 208, // 3:28 in seconds
+      publishDate: "Feb 10, 2021",
+      thumbnailUrl: `https://img.youtube.com/vi/Gd9_hB5USkQ/maxresdefault.jpg`,
+    },
   ];
 
   const categories = [
