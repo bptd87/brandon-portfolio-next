@@ -2,6 +2,7 @@ import AboutNav from "@/components/AboutNav";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Mail, MapPin, Sparkles } from "lucide-react";
+import StructuredData from "@/components/StructuredData";
 
 export default function About() {
   const galleryImages = [
@@ -17,6 +18,57 @@ export default function About() {
 
   return (
     <div className="min-h-screen bg-background">
+      <StructuredData
+        type="Person"
+        person={{
+          name: "Brandon PT Davis",
+          jobTitle: "Scenic and Experiential Designer",
+          url: "https://www.brandonptdavis.com/about",
+          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YiqCsZPgtoSSsQyE.png",
+          description: "Scenic and experiential designer based in Southern California with over 120 design credits across regional theatre, summer stock, academic theatre, immersive experiences, and live entertainment. Member of USA 829. Educator teaching scenic design, rendering, and collaborative design processes at the university level.",
+          email: "info@brandonptdavis.com",
+          address: {
+            addressLocality: "Irvine",
+            addressRegion: "CA",
+            addressCountry: "US",
+          },
+          sameAs: [
+            "https://www.instagram.com/brandonptdavis",
+            "https://www.linkedin.com/in/brandonptdavis",
+            "https://www.youtube.com/@BrandonPTDavisDesign",
+            "https://www.facebook.com/BrandonPTDavisA",
+            "https://www.usa829.org/Member-Profile/MemberID/15357",
+            "https://getadaptive.com/about-us/",
+          ],
+          alumniOf: [
+            {
+              name: "University of California, Irvine",
+              url: "https://www.uci.edu",
+            },
+            {
+              name: "Stephens College",
+              url: "https://www.stephens.edu",
+            },
+          ],
+          knowsAbout: [
+            "Scenic Design",
+            "Experiential Design",
+            "Theatrical Design",
+            "Regional Theatre",
+            "Summer Stock Theatre",
+            "Academic Theatre",
+            "Event Design",
+            "Concept Rendering",
+            "Vectorworks",
+            "Twinmotion",
+            "3D Modeling",
+            "Digital Fabrication",
+            "Immersive Design",
+            "Themed Entertainment",
+            "Scenic Design Education",
+          ],
+        }}
+      />
       <Header />
       <AboutNav />
 

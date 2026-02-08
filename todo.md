@@ -1341,3 +1341,21 @@
 - [x] Create tutorials RSS feed
 - [x] Add tutorials RSS feed link to HTML head
 - [x] Test tutorials sitemap and RSS endpoints
+
+## Structured Data (JSON-LD) Implementation
+- [ ] Create JSON-LD schema generation utilities
+- [ ] Add Person schema to homepage with profile, credentials, and social links
+- [ ] Add Person schema to About page
+- [ ] Add Organization schema to homepage
+- [ ] Test schema markup with Google Rich Results Test
+- [ ] Validate JSON-LD syntax and structure
+
+## Structured Data Accuracy Updates
+- [x] Research Brandon PT Davis professional background (South Coast Rep, USA 829, Adaptive Design Services)
+- [x] Verify educational credentials (Stephens College BFA, UC Irvine MFA)
+- [x] Update Person schema with accurate professional details
+- [x] Update Organization schema with correct information
+- [x] Remove inaccurate Broadway references
+- [x] Add correct social profiles (USA 829, Adaptive Design Services, Instagram, LinkedIn, YouTube, Facebook)
+- [x] Update location to Irvine, CA
+- [x] Update email to info@brandonptdavis.com

@@ -8,6 +8,7 @@ import { trpc } from "@/lib/trpc";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { Link } from "wouter";
 import { AnimatedSection } from "@/components/AnimatedSection";
+import StructuredData from "@/components/StructuredData";
 
 export default function Home() {
   const { user } = useAuth();
@@ -22,6 +23,78 @@ export default function Home() {
 
   return (
     <>
+      <StructuredData
+        type="Both"
+        person={{
+          name: "Brandon PT Davis",
+          jobTitle: "Scenic and Experiential Designer",
+          url: "https://www.brandonptdavis.com",
+          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YiqCsZPgtoSSsQyE.png",
+          description: "Scenic and experiential designer based in Southern California with over 120 design credits across regional theatre, summer stock, academic theatre, immersive experiences, and live entertainment. Member of USA 829.",
+          email: "info@brandonptdavis.com",
+          address: {
+            addressLocality: "Irvine",
+            addressRegion: "CA",
+            addressCountry: "US",
+          },
+          sameAs: [
+            "https://www.instagram.com/brandonptdavis",
+            "https://www.linkedin.com/in/brandonptdavis",
+            "https://www.youtube.com/@BrandonPTDavisDesign",
+            "https://www.facebook.com/BrandonPTDavisA",
+            "https://www.usa829.org/Member-Profile/MemberID/15357",
+          ],
+          alumniOf: [
+            {
+              name: "University of California, Irvine",
+              url: "https://www.uci.edu",
+            },
+            {
+              name: "Stephens College",
+              url: "https://www.stephens.edu",
+            },
+          ],
+          knowsAbout: [
+            "Scenic Design",
+            "Experiential Design",
+            "Theatrical Design",
+            "Regional Theatre",
+            "Summer Stock Theatre",
+            "Academic Theatre",
+            "Event Design",
+            "Concept Rendering",
+            "Vectorworks",
+            "Twinmotion",
+            "3D Modeling",
+            "Digital Fabrication",
+            "Immersive Design",
+            "Themed Entertainment",
+          ],
+        }}
+        organization={{
+          name: "Brandon PT Davis Design",
+          url: "https://www.brandonptdavis.com",
+          logo: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YiqCsZPgtoSSsQyE.png",
+          description: "Professional scenic and experiential design studio specializing in regional theatre, summer stock, academic theatre, immersive experiences, event design, and themed entertainment.",
+          founder: {
+            name: "Brandon PT Davis",
+            url: "https://www.brandonptdavis.com/about",
+          },
+          foundingDate: "2015",
+          email: "info@brandonptdavis.com",
+          address: {
+            addressLocality: "Irvine",
+            addressRegion: "CA",
+            addressCountry: "US",
+          },
+          sameAs: [
+            "https://www.instagram.com/brandonptdavis",
+            "https://www.linkedin.com/in/brandonptdavis",
+            "https://www.youtube.com/@BrandonPTDavisDesign",
+            "https://www.facebook.com/BrandonPTDavisA",
+          ],
+        }}
+      />
       <Header />
       
       {/* Hero Section - Simple, Bold Typography */}
