@@ -1184,3 +1184,7 @@
 - [x] Fix tutorial card images to fill full width with no white space at top
 
 - [x] Remove gap between card image and content section in tutorial cards
+
+- [x] Add rounded corners to tutorial card images
+- [x] Restore card border/outline
+- [x] Ensure image fills card properly with rounded corners
