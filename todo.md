@@ -1275,3 +1275,10 @@
 - [x] Generate 3-4 new dramatic theatrical images with cyan lighting
 - [ ] Add updated date field to article
 - [ ] Test article display and readability
+
+## Hardware Article Formatting Fixes
+- [ ] Fix heading hierarchy - use H2 for main sections, H3/H4 for subsections (reduce TOC length)
+- [x] Clean up ** bold formatting showing in text
+- [ ] Make H2 size consistent with computer literacy article (currently too large)
+- [ ] Restore Beowulf video joke (was removed by mistake)
+- [ ] Update hero image to match article card style (vintage computer aesthetic, not dramatic theatrical)

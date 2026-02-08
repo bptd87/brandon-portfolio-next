@@ -447,6 +447,8 @@ export default function ArticleDetail() {
                   }
                   .article-content-${article.id} strong {
                     color: ${category ? getCategoryColor(category.name).hex : 'hsl(var(--foreground))'};
+                    font-weight: 700;
+                    font-size: 1.125rem;
                   }
                 `}</style>
                 
@@ -457,9 +459,10 @@ export default function ArticleDetail() {
                   prose-headings:font-['Playfair_Display'] prose-headings:font-bold prose-headings:font-normal prose-headings:leading-[1.2]
                   prose-h2:text-[1.875rem] prose-h2:mt-16 prose-h2:mb-4 prose-h2:scroll-mt-24 prose-h2:leading-[1.3]
                   prose-h3:text-[1.5rem] prose-h3:mt-10 prose-h3:mb-3 prose-h3:leading-[1.4]
+                  prose-h4:text-[1.25rem] prose-h4:mt-8 prose-h4:mb-2 prose-h4:leading-[1.4]
                   prose-p:text-foreground/90 prose-p:leading-[1.75] prose-p:mb-6 prose-p:text-[1.0625rem] prose-p:font-normal prose-p:tracking-normal
                   prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-a:font-medium
-                  prose-strong:font-semibold
+                  prose-strong:font-bold prose-strong:text-[1.125rem]
                   prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-8 
                   prose-blockquote:italic prose-blockquote:text-xl prose-blockquote:my-10 prose-blockquote:font-['Playfair_Display'] prose-blockquote:leading-[1.6]
                   prose-ul:my-8 prose-ol:my-8 prose-ul:leading-[2] prose-ol:leading-[2] prose-ul:list-disc prose-ol:list-decimal prose-ul:pl-8 prose-ol:pl-8
@@ -476,21 +479,32 @@ export default function ArticleDetail() {
                   switch (section.type) {
                     case 'heading':
                       const categoryColorObj = category ? getCategoryColor(category.name) : undefined;
-                      return (
-                        <h2 
-                          key={index}
-                          className="mt-12 mb-8"
-                          style={categoryColorObj ? { color: `${categoryColorObj.hex} !important` } : undefined}
-                        >
-                          {decodeHTMLEntities(section.text || section.content || '')}
-                        </h2>
-                      );
+                      const level = section.level || 2;
+                      const headingClassName = level === 2 ? "mt-12 mb-8" : level === 3 ? "mt-10 mb-6" : "mt-8 mb-4";
+                      const headingStyle = categoryColorObj ? { color: `${categoryColorObj.hex} !important` } : undefined;
+                      const headingText = decodeHTMLEntities(section.text || section.content || '');
+                      
+                      if (level === 2) {
+                        return <h2 key={index} className={headingClassName} style={headingStyle}>{headingText}</h2>;
+                      } else if (level === 3) {
+                        return <h3 key={index} className={headingClassName} style={headingStyle}>{headingText}</h3>;
+                      } else if (level === 4) {
+                        return <h4 key={index} className={headingClassName} style={headingStyle}>{headingText}</h4>;
+                      } else {
+                        return <h2 key={index} className={headingClassName} style={headingStyle}>{headingText}</h2>;
+                      }
                     
                     case 'paragraph':
+                      const categoryColor = category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))';
                       return (
-                        <p key={index} className="mb-6 leading-relaxed">
-                          {decodeHTMLEntities(section.text || section.content || '')}
-                        </p>
+                        <p 
+                          key={index} 
+                          className="mb-6 leading-relaxed [&_strong]:font-bold [&_strong]:text-[1.125rem]"
+                          style={{
+                            ['--strong-color' as any]: categoryColor
+                          }}
+                          dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(section.text || section.content || '') }}
+                        />
                       );
                     
                     case 'quote':
@@ -553,10 +567,17 @@ export default function ArticleDetail() {
                     
                     case 'list':
                       const ListTag = section.listType === 'numbered' ? 'ol' : 'ul';
+                      const listCategoryColor = category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))';
                       return (
-                        <ListTag key={index} className={`my-6 space-y-3 ml-6 ${section.listType === 'numbered' ? 'list-decimal' : 'list-disc'}`}>
+                        <ListTag 
+                          key={index} 
+                          className={`my-6 space-y-3 ml-6 ${section.listType === 'numbered' ? 'list-decimal' : 'list-disc'} [&_strong]:font-bold [&_strong]:text-[1.125rem]`}
+                          style={{
+                            ['--strong-color' as any]: listCategoryColor
+                          }}
+                        >
                           {section.items?.map((item: string, itemIndex: number) => (
-                            <li key={itemIndex} className="leading-relaxed">{decodeHTMLEntities(item)}</li>
+                            <li key={itemIndex} className="leading-relaxed" dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(item) }} />
                           ))}
                         </ListTag>
                       );
