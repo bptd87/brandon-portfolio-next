@@ -1216,3 +1216,4 @@
 - [x] Align news card images to the top of cards (remove gap above images)
 - [x] Align related project card images to top on news detail pages
 - [x] Ensure all work and project portfolio cards have image-to-top alignment
+- [x] Fix missing navbar on contact page

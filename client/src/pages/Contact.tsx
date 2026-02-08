@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export function Contact() {
@@ -22,6 +23,7 @@ export function Contact() {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
       {/* Animated Background Orbs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 -left-40 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }}></div>
