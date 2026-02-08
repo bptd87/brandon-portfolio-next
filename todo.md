@@ -1196,3 +1196,7 @@
 - [x] Create detail page for "Understanding Classes" tutorial
 
 - [x] Fix missing relatedResources field in Understanding Classes tutorial causing error
+
+- [x] Generate educational content from "Understanding Design Layers" tutorial script
+- [x] Add "Understanding Design Layers" tutorial to StudioTutorials page
+- [x] Create detail page for "Understanding Design Layers" tutorial

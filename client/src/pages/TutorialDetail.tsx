@@ -226,7 +226,121 @@ Finally, the tutorial explores how grouping objects interacts with class visibil
 
       relatedTutorials: [
         { title: "Vectorworks Tutorial: Navigating the User Interface", slug: "navigating-user-interface" },
-        { title: "Vectorworks 3: Design Layers", slug: "design-layers" },
+        { title: "Vectorworks Tutorial: Understanding Design Layers", slug: "understanding-design-layers" },
+        { title: "Vectorworks 4: Basic 2D Tools", slug: "basic-2d-tools" },
+      ],
+    },
+    "understanding-design-layers": {
+      id: 3,
+      slug: "understanding-design-layers",
+      title: "Vectorworks Tutorial: Understanding Design Layers",
+      description: "Master the layer organization system that allows you to separate and manage different elements of your scenic design across multiple drawing planes.",
+      youtubeId: "CwCxmhQAFwI",
+      category: "Getting Started",
+      difficulty: "Beginner",
+      duration: 474, // 7:54 in seconds
+      uploadDate: "2020-08-15",
+      
+      learningObjectives: [
+        "Understand what design layers are and how they organize drawing information",
+        "Navigate and manage design layers using the Navigation palette",
+        "Create, duplicate, and edit design layers with proper naming conventions",
+        "Control layer stacking order and visibility",
+        "Use layer viewing options (Gray/Snap Others, Show Others, Show/Snap Others)",
+        "Apply design layer concepts to real scenic design workflows",
+      ],
+
+      overview: `This tutorial introduces design layers as a fundamental organizational tool in Vectorworks. Design layers function like stacked sheets of vellum in traditional drafting\u2014allowing you to separate architectural plans, scenic ground plans, and lighting plots onto different layers that can be viewed together or independently.
+
+The walkthrough covers how to access design layers through the Navigation palette, create and name new layers with proper conventions, and control stacking order to determine which elements appear on top. You'll see a real production example from UCI's \"The Pajama Game\" showing how layers organize 3D hybrid symbols.
+
+Finally, the tutorial explores layer viewing options that control whether you can see and snap to objects on inactive layers\u2014critical for maintaining clean workflows when drafting complex scenic designs with multiple overlapping elements.`,
+
+      keyConcepts: [
+        {
+          title: "DESIGN LAYERS",
+          content: "Design layers organize drawing information conceptually similar to stacked sheets of paper or vellum. Each layer can contain different elements (architecture, scenery, lighting) that can be shown or hidden independently.",
+        },
+        {
+          title: "STACKING ORDER",
+          content: "The vertical arrangement of design layers determines which elements appear on top when layers overlap. Higher layers in the stack appear in front of lower layers\u2014critical for controlling visibility in both 2D and 3D views.",
+        },
+        {
+          title: "LAYER VIEWING OPTIONS",
+          content: "Gray/Snap Others: See inactive layers in gray, can snap to them. Show Others: See inactive layers in full color, cannot snap. Show/Snap Others: See and snap to inactive layers. Show/Snap/Modify Others: Full access (not recommended).",
+        },
+      ],
+
+      proTips: [
+        "Keep all design layers at the same scale (typically 1/4\" = 1'-0\" for theatrical work) to ensure files work in unison.",
+        "Use consistent naming conventions: S-Ground Plan (scenic), L-Ground Plan (lighting), Arch-Ground Plan (architecture).",
+        "Place architectural elements on the bottom layer, scenic elements in the middle, and lighting on top for logical stacking.",
+        "Use 'Gray/Snap Others' as your default viewing mode\u2014it provides visual hierarchy while maintaining snap functionality.",
+      ],
+
+      shortcuts: [
+        { keys: "Right-click layer name", action: "Quick access to Edit menu" },
+        { keys: "Double-click layer name", action: "Open Design Layer Organization dialog" },
+      ],
+
+      commonPitfalls: [
+        "Creating layers at different scales, causing dimensional conflicts",
+        "Not understanding stacking order, leading to elements appearing behind others unexpectedly",
+        "Using 'Show/Snap/Modify Others' and accidentally editing the wrong layer",
+        "Forgetting to check which layer is active before drawing new objects",
+        "Not using consistent naming conventions across projects",
+      ],
+
+      transcript: [
+        { time: "0:01", text: "Hello, this is Brandon PT Davis, theatrical scenic designer, and in this Vectorworks tutorial I'm going to talk to you about classes and design layers." },
+        { time: "0:12", text: "Design layers are another method in which Vectorworks users can organize the information in their drawing." },
+        { time: "0:20", text: "Conceptually, the design layer is similar to traditional drafting standards. A designer could use sheets of paper or vellum to draw elements of their design on specific pages\u2014such as the base layer being the architectural drafting, and on top have the scenic ground plan, and stacked on top of that there could be the lighting plot." },
+        { time: "0:47", text: "In order to illustrate the function of the design layers, I'm going to show you the production file from University of California Irvine's production of The Pajama Game." },
+        { time: "1:05", text: "Within the file you will find the drafted out ground plan. This ground plan is a 3D hybrid symbol, meaning it has 2D and 3D elements tied to it." },
+        { time: "1:20", text: "To find the layers, you will go to the Navigation palette. The second tab with the three pieces of paper stacked is the navigation tablet." },
+        { time: "1:31", text: "In the navigation tablet you will find the design layer names in the center, and to the right you will find the stacking order." },
+        { time: "1:42", text: "To the left, similar to classes, you can adjust the visibility." },
+        { time: "1:50", text: "In this file we have Set Ground Plan, Architectural Stage Ground Plan, Architectural House Ground Plan. There are a few other layers, but in this example these are the ones that really matter." },
+        { time: "2:05", text: "I'm going to now adjust this into a Right Isometric view." },
+        { time: "2:08", text: "As you can see, we have the set in three dimensions." },
+        { time: "2:13", text: "We can now alter the visibility of the House Ground Plan from visible to off. We can now easily see the inside of the proscenium arch." },
+        { time: "2:28", text: "If you wanted to work on the ground plan without having the hindrance of the architecture, we can also turn this element off as well." },
+        { time: "2:41", text: "These elements here are the scenic design elements that were used within the production." },
+        { time: "2:50", text: "To further explain how visibilities can continue to work, I will now go and show you the class system within the file. We can toggle through the different scenes by clicking on the visibility, and we will be able to see the different scenes within the production." },
+        { time: "3:10", text: "I have now opened a blank file to show you how the design layers work when opening a new project." },
+        { time: "3:18", text: "The design layers, as mentioned before, are in the Navigation Design Layers tab." },
+        { time: "3:24", text: "Typically when you start a new file, the standard for Vectorworks is to name the design layer 'Design Layer-1.'" },
+        { time: "3:35", text: "If I were to duplicate this Design Layer-1, it will auto-name itself Design Layer-2." },
+        { time: "3:48", text: "In order to edit or modify the current Design Layer 1, there's a number of ways we can accomplish this. First, we can right-click to edit. We can also double-click on the design layer organization and view the design layers within the file from there." },
+        { time: "4:12", text: "Similar to the palette, the Organization palette has visibility, design layer name, stacking order, and scale. Again, these elements beyond are more tied towards architecture and not going to be covered in this video." },
+        { time: "4:31", text: "In order to edit the design layer, we simply have to click Edit." },
+        { time: "4:40", text: "Design layer\u2014we can name Scenic Ground Plan: S for scenic and GP as an abbreviation for ground plane." },
+        { time: "4:50", text: "You can also modify the scale of the design layer. In order for your files to work in unison, it is important that all design layers are the same scale." },
+        { time: "5:02", text: "Typically we work in quarter-inch or 1:48 scale. Stacking order can then be modified manually in the Edit Design Layers palette." },
+        { time: "5:15", text: "Below are the architectural elements which we will not be covering." },
+        { time: "5:24", text: "Now the Set Ground Plane layer has been created." },
+        { time: "5:27", text: "I'm now going to create a new design layer. I'm going to call this one L-Ground Plan, or the Lighting Ground Plan." },
+        { time: "5:39", text: "I'm going to press OK. As we can see, without going to edit, the attributes of the design layers are similar, and they are both the same scale. The name and visibility are the same. The stacking order has the Ground Plan layer on top and the Scenic Ground Plane layer on bottom." },
+        { time: "5:59", text: "We can shuffle this by sliding the Ground Plan order, so now the Scenic Ground Plane is on top and the Lighting Ground Plane is on the bottom." },
+        { time: "6:14", text: "In order to show you how these ground plan layers work within stacking, I'm going to draw a couple of circles." },
+        { time: "6:21", text: "The first circle I'm drawing on the Lighting Ground Plan layer. We know this because the Lighting Ground Plan layer is currently checked." },
+        { time: "6:29", text: "Now I'm going to draw a smaller circle on the Scenic Ground Plan layer." },
+        { time: "6:40", text: "If we change the stacking order of the ground plane layers, we now see that the Lighting Ground Plan is now on top with the larger circle." },
+        { time: "7:02", text: "We can modify how we view the design layers through the Layer Options. Currently, 'Gray/Snap Others' is turned on. This function can be changed to 'Show Others,' so now we can see both, but we cannot snap to the layers below." },
+        { time: "7:23", text: "If you want to show and snap onto the layers, simply change the layer options to 'Show/Snap Others.'" },
+        { time: "7:35", text: "We can also adjust this with 'Show/Snap/Modify Others,' though I do not recommend this as it can make your file confusing." },
+        { time: "7:43", text: "This concludes the Vectorworks tutorial session on classes and design layers. If you have any questions, please feel free to ask. Thank you." },
+      ],
+
+      relatedResources: [
+        { title: "Vectorworks University: Design Layers", url: "https://university.vectorworks.net/course/index.php?mycourses=0&search=design+layers", description: "Official Vectorworks training on layer organization and management" },
+        { title: "Vectorworks Forum: Layers Discussion", url: "https://forum.vectorworks.net/index.php?/forum/22-classes-layers-views/", description: "Community discussions about design layers and best practices" },
+        { title: "Vectorworks Help: Design Layers", url: "https://app-help.vectorworks.net/2024/eng/VW2024_Guide/Layers/Design_layers.htm", description: "Official documentation on design layer functionality" },
+      ],
+
+      relatedTutorials: [
+        { title: "Vectorworks Tutorial: Understanding Classes", slug: "understanding-classes" },
+        { title: "Vectorworks Tutorial: Navigating the User Interface", slug: "navigating-user-interface" },
         { title: "Vectorworks 4: Basic 2D Tools", slug: "basic-2d-tools" },
       ],
     },

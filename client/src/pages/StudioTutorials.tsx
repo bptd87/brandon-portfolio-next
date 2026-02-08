@@ -36,6 +36,18 @@ export default function StudioTutorials() {
       duration: 587, // 9:47 in seconds
       thumbnailUrl: `https://img.youtube.com/vi/tXQcTdGiwT4/maxresdefault.jpg`,
     },
+    {
+      id: 3,
+      title: "Vectorworks Tutorial: Understanding Design Layers",
+      slug: "understanding-design-layers",
+      youtubeId: "CwCxmhQAFwI",
+      youtubeUrl: "https://www.youtube.com/watch?v=CwCxmhQAFwI",
+      description: "Master the layer organization system that allows you to separate and manage different elements of your scenic design across multiple drawing planes.",
+      category: "getting-started",
+      difficultyLevel: "beginner",
+      duration: 474, // 7:54 in seconds
+      thumbnailUrl: `https://img.youtube.com/vi/CwCxmhQAFwI/maxresdefault.jpg`,
+    },
   ];
 
   const categories = [
