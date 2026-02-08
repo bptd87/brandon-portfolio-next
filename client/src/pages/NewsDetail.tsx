@@ -9,6 +9,7 @@ import { Calendar, ExternalLink, MapPin, Share2, ArrowLeft } from "lucide-react"
 import { Link, useParams } from "wouter";
 import { toast } from "sonner";
 import { SEO } from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 
 // Helper function to create pixelated gradient from image
 function createPixelatedGradient(imageUrl: string, callback: (gradient: string) => void) {
@@ -198,6 +199,14 @@ export default function NewsDetail() {
   // Get related news (exclude current)
   const related = relatedNews?.filter(n => n.id !== newsItem.id).slice(0, 3) || [];
 
+  // Calculate word count from content blocks
+  const wordCount = contentBlocks.reduce((count: number, block: any) => {
+    if (block.type === 'text' && block.content) {
+      return count + block.content.split(/\s+/).length;
+    }
+    return count;
+  }, 0);
+
   return (
     <div className="min-h-screen bg-background">
       <SEO
@@ -208,6 +217,35 @@ export default function NewsDetail() {
         type="article"
         publishedTime={newsItem.date?.toISOString()}
         modifiedTime={newsItem.updatedAt?.toISOString()}
+      />
+      <StructuredData
+        type="Article"
+        article={{
+          headline: newsItem.title,
+          description: newsItem.excerpt || undefined,
+          image: newsItem.coverImageUrl || undefined,
+          author: {
+            name: "Brandon PT Davis",
+            url: "https://www.brandonptdavis.com/about",
+          },
+          datePublished: newsItem.date ? new Date(newsItem.date).toISOString() : new Date(newsItem.createdAt).toISOString(),
+          dateModified: newsItem.updatedAt ? new Date(newsItem.updatedAt).toISOString() : undefined,
+          publisher: {
+            name: "Brandon PT Davis Design",
+            logo: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YiqCsZPgtoSSsQyE.png",
+          },
+          url: `https://www.brandonptdavis.com/news/${newsItem.slug}`,
+          wordCount: wordCount > 0 ? wordCount : undefined,
+          keywords: newsItem.tags ? (typeof newsItem.tags === 'string' ? JSON.parse(newsItem.tags) : newsItem.tags) : [],
+        }}
+      />
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "News", url: "https://www.brandonptdavis.com/news" },
+          { name: newsItem.title, url: `https://www.brandonptdavis.com/news/${newsItem.slug}` },
+        ]}
       />
       <Header />
 

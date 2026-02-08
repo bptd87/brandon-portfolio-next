@@ -81,14 +81,56 @@ interface CreativeWorkSchema {
   }>;
 }
 
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+interface ArticleSchema {
+  headline: string;
+  description?: string;
+  image?: string;
+  author: {
+    name: string;
+    url?: string;
+  };
+  datePublished: string;
+  dateModified?: string;
+  publisher: {
+    name: string;
+    logo?: string;
+  };
+  url: string;
+  articleBody?: string;
+  wordCount?: number;
+  keywords?: string[];
+}
+
+interface VideoObjectSchema {
+  name: string;
+  description?: string;
+  thumbnailUrl: string;
+  uploadDate: string;
+  duration?: string; // ISO 8601 duration format (e.g., "PT10M30S")
+  contentUrl?: string;
+  embedUrl?: string;
+  publisher?: {
+    name: string;
+    logo?: string;
+  };
+}
+
 interface StructuredDataProps {
-  type: 'Person' | 'Organization' | 'Both' | 'CreativeWork';
+  type: 'Person' | 'Organization' | 'Both' | 'CreativeWork' | 'BreadcrumbList' | 'Article' | 'VideoObject';
   person?: PersonSchema;
   organization?: OrganizationSchema;
   creativeWork?: CreativeWorkSchema;
+  breadcrumbs?: BreadcrumbItem[];
+  article?: ArticleSchema;
+  videoObject?: VideoObjectSchema;
 }
 
-export default function StructuredData({ type, person, organization, creativeWork }: StructuredDataProps) {
+export default function StructuredData({ type, person, organization, creativeWork, breadcrumbs, article, videoObject }: StructuredDataProps) {
   const generatePersonSchema = (data: PersonSchema) => {
     const schema: any = {
       '@context': 'https://schema.org',
@@ -240,6 +282,84 @@ export default function StructuredData({ type, person, organization, creativeWor
   
   if (type === 'CreativeWork' && creativeWork) {
     schemas.push(generateCreativeWorkSchema(creativeWork));
+  }
+  
+  if (type === 'BreadcrumbList' && breadcrumbs && breadcrumbs.length > 0) {
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: breadcrumbs.map((item, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: item.name,
+        item: item.url,
+      })),
+    });
+  }
+  
+  if (type === 'Article' && article) {
+    const schema: any = {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: article.headline,
+      author: {
+        '@type': 'Person',
+        name: article.author.name,
+        ...(article.author.url && { url: article.author.url }),
+      },
+      datePublished: article.datePublished,
+      publisher: {
+        '@type': 'Organization',
+        name: article.publisher.name,
+        ...(article.publisher.logo && {
+          logo: {
+            '@type': 'ImageObject',
+            url: article.publisher.logo,
+          },
+        }),
+      },
+      url: article.url,
+    };
+    
+    if (article.description) schema.description = article.description;
+    if (article.image) schema.image = article.image;
+    if (article.dateModified) schema.dateModified = article.dateModified;
+    if (article.articleBody) schema.articleBody = article.articleBody;
+    if (article.wordCount) schema.wordCount = article.wordCount;
+    if (article.keywords && article.keywords.length > 0) {
+      schema.keywords = article.keywords.join(', ');
+    }
+    
+    schemas.push(schema);
+  }
+  
+  if (type === 'VideoObject' && videoObject) {
+    const schema: any = {
+      '@context': 'https://schema.org',
+      '@type': 'VideoObject',
+      name: videoObject.name,
+      thumbnailUrl: videoObject.thumbnailUrl,
+      uploadDate: videoObject.uploadDate,
+    };
+    
+    if (videoObject.description) schema.description = videoObject.description;
+    if (videoObject.duration) schema.duration = videoObject.duration;
+    if (videoObject.contentUrl) schema.contentUrl = videoObject.contentUrl;
+    if (videoObject.embedUrl) schema.embedUrl = videoObject.embedUrl;
+    if (videoObject.publisher) {
+      schema.publisher = {
+        '@type': 'Organization',
+        name: videoObject.publisher.name,
+        ...(videoObject.publisher.logo && {
+          logo: {
+            '@type': 'ImageObject',
+            url: videoObject.publisher.logo,
+          },
+        }),
+      };
+    }
+    
+    schemas.push(schema);
   }
 
   return (

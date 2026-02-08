@@ -135,6 +135,14 @@ export default function ProjectDetail() {
         type="website"
       />
       <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "Projects", url: "https://www.brandonptdavis.com/projects" },
+          { name: project.title, url: `https://www.brandonptdavis.com/projects/${project.slug}` },
+        ]}
+      />
+      <StructuredData
         type="CreativeWork"
         creativeWork={{
           name: project.title,

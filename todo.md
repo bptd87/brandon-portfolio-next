@@ -1367,3 +1367,24 @@
 - [x] Include project images, dates, venue, description in schema
 - [x] Test CreativeWork schema with Google Rich Results Test
 - [x] Validate schema appears correctly on all project pages
+
+## BreadcrumbList Schema Implementation
+- [x] Add BreadcrumbList schema component to StructuredData
+- [x] Implement breadcrumbs on project detail pages
+- [x] Implement breadcrumbs on article detail pages
+- [x] Implement breadcrumbs on news detail pages
+- [x] Implement breadcrumbs on tutorial detail pages
+- [x] Test breadcrumb schema with Google Rich Results Test
+
+## VideoObject Schema for Tutorials
+- [x] Add VideoObject schema component to StructuredData
+- [x] Implement VideoObject schema on tutorial detail pages
+- [x] Include video URL, thumbnail, duration, upload date
+- [x] Test VideoObject schema with Google Rich Results Test
+
+## Article Schema for Blog Posts
+- [x] Add Article/BlogPosting schema component to StructuredData
+- [x] Implement Article schema on article detail pages
+- [x] Implement Article schema on news detail pages
+- [x] Include author, publish date, featured image, word count
+- [x] Test Article schema with Google Rich Results Test

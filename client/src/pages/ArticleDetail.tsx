@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { getCategoryColor } from "@/lib/categoryColors";
 import Comments from "@/components/Comments";
 import { SEO } from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 
 // Decode HTML entities
 const decodeHTMLEntities = (text: string): string => {
@@ -306,6 +307,36 @@ export default function ArticleDetail() {
         author="Brandon PT Davis"
         publishedTime={article.publishedAt?.toISOString()}
         modifiedTime={article.updatedAt?.toISOString()}
+      />
+      <StructuredData
+        type="Article"
+        article={{
+          headline: article.title,
+          description: article.excerpt || undefined,
+          image: article.coverImageUrl || undefined,
+          author: {
+            name: "Brandon PT Davis",
+            url: "https://www.brandonptdavis.com/about",
+          },
+          datePublished: article.publishedAt ? new Date(article.publishedAt).toISOString() : new Date(article.createdAt).toISOString(),
+          dateModified: article.updatedAt ? new Date(article.updatedAt).toISOString() : undefined,
+          publisher: {
+            name: "Brandon PT Davis Design",
+            logo: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YiqCsZPgtoSSsQyE.png",
+          },
+          url: `https://www.brandonptdavis.com/articles/${article.slug}`,
+          wordCount: wordCount,
+          keywords: article.seoKeywords?.split(',').map(k => k.trim()) || [],
+        }}
+      />
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "Articles", url: "https://www.brandonptdavis.com/articles" },
+          { name: article.title, url: `https://www.brandonptdavis.com/articles/${article.slug}` },
+        ]}
+
       />
       <Header />
 

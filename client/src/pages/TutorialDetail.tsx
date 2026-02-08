@@ -8,6 +8,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
+import StructuredData from "@/components/StructuredData";
+import { SEO } from "@/components/SEO";
 
 export default function TutorialDetail() {
   const params = useParams();
@@ -2309,8 +2311,44 @@ The final section introduces the powerful Duplicate Along Path feature, which al
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   };
 
+  // Convert duration to ISO 8601 format (PT10M30S)
+  const durationISO = typeof tutorial.duration === 'number' 
+    ? `PT${Math.floor(tutorial.duration / 60)}M${tutorial.duration % 60}S`
+    : undefined;
+
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO
+        title={`${tutorial.title} | Brandon PT Davis`}
+        description={tutorial.description}
+        url={`https://www.brandonptdavis.com/studio/tutorials/${tutorial.slug}`}
+        type="website"
+      />
+      <StructuredData
+        type="VideoObject"
+        videoObject={{
+          name: tutorial.title,
+          description: tutorial.description,
+          thumbnailUrl: `https://img.youtube.com/vi/${tutorial.youtubeId}/maxresdefault.jpg`,
+          uploadDate: tutorial.uploadDate,
+          duration: durationISO,
+          embedUrl: `https://www.youtube.com/embed/${tutorial.youtubeId}`,
+          contentUrl: `https://www.youtube.com/watch?v=${tutorial.youtubeId}`,
+          publisher: {
+            name: "Brandon PT Davis Design",
+            logo: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YiqCsZPgtoSSsQyE.png",
+          },
+        }}
+      />
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "Studio", url: "https://www.brandonptdavis.com/studio" },
+          { name: "Tutorials", url: "https://www.brandonptdavis.com/studio/tutorials" },
+          { name: tutorial.title, url: `https://www.brandonptdavis.com/studio/tutorials/${tutorial.slug}` },
+        ]}
+      />
       <Header />
 
       {/* Tutorial Header */}
