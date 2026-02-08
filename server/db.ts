@@ -294,7 +294,29 @@ export async function getAllNews(filters?: { status?: 'draft' | 'published' | 'a
   const db = await getDb();
   if (!db) return [];
 
-  let query = db.select().from(news).$dynamic();
+  let query = db.select({
+    id: news.id,
+    title: news.title,
+    slug: news.slug,
+    excerpt: news.excerpt,
+    categoryId: news.categoryId,
+    coverImageUrl: news.coverImageUrl,
+    coverImageKey: news.coverImageKey,
+    location: news.location,
+    date: news.date,
+    externalLink: news.externalLink,
+    tags: news.tags,
+    blocks: news.blocks,
+    status: news.status,
+    featured: news.featured,
+    seoTitle: news.seoTitle,
+    seoDescription: news.seoDescription,
+    seoKeywords: news.seoKeywords,
+    createdAt: news.createdAt,
+    updatedAt: news.updatedAt,
+    publishedAt: news.publishedAt,
+    category: categories,
+  }).from(news).leftJoin(categories, eq(news.categoryId, categories.id)).$dynamic();
 
   const conditions = [];
   if (filters?.status) conditions.push(eq(news.status, filters.status));

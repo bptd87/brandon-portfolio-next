@@ -1112,3 +1112,8 @@
 - [ ] Update database with complete content blocks
 - [ ] Verify all 4 articles display with full content and images
 - [x] Add cover images to 4 news articles (Million Dollar Quartet, Tom Buderwitz, 40 Productions, Utah Shakespeare)
+- [ ] Add categories/tags system to news articles
+- [ ] Update database schema with categories field
+- [ ] Categorize all existing articles
+- [ ] Add category filter UI to news page
+- [ ] Test category filtering functionality

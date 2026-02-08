@@ -1,0 +1,46 @@
+{
+  "query": "SELECT id, name, slug, type FROM categories WHERE type = 'news';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT id, name, slug, type FROM categories WHERE type = 'news';",
+  "rows": [
+    {
+      "id": "60010",
+      "name": "Production Debuts",
+      "slug": "production-debuts",
+      "type": "news"
+    },
+    {
+      "id": "60011",
+      "name": "Collaborations",
+      "slug": "collaborations",
+      "type": "news"
+    },
+    {
+      "id": "60012",
+      "name": "Milestones",
+      "slug": "milestones",
+      "type": "news"
+    },
+    {
+      "id": "60013",
+      "name": "Reviews & Press",
+      "slug": "reviews-press",
+      "type": "news"
+    },
+    {
+      "id": "60014",
+      "name": "Opening Nights",
+      "slug": "opening-nights",
+      "type": "news"
+    },
+    {
+      "id": "60015",
+      "name": "Season Announcements",
+      "slug": "season-announcements",
+      "type": "news"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\tslug\ttype\n60010\tProduction Debuts\tproduction-debuts\tnews\n60011\tCollaborations\tcollaborations\tnews\n60012\tMilestones\tmilestones\tnews\n60013\tReviews & Press\treviews-press\tnews\n60014\tOpening Nights\topening-nights\tnews\n60015\tSeason Announcements\tseason-announcements\tnews\n",
+  "stderr": "",
+  "execution_time_ms": 351
+}

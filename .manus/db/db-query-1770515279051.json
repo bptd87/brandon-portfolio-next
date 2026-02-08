@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO categories (name, slug, type, color, description) VALUES\n('Production Debuts', 'production-debuts', 'news', '#FF5722', 'First-time productions at major venues and significant opening nights'),\n('Collaborations', 'collaborations', 'news', '#2196F3', 'Assisting other designers or working with notable artists'),\n('Milestones', 'milestones', 'news', '#4CAF50', 'Career achievements and significant professional moments'),\n('Reviews & Press', 'reviews-press', 'news', '#9C27B0', 'Media coverage, critical reviews, and press mentions'),\n('Opening Nights', 'opening-nights', 'news', '#FF9800', 'Production premieres and opening announcements'),\n('Season Announcements', 'season-announcements', 'news', '#00BCD4', 'Upcoming season plans and commitments');",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute INSERT INTO categories (name, slug, type, color, description) VALUES\n('Production Debuts', 'production-debuts', 'news', '#FF5722', 'First-time productions at major venues and significant opening nights'),\n('Collaborations', 'collaborations', 'news', '#2196F3', 'Assisting other designers or working with notable artists'),\n('Milestones', 'milestones', 'news', '#4CAF50', 'Career achievements and significant professional moments'),\n('Reviews & Press', 'reviews-press', 'news', '#9C27B0', 'Media coverage, critical reviews, and press mentions'),\n('Opening Nights', 'opening-nights', 'news', '#FF9800', 'Production premieres and opening announcements'),\n('Season Announcements', 'season-announcements', 'news', '#00BCD4', 'Upcoming season plans and commitments');",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 362
+}

@@ -1,0 +1,190 @@
+{
+  "query": "SELECT id, title, slug, excerpt FROM news ORDER BY publishedAt DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT id, title, slug, excerpt FROM news ORDER BY publishedAt DESC;",
+  "rows": [
+    {
+      "id": "30001",
+      "title": "Returning to New Swan Theatre Festival in 2026",
+      "slug": "returning-to-new-swan-theatre-festival-2026",
+      "excerpt": "Scenic designer Brandon PT Davis returns to the New Swan Shakespeare Festival for the 2026 season, bringing his narrative-driven design approach to a repertory lineup spanning two distinct American eras."
+    },
+    {
+      "id": "30005",
+      "title": "The Orange Curtain Review Praises Million Dollar Quartet at South Coast Repertory",
+      "slug": "the-orange-curtain-review-praises-million-dollar-quartet-at-south-coast-repertory",
+      "excerpt": "The Orange Curtain Review praises Million Dollar Quartet at South Coast Repertory for its high-energy performances and thoughtful engagement with the cultural and economic realities behind early rock ’n’ roll."
+    },
+    {
+      "id": "1",
+      "title": "Making My SCR Debut: Million Dollar Quartet (2025)",
+      "slug": "million-dollar-quartet-scr-debut",
+      "excerpt": "Co-designing my first production at South Coast Repertory, one of the nation's leading regional theaters."
+    },
+    {
+      "id": "2",
+      "title": "Assisting Tom Buderwitz on The Play That Goes Wrong at Seattle Rep",
+      "slug": "assisting-the-play-that-goes-wrong",
+      "excerpt": "Working with Tom Buderwitz on this hilarious comedy at Seattle Repertory Theatre."
+    },
+    {
+      "id": "3",
+      "title": "40 Productions at Okoboji Summer Theatre",
+      "slug": "40-productions-at-okoboji-summer-theatre",
+      "excerpt": "Celebrating a milestone: my 40th scenic design for Okoboji Summer Theatre."
+    },
+    {
+      "id": "30009",
+      "title": "Opening Night: Deathtrap at Okoboji Summer Theatre",
+      "slug": "deathtrap-opening-ost",
+      "excerpt": "Ira Levin's clever thriller opens at OST."
+    },
+    {
+      "id": "4",
+      "title": "Fifth Season Assisting Jo Winiarski — Utah Shakespeare Festival",
+      "slug": "fifth-season-utah-shakespeare-festival",
+      "excerpt": "Returning for my fifth season as assistant scenic designer at Utah Shakespeare Festival."
+    },
+    {
+      "id": "30011",
+      "title": "My Season as Scenic Designer for New Swan Shakespeare Festival (2025)",
+      "slug": "new-swan-season-2025",
+      "excerpt": "Designing two Shakespeare productions for New Swan's outdoor amphitheater."
+    },
+    {
+      "id": "30012",
+      "title": "Opening Night: Romero at University of Missouri",
+      "slug": "romero-opening-university-of-missouri",
+      "excerpt": "World premiere production exploring the life and martyrdom of Archbishop Óscar Romero."
+    },
+    {
+      "id": "30013",
+      "title": "Scenic Design for Okoboji Summer Theatre — Summer 2025 Season",
+      "slug": "okoboji-summer-2025-season",
+      "excerpt": "I’m excited to return to Okoboji Summer Theatre as the scenic designer for three productions in the 2025 season. This summer’s lineup spans romantic comedy, psychological thriller, and classic musical theatre—offering a dynamic range of storytelling and design challenges in a place that continues to feel like a creative home."
+    },
+    {
+      "id": "30014",
+      "title": "Shut Up, Sherlock Praised in SLO Review",
+      "slug": "shut-up-sherlock-praised",
+      "excerpt": "The Great American Melodrama's production receives positive review."
+    },
+    {
+      "id": "30015",
+      "title": "Opening Night: How to Succeed in Business Without Really Trying at OST",
+      "slug": "how-to-succeed-opening-ost",
+      "excerpt": "The classic Pulitzer Prize-winning musical opens at Okoboji Summer Theatre."
+    },
+    {
+      "id": "30016",
+      "title": "Guys on Ice Receives Praise in SLO Review",
+      "slug": "guys-on-ice-slo-review",
+      "excerpt": "Guys on Ice at The Great American Melodrama received a warm and generous review from SLO Review, praising the production’s heart, humor, and collaborative craft. The review specifically highlights my scenic design, noting how the intimate ice shanty setting supports the show’s slice-of-life storytelling and emotional warmth."
+    },
+    {
+      "id": "30017",
+      "title": "Freaky Friday at Okoboji Summer Theatre Receives Praise",
+      "slug": "freaky-friday-review",
+      "excerpt": "Local critics praise the inventive scenic design for this family musical."
+    },
+    {
+      "id": "5",
+      "title": "Joining United Scenic Artists, Local USA 829",
+      "slug": "united-scenic-artists-local-usa-829",
+      "excerpt": "Officially joining the union for professional scenic, lighting, and costume designers."
+    },
+    {
+      "id": "30019",
+      "title": "Forum at Theatre SilCo Featured in Summit Daily",
+      "slug": "forum-review",
+      "excerpt": "A Funny Thing Happened on the Way to the Forum receives local press coverage."
+    },
+    {
+      "id": "30020",
+      "title": "2024 Okoboji Summer Theatre Season – Scenic Designs Announced",
+      "slug": "okoboji-summer-2024-season",
+      "excerpt": "Season announcement for summer 2024 at Okoboji Summer Theatre."
+    },
+    {
+      "id": "30021",
+      "title": "Scenic Design for ¡Lotería: Game On! at Theatre SilCo",
+      "slug": "loteria-theatre-silco",
+      "excerpt": "Immersive bilingual production blending theatre and game show elements."
+    },
+    {
+      "id": "30022",
+      "title": "Assisting My First Off-Broadway Show — The Fears (April–May 2023)",
+      "slug": "assisting-the-fears",
+      "excerpt": "Assistant scenic designer for The Fears at Pershing Square Signature Center in New York."
+    },
+    {
+      "id": "30023",
+      "title": "Stephens College Update: Looking Ahead to Spring 2022",
+      "slug": "stephens-college-update-spring-2022",
+      "excerpt": "Updates on teaching and productions at Stephens College."
+    },
+    {
+      "id": "30024",
+      "title": "Returning to Stephens College as Assistant Professor of Scenic Design",
+      "slug": "returning-to-stephens-college",
+      "excerpt": "Joining the faculty at Stephens College to teach scenic design."
+    },
+    {
+      "id": "30025",
+      "title": "Scenic Design for Lysistrata at UTEP — Spring 2021",
+      "slug": "lysistrata-utep-spring-2021",
+      "excerpt": "Immersive scenic design for Aristophanes' Greek comedy."
+    },
+    {
+      "id": "30026",
+      "title": "Graduating from UCI in the Middle of a Pandemic",
+      "slug": "graduating-from-uci-pandemic",
+      "excerpt": "Completing my MFA during the COVID-19 pandemic."
+    },
+    {
+      "id": "30027",
+      "title": "New Role at UTEP — Assistant Professor of Scenic Design & Technology",
+      "slug": "new-role-utep",
+      "excerpt": "Starting a new position at University of Texas El Paso."
+    },
+    {
+      "id": "30028",
+      "title": "Company at UC Irvine Highlighted in StageSceneLA",
+      "slug": "company-review",
+      "excerpt": "Production receives critical acclaim from Los Angeles theatre critics."
+    },
+    {
+      "id": "30029",
+      "title": "The Pajama Game Receives Praise from StageSceneLA",
+      "slug": "the-pajama-game-stagescenela",
+      "excerpt": "StageSceneLA praised UC Irvine’s 2019 production of The Pajama Game, citing Brandon PT Davis’s stylish scenic design as part of a professional-caliber production that brought renewed relevance to the Golden Age musical."
+    },
+    {
+      "id": "30030",
+      "title": "Scenic Design for Parliament Square — California Premiere at UCI",
+      "slug": "parliament-square-california-premiere",
+      "excerpt": "Scenic designer Brandon PT Davis designed the set for the California premiere of Parliament Square at the University of California, Irvine, creating a visually sparse environment that amplified the play’s themes of protest, sacrifice, and conviction."
+    },
+    {
+      "id": "30031",
+      "title": "American Idiot at UC Irvine Reviewed in The Show Report",
+      "slug": "american-idiot-review",
+      "excerpt": "Scenic designer Brandon PT Davis designed the set for UC Irvine’s 2018 production of American Idiot, with The Show Report praising the dynamic scenic environment as a key contributor to the production’s impact."
+    },
+    {
+      "id": "30032",
+      "title": "Heading to UC Irvine for My MFA",
+      "slug": "heading-to-uc-irvine",
+      "excerpt": "Discover my journey to UC Irvine for an MFA. Explore insights, tips, and experiences as I embark on this academic and creative adventure."
+    },
+    {
+      "id": "30033",
+      "title": "The Foreigner Praised in The Tribune",
+      "slug": "the-foreigner-review",
+      "excerpt": "Production at The Great American Melodrama receives acclaim."
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tslug\texcerpt\n30001\tReturning to New Swan Theatre Festival in 2026\treturning-to-new-swan-theatre-festival-2026\tScenic designer Brandon PT Davis returns to the New Swan Shakespeare Festival for the 2026 season, bringing his narrative-driven design approach to a repertory lineup spanning two distinct American eras.\n30005\tThe Orange Curtain Review Praises Million Dollar Quartet at South Coast Repertory\tthe-orange-curtain-review-praises-million-dollar-quartet-at-south-coast-repertory\tThe Orange Curtain Review praises Million Dollar Quartet at South Coast Repertory for its high-energy performances and thoughtful engagement with the cultural and economic realities behind early rock ’n’ roll.\n1\tMaking My SCR Debut: Million Dollar Quartet (2025)\tmillion-dollar-quartet-scr-debut\tCo-designing my first production at South Coast Repertory, one of the nation's leading regional theaters.\n2\tAssisting Tom Buderwitz on The Play That Goes Wrong at Seattle Rep\tassisting-the-play-that-goes-wrong\tWorking with Tom Buderwitz on this hilarious comedy at Seattle Repertory Theatre.\n3\t40 Productions at Okoboji Summer Theatre\t40-productions-at-okoboji-summer-theatre\tCelebrating a milestone: my 40th scenic design for Okoboji Summer Theatre.\n30009\tOpening Night: Deathtrap at Okoboji Summer Theatre\tdeathtrap-opening-ost\tIra Levin's clever thriller opens at OST.\n4\tFifth Season Assisting Jo Winiarski — Utah Shakespeare Festival\tfifth-season-utah-shakespeare-festival\tReturning for my fifth season as assistant scenic designer at Utah Shakespeare Festival.\n30011\tMy Season as Scenic Designer for New Swan Shakespeare Festival (2025)\tnew-swan-season-2025\tDesigning two Shakespeare productions for New Swan's outdoor amphitheater.\n30012\tOpening Night: Romero at University of Missouri\tromero-opening-university-of-missouri\tWorld premiere production exploring the life and martyrdom of Archbishop Óscar Romero.\n30013\tScenic Design for Okoboji Summer Theatre — Summer 2025 Season\tokoboji-summer-2025-season\tI’m excited to return to Okoboji Summer Theatre as the scenic designer for three productions in the 2025 season. This summer’s lineup spans romantic comedy, psychological thriller, and classic musical theatre—offering a dynamic range of storytelling and design challenges in a place that continues to feel like a creative home.\n30014\tShut Up, Sherlock Praised in SLO Review\tshut-up-sherlock-praised\tThe Great American Melodrama's production receives positive review.\n30015\tOpening Night: How to Succeed in Business Without Really Trying at OST\thow-to-succeed-opening-ost\tThe classic Pulitzer Prize-winning musical opens at Okoboji Summer Theatre.\n30016\tGuys on Ice Receives Praise in SLO Review\tguys-on-ice-slo-review\tGuys on Ice at The Great American Melodrama received a warm and generous review from SLO Review, praising the production’s heart, humor, and collaborative craft. The review specifically highlights my scenic design, noting how the intimate ice shanty setting supports the show’s slice-of-life storytelling and emotional warmth.\n30017\tFreaky Friday at Okoboji Summer Theatre Receives Praise\tfreaky-friday-review\tLocal critics praise the inventive scenic design for this family musical.\n5\tJoining United Scenic Artists, Local USA 829\tunited-scenic-artists-local-usa-829\tOfficially joining the union for professional scenic, lighting, and costume designers.\n30019\tForum at Theatre SilCo Featured in Summit Daily\tforum-review\tA Funny Thing Happened on the Way to the Forum receives local press coverage.\n30020\t2024 Okoboji Summer Theatre Season – Scenic Designs Announced\tokoboji-summer-2024-season\tSeason announcement for summer 2024 at Okoboji Summer Theatre.\n30021\tScenic Design for ¡Lotería: Game On! at Theatre SilCo\tloteria-theatre-silco\tImmersive bilingual production blending theatre and game show elements.\n30022\tAssisting My First Off-Broadway Show — The Fears (April–May 2023)\tassisting-the-fears\tAssistant scenic designer for The Fears at Pershing Square Signature Center in New York.\n30023\tStephens College Update: Looking Ahead to Spring 2022\tstephens-college-update-spring-2022\tUpdates on teaching and productions at Stephens College.\n30024\tReturning to Stephens College as Assistant Professor of Scenic Design\treturning-to-stephens-college\tJoining the faculty at Stephens College to teach scenic design.\n30025\tScenic Design for Lysistrata at UTEP — Spring 2021\tlysistrata-utep-spring-2021\tImmersive scenic design for Aristophanes' Greek comedy.\n30026\tGraduating from UCI in the Middle of a Pandemic\tgraduating-from-uci-pandemic\tCompleting my MFA during the COVID-19 pandemic.\n30027\tNew Role at UTEP — Assistant Professor of Scenic Design & Technology\tnew-role-utep\tStarting a new position at University of Texas El Paso.\n30028\tCompany at UC Irvine Highlighted in StageSceneLA\tcompany-review\tProduction receives critical acclaim from Los Angeles theatre critics.\n30029\tThe Pajama Game Receives Praise from StageSceneLA\tthe-pajama-game-stagescenela\tStageSceneLA praised UC Irvine’s 2019 production of The Pajama Game, citing Brandon PT Davis’s stylish scenic design as part of a professional-caliber production that brought renewed relevance to the Golden Age musical.\n30030\tScenic Design for Parliament Square — California Premiere at UCI\tparliament-square-california-premiere\tScenic designer Brandon PT Davis designed the set for the California premiere of Parliament Square at the University of California, Irvine, creating a visually sparse environment that amplified the play’s themes of protest, sacrifice, and conviction.\n30031\tAmerican Idiot at UC Irvine Reviewed in The Show Report\tamerican-idiot-review\tScenic designer Brandon PT Davis designed the set for UC Irvine’s 2018 production of American Idiot, with The Show Report praising the dynamic scenic environment as a key contributor to the production’s impact.\n30032\tHeading to UC Irvine for My MFA\theading-to-uc-irvine\tDiscover my journey to UC Irvine for an MFA. Explore insights, tips, and experiences as I embark on this academic and creative adventure.\n30033\tThe Foreigner Praised in The Tribune\tthe-foreigner-review\tProduction at The Great American Melodrama receives acclaim.\n",
+  "stderr": "",
+  "execution_time_ms": 404
+}
