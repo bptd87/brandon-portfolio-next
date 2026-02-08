@@ -1111,3 +1111,4 @@
 - [ ] Extract full content for "Fifth Season at Utah Shakespeare"
 - [ ] Update database with complete content blocks
 - [ ] Verify all 4 articles display with full content and images
+- [x] Add cover images to 4 news articles (Million Dollar Quartet, Tom Buderwitz, 40 Productions, Utah Shakespeare)
