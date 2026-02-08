@@ -142,6 +142,19 @@ export default function StudioTutorials() {
       publishDate: "Jan 31, 2021",
       thumbnailUrl: `https://img.youtube.com/vi/ib2-H14Cx5I/maxresdefault.jpg`,
     },
+    {
+      id: 11,
+      title: "Vectorworks Tutorial: 2D Annotations and Dimensioning",
+      slug: "2d-annotations-dimensioning",
+      youtubeId: "JOlFjmY_R7o",
+      youtubeUrl: "https://www.youtube.com/watch?v=JOlFjmY_R7o",
+      description: "Master the complete workflow for creating viewports, dimensioning drawings, adding drawing labels, section markers, callouts, detail viewports, and publishing to PDF.",
+      category: "2d-drafting",
+      difficultyLevel: "intermediate",
+      duration: 1631, // 27:11 in seconds
+      publishDate: "Feb 01, 2021",
+      thumbnailUrl: `https://img.youtube.com/vi/JOlFjmY_R7o/maxresdefault.jpg`,
+    },
   ];
 
   const categories = [
