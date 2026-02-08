@@ -563,12 +563,12 @@ The tutorial covers 15+ essential tools organized into categories: navigation to
       ],
       
       keyConcepts: [
-        { term: "Sheet Layer", definition: "A layer within Vectorworks used to lay out pages for printing, similar to a physical sheet of paper where you arrange your drawings." },
-        { term: "Viewport", definition: "A window into a design layer that displays specific content on a sheet layer, allowing you to show the same drawing at different scales or views." },
-        { term: "Title Block", definition: "A standardized border and information area on a sheet that contains project details, sheet numbers, drawing titles, and other documentation metadata." },
-        { term: "Crop", definition: "A rectangle that defines which portion of a design layer will be visible in a viewport, allowing you to isolate specific drawings or details." },
-        { term: "Drawing Label", definition: "Text that identifies a viewport with a drawing number and title, automatically linked to the viewport properties for easy updates." },
-        { term: "Scale", definition: "The ratio between the size of the drawing on the sheet and the actual size of the object, such as 1/2\" = 1'-0\" for architectural drawings." },
+        { title: "SHEET LAYER", content: "A layer within Vectorworks used to lay out pages for printing, similar to a physical sheet of paper where you arrange your drawings. Sheet layers are the final output format for documentation." },
+        { title: "VIEWPORT", content: "A window into a design layer that displays specific content on a sheet layer, allowing you to show the same drawing at different scales or views. Viewports link design content to print layouts." },
+        { title: "TITLE BLOCK", content: "A standardized border and information area on a sheet that contains project details, sheet numbers, drawing titles, and other documentation metadata. Title blocks provide consistent documentation formatting." },
+        { title: "CROP", content: "A rectangle that defines which portion of a design layer will be visible in a viewport, allowing you to isolate specific drawings or details. Crops control what content appears in each viewport." },
+        { title: "DRAWING LABEL", content: "Text that identifies a viewport with a drawing number and title, automatically linked to the viewport properties for easy updates. Drawing labels maintain consistency across documentation." },
+        { title: "SCALE", content: "The ratio between the size of the drawing on the sheet and the actual size of the object, such as 1/2\" = 1'-0\" for architectural drawings. Proper scale control ensures accurate documentation." },
       ],
       
       proTips: [
