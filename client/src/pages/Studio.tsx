@@ -126,7 +126,7 @@ export default function Studio() {
                 className={`block group ${!card.available ? "cursor-not-allowed" : ""}`}
               >
                 <Card 
-                  className={`h-full border-2 border-border ${card.available ? "hover:border-primary" : ""} transition-all duration-300 ${card.available ? "hover:shadow-2xl hover:-translate-y-1" : "opacity-70"} relative overflow-hidden rounded-2xl`}
+                  className={`aspect-[3/4] border-2 border-border ${card.available ? "hover:border-primary" : ""} transition-all duration-300 ${card.available ? "hover:shadow-2xl hover:-translate-y-1" : "opacity-70"} relative overflow-hidden rounded-2xl`}
                 >
                   {card.comingSoon && (
                     <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm text-foreground text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider z-10 border border-border">
@@ -134,8 +134,8 @@ export default function Studio() {
                     </div>
                   )}
                   
-                  {/* Portrait Image */}
-                  <div className="relative aspect-[3/4] overflow-hidden">
+                  {/* Full Card Background Image */}
+                  <div className="absolute inset-0">
                     <img 
                       src={card.image} 
                       alt={card.title}
@@ -176,57 +176,64 @@ export default function Studio() {
         </div>
       </section>
 
-      {/* Quick Access Tools Section */}
-      <section className="container pb-24">
-        <AnimatedSection>
-          <div className="mb-12">
-            <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-4">
-              Quick access to tools
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl">
-              Essential calculators and references for your daily design work
-            </p>
+      {/* Quick Access Tools Section - Horizontal Scroll */}
+      <section className="pb-24">
+        <div className="container">
+          <AnimatedSection>
+            <div className="mb-8">
+              <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-4">
+                Quick access to tools
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl">
+                Essential calculators and references for your daily design work
+              </p>
+            </div>
+          </AnimatedSection>
+        </div>
+
+        {/* Horizontal Scrollable Tool Cards */}
+        <div className="overflow-x-auto scrollbar-hide">
+          <div className="container">
+            <div className="flex gap-4 pb-4">
+              {toolCards.map((tool, index) => (
+                <AnimatedSection key={tool.title} delay={index * 80}>
+                  <Link href={tool.href} className="block group flex-shrink-0">
+                    <Card className="w-[280px] border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden rounded-2xl">
+                      {/* Tool Image */}
+                      <div className="relative aspect-[4/3] overflow-hidden">
+                        <img 
+                          src={tool.image} 
+                          alt={tool.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+                        
+                        {/* Color accent */}
+                        <div 
+                          className="absolute inset-0 mix-blend-multiply opacity-20 group-hover:opacity-30 transition-opacity duration-300"
+                          style={{ backgroundColor: tool.accentColor }}
+                        />
+                      </div>
+
+                      {/* Tool Content */}
+                      <CardContent className="p-4">
+                        <h3 className="text-lg font-black tracking-tight mb-1" style={{ color: tool.accentColor }}>
+                          {tool.title}
+                        </h3>
+                        <p className="text-xs text-muted-foreground mb-3 line-clamp-2">
+                          {tool.description}
+                        </p>
+                        
+                        <div className="inline-flex items-center gap-1 font-bold text-xs group-hover:gap-2 transition-all duration-300" style={{ color: tool.accentColor }}>
+                          Launch <ArrowRight className="w-3 h-3" />
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </AnimatedSection>
+              ))}
+            </div>
           </div>
-        </AnimatedSection>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {toolCards.map((tool, index) => (
-            <AnimatedSection key={tool.title} delay={index * 80}>
-              <Link href={tool.href} className="block group">
-                <Card className="h-full border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden rounded-2xl">
-                  {/* Tool Image */}
-                  <div className="relative aspect-[16/10] overflow-hidden">
-                    <img 
-                      src={tool.image} 
-                      alt={tool.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
-                    
-                    {/* Color accent */}
-                    <div 
-                      className="absolute inset-0 mix-blend-multiply opacity-20 group-hover:opacity-30 transition-opacity duration-300"
-                      style={{ backgroundColor: tool.accentColor }}
-                    />
-                  </div>
-
-                  {/* Tool Content */}
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-black tracking-tight mb-2" style={{ color: tool.accentColor }}>
-                      {tool.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      {tool.description}
-                    </p>
-                    
-                    <div className="inline-flex items-center gap-2 font-bold text-sm group-hover:gap-3 transition-all duration-300" style={{ color: tool.accentColor }}>
-                      Launch <ArrowRight className="w-4 h-4" />
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            </AnimatedSection>
-          ))}
         </div>
       </section>
 

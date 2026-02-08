@@ -1400,3 +1400,9 @@
 - [x] Create App Studio landing page for individual apps
 - [x] Link cards to appropriate pages
 - [x] Test responsive layout on mobile/tablet
+
+## Studio Card Layout Fixes
+- [x] Fix portrait cards to fill entire card area (remove gaps)
+- [x] Convert tool cards from grid to horizontal scrollable row
+- [x] Make tool cards smaller for better scrolling experience
+- [x] Test horizontal scroll on mobile and desktop
