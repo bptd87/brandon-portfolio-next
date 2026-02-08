@@ -1182,3 +1182,5 @@
 
 - [x] Remove placeholder tutorials - keep only real "Navigating the User Interface" tutorial
 - [x] Fix tutorial card images to fill full width with no white space at top
+
+- [x] Remove gap between card image and content section in tutorial cards
