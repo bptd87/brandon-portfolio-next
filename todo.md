@@ -1132,3 +1132,7 @@
 - [x] Add NEWS dropdown menu with category filters
 - [x] Add ARTICLES dropdown menu with category filters  
 - [x] Design custom neon line-art SVG icons for all nav items (WORK, NEWS, ABOUT, ARTICLES, STUDIO)
+
+- [x] Fix navigation to use consistent orange/blue/red color scheme (not cyan/gold)
+- [x] Move icons from top-level nav to dropdown menus only
+- [x] Fix dropdown menu clickability issues
