@@ -1123,3 +1123,8 @@
 - [x] Simplify About page - remove excessive content, keep hero + 3-4 projects + brief philosophy + gallery
 - [x] Strip About page to simple bio - remove Design in Action, remove CTA cards, keep only hero + bio + gallery
 - [x] Fix About page name typography - reduce font size so full name fits without wrapping
+
+- [x] Implement auto-hide navigation (hide on scroll down, show on scroll up)
+- [x] Convert navigation dropdowns to hover-based (not click)
+- [x] Make all nav items clickable (Work, News, Articles, Studio)
+- [x] Apply neon/cyan aesthetic to navigation design
