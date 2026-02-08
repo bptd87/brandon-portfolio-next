@@ -1282,3 +1282,7 @@
 - [ ] Make H2 size consistent with computer literacy article (currently too large)
 - [ ] Restore Beowulf video joke (was removed by mistake)
 - [ ] Update hero image to match article card style (vintage computer aesthetic, not dramatic theatrical)
+
+## Article Landing Page Fixes
+- [x] Fix article card text size - too large and covering metadata
+- [x] Separate musical theatre section from regular articles on landing page
