@@ -1118,3 +1118,4 @@
 - [ ] Add category filter UI to news page
 - [ ] Test category filtering functionality
 - [ ] Add cover images to 26 remaining news articles
+- [x] Redesign About pages with bold, art-based aesthetic (larger typography, striking visuals)
