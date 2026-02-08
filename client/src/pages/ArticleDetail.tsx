@@ -455,15 +455,15 @@ export default function ArticleDetail() {
                   className="article-content article-content-${article.id} article-html-content max-w-[65ch] mx-auto
                   prose prose-lg prose-invert
                   prose-headings:font-['Playfair_Display'] prose-headings:font-bold prose-headings:font-normal prose-headings:leading-[1.2]
-                  prose-h2:text-[2.5rem] prose-h2:mt-24 prose-h2:mb-6 prose-h2:scroll-mt-24 prose-h2:leading-[1.2]
-                  prose-h3:text-[1.75rem] prose-h3:mt-12 prose-h3:mb-4 prose-h3:leading-[1.3]
-                  prose-p:text-foreground/90 prose-p:leading-[2] prose-p:mb-8 prose-p:text-[1.125rem] prose-p:font-normal prose-p:tracking-normal prose-p:text-justify
+                  prose-h2:text-[1.875rem] prose-h2:mt-16 prose-h2:mb-4 prose-h2:scroll-mt-24 prose-h2:leading-[1.3]
+                  prose-h3:text-[1.5rem] prose-h3:mt-10 prose-h3:mb-3 prose-h3:leading-[1.4]
+                  prose-p:text-foreground/90 prose-p:leading-[1.75] prose-p:mb-6 prose-p:text-[1.0625rem] prose-p:font-normal prose-p:tracking-normal
                   prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-a:font-medium
                   prose-strong:font-semibold
                   prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-8 
-                  prose-blockquote:italic prose-blockquote:text-2xl prose-blockquote:my-12 prose-blockquote:font-['Playfair_Display'] prose-blockquote:leading-[1.6]
+                  prose-blockquote:italic prose-blockquote:text-xl prose-blockquote:my-10 prose-blockquote:font-['Playfair_Display'] prose-blockquote:leading-[1.6]
                   prose-ul:my-8 prose-ol:my-8 prose-ul:leading-[2] prose-ol:leading-[2] prose-ul:list-disc prose-ol:list-decimal prose-ul:pl-8 prose-ol:pl-8
-                  prose-li:my-2 prose-li:text-[1.125rem] prose-li:leading-[2] prose-li:ml-0
+                  prose-li:my-1.5 prose-li:text-[1.0625rem] prose-li:leading-[1.75] prose-li:ml-0
                   [&_ul]:list-disc [&_ol]:list-decimal [&_li]:list-item [&_li]:ml-0
                   prose-img:rounded-2xl prose-img:my-12 prose-img:shadow-xl
                   prose-figure:my-12
@@ -487,7 +487,7 @@ export default function ArticleDetail() {
                     
                     case 'paragraph':
                       return (
-                        <p key={index} className={index === 0 ? 'first-letter:text-7xl first-letter:font-bold first-letter:mr-3 first-letter:float-left first-letter:font-[\'Playfair_Display\'] first-letter:leading-[0.8]' : ''}>
+                        <p key={index}>
                           {decodeHTMLEntities(section.content)}
                         </p>
                       );

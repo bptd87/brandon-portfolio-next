@@ -1,0 +1,154 @@
+[
+  {
+    "type": "paragraph",
+    "content": "If your students call you a tech guru, you know the flood of emails asking, \"Which computer should I buy?\" It's a rite of passage. The array of options, each tailored to a specific budget, can make anyone feel a slight sense of anxiety. But fear not! We must teach our students to thrive in today's digital world. Incorporating computer literacy into our curricula is paramount, and here's why."
+  },
+  {
+    "type": "heading",
+    "text": "Bridging Generational Gaps in Computer Literacy"
+  },
+  {
+    "type": "paragraph",
+    "content": "Society often assumes that students are inherently tech-savvy. Memes joke about Millennials teaching their Boomer bosses how to create a PDF. However, the reality is that our Gen Z students are the iPad generation. They're accustomed to mobile software designed for intuitive navigation with a few finger gestures."
+  },
+  {
+    "type": "paragraph",
+    "content": "Traditional PC software can be overwhelming with its myriad hotkeys and hidden menus. Even software like AutoCAD, which has been around since 1982, relies on a command bar that can seem archaic to digital natives."
+  },
+  {
+    "type": "heading",
+    "text": "A Curriculum Tailored to the Future"
+  },
+  {
+    "type": "paragraph",
+    "content": "I've integrated computer literacy into my Digital Rendering Course, a required class for all production students. Here's a glimpse of how I structure the course:"
+  },
+  {
+    "type": "image",
+    "url": "https://private-us-east-1.manuscdn.com/sessionFile/erhSK1Z2iEewnSpDHueKVU/sandbox/IqudthipFQtoAXlFZH1434-img-1_1770547982000_na1fn_Y29tcHV0ZXItbGl0ZXJhY3ktc3R1ZGVudC1jb2Rpbmc.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvZXJoU0sxWjJpRWV3blNwREh1ZUtWVS9zYW5kYm94L0lxdWR0aGlwRlF0b0FYbEZaSDE0MzQtaW1nLTFfMTc3MDU0Nzk4MjAwMF9uYTFmbl9ZMjl0Y0hWMFpYSXRiR2wwWlhKaFkza3RjM1IxWkdWdWRDMWpiMlJwYm1jLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSx3XzE5MjAsaF8xOTIwL2Zvcm1hdCx3ZWJwL3F1YWxpdHkscV84MCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=nPqOS0DsH489nXW6oHLgvb1K3aolITWKYfMAahnFCADuCx-prljkLlgQsODXTZfvbxLzg9ax8YmR7R0WohJGEFkqp1u4FoO-3GxYxrpIQhpRg5fo0QU4qgJ7ZQd7m5Iohd8Tt~BHXIcKKOMI~9SMt2mFHNbFaSMEy7~dF39ou-ujTcbXyVjwxFSXNrtyaZpYY19rHqZGloZNe51sEUD~KZbqa5NZztrcioLeop6FmQJhp3ggklvpDDTX~lRKCv6K2v7R1QeKWCZFtJ4bHn73zrtGEmZKd4u3KHu~PzC9Rzc36nLWHBQy0YEB4atvIbAVPfnJlicvaWBZECmcivBdaw__",
+    "alt": "Theatre student working on laptop in dramatic theatrical space with cyan stage lighting",
+    "caption": "Modern theatre students need guidance navigating traditional desktop software interfaces in professional production environments"
+  },
+  {
+    "type": "heading",
+    "text": "Day 1: Unraveling Computer Hardware"
+  },
+  {
+    "type": "list",
+    "items": [
+      "Types of Computers: Strengths and Weaknesses",
+      "Operating Systems: Demystified",
+      "Hardware Components: From Motherboards to GPUs",
+      "The Brain of the Computer: CPU and CPU Cores",
+      "Navigating Graphics: Understanding the GPU",
+      "Balancing Act: Understanding RAM",
+      "Storage Wars: SSD vs. HDD",
+      "Accessories: Their Importance"
+    ]
+  },
+  {
+    "type": "quote",
+    "text": "I've found that quirky anecdotes help demystify complex ideas. For example, I compare the CPU to the brain and the RAM to a juggler balancing coursework. This session teaches students to assess their software and hardware needs for wise investments."
+  },
+  {
+    "type": "image",
+    "url": "https://private-us-east-1.manuscdn.com/sessionFile/erhSK1Z2iEewnSpDHueKVU/sandbox/IqudthipFQtoAXlFZH1434-img-2_1770547976000_na1fn_Y29tcHV0ZXItbGl0ZXJhY3ktaGFyZHdhcmU.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvZXJoU0sxWjJpRWV3blNwREh1ZUtWVS9zYW5kYm94L0lxdWR0aGlwRlF0b0FYbEZaSDE0MzQtaW1nLTJfMTc3MDU0Nzk3NjAwMF9uYTFmbl9ZMjl0Y0hWMFpYSXRiR2wwWlhKaFkza3RhR0Z5WkhkaGNtVS5wbmc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=K~g5cZbxrbyatBzt~yLfV4R2RLeby3VfyE2AmBamGxcX2oEr7WM082L2AbuRaE~1p1kaGvkofE3ZShHtwEEhrhoj3ArjAfRphT1qa87fA1dulVqu5DDy-mA5-JtMzCXEc4hA5tf7L6CvpYrKce8eb8uxEvk70djBNVjFzTBAIn3t9FGPcb8LaHMSuELsKcW~tnf~z1M7FP-GojtnXqXYp6UKREhRuU114Z8SSreipipMzjxFflasDO3eI6gimzqkVUeXzxn~YnPYYq-ey7-2otNu9jolWWynDY2tB1K08pHWe94CJyAfuHrW7sPaXh1N-oXkD5QhPBMZ~vWNyonKtA__",
+    "alt": "Computer motherboard with CPU and cooling fan in dramatic cyan lighting",
+    "caption": "Understanding hardware components empowers students to make informed purchasing decisions based on their specific software needs"
+  },
+  {
+    "type": "heading",
+    "text": "Day 2: Mastering File Management and Storage"
+  },
+  {
+    "type": "list",
+    "items": [
+      "Organizing Chaos: File Naming Schemes",
+      "Folder Hierarchy: The Art of Organizing",
+      "Files Over Time: Managing and Removing",
+      "The Ageless Files: Storage on Physical Drives",
+      "Embracing the Cloud: Services, Benefits, and Drawbacks"
+    ]
+  },
+  {
+    "type": "quote",
+    "text": "This session teaches key file management skills. It stresses the importance of teamwork and collaboration in production environments where multiple team members need access to the same files."
+  },
+  {
+    "type": "heading",
+    "text": "Day 3: The Rise of Artificial Intelligence"
+  },
+  {
+    "type": "list",
+    "items": [
+      "A Journey Through AI History",
+      "AI vs Traditional Computing: How They Differ",
+      "Meeting Chat GPT: Understanding AI Generators",
+      "Impact of AI on the Art Industry",
+      "Ethics in AI: Navigating Uncharted Territory"
+    ]
+  },
+  {
+    "type": "paragraph",
+    "content": "The final lecture dives into the relevance of AI in today's society. It's intriguing how students know of AI tools but haven't explored them deeply. Many haven't made AI art or used ChatGPT for creative purposes. The ethics discussion sparks engaging debates and leads to personal growth."
+  },
+  {
+    "type": "image",
+    "url": "https://private-us-east-1.manuscdn.com/sessionFile/erhSK1Z2iEewnSpDHueKVU/sandbox/IqudthipFQtoAXlFZH1434-img-3_1770547990000_na1fn_Y29tcHV0ZXItbGl0ZXJhY3ktYWktaW50ZXJmYWNl.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvZXJoU0sxWjJpRWV3blNwREh1ZUtWVS9zYW5kYm94L0lxdWR0aGlwRlF0b0FYbEZaSDE0MzQtaW1nLTNfMTc3MDU0Nzk5MDAwMF9uYTFmbl9ZMjl0Y0hWMFpYSXRiR2wwWlhKaFkza3RZV2t0YVc1MFpYSm1ZV05sLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSx3XzE5MjAsaF8xOTIwL2Zvcm1hdCx3ZWJwL3F1YWxpdHkscV84MCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=j8-GoAZl56FgHJ8vTYH7444rrOH65YfL3PZaImJMjdWfnpUQgY5uusnHrCxfCpc3X6rJgAqumAmizflQAhh7hJjl3aQhAk5GCFKtquSJg~nH9jj~8vGdSdWunzlAyYY21aIlUAZJE~Mbng9gyMcO2XainTAU2WThXbtCDtZBU~6Df7oe52Bl7jZ0aS-pQqOap9YV2dNc1NHcSKaHiFTI64tOhnK-LHicfvVuievl2uZ5pxS3L6uHniiNrJJTNLBwXy~hJTtZdLyAWeOheKFupBYooVvN-w5px5hHA~oPe2Rwgn9HZiUl0yKAG15ZstBTw2Tls5xWGXk3DkPRVs3o~g__",
+    "alt": "Hands typing on laptop with holographic AI interface graphics in cyan light",
+    "caption": "Exploring AI tools opens new creative possibilities for theatre production students while raising important ethical questions"
+  },
+  {
+    "type": "heading",
+    "text": "Empowering Students for the Future"
+  },
+  {
+    "type": "paragraph",
+    "content": "The demand for tech competency in theatre production is soaring in today's digital age. We must integrate computer skills education into the theatre production curriculum to empower students to make informed decisions about the technology that supports their craft."
+  },
+  {
+    "type": "paragraph",
+    "content": "Students shouldn't rely solely on intuition when making technology choices. A well-versed student can match their hardware needs based on software specifications and find the best value for their specific requirements. This knowledge dispels the myth that they must spend thousands on a high-end computer when a mid-range option might suffice."
+  },
+  {
+    "type": "paragraph",
+    "content": "By aligning courses with current technology trends, we bridge the digital divide and make education accessible to all, regardless of background or location. This fosters a more inclusive, diverse community of theatre practitioners who will thrive in an industry increasingly driven by innovation and creativity."
+  },
+  {
+    "type": "heading",
+    "text": "Conclusion"
+  },
+  {
+    "type": "paragraph",
+    "content": "Computer literacy in our curriculums isn't just about technical skills. It's about giving students the confidence to navigate a rapidly changing digital world. We want to empower them for a future where technology plays an increasingly central role in theatre production."
+  },
+  {
+    "type": "paragraph",
+    "content": "Let's bridge the gap between generations and create a more tech-savvy, informed generation of theatre production professionals who can harness technology to bring their creative visions to life."
+  },
+  {
+    "type": "faq",
+    "questions": [
+      {
+        "question": "Why is computer literacy important for theatre students?",
+        "answer": "Theatre production increasingly relies on digital tools for design, rendering, and collaboration. Computer literacy empowers students to make informed technology decisions, understand hardware requirements for professional software, and adapt to industry-standard workflows."
+      },
+      {
+        "question": "What computer specs do theatre students actually need?",
+        "answer": "It depends on their software requirements. Students using 3D rendering software like Vectorworks need dedicated GPUs and 16GB+ RAM, while those focused on 2D drafting can work with mid-range systems. The key is matching hardware to software specifications rather than buying the most expensive option."
+      },
+      {
+        "question": "How do I teach Gen Z students about traditional PC software?",
+        "answer": "Start with relatable analogies (CPU as brain, RAM as juggler) and acknowledge their mobile-first experience. Demonstrate keyboard shortcuts gradually, explain the logic behind menu structures, and provide hands-on practice with real production scenarios."
+      },
+      {
+        "question": "Should theatre programs teach AI tools?",
+        "answer": "Yes. AI is transforming creative industries, and students need to understand both its capabilities and ethical implications. Teaching AI literacy helps students explore new creative possibilities while developing critical thinking about appropriate use cases."
+      },
+      {
+        "question": "How can I integrate computer literacy into existing curriculum?",
+        "answer": "Dedicate 2-3 class sessions within required courses (like digital rendering or technical production) to cover hardware fundamentals, file management, and emerging technologies. Use real production scenarios and student questions as teaching opportunities throughout the semester."
+      }
+    ]
+  }
+]
