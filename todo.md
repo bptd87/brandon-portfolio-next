@@ -1223,3 +1223,4 @@
 - [x] Add tutorial 8: 2D Edit and Modify Tricks with comprehensive educational content
 - [x] Fix all tutorial transcripts (1-8) - edit raw fragments into readable text with proper sentences and punctuation
 - [x] Add tutorial 9: Resource Manager Basics with comprehensive educational content and pre-formatted transcript
+- [x] Fix tutorial 9 (Resource Manager Basics) video not loading

@@ -866,7 +866,7 @@ The final section introduces the powerful Duplicate Along Path feature, which al
       id: 9,
       title: "Vectorworks Tutorial: Resource Manager Basics",
       slug: "resource-manager-basics",
-      youtubeEmbed: "https://www.youtube.com/embed/Y7trPdHxRxM",
+      youtubeId: "Y7trPdHxRxM",
       duration: "5:48",
       publishDate: "Jan 30, 2021",
       category: "Getting Started",
