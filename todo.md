@@ -1473,3 +1473,12 @@
 - [ ] Apply design checklist (header, tabs, mobile)
 - [ ] Test implementation
 - [ ] Save checkpoint
+
+## Dimension Reference Critical Fixes (User Reported - Feb 8, 2026)
+- [x] Fix category button text overlap - added flex-nowrap to prevent wrapping
+- [x] Regenerate wireframe graphics with solid gradient backgrounds (purple to blue)
+- [x] Upload improved wireframes to S3 CDN
+- [x] Update dimension items with new wireframe URLs (5 items: 2 booths, sofa, dining chair, bar stool)
+- [x] Add wireframe rendering to dimension cards with gradient background
+- [x] Test category scrolling and button visibility
+- [x] Verify wireframe images display properly without transparency artifacts

@@ -18,6 +18,7 @@ interface DimensionItem {
   diameter?: string;
   notes?: string;
   jargon?: string;
+  wireframe?: string;
 }
 
 type CategoryKey = 
@@ -87,8 +88,8 @@ const CATEGORIES: CategoryKey[] = [
 
 const DIMENSIONS: DimensionItem[] = [
   // EXPERIENTIAL - EXHIBITION
-  { name: 'Standard Booth (10\'x10\')', category: 'Experiential - Exhibition', width: '10\'-0"', depth: '10\'-0"', height: '8\'-0"', notes: 'Standard inline booth space' },
-  { name: 'Standard Booth (10\'x20\')', category: 'Experiential - Exhibition', width: '20\'-0"', depth: '10\'-0"', height: '8\'-0"', notes: 'Double inline booth' },
+  { name: 'Standard Booth (10\'x10\')', category: 'Experiential - Exhibition', width: '10\'-0"', depth: '10\'-0"', height: '8\'-0"', notes: 'Standard inline booth space', wireframe: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/UaBeGzxuajtMKUxS.png' },
+  { name: 'Standard Booth (10\'x20\')', category: 'Experiential - Exhibition', width: '20\'-0"', depth: '10\'-0"', height: '8\'-0"', notes: 'Double inline booth', wireframe: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/AJqvhxicjATTZIjO.png' },
   { name: 'Standard Booth (20\'x20\')', category: 'Experiential - Exhibition', width: '20\'-0"', depth: '20\'-0"', notes: 'Island booth, height often restricted to 16\'-20\'' },
   { name: 'BeMatrix Frame (1x2.5m)', category: 'Experiential - Exhibition', width: '992mm (39.06")', height: '2480mm (97.64")', depth: '62mm', notes: 'Industry standard modular frame system' },
   { name: 'BeMatrix Frame (1x1m)', category: 'Experiential - Exhibition', width: '992mm (39.06")', height: '992mm (39.06")', depth: '62mm' },
@@ -119,14 +120,14 @@ const DIMENSIONS: DimensionItem[] = [
   { name: 'Charging Station (Kiosk)', category: 'Experiential - Activation', width: '24"', depth: '24"', height: '60" - 72"', notes: 'Freestanding unit' },
 
   // FURNITURE - SEATING
-  { name: 'Standard Sofa (3-Seat)', category: 'Furniture - Seating', width: '84" - 96"', depth: '36" - 40"', height: '30" - 36"', notes: 'Common residential' },
+  { name: 'Standard Sofa (3-Seat)', category: 'Furniture - Seating', width: '84" - 96"', depth: '36" - 40"', height: '30" - 36"', notes: 'Common residential', wireframe: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/nYCigKyxlEWQRiKT.png' },
   { name: 'Loveseat (2-Seat)', category: 'Furniture - Seating', width: '58" - 64"', depth: '36" - 40"', height: '30" - 36"' },
   { name: 'Armchair', category: 'Furniture - Seating', width: '30" - 36"', depth: '32" - 38"', height: '30" - 36"' },
   { name: 'Club Chair', category: 'Furniture - Seating', width: '32" - 36"', depth: '34" - 38"', height: '28" - 32"' },
   { name: 'Accent Chair', category: 'Furniture - Seating', width: '26" - 30"', depth: '28" - 32"', height: '32" - 36"' },
-  { name: 'Dining Chair (Standard)', category: 'Furniture - Seating', width: '18" - 20"', depth: '20" - 24"', height: '36" - 40"' },
+  { name: 'Dining Chair (Standard)', category: 'Furniture - Seating', width: '18" - 20"', depth: '20" - 24"', height: '36" - 40"', wireframe: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/DKbnISwpWjvzirnT.png' },
   { name: 'Counter Stool', category: 'Furniture - Seating', width: '16" - 18"', depth: '16" - 18"', height: '24" - 26"' },
-  { name: 'Bar Stool (Standard)', category: 'Furniture - Seating', width: '16" - 18"', depth: '16" - 18"', height: '30"' },
+  { name: 'Bar Stool (Standard)', category: 'Furniture - Seating', width: '16" - 18"', depth: '16" - 18"', height: '30"', wireframe: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/CtIJkmDHHpJnTpyv.png' },
 
   // FURNITURE - TABLES
   { name: 'Coffee Table (Rectangle)', category: 'Furniture - Tables', width: '48" - 60"', depth: '24" - 30"', height: '16" - 18"' },
@@ -329,7 +330,12 @@ export default function DimensionReference() {
           <div 
             id="category-scroll"
             className="flex gap-2 overflow-x-auto scrollbar-hide px-10"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            style={{ 
+              scrollbarWidth: 'none', 
+              msOverflowStyle: 'none',
+              flexWrap: 'nowrap',
+              WebkitOverflowScrolling: 'touch'
+            }}
           >
             {CATEGORIES.map((category) => {
               const Icon = CATEGORY_ICONS[category];
@@ -372,9 +378,21 @@ export default function DimensionReference() {
           {filteredDimensions.map((item, index) => (
             <div
               key={index}
-              className="bg-card border border-border rounded-lg p-4 hover:shadow-md transition-shadow"
+              className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
             >
-              <div className="flex items-start justify-between mb-3">
+              {/* Wireframe Image */}
+              {item.wireframe && (
+                <div className="bg-gradient-to-br from-[#9C27B0]/10 to-[#2196F3]/10 p-6 flex items-center justify-center">
+                  <img 
+                    src={item.wireframe} 
+                    alt={`Wireframe diagram of ${item.name}`}
+                    className="w-full max-w-[200px] h-auto opacity-90"
+                  />
+                </div>
+              )}
+              
+              <div className="p-4">
+                <div className="flex items-start justify-between mb-3">
                 <div>
                   <h3 className="font-semibold text-base mb-1">{item.name}</h3>
                   <p className="text-xs text-muted-foreground">{item.category}</p>
@@ -421,22 +439,23 @@ export default function DimensionReference() {
                 )}
               </div>
 
-              {(item.notes || item.jargon) && (
-                <div className="bg-accent/50 rounded-lg p-3 text-xs space-y-2">
-                  {item.notes && (
-                    <p className="text-muted-foreground">
-                      <span className="font-bold text-[#2196F3] mr-1">NOTE:</span>
-                      {item.notes}
-                    </p>
-                  )}
-                  {item.jargon && (
-                    <p className="text-muted-foreground italic">
-                      <span className="font-bold text-[#9C27B0] mr-1">AKA:</span>
-                      {item.jargon}
-                    </p>
-                  )}
-                </div>
-              )}
+                {(item.notes || item.jargon) && (
+                  <div className="bg-accent/50 rounded-lg p-3 text-xs space-y-2">
+                    {item.notes && (
+                      <p className="text-muted-foreground">
+                        <span className="font-bold text-[#2196F3] mr-1">NOTE:</span>
+                        {item.notes}
+                      </p>
+                    )}
+                    {item.jargon && (
+                      <p className="text-muted-foreground italic">
+                        <span className="font-bold text-[#9C27B0] mr-1">AKA:</span>
+                        {item.jargon}
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
           ))}
         </div>
