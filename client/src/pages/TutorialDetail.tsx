@@ -157,42 +157,42 @@ Finally, the tutorial explores view controls, zoom functions, and workspace cust
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background text-foreground">
       <Header />
 
       {/* Tutorial Header */}
-      <section className="py-12 border-b-2 border-[#2196F3]">
+      <section className="py-12 border-b border-[#2196F3]">
         <div className="container max-w-6xl">
-          <Link href="/studio/tutorials" className="text-sm text-muted-foreground hover:text-[#2196F3] mb-4 inline-flex items-center gap-2 transition-colors">
+          <Link href="/studio/tutorials" className="text-sm text-muted-foreground hover:text-[#2196F3] mb-6 inline-flex items-center gap-2 transition-colors">
             ← Back to Tutorials
           </Link>
           
-          <div className="flex flex-wrap gap-2 mb-4">
-            <Badge className="bg-[#2196F3]/20 text-[#2196F3] border-2 border-[#2196F3] uppercase tracking-wider font-bold">
+          <div className="flex flex-wrap gap-3 mb-6">
+            <Badge className="bg-[#2196F3] text-white border border-[#2196F3] uppercase tracking-wider font-bold px-4 py-1.5 text-xs">
               {tutorial.category}
             </Badge>
-            <Badge className="bg-background border-2 border-border flex items-center gap-1 uppercase tracking-wider font-bold">
-              <TrendingUp className="w-3 h-3" />
+            <Badge className="bg-transparent text-foreground border border-border flex items-center gap-1.5 uppercase tracking-wider font-bold px-4 py-1.5 text-xs">
+              <TrendingUp className="w-3.5 h-3.5" />
               {tutorial.difficulty}
             </Badge>
-            <Badge className="bg-background border-2 border-border flex items-center gap-1 uppercase tracking-wider font-bold">
-              <Clock className="w-3 h-3" />
+            <Badge className="bg-transparent text-foreground border border-border flex items-center gap-1.5 uppercase tracking-wider font-bold px-4 py-1.5 text-xs">
+              <Clock className="w-3.5 h-3.5" />
               {formatDuration(tutorial.duration)}
             </Badge>
-            <Badge className="bg-background border-2 border-border flex items-center gap-1 uppercase tracking-wider font-bold">
-              <Calendar className="w-3 h-3" />
+            <Badge className="bg-transparent text-foreground border border-border flex items-center gap-1.5 uppercase tracking-wider font-bold px-4 py-1.5 text-xs">
+              <Calendar className="w-3.5 h-3.5" />
               {formatDate(tutorial.uploadDate)}
             </Badge>
           </div>
 
-          <h1 className="mb-6 text-4xl md:text-5xl font-bold leading-tight">{tutorial.title}</h1>
+          <h1 className="mb-4 text-4xl md:text-5xl font-bold leading-tight text-foreground">{tutorial.title}</h1>
         </div>
       </section>
 
       {/* Video Embed */}
-      <section className="py-12 bg-black border-b-2 border-[#FF5722]">
+      <section className="py-12 bg-muted/30 border-b border-border">
         <div className="container max-w-6xl">
-          <div className="aspect-video overflow-hidden shadow-2xl border-4 border-[#FF5722]">
+          <div className="aspect-video overflow-hidden rounded-lg shadow-2xl">
             <iframe
               width="100%"
               height="100%"
@@ -212,88 +212,154 @@ Finally, the tutorial explores view controls, zoom functions, and workspace cust
       <section className="py-16">
         <div className="container max-w-6xl">
           <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full grid-cols-5 h-auto p-0 bg-transparent border-b-2 border-border gap-0">
+            <TabsList className="grid w-full grid-cols-5 bg-muted/50 p-1 rounded-lg mb-8 h-auto gap-1">
               <TabsTrigger 
                 value="overview" 
-                className="data-[state=active]:bg-[#2196F3] data-[state=active]:text-white border-2 border-border data-[state=active]:border-[#2196F3] data-[state=active]:border-b-0 data-[state=active]:-mb-[2px] uppercase tracking-wider font-bold py-4 transition-all"
+                className="data-[state=active]:bg-[#2196F3] data-[state=active]:text-white data-[state=active]:shadow-lg text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
               >
                 Overview
               </TabsTrigger>
               <TabsTrigger 
                 value="concepts" 
-                className="data-[state=active]:bg-[#FF5722] data-[state=active]:text-white border-2 border-border data-[state=active]:border-[#FF5722] data-[state=active]:border-b-0 data-[state=active]:-mb-[2px] uppercase tracking-wider font-bold py-4 transition-all"
+                className="data-[state=active]:bg-[#FF5722] data-[state=active]:text-white data-[state=active]:shadow-lg text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
               >
-                Key Concepts
+                Concepts
               </TabsTrigger>
               <TabsTrigger 
                 value="reference" 
-                className="data-[state=active]:bg-[#9C27B0] data-[state=active]:text-white border-2 border-border data-[state=active]:border-[#9C27B0] data-[state=active]:border-b-0 data-[state=active]:-mb-[2px] uppercase tracking-wider font-bold py-4 transition-all"
+                className="data-[state=active]:bg-[#9C27B0] data-[state=active]:text-white data-[state=active]:shadow-lg text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
               >
                 Quick Ref
               </TabsTrigger>
               <TabsTrigger 
                 value="transcript" 
-                className="data-[state=active]:bg-[#F44336] data-[state=active]:text-white border-2 border-border data-[state=active]:border-[#F44336] data-[state=active]:border-b-0 data-[state=active]:-mb-[2px] uppercase tracking-wider font-bold py-4 transition-all"
+                className="data-[state=active]:bg-[#F44336] data-[state=active]:text-white data-[state=active]:shadow-lg text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
               >
                 Transcript
               </TabsTrigger>
               <TabsTrigger 
                 value="resources" 
-                className="data-[state=active]:bg-[#00BCD4] data-[state=active]:text-white border-2 border-border data-[state=active]:border-[#00BCD4] data-[state=active]:border-b-0 data-[state=active]:-mb-[2px] uppercase tracking-wider font-bold py-4 transition-all"
+                className="data-[state=active]:bg-[#00BCD4] data-[state=active]:text-white data-[state=active]:shadow-lg text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
               >
                 Resources
               </TabsTrigger>
             </TabsList>
 
             {/* Overview Tab */}
-            <TabsContent value="overview" className="mt-8 border-2 border-border p-8 bg-background">
-              <h2 className="text-2xl font-bold mb-6 text-[#2196F3] uppercase tracking-wider">What You'll Learn</h2>
-              <div className="space-y-3 mb-12">
-                {tutorial.learningObjectives.map((objective, index) => (
-                  <div key={index} className="flex items-start gap-3 group">
-                    <div className="w-2 h-2 bg-[#2196F3] mt-2 flex-shrink-0 group-hover:w-4 transition-all"></div>
-                    <span className="text-muted-foreground leading-relaxed">{objective}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="border-t-2 border-[#2196F3] pt-8">
-                <h3 className="text-xl font-bold mb-4 uppercase tracking-wider">Tutorial Overview</h3>
-                <div className="space-y-4">
-                  {tutorial.overview.split('\n\n').map((paragraph, index) => (
-                    <p key={index} className="text-muted-foreground leading-relaxed">
-                      {paragraph}
-                    </p>
+            <TabsContent value="overview" className="mt-0">
+              <div className="border border-border rounded-lg p-8 bg-card">
+                <h2 className="text-2xl font-bold mb-6 text-[#2196F3] uppercase tracking-wider">What You'll Learn</h2>
+                <div className="space-y-3 mb-12">
+                  {tutorial.learningObjectives.map((objective, index) => (
+                    <div key={index} className="flex items-start gap-3 group">
+                      <div className="w-1.5 h-1.5 bg-[#2196F3] mt-2 flex-shrink-0 group-hover:w-3 transition-all"></div>
+                      <span className="text-foreground leading-relaxed">{objective}</span>
+                    </div>
                   ))}
+                </div>
+
+                <div className="border-t border-[#2196F3] pt-8">
+                  <h3 className="text-xl font-bold mb-4 uppercase tracking-wider text-foreground">Tutorial Overview</h3>
+                  <div className="space-y-4">
+                    {tutorial.overview.split('\n\n').map((paragraph, index) => (
+                      <p key={index} className="text-muted-foreground leading-relaxed">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
                 </div>
               </div>
             </TabsContent>
 
             {/* Key Concepts Tab */}
-            <TabsContent value="concepts" className="mt-8 border-2 border-border p-8 bg-background">
-              <h2 className="text-2xl font-bold mb-8 text-[#FF5722] uppercase tracking-wider">Key Concepts</h2>
-              <div className="space-y-8">
-                {tutorial.keyConcepts.map((concept, index) => (
-                  <div key={index} className="border-l-4 border-[#FF5722] pl-6 py-4 bg-[#FF5722]/5">
-                    <div className="flex items-start gap-3 mb-3">
-                      <Lightbulb className="w-6 h-6 text-[#FF5722] flex-shrink-0 mt-1" />
-                      <h3 className="font-bold text-lg uppercase tracking-wider">{concept.title}</h3>
+            <TabsContent value="concepts" className="mt-0">
+              <div className="border border-border rounded-lg p-8 bg-card">
+                <h2 className="text-2xl font-bold mb-8 text-[#FF5722] uppercase tracking-wider">Key Concepts</h2>
+                <div className="space-y-8">
+                  {tutorial.keyConcepts.map((concept, index) => (
+                    <div key={index} className="border-l-4 border-[#FF5722] pl-6 py-4 bg-[#FF5722]/10 rounded-r">
+                      <div className="flex items-start gap-3 mb-3">
+                        <Lightbulb className="w-6 h-6 text-[#FF5722] flex-shrink-0 mt-1" />
+                        <h3 className="font-bold text-lg uppercase tracking-wider text-foreground">{concept.title}</h3>
+                      </div>
+                      <p className="text-muted-foreground leading-relaxed">
+                        {concept.content}
+                      </p>
                     </div>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {concept.content}
-                    </p>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
 
-              <div className="border-t-2 border-[#FF5722] mt-12 pt-8">
-                <h3 className="text-xl font-bold mb-6 text-[#FF5722] uppercase tracking-wider">Pro Tips</h3>
-                <div className="grid md:grid-cols-2 gap-6">
-                  {tutorial.proTips.map((tip, index) => (
-                    <div key={index} className="border-2 border-[#FF5722] p-4 bg-[#FF5722]/5">
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        <span className="font-bold text-[#FF5722] block mb-2 uppercase tracking-wider">PRO TIP</span>
-                        {tip}
+                <div className="border-t border-[#FF5722] mt-12 pt-8">
+                  <h3 className="text-xl font-bold mb-6 text-[#FF5722] uppercase tracking-wider">Pro Tips</h3>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    {tutorial.proTips.map((tip, index) => (
+                      <div key={index} className="border border-[#FF5722] rounded-lg p-4 bg-[#FF5722]/10">
+                        <p className="text-sm text-foreground leading-relaxed">
+                          <span className="font-bold text-[#FF5722] block mb-2 uppercase tracking-wider">PRO TIP</span>
+                          {tip}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* Quick Reference Tab */}
+            <TabsContent value="reference" className="mt-0">
+              <div className="border border-border rounded-lg p-8 bg-card">
+                <div className="grid md:grid-cols-2 gap-12">
+                  {/* Shortcuts */}
+                  <div>
+                    <h3 className="font-bold text-xl mb-6 flex items-center gap-3 text-[#9C27B0] uppercase tracking-wider">
+                      <Keyboard className="w-6 h-6" />
+                      Essential Shortcuts
+                    </h3>
+                    <div className="space-y-4">
+                      {tutorial.shortcuts.map((shortcut, index) => (
+                        <div key={index} className="border border-[#9C27B0] rounded-lg p-4 bg-[#9C27B0]/10">
+                          <code className="text-sm font-mono text-[#9C27B0] font-bold block mb-2">
+                            {shortcut.keys}
+                          </code>
+                          <span className="text-sm text-muted-foreground">
+                            {shortcut.action}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Common Pitfalls */}
+                  <div>
+                    <h3 className="font-bold text-xl mb-6 flex items-center gap-3 text-[#9C27B0] uppercase tracking-wider">
+                      <AlertCircle className="w-6 h-6" />
+                      Common Pitfalls
+                    </h3>
+                    <div className="space-y-3">
+                      {tutorial.commonPitfalls.map((pitfall, index) => (
+                        <div key={index} className="flex items-start gap-3 border-l-4 border-[#9C27B0] pl-4 py-2 bg-[#9C27B0]/5 rounded-r">
+                          <span className="text-[#9C27B0] flex-shrink-0 font-bold">×</span>
+                          <span className="text-sm text-foreground">{pitfall}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* Transcript Tab */}
+            <TabsContent value="transcript" className="mt-0">
+              <div className="border border-border rounded-lg p-8 bg-card">
+                <h2 className="text-2xl font-bold mb-8 text-[#F44336] uppercase tracking-wider">Full Transcript</h2>
+                <div className="space-y-4 font-mono text-sm">
+                  {tutorial.transcript.map((entry, index) => (
+                    <div key={index} className="flex gap-6 hover:bg-[#F44336]/10 p-3 rounded transition-colors border-l-2 border-transparent hover:border-[#F44336]">
+                      <span className="text-[#F44336] flex-shrink-0 w-16 font-bold">
+                        {entry.time}
+                      </span>
+                      <p className="text-foreground leading-relaxed">
+                        {entry.text}
                       </p>
                     </div>
                   ))}
@@ -301,109 +367,53 @@ Finally, the tutorial explores view controls, zoom functions, and workspace cust
               </div>
             </TabsContent>
 
-            {/* Quick Reference Tab */}
-            <TabsContent value="reference" className="mt-8 border-2 border-border p-8 bg-background">
-              <div className="grid md:grid-cols-2 gap-12">
-                {/* Shortcuts */}
-                <div>
-                  <h3 className="font-bold text-xl mb-6 flex items-center gap-3 text-[#9C27B0] uppercase tracking-wider">
-                    <Keyboard className="w-6 h-6" />
-                    Essential Shortcuts
-                  </h3>
-                  <div className="space-y-4">
-                    {tutorial.shortcuts.map((shortcut, index) => (
-                      <div key={index} className="border-2 border-[#9C27B0] p-4 bg-[#9C27B0]/5">
-                        <code className="text-sm font-mono text-[#9C27B0] font-bold block mb-2">
-                          {shortcut.keys}
-                        </code>
-                        <span className="text-sm text-muted-foreground">
-                          {shortcut.action}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Common Pitfalls */}
-                <div>
-                  <h3 className="font-bold text-xl mb-6 flex items-center gap-3 text-[#9C27B0] uppercase tracking-wider">
-                    <AlertCircle className="w-6 h-6" />
-                    Common Pitfalls
-                  </h3>
-                  <div className="space-y-3">
-                    {tutorial.commonPitfalls.map((pitfall, index) => (
-                      <div key={index} className="flex items-start gap-3 border-l-4 border-[#9C27B0] pl-4 py-2">
-                        <span className="text-[#9C27B0] flex-shrink-0 font-bold">×</span>
-                        <span className="text-sm text-muted-foreground">{pitfall}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </TabsContent>
-
-            {/* Transcript Tab */}
-            <TabsContent value="transcript" className="mt-8 border-2 border-border p-8 bg-background">
-              <h2 className="text-2xl font-bold mb-8 text-[#F44336] uppercase tracking-wider">Full Transcript</h2>
-              <div className="space-y-4 font-mono text-sm">
-                {tutorial.transcript.map((entry, index) => (
-                  <div key={index} className="flex gap-6 hover:bg-[#F44336]/5 p-2 transition-colors border-l-2 border-transparent hover:border-[#F44336]">
-                    <span className="text-[#F44336] flex-shrink-0 w-16 font-bold">
-                      {entry.time}
-                    </span>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {entry.text}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </TabsContent>
-
             {/* Resources Tab */}
-            <TabsContent value="resources" className="mt-8 border-2 border-border p-8 bg-background">
-              <h2 className="text-2xl font-bold mb-8 text-[#00BCD4] uppercase tracking-wider">Related Resources</h2>
-              
-              <div className="space-y-6 mb-12">
-                {tutorial.relatedResources.map((resource, index) => (
-                  <a
-                    key={index}
-                    href={resource.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block border-2 border-border hover:border-[#00BCD4] p-6 transition-all group bg-background hover:bg-[#00BCD4]/5"
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
-                          <Badge className="bg-[#00BCD4]/20 text-[#00BCD4] border-2 border-[#00BCD4] uppercase tracking-wider font-bold text-xs">
-                            {resource.type}
-                          </Badge>
+            <TabsContent value="resources" className="mt-0">
+              <div className="border border-border rounded-lg p-8 bg-card">
+                <h2 className="text-2xl font-bold mb-8 text-[#00BCD4] uppercase tracking-wider">Related Resources</h2>
+                
+                <div className="space-y-4 mb-12">
+                  {tutorial.relatedResources.map((resource, index) => (
+                    <a
+                      key={index}
+                      href={resource.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block border border-border hover:border-[#00BCD4] rounded-lg p-6 transition-all group bg-card hover:bg-[#00BCD4]/10"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-2">
+                            <Badge className="bg-[#00BCD4] text-white border-0 uppercase tracking-wider font-bold text-xs px-3 py-1">
+                              {resource.type}
+                            </Badge>
+                          </div>
+                          <h3 className="font-bold text-lg mb-2 group-hover:text-[#00BCD4] transition-colors text-foreground">
+                            {resource.title}
+                          </h3>
                         </div>
-                        <h3 className="font-bold text-lg mb-2 group-hover:text-[#00BCD4] transition-colors">
-                          {resource.title}
-                        </h3>
+                        <ExternalLink className="w-5 h-5 text-[#00BCD4] flex-shrink-0 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                       </div>
-                      <ExternalLink className="w-5 h-5 text-[#00BCD4] flex-shrink-0 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                    </div>
-                  </a>
-                ))}
-              </div>
-
-              <div className="border-t-2 border-[#00BCD4] pt-8">
-                <h3 className="text-xl font-bold mb-6 uppercase tracking-wider">Continue Learning</h3>
-                <div className="grid md:grid-cols-3 gap-6">
-                  {tutorial.relatedTutorials.map((related, index) => (
-                    <Link key={index} href={`/studio/tutorials/${related.slug}`}>
-                      <div className="border-2 border-border hover:border-[#00BCD4] p-6 transition-all group bg-background hover:bg-[#00BCD4]/5 h-full">
-                        <h4 className="font-semibold mb-3 group-hover:text-[#00BCD4] transition-colors">
-                          {related.title}
-                        </h4>
-                        <div className="flex items-center gap-2 text-sm text-[#00BCD4] group-hover:gap-3 transition-all uppercase tracking-wider font-bold">
-                          Watch Tutorial <ArrowRight className="w-4 h-4" />
-                        </div>
-                      </div>
-                    </Link>
+                    </a>
                   ))}
+                </div>
+
+                <div className="border-t border-[#00BCD4] pt-8">
+                  <h3 className="text-xl font-bold mb-6 uppercase tracking-wider text-foreground">Continue Learning</h3>
+                  <div className="grid md:grid-cols-3 gap-6">
+                    {tutorial.relatedTutorials.map((related, index) => (
+                      <Link key={index} href={`/studio/tutorials/${related.slug}`}>
+                        <div className="border border-border hover:border-[#00BCD4] rounded-lg p-6 transition-all group bg-card hover:bg-[#00BCD4]/10 h-full">
+                          <h4 className="font-semibold mb-3 group-hover:text-[#00BCD4] transition-colors text-foreground">
+                            {related.title}
+                          </h4>
+                          <div className="flex items-center gap-2 text-sm text-[#00BCD4] group-hover:gap-3 transition-all uppercase tracking-wider font-bold">
+                            Watch Tutorial <ArrowRight className="w-4 h-4" />
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
             </TabsContent>
