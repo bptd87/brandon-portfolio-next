@@ -133,7 +133,7 @@ export default function ScaleCalculator() {
       {/* Compact Hero with Header Image */}
       <section className="relative h-[30vh] md:h-[35vh] overflow-hidden border-b border-border">
         <img 
-          src="https://s3.us-west-1.amazonaws.com/manus.static.files/scale-header.webp"
+          src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/lnzkWrrrBVEdEMDu.webp"
           alt="Scale Calculator - Precision conversion for theatrical drafting" 
           className="absolute inset-0 w-full h-full object-cover"
         />

@@ -1449,3 +1449,8 @@
 - [x] Fix tab colors to fill entire box (bg-[#2196F3] text-white)
 - [x] Test header image and alignment
 - [x] Test tab styling
+
+## Fix Missing Header Image
+- [x] Upload scale-header.webp to S3
+- [x] Update Scale Calculator with correct S3 URL
+- [x] Test image loads correctly
