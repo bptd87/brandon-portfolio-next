@@ -1089,3 +1089,16 @@
 - [x] Fix missing or incomplete text/content blocks (content blocks rendering correctly)
 - [x] Add 5 relevant tags to each news article (30 articles updated with relevant tags)
 - [x] Verify all news articles display correctly (tags and external links showing)
+
+## News Articles Image Fixes
+- [ ] Find "Making My SCR Debut" article and add cover image
+- [ ] Find "Assisting Tom" article and add cover image
+- [ ] Find "40 production" article and add cover image
+- [ ] Verify all three articles display with proper cards on news page
+
+## News Articles Image Fixes - COMPLETED
+- [x] Find "Making My SCR Debut" article and add cover image (Brandon with scenic model at SCR)
+- [x] Find "Assisting Tom Buderwitz" article and add cover image (The Play That Goes Wrong production photo)
+- [x] Find "40 Productions at Okoboji" article and add cover image (40 production collage)
+- [x] Find "Fifth Season at Utah Shakespeare" article and add cover image (The Importance of Being Earnest)
+- [x] Verify all four articles display with proper cards on news page
