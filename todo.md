@@ -1515,3 +1515,17 @@
 ## RelatedTools Component Fix (User Reported - Feb 8, 2026)
 - [x] Fix nested anchor tags error in RelatedTools component
 - [x] Test Design History Timeline page after fix
+
+## Design History Timeline Image Improvements (User Requested - Feb 8, 2026)
+- [x] Search for better interior/exterior Wikipedia images for Ancient periods (Egyptian, Greek, Roman)
+- [x] Search for Medieval period images (Byzantine, Gothic)
+- [x] Search for Renaissance and Baroque period images
+- [x] Search for Neoclassical and Revival period images
+- [x] Search for 19th century period images (Beaux-Arts, Arts & Crafts, Art Nouveau)
+- [x] Search for Early Modernism images (Chicago School, Art Deco)
+- [x] Search for High Modernism images (Bauhaus, De Stijl, International Style)
+- [x] Search for Mid-Century and Late Modern images (Mid-Century Modern, Brutalism, Metabolism, High-Tech)
+- [x] Search for Postmodern and Contemporary images (Postmodernism, Deconstructivism, Minimalism, Parametricism, Sustainable, Contemporary)
+- [x] Upload all new images to S3 (76 images uploaded successfully)
+- [x] Update DESIGN_PERIODS data with new image URLs (28 periods updated)
+- [x] Test all images load correctly and represent periods accurately

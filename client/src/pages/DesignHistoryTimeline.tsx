@@ -31,7 +31,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Monumentality', 'Symmetry', 'Religious symbolism', 'Stone construction'],
     keyFigures: ['Imhotep'],
     notableWorks: ['Great Pyramids of Giza', 'Temple of Karnak', 'Abu Simbel'],
-    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/SJWXmioFZivDCJbc.jpg',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/RbmPrTmOJuyxCrBB.jpg',
     colors: ['#D4AF37', '#8B4513', '#F4E4C1', '#2C1810', '#E8D4A8']
   },
   {
@@ -44,7 +44,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Classical orders', 'Proportion', 'Harmony', 'Democratic spaces'],
     keyFigures: ['Iktinos', 'Kallikrates', 'Phidias'],
     notableWorks: ['Parthenon', 'Temple of Athena Nike', 'Erechtheion'],
-    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/ZwIyAaQMKkIGgZCE.jpg',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/DbKsoYfWnwCnXBtw.png',
     colors: ['#FFFFFF', '#F5F5DC', '#4A90E2', '#8B0000', '#DAA520']
   },
   {
@@ -57,7 +57,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Arches and vaults', 'Concrete', 'Engineering', 'Urban planning'],
     keyFigures: ['Vitruvius'],
     notableWorks: ['Colosseum', 'Pantheon', 'Roman aqueducts', 'Forum'],
-    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/tKJneBWrTrrjtGcY.jpg',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/lUGVcqGkgPAPTBTm.jpg',
     colors: ['#8B0000', '#DAA520', '#F5DEB3', '#8B4513', '#2F4F4F']
   },
 
@@ -71,7 +71,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     description: 'Domes, mosaics, religious iconography, centralized plans, rich decoration',
     characteristics: ['Domes', 'Mosaics', 'Religious iconography', 'Rich decoration'],
     notableWorks: ['Hagia Sophia', 'San Vitale', 'St. Mark\'s Basilica'],
-    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/KyWdIuOOdLcntBCm.jpg',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/NNliXuwYhdKvklLt.webp',
     colors: ['#FFD700', '#4B0082', '#8B0000', '#00008B', '#228B22']
   },
   {
@@ -83,7 +83,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     description: 'Pointed arches, ribbed vaults, flying buttresses, large stained glass windows, verticality',
     characteristics: ['Pointed arches', 'Flying buttresses', 'Stained glass', 'Verticality'],
     notableWorks: ['Notre-Dame de Paris', 'Chartres Cathedral', 'Cologne Cathedral'],
-    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/NhVpVyBoxdiJOuha.jpg',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/VftWcDsYMgyyGqcn.jpg',
     colors: ['#4169E1', '#DC143C', '#FFD700', '#4B0082', '#2F4F4F']
   },
 
@@ -98,7 +98,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Classical revival', 'Symmetry', 'Proportion', 'Humanism'],
     keyFigures: ['Brunelleschi', 'Alberti', 'Michelangelo', 'Palladio'],
     notableWorks: ['Florence Cathedral dome', 'St. Peter\'s Basilica', 'Villa Rotonda'],
-    imageUrl: 'https://images.unsplash.com/photo-1534445538923-caae0c611d42?w=800',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/LvbmuucdrZuhcsEq.jpg',
     colors: ['#8B4513', '#D4AF37', '#F5DEB3', '#8B0000', '#2F4F4F']
   },
   {
@@ -111,7 +111,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Drama', 'Grandeur', 'Curved forms', 'Ornate decoration'],
     keyFigures: ['Bernini', 'Borromini', 'Wren'],
     notableWorks: ['St. Peter\'s Square', 'Palace of Versailles', 'St. Paul\'s Cathedral'],
-    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/WauxmwkLkcjUOKlo.jpg',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/czlAbJQAwJbYKQsB.jpg',
     colors: ['#FFD700', '#8B0000', '#4B0082', '#F5DEB3', '#2F4F4F']
   },
   {
@@ -123,7 +123,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     description: 'Lightness, elegance, playfulness, ornate decoration, pastel colors, asymmetry',
     characteristics: ['Lightness', 'Elegance', 'Ornate', 'Asymmetry'],
     notableWorks: ['Hôtel de Soubise', 'Sanssouci Palace', 'Amalienburg'],
-    imageUrl: 'https://images.unsplash.com/photo-1586772002130-b0e1c00d62fc?w=800',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/hGkKoYbTvBtkIBcZ.jpeg',
     colors: ['#FFB6C1', '#E6E6FA', '#FFFACD', '#F0E68C', '#DDA0DD']
   },
 
@@ -191,7 +191,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Organic forms', 'Flowing lines', 'Nature motifs', 'Decorative arts'],
     keyFigures: ['Victor Horta', 'Antoni Gaudí', 'Hector Guimard'],
     notableWorks: ['Hôtel Tassel', 'Sagrada Família', 'Paris Métro entrances'],
-    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/mAywDuVcNrWccWZS.jpg',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/aEVpyRsNZldTYJFQ.jpg',
     colors: ['#556B2F', '#DAA520', '#8B4513', '#9370DB', '#2F4F4F']
   },
 
@@ -219,7 +219,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Geometric ornament', 'Luxury', 'Streamlined', 'Modern materials'],
     keyFigures: ['William Van Alen', 'Raymond Hood'],
     notableWorks: ['Chrysler Building', 'Rockefeller Center', 'Radio City Music Hall'],
-    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/nGJAWKvpqLyQFTNt.jpg',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/QeCJmseOsSWUfkJM.jpg',
     colors: ['#FFD700', '#000000', '#C0C0C0', '#8B0000', '#4B0082']
   },
 
@@ -234,7 +234,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Functionalism', 'Geometric', 'Integration of arts', 'Modern materials'],
     keyFigures: ['Walter Gropius', 'Ludwig Mies van der Rohe', 'Marcel Breuer'],
     notableWorks: ['Bauhaus Dessau', 'Fagus Factory', 'Barcelona Pavilion'],
-    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/lJdEzUuZhkvGBRHU.jpg',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/pvxoMjhiZWiJmLhB.jpg',
     colors: ['#FF0000', '#FFFF00', '#0000FF', '#000000', '#FFFFFF']
   },
   {
@@ -288,7 +288,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Raw concrete', 'Massive forms', 'Fortress-like', 'Honesty'],
     keyFigures: ['Le Corbusier', 'Paul Rudolph', 'Denys Lasdun'],
     notableWorks: ['Unité d\'Habitation', 'Yale Art & Architecture', 'National Theatre London'],
-    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/EassGakovLUhHQlN.jpg',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/fRzNIDPKmYRapEBE.webp',
     colors: ['#696969', '#808080', '#A9A9A9', '#556B2F', '#2F4F4F']
   },
   {
@@ -329,7 +329,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Historical references', 'Ornamentation', 'Irony', 'Pluralism'],
     keyFigures: ['Robert Venturi', 'Michael Graves', 'Philip Johnson'],
     notableWorks: ['Vanna Venturi House', 'Portland Building', 'AT&T Building'],
-    imageUrl: 'https://images.unsplash.com/photo-1486718448742-163732cd1544?w=800',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/PqxEdKXDmTyKCSMp.jpg',
     colors: ['#FF69B4', '#00CED1', '#FFD700', '#9370DB', '#FF6347']
   },
   {
@@ -342,7 +342,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Fragmented', 'Non-rectilinear', 'Distorted', 'Chaotic'],
     keyFigures: ['Frank Gehry', 'Zaha Hadid', 'Daniel Libeskind'],
     notableWorks: ['Guggenheim Bilbao', 'Vitra Fire Station', 'Jewish Museum Berlin'],
-    imageUrl: 'https://images.unsplash.com/photo-1583484963886-cdd56c49f53f?w=800',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/vQYjuUJkeUFnrMms.jpg',
     colors: ['#C0C0C0', '#696969', '#FF6347', '#4169E1', '#000000']
   },
   {
@@ -355,7 +355,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Simplicity', 'Essential', 'Clean lines', 'Spatial clarity'],
     keyFigures: ['Tadao Ando', 'John Pawson', 'Alberto Campo Baeza'],
     notableWorks: ['Church of the Light', 'Nový Dvůr Monastery', 'House of the Infinite'],
-    imageUrl: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/VvjMYiUCNlvMjBex.jpg',
     colors: ['#FFFFFF', '#F5F5F5', '#E0E0E0', '#BEBEBE', '#808080']
   },
   {
@@ -368,7 +368,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Digital', 'Algorithmic', 'Complex curves', 'Computational'],
     keyFigures: ['Zaha Hadid', 'Patrik Schumacher', 'Greg Lynn'],
     notableWorks: ['Heydar Aliyev Center', 'Galaxy SOHO', 'Broad Museum'],
-    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/TyvxBTpgdKtsQAef.jpg',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/pRlmxVHihDSUETbk.jpg',
     colors: ['#FFFFFF', '#4169E1', '#C0C0C0', '#FF6347', '#000000']
   },
   {
@@ -381,7 +381,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Environmental', 'Energy efficient', 'Green building', 'Renewable'],
     keyFigures: ['Norman Foster', 'Renzo Piano', 'Ken Yeang'],
     notableWorks: ['California Academy of Sciences', 'The Edge Amsterdam', 'ACROS Fukuoka'],
-    imageUrl: 'https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=800',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/CqArXWEqrtDSspXH.jpg',
     colors: ['#228B22', '#8FBC8F', '#F5F5DC', '#6B8E23', '#2F4F4F']
   },
   {
@@ -394,7 +394,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Diversity', 'Sustainability', 'Technology', 'Biophilic'],
     keyFigures: ['Bjarke Ingels', 'Shigeru Ban', 'Thomas Heatherwick'],
     notableWorks: ['The Shed NYC', 'VIA 57 West', 'Vessel Hudson Yards'],
-    imageUrl: 'https://images.unsplash.com/photo-1511452885600-a3d2c9148a31?w=800',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/pRLceAvYAVIDlvJR.jpg',
     colors: ['#4169E1', '#32CD32', '#FFD700', '#FF6347', '#000000']
   },
 ];
