@@ -16,6 +16,7 @@ interface DesignPeriod {
   keyFigures?: string[];
   notableWorks?: string[];
   imageUrl: string;
+  gallery?: string[]; // Array of interior/exterior images
   colors: string[];
 }
 
@@ -32,6 +33,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Imhotep'],
     notableWorks: ['Great Pyramids of Giza', 'Temple of Karnak', 'Abu Simbel'],
     imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/RbmPrTmOJuyxCrBB.jpg',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/RbmPrTmOJuyxCrBB.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/LgXfCBWMKTAQ.jpg'],
     colors: ['#D4AF37', '#8B4513', '#F4E4C1', '#2C1810', '#E8D4A8']
   },
   {
@@ -45,6 +47,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Iktinos', 'Kallikrates', 'Phidias'],
     notableWorks: ['Parthenon', 'Temple of Athena Nike', 'Erechtheion'],
     imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/DbKsoYfWnwCnXBtw.png',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/DbKsoYfWnwCnXBtw.png', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/wHkoz823SAN7.jpg'],
     colors: ['#FFFFFF', '#F5F5DC', '#4A90E2', '#8B0000', '#DAA520']
   },
   {
@@ -58,6 +61,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Vitruvius'],
     notableWorks: ['Colosseum', 'Pantheon', 'Roman aqueducts', 'Forum'],
     imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/lUGVcqGkgPAPTBTm.jpg',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/fRxMZjXdFhOPVZWP.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/wj8ZUcuiVMqJ.jpg'],
     colors: ['#8B0000', '#DAA520', '#F5DEB3', '#8B4513', '#2F4F4F']
   },
 
@@ -72,6 +76,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Domes', 'Mosaics', 'Religious iconography', 'Rich decoration'],
     notableWorks: ['Hagia Sophia', 'San Vitale', 'St. Mark\'s Basilica'],
     imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/NNliXuwYhdKvklLt.webp',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/JCxDKVKGMlPNtJCq.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/DaCnkz55HEyT.jpg'],
     colors: ['#FFD700', '#4B0082', '#8B0000', '#00008B', '#228B22']
   },
   {
@@ -84,6 +89,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Pointed arches', 'Flying buttresses', 'Stained glass', 'Verticality'],
     notableWorks: ['Notre-Dame de Paris', 'Chartres Cathedral', 'Cologne Cathedral'],
     imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/VftWcDsYMgyyGqcn.jpg',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/HKYOBmMQZBRcvwMp.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/Txah681W1Yt8.jpg'],
     colors: ['#4169E1', '#DC143C', '#FFD700', '#4B0082', '#2F4F4F']
   },
 
@@ -99,6 +105,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Brunelleschi', 'Alberti', 'Michelangelo', 'Palladio'],
     notableWorks: ['Florence Cathedral dome', 'St. Peter\'s Basilica', 'Villa Rotonda'],
     imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/LvbmuucdrZuhcsEq.jpg',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/FpLFXJvHrOBqtxDV.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/Jr6nVjWNY14S.jpg'],
     colors: ['#8B4513', '#D4AF37', '#F5DEB3', '#8B0000', '#2F4F4F']
   },
   {
@@ -112,6 +119,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Bernini', 'Borromini', 'Wren'],
     notableWorks: ['St. Peter\'s Square', 'Palace of Versailles', 'St. Paul\'s Cathedral'],
     imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/czlAbJQAwJbYKQsB.jpg',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/ZkOFfxLYbHGqjdaK.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/gE7oWJklKMMd.jpg'],
     colors: ['#FFD700', '#8B0000', '#4B0082', '#F5DEB3', '#2F4F4F']
   },
   {
@@ -124,6 +132,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Lightness', 'Elegance', 'Ornate', 'Asymmetry'],
     notableWorks: ['Hôtel de Soubise', 'Sanssouci Palace', 'Amalienburg'],
     imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/hGkKoYbTvBtkIBcZ.jpeg',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/ZqCEqZELPXPKPRZN.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/gE7oWJklKMMd.jpg'],
     colors: ['#FFB6C1', '#E6E6FA', '#FFFACD', '#F0E68C', '#DDA0DD']
   },
 
@@ -139,6 +148,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Robert Adam', 'Thomas Jefferson', 'Karl Friedrich Schinkel'],
     notableWorks: ['Panthéon Paris', 'Brandenburg Gate', 'US Capitol'],
     imageUrl: 'https://images.unsplash.com/photo-1555992336-fb0d29498b13?w=800',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/OoHEqCKGVZaHQkqz.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/Jr6nVjWNY14S.jpg'],
     colors: ['#F5F5F5', '#DAA520', '#8B4513', '#2F4F4F', '#696969']
   },
   {
@@ -152,6 +162,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Augustus Pugin', 'John Ruskin'],
     notableWorks: ['Palace of Westminster', 'St. Patrick\'s Cathedral NYC'],
     imageUrl: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/HKYOBmMQZBRcvwMp.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/Txah681W1Yt8.jpg'],
     colors: ['#8B4513', '#2F4F4F', '#FFD700', '#8B0000', '#4B0082']
   },
 
@@ -166,6 +177,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Academic classicism', 'Grandeur', 'Elaborate ornament', 'Symmetry'],
     notableWorks: ['Paris Opera', 'Grand Central Terminal', 'Boston Public Library'],
     imageUrl: 'https://images.unsplash.com/photo-1558617398-b0f0c4c5d812?w=800',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/ZkOFfxLYbHGqjdaK.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/gE7oWJklKMMd.jpg'],
     colors: ['#F5F5DC', '#DAA520', '#8B4513', '#2F4F4F', '#FFD700']
   },
   {
@@ -179,6 +191,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['William Morris', 'Charles Rennie Mackintosh'],
     notableWorks: ['Red House', 'Glasgow School of Art'],
     imageUrl: 'https://images.unsplash.com/photo-1615875605825-5eb9bb5d52ac?w=800',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/VfwpJUUDKDjjGXLv.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/Jr6nVjWNY14S.jpg'],
     colors: ['#8B4513', '#556B2F', '#D2691E', '#8B7355', '#A0522D']
   },
   {
@@ -192,6 +205,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Victor Horta', 'Antoni Gaudí', 'Hector Guimard'],
     notableWorks: ['Hôtel Tassel', 'Sagrada Família', 'Paris Métro entrances'],
     imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/aEVpyRsNZldTYJFQ.jpg',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/mOZEOOcNIuRTMqKE.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/WRNX3hxx0syW.jpg'],
     colors: ['#556B2F', '#DAA520', '#8B4513', '#9370DB', '#2F4F4F']
   },
 
@@ -207,6 +221,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Louis Sullivan', 'Daniel Burnham', 'John Root'],
     notableWorks: ['Wainwright Building', 'Monadnock Building', 'Carson Pirie Scott'],
     imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/OoHEqCKGVZaHQkqz.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/wj8ZUcuiVMqJ.jpg'],
     colors: ['#8B4513', '#2F4F4F', '#696969', '#A9A9A9', '#BC8F8F']
   },
   {
@@ -220,6 +235,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['William Van Alen', 'Raymond Hood'],
     notableWorks: ['Chrysler Building', 'Rockefeller Center', 'Radio City Music Hall'],
     imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/QeCJmseOsSWUfkJM.jpg',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/LfxNpXWjjwwHdpQE.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/GU8HGXuJi0om.jpg'],
     colors: ['#FFD700', '#000000', '#C0C0C0', '#8B0000', '#4B0082']
   },
 
@@ -235,6 +251,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Walter Gropius', 'Ludwig Mies van der Rohe', 'Marcel Breuer'],
     notableWorks: ['Bauhaus Dessau', 'Fagus Factory', 'Barcelona Pavilion'],
     imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/pvxoMjhiZWiJmLhB.jpg',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/FxXJGZdNXuJMcxSw.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/QcDx7AbcVMaL.jpg'],
     colors: ['#FF0000', '#FFFF00', '#0000FF', '#000000', '#FFFFFF']
   },
   {
@@ -248,6 +265,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Gerrit Rietveld', 'Theo van Doesburg', 'Piet Mondrian'],
     notableWorks: ['Rietveld Schröder House', 'Café Aubette'],
     imageUrl: 'https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?w=800',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/FxXJGZdNXuJMcxSw.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/QcDx7AbcVMaL.jpg'],
     colors: ['#FF0000', '#FFFF00', '#0000FF', '#000000', '#FFFFFF']
   },
   {
@@ -261,6 +279,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Le Corbusier', 'Mies van der Rohe', 'Walter Gropius'],
     notableWorks: ['Villa Savoye', 'Seagram Building', 'Farnsworth House'],
     imageUrl: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/FxXJGZdNXuJMcxSw.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/QcDx7AbcVMaL.jpg'],
     colors: ['#FFFFFF', '#000000', '#808080', '#A9A9A9', '#2F4F4F']
   },
 
@@ -276,6 +295,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Eero Saarinen', 'Richard Neutra', 'Charles & Ray Eames'],
     notableWorks: ['Farnsworth House', 'Case Study Houses', 'TWA Terminal'],
     imageUrl: 'https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=800',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/VfwpJUUDKDjjGXLv.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/Jr6nVjWNY14S.jpg'],
     colors: ['#D2691E', '#8B4513', '#556B2F', '#F4A460', '#2F4F4F']
   },
   {
@@ -289,6 +309,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Le Corbusier', 'Paul Rudolph', 'Denys Lasdun'],
     notableWorks: ['Unité d\'Habitation', 'Yale Art & Architecture', 'National Theatre London'],
     imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/fRzNIDPKmYRapEBE.webp',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/fRzNIDPKmYRapEBE.webp', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/wANdpMPIIcGi.png'],
     colors: ['#696969', '#808080', '#A9A9A9', '#556B2F', '#2F4F4F']
   },
   {
@@ -302,6 +323,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Kenzo Tange', 'Kisho Kurokawa', 'Fumihiko Maki'],
     notableWorks: ['Nakagin Capsule Tower', 'Osaka Expo \'70', 'Yamanashi Press Center'],
     imageUrl: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/FxXJGZdNXuJMcxSw.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/QcDx7AbcVMaL.jpg'],
     colors: ['#FF6347', '#696969', '#F5F5F5', '#000000', '#FFD700']
   },
   {
@@ -315,6 +337,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Norman Foster', 'Richard Rogers', 'Renzo Piano'],
     notableWorks: ['Pompidou Centre', 'Lloyd\'s Building', 'HSBC Building Hong Kong'],
     imageUrl: 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=800',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/FxXJGZdNXuJMcxSw.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/QcDx7AbcVMaL.jpg'],
     colors: ['#4169E1', '#C0C0C0', '#FF0000', '#FFFF00', '#000000']
   },
 
@@ -330,6 +353,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Robert Venturi', 'Michael Graves', 'Philip Johnson'],
     notableWorks: ['Vanna Venturi House', 'Portland Building', 'AT&T Building'],
     imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/PqxEdKXDmTyKCSMp.jpg',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/PqxEdKXDmTyKCSMp.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/gE7oWJklKMMd.jpg'],
     colors: ['#FF69B4', '#00CED1', '#FFD700', '#9370DB', '#FF6347']
   },
   {
@@ -343,6 +367,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Frank Gehry', 'Zaha Hadid', 'Daniel Libeskind'],
     notableWorks: ['Guggenheim Bilbao', 'Vitra Fire Station', 'Jewish Museum Berlin'],
     imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/vQYjuUJkeUFnrMms.jpg',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/vQYjuUJkeUFnrMms.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YDq8vVGgNdhg.jpg'],
     colors: ['#C0C0C0', '#696969', '#FF6347', '#4169E1', '#000000']
   },
   {
@@ -356,6 +381,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Tadao Ando', 'John Pawson', 'Alberto Campo Baeza'],
     notableWorks: ['Church of the Light', 'Nový Dvůr Monastery', 'House of the Infinite'],
     imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/VvjMYiUCNlvMjBex.jpg',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/VvjMYiUCNlvMjBex.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/Jr6nVjWNY14S.jpg'],
     colors: ['#FFFFFF', '#F5F5F5', '#E0E0E0', '#BEBEBE', '#808080']
   },
   {
@@ -369,6 +395,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Zaha Hadid', 'Patrik Schumacher', 'Greg Lynn'],
     notableWorks: ['Heydar Aliyev Center', 'Galaxy SOHO', 'Broad Museum'],
     imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/pRlmxVHihDSUETbk.jpg',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/pRlmxVHihDSUETbk.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/1xFJCIIkfkYL.jpg'],
     colors: ['#FFFFFF', '#4169E1', '#C0C0C0', '#FF6347', '#000000']
   },
   {
@@ -382,6 +409,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Norman Foster', 'Renzo Piano', 'Ken Yeang'],
     notableWorks: ['California Academy of Sciences', 'The Edge Amsterdam', 'ACROS Fukuoka'],
     imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/CqArXWEqrtDSspXH.jpg',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/CqArXWEqrtDSspXH.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/QcDx7AbcVMaL.jpg'],
     colors: ['#228B22', '#8FBC8F', '#F5F5DC', '#6B8E23', '#2F4F4F']
   },
   {
@@ -395,6 +423,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     keyFigures: ['Bjarke Ingels', 'Shigeru Ban', 'Thomas Heatherwick'],
     notableWorks: ['The Shed NYC', 'VIA 57 West', 'Vessel Hudson Yards'],
     imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/pRLceAvYAVIDlvJR.jpg',
+    gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/pRLceAvYAVIDlvJR.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/1xFJCIIkfkYL.jpg'],
     colors: ['#4169E1', '#32CD32', '#FFD700', '#FF6347', '#000000']
   },
 ];
@@ -576,14 +605,31 @@ export default function DesignHistoryTimeline() {
                       >
                         <div className="bg-neutral-200/60 dark:bg-neutral-900/60 backdrop-blur-xl border-x border-b border-black/10 dark:border-white/10 rounded-b-3xl p-8 md:p-12 space-y-8">
 
-                          {/* Hero Image */}
-                          <div className="aspect-[21/9] overflow-hidden rounded-2xl border border-black/10 dark:border-white/10">
-                            <img
-                              src={period.imageUrl}
-                              alt={period.name}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
+                          {/* Image Gallery */}
+                          {period.gallery && period.gallery.length > 0 ? (
+                            <div>
+                              <div className="font-pixel text-[10px] tracking-[0.3em] text-black/40 dark:text-white/40 mb-4">REFERENCE IMAGES</div>
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {period.gallery.map((imageUrl, idx) => (
+                                  <div key={idx} className="aspect-[16/9] overflow-hidden rounded-2xl border border-black/10 dark:border-white/10">
+                                    <img
+                                      src={imageUrl}
+                                      alt={`${period.name} - Image ${idx + 1}`}
+                                      className="w-full h-full object-cover"
+                                    />
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="aspect-[21/9] overflow-hidden rounded-2xl border border-black/10 dark:border-white/10">
+                              <img
+                                src={period.imageUrl}
+                                alt={period.name}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          )}
 
                           {/* Color Palette */}
                           <div>
