@@ -194,6 +194,19 @@ export default function StudioTutorials() {
       publishDate: "Feb 08, 2021",
       thumbnailUrl: `https://img.youtube.com/vi/9iApEa1XTug/maxresdefault.jpg`,
     },
+    {
+      id: 15,
+      title: "Vectorworks Tutorial: 3D Modeling Tools",
+      slug: "3d-modeling-tools",
+      youtubeId: "8dm9ZMTXypE",
+      youtubeUrl: "https://www.youtube.com/watch?v=8dm9ZMTXypE",
+      description: "Master the essential 3D modeling tools in Vectorworks including primitive objects, push/pull, extract, fillet, chamfer, taper, deform, and shell solid.",
+      category: "3d-modeling",
+      difficultyLevel: "intermediate",
+      duration: 1099, // 18:19 in seconds
+      publishDate: "Feb 08, 2021",
+      thumbnailUrl: `https://img.youtube.com/vi/8dm9ZMTXypE/maxresdefault.jpg`,
+    },
   ];
 
   const categories = [
