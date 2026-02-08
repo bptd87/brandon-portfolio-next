@@ -1164,3 +1164,10 @@
 - [x] Generate educational content from "Navigating the User Interface" tutorial script
 - [x] Create tutorial detail page with video embed, transcript, key concepts, timestamps
 - [x] Add tutorial to StudioTutorials list with proper metadata
+
+## Tutorial Detail Page Redesign
+- [x] Research and curate related Vectorworks resources (documentation, forums, tools)
+- [x] Redesign tutorial detail page with tabbed gallery layout (not stacked sections)
+- [x] Apply theatrical aesthetic: sharp corners, bold typography, neon accents, technical lines
+- [x] Use orange/blue/red/purple color scheme consistently
+- [x] Remove all rounded corners and corporate design elements

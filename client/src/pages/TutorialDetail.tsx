@@ -1,10 +1,10 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { Clock, Calendar, TrendingUp, Lightbulb, AlertCircle, Keyboard, ArrowRight } from "lucide-react";
+import { Clock, Calendar, TrendingUp, Lightbulb, AlertCircle, Keyboard, ArrowRight, ExternalLink } from "lucide-react";
 import { useParams, Link } from "wouter";
+import { useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function TutorialDetail() {
   const params = useParams();
@@ -74,40 +74,68 @@ Finally, the tutorial explores view controls, zoom functions, and workspace cust
     ],
 
     transcript: [
-      { time: "0:00", speaker: "Brandon PT Davis", text: "[Music]" },
-      { time: "0:05", speaker: "Brandon PT Davis", text: "Hello, this is Brandon PT Davis. I'm a theatrical scenic designer, and today I'm going to share with you a Vectorworks tutorial about the user interface." },
-      { time: "0:17", speaker: "Brandon PT Davis", text: "We're going to start off by opening the software. I have the software here on my desktop." },
-      { time: "0:23", speaker: "Brandon PT Davis", text: "As you notice, the Vectorworks software takes time to open. This is normal because the software is very large." },
-      { time: "0:32", speaker: "Brandon PT Davis", text: "As the software opens, you'll notice that the Vectorworks template user template here is set as a default that says 'Do not use the sheet.' It recommends to close the file, click the file, and select an existing file or open a template." },
-      { time: "0:53", speaker: "Brandon PT Davis", text: "My students at UTEP have been provided with a specific template for them to learn the software, so now I'm going to close this file." },
-      { time: "1:04", speaker: "Brandon PT Davis", text: "To open the file, I'm going to go to File > New, and under here I have the UTEP Basics template. I'm going to press OK." },
-      { time: "1:18", speaker: "Brandon PT Davis", text: "Now that we have the proper Vectorworks template installed, I'm going to speak with you about the Vectorworks user interface." },
-      { time: "1:25", speaker: "Brandon PT Davis", text: "Like many software programs, the Vectorworks user interface has a menu bar across the top—items such as File, Edit, Tools, Text, View, Window, Cloud, and Help." },
-      { time: "1:39", speaker: "Brandon PT Davis", text: "You may have seen in other software programs Vectorworks will use these similar but also differently than other programs you may be used to. We will talk specifically about these tools, these menu items, as we move forward." },
-      { time: "1:55", speaker: "Brandon PT Davis", text: "We also have the Modify, Model, Spotlight, and Event menu items. These items are more specific to Vectorworks." },
-      { time: "2:09", speaker: "Brandon PT Davis", text: "On the left side here, we have the Basic Tool Palette. The Basic Tool Palette is a combination of tools that you use most frequently throughout the Vectorworks software. This would include things like the square tool, 2D line tool, measuring tools, and annotations. We'll speak more specifically about the basic tool set in the next video." },
-      { time: "2:32", speaker: "Brandon PT Davis", text: "The Attributes Palette allows you to edit and modify specific attributes within the 2D objects that you are creating in Vectorworks." },
-      { time: "2:44", speaker: "Brandon PT Davis", text: "The Tool Set Palette—this palette is very specific to the Vectorworks workspace that you're using. There is a variety of tools that you can use throughout the Vectorworks software, and we will speak specifically to how they apply to theatrical design during the course of these tutorials." },
-      { time: "3:01", speaker: "Brandon PT Davis", text: "We also have a Snapping Palette. A Snapping Palette modifies the way that you interact with the object through Vectorworks. We can move the Snapping Palette right now into the top left corner. We can also change where we have all the palettes in Vectorworks so that we can work in our most effective manner. My preference is to have the workspace configured as shown here." },
-      { time: "3:36", speaker: "Brandon PT Davis", text: "To the right side, we have the Object Info Palette. The Object Info Palette provides information about objects that you're working with in Vectorworks. I will draw a rectangle to show you some of the functionality of the Object Info Palette." },
-      { time: "3:53", speaker: "Brandon PT Davis", text: "So here we can see class, layer, and plane information, as well as width and height. We can modify the rotation of the object as well. There's also data information, and if we're working with 3D objects, we can modify the textures that are applied to the object through the window render options in the Object Info Palette." },
-      { time: "4:18", speaker: "Brandon PT Davis", text: "Below the Object Info Palette is the Navigation Palette. The Navigation Palette is a way to navigate through many aspects of the software. We have our classes here, layers, sheet layers, viewports, saved views, and file references." },
-      { time: "4:50", speaker: "Brandon PT Davis", text: "On the top, we have the Resource Manager. The Resource Manager is a way to store lots of information throughout Vectorworks. Resource Manager items include gradients, hatches, images, line types, materials, record formats, Renderworks backgrounds, Renderworks styles, Renderworks textures, a resource folder, roof styles, script, sketch styles, slab styles, text style, tiles, wall style, and worksheet." },
-      { time: "5:29", speaker: "Brandon PT Davis", text: "At the center, we have the Vectorworks workspace. This large square in the center—the Vectorworks workspace by default is in Top/Plan view. Top/Plan view is also the 2D view." },
-      { time: "5:45", speaker: "Brandon PT Davis", text: "We also have a ruler on the X and Y axis, and at the center we have zero, zero. In order to explain the X, Y, and Z axis and our views, I will show you these arrow symbols that I've created." },
-      { time: "6:04", speaker: "Brandon PT Davis", text: "Thinking of the green North and South as the Y-axis, and red East and West as the X-axis. At the center and the ruler, we have zero, zero. It is recommended that your models be as close and/or on zero, zero as possible when creating your model." },
-      { time: "6:31", speaker: "Brandon PT Davis", text: "Straying too far away from zero, zero will affect Vectorworks' ability to render the view in perspective." },
-      { time: "6:48", speaker: "Brandon PT Davis", text: "Now I will go to a Right Isometric view and show you the axis. We have the green axis—the North and South as our Y-axis. The red East and West as our X-axis. And the Z-axis is up and down." },
-      { time: "7:08", speaker: "Brandon PT Davis", text: "If we look at the ruler again from this view, we have East as positive numbers—four inches, eight inches, further on it's infinite. If we look towards the West from zero, we go into negative numbers—negative four, et cetera. The same applies both to North and South and the Z-axis up and down—negative, positive numbers." },
-      { time: "7:47", speaker: "Brandon PT Davis", text: "The View Bar across the top offers some of the same functionality as the Navigation Palette. Here we can toggle through the classes and change the active class that we're using. We can toggle through our design and sheet layers. We can also change our screen and layer plane views. Saved views will be stored here." },
-      { time: "8:19", speaker: "Brandon PT Davis", text: "These items here affect how you zoom into Vectorworks, so I can zoom to page or I can zoom to the object. We can also zoom in with this functionality. This is a numeric way to view the zoom functions." },
-      { time: "8:49", speaker: "Brandon PT Davis", text: "These are the working plane views, which we will talk more about when we get into 3D. But we can toggle through the views using this slider. So here is top, right, left. You can also use the number pad and change the views as well." },
-      { time: "9:22", speaker: "Brandon PT Davis", text: "This icon here will change to your previous and next views that you are looking at within your Vectorworks file." },
-      { time: "9:35", speaker: "Brandon PT Davis", text: "This icon is the Rotate Plan. This would be used if you were working in 3D and wanted to adjust the ground plan to a different view." },
-      { time: "9:50", speaker: "Brandon PT Davis", text: "You can also modify the perspective with this dropdown, and the render settings can be modified with this dropdown." },
-      { time: "10:02", speaker: "Brandon PT Davis", text: "The View Bar located here will be changed depending on the tools that you have accessed." },
-      { time: "10:12", speaker: "Brandon PT Davis", text: "And this palette here will give you access to shortcuts from both document preferences and Vectorworks preferences." },
-      { time: "10:22", speaker: "Brandon PT Davis", text: "This concludes the Vectorworks tutorial on user interface. If you have any questions, please let me know. Thank you." },
+      { time: "0:00", text: "[Music]" },
+      { time: "0:05", text: "Hello, this is Brandon PT Davis. I'm a theatrical scenic designer, and today I'm going to share with you a Vectorworks tutorial about the user interface." },
+      { time: "0:17", text: "We're going to start off by opening the software. I have the software here on my desktop." },
+      { time: "0:23", text: "As you notice, the Vectorworks software takes time to open. This is normal because the software is very large." },
+      { time: "0:32", text: "As the software opens, you'll notice that the Vectorworks template user template here is set as a default that says 'Do not use the sheet.' It recommends to close the file, click the file, and select an existing file or open a template." },
+      { time: "0:53", text: "My students at UTEP have been provided with a specific template for them to learn the software, so now I'm going to close this file." },
+      { time: "1:04", text: "To open the file, I'm going to go to File > New, and under here I have the UTEP Basics template. I'm going to press OK." },
+      { time: "1:18", text: "Now that we have the proper Vectorworks template installed, I'm going to speak with you about the Vectorworks user interface." },
+      { time: "1:25", text: "Like many software programs, the Vectorworks user interface has a menu bar across the top—items such as File, Edit, Tools, Text, View, Window, Cloud, and Help." },
+      { time: "1:39", text: "You may have seen in other software programs Vectorworks will use these similar but also differently than other programs you may be used to. We will talk specifically about these tools, these menu items, as we move forward." },
+      { time: "1:55", text: "We also have the Modify, Model, Spotlight, and Event menu items. These items are more specific to Vectorworks." },
+      { time: "2:09", text: "On the left side here, we have the Basic Tool Palette. The Basic Tool Palette is a combination of tools that you use most frequently throughout the Vectorworks software. This would include things like the square tool, 2D line tool, measuring tools, and annotations. We'll speak more specifically about the basic tool set in the next video." },
+      { time: "2:32", text: "The Attributes Palette allows you to edit and modify specific attributes within the 2D objects that you are creating in Vectorworks." },
+      { time: "2:44", text: "The Tool Set Palette—this palette is very specific to the Vectorworks workspace that you're using. There is a variety of tools that you can use throughout the Vectorworks software, and we will speak specifically to how they apply to theatrical design during the course of these tutorials." },
+      { time: "3:01", text: "We also have a Snapping Palette. A Snapping Palette modifies the way that you interact with the object through Vectorworks. We can move the Snapping Palette right now into the top left corner. We can also change where we have all the palettes in Vectorworks so that we can work in our most effective manner. My preference is to have the workspace configured as shown here." },
+      { time: "3:36", text: "To the right side, we have the Object Info Palette. The Object Info Palette provides information about objects that you're working with in Vectorworks. I will draw a rectangle to show you some of the functionality of the Object Info Palette." },
+      { time: "3:53", text: "So here we can see class, layer, and plane information, as well as width and height. We can modify the rotation of the object as well. There's also data information, and if we're working with 3D objects, we can modify the textures that are applied to the object through the window render options in the Object Info Palette." },
+      { time: "4:18", text: "Below the Object Info Palette is the Navigation Palette. The Navigation Palette is a way to navigate through many aspects of the software. We have our classes here, layers, sheet layers, viewports, saved views, and file references." },
+      { time: "4:50", text: "On the top, we have the Resource Manager. The Resource Manager is a way to store lots of information throughout Vectorworks. Resource Manager items include gradients, hatches, images, line types, materials, record formats, Renderworks backgrounds, Renderworks styles, Renderworks textures, a resource folder, roof styles, script, sketch styles, slab styles, text style, tiles, wall style, and worksheet." },
+      { time: "5:29", text: "At the center, we have the Vectorworks workspace. This large square in the center—the Vectorworks workspace by default is in Top/Plan view. Top/Plan view is also the 2D view." },
+      { time: "5:45", text: "We also have a ruler on the X and Y axis, and at the center we have zero, zero. In order to explain the X, Y, and Z axis and our views, I will show you these arrow symbols that I've created." },
+      { time: "6:04", text: "Thinking of the green North and South as the Y-axis, and red East and West as the X-axis. At the center and the ruler, we have zero, zero. It is recommended that your models be as close and/or on zero, zero as possible when creating your model." },
+      { time: "6:31", text: "Straying too far away from zero, zero will affect Vectorworks' ability to render the view in perspective." },
+      { time: "6:48", text: "Now I will go to a Right Isometric view and show you the axis. We have the green axis—the North and South as our Y-axis. The red East and West as our X-axis. And the Z-axis is up and down." },
+      { time: "7:08", text: "If we look at the ruler again from this view, we have East as positive numbers—four inches, eight inches, further on it's infinite. If we look towards the West from zero, we go into negative numbers—negative four, et cetera. The same applies both to North and South and the Z-axis up and down—negative, positive numbers." },
+      { time: "7:47", text: "The View Bar across the top offers some of the same functionality as the Navigation Palette. Here we can toggle through the classes and change the active class that we're using. We can toggle through our design and sheet layers. We can also change our screen and layer plane views. Saved views will be stored here." },
+      { time: "8:19", text: "These items here affect how you zoom into Vectorworks, so I can zoom to page or I can zoom to the object. We can also zoom in with this functionality. This is a numeric way to view the zoom functions." },
+      { time: "8:49", text: "These are the working plane views, which we will talk more about when we get into 3D. But we can toggle through the views using this slider. So here is top, right, left. You can also use the number pad and change the views as well." },
+      { time: "9:22", text: "This icon here will change to your previous and next views that you are looking at within your Vectorworks file." },
+      { time: "9:35", text: "This icon is the Rotate Plan. This would be used if you were working in 3D and wanted to adjust the ground plan to a different view." },
+      { time: "9:50", text: "You can also modify the perspective with this dropdown, and the render settings can be modified with this dropdown." },
+      { time: "10:02", text: "The View Bar located here will be changed depending on the tools that you have accessed." },
+      { time: "10:12", text: "And this palette here will give you access to shortcuts from both document preferences and Vectorworks preferences." },
+      { time: "10:22", text: "This concludes the Vectorworks tutorial on user interface. If you have any questions, please let me know. Thank you." },
+    ],
+
+    relatedResources: [
+      {
+        title: "Vectorworks Quick Start Tutorials",
+        url: "https://app-help.vectorworks.net/2025/eng/VW2025_Guide/QuickStart/Quick_Start_tutorials.htm",
+        type: "Official Documentation",
+      },
+      {
+        title: "Customizing Workspaces Guide",
+        url: "https://app-help.vectorworks.net/2026/eng/VW2026_Guide/Start/Customizing_workspaces.htm",
+        type: "Official Documentation",
+      },
+      {
+        title: "Vectorworks 101's: User Interface Playlist",
+        url: "https://www.youtube.com/playlist?list=PLiLCoe7DU1HYNYeFLC3R1C-C7JshE_a0G",
+        type: "Video Series",
+      },
+      {
+        title: "Scenic and Set Design with Vectorworks Course",
+        url: "https://university.vectorworks.net/course/view.php?id=331",
+        type: "Online Course",
+      },
+      {
+        title: "Vectorworks Community Board",
+        url: "https://forum.vectorworks.net/",
+        type: "Community",
+      },
     ],
 
     relatedTutorials: [
@@ -133,38 +161,38 @@ Finally, the tutorial explores view controls, zoom functions, and workspace cust
       <Header />
 
       {/* Tutorial Header */}
-      <section className="py-12 border-b border-border">
-        <div className="container max-w-5xl">
-          <Link href="/studio/tutorials" className="text-sm text-muted-foreground hover:text-foreground mb-4 inline-block">
+      <section className="py-12 border-b-2 border-[#2196F3]">
+        <div className="container max-w-6xl">
+          <Link href="/studio/tutorials" className="text-sm text-muted-foreground hover:text-[#2196F3] mb-4 inline-flex items-center gap-2 transition-colors">
             ← Back to Tutorials
           </Link>
           
           <div className="flex flex-wrap gap-2 mb-4">
-            <Badge className="bg-blue-500/10 text-blue-500 border-blue-500/30 border">
+            <Badge className="bg-[#2196F3]/20 text-[#2196F3] border-2 border-[#2196F3] uppercase tracking-wider font-bold">
               {tutorial.category}
             </Badge>
-            <Badge variant="outline" className="flex items-center gap-1">
+            <Badge className="bg-background border-2 border-border flex items-center gap-1 uppercase tracking-wider font-bold">
               <TrendingUp className="w-3 h-3" />
               {tutorial.difficulty}
             </Badge>
-            <Badge variant="outline" className="flex items-center gap-1">
+            <Badge className="bg-background border-2 border-border flex items-center gap-1 uppercase tracking-wider font-bold">
               <Clock className="w-3 h-3" />
               {formatDuration(tutorial.duration)}
             </Badge>
-            <Badge variant="outline" className="flex items-center gap-1">
+            <Badge className="bg-background border-2 border-border flex items-center gap-1 uppercase tracking-wider font-bold">
               <Calendar className="w-3 h-3" />
               {formatDate(tutorial.uploadDate)}
             </Badge>
           </div>
 
-          <h1 className="mb-6">{tutorial.title}</h1>
+          <h1 className="mb-6 text-4xl md:text-5xl font-bold leading-tight">{tutorial.title}</h1>
         </div>
       </section>
 
       {/* Video Embed */}
-      <section className="py-12 bg-black border-b border-border">
-        <div className="container max-w-5xl">
-          <div className="aspect-video rounded-lg overflow-hidden shadow-2xl">
+      <section className="py-12 bg-black border-b-2 border-[#FF5722]">
+        <div className="container max-w-6xl">
+          <div className="aspect-video overflow-hidden shadow-2xl border-4 border-[#FF5722]">
             <iframe
               width="100%"
               height="100%"
@@ -180,163 +208,206 @@ Finally, the tutorial explores view controls, zoom functions, and workspace cust
         </div>
       </section>
 
-      {/* What You'll Learn */}
-      <section className="py-12 border-b border-border">
-        <div className="container max-w-5xl">
-          <h2 className="text-2xl font-bold mb-6">What You'll Learn</h2>
-          <ul className="space-y-3">
-            {tutorial.learningObjectives.map((objective, index) => (
-              <li key={index} className="flex items-start gap-3">
-                <ArrowRight className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
-                <span className="text-muted-foreground">{objective}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* Overview */}
-      <section className="py-12 border-b border-border bg-muted/30">
-        <div className="container max-w-5xl">
-          <div className="prose prose-invert max-w-none">
-            {tutorial.overview.split('\n\n').map((paragraph, index) => (
-              <p key={index} className="text-muted-foreground leading-relaxed mb-4">
-                {paragraph}
-              </p>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Key Concepts */}
-      <section className="py-12 border-b border-border">
-        <div className="container max-w-5xl">
-          <h2 className="text-2xl font-bold mb-6">Key Concepts</h2>
-          <div className="space-y-6">
-            {tutorial.keyConcepts.map((concept, index) => (
-              <Card key={index} className="border-2 border-blue-500/30 bg-blue-500/5">
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-3 mb-3">
-                    <Lightbulb className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" />
-                    <h3 className="font-bold text-lg">{concept.title}</h3>
-                  </div>
-                  <p className="text-muted-foreground leading-relaxed ml-8">
-                    {concept.content}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Pro Tips */}
-      <section className="py-12 border-b border-border bg-muted/30">
-        <div className="container max-w-5xl">
-          <h2 className="text-2xl font-bold mb-6">Pro Tips</h2>
-          <div className="grid md:grid-cols-2 gap-4">
-            {tutorial.proTips.map((tip, index) => (
-              <Card key={index} className="border-orange-500/30 bg-orange-500/5">
-                <CardContent className="pt-6">
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    <span className="font-bold text-orange-500 block mb-2">PRO TIP</span>
-                    {tip}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Quick Reference */}
-      <section className="py-12 border-b border-border">
-        <div className="container max-w-5xl">
-          <h2 className="text-2xl font-bold mb-6">Quick Reference</h2>
-          
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Shortcuts */}
-            <div>
-              <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-                <Keyboard className="w-5 h-5 text-purple-500" />
-                Essential Shortcuts
-              </h3>
-              <div className="space-y-3">
-                {tutorial.shortcuts.map((shortcut, index) => (
-                  <div key={index} className="flex justify-between items-start gap-4 p-3 bg-muted/50 rounded-lg">
-                    <code className="text-sm font-mono text-purple-500 font-semibold">
-                      {shortcut.keys}
-                    </code>
-                    <span className="text-sm text-muted-foreground text-right">
-                      {shortcut.action}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Common Pitfalls */}
-            <div>
-              <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-                <AlertCircle className="w-5 h-5 text-red-500" />
-                Common Pitfalls
-              </h3>
-              <ul className="space-y-2">
-                {tutorial.commonPitfalls.map((pitfall, index) => (
-                  <li key={index} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <span className="text-red-500 flex-shrink-0">•</span>
-                    <span>{pitfall}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Transcript */}
-      <section className="py-12 border-b border-border bg-muted/30">
-        <div className="container max-w-5xl">
-          <h2 className="text-2xl font-bold mb-6">Transcript</h2>
-          <div className="space-y-4">
-            {tutorial.transcript.map((entry, index) => (
-              <div key={index} className="flex gap-4">
-                <span className="text-sm font-mono text-blue-500 flex-shrink-0 w-16">
-                  {entry.time}
-                </span>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {entry.text}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Related Tutorials */}
+      {/* Tabbed Content */}
       <section className="py-16">
-        <div className="container max-w-5xl">
-          <h2 className="text-2xl font-bold mb-6">Keep Learning</h2>
-          <p className="text-muted-foreground mb-8">
-            Build on what you've learned with related tutorials that expand these core concepts.
-          </p>
-          
-          <div className="grid md:grid-cols-3 gap-6">
-            {tutorial.relatedTutorials.map((related, index) => (
-              <Link key={index} href={`/studio/tutorials/${related.slug}`}>
-                <Card className="h-full hover:shadow-xl transition-all duration-300 border-2 hover:border-blue-500/50 group">
-                  <CardContent className="pt-6">
-                    <h3 className="font-semibold mb-2 group-hover:text-blue-500 transition-colors">
-                      {related.title}
-                    </h3>
-                    <div className="flex items-center gap-2 text-sm text-blue-500 group-hover:gap-3 transition-all">
-                      Watch Tutorial <ArrowRight className="w-4 h-4" />
+        <div className="container max-w-6xl">
+          <Tabs defaultValue="overview" className="w-full">
+            <TabsList className="grid w-full grid-cols-5 h-auto p-0 bg-transparent border-b-2 border-border gap-0">
+              <TabsTrigger 
+                value="overview" 
+                className="data-[state=active]:bg-[#2196F3] data-[state=active]:text-white border-2 border-border data-[state=active]:border-[#2196F3] data-[state=active]:border-b-0 data-[state=active]:-mb-[2px] uppercase tracking-wider font-bold py-4 transition-all"
+              >
+                Overview
+              </TabsTrigger>
+              <TabsTrigger 
+                value="concepts" 
+                className="data-[state=active]:bg-[#FF5722] data-[state=active]:text-white border-2 border-border data-[state=active]:border-[#FF5722] data-[state=active]:border-b-0 data-[state=active]:-mb-[2px] uppercase tracking-wider font-bold py-4 transition-all"
+              >
+                Key Concepts
+              </TabsTrigger>
+              <TabsTrigger 
+                value="reference" 
+                className="data-[state=active]:bg-[#9C27B0] data-[state=active]:text-white border-2 border-border data-[state=active]:border-[#9C27B0] data-[state=active]:border-b-0 data-[state=active]:-mb-[2px] uppercase tracking-wider font-bold py-4 transition-all"
+              >
+                Quick Ref
+              </TabsTrigger>
+              <TabsTrigger 
+                value="transcript" 
+                className="data-[state=active]:bg-[#F44336] data-[state=active]:text-white border-2 border-border data-[state=active]:border-[#F44336] data-[state=active]:border-b-0 data-[state=active]:-mb-[2px] uppercase tracking-wider font-bold py-4 transition-all"
+              >
+                Transcript
+              </TabsTrigger>
+              <TabsTrigger 
+                value="resources" 
+                className="data-[state=active]:bg-[#00BCD4] data-[state=active]:text-white border-2 border-border data-[state=active]:border-[#00BCD4] data-[state=active]:border-b-0 data-[state=active]:-mb-[2px] uppercase tracking-wider font-bold py-4 transition-all"
+              >
+                Resources
+              </TabsTrigger>
+            </TabsList>
+
+            {/* Overview Tab */}
+            <TabsContent value="overview" className="mt-8 border-2 border-border p-8 bg-background">
+              <h2 className="text-2xl font-bold mb-6 text-[#2196F3] uppercase tracking-wider">What You'll Learn</h2>
+              <div className="space-y-3 mb-12">
+                {tutorial.learningObjectives.map((objective, index) => (
+                  <div key={index} className="flex items-start gap-3 group">
+                    <div className="w-2 h-2 bg-[#2196F3] mt-2 flex-shrink-0 group-hover:w-4 transition-all"></div>
+                    <span className="text-muted-foreground leading-relaxed">{objective}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="border-t-2 border-[#2196F3] pt-8">
+                <h3 className="text-xl font-bold mb-4 uppercase tracking-wider">Tutorial Overview</h3>
+                <div className="space-y-4">
+                  {tutorial.overview.split('\n\n').map((paragraph, index) => (
+                    <p key={index} className="text-muted-foreground leading-relaxed">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* Key Concepts Tab */}
+            <TabsContent value="concepts" className="mt-8 border-2 border-border p-8 bg-background">
+              <h2 className="text-2xl font-bold mb-8 text-[#FF5722] uppercase tracking-wider">Key Concepts</h2>
+              <div className="space-y-8">
+                {tutorial.keyConcepts.map((concept, index) => (
+                  <div key={index} className="border-l-4 border-[#FF5722] pl-6 py-4 bg-[#FF5722]/5">
+                    <div className="flex items-start gap-3 mb-3">
+                      <Lightbulb className="w-6 h-6 text-[#FF5722] flex-shrink-0 mt-1" />
+                      <h3 className="font-bold text-lg uppercase tracking-wider">{concept.title}</h3>
                     </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {concept.content}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="border-t-2 border-[#FF5722] mt-12 pt-8">
+                <h3 className="text-xl font-bold mb-6 text-[#FF5722] uppercase tracking-wider">Pro Tips</h3>
+                <div className="grid md:grid-cols-2 gap-6">
+                  {tutorial.proTips.map((tip, index) => (
+                    <div key={index} className="border-2 border-[#FF5722] p-4 bg-[#FF5722]/5">
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        <span className="font-bold text-[#FF5722] block mb-2 uppercase tracking-wider">PRO TIP</span>
+                        {tip}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* Quick Reference Tab */}
+            <TabsContent value="reference" className="mt-8 border-2 border-border p-8 bg-background">
+              <div className="grid md:grid-cols-2 gap-12">
+                {/* Shortcuts */}
+                <div>
+                  <h3 className="font-bold text-xl mb-6 flex items-center gap-3 text-[#9C27B0] uppercase tracking-wider">
+                    <Keyboard className="w-6 h-6" />
+                    Essential Shortcuts
+                  </h3>
+                  <div className="space-y-4">
+                    {tutorial.shortcuts.map((shortcut, index) => (
+                      <div key={index} className="border-2 border-[#9C27B0] p-4 bg-[#9C27B0]/5">
+                        <code className="text-sm font-mono text-[#9C27B0] font-bold block mb-2">
+                          {shortcut.keys}
+                        </code>
+                        <span className="text-sm text-muted-foreground">
+                          {shortcut.action}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Common Pitfalls */}
+                <div>
+                  <h3 className="font-bold text-xl mb-6 flex items-center gap-3 text-[#9C27B0] uppercase tracking-wider">
+                    <AlertCircle className="w-6 h-6" />
+                    Common Pitfalls
+                  </h3>
+                  <div className="space-y-3">
+                    {tutorial.commonPitfalls.map((pitfall, index) => (
+                      <div key={index} className="flex items-start gap-3 border-l-4 border-[#9C27B0] pl-4 py-2">
+                        <span className="text-[#9C27B0] flex-shrink-0 font-bold">×</span>
+                        <span className="text-sm text-muted-foreground">{pitfall}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* Transcript Tab */}
+            <TabsContent value="transcript" className="mt-8 border-2 border-border p-8 bg-background">
+              <h2 className="text-2xl font-bold mb-8 text-[#F44336] uppercase tracking-wider">Full Transcript</h2>
+              <div className="space-y-4 font-mono text-sm">
+                {tutorial.transcript.map((entry, index) => (
+                  <div key={index} className="flex gap-6 hover:bg-[#F44336]/5 p-2 transition-colors border-l-2 border-transparent hover:border-[#F44336]">
+                    <span className="text-[#F44336] flex-shrink-0 w-16 font-bold">
+                      {entry.time}
+                    </span>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {entry.text}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </TabsContent>
+
+            {/* Resources Tab */}
+            <TabsContent value="resources" className="mt-8 border-2 border-border p-8 bg-background">
+              <h2 className="text-2xl font-bold mb-8 text-[#00BCD4] uppercase tracking-wider">Related Resources</h2>
+              
+              <div className="space-y-6 mb-12">
+                {tutorial.relatedResources.map((resource, index) => (
+                  <a
+                    key={index}
+                    href={resource.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block border-2 border-border hover:border-[#00BCD4] p-6 transition-all group bg-background hover:bg-[#00BCD4]/5"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <Badge className="bg-[#00BCD4]/20 text-[#00BCD4] border-2 border-[#00BCD4] uppercase tracking-wider font-bold text-xs">
+                            {resource.type}
+                          </Badge>
+                        </div>
+                        <h3 className="font-bold text-lg mb-2 group-hover:text-[#00BCD4] transition-colors">
+                          {resource.title}
+                        </h3>
+                      </div>
+                      <ExternalLink className="w-5 h-5 text-[#00BCD4] flex-shrink-0 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    </div>
+                  </a>
+                ))}
+              </div>
+
+              <div className="border-t-2 border-[#00BCD4] pt-8">
+                <h3 className="text-xl font-bold mb-6 uppercase tracking-wider">Continue Learning</h3>
+                <div className="grid md:grid-cols-3 gap-6">
+                  {tutorial.relatedTutorials.map((related, index) => (
+                    <Link key={index} href={`/studio/tutorials/${related.slug}`}>
+                      <div className="border-2 border-border hover:border-[#00BCD4] p-6 transition-all group bg-background hover:bg-[#00BCD4]/5 h-full">
+                        <h4 className="font-semibold mb-3 group-hover:text-[#00BCD4] transition-colors">
+                          {related.title}
+                        </h4>
+                        <div className="flex items-center gap-2 text-sm text-[#00BCD4] group-hover:gap-3 transition-all uppercase tracking-wider font-bold">
+                          Watch Tutorial <ArrowRight className="w-4 h-4" />
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </section>
 
