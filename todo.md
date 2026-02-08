@@ -1231,3 +1231,6 @@
 - [ ] Add tutorial 13: Hybrid Symbols with comprehensive educational content and pre-formatted transcript
 - [x] Add tutorial 13: Hybrid Symbols with comprehensive educational content and pre-formatted transcript
 - [x] Fix timestamp and date display issues on tutorial detail pages
+
+## Tutorial Updates
+- [x] Add note to tutorial 14 (Basics of Textures) that OpenGL is now called "Shaded" in current Vectorworks versions

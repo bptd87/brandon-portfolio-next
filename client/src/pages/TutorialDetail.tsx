@@ -1449,9 +1449,9 @@ The final section introduces the powerful Duplicate Along Path feature, which al
     duration: "13:21",
     publishDate: "Feb 08, 2021",
     description: "Learn how to apply, edit, and create custom Renderworks textures to bring life to your 3D models in Vectorworks.",
-    overview: "This tutorial introduces Renderworks textures in Vectorworks, covering how to apply pre-made textures, adjust mapping types, edit texture parameters, and create custom textures from scratch. You'll learn the differences between OpenGL and Renderworks rendering modes, understand texture shaders (color, reflectivity, transparency, bump), and master the controls for scaling, rotating, and mapping textures onto 3D objects. The tutorial demonstrates practical workflows for wood, stone, glass, and marble textures, showing how to achieve realistic results through proper texture configuration and lighting.",
+    overview: "This tutorial introduces Renderworks textures in Vectorworks, covering how to apply pre-made textures, adjust mapping types, edit texture parameters, and create custom textures from scratch. You'll learn the differences between OpenGL and Renderworks rendering modes, understand texture shaders (color, reflectivity, transparency, bump), and master the controls for scaling, rotating, and mapping textures onto 3D objects. The tutorial demonstrates practical workflows for wood, stone, glass, and marble textures, showing how to achieve realistic results through proper texture configuration and lighting.\n\n**Note:** In current versions of Vectorworks, OpenGL rendering mode has been renamed to \"Shaded.\" The concepts and workflows remain the same.",
     learningObjectives: [
-      "Understand the differences between OpenGL, Fast Renderworks, and Final Quality Renderworks",
+      "Understand the differences between OpenGL (now called 'Shaded'), Fast Renderworks, and Final Quality Renderworks",
       "Apply pre-made Renderworks textures from the Resource Manager to 3D objects",
       "Adjust texture mapping types (Plane, Auto-Align Plane, Perimeter, Sphere, Cylinder)",
       "Edit texture parameters including scale, offset, rotation, and mapping mode",
@@ -1464,7 +1464,7 @@ The final section introduces the powerful Duplicate Along Path feature, which al
     keyConcepts: [
       {
         title: "RENDERWORKS RENDERING MODES",
-        content: "OpenGL is the fastest, simplified render mode that doesn't calculate lighting. Fast Renderworks adds basic lighting calculations. Final Quality Renderworks produces photorealistic results with full lighting, shadows, and reflections—but requires more processing time. Use OpenGL for modeling, Renderworks for presentation.",
+        content: "OpenGL (now called 'Shaded' in current Vectorworks versions) is the fastest, simplified render mode that doesn't calculate lighting. Fast Renderworks adds basic lighting calculations. Final Quality Renderworks produces photorealistic results with full lighting, shadows, and reflections—but requires more processing time. Use Shaded/OpenGL for modeling, Renderworks for presentation.",
       },
       {
         title: "TEXTURE MAPPING TYPES",
@@ -1488,7 +1488,7 @@ The final section introduces the powerful Duplicate Along Path feature, which al
       },
     ],
     proTips: [
-      "Work in OpenGL while modeling and adjusting textures—only switch to Renderworks when you need to check the final appearance",
+      "Work in Shaded mode (formerly OpenGL) while modeling and adjusting textures—only switch to Renderworks when you need to check the final appearance",
       "Rename long texture names to shorter, descriptive names (e.g., 'Stonework') to keep your Resource Manager organized",
       "Edit texture scale in the texture definition (Resource Manager > Edit) rather than per-object for consistency across your model",
       "Start with Vectorworks' pre-made textures and modify them rather than building from scratch—they have well-tuned shader settings",
