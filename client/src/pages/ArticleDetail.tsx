@@ -489,7 +489,7 @@ export default function ArticleDetail() {
                     case 'paragraph':
                       return (
                         <p key={index} className="mb-6 leading-relaxed">
-                          {decodeHTMLEntities(section.content)}
+                          {decodeHTMLEntities(section.text || section.content || '')}
                         </p>
                       );
                     

@@ -1266,3 +1266,12 @@
 - [ ] Add reading progress indicator
 - [x] Ensure consistent typography throughout
 - [ ] Test article on mobile and desktop
+
+## Computer Hardware Article Update for 2026
+- [x] Review current article content and identify outdated information
+- [x] Update hardware recommendations for 2026 (CPU, GPU, RAM, storage specs and pricing)
+- [x] Rewrite content in Brandon's voice while keeping core message
+- [ ] Fix formatting issues (sections, bullet lists, spacing)
+- [x] Generate 3-4 new dramatic theatrical images with cyan lighting
+- [ ] Add updated date field to article
+- [ ] Test article display and readability
