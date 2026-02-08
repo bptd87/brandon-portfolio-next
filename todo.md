@@ -1237,3 +1237,4 @@
 - [x] Add tutorial 15: 3D Modeling Tools (18:19) with comprehensive educational content
 - [x] Add tutorial 16: Creating 24x36 PDFs Without a Plotter (3:28) with comprehensive educational content
 - [x] Add tutorial 17: Modeling a Table (37:48) with comprehensive educational content
+- [x] Add tutorial 18: Creating a Camera and Rendering (10:36) with comprehensive educational content

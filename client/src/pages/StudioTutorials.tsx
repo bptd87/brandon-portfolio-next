@@ -233,6 +233,19 @@ export default function StudioTutorials() {
       publishDate: "Feb 12, 2021",
       thumbnailUrl: `https://img.youtube.com/vi/TdZeKdL-DVc/maxresdefault.jpg`,
     },
+    {
+      id: 18,
+      title: "Vectorworks Tutorial: Creating a Camera and Rendering",
+      slug: "creating-camera-rendering",
+      youtubeId: "Jp4eG5n3esc",
+      youtubeUrl: "https://www.youtube.com/watch?v=Jp4eG5n3esc",
+      description: "Learn the complete workflow for creating cameras, setting up dramatic lighting, configuring viewports, and exporting high-quality renderings in Vectorworks.",
+      category: "rendering",
+      difficultyLevel: "intermediate",
+      duration: 636, // 10:36 in seconds
+      publishDate: "Feb 15, 2021",
+      thumbnailUrl: `https://img.youtube.com/vi/Jp4eG5n3esc/maxresdefault.jpg`,
+    },
   ];
 
   const categories = [
