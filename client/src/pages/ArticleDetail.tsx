@@ -556,6 +556,36 @@ export default function ArticleDetail() {
                         </figure>
                       );
                     
+                    case 'video':
+                      // Extract YouTube video ID from URL
+                      const getYouTubeId = (url: string) => {
+                        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+                        const match = url.match(regExp);
+                        return (match && match[2].length === 11) ? match[2] : null;
+                      };
+                      
+                      const videoId = getYouTubeId(section.url || '');
+                      
+                      return (
+                        <figure key={index} className="my-12">
+                          <div className="relative w-full rounded-xl overflow-hidden shadow-2xl" style={{ paddingBottom: '56.25%' }}>
+                            <iframe
+                              className="absolute top-0 left-0 w-full h-full"
+                              src={`https://www.youtube.com/embed/${videoId}`}
+                              title={section.caption || 'Video'}
+                              frameBorder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                            />
+                          </div>
+                          {section.caption && (
+                            <figcaption className="text-sm text-muted-foreground mt-4 text-center">
+                              {decodeHTMLEntities(section.caption)}
+                            </figcaption>
+                          )}
+                        </figure>
+                      );
+                    
                     case 'gallery':
                       return (
                         <div key={index} className="my-12 -mx-4 md:mx-0">
