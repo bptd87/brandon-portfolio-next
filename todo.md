@@ -1128,3 +1128,7 @@
 - [x] Convert navigation dropdowns to hover-based (not click)
 - [x] Make all nav items clickable (Work, News, Articles, Studio)
 - [x] Apply neon/cyan aesthetic to navigation design
+
+- [x] Add NEWS dropdown menu with category filters
+- [x] Add ARTICLES dropdown menu with category filters  
+- [x] Design custom neon line-art SVG icons for all nav items (WORK, NEWS, ABOUT, ARTICLES, STUDIO)

@@ -4,16 +4,61 @@ import { ChevronDown, Sun, Moon, Menu } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import MobileMenu from "./MobileMenu";
 
+// Custom Neon SVG Icons
+const WorkIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="inline-block">
+    <path d="M2 8h20M2 8v12a2 2 0 002 2h16a2 2 0 002-2V8M6 4h12M8 4v4M16 4v4" />
+    <rect x="4" y="8" width="16" height="3" />
+  </svg>
+);
+
+const NewsIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="inline-block">
+    <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l6 6v8a2 2 0 01-2 2z" />
+    <polyline points="15 2 15 8 21 8" />
+    <line x1="7" y1="12" x2="17" y2="12" />
+    <line x1="7" y1="16" x2="17" y2="16" />
+  </svg>
+);
+
+const AboutIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="inline-block">
+    <circle cx="12" cy="12" r="10" />
+    <path d="M12 16v-4M12 8h.01" />
+  </svg>
+);
+
+const ArticlesIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="inline-block">
+    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+    <polyline points="14 2 14 8 20 8" />
+    <line x1="16" y1="13" x2="8" y2="13" />
+    <line x1="16" y1="17" x2="8" y2="17" />
+    <polyline points="10 9 9 9 8 9" />
+  </svg>
+);
+
+const StudioIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="inline-block">
+    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+    <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
+  </svg>
+);
+
 export default function Header() {
   const [location] = useLocation();
   const [portfolioOpen, setPortfolioOpen] = useState(false);
+  const [newsOpen, setNewsOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [articlesOpen, setArticlesOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const { theme, toggleTheme } = useTheme();
   const portfolioDropdownRef = useRef<HTMLDivElement>(null);
+  const newsDropdownRef = useRef<HTMLDivElement>(null);
   const aboutDropdownRef = useRef<HTMLDivElement>(null);
+  const articlesDropdownRef = useRef<HTMLDivElement>(null);
 
   const isActive = (path: string) => {
     if (path === "/") return location === "/";
@@ -32,7 +77,9 @@ export default function Header() {
         setIsVisible(false);
         // Close dropdowns when hiding
         setPortfolioOpen(false);
+        setNewsOpen(false);
         setAboutOpen(false);
+        setArticlesOpen(false);
       }
       
       setLastScrollY(currentScrollY);
@@ -48,8 +95,14 @@ export default function Header() {
       if (portfolioDropdownRef.current && !portfolioDropdownRef.current.contains(event.target as Node)) {
         setPortfolioOpen(false);
       }
+      if (newsDropdownRef.current && !newsDropdownRef.current.contains(event.target as Node)) {
+        setNewsOpen(false);
+      }
       if (aboutDropdownRef.current && !aboutDropdownRef.current.contains(event.target as Node)) {
         setAboutOpen(false);
+      }
+      if (articlesDropdownRef.current && !articlesDropdownRef.current.contains(event.target as Node)) {
+        setArticlesOpen(false);
       }
     };
 
@@ -62,6 +115,24 @@ export default function Header() {
     { name: "Experiential", slug: "experiential_design" },
     { name: "Renderings", slug: "rendering" },
     { name: "Models", slug: "scenic_models" },
+  ];
+
+  const newsCategories = [
+    { name: "All News", slug: "" },
+    { name: "Collaborations", slug: "collaborations" },
+    { name: "Milestones", slug: "milestones" },
+    { name: "Opening Nights", slug: "opening-nights" },
+    { name: "Production Debuts", slug: "production-debuts" },
+    { name: "Reviews & Press", slug: "reviews-press" },
+    { name: "Season Announcements", slug: "season-announcements" },
+  ];
+
+  const articleCategories = [
+    { name: "All Articles", slug: "" },
+    { name: "Career Guides", slug: "career" },
+    { name: "Design Process", slug: "process" },
+    { name: "Technical Tutorials", slug: "technical" },
+    { name: "Industry Insights", slug: "industry" },
   ];
 
   const aboutPages = [
@@ -109,6 +180,7 @@ export default function Header() {
                     isActive("/projects") ? "text-[#00E5FF]" : ""
                   }`}
                 >
+                  <WorkIcon />
                   WORK
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${portfolioOpen ? "rotate-180" : ""}`} />
                   <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#00E5FF] group-hover:w-full transition-all duration-300"></span>
@@ -121,7 +193,7 @@ export default function Header() {
                       boxShadow: "0 0 30px rgba(0, 229, 255, 0.2)"
                     }}
                   >
-                    {disciplines.map((discipline, index) => (
+                    {disciplines.map((discipline) => (
                       <Link
                         key={discipline.slug}
                         href={`/projects?discipline=${discipline.slug}`}
@@ -135,15 +207,45 @@ export default function Header() {
                 )}
               </div>
 
-              <Link 
-                href="/news" 
-                className={`text-sm font-bold tracking-wide transition-all hover:text-[#00E5FF] relative group ${
-                  isActive("/news") ? "text-[#00E5FF]" : ""
-                }`}
+              {/* News Dropdown - Hover Based */}
+              <div 
+                className="relative" 
+                ref={newsDropdownRef}
+                onMouseEnter={() => setNewsOpen(true)}
+                onMouseLeave={() => setNewsOpen(false)}
               >
-                NEWS
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#00E5FF] group-hover:w-full transition-all duration-300"></span>
-              </Link>
+                <Link
+                  href="/news"
+                  className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-[#00E5FF] relative group ${
+                    isActive("/news") ? "text-[#00E5FF]" : ""
+                  }`}
+                >
+                  <NewsIcon />
+                  NEWS
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${newsOpen ? "rotate-180" : ""}`} />
+                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#00E5FF] group-hover:w-full transition-all duration-300"></span>
+                </Link>
+
+                {/* Dropdown Menu */}
+                {newsOpen && (
+                  <div className="absolute top-full left-0 mt-3 w-64 bg-background/95 backdrop-blur-xl border border-[#00E5FF]/30 rounded-lg overflow-hidden shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200"
+                    style={{
+                      boxShadow: "0 0 30px rgba(0, 229, 255, 0.2)"
+                    }}
+                  >
+                    {newsCategories.map((category) => (
+                      <Link
+                        key={category.slug || "all"}
+                        href={category.slug ? `/news?category=${category.slug}` : "/news"}
+                        className="block px-5 py-3 text-sm font-semibold hover:bg-[#00E5FF]/10 hover:text-[#00E5FF] transition-all border-b border-[#00E5FF]/10 last:border-0 relative group"
+                      >
+                        <span className="relative z-10">{category.name}</span>
+                        <span className="absolute left-0 top-0 w-1 h-0 bg-[#00E5FF] group-hover:h-full transition-all duration-300"></span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
 
               {/* About Dropdown - Hover Based */}
               <div 
@@ -158,6 +260,7 @@ export default function Header() {
                     isActive("/about") || isActive("/teaching-philosophy") || isActive("/resume") || isActive("/creative-statement") ? "text-[#FFD700]" : ""
                   }`}
                 >
+                  <AboutIcon />
                   ABOUT
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${aboutOpen ? "rotate-180" : ""}`} />
                   <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#FFD700] group-hover:w-full transition-all duration-300"></span>
@@ -184,22 +287,53 @@ export default function Header() {
                 )}
               </div>
 
-              <Link 
-                href="/articles" 
-                className={`text-sm font-bold tracking-wide transition-all hover:text-[#00E5FF] relative group ${
-                  isActive("/articles") ? "text-[#00E5FF]" : ""
-                }`}
+              {/* Articles Dropdown - Hover Based */}
+              <div 
+                className="relative" 
+                ref={articlesDropdownRef}
+                onMouseEnter={() => setArticlesOpen(true)}
+                onMouseLeave={() => setArticlesOpen(false)}
               >
-                ARTICLES
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#00E5FF] group-hover:w-full transition-all duration-300"></span>
-              </Link>
+                <Link
+                  href="/articles"
+                  className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-[#00E5FF] relative group ${
+                    isActive("/articles") ? "text-[#00E5FF]" : ""
+                  }`}
+                >
+                  <ArticlesIcon />
+                  ARTICLES
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${articlesOpen ? "rotate-180" : ""}`} />
+                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#00E5FF] group-hover:w-full transition-all duration-300"></span>
+                </Link>
+
+                {/* Dropdown Menu */}
+                {articlesOpen && (
+                  <div className="absolute top-full left-0 mt-3 w-56 bg-background/95 backdrop-blur-xl border border-[#00E5FF]/30 rounded-lg overflow-hidden shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200"
+                    style={{
+                      boxShadow: "0 0 30px rgba(0, 229, 255, 0.2)"
+                    }}
+                  >
+                    {articleCategories.map((category) => (
+                      <Link
+                        key={category.slug || "all"}
+                        href={category.slug ? `/articles?category=${category.slug}` : "/articles"}
+                        className="block px-5 py-3 text-sm font-semibold hover:bg-[#00E5FF]/10 hover:text-[#00E5FF] transition-all border-b border-[#00E5FF]/10 last:border-0 relative group"
+                      >
+                        <span className="relative z-10">{category.name}</span>
+                        <span className="absolute left-0 top-0 w-1 h-0 bg-[#00E5FF] group-hover:h-full transition-all duration-300"></span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
 
               <Link 
                 href="/studio" 
-                className={`text-sm font-bold tracking-wide transition-all hover:text-[#00E5FF] relative group ${
+                className={`text-sm font-bold tracking-wide transition-all hover:text-[#00E5FF] relative group flex items-center gap-1.5 ${
                   isActive("/studio") ? "text-[#00E5FF]" : ""
                 }`}
               >
+                <StudioIcon />
                 STUDIO
                 <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#00E5FF] group-hover:w-full transition-all duration-300"></span>
               </Link>
