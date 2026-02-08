@@ -10,6 +10,7 @@ import { useState } from "react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Lightbox } from "@/components/Lightbox";
 import { SEO } from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 
 // Convert YouTube/Vimeo URLs to embed format
 function getEmbedUrl(url: string): string {
@@ -110,6 +111,20 @@ export default function ProjectDetail() {
   // Determine accent color based on project index
   const accentColor = ACCENT_COLORS[currentIndex % 3] || ACCENT_COLORS[0];
 
+  // Prepare creative work schema data
+  const projectImages = productionPhotos.slice(0, 5).map(img => ({
+    type: 'ImageObject' as const,
+    contentUrl: img.imageUrl || '',
+    caption: img.caption || undefined,
+    name: img.altText || undefined,
+  })).filter(img => img.contentUrl);
+
+  const contributors = creativeTeamArray.map(member => ({
+    type: 'Person' as const,
+    name: member.name,
+    roleName: member.role,
+  }));
+
   return (
     <div className="min-h-screen bg-background">
       <SEO
@@ -118,6 +133,36 @@ export default function ProjectDetail() {
         image={project.coverImageUrl || undefined}
         url={`https://www.brandonptdavis.com/projects/${project.slug}`}
         type="website"
+      />
+      <StructuredData
+        type="CreativeWork"
+        creativeWork={{
+          name: project.title,
+          description: project.excerpt || project.description || undefined,
+          image: project.coverImageUrl || undefined,
+          creator: {
+            name: "Brandon PT Davis",
+            url: "https://www.brandonptdavis.com/about",
+          },
+          dateCreated: project.year ? `${project.year}-01-01` : undefined,
+          datePublished: project.publishedAt ? new Date(project.publishedAt).toISOString().split('T')[0] : undefined,
+          genre: project.discipline?.replace('_', ' ') || 'Scenic Design',
+          keywords: project.seoKeywords?.split(',').map(k => k.trim()) || [],
+          locationCreated: project.client ? {
+            name: project.client,
+            ...(project.location && {
+              address: {
+                addressLocality: project.location.split(',')[0]?.trim(),
+                addressRegion: project.location.split(',')[1]?.trim() || undefined,
+                addressCountry: "US",
+              },
+            }),
+          } : undefined,
+          url: `https://www.brandonptdavis.com/projects/${project.slug}`,
+          workExample: projectImages.length > 0 ? projectImages : undefined,
+          about: project.designNotes || undefined,
+          contributor: contributors.length > 0 ? contributors : undefined,
+        }}
       />
       <Header />
 

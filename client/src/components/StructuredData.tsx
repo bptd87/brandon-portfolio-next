@@ -46,13 +46,49 @@ interface OrganizationSchema {
   };
 }
 
-interface StructuredDataProps {
-  type: 'Person' | 'Organization' | 'Both';
-  person?: PersonSchema;
-  organization?: OrganizationSchema;
+interface CreativeWorkSchema {
+  name: string;
+  description?: string;
+  image?: string | string[];
+  creator?: {
+    name: string;
+    url?: string;
+  };
+  dateCreated?: string;
+  datePublished?: string;
+  genre?: string;
+  keywords?: string[];
+  locationCreated?: {
+    name: string;
+    address?: {
+      addressLocality?: string;
+      addressRegion?: string;
+      addressCountry?: string;
+    };
+  };
+  url?: string;
+  workExample?: Array<{
+    type: 'ImageObject';
+    contentUrl: string;
+    caption?: string;
+    name?: string;
+  }>;
+  about?: string;
+  contributor?: Array<{
+    type: 'Person';
+    name: string;
+    roleName?: string;
+  }>;
 }
 
-export default function StructuredData({ type, person, organization }: StructuredDataProps) {
+interface StructuredDataProps {
+  type: 'Person' | 'Organization' | 'Both' | 'CreativeWork';
+  person?: PersonSchema;
+  organization?: OrganizationSchema;
+  creativeWork?: CreativeWorkSchema;
+}
+
+export default function StructuredData({ type, person, organization, creativeWork }: StructuredDataProps) {
   const generatePersonSchema = (data: PersonSchema) => {
     const schema: any = {
       '@context': 'https://schema.org',
@@ -132,6 +168,66 @@ export default function StructuredData({ type, person, organization }: Structure
     return schema;
   };
 
+  const generateCreativeWorkSchema = (data: CreativeWorkSchema) => {
+    const schema: any = {
+      '@context': 'https://schema.org',
+      '@type': 'CreativeWork',
+      name: data.name,
+    };
+
+    if (data.description) schema.description = data.description;
+    if (data.image) schema.image = data.image;
+    if (data.url) schema.url = data.url;
+    if (data.dateCreated) schema.dateCreated = data.dateCreated;
+    if (data.datePublished) schema.datePublished = data.datePublished;
+    if (data.genre) schema.genre = data.genre;
+    if (data.about) schema.about = data.about;
+    
+    if (data.creator) {
+      schema.creator = {
+        '@type': 'Person',
+        name: data.creator.name,
+        ...(data.creator.url && { url: data.creator.url }),
+      };
+    }
+    
+    if (data.locationCreated) {
+      schema.locationCreated = {
+        '@type': 'Place',
+        name: data.locationCreated.name,
+        ...(data.locationCreated.address && {
+          address: {
+            '@type': 'PostalAddress',
+            ...data.locationCreated.address,
+          },
+        }),
+      };
+    }
+    
+    if (data.keywords && data.keywords.length > 0) {
+      schema.keywords = data.keywords.join(', ');
+    }
+    
+    if (data.workExample && data.workExample.length > 0) {
+      schema.workExample = data.workExample.map(work => ({
+        '@type': work.type,
+        contentUrl: work.contentUrl,
+        ...(work.caption && { caption: work.caption }),
+        ...(work.name && { name: work.name }),
+      }));
+    }
+    
+    if (data.contributor && data.contributor.length > 0) {
+      schema.contributor = data.contributor.map(person => ({
+        '@type': person.type,
+        name: person.name,
+        ...(person.roleName && { roleName: person.roleName }),
+      }));
+    }
+
+    return schema;
+  };
+
   const schemas = [];
   
   if ((type === 'Person' || type === 'Both') && person) {
@@ -140,6 +236,10 @@ export default function StructuredData({ type, person, organization }: Structure
   
   if ((type === 'Organization' || type === 'Both') && organization) {
     schemas.push(generateOrganizationSchema(organization));
+  }
+  
+  if (type === 'CreativeWork' && creativeWork) {
+    schemas.push(generateCreativeWorkSchema(creativeWork));
   }
 
   return (
