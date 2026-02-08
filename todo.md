@@ -1139,3 +1139,5 @@
 
 - [x] Design creative theatrical-inspired icons for dropdown menus (spotlight, curtain, blueprint, etc.)
 - [x] Fix dropdown retraction timing - add delay so users can click items
+
+- [x] Fix ARTICLES dropdown to show actual article categories from database

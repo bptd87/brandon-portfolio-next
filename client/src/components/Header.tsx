@@ -261,10 +261,11 @@ export default function Header() {
 
   const articleCategories = [
     { name: "All Articles", slug: "", icon: <AllCategoriesIcon /> },
-    { name: "Career Guides", slug: "career", icon: <ArticleIcon /> },
-    { name: "Design Process", slug: "process", icon: <ArticleIcon /> },
-    { name: "Technical Tutorials", slug: "technical", icon: <ArticleIcon /> },
-    { name: "Industry Insights", slug: "industry", icon: <ArticleIcon /> },
+    { name: "Design Philosophy", slug: "design-philosophy", icon: <ArticleIcon /> },
+    { name: "Musical Theatre & Cinema", slug: "musical-theatre-cinema", icon: <ArticleIcon /> },
+    { name: "Scenic Design Process", slug: "scenic-design-process", icon: <ArticleIcon /> },
+    { name: "Technology & Tutorials", slug: "technology-tutorials", icon: <ArticleIcon /> },
+    { name: "Themed Entertainment", slug: "themed-entertainment", icon: <ArticleIcon /> },
   ];
 
   const aboutPages = [
