@@ -155,6 +155,19 @@ export default function StudioTutorials() {
       publishDate: "Feb 01, 2021",
       thumbnailUrl: `https://img.youtube.com/vi/JOlFjmY_R7o/maxresdefault.jpg`,
     },
+    {
+      id: 12,
+      title: "Vectorworks Tutorial: 3D Modeling Basics",
+      slug: "3d-modeling-basics",
+      youtubeId: "Jjz1zXDXafs",
+      youtubeUrl: "https://www.youtube.com/watch?v=Jjz1zXDXafs",
+      description: "Master essential 3D modeling operations including Extrude, Add/Subtract/Intersect Solids, Section Solids, Multiple Extrude, Tapered Extrude, Sweep, and Extrude Along Path.",
+      category: "3d-modeling",
+      difficultyLevel: "intermediate",
+      duration: 1274, // 21:14 in seconds
+      publishDate: "Feb 03, 2021",
+      thumbnailUrl: `https://img.youtube.com/vi/Jjz1zXDXafs/maxresdefault.jpg`,
+    },
   ];
 
   const categories = [
