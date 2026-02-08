@@ -1431,3 +1431,14 @@
 - [x] Test calculator on mobile devices
 - [x] Test calculator on desktop
 - [x] Ensure smooth touch interactions for mobile
+
+## Scale Calculator Redesign
+- [x] Redesign mobile-first layout to fit on one screen (no scrolling)
+- [x] Add header image from original design (scale-converter-abstract.webp)
+- [x] Replace blue calculator icon with Ruler icon
+- [x] Implement 3D printer bed size checker
+- [x] Add printer presets (Prusa Mini, Prusa MK4, Ender 3, Bambu Lab, etc.)
+- [x] Show if model will fit on selected printer bed
+- [x] Display build volume dimensions
+- [x] Test mobile layout without scrolling
+- [x] Test desktop layout
