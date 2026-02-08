@@ -49,7 +49,7 @@ export function RelatedTools({ currentToolId }: RelatedToolsProps) {
         <div className="grid md:grid-cols-2 gap-6">
           {relatedTools.map(tool => (
             <Link key={tool.id} href={tool.href}>
-              <a className="group block p-6 bg-neutral-200/60 dark:bg-neutral-900/60 backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-3xl hover:border-black/30 dark:hover:border-white/30 transition-all">
+              <div className="group block p-6 bg-neutral-200/60 dark:bg-neutral-900/60 backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-3xl hover:border-black/30 dark:hover:border-white/30 transition-all cursor-pointer">
                 <div className="flex items-start gap-4">
                   <div className="p-3 bg-black/5 dark:bg-white/5 rounded-2xl group-hover:bg-black/10 dark:group-hover:bg-white/10 transition-colors">
                     {tool.icon}
@@ -59,7 +59,7 @@ export function RelatedTools({ currentToolId }: RelatedToolsProps) {
                     <p className="text-sm text-black/60 dark:text-white/60">{tool.description}</p>
                   </div>
                 </div>
-              </a>
+              </div>
             </Link>
           ))}
         </div>

@@ -1511,3 +1511,7 @@
 - [ ] Add filter by region functionality
 - [x] Test all features on mobile and desktop
 - [x] Verify all Wikipedia images load correctly
+
+## RelatedTools Component Fix (User Reported - Feb 8, 2026)
+- [x] Fix nested anchor tags error in RelatedTools component
+- [x] Test Design History Timeline page after fix
