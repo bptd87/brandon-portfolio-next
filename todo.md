@@ -1136,3 +1136,6 @@
 - [x] Fix navigation to use consistent orange/blue/red color scheme (not cyan/gold)
 - [x] Move icons from top-level nav to dropdown menus only
 - [x] Fix dropdown menu clickability issues
+
+- [x] Design creative theatrical-inspired icons for dropdown menus (spotlight, curtain, blueprint, etc.)
+- [x] Fix dropdown retraction timing - add delay so users can click items
