@@ -1224,3 +1224,4 @@
 - [x] Fix all tutorial transcripts (1-8) - edit raw fragments into readable text with proper sentences and punctuation
 - [x] Add tutorial 9: Resource Manager Basics with comprehensive educational content and pre-formatted transcript
 - [x] Fix tutorial 9 (Resource Manager Basics) video not loading
+- [x] Add tutorial 10: Understanding Symbols with comprehensive educational content and pre-formatted transcript

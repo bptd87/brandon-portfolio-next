@@ -129,6 +129,19 @@ export default function StudioTutorials() {
       publishDate: "Jan 30, 2021",
       thumbnailUrl: `https://img.youtube.com/vi/Y7trPdHxRxM/maxresdefault.jpg`,
     },
+    {
+      id: 10,
+      title: "Vectorworks Tutorial: Understanding Symbols",
+      slug: "understanding-symbols",
+      youtubeId: "ib2-H14Cx5I",
+      youtubeUrl: "https://www.youtube.com/watch?v=ib2-H14Cx5I",
+      description: "Master the creation and management of 2D, 3D, and hybrid symbols in Vectorworks, including symbol types, scaling methods, and editing workflows.",
+      category: "getting-started",
+      difficultyLevel: "beginner",
+      duration: 501, // 8:21 in seconds
+      publishDate: "Jan 31, 2021",
+      thumbnailUrl: `https://img.youtube.com/vi/ib2-H14Cx5I/maxresdefault.jpg`,
+    },
   ];
 
   const categories = [
