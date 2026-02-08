@@ -1286,3 +1286,8 @@
 ## Article Landing Page Fixes
 - [x] Fix article card text size - too large and covering metadata
 - [x] Separate musical theatre section from regular articles on landing page
+
+## Homepage SEO Fixes
+- [x] Add keywords meta tag
+- [x] Optimize title to 30-60 characters
+- [x] Add description meta tag (50-160 characters)
