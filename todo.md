@@ -1442,3 +1442,10 @@
 - [x] Display build volume dimensions
 - [x] Test mobile layout without scrolling
 - [x] Test desktop layout
+
+## Scale Calculator Design Fixes
+- [x] Change header image to scale-header.webp (match card image)
+- [x] Align header text with calculator app content (max-w-5xl container)
+- [x] Fix tab colors to fill entire box (bg-[#2196F3] text-white)
+- [x] Test header image and alignment
+- [x] Test tab styling

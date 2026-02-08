@@ -131,23 +131,23 @@ export default function ScaleCalculator() {
       <Header />
 
       {/* Compact Hero with Header Image */}
-      <section className="relative h-[40vh] md:h-[50vh] overflow-hidden border-b border-border">
+      <section className="relative h-[30vh] md:h-[35vh] overflow-hidden border-b border-border">
         <img 
-          src="https://s3.us-west-1.amazonaws.com/manus.static.files/scale-converter-abstract.webp"
+          src="https://s3.us-west-1.amazonaws.com/manus.static.files/scale-header.webp"
           alt="Scale Calculator - Precision conversion for theatrical drafting" 
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/20" />
         
-        <div className="absolute bottom-0 left-0 right-0 container pb-6 md:pb-8">
-          <div className="flex items-center gap-2 mb-3">
-            <Ruler className="w-5 h-5 text-[#2196F3]" />
-            <p className="text-xs tracking-widest text-muted-foreground font-semibold">SCALE CALCULATOR</p>
+        <div className="absolute bottom-0 left-0 right-0 container max-w-5xl pb-4 md:pb-6">
+          <div className="flex items-center gap-2 mb-2">
+            <Ruler className="w-4 h-4 text-[#2196F3]" />
+            <p className="text-[10px] md:text-xs tracking-widest text-muted-foreground font-semibold uppercase">Scale Calculator</p>
           </div>
-          <h1 className="text-4xl md:text-5xl font-black tracking-tighter mb-2 text-white drop-shadow-lg">
+          <h1 className="text-3xl md:text-4xl font-black tracking-tighter mb-1 text-white drop-shadow-lg">
             3D Printing Scale Converter
           </h1>
-          <p className="text-sm md:text-base text-white/90 max-w-2xl drop-shadow">
+          <p className="text-xs md:text-sm text-white/90 max-w-2xl drop-shadow">
             Convert real-world dimensions to model measurements for theatrical 3D printing
           </p>
         </div>
@@ -163,7 +163,7 @@ export default function ScaleCalculator() {
                 onClick={() => setActiveTab('real-to-scale')}
                 className={`flex-1 py-4 text-xs md:text-sm font-bold uppercase tracking-widest transition-all ${
                   activeTab === 'real-to-scale'
-                    ? 'bg-[#2196F3]/10 text-[#2196F3] border-b-2 border-[#2196F3]'
+                    ? 'bg-[#2196F3] text-white'
                     : 'text-muted-foreground hover:bg-muted/50'
                 }`}
               >
@@ -173,7 +173,7 @@ export default function ScaleCalculator() {
                 onClick={() => setActiveTab('scale-to-real')}
                 className={`flex-1 py-4 text-xs md:text-sm font-bold uppercase tracking-widest transition-all ${
                   activeTab === 'scale-to-real'
-                    ? 'bg-[#2196F3]/10 text-[#2196F3] border-b-2 border-[#2196F3]'
+                    ? 'bg-[#2196F3] text-white'
                     : 'text-muted-foreground hover:bg-muted/50'
                 }`}
               >
