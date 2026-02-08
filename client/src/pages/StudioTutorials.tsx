@@ -103,6 +103,19 @@ export default function StudioTutorials() {
       publishDate: "Jan 28, 2021",
       thumbnailUrl: `https://img.youtube.com/vi/EZB5O-Wmsk4/maxresdefault.jpg`,
     },
+    {
+      id: 8,
+      title: "Vectorworks Tutorial: 2D Edit and Modify Tricks",
+      slug: "2d-edit-modify-tricks",
+      youtubeId: "8lTla9cvIPk",
+      youtubeUrl: "https://www.youtube.com/watch?v=8lTla9cvIPk",
+      description: "Master essential 2D editing and modification tools including Mirror, Reshape, Offset, Split, Connect/Combine, and advanced Modify menu commands for efficient drafting workflows.",
+      category: "2d-drafting",
+      difficultyLevel: "intermediate",
+      duration: 767, // 12:47 in seconds
+      publishDate: "Jan 29, 2021",
+      thumbnailUrl: `https://img.youtube.com/vi/8lTla9cvIPk/maxresdefault.jpg`,
+    },
   ];
 
   const categories = [

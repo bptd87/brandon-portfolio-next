@@ -1220,3 +1220,4 @@
 - [x] Add tutorial 6: Sheet Layers with comprehensive educational content
 - [x] Fix blank key concepts in tutorial 6 Sheet Layers Concepts tab
 - [x] Add tutorial 7: Creating Trim Profiles with Polyline Tool with comprehensive educational content
+- [x] Add tutorial 8: 2D Edit and Modify Tricks with comprehensive educational content
