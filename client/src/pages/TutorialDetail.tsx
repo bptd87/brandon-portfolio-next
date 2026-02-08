@@ -11,7 +11,8 @@ export default function TutorialDetail() {
   const slug = params.slug;
 
   // This will be replaced with database query
-  const tutorial = {
+  const tutorials: Record<string, any> = {
+    "navigating-user-interface": {
     id: 1,
     slug: "navigating-user-interface",
     title: "Vectorworks Tutorial: Navigating the User Interface for Scenic Designers",
@@ -144,7 +145,95 @@ Finally, the tutorial explores view controls, zoom functions, and workspace cust
       { title: "Vectorworks 3: Basic 2D Tools", slug: "basic-2d-tools" },
       { title: "Vectorworks 5: 2D Theater Ground Plan", slug: "2d-theater-ground-plan" },
     ],
+    },
+    "understanding-classes": {
+      id: 2,
+      slug: "understanding-classes",
+      title: "Vectorworks Tutorial: Understanding Classes",
+      description: "Master the organization system that controls graphic attributes, textures, and visibility in Vectorworks using classes and hierarchies.",
+      youtubeId: "tXQcTdGiwT4",
+      category: "Getting Started",
+      difficulty: "Beginner",
+      duration: 587, // 9:47 in seconds
+      uploadDate: "2020-08-15",
+      
+      learningObjectives: [
+        "Understand what classes are and how they differ from design layers",
+        "Navigate and manage classes using the Navigation palette",
+        "Use class hierarchies to organize scenic drawings",
+        "Apply and override graphic attributes using classes",
+        "Reset overridden attributes back to class control",
+        "Use groups strategically while preserving class visibility",
+      ],
+
+      overview: `This tutorial introduces classes as one of the most important organizational tools in Vectorworks. You'll learn how classes control graphic attributes, textures, and visibility—allowing you to show or hide specific elements of a drawing as needed for drafting and documentation.
+
+The walkthrough covers how classes are structured, how class hierarchies work, and why standard classes like None and Dimension are critical to a clean workflow. You'll also see the difference between manually overriding attributes and allowing classes to control appearance using Use at Creation settings.
+
+Finally, the tutorial explores how grouping objects interacts with class visibility—showing how multiple classed objects can live inside a group while still responding independently to class-based control. This approach becomes especially useful in complex scenic drawings.`,
+
+      keyConcepts: [
+        {
+          title: "CLASSES",
+          content: "Classes control how things look and when they appear. They manage line weights, fills, textures, and visibility. Think of classes as graphic and visibility filters layered on top of your drawing—not containers for geometry.",
+        },
+        {
+          title: "NONE CLASS",
+          content: "The base class where all 3D modeling should occur. Equivalent to Layer 0 in AutoCAD or the default layer in SketchUp. Model geometry here, then let classes control appearance.",
+        },
+        {
+          title: "CLASS HIERARCHIES",
+          content: "Use hyphens between text elements (e.g., 2D-Overhead-Dash) to create organized, nested class structures in the Navigation palette.",
+        },
+      ],
+
+      proTips: [
+        "Model geometry in the None class whenever possible, and let classes control appearance instead of manually overriding attributes.",
+        "If something looks 'wrong,' check whether its attributes are overridden before assuming the class is incorrect.",
+        "Use groups to manage visibility of multiple classed objects together while preserving their individual class assignments.",
+      ],
+
+      shortcuts: [
+        { keys: "Cmd / Ctrl + G", action: "Combine multiple objects while preserving their individual class assignments" },
+      ],
+
+      commonPitfalls: [
+        "Overriding attributes instead of using class-based control",
+        "Putting modeled geometry into arbitrary classes instead of None",
+        "Confusing class visibility with design layer visibility",
+        "Forgetting that grouped objects can retain independent class attributes",
+        "Breaking class hierarchies by inconsistent naming",
+      ],
+
+      transcript: [
+        { time: "0:01", text: "Hello, this is Brandon PT Davis, theatrical scenic designer, and in this Vectorworks tutorial I'm going to talk to you about classes and design layers. To start the video off, we will talk about classes." },
+        { time: "0:20", text: "Classes are one of the many powerful functions built into Vectorworks to allow the user to organize their drawing. Classes can be affected by graphic attributes, textures, and textiles. Classes can also be used in the visibility to be turned on and off, allowing the user to show a particular element when needed." },
+        { time: "0:49", text: "Classes can be found in the Navigation palette. Under Navigation palette, you can also access classes in this top bar and scroll down and view them here. To look at the hierarchy list of the navigation and classes, you can double click on the icon here." },
+        { time: "1:11", text: "As you can see, this template has some classes pre-installed. We have the 2D classes, sheet layer classes, and S for scenic or set classes. Note that the Dimension class and None class are also here. These two classes come standard with all Vectorworks templates." },
+        { time: "1:43", text: "The None class is the base class in which all the 3D elements should be modeled. If you're a previous AutoCAD user, it's equivalent to Layer Zero, also similar in SketchUp. The Dimension class is where dimension attributes are stored." },
+        { time: "2:13", text: "If I were to go and look at, say, this overhead dash, I can press Edit. Notice that the hyphens between the two text elements are what create the hierarchy and allow for better organization within the classes palette." },
+        { time: "2:37", text: "In this palette, we are able to modify the graphic attributes. As you see, we have checked 'Use at Creation,' and we have the fill style set to None, the pen type set to Line Type Dash. You can also change the pen type to None, Solid, Pattern, and Line Type." },
+        { time: "3:04", text: "I'm going to show you how you can modify the attributes using classes with these five squares that I have drafted. To start off, I will show you the traditional way of modifying the attributes of a graphic." },
+        { time: "7:40", text: "Now that I've shown you how I can change the visibility of class, I'm going to show you how a group can add to the effectiveness of the visibility with classes." },
+        { time: "9:38", text: "This concludes the portion of the tutorial covering classes. The next section of this tutorial will be on the design layer aspect of Vectorworks." },
+      ],
+    },
   };
+
+  const tutorial = slug ? tutorials[slug] : null;
+
+  if (!tutorial) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold mb-4">Tutorial Not Found</h1>
+          <Link href="/studio/tutorials">
+            <a className="text-[#2196F3] hover:underline">← Back to Tutorials</a>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const formatDuration = (seconds: number) => {
     const mins = Math.floor(seconds / 60);

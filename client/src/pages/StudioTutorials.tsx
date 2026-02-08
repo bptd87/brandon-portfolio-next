@@ -24,6 +24,18 @@ export default function StudioTutorials() {
       duration: 634, // 10:34 in seconds
       thumbnailUrl: `https://img.youtube.com/vi/jRI33g1oSt0/maxresdefault.jpg`,
     },
+    {
+      id: 2,
+      title: "Vectorworks Tutorial: Understanding Classes",
+      slug: "understanding-classes",
+      youtubeId: "tXQcTdGiwT4",
+      youtubeUrl: "https://www.youtube.com/watch?v=tXQcTdGiwT4",
+      description: "Master the organization system that controls graphic attributes, textures, and visibility in Vectorworks using classes and hierarchies.",
+      category: "getting-started",
+      difficultyLevel: "beginner",
+      duration: 587, // 9:47 in seconds
+      thumbnailUrl: `https://img.youtube.com/vi/tXQcTdGiwT4/maxresdefault.jpg`,
+    },
   ];
 
   const categories = [

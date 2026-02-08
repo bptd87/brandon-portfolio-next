@@ -1190,3 +1190,7 @@
 - [x] Ensure image fills card properly with rounded corners
 
 - [x] Redesign tutorial cards to large feature-style layout with full-width thumbnail and overlaid content
+
+- [x] Generate educational content from "Understanding Classes" tutorial script
+- [x] Add "Understanding Classes" tutorial to StudioTutorials page
+- [x] Create detail page for "Understanding Classes" tutorial
