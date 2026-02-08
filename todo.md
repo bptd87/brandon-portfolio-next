@@ -1299,3 +1299,8 @@
 - [x] Add dynamic OG/Twitter tags to news detail pages
 - [ ] Add static OG/Twitter tags to About, Contact, Studio pages
 - [x] Test social media sharing previews
+
+## Default OG Image
+- [x] Generate default Open Graph image (1200×630px)
+- [x] Add image to public directory
+- [x] Update meta tag references
