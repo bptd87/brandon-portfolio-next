@@ -77,6 +77,19 @@ export default function StudioTutorials() {
       publishDate: "Jan 27, 2021",
       thumbnailUrl: `https://img.youtube.com/vi/orjqcNYveOg/maxresdefault.jpg`,
     },
+    {
+      id: 6,
+      title: "Vectorworks Tutorial: Sheet Layers",
+      slug: "sheet-layers",
+      youtubeId: "D4AXwNQgdBI",
+      youtubeUrl: "https://www.youtube.com/watch?v=D4AXwNQgdBI",
+      description: "Learn how to use sheet layers for laying out pages for printing, including creating viewports, adding title blocks, and managing drawing scales.",
+      category: "2d-drafting",
+      difficultyLevel: "beginner",
+      duration: 476, // 7:56 in seconds
+      publishDate: "Jan 27, 2021",
+      thumbnailUrl: `https://img.youtube.com/vi/D4AXwNQgdBI/maxresdefault.jpg`,
+    },
   ];
 
   const categories = [

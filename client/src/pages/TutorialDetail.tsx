@@ -540,6 +540,115 @@ The tutorial covers 15+ essential tools organized into categories: navigation to
         { title: "Vectorworks Tutorial: Installing a Workspace and Template", slug: "installing-workspace-template" },
       ],
     },
+    "sheet-layers": {
+      id: 6,
+      slug: "sheet-layers",
+      title: "Vectorworks Tutorial: Sheet Layers",
+      description: "Learn how to use sheet layers for laying out pages for printing, including creating viewports, adding title blocks, and managing drawing scales for professional documentation.",
+      youtubeId: "D4AXwNQgdBI",
+      category: "2D Drafting",
+      difficulty: "Beginner",
+      duration: 476, // 7:56 in seconds
+      uploadDate: "2021-01-27",
+      
+      overview: "This tutorial covers the essential workflow for creating professional print documentation in Vectorworks using sheet layers. You'll learn how to set up sheet layers as virtual pages, create viewports that reference your design layer content, add title blocks and borders, and manage drawing scales. By the end of this tutorial, you'll understand how to organize multiple drawings on a single sheet and create a complete drawing package ready for printing or PDF export.\n\nSheet layers are fundamental to professional documentation workflow, allowing you to present your design work in a standardized format with proper title blocks, drawing numbers, and scales. This tutorial demonstrates the complete process from creating a blank sheet to populating it with multiple viewports at different scales.",
+      
+      learningObjectives: [
+        "Understand the difference between design layers and sheet layers",
+        "Create and manage sheet layers for print documentation",
+        "Add and configure title blocks and borders",
+        "Create viewports from design layer content",
+        "Control viewport scales and drawing labels",
+        "Organize multiple viewports on a single sheet",
+      ],
+      
+      keyConcepts: [
+        { term: "Sheet Layer", definition: "A layer within Vectorworks used to lay out pages for printing, similar to a physical sheet of paper where you arrange your drawings." },
+        { term: "Viewport", definition: "A window into a design layer that displays specific content on a sheet layer, allowing you to show the same drawing at different scales or views." },
+        { term: "Title Block", definition: "A standardized border and information area on a sheet that contains project details, sheet numbers, drawing titles, and other documentation metadata." },
+        { term: "Crop", definition: "A rectangle that defines which portion of a design layer will be visible in a viewport, allowing you to isolate specific drawings or details." },
+        { term: "Drawing Label", definition: "Text that identifies a viewport with a drawing number and title, automatically linked to the viewport properties for easy updates." },
+        { term: "Scale", definition: "The ratio between the size of the drawing on the sheet and the actual size of the object, such as 1/2\" = 1'-0\" for architectural drawings." },
+      ],
+      
+      proTips: [
+        "Name your viewports descriptively (e.g., 'Wall Front', 'Plan View') in the Object Info palette to easily identify them in complex drawing packages.",
+        "Use the keyboard shortcut Ctrl/Cmd + ' (apostrophe) to quickly create a viewport from a selected crop rectangle.",
+        "Sheet layer numbers and titles automatically populate in title blocks through the Title Block Manager - no manual text editing needed.",
+        "Keep your design layers organized and clean since viewports directly reference that content - changes in design layers instantly update on sheets.",
+        "Create a standard template with pre-configured sheet layers and title blocks to maintain consistency across all your projects.",
+        "Use the Navigation palette to quickly switch between sheet layers and see all viewports associated with each sheet.",
+        "Set viewport scales in the Object Info palette for precise control over how your drawings appear at different sizes on the same sheet.",
+      ],
+      
+      shortcuts: [
+        { keys: "Ctrl/Cmd + '", action: "Create Viewport", description: "Quickly create a viewport from a selected crop rectangle" },
+        { keys: "Fit to Page", action: "Zoom to Sheet", description: "View the entire sheet layer in the viewport (use zoom icons)" },
+      ],
+      
+      commonPitfalls: [
+        "Forgetting to create a crop rectangle before making a viewport - the crop defines what content will be visible.",
+        "Not naming viewports descriptively, making it difficult to identify them later in complex drawing sets.",
+        "Manually editing title block text instead of using the sheet layer properties, which breaks automatic updates.",
+        "Creating viewports at incorrect scales and not checking the Object Info palette scale settings.",
+        "Placing too many viewports on a single sheet, making the documentation cluttered and hard to read.",
+      ],
+      
+      transcript: [
+        { time: "0:00", text: "[Music]" },
+        { time: "0:06", text: "Hello, this is Brandon PT Davis and in this Vectorworks tutorial we will discuss sheet layers." },
+        { time: "0:14", text: "A sheet layer is a layer within Vectorworks that the user will use to lay out a page for printing." },
+        { time: "0:22", text: "We had discussed in a previous video design layers and how they are like pages, and sheet layers are pages." },
+        { time: "0:33", text: "In order to access the sheet layer from the navigation palette, we will click on the icon that looks like a piece of paper with a folded corner." },
+        { time: "0:44", text: "Currently in the document we have one sheet layer. That sheet layer is numbered 1 and titled Sheet Layer 1." },
+        { time: "0:56", text: "To access the sheet layer, I'm going to click next to the sheet number to toggle to the sheet layer." },
+        { time: "1:03", text: "Currently we are zoomed into the sheet layer. To see the full page I will click 'Fit to Page' area in the top zoom icons." },
+        { time: "1:14", text: "In the template you will notice that the sheet layer has a border and title block pre-loaded." },
+        { time: "1:21", text: "I can modify the sheet layer by right-clicking and going to Edit." },
+        { time: "1:31", text: "In the sheet layer dialog you'll see you can modify the sheet number, the sheet title, the stacking order, and the raster rendering DPI." },
+        { time: "1:48", text: "I'm going to call this sheet layer 'Wall Elevation'. I will retain the sheet number as 1 and press OK." },
+        { time: "2:00", text: "Please note that within the title block, the sheet number and the sheet title are auto-generated through the Title Block Manager." },
+        { time: "2:12", text: "We'll go into more specifics on the Title Block Manager in another tutorial video." },
+        { time: "2:17", text: "To add another sheet layer I can right-click and select New." },
+        { time: "2:29", text: "This sheet layer I'm going to number 2 and type in 'Details' and press OK." },
+        { time: "2:45", text: "What you'll notice is that I just have the outline of the page without the border or title block." },
+        { time: "2:52", text: "To insert a border and title block you can go to the Dimension and Notes tools and scroll to the Title Block Border tool." },
+        { time: "3:04", text: "In the title block border style, I can click 'UTEP Basic Title Block' to load the title block and click on the center." },
+        { time: "3:22", text: "Now I have the title block installed. Now that the title block is installed you will notice the sheet title corresponds with the title we entered in the navigation palette." },
+        { time: "3:37", text: "In order to add our 2D drafting to the sheet layer, we'll first go back to the design layer." },
+        { time: "3:44", text: "In the design layer I have this drawing of a wall with a top view, a section, and a front elevation." },
+        { time: "3:52", text: "To transfer the information from the design layer to the sheet layer, you first want to create a rectangle crop around the item that you want to be displayed." },
+        { time: "4:05", text: "I'm going to start with the front elevation. With the rectangle still highlighted I will now go to View > Create Viewport." },
+        { time: "4:21", text: "The dialog says 'The selected object may be used as a viewport's crop. Do you want to use this as a crop?' Click Yes." },
+        { time: "4:34", text: "Now a Create Viewport dialog will appear. There is a number of settings that we can modify: the first is name, viewport, drawing number, sheet number." },
+        { time: "4:52", text: "I will go ahead and leave this icon clicked. We are going to create layers on Sheet 1 Wall Elevation, create a drawing label." },
+        { time: "5:04", text: "We're going to use the style that is built into our file, and in the drawing number dialog I'm going to write 2, and in the drawing title I will write 'Wall Front' and press OK." },
+        { time: "5:25", text: "In the navigation palette with the viewport selected, you will note the scale is currently set to a quarter inch." },
+        { time: "5:36", text: "We can modify the scale by clicking the scale drop down. I'm going to change this to half inch scale." },
+        { time: "5:45", text: "Now that I've shown you how to modify the scale of a viewport, I want to show that you can also update the drawing title and number in the Object Info palette." },
+        { time: "5:58", text: "At the bottom of the Object Info palette you see this name - this is the name of the viewport." },
+        { time: "6:05", text: "If we look in the navigation next to the sheet layers is the viewport. Here is the viewport 2-1 which is the same viewport that I have selected." },
+        { time: "6:17", text: "I recommend putting a small name by the viewport like 'Wall Front'. As your drawing package gets more complex, having this information will help you identify a viewport from the viewport navigation." },
+        { time: "6:38", text: "Now I'm going to add the plan view to the drawing. I'm going to go back to the drawing layer." },
+        { time: "6:48", text: "I'm first going to redraw the crop and have the crop selected, and press Ctrl or Command apostrophe to create the viewport." },
+        { time: "7:05", text: "This time I'm going to go ahead and name the viewport manually: 1-1 Wall Plan." },
+        { time: "7:19", text: "I will update the drawing title to 'Wall Plan' and I can also change the scale to half inch scale and press OK." },
+        { time: "7:34", text: "Directly above our viewport we have the wall plan viewport." },
+        { time: "7:42", text: "This concludes the Vectorworks tutorial on sheet layers. If you have any questions, feel free to ask." },
+      ],
+      
+      relatedResources: [
+        { type: "Documentation", title: "Vectorworks Sheet Layers Guide", url: "https://app-help.vectorworks.net/" },
+        { type: "Video", title: "Title Block Manager Tutorial", url: "https://www.youtube.com/vectorworks" },
+        { type: "Template", title: "Professional Title Block Templates", url: "https://www.vectorworks.net/" },
+      ],
+      
+      relatedTutorials: [
+        { title: "Vectorworks Tutorial: Understanding Design Layers", slug: "understanding-design-layers" },
+        { title: "Vectorworks Tutorial: Basics Tool Palette", slug: "basics-tool-palette" },
+        { title: "Vectorworks Tutorial: Understanding Classes", slug: "understanding-classes" },
+      ],
+    },
   };
 
   const tutorial = slug ? tutorials[slug] : null;

@@ -1217,3 +1217,4 @@
 - [x] Align related project card images to top on news detail pages
 - [x] Ensure all work and project portfolio cards have image-to-top alignment
 - [x] Fix missing navbar on contact page
+- [x] Add tutorial 6: Sheet Layers with comprehensive educational content
