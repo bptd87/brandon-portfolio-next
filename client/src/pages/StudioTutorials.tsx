@@ -195,9 +195,9 @@ export default function StudioTutorials() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredTutorials.map(tutorial => (
             <Link key={tutorial.id} href={tutorial.slug ? `/studio/tutorials/${tutorial.slug}` : tutorial.youtubeUrl}>
-            <Card className="group hover:shadow-xl transition-all duration-300 overflow-hidden border border-border hover:border-[#2196F3]/50 rounded-lg bg-card">
+            <Card className="group hover:shadow-xl transition-all duration-300 overflow-hidden border border-border hover:border-[#2196F3]/50 rounded-lg bg-card p-0">
               {/* Thumbnail */}
-              <div className="relative aspect-video bg-muted overflow-hidden rounded-t-lg">
+              <div className="relative aspect-video bg-muted overflow-hidden">
                 <img 
                   src={tutorial.thumbnailUrl} 
                   alt={tutorial.title}

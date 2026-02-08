@@ -1212,3 +1212,4 @@
 - [x] Update all tutorial dates to match YouTube publish dates (Jan 24-27, 2021)
 - [x] Change tutorial cards layout from single-column to 4-wide grid
 - [x] Change tutorial grid from 4 columns to 3 columns and fix thumbnail sizing to fill card width
+- [x] Align tutorial card thumbnails to the very top of cards (remove gap above images)
