@@ -132,7 +132,7 @@ export default function News() {
           {featuredNews && (
             <div className="max-w-6xl mx-auto mb-16">
               <Link href={`/news/${featuredNews.slug}`}>
-                <Card className="overflow-hidden hover:shadow-2xl transition-all duration-500 group cursor-pointer border-2 border-primary/20">
+                <Card className="overflow-hidden hover:shadow-2xl transition-all duration-500 group cursor-pointer border-2 border-primary/20 p-0">
                   <div className="grid md:grid-cols-2 gap-0">
                     {featuredNews.coverImageUrl && (
                       <div className="aspect-[16/9] md:aspect-auto overflow-hidden">
@@ -226,7 +226,7 @@ export default function News() {
                             <div className="hidden md:block absolute top-8 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-[#00E5FF] border-4 border-background shadow-lg z-10" />
                             
                             <Link href={`/news/${item.slug}`}>
-                              <Card className="hover:shadow-xl transition-all duration-300 group cursor-pointer overflow-hidden">
+                              <Card className="hover:shadow-xl transition-all duration-300 group cursor-pointer overflow-hidden p-0">
                                 {item.coverImageUrl && (
                                   <div className="aspect-[16/9] overflow-hidden">
                                     <img 
