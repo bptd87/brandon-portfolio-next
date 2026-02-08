@@ -1,0 +1,70 @@
+{
+  "query": "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'articles' AND TABLE_SCHEMA = DATABASE();",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'articles' AND TABLE_SCHEMA = DATABASE();",
+  "rows": [
+    {
+      "COLUMN_NAME": "id"
+    },
+    {
+      "COLUMN_NAME": "title"
+    },
+    {
+      "COLUMN_NAME": "slug"
+    },
+    {
+      "COLUMN_NAME": "excerpt"
+    },
+    {
+      "COLUMN_NAME": "content"
+    },
+    {
+      "COLUMN_NAME": "categoryId"
+    },
+    {
+      "COLUMN_NAME": "coverImageUrl"
+    },
+    {
+      "COLUMN_NAME": "coverImageKey"
+    },
+    {
+      "COLUMN_NAME": "authorId"
+    },
+    {
+      "COLUMN_NAME": "readTime"
+    },
+    {
+      "COLUMN_NAME": "status"
+    },
+    {
+      "COLUMN_NAME": "featured"
+    },
+    {
+      "COLUMN_NAME": "seoTitle"
+    },
+    {
+      "COLUMN_NAME": "seoDescription"
+    },
+    {
+      "COLUMN_NAME": "seoKeywords"
+    },
+    {
+      "COLUMN_NAME": "createdAt"
+    },
+    {
+      "COLUMN_NAME": "updatedAt"
+    },
+    {
+      "COLUMN_NAME": "publishedAt"
+    },
+    {
+      "COLUMN_NAME": "likes"
+    },
+    {
+      "COLUMN_NAME": "views"
+    }
+  ],
+  "messages": [],
+  "stdout": "COLUMN_NAME\nid\ntitle\nslug\nexcerpt\ncontent\ncategoryId\ncoverImageUrl\ncoverImageKey\nauthorId\nreadTime\nstatus\nfeatured\nseoTitle\nseoDescription\nseoKeywords\ncreatedAt\nupdatedAt\npublishedAt\nlikes\nviews\n",
+  "stderr": "",
+  "execution_time_ms": 360
+}
