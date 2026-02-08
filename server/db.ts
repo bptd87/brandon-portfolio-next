@@ -7,7 +7,8 @@ import {
   projects, InsertProject, projectImages, InsertProjectImage, projectTags,
   news, InsertNews, newsTags,
   articles, InsertArticle, articleTags,
-  comments, InsertComment
+  comments, InsertComment,
+  tutorialProgress, InsertTutorialProgress
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -613,4 +614,51 @@ export async function getCommentById(id: number) {
 
   const result = await db.select().from(comments).where(eq(comments.id, id)).limit(1);
   return result[0];
+}
+
+// ============ TUTORIAL PROGRESS OPERATIONS ============
+
+export async function getTutorialProgressByUser(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+
+  const result = await db
+    .select()
+    .from(tutorialProgress)
+    .where(eq(tutorialProgress.userId, userId));
+
+  return result;
+}
+
+export async function getTutorialProgress(userId: number, tutorialSlug: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db
+    .select()
+    .from(tutorialProgress)
+    .where(
+      and(
+        eq(tutorialProgress.userId, userId),
+        eq(tutorialProgress.tutorialSlug, tutorialSlug)
+      )
+    )
+    .limit(1);
+
+  return result[0];
+}
+
+export async function createTutorialProgress(data: InsertTutorialProgress) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db.insert(tutorialProgress).values(data);
+  return Number(result[0].insertId);
+}
+
+export async function updateTutorialProgress(id: number, data: Partial<InsertTutorialProgress>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db.update(tutorialProgress).set(data).where(eq(tutorialProgress.id, id));
 }

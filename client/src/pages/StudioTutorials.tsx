@@ -2,13 +2,26 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useState } from "react";
-import { PlayCircle, Clock, TrendingUp, ArrowRight } from "lucide-react";
+import { useState, useEffect } from "react";
+import { PlayCircle, Clock, TrendingUp, ArrowRight, Search, CheckCircle } from "lucide-react";
+import { trpc } from "@/lib/trpc";
 import { Link } from "wouter";
 
 export default function StudioTutorials() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  
+  // Get current user
+  const { data: user } = trpc.auth.me.useQuery();
+  
+  // Fetch tutorial progress for logged-in users
+  const { data: progressData = [] } = trpc.tutorialProgress.getProgress.useQuery(undefined, {
+    enabled: !!user,
+  });
+  
+  // Create a map of tutorial slug to watched status
+  const watchedMap = new Map(progressData.map(p => [p.tutorialSlug, p.watched]));
 
   // Tutorial data - will be replaced with database content later
   const tutorials = [
@@ -277,8 +290,17 @@ export default function StudioTutorials() {
 
   // Filter tutorials
   const filteredTutorials = tutorials.filter(tutorial => {
+    // Category filter
     if (selectedCategory && tutorial.category !== selectedCategory) return false;
+    // Difficulty filter
     if (selectedDifficulty && tutorial.difficultyLevel !== selectedDifficulty) return false;
+    // Search filter
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      const matchesTitle = tutorial.title.toLowerCase().includes(query);
+      const matchesDescription = tutorial.description.toLowerCase().includes(query);
+      if (!matchesTitle && !matchesDescription) return false;
+    }
     return true;
   });
 
@@ -304,6 +326,54 @@ export default function StudioTutorials() {
             Master scenic design software with step-by-step video tutorials covering everything from 
             basic workspace setup to advanced 3D modeling techniques.
           </p>
+          {user && progressData.length > 0 && (
+            <div className="mt-6 flex items-center gap-3">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <CheckCircle className="w-4 h-4 text-green-500" />
+                <span>{progressData.filter(p => p.watched).length} of {tutorials.length} tutorials completed</span>
+              </div>
+              <div className="flex-1 max-w-xs h-2 bg-muted rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-green-500 transition-all duration-500"
+                  style={{ width: `${Math.round((progressData.filter(p => p.watched).length / tutorials.length) * 100)}%` }}
+                />
+              </div>
+              <span className="text-sm font-semibold text-muted-foreground">
+                {Math.round((progressData.filter(p => p.watched).length / tutorials.length) * 100)}%
+              </span>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Search Bar */}
+      <section className="container py-8 border-b border-border">
+        <div className="max-w-2xl mx-auto">
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Search tutorials by keyword..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-12 pr-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
+          </div>
+          {searchQuery && (
+            <p className="mt-2 text-sm text-muted-foreground">
+              Found {filteredTutorials.length} tutorial{filteredTutorials.length !== 1 ? 's' : ''} matching "{searchQuery}"
+            </p>
+          )}
         </div>
       </section>
 
@@ -401,6 +471,13 @@ export default function StudioTutorials() {
                   <Clock className="w-3 h-3" />
                   {formatDuration(tutorial.duration)}
                 </div>
+                
+                {/* Watched checkmark badge */}
+                {user && watchedMap.get(tutorial.slug) && (
+                  <div className="absolute top-3 right-3 bg-green-500 text-white p-1.5 rounded-full shadow-lg">
+                    <CheckCircle className="w-4 h-4" />
+                  </div>
+                )}
               </div>
 
               <CardContent className="p-4 space-y-3 bg-card">

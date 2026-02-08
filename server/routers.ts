@@ -888,6 +888,42 @@ export const appRouter = router({
         return { url, key: fileKey };
       }),
   }),
+
+  // ============ TUTORIAL PROGRESS TRACKING ============
+  tutorialProgress: router({
+    // Get user's progress for all tutorials
+    getProgress: protectedProcedure.query(async ({ ctx }) => {
+      return await db.getTutorialProgressByUser(ctx.user.id);
+    }),
+    
+    // Toggle watched status for a tutorial
+    toggleWatched: protectedProcedure
+      .input(z.object({
+        tutorialSlug: z.string(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const existing = await db.getTutorialProgress(ctx.user.id, input.tutorialSlug);
+        
+        if (existing) {
+          // Toggle watched status
+          const newWatchedStatus = !existing.watched;
+          await db.updateTutorialProgress(existing.id, {
+            watched: newWatchedStatus,
+            watchedAt: newWatchedStatus ? new Date() : null,
+          });
+          return { watched: newWatchedStatus };
+        } else {
+          // Create new progress entry
+          const id = await db.createTutorialProgress({
+            userId: ctx.user.id,
+            tutorialSlug: input.tutorialSlug,
+            watched: true,
+            watchedAt: new Date(),
+          });
+          return { watched: true, id };
+        }
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

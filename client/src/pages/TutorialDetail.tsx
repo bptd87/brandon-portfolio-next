@@ -1,14 +1,40 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Calendar, TrendingUp, Lightbulb, AlertCircle, Keyboard, ArrowRight, ExternalLink } from "lucide-react";
+import { Clock, Calendar, TrendingUp, Lightbulb, AlertCircle, Keyboard, ArrowRight, ExternalLink, CheckCircle } from "lucide-react";
 import { useParams, Link } from "wouter";
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { trpc } from "@/lib/trpc";
+import { toast } from "sonner";
 
 export default function TutorialDetail() {
   const params = useParams();
   const slug = params.slug;
+  
+  // Get current user
+  const { data: user } = trpc.auth.me.useQuery();
+  
+  // Fetch tutorial progress
+  const { data: progressData = [] } = trpc.tutorialProgress.getProgress.useQuery(undefined, {
+    enabled: !!user,
+  });
+  
+  // Toggle watched mutation
+  const utils = trpc.useUtils();
+  const toggleWatched = trpc.tutorialProgress.toggleWatched.useMutation({
+    onSuccess: () => {
+      utils.tutorialProgress.getProgress.invalidate();
+      toast.success("Progress updated");
+    },
+    onError: () => {
+      toast.error("Failed to update progress");
+    },
+  });
+  
+  // Check if current tutorial is watched
+  const isWatched = progressData.some(p => p.tutorialSlug === slug && p.watched);
 
   // This will be replaced with database query
   const tutorials: Record<string, any> = {
@@ -2312,8 +2338,23 @@ The final section introduces the powerful Duplicate Along Path feature, which al
             </Badge>
           </div>
 
-          <h1 className="mb-4 text-4xl md:text-5xl font-bold leading-tight text-foreground">{tutorial.title}</h1>
-          <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl">{tutorial.description}</p>
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex-1">
+              <h1 className="mb-4 text-4xl md:text-5xl font-bold leading-tight text-foreground">{tutorial.title}</h1>
+              <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl">{tutorial.description}</p>
+            </div>
+            {user && slug && (
+              <Button
+                onClick={() => toggleWatched.mutate({ tutorialSlug: slug })}
+                variant={isWatched ? "default" : "outline"}
+                className={isWatched ? "bg-green-500 hover:bg-green-600 text-white" : ""}
+                disabled={toggleWatched.isPending}
+              >
+                <CheckCircle className="w-4 h-4 mr-2" />
+                {isWatched ? "Watched" : "Mark as Watched"}
+              </Button>
+            )}
+          </div>
         </div>
       </section>
 

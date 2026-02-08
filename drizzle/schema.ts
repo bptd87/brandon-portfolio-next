@@ -257,6 +257,25 @@ export const comments = mysqlTable("comments", {
 export type Comment = typeof comments.$inferSelect;
 export type InsertComment = typeof comments.$inferInsert;
 
+/**
+ * Tutorial progress tracking table
+ */
+export const tutorialProgress = mysqlTable("tutorialProgress", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  tutorialSlug: varchar("tutorialSlug", { length: 255 }).notNull(),
+  watched: boolean("watched").default(false).notNull(),
+  watchedAt: timestamp("watchedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userIdx: index("user_idx").on(table.userId),
+  tutorialIdx: index("tutorial_idx").on(table.tutorialSlug),
+}));
+
+export type TutorialProgress = typeof tutorialProgress.$inferSelect;
+export type InsertTutorialProgress = typeof tutorialProgress.$inferInsert;
+
 // Relations
 export const projectsRelations = relations(projects, ({ one, many }) => ({
   category: one(categories, {

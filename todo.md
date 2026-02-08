@@ -1239,3 +1239,10 @@
 - [x] Add tutorial 17: Modeling a Table (37:48) with comprehensive educational content
 - [x] Add tutorial 18: Creating a Camera and Rendering (10:36) with comprehensive educational content
 - [x] Add tutorial 19: Creating 2D Drafting from 3D Models (24:00) with comprehensive educational content
+
+## New Features
+- [x] Implement tutorial search functionality with keyword filtering across titles, descriptions, and transcripts
+- [x] Create database schema for tutorial progress tracking (tutorialProgress table)
+- [x] Implement backend tRPC procedures for marking tutorials as watched and fetching progress
+- [x] Add frontend UI for marking tutorials as watched with persistent checkmarks
+- [x] Display completion percentage on tutorials page
