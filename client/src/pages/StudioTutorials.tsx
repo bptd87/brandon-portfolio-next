@@ -318,7 +318,7 @@ export default function StudioTutorials() {
       <Header />
 
       {/* Page Header */}
-      <section className="py-20 border-b border-border bg-gradient-to-br from-[#2196F3]/5 to-transparent">
+      <section className="pt-32 pb-20 border-b border-border bg-gradient-to-br from-[#2196F3]/5 to-transparent">
         <div className="container">
           <p className="text-xs tracking-widest text-muted-foreground mb-4">STUDIO / TUTORIALS</p>
           <h1 className="mb-4">Vectorworks Tutorials</h1>

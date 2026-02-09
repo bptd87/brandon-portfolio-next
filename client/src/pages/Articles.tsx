@@ -82,7 +82,7 @@ function ArticlesContent() {
       <Header />
 
       {/* Page Header */}
-      <section className="py-20 border-b border-border">
+      <section className="pt-32 pb-20 border-b border-border">
         <div className="container">
           <p className="text-xs tracking-widest text-muted-foreground mb-4">ARTICLES</p>
           <h1 className="mb-4">Scenic Insights</h1>

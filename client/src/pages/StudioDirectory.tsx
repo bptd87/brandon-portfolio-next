@@ -171,7 +171,7 @@ export default function StudioDirectory() {
       <Header />
 
       {/* Page Header */}
-      <section className="py-20 border-b border-border bg-gradient-to-br from-[#F44336]/5 to-transparent">
+      <section className="pt-32 pb-20 border-b border-border bg-gradient-to-br from-[#F44336]/5 to-transparent">
         <div className="container">
           <p className="text-xs tracking-widest text-muted-foreground mb-4">STUDIO / SCENIC DIRECTORY</p>
           <h1 className="mb-4">Scenic Directory</h1>

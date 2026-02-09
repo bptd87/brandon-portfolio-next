@@ -93,7 +93,7 @@ function NewsContent() {
       <Header />
 
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-background to-muted/30">
+      <section className="pt-32 pb-20 bg-gradient-to-br from-background to-muted/30">
         <div className="container">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-['Playfair_Display'] italic font-bold mb-6 bg-gradient-to-r from-[#FF5722] to-[#FF1744] bg-clip-text text-transparent">

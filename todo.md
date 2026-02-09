@@ -2126,3 +2126,4 @@
 - [x] Add category metadata and color-coded hover effects to article cards on Studio page
 - [x] Fix article card hover - remove border, use category accent color for title
 - [x] Apply category badge and color hover system to main Articles listing page
+- [x] Fix spacing between navigation bar and page content (add proper top padding/margin)
