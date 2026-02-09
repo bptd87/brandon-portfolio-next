@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { ExternalLink, Instagram, Linkedin, Mail, FileText, Video, Github, Twitter, Facebook, Youtube, Newspaper, Image as ImageIcon, Link as LinkIcon, PenTool, Globe, Home } from 'lucide-react';
 import { Link } from 'wouter';
 import { trpc } from '@/lib/trpc';
@@ -26,7 +26,6 @@ interface BioData {
 }
 
 export default function Links() {
-  const [items, setItems] = useState<DashboardItem[]>([]);
   const [bioData] = useState<BioData>({
     name: 'BRANDON PT DAVIS',
     tagline: 'Scenic & Experiential Designer',
@@ -50,8 +49,8 @@ export default function Links() {
 
   // --- Data Processing ---
 
-  useEffect(() => {
-    if (loading) return;
+  const items = useMemo(() => {
+    if (loading) return [];
 
     const dashboardItems: DashboardItem[] = [];
 
@@ -175,13 +174,11 @@ export default function Links() {
     }
 
     // Sort: Pinned first, then by date
-    const sorted = dashboardItems.sort((a, b) => {
+    return dashboardItems.sort((a, b) => {
       if (a.isPinned && !b.isPinned) return -1;
       if (!a.isPinned && b.isPinned) return 1;
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     });
-
-    setItems(sorted);
   }, [projects, articles, news, tutorials, loading]);
 
   // --- Infinite Scroll ---
@@ -338,7 +335,7 @@ export default function Links() {
             <div className="h-px flex-1 bg-border ml-4" />
           </div>
 
-          <div className="grid grid-cols-3 gap-3 md:gap-4">
+          <div className="grid grid-cols-2 gap-3 md:gap-4">
             {feedItems.map((item) => {
               const ItemIcon = getIcon(item.icon);
               const isExternal = item.url.startsWith('http');
