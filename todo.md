@@ -1970,3 +1970,11 @@
 - [x] Redesign image galleries as full-width grids (like Lumenati), not narrow columns
 - [x] Elevate Technical Drawings section - make it more prominent, possibly move before Production Photos
 - [x] Add visual hierarchy: Technical drawings (YOUR work) should be the star
+
+## Red Bull Jukebox - Interspersed Layout & Fixes
+- [x] Restructure page: text sections BETWEEN galleries (like AJ/Lumenati examples)
+- [x] New flow: Intro → Stats → THE CHALLENGE → Technical Drawings → THE SOLUTION → Production Photos → THE PROCESS → Team
+- [x] Fix logos for dark mode (too gray or false PNG - increase brightness/check transparency)
+- [x] Change technical drawings aspect ratio to portrait (aspect-[3/4])
+- [x] Remove hero image (Brothers Osborne stage shot) from Production Photos gallery
+- [x] Remove "Read More" button - show full content inline

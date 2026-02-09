@@ -259,14 +259,14 @@ export default function ProjectDetail() {
                     <img 
                       src={metadata.redBullLogo} 
                       alt="Red Bull" 
-                      className="h-16 md:h-20 w-auto brightness-110"
+                      className="h-16 md:h-20 w-auto brightness-125"
                     />
                   )}
                   {metadata.lumenatiLogo && (
                     <img 
                       src={metadata.lumenatiLogo} 
                       alt="Lumenati" 
-                      className="h-16 md:h-20 w-auto opacity-95"
+                      className="h-16 md:h-20 w-auto brightness-150"
                     />
                   )}
                 </div>
@@ -350,61 +350,23 @@ export default function ProjectDetail() {
           </AnimatedSection>
         )}
 
-        {/* Design Notes */}
-        {designNotes && (
+        {/* THE CHALLENGE - First text section */}
+        {designNotes && designNotes.includes('THE CHALLENGE') && (
           <AnimatedSection>
             <div className="prose prose-lg max-w-none">
-              <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: accentColor }}>
-                Design Notes
+              <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-6" style={{ color: accentColor }}>
+                THE CHALLENGE
               </h2>
-              <div className="text-foreground/80 leading-relaxed whitespace-pre-wrap space-y-6">
-                {(showFullNotes ? designNotes : notesPreview)
-                  .split('\n\n')
-                  .map((paragraph, idx) => {
-                    // Check if paragraph is a section header (all caps, short)
-                    const isHeader = paragraph.trim().length < 30 && 
-                                    paragraph.trim() === paragraph.trim().toUpperCase() &&
-                                    !paragraph.includes('→') &&
-                                    !paragraph.includes('•');
-                    
-                    if (isHeader) {
-                      return (
-                        <h3 
-                          key={idx} 
-                          className="text-2xl font-black tracking-tight mt-8 mb-4"
-                          style={{ color: accentColor }}
-                        >
-                          {paragraph.trim()}
-                        </h3>
-                      );
-                    }
-                    
-                    return (
-                      <p key={idx} className="leading-relaxed">
-                        {paragraph}
-                      </p>
-                    );
-                  })}
+              <div className="text-foreground/80 text-lg leading-relaxed">
+                {designNotes.split('THE SOLUTION')[0].split('THE CHALLENGE')[1]?.trim().split('\n\n').map((p, idx) => (
+                  <p key={idx} className="mb-4">{p}</p>
+                ))}
               </div>
-              {shouldShowReadMore && (
-                <Button
-                  variant="ghost"
-                  onClick={() => setShowFullNotes(!showFullNotes)}
-                  className="mt-4 gap-2"
-                  style={{ color: accentColor }}
-                >
-                  {showFullNotes ? (
-                    <>Show Less <ChevronUp className="h-4 w-4" /></>
-                  ) : (
-                    <>Read More <ChevronDown className="h-4 w-4" /></>
-                  )}
-                </Button>
-              )}
             </div>
           </AnimatedSection>
         )}
 
-        {/* Technical Drawings - ELEVATED AS PRIMARY SHOWCASE */}
+        {/* Technical Drawings - YOUR WORK SHOWCASE */}
         {technicalDrawings.length > 0 && (
           <AnimatedSection>
             <div>
@@ -418,7 +380,7 @@ export default function ProjectDetail() {
                 {technicalDrawings.map((img, idx) => (
                   <AnimatedSection key={img.id} delay={idx * 50}>
                     <div 
-                      className="group relative overflow-hidden rounded-lg cursor-pointer aspect-[4/3]"
+                      className="group relative overflow-hidden rounded-lg cursor-pointer aspect-[3/4]"
                       onClick={() => {
                         setLightboxImages(technicalDrawings);
                         setLightboxIndex(idx);
@@ -451,8 +413,27 @@ export default function ProjectDetail() {
           </AnimatedSection>
         )}
 
+        {/* THE SOLUTION - Second text section */}
+        {designNotes && designNotes.includes('THE SOLUTION') && (
+          <AnimatedSection>
+            <div className="prose prose-lg max-w-none">
+              <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-6" style={{ color: accentColor }}>
+                THE SOLUTION
+              </h2>
+              <div className="text-foreground/80 text-lg leading-relaxed">
+                {designNotes.split('THE PROCESS')[0].split('THE SOLUTION')[1]?.trim().split('\n').map((line, idx) => {
+                  if (line.startsWith('→') || line.startsWith('•')) {
+                    return <p key={idx} className="mb-2 pl-4">{line}</p>;
+                  }
+                  return line.trim() ? <p key={idx} className="mb-4">{line}</p> : null;
+                })}
+              </div>
+            </div>
+          </AnimatedSection>
+        )}
+
         {/* Production Photos Gallery */}
-        {productionPhotos.length > 0 && (
+        {productionPhotos.filter(img => img.imageUrl !== project.coverImageUrl).length > 0 && (
           <AnimatedSection>
             <div>
               <button
@@ -461,7 +442,7 @@ export default function ProjectDetail() {
               >
                 <h2 className="text-4xl font-black tracking-tighter" style={{ color: accentColor }}>
                   Production Photos
-                  <span className="ml-4 text-muted-foreground text-lg">({productionPhotos.length})</span>
+                  <span className="ml-4 text-muted-foreground text-lg">({productionPhotos.filter(img => img.imageUrl !== project.coverImageUrl).length})</span>
                 </h2>
                 {galleryOpen ? (
                   <ChevronUp className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
@@ -472,7 +453,7 @@ export default function ProjectDetail() {
               
               {galleryOpen && (
                 <div className="space-y-8">
-                  {productionPhotos.map((img, idx) => (
+                  {productionPhotos.filter(img => img.imageUrl !== project.coverImageUrl).map((img, idx) => (
                     <AnimatedSection key={img.id} delay={idx * 50}>
                       <div 
                         className="group relative overflow-hidden rounded-lg cursor-pointer"
@@ -509,7 +490,24 @@ export default function ProjectDetail() {
           </AnimatedSection>
         )}
 
-
+        {/* THE PROCESS - Third text section */}
+        {designNotes && designNotes.includes('THE PROCESS') && (
+          <AnimatedSection>
+            <div className="prose prose-lg max-w-none">
+              <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-6" style={{ color: accentColor }}>
+                THE PROCESS
+              </h2>
+              <div className="text-foreground/80 text-lg leading-relaxed">
+                {designNotes.split('THE RESULT')[0].split('THE PROCESS')[1]?.trim().split('\n').map((line, idx) => {
+                  if (line.startsWith('→') || line.startsWith('•')) {
+                    return <p key={idx} className="mb-2 pl-4">{line}</p>;
+                  }
+                  return line.trim() ? <p key={idx} className="mb-4">{line}</p> : null;
+                })}
+              </div>
+            </div>
+          </AnimatedSection>
+        )}
 
         {/* Renderings */}
         {renderings.length > 0 && (
