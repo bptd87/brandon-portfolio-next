@@ -1778,3 +1778,10 @@
 - [x] Add SEO keywords (fantasy, theme park, Tamriel, dining venue, etc.)
 - [x] Add software tags (Vectorworks, Twinmotion, Photoshop)
 - [x] Test rendering appears in portfolio
+
+## Fix Missing Rendering Images on Detail Pages (User Reported - Feb 9, 2026)
+- [x] Investigate issue - detail pages need images in projectImages table, not just coverImageUrl
+- [x] Check projectImages table schema
+- [x] Add The Northwind Mare Tavern image to projectImages table
+- [x] Add Isolation image to projectImages table
+- [x] Verify both images display on detail pages
