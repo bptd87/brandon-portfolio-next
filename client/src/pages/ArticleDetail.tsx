@@ -805,31 +805,66 @@ function ArticleDetailContent() {
                 <div className="mt-20 pt-12 border-t">
                   <h2 className="text-3xl font-['Playfair_Display'] italic mb-8">Continue Reading</h2>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {related.map((relatedArticle) => (
+                    {related.map((relatedArticle) => {
+                      const categoryColor = relatedArticle.category?.name 
+                        ? getCategoryColor(relatedArticle.category.name).hex
+                        : '#FF6B35';
+                      return (
                       <Link key={relatedArticle.id} href={`/articles/${relatedArticle.slug}`}>
-                        <div className="group cursor-pointer">
+                        <div className="group bg-card rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl cursor-pointer border border-border">
+                          {/* Cover Image */}
                           {relatedArticle.coverImageUrl && (
-                            <div className="mb-4 overflow-hidden rounded-xl">
+                            <div className="aspect-[16/9] overflow-hidden">
                               <img 
                                 src={relatedArticle.coverImageUrl}
                                 alt={decodeHTMLEntities(relatedArticle.title)}
-                                className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                 loading="lazy"
-
                               />
                             </div>
                           )}
-                          <h3 className="text-xl font-['Playfair_Display'] italic group-hover:text-primary transition-colors">
-                            {decodeHTMLEntities(relatedArticle.title)}
-                          </h3>
-                          {relatedArticle.excerpt && (
-                            <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
-                              {decodeHTMLEntities(relatedArticle.excerpt)}
-                            </p>
-                          )}
+                          
+                          <div className="p-6">
+                            {/* Category Badge */}
+                            {relatedArticle.category && (
+                              <Badge className={`${getCategoryColor(relatedArticle.category.name).badge} text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider border border-white/20`}>
+                                {relatedArticle.category.name}
+                              </Badge>
+                            )}
+                            
+                            <h3 className="text-xl font-bold mb-2 transition-colors line-clamp-2"
+                              style={{ color: 'inherit' }}
+                              onMouseEnter={(e) => e.currentTarget.style.color = categoryColor}
+                              onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>
+                              {decodeHTMLEntities(relatedArticle.title)}
+                            </h3>
+                            
+                            {relatedArticle.excerpt && (
+                              <p className="text-sm text-muted-foreground line-clamp-2 mb-3 leading-relaxed">
+                                {decodeHTMLEntities(relatedArticle.excerpt)}
+                              </p>
+                            )}
+                            
+                            <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                              <span>
+                                {relatedArticle.publishedAt && new Date(relatedArticle.publishedAt).toLocaleDateString('en-US', { 
+                                  month: 'short',
+                                  day: 'numeric',
+                                  year: 'numeric'
+                                })}
+                              </span>
+                              {relatedArticle.readTime && (
+                                <>
+                                  <span>•</span>
+                                  <span>{relatedArticle.readTime} min read</span>
+                                </>
+                              )}
+                            </div>
+                          </div>
                         </div>
                       </Link>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               )}
