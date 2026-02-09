@@ -439,8 +439,7 @@ export default function RoscoPaintCalculator() {
                 {/* Inventory Toggle */}
                 <button
                     onClick={() => setInStockOnly(!inStockOnly)}
-                     className={`flex items-center gap-3 px-6 py-3 rounded-full border transition-all ${inStockOnly ? 'bg-pink-500 text-white border-pink-500' : 'bg-transparent'}`}
-                    style={{ borderColor: inStockOnly ? 'transparent' : colors.cardBorder }}
+                     className={`flex items-center gap-3 px-6 py-3 rounded-xl border transition-all hover:scale-105 ${inStockOnly ? 'bg-pink-500 text-white border-pink-500' : 'bg-transparent border-border hover:bg-muted'}`}
                 >
                     <Archive size={18} />
                     <div className="text-xs font-bold tracking-wider uppercase">
@@ -456,7 +455,7 @@ export default function RoscoPaintCalculator() {
                     {/* Result Card */}
                     {result && (
                         <div 
-                            className="border rounded-3xl p-6 md:p-8"
+                            className="border rounded-2xl p-6 md:p-8"
                             style={{ 
                                 backgroundColor: colors.cardBg, 
                                 borderColor: colors.cardBorder,
@@ -468,12 +467,12 @@ export default function RoscoPaintCalculator() {
                                 <div className="flex gap-2">
                                     <button 
                                         onClick={() => setSaveModalOpen(true)} 
-                                        className="px-4 py-2 rounded-full bg-purple-500 text-white hover:bg-purple-600 transition-colors flex items-center gap-2 text-sm font-medium"
+                                        className="px-4 py-2 rounded-xl bg-pink-500/90 text-white hover:bg-pink-600 transition-all hover:scale-105 flex items-center gap-2 text-sm font-bold uppercase tracking-wide"
                                     >
-                                        <Archive size={16} />
+                                        <Save size={16} />
                                         Save Recipe
                                     </button>
-                                    <button onClick={copyRecipe} className="p-2 rounded-full hover:bg-black/5 transition-colors">
+                                    <button onClick={copyRecipe} className="p-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-colors" title="Copy recipe to clipboard">
                                         {copied ? <ArrowRight size={20} /> : <Copy size={20} />}
                                     </button>
                                 </div>
@@ -497,7 +496,7 @@ export default function RoscoPaintCalculator() {
                                 
                                 <div className="space-y-2">
                                      {result.recipe.map((r, i) => (
-                                        <div key={i} className="flex items-center gap-3 p-3 rounded-xl border" style={{ borderColor: colors.cardBorder, backgroundColor: colors.inputBg }}>
+                                        <div key={i} className="flex items-center gap-3 p-3 rounded-lg border" style={{ borderColor: colors.cardBorder, backgroundColor: colors.inputBg }}>
                                             <div className="w-8 h-8 rounded-lg shadow-sm border" style={{ backgroundColor: r.paint.hex, borderColor: colors.cardBorder }} />
                                             <div className="flex-1">
                                                 <div className="font-bold text-sm">{r.paint.name}</div>
@@ -519,7 +518,7 @@ export default function RoscoPaintCalculator() {
                     
                     {/* Controls */}
                     <div 
-                        className="border rounded-3xl p-6 sticky top-24"
+                        className="border rounded-2xl p-6 sticky top-24"
                         style={{ backgroundColor: colors.cardBg, borderColor: colors.cardBorder, boxShadow: colors.cardShadow }}
                     >
                          <h3 className="font-display text-lg mb-6">Target Color</h3>
@@ -608,41 +607,44 @@ export default function RoscoPaintCalculator() {
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-white dark:bg-gray-900 rounded-2xl p-6 max-w-md w-full shadow-2xl"
+              className="bg-background border border-border rounded-2xl p-8 max-w-md w-full shadow-2xl"
             >
-              <h3 className="text-2xl font-display mb-4">Save Recipe</h3>
+              <div className="flex items-center gap-3 mb-6">
+                <Save className="h-6 w-6 text-pink-500" />
+                <h3 className="text-2xl font-display">Save Recipe</h3>
+              </div>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Recipe Name *</label>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">Recipe Name *</label>
                   <input
                     type="text"
                     value={recipeName}
                     onChange={(e) => setRecipeName(e.target.value)}
                     placeholder="e.g., Deep Purple Stage Wash"
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800"
+                    className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:border-pink-500 focus:ring-2 focus:ring-pink-500/20 transition-all"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Notes (optional)</label>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">Notes (optional)</label>
                   <textarea
                     value={recipeNotes}
                     onChange={(e) => setRecipeNotes(e.target.value)}
                     placeholder="Add notes about this recipe..."
                     rows={3}
-                    className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800"
+                    className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:border-pink-500 focus:ring-2 focus:ring-pink-500/20 transition-all resize-none"
                   />
                 </div>
                 <div className="flex gap-3">
                   <button
                     onClick={handleSaveRecipe}
                     disabled={!recipeName.trim() || saveRecipeMutation.isPending}
-                    className="flex-1 px-4 py-2 rounded-lg bg-purple-500 text-white hover:bg-purple-600 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+                    className="flex-1 px-4 py-3 rounded-xl bg-pink-500 text-white hover:bg-pink-600 disabled:opacity-50 disabled:cursor-not-allowed font-bold uppercase tracking-wide text-sm transition-all hover:scale-105"
                   >
                     {saveRecipeMutation.isPending ? 'Saving...' : 'Save Recipe'}
                   </button>
                   <button
                     onClick={() => setSaveModalOpen(false)}
-                    className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"
+                    className="px-4 py-3 rounded-xl border border-border hover:bg-muted transition-colors font-medium"
                   >
                     Cancel
                   </button>
