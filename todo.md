@@ -2136,3 +2136,7 @@
 - [x] Reduce body copy font weight in philosophy section for more minimal feel
 - [x] Rewrite FAQ to focus on rendering as art form and design process, not technology
 - [ ] Transform Experiential portfolio page with editorial content, capabilities, process, and FAQ
+- [ ] Transform Experiential portfolio to agency-style with bold energy and dynamic layout
+- [ ] Add technical toolkit showcase (Vectorworks, Twinmotion, Photoshop, Cinema 4D, SketchUp, Authored Composite Visualization)
+- [ ] Generate additional images for technical workflow and buildability
+- [ ] Add buildability and fabrication experience section
