@@ -41,7 +41,8 @@ async function startServer() {
   // Sitemaps
   app.get("/sitemap.xml", async (req, res) => {
     try {
-      const xml = await sitemap.generateMainSitemap();
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
+      const xml = await sitemap.generateMainSitemap(baseUrl);
       res.header("Content-Type", "application/xml");
       res.send(xml);
     } catch (error) {
@@ -52,7 +53,8 @@ async function startServer() {
   
   app.get("/image-sitemap.xml", async (req, res) => {
     try {
-      const xml = await sitemap.generateImageSitemap();
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
+      const xml = await sitemap.generateImageSitemap(baseUrl);
       res.header("Content-Type", "application/xml");
       res.send(xml);
     } catch (error) {
@@ -63,7 +65,8 @@ async function startServer() {
   
   app.get("/video-sitemap.xml", async (req, res) => {
     try {
-      const xml = await sitemap.generateVideoSitemap();
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
+      const xml = await sitemap.generateVideoSitemap(baseUrl);
       res.header("Content-Type", "application/xml");
       res.send(xml);
     } catch (error) {
@@ -74,7 +77,8 @@ async function startServer() {
   
   app.get("/sitemap-index.xml", (req, res) => {
     try {
-      const xml = sitemap.generateSitemapIndex();
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
+      const xml = sitemap.generateSitemapIndex(baseUrl);
       res.header("Content-Type", "application/xml");
       res.send(xml);
     } catch (error) {
@@ -85,7 +89,8 @@ async function startServer() {
   
   app.get("/robots.txt", (req, res) => {
     try {
-      const txt = sitemap.generateRobotsTxt();
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
+      const txt = sitemap.generateRobotsTxt(baseUrl);
       res.header("Content-Type", "text/plain");
       res.send(txt);
     } catch (error) {
@@ -99,7 +104,8 @@ async function startServer() {
   
   app.get("/articles/rss.xml", async (req, res) => {
     try {
-      const xml = await sitemap.generateArticlesRSS();
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
+      const xml = await sitemap.generateArticlesRSS(baseUrl);
       res.header("Content-Type", "application/rss+xml");
       res.send(xml);
     } catch (error) {
@@ -110,7 +116,8 @@ async function startServer() {
   
   app.get("/news/rss.xml", async (req, res) => {
     try {
-      const xml = await sitemap.generateNewsRSS();
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
+      const xml = await sitemap.generateNewsRSS(baseUrl);
       res.header("Content-Type", "application/rss+xml");
       res.send(xml);
     } catch (error) {
@@ -121,7 +128,8 @@ async function startServer() {
   
   app.get("/studio/tutorials/rss.xml", (req, res) => {
     try {
-      const xml = sitemap.generateTutorialsRSS();
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
+      const xml = sitemap.generateTutorialsRSS(baseUrl);
       res.header("Content-Type", "application/rss+xml");
       res.send(xml);
     } catch (error) {

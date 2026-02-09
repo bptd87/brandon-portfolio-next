@@ -89,7 +89,8 @@ function formatDate(date: Date | number): string {
 /**
  * Generate main sitemap with all pages
  */
-export async function generateMainSitemap(): Promise<string> {
+export async function generateMainSitemap(baseUrl?: string): Promise<string> {
+  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://brandon-portfolio-v2.manus.space';
   const urls: SitemapUrl[] = [];
   
   // Homepage - highest priority
@@ -254,7 +255,8 @@ export async function generateMainSitemap(): Promise<string> {
 /**
  * Generate image sitemap with all project images
  */
-export async function generateImageSitemap(): Promise<string> {
+export async function generateImageSitemap(baseUrl?: string): Promise<string> {
+  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://brandon-portfolio-v2.manus.space';
   const projects = await db.getAllProjects();
   
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -304,7 +306,8 @@ export async function generateImageSitemap(): Promise<string> {
 /**
  * Generate sitemap index
  */
-export function generateSitemapIndex(): string {
+export function generateSitemapIndex(baseUrl?: string): string {
+  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://brandon-portfolio-v2.manus.space';
   const now = new Date().toISOString();
   
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -327,7 +330,8 @@ export function generateSitemapIndex(): string {
 /**
  * Generate video sitemap with all project videos
  */
-export async function generateVideoSitemap(): Promise<string> {
+export async function generateVideoSitemap(baseUrl?: string): Promise<string> {
+  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://brandon-portfolio-v2.manus.space';
   const projects = await db.getAllProjects();
   
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -385,7 +389,8 @@ export async function generateVideoSitemap(): Promise<string> {
 /**
  * Generate RSS feed for articles
  */
-export async function generateArticlesRSS(): Promise<string> {
+export async function generateArticlesRSS(baseUrl?: string): Promise<string> {
+  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://brandon-portfolio-v2.manus.space';
   const articles = await db.getAllArticles();
   const publishedArticles = articles.filter(a => a.status === 'published');
   
@@ -436,7 +441,8 @@ export async function generateArticlesRSS(): Promise<string> {
 /**
  * Generate RSS feed for news
  */
-export async function generateNewsRSS(): Promise<string> {
+export async function generateNewsRSS(baseUrl?: string): Promise<string> {
+  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://brandon-portfolio-v2.manus.space';
   const newsItems = await db.getAllNews();
   const publishedNews = newsItems.filter(n => n.status === 'published');
   
@@ -482,7 +488,8 @@ export async function generateNewsRSS(): Promise<string> {
 /**
  * Generate RSS feed for tutorials
  */
-export function generateTutorialsRSS(): string {
+export function generateTutorialsRSS(baseUrl?: string): string {
+  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://brandon-portfolio-v2.manus.space';
   // Hardcoded tutorial data matching StudioTutorials.tsx
   const tutorials = [
     {
@@ -661,7 +668,8 @@ export function generateTutorialsRSS(): string {
 /**
  * Generate robots.txt
  */
-export function generateRobotsTxt(): string {
+export function generateRobotsTxt(baseUrl?: string): string {
+  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://brandon-portfolio-v2.manus.space';
   return `# Brandon PT Davis Portfolio - Robots.txt
 User-agent: *
 Allow: /
