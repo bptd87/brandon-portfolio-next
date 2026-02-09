@@ -145,7 +145,7 @@ export default function RenderingProjectDetail() {
       )}
 
       {/* Ultra-Minimal Gallery Layout */}
-      <div className="container max-w-7xl py-16 space-y-12">
+      <div className="container max-w-7xl pt-32 pb-16 space-y-12">
         
         {/* Back Button - Subtle */}
         <AnimatedSection>

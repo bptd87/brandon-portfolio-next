@@ -1761,3 +1761,7 @@
 - [x] Shorten descriptions on all rendering projects to 50-75 word poetic captions
 - [x] Test complete rendering portfolio flow (landing → detail → back)
 - [x] Ensure renderings feel like fine art, not technical portfolio pieces
+
+## Fix Rendering Detail Page Header Overlap (User Reported - Feb 9, 2026)
+- [x] Add proper top padding to rendering detail page container to prevent Back button from hiding behind header
+- [x] Test that all content fits within visible frame below navigation bar
