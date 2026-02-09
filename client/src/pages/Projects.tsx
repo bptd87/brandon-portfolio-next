@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MapPin, Calendar } from "lucide-react";
+import { MapPin, Calendar, ArrowRight } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { Link, useLocation, useSearch } from "wouter";
 import Header from "@/components/Header";
@@ -110,31 +110,50 @@ export default function Projects() {
             <section className="py-16 overflow-visible">
               <div className="container overflow-visible">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-visible">
-                  {filteredProjects.map((project) => (
+                  {filteredProjects.map((project, index) => {
+                    // Cycle through brand colors for variety
+                    const brandColors = [
+                      '#FF5722', // Orange
+                      '#00BCD4', // Cyan
+                      '#E91E63', // Pink
+                      '#FFC107', // Amber
+                    ];
+                    const hoverColor = brandColors[index % brandColors.length];
+                    
+                    return (
                     <Link key={project.id} href={`/projects/${project.slug}`}>
-                      <div className="relative overflow-hidden rounded-lg cursor-pointer group aspect-[3/2]">
+                      <div className="relative overflow-hidden rounded-lg cursor-pointer group aspect-[3/2] border-2 border-transparent hover:border-opacity-100 transition-all duration-500" style={{ borderColor: hoverColor }}>
                         {project.coverImageUrl ? (
                           <>
                             <img 
                               src={project.coverImageUrl} 
                               alt={project.title}
-                              className="w-full h-full object-cover object-[center_20%] group-hover:scale-105 transition-transform duration-700"
+                              className="w-full h-full object-cover object-[center_20%] group-hover:scale-110 transition-transform duration-700"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                            {/* Gradient overlay - enhanced on hover */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent group-hover:from-black/90 group-hover:via-black/60 transition-all duration-500" />
+                            
+                            {/* Project info */}
                             <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
                               {project.client && (
-                                <p className="text-xs tracking-widest mb-2 opacity-80">
+                                <p className="text-xs tracking-widest mb-2 opacity-80 group-hover:opacity-100 transition-opacity">
                                   {project.client.toUpperCase()}
                                 </p>
                               )}
-                              <h3 className="text-2xl md:text-3xl font-['Playfair_Display'] italic mb-2">
+                              <h3 className="text-2xl md:text-3xl font-['Playfair_Display'] italic mb-2 group-hover:scale-105 transition-transform origin-left" style={{ color: hoverColor }}>
                                 {project.title}
                               </h3>
                               {project.year && (
-                                <p className="text-sm opacity-80">
+                                <p className="text-sm opacity-80 group-hover:opacity-100 transition-opacity">
                                   {project.year}
                                 </p>
                               )}
+                              
+                              {/* "View Project" indicator on hover */}
+                              <div className="flex items-center gap-2 mt-3 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
+                                <span className="text-sm font-semibold" style={{ color: hoverColor }}>VIEW PROJECT</span>
+                                <ArrowRight className="h-4 w-4" style={{ color: hoverColor }} />
+                              </div>
                             </div>
                           </>
                         ) : (
@@ -144,7 +163,8 @@ export default function Projects() {
                         )}
                       </div>
                     </Link>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </section>

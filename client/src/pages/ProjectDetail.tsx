@@ -212,7 +212,7 @@ export default function ProjectDetail() {
       )}
 
       {/* Full-Screen Hero Section */}
-      <section className="relative h-[85vh] overflow-hidden">
+      <section className="relative h-screen overflow-hidden">
         {project.coverImageUrl ? (
           <img 
             src={project.coverImageUrl} 

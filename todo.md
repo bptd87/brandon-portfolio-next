@@ -2098,3 +2098,6 @@
 - [x] Update Tomas and the Library Lady subcategory to Theatre for Young Audiences
 - [x] Fix duplicate Theatre for Young Audiences subcategory filters
 - [x] Link Creative Team names to collaborator profiles
+- [x] Verify and enhance lightbox functionality for full-screen image viewing
+- [x] Expand project detail hero images to full viewport width
+- [x] Add hover effects to portfolio cards (1.05x scale + metadata reveal)
