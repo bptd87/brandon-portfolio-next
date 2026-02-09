@@ -1883,4 +1883,9 @@
 - [x] Add breadcrumbs to NewsDetail page
 - [x] Add breadcrumbs to TutorialDetail page
 - [x] Test breadcrumb navigation on all pages (project, article, news all working)
+- [x] Save checkpoint
+
+## Fix Nested Anchor Tag Error in Breadcrumb
+- [x] Update Breadcrumb component to remove nested anchor tags
+- [x] Test fix on project page (no errors in console)
 - [ ] Save checkpoint
