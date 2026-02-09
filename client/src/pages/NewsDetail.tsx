@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PageThemeWrapper from "@/components/PageThemeWrapper";
+import ThemeToggle from "@/components/ThemeToggle";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -65,6 +67,15 @@ function createPixelatedGradient(imageUrl: string, callback: (gradient: string) 
 }
 
 export default function NewsDetail() {
+  return (
+    <PageThemeWrapper forceTheme={null}>
+      <NewsDetailContent />
+      <ThemeToggle />
+    </PageThemeWrapper>
+  );
+}
+
+function NewsDetailContent() {
   const { slug } = useParams<{ slug: string }>();
   const { data: newsItem, isLoading } = trpc.news.getBySlug.useQuery({ slug: slug! });
   const { data: relatedNews } = trpc.news.list.useQuery({});

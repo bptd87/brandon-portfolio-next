@@ -6,11 +6,22 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PageThemeWrapper from "@/components/PageThemeWrapper";
+import ThemeToggle from "@/components/ThemeToggle";
 import { trpc } from "@/lib/trpc";
 import { Calendar, MapPin, ArrowRight, Search, Rss } from "lucide-react";
 import { Link } from "wouter";
 
 export default function News() {
+  return (
+    <PageThemeWrapper forceTheme={null}>
+      <NewsContent />
+      <ThemeToggle />
+    </PageThemeWrapper>
+  );
+}
+
+function NewsContent() {
   const { data: newsItems = [], isLoading } = trpc.news.list.useQuery({});
   const { data: allCategories = [] } = trpc.categories.list.useQuery({});
   

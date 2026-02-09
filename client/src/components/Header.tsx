@@ -1,7 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { useState, useRef, useEffect } from "react";
-import { ChevronDown, Sun, Moon, Menu } from "lucide-react";
-import { useTheme } from "@/contexts/ThemeContext";
+import { ChevronDown, Menu } from "lucide-react";
 import MobileMenu from "./MobileMenu";
 
 // Creative Theatrical Icons for Dropdown Items
@@ -168,7 +167,6 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const { theme, toggleTheme } = useTheme();
   
   // Refs for dropdown containers
   const portfolioDropdownRef = useRef<HTMLDivElement>(null);
@@ -546,16 +544,6 @@ export default function Header() {
                 )}
               </div>
 
-              {/* Theme Toggle */}
-              <button
-                onClick={toggleTheme}
-                className="text-sm font-medium hover:text-foreground transition-all p-1 relative group"
-                title="Toggle theme"
-              >
-                {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-                <span className="absolute inset-0 rounded-full border border-border group-hover:border-foreground/50 transition-all duration-300"></span>
-              </button>
-
               {/* Contact Button */}
               <Link 
                 href="/contact" 
@@ -568,15 +556,6 @@ export default function Header() {
 
             {/* Mobile Menu Button */}
             <div className="flex items-center gap-4 lg:hidden">
-              {/* Theme Toggle (Mobile) */}
-              <button
-                onClick={toggleTheme}
-                className="text-sm font-medium hover:text-foreground transition-all p-1"
-                title="Toggle theme"
-              >
-                {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-              </button>
-
               {/* Hamburger Button */}
               <button
                 onClick={() => setMobileMenuOpen(true)}

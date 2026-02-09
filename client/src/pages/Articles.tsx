@@ -2,6 +2,8 @@
 import React from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PageThemeWrapper from "@/components/PageThemeWrapper";
+import ThemeToggle from "@/components/ThemeToggle";
 import { Badge } from "@/components/ui/badge";
 import { trpc } from "@/lib/trpc";
 import { getCategoryBadgeClasses, getCategoryColor } from "@/lib/categoryColors";
@@ -16,6 +18,15 @@ const decodeHTMLEntities = (text: string): string => {
 };
 
 export default function Articles() {
+  return (
+    <PageThemeWrapper forceTheme={null}>
+      <ArticlesContent />
+      <ThemeToggle />
+    </PageThemeWrapper>
+  );
+}
+
+function ArticlesContent() {
   const { data: articles, isLoading } = trpc.articles.list.useQuery({});
   const [searchQuery, setSearchQuery] = React.useState("");
   const [selectedCategory, setSelectedCategory] = React.useState<string | null>(null);

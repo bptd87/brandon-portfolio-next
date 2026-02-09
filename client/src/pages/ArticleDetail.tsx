@@ -1,5 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PageThemeWrapper from "@/components/PageThemeWrapper";
+import ThemeToggle from "@/components/ThemeToggle";
 import { Card } from '@/components/ui/card';
 import { ProgressiveImage } from '@/components/ProgressiveImage';
 import { Button } from "@/components/ui/button";
@@ -24,6 +26,15 @@ const decodeHTMLEntities = (text: string): string => {
 };
 
 export default function ArticleDetail() {
+  return (
+    <PageThemeWrapper forceTheme={null}>
+      <ArticleDetailContent />
+      <ThemeToggle />
+    </PageThemeWrapper>
+  );
+}
+
+function ArticleDetailContent() {
   const { slug } = useParams<{ slug: string }>();
   const { data: article, isLoading } = trpc.articles.getBySlug.useQuery({ slug: slug! });
   const { data: category } = trpc.categories.getById.useQuery(

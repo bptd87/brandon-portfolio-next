@@ -2117,3 +2117,4 @@
 - [x] Redesign project detail hero section - remove back button, improve layout and typography
 - [x] Fix object-top positioning on production photo grids (portrait images showing chest only)
 - [x] Add object-top positioning to project detail hero cover images
+- [x] Implement per-page theme switching - dark mode for portfolio, light mode for news/articles

@@ -6,6 +6,7 @@ interface ThemeContextType {
   theme: Theme;
   toggleTheme?: () => void;
   switchable: boolean;
+  setForceTheme: (theme: Theme | null) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -21,6 +22,7 @@ export function ThemeProvider({
   defaultTheme = "light",
   switchable = false,
 }: ThemeProviderProps) {
+  const [forceTheme, setForceTheme] = useState<Theme | null>(null);
   const [theme, setTheme] = useState<Theme>(() => {
     if (switchable) {
       const stored = localStorage.getItem("theme");
@@ -29,18 +31,20 @@ export function ThemeProvider({
     return defaultTheme;
   });
 
+  const effectiveTheme = forceTheme || theme;
+
   useEffect(() => {
     const root = document.documentElement;
-    if (theme === "dark") {
+    if (effectiveTheme === "dark") {
       root.classList.add("dark");
     } else {
       root.classList.remove("dark");
     }
 
-    if (switchable) {
+    if (switchable && !forceTheme) {
       localStorage.setItem("theme", theme);
     }
-  }, [theme, switchable]);
+  }, [effectiveTheme, theme, switchable, forceTheme]);
 
   const toggleTheme = switchable
     ? () => {
@@ -49,7 +53,7 @@ export function ThemeProvider({
     : undefined;
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, switchable }}>
+    <ThemeContext.Provider value={{ theme: effectiveTheme, toggleTheme, switchable, setForceTheme }}>
       {children}
     </ThemeContext.Provider>
   );
