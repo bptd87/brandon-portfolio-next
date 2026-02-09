@@ -1645,3 +1645,9 @@
 ## Replace Ghost Image with Cleaned Version (User Requested - Feb 8, 2026)
 - [x] Upload cleaned ghost image to S3 (https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/XmkWKbpBTnVhFHuU.png)
 - [x] Update 404 page to use new ghost image URL (changed to object-contain for proper display)
+
+## Final 404 Page Refinements (User Requested - Feb 8, 2026)
+- [x] Remove header and footer from 404 page
+- [x] Add bottom fade effect back to ghost image (24px gradient)
+- [x] Animate cloud/smoke with transparency pulsing effect (0.7 to 0.95 opacity, 3s loop)
+- [x] Change copy to use emergency speech joke format ("Ladies and gentlemen, we are experiencing a brief technical difficulty...")
