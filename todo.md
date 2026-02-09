@@ -2135,3 +2135,4 @@
 - [x] Rebrand FAQ as 'Authored Composite Rendering' with collapsible accordion that sells the process
 - [x] Reduce body copy font weight in philosophy section for more minimal feel
 - [x] Rewrite FAQ to focus on rendering as art form and design process, not technology
+- [ ] Transform Experiential portfolio page with editorial content, capabilities, process, and FAQ
