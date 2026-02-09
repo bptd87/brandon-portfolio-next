@@ -1660,3 +1660,6 @@
 
 ## Add Subtle Bottom Fade to Ghost (User Requested - Feb 9, 2026)
 - [x] Add gradual bottom fade so ghost blends naturally into background (128px gradient with via-stop for smooth transition)
+
+## Fix Bottom Fade with Mask-Image (User Reported Issue - Feb 9, 2026)
+- [x] Replace gradient overlay with CSS mask-image for smooth, natural fade without harsh line (gradient from 60% to 100%)
