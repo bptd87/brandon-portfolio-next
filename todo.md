@@ -2031,3 +2031,6 @@
 - [x] Identify experiential landing page route (/projects/experiential)
 - [x] Check why card image is blank on experiential landing page (coverImageUrl not working)
 - [x] Use one of the event photo URLs as cover image for the card (crowd-wide.jpg)
+
+## Experiential Landing Page Sorting
+- [x] Fix Experiential landing page sorting to show projects in chronological order by date (newest first)

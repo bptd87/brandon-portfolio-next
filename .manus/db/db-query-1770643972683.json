@@ -1,0 +1,40 @@
+{
+  "query": "SELECT slug, title, LEFT(coverImageUrl, 80) as cover_preview, publishedAt FROM projects WHERE featured = true ORDER BY publishedAt DESC LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT slug, title, LEFT(coverImageUrl, 80) as cover_preview, publishedAt FROM projects WHERE featured = true ORDER BY publishedAt DESC LIMIT 5;",
+  "rows": [
+    {
+      "slug": "the-glass-menagerie",
+      "title": "The Glass Menagerie",
+      "cover_preview": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/",
+      "publishedAt": "2025-10-01 00:00:00"
+    },
+    {
+      "slug": "million-dollar-quartet",
+      "title": "Million Dollar Quartet",
+      "cover_preview": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/",
+      "publishedAt": "2025-09-01 00:00:00"
+    },
+    {
+      "slug": "much-ado-about-nothing",
+      "title": "Much Ado About Nothing",
+      "cover_preview": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/",
+      "publishedAt": "2025-07-01 00:00:00"
+    },
+    {
+      "slug": "romero",
+      "title": "Romero",
+      "cover_preview": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/",
+      "publishedAt": "2025-04-01 00:00:00"
+    },
+    {
+      "slug": "guys-on-ice",
+      "title": "Guys on Ice",
+      "cover_preview": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/",
+      "publishedAt": "2025-01-01 00:00:00"
+    }
+  ],
+  "messages": [],
+  "stdout": "slug\ttitle\tcover_preview\tpublishedAt\nthe-glass-menagerie\tThe Glass Menagerie\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/\t2025-10-01 00:00:00\nmillion-dollar-quartet\tMillion Dollar Quartet\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/\t2025-09-01 00:00:00\nmuch-ado-about-nothing\tMuch Ado About Nothing\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/\t2025-07-01 00:00:00\nromero\tRomero\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/\t2025-04-01 00:00:00\nguys-on-ice\tGuys on Ice\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/\t2025-01-01 00:00:00\n",
+  "stderr": "",
+  "execution_time_ms": 60
+}
