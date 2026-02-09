@@ -468,18 +468,19 @@ export default function NewsDetail() {
                 <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">Tags</h3>
                 <div className="flex flex-wrap gap-2">
                   {newsItem.tags.map((tag: any) => (
-                    <Badge 
-                      key={tag.id} 
-                      variant="outline" 
-                      className="text-sm font-normal px-4 py-2 rounded-full transition-all hover:scale-105"
-                      style={{
-                        borderColor: `hsl(var(--accent))`,
-                        color: `hsl(var(--accent-foreground))`,
-                        backgroundColor: `hsl(var(--accent) / 0.1)`
-                      }}
-                    >
-                      {tag.name}
-                    </Badge>
+                    <Link key={tag.id} href={`/tags/${tag.slug}`}>
+                      <Badge 
+                        variant="outline" 
+                        className="text-sm font-normal px-4 py-2 rounded-full transition-all hover:scale-105 cursor-pointer"
+                        style={{
+                          borderColor: `hsl(var(--accent))`,
+                          color: `hsl(var(--accent-foreground))`,
+                          backgroundColor: `hsl(var(--accent) / 0.1)`
+                        }}
+                      >
+                        {tag.name}
+                      </Badge>
+                    </Link>
                   ))}
                 </div>
               </div>

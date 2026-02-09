@@ -84,6 +84,20 @@ export const appRouter = router({
       return await db.getAllTags();
     }),
     
+    getBySlug: publicProcedure
+      .input(z.object({ slug: z.string().min(1).max(100) }))
+      .query(async ({ input }) => {
+        const tag = await db.getTagBySlug(input.slug);
+        if (!tag) return null;
+        
+        // Get all content associated with this tag
+        const projects = await db.getProjectsByTag(tag.id);
+        const articles = await db.getArticlesByTag(tag.id);
+        const news = await db.getNewsByTag(tag.id);
+        
+        return { tag, projects, articles, news };
+      }),
+    
     create: adminProcedure
       .input(z.object({
         name: z.string().min(1).max(100),

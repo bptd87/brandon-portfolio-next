@@ -721,18 +721,19 @@ export default function ArticleDetail() {
                   <h3 className="text-sm uppercase tracking-wider text-muted-foreground mb-4 font-semibold">Tagged With</h3>
                   <div className="flex flex-wrap gap-2">
                     {article.tags.map((tag: any) => (
-                      <Badge 
-                        key={tag.id} 
-                        variant="outline" 
-                        className="text-sm font-normal px-4 py-2 rounded-full transition-all hover:scale-105"
-                        style={category ? {
-                          borderColor: `${getCategoryColor(category.name).hex}40`,
-                          color: getCategoryColor(category.name).hex,
-                          backgroundColor: `${getCategoryColor(category.name).hex}10`
-                        } : undefined}
-                      >
-                        {tag.name}
-                      </Badge>
+                      <Link key={tag.id} href={`/tags/${tag.slug}`}>
+                        <Badge 
+                          variant="outline" 
+                          className="text-sm font-normal px-4 py-2 rounded-full transition-all hover:scale-105 cursor-pointer"
+                          style={category ? {
+                            borderColor: `${getCategoryColor(category.name).hex}40`,
+                            color: getCategoryColor(category.name).hex,
+                            backgroundColor: `${getCategoryColor(category.name).hex}10`
+                          } : undefined}
+                        >
+                          {tag.name}
+                        </Badge>
+                      </Link>
                     ))}
                   </div>
                 </div>

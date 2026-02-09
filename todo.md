@@ -1825,3 +1825,14 @@
 - [x] Style tags on article detail pages to match page design aesthetic (already well-styled)
 - [x] Style tags on news detail pages to match page design aesthetic (updated to use junction table + rounded pills)
 - [x] Test tag display on article and news pages (both working correctly!)
+
+## Create Dedicated Tag Pages (User Requested - Feb 9, 2026)
+- [x] Design tag page structure showing projects, articles, and news
+- [x] Create tRPC query to fetch all content for a specific tag
+- [x] Create TagDetail.tsx page component
+- [x] Add route for tag pages in App.tsx
+- [x] Make tags clickable on project detail pages
+- [x] Make tags clickable on article detail pages
+- [x] Make tags clickable on news detail pages
+- [x] Test tag pages with various tags (Brand Experience with projects, Technology in Theatre with articles)
+- [ ] Save checkpoint

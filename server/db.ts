@@ -158,6 +158,56 @@ export async function getTagById(id: number) {
   return result[0];
 }
 
+export async function getTagBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db.select().from(tags).where(eq(tags.slug, slug)).limit(1);
+  return result[0];
+}
+
+export async function getProjectsByTag(tagId: number) {
+  const db = await getDb();
+  if (!db) return [];
+
+  const result = await db
+    .select({ project: projects })
+    .from(projectTags)
+    .innerJoin(projects, eq(projectTags.projectId, projects.id))
+    .where(and(eq(projectTags.tagId, tagId), eq(projects.status, 'published')))
+    .orderBy(desc(projects.publishedAt));
+
+  return result.map(r => r.project);
+}
+
+export async function getArticlesByTag(tagId: number) {
+  const db = await getDb();
+  if (!db) return [];
+
+  const result = await db
+    .select({ article: articles })
+    .from(articleTags)
+    .innerJoin(articles, eq(articleTags.articleId, articles.id))
+    .where(and(eq(articleTags.tagId, tagId), eq(articles.status, 'published')))
+    .orderBy(desc(articles.publishedAt));
+
+  return result.map(r => r.article);
+}
+
+export async function getNewsByTag(tagId: number) {
+  const db = await getDb();
+  if (!db) return [];
+
+  const result = await db
+    .select({ news: news })
+    .from(newsTags)
+    .innerJoin(news, eq(newsTags.newsId, news.id))
+    .where(and(eq(newsTags.tagId, tagId), eq(news.status, 'published')))
+    .orderBy(desc(news.date));
+
+  return result.map(r => r.news);
+}
+
 export async function createTag(tag: InsertTag) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");

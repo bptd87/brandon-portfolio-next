@@ -33,6 +33,7 @@ import ScenicModelsPortfolio from "./pages/ScenicModelsPortfolio";
 import TutorialDetail from "./pages/TutorialDetail";
 import NewsDetail from "./pages/NewsDetail";
 import ArticleDetail from "./pages/ArticleDetail";
+import TagDetail from "./pages/TagDetail";
 import AdminFaqConvert from "./pages/AdminFaqConvert";
 import AdminImportNews from "./pages/AdminImportNews";
 import Privacy from "./pages/Privacy";
@@ -64,6 +65,7 @@ function Router() {
       <Route path={"/news/:slug"} component={NewsDetail} />
       <Route path={"/articles"} component={Articles} />
       <Route path={"/articles/:slug"} component={ArticleDetail} />
+      <Route path={"/tags/:slug"} component={TagDetail} />
       <Route path={"/admin/faq-convert"} component={AdminFaqConvert} />
       <Route path={"/admin/import-news"} component={AdminImportNews} />
       <Route path={"/about"} component={About} />
