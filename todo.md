@@ -1748,3 +1748,16 @@
 - [ ] Ensure navigation (prev/next arrows) stays within discipline boundaries
 - [ ] Future: Create ScenicModelsProjectDetail component
 - [ ] Future: Create flexible component system for custom Experiential pages
+
+## Redesign Rendering Portfolio with Ultra-Minimal Gallery Aesthetic (User Requested - Feb 9, 2026)
+- [x] Analyze current rendering portfolio landing page and project detail flow
+- [x] Redesign rendering project detail pages with ultra-minimal approach:
+  - Remove visible tags (keep in meta tags only for SEO)
+  - Shorten narrative to 50-75 words (poetic, evocative)
+  - Remove or hide technical details section
+  - Let images dominate - gallery exhibition label approach
+  - Keep SEO strong through invisible meta tags, alt text, structured data
+- [x] Update rendering portfolio landing page for cohesive gallery experience
+- [x] Shorten descriptions on all rendering projects to 50-75 word poetic captions
+- [x] Test complete rendering portfolio flow (landing → detail → back)
+- [x] Ensure renderings feel like fine art, not technical portfolio pieces

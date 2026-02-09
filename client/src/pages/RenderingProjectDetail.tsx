@@ -1,7 +1,6 @@
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/lib/trpc";
-import { ArrowLeft, ArrowRight, Tag } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link, useParams, useLocation } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -27,7 +26,7 @@ export default function RenderingProjectDetail() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <p className="text-muted-foreground">Loading rendering...</p>
+        <p className="text-muted-foreground">Loading...</p>
       </div>
     );
   }
@@ -36,7 +35,7 @@ export default function RenderingProjectDetail() {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4">Rendering Not Found</h2>
+          <h2 className="text-2xl font-bold mb-4">Not Found</h2>
           <Link href="/projects/rendering">
             <Button variant="outline">Back to Renderings</Button>
           </Link>
@@ -48,11 +47,8 @@ export default function RenderingProjectDetail() {
   const images = project.images || [];
   const renderings = images.filter(img => img.imageType === 'rendering' || img.imageType === 'production');
   
-  // Parse tags
+  // Parse tags for SEO (invisible)
   const tags = project.seoKeywords?.split(',').map(t => t.trim()).filter(Boolean) || [];
-  
-  // Extract software from design notes or use defaults
-  const softwareUsed = ['Vectorworks', 'Twinmotion', 'Photoshop'];
 
   // Find prev/next projects from rendering discipline only
   const currentIndex = allProjects?.findIndex(p => p.id === project.id) ?? -1;
@@ -86,9 +82,9 @@ export default function RenderingProjectDetail() {
     }
   };
 
-  // Generate SEO-optimized description
-  const seoDescription = project.excerpt || project.description || 
-    `${project.title} - Architectural rendering and visualization by Brandon PT Davis. Created using ${softwareUsed.join(', ')}.`;
+  // Generate SEO-optimized description from excerpt or designNotes
+  const seoDescription = project.excerpt || project.designNotes?.substring(0, 160) || 
+    `${project.title} - Architectural rendering by Brandon PT Davis`;
 
   return (
     <div className="min-h-screen bg-background">
@@ -123,7 +119,6 @@ export default function RenderingProjectDetail() {
           genre: "Architectural Rendering",
           keywords: tags,
           url: `https://www.brandonptdavis.com/projects/${project.slug}`,
-          about: project.designNotes || undefined,
         }}
       />
       <Header />
@@ -149,137 +144,75 @@ export default function RenderingProjectDetail() {
         </button>
       )}
 
-      {/* Main Content Container */}
-      <div className="container max-w-6xl py-16 space-y-16">
+      {/* Ultra-Minimal Gallery Layout */}
+      <div className="container max-w-7xl py-16 space-y-12">
         
-        {/* Header Section */}
+        {/* Back Button - Subtle */}
         <AnimatedSection>
-          <div className="space-y-6">
-            <Link href="/projects/rendering">
-              <Button 
-                variant="ghost" 
-                size="sm"
-                className="gap-2 text-muted-foreground hover:text-foreground"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Back to Renderings
-              </Button>
-            </Link>
-
-            <div>
-              <h1 className="text-5xl md:text-6xl font-black tracking-tight mb-4">
-                {project.title}
-              </h1>
-              
-              <div className="flex items-center gap-4 text-muted-foreground mb-6">
-                {project.year && <span>{project.year}</span>}
-                {project.client && (
-                  <>
-                    <span>•</span>
-                    <span>{project.client}</span>
-                  </>
-                )}
-              </div>
-
-              {/* Tags */}
-              {tags.length > 0 && (
-                <div className="flex items-center gap-2 flex-wrap">
-                  <Tag className="h-4 w-4 text-muted-foreground" />
-                  {tags.map((tag) => (
-                    <Badge 
-                      key={tag} 
-                      variant="outline"
-                      className="text-xs"
-                    >
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
+          <Link href="/projects/rendering">
+            <Button 
+              variant="ghost" 
+              size="sm"
+              className="gap-2 text-muted-foreground hover:text-foreground"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back
+            </Button>
+          </Link>
         </AnimatedSection>
 
-        {/* Main Rendering Image - Full Width */}
+        {/* Main Image */}
         {renderings.length > 0 && (
           <AnimatedSection>
             <div 
-              className="cursor-pointer group rounded-2xl overflow-hidden"
+              className="cursor-pointer group"
               onClick={() => openLightbox(0)}
             >
               <img
                 src={renderings[0].imageUrl || ''}
-                alt={renderings[0].altText || project.title}
-                className="w-full h-auto transition-opacity group-hover:opacity-95"
+                alt={renderings[0].altText || `${project.title} - Rendering by Brandon PT Davis`}
+                className="w-full h-auto rounded-2xl transition-opacity group-hover:opacity-95"
               />
             </div>
           </AnimatedSection>
         )}
 
-        {/* Narrative Section */}
-        {project.designNotes && (
-          <AnimatedSection>
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-sm tracking-widest uppercase text-muted-foreground mb-8">
-                Narrative
-              </h2>
-              <div className="prose prose-lg max-w-none">
-                <p className="text-lg leading-relaxed text-foreground/90 whitespace-pre-wrap">
-                  {project.designNotes}
-                </p>
-              </div>
-            </div>
-          </AnimatedSection>
-        )}
-
-        {/* Technical Details */}
+        {/* Title + Caption - Centered, Minimal */}
         <AnimatedSection>
-          <div className="max-w-3xl mx-auto border-t border-border pt-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm">
-              <div>
-                <h3 className="text-xs tracking-widest uppercase text-muted-foreground mb-3">
-                  Software
-                </h3>
-                <div className="space-y-1">
-                  {softwareUsed.map(software => (
-                    <div key={software} className="text-foreground/80">
-                      {software}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              {project.year && (
-                <div>
-                  <h3 className="text-xs tracking-widest uppercase text-muted-foreground mb-3">
-                    Year
-                  </h3>
-                  <div className="text-foreground/80">{project.year}</div>
-                </div>
-              )}
-            </div>
+          <div className="max-w-2xl mx-auto text-center space-y-4">
+            <h1 className="text-4xl md:text-5xl font-black tracking-tight">
+              {project.title}
+            </h1>
+            
+            {project.year && (
+              <p className="text-sm text-muted-foreground tracking-wider">
+                {project.year}
+              </p>
+            )}
+
+            {/* Short Poetic Caption (50-75 words from excerpt) */}
+            {project.excerpt && (
+              <p className="text-base leading-relaxed text-foreground/80 italic">
+                {project.excerpt}
+              </p>
+            )}
           </div>
         </AnimatedSection>
 
-        {/* Additional Images (if any) */}
+        {/* Additional Images (if any) - Clean Grid */}
         {renderings.length > 1 && (
-          <div className="space-y-12">
+          <div className="space-y-12 pt-8">
             {renderings.slice(1).map((image, index) => (
               <AnimatedSection key={image.id}>
                 <div 
-                  className="cursor-pointer group rounded-2xl overflow-hidden"
+                  className="cursor-pointer group"
                   onClick={() => openLightbox(index + 1)}
                 >
                   <img
                     src={image.imageUrl || ''}
-                    alt={image.altText || `${project.title} - Image ${index + 2}`}
-                    className="w-full h-auto transition-opacity group-hover:opacity-95"
+                    alt={image.altText || `${project.title} - Image ${index + 2} - Rendering by Brandon PT Davis`}
+                    className="w-full h-auto rounded-2xl transition-opacity group-hover:opacity-95"
                   />
-                  {image.caption && (
-                    <p className="text-center text-sm text-muted-foreground mt-4 italic">
-                      {image.caption}
-                    </p>
-                  )}
                 </div>
               </AnimatedSection>
             ))}
