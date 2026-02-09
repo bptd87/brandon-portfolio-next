@@ -251,7 +251,17 @@ export default function Home() {
 
                 {/* 2-Column Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                  {projects.slice(0, 8).map((project) => (
+                  {projects.slice(0, 8).map((project, index) => {
+                    // Cycle through brand colors for variety
+                    const brandColors = [
+                      '#FF5722', // Orange
+                      '#00BCD4', // Cyan
+                      '#E91E63', // Pink
+                      '#FFC107', // Amber
+                    ];
+                    const hoverColor = brandColors[index % brandColors.length];
+                    
+                    return (
                     <Link key={project.id} href={`/projects/${project.slug}`}>
                       <Card className="group cursor-pointer overflow-hidden border-0 bg-transparent hover:scale-[1.02] transition-all duration-500">
                         <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
@@ -286,9 +296,17 @@ export default function Home() {
                         </div>
                         
                         <CardContent className="p-6 bg-card">
-                          <h3 className="text-2xl font-bold mb-2 group-hover:text-[#FF5722] transition-colors">
+                          <h3 
+                            className="text-2xl font-bold mb-2 transition-colors"
+                            style={{ '--hover-color': hoverColor } as React.CSSProperties}
+                            onMouseEnter={(e) => (e.currentTarget.style.color = hoverColor)}
+                            onMouseLeave={(e) => (e.currentTarget.style.color = '')}
+                          >
                             {project.title}
                           </h3>
+                          {project.client && (
+                            <p className="text-sm font-medium text-foreground mb-1">{project.client}</p>
+                          )}
                           {project.location && (
                             <p className="text-sm text-muted-foreground mb-3">{project.location}</p>
                           )}
@@ -300,7 +318,8 @@ export default function Home() {
                         </CardContent>
                       </Card>
                     </Link>
-                  ))}
+                    );
+                  })}
                 </div>
 
                 {/* View All Projects Button */}
@@ -350,16 +369,16 @@ export default function Home() {
                         )}
                         <CardContent className="p-6">
                           {news.publishedAt && (
-                            <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
-                              <Calendar className="h-3 w-3" />
-                              {new Date(news.publishedAt).toLocaleDateString('en-US', {
+                            <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-2">
+                              <Calendar className="h-3 w-3 flex-shrink-0" />
+                              <span>{new Date(news.publishedAt).toLocaleDateString('en-US', {
                                 year: 'numeric',
-                                month: 'long',
+                                month: 'short',
                                 day: 'numeric'
-                              })}
+                              })}</span>
                             </div>
                           )}
-                          <h3 className="text-xl font-bold mb-3 line-clamp-2 group-hover:text-[#FF5722] transition-colors">
+                          <h3 className="text-xl font-bold mb-2 line-clamp-2 group-hover:text-[#FF5722] transition-colors">
                             {news.title}
                           </h3>
                           <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed mb-4">

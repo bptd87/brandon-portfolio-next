@@ -2089,3 +2089,7 @@
 - [x] Replace Latest Thinking section with Latest News section
 - [ ] Select 6-8 best scenic design projects for homepage grid
 - [x] Remove Articles from homepage (now in Studio dropdown)
+- [x] Add theatre company metadata to featured portfolio grid on homepage
+- [x] Fix theatre company metadata display on homepage portfolio cards
+- [x] Add brand-colored hover effects with variety (orange, cyan, pink, amber)
+- [x] Fix news cards spacing/gap issue
