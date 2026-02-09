@@ -116,12 +116,55 @@ const ArticleIcon = () => (
   </svg>
 );
 
+// Studio Icons
+
+// Tutorials - Play button/video
+const TutorialsIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="inline-block mr-2">
+    <rect x="2" y="3" width="20" height="14" rx="2" />
+    <path d="M10 8l6 4-6 4V8z" fill="currentColor" strokeWidth="0" />
+  </svg>
+);
+
+// App Studio - Grid of tools
+const AppStudioIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="inline-block mr-2">
+    <rect x="3" y="3" width="7" height="7" rx="1" />
+    <rect x="14" y="3" width="7" height="7" rx="1" />
+    <rect x="3" y="14" width="7" height="7" rx="1" />
+    <rect x="14" y="14" width="7" height="7" rx="1" />
+    <circle cx="6.5" cy="6.5" r="1" fill="currentColor" />
+    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
+  </svg>
+);
+
+// Vault - Archive/safe
+const VaultIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="inline-block mr-2">
+    <rect x="3" y="4" width="18" height="16" rx="2" />
+    <circle cx="12" cy="12" r="3" />
+    <path d="M12 9v6M9 12h6" strokeWidth="1" />
+    <path d="M19 12h2M3 12h2" strokeOpacity="0.5" />
+  </svg>
+);
+
+// Scenic Directory - List/directory
+const DirectoryIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="inline-block mr-2">
+    <path d="M3 6h18M3 12h18M3 18h18" />
+    <circle cx="7" cy="6" r="1" fill="currentColor" />
+    <circle cx="7" cy="12" r="1" fill="currentColor" />
+    <circle cx="7" cy="18" r="1" fill="currentColor" />
+  </svg>
+);
+
 export default function Header() {
   const [location] = useLocation();
   const [portfolioOpen, setPortfolioOpen] = useState(false);
   const [newsOpen, setNewsOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [articlesOpen, setArticlesOpen] = useState(false);
+  const [studioOpen, setStudioOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -132,12 +175,14 @@ export default function Header() {
   const newsDropdownRef = useRef<HTMLDivElement>(null);
   const aboutDropdownRef = useRef<HTMLDivElement>(null);
   const articlesDropdownRef = useRef<HTMLDivElement>(null);
+  const studioDropdownRef = useRef<HTMLDivElement>(null);
   
   // Timeout refs for delayed closing
   const portfolioTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const newsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const aboutTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const articlesTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const studioTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const isActive = (path: string) => {
     if (path === "/") return location === "/";
@@ -159,6 +204,7 @@ export default function Header() {
         setNewsOpen(false);
         setAboutOpen(false);
         setArticlesOpen(false);
+        setStudioOpen(false);
       }
       
       setLastScrollY(currentScrollY);
@@ -182,6 +228,9 @@ export default function Header() {
       }
       if (articlesDropdownRef.current && !articlesDropdownRef.current.contains(event.target as Node)) {
         setArticlesOpen(false);
+      }
+      if (studioDropdownRef.current && !studioDropdownRef.current.contains(event.target as Node)) {
+        setStudioOpen(false);
       }
     };
 
@@ -240,6 +289,19 @@ export default function Header() {
       clearTimeout(articlesTimeoutRef.current);
     }
     setArticlesOpen(true);
+  };
+
+  const handleStudioMouseLeave = () => {
+    studioTimeoutRef.current = setTimeout(() => {
+      setStudioOpen(false);
+    }, 300);
+  };
+
+  const handleStudioMouseEnter = () => {
+    if (studioTimeoutRef.current) {
+      clearTimeout(studioTimeoutRef.current);
+    }
+    setStudioOpen(true);
   };
 
   const disciplines = [
@@ -462,15 +524,74 @@ export default function Header() {
                 )}
               </div>
 
-              <Link 
-                href="/studio" 
-                className={`text-sm font-bold tracking-wide transition-all hover:text-foreground relative group ${
-                  isActive("/studio") ? "text-foreground" : ""
-                }`}
+              {/* Studio Dropdown - Hover Based with Delay */}
+              <div 
+                className="relative" 
+                ref={studioDropdownRef}
+                onMouseEnter={handleStudioMouseEnter}
+                onMouseLeave={handleStudioMouseLeave}
               >
-                STUDIO
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-foreground group-hover:w-full transition-all duration-300"></span>
-              </Link>
+                <Link
+                  href="/studio"
+                  className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-foreground relative group ${
+                    isActive("/studio") || isActive("/tutorials") || isActive("/vault") || isActive("/directory") ? "text-foreground" : ""
+                  }`}
+                >
+                  STUDIO
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${studioOpen ? "rotate-180" : ""}`} />
+                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-foreground group-hover:w-full transition-all duration-300"></span>
+                </Link>
+
+                {/* Dropdown Menu */}
+                {studioOpen && (
+                  <div 
+                    className="absolute top-full left-0 mt-3 w-56 bg-popover backdrop-blur-xl border border-border rounded-lg overflow-hidden shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200"
+                    onMouseEnter={handleStudioMouseEnter}
+                    onMouseLeave={handleStudioMouseLeave}
+                  >
+                    <Link
+                      href="/tutorials"
+                      className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border relative group"
+                    >
+                      <span className="relative z-10 flex items-center">
+                        <TutorialsIcon />
+                        Tutorials
+                      </span>
+                      <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
+                    </Link>
+                    <Link
+                      href="/studio"
+                      className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border relative group"
+                    >
+                      <span className="relative z-10 flex items-center">
+                        <AppStudioIcon />
+                        App Studio
+                      </span>
+                      <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
+                    </Link>
+                    <Link
+                      href="/vault"
+                      className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border relative group"
+                    >
+                      <span className="relative z-10 flex items-center">
+                        <VaultIcon />
+                        Vault
+                      </span>
+                      <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
+                    </Link>
+                    <Link
+                      href="/directory"
+                      className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border last:border-0 relative group"
+                    >
+                      <span className="relative z-10 flex items-center">
+                        <DirectoryIcon />
+                        Scenic Directory
+                      </span>
+                      <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
+                    </Link>
+                  </div>
+                )}
+              </div>
 
               {/* Theme Toggle */}
               <button

@@ -22,6 +22,7 @@ import Studio from "./pages/Studio";
 import StudioTutorials from "./pages/StudioTutorials";
 import StudioApps from "./pages/StudioApps";
 import StudioDirectory from "./pages/StudioDirectory";
+import Vault from "./pages/Vault";
 import ScaleCalculator from "./pages/ScaleCalculator";
 import DimensionReference from "./pages/DimensionReference";
 import DesignHistoryTimeline from "./pages/DesignHistoryTimeline";
@@ -86,6 +87,7 @@ function Router() {
       <Route path={"/studio/apps"} component={StudioApps} />
       <Route path={"/studio/directory"} component={StudioDirectory} />
       <Route path={"/studio"} component={Studio} />
+      <Route path={"/vault"} component={Vault} />
       <Route path={"/admin"} component={Admin} />
       <Route path={"/privacy"} component={Privacy} />
       <Route path={"/terms"} component={Terms} />

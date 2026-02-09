@@ -2038,3 +2038,15 @@
 ## Fix Scenic Design Template
 - [x] Restore scenic design project detail template (design notes visible, excerpt hidden)
 - [x] Ensure scenic and experiential templates remain separate
+
+## Urgent Fixes
+- [ ] Fix scenic design template: change 'Event Photos' to 'Production Photos'
+
+## Experiential Project Pages (Each Unique Custom Layout)
+- [x] Red Bull Jukebox - custom layout complete
+- [ ] Rab Bothy Activation - create unique custom page
+- [ ] First Bank Lollipop - create unique custom page
+- [ ] Other experiential projects - create unique custom pages as needed
+- [ ] Fix JavaScript error on published site (React/routing issue)
+- [x] Add dropdown menu with icons to STUDIO nav item
+- [x] Create Coming Soon page for Vault (/vault)
