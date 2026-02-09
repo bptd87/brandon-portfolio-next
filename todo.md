@@ -2130,3 +2130,4 @@
 - [x] Unify all article cards to use same horizontal layout with consistent styling
 - [x] Change Scenic Design Process category accent color to yellow and make badge borders thinner
 - [x] Update Continue Reading section to show category-based related articles with matching card design
+- [x] Create gallery-like Rendering portfolio landing page with editorial design, art-led principles, and process layers
