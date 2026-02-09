@@ -1696,3 +1696,15 @@
 - [x] Query all projects and generate list for user to add month information (25 scenic design productions)
 - [x] Fix project detail next/prev navigation to stay within discipline groups (scenic_design, experiential_design, rendering, scenic_models)
 - [x] Test navigation between projects in same discipline (verified: The Glass Menagerie → Bell, Book, and Candle, both scenic_design)
+
+## Update Project Dates with Correct Months (User Provided - Feb 9, 2026)
+- [x] Update all 25 scenic design project publishedAt dates with correct months
+- [x] Fix All My Sons year from 2011 to 2010
+- [ ] Verify projects now display in correct chronological order within each year
+
+## Fix Missing Company Metadata (User Reported - Feb 9, 2026)
+- [x] Query database to find projects with NULL or empty client field (found 7 projects)
+- [x] Update missing client data from CV for all theatre productions (Head Over Heels, Boeing Boeing, Merry Wives, Inspector Calls, Tomás, Angel Street, All My Sons)
+- [x] Verify all projects display company names on portfolio page (all 7 projects now show company names)
+- [x] Fix incorrect years for Head Over Heels (2023), An Inspector Calls (2022), Tomás (2022), Angel Street (2013)
+- [x] Update An Inspector Calls location to Spirit Lake, IA

@@ -1,0 +1,9 @@
+{
+  "query": "UPDATE projects SET client = 'Theatre SilCo' WHERE title = 'Head Over Heels';\nUPDATE projects SET client = 'Stephens College' WHERE title = 'Boeing, Boeing';\nUPDATE projects SET client = 'Stephens College' WHERE title = 'The Merry Wives of Windsor';\nUPDATE projects SET client = 'Okoboji Summer Theatre' WHERE title = 'An Inspector Calls';\nUPDATE projects SET client = 'Lake Dillon Theatre' WHERE title = 'Tomás and the Library Lady';\nUPDATE projects SET client = 'Okoboji Summer Theatre' WHERE title = 'Angel Street';\nUPDATE projects SET client = 'Stephens College' WHERE title = 'All My Sons';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute UPDATE projects SET client = 'Theatre SilCo' WHERE title = 'Head Over Heels';\nUPDATE projects SET client = 'Stephens College' WHERE title = 'Boeing, Boeing';\nUPDATE projects SET client = 'Stephens College' WHERE title = 'The Merry Wives of Windsor';\nUPDATE projects SET client = 'Okoboji Summer Theatre' WHERE title = 'An Inspector Calls';\nUPDATE projects SET client = 'Lake Dillon Theatre' WHERE title = 'Tomás and the Library Lady';\nUPDATE projects SET client = 'Okoboji Summer Theatre' WHERE title = 'Angel Street';\nUPDATE projects SET client = 'Stephens College' WHERE title = 'All My Sons';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 661
+}
