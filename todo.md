@@ -1993,3 +1993,7 @@
 - [x] Find white/light version of Lumenati logo that works on dark background
 - [x] Remove hero cover image entirely - use solid dark background instead
 - [x] Remove white box around logos (weak solution)
+
+## Red Bull Jukebox - Logo Size & Hero Height
+- [x] Replace Lumenati logo with cropped version (remove black padding to match Red Bull size)
+- [x] Reduce hero section height from 85vh to 45vh to bring content up
