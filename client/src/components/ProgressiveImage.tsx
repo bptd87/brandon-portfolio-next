@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface ProgressiveImageProps {
   src: string;
@@ -8,6 +8,7 @@ interface ProgressiveImageProps {
   loading?: 'eager' | 'lazy';
   aspectRatio?: string;
   objectFit?: 'cover' | 'contain';
+  smartPosition?: boolean; // Enable automatic orientation detection
 }
 
 export function ProgressiveImage({
@@ -15,12 +16,30 @@ export function ProgressiveImage({
   alt,
   className = '',
   onClick,
-  loading = 'eager', // Changed default to eager to prevent lazy loading flashing
+  loading = 'lazy',
   aspectRatio,
   objectFit = 'cover',
+  smartPosition = false,
 }: ProgressiveImageProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [objectPosition, setObjectPosition] = useState<string>('object-center');
+
+  useEffect(() => {
+    if (!smartPosition) return;
+    
+    const img = new Image();
+    img.src = src;
+    
+    img.onload = () => {
+      // Portrait images: show top (faces), Landscape: center
+      if (img.naturalHeight > img.naturalWidth) {
+        setObjectPosition('object-top');
+      } else {
+        setObjectPosition('object-center');
+      }
+    };
+  }, [src, smartPosition]);
 
   return (
     <div 
@@ -52,6 +71,7 @@ export function ProgressiveImage({
         className={`
           w-full h-full 
           ${objectFit === 'cover' ? 'object-cover' : 'object-contain'}
+          ${smartPosition ? objectPosition : ''}
           ${imageLoaded ? 'opacity-100' : 'opacity-0'}
           ${className}
         `}

@@ -2118,3 +2118,7 @@
 - [x] Fix object-top positioning on production photo grids (portrait images showing chest only)
 - [x] Add object-top positioning to project detail hero cover images
 - [x] Implement per-page theme switching - dark mode for portfolio, light mode for news/articles
+- [x] Implement smart image positioning with automatic orientation detection
+- [x] Add progressive image loading with blur-up placeholders
+- [x] Implement lazy loading for below-the-fold images
+- [x] Optimize page loading with code splitting and resource preloading

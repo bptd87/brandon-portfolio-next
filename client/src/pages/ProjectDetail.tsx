@@ -1,6 +1,7 @@
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { trpc } from "@/lib/trpc";
 import { ArrowLeft, ArrowRight, MapPin, Calendar, ChevronDown, ChevronUp } from "lucide-react";
@@ -194,10 +195,12 @@ export default function ProjectDetail() {
       {/* Full-Screen Hero Section */}
       <section className="relative h-screen overflow-hidden">
         {project.coverImageUrl ? (
-          <img 
-            src={project.coverImageUrl} 
+          <ProgressiveImage
+            src={project.coverImageUrl}
             alt={project.title}
-            className="w-full h-full object-cover object-top"
+            className=""
+            smartPosition={true}
+            loading="eager"
           />
         ) : (
           <div className="w-full h-full bg-muted flex items-center justify-center">
@@ -324,10 +327,13 @@ export default function ProjectDetail() {
                           setLightboxOpen(true);
                         }}
                       >
-                        <img
+                        <ProgressiveImage
                           src={img.imageUrl || ''}
                           alt={img.altText || img.caption || project.title}
-                          className="w-full h-full object-cover object-top group-hover:scale-105 group-hover:brightness-110 transition-all duration-500"
+                          className="group-hover:scale-105 group-hover:brightness-110 transition-all duration-500"
+                          aspectRatio="3/2"
+                          smartPosition={true}
+                          loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         
@@ -382,10 +388,13 @@ export default function ProjectDetail() {
                           setLightboxOpen(true);
                         }}
                       >
-                        <img
+                        <ProgressiveImage
                           src={img.imageUrl || ''}
                           alt={img.altText || img.caption || project.title}
-                          className="w-full h-full object-cover object-top group-hover:scale-105 group-hover:brightness-110 transition-all duration-500"
+                          className="group-hover:scale-105 group-hover:brightness-110 transition-all duration-500"
+                          aspectRatio="3/2"
+                          smartPosition={true}
+                          loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         
@@ -554,10 +563,13 @@ export default function ProjectDetail() {
                     <Card className="group cursor-pointer overflow-hidden border-0 bg-transparent hover:scale-[1.02] transition-all duration-500">
                       <div className="relative aspect-[3/2] overflow-hidden rounded-lg">
                         {relatedProject.coverImageUrl ? (
-                          <img
+                          <ProgressiveImage
                             src={relatedProject.coverImageUrl}
                             alt={`${relatedProject.title} - Scenic design by Brandon PT Davis`}
-                            className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700"
+                            className="group-hover:scale-110 transition-transform duration-700"
+                            aspectRatio="3/2"
+                            smartPosition={true}
+                            loading="lazy"
                           />
                         ) : (
                           <div className="w-full h-full bg-muted flex items-center justify-center">

@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MapPin, Calendar, ArrowRight } from "lucide-react";
+import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { trpc } from "@/lib/trpc";
 import { Link, useLocation, useSearch } from "wouter";
 import Header from "@/components/Header";
@@ -125,10 +126,13 @@ export default function Projects() {
                       <div className="relative overflow-hidden rounded-lg cursor-pointer group aspect-[3/2]">
                         {project.coverImageUrl ? (
                           <>
-                            <img 
-                              src={project.coverImageUrl} 
+                            <ProgressiveImage
+                              src={project.coverImageUrl}
                               alt={project.title}
-                              className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700"
+                              className="group-hover:scale-110 transition-transform duration-700"
+                              aspectRatio="3/2"
+                              smartPosition={true}
+                              loading="lazy"
                             />
                             {/* Gradient overlay - fades out on hover to reveal full image */}
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent group-hover:opacity-0 transition-all duration-500" />

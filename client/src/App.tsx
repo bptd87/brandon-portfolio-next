@@ -3,6 +3,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { Route, Switch, useLocation } from "wouter";
+import { lazy, Suspense } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import PageTransition from "./components/PageTransition";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -11,39 +12,42 @@ import News from "./pages/News";
 import Articles from "./pages/Articles";
 import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
+// Critical routes - load immediately
 import Admin from "./pages/Admin";
 import About from "./pages/About";
-import AboutResume from "./pages/AboutResume";
-import TeachingPhilosophy from "./pages/TeachingPhilosophy";
-import Resume from "./pages/Resume";
-import CreativeStatement from "./pages/CreativeStatement";
 import { Contact } from "./pages/Contact";
 import Studio from "./pages/Studio";
-import StudioTutorials from "./pages/StudioTutorials";
-import StudioApps from "./pages/StudioApps";
-import StudioDirectory from "./pages/StudioDirectory";
-import Vault from "./pages/Vault";
 import Collaborators from "./pages/Collaborators";
-import ScaleCalculator from "./pages/ScaleCalculator";
-import DimensionReference from "./pages/DimensionReference";
-import DesignHistoryTimeline from "./pages/DesignHistoryTimeline";
-import RoscoPaintCalculator from "./pages/RoscoPaintCalculator";
-import ExperientialPortfolio from "./pages/ExperientialPortfolio";
-import RenderingPortfolio from "./pages/RenderingPortfolio";
 import ProjectDetailRouter from "./pages/ProjectDetailRouter";
-import ScenicModelsPortfolio from "./pages/ScenicModelsPortfolio";
-import TutorialDetail from "./pages/TutorialDetail";
 import NewsDetail from "./pages/NewsDetail";
 import ArticleDetail from "./pages/ArticleDetail";
-import TagDetail from '@/pages/TagDetail';
-import Links from '@/pages/Links';
-import AdminFaqConvert from "./pages/AdminFaqConvert";
-import AdminImportNews from "./pages/AdminImportNews";
-import Privacy from "./pages/Privacy";
-import Terms from "./pages/Terms";
-import FAQ from "./pages/FAQ";
-import Accessibility from "./pages/Accessibility";
-import Sitemap from "./pages/Sitemap";
+
+// Non-critical routes - lazy load for better initial performance
+const AboutResume = lazy(() => import("./pages/AboutResume"));
+const TeachingPhilosophy = lazy(() => import("./pages/TeachingPhilosophy"));
+const Resume = lazy(() => import("./pages/Resume"));
+const CreativeStatement = lazy(() => import("./pages/CreativeStatement"));
+const StudioTutorials = lazy(() => import("./pages/StudioTutorials"));
+const StudioApps = lazy(() => import("./pages/StudioApps"));
+const StudioDirectory = lazy(() => import("./pages/StudioDirectory"));
+const Vault = lazy(() => import("./pages/Vault"));
+const ScaleCalculator = lazy(() => import("./pages/ScaleCalculator"));
+const DimensionReference = lazy(() => import("./pages/DimensionReference"));
+const DesignHistoryTimeline = lazy(() => import("./pages/DesignHistoryTimeline"));
+const RoscoPaintCalculator = lazy(() => import("./pages/RoscoPaintCalculator"));
+const ExperientialPortfolio = lazy(() => import("./pages/ExperientialPortfolio"));
+const RenderingPortfolio = lazy(() => import("./pages/RenderingPortfolio"));
+const ScenicModelsPortfolio = lazy(() => import("./pages/ScenicModelsPortfolio"));
+const TutorialDetail = lazy(() => import("./pages/TutorialDetail"));
+const TagDetail = lazy(() => import('@/pages/TagDetail'));
+const Links = lazy(() => import('@/pages/Links'));
+const AdminFaqConvert = lazy(() => import("./pages/AdminFaqConvert"));
+const AdminImportNews = lazy(() => import("./pages/AdminImportNews"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const Terms = lazy(() => import("./pages/Terms"));
+const FAQ = lazy(() => import("./pages/FAQ"));
+const Accessibility = lazy(() => import("./pages/Accessibility"));
+const Sitemap = lazy(() => import("./pages/Sitemap"));
 
 function Router() {
   const [location] = useLocation();
@@ -56,6 +60,11 @@ function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <PageTransition>
+      <Suspense fallback={
+        <div className="min-h-screen flex items-center justify-center bg-background">
+          <div className="animate-pulse text-muted-foreground">Loading...</div>
+        </div>
+      }>
       <Switch>
       <Route path={"/"} component={Home} />
       <Route path={"/projects"} component={Projects} />
@@ -101,6 +110,7 @@ function Router() {
       {/* Final fallback route */}
       <Route component={NotFound} />
       </Switch>
+      </Suspense>
     </PageTransition>
   );
 }
