@@ -2004,3 +2004,7 @@
 - [x] Implement theme-aware logo switching (white for dark mode, colored for light mode)
 - [x] Use colored Red Bull for both themes (works on both backgrounds)
 - [x] Reduce logo sizes from h-16/20 to h-10/12 for better proportion
+
+## Red Bull Jukebox - Restore Cover Image
+- [x] Add cover image back to database for landing page display
+- [x] Ensure project detail page still uses solid dark background (not the cover image)
