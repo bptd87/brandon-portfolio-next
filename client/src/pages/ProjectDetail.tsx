@@ -506,6 +506,28 @@ export default function ProjectDetail() {
           </AnimatedSection>
         )}
 
+        {/* Tags */}
+        {project.tags && project.tags.length > 0 && (
+          <AnimatedSection>
+            <div className="mt-16">
+              <h2 className="text-3xl font-black tracking-tighter mb-6" style={{ color: accentColor }}>
+                Tags
+              </h2>
+              <div className="flex flex-wrap gap-3">
+                {project.tags.map((tag: any) => (
+                  <span
+                    key={tag.id}
+                    className="px-5 py-2.5 rounded-full text-sm font-semibold text-background transition-all duration-300 hover:scale-105 hover:shadow-lg cursor-pointer"
+                    style={{ backgroundColor: accentColor }}
+                  >
+                    {tag.name}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </AnimatedSection>
+        )}
+
         <Separator className="my-16" />
 
         {/* Related Projects */}

@@ -1,0 +1,190 @@
+{
+  "query": "SELECT \n  title,\n  discipline,\n  CASE \n    WHEN seoKeywords IS NULL THEN 0\n    ELSE LENGTH(seoKeywords) - LENGTH(REPLACE(seoKeywords, ',', '')) + 1 \n  END as keyword_count,\n  CASE \n    WHEN excerpt IS NULL THEN 0\n    ELSE LENGTH(excerpt)\n  END as desc_length\nFROM projects \nWHERE status = 'published'\nAND (\n  (seoKeywords IS NOT NULL AND LENGTH(seoKeywords) - LENGTH(REPLACE(seoKeywords, ',', '')) + 1 > 8)\n  OR (excerpt IS NOT NULL AND (LENGTH(excerpt) < 50 OR LENGTH(excerpt) > 160))\n  OR excerpt IS NULL\n  OR seoKeywords IS NULL\n)\nORDER BY discipline, title\nLIMIT 30;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT \n  title,\n  discipline,\n  CASE \n    WHEN seoKeywords IS NULL THEN 0\n    ELSE LENGTH(seoKeywords) - LENGTH(REPLACE(seoKeywords, ',', '')) + 1 \n  END as keyword_count,\n  CASE \n    WHEN excerpt IS NULL THEN 0\n    ELSE LENGTH(excerpt)\n  END as desc_length\nFROM projects \nWHERE status = 'published'\nAND (\n  (seoKeywords IS NOT NULL AND LENGTH(seoKeywords) - LENGTH(REPLACE(seoKeywords, ',', '')) + 1 > 8)\n  OR (excerpt IS NOT NULL AND (LENGTH(excerpt) < 50 OR LENGTH(excerpt) > 160))\n  OR excerpt IS NULL\n  OR seoKeywords IS NULL\n)\nORDER BY discipline, title\nLIMIT 30;",
+  "rows": [
+    {
+      "title": "¡LOTERIA: GAME ON!",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "379"
+    },
+    {
+      "title": "A Funny Thing Happened on the Way to the Forum",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "66"
+    },
+    {
+      "title": "All My Sons",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "152"
+    },
+    {
+      "title": "All's Well That Ends Well",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "156"
+    },
+    {
+      "title": "American Idiot",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "159"
+    },
+    {
+      "title": "An Inspector Calls",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "165"
+    },
+    {
+      "title": "Angel Street",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "161"
+    },
+    {
+      "title": "Barefoot in the Park",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "90"
+    },
+    {
+      "title": "Bell, Book, and Candle",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "396"
+    },
+    {
+      "title": "Boeing, Boeing",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "112"
+    },
+    {
+      "title": "Company",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "144"
+    },
+    {
+      "title": "Freaky Friday",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "72"
+    },
+    {
+      "title": "Guys on Ice",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "84"
+    },
+    {
+      "title": "Head Over Heels",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "157"
+    },
+    {
+      "title": "Million Dollar Quartet",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "170"
+    },
+    {
+      "title": "Much Ado About Nothing",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "110"
+    },
+    {
+      "title": "Parliament Square",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "147"
+    },
+    {
+      "title": "Romero",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "98"
+    },
+    {
+      "title": "The Glass Menagerie",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "321"
+    },
+    {
+      "title": "The Merry Wives of Windsor",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "63"
+    },
+    {
+      "title": "The Pajama Game",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "151"
+    },
+    {
+      "title": "The Penelopiad",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "148"
+    },
+    {
+      "title": "Tomás and the Library Lady",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "152"
+    },
+    {
+      "title": "Urinetown",
+      "discipline": "scenic_design",
+      "keyword_count": "0",
+      "desc_length": "163"
+    },
+    {
+      "title": "First Bank Lollipop Pop Up",
+      "discipline": "experiential_design",
+      "keyword_count": "0",
+      "desc_length": "2058"
+    },
+    {
+      "title": "Lysistrata",
+      "discipline": "experiential_design",
+      "keyword_count": "0",
+      "desc_length": "145"
+    },
+    {
+      "title": "New Swan Venue File",
+      "discipline": "experiential_design",
+      "keyword_count": "8",
+      "desc_length": "198"
+    },
+    {
+      "title": "Park & Shop",
+      "discipline": "experiential_design",
+      "keyword_count": "0",
+      "desc_length": "159"
+    },
+    {
+      "title": "Rab Bothy Activation",
+      "discipline": "experiential_design",
+      "keyword_count": "0",
+      "desc_length": "12"
+    },
+    {
+      "title": "Red Bull Jukebox",
+      "discipline": "experiential_design",
+      "keyword_count": "0",
+      "desc_length": "243"
+    }
+  ],
+  "messages": [],
+  "stdout": "title\tdiscipline\tkeyword_count\tdesc_length\n¡LOTERIA: GAME ON!\tscenic_design\t0\t379\nA Funny Thing Happened on the Way to the Forum\tscenic_design\t0\t66\nAll My Sons\tscenic_design\t0\t152\nAll's Well That Ends Well\tscenic_design\t0\t156\nAmerican Idiot\tscenic_design\t0\t159\nAn Inspector Calls\tscenic_design\t0\t165\nAngel Street\tscenic_design\t0\t161\nBarefoot in the Park\tscenic_design\t0\t90\nBell, Book, and Candle\tscenic_design\t0\t396\nBoeing, Boeing\tscenic_design\t0\t112\nCompany\tscenic_design\t0\t144\nFreaky Friday\tscenic_design\t0\t72\nGuys on Ice\tscenic_design\t0\t84\nHead Over Heels\tscenic_design\t0\t157\nMillion Dollar Quartet\tscenic_design\t0\t170\nMuch Ado About Nothing\tscenic_design\t0\t110\nParliament Square\tscenic_design\t0\t147\nRomero\tscenic_design\t0\t98\nThe Glass Menagerie\tscenic_design\t0\t321\nThe Merry Wives of Windsor\tscenic_design\t0\t63\nThe Pajama Game\tscenic_design\t0\t151\nThe Penelopiad\tscenic_design\t0\t148\nTomás and the Library Lady\tscenic_design\t0\t152\nUrinetown\tscenic_design\t0\t163\nFirst Bank Lollipop Pop Up\texperiential_design\t0\t2058\nLysistrata\texperiential_design\t0\t145\nNew Swan Venue File\texperiential_design\t8\t198\nPark & Shop\texperiential_design\t0\t159\nRab Bothy Activation\texperiential_design\t0\t12\nRed Bull Jukebox\texperiential_design\t0\t243\n",
+  "stderr": "",
+  "execution_time_ms": 359
+}

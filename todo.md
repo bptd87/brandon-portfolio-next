@@ -1793,3 +1793,25 @@
 - [x] Shorten meta description to 158 characters
 - [x] Update homepage SEO in index.html (meta tags, Open Graph, Twitter cards)
 - [x] Verify SEO improvements
+
+## Comprehensive SEO Audit & Fix (User Requested - Feb 9, 2026)
+- [x] Search for any Broadway references across all pages (user is NOT a Broadway designer)
+- [x] Identify all page types that need SEO audit
+- [x] Audit all projects - found 30/37 with SEO issues
+- [x] Add SEO keywords and display tags to 4 sample scenic design projects
+- [x] Update project detail page to show display tags at bottom
+- [x] Redesign tags section (user requested):
+  - Make tags fully rounded (pill shape)
+  - Match page accent color (changes per project)
+  - Give tags own section with "Tags" heading
+  - Prepare for future filtering/sorting functionality
+- [x] Add SEO keywords and tags to all remaining scenic design projects (20 projects completed)
+- [x] Test redesigned tag display on multiple scenic design project pages
+- [x] Continue with other disciplines (Experiential, Rendering, Models)
+  - [x] Add SEO keywords and tags to 8 experiential projects
+  - [x] Verify rendering projects already have SEO (4 projects)
+  - [x] Add SEO keywords and tags to 1 scenic models project
+  - [x] Test tag display on experiential project page
+- [ ] Audit article pages for SEO issues
+- [ ] Audit news pages for SEO issues
+- [ ] Audit static pages (About, Resume, Contact, Teaching, etc.)

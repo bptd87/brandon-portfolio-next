@@ -1,0 +1,9 @@
+{
+  "query": "\n-- Red Bull Jukebox (2024) - Large-scale live event with CNC fabrication\nUPDATE projects \nSET seoKeywords = 'live event design, Red Bull, experiential design, Lumenati, CNC fabrication, LED integration'\nWHERE title = 'Red Bull Jukebox';\n\n-- Add display tags\nINSERT IGNORE INTO tags (name, slug) VALUES \n  ('Live Event', 'live-event'),\n  ('CNC Fabrication', 'cnc-fabrication'),\n  ('LED Integration', 'led-integration'),\n  ('2024', '2024');\n\nINSERT INTO projectTags (projectId, tagId)\nSELECT p.id, t.id\nFROM projects p, tags t\nWHERE p.title = 'Red Bull Jukebox'\n  AND t.slug IN ('live-event', 'cnc-fabrication', 'led-integration', 'lumenati', '2024')\n  AND NOT EXISTS (\n    SELECT 1 FROM projectTags pt \n    WHERE pt.projectId = p.id AND pt.tagId = t.id\n  );\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute \n-- Red Bull Jukebox (2024) - Large-scale live event with CNC fabrication\nUPDATE projects \nSET seoKeywords = 'live event design, Red Bull, experiential design, Lumenati, CNC fabrication, LED integration'\nWHERE title = 'Red Bull Jukebox';\n\n-- Add display tags\nINSERT IGNORE INTO tags (name, slug) VALUES \n  ('Live Event', 'live-event'),\n  ('CNC Fabrication', 'cnc-fabrication'),\n  ('LED Integration', 'led-integration'),\n  ('2024', '2024');\n\nINSERT INTO projectTags (projectId, tagId)\nSELECT p.id, t.id\nFROM projects p, tags t\nWHERE p.title = 'Red Bull Jukebox'\n  AND t.slug IN ('live-event', 'cnc-fabrication', 'led-integration', 'lumenati', '2024')\n  AND NOT EXISTS (\n    SELECT 1 FROM projectTags pt \n    WHERE pt.projectId = p.id AND pt.tagId = t.id\n  );\n",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 470
+}

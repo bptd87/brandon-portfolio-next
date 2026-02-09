@@ -1,0 +1,101 @@
+{
+  "query": "\nSELECT discipline, title, year, \n       CASE WHEN seoKeywords IS NOT NULL THEN '✓' ELSE '✗' END as has_keywords,\n       CASE WHEN EXISTS (SELECT 1 FROM projectTags WHERE projectTags.projectId = projects.id) THEN '✓' ELSE '✗' END as has_tags\nFROM projects \nWHERE discipline IN ('experiential_design', 'rendering', 'scenic_models')\nORDER BY discipline, year DESC, title ASC;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute \nSELECT discipline, title, year, \n       CASE WHEN seoKeywords IS NOT NULL THEN '✓' ELSE '✗' END as has_keywords,\n       CASE WHEN EXISTS (SELECT 1 FROM projectTags WHERE projectTags.projectId = projects.id) THEN '✓' ELSE '✗' END as has_tags\nFROM projects \nWHERE discipline IN ('experiential_design', 'rendering', 'scenic_models')\nORDER BY discipline, year DESC, title ASC;\n",
+  "rows": [
+    {
+      "discipline": "experiential_design",
+      "title": "First Bank Lollipop Pop Up",
+      "year": "2025",
+      "has_keywords": "✗",
+      "has_tags": "✗"
+    },
+    {
+      "discipline": "experiential_design",
+      "title": "Rab Bothy Activation",
+      "year": "2025",
+      "has_keywords": "✗",
+      "has_tags": "✗"
+    },
+    {
+      "discipline": "experiential_design",
+      "title": "Red Bull Jukebox",
+      "year": "2024",
+      "has_keywords": "✗",
+      "has_tags": "✗"
+    },
+    {
+      "discipline": "experiential_design",
+      "title": "Lysistrata",
+      "year": "2021",
+      "has_keywords": "✓",
+      "has_tags": "✓"
+    },
+    {
+      "discipline": "experiential_design",
+      "title": "Park & Shop",
+      "year": "2021",
+      "has_keywords": "✓",
+      "has_tags": "✓"
+    },
+    {
+      "discipline": "experiential_design",
+      "title": "New Swan Venue File",
+      "year": "2020",
+      "has_keywords": "✓",
+      "has_tags": "✗"
+    },
+    {
+      "discipline": "experiential_design",
+      "title": "Southside Bethel Baptist Church",
+      "year": "2020",
+      "has_keywords": "✓",
+      "has_tags": "✓"
+    },
+    {
+      "discipline": "experiential_design",
+      "title": "Red Line Café",
+      "year": "2019",
+      "has_keywords": "✗",
+      "has_tags": "✗"
+    },
+    {
+      "discipline": "rendering",
+      "title": "The Northwind Mare Tavern",
+      "year": "2026",
+      "has_keywords": "✓",
+      "has_tags": "✗"
+    },
+    {
+      "discipline": "rendering",
+      "title": "Ashes of the Underworld",
+      "year": "2021",
+      "has_keywords": "✓",
+      "has_tags": "✗"
+    },
+    {
+      "discipline": "rendering",
+      "title": "Isolation",
+      "year": "2020",
+      "has_keywords": "✓",
+      "has_tags": "✗"
+    },
+    {
+      "discipline": "rendering",
+      "title": "Angel Food Cake",
+      "year": "2017",
+      "has_keywords": "✓",
+      "has_tags": "✗"
+    },
+    {
+      "discipline": "scenic_models",
+      "title": "Scenic Models",
+      "year": "2024",
+      "has_keywords": "✗",
+      "has_tags": "✗"
+    }
+  ],
+  "messages": [],
+  "stdout": "discipline\ttitle\tyear\thas_keywords\thas_tags\nexperiential_design\tFirst Bank Lollipop Pop Up\t2025\t✗\t✗\nexperiential_design\tRab Bothy Activation\t2025\t✗\t✗\nexperiential_design\tRed Bull Jukebox\t2024\t✗\t✗\nexperiential_design\tLysistrata\t2021\t✓\t✓\nexperiential_design\tPark & Shop\t2021\t✓\t✓\nexperiential_design\tNew Swan Venue File\t2020\t✓\t✗\nexperiential_design\tSouthside Bethel Baptist Church\t2020\t✓\t✓\nexperiential_design\tRed Line Café\t2019\t✗\t✗\nrendering\tThe Northwind Mare Tavern\t2026\t✓\t✗\nrendering\tAshes of the Underworld\t2021\t✓\t✗\nrendering\tIsolation\t2020\t✓\t✗\nrendering\tAngel Food Cake\t2017\t✓\t✗\nscenic_models\tScenic Models\t2024\t✗\t✗\n",
+  "stderr": "",
+  "execution_time_ms": 348
+}

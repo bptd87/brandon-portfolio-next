@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO tags (name, slug) VALUES\n('Shakespeare', 'shakespeare'),\n('Operatic Design', 'operatic-design'),\n('Curtain Architecture', 'curtain-architecture'),\n('Theatre Festival', 'theatre-festival'),\n('1950s', '1950s'),\n('Mid-Century Modern', 'mid-century-modern'),\n('Realistic Interior', 'realistic-interior'),\n('Summer Stock', 'summer-stock'),\n('Recording Studio', 'recording-studio'),\n('Rock and Roll', 'rock-and-roll'),\n('Regional Theatre', 'regional-theatre'),\n('Co-Design', 'co-design'),\n('Wild West', 'wild-west'),\n('Spaghetti Western', 'spaghetti-western'),\n('Saloon Design', 'saloon-design'),\n('2025', '2025'),\n('2024', '2024'),\n('2023', '2023')\nON DUPLICATE KEY UPDATE name=VALUES(name);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute INSERT INTO tags (name, slug) VALUES\n('Shakespeare', 'shakespeare'),\n('Operatic Design', 'operatic-design'),\n('Curtain Architecture', 'curtain-architecture'),\n('Theatre Festival', 'theatre-festival'),\n('1950s', '1950s'),\n('Mid-Century Modern', 'mid-century-modern'),\n('Realistic Interior', 'realistic-interior'),\n('Summer Stock', 'summer-stock'),\n('Recording Studio', 'recording-studio'),\n('Rock and Roll', 'rock-and-roll'),\n('Regional Theatre', 'regional-theatre'),\n('Co-Design', 'co-design'),\n('Wild West', 'wild-west'),\n('Spaghetti Western', 'spaghetti-western'),\n('Saloon Design', 'saloon-design'),\n('2025', '2025'),\n('2024', '2024'),\n('2023', '2023')\nON DUPLICATE KEY UPDATE name=VALUES(name);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 357
+}

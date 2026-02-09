@@ -1,0 +1,9 @@
+{
+  "query": "\n-- Rab Bothy Activation (2025) - Outdoor brand activation for Rab outdoor gear\nUPDATE projects \nSET seoKeywords = 'outdoor brand activation, Rab gear, experiential marketing, Lumenati, immersive installation'\nWHERE title = 'Rab Bothy Activation';\n\n-- Add display tags (using INSERT IGNORE for MySQL compatibility)\nINSERT IGNORE INTO tags (name, slug) VALUES \n  ('Outdoor Activation', 'outdoor-activation'),\n  ('Brand Experience', 'brand-experience'),\n  ('Lumenati', 'lumenati');\n\nINSERT INTO projectTags (projectId, tagId)\nSELECT p.id, t.id\nFROM projects p, tags t\nWHERE p.title = 'Rab Bothy Activation'\n  AND t.slug IN ('outdoor-activation', 'brand-experience', 'lumenati', '2025')\n  AND NOT EXISTS (\n    SELECT 1 FROM projectTags pt \n    WHERE pt.projectId = p.id AND pt.tagId = t.id\n  );\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute \n-- Rab Bothy Activation (2025) - Outdoor brand activation for Rab outdoor gear\nUPDATE projects \nSET seoKeywords = 'outdoor brand activation, Rab gear, experiential marketing, Lumenati, immersive installation'\nWHERE title = 'Rab Bothy Activation';\n\n-- Add display tags (using INSERT IGNORE for MySQL compatibility)\nINSERT IGNORE INTO tags (name, slug) VALUES \n  ('Outdoor Activation', 'outdoor-activation'),\n  ('Brand Experience', 'brand-experience'),\n  ('Lumenati', 'lumenati');\n\nINSERT INTO projectTags (projectId, tagId)\nSELECT p.id, t.id\nFROM projects p, tags t\nWHERE p.title = 'Rab Bothy Activation'\n  AND t.slug IN ('outdoor-activation', 'brand-experience', 'lumenati', '2025')\n  AND NOT EXISTS (\n    SELECT 1 FROM projectTags pt \n    WHERE pt.projectId = p.id AND pt.tagId = t.id\n  );\n",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 456
+}

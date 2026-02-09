@@ -1,0 +1,114 @@
+{
+  "query": "\nSELECT id, discipline, title, year, seoKeywords,\n       (SELECT COUNT(*) FROM projectTags WHERE projectTags.projectId = projects.id) as tag_count\nFROM projects \nWHERE discipline IN ('experiential_design', 'rendering', 'scenic_models')\nORDER BY \n  CASE discipline\n    WHEN 'experiential_design' THEN 1\n    WHEN 'rendering' THEN 2\n    WHEN 'scenic_models' THEN 3\n  END,\n  year DESC, title ASC;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute \nSELECT id, discipline, title, year, seoKeywords,\n       (SELECT COUNT(*) FROM projectTags WHERE projectTags.projectId = projects.id) as tag_count\nFROM projects \nWHERE discipline IN ('experiential_design', 'rendering', 'scenic_models')\nORDER BY \n  CASE discipline\n    WHEN 'experiential_design' THEN 1\n    WHEN 'rendering' THEN 2\n    WHEN 'scenic_models' THEN 3\n  END,\n  year DESC, title ASC;\n",
+  "rows": [
+    {
+      "id": "90011",
+      "discipline": "experiential_design",
+      "title": "First Bank Lollipop Pop Up",
+      "year": "2025",
+      "seoKeywords": "NULL",
+      "tag_count": "0"
+    },
+    {
+      "id": "90008",
+      "discipline": "experiential_design",
+      "title": "Rab Bothy Activation",
+      "year": "2025",
+      "seoKeywords": "NULL",
+      "tag_count": "0"
+    },
+    {
+      "id": "90007",
+      "discipline": "experiential_design",
+      "title": "Red Bull Jukebox",
+      "year": "2024",
+      "seoKeywords": "NULL",
+      "tag_count": "0"
+    },
+    {
+      "id": "90055",
+      "discipline": "experiential_design",
+      "title": "Lysistrata",
+      "year": "2021",
+      "seoKeywords": "scenic design, Lysistrata, Greek comedy, Aristophanes, New Swan Theatre, minimalist",
+      "tag_count": "6"
+    },
+    {
+      "id": "90057",
+      "discipline": "experiential_design",
+      "title": "Park & Shop",
+      "year": "2021",
+      "seoKeywords": "scenic design, Park and Shop, musical theatre, New Swan Theatre, retail comedy",
+      "tag_count": "3"
+    },
+    {
+      "id": "90012",
+      "discipline": "experiential_design",
+      "title": "New Swan Venue File",
+      "year": "2020",
+      "seoKeywords": "venue file, New Swan Theatre, Vectorworks, technical documentation, outdoor theatre, architectural drawing, performance space, CAD rendering",
+      "tag_count": "0"
+    },
+    {
+      "id": "90035",
+      "discipline": "experiential_design",
+      "title": "Southside Bethel Baptist Church",
+      "year": "2020",
+      "seoKeywords": "scenic design, Southside Bethel Baptist Church, realistic interior, church, Okoboji Summer Theatre",
+      "tag_count": "4"
+    },
+    {
+      "id": "90037",
+      "discipline": "experiential_design",
+      "title": "Red Line Café",
+      "year": "2019",
+      "seoKeywords": "NULL",
+      "tag_count": "0"
+    },
+    {
+      "id": "120001",
+      "discipline": "rendering",
+      "title": "The Northwind Mare Tavern",
+      "year": "2026",
+      "seoKeywords": "fantasy, theme park, Tamriel, Emberreach, tavern, dining venue, experiential design, fantasy architecture, Vectorworks, Twinmotion, Photoshop, composite visualization",
+      "tag_count": "0"
+    },
+    {
+      "id": "90013",
+      "discipline": "rendering",
+      "title": "Ashes of the Underworld",
+      "year": "2021",
+      "seoKeywords": "concept rendering, Penelopiad, Greek mythology, theatrical design, pandemic art, liminal space, architectural visualization, Vectorworks, Twinmotion",
+      "tag_count": "0"
+    },
+    {
+      "id": "90015",
+      "discipline": "rendering",
+      "title": "Isolation",
+      "year": "2020",
+      "seoKeywords": "concept rendering, isolation theme, architectural visualization, contemplative space, interior design, theatrical rendering, pandemic art",
+      "tag_count": "0"
+    },
+    {
+      "id": "90014",
+      "discipline": "rendering",
+      "title": "Angel Food Cake",
+      "year": "2017",
+      "seoKeywords": "theatrical rendering, mobile home set design, Angel Food Cake, Western Summer Theatre, domestic interior, Vectorworks, Twinmotion, scenic visualization",
+      "tag_count": "0"
+    },
+    {
+      "id": "90047",
+      "discipline": "scenic_models",
+      "title": "Scenic Models",
+      "year": "2024",
+      "seoKeywords": "NULL",
+      "tag_count": "0"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tdiscipline\ttitle\tyear\tseoKeywords\ttag_count\n90011\texperiential_design\tFirst Bank Lollipop Pop Up\t2025\tNULL\t0\n90008\texperiential_design\tRab Bothy Activation\t2025\tNULL\t0\n90007\texperiential_design\tRed Bull Jukebox\t2024\tNULL\t0\n90055\texperiential_design\tLysistrata\t2021\tscenic design, Lysistrata, Greek comedy, Aristophanes, New Swan Theatre, minimalist\t6\n90057\texperiential_design\tPark & Shop\t2021\tscenic design, Park and Shop, musical theatre, New Swan Theatre, retail comedy\t3\n90012\texperiential_design\tNew Swan Venue File\t2020\tvenue file, New Swan Theatre, Vectorworks, technical documentation, outdoor theatre, architectural drawing, performance space, CAD rendering\t0\n90035\texperiential_design\tSouthside Bethel Baptist Church\t2020\tscenic design, Southside Bethel Baptist Church, realistic interior, church, Okoboji Summer Theatre\t4\n90037\texperiential_design\tRed Line Café\t2019\tNULL\t0\n120001\trendering\tThe Northwind Mare Tavern\t2026\tfantasy, theme park, Tamriel, Emberreach, tavern, dining venue, experiential design, fantasy architecture, Vectorworks, Twinmotion, Photoshop, composite visualization\t0\n90013\trendering\tAshes of the Underworld\t2021\tconcept rendering, Penelopiad, Greek mythology, theatrical design, pandemic art, liminal space, architectural visualization, Vectorworks, Twinmotion\t0\n90015\trendering\tIsolation\t2020\tconcept rendering, isolation theme, architectural visualization, contemplative space, interior design, theatrical rendering, pandemic art\t0\n90014\trendering\tAngel Food Cake\t2017\ttheatrical rendering, mobile home set design, Angel Food Cake, Western Summer Theatre, domestic interior, Vectorworks, Twinmotion, scenic visualization\t0\n90047\tscenic_models\tScenic Models\t2024\tNULL\t0\n",
+  "stderr": "",
+  "execution_time_ms": 343
+}

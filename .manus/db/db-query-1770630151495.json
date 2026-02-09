@@ -1,0 +1,150 @@
+{
+  "query": "\nSELECT id, slug, title, client, year \nFROM projects \nWHERE discipline = 'scenic_design' \nAND status = 'published'\nAND (seoKeywords IS NULL OR seoKeywords = '')\nORDER BY year DESC, publishedAt DESC;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute \nSELECT id, slug, title, client, year \nFROM projects \nWHERE discipline = 'scenic_design' \nAND status = 'published'\nAND (seoKeywords IS NULL OR seoKeywords = '')\nORDER BY year DESC, publishedAt DESC;\n",
+  "rows": [
+    {
+      "id": "90010",
+      "slug": "the-glass-menagerie",
+      "title": "The Glass Menagerie",
+      "client": "Maples Repertory Theatre",
+      "year": "2025"
+    },
+    {
+      "id": "90077",
+      "slug": "romero",
+      "title": "Romero",
+      "client": "University of Missouri",
+      "year": "2025"
+    },
+    {
+      "id": "90045",
+      "slug": "guys-on-ice",
+      "title": "Guys on Ice",
+      "client": "The Great American Melodrama",
+      "year": "2025"
+    },
+    {
+      "id": "90041",
+      "slug": "urinetown",
+      "title": "Urinetown",
+      "client": "University of Missouri",
+      "year": "2024"
+    },
+    {
+      "id": "90042",
+      "slug": "barefoot-in-the-park",
+      "title": "Barefoot in the Park",
+      "client": "Okoboji Summer Theatre",
+      "year": "2024"
+    },
+    {
+      "id": "90056",
+      "slug": "freaky-friday",
+      "title": "Freaky Friday",
+      "client": "Okoboji Summer Theatre",
+      "year": "2024"
+    },
+    {
+      "id": "90044",
+      "slug": "head-over-heels",
+      "title": "Head Over Heels",
+      "client": "Theatre SilCo",
+      "year": "2023"
+    },
+    {
+      "id": "90009",
+      "slug": "loteria-game-on",
+      "title": "¡LOTERIA: GAME ON!",
+      "client": "Theatre SilCo",
+      "year": "2023"
+    },
+    {
+      "id": "90054",
+      "slug": "boeing-boeing",
+      "title": "Boeing, Boeing",
+      "client": "Stephens College",
+      "year": "2023"
+    },
+    {
+      "id": "90053",
+      "slug": "the-merry-wives-of-windsor",
+      "title": "The Merry Wives of Windsor",
+      "client": "Stephens College",
+      "year": "2022"
+    },
+    {
+      "id": "90036",
+      "slug": "an-inspector-calls",
+      "title": "An Inspector Calls",
+      "client": "Okoboji Summer Theatre",
+      "year": "2022"
+    },
+    {
+      "id": "90049",
+      "slug": "a-funny-thing-happened",
+      "title": "A Funny Thing Happened on the Way to the Forum",
+      "client": "Lake Dillon Theatre",
+      "year": "2022"
+    },
+    {
+      "id": "90039",
+      "slug": "tomas-and-the-library-lady",
+      "title": "Tomás and the Library Lady",
+      "client": "Lake Dillon Theatre",
+      "year": "2022"
+    },
+    {
+      "id": "90051",
+      "slug": "the-penelopiad",
+      "title": "The Penelopiad",
+      "client": "University of California Irvine",
+      "year": "2020"
+    },
+    {
+      "id": "90019",
+      "slug": "company",
+      "title": "Company",
+      "client": "University of California Irvine",
+      "year": "2019"
+    },
+    {
+      "id": "90048",
+      "slug": "the-pajama-game",
+      "title": "The Pajama Game",
+      "client": "University of California Irvine",
+      "year": "2019"
+    },
+    {
+      "id": "90018",
+      "slug": "parliament-square",
+      "title": "Parliament Square",
+      "client": "University of California Irvine",
+      "year": "2019"
+    },
+    {
+      "id": "90038",
+      "slug": "american-idiot",
+      "title": "American Idiot",
+      "client": "University of California Irvine",
+      "year": "2018"
+    },
+    {
+      "id": "90043",
+      "slug": "angel-street",
+      "title": "Angel Street",
+      "client": "Okoboji Summer Theatre",
+      "year": "2013"
+    },
+    {
+      "id": "90017",
+      "slug": "all-my-sons",
+      "title": "All My Sons",
+      "client": "Stephens College",
+      "year": "2010"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tslug\ttitle\tclient\tyear\n90010\tthe-glass-menagerie\tThe Glass Menagerie\tMaples Repertory Theatre\t2025\n90077\tromero\tRomero\tUniversity of Missouri\t2025\n90045\tguys-on-ice\tGuys on Ice\tThe Great American Melodrama\t2025\n90041\turinetown\tUrinetown\tUniversity of Missouri\t2024\n90042\tbarefoot-in-the-park\tBarefoot in the Park\tOkoboji Summer Theatre\t2024\n90056\tfreaky-friday\tFreaky Friday\tOkoboji Summer Theatre\t2024\n90044\thead-over-heels\tHead Over Heels\tTheatre SilCo\t2023\n90009\tloteria-game-on\t¡LOTERIA: GAME ON!\tTheatre SilCo\t2023\n90054\tboeing-boeing\tBoeing, Boeing\tStephens College\t2023\n90053\tthe-merry-wives-of-windsor\tThe Merry Wives of Windsor\tStephens College\t2022\n90036\tan-inspector-calls\tAn Inspector Calls\tOkoboji Summer Theatre\t2022\n90049\ta-funny-thing-happened\tA Funny Thing Happened on the Way to the Forum\tLake Dillon Theatre\t2022\n90039\ttomas-and-the-library-lady\tTomás and the Library Lady\tLake Dillon Theatre\t2022\n90051\tthe-penelopiad\tThe Penelopiad\tUniversity of California Irvine\t2020\n90019\tcompany\tCompany\tUniversity of California Irvine\t2019\n90048\tthe-pajama-game\tThe Pajama Game\tUniversity of California Irvine\t2019\n90018\tparliament-square\tParliament Square\tUniversity of California Irvine\t2019\n90038\tamerican-idiot\tAmerican Idiot\tUniversity of California Irvine\t2018\n90043\tangel-street\tAngel Street\tOkoboji Summer Theatre\t2013\n90017\tall-my-sons\tAll My Sons\tStephens College\t2010\n",
+  "stderr": "",
+  "execution_time_ms": 363
+}
