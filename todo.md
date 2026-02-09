@@ -2002,4 +2002,5 @@
 - [x] Find colored Red Bull logo for light mode
 - [x] Find colored Lumenati logo for light mode (original with colors)
 - [x] Implement theme-aware logo switching (white for dark mode, colored for light mode)
-- [ ] Test in both light and dark themes
+- [x] Use colored Red Bull for both themes (works on both backgrounds)
+- [x] Reduce logo sizes from h-16/20 to h-10/12 for better proportion

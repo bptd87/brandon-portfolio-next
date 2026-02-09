@@ -254,19 +254,19 @@ export default function ProjectDetail() {
             {/* CLIENT LOGOS - Theme-Aware */}
             {((metadata.redBullLogoDark && metadata.redBullLogoLight) || (metadata.lumenatiLogoDark && metadata.lumenatiLogoLight)) && (
               <div className="mb-6">
-                <div className="flex items-center gap-8 flex-wrap mb-4">
+                <div className="flex items-center gap-6 flex-wrap mb-4">
                   {(metadata.redBullLogoDark && metadata.redBullLogoLight) && (
                     <img 
-                      src={theme === 'dark' ? metadata.redBullLogoDark : metadata.redBullLogoLight} 
+                      src={metadata.redBullLogoLight} 
                       alt="Red Bull" 
-                      className="h-16 md:h-20 w-auto"
+                      className="h-10 md:h-12 w-auto"
                     />
                   )}
                   {(metadata.lumenatiLogoDark && metadata.lumenatiLogoLight) && (
                     <img 
                       src={theme === 'dark' ? metadata.lumenatiLogoDark : metadata.lumenatiLogoLight} 
                       alt="Lumenati" 
-                      className="h-16 md:h-20 w-auto"
+                      className="h-10 md:h-12 w-auto"
                     />
                   )}
                 </div>
