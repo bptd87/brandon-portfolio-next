@@ -85,7 +85,20 @@ export default function ProjectDetail() {
   const images = project.images || [];
   const productionPhotos = images.filter(img => img.imageType === 'production');
   const renderings = images.filter(img => img.imageType === 'rendering');
+  const technicalDrawings = images.filter(img => img.imageType === 'technical_drawing');
   const videos = images.filter(img => img.imageType === 'video');
+
+  // Parse metadata for additional project info
+  let metadata: any = {};
+  try {
+    if (typeof project.metadata === 'string') {
+      metadata = JSON.parse(project.metadata);
+    } else if (project.metadata) {
+      metadata = project.metadata;
+    }
+  } catch (e) {
+    console.error('Failed to parse metadata:', e);
+  }
 
   // Parse creative team from JSON array
   let creativeTeamArray: Array<{name: string, role: string}> = [];
@@ -276,7 +289,42 @@ export default function ProjectDetail() {
                   <span>{project.year}</span>
                 </div>
               )}
+              {metadata.venue && (
+                <div className="flex items-center gap-2">
+                  <span>•</span>
+                  <span>{metadata.venue}</span>
+                </div>
+              )}
+              {metadata.venueCapacity && (
+                <div className="flex items-center gap-2">
+                  <span>•</span>
+                  <span>{metadata.venueCapacity} capacity</span>
+                </div>
+              )}
             </div>
+
+            {/* Brand Logos - Agency Style */}
+            {(metadata.lumenatiLogo || metadata.redBullLogo) && (
+              <div className="mb-8">
+                <div className="text-xs font-pixel text-foreground/60 mb-3 tracking-wider">IN COLLABORATION WITH</div>
+                <div className="flex items-center gap-8 flex-wrap">
+                  {metadata.lumenatiLogo && (
+                    <img 
+                      src={metadata.lumenatiLogo} 
+                      alt="Lumenati" 
+                      className="h-16 w-auto opacity-90 hover:opacity-100 transition-all hover:scale-105"
+                    />
+                  )}
+                  {metadata.redBullLogo && (
+                    <img 
+                      src={metadata.redBullLogo} 
+                      alt="Red Bull" 
+                      className="h-16 w-auto opacity-90 hover:opacity-100 transition-all hover:scale-105"
+                    />
+                  )}
+                </div>
+              </div>
+            )}
 
             <Link href="/projects">
               <Button 
@@ -381,6 +429,64 @@ export default function ProjectDetail() {
           </AnimatedSection>
         )}
 
+        {/* Technical Drawings */}
+        {technicalDrawings.length > 0 && (
+          <AnimatedSection>
+            <div>
+              <button
+                onClick={() => setRenderingsOpen(!renderingsOpen)}
+                className="flex items-center justify-between w-full mb-8 group"
+              >
+                <h2 className="text-4xl font-black tracking-tighter" style={{ color: accentColor }}>
+                  Technical Drawings
+                  <span className="ml-4 text-muted-foreground text-lg">({technicalDrawings.length})</span>
+                </h2>
+                {renderingsOpen ? (
+                  <ChevronUp className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
+                ) : (
+                  <ChevronDown className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
+                )}
+              </button>
+              
+              {renderingsOpen && (
+                <div className="space-y-8">
+                  {technicalDrawings.map((img, idx) => (
+                    <AnimatedSection key={img.id} delay={idx * 50}>
+                      <div 
+                        className="group relative overflow-hidden rounded-lg cursor-pointer"
+                        onClick={() => {
+                          setLightboxImages(technicalDrawings);
+                          setLightboxIndex(idx);
+                          setLightboxOpen(true);
+                        }}
+                      >
+                        <img
+                          src={img.imageUrl || ''}
+                          alt={img.altText || img.caption || project.title}
+                          className="w-full h-auto object-cover group-hover:scale-102 group-hover:brightness-110 transition-all duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        
+                        {img.caption && (
+                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/95 via-background/70 to-transparent p-6">
+                            <p className="text-sm text-foreground/90">{img.caption}</p>
+                          </div>
+                        )}
+                        
+                        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <div className="px-3 py-1.5 rounded-full bg-background/90 backdrop-blur-sm border border-border">
+                            <p className="text-xs font-semibold">Click to expand</p>
+                          </div>
+                        </div>
+                      </div>
+                    </AnimatedSection>
+                  ))}
+                </div>
+              )}
+            </div>
+          </AnimatedSection>
+        )}
+
         {/* Renderings */}
         {renderings.length > 0 && (
           <AnimatedSection>
@@ -435,6 +541,40 @@ export default function ProjectDetail() {
                   ))}
                 </div>
               )}
+            </div>
+          </AnimatedSection>
+        )}
+
+        {/* Project Video from Metadata */}
+        {metadata.videoUrl && (
+          <AnimatedSection>
+            <div>
+              <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: accentColor }}>
+                Event Footage
+              </h2>
+              <a 
+                href={metadata.videoUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block group"
+              >
+                <div className="relative rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl" style={{ borderColor: accentColor }}>
+                  <div className="relative w-full bg-muted" style={{ paddingBottom: '56.25%' }}>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-8 text-center">
+                      <div className="w-20 h-20 rounded-full flex items-center justify-center transition-transform group-hover:scale-110" style={{ backgroundColor: accentColor }}>
+                        <svg className="w-10 h-10 text-background" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z"/>
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="text-xl font-bold mb-2">Watch Event Footage</p>
+                        <p className="text-sm text-muted-foreground">Brothers Osborne perform at Red Bull Jukebox Nashville</p>
+                        <p className="text-xs text-muted-foreground mt-2">Opens on RedBull.com</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
             </div>
           </AnimatedSection>
         )}

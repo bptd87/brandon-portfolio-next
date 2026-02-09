@@ -117,7 +117,7 @@ export const projectImages = mysqlTable("projectImages", {
   imageUrl: text("imageUrl"),
   imageKey: text("imageKey"),
   videoUrl: text("videoUrl"),
-  imageType: mysqlEnum("imageType", ["production", "rendering", "video"]).default("production").notNull(),
+  imageType: mysqlEnum("imageType", ["production", "rendering", "technical_drawing", "video"]).default("production").notNull(),
   caption: text("caption"),
   altText: text("altText"),
   sortOrder: int("sortOrder").default(0).notNull(),

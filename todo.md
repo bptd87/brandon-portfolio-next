@@ -1912,3 +1912,36 @@
 ## Add Footer to Links Page
 - [x] Add "Powered by Manus" footer at bottom
 - [ ] Save checkpoint
+
+## Set Up Automatic Daily GitHub Backups
+- [x] Create scheduled task for daily backups (runs at 2:00 AM daily)
+- [x] Test backup schedule (configured successfully)
+
+## Enhance Red Bull Jukebox Experiential Design Project
+- [ ] Research Red Bull Jukebox event online
+- [ ] Review current project data in database
+- [ ] Gather additional images and media
+- [ ] Add Lumenati client logo
+- [ ] Enhance project description with event details
+- [ ] Add design process and creative approach
+- [ ] Update creative team credits
+- [ ] Test project page display
+- [ ] Save checkpoint
+
+## Red Bull Jukebox Project Enhancement
+- [ ] Add Lumenati logo to project page
+- [ ] Create structured credits section (Client: Red Bull, Agency: Lumenati, Team members)
+- [ ] Add video embed showing LED stage design
+- [ ] Update image captions to better describe CNC drafting work
+- [ ] Add venue capacity and project scale details
+- [ ] Improve project description with event context
+
+## Red Bull Jukebox Agency-Style Redesign
+- [x] Rewrite Design Notes in agency case study style (outcome-focused, confident tone)
+- [x] Make Lumenati logo much more prominent in hero section (larger, better positioned)
+- [x] Add Red Bull logo alongside Lumenati
+- [x] Restructure copy to lead with impact/outcomes, then process details
+- [x] Add project metrics/scale callouts (6,800 attendees, venue size, etc.)
+- [x] Change "Renderings" label to "Technical Drawings" or "CNC Drafting Plates"
+- [x] Remove duplicate production photo (Brothers Osborne image appears twice)
+- [x] Add more event photos to showcase completed installation
