@@ -2114,3 +2114,4 @@
 - [x] Show subcategory instead of discipline in project detail badge
 - [x] Update portfolio card images to use object-top for portrait orientation
 - [x] Change production photo grid aspect ratio from 4:3 to 3:2 landscape
+- [x] Redesign project detail hero section - remove back button, improve layout and typography

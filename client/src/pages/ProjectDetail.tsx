@@ -214,13 +214,14 @@ export default function ProjectDetail() {
           style={{ backgroundColor: accentColor }}
         />
 
-        {/* Project info overlay - bottom positioned */}
-        <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16 lg:p-24">
-          <div className="container max-w-5xl">
-            <div className="flex items-center gap-4 mb-6">
+        {/* Project info overlay - centered */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="container max-w-4xl text-center px-8">
+            {/* Subcategory badge */}
+            <div className="flex justify-center mb-6">
               <Badge 
                 variant="outline" 
-                className="text-sm tracking-wider font-semibold bg-background/80 backdrop-blur-sm px-4 py-2 border-2"
+                className="text-xs tracking-widest font-bold bg-background/90 backdrop-blur-md px-6 py-2.5 border-2 rounded-full"
                 style={{
                   borderColor: accentColor,
                   color: accentColor
@@ -228,41 +229,35 @@ export default function ProjectDetail() {
               >
                 {project.subcategory?.toUpperCase() || project.discipline?.replace('_', ' ').toUpperCase() || 'PROJECT'}
               </Badge>
-              {project.year && (
-                <span className="text-sm text-foreground/80 font-pixel">{project.year}</span>
-              )}
             </div>
             
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-6 leading-tight">
+            {/* Project title */}
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-8 leading-[0.9]">
               {project.title}
             </h1>
 
-            <div className="flex items-center gap-6 text-foreground/90 flex-wrap text-base mb-8">
+            {/* Metadata row with icons */}
+            <div className="flex items-center justify-center gap-8 text-foreground/90 flex-wrap text-lg mb-4">
               {project.client && (
-                <div className="flex items-center gap-2">
-                  <MapPin className="h-5 w-5" />
-                  <span>{project.client}</span>
+                <div className="flex items-center gap-2.5">
+                  <MapPin className="h-5 w-5" style={{ color: accentColor }} />
+                  <span className="font-medium">{project.client}</span>
                 </div>
               )}
               {project.location && (
-                <div className="flex items-center gap-2">
-                  <span>•</span>
-                  <span>{project.location}</span>
+                <div className="flex items-center gap-2.5">
+                  <span className="text-muted-foreground">•</span>
+                  <span className="font-medium">{project.location}</span>
                 </div>
               )}
-              {/* Year removed from metadata to avoid duplication - shown in badge area */}
+              {project.year && (
+                <div className="flex items-center gap-2.5">
+                  <span className="text-muted-foreground">•</span>
+                  <Calendar className="h-5 w-5" style={{ color: accentColor }} />
+                  <span className="font-medium">{project.year}</span>
+                </div>
+              )}
             </div>
-
-            <Link href="/projects">
-              <Button 
-                variant="outline" 
-                size="lg"
-                className="gap-2 font-semibold text-base px-8 py-6 border-2"
-              >
-                <ArrowLeft className="h-5 w-5" />
-                BACK TO PROJECTS
-              </Button>
-            </Link>
           </div>
         </div>
       </section>
