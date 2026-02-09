@@ -39,8 +39,11 @@ export default function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
   const [, setLocation] = useLocation();
   const { data: project, isLoading } = trpc.projects.getBySlug.useQuery({ slug: slug! });
-  // Fetch ALL projects for navigation
-  const { data: allProjects } = trpc.projects.list.useQuery({});
+  // Fetch projects in same discipline for navigation
+  const { data: allProjects } = trpc.projects.list.useQuery(
+    { discipline: project?.discipline },
+    { enabled: !!project?.discipline }
+  );
   
   // Fetch related projects (same discipline) for "More Projects" section
   const { data: allRelatedProjects } = trpc.projects.list.useQuery(
@@ -103,7 +106,7 @@ export default function ProjectDetail() {
   // Get related projects excluding current one
   const relatedProjectsFiltered = relatedProjects?.filter(p => p.id !== project.id).slice(0, 3) || [];
   
-  // Find prev/next projects from ALL projects (not just same discipline)
+  // Find prev/next projects from same discipline only
   const currentIndex = allProjects?.findIndex(p => p.id === project.id) ?? -1;
   const prevProject = currentIndex > 0 ? allProjects?.[currentIndex - 1] : null;
   const nextProject = currentIndex >= 0 && currentIndex < (allProjects?.length ?? 0) - 1 ? allProjects?.[currentIndex + 1] : null;

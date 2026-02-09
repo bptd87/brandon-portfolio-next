@@ -1691,3 +1691,8 @@
 - [x] Update missing company data in database (32 projects updated with client field)
 - [x] Fix project sorting to order by publishedAt timestamp, then year (most recent first)
 - [x] Verify correct chronological order on portfolio page (confirmed: 2025 → 2024 → 2023 → 2022 → 2020 → 2019 → 2018)
+
+## Generate Production List and Fix Navigation (User Requested - Feb 9, 2026)
+- [x] Query all projects and generate list for user to add month information (25 scenic design productions)
+- [x] Fix project detail next/prev navigation to stay within discipline groups (scenic_design, experiential_design, rendering, scenic_models)
+- [x] Test navigation between projects in same discipline (verified: The Glass Menagerie → Bell, Book, and Candle, both scenic_design)
