@@ -1560,3 +1560,9 @@
 - [x] Update Design History Timeline hero section to match Dimension Reference format
 - [x] Update container widths and spacing to match other Studio apps
 - [x] Test visual alignment with Dimension Reference
+
+## Design History Timeline Hero Image Update (User Reported - Feb 8, 2026)
+- [x] Search for or generate hero background image representing architectural history theme
+- [x] Upload new hero image to S3
+- [x] Update Design History Timeline hero section with new image URL
+- [x] Test hero image appearance and theme consistency

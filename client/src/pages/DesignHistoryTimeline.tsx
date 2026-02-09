@@ -459,7 +459,7 @@ export default function DesignHistoryTimeline() {
       {/* Compact Hero with Header Image */}
       <section className="relative h-[30vh] md:h-[35vh] overflow-hidden border-b border-border">
         <img 
-          src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/BpqvvdMEYcpzDwGz.webp"
+          src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/JWtmSLqTxNiBvvea.webp"
           alt="Design History Timeline - Architectural design through history" 
           className="absolute inset-0 w-full h-full object-cover"
         />
