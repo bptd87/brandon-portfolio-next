@@ -2103,3 +2103,5 @@
 - [x] Add hover effects to portfolio cards (1.05x scale + metadata reveal)
 - [x] Update hover effects to hide metadata (Alexander Dodge style)
 - [x] Remove colored borders from portfolio card hover effects
+- [x] Fix missing image on Glass Menagerie project page
+- [x] Update project detail pages to use 2-column grid for images

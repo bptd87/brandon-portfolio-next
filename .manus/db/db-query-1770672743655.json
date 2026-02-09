@@ -1,0 +1,101 @@
+{
+  "query": "SELECT pi.id, pi.imageUrl, pi.caption, pi.altText, pi.imageType FROM projectImages pi JOIN projects p ON pi.projectId = p.id WHERE p.title LIKE '%Glass Menagerie%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT pi.id, pi.imageUrl, pi.caption, pi.altText, pi.imageType FROM projectImages pi JOIN projects p ON pi.projectId = p.id WHERE p.title LIKE '%Glass Menagerie%';",
+  "rows": [
+    {
+      "id": "60052",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/9aefb5d6-2818-49b0-8645-2164ae79ae71-1768245589836.webp",
+      "caption": "NULL",
+      "altText": "The Glass Menagerie - Scenic design by Brandon PT Davis. Abstract memory play setting, evoking Tom Wingfield's recollection.",
+      "imageType": "rendering"
+    },
+    {
+      "id": "60053",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/562381719-1396571829138916-6060123560258753992-n-1768245613889.webp",
+      "caption": "NULL",
+      "altText": "The Glass Menagerie - Scenic design by Brandon PT Davis. Abstract, fragmented set reflecting memory, not a literal apartment.",
+      "imageType": "production"
+    },
+    {
+      "id": "60054",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/565123609-1396572019138897-1561331001594221644-n-1768245609632.webp",
+      "caption": "NULL",
+      "altText": "The Glass Menagerie - Scenic design by Brandon PT Davis. Dreamlike set, reflecting Tom's memory, with evocative lighting and symbolic elements.",
+      "imageType": "production"
+    },
+    {
+      "id": "60055",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/567522705-1396571785805587-5449246552254110173-n-1768245610302.webp",
+      "caption": "NULL",
+      "altText": "The Glass Menagerie - Scenic design by Brandon PT Davis. Evocative memory-play set, non-literal apartment, fragmented elements, and soft lighting create a nostalgic atmosphere.",
+      "imageType": "production"
+    },
+    {
+      "id": "60056",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/561344365-1396571679138931-4960802609866293750-n-1768245611345.webp",
+      "caption": "NULL",
+      "altText": "The Glass Menagerie - Scenic design by Brandon PT Davis. Memory play setting, non-literal apartment, reflecting Tom Wingfield's recollection.",
+      "imageType": "production"
+    },
+    {
+      "id": "60057",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/562171801-1396572192472213-8484337548098700423-n-1768245612022.webp",
+      "caption": "NULL",
+      "altText": "The Glass Menagerie - Scenic design by Brandon PT Davis. A fragmented set evokes memory, with soft lighting and a dreamlike atmosphere.",
+      "imageType": "production"
+    },
+    {
+      "id": "60058",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/562365626-1396572035805562-5595894779943318782-n-1768245612769.webp",
+      "caption": "NULL",
+      "altText": "The Glass Menagerie - Scenic design by Brandon PT Davis. Evocative set, shaped by memory, not a literal apartment. Fragmented elements suggest recollection.",
+      "imageType": "production"
+    },
+    {
+      "id": "60059",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/561369764-1396571842472248-3938955528591190381-n-1768245613342.webp",
+      "caption": "NULL",
+      "altText": "The Glass Menagerie - Scenic design by Brandon PT Davis. Memory play setting, not a literal apartment, shaped by recollection.",
+      "imageType": "production"
+    },
+    {
+      "id": "60060",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/565816238-1396571685805597-1872934656288507275-n-1768245614366.webp",
+      "caption": "NULL",
+      "altText": "The Glass Menagerie - Scenic design by Brandon PT Davis. A non-literal, memory-inspired set with fragmented elements and evocative lighting, reflecting Tom's recollection.",
+      "imageType": "production"
+    },
+    {
+      "id": "60061",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/561866608-1396571682472264-3649734399848466288-n-1768245615051.webp",
+      "caption": "NULL",
+      "altText": "The Glass Menagerie - Scenic design by Brandon PT Davis. Staged as a memory play, the set evokes Tom Wingfield's recollection rather than a literal apartment.",
+      "imageType": "production"
+    },
+    {
+      "id": "60062",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/561393440-1396571495805616-1299346261064466763-n-1768245615741.webp",
+      "caption": "NULL",
+      "altText": "The Glass Menagerie - Scenic design by Brandon PT Davis. A dreamlike, non-realistic set evokes Tom Wingfield's memory, not a literal apartment.",
+      "imageType": "production"
+    },
+    {
+      "id": "60063",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/566207909-1396572589138840-5137182735921240777-n-1768245608087.webp",
+      "caption": "NULL",
+      "altText": "The Glass Menagerie - Scenic design by Brandon PT Davis. Evocative set with fragmented walls, soft, dreamlike lighting, and sparse furniture, conveying a poignant memory.",
+      "imageType": "production"
+    },
+    {
+      "id": "60064",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/561341373-1396572259138873-1153848128221018463-n-1768245608582.webp",
+      "caption": "NULL",
+      "altText": "The Glass Menagerie - Scenic design by Brandon PT Davis. Evocative memory play set, non-literal apartment with fragmented elements, and soft, reflective lighting.",
+      "imageType": "production"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\timageUrl\tcaption\taltText\timageType\n60052\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/9aefb5d6-2818-49b0-8645-2164ae79ae71-1768245589836.webp\tNULL\tThe Glass Menagerie - Scenic design by Brandon PT Davis. Abstract memory play setting, evoking Tom Wingfield's recollection.\trendering\n60053\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/562381719-1396571829138916-6060123560258753992-n-1768245613889.webp\tNULL\tThe Glass Menagerie - Scenic design by Brandon PT Davis. Abstract, fragmented set reflecting memory, not a literal apartment.\tproduction\n60054\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/565123609-1396572019138897-1561331001594221644-n-1768245609632.webp\tNULL\tThe Glass Menagerie - Scenic design by Brandon PT Davis. Dreamlike set, reflecting Tom's memory, with evocative lighting and symbolic elements.\tproduction\n60055\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/567522705-1396571785805587-5449246552254110173-n-1768245610302.webp\tNULL\tThe Glass Menagerie - Scenic design by Brandon PT Davis. Evocative memory-play set, non-literal apartment, fragmented elements, and soft lighting create a nostalgic atmosphere.\tproduction\n60056\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/561344365-1396571679138931-4960802609866293750-n-1768245611345.webp\tNULL\tThe Glass Menagerie - Scenic design by Brandon PT Davis. Memory play setting, non-literal apartment, reflecting Tom Wingfield's recollection.\tproduction\n60057\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/562171801-1396572192472213-8484337548098700423-n-1768245612022.webp\tNULL\tThe Glass Menagerie - Scenic design by Brandon PT Davis. A fragmented set evokes memory, with soft lighting and a dreamlike atmosphere.\tproduction\n60058\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/562365626-1396572035805562-5595894779943318782-n-1768245612769.webp\tNULL\tThe Glass Menagerie - Scenic design by Brandon PT Davis. Evocative set, shaped by memory, not a literal apartment. Fragmented elements suggest recollection.\tproduction\n60059\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/561369764-1396571842472248-3938955528591190381-n-1768245613342.webp\tNULL\tThe Glass Menagerie - Scenic design by Brandon PT Davis. Memory play setting, not a literal apartment, shaped by recollection.\tproduction\n60060\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/565816238-1396571685805597-1872934656288507275-n-1768245614366.webp\tNULL\tThe Glass Menagerie - Scenic design by Brandon PT Davis. A non-literal, memory-inspired set with fragmented elements and evocative lighting, reflecting Tom's recollection.\tproduction\n60061\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/561866608-1396571682472264-3649734399848466288-n-1768245615051.webp\tNULL\tThe Glass Menagerie - Scenic design by Brandon PT Davis. Staged as a memory play, the set evokes Tom Wingfield's recollection rather than a literal apartment.\tproduction\n60062\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/561393440-1396571495805616-1299346261064466763-n-1768245615741.webp\tNULL\tThe Glass Menagerie - Scenic design by Brandon PT Davis. A dreamlike, non-realistic set evokes Tom Wingfield's memory, not a literal apartment.\tproduction\n60063\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/566207909-1396572589138840-5137182735921240777-n-1768245608087.webp\tNULL\tThe Glass Menagerie - Scenic design by Brandon PT Davis. Evocative set with fragmented walls, soft, dreamlike lighting, and sparse furniture, conveying a poignant memory.\tproduction\n60064\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/561341373-1396572259138873-1153848128221018463-n-1768245608582.webp\tNULL\tThe Glass Menagerie - Scenic design by Brandon PT Davis. Evocative memory play set, non-literal apartment with fragmented elements, and soft, reflective lighting.\tproduction\n",
+  "stderr": "",
+  "execution_time_ms": 55
+}

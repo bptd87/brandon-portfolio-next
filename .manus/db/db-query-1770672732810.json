@@ -1,0 +1,70 @@
+{
+  "query": "SHOW TABLES;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SHOW TABLES;",
+  "rows": [
+    {
+      "Tables_in_W7Mo5vQmuLDeDzmE7vXHYq": "__drizzle_migrations"
+    },
+    {
+      "Tables_in_W7Mo5vQmuLDeDzmE7vXHYq": "articleTags"
+    },
+    {
+      "Tables_in_W7Mo5vQmuLDeDzmE7vXHYq": "articles"
+    },
+    {
+      "Tables_in_W7Mo5vQmuLDeDzmE7vXHYq": "categories"
+    },
+    {
+      "Tables_in_W7Mo5vQmuLDeDzmE7vXHYq": "collaborators"
+    },
+    {
+      "Tables_in_W7Mo5vQmuLDeDzmE7vXHYq": "comments"
+    },
+    {
+      "Tables_in_W7Mo5vQmuLDeDzmE7vXHYq": "news"
+    },
+    {
+      "Tables_in_W7Mo5vQmuLDeDzmE7vXHYq": "newsTags"
+    },
+    {
+      "Tables_in_W7Mo5vQmuLDeDzmE7vXHYq": "paintRecipes"
+    },
+    {
+      "Tables_in_W7Mo5vQmuLDeDzmE7vXHYq": "projectImages"
+    },
+    {
+      "Tables_in_W7Mo5vQmuLDeDzmE7vXHYq": "projectTags"
+    },
+    {
+      "Tables_in_W7Mo5vQmuLDeDzmE7vXHYq": "project_collaborators"
+    },
+    {
+      "Tables_in_W7Mo5vQmuLDeDzmE7vXHYq": "project_team_members"
+    },
+    {
+      "Tables_in_W7Mo5vQmuLDeDzmE7vXHYq": "projects"
+    },
+    {
+      "Tables_in_W7Mo5vQmuLDeDzmE7vXHYq": "scenicDirectory"
+    },
+    {
+      "Tables_in_W7Mo5vQmuLDeDzmE7vXHYq": "tags"
+    },
+    {
+      "Tables_in_W7Mo5vQmuLDeDzmE7vXHYq": "team_members"
+    },
+    {
+      "Tables_in_W7Mo5vQmuLDeDzmE7vXHYq": "tutorialProgress"
+    },
+    {
+      "Tables_in_W7Mo5vQmuLDeDzmE7vXHYq": "tutorials"
+    },
+    {
+      "Tables_in_W7Mo5vQmuLDeDzmE7vXHYq": "users"
+    }
+  ],
+  "messages": [],
+  "stdout": "Tables_in_W7Mo5vQmuLDeDzmE7vXHYq\n__drizzle_migrations\narticleTags\narticles\ncategories\ncollaborators\ncomments\nnews\nnewsTags\npaintRecipes\nprojectImages\nprojectTags\nproject_collaborators\nproject_team_members\nprojects\nscenicDirectory\ntags\nteam_members\ntutorialProgress\ntutorials\nusers\n",
+  "stderr": "",
+  "execution_time_ms": 57
+}

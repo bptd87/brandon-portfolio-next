@@ -343,11 +343,11 @@ export default function ProjectDetail() {
               </button>
               
               {galleryOpen && (
-                <div className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {productionPhotos.map((img, idx) => (
                     <AnimatedSection key={img.id} delay={idx * 50}>
                       <div 
-                        className="group relative overflow-hidden rounded-lg cursor-pointer"
+                        className="group relative overflow-hidden rounded-lg cursor-pointer aspect-[4/3]"
                         onClick={() => {
                           setLightboxImages(productionPhotos);
                           setLightboxIndex(idx);
@@ -357,7 +357,7 @@ export default function ProjectDetail() {
                         <img
                           src={img.imageUrl || ''}
                           alt={img.altText || img.caption || project.title}
-                          className="w-full h-auto object-cover group-hover:scale-102 group-hover:brightness-110 transition-all duration-500"
+                          className="w-full h-full object-cover group-hover:scale-105 group-hover:brightness-110 transition-all duration-500"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         
@@ -401,11 +401,11 @@ export default function ProjectDetail() {
               </button>
               
               {renderingsOpen && (
-                <div className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {renderings.map((img, idx) => (
                     <AnimatedSection key={img.id} delay={idx * 50}>
                       <div 
-                        className="group relative overflow-hidden rounded-lg cursor-pointer"
+                        className="group relative overflow-hidden rounded-lg cursor-pointer aspect-[4/3]"
                         onClick={() => {
                           setLightboxImages(renderings);
                           setLightboxIndex(idx);
@@ -415,7 +415,7 @@ export default function ProjectDetail() {
                         <img
                           src={img.imageUrl || ''}
                           alt={img.altText || img.caption || project.title}
-                          className="w-full h-auto object-cover group-hover:scale-102 group-hover:brightness-110 transition-all duration-500"
+                          className="w-full h-full object-cover group-hover:scale-105 group-hover:brightness-110 transition-all duration-500"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         
