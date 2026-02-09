@@ -247,67 +247,59 @@ export default function ProjectDetail() {
           style={{ backgroundColor: accentColor }}
         />
 
-        {/* Project info overlay - EXPERIENTIAL AGENCY STYLE */}
+        {/* Project info overlay - SIMPLIFIED HERO */}
         <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16 lg:p-24">
           <div className="container max-w-5xl">
             
-            {/* HUGE CLIENT LOGOS AT TOP - Experiential Agency Style */}
+            {/* CLIENT LOGOS - Clean & Prominent */}
             {(metadata.redBullLogo || metadata.lumenatiLogo) && (
-              <div className="mb-8">
-                <div className="flex items-center gap-6 flex-wrap mb-4">
+              <div className="mb-6">
+                <div className="flex items-center gap-6 flex-wrap mb-3">
                   {metadata.redBullLogo && (
                     <img 
                       src={metadata.redBullLogo} 
                       alt="Red Bull" 
-                      className="h-20 md:h-24 w-auto brightness-110"
+                      className="h-16 md:h-20 w-auto brightness-110"
                     />
                   )}
                   {metadata.lumenatiLogo && (
                     <img 
                       src={metadata.lumenatiLogo} 
                       alt="Lumenati" 
-                      className="h-20 md:h-24 w-auto opacity-95"
+                      className="h-16 md:h-20 w-auto opacity-95"
                     />
                   )}
                 </div>
-                <div className="text-xs md:text-sm font-pixel text-foreground/70 tracking-wider">
+                <div className="text-xs font-pixel text-foreground/60 tracking-wider">
                   CLIENT: RED BULL  •  AGENCY: LUMENATI  •  ROLE: TECHNICAL DESIGNER
                 </div>
               </div>
             )}
-
-            <div className="flex items-center gap-4 mb-4">
-              <Badge 
-                variant="outline" 
-                className="text-xs md:text-sm tracking-wider font-semibold bg-background/80 backdrop-blur-sm px-3 py-1.5 border-2"
-                style={{
-                  borderColor: accentColor,
-                  color: accentColor
-                }}
-              >
-                {project.discipline?.toUpperCase() || 'PROJECT'}
-              </Badge>
-              {project.year && (
-                <span className="text-xs md:text-sm text-foreground/80 font-pixel">{project.year}</span>
-              )}
-            </div>
             
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-4 leading-tight">
+            {/* TITLE ONLY - Big & Bold */}
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-none">
               {project.title}
             </h1>
+          </div>
+        </div>
+      </section>
 
-            {/* PUNCHY EXCERPT */}
+      {/* Content Sections */}
+      <div className="container max-w-5xl py-16 space-y-16">
+        
+        {/* PROJECT INTRO - Excerpt + Details */}
+        <AnimatedSection>
+          <div className="space-y-6">
             {project.excerpt && (
-              <p className="text-lg md:text-xl font-semibold text-foreground/90 mb-6 leading-relaxed">
+              <p className="text-2xl md:text-3xl font-semibold text-foreground/90 leading-relaxed">
                 {project.excerpt}
               </p>
             )}
-
-            <div className="flex items-center gap-4 text-foreground/80 flex-wrap text-sm md:text-base">
+            <div className="flex items-center gap-6 text-foreground/70 flex-wrap text-base">
               {metadata.venue && (
                 <div className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4" />
-                  <span>{metadata.venue}</span>
+                  <MapPin className="h-5 w-5" />
+                  <span className="font-semibold">{metadata.venue}</span>
                 </div>
               )}
               {project.location && (
@@ -316,31 +308,16 @@ export default function ProjectDetail() {
                   <span>{project.location}</span>
                 </div>
               )}
-              {metadata.venueCapacity && (
+              {project.year && (
                 <div className="flex items-center gap-2">
                   <span>•</span>
-                  <span className="font-semibold">{metadata.venueCapacity} CAPACITY</span>
+                  <span>{project.year}</span>
                 </div>
               )}
             </div>
-
-            <Link href="/projects">
-              <Button 
-                variant="outline" 
-                size="lg"
-                className="gap-2 font-semibold text-base px-8 py-6 border-2"
-              >
-                <ArrowLeft className="h-5 w-5" />
-                BACK TO PROJECTS
-              </Button>
-            </Link>
           </div>
-        </div>
-      </section>
+        </AnimatedSection>
 
-      {/* Content Sections */}
-      <div className="container max-w-5xl py-16 space-y-16">
-        
         {/* BIG STATS - Experiential Agency Style */}
         {metadata.venueCapacity && (
           <AnimatedSection>
@@ -427,6 +404,53 @@ export default function ProjectDetail() {
           </AnimatedSection>
         )}
 
+        {/* Technical Drawings - ELEVATED AS PRIMARY SHOWCASE */}
+        {technicalDrawings.length > 0 && (
+          <AnimatedSection>
+            <div>
+              <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: accentColor }}>
+                Technical Drawings
+                <span className="ml-4 text-muted-foreground text-lg">({technicalDrawings.length})</span>
+              </h2>
+              
+              {/* FULL-WIDTH GRID - Like Lumenati */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {technicalDrawings.map((img, idx) => (
+                  <AnimatedSection key={img.id} delay={idx * 50}>
+                    <div 
+                      className="group relative overflow-hidden rounded-lg cursor-pointer aspect-[4/3]"
+                      onClick={() => {
+                        setLightboxImages(technicalDrawings);
+                        setLightboxIndex(idx);
+                        setLightboxOpen(true);
+                      }}
+                    >
+                      <img
+                        src={img.imageUrl || ''}
+                        alt={img.altText || img.caption || project.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
+                      
+                      {img.caption && (
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/95 via-background/70 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <p className="text-sm text-foreground/90">{img.caption}</p>
+                        </div>
+                      )}
+                      
+                      <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="px-3 py-1.5 rounded-full bg-background/90 backdrop-blur-sm border border-border">
+                          <p className="text-xs font-semibold">Click to expand</p>
+                        </div>
+                      </div>
+                    </div>
+                  </AnimatedSection>
+                ))}
+              </div>
+            </div>
+          </AnimatedSection>
+        )}
+
         {/* Production Photos Gallery */}
         {productionPhotos.length > 0 && (
           <AnimatedSection>
@@ -485,63 +509,7 @@ export default function ProjectDetail() {
           </AnimatedSection>
         )}
 
-        {/* Technical Drawings */}
-        {technicalDrawings.length > 0 && (
-          <AnimatedSection>
-            <div>
-              <button
-                onClick={() => setRenderingsOpen(!renderingsOpen)}
-                className="flex items-center justify-between w-full mb-8 group"
-              >
-                <h2 className="text-4xl font-black tracking-tighter" style={{ color: accentColor }}>
-                  Technical Drawings
-                  <span className="ml-4 text-muted-foreground text-lg">({technicalDrawings.length})</span>
-                </h2>
-                {renderingsOpen ? (
-                  <ChevronUp className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
-                ) : (
-                  <ChevronDown className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
-                )}
-              </button>
-              
-              {renderingsOpen && (
-                <div className="space-y-8">
-                  {technicalDrawings.map((img, idx) => (
-                    <AnimatedSection key={img.id} delay={idx * 50}>
-                      <div 
-                        className="group relative overflow-hidden rounded-lg cursor-pointer"
-                        onClick={() => {
-                          setLightboxImages(technicalDrawings);
-                          setLightboxIndex(idx);
-                          setLightboxOpen(true);
-                        }}
-                      >
-                        <img
-                          src={img.imageUrl || ''}
-                          alt={img.altText || img.caption || project.title}
-                          className="w-full h-auto object-cover group-hover:scale-102 group-hover:brightness-110 transition-all duration-500"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        
-                        {img.caption && (
-                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/95 via-background/70 to-transparent p-6">
-                            <p className="text-sm text-foreground/90">{img.caption}</p>
-                          </div>
-                        )}
-                        
-                        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <div className="px-3 py-1.5 rounded-full bg-background/90 backdrop-blur-sm border border-border">
-                            <p className="text-xs font-semibold">Click to expand</p>
-                          </div>
-                        </div>
-                      </div>
-                    </AnimatedSection>
-                  ))}
-                </div>
-              )}
-            </div>
-          </AnimatedSection>
-        )}
+
 
         {/* Renderings */}
         {renderings.length > 0 && (

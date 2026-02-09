@@ -1963,3 +1963,10 @@
 - [x] Add more visual breathing room between sections
 - [x] Make copy more conversational but still professional (between AJ's structure and Lumenati's edge)
 - [x] Ensure hierarchy is clear: Client logos → Stats → Story → Images
+
+## Red Bull Jukebox - Hero Simplification & Layout Fixes
+- [x] Simplify hero section - remove clutter (move venue details, excerpt out of hero overlay)
+- [x] Keep only: Logos + Client hierarchy + Project title in hero
+- [x] Redesign image galleries as full-width grids (like Lumenati), not narrow columns
+- [x] Elevate Technical Drawings section - make it more prominent, possibly move before Production Photos
+- [x] Add visual hierarchy: Technical drawings (YOUR work) should be the star
