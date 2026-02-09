@@ -2026,3 +2026,8 @@
 - [x] Investigate API query error - sandbox was reset, changes were lost
 - [x] Reapply all fixes: cover image URL, excerpt, date (2024-09-24), client (Lumenati × Red Bull)
 - [x] Fix data pattern validation error
+
+## Red Bull Jukebox - Experiential Landing Page Card Image
+- [x] Identify experiential landing page route (/projects/experiential)
+- [x] Check why card image is blank on experiential landing page (coverImageUrl not working)
+- [x] Use one of the event photo URLs as cover image for the card (crowd-wide.jpg)
