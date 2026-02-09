@@ -20,7 +20,7 @@ export default function NotFound() {
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            {/* Ghost Image with animated transparency */}
+            {/* Ghost Image with animated transparency and glow */}
             <motion.div 
               className="w-48 h-72 mx-auto mb-8"
               animate={{ 
@@ -30,6 +30,9 @@ export default function NotFound() {
                 duration: 3,
                 repeat: Infinity,
                 ease: "easeInOut"
+              }}
+              style={{
+                filter: 'drop-shadow(0 0 30px rgba(34, 211, 238, 0.4)) drop-shadow(0 0 60px rgba(34, 211, 238, 0.2))'
               }}
             >
               <ProgressiveImage

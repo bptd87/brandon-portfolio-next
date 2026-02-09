@@ -1654,3 +1654,6 @@
 
 ## Fix Ghost Image Fade (User Reported Issue - Feb 8, 2026)
 - [x] Remove bottom fade - was creating awkward horizontal line cutting off legs
+
+## Add Cyan Glow Effect to Ghost (User Requested - Feb 8, 2026)
+- [x] Add soft cyan glow around ghost image to enhance ethereal appearance (double drop-shadow with cyan color)
