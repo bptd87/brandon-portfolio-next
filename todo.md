@@ -1663,3 +1663,10 @@
 
 ## Fix Bottom Fade with Mask-Image (User Reported Issue - Feb 9, 2026)
 - [x] Replace gradient overlay with CSS mask-image for smooth, natural fade without harsh line (gradient from 60% to 100%)
+
+## Complete 404 Page Redesign (User Requested - Feb 9, 2026)
+- [x] Fix rectangular glow issue (moved filter to inner wrapper div)
+- [x] Redesign layout/composition (two-column grid layout, ghost left, content right)
+- [x] Improve typography and spacing (larger 404, refined tracking, better line spacing)
+- [x] Add more dramatic theatrical styling (spotlight effect, vignette, gradient divider)
+- [x] Ensure ghost fades naturally (mask from 55% to 100% with smooth gradient)
