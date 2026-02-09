@@ -1553,3 +1553,10 @@
 - [x] Update Design History Timeline header to match other Studio apps
 - [x] Add beta badge to indicate work-in-progress status
 - [x] Test header appearance and verify consistency
+
+## Design History Timeline Layout Alignment (User Reported - Feb 8, 2026)
+- [x] Compare full layout structure between Dimension Reference and Design History Timeline
+- [x] Identify specific layout differences (hero section structure, container widths, spacing, background colors)
+- [x] Update Design History Timeline hero section to match Dimension Reference format
+- [x] Update container widths and spacing to match other Studio apps
+- [x] Test visual alignment with Dimension Reference

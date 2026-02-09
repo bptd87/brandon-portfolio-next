@@ -453,18 +453,19 @@ export default function DesignHistoryTimeline() {
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-background">
       <Header />
-      <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white transition-colors duration-300 pt-32 pb-24">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
 
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="mb-12"
-        >
+      {/* Compact Hero with Header Image */}
+      <section className="relative h-[30vh] md:h-[35vh] overflow-hidden border-b border-border">
+        <img 
+          src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/BpqvvdMEYcpzDwGz.webp"
+          alt="Design History Timeline - Architectural design through history" 
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/20" />
+        
+        <div className="absolute bottom-0 left-0 right-0 container max-w-5xl pb-4 md:pb-6">
           <div className="flex items-center gap-2 mb-2">
             <Calendar className="w-4 h-4 text-[#9C27B0]" />
             <span className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
@@ -480,43 +481,31 @@ export default function DesignHistoryTimeline() {
           <p className="text-sm md:text-base text-muted-foreground max-w-2xl">
             Explore 28 design periods from Ancient Egypt to Contemporary. Click any period to view reference images, characteristics, and key figures.
           </p>
-        </motion.div>
+        </div>
+      </section>
 
-        {/* Search */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="mb-8"
-        >
-          <div className="bg-neutral-200/60 dark:bg-neutral-900/60 backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-3xl p-6">
-            <label className="font-pixel text-[10px] tracking-[0.3em] text-black/40 dark:text-white/40 mb-3 block">
-              SEARCH
-            </label>
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-black/40 dark:text-white/40" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search periods, regions, or characteristics..."
-                className="w-full bg-white dark:bg-black border border-black/10 dark:border-white/10 text-black dark:text-white pl-12 pr-4 py-3 rounded-2xl focus:outline-none focus:border-black dark:focus:border-white transition-colors placeholder:text-black/30 dark:placeholder:text-white/30"
-              />
-            </div>
+      {/* Main Content */}
+      <section className="container max-w-5xl py-6 md:py-8">
+        {/* Search Bar */}
+        <div className="mb-6">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search periods, regions, or characteristics..."
+              className="w-full h-10 pl-10 pr-4 bg-background border border-input rounded-md text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            />
           </div>
-        </motion.div>
+        </div>
 
         {/* Results Count */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="mb-8"
-        >
-          <span className="font-pixel text-[10px] tracking-[0.2em] text-black/40 dark:text-white/40">
-            {filteredPeriods.length} PERIODS • CLICK TO EXPAND
-          </span>
-        </motion.div>
+        <div className="mb-6">
+          <p className="text-sm text-muted-foreground">
+            {filteredPeriods.length} periods found
+          </p>
+        </div>
 
         {/* Timeline */}
         <div className="relative max-w-5xl mx-auto">
@@ -742,9 +731,9 @@ export default function DesignHistoryTimeline() {
 
         {/* More Apps Section */}
         <RelatedTools currentToolId="design-history-timeline" />
-      </div>
+      </section>
+
+      <Footer />
     </div>
-    <Footer />
-    </>
   );
 }
