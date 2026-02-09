@@ -2034,3 +2034,7 @@
 
 ## Experiential Landing Page Sorting
 - [x] Fix Experiential landing page sorting to show projects in chronological order by date (newest first)
+
+## Fix Scenic Design Template
+- [x] Restore scenic design project detail template (design notes visible, excerpt hidden)
+- [x] Ensure scenic and experiential templates remain separate
