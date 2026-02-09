@@ -1765,3 +1765,16 @@
 ## Fix Rendering Detail Page Header Overlap (User Reported - Feb 9, 2026)
 - [x] Add proper top padding to rendering detail page container to prevent Back button from hiding behind header
 - [x] Test that all content fits within visible frame below navigation bar
+
+## Move New Swan Venue File to Experiential Design (User Requested - Feb 9, 2026)
+- [x] Update New Swan Venue File project discipline from 'rendering' to 'experiential_design'
+- [x] Verify project appears in experiential portfolio
+- [x] Verify project removed from rendering portfolio
+
+## Add New Rendering: The Northwind Mare Tavern (User Requested - Feb 9, 2026)
+- [x] Upload SkyrimCafe_Ext.jpg to S3
+- [x] Create project in database with title, year (2026), discipline (rendering)
+- [x] Compose 50-75 word poetic caption about fantasy tavern concept
+- [x] Add SEO keywords (fantasy, theme park, Tamriel, dining venue, etc.)
+- [x] Add software tags (Vectorworks, Twinmotion, Photoshop)
+- [x] Test rendering appears in portfolio
