@@ -1873,4 +1873,14 @@
 - [x] Add appropriate schema to About page (already implemented)
 - [x] Update URLs to use dynamic baseUrl instead of hardcoded domain
 - [x] Test structured data with Google Rich Results Test (verified URLs are dynamic)
+- [x] Save checkpoint
+
+## Implement Breadcrumb Navigation UI
+- [x] Create reusable Breadcrumb component with proper styling
+- [x] Add breadcrumbs to ProjectDetail page
+- [x] Add breadcrumbs to RenderingProjectDetail page
+- [x] Add breadcrumbs to ArticleDetail page
+- [x] Add breadcrumbs to NewsDetail page
+- [x] Add breadcrumbs to TutorialDetail page
+- [x] Test breadcrumb navigation on all pages (project, article, news all working)
 - [ ] Save checkpoint

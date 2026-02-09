@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import StructuredData from "@/components/StructuredData";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { SEO } from "@/components/SEO";
 
 export default function TutorialDetail() {
@@ -2350,6 +2351,16 @@ The final section introduces the powerful Duplicate Along Path feature, which al
         ]}
       />
       <Header />
+
+      {/* Breadcrumb Navigation */}
+      <div className="container py-6">
+        <Breadcrumb
+          items={[
+            { label: "Studio", href: "/studio" },
+            { label: tutorial.title }
+          ]}
+        />
+      </div>
 
       {/* Tutorial Header */}
       <section className="py-12 border-b border-[#2196F3]">

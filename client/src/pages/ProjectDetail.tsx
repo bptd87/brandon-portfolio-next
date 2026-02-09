@@ -11,6 +11,7 @@ import { AnimatedSection } from "@/components/AnimatedSection";
 import { Lightbox } from "@/components/Lightbox";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 // Convert YouTube/Vimeo URLs to embed format
 function getEmbedUrl(url: string): string {
@@ -175,6 +176,17 @@ export default function ProjectDetail() {
         }}
       />
       <Header />
+
+      {/* Breadcrumb Navigation */}
+      <div className="container py-6">
+        <Breadcrumb
+          items={[
+            { label: "Work", href: "/projects" },
+            { label: project.discipline === 'scenic_design' ? 'Scenic Design' : project.discipline === 'experiential_design' ? 'Experiential' : project.discipline === 'rendering' ? 'Rendering' : 'Scenic Models', href: `/projects?discipline=${project.discipline}` },
+            { label: project.title }
+          ]}
+        />
+      </div>
 
       {/* Sticky Navigation Arrows */}
       {prevProject && (

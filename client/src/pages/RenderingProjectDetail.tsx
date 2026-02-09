@@ -9,6 +9,7 @@ import { AnimatedSection } from "@/components/AnimatedSection";
 import { Lightbox } from "@/components/Lightbox";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 export default function RenderingProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -121,6 +122,17 @@ export default function RenderingProjectDetail() {
         }}
       />
       <Header />
+
+      {/* Breadcrumb Navigation */}
+      <div className="container py-6">
+        <Breadcrumb
+          items={[
+            { label: "Work", href: "/projects" },
+            { label: "Rendering", href: "/projects/rendering" },
+            { label: project.title }
+          ]}
+        />
+      </div>
 
       {/* Sticky Navigation Arrows */}
       {prevProject && (

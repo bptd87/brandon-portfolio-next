@@ -14,6 +14,7 @@ import { getCategoryColor } from "@/lib/categoryColors";
 
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 // Decode HTML entities
 const decodeHTMLEntities = (text: string): string => {
@@ -338,6 +339,17 @@ export default function ArticleDetail() {
 
       />
       <Header />
+
+      {/* Breadcrumb Navigation */}
+      <div className="container py-6">
+        <Breadcrumb
+          items={[
+            { label: "Articles", href: "/articles" },
+            { label: category?.name || "Uncategorized", href: `/articles?category=${category?.slug || ''}` },
+            { label: article.title }
+          ]}
+        />
+      </div>
 
       {/* Reading Progress Bar */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-muted/30 z-50">

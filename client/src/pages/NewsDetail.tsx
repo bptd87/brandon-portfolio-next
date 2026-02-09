@@ -10,6 +10,7 @@ import { Link, useParams } from "wouter";
 import { toast } from "sonner";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 // Helper function to create pixelated gradient from image
 function createPixelatedGradient(imageUrl: string, callback: (gradient: string) => void) {
@@ -247,6 +248,16 @@ export default function NewsDetail() {
         ]}
       />
       <Header />
+
+      {/* Breadcrumb Navigation */}
+      <div className="container py-6">
+        <Breadcrumb
+          items={[
+            { label: "News", href: "/news" },
+            { label: newsItem.title }
+          ]}
+        />
+      </div>
 
       {/* Hero Section with Title Overlay */}
       <section 
