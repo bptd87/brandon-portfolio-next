@@ -23,6 +23,7 @@ import StudioTutorials from "./pages/StudioTutorials";
 import StudioApps from "./pages/StudioApps";
 import StudioDirectory from "./pages/StudioDirectory";
 import Vault from "./pages/Vault";
+import Collaborators from "./pages/Collaborators";
 import ScaleCalculator from "./pages/ScaleCalculator";
 import DimensionReference from "./pages/DimensionReference";
 import DesignHistoryTimeline from "./pages/DesignHistoryTimeline";
@@ -71,6 +72,7 @@ function Router() {
       <Route path={"/admin/faq-convert"} component={AdminFaqConvert} />
       <Route path={"/admin/import-news"} component={AdminImportNews} />
       <Route path={"/about"} component={About} />
+      <Route path={"/about/collaborators"} component={Collaborators} />
       <Route path={"/about/resume"} component={AboutResume} />
       <Route path={"/about/teaching"} component={TeachingPhilosophy} />
       <Route path={"/about/philosophy"} component={CreativeStatement} />

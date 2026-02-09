@@ -467,3 +467,69 @@ export const paintRecipes = mysqlTable("paintRecipes", {
 
 export type PaintRecipe = typeof paintRecipes.$inferSelect;
 export type InsertPaintRecipe = typeof paintRecipes.$inferInsert;
+
+/**
+ * Collaborators table for directors, designers, theatre companies, and partner companies
+ */
+export const collaborators = mysqlTable("collaborators", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  role: mysqlEnum("role", [
+    "director",
+    "scenic_designer",
+    "costume_designer",
+    "lighting_designer",
+    "sound_designer",
+    "projection_designer",
+    "theatre_company",
+    "partner_company"
+  ]).notNull(),
+  bio: text("bio"),
+  portfolioUrl: text("portfolioUrl"),
+  instagramHandle: varchar("instagramHandle", { length: 100 }),
+  instagramUrl: text("instagramUrl"),
+  websiteUrl: text("websiteUrl"),
+  imageUrl: text("imageUrl"),
+  imageKey: text("imageKey"),
+  featured: boolean("featured").default(false).notNull(),
+  sortOrder: int("sortOrder").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  roleIdx: index("role_idx").on(table.role),
+  slugIdx: index("slug_idx").on(table.slug),
+  featuredIdx: index("featured_idx").on(table.featured),
+}));
+
+export type Collaborator = typeof collaborators.$inferSelect;
+export type InsertCollaborator = typeof collaborators.$inferInsert;
+
+/**
+ * Project collaborators junction table for linking projects with collaborators
+ */
+export const projectCollaborators = mysqlTable("project_collaborators", {
+  projectId: int("projectId").notNull().references(() => projects.id, { onDelete: "cascade" }),
+  collaboratorId: int("collaboratorId").notNull().references(() => collaborators.id, { onDelete: "cascade" }),
+  customRole: varchar("customRole", { length: 255 }), // Optional custom role override
+  sortOrder: int("sortOrder").default(0).notNull(),
+}, (table) => ({
+  projectIdx: index("project_idx").on(table.projectId),
+  collaboratorIdx: index("collaborator_idx").on(table.collaboratorId),
+}));
+
+// Collaborator relations
+export const collaboratorsRelations = relations(collaborators, ({ many }) => ({
+  projects: many(projectCollaborators),
+}));
+
+export const projectCollaboratorsRelations = relations(projectCollaborators, ({ one }) => ({
+  project: one(projects, {
+    fields: [projectCollaborators.projectId],
+    references: [projects.id],
+  }),
+  collaborator: one(collaborators, {
+    fields: [projectCollaborators.collaboratorId],
+    references: [collaborators.id],
+  }),
+}));

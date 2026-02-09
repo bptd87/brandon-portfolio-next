@@ -2050,3 +2050,9 @@
 - [ ] Fix JavaScript error on published site (React/routing issue)
 - [x] Add dropdown menu with icons to STUDIO nav item
 - [x] Create Coming Soon page for Vault (/vault)
+- [x] Extract collaborator data from existing projects (directors, designers by type, theatre companies)
+- [x] Research and find portfolio/Instagram links for all collaborators
+- [x] Create database schema for collaborators table
+- [ ] Build /about/collaborators page with filtering (Directors, Scenic, Costume, Lighting, Sound, Projection, Theatre Companies, Companies)
+- [ ] Add cross-linking from project detail pages to collaborator profiles
+- [ ] Add "Projects Worked On" section to each collaborator profile

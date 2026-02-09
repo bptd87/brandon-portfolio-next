@@ -9,7 +9,8 @@ import {
   articles, InsertArticle, articleTags,
   comments, InsertComment,
   tutorialProgress, InsertTutorialProgress,
-  paintRecipes, InsertPaintRecipe
+  paintRecipes, InsertPaintRecipe,
+  collaborators, InsertCollaborator, projectCollaborators
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -767,4 +768,81 @@ export async function deletePaintRecipe(id: number, userId: number) {
   await db
     .delete(paintRecipes)
     .where(and(eq(paintRecipes.id, id), eq(paintRecipes.userId, userId)));
+}
+
+
+// ============ COLLABORATOR OPERATIONS ============
+
+export async function getAllCollaborators(filters?: { role?: string; featured?: boolean }) {
+  const db = await getDb();
+  if (!db) return [];
+
+  try {
+    const { collaborators } = await import("../drizzle/schema");
+    const { eq, and } = await import("drizzle-orm");
+
+    const conditions = [];
+    if (filters?.role) {
+      conditions.push(eq(collaborators.role, filters.role as any));
+    }
+    if (filters?.featured !== undefined) {
+      conditions.push(eq(collaborators.featured, filters.featured));
+    }
+
+    const whereClause = conditions.length > 0 ? and(...conditions) : undefined;
+
+    return await db
+      .select()
+      .from(collaborators)
+      .where(whereClause)
+      .orderBy(collaborators.sortOrder, collaborators.name);
+  } catch (error) {
+    console.error("[Database] Failed to fetch collaborators:", error);
+    return [];
+  }
+}
+
+export async function getCollaboratorBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) return null;
+
+  try {
+    const { collaborators } = await import("../drizzle/schema");
+    const { eq } = await import("drizzle-orm");
+
+    const result = await db
+      .select()
+      .from(collaborators)
+      .where(eq(collaborators.slug, slug))
+      .limit(1);
+
+    return result[0] || null;
+  } catch (error) {
+    console.error("[Database] Failed to fetch collaborator by slug:", error);
+    return null;
+  }
+}
+
+export async function getCollaboratorProjects(collaboratorId: number) {
+  const db = await getDb();
+  if (!db) return [];
+
+  try {
+    const { projectCollaborators, projects } = await import("../drizzle/schema");
+    const { eq } = await import("drizzle-orm");
+
+    const result = await db
+      .select({
+        project: projects,
+      })
+      .from(projectCollaborators)
+      .innerJoin(projects, eq(projectCollaborators.projectId, projects.id))
+      .where(eq(projectCollaborators.collaboratorId, collaboratorId))
+      .orderBy(projects.publishedAt);
+
+    return result.map(r => r.project);
+  } catch (error) {
+    console.error("[Database] Failed to fetch collaborator projects:", error);
+    return [];
+  }
 }

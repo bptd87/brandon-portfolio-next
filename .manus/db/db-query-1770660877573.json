@@ -1,0 +1,226 @@
+{
+  "query": "\nSELECT \n  id,\n  title,\n  slug,\n  year,\n  location,\n  creativeTeam,\n  metadata\nFROM projects \nWHERE discipline = 'scenic_design'\nAND status = 'published'\nORDER BY publishedAt DESC;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute \nSELECT \n  id,\n  title,\n  slug,\n  year,\n  location,\n  creativeTeam,\n  metadata\nFROM projects \nWHERE discipline = 'scenic_design'\nAND status = 'published'\nORDER BY publishedAt DESC;\n",
+  "rows": [
+    {
+      "id": "90010",
+      "title": "The Glass Menagerie",
+      "slug": "the-glass-menagerie",
+      "year": "2025",
+      "location": " Macon, MO",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"Tennessee Williams\\\",\\\"role\\\":\\\"Playwright\\\"},{\\\"name\\\":\\\"Kimberly Braun\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Design\\\"},{\\\"name\\\":\\\"Jack A. Smith\\\",\\\"role\\\":\\\"Costume Design\\\"},{\\\"name\\\":\\\"Vincente Williams\\\",\\\"role\\\":\\\"Ligthing Design\\\"},{\\\"name\\\":\\\"Leo Basinger\\\",\\\"role\\\":\\\"Sound Design\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90087",
+      "title": "Million Dollar Quartet",
+      "slug": "million-dollar-quartet",
+      "year": "2025",
+      "location": "Costa Mesa, CA",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"James Moye\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Kim Martin-Cotten\\\",\\\"role\\\":\\\"Associate Director\\\"},{\\\"name\\\":\\\"Wiley DeWeese\\\",\\\"role\\\":\\\"Music Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis & Efren Delgadillo Jr\\\",\\\"role\\\":\\\"Co-Scenic Designer\\\"},{\\\"name\\\":\\\"Kish Finnegan\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Lonnie Rafael Alcaraz\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Jeff Polunas\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90016",
+      "title": "Bell, Book, and Candle",
+      "slug": "bell-book-and-candle",
+      "year": "2025",
+      "location": "Okoboji, IA",
+      "creativeTeam": "{}",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90089",
+      "title": "Much Ado About Nothing",
+      "slug": "much-ado-about-nothing",
+      "year": "2025",
+      "location": "Irvine, CA",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"Eli Simon\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Kathryn Poppen\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Karyn D. Lawrence\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Aerik Harbert\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90071",
+      "title": "All's Well That Ends Well",
+      "slug": "alls-well-that-ends-well",
+      "year": "2025",
+      "location": "Irvine, CA",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"Rob Salas\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Ayrika Johnson\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Nita Mendoza\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Aerik Harbert\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90077",
+      "title": "Romero",
+      "slug": "romero",
+      "year": "2025",
+      "location": "Columbia, MO",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"Xiomara Cornejo\\\",\\\"role\\\":\\\"Playwright \\\"},{\\\"name\\\":\\\"David Crespy\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Mark Vital \\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Vincete Williams\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Michael Webb & Joseph Seevers\\\",\\\"role\\\":\\\"Sound Designer\\\"},{\\\"name\\\":\\\"Cherie Sampson\\\",\\\"role\\\":\\\"Projection Design\\\"},{\\\"name\\\":\\\"Lil Lamberta & Claire Bronchick\\\",\\\"role\\\":\\\"Puppetry \\\"},{\\\"name\\\":\\\"Rebecca Allen\\\",\\\"role\\\":\\\"Photos\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90045",
+      "title": "Guys on Ice",
+      "slug": "guys-on-ice",
+      "year": "2025",
+      "location": "Oceano, CA",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"Fred Alley\\\",\\\"role\\\":\\\"Book & Lyrics\\\"},{\\\"name\\\":\\\"James Kaplan\\\",\\\"role\\\":\\\"Music\\\"},{\\\"name\\\":\\\"Dan Klarer\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Andy Hudson\\\",\\\"role\\\":\\\"Music Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Dan Klarer\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Cody Soper\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Nathan Miklas\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90041",
+      "title": "Urinetown",
+      "slug": "urinetown",
+      "year": "2024",
+      "location": "Columbia, MO",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"Mark Hollman\\\",\\\"role\\\":\\\"Music & Lyrics by\\\"},{\\\"name\\\":\\\"Greg Koti\\\",\\\"role\\\":\\\"Book & Lyrics by\\\"},{\\\"name\\\":\\\"Audra Sergel\\\",\\\"role\\\":\\\"Music Direction\\\"},{\\\"name\\\":\\\"Emily Ehling\\\",\\\"role\\\":\\\"Choreographed by\\\"},{\\\"name\\\":\\\"Joy Powell\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Marc W. Vial II\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Vincente Williams\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Devin Stevenson\\\",\\\"role\\\":\\\"Sound Designer\\\"},{\\\"name\\\":\\\"Rebecca Allen\\\",\\\"role\\\":\\\"Photos\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90042",
+      "title": "Barefoot in the Park",
+      "slug": "barefoot-in-the-park",
+      "year": "2024",
+      "location": "Okoboji, IA",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"Neil Simon \\\",\\\"role\\\":\\\"Playwright\\\"},{\\\"name\\\":\\\"Brett Olson\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Shannon King\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Lennox Emery\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Kayla Slinger\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90056",
+      "title": "Freaky Friday",
+      "slug": "freaky-friday",
+      "year": "2024",
+      "location": "Okoboji, IA",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"Tom Kitt\\\",\\\"role\\\":\\\"Music\\\"},{\\\"name\\\":\\\"Brian Yorkey\\\",\\\"role\\\":\\\"Lyrics\\\"},{\\\"name\\\":\\\"Bridget Carpenter\\\",\\\"role\\\":\\\"Book\\\"},{\\\"name\\\":\\\"Josh Walden\\\",\\\"role\\\":\\\"Director / Choreographer \\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Zachary Phelps\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Savannah Bell\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Kayla Slinger\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90044",
+      "title": "Head Over Heels",
+      "slug": "head-over-heels",
+      "year": "2023",
+      "location": "Silverthorne, CO",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"The Go-Go’s\\\",\\\"role\\\":\\\"Music & Lyrics by\\\"},{\\\"name\\\":\\\"Jeff Whitty\\\",\\\"role\\\":\\\"Book conceived by & original book by\\\"},{\\\"name\\\":\\\"James Magruder\\\",\\\"role\\\":\\\"Adapted by\\\"},{\\\"name\\\":\\\"Josh Walden\\\",\\\"role\\\":\\\"Directed & Choreographed by\\\"},{\\\"name\\\":\\\"Timothy Fletcher\\\",\\\"role\\\":\\\"Music Direction\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Melissa Livingston\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Merle DeWitt III\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Hudson Waldrop\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90009",
+      "title": "¡LOTERIA: GAME ON!",
+      "slug": "loteria-game-on",
+      "year": "2023",
+      "location": "Silverthorne, CO",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"Mabelle Reynoso\\\",\\\"role\\\":\\\"Playwright\\\"},{\\\"name\\\":\\\"Sara Rodriguez\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Design\\\"},{\\\"name\\\":\\\"Lauryn Terceira\\\",\\\"role\\\":\\\"Costume Design\\\"},{\\\"name\\\":\\\"Jesús Lopez\\\",\\\"role\\\":\\\"Lighting Design\\\"},{\\\"name\\\":\\\"Grayson Moreno\\\",\\\"role\\\":\\\"Sound Design\\\"},{\\\"name\\\":\\\"Merle Dewitt\\\",\\\"role\\\":\\\"Projection Design\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90054",
+      "title": "Boeing, Boeing",
+      "slug": "boeing-boeing",
+      "year": "2023",
+      "location": "Columbia, MO",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"Marc Camoletti\\\",\\\"role\\\":\\\"Playwright\\\"},{\\\"name\\\":\\\"John Hemphill\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Fae Riemann-Royer\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Katie Cohen\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Michael Burke\\\",\\\"role\\\":\\\"Sound Designer\\\"},{\\\"name\\\":\\\"Rebecca Allen\\\",\\\"role\\\":\\\"Photos\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90053",
+      "title": "The Merry Wives of Windsor",
+      "slug": "the-merry-wives-of-windsor",
+      "year": "2022",
+      "location": "Columbia, MO",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"Jamey Grisham\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Alice Crist\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Lennox Emery\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Michael Burke\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90036",
+      "title": "An Inspector Calls",
+      "slug": "an-inspector-calls",
+      "year": "2022",
+      "location": "Spirit Lake, IA",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"J.B. Priestley\\\",\\\"role\\\":\\\"Playwright \\\"},{\\\"name\\\":\\\"Stephen Brotebeck\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Kirsteen Buchanan\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Lennox Emery\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Stephen Brotebeck\\\",\\\"role\\\":\\\"Sound Design\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90049",
+      "title": "A Funny Thing Happened on the Way to the Forum",
+      "slug": "a-funny-thing-happened",
+      "year": "2022",
+      "location": "Silverthorne, CO",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"Stephens Sondheim \\\",\\\"role\\\":\\\"Music and Lyrics\\\"},{\\\"name\\\":\\\"Mellisa Livingston\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Len Rhodes\\\",\\\"role\\\":\\\"Music Director\\\"},{\\\"name\\\":\\\"Rachel Leigh Dolan\\\",\\\"role\\\":\\\"Choreographer\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Rachel Anne Germinario\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Kenrick Fischer\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Matthew Eckstein\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90039",
+      "title": "Tomás and the Library Lady",
+      "slug": "tomas-and-the-library-lady",
+      "year": "2022",
+      "location": "Silverthorne, CO",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"Pat Mora\\\",\\\"role\\\":\\\"From the Book by\\\"},{\\\"name\\\":\\\"José Cruz González\\\",\\\"role\\\":\\\"Adapted by\\\"},{\\\"name\\\":\\\"Sara Rodriguez\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Lauryn Terciera\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Nita Mendoza\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Noel Nichols\\\",\\\"role\\\":\\\"Sound Designer\\\"},{\\\"name\\\":\\\"Jesús López Vargas\\\",\\\"role\\\":\\\"Projection Designer\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90051",
+      "title": "The Penelopiad",
+      "slug": "the-penelopiad",
+      "year": "2020",
+      "location": "Irvine, CA",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"Margaret Atwood\\\",\\\"role\\\":\\\"Playwright\\\"},{\\\"name\\\":\\\"Sara Rodriguez\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Luke Shepherd\\\",\\\"role\\\":\\\"Composer\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Sarah Monaghan\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Avery Reagan\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Jack Bueermann\\\",\\\"role\\\":\\\"Sound Designer\\\"},{\\\"name\\\":\\\"Merle DeWitt III\\\",\\\"role\\\":\\\"Projection Design\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90019",
+      "title": "Company",
+      "slug": "company",
+      "year": "2019",
+      "location": "Irvine, CA",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"Stephens Sondheim\\\",\\\"role\\\":\\\"Music & Lyrics by\\\"},{\\\"name\\\":\\\"George Furth\\\",\\\"role\\\":\\\"Book by\\\"},{\\\"name\\\":\\\"Eli Siomon\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Lex Leigh\\\",\\\"role\\\":\\\"Music Direction\\\"},{\\\"name\\\":\\\"Allison Eversol\\\",\\\"role\\\":\\\"Choreography \\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Cassie DeFile\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Jacob P. Brinkman\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Garrett Gagnon\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90048",
+      "title": "The Pajama Game",
+      "slug": "the-pajama-game",
+      "year": "2019",
+      "location": "Irvine, CA",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"Richard Adler & Jerry Ross\\\",\\\"role\\\":\\\"Music & Lyrics by\\\"},{\\\"name\\\":\\\"George Abbott & Richard Bissell\\\",\\\"role\\\":\\\"Book by\\\"},{\\\"name\\\":\\\"Don Hill\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Lex Leigh\\\",\\\"role\\\":\\\"Music Direction\\\"},{\\\"name\\\":\\\"Allison Eversol\\\",\\\"role\\\":\\\"Choreography\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Sarah Monaghan\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Natori Cummings-Haynes\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Ningru Guo\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90018",
+      "title": "Parliament Square",
+      "slug": "parliament-square",
+      "year": "2019",
+      "location": "Irvine, CA",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"James Fritz\\\",\\\"role\\\":\\\"Playwright\\\"},{\\\"name\\\":\\\"Jane Page\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Matthew Martinez\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Jacob P. Brinkman\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Ezra Anisman & Garrett Gagnon\\\",\\\"role\\\":\\\"Sound Design\\\"},{\\\"name\\\":\\\"Merle DeWitt III\\\",\\\"role\\\":\\\"Projection Design\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90038",
+      "title": "American Idiot",
+      "slug": "american-idiot",
+      "year": "2018",
+      "location": "Irvine, CA",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"Green Day\\\",\\\"role\\\":\\\"Music\\\"},{\\\"name\\\":\\\"Bill Joe Armstrong \\\",\\\"role\\\":\\\"Lyrics \\\"},{\\\"name\\\":\\\"Billie Joe Armstrong & Michael Mayer\\\",\\\"role\\\":\\\"Book\\\"},{\\\"name\\\":\\\"Andrew Palermo\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Lex Leigh\\\",\\\"role\\\":\\\"Music Director\\\"},{\\\"name\\\":\\\"Allison Eversol \\\",\\\"role\\\":\\\"Choreographer\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Jennifer Clark\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"David Hern\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Jordan Tani\\\",\\\"role\\\":\\\"Sound Designer\\\"},{\\\"name\\\":\\\"Elizabeth Barrett\\\",\\\"role\\\":\\\"Projection Design\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90043",
+      "title": "Angel Street",
+      "slug": "angel-street",
+      "year": "2013",
+      "location": "Columbia, MO",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"Patrick Hamilton\\\",\\\"role\\\":\\\"Playwright\\\"},{\\\"name\\\":\\\"Rich Cole\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Ashley Harrison\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Christopher Boew\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Michael Burke\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"",
+      "metadata": "NULL"
+    },
+    {
+      "id": "90017",
+      "title": "All My Sons",
+      "slug": "all-my-sons",
+      "year": "2010",
+      "location": "Columbia, MO",
+      "creativeTeam": "\"[{\\\"name\\\":\\\"Lamby Hedge\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Kate Wood\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Emily Swenson\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Michael Burke\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"",
+      "metadata": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tslug\tyear\tlocation\tcreativeTeam\tmetadata\n90010\tThe Glass Menagerie\tthe-glass-menagerie\t2025\t Macon, MO\t\"[{\\\"name\\\":\\\"Tennessee Williams\\\",\\\"role\\\":\\\"Playwright\\\"},{\\\"name\\\":\\\"Kimberly Braun\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Design\\\"},{\\\"name\\\":\\\"Jack A. Smith\\\",\\\"role\\\":\\\"Costume Design\\\"},{\\\"name\\\":\\\"Vincente Williams\\\",\\\"role\\\":\\\"Ligthing Design\\\"},{\\\"name\\\":\\\"Leo Basinger\\\",\\\"role\\\":\\\"Sound Design\\\"}]\"\tNULL\n90087\tMillion Dollar Quartet\tmillion-dollar-quartet\t2025\tCosta Mesa, CA\t\"[{\\\"name\\\":\\\"James Moye\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Kim Martin-Cotten\\\",\\\"role\\\":\\\"Associate Director\\\"},{\\\"name\\\":\\\"Wiley DeWeese\\\",\\\"role\\\":\\\"Music Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis & Efren Delgadillo Jr\\\",\\\"role\\\":\\\"Co-Scenic Designer\\\"},{\\\"name\\\":\\\"Kish Finnegan\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Lonnie Rafael Alcaraz\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Jeff Polunas\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"\tNULL\n90016\tBell, Book, and Candle\tbell-book-and-candle\t2025\tOkoboji, IA\t{}\tNULL\n90089\tMuch Ado About Nothing\tmuch-ado-about-nothing\t2025\tIrvine, CA\t\"[{\\\"name\\\":\\\"Eli Simon\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Kathryn Poppen\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Karyn D. Lawrence\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Aerik Harbert\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"\tNULL\n90071\tAll's Well That Ends Well\talls-well-that-ends-well\t2025\tIrvine, CA\t\"[{\\\"name\\\":\\\"Rob Salas\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Ayrika Johnson\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Nita Mendoza\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Aerik Harbert\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"\tNULL\n90077\tRomero\tromero\t2025\tColumbia, MO\t\"[{\\\"name\\\":\\\"Xiomara Cornejo\\\",\\\"role\\\":\\\"Playwright \\\"},{\\\"name\\\":\\\"David Crespy\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Mark Vital \\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Vincete Williams\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Michael Webb & Joseph Seevers\\\",\\\"role\\\":\\\"Sound Designer\\\"},{\\\"name\\\":\\\"Cherie Sampson\\\",\\\"role\\\":\\\"Projection Design\\\"},{\\\"name\\\":\\\"Lil Lamberta & Claire Bronchick\\\",\\\"role\\\":\\\"Puppetry \\\"},{\\\"name\\\":\\\"Rebecca Allen\\\",\\\"role\\\":\\\"Photos\\\"}]\"\tNULL\n90045\tGuys on Ice\tguys-on-ice\t2025\tOceano, CA\t\"[{\\\"name\\\":\\\"Fred Alley\\\",\\\"role\\\":\\\"Book & Lyrics\\\"},{\\\"name\\\":\\\"James Kaplan\\\",\\\"role\\\":\\\"Music\\\"},{\\\"name\\\":\\\"Dan Klarer\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Andy Hudson\\\",\\\"role\\\":\\\"Music Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Dan Klarer\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Cody Soper\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Nathan Miklas\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"\tNULL\n90041\tUrinetown\turinetown\t2024\tColumbia, MO\t\"[{\\\"name\\\":\\\"Mark Hollman\\\",\\\"role\\\":\\\"Music & Lyrics by\\\"},{\\\"name\\\":\\\"Greg Koti\\\",\\\"role\\\":\\\"Book & Lyrics by\\\"},{\\\"name\\\":\\\"Audra Sergel\\\",\\\"role\\\":\\\"Music Direction\\\"},{\\\"name\\\":\\\"Emily Ehling\\\",\\\"role\\\":\\\"Choreographed by\\\"},{\\\"name\\\":\\\"Joy Powell\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Marc W. Vial II\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Vincente Williams\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Devin Stevenson\\\",\\\"role\\\":\\\"Sound Designer\\\"},{\\\"name\\\":\\\"Rebecca Allen\\\",\\\"role\\\":\\\"Photos\\\"}]\"\tNULL\n90042\tBarefoot in the Park\tbarefoot-in-the-park\t2024\tOkoboji, IA\t\"[{\\\"name\\\":\\\"Neil Simon \\\",\\\"role\\\":\\\"Playwright\\\"},{\\\"name\\\":\\\"Brett Olson\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Shannon King\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Lennox Emery\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Kayla Slinger\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"\tNULL\n90056\tFreaky Friday\tfreaky-friday\t2024\tOkoboji, IA\t\"[{\\\"name\\\":\\\"Tom Kitt\\\",\\\"role\\\":\\\"Music\\\"},{\\\"name\\\":\\\"Brian Yorkey\\\",\\\"role\\\":\\\"Lyrics\\\"},{\\\"name\\\":\\\"Bridget Carpenter\\\",\\\"role\\\":\\\"Book\\\"},{\\\"name\\\":\\\"Josh Walden\\\",\\\"role\\\":\\\"Director / Choreographer \\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Zachary Phelps\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Savannah Bell\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Kayla Slinger\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"\tNULL\n90044\tHead Over Heels\thead-over-heels\t2023\tSilverthorne, CO\t\"[{\\\"name\\\":\\\"The Go-Go’s\\\",\\\"role\\\":\\\"Music & Lyrics by\\\"},{\\\"name\\\":\\\"Jeff Whitty\\\",\\\"role\\\":\\\"Book conceived by & original book by\\\"},{\\\"name\\\":\\\"James Magruder\\\",\\\"role\\\":\\\"Adapted by\\\"},{\\\"name\\\":\\\"Josh Walden\\\",\\\"role\\\":\\\"Directed & Choreographed by\\\"},{\\\"name\\\":\\\"Timothy Fletcher\\\",\\\"role\\\":\\\"Music Direction\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Melissa Livingston\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Merle DeWitt III\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Hudson Waldrop\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"\tNULL\n90009\t¡LOTERIA: GAME ON!\tloteria-game-on\t2023\tSilverthorne, CO\t\"[{\\\"name\\\":\\\"Mabelle Reynoso\\\",\\\"role\\\":\\\"Playwright\\\"},{\\\"name\\\":\\\"Sara Rodriguez\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Design\\\"},{\\\"name\\\":\\\"Lauryn Terceira\\\",\\\"role\\\":\\\"Costume Design\\\"},{\\\"name\\\":\\\"Jesús Lopez\\\",\\\"role\\\":\\\"Lighting Design\\\"},{\\\"name\\\":\\\"Grayson Moreno\\\",\\\"role\\\":\\\"Sound Design\\\"},{\\\"name\\\":\\\"Merle Dewitt\\\",\\\"role\\\":\\\"Projection Design\\\"}]\"\tNULL\n90054\tBoeing, Boeing\tboeing-boeing\t2023\tColumbia, MO\t\"[{\\\"name\\\":\\\"Marc Camoletti\\\",\\\"role\\\":\\\"Playwright\\\"},{\\\"name\\\":\\\"John Hemphill\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Fae Riemann-Royer\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Katie Cohen\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Michael Burke\\\",\\\"role\\\":\\\"Sound Designer\\\"},{\\\"name\\\":\\\"Rebecca Allen\\\",\\\"role\\\":\\\"Photos\\\"}]\"\tNULL\n90053\tThe Merry Wives of Windsor\tthe-merry-wives-of-windsor\t2022\tColumbia, MO\t\"[{\\\"name\\\":\\\"Jamey Grisham\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Alice Crist\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Lennox Emery\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Michael Burke\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"\tNULL\n90036\tAn Inspector Calls\tan-inspector-calls\t2022\tSpirit Lake, IA\t\"[{\\\"name\\\":\\\"J.B. Priestley\\\",\\\"role\\\":\\\"Playwright \\\"},{\\\"name\\\":\\\"Stephen Brotebeck\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Kirsteen Buchanan\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Lennox Emery\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Stephen Brotebeck\\\",\\\"role\\\":\\\"Sound Design\\\"}]\"\tNULL\n90049\tA Funny Thing Happened on the Way to the Forum\ta-funny-thing-happened\t2022\tSilverthorne, CO\t\"[{\\\"name\\\":\\\"Stephens Sondheim \\\",\\\"role\\\":\\\"Music and Lyrics\\\"},{\\\"name\\\":\\\"Mellisa Livingston\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Len Rhodes\\\",\\\"role\\\":\\\"Music Director\\\"},{\\\"name\\\":\\\"Rachel Leigh Dolan\\\",\\\"role\\\":\\\"Choreographer\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Rachel Anne Germinario\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Kenrick Fischer\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Matthew Eckstein\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"\tNULL\n90039\tTomás and the Library Lady\ttomas-and-the-library-lady\t2022\tSilverthorne, CO\t\"[{\\\"name\\\":\\\"Pat Mora\\\",\\\"role\\\":\\\"From the Book by\\\"},{\\\"name\\\":\\\"José Cruz González\\\",\\\"role\\\":\\\"Adapted by\\\"},{\\\"name\\\":\\\"Sara Rodriguez\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Lauryn Terciera\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Nita Mendoza\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Noel Nichols\\\",\\\"role\\\":\\\"Sound Designer\\\"},{\\\"name\\\":\\\"Jesús López Vargas\\\",\\\"role\\\":\\\"Projection Designer\\\"}]\"\tNULL\n90051\tThe Penelopiad\tthe-penelopiad\t2020\tIrvine, CA\t\"[{\\\"name\\\":\\\"Margaret Atwood\\\",\\\"role\\\":\\\"Playwright\\\"},{\\\"name\\\":\\\"Sara Rodriguez\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Luke Shepherd\\\",\\\"role\\\":\\\"Composer\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Sarah Monaghan\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Avery Reagan\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Jack Bueermann\\\",\\\"role\\\":\\\"Sound Designer\\\"},{\\\"name\\\":\\\"Merle DeWitt III\\\",\\\"role\\\":\\\"Projection Design\\\"}]\"\tNULL\n90019\tCompany\tcompany\t2019\tIrvine, CA\t\"[{\\\"name\\\":\\\"Stephens Sondheim\\\",\\\"role\\\":\\\"Music & Lyrics by\\\"},{\\\"name\\\":\\\"George Furth\\\",\\\"role\\\":\\\"Book by\\\"},{\\\"name\\\":\\\"Eli Siomon\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Lex Leigh\\\",\\\"role\\\":\\\"Music Direction\\\"},{\\\"name\\\":\\\"Allison Eversol\\\",\\\"role\\\":\\\"Choreography \\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Cassie DeFile\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Jacob P. Brinkman\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Garrett Gagnon\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"\tNULL\n90048\tThe Pajama Game\tthe-pajama-game\t2019\tIrvine, CA\t\"[{\\\"name\\\":\\\"Richard Adler & Jerry Ross\\\",\\\"role\\\":\\\"Music & Lyrics by\\\"},{\\\"name\\\":\\\"George Abbott & Richard Bissell\\\",\\\"role\\\":\\\"Book by\\\"},{\\\"name\\\":\\\"Don Hill\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Lex Leigh\\\",\\\"role\\\":\\\"Music Direction\\\"},{\\\"name\\\":\\\"Allison Eversol\\\",\\\"role\\\":\\\"Choreography\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Sarah Monaghan\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Natori Cummings-Haynes\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Ningru Guo\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"\tNULL\n90018\tParliament Square\tparliament-square\t2019\tIrvine, CA\t\"[{\\\"name\\\":\\\"James Fritz\\\",\\\"role\\\":\\\"Playwright\\\"},{\\\"name\\\":\\\"Jane Page\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Matthew Martinez\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Jacob P. Brinkman\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Ezra Anisman & Garrett Gagnon\\\",\\\"role\\\":\\\"Sound Design\\\"},{\\\"name\\\":\\\"Merle DeWitt III\\\",\\\"role\\\":\\\"Projection Design\\\"}]\"\tNULL\n90038\tAmerican Idiot\tamerican-idiot\t2018\tIrvine, CA\t\"[{\\\"name\\\":\\\"Green Day\\\",\\\"role\\\":\\\"Music\\\"},{\\\"name\\\":\\\"Bill Joe Armstrong \\\",\\\"role\\\":\\\"Lyrics \\\"},{\\\"name\\\":\\\"Billie Joe Armstrong & Michael Mayer\\\",\\\"role\\\":\\\"Book\\\"},{\\\"name\\\":\\\"Andrew Palermo\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Lex Leigh\\\",\\\"role\\\":\\\"Music Director\\\"},{\\\"name\\\":\\\"Allison Eversol \\\",\\\"role\\\":\\\"Choreographer\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Jennifer Clark\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"David Hern\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Jordan Tani\\\",\\\"role\\\":\\\"Sound Designer\\\"},{\\\"name\\\":\\\"Elizabeth Barrett\\\",\\\"role\\\":\\\"Projection Design\\\"}]\"\tNULL\n90043\tAngel Street\tangel-street\t2013\tColumbia, MO\t\"[{\\\"name\\\":\\\"Patrick Hamilton\\\",\\\"role\\\":\\\"Playwright\\\"},{\\\"name\\\":\\\"Rich Cole\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Ashley Harrison\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Christopher Boew\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Michael Burke\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"\tNULL\n90017\tAll My Sons\tall-my-sons\t2010\tColumbia, MO\t\"[{\\\"name\\\":\\\"Lamby Hedge\\\",\\\"role\\\":\\\"Director\\\"},{\\\"name\\\":\\\"Brandon PT Davis\\\",\\\"role\\\":\\\"Scenic Designer\\\"},{\\\"name\\\":\\\"Kate Wood\\\",\\\"role\\\":\\\"Costume Designer\\\"},{\\\"name\\\":\\\"Emily Swenson\\\",\\\"role\\\":\\\"Lighting Designer\\\"},{\\\"name\\\":\\\"Michael Burke\\\",\\\"role\\\":\\\"Sound Designer\\\"}]\"\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 64
+}

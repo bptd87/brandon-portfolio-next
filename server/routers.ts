@@ -990,6 +990,34 @@ export const appRouter = router({
         }
       }),
   }),
+
+  // ============ COLLABORATORS ============
+  collaborators: router({
+    list: publicProcedure
+      .input(z.object({ 
+        role: z.enum(['director', 'scenic_designer', 'costume_designer', 'lighting_designer', 'sound_designer', 'projection_designer', 'theatre_company', 'partner_company']).optional(),
+        featured: z.boolean().optional()
+      }).optional())
+      .query(async ({ input }) => {
+        return await db.getAllCollaborators(input);
+      }),
+    
+    getBySlug: publicProcedure
+      .input(z.object({ slug: z.string() }))
+      .query(async ({ input }) => {
+        const collaborator = await db.getCollaboratorBySlug(input.slug);
+        if (!collaborator) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Collaborator not found' });
+        }
+        return collaborator;
+      }),
+    
+    getProjects: publicProcedure
+      .input(z.object({ collaboratorId: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getCollaboratorProjects(input.collaboratorId);
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;
