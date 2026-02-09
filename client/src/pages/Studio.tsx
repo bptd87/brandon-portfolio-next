@@ -101,8 +101,7 @@ export default function Studio() {
               return (
               <AnimatedSection key={article.id} delay={index * 100}>
                 <Link href={`/articles/${article.slug}`}>
-                  <Card className="group cursor-pointer overflow-hidden border-2 border-transparent hover:border-[var(--category-color)] bg-transparent hover:scale-[1.02] transition-all duration-500"
-                    style={{ '--category-color': categoryColor } as React.CSSProperties}>
+                  <Card className="group cursor-pointer overflow-hidden border-0 bg-transparent hover:scale-[1.02] transition-all duration-500">
                     <div className="relative aspect-[16/9] overflow-hidden rounded-lg mb-4">
                       {article.coverImageUrl ? (
                         <ProgressiveImage

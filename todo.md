@@ -2124,3 +2124,4 @@
 - [x] Optimize page loading with code splitting and resource preloading
 - [x] Redesign Studio landing page as narrative-driven learning and tools hub with Articles featured at top
 - [x] Add category metadata and color-coded hover effects to article cards on Studio page
+- [x] Fix article card hover - remove border, use category accent color for title
