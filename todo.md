@@ -1677,3 +1677,7 @@
 - [x] Abandon ghost light concept (too complicated)
 - [x] Create typography-focused 404 with theatrical message
 - [x] Focus on quality over complexity
+
+## Fix 404 Page Portfolio Link (User Reported - Feb 9, 2026)
+- [x] Find correct portfolio route (/projects)
+- [x] Update View Portfolio button to link to /projects instead of /work
