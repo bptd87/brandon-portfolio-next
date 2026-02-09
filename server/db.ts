@@ -8,7 +8,8 @@ import {
   news, InsertNews, newsTags,
   articles, InsertArticle, articleTags,
   comments, InsertComment,
-  tutorialProgress, InsertTutorialProgress
+  tutorialProgress, InsertTutorialProgress,
+  paintRecipes, InsertPaintRecipe
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -661,4 +662,58 @@ export async function updateTutorialProgress(id: number, data: Partial<InsertTut
   if (!db) throw new Error("Database not available");
 
   await db.update(tutorialProgress).set(data).where(eq(tutorialProgress.id, id));
+}
+
+// ============ PAINT RECIPE OPERATIONS ============
+
+export async function createPaintRecipe(recipe: InsertPaintRecipe) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const [result] = await db.insert(paintRecipes).values(recipe);
+  return result;
+}
+
+export async function getUserPaintRecipes(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const recipes = await db
+    .select()
+    .from(paintRecipes)
+    .where(eq(paintRecipes.userId, userId))
+    .orderBy(desc(paintRecipes.createdAt));
+  
+  return recipes;
+}
+
+export async function getPaintRecipeById(id: number, userId: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const [recipe] = await db
+    .select()
+    .from(paintRecipes)
+    .where(and(eq(paintRecipes.id, id), eq(paintRecipes.userId, userId)));
+  
+  return recipe || null;
+}
+
+export async function updatePaintRecipe(id: number, userId: number, data: Partial<InsertPaintRecipe>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db
+    .update(paintRecipes)
+    .set(data)
+    .where(and(eq(paintRecipes.id, id), eq(paintRecipes.userId, userId)));
+}
+
+export async function deletePaintRecipe(id: number, userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db
+    .delete(paintRecipes)
+    .where(and(eq(paintRecipes.id, id), eq(paintRecipes.userId, userId)));
 }

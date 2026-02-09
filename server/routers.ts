@@ -889,6 +889,58 @@ export const appRouter = router({
       }),
   }),
 
+  // ============ PAINT RECIPES ============
+  paintRecipes: router({
+    saveRecipe: protectedProcedure
+      .input(z.object({
+        name: z.string().min(1).max(255),
+        notes: z.string().optional(),
+        targetColor: z.string().regex(/^#[0-9A-F]{6}$/i),
+        mixingRecipe: z.array(z.object({
+          paintId: z.string(),
+          paintName: z.string(),
+          color: z.string(),
+          parts: z.number(),
+        })),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const result = await db.createPaintRecipe({
+          userId: ctx.user.id,
+          ...input,
+        });
+        return { id: result.insertId };
+      }),
+
+    getRecipes: protectedProcedure.query(async ({ ctx }) => {
+      return await db.getUserPaintRecipes(ctx.user.id);
+    }),
+
+    getRecipeById: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ ctx, input }) => {
+        return await db.getPaintRecipeById(input.id, ctx.user.id);
+      }),
+
+    updateRecipe: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        name: z.string().min(1).max(255).optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { id, ...data } = input;
+        await db.updatePaintRecipe(id, ctx.user.id, data);
+        return { success: true };
+      }),
+
+    deleteRecipe: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        await db.deletePaintRecipe(input.id, ctx.user.id);
+        return { success: true };
+      }),
+  }),
+
   // ============ TUTORIAL PROGRESS TRACKING ============
   tutorialProgress: router({
     // Get user's progress for all tutorials

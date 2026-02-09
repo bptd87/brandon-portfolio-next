@@ -1575,3 +1575,19 @@
 - [x] Update StudioApps page with Rosco Paint Calculator card
 - [x] Test calculator functionality (mixing ratios, coverage calculations)
 - [x] Verify responsive design on mobile and desktop
+
+## Rosco Paint Calculator Saved Recipes Feature (User Requested - Feb 8, 2026)
+- [x] Create database schema for paint_recipes table (id, userId, name, notes, targetColor, mixingRecipe, createdAt)
+- [x] Generate and apply database migration SQL
+- [x] Add database helper functions in server/db.ts for recipe CRUD operations
+- [x] Create tRPC procedures for saveRecipe, getRecipes, updateRecipe, deleteRecipe
+- [x] Add "Save Recipe" button and modal to RoscoPaintCalculator UI
+- [x] Create SavedRecipes component to display user's saved recipes
+- [x] Add recipe management UI (edit name/notes, delete, load recipe)
+- [ ] Write vitest unit tests for recipe CRUD operations
+- [ ] Test full saved recipes workflow in browser
+
+## Rosco Paint Calculator Layout Improvement (User Requested - Feb 8, 2026)
+- [x] Remove "Rosco Paint Abstract" component with blank image
+- [x] Simplify layout to focus on color picker, mixing recipe, and paint library
+- [x] Test improved user-friendly layout

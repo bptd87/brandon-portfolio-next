@@ -64,6 +64,13 @@
       "when": 1770546477257,
       "tag": "0008_careless_starfox",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1770603105513,
+      "tag": "0009_sweet_lizard",
+      "breakpoints": true
     }
   ]
 }

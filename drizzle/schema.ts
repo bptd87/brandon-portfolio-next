@@ -442,3 +442,28 @@ export const scenicDirectory = mysqlTable("scenicDirectory", {
 
 export type ScenicDirectoryItem = typeof scenicDirectory.$inferSelect;
 export type InsertScenicDirectoryItem = typeof scenicDirectory.$inferInsert;
+
+/**
+ * Saved paint recipes for Rosco Paint Calculator
+ */
+export const paintRecipes = mysqlTable("paintRecipes", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  name: varchar("name", { length: 255 }).notNull(),
+  notes: text("notes"),
+  targetColor: varchar("targetColor", { length: 7 }).notNull(), // Hex color code
+  mixingRecipe: json("mixingRecipe").$type<Array<{
+    paintId: string;
+    paintName: string;
+    color: string;
+    parts: number;
+  }>>().notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userIdx: index("user_idx").on(table.userId),
+  createdAtIdx: index("created_at_idx").on(table.createdAt),
+}));
+
+export type PaintRecipe = typeof paintRecipes.$inferSelect;
+export type InsertPaintRecipe = typeof paintRecipes.$inferInsert;

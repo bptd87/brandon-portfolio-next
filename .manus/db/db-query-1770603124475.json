@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE `paintRecipes` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`userId` int NOT NULL,\n\t`name` varchar(255) NOT NULL,\n\t`notes` text,\n\t`targetColor` varchar(7) NOT NULL,\n\t`mixingRecipe` json NOT NULL,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\t`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,\n\tCONSTRAINT `paintRecipes_id` PRIMARY KEY(`id`)\n);\n\nALTER TABLE `paintRecipes` ADD CONSTRAINT `paintRecipes_userId_users_id_fk` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE no action;\n\nCREATE INDEX `user_idx` ON `paintRecipes` (`userId`);\n\nCREATE INDEX `created_at_idx` ON `paintRecipes` (`createdAt`);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute CREATE TABLE `paintRecipes` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`userId` int NOT NULL,\n\t`name` varchar(255) NOT NULL,\n\t`notes` text,\n\t`targetColor` varchar(7) NOT NULL,\n\t`mixingRecipe` json NOT NULL,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\t`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,\n\tCONSTRAINT `paintRecipes_id` PRIMARY KEY(`id`)\n);\n\nALTER TABLE `paintRecipes` ADD CONSTRAINT `paintRecipes_userId_users_id_fk` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE cascade ON UPDATE no action;\n\nCREATE INDEX `user_idx` ON `paintRecipes` (`userId`);\n\nCREATE INDEX `created_at_idx` ON `paintRecipes` (`createdAt`);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 5996
+}
