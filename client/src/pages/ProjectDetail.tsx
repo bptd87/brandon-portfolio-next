@@ -233,9 +233,7 @@ export default function ProjectDetail() {
             className="w-full h-full object-cover"
           />
         ) : (
-          <div className="w-full h-full bg-muted flex items-center justify-center">
-            <p className="text-muted-foreground text-2xl">No cover image</p>
-          </div>
+          <div className="w-full h-full bg-background" />
         )}
         
         {/* Gradient overlay */}
@@ -254,23 +252,23 @@ export default function ProjectDetail() {
             {/* CLIENT LOGOS - Clean & Prominent */}
             {(metadata.redBullLogo || metadata.lumenatiLogo) && (
               <div className="mb-6">
-                <div className="inline-flex items-center gap-6 flex-wrap mb-3 bg-white/95 backdrop-blur-sm px-6 py-4 rounded-lg">
+                <div className="flex items-center gap-8 flex-wrap mb-4">
                   {metadata.redBullLogo && (
                     <img 
                       src={metadata.redBullLogo} 
                       alt="Red Bull" 
-                      className="h-12 md:h-16 w-auto"
+                      className="h-16 md:h-20 w-auto"
                     />
                   )}
                   {metadata.lumenatiLogo && (
                     <img 
                       src={metadata.lumenatiLogo} 
                       alt="Lumenati" 
-                      className="h-12 md:h-16 w-auto"
+                      className="h-16 md:h-20 w-auto"
                     />
                   )}
                 </div>
-                <div className="text-xs font-pixel text-foreground/80 tracking-wider">
+                <div className="text-xs font-pixel text-foreground/70 tracking-wider">
                   CLIENT: RED BULL  •  AGENCY: LUMENATI  •  ROLE: TECHNICAL DESIGNER
                 </div>
               </div>

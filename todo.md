@@ -1987,3 +1987,9 @@
 - [x] Convert Event Photos from collapsible to proper gallery grid (like Technical Drawings)
 - [x] Update copy to singular voice - Brandon is one person, not "we"
 - [x] Review copy against August Jackson/Lumenati references for tone and style
+
+## Red Bull Jukebox - Logo & Hero Fixes
+- [x] Find white/light version of Red Bull logo that works on dark background
+- [x] Find white/light version of Lumenati logo that works on dark background
+- [x] Remove hero cover image entirely - use solid dark background instead
+- [x] Remove white box around logos (weak solution)
