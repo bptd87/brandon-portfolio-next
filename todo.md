@@ -2056,3 +2056,4 @@
 - [ ] Build /about/collaborators page with filtering (Directors, Scenic, Costume, Lighting, Sound, Projection, Theatre Companies, Companies)
 - [ ] Add cross-linking from project detail pages to collaborator profiles
 - [ ] Add "Projects Worked On" section to each collaborator profile
+- [x] Extract all collaborators from projects and CV, deduplicate, and populate database
