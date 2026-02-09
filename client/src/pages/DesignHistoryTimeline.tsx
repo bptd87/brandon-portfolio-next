@@ -465,16 +465,20 @@ export default function DesignHistoryTimeline() {
           transition={{ duration: 0.8 }}
           className="mb-12"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-neutral-200/60 dark:bg-neutral-900/60 backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-full mb-8">
-            <Calendar className="w-3.5 h-3.5 text-black/60 dark:text-white/60" />
-            <span className="font-pixel text-[10px] tracking-[0.2em] text-black/60 dark:text-white/60">EXPLORE TIMELINE</span>
+          <div className="flex items-center gap-2 mb-2">
+            <Calendar className="w-4 h-4 text-[#9C27B0]" />
+            <span className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
+              DESIGN HISTORY TIMELINE
+            </span>
+            <span className="ml-2 px-2 py-0.5 text-[10px] font-semibold tracking-wider bg-amber-500/20 text-amber-700 dark:text-amber-400 border border-amber-500/30 rounded-full">
+              BETA
+            </span>
           </div>
-
-          <h1 className="font-display text-black dark:text-white text-5xl md:text-6xl lg:text-7xl mb-6 leading-[0.95] italic">
-            Design History Timeline
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-2">
+            Architectural Design Through History
           </h1>
-          <p className="text-xl md:text-2xl text-black/70 dark:text-white/70 leading-relaxed max-w-3xl">
-            Click any period to explore. Scroll through history from Ancient Egypt to today.
+          <p className="text-sm md:text-base text-muted-foreground max-w-2xl">
+            Explore 28 design periods from Ancient Egypt to Contemporary. Click any period to view reference images, characteristics, and key figures.
           </p>
         </motion.div>
 

@@ -1547,3 +1547,9 @@
 - [x] Upload all replacement cover images to S3 (10 images uploaded)
 - [x] Update timeline data with correct cover images
 - [x] Test all 28 periods to verify image accuracy and completeness
+
+## Design History Timeline Header Update (User Requested - Feb 8, 2026)
+- [x] Check Dimension Reference header format for consistency
+- [x] Update Design History Timeline header to match other Studio apps
+- [x] Add beta badge to indicate work-in-progress status
+- [x] Test header appearance and verify consistency
