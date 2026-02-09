@@ -1,0 +1,130 @@
+{
+  "query": "SELECT id, title, subcategory FROM projects WHERE discipline = 'scenic_design' ORDER BY subcategory, title LIMIT 30;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT id, title, subcategory FROM projects WHERE discipline = 'scenic_design' ORDER BY subcategory, title LIMIT 30;",
+  "rows": [
+    {
+      "id": "90042",
+      "title": "Barefoot in the Park",
+      "subcategory": "Comedy"
+    },
+    {
+      "id": "90016",
+      "title": "Bell, Book, and Candle",
+      "subcategory": "Comedy"
+    },
+    {
+      "id": "90054",
+      "title": "Boeing, Boeing",
+      "subcategory": "Comedy"
+    },
+    {
+      "id": "90017",
+      "title": "All My Sons",
+      "subcategory": "Drama"
+    },
+    {
+      "id": "90036",
+      "title": "An Inspector Calls",
+      "subcategory": "Drama"
+    },
+    {
+      "id": "90043",
+      "title": "Angel Street",
+      "subcategory": "Drama"
+    },
+    {
+      "id": "90018",
+      "title": "Parliament Square",
+      "subcategory": "Drama"
+    },
+    {
+      "id": "90077",
+      "title": "Romero",
+      "subcategory": "Drama"
+    },
+    {
+      "id": "90010",
+      "title": "The Glass Menagerie",
+      "subcategory": "Drama"
+    },
+    {
+      "id": "90051",
+      "title": "The Penelopiad",
+      "subcategory": "Drama"
+    },
+    {
+      "id": "90049",
+      "title": "A Funny Thing Happened on the Way to the Forum",
+      "subcategory": "Musical Theatre"
+    },
+    {
+      "id": "90038",
+      "title": "American Idiot",
+      "subcategory": "Musical Theatre"
+    },
+    {
+      "id": "90019",
+      "title": "Company",
+      "subcategory": "Musical Theatre"
+    },
+    {
+      "id": "90056",
+      "title": "Freaky Friday",
+      "subcategory": "Musical Theatre"
+    },
+    {
+      "id": "90045",
+      "title": "Guys on Ice",
+      "subcategory": "Musical Theatre"
+    },
+    {
+      "id": "90044",
+      "title": "Head Over Heels",
+      "subcategory": "Musical Theatre"
+    },
+    {
+      "id": "90087",
+      "title": "Million Dollar Quartet",
+      "subcategory": "Musical Theatre"
+    },
+    {
+      "id": "90048",
+      "title": "The Pajama Game",
+      "subcategory": "Musical Theatre"
+    },
+    {
+      "id": "90041",
+      "title": "Urinetown",
+      "subcategory": "Musical Theatre"
+    },
+    {
+      "id": "90071",
+      "title": "All's Well That Ends Well",
+      "subcategory": "Shakespeare"
+    },
+    {
+      "id": "90089",
+      "title": "Much Ado About Nothing",
+      "subcategory": "Shakespeare"
+    },
+    {
+      "id": "90053",
+      "title": "The Merry Wives of Windsor",
+      "subcategory": "Shakespeare"
+    },
+    {
+      "id": "90009",
+      "title": "¡LOTERIA: GAME ON!",
+      "subcategory": "Theatre for Young Audiences"
+    },
+    {
+      "id": "90039",
+      "title": "Tomás and the Library Lady",
+      "subcategory": "Theatre for Young Audiences"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tsubcategory\n90042\tBarefoot in the Park\tComedy\n90016\tBell, Book, and Candle\tComedy\n90054\tBoeing, Boeing\tComedy\n90017\tAll My Sons\tDrama\n90036\tAn Inspector Calls\tDrama\n90043\tAngel Street\tDrama\n90018\tParliament Square\tDrama\n90077\tRomero\tDrama\n90010\tThe Glass Menagerie\tDrama\n90051\tThe Penelopiad\tDrama\n90049\tA Funny Thing Happened on the Way to the Forum\tMusical Theatre\n90038\tAmerican Idiot\tMusical Theatre\n90019\tCompany\tMusical Theatre\n90056\tFreaky Friday\tMusical Theatre\n90045\tGuys on Ice\tMusical Theatre\n90044\tHead Over Heels\tMusical Theatre\n90087\tMillion Dollar Quartet\tMusical Theatre\n90048\tThe Pajama Game\tMusical Theatre\n90041\tUrinetown\tMusical Theatre\n90071\tAll's Well That Ends Well\tShakespeare\n90089\tMuch Ado About Nothing\tShakespeare\n90053\tThe Merry Wives of Windsor\tShakespeare\n90009\t¡LOTERIA: GAME ON!\tTheatre for Young Audiences\n90039\tTomás and the Library Lady\tTheatre for Young Audiences\n",
+  "stderr": "",
+  "execution_time_ms": 50
+}
