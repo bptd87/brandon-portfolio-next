@@ -1725,3 +1725,26 @@
 - [x] Update navigation to link to individual portfolio pages (Header dropdown updated)
 - [x] Add routing for /projects/scenic-design, /projects/experiential, /projects/rendering, /projects/scenic-models
 - [x] Test all portfolio pages for unique visual identity
+
+## Create Unique Project Detail Pages for Each Discipline (User Requested - Feb 9, 2026)
+- [x] Analyze current ProjectDetail page structure and reusable components
+- [x] Plan unique layouts for each discipline:
+  - Experiential: Custom-built pages (will build together one by one)
+  - Rendering: Art gallery aesthetic with software/process icons
+  - Scenic Models: Craftsmanship showcase (detail shots, materials, scale info)
+- [x] Create initial RenderingProjectDetail component
+- [x] Redesign RenderingProjectDetail with clean minimal layout:
+  - Remove info overlay on images
+  - Single full-width rendering image (one image per page)
+  - 300-word artistic narrative section (poetic, not technical)
+  - Subtle software/technical info presentation
+  - Clean, gallery-like aesthetic
+  - Comprehensive SEO optimization (meta tags, Open Graph, structured data)
+  - Tags display for categorization and SEO
+  - Alt text for all images
+- [x] Compose artistic narrative for Ashes of the Underworld (pandemic isolation, liminal space theme)
+- [x] Update routing to use RenderingProjectDetail for rendering discipline
+- [x] Test redesigned rendering detail pages with real projects
+- [ ] Ensure navigation (prev/next arrows) stays within discipline boundaries
+- [ ] Future: Create ScenicModelsProjectDetail component
+- [ ] Future: Create flexible component system for custom Experiential pages

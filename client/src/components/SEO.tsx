@@ -9,6 +9,7 @@ interface SEOProps {
   author?: string;
   publishedTime?: string;
   modifiedTime?: string;
+  keywords?: string;
 }
 
 export function SEO({
@@ -20,6 +21,7 @@ export function SEO({
   author,
   publishedTime,
   modifiedTime,
+  keywords,
 }: SEOProps) {
   const siteName = "Brandon PT Davis";
   const twitterHandle = "@brandonptdavis";
@@ -29,6 +31,7 @@ export function SEO({
       {/* Basic Meta Tags */}
       <title>{title}</title>
       <meta name="description" content={description} />
+      {keywords && <meta name="keywords" content={keywords} />}
 
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={type} />

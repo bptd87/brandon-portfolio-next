@@ -28,6 +28,7 @@ import DesignHistoryTimeline from "./pages/DesignHistoryTimeline";
 import RoscoPaintCalculator from "./pages/RoscoPaintCalculator";
 import ExperientialPortfolio from "./pages/ExperientialPortfolio";
 import RenderingPortfolio from "./pages/RenderingPortfolio";
+import ProjectDetailRouter from "./pages/ProjectDetailRouter";
 import ScenicModelsPortfolio from "./pages/ScenicModelsPortfolio";
 import TutorialDetail from "./pages/TutorialDetail";
 import NewsDetail from "./pages/NewsDetail";
@@ -58,7 +59,7 @@ function Router() {
       <Route path={"/projects/experiential"} component={ExperientialPortfolio} />
       <Route path={"/projects/rendering"} component={RenderingPortfolio} />
       <Route path={"/projects/scenic-models"} component={ScenicModelsPortfolio} />
-      <Route path={"/projects/:slug"} component={ProjectDetail} />
+      <Route path={"/projects/:slug"} component={ProjectDetailRouter} />
       <Route path={"/news"} component={News} />
       <Route path={"/news/:slug"} component={NewsDetail} />
       <Route path={"/articles"} component={Articles} />
