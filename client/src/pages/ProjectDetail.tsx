@@ -247,13 +247,39 @@ export default function ProjectDetail() {
           style={{ backgroundColor: accentColor }}
         />
 
-        {/* Project info overlay - bottom positioned */}
+        {/* Project info overlay - EXPERIENTIAL AGENCY STYLE */}
         <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16 lg:p-24">
           <div className="container max-w-5xl">
-            <div className="flex items-center gap-4 mb-6">
+            
+            {/* HUGE CLIENT LOGOS AT TOP - Experiential Agency Style */}
+            {(metadata.redBullLogo || metadata.lumenatiLogo) && (
+              <div className="mb-8">
+                <div className="flex items-center gap-6 flex-wrap mb-4">
+                  {metadata.redBullLogo && (
+                    <img 
+                      src={metadata.redBullLogo} 
+                      alt="Red Bull" 
+                      className="h-20 md:h-24 w-auto brightness-110"
+                    />
+                  )}
+                  {metadata.lumenatiLogo && (
+                    <img 
+                      src={metadata.lumenatiLogo} 
+                      alt="Lumenati" 
+                      className="h-20 md:h-24 w-auto opacity-95"
+                    />
+                  )}
+                </div>
+                <div className="text-xs md:text-sm font-pixel text-foreground/70 tracking-wider">
+                  CLIENT: RED BULL  •  AGENCY: LUMENATI  •  ROLE: TECHNICAL DESIGNER
+                </div>
+              </div>
+            )}
+
+            <div className="flex items-center gap-4 mb-4">
               <Badge 
                 variant="outline" 
-                className="text-sm tracking-wider font-semibold bg-background/80 backdrop-blur-sm px-4 py-2 border-2"
+                className="text-xs md:text-sm tracking-wider font-semibold bg-background/80 backdrop-blur-sm px-3 py-1.5 border-2"
                 style={{
                   borderColor: accentColor,
                   color: accentColor
@@ -262,19 +288,26 @@ export default function ProjectDetail() {
                 {project.discipline?.toUpperCase() || 'PROJECT'}
               </Badge>
               {project.year && (
-                <span className="text-sm text-foreground/80 font-pixel">{project.year}</span>
+                <span className="text-xs md:text-sm text-foreground/80 font-pixel">{project.year}</span>
               )}
             </div>
             
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-6 leading-tight">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-4 leading-tight">
               {project.title}
             </h1>
 
-            <div className="flex items-center gap-6 text-foreground/90 flex-wrap text-base mb-8">
-              {project.client && (
+            {/* PUNCHY EXCERPT */}
+            {project.excerpt && (
+              <p className="text-lg md:text-xl font-semibold text-foreground/90 mb-6 leading-relaxed">
+                {project.excerpt}
+              </p>
+            )}
+
+            <div className="flex items-center gap-4 text-foreground/80 flex-wrap text-sm md:text-base">
+              {metadata.venue && (
                 <div className="flex items-center gap-2">
-                  <MapPin className="h-5 w-5" />
-                  <span>{project.client}</span>
+                  <MapPin className="h-4 w-4" />
+                  <span>{metadata.venue}</span>
                 </div>
               )}
               {project.location && (
@@ -283,48 +316,13 @@ export default function ProjectDetail() {
                   <span>{project.location}</span>
                 </div>
               )}
-              {project.year && (
-                <div className="flex items-center gap-2">
-                  <Calendar className="h-5 w-5" />
-                  <span>{project.year}</span>
-                </div>
-              )}
-              {metadata.venue && (
-                <div className="flex items-center gap-2">
-                  <span>•</span>
-                  <span>{metadata.venue}</span>
-                </div>
-              )}
               {metadata.venueCapacity && (
                 <div className="flex items-center gap-2">
                   <span>•</span>
-                  <span>{metadata.venueCapacity} capacity</span>
+                  <span className="font-semibold">{metadata.venueCapacity} CAPACITY</span>
                 </div>
               )}
             </div>
-
-            {/* Brand Logos - Agency Style */}
-            {(metadata.lumenatiLogo || metadata.redBullLogo) && (
-              <div className="mb-8">
-                <div className="text-xs font-pixel text-foreground/60 mb-3 tracking-wider">IN COLLABORATION WITH</div>
-                <div className="flex items-center gap-8 flex-wrap">
-                  {metadata.lumenatiLogo && (
-                    <img 
-                      src={metadata.lumenatiLogo} 
-                      alt="Lumenati" 
-                      className="h-16 w-auto opacity-90 hover:opacity-100 transition-all hover:scale-105"
-                    />
-                  )}
-                  {metadata.redBullLogo && (
-                    <img 
-                      src={metadata.redBullLogo} 
-                      alt="Red Bull" 
-                      className="h-16 w-auto opacity-90 hover:opacity-100 transition-all hover:scale-105"
-                    />
-                  )}
-                </div>
-              </div>
-            )}
 
             <Link href="/projects">
               <Button 
@@ -343,6 +341,38 @@ export default function ProjectDetail() {
       {/* Content Sections */}
       <div className="container max-w-5xl py-16 space-y-16">
         
+        {/* BIG STATS - Experiential Agency Style */}
+        {metadata.venueCapacity && (
+          <AnimatedSection>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-8 md:p-12 rounded-2xl border-2" style={{ borderColor: accentColor + '40' }}>
+              <div className="text-center">
+                <div className="text-5xl md:text-6xl font-black mb-2" style={{ color: accentColor }}>
+                  {metadata.venueCapacity}
+                </div>
+                <div className="text-sm md:text-base font-semibold text-foreground/70 tracking-wider uppercase">
+                  Fans in Attendance
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="text-5xl md:text-6xl font-black mb-2" style={{ color: accentColor }}>
+                  1
+                </div>
+                <div className="text-sm md:text-base font-semibold text-foreground/70 tracking-wider uppercase">
+                  Unforgettable Night
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="text-5xl md:text-6xl font-black mb-2" style={{ color: accentColor }}>
+                  100%
+                </div>
+                <div className="text-sm md:text-base font-semibold text-foreground/70 tracking-wider uppercase">
+                  Fan-Controlled Setlist
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+        )}
+
         {/* Design Notes */}
         {designNotes && (
           <AnimatedSection>
@@ -350,8 +380,34 @@ export default function ProjectDetail() {
               <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: accentColor }}>
                 Design Notes
               </h2>
-              <div className="text-foreground/80 leading-relaxed whitespace-pre-wrap">
-                {showFullNotes ? designNotes : notesPreview}
+              <div className="text-foreground/80 leading-relaxed whitespace-pre-wrap space-y-6">
+                {(showFullNotes ? designNotes : notesPreview)
+                  .split('\n\n')
+                  .map((paragraph, idx) => {
+                    // Check if paragraph is a section header (all caps, short)
+                    const isHeader = paragraph.trim().length < 30 && 
+                                    paragraph.trim() === paragraph.trim().toUpperCase() &&
+                                    !paragraph.includes('→') &&
+                                    !paragraph.includes('•');
+                    
+                    if (isHeader) {
+                      return (
+                        <h3 
+                          key={idx} 
+                          className="text-2xl font-black tracking-tight mt-8 mb-4"
+                          style={{ color: accentColor }}
+                        >
+                          {paragraph.trim()}
+                        </h3>
+                      );
+                    }
+                    
+                    return (
+                      <p key={idx} className="leading-relaxed">
+                        {paragraph}
+                      </p>
+                    );
+                  })}
               </div>
               {shouldShowReadMore && (
                 <Button

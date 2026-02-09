@@ -1945,3 +1945,21 @@
 - [x] Change "Renderings" label to "Technical Drawings" or "CNC Drafting Plates"
 - [x] Remove duplicate production photo (Brothers Osborne image appears twice)
 - [x] Add more event photos to showcase completed installation
+
+## Red Bull Jukebox - TRUE Experiential Agency Redesign
+- [ ] Fix Lumenati logo not displaying in hero section
+- [ ] Clarify client hierarchy: Red Bull (brand client) → Lumenati (agency) → Brandon (freelancer for Lumenati)
+- [ ] Replace long text paragraphs with bold, punchy headlines
+- [ ] Add large stats/numbers section (6,800 fans, venue capacity, etc.)
+- [ ] Add icons for key project elements (LED, CNC, fabrication, etc.)
+- [ ] Create visual-first layout with less text, more impact
+- [ ] Redesign "Design Notes" section to be more scannable with callouts
+- [ ] Consider adding project highlights/key deliverables section with icons
+
+## Red Bull Jukebox - REFINED Experiential Design (AJ + Lumenati hybrid)
+- [x] Keep large logos at top (current implementation is good)
+- [x] Restructure Design Notes with bold section headers: "THE CHALLENGE", "THE SOLUTION", "THE PROCESS", "THE IMPACT"
+- [x] Keep stats section but refine styling (cards with borders, not just numbers)
+- [x] Add more visual breathing room between sections
+- [x] Make copy more conversational but still professional (between AJ's structure and Lumenati's edge)
+- [x] Ensure hierarchy is clear: Client logos → Stats → Story → Images
