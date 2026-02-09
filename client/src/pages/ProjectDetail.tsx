@@ -503,14 +503,21 @@ export default function ProjectDetail() {
               
               {teamOpen && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {creativeTeamArray.map((member, idx) => (
-                    <div key={idx} className="flex items-start gap-4 p-4 rounded-lg bg-muted/50 border border-border">
-                      <div className="flex-1">
-                        <p className="font-semibold text-foreground">{member.name}</p>
-                        <p className="text-sm text-muted-foreground">{member.role}</p>
-                      </div>
-                    </div>
-                  ))}
+                  {creativeTeamArray.map((member, idx) => {
+                    // Create slug from name for collaborator link
+                    const slug = member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                    
+                    return (
+                      <Link key={idx} href={`/about/collaborators#${slug}`}>
+                        <div className="flex items-start gap-4 p-4 rounded-lg bg-muted/50 border border-border hover:bg-muted hover:border-[#FF5722] transition-all duration-300 cursor-pointer group">
+                          <div className="flex-1">
+                            <p className="font-semibold text-foreground group-hover:text-[#FF5722] transition-colors">{member.name}</p>
+                            <p className="text-sm text-muted-foreground">{member.role}</p>
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  })}
                 </div>
               )}
             </div>

@@ -131,10 +131,15 @@ export default function Collaborators() {
                       </h2>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {collaborators.map((collaborator) => (
+                        {collaborators.map((collaborator) => {
+                          // Create slug from name for anchor link
+                          const slug = collaborator.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                          
+                          return (
                           <div
                             key={collaborator.id}
-                            className="bg-card border border-border rounded-lg p-6 hover:border-foreground/20 transition-all group"
+                            id={slug}
+                            className="bg-card border border-border rounded-lg p-6 hover:border-foreground/20 transition-all group scroll-mt-32"
                           >
                             {/* Name */}
                             <h3 className="text-xl font-bold mb-2 group-hover:text-[#FF5722] transition-colors">
@@ -185,7 +190,8 @@ export default function Collaborators() {
                               )}
                             </div>
                           </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </div>
                   );

@@ -2097,3 +2097,4 @@
 - [x] Fix image cropping on portfolio cards (prevent cutting off heads)
 - [x] Update Tomas and the Library Lady subcategory to Theatre for Young Audiences
 - [x] Fix duplicate Theatre for Young Audiences subcategory filters
+- [x] Link Creative Team names to collaborator profiles
