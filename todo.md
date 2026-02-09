@@ -2101,3 +2101,4 @@
 - [x] Verify and enhance lightbox functionality for full-screen image viewing
 - [x] Expand project detail hero images to full viewport width
 - [x] Add hover effects to portfolio cards (1.05x scale + metadata reveal)
+- [x] Update hover effects to hide metadata (Alexander Dodge style)

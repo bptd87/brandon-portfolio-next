@@ -130,30 +130,24 @@ export default function Projects() {
                               alt={project.title}
                               className="w-full h-full object-cover object-[center_20%] group-hover:scale-110 transition-transform duration-700"
                             />
-                            {/* Gradient overlay - enhanced on hover */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent group-hover:from-black/90 group-hover:via-black/60 transition-all duration-500" />
+                            {/* Gradient overlay - fades out on hover to reveal full image */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent group-hover:opacity-0 transition-all duration-500" />
                             
-                            {/* Project info */}
-                            <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                            {/* Project info - fades out on hover */}
+                            <div className="absolute bottom-0 left-0 right-0 p-6 text-white group-hover:opacity-0 transition-all duration-500">
                               {project.client && (
-                                <p className="text-xs tracking-widest mb-2 opacity-80 group-hover:opacity-100 transition-opacity">
+                                <p className="text-xs tracking-widest mb-2 opacity-80">
                                   {project.client.toUpperCase()}
                                 </p>
                               )}
-                              <h3 className="text-2xl md:text-3xl font-['Playfair_Display'] italic mb-2 group-hover:scale-105 transition-transform origin-left" style={{ color: hoverColor }}>
+                              <h3 className="text-2xl md:text-3xl font-['Playfair_Display'] italic mb-2" style={{ color: hoverColor }}>
                                 {project.title}
                               </h3>
                               {project.year && (
-                                <p className="text-sm opacity-80 group-hover:opacity-100 transition-opacity">
+                                <p className="text-sm opacity-80">
                                   {project.year}
                                 </p>
                               )}
-                              
-                              {/* "View Project" indicator on hover */}
-                              <div className="flex items-center gap-2 mt-3 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
-                                <span className="text-sm font-semibold" style={{ color: hoverColor }}>VIEW PROJECT</span>
-                                <ArrowRight className="h-4 w-4" style={{ color: hoverColor }} />
-                              </div>
                             </div>
                           </>
                         ) : (
