@@ -1785,3 +1785,11 @@
 - [x] Add The Northwind Mare Tavern image to projectImages table
 - [x] Add Isolation image to projectImages table
 - [x] Verify both images display on detail pages
+
+## Fix Homepage SEO Issues (User Requested - Feb 9, 2026)
+- [x] Check current homepage keywords (currently 12, need to reduce to 3-8)
+- [x] Check current meta description (currently 172 chars, need 50-160)
+- [x] Optimize keywords to 6 focused terms (scenic design, experiential design, Brandon Davis, theatre designer, themed entertainment, immersive design)
+- [x] Shorten meta description to 158 characters
+- [x] Update homepage SEO in index.html (meta tags, Open Graph, Twitter cards)
+- [x] Verify SEO improvements
