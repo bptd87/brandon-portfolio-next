@@ -12,6 +12,7 @@ import { Lightbox } from "@/components/Lightbox";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { useTheme } from "@/contexts/ThemeContext";
 
 // Convert YouTube/Vimeo URLs to embed format
 function getEmbedUrl(url: string): string {
@@ -39,6 +40,7 @@ const ACCENT_COLORS = ['#FF5722', '#00E5FF', '#FF1744'];
 export default function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
   const [, setLocation] = useLocation();
+  const { theme } = useTheme();
   const { data: project, isLoading } = trpc.projects.getBySlug.useQuery({ slug: slug! });
   // Fetch projects in same discipline for navigation
   const { data: allProjects } = trpc.projects.list.useQuery(
@@ -249,20 +251,20 @@ export default function ProjectDetail() {
         <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16 lg:p-24">
           <div className="container max-w-5xl">
             
-            {/* CLIENT LOGOS - Clean & Prominent */}
-            {(metadata.redBullLogo || metadata.lumenatiLogo) && (
+            {/* CLIENT LOGOS - Theme-Aware */}
+            {((metadata.redBullLogoDark && metadata.redBullLogoLight) || (metadata.lumenatiLogoDark && metadata.lumenatiLogoLight)) && (
               <div className="mb-6">
                 <div className="flex items-center gap-8 flex-wrap mb-4">
-                  {metadata.redBullLogo && (
+                  {(metadata.redBullLogoDark && metadata.redBullLogoLight) && (
                     <img 
-                      src={metadata.redBullLogo} 
+                      src={theme === 'dark' ? metadata.redBullLogoDark : metadata.redBullLogoLight} 
                       alt="Red Bull" 
                       className="h-16 md:h-20 w-auto"
                     />
                   )}
-                  {metadata.lumenatiLogo && (
+                  {(metadata.lumenatiLogoDark && metadata.lumenatiLogoLight) && (
                     <img 
-                      src={metadata.lumenatiLogo} 
+                      src={theme === 'dark' ? metadata.lumenatiLogoDark : metadata.lumenatiLogoLight} 
                       alt="Lumenati" 
                       className="h-16 md:h-20 w-auto"
                     />

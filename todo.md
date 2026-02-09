@@ -1997,3 +1997,9 @@
 ## Red Bull Jukebox - Logo Size & Hero Height
 - [x] Replace Lumenati logo with cropped version (remove black padding to match Red Bull size)
 - [x] Reduce hero section height from 85vh to 45vh to bring content up
+
+## Red Bull Jukebox - Theme-Aware Logos
+- [x] Find colored Red Bull logo for light mode
+- [x] Find colored Lumenati logo for light mode (original with colors)
+- [x] Implement theme-aware logo switching (white for dark mode, colored for light mode)
+- [ ] Test in both light and dark themes

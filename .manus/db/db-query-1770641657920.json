@@ -1,0 +1,9 @@
+{
+  "query": "UPDATE projects \nSET metadata = JSON_SET(\n  COALESCE(metadata, '{}'),\n  '$.redBullLogoDark', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/WaQCNYwAexHtLoPu.png',\n  '$.redBullLogoLight', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/nsvxDfaNriPPzuUm.png',\n  '$.lumenatiLogoDark', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/nEyDOgvczZNWFpSE.png',\n  '$.lumenatiLogoLight', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/gJstQZomLaonXozk.png'\n)\nWHERE slug = 'red-bull-jukebox';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute UPDATE projects \nSET metadata = JSON_SET(\n  COALESCE(metadata, '{}'),\n  '$.redBullLogoDark', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/WaQCNYwAexHtLoPu.png',\n  '$.redBullLogoLight', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/nsvxDfaNriPPzuUm.png',\n  '$.lumenatiLogoDark', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/nEyDOgvczZNWFpSE.png',\n  '$.lumenatiLogoLight', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/gJstQZomLaonXozk.png'\n)\nWHERE slug = 'red-bull-jukebox';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 374
+}
