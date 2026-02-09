@@ -2061,3 +2061,4 @@
 - [ ] Extract all missing collaborators from scenic design project pages
 - [x] Research quality profiles for all directors (bios, portfolios, Instagram)
 - [x] Update collaborators database with complete profiles
+- [x] Research and add website URLs for all theatre companies
