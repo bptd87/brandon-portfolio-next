@@ -2115,3 +2115,4 @@
 - [x] Update portfolio card images to use object-top for portrait orientation
 - [x] Change production photo grid aspect ratio from 4:3 to 3:2 landscape
 - [x] Redesign project detail hero section - remove back button, improve layout and typography
+- [x] Fix object-top positioning on production photo grids (portrait images showing chest only)
