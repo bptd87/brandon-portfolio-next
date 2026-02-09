@@ -3,7 +3,6 @@ import { ExternalLink, Instagram, Linkedin, Mail, FileText, Video, Github, Twitt
 import { Link } from 'wouter';
 import { trpc } from '@/lib/trpc';
 import { SEO } from '@/components/SEO';
-import Header from '@/components/Header';
 
 // --- Interfaces ---
 
@@ -29,7 +28,7 @@ export default function Links() {
   const [bioData] = useState<BioData>({
     name: 'BRANDON PT DAVIS',
     tagline: 'Scenic & Experiential Designer',
-    profileImage: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/gSCYV4j3Tz4eFi7dxKRFpk/migrated/headshot-brandon-pt-davis-1769419224865.webp',
+    profileImage: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/uRNxMuYEkdakBfeA.jpeg',
   });
 
   // Pagination
@@ -230,7 +229,7 @@ export default function Links() {
         description={`Latest work and updates from ${bioData.name}`}
       />
 
-      <Header />
+
 
       {/* Ambient Background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
