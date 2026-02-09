@@ -2008,3 +2008,8 @@
 ## Red Bull Jukebox - Restore Cover Image
 - [x] Add cover image back to database for landing page display
 - [x] Ensure project detail page still uses solid dark background (not the cover image)
+
+## Red Bull Jukebox - Photo Credits
+- [x] Add photo credits to cover image (Brothers Osborne performance)
+- [x] Add photo credits to all event photos ("Photo courtesy of Red Bull")
+- [x] Verify credits display correctly on project page

@@ -1,0 +1,66 @@
+{
+  "query": "SELECT id, imageUrl, caption, altText, imageType FROM projectImages WHERE projectId = 90007;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT id, imageUrl, caption, altText, imageType FROM projectImages WHERE projectId = 90007;",
+  "rows": [
+    {
+      "id": "60035",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/brothers-osborne-1769506686160.webp",
+      "caption": "NULL",
+      "altText": "Red Bull Jukebox - Scenic design by Brandon PT Davis. Dynamic stage setup with bold lighting, energetic atmosphere, and modern design elements.",
+      "imageType": "production"
+    },
+    {
+      "id": "60037",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/rbj-cnc-page-1-1769506688211.webp",
+      "caption": "NULL",
+      "altText": "Red Bull Jukebox CNC fabrication drawings by Brandon PT Davis - Technical elevation and section drawings for monumental LED wall arch with precise panel segmentation and connection details.",
+      "imageType": "technical_drawing"
+    },
+    {
+      "id": "60038",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/rbj-cnc-page-2-1769506687674.webp",
+      "caption": "NULL",
+      "altText": "Red Bull Jukebox CNC layout drawings by Brandon PT Davis - Detailed CNC cutting patterns for layered façade components with arc radii coordination and assembly sequencing.",
+      "imageType": "technical_drawing"
+    },
+    {
+      "id": "60039",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/rbj-cnc-page-3-1769506687190.webp",
+      "caption": "NULL",
+      "altText": "Red Bull Jukebox fabrication documentation by Brandon PT Davis - CNC panel layouts with dimensional specifications, material callouts (aluminum/MDF), and truss system integration details.",
+      "imageType": "technical_drawing"
+    },
+    {
+      "id": "60040",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/rbj-cnc-page-4-1769506686787.webp",
+      "caption": "NULL",
+      "altText": "Red Bull Jukebox technical drawings by Brandon PT Davis - Human-scale reference drawings showing LED arch proportions, sightline analysis, and venue integration for Ascend Amphitheater.",
+      "imageType": "technical_drawing"
+    },
+    {
+      "id": "120003",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/EMKaXlsnQrfQeNdH.jpg",
+      "caption": "NULL",
+      "altText": "Red Bull Jukebox Nashville 2024 - Wide view of LED arch installation and stage design by Brandon PT Davis with Lumenati",
+      "imageType": "production"
+    },
+    {
+      "id": "120004",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/IQqdmHGQMUxwfNpA.jpg",
+      "caption": "NULL",
+      "altText": "Red Bull Jukebox Nashville 2024 - Full venue view showing monumental LED arch and crowd at Ascend Amphitheater",
+      "imageType": "production"
+    },
+    {
+      "id": "120005",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/tWnsoIGIldylcfSL.jpg",
+      "caption": "NULL",
+      "altText": "Red Bull Jukebox Nashville 2024 - Close-up of LED arch with Red Bull Jukebox branding and stage lighting",
+      "imageType": "production"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\timageUrl\tcaption\taltText\timageType\n60035\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/brothers-osborne-1769506686160.webp\tNULL\tRed Bull Jukebox - Scenic design by Brandon PT Davis. Dynamic stage setup with bold lighting, energetic atmosphere, and modern design elements.\tproduction\n60037\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/rbj-cnc-page-1-1769506688211.webp\tNULL\tRed Bull Jukebox CNC fabrication drawings by Brandon PT Davis - Technical elevation and section drawings for monumental LED wall arch with precise panel segmentation and connection details.\ttechnical_drawing\n60038\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/rbj-cnc-page-2-1769506687674.webp\tNULL\tRed Bull Jukebox CNC layout drawings by Brandon PT Davis - Detailed CNC cutting patterns for layered façade components with arc radii coordination and assembly sequencing.\ttechnical_drawing\n60039\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/rbj-cnc-page-3-1769506687190.webp\tNULL\tRed Bull Jukebox fabrication documentation by Brandon PT Davis - CNC panel layouts with dimensional specifications, material callouts (aluminum/MDF), and truss system integration details.\ttechnical_drawing\n60040\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663337866878/W7Mo5vQmuLDeDzmE7vXHYq/migrated/rbj-cnc-page-4-1769506686787.webp\tNULL\tRed Bull Jukebox technical drawings by Brandon PT Davis - Human-scale reference drawings showing LED arch proportions, sightline analysis, and venue integration for Ascend Amphitheater.\ttechnical_drawing\n120003\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/EMKaXlsnQrfQeNdH.jpg\tNULL\tRed Bull Jukebox Nashville 2024 - Wide view of LED arch installation and stage design by Brandon PT Davis with Lumenati\tproduction\n120004\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/IQqdmHGQMUxwfNpA.jpg\tNULL\tRed Bull Jukebox Nashville 2024 - Full venue view showing monumental LED arch and crowd at Ascend Amphitheater\tproduction\n120005\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/tWnsoIGIldylcfSL.jpg\tNULL\tRed Bull Jukebox Nashville 2024 - Close-up of LED arch with Red Bull Jukebox branding and stage lighting\tproduction\n",
+  "stderr": "",
+  "execution_time_ms": 366
+}
