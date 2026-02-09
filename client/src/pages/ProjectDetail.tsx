@@ -254,23 +254,23 @@ export default function ProjectDetail() {
             {/* CLIENT LOGOS - Clean & Prominent */}
             {(metadata.redBullLogo || metadata.lumenatiLogo) && (
               <div className="mb-6">
-                <div className="flex items-center gap-6 flex-wrap mb-3">
+                <div className="inline-flex items-center gap-6 flex-wrap mb-3 bg-white/95 backdrop-blur-sm px-6 py-4 rounded-lg">
                   {metadata.redBullLogo && (
                     <img 
                       src={metadata.redBullLogo} 
                       alt="Red Bull" 
-                      className="h-16 md:h-20 w-auto brightness-125"
+                      className="h-12 md:h-16 w-auto"
                     />
                   )}
                   {metadata.lumenatiLogo && (
                     <img 
                       src={metadata.lumenatiLogo} 
                       alt="Lumenati" 
-                      className="h-16 md:h-20 w-auto brightness-150"
+                      className="h-12 md:h-16 w-auto"
                     />
                   )}
                 </div>
-                <div className="text-xs font-pixel text-foreground/60 tracking-wider">
+                <div className="text-xs font-pixel text-foreground/80 tracking-wider">
                   CLIENT: RED BULL  •  AGENCY: LUMENATI  •  ROLE: TECHNICAL DESIGNER
                 </div>
               </div>
@@ -380,7 +380,7 @@ export default function ProjectDetail() {
                 {technicalDrawings.map((img, idx) => (
                   <AnimatedSection key={img.id} delay={idx * 50}>
                     <div 
-                      className="group relative overflow-hidden rounded-lg cursor-pointer aspect-[3/4]"
+                      className="group relative overflow-hidden rounded-lg cursor-pointer aspect-[3/2]"
                       onClick={() => {
                         setLightboxImages(technicalDrawings);
                         setLightboxIndex(idx);
@@ -432,60 +432,47 @@ export default function ProjectDetail() {
           </AnimatedSection>
         )}
 
-        {/* Production Photos Gallery */}
+        {/* Event Photos Gallery */}
         {productionPhotos.filter(img => img.imageUrl !== project.coverImageUrl).length > 0 && (
           <AnimatedSection>
             <div>
-              <button
-                onClick={() => setGalleryOpen(!galleryOpen)}
-                className="flex items-center justify-between w-full mb-8 group"
-              >
-                <h2 className="text-4xl font-black tracking-tighter" style={{ color: accentColor }}>
-                  Production Photos
-                  <span className="ml-4 text-muted-foreground text-lg">({productionPhotos.filter(img => img.imageUrl !== project.coverImageUrl).length})</span>
-                </h2>
-                {galleryOpen ? (
-                  <ChevronUp className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
-                ) : (
-                  <ChevronDown className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
-                )}
-              </button>
-              
-              {galleryOpen && (
-                <div className="space-y-8">
-                  {productionPhotos.filter(img => img.imageUrl !== project.coverImageUrl).map((img, idx) => (
-                    <AnimatedSection key={img.id} delay={idx * 50}>
-                      <div 
-                        className="group relative overflow-hidden rounded-lg cursor-pointer"
-                        onClick={() => {
-                          setLightboxImages(productionPhotos);
-                          setLightboxIndex(idx);
-                          setLightboxOpen(true);
-                        }}
-                      >
-                        <img
-                          src={img.imageUrl || ''}
-                          alt={img.altText || img.caption || project.title}
-                          className="w-full h-auto object-cover group-hover:scale-102 group-hover:brightness-110 transition-all duration-500"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        
-                        {img.caption && (
-                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/95 via-background/70 to-transparent p-6">
-                            <p className="text-sm text-foreground/90">{img.caption}</p>
-                          </div>
-                        )}
-                        
-                        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <div className="px-3 py-1.5 rounded-full bg-background/90 backdrop-blur-sm border border-border">
-                            <p className="text-xs font-semibold">Click to expand</p>
-                          </div>
+              <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: accentColor }}>
+                Event Photos
+                <span className="ml-4 text-muted-foreground text-lg">({productionPhotos.filter(img => img.imageUrl !== project.coverImageUrl).length})</span>
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {productionPhotos.filter(img => img.imageUrl !== project.coverImageUrl).map((img, idx) => (
+                  <AnimatedSection key={img.id} delay={idx * 50}>
+                    <div 
+                      className="group relative overflow-hidden rounded-lg cursor-pointer aspect-[16/9]"
+                      onClick={() => {
+                        setLightboxImages(productionPhotos.filter(img => img.imageUrl !== project.coverImageUrl));
+                        setLightboxIndex(idx);
+                        setLightboxOpen(true);
+                      }}
+                    >
+                      <img
+                        src={img.imageUrl || ''}
+                        alt={img.altText || img.caption || project.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      
+                      {img.caption && (
+                        <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <p className="text-sm font-medium text-white drop-shadow-lg">{img.caption}</p>
+                        </div>
+                      )}
+                      
+                      <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="px-3 py-1.5 rounded-full bg-background/90 backdrop-blur-sm border border-border">
+                          <p className="text-xs font-semibold">Click to expand</p>
                         </div>
                       </div>
-                    </AnimatedSection>
-                  ))}
-                </div>
-              )}
+                    </div>
+                  </AnimatedSection>
+                ))}
+              </div>
             </div>
           </AnimatedSection>
         )}
@@ -504,6 +491,22 @@ export default function ProjectDetail() {
                   }
                   return line.trim() ? <p key={idx} className="mb-4">{line}</p> : null;
                 })}
+              </div>
+            </div>
+          </AnimatedSection>
+        )}
+
+        {/* THE RESULT - Final text section */}
+        {designNotes && designNotes.includes('THE RESULT') && (
+          <AnimatedSection>
+            <div className="prose prose-lg max-w-none">
+              <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-6" style={{ color: accentColor }}>
+                THE RESULT
+              </h2>
+              <div className="text-foreground/80 text-lg leading-relaxed">
+                {designNotes.split('THE RESULT')[1]?.trim().split('\n\n').map((p, idx) => (
+                  <p key={idx} className="mb-4">{p}</p>
+                ))}
               </div>
             </div>
           </AnimatedSection>

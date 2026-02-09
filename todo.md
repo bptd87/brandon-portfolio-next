@@ -1978,3 +1978,12 @@
 - [x] Change technical drawings aspect ratio to portrait (aspect-[3/4])
 - [x] Remove hero image (Brothers Osborne stage shot) from Production Photos gallery
 - [x] Remove "Read More" button - show full content inline
+
+## Red Bull Jukebox - Final Fixes
+- [x] Fix technical drawings aspect ratio - 3:2 landscape
+- [x] Remove hero image from Event Photos gallery (Brothers Osborne stage shot)
+- [x] Fix logo visibility - added white background container with backdrop blur for contrast
+- [x] Rename "Production Photos" to "Event Photos"
+- [x] Convert Event Photos from collapsible to proper gallery grid (like Technical Drawings)
+- [x] Update copy to singular voice - Brandon is one person, not "we"
+- [x] Review copy against August Jackson/Lumenati references for tone and style
