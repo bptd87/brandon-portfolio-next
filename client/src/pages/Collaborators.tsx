@@ -158,7 +158,7 @@ export default function Collaborators() {
                                   className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors"
                                 >
                                   <ExternalLink className="w-3.5 h-3.5" />
-                                  Portfolio
+                                  {collaborator.role === 'theatre_company' || collaborator.role === 'partner_company' ? 'Website' : 'Portfolio'}
                                 </a>
                               )}
                               {collaborator.websiteUrl && collaborator.websiteUrl !== collaborator.portfolioUrl && (
