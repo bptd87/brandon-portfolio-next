@@ -355,8 +355,8 @@ export const appRouter = router({
         const newsItem = await db.getNewsBySlug(input.slug);
         if (!newsItem) return null;
         
-        // Tags are stored in the tags TEXT field as JSON, not in newsTags relation
-        return newsItem;
+        const tags = await db.getNewsTags(newsItem.id);
+        return { ...newsItem, tags };
       }),
     
     create: adminProcedure

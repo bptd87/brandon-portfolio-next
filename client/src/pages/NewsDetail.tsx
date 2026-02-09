@@ -236,7 +236,7 @@ export default function NewsDetail() {
           },
           url: `https://www.brandonptdavis.com/news/${newsItem.slug}`,
           wordCount: wordCount > 0 ? wordCount : undefined,
-          keywords: newsItem.tags ? (typeof newsItem.tags === 'string' ? JSON.parse(newsItem.tags) : newsItem.tags) : [],
+          keywords: newsItem.tags ? newsItem.tags.map((tag: any) => tag.name) : [],
         }}
       />
       <StructuredData
@@ -463,28 +463,27 @@ export default function NewsDetail() {
             )}
 
             {/* Tags */}
-            {(() => {
-              try {
-                const parsedTags = newsItem.tags ? (typeof newsItem.tags === 'string' ? JSON.parse(newsItem.tags) : newsItem.tags) : [];
-                if (Array.isArray(parsedTags) && parsedTags.length > 0) {
-                  return (
-                    <div className="mt-16 pt-8 border-t border-border">
-                      <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">Tags</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {parsedTags.map((tag: string, index: number) => (
-                          <Badge key={index} variant="secondary" className="text-sm px-3 py-1">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                }
-              } catch (e) {
-                return null;
-              }
-              return null;
-            })()}
+            {newsItem.tags && newsItem.tags.length > 0 && (
+              <div className="mt-16 pt-8 border-t border-border">
+                <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-4">Tags</h3>
+                <div className="flex flex-wrap gap-2">
+                  {newsItem.tags.map((tag: any) => (
+                    <Badge 
+                      key={tag.id} 
+                      variant="outline" 
+                      className="text-sm font-normal px-4 py-2 rounded-full transition-all hover:scale-105"
+                      style={{
+                        borderColor: `hsl(var(--accent))`,
+                        color: `hsl(var(--accent-foreground))`,
+                        backgroundColor: `hsl(var(--accent) / 0.1)`
+                      }}
+                    >
+                      {tag.name}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>

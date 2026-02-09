@@ -1815,3 +1815,13 @@
 - [ ] Audit article pages for SEO issues
 - [ ] Audit news pages for SEO issues
 - [ ] Audit static pages (About, Resume, Contact, Teaching, etc.)
+
+## Add Tags to Articles and News (User Requested - Feb 9, 2026)
+- [x] Audit article detail pages to see current design and tag display
+- [x] Audit news detail pages to see current design and tag display
+- [x] Query database to find all articles and news items
+- [x] Add SEO keywords and display tags to all articles (23 articles completed)
+- [x] Add SEO keywords and display tags to all news items (29 news items completed)
+- [x] Style tags on article detail pages to match page design aesthetic (already well-styled)
+- [x] Style tags on news detail pages to match page design aesthetic (updated to use junction table + rounded pills)
+- [x] Test tag display on article and news pages (both working correctly!)
