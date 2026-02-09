@@ -11,6 +11,7 @@ import { AnimatedSection } from "@/components/AnimatedSection";
 import StructuredData from "@/components/StructuredData";
 
 export default function Home() {
+  const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://www.brandonptdavis.com';
   const { user } = useAuth();
   const { data: projects } = trpc.projects.list.useQuery({ featured: true, status: 'published' });
   const { data: newsItems } = trpc.news.list.useQuery({});
@@ -28,7 +29,7 @@ export default function Home() {
         person={{
           name: "Brandon PT Davis",
           jobTitle: "Scenic and Experiential Designer",
-          url: "https://www.brandonptdavis.com",
+          url: baseUrl,
           image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YiqCsZPgtoSSsQyE.png",
           description: "Scenic and experiential designer based in Southern California with over 120 design credits across regional theatre, summer stock, academic theatre, immersive experiences, and live entertainment. Member of USA 829.",
           email: "info@brandonptdavis.com",
@@ -73,12 +74,12 @@ export default function Home() {
         }}
         organization={{
           name: "Brandon PT Davis Design",
-          url: "https://www.brandonptdavis.com",
+          url: baseUrl,
           logo: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YiqCsZPgtoSSsQyE.png",
           description: "Professional scenic and experiential design studio specializing in regional theatre, summer stock, academic theatre, immersive experiences, event design, and themed entertainment.",
           founder: {
             name: "Brandon PT Davis",
-            url: "https://www.brandonptdavis.com/about",
+            url: `${baseUrl}/about`,
           },
           foundingDate: "2015",
           email: "info@brandonptdavis.com",

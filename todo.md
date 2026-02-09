@@ -1472,7 +1472,7 @@
 - [ ] Add search and filtering functionality
 - [ ] Apply design checklist (header, tabs, mobile)
 - [ ] Test implementation
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 ## Dimension Reference Critical Fixes (User Reported - Feb 8, 2026)
 - [x] Fix category button text overlap - added flex-nowrap to prevent wrapping
@@ -1835,7 +1835,7 @@
 - [x] Make tags clickable on article detail pages
 - [x] Make tags clickable on news detail pages
 - [x] Test tag pages with various tags (Brand Experience with projects, Technology in Theatre with articles)
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 ## SEO Audit and Optimization (User Requested - Feb 9, 2026)
 - [ ] Audit meta tags (title, description) on all page types
@@ -1855,7 +1855,7 @@
 - [x] Fix canonical URL tags (add to all pages) - Now using dynamic window.location.href
 - [x] Fix Open Graph and Twitter URL mismatches - Now using canonicalUrl variable
 - [x] Fix any other identified SEO issues (removed static OG tags from index.html)
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 ## Implement Dynamic XML Sitemap Generation
 - [x] Create sitemap.xml endpoint in Express server (already existed)
@@ -1863,4 +1863,14 @@
 - [x] Generate XML sitemap with proper formatting and priorities (already implemented)
 - [x] Test sitemap endpoint and validate XML format (working correctly with dynamic URLs)
 - [x] Add sitemap reference to robots.txt (already implemented with dynamic URLs)
+- [x] Save checkpoint
+
+## Implement JSON-LD Structured Data (Person & Organization Schema)
+- [x] Create StructuredData component for Person schema (already existed)
+- [x] Create StructuredData component for Organization schema (already existed)
+- [x] Add Person schema to homepage (already implemented with rich data)
+- [x] Add Organization schema to homepage (already implemented with rich data)
+- [x] Add appropriate schema to About page (already implemented)
+- [x] Update URLs to use dynamic baseUrl instead of hardcoded domain
+- [x] Test structured data with Google Rich Results Test (verified URLs are dynamic)
 - [ ] Save checkpoint

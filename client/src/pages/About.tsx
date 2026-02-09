@@ -5,6 +5,7 @@ import { Mail, MapPin, Sparkles } from "lucide-react";
 import StructuredData from "@/components/StructuredData";
 
 export default function About() {
+  const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://www.brandonptdavis.com';
   const galleryImages = [
     { url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/TsVdekRTdTHOgGda.JPG", alt: "Teaching scenic design to students" },
     { url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/sgcZKfoZzxPeTUel.JPG", alt: "UC Irvine graduate school days" },
@@ -23,7 +24,7 @@ export default function About() {
         person={{
           name: "Brandon PT Davis",
           jobTitle: "Scenic and Experiential Designer",
-          url: "https://www.brandonptdavis.com/about",
+          url: `${baseUrl}/about`,
           image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YiqCsZPgtoSSsQyE.png",
           description: "Scenic and experiential designer based in Southern California with over 120 design credits across regional theatre, summer stock, academic theatre, immersive experiences, and live entertainment. Member of USA 829. Educator teaching scenic design, rendering, and collaborative design processes at the university level.",
           email: "info@brandonptdavis.com",
