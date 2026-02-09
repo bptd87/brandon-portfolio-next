@@ -85,10 +85,24 @@ export default function Studio() {
 
         {articles && articles.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {articles.slice(0, 3).map((article, index) => (
+            {articles.slice(0, 3).map((article, index) => {
+              // Category color mapping
+              const categoryColors: Record<string, string> = {
+                'Tutorials': '#2196F3',
+                'Technical': '#FF5722',
+                'Design Theory': '#9C27B0',
+                'Industry': '#F44336',
+                'default': '#FF6B35'
+              };
+              const categoryColor = article.category?.name 
+                ? categoryColors[article.category.name] || categoryColors.default
+                : categoryColors.default;
+              
+              return (
               <AnimatedSection key={article.id} delay={index * 100}>
                 <Link href={`/articles/${article.slug}`}>
-                  <Card className="group cursor-pointer overflow-hidden border-0 bg-transparent hover:scale-[1.02] transition-all duration-500">
+                  <Card className="group cursor-pointer overflow-hidden border-2 border-transparent hover:border-[var(--category-color)] bg-transparent hover:scale-[1.02] transition-all duration-500"
+                    style={{ '--category-color': categoryColor } as React.CSSProperties}>
                     <div className="relative aspect-[16/9] overflow-hidden rounded-lg mb-4">
                       {article.coverImageUrl ? (
                         <ProgressiveImage
@@ -108,7 +122,24 @@ export default function Studio() {
                     </div>
                     
                     <CardContent className="p-0">
-                      <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                      {article.category && (
+                        <Badge 
+                          variant="secondary" 
+                          className="mb-3 text-xs font-bold"
+                          style={{ 
+                            backgroundColor: `${categoryColor}20`,
+                            color: categoryColor,
+                            borderColor: `${categoryColor}40`
+                          }}
+                        >
+                          {article.category.name}
+                        </Badge>
+                      )}
+                      
+                      <h3 className="text-xl font-bold mb-2 transition-colors line-clamp-2"
+                        style={{ color: 'inherit' }}
+                        onMouseEnter={(e) => e.currentTarget.style.color = categoryColor}
+                        onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>
                         {article.title}
                       </h3>
                       
@@ -132,7 +163,8 @@ export default function Studio() {
                   </Card>
                 </Link>
               </AnimatedSection>
-            ))}
+            );
+            })}
           </div>
         ) : (
           <div className="text-center py-12 text-muted-foreground">
