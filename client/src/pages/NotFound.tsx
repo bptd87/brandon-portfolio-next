@@ -66,13 +66,11 @@ export default function NotFound() {
               </div>
 
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-4">
-                Looks like this page has wandered backstage and can't find its mark. 
-                Even the ghost light couldn't guide you here.
+                Ladies and gentlemen, we are experiencing a brief delay backstage.
               </p>
               
               <p className="text-base text-muted-foreground/80 max-w-xl mx-auto mb-12">
-                Don't worry—every great production has its improvised moments. 
-                Let's get you back to center stage.
+                For your safety and our peace of mind, we ask that you please remain seated and follow any instructions given by theatre staff. Thank you for your patience.
               </p>
 
               {/* Navigation Buttons */}

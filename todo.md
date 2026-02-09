@@ -1633,3 +1633,6 @@
 - [x] Remove background glow effect behind ghost image
 - [x] Add floating/hovering animation to ghost image (4s vertical motion)
 - [x] Add fade effect at bottom of ghost image (gradient to background)
+
+## Update 404 Page Copy (User Requested - Feb 8, 2026)
+- [x] Replace current copy with theatre announcement: "Ladies and gentlemen, we are experiencing a brief delay backstage..."
