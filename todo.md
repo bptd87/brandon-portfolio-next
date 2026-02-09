@@ -1651,3 +1651,6 @@
 - [x] Add bottom fade effect back to ghost image (24px gradient)
 - [x] Animate cloud/smoke with transparency pulsing effect (0.7 to 0.95 opacity, 3s loop)
 - [x] Change copy to use emergency speech joke format ("Ladies and gentlemen, we are experiencing a brief technical difficulty...")
+
+## Fix Ghost Image Fade (User Reported Issue - Feb 8, 2026)
+- [x] Remove bottom fade - was creating awkward horizontal line cutting off legs

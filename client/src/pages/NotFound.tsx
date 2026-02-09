@@ -21,27 +21,24 @@ export default function NotFound() {
             className="text-center"
           >
             {/* Ghost Image with animated transparency */}
-            <div className="relative w-48 h-72 mx-auto mb-8">
-              <motion.div
-                animate={{ 
-                  opacity: [0.7, 0.95, 0.7]
-                }}
-                transition={{ 
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              >
-                <ProgressiveImage
-                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/XmkWKbpBTnVhFHuU.png"
-                  alt="Brandon as a ghost - lost in the theatre"
-                  className="w-full h-full object-contain"
-                  loading="eager"
-                />
-              </motion.div>
-              {/* Bottom fade effect */}
-              <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent pointer-events-none" />
-            </div>
+            <motion.div 
+              className="w-48 h-72 mx-auto mb-8"
+              animate={{ 
+                opacity: [0.7, 0.95, 0.7]
+              }}
+              transition={{ 
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              <ProgressiveImage
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/XmkWKbpBTnVhFHuU.png"
+                alt="Brandon as a ghost - lost in the theatre"
+                className="w-full h-full object-contain"
+                loading="eager"
+              />
+            </motion.div>
 
             {/* 404 Text */}
             <motion.div
