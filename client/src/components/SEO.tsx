@@ -16,7 +16,7 @@ export function SEO({
   title,
   description,
   image = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YiqCsZPgtoSSsQyE.png",
-  url = "https://www.brandonptdavis.com",
+  url,
   type = "website",
   author,
   publishedTime,
@@ -25,6 +25,9 @@ export function SEO({
 }: SEOProps) {
   const siteName = "Brandon PT Davis";
   const twitterHandle = "@brandonptdavis";
+  
+  // Use provided URL or fallback to current page URL
+  const canonicalUrl = url || (typeof window !== 'undefined' ? window.location.href : 'https://www.brandonptdavis.com');
 
   return (
     <Helmet>
@@ -35,7 +38,7 @@ export function SEO({
 
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={type} />
-      <meta property="og:url" content={url} />
+      <meta property="og:url" content={canonicalUrl} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
@@ -43,7 +46,7 @@ export function SEO({
 
       {/* Twitter */}
       <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content={url} />
+      <meta property="twitter:url" content={canonicalUrl} />
       <meta property="twitter:title" content={title} />
       <meta property="twitter:description" content={description} />
       <meta property="twitter:image" content={image} />
@@ -61,7 +64,7 @@ export function SEO({
       )}
 
       {/* Canonical URL */}
-      <link rel="canonical" href={url} />
+      <link rel="canonical" href={canonicalUrl} />
     </Helmet>
   );
 }

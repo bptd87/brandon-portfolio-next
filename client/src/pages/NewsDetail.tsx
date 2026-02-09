@@ -213,7 +213,6 @@ export default function NewsDetail() {
         title={`${newsItem.title} | Brandon PT Davis`}
         description={newsItem.excerpt || `${newsItem.title} - News from Brandon PT Davis`}
         image={newsItem.coverImageUrl || undefined}
-        url={`https://www.brandonptdavis.com/news/${newsItem.slug}`}
         type="article"
         publishedTime={newsItem.date?.toISOString()}
         modifiedTime={newsItem.updatedAt?.toISOString()}

@@ -2321,7 +2321,7 @@ The final section introduces the powerful Duplicate Along Path feature, which al
       <SEO
         title={`${tutorial.title} | Brandon PT Davis`}
         description={tutorial.description}
-        url={`https://www.brandonptdavis.com/studio/tutorials/${tutorial.slug}`}
+        image={`https://img.youtube.com/vi/${tutorial.youtubeId}/maxresdefault.jpg`}
         type="website"
       />
       <StructuredData

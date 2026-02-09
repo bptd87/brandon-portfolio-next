@@ -73,7 +73,6 @@ export default function StudioApps() {
       <SEO
         title="App Studio | Brandon PT Davis"
         description="Free web apps for scenic designers. Scale calculators, dimension references, paint mixers, and design tools."
-        url="https://www.brandonptdavis.com/studio/apps"
         type="website"
       />
       <Header />

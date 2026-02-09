@@ -92,7 +92,6 @@ export default function RenderingProjectDetail() {
         title={`${project.title} | Rendering | Brandon PT Davis`}
         description={seoDescription}
         image={project.coverImageUrl || undefined}
-        url={`https://www.brandonptdavis.com/projects/${project.slug}`}
         type="website"
         keywords={tags.join(', ')}
       />

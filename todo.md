@@ -1836,3 +1836,23 @@
 - [x] Make tags clickable on news detail pages
 - [x] Test tag pages with various tags (Brand Experience with projects, Technology in Theatre with articles)
 - [ ] Save checkpoint
+
+## SEO Audit and Optimization (User Requested - Feb 9, 2026)
+- [ ] Audit meta tags (title, description) on all page types
+- [ ] Check Open Graph tags for social media sharing
+- [ ] Verify structured data (JSON-LD) implementation
+- [ ] Check sitemap.xml exists and is properly configured
+- [ ] Check robots.txt configuration
+- [ ] Test SEO on homepage
+- [ ] Test SEO on project detail pages
+- [ ] Test SEO on article detail pages
+- [ ] Test SEO on news detail pages
+- [ ] Test SEO on tag pages
+- [x] Fix Open Graph images to use content-specific cover images (projects, articles, news, tutorials)
+  - Projects, articles, news already using coverImageUrl
+  - Tutorials now using YouTube thumbnail
+  - 15 items without cover images will use fallback headshot
+- [x] Fix canonical URL tags (add to all pages) - Now using dynamic window.location.href
+- [x] Fix Open Graph and Twitter URL mismatches - Now using canonicalUrl variable
+- [x] Fix any other identified SEO issues (removed static OG tags from index.html)
+- [ ] Save checkpoint

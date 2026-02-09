@@ -98,7 +98,6 @@ export default function Studio() {
       <SEO
         title="Studio | Brandon PT Davis"
         description="Design resources and tools for scenic designers. Video tutorials, interactive apps, Vectorworks vault, and curated directory."
-        url="https://www.brandonptdavis.com/studio"
         type="website"
       />
       <Header />

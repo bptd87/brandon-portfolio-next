@@ -134,7 +134,6 @@ export default function ProjectDetail() {
         title={`${project.title} | Brandon PT Davis`}
         description={project.excerpt || project.description || `${project.title} - Scenic design project by Brandon PT Davis`}
         image={project.coverImageUrl || undefined}
-        url={`https://www.brandonptdavis.com/projects/${project.slug}`}
         type="website"
       />
       <StructuredData

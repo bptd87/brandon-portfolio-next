@@ -302,7 +302,6 @@ export default function ArticleDetail() {
         title={`${article.title} | Brandon PT Davis`}
         description={article.excerpt || `${article.title} - Article by Brandon PT Davis`}
         image={article.coverImageUrl || undefined}
-        url={`https://www.brandonptdavis.com/articles/${article.slug}`}
         type="article"
         author="Brandon PT Davis"
         publishedTime={article.publishedAt?.toISOString()}

@@ -1,0 +1,100 @@
+{
+  "query": "\nSELECT 'Project' as type, id, title, slug FROM projects WHERE coverImageUrl IS NULL OR coverImageUrl = ''\nUNION ALL\nSELECT 'Article' as type, id, title, slug FROM articles WHERE coverImageUrl IS NULL OR coverImageUrl = ''\nUNION ALL\nSELECT 'News' as type, id, title, slug FROM news WHERE coverImageUrl IS NULL OR coverImageUrl = '';\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute \nSELECT 'Project' as type, id, title, slug FROM projects WHERE coverImageUrl IS NULL OR coverImageUrl = ''\nUNION ALL\nSELECT 'Article' as type, id, title, slug FROM articles WHERE coverImageUrl IS NULL OR coverImageUrl = ''\nUNION ALL\nSELECT 'News' as type, id, title, slug FROM news WHERE coverImageUrl IS NULL OR coverImageUrl = '';\n",
+  "rows": [
+    {
+      "type": "News",
+      "id": "5",
+      "title": "Joining United Scenic Artists, Local USA 829",
+      "slug": "united-scenic-artists-local-usa-829"
+    },
+    {
+      "type": "News",
+      "id": "30011",
+      "title": "My Season as Scenic Designer for New Swan Shakespeare Festival (2025)",
+      "slug": "new-swan-season-2025"
+    },
+    {
+      "type": "News",
+      "id": "30014",
+      "title": "Shut Up, Sherlock Praised in SLO Review",
+      "slug": "shut-up-sherlock-praised"
+    },
+    {
+      "type": "News",
+      "id": "30015",
+      "title": "Opening Night: How to Succeed in Business Without Really Trying at OST",
+      "slug": "how-to-succeed-opening-ost"
+    },
+    {
+      "type": "News",
+      "id": "30017",
+      "title": "Freaky Friday at Okoboji Summer Theatre Receives Praise",
+      "slug": "freaky-friday-review"
+    },
+    {
+      "type": "News",
+      "id": "30019",
+      "title": "Forum at Theatre SilCo Featured in Summit Daily",
+      "slug": "forum-review"
+    },
+    {
+      "type": "News",
+      "id": "30020",
+      "title": "2024 Okoboji Summer Theatre Season – Scenic Designs Announced",
+      "slug": "okoboji-summer-2024-season"
+    },
+    {
+      "type": "News",
+      "id": "30021",
+      "title": "Scenic Design for ¡Lotería: Game On! at Theatre SilCo",
+      "slug": "loteria-theatre-silco"
+    },
+    {
+      "type": "News",
+      "id": "30022",
+      "title": "Assisting My First Off-Broadway Show — The Fears (April–May 2023)",
+      "slug": "assisting-the-fears"
+    },
+    {
+      "type": "News",
+      "id": "30023",
+      "title": "Stephens College Update: Looking Ahead to Spring 2022",
+      "slug": "stephens-college-update-spring-2022"
+    },
+    {
+      "type": "News",
+      "id": "30024",
+      "title": "Returning to Stephens College as Assistant Professor of Scenic Design",
+      "slug": "returning-to-stephens-college"
+    },
+    {
+      "type": "News",
+      "id": "30025",
+      "title": "Scenic Design for Lysistrata at UTEP — Spring 2021",
+      "slug": "lysistrata-utep-spring-2021"
+    },
+    {
+      "type": "News",
+      "id": "30026",
+      "title": "Graduating from UCI in the Middle of a Pandemic",
+      "slug": "graduating-from-uci-pandemic"
+    },
+    {
+      "type": "News",
+      "id": "30027",
+      "title": "New Role at UTEP — Assistant Professor of Scenic Design & Technology",
+      "slug": "new-role-utep"
+    },
+    {
+      "type": "News",
+      "id": "30028",
+      "title": "Company at UC Irvine Highlighted in StageSceneLA",
+      "slug": "company-review"
+    }
+  ],
+  "messages": [],
+  "stdout": "type\tid\ttitle\tslug\nNews\t5\tJoining United Scenic Artists, Local USA 829\tunited-scenic-artists-local-usa-829\nNews\t30011\tMy Season as Scenic Designer for New Swan Shakespeare Festival (2025)\tnew-swan-season-2025\nNews\t30014\tShut Up, Sherlock Praised in SLO Review\tshut-up-sherlock-praised\nNews\t30015\tOpening Night: How to Succeed in Business Without Really Trying at OST\thow-to-succeed-opening-ost\nNews\t30017\tFreaky Friday at Okoboji Summer Theatre Receives Praise\tfreaky-friday-review\nNews\t30019\tForum at Theatre SilCo Featured in Summit Daily\tforum-review\nNews\t30020\t2024 Okoboji Summer Theatre Season – Scenic Designs Announced\tokoboji-summer-2024-season\nNews\t30021\tScenic Design for ¡Lotería: Game On! at Theatre SilCo\tloteria-theatre-silco\nNews\t30022\tAssisting My First Off-Broadway Show — The Fears (April–May 2023)\tassisting-the-fears\nNews\t30023\tStephens College Update: Looking Ahead to Spring 2022\tstephens-college-update-spring-2022\nNews\t30024\tReturning to Stephens College as Assistant Professor of Scenic Design\treturning-to-stephens-college\nNews\t30025\tScenic Design for Lysistrata at UTEP — Spring 2021\tlysistrata-utep-spring-2021\nNews\t30026\tGraduating from UCI in the Middle of a Pandemic\tgraduating-from-uci-pandemic\nNews\t30027\tNew Role at UTEP — Assistant Professor of Scenic Design & Technology\tnew-role-utep\nNews\t30028\tCompany at UC Irvine Highlighted in StageSceneLA\tcompany-review\n",
+  "stderr": "",
+  "execution_time_ms": 348
+}
