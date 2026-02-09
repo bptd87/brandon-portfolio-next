@@ -1908,3 +1908,7 @@
 - [x] Update Links.tsx with new image URL
 - [x] Remove site header and footer from Links page
 - [ ] Save checkpoint
+
+## Add Footer to Links Page
+- [x] Add "Powered by Manus" footer at bottom
+- [ ] Save checkpoint

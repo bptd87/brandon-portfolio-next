@@ -427,6 +427,13 @@ export default function Links() {
         </div>
 
         <div className="h-20" /> {/* Bottom spacer */}
+        
+        {/* Footer */}
+        <footer className="py-8 text-center">
+          <p className="text-xs text-muted-foreground">
+            © {new Date().getFullYear()} Brandon PT Davis
+          </p>
+        </footer>
       </div>
     </div>
   );
