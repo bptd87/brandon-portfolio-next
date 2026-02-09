@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { trpc } from "@/lib/trpc";
 import { ArrowLeft, ArrowRight, MapPin, Calendar, ChevronDown, ChevronUp } from "lucide-react";
@@ -51,7 +52,7 @@ export default function ProjectDetail() {
     { discipline: project?.discipline },
     { enabled: !!project?.discipline }
   );
-  const relatedProjects = allRelatedProjects?.slice(0, 10);
+  const relatedProjects = allRelatedProjects; // Show all projects
   const [showFullNotes, setShowFullNotes] = useState(false);
   const [galleryOpen, setGalleryOpen] = useState(true);
   const [renderingsOpen, setRenderingsOpen] = useState(true);
@@ -105,7 +106,7 @@ export default function ProjectDetail() {
   const shouldShowReadMore = designNotes.length > 800;
 
   // Get related projects excluding current one
-  const relatedProjectsFiltered = relatedProjects?.filter(p => p.id !== project.id).slice(0, 3) || [];
+  const relatedProjectsFiltered = relatedProjects?.filter(p => p.id !== project.id) || [];
   
   // Find prev/next projects from same discipline only
   const currentIndex = allProjects?.findIndex(p => p.id === project.id) ?? -1;
@@ -188,28 +189,7 @@ export default function ProjectDetail() {
         />
       </div>
 
-      {/* Sticky Navigation Arrows */}
-      {prevProject && (
-        <button
-          onClick={() => setLocation(`/projects/${prevProject.slug}`)}
-          className="fixed left-4 top-1/2 -translate-y-1/2 z-50 backdrop-blur-md bg-background/80 border-2 hover:bg-background p-4 rounded-full transition-all hover:scale-110"
-          style={{ borderColor: accentColor }}
-          aria-label="Previous project"
-        >
-          <ArrowLeft className="h-6 w-6" style={{ color: accentColor }} />
-        </button>
-      )}
-      
-      {nextProject && (
-        <button
-          onClick={() => setLocation(`/projects/${nextProject.slug}`)}
-          className="fixed right-4 top-1/2 -translate-y-1/2 z-50 backdrop-blur-md bg-background/80 border-2 hover:bg-background p-4 rounded-full transition-all hover:scale-110"
-          style={{ borderColor: accentColor }}
-          aria-label="Next project"
-        >
-          <ArrowRight className="h-6 w-6" style={{ color: accentColor }} />
-        </button>
-      )}
+      {/* Navigation arrows removed per user request */}
 
       {/* Full-Screen Hero Section */}
       <section className="relative h-screen overflow-hidden">
@@ -509,9 +489,21 @@ export default function ProjectDetail() {
                     
                     return (
                       <Link key={idx} href={`/about/collaborators#${slug}`}>
-                        <div className="flex items-start gap-4 p-4 rounded-lg bg-muted/50 border border-border hover:bg-muted hover:border-[#FF5722] transition-all duration-300 cursor-pointer group">
+                        <div 
+                          className="flex items-start gap-4 p-4 rounded-lg bg-muted/50 border border-border hover:bg-muted transition-all duration-300 cursor-pointer group"
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.borderColor = accentColor;
+                            const nameEl = e.currentTarget.querySelector('p.font-semibold') as HTMLElement;
+                            if (nameEl) nameEl.style.color = accentColor;
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.borderColor = '';
+                            const nameEl = e.currentTarget.querySelector('p.font-semibold') as HTMLElement;
+                            if (nameEl) nameEl.style.color = '';
+                          }}
+                        >
                           <div className="flex-1">
-                            <p className="font-semibold text-foreground group-hover:text-[#FF5722] transition-colors">{member.name}</p>
+                            <p className="font-semibold text-foreground transition-colors">{member.name}</p>
                             <p className="text-sm text-muted-foreground">{member.role}</p>
                           </div>
                         </div>
@@ -556,32 +548,51 @@ export default function ProjectDetail() {
               <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: accentColor }}>
                 More {project.discipline} Projects
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {relatedProjectsFiltered.map((relatedProject, idx) => (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {relatedProjectsFiltered.map((relatedProject, idx) => {
+                  // Cycle through brand colors for variety
+                  const brandColors = [
+                    '#FF5722', // Orange
+                    '#00BCD4', // Cyan
+                    '#E91E63', // Pink
+                    '#FFC107', // Amber
+                  ];
+                  const hoverColor = brandColors[idx % brandColors.length];
+                  
+                  return (
                   <Link key={relatedProject.id} href={`/projects/${relatedProject.slug}`}>
-                    <div className="group cursor-pointer">
-                      <div className="relative overflow-hidden rounded-lg mb-4 border-2 border-border hover:border-foreground/20 transition-all">
+                    <Card className="group cursor-pointer overflow-hidden border-0 bg-transparent hover:scale-[1.02] transition-all duration-500">
+                      <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
                         {relatedProject.coverImageUrl ? (
                           <img
                             src={relatedProject.coverImageUrl}
-                            alt={relatedProject.title}
-                            className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-700"
+                            alt={`${relatedProject.title} - Scenic design by Brandon PT Davis`}
+                            className="w-full h-full object-cover object-[center_20%] group-hover:scale-110 transition-transform duration-700"
                           />
                         ) : (
-                          <div className="w-full h-64 bg-muted flex items-center justify-center">
+                          <div className="w-full h-full bg-muted flex items-center justify-center">
                             <p className="text-muted-foreground">No image</p>
                           </div>
                         )}
+                        {/* Gradient overlay - fades out on hover */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-500">
+                          <div className="absolute bottom-0 left-0 right-0 p-6">
+                            <p className="text-xs font-semibold text-white/70 uppercase tracking-wider mb-2">
+                              {relatedProject.client}
+                            </p>
+                            <h3 className="text-2xl font-bold text-white italic font-serif">
+                              {relatedProject.title}
+                            </h3>
+                            {relatedProject.year && (
+                              <p className="text-sm text-white/80 mt-2">{relatedProject.year}</p>
+                            )}
+                          </div>
+                        </div>
                       </div>
-                      <h3 className="text-xl font-bold mb-2 group-hover:text-foreground/70 transition-colors">
-                        {relatedProject.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        {relatedProject.year} • {relatedProject.client}
-                      </p>
-                    </div>
+                    </Card>
                   </Link>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </AnimatedSection>

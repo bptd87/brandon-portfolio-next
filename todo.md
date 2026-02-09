@@ -2107,3 +2107,6 @@
 - [x] Update project detail pages to use 2-column grid for images
 - [x] Update homepage to show complete scenic design portfolio (not just featured)
 - [x] Revert homepage to show only 8 featured projects (not full portfolio)
+- [x] Show all scenic design projects in More Scenic Design section (not just related)
+- [x] Remove left/right navigation arrows from Scenic Portfolio page
+- [x] Update collaboration highlight colors to match page accent color
