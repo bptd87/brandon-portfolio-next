@@ -21,27 +21,31 @@ export default function NotFound() {
             className="text-center"
           >
             {/* Ghost Image with animated transparency and glow */}
-            <motion.div 
-              className="w-48 h-72 mx-auto mb-8"
-              animate={{ 
-                opacity: [0.7, 0.95, 0.7]
-              }}
-              transition={{ 
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              style={{
-                filter: 'drop-shadow(0 0 30px rgba(34, 211, 238, 0.4)) drop-shadow(0 0 60px rgba(34, 211, 238, 0.2))'
-              }}
-            >
-              <ProgressiveImage
-                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/XmkWKbpBTnVhFHuU.png"
-                alt="Brandon as a ghost - lost in the theatre"
-                className="w-full h-full object-contain"
-                loading="eager"
-              />
-            </motion.div>
+            <div className="relative w-48 h-72 mx-auto mb-8">
+              <motion.div 
+                className="w-full h-full"
+                animate={{ 
+                  opacity: [0.7, 0.95, 0.7]
+                }}
+                transition={{ 
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                style={{
+                  filter: 'drop-shadow(0 0 30px rgba(34, 211, 238, 0.4)) drop-shadow(0 0 60px rgba(34, 211, 238, 0.2))'
+                }}
+              >
+                <ProgressiveImage
+                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/XmkWKbpBTnVhFHuU.png"
+                  alt="Brandon as a ghost - lost in the theatre"
+                  className="w-full h-full object-contain"
+                  loading="eager"
+                />
+              </motion.div>
+              {/* Subtle bottom fade to blend into background */}
+              <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background via-background/50 to-transparent pointer-events-none" />
+            </div>
 
             {/* 404 Text */}
             <motion.div

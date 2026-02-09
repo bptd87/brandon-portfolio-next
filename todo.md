@@ -1657,3 +1657,6 @@
 
 ## Add Cyan Glow Effect to Ghost (User Requested - Feb 8, 2026)
 - [x] Add soft cyan glow around ghost image to enhance ethereal appearance (double drop-shadow with cyan color)
+
+## Add Subtle Bottom Fade to Ghost (User Requested - Feb 9, 2026)
+- [x] Add gradual bottom fade so ghost blends naturally into background (128px gradient with via-stop for smooth transition)
