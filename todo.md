@@ -1539,3 +1539,11 @@
 - [x] Add gallery rendering UI component (2-column grid layout)
 - [x] Test gallery display for all periods (minimum 2 images each)
 - [x] Verify interior/exterior balance in galleries
+
+## Design History Timeline Image Audit & Fixes (User Reported - Feb 8, 2026)
+- [x] Audit all 28 periods to identify which ones are missing gallery images
+- [x] Identify periods with incorrect cover images (10 periods with Unsplash covers)
+- [x] Search for correct replacement cover images for 10 periods: Neoclassical, Gothic Revival, Beaux-Arts, Arts & Crafts, Chicago School, De Stijl, International Style, Mid-Century Modern, Metabolism, High-Tech
+- [x] Upload all replacement cover images to S3 (10 images uploaded)
+- [x] Update timeline data with correct cover images
+- [x] Test all 28 periods to verify image accuracy and completeness

@@ -147,7 +147,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Classical revival', 'Simplicity', 'Order', 'Symmetry'],
     keyFigures: ['Robert Adam', 'Thomas Jefferson', 'Karl Friedrich Schinkel'],
     notableWorks: ['Panthéon Paris', 'Brandenburg Gate', 'US Capitol'],
-    imageUrl: 'https://images.unsplash.com/photo-1555992336-fb0d29498b13?w=800',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/GBVaYMkMjQCMvEMu.webp',
     gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/OoHEqCKGVZaHQkqz.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/Jr6nVjWNY14S.jpg'],
     colors: ['#F5F5F5', '#DAA520', '#8B4513', '#2F4F4F', '#696969']
   },
@@ -161,7 +161,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Medieval revival', 'Pointed arches', 'Picturesque', 'Romantic'],
     keyFigures: ['Augustus Pugin', 'John Ruskin'],
     notableWorks: ['Palace of Westminster', 'St. Patrick\'s Cathedral NYC'],
-    imageUrl: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/PPdIZEpdIrPbrtfJ.jpg',
     gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/HKYOBmMQZBRcvwMp.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/Txah681W1Yt8.jpg'],
     colors: ['#8B4513', '#2F4F4F', '#FFD700', '#8B0000', '#4B0082']
   },
@@ -176,7 +176,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     description: 'Academic classical design, grandeur, elaborate ornament, symmetry, hierarchy of spaces',
     characteristics: ['Academic classicism', 'Grandeur', 'Elaborate ornament', 'Symmetry'],
     notableWorks: ['Paris Opera', 'Grand Central Terminal', 'Boston Public Library'],
-    imageUrl: 'https://images.unsplash.com/photo-1558617398-b0f0c4c5d812?w=800',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/lnTAmiYAuwXmFuNI.jpg',
     gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/ZkOFfxLYbHGqjdaK.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/gE7oWJklKMMd.jpg'],
     colors: ['#F5F5DC', '#DAA520', '#8B4513', '#2F4F4F', '#FFD700']
   },
@@ -190,7 +190,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Handcraft', 'Natural materials', 'Simplicity', 'Anti-industrial'],
     keyFigures: ['William Morris', 'Charles Rennie Mackintosh'],
     notableWorks: ['Red House', 'Glasgow School of Art'],
-    imageUrl: 'https://images.unsplash.com/photo-1615875605825-5eb9bb5d52ac?w=800',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/BQcdOdbkTzdxYHox.jpg',
     gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/VfwpJUUDKDjjGXLv.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/Jr6nVjWNY14S.jpg'],
     colors: ['#8B4513', '#556B2F', '#D2691E', '#8B7355', '#A0522D']
   },
@@ -220,7 +220,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Skyscrapers', 'Steel frame', 'Large windows', 'Commercial'],
     keyFigures: ['Louis Sullivan', 'Daniel Burnham', 'John Root'],
     notableWorks: ['Wainwright Building', 'Monadnock Building', 'Carson Pirie Scott'],
-    imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/acGEcUWOIukdPmzh.jpg',
     gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/OoHEqCKGVZaHQkqz.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/wj8ZUcuiVMqJ.jpg'],
     colors: ['#8B4513', '#2F4F4F', '#696969', '#A9A9A9', '#BC8F8F']
   },
@@ -264,7 +264,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Abstraction', 'Primary colors', 'Orthogonal', 'Simplification'],
     keyFigures: ['Gerrit Rietveld', 'Theo van Doesburg', 'Piet Mondrian'],
     notableWorks: ['Rietveld Schröder House', 'Café Aubette'],
-    imageUrl: 'https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?w=800',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/bDdhpiAtpdkaawTj.jpg',
     gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/FxXJGZdNXuJMcxSw.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/QcDx7AbcVMaL.jpg'],
     colors: ['#FF0000', '#FFFF00', '#0000FF', '#000000', '#FFFFFF']
   },
@@ -278,7 +278,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Universal', 'Flat roofs', 'Ribbon windows', 'No ornament'],
     keyFigures: ['Le Corbusier', 'Mies van der Rohe', 'Walter Gropius'],
     notableWorks: ['Villa Savoye', 'Seagram Building', 'Farnsworth House'],
-    imageUrl: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/IcMZkSYDKQaELpEn.jpg',
     gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/FxXJGZdNXuJMcxSw.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/QcDx7AbcVMaL.jpg'],
     colors: ['#FFFFFF', '#000000', '#808080', '#A9A9A9', '#2F4F4F']
   },
@@ -294,7 +294,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Clean lines', 'Organic forms', 'Indoor-outdoor', 'New materials'],
     keyFigures: ['Eero Saarinen', 'Richard Neutra', 'Charles & Ray Eames'],
     notableWorks: ['Farnsworth House', 'Case Study Houses', 'TWA Terminal'],
-    imageUrl: 'https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=800',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/IssWaEOXGirXkQMp.jpg',
     gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/VfwpJUUDKDjjGXLv.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/Jr6nVjWNY14S.jpg'],
     colors: ['#D2691E', '#8B4513', '#556B2F', '#F4A460', '#2F4F4F']
   },
@@ -322,7 +322,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Organic growth', 'Flexible', 'Prefab', 'Megastructures'],
     keyFigures: ['Kenzo Tange', 'Kisho Kurokawa', 'Fumihiko Maki'],
     notableWorks: ['Nakagin Capsule Tower', 'Osaka Expo \'70', 'Yamanashi Press Center'],
-    imageUrl: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/RJEMBMLKcHkLRVNI.jpg',
     gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/FxXJGZdNXuJMcxSw.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/QcDx7AbcVMaL.jpg'],
     colors: ['#FF6347', '#696969', '#F5F5F5', '#000000', '#FFD700']
   },
@@ -336,7 +336,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Exposed structure', 'Industrial aesthetic', 'Technology', 'Flexibility'],
     keyFigures: ['Norman Foster', 'Richard Rogers', 'Renzo Piano'],
     notableWorks: ['Pompidou Centre', 'Lloyd\'s Building', 'HSBC Building Hong Kong'],
-    imageUrl: 'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=800',
+    imageUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/VSBJrsysMOKnOsBP.jpg',
     gallery: ['https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/FxXJGZdNXuJMcxSw.jpg', 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/QcDx7AbcVMaL.jpg'],
     colors: ['#4169E1', '#C0C0C0', '#FF0000', '#FFFF00', '#000000']
   },
