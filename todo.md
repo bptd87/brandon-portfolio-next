@@ -2076,3 +2076,16 @@
 - [x] Implement full-screen hero carousel with rotating production photography
 - [x] Select 4-5 best production photos for hero carousel
 - [x] Add smooth transitions and auto-rotation to carousel
+
+- [ ] Analyze scenic design portfolio page hero overlay and sections
+- [ ] Compare to competitor best practices from research
+- [ ] Implement improvements based on analysis
+
+- [x] Reduce hero text size to give more space to production photography
+- [ ] Review and improve homepage sections layout (Featured Projects, Latest Thinking)
+- [ ] Select better featured projects for homepage showcase
+
+- [x] Replace full-screen project showcases with 2-column grid layout (match competitors)
+- [x] Replace Latest Thinking section with Latest News section
+- [ ] Select 6-8 best scenic design projects for homepage grid
+- [x] Remove Articles from homepage (now in Studio dropdown)
