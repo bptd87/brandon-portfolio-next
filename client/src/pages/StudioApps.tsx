@@ -27,10 +27,10 @@ export default function StudioApps() {
       category: "Reference",
     },
     {
-      title: "Paint Calculator",
-      description: "Calculate paint coverage and mixing ratios for scenic painting.",
+      title: "Rosco Paint Calculator",
+      description: "Professional scenic paint mixing calculator with advanced 5-step color matching engine for Rosco Off-Broadway paints.",
       image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/MtnVhwckqruzlJNJ.webp",
-      href: "/studio/apps/paint-calculator",
+      href: "/studio/apps/rosco-paint-calculator",
       accentColor: "#00E676",
       category: "Calculator",
     },

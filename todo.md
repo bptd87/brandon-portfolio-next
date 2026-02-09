@@ -1566,3 +1566,12 @@
 - [x] Upload new hero image to S3
 - [x] Update Design History Timeline hero section with new image URL
 - [x] Test hero image appearance and theme consistency
+
+## Rosco Paint Calculator Integration (User Requested - Feb 8, 2026)
+- [x] Review uploaded Rosco Paint Calculator code structure and functionality
+- [x] Copy file to project and integrate Header/Footer components
+- [x] Update styling to match Studio apps design system (hero section, containers, spacing)
+- [x] Add route to App.tsx for /studio/apps/rosco-paint-calculator
+- [x] Update StudioApps page with Rosco Paint Calculator card
+- [x] Test calculator functionality (mixing ratios, coverage calculations)
+- [x] Verify responsive design on mobile and desktop
