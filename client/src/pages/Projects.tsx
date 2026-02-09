@@ -128,7 +128,7 @@ export default function Projects() {
                             <img 
                               src={project.coverImageUrl} 
                               alt={project.title}
-                              className="w-full h-full object-cover object-[center_20%] group-hover:scale-110 transition-transform duration-700"
+                              className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700"
                             />
                             {/* Gradient overlay - fades out on hover to reveal full image */}
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent group-hover:opacity-0 transition-all duration-500" />

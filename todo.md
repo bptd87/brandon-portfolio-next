@@ -2112,3 +2112,4 @@
 - [x] Update collaboration highlight colors to match page accent color
 - [x] Remove duplicate date from project detail hero section
 - [x] Show subcategory instead of discipline in project detail badge
+- [x] Update portfolio card images to use object-top for portrait orientation

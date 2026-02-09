@@ -562,7 +562,7 @@ export default function ProjectDetail() {
                           <img
                             src={relatedProject.coverImageUrl}
                             alt={`${relatedProject.title} - Scenic design by Brandon PT Davis`}
-                            className="w-full h-full object-cover object-[center_20%] group-hover:scale-110 transition-transform duration-700"
+                            className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700"
                           />
                         ) : (
                           <div className="w-full h-full bg-muted flex items-center justify-center">
