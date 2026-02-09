@@ -1636,3 +1636,12 @@
 
 ## Update 404 Page Copy (User Requested - Feb 8, 2026)
 - [x] Replace current copy with theatre announcement: "Ladies and gentlemen, we are experiencing a brief delay backstage..."
+
+## Fix 404 Page Layout and Copy (User Requested - Feb 8, 2026)
+- [x] Fix image crop to show full ghost (changed to object-cover object-top, removed fade)
+- [x] Rewrite copy to be a clever theatre joke that makes sense for 404 ("This Page Has Left the Building")
+- [x] Ensure entire page fits without scrolling (reduced image size, spacing, button padding)
+
+## Replace Ghost Image with Cleaned Version (User Requested - Feb 8, 2026)
+- [ ] Upload cleaned ghost image to S3
+- [ ] Update 404 page to use new ghost image URL
