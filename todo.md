@@ -2106,3 +2106,4 @@
 - [x] Fix missing image on Glass Menagerie project page
 - [x] Update project detail pages to use 2-column grid for images
 - [x] Update homepage to show complete scenic design portfolio (not just featured)
+- [x] Revert homepage to show only 8 featured projects (not full portfolio)
