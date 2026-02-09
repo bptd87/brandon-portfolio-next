@@ -27,11 +27,11 @@ export const categoryColors: Record<string, CategoryColor> = {
     hex: '#F43F5E',
   },
   'Scenic Design Process': {
-    badge: 'bg-coral-500/90 backdrop-blur-sm',
-    text: 'text-coral-500',
-    hover: 'hover:bg-coral-500/20 hover:border-coral-500',
-    rgb: '255, 107, 107', // Coral
-    hex: '#FF6B6B',
+    badge: 'bg-yellow-500/90 backdrop-blur-sm',
+    text: 'text-yellow-500',
+    hover: 'hover:bg-yellow-500/20 hover:border-yellow-500',
+    rgb: '234, 179, 8', // Yellow
+    hex: '#EAB308',
   },
   'Technology & Tutorials': {
     badge: 'bg-cyan-500/90 backdrop-blur-sm',
@@ -71,7 +71,7 @@ export function getCategoryColor(categoryName: string | null | undefined): Categ
  */
 export function getCategoryBadgeClasses(categoryName: string | null | undefined): string {
   const color = getCategoryColor(categoryName);
-  return `${color.badge} text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider`;
+  return `${color.badge} text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider border border-white/20`;
 }
 
 /**

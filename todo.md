@@ -2128,3 +2128,4 @@
 - [x] Apply category badge and color hover system to main Articles listing page
 - [x] Fix spacing between navigation bar and page content (add proper top padding/margin)
 - [x] Unify all article cards to use same horizontal layout with consistent styling
+- [x] Change Scenic Design Process category accent color to yellow and make badge borders thinner
