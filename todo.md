@@ -1685,3 +1685,9 @@
 ## Fix Project Categories (User Reported - Feb 9, 2026)
 - [x] Change "New Swan Venue File" from Scenic Design to Rendering
 - [x] Change "Angel Food Cake" from Scenic Design to Rendering
+
+## Fix Portfolio Data Issues (User Reported - Feb 9, 2026)
+- [x] Review CV to extract correct company/venue information for all projects
+- [x] Update missing company data in database (32 projects updated with client field)
+- [x] Fix project sorting to order by publishedAt timestamp, then year (most recent first)
+- [x] Verify correct chronological order on portfolio page (confirmed: 2025 → 2024 → 2023 → 2022 → 2020 → 2019 → 2018)

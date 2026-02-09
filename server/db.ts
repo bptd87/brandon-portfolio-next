@@ -196,7 +196,8 @@ export async function getAllProjects(filters?: {
     query = query.where(and(...conditions));
   }
 
-  return await query.orderBy(desc(projects.year));
+  // Sort by publishedAt (most recent first), then by year if publishedAt is null
+  return await query.orderBy(desc(projects.publishedAt), desc(projects.year));
 }
 
 export async function getProjectById(id: number) {
