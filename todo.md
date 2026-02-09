@@ -2057,3 +2057,7 @@
 - [ ] Add cross-linking from project detail pages to collaborator profiles
 - [ ] Add "Projects Worked On" section to each collaborator profile
 - [x] Extract all collaborators from projects and CV, deduplicate, and populate database
+
+- [ ] Extract all missing collaborators from scenic design project pages
+- [x] Research quality profiles for all directors (bios, portfolios, Instagram)
+- [x] Update collaborators database with complete profiles
