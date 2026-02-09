@@ -1,0 +1,17 @@
+{
+  "query": "SELECT id, title, slug, featured, status FROM projects WHERE slug = 'red-bull-jukebox';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT id, title, slug, featured, status FROM projects WHERE slug = 'red-bull-jukebox';",
+  "rows": [
+    {
+      "id": "90007",
+      "title": "Red Bull Jukebox",
+      "slug": "red-bull-jukebox",
+      "featured": "0",
+      "status": "published"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tslug\tfeatured\tstatus\n90007\tRed Bull Jukebox\tred-bull-jukebox\t0\tpublished\n",
+  "stderr": "",
+  "execution_time_ms": 349
+}

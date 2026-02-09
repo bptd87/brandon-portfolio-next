@@ -2013,3 +2013,11 @@
 - [x] Add photo credits to cover image (Brothers Osborne performance)
 - [x] Add photo credits to all event photos ("Photo courtesy of Red Bull")
 - [x] Verify credits display correctly on project page
+
+## Red Bull Jukebox - Cover Image Loading Issue
+- [x] Investigate why cover image isn't displaying on landing page
+- [x] Check if Red Bull Jukebox is being filtered out from homepage (not marked as featured)
+- [x] Mark Red Bull Jukebox as featured to display on homepage
+- [x] Fix hardcoded "SCENIC DESIGN" badge on homepage to show correct discipline
+- [x] Set publishedAt date to make Red Bull appear in top 4 featured projects
+- [x] Verify cover image displays correctly on homepage

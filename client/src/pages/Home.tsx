@@ -223,7 +223,7 @@ export default function Home() {
                                 color: index % 3 === 0 ? '#FF5722' : index % 3 === 1 ? '#00E5FF' : '#FF1744'
                               }}
                             >
-                              SCENIC DESIGN
+                              {project.discipline === 'experiential_design' ? 'EXPERIENTIAL DESIGN' : 'SCENIC DESIGN'}
                             </Badge>
                             <span className="text-sm text-foreground/80 font-pixel">{project.year}</span>
                           </div>
