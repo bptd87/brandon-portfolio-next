@@ -2095,3 +2095,4 @@
 - [x] Fix news cards spacing/gap issue
 - [x] Update Scenic Portfolio page to use 2-column grid layout matching homepage
 - [x] Fix image cropping on portfolio cards (prevent cutting off heads)
+- [x] Update Tomas and the Library Lady subcategory to Theatre for Young Audiences
