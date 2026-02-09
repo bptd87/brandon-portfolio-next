@@ -36,9 +36,9 @@ export default function NotFound() {
               }}
             >
               <ProgressiveImage
-                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/TGWPVtCzkqgWUcQx.jpeg"
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/XmkWKbpBTnVhFHuU.png"
                 alt="Brandon as a ghost - lost in the theatre"
-                className="w-full h-full object-cover object-top"
+                className="w-full h-full object-contain"
                 loading="eager"
               />
             </motion.div>

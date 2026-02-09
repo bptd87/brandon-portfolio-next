@@ -1643,5 +1643,5 @@
 - [x] Ensure entire page fits without scrolling (reduced image size, spacing, button padding)
 
 ## Replace Ghost Image with Cleaned Version (User Requested - Feb 8, 2026)
-- [ ] Upload cleaned ghost image to S3
-- [ ] Update 404 page to use new ghost image URL
+- [x] Upload cleaned ghost image to S3 (https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/XmkWKbpBTnVhFHuU.png)
+- [x] Update 404 page to use new ghost image URL (changed to object-contain for proper display)
