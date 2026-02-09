@@ -1708,3 +1708,20 @@
 - [x] Verify all projects display company names on portfolio page (all 7 projects now show company names)
 - [x] Fix incorrect years for Head Over Heels (2023), An Inspector Calls (2022), Tomás (2022), Angel Street (2013)
 - [x] Update An Inspector Calls location to Spirit Lake, IA
+
+## Create Unique Portfolio Landing Pages for Each Discipline (User Requested - Feb 9, 2026)
+- [x] Analyze current Projects page structure and design approach
+- [x] Plan unique visual identities for each discipline:
+  - Scenic Design: Keep current theatrical approach with genre filters
+  - Experiential: Flexible, project-driven layout (no hard template)
+  - Rendering: Technical precision, large visualization showcase
+  - Scenic Models: Craftsmanship, 3D detail focus
+- [x] Create fresh starting point designs aligned with site's aesthetic
+- [x] Create separate page components for Experiential, Rendering, and Scenic Models
+- [x] Design unique hero sections and layouts for each portfolio type:
+  - Experiential: Bold immersive hero, flexible 2-column grid
+  - Rendering: Technical clean hero with icon, large 16:9 showcase
+  - Scenic Models: Craftsmanship focus, square grid with detail indicators
+- [x] Update navigation to link to individual portfolio pages (Header dropdown updated)
+- [x] Add routing for /projects/scenic-design, /projects/experiential, /projects/rendering, /projects/scenic-models
+- [x] Test all portfolio pages for unique visual identity

@@ -243,10 +243,10 @@ export default function Header() {
   };
 
   const disciplines = [
-    { name: "Scenic Design", slug: "scenic_design", icon: <ScenicDesignIcon /> },
-    { name: "Experiential", slug: "experiential_design", icon: <ExperientialIcon /> },
-    { name: "Renderings", slug: "rendering", icon: <RenderingIcon /> },
-    { name: "Models", slug: "scenic_models", icon: <ModelsIcon /> },
+    { name: "Scenic Design", slug: "scenic-design", path: "/projects/scenic-design", icon: <ScenicDesignIcon /> },
+    { name: "Experiential", slug: "experiential", path: "/projects/experiential", icon: <ExperientialIcon /> },
+    { name: "Renderings", slug: "rendering", path: "/projects/rendering", icon: <RenderingIcon /> },
+    { name: "Models", slug: "scenic-models", path: "/projects/scenic-models", icon: <ModelsIcon /> },
   ];
 
   const newsCategories = [
@@ -325,7 +325,7 @@ export default function Header() {
                     {disciplines.map((discipline) => (
                       <Link
                         key={discipline.slug}
-                        href={`/projects?discipline=${discipline.slug}`}
+                        href={discipline.path}
                         className="block px-5 py-3 text-sm font-semibold hover:bg-[#2196F3]/10 hover:text-[#2196F3] transition-all border-b border-border last:border-0 relative group"
                       >
                         <span className="relative z-10 flex items-center">
