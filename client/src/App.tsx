@@ -33,7 +33,8 @@ import ScenicModelsPortfolio from "./pages/ScenicModelsPortfolio";
 import TutorialDetail from "./pages/TutorialDetail";
 import NewsDetail from "./pages/NewsDetail";
 import ArticleDetail from "./pages/ArticleDetail";
-import TagDetail from "./pages/TagDetail";
+import TagDetail from '@/pages/TagDetail';
+import Links from '@/pages/Links';
 import AdminFaqConvert from "./pages/AdminFaqConvert";
 import AdminImportNews from "./pages/AdminImportNews";
 import Privacy from "./pages/Privacy";
@@ -91,6 +92,7 @@ function Router() {
       <Route path={"/faq"} component={FAQ} />
       <Route path={"/accessibility"} component={Accessibility} />
       <Route path={"/sitemap"} component={Sitemap} />
+      <Route path={"/links"} component={Links} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
