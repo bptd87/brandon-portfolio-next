@@ -1681,3 +1681,7 @@
 ## Fix 404 Page Portfolio Link (User Reported - Feb 9, 2026)
 - [x] Find correct portfolio route (/projects)
 - [x] Update View Portfolio button to link to /projects instead of /work
+
+## Fix Project Categories (User Reported - Feb 9, 2026)
+- [x] Change "New Swan Venue File" from Scenic Design to Rendering
+- [x] Change "Angel Food Cake" from Scenic Design to Rendering
