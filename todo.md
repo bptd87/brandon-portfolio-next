@@ -1620,3 +1620,16 @@
 - [x] Test paint calculator without authentication (Copy Recipe button works, no sign-in)
 - [x] Test articles without comments section (verified: no comments component)
 - [x] Correct coming soon badges: Remove from Rosco Paint Calculator, add to Model Scaler, Paint Finder, Classical Orders
+
+## Create Fun 404 Page with Ghost Image (User Requested - Feb 8, 2026)
+- [x] Upload ghost image to S3 and get CDN URL (https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/TGWPVtCzkqgWUcQx.jpeg)
+- [x] Create NotFound.tsx component with ghost image
+- [x] Add fun copy about being lost in the theatre ("Off Script", ghost light references)
+- [x] Add navigation buttons to Home and Scenic Design Portfolio
+- [x] Configure App.tsx routing to show 404 for non-existent routes (already configured with catch-all route)
+- [x] Test 404 page by visiting invalid URL (verified: floating animation, fade effect, navigation buttons work)
+
+## 404 Page Refinements (User Requested - Feb 8, 2026)
+- [x] Remove background glow effect behind ghost image
+- [x] Add floating/hovering animation to ghost image (4s vertical motion)
+- [x] Add fade effect at bottom of ghost image (gradient to background)
