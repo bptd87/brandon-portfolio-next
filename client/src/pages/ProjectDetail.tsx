@@ -197,7 +197,7 @@ export default function ProjectDetail() {
           <img 
             src={project.coverImageUrl} 
             alt={project.title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-top"
           />
         ) : (
           <div className="w-full h-full bg-muted flex items-center justify-center">
