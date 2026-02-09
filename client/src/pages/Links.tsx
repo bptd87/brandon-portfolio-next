@@ -197,7 +197,7 @@ export default function Links() {
 
   useEffect(() => {
     setHasMore(displayLimit < items.length);
-  }, [displayLimit, items.length]);
+  }, [displayLimit, items]);
 
   // --- Render Helpers ---
 

@@ -1895,4 +1895,4 @@
 - [x] Create tRPC queries to fetch latest content (projects, articles, news) - using existing list routers
 - [x] Add /links route in App.tsx
 - [x] Test links page with dynamic content (working perfectly!)
-- [ ] Save checkpoint
+- [x] Save checkpoint
