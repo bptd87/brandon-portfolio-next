@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { AnimatedSection } from "@/components/AnimatedSection";
+import { RenderingFAQ } from "@/components/RenderingFAQ";
 
 export default function RenderingPortfolio() {
   const { data: projects, isLoading } = trpc.projects.list.useQuery({ 
@@ -25,7 +26,7 @@ export default function RenderingPortfolio() {
               </h1>
               
               <div className="space-y-8 max-w-3xl mx-auto">
-                <p className="text-2xl md:text-3xl leading-relaxed font-light">
+                <p className="text-2xl md:text-3xl leading-relaxed font-extralight">
                   Rendering is not documentation.
                   <br />
                   It is <em className="font-['Playfair_Display'] not-italic">authored visual storytelling</em>—
@@ -258,93 +259,7 @@ export default function RenderingPortfolio() {
         </div>
       </section>
 
-      {/* FAQ Section - Stunning & Direct */}
-      <section className="py-32 border-t border-border">
-        <div className="container max-w-4xl">
-          <AnimatedSection>
-            <div className="text-center mb-20">
-              <h2 className="text-5xl md:text-6xl font-black mb-6">The Future is AI</h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Let's address what everyone's thinking.
-              </p>
-            </div>
-          </AnimatedSection>
-
-          <div className="space-y-8">
-            {/* FAQ 1 */}
-            <AnimatedSection>
-              <div className="border-b border-border pb-8">
-                <h3 className="text-2xl font-bold mb-4">Do you use AI in your renderings?</h3>
-                <p className="text-lg leading-relaxed text-muted-foreground">
-                  Yes. AI is a tool in the post-production phase—texture generation, atmospheric refinement, 
-                  rapid iteration. It sits alongside Photoshop, V-Ray, and every other instrument in the pipeline. 
-                  The question isn't whether AI is used, but whether the final image serves the vision.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            {/* FAQ 2 */}
-            <AnimatedSection>
-              <div className="border-b border-border pb-8">
-                <h3 className="text-2xl font-bold mb-4">Isn't that cheating?</h3>
-                <p className="text-lg leading-relaxed text-muted-foreground">
-                  No more than using a render engine is cheating. Or Photoshop. Or a camera. Every tool in visual 
-                  storytelling is an abstraction—a way to translate intention into image. AI accelerates parts of 
-                  that process. The craft is in knowing what to ask for, what to keep, and what to discard.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            {/* FAQ 3 */}
-            <AnimatedSection>
-              <div className="border-b border-border pb-8">
-                <h3 className="text-2xl font-bold mb-4">Will AI replace scenic designers?</h3>
-                <p className="text-lg leading-relaxed text-muted-foreground">
-                  AI will replace designers who don't understand composition, light, narrative, or context. 
-                  It won't replace designers who do. The tool doesn't make the artist. The artist makes the work. 
-                  AI is a brush, not a painter.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            {/* FAQ 4 */}
-            <AnimatedSection>
-              <div className="border-b border-border pb-8">
-                <h3 className="text-2xl font-bold mb-4">How do you ensure quality?</h3>
-                <p className="text-lg leading-relaxed text-muted-foreground">
-                  Every rendering begins with authored 3D geometry. Lighting is developed manually. Materials are 
-                  chosen intentionally. AI enters only after the foundation is built—and only when it serves the 
-                  image. The final output is always curated, refined, and aligned with the project's narrative goals.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            {/* FAQ 5 */}
-            <AnimatedSection>
-              <div className="border-b border-border pb-8">
-                <h3 className="text-2xl font-bold mb-4">What's your stance on the ethics of AI?</h3>
-                <p className="text-lg leading-relaxed text-muted-foreground">
-                  AI models are trained on vast datasets, some of which include copyrighted work. That's a real concern. 
-                  My approach: use AI as a compositing tool, not a replacement for original work. I don't generate entire 
-                  images from prompts. I build the foundation, then refine. Transparency matters. So does craft.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            {/* FAQ 6 */}
-            <AnimatedSection>
-              <div className="pb-8">
-                <h3 className="text-2xl font-bold mb-4">Why be so open about this?</h3>
-                <p className="text-lg leading-relaxed text-muted-foreground">
-                  Because pretending AI doesn't exist won't make it go away. The conversation around AI in design is 
-                  often defensive or dismissive. I'd rather be honest. The tools are here. The question is how we use them. 
-                  I choose to use them in service of better storytelling—not as a shortcut, but as an evolution.
-                </p>
-              </div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
+      <RenderingFAQ />
 
       <Footer />
     </div>

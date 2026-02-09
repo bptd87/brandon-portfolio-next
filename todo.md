@@ -2132,3 +2132,5 @@
 - [x] Update Continue Reading section to show category-based related articles with matching card design
 - [x] Create gallery-like Rendering portfolio landing page with editorial design, art-led principles, and process layers
 - [x] Move philosophy statement into header section and add stunning FAQ addressing AI integration
+- [x] Rebrand FAQ as 'Authored Composite Rendering' with collapsible accordion that sells the process
+- [x] Reduce body copy font weight in philosophy section for more minimal feel
