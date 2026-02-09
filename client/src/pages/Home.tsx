@@ -269,7 +269,7 @@ export default function Home() {
                             <img
                               src={project.coverImageUrl}
                               alt={`${project.title} - Scenic design by Brandon PT Davis`}
-                              className="w-full h-full object-cover object-[center_30%] group-hover:scale-110 transition-transform duration-700"
+                              className="w-full h-full object-cover object-[center_20%] group-hover:scale-110 transition-transform duration-700"
                             />
                           ) : (
                             <div className="w-full h-full bg-muted flex items-center justify-center">
@@ -363,7 +363,7 @@ export default function Home() {
                             <img
                               src={news.coverImageUrl}
                               alt={news.title}
-                              className="w-full h-full object-cover object-[center_30%] group-hover:scale-110 transition-transform duration-700"
+                              className="w-full h-full object-cover object-[center_20%] group-hover:scale-110 transition-transform duration-700"
                             />
                           </div>
                         )}
