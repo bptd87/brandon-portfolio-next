@@ -322,7 +322,7 @@ export default function ProjectDetail() {
                   {productionPhotos.map((img, idx) => (
                     <AnimatedSection key={img.id} delay={idx * 50}>
                       <div 
-                        className="group relative overflow-hidden rounded-lg cursor-pointer aspect-[4/3]"
+                        className="group relative overflow-hidden rounded-lg cursor-pointer aspect-[3/2]"
                         onClick={() => {
                           setLightboxImages(productionPhotos);
                           setLightboxIndex(idx);
@@ -380,7 +380,7 @@ export default function ProjectDetail() {
                   {renderings.map((img, idx) => (
                     <AnimatedSection key={img.id} delay={idx * 50}>
                       <div 
-                        className="group relative overflow-hidden rounded-lg cursor-pointer aspect-[4/3]"
+                        className="group relative overflow-hidden rounded-lg cursor-pointer aspect-[3/2]"
                         onClick={() => {
                           setLightboxImages(renderings);
                           setLightboxIndex(idx);
@@ -557,7 +557,7 @@ export default function ProjectDetail() {
                   return (
                   <Link key={relatedProject.id} href={`/projects/${relatedProject.slug}`}>
                     <Card className="group cursor-pointer overflow-hidden border-0 bg-transparent hover:scale-[1.02] transition-all duration-500">
-                      <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
+                      <div className="relative aspect-[3/2] overflow-hidden rounded-lg">
                         {relatedProject.coverImageUrl ? (
                           <img
                             src={relatedProject.coverImageUrl}
