@@ -2063,3 +2063,4 @@
 - [x] Update collaborators database with complete profiles
 - [x] Research and add website URLs for all theatre companies
 - [x] Fix Collaborators page to show 'Website' for theatre companies instead of 'Portfolio'
+- [x] Extract all designers from scenic design project pages and populate collaborators database
