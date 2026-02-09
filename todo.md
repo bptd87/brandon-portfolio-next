@@ -2102,3 +2102,4 @@
 - [x] Expand project detail hero images to full viewport width
 - [x] Add hover effects to portfolio cards (1.05x scale + metadata reveal)
 - [x] Update hover effects to hide metadata (Alexander Dodge style)
+- [x] Remove colored borders from portfolio card hover effects

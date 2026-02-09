@@ -122,7 +122,7 @@ export default function Projects() {
                     
                     return (
                     <Link key={project.id} href={`/projects/${project.slug}`}>
-                      <div className="relative overflow-hidden rounded-lg cursor-pointer group aspect-[3/2] border-2 border-transparent hover:border-opacity-100 transition-all duration-500" style={{ borderColor: hoverColor }}>
+                      <div className="relative overflow-hidden rounded-lg cursor-pointer group aspect-[3/2]">
                         {project.coverImageUrl ? (
                           <>
                             <img 
