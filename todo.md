@@ -2021,3 +2021,8 @@
 - [x] Fix hardcoded "SCENIC DESIGN" badge on homepage to show correct discipline
 - [x] Set publishedAt date to make Red Bull appear in top 4 featured projects
 - [x] Verify cover image displays correctly on homepage
+
+## Red Bull Jukebox - API Query Error Fix
+- [x] Investigate API query error - sandbox was reset, changes were lost
+- [x] Reapply all fixes: cover image URL, excerpt, date (2024-09-24), client (Lumenati × Red Bull)
+- [x] Fix data pattern validation error
