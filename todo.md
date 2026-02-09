@@ -1670,3 +1670,10 @@
 - [x] Improve typography and spacing (larger 404, refined tracking, better line spacing)
 - [x] Add more dramatic theatrical styling (spotlight effect, vignette, gradient divider)
 - [x] Ensure ghost fades naturally (mask from 55% to 100% with smooth gradient)
+
+## Simple High-Quality 404 Page (User Requested - Feb 9, 2026)
+- [x] Generate new ghost image optimized for web (no glow issues)
+- [x] Create simple, clean, elegant 404 design
+- [x] Abandon ghost light concept (too complicated)
+- [x] Create typography-focused 404 with theatrical message
+- [x] Focus on quality over complexity
