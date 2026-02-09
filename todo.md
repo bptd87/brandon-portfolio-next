@@ -2067,8 +2067,12 @@
 - [x] Research scenic design competitor websites and create comparison audit report
 
 ## Homepage Improvements (Based on Competitive Analysis)
-- [ ] Implement full-screen hero carousel with rotating production photography
+- [x] Implement full-screen hero carousel with rotating production photography
 - [x] Move ARTICLES into STUDIO dropdown menu to simplify main navigation
 - [ ] Add awards/recognition section between Featured Projects and Latest Thinking
 - [ ] Enhance visual hierarchy throughout homepage
 - [ ] Optimize hero images for performance (WebP, lazy loading)
+
+- [x] Implement full-screen hero carousel with rotating production photography
+- [x] Select 4-5 best production photos for hero carousel
+- [x] Add smooth transitions and auto-rotation to carousel
