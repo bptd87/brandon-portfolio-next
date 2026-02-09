@@ -226,7 +226,7 @@ export default function ProjectDetail() {
                   color: accentColor
                 }}
               >
-                {project.discipline?.toUpperCase() || 'PROJECT'}
+                {project.subcategory?.toUpperCase() || project.discipline?.replace('_', ' ').toUpperCase() || 'PROJECT'}
               </Badge>
               {project.year && (
                 <span className="text-sm text-foreground/80 font-pixel">{project.year}</span>
@@ -250,12 +250,7 @@ export default function ProjectDetail() {
                   <span>{project.location}</span>
                 </div>
               )}
-              {project.year && (
-                <div className="flex items-center gap-2">
-                  <Calendar className="h-5 w-5" />
-                  <span>{project.year}</span>
-                </div>
-              )}
+              {/* Year removed from metadata to avoid duplication - shown in badge area */}
             </div>
 
             <Link href="/projects">

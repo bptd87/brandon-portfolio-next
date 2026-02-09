@@ -2110,3 +2110,5 @@
 - [x] Show all scenic design projects in More Scenic Design section (not just related)
 - [x] Remove left/right navigation arrows from Scenic Portfolio page
 - [x] Update collaboration highlight colors to match page accent color
+- [x] Remove duplicate date from project detail hero section
+- [x] Show subcategory instead of discipline in project detail badge
