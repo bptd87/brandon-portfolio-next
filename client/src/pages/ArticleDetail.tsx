@@ -11,7 +11,7 @@ import { Link, useParams } from "wouter";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { getCategoryColor } from "@/lib/categoryColors";
-import Comments from "@/components/Comments";
+
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 
@@ -738,13 +738,7 @@ export default function ArticleDetail() {
                 </div>
               )}
 
-              {/* Comments Section */}
-              <div className="max-w-[65ch] mx-auto">
-                <Comments 
-                  articleId={article.id} 
-                  accentColor={category ? getCategoryColor(category.name).hex : '#06B6D4'} 
-                />
-              </div>
+
 
               {/* Author Bio with Engagement */}
               <div className="mt-16 pt-12 border-t max-w-[65ch] mx-auto">

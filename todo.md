@@ -1601,3 +1601,22 @@
 - [x] Update mixing recipe result card styling
 - [x] Ensure consistent rounded corners, shadows, and spacing throughout
 - [x] Test redesigned app for visual consistency
+
+## Rosco Paint Calculator Layout Improvement - Negative Space Fix (User Requested - Feb 8, 2026)
+- [x] Analyze current layout and identify negative space issues
+- [x] Design solution to fill vertical space below mixing recipe card (add Saved Recipes section)
+- [x] Consider adding saved recipes section, paint library, or other relevant content
+- [x] Implement Saved Recipes section below mixing recipe card
+- [x] Fix TypeScript errors in saved recipes display
+- [x] Add empty state for Saved Recipes section
+- [ ] Test improved layout for better visual balance
+- [x] Add "Coming Soon" badges to Paint Calculator, Classical Orders, and Paint Finder apps (not yet reintroduced)
+
+## Remove Authentication Features (User Requested - Feb 8, 2026)
+- [x] Remove saved recipes functionality from Rosco Paint Calculator (no sign-in, no save button)
+- [x] Remove empty state with sign-in button from Rosco Paint Calculator
+- [x] Replace Save Recipe button with Copy Recipe button
+- [x] Remove comments section from article pages
+- [x] Test paint calculator without authentication (Copy Recipe button works, no sign-in)
+- [x] Test articles without comments section (verified: no comments component)
+- [x] Correct coming soon badges: Remove from Rosco Paint Calculator, add to Model Scaler, Paint Finder, Classical Orders

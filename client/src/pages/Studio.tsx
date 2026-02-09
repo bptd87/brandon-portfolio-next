@@ -47,11 +47,12 @@ export default function Studio() {
   // Tool cards - "Quick access to tools"
   const toolCards = [
     {
-      title: "Scale Calculator",
+      title: "Model Scaler",
       description: "Convert between architectural and model scales",
       image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/pUUxwGnztzjjGFym.webp",
-      href: "/studio/apps/scale-calculator",
+      href: "/studio/apps/model-scaler",
       accentColor: "#00E5FF",
+      comingSoon: true,
     },
     {
       title: "Dimension Reference",
@@ -61,10 +62,10 @@ export default function Studio() {
       accentColor: "#FF1744",
     },
     {
-      title: "Paint Calculator",
-      description: "Calculate paint coverage and mixing ratios",
+      title: "Rosco Paint Calculator",
+      description: "Mix Rosco Off-Broadway paints to match any color",
       image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/MtnVhwckqruzlJNJ.webp",
-      href: "/studio/apps/paint-calculator",
+      href: "/studio/apps/rosco-paint-calculator",
       accentColor: "#00E676",
     },
     {
@@ -80,6 +81,7 @@ export default function Studio() {
       image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/XPuTTIxLVRHncWpw.webp",
       href: "/studio/apps/classical-orders",
       accentColor: "#D500F9",
+      comingSoon: true,
     },
     {
       title: "Paint Finder",
@@ -87,6 +89,7 @@ export default function Studio() {
       image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/abfCgRFgIIVNtmbG.webp",
       href: "/studio/apps/paint-finder",
       accentColor: "#FF6D00",
+      comingSoon: true,
     },
   ];
 
@@ -223,9 +226,9 @@ export default function Studio() {
           <div id="tool-cards-scroll" className="overflow-x-auto scrollbar-hide">
             <div className="container">
               <div className="flex gap-4 pb-4">
-              {toolCards.map((tool) => (
-                  <Link key={tool.title} href={tool.href} className="block group flex-shrink-0">
-                    <Card className="w-[320px] aspect-[16/9] border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden rounded-2xl relative">
+              {toolCards.map((tool) => {
+                  const CardComponent = (
+                    <Card className={`w-[320px] aspect-[16/9] border-2 border-border transition-all duration-300 overflow-hidden rounded-2xl relative ${tool.comingSoon ? 'opacity-60' : 'hover:border-primary hover:shadow-xl hover:-translate-y-1'}`}>
                       {/* Full Card Background Image */}
                       <div className="absolute inset-0">
                         <img 
@@ -244,20 +247,35 @@ export default function Studio() {
 
                       {/* Tool Content Overlay */}
                       <CardContent className="absolute bottom-0 left-0 right-0 p-4 z-10">
-                        <h3 className="text-lg font-black tracking-tight mb-1" style={{ color: tool.accentColor }}>
-                          {tool.title}
-                        </h3>
+                        <div className="flex items-center gap-2 mb-1">
+                          <h3 className="text-lg font-black tracking-tight" style={{ color: tool.accentColor }}>
+                            {tool.title}
+                          </h3>
+                          {tool.comingSoon && (
+                            <span className="px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider bg-pink-500/20 text-pink-500 rounded-full border border-pink-500/30">
+                              Coming Soon
+                            </span>
+                          )}
+                        </div>
                         <p className="text-xs text-foreground/80 mb-2 line-clamp-1">
                           {tool.description}
                         </p>
                         
-                        <div className="inline-flex items-center gap-1 font-bold text-xs group-hover:gap-2 transition-all duration-300" style={{ color: tool.accentColor }}>
-                          Launch <ArrowRight className="w-3 h-3" />
-                        </div>
+                        {!tool.comingSoon && (
+                          <div className="inline-flex items-center gap-1 font-bold text-xs group-hover:gap-2 transition-all duration-300" style={{ color: tool.accentColor }}>
+                            Launch <ArrowRight className="w-3 h-3" />
+                          </div>
+                        )}
                       </CardContent>
                     </Card>
-                  </Link>
-              ))}
+                  );
+                  
+                  return tool.comingSoon ? (
+                    <div key={tool.title} className="flex-shrink-0">{CardComponent}</div>
+                  ) : (
+                    <Link key={tool.title} href={tool.href} className="block group flex-shrink-0">{CardComponent}</Link>
+                  );
+              })}
               </div>
             </div>
           </div>

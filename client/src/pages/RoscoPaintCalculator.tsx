@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Copy, Palette, Paintbrush, ArrowRight, ArrowLeft, Archive, Sliders, Save, Trash2, Edit2 } from 'lucide-react';
+import { Copy, Palette, Paintbrush, ArrowRight, ArrowLeft, Sliders } from 'lucide-react';
 import { RelatedTools } from '../components/studio/RelatedTools';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
 import { SEO } from '../components/SEO';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { trpc } from '@/lib/trpc';
-import { useAuth } from '@/_core/hooks/useAuth';
-import { getLoginUrl } from '@/const';
+
 
 // Rosco Off-Broadway Paint Colors (32 colors)
 interface RoscoPaint {
@@ -287,29 +285,7 @@ export default function RoscoPaintCalculator() {
   const [showInventory, setShowInventory] = useState(false);
   const [inStockOnly, setInStockOnly] = useState(false);
 
-  // Saved Recipes State
-  const [saveModalOpen, setSaveModalOpen] = useState(false);
-  const [recipeName, setRecipeName] = useState('');
-  const [recipeNotes, setRecipeNotes] = useState('');
-  const [showSavedRecipes, setShowSavedRecipes] = useState(false);
 
-  // Auth and tRPC
-  const { user } = useAuth();
-  const utils = trpc.useUtils();
-  const savedRecipesQuery = trpc.paintRecipes.getRecipes.useQuery(undefined, { enabled: !!user });
-  const saveRecipeMutation = trpc.paintRecipes.saveRecipe.useMutation({
-    onSuccess: () => {
-      utils.paintRecipes.getRecipes.invalidate();
-      setSaveModalOpen(false);
-      setRecipeName('');
-      setRecipeNotes('');
-    },
-  });
-  const deleteRecipeMutation = trpc.paintRecipes.deleteRecipe.useMutation({
-    onSuccess: () => {
-      utils.paintRecipes.getRecipes.invalidate();
-    },
-  });
 
   // Load inventory
   useEffect(() => {
@@ -366,36 +342,7 @@ export default function RoscoPaintCalculator() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleSaveRecipe = () => {
-    if (!user) {
-      window.location.href = getLoginUrl();
-      return;
-    }
-    if (!result || !recipeName.trim()) return;
-    
-    saveRecipeMutation.mutate({
-      name: recipeName.trim(),
-      notes: recipeNotes.trim(),
-      targetColor,
-      mixingRecipe: result.recipe.map(r => ({
-        paintId: r.paint.id,
-        paintName: r.paint.name,
-        color: r.paint.hex,
-        parts: r.parts,
-      })),
-    });
-  };
 
-  const handleLoadRecipe = (recipe: any) => {
-    setTargetColor(recipe.targetColor);
-    setShowSavedRecipes(false);
-  };
-
-  const handleDeleteRecipe = (id: number) => {
-    if (confirm('Delete this recipe?')) {
-      deleteRecipeMutation.mutate({ id });
-    }
-  };
 
   return (
     <>
@@ -441,7 +388,7 @@ export default function RoscoPaintCalculator() {
                     onClick={() => setInStockOnly(!inStockOnly)}
                      className={`flex items-center gap-3 px-6 py-3 rounded-xl border transition-all hover:scale-105 ${inStockOnly ? 'bg-pink-500 text-white border-pink-500' : 'bg-transparent border-border hover:bg-muted'}`}
                 >
-                    <Archive size={18} />
+                    <Sliders size={18} />
                     <div className="text-xs font-bold tracking-wider uppercase">
                         {inStockOnly ? 'Using Inventory' : 'Full Catalog'}
                     </div>
@@ -464,18 +411,19 @@ export default function RoscoPaintCalculator() {
                         >
                             <div className="flex items-center justify-between mb-8">
                                 <h3 className="font-display text-xl" style={{ color: colors.accent }}>Mixing Recipe</h3>
-                                <div className="flex gap-2">
-                                    <button 
-                                        onClick={() => setSaveModalOpen(true)} 
-                                        className="px-4 py-2 rounded-xl bg-pink-500/90 text-white hover:bg-pink-600 transition-all hover:scale-105 flex items-center gap-2 text-sm font-bold uppercase tracking-wide"
-                                    >
-                                        <Save size={16} />
-                                        Save Recipe
-                                    </button>
-                                    <button onClick={copyRecipe} className="p-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-colors" title="Copy recipe to clipboard">
-                                        {copied ? <ArrowRight size={20} /> : <Copy size={20} />}
-                                    </button>
-                                </div>
+                                <button onClick={copyRecipe} className="px-4 py-2 rounded-xl bg-pink-500/90 text-white hover:bg-pink-600 transition-all hover:scale-105 flex items-center gap-2 text-sm font-bold uppercase tracking-wide" title="Copy recipe to clipboard">
+                                    {copied ? (
+                                        <>
+                                            <ArrowRight size={16} />
+                                            Copied!
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Copy size={16} />
+                                            Copy Recipe
+                                        </>
+                                    )}
+                                </button>
                             </div>
                             
                             <div className="grid md:grid-cols-2 gap-8">
@@ -510,6 +458,7 @@ export default function RoscoPaintCalculator() {
                         </div>
                     )}
                     
+
 
                 </div>
 
@@ -600,132 +549,8 @@ export default function RoscoPaintCalculator() {
         </section>
 
         {/* More Apps Section */}
-        
-        {/* Save Recipe Modal */}
-        {saveModalOpen && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="bg-background border border-border rounded-2xl p-8 max-w-md w-full shadow-2xl"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <Save className="h-6 w-6 text-pink-500" />
-                <h3 className="text-2xl font-display">Save Recipe</h3>
-              </div>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">Recipe Name *</label>
-                  <input
-                    type="text"
-                    value={recipeName}
-                    onChange={(e) => setRecipeName(e.target.value)}
-                    placeholder="e.g., Deep Purple Stage Wash"
-                    className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:border-pink-500 focus:ring-2 focus:ring-pink-500/20 transition-all"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">Notes (optional)</label>
-                  <textarea
-                    value={recipeNotes}
-                    onChange={(e) => setRecipeNotes(e.target.value)}
-                    placeholder="Add notes about this recipe..."
-                    rows={3}
-                    className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:border-pink-500 focus:ring-2 focus:ring-pink-500/20 transition-all resize-none"
-                  />
-                </div>
-                <div className="flex gap-3">
-                  <button
-                    onClick={handleSaveRecipe}
-                    disabled={!recipeName.trim() || saveRecipeMutation.isPending}
-                    className="flex-1 px-4 py-3 rounded-xl bg-pink-500 text-white hover:bg-pink-600 disabled:opacity-50 disabled:cursor-not-allowed font-bold uppercase tracking-wide text-sm transition-all hover:scale-105"
-                  >
-                    {saveRecipeMutation.isPending ? 'Saving...' : 'Save Recipe'}
-                  </button>
-                  <button
-                    onClick={() => setSaveModalOpen(false)}
-                    className="px-4 py-3 rounded-xl border border-border hover:bg-muted transition-colors font-medium"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
 
-        {/* Saved Recipes Section */}
-        {user && savedRecipesQuery.data && savedRecipesQuery.data.length > 0 && (
-          <div className="container mx-auto px-4 py-12">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-3xl font-display">Saved Recipes</h2>
-              <button
-                onClick={() => setShowSavedRecipes(!showSavedRecipes)}
-                className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"
-              >
-                {showSavedRecipes ? 'Hide' : 'Show'} ({savedRecipesQuery.data.length})
-              </button>
-            </div>
 
-            {showSavedRecipes && (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {savedRecipesQuery.data.map((recipe: any) => (
-                  <div
-                    key={recipe.id}
-                    className="border rounded-xl p-6 hover:shadow-lg transition-shadow"
-                    style={{ borderColor: colors.cardBorder, backgroundColor: colors.cardBg }}
-                  >
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex-1">
-                        <h3 className="font-bold text-lg mb-1">{recipe.name}</h3>
-                        {recipe.notes && (
-                          <p className="text-sm opacity-60">{recipe.notes}</p>
-                        )}
-                      </div>
-                      <div
-                        className="w-12 h-12 rounded-lg border ml-3"
-                        style={{ backgroundColor: recipe.targetColor, borderColor: colors.cardBorder }}
-                      />
-                    </div>
-
-                    <div className="space-y-2 mb-4">
-                      {JSON.parse(recipe.mixingRecipe).map((item: any, i: number) => (
-                        <div key={i} className="flex items-center gap-2 text-sm">
-                          <div
-                            className="w-4 h-4 rounded border"
-                            style={{ backgroundColor: item.color, borderColor: colors.cardBorder }}
-                          />
-                          <span className="flex-1">{item.paintName}</span>
-                          <span className="font-mono">{item.parts.toFixed(1)}pt</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => handleLoadRecipe(recipe)}
-                        className="flex-1 px-3 py-2 rounded-lg bg-purple-500 text-white hover:bg-purple-600 text-sm font-medium flex items-center justify-center gap-2"
-                      >
-                        <Palette size={14} />
-                        Load
-                      </button>
-                      <button
-                        onClick={() => handleDeleteRecipe(recipe.id)}
-                        className="px-3 py-2 rounded-lg border border-red-500 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
-                      >
-                        <Trash2 size={14} />
-                      </button>
-                    </div>
-
-                    <div className="text-xs opacity-40 mt-3">
-                      {new Date(recipe.createdAt).toLocaleDateString()}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
 
         <RelatedTools currentToolId="rosco-paint-calculator" />
       </div>

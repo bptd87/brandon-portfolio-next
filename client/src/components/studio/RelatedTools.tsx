@@ -7,6 +7,7 @@ interface Tool {
   description: string;
   href: string;
   icon: React.ReactNode;
+  comingSoon?: boolean;
 }
 
 const STUDIO_TOOLS: Tool[] = [
@@ -47,21 +48,34 @@ export function RelatedTools({ currentToolId }: RelatedToolsProps) {
       <div className="container">
         <h2 className="text-2xl md:text-3xl font-display italic mb-8">More Studio Tools</h2>
         <div className="grid md:grid-cols-2 gap-6">
-          {relatedTools.map(tool => (
-            <Link key={tool.id} href={tool.href}>
-              <div className="group block p-6 bg-neutral-200/60 dark:bg-neutral-900/60 backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-3xl hover:border-black/30 dark:hover:border-white/30 transition-all cursor-pointer">
+          {relatedTools.map(tool => {
+            const CardContent = (
+              <div className={`group block p-6 bg-neutral-200/60 dark:bg-neutral-900/60 backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-3xl transition-all ${tool.comingSoon ? 'opacity-60 cursor-not-allowed' : 'hover:border-black/30 dark:hover:border-white/30 cursor-pointer'}`}>
                 <div className="flex items-start gap-4">
                   <div className="p-3 bg-black/5 dark:bg-white/5 rounded-2xl group-hover:bg-black/10 dark:group-hover:bg-white/10 transition-colors">
                     {tool.icon}
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-display italic mb-2">{tool.name}</h3>
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3 className="text-xl font-display italic">{tool.name}</h3>
+                      {tool.comingSoon && (
+                        <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-pink-500/20 text-pink-500 rounded-full border border-pink-500/30">
+                          Coming Soon
+                        </span>
+                      )}
+                    </div>
                     <p className="text-sm text-black/60 dark:text-white/60">{tool.description}</p>
                   </div>
                 </div>
               </div>
-            </Link>
-          ))}
+            );
+            
+            return tool.comingSoon ? (
+              <div key={tool.id}>{CardContent}</div>
+            ) : (
+              <Link key={tool.id} href={tool.href}>{CardContent}</Link>
+            );
+          })}
         </div>
       </div>
     </div>
