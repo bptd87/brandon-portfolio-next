@@ -2093,3 +2093,4 @@
 - [x] Fix theatre company metadata display on homepage portfolio cards
 - [x] Add brand-colored hover effects with variety (orange, cyan, pink, amber)
 - [x] Fix news cards spacing/gap issue
+- [x] Update Scenic Portfolio page to use 2-column grid layout matching homepage

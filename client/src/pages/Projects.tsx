@@ -109,10 +109,10 @@ export default function Projects() {
           {filteredProjects && filteredProjects.length > 0 ? (
             <section className="py-16 overflow-visible">
               <div className="container overflow-visible">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-visible">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-visible">
                   {filteredProjects.map((project) => (
                     <Link key={project.id} href={`/projects/${project.slug}`}>
-                      <div className="relative overflow-hidden rounded-lg cursor-pointer group aspect-[4/3]">
+                      <div className="relative overflow-hidden rounded-lg cursor-pointer group aspect-[3/2]">
                         {project.coverImageUrl ? (
                           <>
                             <img 
@@ -122,17 +122,17 @@ export default function Projects() {
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                             <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                              {project.subcategory && (
+                              {project.client && (
                                 <p className="text-xs tracking-widest mb-2 opacity-80">
-                                  {project.subcategory.toUpperCase()}
+                                  {project.client.toUpperCase()}
                                 </p>
                               )}
                               <h3 className="text-2xl md:text-3xl font-['Playfair_Display'] italic mb-2">
                                 {project.title}
                               </h3>
-                              {project.client && project.year && (
+                              {project.year && (
                                 <p className="text-sm opacity-80">
-                                  {project.client} · {project.year}
+                                  {project.year}
                                 </p>
                               )}
                             </div>
