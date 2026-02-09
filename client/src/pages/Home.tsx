@@ -251,7 +251,7 @@ export default function Home() {
 
                 {/* 2-Column Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                  {projects.slice(0, 8).map((project, index) => {
+                  {projects.map((project, index) => {
                     // Cycle through brand colors for variety
                     const brandColors = [
                       '#FF5722', // Orange
@@ -322,15 +322,7 @@ export default function Home() {
                   })}
                 </div>
 
-                {/* View All Projects Button */}
-                <div className="text-center">
-                  <Link href="/projects/scenic-design">
-                    <Button size="lg" variant="outline" className="text-base font-semibold px-8 py-6">
-                      VIEW ALL SCENIC DESIGN PROJECTS
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  </Link>
-                </div>
+                {/* Removed View All button - showing complete portfolio on homepage */}
               </div>
             </div>
           </section>
