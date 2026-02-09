@@ -4,28 +4,28 @@ import { ChevronDown } from "lucide-react";
 
 const faqs = [
   {
+    question: "What makes a rendering successful?",
+    answer: "A successful rendering doesn't just document space—it communicates emotion, narrative, and atmosphere. It's about choosing what to reveal and what to withhold. Composition guides the eye. Light establishes mood. Material choices carry memory and history. When these elements align with the story you're telling, the rendering transcends technical accuracy and becomes a piece of visual storytelling."
+  },
+  {
+    question: "How do you approach composition in renderings?",
+    answer: "Every frame is a deliberate choice. I start by asking: where should the viewer's eye enter? What's the focal point? What remains in shadow? Composition isn't about filling space—it's about building visual hierarchy that serves the narrative. I use the rule of thirds, leading lines, and negative space to create tension, balance, or unease depending on what the project demands."
+  },
+  {
+    question: "What's your philosophy on light and atmosphere?",
+    answer: "Light is emotion. It defines time of day, temperature, and psychological tension. I approach lighting like a cinematographer—motivated sources, intentional shadows, and atmospheric depth. Fog, haze, and volumetric effects aren't decoration; they create separation between foreground and background, add mystery, and remind the viewer they're looking at a moment in time, not just geometry."
+  },
+  {
+    question: "How do you collaborate with directors and designers?",
+    answer: "I start by understanding the narrative and emotional goals of the project. What feeling should this space evoke? What's the story being told? From there, I work iteratively—sharing early compositions, testing lighting scenarios, and refining based on feedback. The best collaborations happen when the rendering process becomes part of the design conversation, not just documentation of decisions already made."
+  },
+  {
+    question: "What's the difference between documentation and storytelling?",
+    answer: "Documentation shows what a space looks like. Storytelling shows what it feels like. Documentation is neutral, objective, complete. Storytelling is authored—it has a point of view, a mood, a sense of time and place. I'm not interested in creating architectural photography. I'm interested in creating images that make you want to step into the world they depict."
+  },
+  {
     question: "What is Authored Composite Rendering?",
-    answer: "It's a hybrid workflow that combines traditional 3D rendering with AI-assisted post-production. Every image begins with intentional geometry, authored lighting, and curated materials. AI enters only in the composite phase—refining atmospherics, enhancing textures, or accelerating iteration. The result is faster turnaround without sacrificing artistic control."
-  },
-  {
-    question: "Why is this approach better than traditional rendering?",
-    answer: "Speed and flexibility. Traditional rendering can take hours per frame. Authored Composite Rendering maintains the same foundation—authored models, intentional lighting—but compresses the post-production timeline. You get photorealistic results faster, with more room for creative iteration and client feedback loops."
-  },
-  {
-    question: "How does this benefit my project?",
-    answer: "More options, faster. Instead of waiting days for a single angle, you can explore multiple compositions, lighting scenarios, and atmospheric treatments in the same timeframe. This means better design decisions, more confident presentations, and renderings that truly serve the narrative of your space."
-  },
-  {
-    question: "What level of control do you maintain?",
-    answer: "Complete control. Every rendering starts with authored 3D geometry built specifically for your project. Lighting is developed manually. Materials are chosen intentionally. AI tools support the composite phase, but every output is curated, refined, and aligned with your project's goals. You're not getting generic AI art—you're getting designed images."
-  },
-  {
-    question: "Can you match specific aesthetic requirements?",
-    answer: "Yes. Because the foundation is authored, not generated, the process adapts to any aesthetic—photorealistic, painterly, atmospheric, or stylized. The composite phase enhances what's already there. If you need a specific look, material palette, or lighting mood, it's built into the base render before AI ever touches it."
-  },
-  {
-    question: "How does pricing compare to traditional rendering?",
-    answer: "Competitive with faster turnaround. The efficiency gains mean you get more iterations and angles for similar investment. Instead of paying for render farm time and waiting days, you get curated results faster—which often translates to better value and more responsive collaboration throughout the design process."
+    answer: "It's my approach to blending traditional 3D rendering with modern post-production techniques. Every image begins with authored geometry, intentional lighting, and curated materials. The composite phase—whether through Photoshop, AI tools, or other methods—refines atmospherics, enhances textures, and accelerates iteration. The result is faster turnaround without sacrificing artistic control. The craft is in knowing what to build, what to enhance, and what to leave alone."
   }
 ];
 
@@ -38,10 +38,10 @@ export function RenderingFAQ() {
         <AnimatedSection>
           <div className="text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-black mb-6">
-              Authored Composite Rendering
+              The Craft
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              A hybrid process that delivers photorealistic results faster, without compromising artistic control.
+              On rendering as an art form, design philosophy, and the process behind the images.
             </p>
           </div>
         </AnimatedSection>
