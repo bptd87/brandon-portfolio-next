@@ -163,7 +163,7 @@ export default function Header() {
   const [portfolioOpen, setPortfolioOpen] = useState(false);
   const [newsOpen, setNewsOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
-  const [articlesOpen, setArticlesOpen] = useState(false);
+
   const [studioOpen, setStudioOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -174,14 +174,14 @@ export default function Header() {
   const portfolioDropdownRef = useRef<HTMLDivElement>(null);
   const newsDropdownRef = useRef<HTMLDivElement>(null);
   const aboutDropdownRef = useRef<HTMLDivElement>(null);
-  const articlesDropdownRef = useRef<HTMLDivElement>(null);
+
   const studioDropdownRef = useRef<HTMLDivElement>(null);
   
   // Timeout refs for delayed closing
   const portfolioTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const newsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const aboutTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const articlesTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   const studioTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const isActive = (path: string) => {
@@ -203,7 +203,7 @@ export default function Header() {
         setPortfolioOpen(false);
         setNewsOpen(false);
         setAboutOpen(false);
-        setArticlesOpen(false);
+
         setStudioOpen(false);
       }
       
@@ -220,14 +220,8 @@ export default function Header() {
       if (portfolioDropdownRef.current && !portfolioDropdownRef.current.contains(event.target as Node)) {
         setPortfolioOpen(false);
       }
-      if (newsDropdownRef.current && !newsDropdownRef.current.contains(event.target as Node)) {
-        setNewsOpen(false);
-      }
       if (aboutDropdownRef.current && !aboutDropdownRef.current.contains(event.target as Node)) {
         setAboutOpen(false);
-      }
-      if (articlesDropdownRef.current && !articlesDropdownRef.current.contains(event.target as Node)) {
-        setArticlesOpen(false);
       }
       if (studioDropdownRef.current && !studioDropdownRef.current.contains(event.target as Node)) {
         setStudioOpen(false);
@@ -278,18 +272,7 @@ export default function Header() {
     setAboutOpen(true);
   };
 
-  const handleArticlesMouseLeave = () => {
-    articlesTimeoutRef.current = setTimeout(() => {
-      setArticlesOpen(false);
-    }, 300);
-  };
 
-  const handleArticlesMouseEnter = () => {
-    if (articlesTimeoutRef.current) {
-      clearTimeout(articlesTimeoutRef.current);
-    }
-    setArticlesOpen(true);
-  };
 
   const handleStudioMouseLeave = () => {
     studioTimeoutRef.current = setTimeout(() => {
@@ -482,47 +465,7 @@ export default function Header() {
                 )}
               </div>
 
-              {/* Articles Dropdown - Hover Based with Delay */}
-              <div 
-                className="relative" 
-                ref={articlesDropdownRef}
-                onMouseEnter={handleArticlesMouseEnter}
-                onMouseLeave={handleArticlesMouseLeave}
-              >
-                <Link
-                  href="/articles"
-                  className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-[#9C27B0] relative group ${
-                    isActive("/articles") ? "text-[#9C27B0]" : ""
-                  }`}
-                >
-                  ARTICLES
-                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${articlesOpen ? "rotate-180" : ""}`} />
-                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#9C27B0] group-hover:w-full transition-all duration-300"></span>
-                </Link>
 
-                {/* Dropdown Menu */}
-                {articlesOpen && (
-                  <div 
-                    className="absolute top-full left-0 mt-3 w-56 bg-popover backdrop-blur-xl border border-border rounded-lg overflow-hidden shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200"
-                    onMouseEnter={handleArticlesMouseEnter}
-                    onMouseLeave={handleArticlesMouseLeave}
-                  >
-                    {articleCategories.map((category) => (
-                      <Link
-                        key={category.slug || "all"}
-                        href={category.slug ? `/articles?category=${category.slug}` : "/articles"}
-                        className="block px-5 py-3 text-sm font-semibold hover:bg-[#9C27B0]/10 hover:text-[#9C27B0] transition-all border-b border-border last:border-0 relative group"
-                      >
-                        <span className="relative z-10 flex items-center">
-                          {category.icon}
-                          {category.name}
-                        </span>
-                        <span className="absolute left-0 top-0 w-1 h-0 bg-[#9C27B0] group-hover:h-full transition-all duration-300"></span>
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
 
               {/* Studio Dropdown - Hover Based with Delay */}
               <div 
@@ -581,11 +524,21 @@ export default function Header() {
                     </Link>
                     <Link
                       href="/directory"
-                      className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border last:border-0 relative group"
+                      className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border relative group"
                     >
                       <span className="relative z-10 flex items-center">
                         <DirectoryIcon />
                         Scenic Directory
+                      </span>
+                      <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
+                    </Link>
+                    <Link
+                      href="/articles"
+                      className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border last:border-0 relative group"
+                    >
+                      <span className="relative z-10 flex items-center">
+                        <ArticleIcon />
+                        Articles
                       </span>
                       <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
                     </Link>

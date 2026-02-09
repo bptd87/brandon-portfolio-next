@@ -2064,3 +2064,11 @@
 - [x] Research and add website URLs for all theatre companies
 - [x] Fix Collaborators page to show 'Website' for theatre companies instead of 'Portfolio'
 - [x] Extract all designers from scenic design project pages and populate collaborators database
+- [x] Research scenic design competitor websites and create comparison audit report
+
+## Homepage Improvements (Based on Competitive Analysis)
+- [ ] Implement full-screen hero carousel with rotating production photography
+- [x] Move ARTICLES into STUDIO dropdown menu to simplify main navigation
+- [ ] Add awards/recognition section between Featured Projects and Latest Thinking
+- [ ] Enhance visual hierarchy throughout homepage
+- [ ] Optimize hero images for performance (WebP, lazy loading)
