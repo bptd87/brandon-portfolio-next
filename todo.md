@@ -2389,4 +2389,11 @@
 - [x] Remove AboutNav from Resume.tsx page
 - [x] Remove AboutNav from CV.tsx page
 - [x] Test that only /resume and /cv pages exist
+- [x] Save checkpoint
+
+## Add Resume and CV to Main Navigation (User Request - Feb 10, 2026)
+- [x] Read Header component to understand current ABOUT dropdown structure
+- [x] Add Resume link to ABOUT dropdown
+- [x] Add CV link to ABOUT dropdown
+- [x] Test dropdown navigation works correctly
 - [ ] Save checkpoint

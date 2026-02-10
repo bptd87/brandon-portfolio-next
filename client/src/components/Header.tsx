@@ -314,7 +314,8 @@ export default function Header() {
   const aboutPages = [
     { name: "About", slug: "/about" },
     { name: "Teaching Philosophy", slug: "/about/teaching" },
-    { name: "Resume / CV", slug: "/about/resume" },
+    { name: "Resume", slug: "/resume" },
+    { name: "CV", slug: "/cv" },
     { name: "Creative Statement", slug: "/about/philosophy" },
   ];
 
