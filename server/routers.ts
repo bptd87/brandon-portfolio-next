@@ -1030,6 +1030,16 @@ export const appRouter = router({
           filename: 'Brandon-PT-Davis-Creative-Statement.pdf'
         };
       }),
+    
+    generateTeachingPhilosophy: publicProcedure
+      .mutation(async () => {
+        const { generateTeachingPhilosophyPDF } = await import('./generateTeachingPhilosophyPDF');
+        const pdfBuffer = await generateTeachingPhilosophyPDF();
+        return {
+          data: pdfBuffer.toString('base64'),
+          filename: 'Brandon-PT-Davis-Teaching-Philosophy.pdf'
+        };
+      }),
   }),
 });
 
