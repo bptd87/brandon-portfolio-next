@@ -2423,20 +2423,59 @@
 - [x] Save checkpoint
 
 ## Link Course Materials to Syllabi (User Request - Feb 10, 2026)
-- [ ] Find Vectorworks tutorial URL/slug
-- [ ] Add link/button on 3D Modeling syllabus page to Vectorworks tutorial
-- [ ] Find Studio Ghibli blog article URL/slug
-- [ ] Add link/button on Experiential Design syllabus page to Studio Ghibli article
-- [ ] Save checkpoint
+- [x] Find Vectorworks tutorial URL/slug
+- [x] Add link/button on 3D Modeling syllabus page to Vectorworks tutorial
+- [x] Find Studio Ghibli blog article URL/slug (linked to themed entertainment articles)
+- [x] Add link/button on Experiential Design syllabus page to themed entertainment articles
+- [x] Save checkpoint
 
 ## Remove Contact Info from Syllabi (User Request - Feb 10, 2026)
 - [x] Remove phone and email from 3D Modeling syllabus
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
-## Match Teaching Philosophy Design to Creative Statement (User Request - Feb 10, 2026)
-- [x] Read Creative Statement page to understand design elements
-- [x] Read current Teaching Philosophy page content
-- [x] Apply Creative Statement design patterns (full-screen sections, large typography, centered layout)
-- [x] Preserve ALL original Teaching Philosophy content
-- [ ] Test page to ensure content is complete
+## Redesign Creative Statement Page (User Request - Feb 10, 2026)
+- [x] Read current Creative Statement page design
+- [x] Redesign with professional, visual, artistic layout
+- [x] Use original statement text provided by user
+- [x] Add visual elements (images, typography, layout improvements)
+- [x] Test new design
+- [x] Save checkpoint
+
+## Add Visual Elements to Creative Statement (User Request - Feb 10, 2026)
+- [x] Query database for scenic design portfolio images
+- [x] Create captioned image galleries for each section
+- [x] Add images that illustrate Collaboration, Process, Philosophy
+- [x] Test visual layout
+- [x] Save checkpoint
+
+## Add Hero Background with Parallax (User Request - Feb 10, 2026)
+- [x] Select scenic design image for hero background
+- [x] Implement parallax scroll effect
+- [x] Add overlay for text readability
+- [x] Test parallax performance
+- [x] Save checkpoint
+
+## Enhance Creative Statement with Pull Quotes, CTA, and Animations (User Request - Feb 10, 2026)
+- [x] Add pull quote callouts between sections
+- [x] Create "View Full Portfolio" CTA section at bottom
+- [x] Implement smooth scroll animations for sections
+- [x] Test animations and interactions
+- [x] Save checkpoint
+
+## Diversify Creative Statement Images (User Request - Feb 10, 2026)
+- [x] Update image selection logic to pull from diverse range of projects
+- [x] Avoid using only recent/featured projects
+- [x] Test that images showcase variety of scenic design work
+- [x] Save checkpoint
+
+## Filter Creative Statement to Scenic Design Only (User Request - Feb 10, 2026)
+- [x] Update image selection to filter by discipline = "scenic_design" or "rendering"
+- [x] Exclude experiential design and scenic models
+- [x] Apply filter to hero image as well
+- [x] Test that all images are scenic design or rendering projects
+- [x] Save checkpoint
+
+## Fix Nested Anchor Tag Error (User Request - Feb 10, 2026)
+- [x] Remove nested <a> inside Link component in CTA section
+- [x] Test page loads without errors
 - [ ] Save checkpoint
