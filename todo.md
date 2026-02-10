@@ -2234,4 +2234,12 @@
 - [x] Complete gallery with 3 images (scenic model detail + 2 production photos)
 - [x] Style creative team block to look professional
 - [x] Verify all fixes - Kim Martin-Cotton listed second as Associate Director
+- [x] Save checkpoint
+
+## Replace Gallery with Single Image in MDQ Article (User Feedback - Feb 10, 2026)
+- [x] Check if NewsDetail supports single 'image' block type
+- [x] Add image block rendering to NewsDetail if needed (already existed)
+- [x] Update MDQ article to use single image block instead of gallery
+- [x] Add newsworthy caption to scenic model image
+- [x] Test image display with caption
 - [ ] Save checkpoint
