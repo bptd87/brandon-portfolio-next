@@ -110,76 +110,77 @@ export default function About() {
       <AboutNav />
 
       {/* Hero Section with Profile Picture */}
-      <section className="container py-32">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-[400px_1fr] gap-12 items-start">
+      <section className="container py-20 md:py-32">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-[480px_1fr] gap-16 items-center">
             {/* Profile Image - Left Side */}
-            <div className="relative">
-              <div className="aspect-[4/5] rounded-2xl overflow-hidden border-4 border-primary/20">
+            <div className="relative group">
+              <div className="aspect-[4/5] rounded-3xl overflow-hidden border-4 border-primary/30 shadow-2xl shadow-primary/10 transition-all duration-300 group-hover:border-primary/50 group-hover:shadow-primary/20">
                 <img 
                   src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/jDUthZkmakLJRTiP.jpeg"
-                  alt="Brandon PT Davis"
+                  alt="Brandon PT Davis - Scenic Designer"
                   className="w-full h-full object-cover object-center"
                 />
               </div>
-              {/* Decorative element */}
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/10 rounded-full blur-3xl -z-10"></div>
+              {/* Enhanced decorative elements */}
+              <div className="absolute -bottom-8 -right-8 w-40 h-40 bg-primary/10 rounded-full blur-3xl -z-10"></div>
+              <div className="absolute -top-8 -left-8 w-32 h-32 bg-accent/10 rounded-full blur-3xl -z-10"></div>
             </div>
 
             {/* Text Content - Right Side */}
-            <div>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
+            <div className="space-y-8">
+              <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 border border-primary/30 mb-2">
                 <Sparkles className="w-4 h-4 text-primary animate-pulse" />
-                <span className="text-sm uppercase tracking-wider text-primary font-semibold">Scenic Designer</span>
+                <span className="text-sm uppercase tracking-widest text-primary font-bold">Scenic Designer</span>
               </div>
               
-              <h1 className="text-5xl md:text-7xl font-serif leading-[0.9] mb-6">
+              <h1 className="text-6xl md:text-8xl font-serif leading-[0.85] mb-8">
                 Brandon<br />PT Davis
               </h1>
               
-              <p className="text-2xl text-foreground/80 leading-relaxed mb-12">
-                Transforming theatrical spaces into <span className="text-primary font-semibold">immersive visual landscapes</span> where story and space move together in harmony
+              <p className="text-xl md:text-2xl text-foreground/90 leading-relaxed max-w-2xl">
+                Transforming theatrical spaces into <span className="text-primary font-bold">immersive visual landscapes</span> where story and space move together in harmony
               </p>
               
-              {/* Contact Info Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex items-center gap-3 group">
-                  <div className="p-2 rounded-lg bg-muted group-hover:bg-muted/70 transition-colors">
+              {/* Contact Info Grid - Refined */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-4">
+                <div className="flex items-center gap-4 group cursor-default">
+                  <div className="p-3 rounded-xl bg-muted/50 group-hover:bg-primary/10 transition-all duration-300 border border-border group-hover:border-primary/30">
                     <MapPin className="w-5 h-5 text-primary" />
                   </div>
-                  <span className="text-foreground/70">Southern California</span>
+                  <span className="text-base font-medium text-foreground/80">Southern California</span>
                 </div>
-                <div className="flex items-center gap-3 group">
-                  <div className="p-2 rounded-lg bg-muted group-hover:bg-muted/70 transition-colors">
+                <div className="flex items-center gap-4 group">
+                  <div className="p-3 rounded-xl bg-muted/50 group-hover:bg-primary/10 transition-all duration-300 border border-border group-hover:border-primary/30">
                     <Mail className="w-5 h-5 text-primary" />
                   </div>
-                  <a href="mailto:info@brandonptdavis.com" className="text-foreground/70 hover:text-primary transition-colors">
+                  <a href="mailto:info@brandonptdavis.com" className="text-base font-medium text-foreground/80 hover:text-primary transition-colors">
                     info@brandonptdavis.com
                   </a>
                 </div>
-                <div className="flex items-center gap-3 group">
-                  <div className="p-2 rounded-lg bg-muted group-hover:bg-muted/70 transition-colors">
+                <div className="flex items-center gap-4 group cursor-default">
+                  <div className="p-3 rounded-xl bg-muted/50 group-hover:bg-primary/10 transition-all duration-300 border border-border group-hover:border-primary/30">
                     <Award className="w-5 h-5 text-primary" />
                   </div>
-                  <span className="text-foreground/70">USA 829 Member</span>
+                  <span className="text-base font-medium text-foreground/80">USA 829 Member</span>
                 </div>
-                <div className="flex items-center gap-3 group">
-                  <div className="p-2 rounded-lg bg-muted group-hover:bg-muted/70 transition-colors">
+                <div className="flex items-center gap-4 group cursor-default">
+                  <div className="p-3 rounded-xl bg-muted/50 group-hover:bg-primary/10 transition-all duration-300 border border-border group-hover:border-primary/30">
                     <Briefcase className="w-5 h-5 text-primary" />
                   </div>
-                  <span className="text-foreground/70">Adaptive Design Services</span>
+                  <span className="text-base font-medium text-foreground/80">Adaptive Design Services</span>
                 </div>
-                <div className="flex items-center gap-3 group">
-                  <div className="p-2 rounded-lg bg-muted group-hover:bg-muted/70 transition-colors">
+                <div className="flex items-center gap-4 group cursor-default">
+                  <div className="p-3 rounded-xl bg-muted/50 group-hover:bg-primary/10 transition-all duration-300 border border-border group-hover:border-primary/30">
                     <GraduationCap className="w-5 h-5 text-primary" />
                   </div>
-                  <span className="text-foreground/70">MFA, UC Irvine</span>
+                  <span className="text-base font-medium text-foreground/80">MFA, UC Irvine</span>
                 </div>
-                <div className="flex items-center gap-3 group">
-                  <div className="p-2 rounded-lg bg-muted group-hover:bg-muted/70 transition-colors">
+                <div className="flex items-center gap-4 group">
+                  <div className="p-3 rounded-xl bg-muted/50 group-hover:bg-primary/10 transition-all duration-300 border border-border group-hover:border-primary/30">
                     <Linkedin className="w-5 h-5 text-primary" />
                   </div>
-                  <a href="https://www.linkedin.com/in/brandonptdavis" target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-primary transition-colors">
+                  <a href="https://www.linkedin.com/in/brandonptdavis" target="_blank" rel="noopener noreferrer" className="text-base font-medium text-foreground/80 hover:text-primary transition-colors">
                     LinkedIn Profile
                   </a>
                 </div>
