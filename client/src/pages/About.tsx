@@ -1,7 +1,7 @@
 import AboutNav from "@/components/AboutNav";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Mail, MapPin, Sparkles, FileText, Lightbulb, GraduationCap, Users, ArrowRight } from "lucide-react";
+import { Mail, MapPin, Sparkles, FileText, Lightbulb, GraduationCap, Users, ArrowRight, Briefcase, Award, Linkedin } from "lucide-react";
 import StructuredData from "@/components/StructuredData";
 import { Link } from "wouter";
 
@@ -112,14 +112,14 @@ export default function About() {
       {/* Hero Section with Profile Picture */}
       <section className="container py-32">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-[400px_1fr] gap-12 items-center">
-            {/* Profile Image */}
-            <div className="relative">
-              <div className="aspect-square rounded-2xl overflow-hidden border-4 border-primary/20">
+          <div className="space-y-12">
+            {/* Profile Image - Landscape */}
+            <div className="relative max-w-2xl mx-auto">
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden border-4 border-primary/20">
                 <img 
                   src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/jDUthZkmakLJRTiP.jpeg"
                   alt="Brandon PT Davis"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-center"
                 />
               </div>
               {/* Decorative element */}
@@ -127,7 +127,7 @@ export default function About() {
             </div>
 
             {/* Text Content */}
-            <div>
+            <div className="text-center max-w-4xl mx-auto">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
                 <Sparkles className="w-4 h-4 text-primary animate-pulse" />
                 <span className="text-sm uppercase tracking-wider text-primary font-semibold">Scenic Designer</span>
@@ -137,24 +137,50 @@ export default function About() {
                 Brandon<br />PT Davis
               </h1>
               
-              <p className="text-2xl text-foreground/80 leading-relaxed mb-8">
+              <p className="text-2xl text-foreground/80 leading-relaxed mb-12">
                 Transforming theatrical spaces into <span className="text-primary font-semibold">immersive visual landscapes</span> where story and space move together in harmony
               </p>
               
-              {/* Contact Info */}
-              <div className="flex flex-wrap gap-6 text-lg">
-                <div className="flex items-center gap-3 group">
+              {/* Contact Info Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                <div className="flex items-center gap-3 group justify-center md:justify-start">
                   <div className="p-2 rounded-lg bg-muted group-hover:bg-muted/70 transition-colors">
                     <MapPin className="w-5 h-5 text-primary" />
                   </div>
                   <span className="text-foreground/70">Southern California</span>
                 </div>
-                <div className="flex items-center gap-3 group">
+                <div className="flex items-center gap-3 group justify-center md:justify-start">
                   <div className="p-2 rounded-lg bg-muted group-hover:bg-muted/70 transition-colors">
                     <Mail className="w-5 h-5 text-primary" />
                   </div>
                   <a href="mailto:info@brandonptdavis.com" className="text-foreground/70 hover:text-primary transition-colors">
                     info@brandonptdavis.com
+                  </a>
+                </div>
+                <div className="flex items-center gap-3 group justify-center md:justify-start">
+                  <div className="p-2 rounded-lg bg-muted group-hover:bg-muted/70 transition-colors">
+                    <Award className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="text-foreground/70">USA 829 Member</span>
+                </div>
+                <div className="flex items-center gap-3 group justify-center md:justify-start">
+                  <div className="p-2 rounded-lg bg-muted group-hover:bg-muted/70 transition-colors">
+                    <Briefcase className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="text-foreground/70">Adaptive Design Services</span>
+                </div>
+                <div className="flex items-center gap-3 group justify-center md:justify-start">
+                  <div className="p-2 rounded-lg bg-muted group-hover:bg-muted/70 transition-colors">
+                    <GraduationCap className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="text-foreground/70">MFA, UC Irvine</span>
+                </div>
+                <div className="flex items-center gap-3 group justify-center md:justify-start">
+                  <div className="p-2 rounded-lg bg-muted group-hover:bg-muted/70 transition-colors">
+                    <Linkedin className="w-5 h-5 text-primary" />
+                  </div>
+                  <a href="https://www.linkedin.com/in/brandonptdavis" target="_blank" rel="noopener noreferrer" className="text-foreground/70 hover:text-primary transition-colors">
+                    LinkedIn Profile
                   </a>
                 </div>
               </div>

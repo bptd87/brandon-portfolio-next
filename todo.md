@@ -2547,3 +2547,9 @@
 - [x] Update About page with correct headshot URL
 - [x] Test image display
 - [ ] Save checkpoint
+
+## Improve About Page Layout and Contact Info (User Request - Feb 10, 2026)
+- [x] Adjust hero layout to better display landscape headshot image
+- [x] Add more professional details to contact information (USA 829, LinkedIn, etc.)
+- [x] Test visual appearance and spacing
+- [ ] Save checkpoint
