@@ -196,7 +196,7 @@ export default function About() {
       {/* Navigation Cards Section */}
       <section className="bg-gradient-to-b from-background to-muted/30 py-32">
         <div className="container">
-          <div className="max-w-7xl mx-auto mb-16">
+          <div className="max-w-7xl mx-auto mb-16 animate-in fade-in slide-in-from-bottom duration-700">
             <h2 className="text-5xl md:text-7xl font-serif mb-6">Explore More</h2>
             <p className="text-xl text-foreground/70 max-w-3xl">
               Dive deeper into my work, philosophy, and collaborations across scenic design, education, and creative partnerships.
@@ -204,11 +204,14 @@ export default function About() {
           </div>
 
           <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-6">
-            {navigationCards.map((card) => {
+            {navigationCards.map((card, index) => {
               const Icon = card.icon;
               return (
                 <Link key={card.href} href={card.href}>
-                  <div className={`group relative overflow-hidden rounded-2xl border ${card.borderColor} bg-gradient-to-br ${card.color} p-8 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl cursor-pointer`}>
+                  <div 
+                    className={`group relative overflow-hidden rounded-2xl border ${card.borderColor} bg-gradient-to-br ${card.color} p-8 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl cursor-pointer animate-in fade-in slide-in-from-bottom duration-700`}
+                    style={{ animationDelay: `${index * 150}ms` }}
+                  >
                     <div className="flex items-start gap-6">
                       <div className="p-4 rounded-xl bg-background/50 backdrop-blur-sm group-hover:bg-background/70 transition-colors">
                         <Icon className="w-8 h-8 text-primary" />
@@ -237,7 +240,7 @@ export default function About() {
       {/* Personal Gallery */}
       <section className="bg-gradient-to-b from-muted/30 to-background py-32">
         <div className="container">
-          <div className="max-w-7xl mx-auto mb-16">
+          <div className="max-w-7xl mx-auto mb-16 animate-in fade-in slide-in-from-bottom duration-700">
             <h2 className="text-5xl md:text-7xl font-serif mb-6">Behind the Scenes</h2>
             <p className="text-xl text-foreground/70 max-w-3xl">
               Design is collaborative. These moments capture the partnerships, mentorships, and creative communities that shape my work.
@@ -248,7 +251,7 @@ export default function About() {
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {/* Large featured image */}
-              <div className="lg:col-span-2 lg:row-span-2">
+              <div className="lg:col-span-2 lg:row-span-2 animate-in fade-in zoom-in-50 duration-700">
                 <div className="relative aspect-square overflow-hidden rounded-2xl group">
                   <img 
                     src={galleryImages[0].url} 
@@ -261,7 +264,11 @@ export default function About() {
 
               {/* Smaller images */}
               {galleryImages.slice(1, 5).map((image, index) => (
-                <div key={index} className="relative aspect-square overflow-hidden rounded-2xl group">
+                <div 
+                  key={index} 
+                  className="relative aspect-square overflow-hidden rounded-2xl group animate-in fade-in zoom-in-50 duration-700"
+                  style={{ animationDelay: `${(index + 1) * 100}ms` }}
+                >
                   <img 
                     src={image.url} 
                     alt={image.alt}
@@ -273,7 +280,11 @@ export default function About() {
 
               {/* Bottom row */}
               {galleryImages.slice(5).map((image, index) => (
-                <div key={index} className="relative aspect-square overflow-hidden rounded-2xl group">
+                <div 
+                  key={index} 
+                  className="relative aspect-square overflow-hidden rounded-2xl group animate-in fade-in zoom-in-50 duration-700"
+                  style={{ animationDelay: `${(index + 5) * 100}ms` }}
+                >
                   <img 
                     src={image.url} 
                     alt={image.alt}

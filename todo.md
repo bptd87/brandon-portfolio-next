@@ -2583,4 +2583,11 @@
 - [x] Add fade-in/slide-in animations for hero content
 - [x] Test on mobile devices
 - [x] Test animations
+- [x] Save checkpoint
+
+## Add Scroll-Triggered Animations to About Page (User Request - Feb 10, 2026)
+- [x] Add scroll-triggered animation to bio section
+- [x] Add scroll-triggered animations to navigation cards
+- [x] Add scroll-triggered animations to photo gallery
+- [x] Test animations on scroll
 - [ ] Save checkpoint
