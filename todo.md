@@ -2272,4 +2272,8 @@
 - [x] Add newsworthy captions to 3 images
 - [x] Format production list using details block for clean display
 - [x] Test article display
+- [x] Save checkpoint
+
+## Change PTGW Category (User Request - Feb 10, 2026)
+- [x] Change "The Play That Goes Wrong" article category from "Collaborations" to "Assistant Scenic Design"
 - [ ] Save checkpoint
