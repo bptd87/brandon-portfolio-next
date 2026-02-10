@@ -2190,11 +2190,16 @@
 - [x] Add category badges to article cards on news listing page (working)
 - [x] Redesign article header layout - move category badge away from back button
 - [x] Assign categories and tags to all 29 articles
-- [ ] Continue rebuilding remaining 28 articles with:
+- [ ] Rebuild Orange Curtain Review article:
+  - [ ] Fix excerpt
+  - [ ] Pull quote from review
+  - [ ] Add images from Million Dollar Quartet project gallery
+  - [ ] Add link button to full review
+- [ ] Continue rebuilding remaining 27 articles with:
   - [ ] 300+ words of quality, narrative-driven content
   - [ ] Proper structure with header blocks
   - [ ] Creative team credits (for production articles)
   - [ ] Production details (venue, dates, reviews)
-  - [ ] Hero images where appropriate (not for season announcements)
-- [ ] Verify all improvements
-- [ ] Save checkpoint
+  - [ ] Hero images and gallery images from project portfolios
+- [x] Verify all improvements
+- [x] Save checkpoint

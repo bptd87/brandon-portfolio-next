@@ -490,6 +490,23 @@ function NewsDetailContent() {
                       </div>
                     );
                   
+                  case 'quote':
+                    return (
+                      <div key={index} className="mb-12">
+                        <blockquote className="border-l-4 border-[#FF5722] pl-6 py-4 bg-accent/30 rounded-r-lg">
+                          <p className="text-xl font-['Playfair_Display'] italic text-foreground mb-4 leading-relaxed">
+                            "{block.text}"
+                          </p>
+                          {(block.author || block.source) && (
+                            <footer className="text-sm text-muted-foreground">
+                              {block.author && <span className="font-semibold">— {block.author}</span>}
+                              {block.source && <span className="ml-2">({block.source})</span>}
+                            </footer>
+                          )}
+                        </blockquote>
+                      </div>
+                    );
+                  
                   case 'team':
                     return (
                       <div key={index} className="mb-12">
