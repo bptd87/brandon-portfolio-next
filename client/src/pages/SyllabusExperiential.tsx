@@ -18,14 +18,6 @@ export default function SyllabusExperiential() {
             </p>
           </div>
 
-          {/* Course Materials Link */}
-          <div className="mb-8">
-            <a href="/articles?category=themed-entertainment" className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors font-semibold">
-              <span>View Course Materials & Articles</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </a>
-          </div>
-
           {/* Course Description */}
           <div className="mb-12">
             <h2 className="text-2xl font-serif mb-4">Course Description</h2>

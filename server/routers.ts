@@ -1018,29 +1018,6 @@ export const appRouter = router({
         return await db.getCollaboratorProjects(input.collaboratorId);
       }),
   }),
-
-  // ============ PDF GENERATION ============
-  pdf: router({
-    generateCreativeStatement: publicProcedure
-      .mutation(async () => {
-        const { generateCreativeStatementPDF } = await import('./generateCreativeStatementPDF');
-        const pdfBuffer = await generateCreativeStatementPDF();
-        return {
-          data: pdfBuffer.toString('base64'),
-          filename: 'Brandon-PT-Davis-Creative-Statement.pdf'
-        };
-      }),
-    
-    generateTeachingPhilosophy: publicProcedure
-      .mutation(async () => {
-        const { generateTeachingPhilosophyPDF } = await import('./generateTeachingPhilosophyPDF');
-        const pdfBuffer = await generateTeachingPhilosophyPDF();
-        return {
-          data: pdfBuffer.toString('base64'),
-          filename: 'Brandon-PT-Davis-Teaching-Philosophy.pdf'
-        };
-      }),
-  }),
 });
 
 export type AppRouter = typeof appRouter;
