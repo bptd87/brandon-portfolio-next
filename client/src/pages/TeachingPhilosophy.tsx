@@ -4,6 +4,7 @@ import { trpc } from "@/lib/trpc";
 import { useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { Download } from "lucide-react";
+import { Helmet } from 'react-helmet-async';
 
 export default function TeachingPhilosophy() {
   const { data: projects } = trpc.projects.list.useQuery({ 
@@ -89,8 +90,28 @@ export default function TeachingPhilosophy() {
     };
   }, []);
 
+  // Get hero project for Open Graph image
+  const heroProject = scenicDesignProjects[Math.floor(scenicDesignProjects.length * 0.35)] || scenicDesignProjects.find(p => p.featured) || scenicDesignProjects[0];
+
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Teaching Philosophy | Brandon PT Davis</title>
+        <meta name="description" content="Brandon PT Davis's teaching philosophy: equipping students with skills, confidence, and adaptability for the evolving entertainment industry through comprehensive scenic design education." />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Teaching Philosophy | Brandon PT Davis" />
+        <meta property="og:description" content="Equipping students with skills, confidence, and adaptability for the evolving entertainment industry through comprehensive scenic design education." />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="https://brandonptdavis.com/about/philosophy" />
+        {heroProject?.coverImageUrl && <meta property="og:image" content={heroProject.coverImageUrl} />}
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Teaching Philosophy | Brandon PT Davis" />
+        <meta name="twitter:description" content="Equipping students with skills, confidence, and adaptability for the evolving entertainment industry through comprehensive scenic design education." />
+        {heroProject?.coverImageUrl && <meta name="twitter:image" content={heroProject.coverImageUrl} />}
+      </Helmet>
       <Header />
 
       {/* Hero Section */}
@@ -334,7 +355,7 @@ export default function TeachingPhilosophy() {
 
               {/* Teaching Experience & Courses */}
               <div className="grid md:grid-cols-2 gap-8 mt-16">
-                <div>
+                <div className="border-l-4 border-purple-500/50 pl-6 bg-gradient-to-r from-purple-500/10 to-pink-500/10 p-6 rounded-r-lg">
                   <h3 className="text-lg uppercase tracking-widest text-muted-foreground mb-6">Teaching Experience</h3>
                   <div className="space-y-6">
                     <div>
@@ -360,7 +381,7 @@ export default function TeachingPhilosophy() {
                   </div>
                 </div>
 
-                <div>
+                <div className="border-l-4 border-cyan-500/50 pl-6 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 p-6 rounded-r-lg">
                   <h3 className="text-lg uppercase tracking-widest text-muted-foreground mb-6">Courses Taught</h3>
                   <ul className="space-y-2 text-foreground/80">
                     <li>• Scenic Design</li>
