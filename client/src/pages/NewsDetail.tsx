@@ -320,21 +320,22 @@ function NewsDetailContent() {
         )}
         
         <div className="relative container h-full flex items-end pb-16 pt-32 min-h-[70vh]">
-          <div className="max-w-5xl">
-            {/* Back Button */}
-            <Link href="/news">
-              <Button variant="ghost" className="mb-8 text-white hover:bg-white/20 hover:text-white">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to News
-              </Button>
-            </Link>
-
-            {/* Category Badge */}
-            {category && (
-              <Badge className="mb-6 bg-[#00E5FF] text-black font-black tracking-wider text-sm px-4 py-2">
-                {category.name.toUpperCase()}
-              </Badge>
-            )}
+          <div className="max-w-5xl w-full">
+            {/* Navigation Row: Back Button + Category Badge */}
+            <div className="flex items-center justify-between mb-8">
+              <Link href="/news">
+                <Button variant="ghost" className="text-white hover:bg-white/20 hover:text-white">
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  Back to News
+                </Button>
+              </Link>
+              
+              {category && (
+                <Badge className="bg-[#00E5FF] text-black font-black tracking-wider text-sm px-4 py-2">
+                  {category.name.toUpperCase()}
+                </Badge>
+              )}
+            </div>
 
             {/* Title Overlay */}
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-['Playfair_Display'] italic font-bold text-white mb-6 leading-tight">

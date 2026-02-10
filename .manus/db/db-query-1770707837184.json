@@ -1,0 +1,184 @@
+{
+  "query": "SELECT id, title, slug, excerpt FROM news WHERE status = 'published' ORDER BY publishedAt DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT id, title, slug, excerpt FROM news WHERE status = 'published' ORDER BY publishedAt DESC;",
+  "rows": [
+    {
+      "id": "30005",
+      "title": "The Orange Curtain Review Praises Million Dollar Quartet at South Coast Repertory",
+      "slug": "the-orange-curtain-review-praises-million-dollar-quartet-at-south-coast-repertory",
+      "excerpt": "The Orange Curtain Review praises Million Dollar Quartet at South Coast Repertory for its high-energy performances and thoughtful engagement with the cultural and economic realities behind early rock ’n’ roll."
+    },
+    {
+      "id": "1",
+      "title": "Making My SCR Debut: Million Dollar Quartet (2025)",
+      "slug": "million-dollar-quartet-scr-debut",
+      "excerpt": "August 2025 — I’m beyond excited to share that I’ve joined the creative team at South Coast Repertory for Million Dollar Quartet — marking my scenic design debut at SCR. I’ll be working as co-scenic d..."
+    },
+    {
+      "id": "2",
+      "title": "Assisting Tom Buderwitz on The Play That Goes Wrong at Seattle Rep",
+      "slug": "assisting-the-play-that-goes-wrong",
+      "excerpt": "August 28, 2025 — Tonight marked the opening of The Play That Goes Wrong at Seattle Rep, and I’m proud to say I served as an Assistant to scenic designer Tom Buderwitz—a mentor whose guidance I cheris..."
+    },
+    {
+      "id": "3",
+      "title": "40 Productions at Okoboji Summer Theatre",
+      "slug": "40-productions-at-okoboji-summer-theatre",
+      "excerpt": "August 5, 2023 — I just opened my 40th production at Okoboji Summer Theatre. I’m 38 now, and somehow this has become my 15th season here. Time flies when you think back on all the shows, all the late ..."
+    },
+    {
+      "id": "30009",
+      "title": "Opening Night: Deathtrap at Okoboji Summer Theatre",
+      "slug": "deathtrap-opening-ost",
+      "excerpt": "July 2025 — Deathtrap by Ira Levin opened at Okoboji Summer Theatre as the sixth show of the season, delivering a sharp, suspenseful mystery full of twists and turns.The Northwest Iowa Review praised ..."
+    },
+    {
+      "id": "4",
+      "title": "Fifth Season Assisting Jo Winiarski — Utah Shakespeare Festival",
+      "slug": "fifth-season-utah-shakespeare-festival",
+      "excerpt": "June 2025 — I’m proud to be in my fifth season assisting Jo Winiarski as Scenic Designer for the Utah Shakespeare Festival. While most of my work with Jo happens remotely during the year, it’s always ..."
+    },
+    {
+      "id": "30011",
+      "title": "My Season as Scenic Designer for New Swan Shakespeare Festival (2025)",
+      "slug": "new-swan-season-2025",
+      "excerpt": "July 2025 — I’m beyond excited to announce that I’m serving as the Season Scenic Designer for the New Swan Shakespeare Festival at UC Irvine. This year, I’m designing two Shakespeare productions in ro..."
+    },
+    {
+      "id": "30012",
+      "title": "Opening Night: Romero at University of Missouri",
+      "slug": "romero-opening-university-of-missouri",
+      "excerpt": "April 23, 2025 — We opened Romero tonight at the University of Missouri, and it’s a haunting, beautiful first performance. This story—by Xiomara Cornejo and directed by Dr. David Crespy—demands a spac..."
+    },
+    {
+      "id": "30013",
+      "title": "Scenic Design for Okoboji Summer Theatre — Summer 2025 Season",
+      "slug": "okoboji-summer-2025-season",
+      "excerpt": "April 16, 2025 — I’m excited to share that I’m scenic designing three shows for the Okoboji Summer Theatre’s 2025 season.Here’s the lineup I’ll be working on:Bell, Book and Candle (July 15–20)Deathtra..."
+    },
+    {
+      "id": "30014",
+      "title": "Shut Up, Sherlock Praised in SLO Review",
+      "slug": "shut-up-sherlock-praised",
+      "excerpt": "April 9, 2025 — I’m thrilled to share that Shut Up, Sherlock at The Great American Melodrama received a wonderful review from SLO Review. The article, “‘Shut Up, Sherlock’ Deserves a Standing Ovation”..."
+    },
+    {
+      "id": "30015",
+      "title": "Opening Night: How to Succeed in Business Without Really Trying at OST",
+      "slug": "how-to-succeed-opening-ost",
+      "excerpt": "August 2025 — How to Succeed in Business Without Really Trying opened at Okoboji Summer Theatre, wrapping up the company’s 67th season with office politics, satire, and plenty of laughs...."
+    },
+    {
+      "id": "30016",
+      "title": "Guys on Ice Receives Praise in SLO Review",
+      "slug": "guys-on-ice-slo-review",
+      "excerpt": "February 15, 2025 — I’m thrilled to share that Guys on Ice at The Great American Melodrama has just received a wonderful review from SLO Review. The piece, titled “‘Guys on Ice’ Is Warm and Funny”, hi..."
+    },
+    {
+      "id": "30017",
+      "title": "Freaky Friday at Okoboji Summer Theatre Receives Praise",
+      "slug": "freaky-friday-review",
+      "excerpt": "July 2024 — Our production of Freaky Friday at Okoboji Summer Theatre was reviewed in the Spencer Daily Reporter, and I’m grateful to see the design team recognized. The review commended the show’s hu..."
+    },
+    {
+      "id": "5",
+      "title": "Joining United Scenic Artists, Local USA 829",
+      "slug": "united-scenic-artists-local-usa-829",
+      "excerpt": "June 2, 2023 — I officially joined United Scenic Artists, Local USA 829.This wasn’t just paperwork. It was the culmination of years of commitment to scenic design — from my earliest productions in the..."
+    },
+    {
+      "id": "30019",
+      "title": "Forum at Theatre SilCo Featured in Summit Daily",
+      "slug": "forum-review",
+      "excerpt": "June 2022 — Our production of A Funny Thing Happened on the Way to the Forum at Theatre SilCo was highlighted in the Summit Daily. The article, “Travel to Ancient Rome with A Funny Thing Happened on t..."
+    },
+    {
+      "id": "30020",
+      "title": "2024 Okoboji Summer Theatre Season – Scenic Designs Announced",
+      "slug": "okoboji-summer-2024-season",
+      "excerpt": "April 2024 — The season is set at Okoboji Summer Theatre, and I’m excited to share the four productions I’ll be designing this summer.Baskerville: A Sherlock Holmes MysteryDirected by Stephen Brotebec..."
+    },
+    {
+      "id": "30021",
+      "title": "Scenic Design for ¡Lotería: Game On! at Theatre SilCo",
+      "slug": "loteria-theatre-silco",
+      "excerpt": "May 2023 — I’m proud to share that my work as Scenic Designer for Theatre SilCo’s ¡Lotería: Game On! was featured in UCI Humanities News. The article highlights the contributions of UCI alumni at Thea..."
+    },
+    {
+      "id": "30022",
+      "title": "Assisting My First Off-Broadway Show — The Fears (April–May 2023)",
+      "slug": "assisting-the-fears",
+      "excerpt": "April 25, 2023 — We began previews for my first Off-Broadway production, The Fears, assisting scenic designer Jo Winiarski. Her leadership and artistry shaped not only the aesthetic world of the play ..."
+    },
+    {
+      "id": "30023",
+      "title": "Stephens College Update: Looking Ahead to Spring 2022",
+      "slug": "stephens-college-update-spring-2022",
+      "excerpt": "December 2021 — Hard to believe my first semester at Stephens College is already done."
+    },
+    {
+      "id": "30024",
+      "title": "Returning to Stephens College as Assistant Professor of Scenic Design",
+      "slug": "returning-to-stephens-college",
+      "excerpt": "August 2021 — I’ve started a new role as Assistant Professor of Scenic Design at Stephens College. It feels meaningful to return to Columbia, MO — my hometown — and to Stephens, where I earned my unde..."
+    },
+    {
+      "id": "30025",
+      "title": "Scenic Design for Lysistrata at UTEP — Spring 2021",
+      "slug": "lysistrata-utep-spring-2021",
+      "excerpt": "April 2021 — I designed Lysistrata (adapted and directed by Jay Stratton) for UTEP’s Theatre & Dance fall season. This was UTEP’s first in-person production after the COVID shutdown...."
+    },
+    {
+      "id": "30026",
+      "title": "Graduating from UCI in the Middle of a Pandemic",
+      "slug": "graduating-from-uci-pandemic",
+      "excerpt": "June 2020 — I’ve officially graduated with my MFA in Scenic Design from UC Irvine. It’s a weird time to be finishing school — everything feels uncertain with COVID, and the theatre world is on pause.S..."
+    },
+    {
+      "id": "30027",
+      "title": "New Role at UTEP — Assistant Professor of Scenic Design & Technology",
+      "slug": "new-role-utep",
+      "excerpt": "December 2020 — I’m excited to step into a new position as Assistant Professor of Scenic Design & Technology at the University of Texas at El Paso. For now, I’ll remain in Chicago and teach online rem..."
+    },
+    {
+      "id": "30028",
+      "title": "Company at UC Irvine Highlighted in StageSceneLA",
+      "slug": "company-review",
+      "excerpt": "November 2019 — I designed the set for UC Irvine’s production of Stephen Sondheim’s Company, directed by Eli Simon. The show was covered by StageSceneLA, which praised the creative vision behind the s..."
+    },
+    {
+      "id": "30029",
+      "title": "The Pajama Game Receives Praise from StageSceneLA",
+      "slug": "the-pajama-game-stagescenela",
+      "excerpt": "July 2019 — StageSceneLA has published a glowing review of The Pajama Game, and I’m honored to see our work recognized. The production captured the playful romance and sharp workplace humor of this Go..."
+    },
+    {
+      "id": "30030",
+      "title": "Scenic Design for Parliament Square — California Premiere at UCI",
+      "slug": "parliament-square-california-premiere",
+      "excerpt": "March 2019 — I’m honored that UCI’s Drama Department staged the California premiere of Parliament Square (March 9–17, 2019), written by James Fritz and directed by Jane Page (UCI Arts Press Release). ..."
+    },
+    {
+      "id": "30031",
+      "title": "American Idiot at UC Irvine Reviewed in The Show Report",
+      "slug": "american-idiot-review",
+      "excerpt": "November 2018 — I designed the scenic world for UC Irvine’s production of Green Day’s American Idiot, directed by Myrona DeLaney. The show was covered in The Show Report, which celebrated the intensit..."
+    },
+    {
+      "id": "30032",
+      "title": "Heading to UC Irvine for My MFA",
+      "slug": "heading-to-uc-irvine",
+      "excerpt": "April 2017 — I’m heading to the University of California, Irvine this fall to begin my MFA in Scenic Design.It feels like the right next step — a chance to dig deeper into design, connect with new col..."
+    },
+    {
+      "id": "30033",
+      "title": "The Foreigner Praised in The Tribune",
+      "slug": "the-foreigner-review",
+      "excerpt": "February 2017 — I designed the scenic environment for The Foreigner at The Great American Melodrama. The production was reviewed by The Tribune, which recognized the creative team’s work and gave a sp..."
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tslug\texcerpt\n30005\tThe Orange Curtain Review Praises Million Dollar Quartet at South Coast Repertory\tthe-orange-curtain-review-praises-million-dollar-quartet-at-south-coast-repertory\tThe Orange Curtain Review praises Million Dollar Quartet at South Coast Repertory for its high-energy performances and thoughtful engagement with the cultural and economic realities behind early rock ’n’ roll.\n1\tMaking My SCR Debut: Million Dollar Quartet (2025)\tmillion-dollar-quartet-scr-debut\tAugust 2025 — I’m beyond excited to share that I’ve joined the creative team at South Coast Repertory for Million Dollar Quartet — marking my scenic design debut at SCR. I’ll be working as co-scenic d...\n2\tAssisting Tom Buderwitz on The Play That Goes Wrong at Seattle Rep\tassisting-the-play-that-goes-wrong\tAugust 28, 2025 — Tonight marked the opening of The Play That Goes Wrong at Seattle Rep, and I’m proud to say I served as an Assistant to scenic designer Tom Buderwitz—a mentor whose guidance I cheris...\n3\t40 Productions at Okoboji Summer Theatre\t40-productions-at-okoboji-summer-theatre\tAugust 5, 2023 — I just opened my 40th production at Okoboji Summer Theatre. I’m 38 now, and somehow this has become my 15th season here. Time flies when you think back on all the shows, all the late ...\n30009\tOpening Night: Deathtrap at Okoboji Summer Theatre\tdeathtrap-opening-ost\tJuly 2025 — Deathtrap by Ira Levin opened at Okoboji Summer Theatre as the sixth show of the season, delivering a sharp, suspenseful mystery full of twists and turns.The Northwest Iowa Review praised ...\n4\tFifth Season Assisting Jo Winiarski — Utah Shakespeare Festival\tfifth-season-utah-shakespeare-festival\tJune 2025 — I’m proud to be in my fifth season assisting Jo Winiarski as Scenic Designer for the Utah Shakespeare Festival. While most of my work with Jo happens remotely during the year, it’s always ...\n30011\tMy Season as Scenic Designer for New Swan Shakespeare Festival (2025)\tnew-swan-season-2025\tJuly 2025 — I’m beyond excited to announce that I’m serving as the Season Scenic Designer for the New Swan Shakespeare Festival at UC Irvine. This year, I’m designing two Shakespeare productions in ro...\n30012\tOpening Night: Romero at University of Missouri\tromero-opening-university-of-missouri\tApril 23, 2025 — We opened Romero tonight at the University of Missouri, and it’s a haunting, beautiful first performance. This story—by Xiomara Cornejo and directed by Dr. David Crespy—demands a spac...\n30013\tScenic Design for Okoboji Summer Theatre — Summer 2025 Season\tokoboji-summer-2025-season\tApril 16, 2025 — I’m excited to share that I’m scenic designing three shows for the Okoboji Summer Theatre’s 2025 season.Here’s the lineup I’ll be working on:Bell, Book and Candle (July 15–20)Deathtra...\n30014\tShut Up, Sherlock Praised in SLO Review\tshut-up-sherlock-praised\tApril 9, 2025 — I’m thrilled to share that Shut Up, Sherlock at The Great American Melodrama received a wonderful review from SLO Review. The article, “‘Shut Up, Sherlock’ Deserves a Standing Ovation”...\n30015\tOpening Night: How to Succeed in Business Without Really Trying at OST\thow-to-succeed-opening-ost\tAugust 2025 — How to Succeed in Business Without Really Trying opened at Okoboji Summer Theatre, wrapping up the company’s 67th season with office politics, satire, and plenty of laughs....\n30016\tGuys on Ice Receives Praise in SLO Review\tguys-on-ice-slo-review\tFebruary 15, 2025 — I’m thrilled to share that Guys on Ice at The Great American Melodrama has just received a wonderful review from SLO Review. The piece, titled “‘Guys on Ice’ Is Warm and Funny”, hi...\n30017\tFreaky Friday at Okoboji Summer Theatre Receives Praise\tfreaky-friday-review\tJuly 2024 — Our production of Freaky Friday at Okoboji Summer Theatre was reviewed in the Spencer Daily Reporter, and I’m grateful to see the design team recognized. The review commended the show’s hu...\n5\tJoining United Scenic Artists, Local USA 829\tunited-scenic-artists-local-usa-829\tJune 2, 2023 — I officially joined United Scenic Artists, Local USA 829.This wasn’t just paperwork. It was the culmination of years of commitment to scenic design — from my earliest productions in the...\n30019\tForum at Theatre SilCo Featured in Summit Daily\tforum-review\tJune 2022 — Our production of A Funny Thing Happened on the Way to the Forum at Theatre SilCo was highlighted in the Summit Daily. The article, “Travel to Ancient Rome with A Funny Thing Happened on t...\n30020\t2024 Okoboji Summer Theatre Season – Scenic Designs Announced\tokoboji-summer-2024-season\tApril 2024 — The season is set at Okoboji Summer Theatre, and I’m excited to share the four productions I’ll be designing this summer.Baskerville: A Sherlock Holmes MysteryDirected by Stephen Brotebec...\n30021\tScenic Design for ¡Lotería: Game On! at Theatre SilCo\tloteria-theatre-silco\tMay 2023 — I’m proud to share that my work as Scenic Designer for Theatre SilCo’s ¡Lotería: Game On! was featured in UCI Humanities News. The article highlights the contributions of UCI alumni at Thea...\n30022\tAssisting My First Off-Broadway Show — The Fears (April–May 2023)\tassisting-the-fears\tApril 25, 2023 — We began previews for my first Off-Broadway production, The Fears, assisting scenic designer Jo Winiarski. Her leadership and artistry shaped not only the aesthetic world of the play ...\n30023\tStephens College Update: Looking Ahead to Spring 2022\tstephens-college-update-spring-2022\tDecember 2021 — Hard to believe my first semester at Stephens College is already done.\n30024\tReturning to Stephens College as Assistant Professor of Scenic Design\treturning-to-stephens-college\tAugust 2021 — I’ve started a new role as Assistant Professor of Scenic Design at Stephens College. It feels meaningful to return to Columbia, MO — my hometown — and to Stephens, where I earned my unde...\n30025\tScenic Design for Lysistrata at UTEP — Spring 2021\tlysistrata-utep-spring-2021\tApril 2021 — I designed Lysistrata (adapted and directed by Jay Stratton) for UTEP’s Theatre & Dance fall season. This was UTEP’s first in-person production after the COVID shutdown....\n30026\tGraduating from UCI in the Middle of a Pandemic\tgraduating-from-uci-pandemic\tJune 2020 — I’ve officially graduated with my MFA in Scenic Design from UC Irvine. It’s a weird time to be finishing school — everything feels uncertain with COVID, and the theatre world is on pause.S...\n30027\tNew Role at UTEP — Assistant Professor of Scenic Design & Technology\tnew-role-utep\tDecember 2020 — I’m excited to step into a new position as Assistant Professor of Scenic Design & Technology at the University of Texas at El Paso. For now, I’ll remain in Chicago and teach online rem...\n30028\tCompany at UC Irvine Highlighted in StageSceneLA\tcompany-review\tNovember 2019 — I designed the set for UC Irvine’s production of Stephen Sondheim’s Company, directed by Eli Simon. The show was covered by StageSceneLA, which praised the creative vision behind the s...\n30029\tThe Pajama Game Receives Praise from StageSceneLA\tthe-pajama-game-stagescenela\tJuly 2019 — StageSceneLA has published a glowing review of The Pajama Game, and I’m honored to see our work recognized. The production captured the playful romance and sharp workplace humor of this Go...\n30030\tScenic Design for Parliament Square — California Premiere at UCI\tparliament-square-california-premiere\tMarch 2019 — I’m honored that UCI’s Drama Department staged the California premiere of Parliament Square (March 9–17, 2019), written by James Fritz and directed by Jane Page (UCI Arts Press Release). ...\n30031\tAmerican Idiot at UC Irvine Reviewed in The Show Report\tamerican-idiot-review\tNovember 2018 — I designed the scenic world for UC Irvine’s production of Green Day’s American Idiot, directed by Myrona DeLaney. The show was covered in The Show Report, which celebrated the intensit...\n30032\tHeading to UC Irvine for My MFA\theading-to-uc-irvine\tApril 2017 — I’m heading to the University of California, Irvine this fall to begin my MFA in Scenic Design.It feels like the right next step — a chance to dig deeper into design, connect with new col...\n30033\tThe Foreigner Praised in The Tribune\tthe-foreigner-review\tFebruary 2017 — I designed the scenic environment for The Foreigner at The Great American Melodrama. The production was reviewed by The Tribune, which recognized the creative team’s work and gave a sp...\n",
+  "stderr": "",
+  "execution_time_ms": 53
+}

@@ -1,0 +1,34 @@
+{
+  "query": "SELECT id, title, slug, date, \n  LENGTH(JSON_EXTRACT(blocks, '$')) as block_count,\n  CASE WHEN coverImageUrl IS NOT NULL THEN 'Yes' ELSE 'No' END as has_image\nFROM news \nWHERE slug IN (\n  'million-dollar-quartet-scr-debut',\n  'making-my-scr-debut-million-dollar-quartet-2025',\n  'assisting-the-play-that-goes-wrong',\n  'assisting-tom-buderwitz-the-play-that-goes-wrong',\n  '40-productions-at-okoboji-summer-theatre'\n)\nORDER BY slug, block_count DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT id, title, slug, date, \n  LENGTH(JSON_EXTRACT(blocks, '$')) as block_count,\n  CASE WHEN coverImageUrl IS NOT NULL THEN 'Yes' ELSE 'No' END as has_image\nFROM news \nWHERE slug IN (\n  'million-dollar-quartet-scr-debut',\n  'making-my-scr-debut-million-dollar-quartet-2025',\n  'assisting-the-play-that-goes-wrong',\n  'assisting-tom-buderwitz-the-play-that-goes-wrong',\n  '40-productions-at-okoboji-summer-theatre'\n)\nORDER BY slug, block_count DESC;",
+  "rows": [
+    {
+      "id": "3",
+      "title": "40 Productions at Okoboji Summer Theatre",
+      "slug": "40-productions-at-okoboji-summer-theatre",
+      "date": "2025-08-06 00:00:00",
+      "block_count": "9317",
+      "has_image": "Yes"
+    },
+    {
+      "id": "2",
+      "title": "Assisting Tom Buderwitz on The Play That Goes Wrong at Seattle Rep",
+      "slug": "assisting-the-play-that-goes-wrong",
+      "date": "2025-08-28 00:00:00",
+      "block_count": "1998",
+      "has_image": "Yes"
+    },
+    {
+      "id": "1",
+      "title": "Making My SCR Debut: Million Dollar Quartet (2025)",
+      "slug": "million-dollar-quartet-scr-debut",
+      "date": "2025-08-29 00:00:00",
+      "block_count": "5368",
+      "has_image": "Yes"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tslug\tdate\tblock_count\thas_image\n3\t40 Productions at Okoboji Summer Theatre\t40-productions-at-okoboji-summer-theatre\t2025-08-06 00:00:00\t9317\tYes\n2\tAssisting Tom Buderwitz on The Play That Goes Wrong at Seattle Rep\tassisting-the-play-that-goes-wrong\t2025-08-28 00:00:00\t1998\tYes\n1\tMaking My SCR Debut: Million Dollar Quartet (2025)\tmillion-dollar-quartet-scr-debut\t2025-08-29 00:00:00\t5368\tYes\n",
+  "stderr": "",
+  "execution_time_ms": 57
+}

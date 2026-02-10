@@ -1,0 +1,100 @@
+{
+  "query": "SELECT * FROM categories WHERE type = 'news' ORDER BY name;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT * FROM categories WHERE type = 'news' ORDER BY name;",
+  "rows": [
+    {
+      "id": "90003",
+      "name": "Academia",
+      "slug": "academia",
+      "type": "news",
+      "description": "Teaching and academic milestones",
+      "createdAt": "2026-02-10 00:46:35",
+      "updatedAt": "2026-02-10 00:46:35",
+      "color": "#9C27B0"
+    },
+    {
+      "id": "90002",
+      "name": "Assistant Scenic Design",
+      "slug": "assistant-scenic-design",
+      "type": "news",
+      "description": "Assistant scenic design collaborations",
+      "createdAt": "2026-02-10 00:46:35",
+      "updatedAt": "2026-02-10 00:46:35",
+      "color": "#2196F3"
+    },
+    {
+      "id": "60011",
+      "name": "Collaborations",
+      "slug": "collaborations",
+      "type": "news",
+      "description": "Assisting other designers or working with notable artists",
+      "createdAt": "2026-02-08 01:47:59",
+      "updatedAt": "2026-02-08 01:47:59",
+      "color": "#2196F3"
+    },
+    {
+      "id": "60012",
+      "name": "Milestones",
+      "slug": "milestones",
+      "type": "news",
+      "description": "Career achievements and significant professional moments",
+      "createdAt": "2026-02-08 01:47:59",
+      "updatedAt": "2026-02-08 01:47:59",
+      "color": "#4CAF50"
+    },
+    {
+      "id": "60014",
+      "name": "Opening Nights",
+      "slug": "opening-nights",
+      "type": "news",
+      "description": "Production premieres and opening announcements",
+      "createdAt": "2026-02-08 01:47:59",
+      "updatedAt": "2026-02-08 01:47:59",
+      "color": "#FF9800"
+    },
+    {
+      "id": "60010",
+      "name": "Production Debuts",
+      "slug": "production-debuts",
+      "type": "news",
+      "description": "First-time productions at major venues and significant opening nights",
+      "createdAt": "2026-02-08 01:47:59",
+      "updatedAt": "2026-02-08 01:47:59",
+      "color": "#FF5722"
+    },
+    {
+      "id": "60013",
+      "name": "Reviews & Press",
+      "slug": "reviews-press",
+      "type": "news",
+      "description": "Media coverage, critical reviews, and press mentions",
+      "createdAt": "2026-02-08 01:47:59",
+      "updatedAt": "2026-02-08 01:47:59",
+      "color": "#9C27B0"
+    },
+    {
+      "id": "90001",
+      "name": "Scenic Design",
+      "slug": "scenic-design",
+      "type": "news",
+      "description": "Professional scenic design work",
+      "createdAt": "2026-02-10 00:46:35",
+      "updatedAt": "2026-02-10 00:46:35",
+      "color": "#FF5722"
+    },
+    {
+      "id": "60015",
+      "name": "Season Announcements",
+      "slug": "season-announcements",
+      "type": "news",
+      "description": "Upcoming season plans and commitments",
+      "createdAt": "2026-02-08 01:47:59",
+      "updatedAt": "2026-02-08 01:47:59",
+      "color": "#00BCD4"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\tslug\ttype\tdescription\tcreatedAt\tupdatedAt\tcolor\n90003\tAcademia\tacademia\tnews\tTeaching and academic milestones\t2026-02-10 00:46:35\t2026-02-10 00:46:35\t#9C27B0\n90002\tAssistant Scenic Design\tassistant-scenic-design\tnews\tAssistant scenic design collaborations\t2026-02-10 00:46:35\t2026-02-10 00:46:35\t#2196F3\n60011\tCollaborations\tcollaborations\tnews\tAssisting other designers or working with notable artists\t2026-02-08 01:47:59\t2026-02-08 01:47:59\t#2196F3\n60012\tMilestones\tmilestones\tnews\tCareer achievements and significant professional moments\t2026-02-08 01:47:59\t2026-02-08 01:47:59\t#4CAF50\n60014\tOpening Nights\topening-nights\tnews\tProduction premieres and opening announcements\t2026-02-08 01:47:59\t2026-02-08 01:47:59\t#FF9800\n60010\tProduction Debuts\tproduction-debuts\tnews\tFirst-time productions at major venues and significant opening nights\t2026-02-08 01:47:59\t2026-02-08 01:47:59\t#FF5722\n60013\tReviews & Press\treviews-press\tnews\tMedia coverage, critical reviews, and press mentions\t2026-02-08 01:47:59\t2026-02-08 01:47:59\t#9C27B0\n90001\tScenic Design\tscenic-design\tnews\tProfessional scenic design work\t2026-02-10 00:46:35\t2026-02-10 00:46:35\t#FF5722\n60015\tSeason Announcements\tseason-announcements\tnews\tUpcoming season plans and commitments\t2026-02-08 01:47:59\t2026-02-08 01:47:59\t#00BCD4\n",
+  "stderr": "",
+  "execution_time_ms": 153
+}

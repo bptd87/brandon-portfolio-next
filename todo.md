@@ -2183,4 +2183,18 @@
 - [ ] Ensure each article has 300+ words with proper formatting (requires content editing)
 - [ ] Add headers, galleries, and team blocks where appropriate (requires content editing)
 - [x] Test enhanced articles (navigation working correctly)
+- [x] Save checkpoint
+
+## Rebuild All News Articles with Quality Content (User Requested - Feb 10, 2026)
+- [x] Rebuild first article (New Swan 2026) with enhanced content and structure
+- [x] Add category badges to article cards on news listing page (working)
+- [x] Redesign article header layout - move category badge away from back button
+- [x] Assign categories and tags to all 29 articles
+- [ ] Continue rebuilding remaining 28 articles with:
+  - [ ] 300+ words of quality, narrative-driven content
+  - [ ] Proper structure with header blocks
+  - [ ] Creative team credits (for production articles)
+  - [ ] Production details (venue, dates, reviews)
+  - [ ] Hero images where appropriate (not for season announcements)
+- [ ] Verify all improvements
 - [ ] Save checkpoint
