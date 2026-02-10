@@ -2473,4 +2473,9 @@
 - [x] Exclude experiential design and scenic models
 - [x] Apply filter to hero image as well
 - [x] Test that all images are scenic design or rendering projects
+- [x] Save checkpoint
+
+## Fix Nested Anchor Tag Error (User Request - Feb 10, 2026)
+- [x] Remove nested <a> inside Link component in CTA section
+- [x] Test page loads without errors
 - [ ] Save checkpoint

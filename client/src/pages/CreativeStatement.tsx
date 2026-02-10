@@ -288,14 +288,12 @@ export default function CreativeStatement() {
           <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
             Discover over 130 realized productions spanning scenic design, experiential design, and collaborative projects across regional theatres and beyond.
           </p>
-          <Link href="/work">
-            <a className="inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-4 rounded-lg hover:bg-primary/90 transition-colors text-lg font-semibold">
-              <span>View Full Portfolio</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12h14"/>
-                <path d="m12 5 7 7-7 7"/>
-              </svg>
-            </a>
+          <Link href="/work" className="inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-4 rounded-lg hover:bg-primary/90 transition-colors text-lg font-semibold">
+            <span>View Full Portfolio</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14"/>
+              <path d="m12 5 7 7-7 7"/>
+            </svg>
           </Link>
         </div>
       </section>
