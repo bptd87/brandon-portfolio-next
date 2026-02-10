@@ -6,7 +6,8 @@ export default function AboutNav() {
   const navItems = [
     { path: "/about", label: "About" },
     { path: "/about/teaching-philosophy", label: "Teaching Philosophy" },
-    { path: "/about/resume", label: "Resume / CV" },
+    { path: "/resume", label: "Resume" },
+    { path: "/cv", label: "CV" },
     { path: "/about/creative-statement", label: "Creative Statement" },
   ];
 
@@ -15,7 +16,8 @@ export default function AboutNav() {
       <div className="container">
         <div className="flex gap-8 overflow-x-auto">
           {navItems.map((item) => {
-            const isActive = location === item.path;
+            const isActive = location === item.path || 
+              (item.path === "/resume" && location === "/about/resume");
             return (
               <Link
                 key={item.path}

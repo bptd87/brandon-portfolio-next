@@ -2359,3 +2359,18 @@
 - [x] Add photo credits to Karli Cadel
 - [x] Add production photos to article body
 - [x] Save checkpoint
+
+## Restore Resume Table Formatting (User Request - Feb 10, 2026)
+- [ ] Review current Resume.tsx page
+- [ ] Restore table formatting for designer experience section
+- [ ] Verify all resume content is properly displayed
+- [ ] Save checkpoint
+
+## Simplify Resume Page (User Request - Feb 10, 2026)
+- [x] Read Resumerough.csv data
+- [x] Rebuild Resume page with simple table layout
+- [x] Add download button for Resume/CV PDF files
+- [x] Create separate CV page for Google indexing
+- [x] Upload Resume and CV PDF files to S3
+- [x] Test table display and download functionality
+- [ ] Save checkpoint

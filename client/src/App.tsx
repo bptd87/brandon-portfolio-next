@@ -26,6 +26,7 @@ import ArticleDetail from "./pages/ArticleDetail";
 const AboutResume = lazy(() => import("./pages/AboutResume"));
 const TeachingPhilosophy = lazy(() => import("./pages/TeachingPhilosophy"));
 const Resume = lazy(() => import("./pages/Resume"));
+const CV = lazy(() => import("./pages/CV"));
 const CreativeStatement = lazy(() => import("./pages/CreativeStatement"));
 const StudioTutorials = lazy(() => import("./pages/StudioTutorials"));
 const StudioApps = lazy(() => import("./pages/StudioApps"));
@@ -87,6 +88,7 @@ function Router() {
       <Route path={"/about/philosophy"} component={CreativeStatement} />
       <Route path={"/teaching-philosophy"} component={TeachingPhilosophy} />
       <Route path={"/resume"} component={Resume} />
+      <Route path={"/cv"} component={CV} />
       <Route path={"/creative-statement"} component={CreativeStatement} />
       <Route path={"/contact"} component={Contact} />
       <Route path={"/studio/tutorials/:slug"} component={TutorialDetail} />
