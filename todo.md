@@ -2427,8 +2427,16 @@
 - [x] Add link/button on 3D Modeling syllabus page to Vectorworks tutorial
 - [x] Find Studio Ghibli blog article URL/slug (linked to themed entertainment articles)
 - [x] Add link/button on Experiential Design syllabus page to themed entertainment articles
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 ## Remove Contact Info from Syllabi (User Request - Feb 10, 2026)
 - [x] Remove phone and email from 3D Modeling syllabus
 - [x] Save checkpoint
+
+## Redesign Creative Statement Page (User Request - Feb 10, 2026)
+- [x] Read current Creative Statement page design
+- [x] Redesign with professional, visual, artistic layout
+- [x] Use original statement text provided by user
+- [x] Add visual elements (images, typography, layout improvements)
+- [x] Test new design
+- [ ] Save checkpoint

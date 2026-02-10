@@ -1,4 +1,3 @@
-import AboutNav from "@/components/AboutNav";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -6,99 +5,81 @@ export default function CreativeStatement() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <AboutNav />
 
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center px-6">
-        <div className="max-w-5xl mx-auto text-center">
-          <h1 className="text-6xl md:text-8xl font-serif leading-tight">
-            <span className="text-blue-500 italic">Design</span> is{" "}
-            <span className="text-red-500 italic">storytelling</span>.
+      <section className="relative min-h-screen flex items-center justify-center px-6 py-32">
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background pointer-events-none"></div>
+        
+        <div className="relative max-w-4xl mx-auto">
+          <p className="text-xs uppercase tracking-widest text-muted-foreground mb-8 text-center">CREATIVE STATEMENT</p>
+          
+          <h1 className="text-5xl md:text-7xl font-serif mb-16 leading-tight text-center">
+            Architecture, History
             <br />
-            <span className="text-purple-500 italic">Space</span> is the{" "}
-            <span className="text-blue-600 italic">narrative</span>.
+            & Narrative Storytelling
           </h1>
+
+          <div className="prose prose-lg dark:prose-invert max-w-none">
+            <p className="text-xl text-foreground/90 leading-relaxed mb-8 first-letter:text-6xl first-letter:font-serif first-letter:float-left first-letter:mr-3 first-letter:leading-none first-letter:text-primary">
+              My passion for scenic design falls somewhere between a love of architecture, history, and narrative storytelling. I'm drawn to projects that have meaning and impact for the communities they serve. I'm especially interested in productions where the design does more than illustrate a setting and becomes part of how the story resonates.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* Section 2 */}
-      <section className="min-h-screen flex items-center justify-center px-6">
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-6xl md:text-8xl font-serif leading-tight mb-12">
-            <span className="text-orange-500 italic">Architecture</span> meets{" "}
-            <span className="text-blue-500 italic">narrative</span>.
-            <br />
-            <span className="text-green-600 italic">History</span> shapes{" "}
-            <span className="text-purple-500 italic">meaning</span>.
-          </h2>
-          <p className="text-xl md:text-2xl text-foreground/70 max-w-3xl mx-auto leading-relaxed">
-            My work lives at the intersection of craft and concept, where physical space becomes a tool for shaping emotion, tension, and rhythm.
-          </p>
+      {/* Collaboration Section */}
+      <section className="relative py-32 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-[200px_1fr] gap-12 items-start mb-16">
+            <div className="text-sm uppercase tracking-widest text-muted-foreground md:sticky md:top-32">
+              Collaboration
+            </div>
+            <div className="prose prose-lg dark:prose-invert max-w-none">
+              <p className="text-xl text-foreground/90 leading-relaxed">
+                I value every collaborator involved in bringing a production to life. That starts with the hidden collaborator, the playwright, and extends to the director, the creative team, and the production teams. I also enjoy working closely with company managers, carpenters, and artisans to realize the best version of the creative team's vision within each unique venue.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Section 3 */}
-      <section className="min-h-screen flex items-center justify-center px-6">
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-6xl md:text-8xl font-serif leading-tight mb-12">
-            <span className="text-green-500 italic">Every voice</span> matters.
-            <br />
-            From <span className="text-blue-500 italic">playwright</span> to{" "}
-            <span className="text-orange-500 italic">carpenter</span>.
-          </h2>
-          <p className="text-xl md:text-2xl text-foreground/70 max-w-3xl mx-auto leading-relaxed">
-            Great design emerges from collaboration. I value every member of the creative and production teams who bring the vision to life.
-          </p>
+      {/* Process Section */}
+      <section className="relative py-32 px-6 bg-accent/5">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-[200px_1fr] gap-12 items-start mb-16">
+            <div className="text-sm uppercase tracking-widest text-muted-foreground md:sticky md:top-32">
+              Process
+            </div>
+            <div className="prose prose-lg dark:prose-invert max-w-none">
+              <p className="text-xl text-foreground/90 leading-relaxed mb-8">
+                My process often begins with a lot of ideas that pull in different directions. Early conversations with the director focus on the text: What do they see, and how can we shape a shared vision? From that point forward, I build digital models to explore and sculpt the world. I'm never afraid to start over, no matter where we are in the process.
+              </p>
+              <p className="text-xl text-foreground/90 leading-relaxed">
+                I love the energy of collaborative design conversations, when ideas start bouncing between departments and the production finds its rhythm. Technically, I thrive in the transition from rendering to drafting, translating concepts into fully buildable spaces. I'm drawn to designs where structure and detail work together, and where every choice supports both the narrative and the performers onstage.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Section 4 */}
-      <section className="min-h-screen flex items-center justify-center px-6">
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-6xl md:text-8xl font-serif leading-tight mb-12">
-            <span className="text-purple-500 italic">Explore</span>.{" "}
-            <span className="text-blue-500 italic">Sculpt</span>.{" "}
-            <span className="text-green-500 italic">Refine</span>.
-            <br />
-            Never afraid to <span className="text-red-500 italic">start over</span>.
-          </h2>
-          <p className="text-xl md:text-2xl text-foreground/70 max-w-3xl mx-auto leading-relaxed">
-            Through conversation and digital modeling, I explore and sculpt the world—always willing to restart, no matter where we are in the journey.
-          </p>
-        </div>
-      </section>
-
-      {/* Section 5 */}
-      <section className="min-h-screen flex items-center justify-center px-6">
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-6xl md:text-8xl font-serif leading-tight mb-12">
-            From <span className="text-blue-500 italic">rendering</span> to{" "}
-            <span className="text-green-500 italic">reality</span>.
-            <br />
-            <span className="text-orange-500 italic">Structure</span> meets{" "}
-            <span className="text-purple-500 italic">detail</span>.
-          </h2>
-          <p className="text-xl md:text-2xl text-foreground/70 max-w-3xl mx-auto leading-relaxed">
-            I thrive in the transition from concept to construction—translating ideas into fully buildable spaces where every choice supports the narrative.
-          </p>
-        </div>
-      </section>
-
-      {/* Section 6 - Final */}
-      <section className="min-h-screen flex items-center justify-center px-6">
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-6xl md:text-8xl font-serif leading-tight mb-12">
-            Designs that feel <span className="text-blue-500 italic">inevitable</span>.
-            <br />
-            Spaces that <span className="text-purple-500 italic">resonate</span>.
-          </h2>
-          <p className="text-xl md:text-2xl text-foreground/70 max-w-3xl mx-auto leading-relaxed mb-16">
-            My goal is to create environments that feel like they couldn't have been any other way—even if it took many revisions to get there.
-          </p>
-          <div className="text-2xl md:text-3xl font-serif text-foreground/60">
-            Brandon PT Davis
-            <br />
-            <span className="text-lg">Scenic Designer</span>
+      {/* Philosophy Section */}
+      <section className="relative py-32 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-[200px_1fr] gap-12 items-start">
+            <div className="text-sm uppercase tracking-widest text-muted-foreground md:sticky md:top-32">
+              Philosophy
+            </div>
+            <div className="prose prose-lg dark:prose-invert max-w-none">
+              <p className="text-xl text-foreground/90 leading-relaxed mb-16">
+                Whether I'm working on a classic or a new play, my goal is to create environments that feel inevitable once they're revealed. Ideally, the design feels like it couldn't have been any other way, even if it took many revisions and collaborative breakthroughs to get there.
+              </p>
+              
+              {/* Signature */}
+              <div className="border-t border-border/50 pt-12">
+                <div className="text-3xl font-serif mb-2">Brandon PT Davis</div>
+                <div className="text-lg text-muted-foreground">Scenic Designer</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
