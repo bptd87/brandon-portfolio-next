@@ -2446,4 +2446,11 @@
 - [x] Create captioned image galleries for each section
 - [x] Add images that illustrate Collaboration, Process, Philosophy
 - [x] Test visual layout
+- [x] Save checkpoint
+
+## Add Hero Background with Parallax (User Request - Feb 10, 2026)
+- [x] Select scenic design image for hero background
+- [x] Implement parallax scroll effect
+- [x] Add overlay for text readability
+- [x] Test parallax performance
 - [ ] Save checkpoint

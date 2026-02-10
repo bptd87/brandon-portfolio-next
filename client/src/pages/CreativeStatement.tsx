@@ -10,6 +10,9 @@ export default function CreativeStatement() {
   // Limit to 6 projects
   const limitedProjects = projects?.slice(0, 6) || [];
 
+  // Get featured project for hero background
+  const heroImage = limitedProjects.find(p => p.featured)?.coverImageUrl || limitedProjects[0]?.coverImageUrl;
+
   // Group projects for different sections
   const processImages = limitedProjects.slice(0, 2);
   const collaborationImages = limitedProjects.slice(2, 4);
@@ -20,20 +23,34 @@ export default function CreativeStatement() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 py-32">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background pointer-events-none"></div>
+      <section className="relative min-h-screen flex items-center justify-center px-6 py-32 overflow-hidden">
+        {/* Parallax Background */}
+        {heroImage && (
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url(${heroImage})`,
+              transform: 'translateZ(0)',
+              willChange: 'transform',
+              backgroundAttachment: 'fixed'
+            }}
+          />
+        )}
+        
+        {/* Overlay for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-background pointer-events-none"></div>
         
         <div className="relative max-w-4xl mx-auto">
-          <p className="text-xs uppercase tracking-widest text-muted-foreground mb-8 text-center">CREATIVE STATEMENT</p>
+          <p className="text-xs uppercase tracking-widest text-white/60 mb-8 text-center">CREATIVE STATEMENT</p>
           
-          <h1 className="text-5xl md:text-7xl font-serif mb-16 leading-tight text-center">
+          <h1 className="text-5xl md:text-7xl font-serif mb-16 leading-tight text-center text-white">
             Architecture, History
             <br />
             & Narrative Storytelling
           </h1>
 
-          <div className="prose prose-lg dark:prose-invert max-w-none">
-            <p className="text-xl text-foreground/90 leading-relaxed mb-8 first-letter:text-6xl first-letter:font-serif first-letter:float-left first-letter:mr-3 first-letter:leading-none first-letter:text-primary">
+          <div className="prose prose-lg prose-invert max-w-none">
+            <p className="text-xl text-white/90 leading-relaxed mb-8 first-letter:text-6xl first-letter:font-serif first-letter:float-left first-letter:mr-3 first-letter:leading-none first-letter:text-primary">
               My passion for scenic design falls somewhere between a love of architecture, history, and narrative storytelling. I'm drawn to projects that have meaning and impact for the communities they serve. I'm especially interested in productions where the design does more than illustrate a setting and becomes part of how the story resonates.
             </p>
           </div>
