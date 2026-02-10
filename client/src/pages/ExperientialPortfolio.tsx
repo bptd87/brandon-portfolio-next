@@ -49,9 +49,7 @@ export default function ExperientialPortfolio() {
   const softwareTools = [
     { name: "Vectorworks", color: "text-blue-400", description: "Technical CAD Drawings" },
     { name: "Twinmotion", color: "text-green-400", description: "Real-Time 3D Visualization" },
-    { name: "Cinema 4D", color: "text-orange-400", description: "3D Modeling Viewport" },
     { name: "Photoshop", color: "text-purple-400", description: "Layered Image Editing" },
-    { name: "SketchUp", color: "text-red-400", description: "Conceptual Design Model" },
   ];
 
   return (
@@ -119,7 +117,7 @@ export default function ExperientialPortfolio() {
                 >
                   <article className="space-y-4">
                     {/* Project Image */}
-                    <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-muted border border-border">
+                    <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-muted">
                       {project.coverImageUrl && (
                         <ProgressiveImage
                           src={project.coverImageUrl}
@@ -174,14 +172,14 @@ export default function ExperientialPortfolio() {
           <AnimatedSection>
             <div className="mb-16">
               <img 
-                src="https://private-us-east-1.manuscdn.com/sessionFile/erhSK1Z2iEewnSpDHueKVU/sandbox/pRn7KB2SHCH92g5NCN7fw4-img-4_1770681286000_na1fn_ZXhwZXJpZW50aWFsLXNvZnR3YXJlLWNvbXBvc2l0ZQ.jpg?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvZXJoU0sxWjJpRWV3blNwREh1ZUtWVS9zYW5kYm94L3BSbjdLQjJTSENIOTJnNU5DTjdmdzQtaW1nLTRfMTc3MDY4MTI4NjAwMF9uYTFmbl9aWGh3WlhKcFpXNTBhV0ZzTFhOdlpuUjNZWEpsTFdOdmJYQnZjMmwwWlEuanBnP3gtb3NzLXByb2Nlc3M9aW1hZ2UvcmVzaXplLHdfMTkyMCxoXzE5MjAvZm9ybWF0LHdlYnAvcXVhbGl0eSxxXzgwIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=f0nr22hT-rvozFmiiMyFF8uOJGCBI31bMTk90-s3rnVK3D-dBgxhpr3rJ~Jet6g9Q7U8k-ALlGwXYT1-yxcebFfQGsrDiNmvsy-TDMbqv~ac3IO2VpaBjnQc7SjUS8QvyYJMLyX3CWSdyRoUhWY9NQDP2jCnObP0Vx4vJC0lxoiN2a45pmppiJXUXXzh1mRRPhzIl0tzB06yz5TWhn2BS65gHbYKZiPcpDd8NHsNIHc3HmCyTa4wM8U1aolYm0Fovvw-UE-TugOFnOFBOlRF2AaMx56SJNl1r0mRy1Kd~67qnWNbaECe5zPzSMcxAlmFiTw9Ann8t2U5n27o2F7cdQ__"
+                src="https://private-us-east-1.manuscdn.com/sessionFile/erhSK1Z2iEewnSpDHueKVU/sandbox/cJm1wyoQmDkIbz1B0NNYZs-img-1_1770683225000_na1fn_ZXhwZXJpZW50aWFsLWludGVncmF0ZWQtd29ya2Zsb3ctdjI.jpg?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvZXJoU0sxWjJpRWV3blNwREh1ZUtWVS9zYW5kYm94L2NKbTF3eW9RbURrSWJ6MUIwTk5ZWnMtaW1nLTFfMTc3MDY4MzIyNTAwMF9uYTFmbl9aWGh3WlhKcFpXNTBhV0ZzTFdsdWRHVm5jbUYwWldRdGQyOXlhMlpzYjNjdGRqSS5qcGc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=jpemnXTZ-aklBX4ShVznToFGBVZJUMgxWYnlyCirrS4HOVPZXkqHaJs842Je3fpbK0b9GGM30GzAcgMIPrWyCwblY-4IqbfAb4rxpwj9zBVStyRCy~rgBkPvkVMiAA1cMZ3O3qTC2j-1ANZa8L2gGFbop5-n25rmUF4QUvco9b5KSTaT9oxOecI9iF~aeMuVHU~6Gt3T6TAO66-PsHKfCMlDy~s4FEtEd7x4vXj2XGuV93tIv1iOkdrI1Wc-dihGV3T~d~4THqmU7lyFSOopGBxljalig-GZFAa7q3xRqvxYu30QWDk-hOMtLHY9MzljFlliKgNg0I21Z~N7hCxgMQ__"
                 alt="Design Software Toolkit - Integrated Workflows"
                 className="w-full rounded-2xl border border-border"
               />
             </div>
           </AnimatedSection>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {softwareTools.map((tool, index) => (
               <AnimatedSection key={index}>
                 <div className="text-center p-6 border border-border rounded-xl bg-background hover:border-white/40 transition-all hover:scale-105">
