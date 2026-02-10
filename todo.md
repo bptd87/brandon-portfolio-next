@@ -2597,4 +2597,10 @@
 - [x] Add scroll event listener to track scroll position
 - [x] Apply subtle parallax movement to headshot image
 - [x] Test parallax effect smoothness
+- [x] Save checkpoint
+
+## Add Parallax to Decorative Blobs (User Request - Feb 10, 2026)
+- [x] Apply parallax to bottom-right blob with 0.1x speed
+- [x] Apply parallax to top-left blob with 0.2x speed
+- [x] Test layered depth effect
 - [ ] Save checkpoint

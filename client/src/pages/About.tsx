@@ -136,9 +136,15 @@ export default function About() {
                   className="w-full h-full object-cover object-center"
                 />
               </div>
-              {/* Enhanced decorative elements */}
-              <div className="absolute -bottom-8 -right-8 w-40 h-40 bg-primary/10 rounded-full blur-3xl -z-10"></div>
-              <div className="absolute -top-8 -left-8 w-32 h-32 bg-accent/10 rounded-full blur-3xl -z-10"></div>
+              {/* Enhanced decorative elements with parallax */}
+              <div 
+                className="absolute -bottom-8 -right-8 w-40 h-40 bg-primary/10 rounded-full blur-3xl -z-10"
+                style={{ transform: `translateY(${scrollY * 0.1}px)` }}
+              ></div>
+              <div 
+                className="absolute -top-8 -left-8 w-32 h-32 bg-accent/10 rounded-full blur-3xl -z-10"
+                style={{ transform: `translateY(${scrollY * 0.2}px)` }}
+              ></div>
             </div>
 
             {/* Text Content - Right Side */}
