@@ -2333,4 +2333,9 @@
 - [x] Add tags (show titles, designers, venues) for searchability
 - [x] Add SEO keywords for search optimization
 - [x] Update publish dates vs production dates
+- [x] Save checkpoint
+
+## Update Location Metadata to Include Theatre Companies (User Feedback - Feb 10, 2026)
+- [x] Update all 16 articles to include theatre company names in location field
+- [x] Format: "Theatre Company, City, State" (e.g., "Pioneer Theatre Company, Salt Lake City, UT")
 - [ ] Save checkpoint
