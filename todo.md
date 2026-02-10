@@ -2141,4 +2141,6 @@
 - [ ] Generate additional images for technical workflow and buildability
 - [ ] Add buildability and fabrication experience section
 - [x] Migrate news data and images from old Squarespace site
-- [x] Complete all missing news article content and images (15/30 have images, all have content)
+- [x] Complete all missing news article content and images (17/30 have images, all have content)
+- [x] Add images to 8 more news articles using title-based fuzzy matching (17 total articles with images)
+- [x] Extract all news articles and actual images from Squarespace WordPress export (50 articles extracted, 874 images downloaded, 50 hero images uploaded to S3)
