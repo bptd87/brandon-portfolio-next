@@ -402,13 +402,13 @@ export default function Header() {
               >
                 <Link
                   href="/about"
-                  className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-foreground relative group ${
-                    isActive("/about") || isActive("/teaching-philosophy") || isActive("/resume") || isActive("/creative-statement") ? "text-foreground" : ""
+                  className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-[#4CAF50] relative group ${
+                    isActive("/about") || isActive("/teaching-philosophy") || isActive("/resume") || isActive("/creative-statement") ? "text-[#4CAF50]" : ""
                   }`}
                 >
                   ABOUT
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${aboutOpen ? "rotate-180" : ""}`} />
-                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-foreground group-hover:w-full transition-all duration-300"></span>
+                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#4CAF50] group-hover:w-full transition-all duration-300"></span>
                 </Link>
 
                 {/* Dropdown Menu */}
