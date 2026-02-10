@@ -34,7 +34,7 @@ export default function Footer() {
           </div>
 
           {/* Middle Section - Navigation Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-16">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-12 mb-16">
             {/* Work */}
             <div>
               <h3 className="text-sm font-black tracking-wider text-[#FF5722] mb-6">WORK</h3>
@@ -64,21 +64,43 @@ export default function Footer() {
 
             {/* Studio */}
             <div>
-              <h3 className="text-sm font-black tracking-wider text-[#00E5FF] mb-6">STUDIO</h3>
+              <h3 className="text-sm font-black tracking-wider text-[#9C27B0] mb-6">STUDIO</h3>
               <ul className="space-y-3">
                 <li>
-                  <Link href="/articles" className="text-foreground/70 hover:text-[#FF1744] transition-colors font-medium">
+                  <Link href="/tutorials" className="text-foreground/70 hover:text-[#9C27B0] transition-colors font-medium">
+                    Tutorials
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/studio" className="text-foreground/70 hover:text-[#9C27B0] transition-colors font-medium">
+                    App Studio
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/vault" className="text-foreground/70 hover:text-[#9C27B0] transition-colors font-medium">
+                    Vault
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/scenic-directory" className="text-foreground/70 hover:text-[#9C27B0] transition-colors font-medium">
+                    Scenic Directory
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Content */}
+            <div>
+              <h3 className="text-sm font-black tracking-wider text-[#FF9800] mb-6">CONTENT</h3>
+              <ul className="space-y-3">
+                <li>
+                  <Link href="/articles" className="text-foreground/70 hover:text-[#FF9800] transition-colors font-medium">
                     Articles
                   </Link>
                 </li>
                 <li>
-                  <Link href="/news" className="text-foreground/70 hover:text-[#FF1744] transition-colors font-medium">
+                  <Link href="/news" className="text-foreground/70 hover:text-[#FF9800] transition-colors font-medium">
                     News
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/studio" className="text-foreground/70 hover:text-[#FF1744] transition-colors font-medium">
-                    App Studio
                   </Link>
                 </li>
               </ul>

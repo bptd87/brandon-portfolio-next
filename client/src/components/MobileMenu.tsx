@@ -10,6 +10,7 @@ interface MobileMenuProps {
 export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const [workOpen, setWorkOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [studioOpen, setStudioOpen] = useState(false);
 
   return (
     <>
@@ -155,14 +156,52 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             ARTICLES
           </Link>
 
-          {/* Studio */}
-          <Link
-            href="/studio"
-            onClick={onClose}
-            className="block py-3 px-4 rounded-lg hover:bg-foreground/5 transition-colors font-bold"
-          >
-            STUDIO
-          </Link>
+          {/* Studio Dropdown */}
+          <div>
+            <button
+              onClick={() => setStudioOpen(!studioOpen)}
+              className="w-full flex items-center justify-between py-3 px-4 rounded-lg hover:bg-foreground/5 transition-colors text-left font-bold"
+            >
+              <span>STUDIO</span>
+              <ChevronDown
+                className={`w-5 h-5 transition-transform ${
+                  studioOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+            {studioOpen && (
+              <div className="ml-4 mt-2 space-y-1">
+                <Link
+                  href="/tutorials"
+                  onClick={onClose}
+                  className="block py-2 px-4 rounded-lg hover:bg-[#9C27B0]/10 hover:text-[#9C27B0] transition-colors"
+                >
+                  Tutorials
+                </Link>
+                <Link
+                  href="/studio"
+                  onClick={onClose}
+                  className="block py-2 px-4 rounded-lg hover:bg-[#9C27B0]/10 hover:text-[#9C27B0] transition-colors"
+                >
+                  App Studio
+                </Link>
+                <Link
+                  href="/vault"
+                  onClick={onClose}
+                  className="block py-2 px-4 rounded-lg hover:bg-[#9C27B0]/10 hover:text-[#9C27B0] transition-colors"
+                >
+                  Vault
+                </Link>
+                <Link
+                  href="/scenic-directory"
+                  onClick={onClose}
+                  className="block py-2 px-4 rounded-lg hover:bg-[#9C27B0]/10 hover:text-[#9C27B0] transition-colors"
+                >
+                  Scenic Directory
+                </Link>
+              </div>
+            )}
+          </div>
 
           {/* Contact CTA */}
           <Link

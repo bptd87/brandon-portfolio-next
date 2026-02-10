@@ -2699,3 +2699,11 @@
 - [x] Save checkpoint
 
 Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) have few or no tags in database. Tags can be added later as needed.
+
+## Update Mobile Navigation and Footer Links (User Request - Feb 10, 2026)
+- [x] Investigate current mobile navigation structure
+- [x] Investigate current footer links
+- [x] Update mobile nav to add Studio dropdown with all submenu items (Tutorials, App Studio, Vault, Scenic Directory)
+- [x] Update footer to include all Studio links and separate Content section for Articles/News
+- [x] Test on mobile viewport (footer verified in page content)
+- [x] Save checkpoint
