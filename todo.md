@@ -2466,4 +2466,11 @@
 - [x] Update image selection logic to pull from diverse range of projects
 - [x] Avoid using only recent/featured projects
 - [x] Test that images showcase variety of scenic design work
+- [x] Save checkpoint
+
+## Filter Creative Statement to Scenic Design Only (User Request - Feb 10, 2026)
+- [x] Update image selection to filter by discipline = "scenic_design" or "rendering"
+- [x] Exclude experiential design and scenic models
+- [x] Apply filter to hero image as well
+- [x] Test that all images are scenic design or rendering projects
 - [ ] Save checkpoint

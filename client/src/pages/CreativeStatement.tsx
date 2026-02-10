@@ -9,12 +9,17 @@ export default function CreativeStatement() {
     status: "published"
   });
 
-  // Get featured project for hero background
-  const heroImage = projects?.find(p => p.featured)?.coverImageUrl || projects?.[0]?.coverImageUrl;
+  // Filter to scenic design and rendering projects only (exclude experiential_design and scenic_models)
+  const scenicDesignProjects = (projects || []).filter(p => 
+    p.discipline === 'scenic_design' || p.discipline === 'rendering'
+  );
+
+  // Get featured scenic design project for hero background
+  const heroImage = scenicDesignProjects.find(p => p.featured)?.coverImageUrl || scenicDesignProjects[0]?.coverImageUrl;
 
   // Diversify images - spread across different projects instead of just first 6
-  const allProjects = projects || [];
-  const totalProjects = allProjects.length;
+  const allProjects = scenicDesignProjects;
+  const totalProjects = scenicDesignProjects.length;
   
   // Select images from different parts of the portfolio for variety
   const processImages = totalProjects > 0 ? [
