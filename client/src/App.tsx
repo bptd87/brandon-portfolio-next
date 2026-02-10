@@ -25,6 +25,8 @@ import ArticleDetail from "./pages/ArticleDetail";
 // Non-critical routes - lazy load for better initial performance
 
 const TeachingPhilosophy = lazy(() => import("./pages/TeachingPhilosophy"));
+const SyllabusExperiential = lazy(() => import("./pages/SyllabusExperiential"));
+const Syllabus3DModeling = lazy(() => import("./pages/Syllabus3DModeling"));
 const Resume = lazy(() => import("./pages/Resume"));
 const CreativeStatement = lazy(() => import("./pages/CreativeStatement"));
 const StudioTutorials = lazy(() => import("./pages/StudioTutorials"));
@@ -86,6 +88,8 @@ function Router() {
       <Route path={"/about/teaching"} component={TeachingPhilosophy} />
       <Route path={"/about/philosophy"} component={CreativeStatement} />
       <Route path={"/teaching-philosophy"} component={TeachingPhilosophy} />
+      <Route path={"/syllabus/experiential-design"} component={SyllabusExperiential} />
+      <Route path={"/syllabus/3d-modeling"} component={Syllabus3DModeling} />
       <Route path={"/resume"} component={Resume} />
       <Route path={"/creative-statement"} component={CreativeStatement} />
       <Route path={"/contact"} component={Contact} />

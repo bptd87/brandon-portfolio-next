@@ -59,6 +59,21 @@ export default function TeachingPhilosophy() {
                 For me, the classroom is a laboratory for experimentation — a space where design education remains responsive to shifting industry landscapes.
               </p>
 
+              <h2 className="text-3xl font-serif mt-12 mb-6">Course Syllabi</h2>
+              <p className="text-foreground/90 leading-relaxed mb-6 text-justify">
+                Explore detailed syllabi from courses I've taught, showcasing the curriculum, projects, and learning objectives that guide students through comprehensive design education.
+              </p>
+              <div className="grid gap-4 mb-12">
+                <a href="/syllabus/experiential-design" className="block bg-card/30 backdrop-blur-md border border-border/50 rounded-2xl p-6 hover:bg-card/50 transition-colors">
+                  <h3 className="text-xl font-semibold mb-2">Experiential Design</h3>
+                  <p className="text-sm text-muted-foreground">Theme parks, restaurants, museums, and immersive experiences — bridging theatrical design with commercial storytelling.</p>
+                </a>
+                <a href="/syllabus/3d-modeling" className="block bg-card/30 backdrop-blur-md border border-border/50 rounded-2xl p-6 hover:bg-card/50 transition-colors">
+                  <h3 className="text-xl font-semibold mb-2">3D Modeling and Rendering</h3>
+                  <p className="text-sm text-muted-foreground">THA 211: Vectorworks — Advanced CAD workflows, 3D modeling, and industry-standard construction documentation.</p>
+                </a>
+              </div>
+
               <h2 className="text-3xl font-serif mt-12 mb-6">Core Philosophy</h2>
               <p className="text-foreground/90 leading-relaxed mb-12 text-justify">
                 My teaching philosophy centers on preparing students not only as designers, but as collaborators, innovators, and leaders. By combining foundational craft, technological literacy, and a strong culture of community, I aim to ensure they graduate ready to shape the future of scenic design across theatre and beyond.

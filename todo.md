@@ -2413,3 +2413,11 @@
 - [x] Update "SCENIC DESIGN" and "ASSISTANT SCENIC DESIGN" section headers
 - [x] Test new typography looks professional
 - [ ] Save checkpoint
+
+## Create Two Syllabus Pages (User Request - Feb 10, 2026)
+- [x] Create "Experiential Design" syllabus page (Theme Parks, Restaurants, Immersive)
+- [x] Create "3D Modeling and Rendering" syllabus page (Vectorworks/Twinmotion)
+- [x] Add routes for both pages in App.tsx
+- [x] Link pages from Teaching Philosophy page
+- [x] Style pages with clean, professional layout
+- [ ] Save checkpoint
