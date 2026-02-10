@@ -2276,4 +2276,25 @@
 
 ## Change PTGW Category (User Request - Feb 10, 2026)
 - [x] Change "The Play That Goes Wrong" article category from "Collaborations" to "Assistant Scenic Design"
-- [ ] Save checkpoint
+- [x] Save checkpoint
+
+## Create Utah Shakespeare Festival Season Articles (User Request - Feb 10, 2026)
+- [x] 2021 Season: Pirates of Penzance, Ragtime (2 shows, on-site tech process)
+- [x] 2022 Season: Trouble in Mind, Clue On Stage, The Sound of Music (3 shows, on-site tech process)
+- [x] 2023 Season: Romeo and Juliet, A Midsummer Night's Dream (2 shows)
+- [x] 2024 Season: The Mountain Top, Silent Sky (2 shows)
+- [x] 2025 Season: The Importance of Being Earnest, A Gentleman's Guide to Love and Murder, Steel Magnolias (3 shows)
+
+## Create Regional Theatre Assistant Design Articles (User Request - Feb 10, 2026)
+- [x] The Fears (2023, Off Broadway: Signature Theatre) - HIGH PRIORITY
+- [x] The Book Club Play (2025, Cincinnati Playhouse in the Park)
+- [x] Souvenir (2024, Pioneer Theatre)
+- [x] Ragtime (2024, The Ruth: Hale Orem)
+- [ ] Natasha, Pierre, and the Great Comet of 1812 (2024, Pioneer Theatre Company)
+- [ ] Jersey Boys (2024, Pioneer Theatre Company)
+- [ ] Native Gardens (2023, Pioneer Theatre Company)
+- [ ] Bottle Shock (2023, California Center for the Arts, Escondido)
+- [ ] A Distinct Society (2022, Pioneer Theatre/Theatre Works Silicon Valley)
+- [ ] Clue On Stage (2022, Dallas Theatre Center)
+- [ ] The King and I (2010, Arrow Rock Lyceum Theatre, designer: Ryan J Zirngibl)
+- [ ] Save checkpoint after all articles complete
