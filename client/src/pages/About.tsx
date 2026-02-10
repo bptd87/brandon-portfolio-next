@@ -112,9 +112,9 @@ export default function About() {
       {/* Hero Section with Profile Picture */}
       <section className="container py-20 md:py-32">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-[480px_1fr] gap-16 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-[480px_1fr] gap-12 md:gap-16 items-center">
             {/* Profile Image - Left Side */}
-            <div className="relative group">
+            <div className="relative group animate-in fade-in slide-in-from-left-8 duration-700">
               <div className="aspect-[4/5] rounded-3xl overflow-hidden border-4 border-primary/30 shadow-2xl shadow-primary/10 transition-all duration-300 group-hover:border-primary/50 group-hover:shadow-primary/20">
                 <img 
                   src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/jDUthZkmakLJRTiP.jpeg"
@@ -128,19 +128,37 @@ export default function About() {
             </div>
 
             {/* Text Content - Right Side */}
-            <div className="space-y-8">
+            <div className="space-y-8 animate-in fade-in slide-in-from-right-8 duration-700 delay-200">
               <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 border border-primary/30 mb-2">
                 <Sparkles className="w-4 h-4 text-primary animate-pulse" />
                 <span className="text-sm uppercase tracking-widest text-primary font-bold">Scenic Designer</span>
               </div>
               
-              <h1 className="text-6xl md:text-8xl font-serif leading-[0.85] mb-8">
+              <h1 className="text-5xl md:text-8xl font-serif leading-[0.85] mb-8">
                 Brandon<br />PT Davis
               </h1>
               
-              <p className="text-xl md:text-2xl text-foreground/90 leading-relaxed max-w-2xl">
+              <p className="text-lg md:text-2xl text-foreground/90 leading-relaxed max-w-2xl">
                 Transforming theatrical spaces into <span className="text-primary font-bold">immersive visual landscapes</span> where story and space move together in harmony
               </p>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <a 
+                  href="/contact" 
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5"
+                >
+                  <Mail className="w-5 h-5" />
+                  Get in Touch
+                </a>
+                <a 
+                  href="/resume" 
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-muted/50 text-foreground rounded-xl font-semibold hover:bg-muted transition-all duration-300 border border-border hover:border-primary/30"
+                >
+                  <FileText className="w-5 h-5" />
+                  View Resume
+                </a>
+              </div>
             </div>
           </div>
         </div>
