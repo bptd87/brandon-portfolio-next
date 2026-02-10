@@ -141,11 +141,17 @@ export default function CreativeStatement() {
                       <img 
                         src={project.coverImageUrl || ''} 
                         alt={project.title}
+                        loading="lazy"
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <div className="absolute bottom-0 left-0 right-0 p-6">
-                          <p className="text-white font-serif text-lg">{project.title}</p>
+                          <p className="text-white font-serif text-lg mb-2">{project.title}</p>
+                          <div className="text-white/80 text-sm space-y-1">
+                            {project.year && <p>{project.year}</p>}
+                            {project.client && <p>{project.client}</p>}
+                            {project.creativeTeam?.director && <p>Dir: {project.creativeTeam.director}</p>}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -199,11 +205,17 @@ export default function CreativeStatement() {
                       <img 
                         src={project.coverImageUrl || ''} 
                         alt={project.title}
+                        loading="lazy"
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <div className="absolute bottom-0 left-0 right-0 p-6">
-                          <p className="text-white font-serif text-lg">{project.title}</p>
+                          <p className="text-white font-serif text-lg mb-2">{project.title}</p>
+                          <div className="text-white/80 text-sm space-y-1">
+                            {project.year && <p>{project.year}</p>}
+                            {project.client && <p>{project.client}</p>}
+                            {project.creativeTeam?.director && <p>Dir: {project.creativeTeam.director}</p>}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -254,11 +266,17 @@ export default function CreativeStatement() {
                       <img 
                         src={project.coverImageUrl || ''} 
                         alt={project.title}
+                        loading="lazy"
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <div className="absolute bottom-0 left-0 right-0 p-6">
-                          <p className="text-white font-serif text-lg">{project.title}</p>
+                          <p className="text-white font-serif text-lg mb-2">{project.title}</p>
+                          <div className="text-white/80 text-sm space-y-1">
+                            {project.year && <p>{project.year}</p>}
+                            {project.client && <p>{project.client}</p>}
+                            {project.creativeTeam?.director && <p>Dir: {project.creativeTeam.director}</p>}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -269,7 +287,21 @@ export default function CreativeStatement() {
               {/* Signature */}
               <div className="border-t border-border/50 pt-12">
                 <div className="text-3xl font-serif mb-2">Brandon PT Davis</div>
-                <div className="text-lg text-muted-foreground">Scenic Designer</div>
+                <div className="text-lg text-muted-foreground mb-8">Scenic Designer</div>
+                
+                {/* Download PDF Button */}
+                <a 
+                  href="#" 
+                  onClick={(e) => { e.preventDefault(); alert('PDF generation coming soon!'); }}
+                  className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-medium"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" x2="12" y1="15" y2="3"/>
+                  </svg>
+                  <span>Download Creative Statement (PDF)</span>
+                </a>
               </div>
             </div>
           </div>
