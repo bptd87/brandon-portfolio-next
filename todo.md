@@ -2609,4 +2609,11 @@
 - [x] Replace direct scroll listener with requestAnimationFrame throttling
 - [x] Add ticking flag to prevent multiple RAF calls
 - [x] Test performance improvement and smoothness
+- [x] Save checkpoint
+
+## Add Skeleton Placeholders to Gallery (User Request - Feb 10, 2026)
+- [x] Create image loading state tracking with useState
+- [x] Add skeleton placeholder styling with shimmer animation
+- [x] Implement onLoad handler to hide skeleton when image loads
+- [x] Test loading experience and layout stability
 - [ ] Save checkpoint
