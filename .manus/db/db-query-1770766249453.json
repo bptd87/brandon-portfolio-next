@@ -1,0 +1,18 @@
+{
+  "query": "SELECT length(content), substr(content, 1, 100) as content_preview FROM articles WHERE slug = 'online-portfolio-theatrical-design-2026';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT length(content), substr(content, 1, 100) as content_preview FROM articles WHERE slug = 'online-portfolio-theatrical-design-2026';",
+  "rows": [
+    {
+      "length(content)": "6562",
+      "content_preview": "["
+    }
+  ],
+  "messages": [
+    "  {",
+    "    \"type\": \"paragraph\",",
+    "    \"content\": \"As many of us remember from our early design days, we"
+  ],
+  "stdout": "length(content)\tcontent_preview\n6562\t[\n  {\n    \"type\": \"paragraph\",\n    \"content\": \"As many of us remember from our early design days, we\n",
+  "stderr": "",
+  "execution_time_ms": 51
+}

@@ -1,0 +1,13 @@
+{
+  "query": "SELECT substr(content, 1, 500) as content_sample FROM articles WHERE slug = 'video-game-environments-lessons-for-scenic-design';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT substr(content, 1, 500) as content_sample FROM articles WHERE slug = 'video-game-environments-lessons-for-scenic-design';",
+  "rows": [
+    {
+      "content_sample": "[{\"type\":\"text\",\"content\":\"\\n<p>I’ve always been drawn to storytelling through games. That probably started with The Legend of Zelda: Ocarina of Time, but the version of that fascination that really stuck with me came later—Chicago, early twenties, broke, working retail, living with my best friend Dru.</p>\\n\\n\\n\\n<p>In 2011, when The Elder Scrolls V: Skyrim came out, we played it relentlessly. On days off we’d trade controllers, wander off the main quest, and disappear into side stories. At the "
+    }
+  ],
+  "messages": [],
+  "stdout": "content_sample\n[{\"type\":\"text\",\"content\":\"\\n<p>I’ve always been drawn to storytelling through games. That probably started with The Legend of Zelda: Ocarina of Time, but the version of that fascination that really stuck with me came later—Chicago, early twenties, broke, working retail, living with my best friend Dru.</p>\\n\\n\\n\\n<p>In 2011, when The Elder Scrolls V: Skyrim came out, we played it relentlessly. On days off we’d trade controllers, wander off the main quest, and disappear into side stories. At the \n",
+  "stderr": "",
+  "execution_time_ms": 59
+}
