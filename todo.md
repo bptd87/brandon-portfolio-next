@@ -2552,4 +2552,5 @@
 - [x] Adjust hero layout to better display landscape headshot image
 - [x] Add more professional details to contact information (USA 829, LinkedIn, etc.)
 - [x] Test visual appearance and spacing
+- [x] Fix aspect ratio to 4:5 for portrait orientation
 - [ ] Save checkpoint

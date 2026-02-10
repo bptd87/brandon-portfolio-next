@@ -115,7 +115,7 @@ export default function About() {
           <div className="space-y-12">
             {/* Profile Image - Landscape */}
             <div className="relative max-w-2xl mx-auto">
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden border-4 border-primary/20">
+              <div className="aspect-[4/5] rounded-2xl overflow-hidden border-4 border-primary/20">
                 <img 
                   src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/jDUthZkmakLJRTiP.jpeg"
                   alt="Brandon PT Davis"
