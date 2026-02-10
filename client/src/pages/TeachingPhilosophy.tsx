@@ -14,8 +14,8 @@ export default function TeachingPhilosophy() {
     p.discipline === 'scenic_design' || p.discipline === 'rendering'
   );
 
-  // Get featured project for hero background
-  const heroImage = scenicDesignProjects.find(p => p.featured)?.coverImageUrl || scenicDesignProjects[0]?.coverImageUrl;
+  // Get a colorful hero background - prefer middle of portfolio for variety
+  const heroImage = scenicDesignProjects[Math.floor(scenicDesignProjects.length * 0.35)]?.coverImageUrl || scenicDesignProjects.find(p => p.featured)?.coverImageUrl || scenicDesignProjects[0]?.coverImageUrl;
 
   // Diversify images across sections - ensure all 6 images are completely different
   const totalProjects = scenicDesignProjects.length;
@@ -318,13 +318,13 @@ export default function TeachingPhilosophy() {
                   Explore detailed syllabi from courses I've taught, showcasing the curriculum, projects, and learning objectives that guide students through comprehensive design education.
                 </p>
                 <div className="grid gap-4">
-                  <Link href="/syllabus/experiential-design" className="block bg-card/30 backdrop-blur-md border border-border/50 rounded-2xl p-6 hover:bg-card/50 transition-colors">
-                    <h4 className="text-xl font-semibold mb-2">Experiential Design</h4>
-                    <p className="text-sm text-muted-foreground">Theme parks, restaurants, museums, and immersive experiences — bridging theatrical design with commercial storytelling.</p>
+                  <Link href="/syllabus/experiential-design" className="block bg-gradient-to-br from-orange-500/20 to-pink-500/20 backdrop-blur-md border border-orange-500/30 rounded-2xl p-6 hover:from-orange-500/30 hover:to-pink-500/30 transition-all duration-300 group">
+                    <h4 className="text-xl font-semibold mb-2 group-hover:text-orange-400 transition-colors">Experiential Design</h4>
+                    <p className="text-sm text-foreground/70">Theme parks, restaurants, museums, and immersive experiences — bridging theatrical design with commercial storytelling.</p>
                   </Link>
-                  <Link href="/syllabus/3d-modeling" className="block bg-card/30 backdrop-blur-md border border-border/50 rounded-2xl p-6 hover:bg-card/50 transition-colors">
-                    <h4 className="text-xl font-semibold mb-2">3D Modeling and Rendering</h4>
-                    <p className="text-sm text-muted-foreground">THA 211: Vectorworks — Advanced CAD workflows, 3D modeling, and industry-standard construction documentation.</p>
+                  <Link href="/syllabus/3d-modeling" className="block bg-gradient-to-br from-blue-500/20 to-cyan-500/20 backdrop-blur-md border border-blue-500/30 rounded-2xl p-6 hover:from-blue-500/30 hover:to-cyan-500/30 transition-all duration-300 group">
+                    <h4 className="text-xl font-semibold mb-2 group-hover:text-blue-400 transition-colors">3D Modeling and Rendering</h4>
+                    <p className="text-sm text-foreground/70">THA 211: Vectorworks — Advanced CAD workflows, 3D modeling, and industry-standard construction documentation.</p>
                   </Link>
                 </div>
               </div>

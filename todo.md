@@ -2491,4 +2491,10 @@
 - [x] Update image selection algorithm to ensure all 6 images are completely different
 - [x] Ensure better color variety across images
 - [x] Test that no images repeat across sections
+- [x] Save checkpoint
+
+## Add Color to Hero Background and Syllabi Boxes (User Request - Feb 10, 2026)
+- [x] Select more colorful hero background image
+- [x] Add color styling to syllabi link boxes (orange/pink gradient for Experiential, blue/cyan for 3D Modeling)
+- [x] Test visual improvements
 - [ ] Save checkpoint
