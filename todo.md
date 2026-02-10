@@ -2157,4 +2157,11 @@
 ## Bulk Update News Articles with Full Content (User Requested - Feb 9, 2026)
 - [x] Execute all SQL UPDATE statements to add full content blocks to news articles (26/30 articles updated)
 - [x] Verify news articles display complete content
+- [x] Save checkpoint
+
+## Fix HTML Entities in News Article Titles (User Requested - Feb 9, 2026)
+- [x] Identify the 4 articles with HTML entity issues (e.g., &amp; instead of &)
+- [x] Update article titles in database to fix HTML entities
+- [x] Re-run content update script for the 4 fixed articles (28/30 now have content)
+- [x] Verify all 30 articles now have full content (28 have content, 2 don't exist in database)
 - [ ] Save checkpoint
