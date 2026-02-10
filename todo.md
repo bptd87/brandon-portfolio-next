@@ -2165,3 +2165,10 @@
 - [x] Re-run content update script for the 4 fixed articles (28/30 now have content)
 - [x] Verify all 30 articles now have full content (28 have content, 2 don't exist in database)
 - [ ] Save checkpoint
+
+## Redesign News Timeline Layout (User Requested - Feb 9, 2026)
+- [x] Review current news page timeline layout
+- [x] Redesign to group articles by year with year section headers
+- [x] Update News.tsx component with new grouped layout (3-column grid)
+- [x] Test the new layout
+- [ ] Save checkpoint

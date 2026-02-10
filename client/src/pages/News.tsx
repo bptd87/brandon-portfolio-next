@@ -197,91 +197,82 @@ function NewsContent() {
         </div>
       </section>
 
-      {/* Timeline Section */}
+      {/* News by Year Section */}
       <section className="py-16 bg-background">
         <div className="container">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-7xl mx-auto">
             {newsByYear.length === 0 ? (
               <div className="text-center py-20">
                 <p className="text-xl text-muted-foreground">No news items found.</p>
               </div>
             ) : (
-              <div className="relative">
-                {/* Timeline line */}
-                <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-[#FF5722] via-[#00E5FF] to-[#FF1744] hidden md:block" />
-
-                {newsByYear.map(({ year, items }, yearIndex) => (
-                  <div key={year} className="mb-16 last:mb-0">
+              <div className="space-y-20">
+                {newsByYear.map(({ year, items }) => (
+                  <div key={year}>
                     {/* Year Header */}
-                    <div className="flex items-center gap-6 mb-12">
-                      <div className="hidden md:flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-[#FF5722] to-[#FF1744] text-white font-black text-3xl shadow-2xl relative z-10 mx-auto">
-                        {year}
+                    <div className="mb-10">
+                      <div className="flex items-center gap-4 mb-2">
+                        <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[#FF5722] to-[#FF1744] text-white font-black text-2xl shadow-lg">
+                          {year}
+                        </div>
+                        <div className="flex-1 h-1 bg-gradient-to-r from-[#FF5722]/20 to-transparent" />
                       </div>
-                      <h2 className="md:hidden text-5xl font-['Playfair_Display'] italic font-bold bg-gradient-to-r from-[#FF5722] to-[#FF1744] bg-clip-text text-transparent">
-                        {year}
-                      </h2>
+                      <p className="text-sm text-muted-foreground ml-20">
+                        {items.length} {items.length === 1 ? 'article' : 'articles'}
+                      </p>
                     </div>
 
-                    {/* News Items for this year */}
-                    <div className="space-y-12">
-                      {items.map((item, itemIndex) => {
-                        const isLeft = itemIndex % 2 === 0;
+                    {/* News Grid for this year */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {items.map((item) => {
                         const category = newsCategories.find(c => c.id === item.categoryId);
                         
                         return (
-                          <div 
-                            key={item.id} 
-                            className={`relative ${isLeft ? 'md:pr-[calc(50%+3rem)]' : 'md:pl-[calc(50%+3rem)] md:ml-auto'}`}
-                          >
-                            {/* Timeline dot */}
-                            <div className="hidden md:block absolute top-8 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-[#00E5FF] border-4 border-background shadow-lg z-10" />
-                            
-                            <Link href={`/news/${item.slug}`}>
-                              <Card className="hover:shadow-xl transition-all duration-300 group cursor-pointer overflow-hidden p-0">
-                                {item.coverImageUrl && (
-                                  <div className="aspect-[16/9] overflow-hidden">
-                                    <img 
-                                      src={item.coverImageUrl} 
-                                      alt={item.title}
-                                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                    />
-                                  </div>
+                          <Link key={item.id} href={`/news/${item.slug}`}>
+                            <Card className="h-full hover:shadow-xl transition-all duration-300 group cursor-pointer overflow-hidden p-0">
+                              {item.coverImageUrl && (
+                                <div className="aspect-[16/9] overflow-hidden">
+                                  <img 
+                                    src={item.coverImageUrl} 
+                                    alt={item.title}
+                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                  />
+                                </div>
+                              )}
+                              <CardContent className="p-6">
+                                {category && (
+                                  <Badge className="mb-3 bg-primary/10 text-primary font-bold text-xs">
+                                    {category.name}
+                                  </Badge>
                                 )}
-                                <CardContent className="p-6">
-                                  {category && (
-                                    <Badge className="mb-3 bg-primary/10 text-primary font-bold">
-                                      {category.name}
-                                    </Badge>
-                                  )}
-                                  <h3 className="text-2xl font-['Playfair_Display'] italic font-bold mb-3 group-hover:text-primary transition-colors">
-                                    {item.title}
-                                  </h3>
-                                  {item.excerpt && (
-                                    <p className="text-muted-foreground mb-4 leading-relaxed">
-                                      {item.excerpt}
-                                    </p>
-                                  )}
-                                  <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-                                    <div className="flex items-center gap-2">
-                                      <Calendar className="h-4 w-4" />
-                                      <span>
-                                        {new Date(item.publishedAt || item.createdAt).toLocaleDateString('en-US', { 
-                                          month: 'long', 
-                                          day: 'numeric' 
-                                        })}
-                                      </span>
-                                    </div>
-                                    {item.location && (
-                                      <div className="flex items-center gap-2">
-                                        <MapPin className="h-4 w-4" />
-                                        <span>{item.location}</span>
-                                      </div>
-                                    )}
+                                <h3 className="text-xl font-['Playfair_Display'] italic font-bold mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                                  {item.title}
+                                </h3>
+                                {item.excerpt && (
+                                  <p className="text-sm text-muted-foreground mb-4 leading-relaxed line-clamp-3">
+                                    {item.excerpt}
+                                  </p>
+                                )}
+                                <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+                                  <div className="flex items-center gap-1.5">
+                                    <Calendar className="h-3.5 w-3.5" />
+                                    <span>
+                                      {new Date(item.publishedAt || item.createdAt).toLocaleDateString('en-US', { 
+                                        month: 'short', 
+                                        day: 'numeric' 
+                                      })}
+                                    </span>
                                   </div>
-                                </CardContent>
-                              </Card>
-                            </Link>
-                          </div>
+                                  {item.location && (
+                                    <div className="flex items-center gap-1.5">
+                                      <MapPin className="h-3.5 w-3.5" />
+                                      <span className="line-clamp-1">{item.location}</span>
+                                    </div>
+                                  )}
+                                </div>
+                              </CardContent>
+                            </Card>
+                          </Link>
                         );
                       })}
                     </div>
