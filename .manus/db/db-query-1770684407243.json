@@ -1,0 +1,130 @@
+{
+  "query": "SELECT slug, title FROM news;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT slug, title FROM news;",
+  "rows": [
+    {
+      "slug": "million-dollar-quartet-scr-debut",
+      "title": "Making My SCR Debut: Million Dollar Quartet (2025)"
+    },
+    {
+      "slug": "assisting-the-play-that-goes-wrong",
+      "title": "Assisting Tom Buderwitz on The Play That Goes Wrong at Seattle Rep"
+    },
+    {
+      "slug": "40-productions-at-okoboji-summer-theatre",
+      "title": "40 Productions at Okoboji Summer Theatre"
+    },
+    {
+      "slug": "fifth-season-utah-shakespeare-festival",
+      "title": "Fifth Season Assisting Jo Winiarski — Utah Shakespeare Festival"
+    },
+    {
+      "slug": "united-scenic-artists-local-usa-829",
+      "title": "Joining United Scenic Artists, Local USA 829"
+    },
+    {
+      "slug": "returning-to-new-swan-theatre-festival-2026",
+      "title": "Returning to New Swan Theatre Festival in 2026"
+    },
+    {
+      "slug": "the-orange-curtain-review-praises-million-dollar-quartet-at-south-coast-repertory",
+      "title": "The Orange Curtain Review Praises Million Dollar Quartet at South Coast Repertory"
+    },
+    {
+      "slug": "deathtrap-opening-ost",
+      "title": "Opening Night: Deathtrap at Okoboji Summer Theatre"
+    },
+    {
+      "slug": "new-swan-season-2025",
+      "title": "My Season as Scenic Designer for New Swan Shakespeare Festival (2025)"
+    },
+    {
+      "slug": "romero-opening-university-of-missouri",
+      "title": "Opening Night: Romero at University of Missouri"
+    },
+    {
+      "slug": "okoboji-summer-2025-season",
+      "title": "Scenic Design for Okoboji Summer Theatre — Summer 2025 Season"
+    },
+    {
+      "slug": "shut-up-sherlock-praised",
+      "title": "Shut Up, Sherlock Praised in SLO Review"
+    },
+    {
+      "slug": "how-to-succeed-opening-ost",
+      "title": "Opening Night: How to Succeed in Business Without Really Trying at OST"
+    },
+    {
+      "slug": "guys-on-ice-slo-review",
+      "title": "Guys on Ice Receives Praise in SLO Review"
+    },
+    {
+      "slug": "freaky-friday-review",
+      "title": "Freaky Friday at Okoboji Summer Theatre Receives Praise"
+    },
+    {
+      "slug": "forum-review",
+      "title": "Forum at Theatre SilCo Featured in Summit Daily"
+    },
+    {
+      "slug": "okoboji-summer-2024-season",
+      "title": "2024 Okoboji Summer Theatre Season – Scenic Designs Announced"
+    },
+    {
+      "slug": "loteria-theatre-silco",
+      "title": "Scenic Design for ¡Lotería: Game On! at Theatre SilCo"
+    },
+    {
+      "slug": "assisting-the-fears",
+      "title": "Assisting My First Off-Broadway Show — The Fears (April–May 2023)"
+    },
+    {
+      "slug": "stephens-college-update-spring-2022",
+      "title": "Stephens College Update: Looking Ahead to Spring 2022"
+    },
+    {
+      "slug": "returning-to-stephens-college",
+      "title": "Returning to Stephens College as Assistant Professor of Scenic Design"
+    },
+    {
+      "slug": "lysistrata-utep-spring-2021",
+      "title": "Scenic Design for Lysistrata at UTEP — Spring 2021"
+    },
+    {
+      "slug": "graduating-from-uci-pandemic",
+      "title": "Graduating from UCI in the Middle of a Pandemic"
+    },
+    {
+      "slug": "new-role-utep",
+      "title": "New Role at UTEP — Assistant Professor of Scenic Design & Technology"
+    },
+    {
+      "slug": "company-review",
+      "title": "Company at UC Irvine Highlighted in StageSceneLA"
+    },
+    {
+      "slug": "the-pajama-game-stagescenela",
+      "title": "The Pajama Game Receives Praise from StageSceneLA"
+    },
+    {
+      "slug": "parliament-square-california-premiere",
+      "title": "Scenic Design for Parliament Square — California Premiere at UCI"
+    },
+    {
+      "slug": "american-idiot-review",
+      "title": "American Idiot at UC Irvine Reviewed in The Show Report"
+    },
+    {
+      "slug": "heading-to-uc-irvine",
+      "title": "Heading to UC Irvine for My MFA"
+    },
+    {
+      "slug": "the-foreigner-review",
+      "title": "The Foreigner Praised in The Tribune"
+    }
+  ],
+  "messages": [],
+  "stdout": "slug\ttitle\nmillion-dollar-quartet-scr-debut\tMaking My SCR Debut: Million Dollar Quartet (2025)\nassisting-the-play-that-goes-wrong\tAssisting Tom Buderwitz on The Play That Goes Wrong at Seattle Rep\n40-productions-at-okoboji-summer-theatre\t40 Productions at Okoboji Summer Theatre\nfifth-season-utah-shakespeare-festival\tFifth Season Assisting Jo Winiarski — Utah Shakespeare Festival\nunited-scenic-artists-local-usa-829\tJoining United Scenic Artists, Local USA 829\nreturning-to-new-swan-theatre-festival-2026\tReturning to New Swan Theatre Festival in 2026\nthe-orange-curtain-review-praises-million-dollar-quartet-at-south-coast-repertory\tThe Orange Curtain Review Praises Million Dollar Quartet at South Coast Repertory\ndeathtrap-opening-ost\tOpening Night: Deathtrap at Okoboji Summer Theatre\nnew-swan-season-2025\tMy Season as Scenic Designer for New Swan Shakespeare Festival (2025)\nromero-opening-university-of-missouri\tOpening Night: Romero at University of Missouri\nokoboji-summer-2025-season\tScenic Design for Okoboji Summer Theatre — Summer 2025 Season\nshut-up-sherlock-praised\tShut Up, Sherlock Praised in SLO Review\nhow-to-succeed-opening-ost\tOpening Night: How to Succeed in Business Without Really Trying at OST\nguys-on-ice-slo-review\tGuys on Ice Receives Praise in SLO Review\nfreaky-friday-review\tFreaky Friday at Okoboji Summer Theatre Receives Praise\nforum-review\tForum at Theatre SilCo Featured in Summit Daily\nokoboji-summer-2024-season\t2024 Okoboji Summer Theatre Season – Scenic Designs Announced\nloteria-theatre-silco\tScenic Design for ¡Lotería: Game On! at Theatre SilCo\nassisting-the-fears\tAssisting My First Off-Broadway Show — The Fears (April–May 2023)\nstephens-college-update-spring-2022\tStephens College Update: Looking Ahead to Spring 2022\nreturning-to-stephens-college\tReturning to Stephens College as Assistant Professor of Scenic Design\nlysistrata-utep-spring-2021\tScenic Design for Lysistrata at UTEP — Spring 2021\ngraduating-from-uci-pandemic\tGraduating from UCI in the Middle of a Pandemic\nnew-role-utep\tNew Role at UTEP — Assistant Professor of Scenic Design & Technology\ncompany-review\tCompany at UC Irvine Highlighted in StageSceneLA\nthe-pajama-game-stagescenela\tThe Pajama Game Receives Praise from StageSceneLA\nparliament-square-california-premiere\tScenic Design for Parliament Square — California Premiere at UCI\namerican-idiot-review\tAmerican Idiot at UC Irvine Reviewed in The Show Report\nheading-to-uc-irvine\tHeading to UC Irvine for My MFA\nthe-foreigner-review\tThe Foreigner Praised in The Tribune\n",
+  "stderr": "",
+  "execution_time_ms": 54
+}

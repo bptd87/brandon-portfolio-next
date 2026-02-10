@@ -2140,3 +2140,4 @@
 - [ ] Add technical toolkit showcase (Vectorworks, Twinmotion, Photoshop, Cinema 4D, SketchUp, Authored Composite Visualization)
 - [ ] Generate additional images for technical workflow and buildability
 - [ ] Add buildability and fabrication experience section
+- [x] Migrate news data and images from old Squarespace site
