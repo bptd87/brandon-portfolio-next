@@ -136,7 +136,6 @@ export default function About() {
             <div className="relative group animate-in fade-in slide-in-from-left-8 duration-700">
               <div 
                 className="aspect-[4/5] rounded-3xl overflow-hidden border-4 border-primary/30 shadow-2xl shadow-primary/10 transition-all duration-300 group-hover:border-primary/50 group-hover:shadow-primary/20"
-                style={{ transform: `translateY(${scrollY * 0.15}px)` }}
               >
                 <img 
                   src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/jDUthZkmakLJRTiP.jpeg"

@@ -2616,4 +2616,10 @@
 - [x] Add skeleton placeholder styling with shimmer animation
 - [x] Implement onLoad handler to hide skeleton when image loads
 - [x] Test loading experience and layout stability
+- [x] Save checkpoint
+
+## Remove Parallax from Profile Headshot (User Request - Feb 10, 2026)
+- [x] Remove parallax transform from headshot image
+- [x] Keep parallax on decorative blobs only
+- [x] Test static headshot appearance
 - [ ] Save checkpoint
