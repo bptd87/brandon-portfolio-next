@@ -1,8 +1,9 @@
 import AboutNav from "@/components/AboutNav";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Mail, MapPin, Sparkles } from "lucide-react";
+import { Mail, MapPin, Sparkles, FileText, Lightbulb, GraduationCap, Users, ArrowRight } from "lucide-react";
 import StructuredData from "@/components/StructuredData";
+import { Link } from "wouter";
 
 export default function About() {
   const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://www.brandonptdavis.com';
@@ -15,6 +16,41 @@ export default function About() {
     { url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/EeESHfPspBcRpEaU.JPG", alt: "Family and community" },
     { url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/JbMFmQRXOBCttcpL.JPG", alt: "Design partnerships" },
     { url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/GDSJlHzKeThOHVcF.JPG", alt: "Behind the scenes" },
+  ];
+
+  const navigationCards = [
+    {
+      title: "Resume/CV",
+      description: "Over 130 realized productions since 2009 across scenic design and assistant scenic design roles",
+      icon: FileText,
+      href: "/resume",
+      color: "from-orange-500/10 to-pink-500/10",
+      borderColor: "border-orange-500/20"
+    },
+    {
+      title: "Creative Statement",
+      description: "Architecture, history, and narrative storytelling — the foundations of my scenic design philosophy",
+      icon: Lightbulb,
+      href: "/creative-statement",
+      color: "from-purple-500/10 to-pink-500/10",
+      borderColor: "border-purple-500/20"
+    },
+    {
+      title: "Teaching Philosophy",
+      description: "Equipping students with skills, confidence, and adaptability for today's evolving entertainment industry",
+      icon: GraduationCap,
+      href: "/about/philosophy",
+      color: "from-cyan-500/10 to-blue-500/10",
+      borderColor: "border-cyan-500/20"
+    },
+    {
+      title: "Collaborators",
+      description: "Directors, designers, theatre companies, and creative partners across 130+ productions",
+      icon: Users,
+      href: "/about/collaborators",
+      color: "from-green-500/10 to-emerald-500/10",
+      borderColor: "border-green-500/20"
+    }
   ];
 
   return (
@@ -73,61 +109,52 @@ export default function About() {
       <Header />
       <AboutNav />
 
-      {/* Hero Section with Profile Picture */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZjU3MjIiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDE0aDI0djI0SDM2eiIvPjwvZz48L2c+PC9zdmc+')] opacity-40" />
+      {/* Hero Section with Profile Picture - Parallax Style */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Image with Parallax Effect */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url(https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/sAwMHaupahiCjmgJ.webp)`,
+            transform: 'translateZ(0)',
+            willChange: 'transform',
+            backgroundAttachment: 'fixed'
+          }}
+        />
         
-        <div className="container relative py-20 md:py-32">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-              {/* Left: Text Content */}
-              <div className="space-y-8 animate-in fade-in slide-in-from-left duration-700">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
-                  <Sparkles className="w-4 h-4 text-primary animate-pulse" />
-                  <span className="text-sm font-pixel uppercase tracking-wider text-primary">Scenic Designer</span>
+        {/* Overlay for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-background pointer-events-none"></div>
+        
+        <div className="relative container py-32">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8">
+              <Sparkles className="w-4 h-4 text-primary animate-pulse" />
+              <span className="text-sm font-pixel uppercase tracking-wider text-primary">Scenic Designer</span>
+            </div>
+            
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif leading-[0.9] mb-8 text-white">
+              Brandon<br />PT Davis
+            </h1>
+            
+            <p className="text-2xl md:text-3xl text-white/90 leading-relaxed max-w-3xl mx-auto mb-12">
+              Transforming theatrical spaces into <span className="text-primary font-semibold">immersive visual landscapes</span> where story and space move together in harmony
+            </p>
+            
+            {/* Contact Info */}
+            <div className="flex flex-wrap gap-6 text-lg justify-center">
+              <div className="flex items-center gap-3 group">
+                <div className="p-2 rounded-lg bg-white/10 group-hover:bg-white/20 transition-colors">
+                  <MapPin className="w-5 h-5 text-white" />
                 </div>
-                
-                <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif leading-[0.9] bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">
-                  Brandon<br />PT Davis
-                </h1>
-                
-                <p className="text-2xl md:text-3xl text-foreground/80 leading-relaxed max-w-2xl">
-                  Transforming theatrical spaces into <span className="text-primary font-semibold">immersive visual landscapes</span> where story and space move together in harmony
-                </p>
-                
-                {/* Contact Info */}
-                <div className="flex flex-wrap gap-6 text-lg pt-4">
-                  <div className="flex items-center gap-3 group">
-                    <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                      <MapPin className="w-5 h-5 text-primary" />
-                    </div>
-                    <span className="text-foreground/80">Southern California</span>
-                  </div>
-                  <div className="flex items-center gap-3 group">
-                    <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                      <Mail className="w-5 h-5 text-primary" />
-                    </div>
-                    <a href="mailto:info@brandonptdavis.com" className="text-foreground/80 hover:text-primary transition-colors">
-                      info@brandonptdavis.com
-                    </a>
-                  </div>
-                </div>
+                <span className="text-white/80">Southern California</span>
               </div>
-
-              {/* Right: Profile Picture */}
-              <div className="relative animate-in fade-in slide-in-from-right duration-700 delay-300">
-                <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl border-4 border-primary/20 group">
-                  <img 
-                    src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/sAwMHaupahiCjmgJ.webp" 
-                    alt="Brandon PT Davis Portrait"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="flex items-center gap-3 group">
+                <div className="p-2 rounded-lg bg-white/10 group-hover:bg-white/20 transition-colors">
+                  <Mail className="w-5 h-5 text-white" />
                 </div>
-                
-                {/* Decorative elements */}
-                <div className="absolute -top-6 -right-6 w-32 h-32 bg-primary/20 rounded-full blur-3xl animate-pulse" />
-                <div className="absolute -bottom-6 -left-6 w-40 h-40 bg-accent/20 rounded-full blur-3xl animate-pulse delay-1000" />
+                <a href="mailto:info@brandonptdavis.com" className="text-white/80 hover:text-primary transition-colors">
+                  info@brandonptdavis.com
+                </a>
               </div>
             </div>
           </div>
@@ -163,8 +190,49 @@ export default function About() {
         </div>
       </section>
 
-      {/* Personal Gallery */}
+      {/* Navigation Cards Section */}
       <section className="bg-gradient-to-b from-background to-muted/30 py-32">
+        <div className="container">
+          <div className="max-w-7xl mx-auto mb-16">
+            <h2 className="text-5xl md:text-7xl font-serif mb-6">Explore More</h2>
+            <p className="text-xl text-foreground/70 max-w-3xl">
+              Dive deeper into my work, philosophy, and collaborations across scenic design, education, and creative partnerships.
+            </p>
+          </div>
+
+          <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-6">
+            {navigationCards.map((card) => {
+              const Icon = card.icon;
+              return (
+                <Link key={card.href} href={card.href}>
+                  <div className={`group relative overflow-hidden rounded-2xl border ${card.borderColor} bg-gradient-to-br ${card.color} p-8 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl cursor-pointer`}>
+                    <div className="flex items-start gap-6">
+                      <div className="p-4 rounded-xl bg-background/50 backdrop-blur-sm group-hover:bg-background/70 transition-colors">
+                        <Icon className="w-8 h-8 text-primary" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-2xl font-serif mb-3 group-hover:text-primary transition-colors">
+                          {card.title}
+                        </h3>
+                        <p className="text-foreground/70 leading-relaxed mb-4">
+                          {card.description}
+                        </p>
+                        <div className="flex items-center gap-2 text-primary font-medium">
+                          <span>Learn more</span>
+                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Personal Gallery */}
+      <section className="bg-gradient-to-b from-muted/30 to-background py-32">
         <div className="container">
           <div className="max-w-7xl mx-auto mb-16">
             <h2 className="text-5xl md:text-7xl font-serif mb-6">Behind the Scenes</h2>
