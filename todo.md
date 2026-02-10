@@ -2171,4 +2171,16 @@
 - [x] Redesign to group articles by year with year section headers
 - [x] Update News.tsx component with new grouped layout (3-column grid)
 - [x] Test the new layout
+- [x] Save checkpoint
+
+## Enhance News Articles with Navigation & Content Blocks (User Requested - Feb 9, 2026)
+- [x] Add new content block types to schema (header, gallery, team)
+- [x] Generate and run migration to add new block types (schema updated, no migration needed - JSON type)
+- [x] Implement related news navigation (chronologically nearby articles)
+- [x] Add prev/next navigation to news detail pages
+- [x] Update NewsDetail component to render new block types
+- [ ] Review all 28 news articles for content quality (requires manual review)
+- [ ] Ensure each article has 300+ words with proper formatting (requires content editing)
+- [ ] Add headers, galleries, and team blocks where appropriate (requires content editing)
+- [x] Test enhanced articles (navigation working correctly)
 - [ ] Save checkpoint

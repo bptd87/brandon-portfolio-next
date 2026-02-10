@@ -157,6 +157,7 @@ export const news = mysqlTable("news", {
   tags: text("tags"),
   blocks: json("blocks").$type<Array<
     | { type: 'text'; content: string }
+    | { type: 'header'; content: string; level?: 2 | 3 | 4 }
     | { type: 'gallery'; images: { url: string; caption?: string }[] }
     | { type: 'team'; title: string; members: { role: string; name: string }[] }
     | { type: 'details'; title: string; items: { label: string; value: string }[] }

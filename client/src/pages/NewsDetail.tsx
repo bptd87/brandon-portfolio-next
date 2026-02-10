@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, createElement } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageThemeWrapper from "@/components/PageThemeWrapper";
@@ -208,8 +208,28 @@ function NewsDetailContent() {
   // Parse content blocks
   const contentBlocks = newsItem.blocks || [];
 
-  // Get related news (exclude current)
-  const related = relatedNews?.filter(n => n.id !== newsItem.id).slice(0, 3) || [];
+  // Get related news - chronologically nearby articles (within 6 months)
+  const related = relatedNews
+    ?.filter(n => n.id !== newsItem.id)
+    .map(n => ({
+      ...n,
+      timeDiff: Math.abs(
+        new Date(n.publishedAt || n.createdAt).getTime() - 
+        new Date(newsItem.publishedAt || newsItem.createdAt).getTime()
+      )
+    }))
+    .sort((a, b) => a.timeDiff - b.timeDiff)
+    .slice(0, 3) || [];
+  
+  // Get prev/next articles chronologically
+  const allNewsSorted = relatedNews
+    ?.sort((a, b) => 
+      new Date(b.publishedAt || b.createdAt).getTime() - 
+      new Date(a.publishedAt || a.createdAt).getTime()
+    ) || [];
+  const currentIndex = allNewsSorted.findIndex(n => n.id === newsItem.id);
+  const prevArticle = currentIndex > 0 ? allNewsSorted[currentIndex - 1] : null;
+  const nextArticle = currentIndex < allNewsSorted.length - 1 ? allNewsSorted[currentIndex + 1] : null;
 
   // Calculate word count from content blocks
   const wordCount = contentBlocks.reduce((count: number, block: any) => {
@@ -392,6 +412,17 @@ function NewsDetailContent() {
                       </div>
                     );
                   
+                  case 'header':
+                    const headerLevel = block.level || 2;
+                    const headerClasses = `font-['Playfair_Display'] italic font-bold text-foreground ${
+                      headerLevel === 3 ? 'text-2xl' : headerLevel === 4 ? 'text-xl' : 'text-3xl'
+                    }`;
+                    return (
+                      <div key={index} className="mb-8">
+                        {createElement(`h${headerLevel}`, { className: headerClasses }, block.content)}
+                      </div>
+                    );
+                  
                   case 'link':
                     return (
                       <div key={index} className="mb-8">
@@ -503,6 +534,60 @@ function NewsDetailContent() {
                       </Badge>
                     </Link>
                   ))}
+                </div>
+              </div>
+            )}
+
+            {/* Prev/Next Navigation */}
+            {(prevArticle || nextArticle) && (
+              <div className="mt-16 pt-8 border-t border-border">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {prevArticle && (
+                    <Link href={`/news/${prevArticle.slug}`}>
+                      <Card className="h-full hover:shadow-lg transition-all group cursor-pointer p-6">
+                        <div className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
+                          <ArrowLeft className="h-4 w-4" />
+                          Previous Article
+                        </div>
+                        <h4 className="text-lg font-['Playfair_Display'] italic font-bold group-hover:text-primary transition-colors line-clamp-2">
+                          {prevArticle.title}
+                        </h4>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
+                          <Calendar className="h-3.5 w-3.5" />
+                          <span>
+                            {new Date(prevArticle.publishedAt || prevArticle.createdAt).toLocaleDateString('en-US', { 
+                              month: 'short', 
+                              day: 'numeric',
+                              year: 'numeric'
+                            })}
+                          </span>
+                        </div>
+                      </Card>
+                    </Link>
+                  )}
+                  {nextArticle && (
+                    <Link href={`/news/${nextArticle.slug}`}>
+                      <Card className="h-full hover:shadow-lg transition-all group cursor-pointer p-6 text-right">
+                        <div className="text-sm text-muted-foreground mb-2 flex items-center justify-end gap-2">
+                          Next Article
+                          <ArrowLeft className="h-4 w-4 rotate-180" />
+                        </div>
+                        <h4 className="text-lg font-['Playfair_Display'] italic font-bold group-hover:text-primary transition-colors line-clamp-2">
+                          {nextArticle.title}
+                        </h4>
+                        <div className="flex items-center justify-end gap-2 text-sm text-muted-foreground mt-2">
+                          <Calendar className="h-3.5 w-3.5" />
+                          <span>
+                            {new Date(nextArticle.publishedAt || nextArticle.createdAt).toLocaleDateString('en-US', { 
+                              month: 'short', 
+                              day: 'numeric',
+                              year: 'numeric'
+                            })}
+                          </span>
+                        </div>
+                      </Card>
+                    </Link>
+                  )}
                 </div>
               </div>
             )}
