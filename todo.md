@@ -2497,4 +2497,11 @@
 - [x] Select more colorful hero background image
 - [x] Add color styling to syllabi link boxes (orange/pink gradient for Experiential, blue/cyan for 3D Modeling)
 - [x] Test visual improvements
+- [x] Save checkpoint
+
+## Add PDF Download to Teaching Philosophy (User Request - Feb 10, 2026)
+- [x] Add PDF download button to Teaching Philosophy page
+- [x] Create Teaching Philosophy PDF generation endpoint
+- [x] Connect button to PDF endpoint
+- [x] Test PDF download functionality
 - [ ] Save checkpoint

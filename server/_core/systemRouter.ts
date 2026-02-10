@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { notifyOwner } from "./notification";
 import { adminProcedure, publicProcedure, router } from "./trpc";
+import { generateTeachingPhilosophyPDF } from "../generateTeachingPhilosophyPDF";
 
 export const systemRouter = router({
   health: publicProcedure
@@ -25,5 +26,10 @@ export const systemRouter = router({
       return {
         success: delivered,
       } as const;
+    }),
+
+  generateTeachingPhilosophyPDF: publicProcedure
+    .mutation(async () => {
+      return await generateTeachingPhilosophyPDF();
     }),
 });

@@ -3,11 +3,14 @@ import Footer from "@/components/Footer";
 import { trpc } from "@/lib/trpc";
 import { useEffect, useRef } from "react";
 import { Link } from "wouter";
+import { Download } from "lucide-react";
 
 export default function TeachingPhilosophy() {
   const { data: projects } = trpc.projects.list.useQuery({ 
     status: "published"
   });
+
+  const generatePDF = trpc.system.generateTeachingPhilosophyPDF.useMutation();
 
   // Filter to scenic design and rendering projects only
   const scenicDesignProjects = (projects || []).filter(p => 
@@ -393,6 +396,32 @@ export default function TeachingPhilosophy() {
           >
             View Portfolio
           </Link>
+        </div>
+      </section>
+
+      {/* Download Button Section */}
+      <section className="relative py-16 px-6 bg-accent/5">
+        <div className="max-w-4xl mx-auto text-center">
+          <button
+            onClick={async () => {
+              try {
+                const result = await generatePDF.mutateAsync();
+                if (result.success && result.url) {
+                  window.open(result.url, '_blank');
+                }
+              } catch (error) {
+                console.error('Failed to generate PDF:', error);
+              }
+            }}
+            disabled={generatePDF.isPending}
+            className="inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-4 rounded-full text-lg font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Download className="w-5 h-5" />
+            Download Teaching Philosophy (PDF)
+          </button>
+          <p className="text-sm text-muted-foreground mt-4">
+            For hiring committees and academic review
+          </p>
         </div>
       </section>
 
