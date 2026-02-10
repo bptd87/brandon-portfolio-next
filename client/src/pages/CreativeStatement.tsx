@@ -9,16 +9,28 @@ export default function CreativeStatement() {
     status: "published"
   });
 
-  // Limit to 6 projects
-  const limitedProjects = projects?.slice(0, 6) || [];
-
   // Get featured project for hero background
-  const heroImage = limitedProjects.find(p => p.featured)?.coverImageUrl || limitedProjects[0]?.coverImageUrl;
+  const heroImage = projects?.find(p => p.featured)?.coverImageUrl || projects?.[0]?.coverImageUrl;
 
-  // Group projects for different sections
-  const processImages = limitedProjects.slice(0, 2);
-  const collaborationImages = limitedProjects.slice(2, 4);
-  const philosophyImages = limitedProjects.slice(4, 6);
+  // Diversify images - spread across different projects instead of just first 6
+  const allProjects = projects || [];
+  const totalProjects = allProjects.length;
+  
+  // Select images from different parts of the portfolio for variety
+  const processImages = totalProjects > 0 ? [
+    allProjects[Math.floor(totalProjects * 0.2)] || allProjects[0],
+    allProjects[Math.floor(totalProjects * 0.4)] || allProjects[1]
+  ].filter(Boolean) : [];
+  
+  const collaborationImages = totalProjects > 0 ? [
+    allProjects[Math.floor(totalProjects * 0.5)] || allProjects[2],
+    allProjects[Math.floor(totalProjects * 0.7)] || allProjects[3]
+  ].filter(Boolean) : [];
+  
+  const philosophyImages = totalProjects > 0 ? [
+    allProjects[Math.floor(totalProjects * 0.8)] || allProjects[4],
+    allProjects[Math.floor(totalProjects * 0.9)] || allProjects[5]
+  ].filter(Boolean) : [];
 
   // Scroll animation refs
   const collaborationRef = useRef<HTMLElement>(null);

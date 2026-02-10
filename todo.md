@@ -2460,4 +2460,10 @@
 - [x] Create "View Full Portfolio" CTA section at bottom
 - [x] Implement smooth scroll animations for sections
 - [x] Test animations and interactions
+- [x] Save checkpoint
+
+## Diversify Creative Statement Images (User Request - Feb 10, 2026)
+- [x] Update image selection logic to pull from diverse range of projects
+- [x] Avoid using only recent/featured projects
+- [x] Test that images showcase variety of scenic design work
 - [ ] Save checkpoint
