@@ -313,10 +313,10 @@ export default function Header() {
 
   const aboutPages = [
     { name: "About", slug: "/about" },
-    { name: "Teaching Philosophy", slug: "/about/teaching" },
-    { name: "Resume", slug: "/resume" },
-    { name: "CV", slug: "/cv" },
+    { name: "Resume / CV", slug: "/resume" },
     { name: "Creative Statement", slug: "/about/philosophy" },
+    { name: "Teaching Philosophy", slug: "/about/teaching" },
+    { name: "Collaborators", slug: "/about/collaborators" },
   ];
 
   return (

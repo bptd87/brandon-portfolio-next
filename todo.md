@@ -2396,4 +2396,13 @@
 - [x] Add Resume link to ABOUT dropdown
 - [x] Add CV link to ABOUT dropdown
 - [x] Test dropdown navigation works correctly
+- [x] Save checkpoint
+
+## Fix Resume/CV Page Structure (User Request - Feb 10, 2026)
+- [x] Delete separate CV.tsx page
+- [x] Rename Resume page to "Resume / CV"
+- [x] Add two download buttons (Resume PDF and CV PDF) that open in new tabs
+- [x] Remove /cv route from App.tsx
+- [x] Update ABOUT dropdown order: About → Resume / CV → Creative Statement → Teaching Philosophy → Collaborators
+- [x] Update route to /resume-cv or keep as /resume
 - [ ] Save checkpoint

@@ -15,7 +15,7 @@ export default function Resume() {
 
           {/* Hero */}
           <div className="mb-12">
-            <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4 font-pixel">RESUME</p>
+            <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4 font-pixel">RESUME / CV</p>
             <div className="flex items-end justify-between gap-8 flex-wrap">
               <div>
                 <h1 className="text-5xl md:text-7xl font-serif mb-4 leading-tight">Production History</h1>
@@ -23,12 +23,20 @@ export default function Resume() {
                   Over 130 realized productions since 2009 across scenic design and assistant scenic design roles.
                 </p>
               </div>
-              <Button size="lg" className="gap-2" asChild>
-                <a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/KZOFqPARnjQauvWm.pdf" download="BrandonPTDavis-Resume-2025.pdf" target="_blank" rel="noopener noreferrer">
-                  <Download className="w-5 h-5" />
-                  Download Resume
-                </a>
-              </Button>
+              <div className="flex gap-4 flex-wrap">
+                <Button size="lg" className="gap-2" asChild>
+                  <a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/KZOFqPARnjQauvWm.pdf" target="_blank" rel="noopener noreferrer">
+                    <Download className="w-5 h-5" />
+                    Resume
+                  </a>
+                </Button>
+                <Button size="lg" variant="outline" className="gap-2" asChild>
+                  <a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/mSMkRDmbSOQtUykO.pdf" target="_blank" rel="noopener noreferrer">
+                    <Download className="w-5 h-5" />
+                    CV
+                  </a>
+                </Button>
+              </div>
             </div>
           </div>
 
