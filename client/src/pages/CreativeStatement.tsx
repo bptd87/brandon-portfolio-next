@@ -1,6 +1,8 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { trpc } from "@/lib/trpc";
+import { useEffect, useRef } from "react";
+import { Link } from "wouter";
 
 export default function CreativeStatement() {
   const { data: projects } = trpc.projects.list.useQuery({ 
@@ -17,6 +19,46 @@ export default function CreativeStatement() {
   const processImages = limitedProjects.slice(0, 2);
   const collaborationImages = limitedProjects.slice(2, 4);
   const philosophyImages = limitedProjects.slice(4, 6);
+
+  // Scroll animation refs
+  const collaborationRef = useRef<HTMLElement>(null);
+  const processRef = useRef<HTMLElement>(null);
+  const philosophyRef = useRef<HTMLElement>(null);
+  const pullQuote1Ref = useRef<HTMLDivElement>(null);
+  const pullQuote2Ref = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -100px 0px"
+    };
+
+    const animateOnScroll = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("opacity-100", "translate-y-0");
+          entry.target.classList.remove("opacity-0", "translate-y-8");
+        }
+      });
+    };
+
+    const refs = [collaborationRef, processRef, philosophyRef, pullQuote1Ref, pullQuote2Ref, ctaRef];
+    
+    refs.forEach(ref => {
+      if (ref.current) {
+        const observer = new IntersectionObserver(animateOnScroll, observerOptions);
+        observer.observe(ref.current);
+        observers.push(observer);
+      }
+    });
+
+    return () => {
+      observers.forEach(observer => observer.disconnect());
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -58,7 +100,10 @@ export default function CreativeStatement() {
       </section>
 
       {/* Collaboration Section */}
-      <section className="relative py-32 px-6">
+      <section 
+        ref={collaborationRef}
+        className="relative py-32 px-6 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
+      >
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-[200px_1fr] gap-12 items-start mb-16">
             <div className="text-sm uppercase tracking-widest text-muted-foreground md:sticky md:top-32">
@@ -95,8 +140,25 @@ export default function CreativeStatement() {
         </div>
       </section>
 
+      {/* Pull Quote 1 */}
+      <div 
+        ref={pullQuote1Ref}
+        className="relative py-24 px-6 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
+      >
+        <div className="max-w-4xl mx-auto">
+          <blockquote className="border-l-4 border-primary pl-8 md:pl-12">
+            <p className="text-3xl md:text-4xl font-serif italic text-foreground/90 leading-relaxed">
+              "I'm never afraid to start over, no matter where we are in the process."
+            </p>
+          </blockquote>
+        </div>
+      </div>
+
       {/* Process Section */}
-      <section className="relative py-32 px-6 bg-accent/5">
+      <section 
+        ref={processRef}
+        className="relative py-32 px-6 bg-accent/5 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
+      >
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-[200px_1fr] gap-12 items-start mb-16">
             <div className="text-sm uppercase tracking-widest text-muted-foreground md:sticky md:top-32">
@@ -136,8 +198,25 @@ export default function CreativeStatement() {
         </div>
       </section>
 
+      {/* Pull Quote 2 */}
+      <div 
+        ref={pullQuote2Ref}
+        className="relative py-24 px-6 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
+      >
+        <div className="max-w-4xl mx-auto">
+          <blockquote className="border-l-4 border-primary pl-8 md:pl-12">
+            <p className="text-3xl md:text-4xl font-serif italic text-foreground/90 leading-relaxed">
+              "Designs that feel inevitable once they're revealed."
+            </p>
+          </blockquote>
+        </div>
+      </div>
+
       {/* Philosophy Section */}
-      <section className="relative py-32 px-6">
+      <section 
+        ref={philosophyRef}
+        className="relative py-32 px-6 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
+      >
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-[200px_1fr] gap-12 items-start">
             <div className="text-sm uppercase tracking-widest text-muted-foreground md:sticky md:top-32">
@@ -177,6 +256,30 @@ export default function CreativeStatement() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* View Full Portfolio CTA */}
+      <section 
+        ref={ctaRef}
+        className="relative py-32 px-6 bg-accent/10 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
+      >
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-serif mb-6">
+            Explore the Full Portfolio
+          </h2>
+          <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
+            Discover over 130 realized productions spanning scenic design, experiential design, and collaborative projects across regional theatres and beyond.
+          </p>
+          <Link href="/work">
+            <a className="inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-4 rounded-lg hover:bg-primary/90 transition-colors text-lg font-semibold">
+              <span>View Full Portfolio</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14"/>
+                <path d="m12 5 7 7-7 7"/>
+              </svg>
+            </a>
+          </Link>
         </div>
       </section>
 
