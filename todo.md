@@ -2350,4 +2350,12 @@
 - [x] Update article date to September 8, 2022
 - [x] Update cover image to showcase scenic design
 - [x] Add production photos to article body
-- [ ] Save checkpoint
+- [x] Save checkpoint
+
+## Update Bottle Shock Article (User Request - Feb 10, 2026)
+- [x] Upload 2 production photos to S3
+- [x] Update article date to July 12, 2023
+- [x] Update cover image to showcase scenic design (wine cellar arches)
+- [x] Add photo credits to Karli Cadel
+- [x] Add production photos to article body
+- [x] Save checkpoint

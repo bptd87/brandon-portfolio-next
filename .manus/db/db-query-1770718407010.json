@@ -1,0 +1,32 @@
+{
+  "query": "SELECT * FROM news WHERE title LIKE '%Bottle Shock%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT * FROM news WHERE title LIKE '%Bottle Shock%';",
+  "rows": [
+    {
+      "id": "120003",
+      "title": "Bottle Shock! The Musical",
+      "slug": "bottle-shock-musical-ccae",
+      "excerpt": "Brandon PT Davis served as Assistant Scenic Designer for the world premiere of Bottle Shock! The Musical at California Center for the Arts Escondido, providing drafting and 3D modeling support for Jo Winiarski amazing scenic design that brought a piece of Napa Valley to the stage.",
+      "categoryId": "90002",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/pJwEDvyBKWthNWbv.jpg",
+      "coverImageKey": "NULL",
+      "location": "California Center for the Arts Escondido, Escondido, CA",
+      "date": "2023-07-23 00:00:00",
+      "blocks": "[{\"content\": \"Brandon PT Davis served as Assistant Scenic Designer for the world premiere of Bottle Shock! The Musical at California Center for the Arts Escondido. Working with scenic designer Jo Winiarski, Davis provided drafting and 3D modeling support for an amazing design that brought a piece of Napa Valley wine country to the stage.\", \"type\": \"text\"}, {\"content\": \"The Production\", \"type\": \"header\"}, {\"content\": \"This world premiere musical tells the story of the famous 1976 Judgment of Paris wine tasting that put California wines on the international map. The production ran July 7-23, 2023 at the Center Theatre.\", \"type\": \"text\"}, {\"members\": [{\"name\": \"J. Scott Lapp\", \"role\": \"Director\"}, {\"name\": \"Jo Winiarski\", \"role\": \"Scenic Designer\"}, {\"name\": \"Brandon PT Davis\", \"role\": \"Assistant Scenic Designer\"}, {\"name\": \"Zach Blane\", \"role\": \"Lighting Designer\"}], \"title\": \"Creative Team\", \"type\": \"team\"}, {\"text\": \"Visit California Center for the Arts\", \"type\": \"link\", \"url\": \"https://artcenter.org/event/bottleshockthemusical/\"}]",
+      "status": "draft",
+      "featured": "0",
+      "seoTitle": "Bottle Shock! The Musical (World Premiere) | Assistant Scenic Designer Brandon PT Davis",
+      "seoDescription": "Brandon PT Davis served as Assistant Scenic Designer for the world premiere of Bottle Shock! The Musical at California Center for the Arts Escondido.",
+      "seoKeywords": "Bottle Shock, California Center for the Arts, Assistant Scenic Designer, Jo Winiarski, Escondido, world premiere, musical theatre",
+      "createdAt": "2026-02-10 09:40:23",
+      "updatedAt": "2026-02-10 09:54:47",
+      "publishedAt": "2023-03-19 00:00:00",
+      "externalLink": "https://artcenter.org/event/bottleshockthemusical/",
+      "tags": "Bottle Shock, California Center for the Arts Escondido, Jo Winiarski, Assistant Scenic Designer, World Premiere, Regional Theatre"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tslug\texcerpt\tcategoryId\tcoverImageUrl\tcoverImageKey\tlocation\tdate\tblocks\tstatus\tfeatured\tseoTitle\tseoDescription\tseoKeywords\tcreatedAt\tupdatedAt\tpublishedAt\texternalLink\ttags\n120003\tBottle Shock! The Musical\tbottle-shock-musical-ccae\tBrandon PT Davis served as Assistant Scenic Designer for the world premiere of Bottle Shock! The Musical at California Center for the Arts Escondido, providing drafting and 3D modeling support for Jo Winiarski amazing scenic design that brought a piece of Napa Valley to the stage.\t90002\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/pJwEDvyBKWthNWbv.jpg\tNULL\tCalifornia Center for the Arts Escondido, Escondido, CA\t2023-07-23 00:00:00\t[{\"content\": \"Brandon PT Davis served as Assistant Scenic Designer for the world premiere of Bottle Shock! The Musical at California Center for the Arts Escondido. Working with scenic designer Jo Winiarski, Davis provided drafting and 3D modeling support for an amazing design that brought a piece of Napa Valley wine country to the stage.\", \"type\": \"text\"}, {\"content\": \"The Production\", \"type\": \"header\"}, {\"content\": \"This world premiere musical tells the story of the famous 1976 Judgment of Paris wine tasting that put California wines on the international map. The production ran July 7-23, 2023 at the Center Theatre.\", \"type\": \"text\"}, {\"members\": [{\"name\": \"J. Scott Lapp\", \"role\": \"Director\"}, {\"name\": \"Jo Winiarski\", \"role\": \"Scenic Designer\"}, {\"name\": \"Brandon PT Davis\", \"role\": \"Assistant Scenic Designer\"}, {\"name\": \"Zach Blane\", \"role\": \"Lighting Designer\"}], \"title\": \"Creative Team\", \"type\": \"team\"}, {\"text\": \"Visit California Center for the Arts\", \"type\": \"link\", \"url\": \"https://artcenter.org/event/bottleshockthemusical/\"}]\tdraft\t0\tBottle Shock! The Musical (World Premiere) | Assistant Scenic Designer Brandon PT Davis\tBrandon PT Davis served as Assistant Scenic Designer for the world premiere of Bottle Shock! The Musical at California Center for the Arts Escondido.\tBottle Shock, California Center for the Arts, Assistant Scenic Designer, Jo Winiarski, Escondido, world premiere, musical theatre\t2026-02-10 09:40:23\t2026-02-10 09:54:47\t2023-03-19 00:00:00\thttps://artcenter.org/event/bottleshockthemusical/\tBottle Shock, California Center for the Arts Escondido, Jo Winiarski, Assistant Scenic Designer, World Premiere, Regional Theatre\n",
+  "stderr": "",
+  "execution_time_ms": 54
+}
