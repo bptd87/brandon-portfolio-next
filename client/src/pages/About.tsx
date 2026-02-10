@@ -112,9 +112,9 @@ export default function About() {
       {/* Hero Section with Profile Picture */}
       <section className="container py-32">
         <div className="max-w-6xl mx-auto">
-          <div className="space-y-12">
-            {/* Profile Image - Landscape */}
-            <div className="relative max-w-2xl mx-auto">
+          <div className="grid md:grid-cols-[400px_1fr] gap-12 items-start">
+            {/* Profile Image - Left Side */}
+            <div className="relative">
               <div className="aspect-[4/5] rounded-2xl overflow-hidden border-4 border-primary/20">
                 <img 
                   src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/jDUthZkmakLJRTiP.jpeg"
@@ -126,8 +126,8 @@ export default function About() {
               <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/10 rounded-full blur-3xl -z-10"></div>
             </div>
 
-            {/* Text Content */}
-            <div className="text-center max-w-4xl mx-auto">
+            {/* Text Content - Right Side */}
+            <div>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
                 <Sparkles className="w-4 h-4 text-primary animate-pulse" />
                 <span className="text-sm uppercase tracking-wider text-primary font-semibold">Scenic Designer</span>
@@ -142,14 +142,14 @@ export default function About() {
               </p>
               
               {/* Contact Info Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
-                <div className="flex items-center gap-3 group justify-center md:justify-start">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex items-center gap-3 group">
                   <div className="p-2 rounded-lg bg-muted group-hover:bg-muted/70 transition-colors">
                     <MapPin className="w-5 h-5 text-primary" />
                   </div>
                   <span className="text-foreground/70">Southern California</span>
                 </div>
-                <div className="flex items-center gap-3 group justify-center md:justify-start">
+                <div className="flex items-center gap-3 group">
                   <div className="p-2 rounded-lg bg-muted group-hover:bg-muted/70 transition-colors">
                     <Mail className="w-5 h-5 text-primary" />
                   </div>
@@ -157,25 +157,25 @@ export default function About() {
                     info@brandonptdavis.com
                   </a>
                 </div>
-                <div className="flex items-center gap-3 group justify-center md:justify-start">
+                <div className="flex items-center gap-3 group">
                   <div className="p-2 rounded-lg bg-muted group-hover:bg-muted/70 transition-colors">
                     <Award className="w-5 h-5 text-primary" />
                   </div>
                   <span className="text-foreground/70">USA 829 Member</span>
                 </div>
-                <div className="flex items-center gap-3 group justify-center md:justify-start">
+                <div className="flex items-center gap-3 group">
                   <div className="p-2 rounded-lg bg-muted group-hover:bg-muted/70 transition-colors">
                     <Briefcase className="w-5 h-5 text-primary" />
                   </div>
                   <span className="text-foreground/70">Adaptive Design Services</span>
                 </div>
-                <div className="flex items-center gap-3 group justify-center md:justify-start">
+                <div className="flex items-center gap-3 group">
                   <div className="p-2 rounded-lg bg-muted group-hover:bg-muted/70 transition-colors">
                     <GraduationCap className="w-5 h-5 text-primary" />
                   </div>
                   <span className="text-foreground/70">MFA, UC Irvine</span>
                 </div>
-                <div className="flex items-center gap-3 group justify-center md:justify-start">
+                <div className="flex items-center gap-3 group">
                   <div className="p-2 rounded-lg bg-muted group-hover:bg-muted/70 transition-colors">
                     <Linkedin className="w-5 h-5 text-primary" />
                   </div>

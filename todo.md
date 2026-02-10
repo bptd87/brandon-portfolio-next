@@ -2553,4 +2553,11 @@
 - [x] Add more professional details to contact information (USA 829, LinkedIn, etc.)
 - [x] Test visual appearance and spacing
 - [x] Fix aspect ratio to 4:5 for portrait orientation
+- [x] Save checkpoint
+
+## Reposition Headshot to Left Side (User Request - Feb 10, 2026)
+- [x] Change layout from stacked to two-column grid
+- [x] Place headshot on left side
+- [x] Position heading and text content on right side
+- [x] Test layout and spacing
 - [ ] Save checkpoint
