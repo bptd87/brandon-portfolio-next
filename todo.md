@@ -2252,4 +2252,13 @@
 - [x] Find and upload production photo from Seattle Rep
 - [x] Add newsworthy caption to production image
 - [x] Test article display
+- [x] Save checkpoint
+
+## Add Sound Designer to PTGW Article (User Feedback - Feb 10, 2026)
+- [x] Research Sound Designer credit from Seattle Rep production
+- [x] Add Sound Designer (Rodolfo Ortega) to creative team block
+- [x] Fixed Lighting Designer (Connie Yun, not Brian Danner)
+- [x] Added all 3 Assistant Scenic Designers (Brandon PT Davis, Atria Pirouzmand, Ali Roustaei)
+- [x] Added Movement & Fight Director (Brian Danner)
+- [x] Note: Always check for Sound Design and Projection Design credits in future articles
 - [ ] Save checkpoint

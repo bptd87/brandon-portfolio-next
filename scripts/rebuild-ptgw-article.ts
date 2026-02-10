@@ -50,9 +50,11 @@ async function rebuildArticle() {
         { role: 'Playwright', name: 'Henry Lewis, Henry Shields & Jonathan Sayer' },
         { role: 'Director', name: 'Dámaso Rodríguez' },
         { role: 'Scenic Designer', name: 'Tom Buderwitz' },
-        { role: 'Assistant Scenic Designer', name: 'Brandon PT Davis' },
+        { role: 'Assistant Scenic Designers', name: 'Brandon PT Davis, Atria Pirouzmand, Ali Roustaei' },
         { role: 'Costume Designer', name: 'Melanie Taylor Burgess' },
-        { role: 'Lighting Designer', name: 'Brian Danner' }
+        { role: 'Lighting Designer', name: 'Connie Yun' },
+        { role: 'Sound Designer', name: 'Rodolfo Ortega' },
+        { role: 'Movement & Fight Director', name: 'Brian Danner' }
       ]
     },
     {
