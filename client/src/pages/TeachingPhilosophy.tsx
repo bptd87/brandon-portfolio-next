@@ -17,22 +17,32 @@ export default function TeachingPhilosophy() {
   // Get featured project for hero background
   const heroImage = scenicDesignProjects.find(p => p.featured)?.coverImageUrl || scenicDesignProjects[0]?.coverImageUrl;
 
-  // Diversify images across sections
+  // Diversify images across sections - ensure all 6 images are completely different
   const totalProjects = scenicDesignProjects.length;
   
+  // Select 6 evenly distributed unique images from the portfolio
+  const selectedIndices = totalProjects >= 6 ? [
+    Math.floor(totalProjects * 0.1),
+    Math.floor(totalProjects * 0.25),
+    Math.floor(totalProjects * 0.4),
+    Math.floor(totalProjects * 0.55),
+    Math.floor(totalProjects * 0.7),
+    Math.floor(totalProjects * 0.85)
+  ] : [0, 1, 2, 3, 4, 5].slice(0, totalProjects);
+  
   const foundationImages = totalProjects > 0 ? [
-    scenicDesignProjects[Math.floor(totalProjects * 0.15)] || scenicDesignProjects[0],
-    scenicDesignProjects[Math.floor(totalProjects * 0.3)] || scenicDesignProjects[1]
+    scenicDesignProjects[selectedIndices[0]],
+    scenicDesignProjects[selectedIndices[1]]
   ].filter(Boolean) : [];
   
   const pedagogyImages = totalProjects > 0 ? [
-    scenicDesignProjects[Math.floor(totalProjects * 0.45)] || scenicDesignProjects[2],
-    scenicDesignProjects[Math.floor(totalProjects * 0.6)] || scenicDesignProjects[3]
+    scenicDesignProjects[selectedIndices[2]],
+    scenicDesignProjects[selectedIndices[3]]
   ].filter(Boolean) : [];
   
   const mentorshipImages = totalProjects > 0 ? [
-    scenicDesignProjects[Math.floor(totalProjects * 0.75)] || scenicDesignProjects[4],
-    scenicDesignProjects[Math.floor(totalProjects * 0.9)] || scenicDesignProjects[5]
+    scenicDesignProjects[selectedIndices[4]],
+    scenicDesignProjects[selectedIndices[5]]
   ].filter(Boolean) : [];
 
   // Scroll animation refs
