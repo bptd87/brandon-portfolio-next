@@ -3,11 +3,14 @@ import Footer from "@/components/Footer";
 import { trpc } from "@/lib/trpc";
 import { useEffect, useRef } from "react";
 import { Link } from "wouter";
+import { Helmet } from "react-helmet-async";
 
 export default function CreativeStatement() {
   const { data: projects } = trpc.projects.list.useQuery({ 
     status: "published"
   });
+  
+  const generatePDF = trpc.pdf.generateCreativeStatement.useMutation();
 
   // Filter to scenic design and rendering projects only (exclude experiential_design and scenic_models)
   const scenicDesignProjects = (projects || []).filter(p => 
@@ -78,7 +81,25 @@ export default function CreativeStatement() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>Creative Statement | Brandon PT Davis</title>
+        <meta name="description" content="My passion for scenic design falls somewhere between a love of architecture, history, and narrative storytelling. Creating environments that feel inevitable once they're revealed." />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Creative Statement | Brandon PT Davis - Scenic Designer" />
+        <meta property="og:description" content="My passion for scenic design falls somewhere between a love of architecture, history, and narrative storytelling. I'm drawn to projects that have meaning and impact for the communities they serve." />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="https://brandonptdavis.com/about/philosophy" />
+        {heroImage && <meta property="og:image" content={heroImage} />}
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Creative Statement | Brandon PT Davis" />
+        <meta name="twitter:description" content="My passion for scenic design falls somewhere between a love of architecture, history, and narrative storytelling." />
+        {heroImage && <meta name="twitter:image" content={heroImage} />}
+      </Helmet>
+      
       <Header />
 
       {/* Hero Section */}
@@ -290,18 +311,35 @@ export default function CreativeStatement() {
                 <div className="text-lg text-muted-foreground mb-8">Scenic Designer</div>
                 
                 {/* Download PDF Button */}
-                <a 
-                  href="#" 
-                  onClick={(e) => { e.preventDefault(); alert('PDF generation coming soon!'); }}
-                  className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-medium"
+                <button 
+                  onClick={async () => {
+                    try {
+                      const result = await generatePDF.mutateAsync();
+                      const blob = new Blob(
+                        [Uint8Array.from(atob(result.data), c => c.charCodeAt(0))],
+                        { type: 'application/pdf' }
+                      );
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = result.filename;
+                      a.click();
+                      URL.revokeObjectURL(url);
+                    } catch (error) {
+                      console.error('PDF generation failed:', error);
+                      alert('Failed to generate PDF. Please try again.');
+                    }
+                  }}
+                  disabled={generatePDF.isPending}
+                  className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-medium disabled:opacity-50"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                     <polyline points="7 10 12 15 17 10"/>
                     <line x1="12" x2="12" y1="15" y2="3"/>
                   </svg>
-                  <span>Download Creative Statement (PDF)</span>
-                </a>
+                  <span>{generatePDF.isPending ? 'Generating PDF...' : 'Download Creative Statement (PDF)'}</span>
+                </button>
               </div>
             </div>
           </div>
