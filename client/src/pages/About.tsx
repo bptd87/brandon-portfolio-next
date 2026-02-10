@@ -109,52 +109,54 @@ export default function About() {
       <Header />
       <AboutNav />
 
-      {/* Hero Section with Profile Picture - Parallax Style */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image with Parallax Effect */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url(https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/sAwMHaupahiCjmgJ.webp)`,
-            transform: 'translateZ(0)',
-            willChange: 'transform',
-            backgroundAttachment: 'fixed'
-          }}
-        />
-        
-        {/* Overlay for readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-background pointer-events-none"></div>
-        
-        <div className="relative container py-32">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8">
-              <Sparkles className="w-4 h-4 text-primary animate-pulse" />
-              <span className="text-sm font-pixel uppercase tracking-wider text-primary">Scenic Designer</span>
-            </div>
-            
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif leading-[0.9] mb-8 text-white">
-              Brandon<br />PT Davis
-            </h1>
-            
-            <p className="text-2xl md:text-3xl text-white/90 leading-relaxed max-w-3xl mx-auto mb-12">
-              Transforming theatrical spaces into <span className="text-primary font-semibold">immersive visual landscapes</span> where story and space move together in harmony
-            </p>
-            
-            {/* Contact Info */}
-            <div className="flex flex-wrap gap-6 text-lg justify-center">
-              <div className="flex items-center gap-3 group">
-                <div className="p-2 rounded-lg bg-white/10 group-hover:bg-white/20 transition-colors">
-                  <MapPin className="w-5 h-5 text-white" />
-                </div>
-                <span className="text-white/80">Southern California</span>
+      {/* Hero Section with Profile Picture */}
+      <section className="container py-32">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-[400px_1fr] gap-12 items-center">
+            {/* Profile Image */}
+            <div className="relative">
+              <div className="aspect-square rounded-2xl overflow-hidden border-4 border-primary/20">
+                <img 
+                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YiqCsZPgtoSSsQyE.png"
+                  alt="Brandon PT Davis"
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <div className="flex items-center gap-3 group">
-                <div className="p-2 rounded-lg bg-white/10 group-hover:bg-white/20 transition-colors">
-                  <Mail className="w-5 h-5 text-white" />
+              {/* Decorative element */}
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/10 rounded-full blur-3xl -z-10"></div>
+            </div>
+
+            {/* Text Content */}
+            <div>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
+                <Sparkles className="w-4 h-4 text-primary animate-pulse" />
+                <span className="text-sm uppercase tracking-wider text-primary font-semibold">Scenic Designer</span>
+              </div>
+              
+              <h1 className="text-5xl md:text-7xl font-serif leading-[0.9] mb-6">
+                Brandon<br />PT Davis
+              </h1>
+              
+              <p className="text-2xl text-foreground/80 leading-relaxed mb-8">
+                Transforming theatrical spaces into <span className="text-primary font-semibold">immersive visual landscapes</span> where story and space move together in harmony
+              </p>
+              
+              {/* Contact Info */}
+              <div className="flex flex-wrap gap-6 text-lg">
+                <div className="flex items-center gap-3 group">
+                  <div className="p-2 rounded-lg bg-muted group-hover:bg-muted/70 transition-colors">
+                    <MapPin className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="text-foreground/70">Southern California</span>
                 </div>
-                <a href="mailto:info@brandonptdavis.com" className="text-white/80 hover:text-primary transition-colors">
-                  info@brandonptdavis.com
-                </a>
+                <div className="flex items-center gap-3 group">
+                  <div className="p-2 rounded-lg bg-muted group-hover:bg-muted/70 transition-colors">
+                    <Mail className="w-5 h-5 text-primary" />
+                  </div>
+                  <a href="mailto:info@brandonptdavis.com" className="text-foreground/70 hover:text-primary transition-colors">
+                    info@brandonptdavis.com
+                  </a>
+                </div>
               </div>
             </div>
           </div>
