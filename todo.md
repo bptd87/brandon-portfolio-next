@@ -2590,4 +2590,11 @@
 - [x] Add scroll-triggered animations to navigation cards
 - [x] Add scroll-triggered animations to photo gallery
 - [x] Test animations on scroll
+- [x] Save checkpoint
+
+## Add Parallax Scrolling to Hero Headshot (User Request - Feb 10, 2026)
+- [x] Create parallax scroll effect using transform translateY
+- [x] Add scroll event listener to track scroll position
+- [x] Apply subtle parallax movement to headshot image
+- [x] Test parallax effect smoothness
 - [ ] Save checkpoint
