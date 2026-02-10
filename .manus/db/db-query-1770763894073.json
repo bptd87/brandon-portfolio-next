@@ -1,0 +1,990 @@
+{
+  "query": "SELECT id, name, slug FROM tags ORDER BY name;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT id, name, slug FROM tags ORDER BY name;",
+  "rows": [
+    {
+      "id": "60149",
+      "name": "1930s",
+      "slug": "1930s"
+    },
+    {
+      "id": "60005",
+      "name": "1950s",
+      "slug": "1950s"
+    },
+    {
+      "id": "30021",
+      "name": "1960s",
+      "slug": "1960s"
+    },
+    {
+      "id": "60195",
+      "name": "2019",
+      "slug": "2019"
+    },
+    {
+      "id": "60196",
+      "name": "2020",
+      "slug": "2020"
+    },
+    {
+      "id": "60197",
+      "name": "2021",
+      "slug": "2021"
+    },
+    {
+      "id": "60198",
+      "name": "2022",
+      "slug": "2022"
+    },
+    {
+      "id": "60018",
+      "name": "2023",
+      "slug": "2023"
+    },
+    {
+      "id": "60017",
+      "name": "2024",
+      "slug": "2024"
+    },
+    {
+      "id": "60016",
+      "name": "2025",
+      "slug": "2025"
+    },
+    {
+      "id": "60202",
+      "name": "2026",
+      "slug": "2026"
+    },
+    {
+      "id": "90026",
+      "name": "A Funny Thing Happened",
+      "slug": "a-funny-thing-happened"
+    },
+    {
+      "id": "60168",
+      "name": "Abstract",
+      "slug": "abstract"
+    },
+    {
+      "id": "60260",
+      "name": "Academic Career",
+      "slug": "academic-career"
+    },
+    {
+      "id": "60171",
+      "name": "Academic Theatre",
+      "slug": "academic-theatre"
+    },
+    {
+      "id": "1",
+      "name": "Acting",
+      "slug": "acting"
+    },
+    {
+      "id": "30001",
+      "name": "AI & Machine Learning",
+      "slug": "ai-machine-learning"
+    },
+    {
+      "id": "60250",
+      "name": "AI & Technology",
+      "slug": "ai-technology"
+    },
+    {
+      "id": "60189",
+      "name": "Arena",
+      "slug": "arena"
+    },
+    {
+      "id": "60166",
+      "name": "Art Deco",
+      "slug": "art-deco"
+    },
+    {
+      "id": "30019",
+      "name": "Art Direction",
+      "slug": "art-direction"
+    },
+    {
+      "id": "60192",
+      "name": "Arthur Miller",
+      "slug": "arthur-miller"
+    },
+    {
+      "id": "90003",
+      "name": "Assistant Designer",
+      "slug": "assistant-designer"
+    },
+    {
+      "id": "90034",
+      "name": "Assistant Professor",
+      "slug": "assistant-professor"
+    },
+    {
+      "id": "60191",
+      "name": "August Wilson",
+      "slug": "august-wilson"
+    },
+    {
+      "id": "60188",
+      "name": "Black Box",
+      "slug": "black-box"
+    },
+    {
+      "id": "60205",
+      "name": "Brand Experience",
+      "slug": "brand-experience"
+    },
+    {
+      "id": "30016",
+      "name": "Broadway",
+      "slug": "broadway"
+    },
+    {
+      "id": "2",
+      "name": "Brutalism",
+      "slug": "brutalism"
+    },
+    {
+      "id": "30010",
+      "name": "Career Development",
+      "slug": "career-development"
+    },
+    {
+      "id": "90004",
+      "name": "Career Milestone",
+      "slug": "career-milestone"
+    },
+    {
+      "id": "60244",
+      "name": "Case Study",
+      "slug": "case-study"
+    },
+    {
+      "id": "60223",
+      "name": "Church Design",
+      "slug": "church-design"
+    },
+    {
+      "id": "30017",
+      "name": "Cinema",
+      "slug": "cinema"
+    },
+    {
+      "id": "60178",
+      "name": "Classic Play",
+      "slug": "classic-play"
+    },
+    {
+      "id": "60215",
+      "name": "Classical Theatre",
+      "slug": "classical-theatre"
+    },
+    {
+      "id": "60211",
+      "name": "CNC Fabrication",
+      "slug": "cnc-fabrication"
+    },
+    {
+      "id": "60012",
+      "name": "Co-Design",
+      "slug": "co-design"
+    },
+    {
+      "id": "60256",
+      "name": "Collaborations",
+      "slug": "collaborations"
+    },
+    {
+      "id": "60179",
+      "name": "Comedy",
+      "slug": "comedy"
+    },
+    {
+      "id": "60209",
+      "name": "Commercial Campaign",
+      "slug": "commercial-campaign"
+    },
+    {
+      "id": "3",
+      "name": "Communication",
+      "slug": "communication"
+    },
+    {
+      "id": "90040",
+      "name": "Company",
+      "slug": "company"
+    },
+    {
+      "id": "30012",
+      "name": "Computer Hardware",
+      "slug": "computer-hardware"
+    },
+    {
+      "id": "60218",
+      "name": "Concept Rendering",
+      "slug": "concept-rendering"
+    },
+    {
+      "id": "60248",
+      "name": "Contemporary Design",
+      "slug": "contemporary-design"
+    },
+    {
+      "id": "60177",
+      "name": "Contemporary Drama",
+      "slug": "contemporary-drama"
+    },
+    {
+      "id": "60232",
+      "name": "Craftsmanship",
+      "slug": "craftsmanship"
+    },
+    {
+      "id": "60003",
+      "name": "Curtain Architecture",
+      "slug": "curtain-architecture"
+    },
+    {
+      "id": "90013",
+      "name": "Deathtrap",
+      "slug": "deathtrap"
+    },
+    {
+      "id": "60239",
+      "name": "Design Education",
+      "slug": "design-education"
+    },
+    {
+      "id": "30011",
+      "name": "Design Philosophy",
+      "slug": "design-philosophy"
+    },
+    {
+      "id": "4",
+      "name": "Design Process",
+      "slug": "design-process"
+    },
+    {
+      "id": "60249",
+      "name": "Design Trends",
+      "slug": "design-trends"
+    },
+    {
+      "id": "60241",
+      "name": "Design Visualization",
+      "slug": "design-visualization"
+    },
+    {
+      "id": "60159",
+      "name": "Dystopian",
+      "slug": "dystopian"
+    },
+    {
+      "id": "30022",
+      "name": "Dystopian Design",
+      "slug": "dystopian-design"
+    },
+    {
+      "id": "5",
+      "name": "Dystopian Theatre",
+      "slug": "dystopian-theatre"
+    },
+    {
+      "id": "30024",
+      "name": "Education",
+      "slug": "education"
+    },
+    {
+      "id": "60165",
+      "name": "Edwardian",
+      "slug": "edwardian"
+    },
+    {
+      "id": "60161",
+      "name": "Elizabethan",
+      "slug": "elizabethan"
+    },
+    {
+      "id": "60238",
+      "name": "Environmental Storytelling",
+      "slug": "environmental-storytelling"
+    },
+    {
+      "id": "60193",
+      "name": "Eugene O'Neill",
+      "slug": "eugene-oneill"
+    },
+    {
+      "id": "60169",
+      "name": "Expressionist",
+      "slug": "expressionist"
+    },
+    {
+      "id": "60208",
+      "name": "Fabrication",
+      "slug": "fabrication"
+    },
+    {
+      "id": "60182",
+      "name": "Family Show",
+      "slug": "family-show"
+    },
+    {
+      "id": "30009",
+      "name": "Film & Television",
+      "slug": "film-television"
+    },
+    {
+      "id": "90024",
+      "name": "Freaky Friday",
+      "slug": "freaky-friday"
+    },
+    {
+      "id": "60163",
+      "name": "Gothic",
+      "slug": "gothic"
+    },
+    {
+      "id": "6",
+      "name": "Graduate School",
+      "slug": "graduate-school"
+    },
+    {
+      "id": "90039",
+      "name": "Graduation",
+      "slug": "graduation"
+    },
+    {
+      "id": "90020",
+      "name": "Great American Melodrama",
+      "slug": "great-american-melodrama"
+    },
+    {
+      "id": "60214",
+      "name": "Greek Comedy",
+      "slug": "greek-comedy"
+    },
+    {
+      "id": "90037",
+      "name": "Greek Theatre",
+      "slug": "greek-theatre"
+    },
+    {
+      "id": "90023",
+      "name": "Guys on Ice",
+      "slug": "guys-on-ice"
+    },
+    {
+      "id": "60222",
+      "name": "Historic Renovation",
+      "slug": "historic-renovation"
+    },
+    {
+      "id": "60181",
+      "name": "Historical Drama",
+      "slug": "historical-drama"
+    },
+    {
+      "id": "90022",
+      "name": "How to Succeed",
+      "slug": "how-to-succeed"
+    },
+    {
+      "id": "60184",
+      "name": "Immersive",
+      "slug": "immersive"
+    },
+    {
+      "id": "30007",
+      "name": "Immersive Experiences",
+      "slug": "immersive-experiences"
+    },
+    {
+      "id": "60229",
+      "name": "Independent Project",
+      "slug": "independent-project"
+    },
+    {
+      "id": "60160",
+      "name": "Industrial",
+      "slug": "industrial"
+    },
+    {
+      "id": "60227",
+      "name": "Industrial Aesthetic",
+      "slug": "industrial-aesthetic"
+    },
+    {
+      "id": "7",
+      "name": "Insights",
+      "slug": "insights"
+    },
+    {
+      "id": "90009",
+      "name": "Jo Winiarski",
+      "slug": "jo-winiarski"
+    },
+    {
+      "id": "8",
+      "name": "Keynote",
+      "slug": "keynote"
+    },
+    {
+      "id": "90029",
+      "name": "Latinx Theatre",
+      "slug": "latinx-theatre"
+    },
+    {
+      "id": "60212",
+      "name": "LED Integration",
+      "slug": "led-integration"
+    },
+    {
+      "id": "60210",
+      "name": "Live Event",
+      "slug": "live-event"
+    },
+    {
+      "id": "90028",
+      "name": "Lotería",
+      "slug": "loter-a"
+    },
+    {
+      "id": "60206",
+      "name": "Lumenati",
+      "slug": "lumenati"
+    },
+    {
+      "id": "90036",
+      "name": "Lysistrata",
+      "slug": "lysistrata"
+    },
+    {
+      "id": "9",
+      "name": "Maude Adams",
+      "slug": "maude-adams"
+    },
+    {
+      "id": "30023",
+      "name": "Memory & Narrative",
+      "slug": "memory-narrative"
+    },
+    {
+      "id": "60147",
+      "name": "Memory Play",
+      "slug": "memory-play"
+    },
+    {
+      "id": "90038",
+      "name": "MFA",
+      "slug": "mfa"
+    },
+    {
+      "id": "60006",
+      "name": "Mid-Century Modern",
+      "slug": "mid-century-modern"
+    },
+    {
+      "id": "60257",
+      "name": "Milestones",
+      "slug": "milestones"
+    },
+    {
+      "id": "90006",
+      "name": "Million Dollar Quartet",
+      "slug": "million-dollar-quartet"
+    },
+    {
+      "id": "30015",
+      "name": "Minimalism",
+      "slug": "minimalism"
+    },
+    {
+      "id": "60203",
+      "name": "Minimalist",
+      "slug": "minimalist"
+    },
+    {
+      "id": "60231",
+      "name": "Model Making",
+      "slug": "model-making"
+    },
+    {
+      "id": "60167",
+      "name": "Modernist",
+      "slug": "modernist"
+    },
+    {
+      "id": "10",
+      "name": "Musical Theatre",
+      "slug": "musical-theatre"
+    },
+    {
+      "id": "60245",
+      "name": "Musical Theatre History",
+      "slug": "musical-theatre-history"
+    },
+    {
+      "id": "90014",
+      "name": "Mystery",
+      "slug": "mystery"
+    },
+    {
+      "id": "90019",
+      "name": "New Play",
+      "slug": "new-play"
+    },
+    {
+      "id": "90016",
+      "name": "New Swan Theatre Festival",
+      "slug": "new-swan-theatre-festival"
+    },
+    {
+      "id": "60265",
+      "name": "New Work",
+      "slug": "new-work"
+    },
+    {
+      "id": "90031",
+      "name": "New York",
+      "slug": "new-york"
+    },
+    {
+      "id": "60266",
+      "name": "Off-Broadway",
+      "slug": "off-broadway"
+    },
+    {
+      "id": "11",
+      "name": "Okoboji Summer Theatre",
+      "slug": "okoboji-summer-theatre"
+    },
+    {
+      "id": "60258",
+      "name": "Opening Night",
+      "slug": "opening-night"
+    },
+    {
+      "id": "12",
+      "name": "Opera",
+      "slug": "opera"
+    },
+    {
+      "id": "60002",
+      "name": "Operatic Design",
+      "slug": "operatic-design"
+    },
+    {
+      "id": "60204",
+      "name": "Outdoor Activation",
+      "slug": "outdoor-activation"
+    },
+    {
+      "id": "60207",
+      "name": "Pop-Up Installation",
+      "slug": "pop-up-installation"
+    },
+    {
+      "id": "13",
+      "name": "Portfolio Development",
+      "slug": "portfolio-development"
+    },
+    {
+      "id": "14",
+      "name": "Presentation Skills",
+      "slug": "presentation-skills"
+    },
+    {
+      "id": "15",
+      "name": "Process",
+      "slug": "process"
+    },
+    {
+      "id": "60240",
+      "name": "Production Analysis",
+      "slug": "production-analysis"
+    },
+    {
+      "id": "60255",
+      "name": "Production Debuts",
+      "slug": "production-debuts"
+    },
+    {
+      "id": "90012",
+      "name": "Professional Achievement",
+      "slug": "professional-achievement"
+    },
+    {
+      "id": "90007",
+      "name": "Professional Debut",
+      "slug": "professional-debut"
+    },
+    {
+      "id": "60252",
+      "name": "Professional Development",
+      "slug": "professional-development"
+    },
+    {
+      "id": "90033",
+      "name": "Professor",
+      "slug": "professor"
+    },
+    {
+      "id": "60183",
+      "name": "Projection Design",
+      "slug": "projection-design"
+    },
+    {
+      "id": "60187",
+      "name": "Proscenium",
+      "slug": "proscenium"
+    },
+    {
+      "id": "60007",
+      "name": "Realistic Interior",
+      "slug": "realistic-interior"
+    },
+    {
+      "id": "60009",
+      "name": "Recording Studio",
+      "slug": "recording-studio"
+    },
+    {
+      "id": "60011",
+      "name": "Regional Theatre",
+      "slug": "regional-theatre"
+    },
+    {
+      "id": "30006",
+      "name": "Rendering Techniques",
+      "slug": "rendering-techniques"
+    },
+    {
+      "id": "60174",
+      "name": "Resident Design",
+      "slug": "resident-design"
+    },
+    {
+      "id": "60217",
+      "name": "Retail Design",
+      "slug": "retail-design"
+    },
+    {
+      "id": "60254",
+      "name": "Reviews & Press",
+      "slug": "reviews-press"
+    },
+    {
+      "id": "60010",
+      "name": "Rock and Roll",
+      "slug": "rock-and-roll"
+    },
+    {
+      "id": "60162",
+      "name": "Romantic",
+      "slug": "romantic"
+    },
+    {
+      "id": "16",
+      "name": "Romero",
+      "slug": "romero"
+    },
+    {
+      "id": "60015",
+      "name": "Saloon Design",
+      "slug": "saloon-design"
+    },
+    {
+      "id": "60194",
+      "name": "Sam Shepard",
+      "slug": "sam-shepard"
+    },
+    {
+      "id": "60230",
+      "name": "Scale Models",
+      "slug": "scale-models"
+    },
+    {
+      "id": "17",
+      "name": "Scenic Design",
+      "slug": "scenic-design"
+    },
+    {
+      "id": "60259",
+      "name": "Season Announcements",
+      "slug": "season-announcements"
+    },
+    {
+      "id": "90017",
+      "name": "Season Designer",
+      "slug": "season-designer"
+    },
+    {
+      "id": "90001",
+      "name": "Seattle Rep",
+      "slug": "seattle-rep"
+    },
+    {
+      "id": "18",
+      "name": "SEO",
+      "slug": "seo"
+    },
+    {
+      "id": "60001",
+      "name": "Shakespeare",
+      "slug": "shakespeare"
+    },
+    {
+      "id": "90021",
+      "name": "Shut Up Sherlock",
+      "slug": "shut-up-sherlock"
+    },
+    {
+      "id": "60185",
+      "name": "Site-Specific",
+      "slug": "site-specific"
+    },
+    {
+      "id": "90027",
+      "name": "Sondheim",
+      "slug": "sondheim"
+    },
+    {
+      "id": "90005",
+      "name": "South Coast Repertory",
+      "slug": "south-coast-repertory"
+    },
+    {
+      "id": "60148",
+      "name": "Southern Gothic",
+      "slug": "southern-gothic"
+    },
+    {
+      "id": "60014",
+      "name": "Spaghetti Western",
+      "slug": "spaghetti-western"
+    },
+    {
+      "id": "60228",
+      "name": "Speculative Design",
+      "slug": "speculative-design"
+    },
+    {
+      "id": "19",
+      "name": "Stephens College",
+      "slug": "stephens-college"
+    },
+    {
+      "id": "60008",
+      "name": "Summer Stock",
+      "slug": "summer-stock"
+    },
+    {
+      "id": "90032",
+      "name": "Teaching",
+      "slug": "teaching"
+    },
+    {
+      "id": "60219",
+      "name": "Technical Documentation",
+      "slug": "technical-documentation"
+    },
+    {
+      "id": "60253",
+      "name": "Technical Skills",
+      "slug": "technical-skills"
+    },
+    {
+      "id": "30005",
+      "name": "Technology in Theatre",
+      "slug": "technology-in-theatre"
+    },
+    {
+      "id": "60019",
+      "name": "Tennessee Williams",
+      "slug": ""
+    },
+    {
+      "id": "90030",
+      "name": "The Fears",
+      "slug": "the-fears"
+    },
+    {
+      "id": "90041",
+      "name": "The Pajama Game",
+      "slug": "the-pajama-game"
+    },
+    {
+      "id": "20",
+      "name": "Theatre Design",
+      "slug": "theatre-design"
+    },
+    {
+      "id": "60004",
+      "name": "Theatre Festival",
+      "slug": "theatre-festival"
+    },
+    {
+      "id": "21",
+      "name": "Theatre History",
+      "slug": "theatre-history"
+    },
+    {
+      "id": "22",
+      "name": "Theatre Production",
+      "slug": "theatre-production"
+    },
+    {
+      "id": "90025",
+      "name": "Theatre SilCo",
+      "slug": "theatre-silco"
+    },
+    {
+      "id": "30018",
+      "name": "Theme Parks",
+      "slug": "theme-parks"
+    },
+    {
+      "id": "60243",
+      "name": "Themed Entertainment",
+      "slug": "themed-entertainment"
+    },
+    {
+      "id": "90015",
+      "name": "Thriller",
+      "slug": "thriller"
+    },
+    {
+      "id": "60186",
+      "name": "Thrust Stage",
+      "slug": "thrust-stage"
+    },
+    {
+      "id": "90002",
+      "name": "Tom Buderwitz",
+      "slug": "tom-buderwitz"
+    },
+    {
+      "id": "60180",
+      "name": "Tragedy",
+      "slug": "tragedy"
+    },
+    {
+      "id": "90018",
+      "name": "UC Irvine",
+      "slug": "uc-irvine"
+    },
+    {
+      "id": "23",
+      "name": "Undegraduate Teaching",
+      "slug": "undegraduate-teaching"
+    },
+    {
+      "id": "90011",
+      "name": "Union",
+      "slug": "union"
+    },
+    {
+      "id": "60152",
+      "name": "Unit Set",
+      "slug": "unit-set"
+    },
+    {
+      "id": "24",
+      "name": "University of Missouri",
+      "slug": "university-of-missouri"
+    },
+    {
+      "id": "60267",
+      "name": "University Theatre",
+      "slug": "university-theatre"
+    },
+    {
+      "id": "60226",
+      "name": "Urban Design",
+      "slug": "urban-design"
+    },
+    {
+      "id": "25",
+      "name": "Urinetown",
+      "slug": "urinetown"
+    },
+    {
+      "id": "26",
+      "name": "URTAS",
+      "slug": "urtas"
+    },
+    {
+      "id": "90010",
+      "name": "USA 829",
+      "slug": "usa-829"
+    },
+    {
+      "id": "90008",
+      "name": "Utah Shakespeare Festival",
+      "slug": "utah-shakespeare-festival"
+    },
+    {
+      "id": "90035",
+      "name": "UTEP",
+      "slug": "utep"
+    },
+    {
+      "id": "60221",
+      "name": "Vectorworks",
+      "slug": "vectorworks"
+    },
+    {
+      "id": "60220",
+      "name": "Venue File",
+      "slug": "venue-file"
+    },
+    {
+      "id": "60164",
+      "name": "Victorian",
+      "slug": "victorian"
+    },
+    {
+      "id": "30014",
+      "name": "Video Games",
+      "slug": "video-games"
+    },
+    {
+      "id": "27",
+      "name": "Videogame Design",
+      "slug": "videogame-design"
+    },
+    {
+      "id": "28",
+      "name": "Web Portfolio",
+      "slug": "web-portfolio"
+    },
+    {
+      "id": "29",
+      "name": "Website",
+      "slug": "website"
+    },
+    {
+      "id": "60013",
+      "name": "Wild West",
+      "slug": "wild-west"
+    },
+    {
+      "id": "30",
+      "name": "Willaim Inge",
+      "slug": "willaim-inge"
+    },
+    {
+      "id": "60190",
+      "name": "William Shakespeare",
+      "slug": "william-shakespeare"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\tslug\n60149\t1930s\t1930s\n60005\t1950s\t1950s\n30021\t1960s\t1960s\n60195\t2019\t2019\n60196\t2020\t2020\n60197\t2021\t2021\n60198\t2022\t2022\n60018\t2023\t2023\n60017\t2024\t2024\n60016\t2025\t2025\n60202\t2026\t2026\n90026\tA Funny Thing Happened\ta-funny-thing-happened\n60168\tAbstract\tabstract\n60260\tAcademic Career\tacademic-career\n60171\tAcademic Theatre\tacademic-theatre\n1\tActing\tacting\n30001\tAI & Machine Learning\tai-machine-learning\n60250\tAI & Technology\tai-technology\n60189\tArena\tarena\n60166\tArt Deco\tart-deco\n30019\tArt Direction\tart-direction\n60192\tArthur Miller\tarthur-miller\n90003\tAssistant Designer\tassistant-designer\n90034\tAssistant Professor\tassistant-professor\n60191\tAugust Wilson\taugust-wilson\n60188\tBlack Box\tblack-box\n60205\tBrand Experience\tbrand-experience\n30016\tBroadway\tbroadway\n2\tBrutalism\tbrutalism\n30010\tCareer Development\tcareer-development\n90004\tCareer Milestone\tcareer-milestone\n60244\tCase Study\tcase-study\n60223\tChurch Design\tchurch-design\n30017\tCinema\tcinema\n60178\tClassic Play\tclassic-play\n60215\tClassical Theatre\tclassical-theatre\n60211\tCNC Fabrication\tcnc-fabrication\n60012\tCo-Design\tco-design\n60256\tCollaborations\tcollaborations\n60179\tComedy\tcomedy\n60209\tCommercial Campaign\tcommercial-campaign\n3\tCommunication\tcommunication\n90040\tCompany\tcompany\n30012\tComputer Hardware\tcomputer-hardware\n60218\tConcept Rendering\tconcept-rendering\n60248\tContemporary Design\tcontemporary-design\n60177\tContemporary Drama\tcontemporary-drama\n60232\tCraftsmanship\tcraftsmanship\n60003\tCurtain Architecture\tcurtain-architecture\n90013\tDeathtrap\tdeathtrap\n60239\tDesign Education\tdesign-education\n30011\tDesign Philosophy\tdesign-philosophy\n4\tDesign Process\tdesign-process\n60249\tDesign Trends\tdesign-trends\n60241\tDesign Visualization\tdesign-visualization\n60159\tDystopian\tdystopian\n30022\tDystopian Design\tdystopian-design\n5\tDystopian Theatre\tdystopian-theatre\n30024\tEducation\teducation\n60165\tEdwardian\tedwardian\n60161\tElizabethan\telizabethan\n60238\tEnvironmental Storytelling\tenvironmental-storytelling\n60193\tEugene O'Neill\teugene-oneill\n60169\tExpressionist\texpressionist\n60208\tFabrication\tfabrication\n60182\tFamily Show\tfamily-show\n30009\tFilm & Television\tfilm-television\n90024\tFreaky Friday\tfreaky-friday\n60163\tGothic\tgothic\n6\tGraduate School\tgraduate-school\n90039\tGraduation\tgraduation\n90020\tGreat American Melodrama\tgreat-american-melodrama\n60214\tGreek Comedy\tgreek-comedy\n90037\tGreek Theatre\tgreek-theatre\n90023\tGuys on Ice\tguys-on-ice\n60222\tHistoric Renovation\thistoric-renovation\n60181\tHistorical Drama\thistorical-drama\n90022\tHow to Succeed\thow-to-succeed\n60184\tImmersive\timmersive\n30007\tImmersive Experiences\timmersive-experiences\n60229\tIndependent Project\tindependent-project\n60160\tIndustrial\tindustrial\n60227\tIndustrial Aesthetic\tindustrial-aesthetic\n7\tInsights\tinsights\n90009\tJo Winiarski\tjo-winiarski\n8\tKeynote\tkeynote\n90029\tLatinx Theatre\tlatinx-theatre\n60212\tLED Integration\tled-integration\n60210\tLive Event\tlive-event\n90028\tLotería\tloter-a\n60206\tLumenati\tlumenati\n90036\tLysistrata\tlysistrata\n9\tMaude Adams\tmaude-adams\n30023\tMemory & Narrative\tmemory-narrative\n60147\tMemory Play\tmemory-play\n90038\tMFA\tmfa\n60006\tMid-Century Modern\tmid-century-modern\n60257\tMilestones\tmilestones\n90006\tMillion Dollar Quartet\tmillion-dollar-quartet\n30015\tMinimalism\tminimalism\n60203\tMinimalist\tminimalist\n60231\tModel Making\tmodel-making\n60167\tModernist\tmodernist\n10\tMusical Theatre\tmusical-theatre\n60245\tMusical Theatre History\tmusical-theatre-history\n90014\tMystery\tmystery\n90019\tNew Play\tnew-play\n90016\tNew Swan Theatre Festival\tnew-swan-theatre-festival\n60265\tNew Work\tnew-work\n90031\tNew York\tnew-york\n60266\tOff-Broadway\toff-broadway\n11\tOkoboji Summer Theatre\tokoboji-summer-theatre\n60258\tOpening Night\topening-night\n12\tOpera\topera\n60002\tOperatic Design\toperatic-design\n60204\tOutdoor Activation\toutdoor-activation\n60207\tPop-Up Installation\tpop-up-installation\n13\tPortfolio Development\tportfolio-development\n14\tPresentation Skills\tpresentation-skills\n15\tProcess\tprocess\n60240\tProduction Analysis\tproduction-analysis\n60255\tProduction Debuts\tproduction-debuts\n90012\tProfessional Achievement\tprofessional-achievement\n90007\tProfessional Debut\tprofessional-debut\n60252\tProfessional Development\tprofessional-development\n90033\tProfessor\tprofessor\n60183\tProjection Design\tprojection-design\n60187\tProscenium\tproscenium\n60007\tRealistic Interior\trealistic-interior\n60009\tRecording Studio\trecording-studio\n60011\tRegional Theatre\tregional-theatre\n30006\tRendering Techniques\trendering-techniques\n60174\tResident Design\tresident-design\n60217\tRetail Design\tretail-design\n60254\tReviews & Press\treviews-press\n60010\tRock and Roll\trock-and-roll\n60162\tRomantic\tromantic\n16\tRomero\tromero\n60015\tSaloon Design\tsaloon-design\n60194\tSam Shepard\tsam-shepard\n60230\tScale Models\tscale-models\n17\tScenic Design\tscenic-design\n60259\tSeason Announcements\tseason-announcements\n90017\tSeason Designer\tseason-designer\n90001\tSeattle Rep\tseattle-rep\n18\tSEO\tseo\n60001\tShakespeare\tshakespeare\n90021\tShut Up Sherlock\tshut-up-sherlock\n60185\tSite-Specific\tsite-specific\n90027\tSondheim\tsondheim\n90005\tSouth Coast Repertory\tsouth-coast-repertory\n60148\tSouthern Gothic\tsouthern-gothic\n60014\tSpaghetti Western\tspaghetti-western\n60228\tSpeculative Design\tspeculative-design\n19\tStephens College\tstephens-college\n60008\tSummer Stock\tsummer-stock\n90032\tTeaching\tteaching\n60219\tTechnical Documentation\ttechnical-documentation\n60253\tTechnical Skills\ttechnical-skills\n30005\tTechnology in Theatre\ttechnology-in-theatre\n60019\tTennessee Williams\t\n90030\tThe Fears\tthe-fears\n90041\tThe Pajama Game\tthe-pajama-game\n20\tTheatre Design\ttheatre-design\n60004\tTheatre Festival\ttheatre-festival\n21\tTheatre History\ttheatre-history\n22\tTheatre Production\ttheatre-production\n90025\tTheatre SilCo\ttheatre-silco\n30018\tTheme Parks\ttheme-parks\n60243\tThemed Entertainment\tthemed-entertainment\n90015\tThriller\tthriller\n60186\tThrust Stage\tthrust-stage\n90002\tTom Buderwitz\ttom-buderwitz\n60180\tTragedy\ttragedy\n90018\tUC Irvine\tuc-irvine\n23\tUndegraduate Teaching\tundegraduate-teaching\n90011\tUnion\tunion\n60152\tUnit Set\tunit-set\n24\tUniversity of Missouri\tuniversity-of-missouri\n60267\tUniversity Theatre\tuniversity-theatre\n60226\tUrban Design\turban-design\n25\tUrinetown\turinetown\n26\tURTAS\turtas\n90010\tUSA 829\tusa-829\n90008\tUtah Shakespeare Festival\tutah-shakespeare-festival\n90035\tUTEP\tutep\n60221\tVectorworks\tvectorworks\n60220\tVenue File\tvenue-file\n60164\tVictorian\tvictorian\n30014\tVideo Games\tvideo-games\n27\tVideogame Design\tvideogame-design\n28\tWeb Portfolio\tweb-portfolio\n29\tWebsite\twebsite\n60013\tWild West\twild-west\n30\tWillaim Inge\twillaim-inge\n60190\tWilliam Shakespeare\twilliam-shakespeare\n",
+  "stderr": "",
+  "execution_time_ms": 59
+}

@@ -1,0 +1,55 @@
+{
+  "query": "SELECT id, title, slug, year, client, location, excerpt \nFROM projects \nWHERE title IN ('Romero', 'Guys on Ice', 'Freaky Friday', 'The Penelopiad', 'Company')\nORDER BY year DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT id, title, slug, year, client, location, excerpt \nFROM projects \nWHERE title IN ('Romero', 'Guys on Ice', 'Freaky Friday', 'The Penelopiad', 'Company')\nORDER BY year DESC;",
+  "rows": [
+    {
+      "id": "90045",
+      "title": "Guys on Ice",
+      "slug": "guys-on-ice",
+      "year": "2025",
+      "client": "The Great American Melodrama",
+      "location": "Oceano, CA",
+      "excerpt": "Scenic design for the musical comedy about two Wisconsin fishermen on a frozen lake."
+    },
+    {
+      "id": "90077",
+      "title": "Romero",
+      "slug": "romero",
+      "year": "2025",
+      "client": "University of Missouri",
+      "location": "Columbia, MO",
+      "excerpt": "Scenic design for the world premiere exploring the life and martyrdom of Archbishop Óscar Romero."
+    },
+    {
+      "id": "90056",
+      "title": "Freaky Friday",
+      "slug": "freaky-friday",
+      "year": "2024",
+      "client": "Okoboji Summer Theatre",
+      "location": "Okoboji, IA",
+      "excerpt": "Scenic design for the musical adaptation of the beloved body-swap story."
+    },
+    {
+      "id": "90051",
+      "title": "The Penelopiad",
+      "slug": "the-penelopiad",
+      "year": "2020",
+      "client": "University of California Irvine",
+      "location": "Irvine, CA",
+      "excerpt": "Explore the innovative scenic design of Margaret Atwood's The Penelopiad, a captivating retelling of The Odyssey from Penelope's unique perspective."
+    },
+    {
+      "id": "90019",
+      "title": "Company",
+      "slug": "company",
+      "year": "2019",
+      "client": "University of California Irvine",
+      "location": "Irvine, CA",
+      "excerpt": "Explore the captivating scenic design of Sondheim's musical, showcasing the complexities of marriage and relationships in vibrant New York City."
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tslug\tyear\tclient\tlocation\texcerpt\n90045\tGuys on Ice\tguys-on-ice\t2025\tThe Great American Melodrama\tOceano, CA\tScenic design for the musical comedy about two Wisconsin fishermen on a frozen lake.\n90077\tRomero\tromero\t2025\tUniversity of Missouri\tColumbia, MO\tScenic design for the world premiere exploring the life and martyrdom of Archbishop Óscar Romero.\n90056\tFreaky Friday\tfreaky-friday\t2024\tOkoboji Summer Theatre\tOkoboji, IA\tScenic design for the musical adaptation of the beloved body-swap story.\n90051\tThe Penelopiad\tthe-penelopiad\t2020\tUniversity of California Irvine\tIrvine, CA\tExplore the innovative scenic design of Margaret Atwood's The Penelopiad, a captivating retelling of The Odyssey from Penelope's unique perspective.\n90019\tCompany\tcompany\t2019\tUniversity of California Irvine\tIrvine, CA\tExplore the captivating scenic design of Sondheim's musical, showcasing the complexities of marriage and relationships in vibrant New York City.\n",
+  "stderr": "",
+  "execution_time_ms": 61
+}

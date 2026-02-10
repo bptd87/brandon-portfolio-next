@@ -1,0 +1,9 @@
+{
+  "query": "-- Get Company project ID\nSET @company_id = (SELECT id FROM projects WHERE title = 'Company' LIMIT 1);\n\n-- Add tags for Company\nINSERT INTO projectTags (projectId, tagId)\nSELECT @company_id, id FROM tags WHERE name IN ('Stephen Sondheim', '2019', 'University Theatre', 'Musical Theatre', 'New York City', 'Relationships')\nON DUPLICATE KEY UPDATE projectId = projectId;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute -- Get Company project ID\nSET @company_id = (SELECT id FROM projects WHERE title = 'Company' LIMIT 1);\n\n-- Add tags for Company\nINSERT INTO projectTags (projectId, tagId)\nSELECT @company_id, id FROM tags WHERE name IN ('Stephen Sondheim', '2019', 'University Theatre', 'Musical Theatre', 'New York City', 'Relationships')\nON DUPLICATE KEY UPDATE projectId = projectId;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 69
+}

@@ -2707,3 +2707,14 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Update footer to include all Studio links and separate Content section for Articles/News
 - [x] Test on mobile viewport (footer verified in page content)
 - [x] Save checkpoint
+
+## Remove Tags from Project Cards and Add Quality Tags to All Projects (User Request - Feb 10, 2026)
+- [x] Remove tag display from homepage project cards
+- [x] Keep tags only on individual project pages (already implemented in ProjectDetail page)
+- [x] Add quality tags to Romero project (World Premiere, 2024, Political Drama, Religious Themes, Biographical, University Theatre)
+- [x] Add quality tags to Guys on Ice project (Musical Comedy, 2025, Regional Theatre, Wisconsin, Ice Fishing, Comedy)
+- [x] Add quality tags to Freaky Friday project (Musical Theatre, 2024, Summer Stock, Family Musical, Body Swap, Contemporary)
+- [x] Add quality tags to The Penelopiad project (Greek Mythology, 2020, University Theatre, Feminist Theatre, Margaret Atwood, Contemporary Adaptation)
+- [x] Add quality tags to Company project (Stephen Sondheim, 2019, University Theatre, Musical Theatre, New York City, Relationships)
+- [x] Verify tags display correctly on project pages only (removed from homepage cards)
+- [x] Save checkpoint

@@ -315,25 +315,9 @@ export default function Home() {
                             <p className="text-sm text-muted-foreground mb-3">{project.location}</p>
                           )}
                           {project.excerpt && (
-                            <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed mb-3">
+                            <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
                               {project.excerpt}
                             </p>
-                          )}
-                          
-                          {/* Tags */}
-                          {project.tags && project.tags.length > 0 && (
-                            <div className="flex flex-wrap gap-2 mt-3">
-                              {project.tags.map((tag) => (
-                                <Badge 
-                                  key={tag.id} 
-                                  variant="secondary" 
-                                  className="text-xs px-2 py-0.5 rounded-full"
-                                  style={{ backgroundColor: `${hoverColor}15`, color: hoverColor }}
-                                >
-                                  {tag.name}
-                                </Badge>
-                              ))}
-                            </div>
                           )}
                         </CardContent>
                       </Card>
