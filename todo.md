@@ -2141,3 +2141,4 @@
 - [ ] Generate additional images for technical workflow and buildability
 - [ ] Add buildability and fabrication experience section
 - [x] Migrate news data and images from old Squarespace site
+- [x] Complete all missing news article content and images (15/30 have images, all have content)
