@@ -232,12 +232,12 @@ function NewsDetailContent() {
   const nextArticle = currentIndex < allNewsSorted.length - 1 ? allNewsSorted[currentIndex + 1] : null;
 
   // Calculate word count from content blocks
-  const wordCount = contentBlocks.reduce((count: number, block: any) => {
+  const wordCount = Array.isArray(contentBlocks) ? contentBlocks.reduce((count: number, block: any) => {
     if (block.type === 'text' && block.content) {
       return count + block.content.split(/\s+/).length;
     }
     return count;
-  }, 0);
+  }, 0) : 0;
 
   return (
     <div className="min-h-screen bg-background">

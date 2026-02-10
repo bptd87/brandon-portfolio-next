@@ -1,0 +1,8 @@
+{
+  "query": "INSERT INTO categories (name, slug, type, color, description) VALUES \n('Life Updates', 'life-updates', 'news', '#9C27B0', 'Personal milestones, announcements, and life updates'),\n('Assistant Scenic Design', 'assistant-scenic-design', 'news', '#607D8B', 'Projects where Brandon PT Davis served as Assistant Scenic Designer');",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute INSERT INTO categories (name, slug, type, color, description) VALUES \n('Life Updates', 'life-updates', 'news', '#9C27B0', 'Personal milestones, announcements, and life updates'),\n('Assistant Scenic Design', 'assistant-scenic-design', 'news', '#607D8B', 'Projects where Brandon PT Davis served as Assistant Scenic Designer');",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1062 (23000) at line 1: Duplicate entry '?' for key 'categories.categories_name_unique'"
+  ]
+}

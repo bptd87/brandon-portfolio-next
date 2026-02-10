@@ -2207,4 +2207,31 @@
 ## Fix Orange Curtain Review Article (User Feedback - Feb 10, 2026)
 - [x] Remove duplicate "Visit South Coast Rep" link button from top of article
 - [x] Fix gallery section title - changed to "Production Photos"
-- [ ] Verify fixes and continue with remaining articles
+- [x] Verify fixes and save checkpoint
+
+## Add Categories and Fix Article Metadata (User Feedback - Feb 10, 2026)
+- [x] Add "Life Updates" news category to database
+- [x] Add "Assistant Scenic Design" news category to database
+- [ ] Update all article locations to proper format: "Organization - City, ST" or "City, ST"
+- [ ] Categorize assistant work articles under "Assistant Scenic Design"
+- [ ] Categorize personal milestones under "Life Updates"
+- [ ] Continue rebuilding articles with proper metadata and categories
+- [ ] Save checkpoint
+
+## Rebuild Million Dollar Quartet SCR Debut Article (User Request - Feb 10, 2026)
+- [x] Extract creative team and content from SCR blog post
+- [x] Upload scenic model photos to S3 (you with model + detail shot)
+- [x] Change cover image to scenic model photo
+- [x] Add co-designer credit for Efren Delgadillo Jr.
+- [x] Add creative team block with full team from SCR blog
+- [x] Rewrite content to emphasize LORT debut without saying "first"
+- [x] Add scenic model photos to gallery
+- [ ] Test and save checkpoint
+
+## Fix MDQ Article Issues (User Feedback - Feb 10, 2026)
+- [x] Change cover image to scenic model photo (you with model)
+- [x] Remove duplicate link button (keep only one at bottom)
+- [x] Complete gallery with 3 images (scenic model detail + 2 production photos)
+- [x] Style creative team block to look professional
+- [x] Verify all fixes - Kim Martin-Cotton listed second as Associate Director
+- [ ] Save checkpoint
