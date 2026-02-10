@@ -2203,3 +2203,8 @@
   - [ ] Hero images and gallery images from project portfolios
 - [x] Verify all improvements
 - [x] Save checkpoint
+
+## Fix Orange Curtain Review Article (User Feedback - Feb 10, 2026)
+- [x] Remove duplicate "Visit South Coast Rep" link button from top of article
+- [x] Fix gallery section title - changed to "Production Photos"
+- [ ] Verify fixes and continue with remaining articles
