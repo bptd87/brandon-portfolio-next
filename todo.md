@@ -2674,4 +2674,12 @@
 - [x] Remove padding/spacing from top of card (added p-0 to override)
 - [x] Ensure images start at very top edge of card
 - [x] Test visual appearance
+- [x] Save checkpoint
+
+## Add VoyageLA Interview Article to News (User Request - Feb 10, 2026)
+- [x] Extract article content from VoyageLA website
+- [x] Create news article in database with title, excerpt, content (using blocks structure)
+- [x] Add cover image for article (uploaded to S3)
+- [x] Set publish date (Feb 10, 2026)
+- [x] Verify article displays on homepage and news page
 - [ ] Save checkpoint
