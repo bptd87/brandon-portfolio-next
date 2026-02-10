@@ -2290,7 +2290,7 @@
 - [x] The Book Club Play (2025, Cincinnati Playhouse in the Park)
 - [x] Souvenir (2024, Pioneer Theatre)
 - [x] Ragtime (2024, The Ruth: Hale Orem)
-- [ ] Natasha, Pierre, and the Great Comet of 1812 (2024, Pioneer Theatre Company)
+- [x] Natasha, Pierre, and the Great Comet of 1812 (2024, Pioneer Theatre Company)
 - [ ] Jersey Boys (2024, Pioneer Theatre Company)
 - [ ] Native Gardens (2023, Pioneer Theatre Company)
 - [ ] Bottle Shock (2023, California Center for the Arts, Escondido)
@@ -2298,3 +2298,15 @@
 - [ ] Clue On Stage (2022, Dallas Theatre Center)
 - [ ] The King and I (2010, Arrow Rock Lyceum Theatre, designer: Ryan J Zirngibl)
 - [ ] Save checkpoint after all articles complete
+
+## Fix Production Dates in All Articles (User Feedback - Feb 10, 2026)
+- [x] Research actual production dates for all created articles
+- [x] Update Utah Shakespeare Festival 2021 season dates (Oct 9, 2021)
+- [x] Update Utah Shakespeare Festival 2022 season dates (Oct 8, 2022)
+- [x] Update Utah Shakespeare Festival 2023 season dates (Sep 9, 2023)
+- [x] Update Utah Shakespeare Festival 2024 season dates (Oct 5, 2024)
+- [x] Update Utah Shakespeare Festival 2025 season dates (Oct 4, 2025)
+- [x] Update The Fears dates (July 9, 2023)
+- [x] The Book Club Play dates correct (March 22 - April 20, 2025)
+- [x] Souvenir dates correct (December 6-21, 2024)
+- [x] Ragtime dates correct (January 4 - February 22, 2025)
