@@ -2325,3 +2325,12 @@
 - [ ] Fix USF 2025: Find production photos showcasing scenic design for each show
 - [ ] Update all 5 USF articles with corrected information
 - [ ] Save checkpoint
+
+## Add Missing Metadata to Assistant Scenic Design Articles (User Feedback - Feb 10, 2026)
+- [x] Review database schema for available metadata fields (tags, location, URLs, SEO)
+- [x] Add production URLs to all 16 articles for cross-linking
+- [x] Add location data (city, state, venue) to all 16 articles
+- [x] Add tags (show titles, designers, venues) for searchability
+- [x] Add SEO keywords for search optimization
+- [x] Update publish dates vs production dates
+- [ ] Save checkpoint
