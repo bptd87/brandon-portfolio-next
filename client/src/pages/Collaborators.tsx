@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { SEO } from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AboutNav from "@/components/AboutNav";
 import { trpc } from "@/lib/trpc";
 import { ExternalLink, Instagram, Users, Building2, Briefcase } from "lucide-react";
-import { SEO } from "@/components/SEO";
+import { useState } from "react";
 import { Link } from "wouter";
 
 type RoleFilter = "all" | "director" | "scenic_designer" | "costume_designer" | "lighting_designer" | "sound_designer" | "projection_designer" | "theatre_company" | "partner_company";
@@ -58,6 +59,7 @@ export default function Collaborators() {
       />
       <div className="min-h-screen flex flex-col bg-background">
         <Header />
+        <AboutNav />
         
         <main className="flex-1 pt-24 pb-20">
           <div className="container">

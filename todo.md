@@ -2511,4 +2511,14 @@
 - [x] Add gradient styling to Teaching Experience section
 - [x] Add gradient styling to Courses section
 - [x] Test visual consistency
+- [x] Save checkpoint
+
+## Update About Page Navigation (User Request - Feb 10, 2026)
+- [x] Review current About page structure
+- [x] Add navigation links to Resume/CV
+- [x] Add navigation links to Creative Statement
+- [x] Add navigation links to Teaching Philosophy
+- [x] Add navigation links to Collaborators
+- [x] Align page layout and styling
+- [x] Test all navigation links
 - [ ] Save checkpoint

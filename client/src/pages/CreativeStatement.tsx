@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AboutNav from "@/components/AboutNav";
 import { trpc } from "@/lib/trpc";
 import { useEffect, useRef } from "react";
 import { Link } from "wouter";
@@ -80,6 +81,7 @@ export default function CreativeStatement() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <AboutNav />
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center px-6 py-32 overflow-hidden">

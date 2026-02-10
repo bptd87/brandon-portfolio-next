@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AboutNav from "@/components/AboutNav";
 
 import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,6 +9,7 @@ export default function Resume() {
   return (
     <>
       <Header />
+      <AboutNav />
       
       <section className="min-h-screen bg-background pt-20 pb-20">
         <div className="container max-w-6xl">
