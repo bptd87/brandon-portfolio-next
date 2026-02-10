@@ -2660,4 +2660,11 @@
 - [x] Update news card images to fill entire card area (changed to h-64 fixed height)
 - [x] Remove black space below images (added flex flex-col to card)
 - [x] Test visual appearance
+- [x] Save checkpoint
+
+## Fix News Card Image Width and Top Gap (User Request - Feb 10, 2026)
+- [x] Revert to aspect-ratio approach for full width coverage
+- [x] Use object-cover to fill area without gaps on top
+- [x] Ensure images span full card width
+- [x] Test visual appearance
 - [ ] Save checkpoint

@@ -361,13 +361,13 @@ export default function Home() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                   {newsItems.slice(0, 3).map((news) => (
                     <Link key={news.id} href={`/news/${news.slug}`}>
-                      <Card className="h-full hover:shadow-2xl transition-all hover:scale-[1.02] cursor-pointer border-2 bg-background overflow-hidden group flex flex-col">
+                      <Card className="h-full hover:shadow-2xl transition-all hover:scale-[1.02] cursor-pointer border-2 bg-background overflow-hidden group">
                         {news.coverImageUrl && (
-                          <div className="relative h-64 overflow-hidden flex-shrink-0">
+                          <div className="relative w-full aspect-[16/9] overflow-hidden">
                             <img
                               src={news.coverImageUrl}
                               alt={news.title}
-                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                              className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                             />
                           </div>
                         )}
