@@ -2603,4 +2603,10 @@
 - [x] Apply parallax to bottom-right blob with 0.1x speed
 - [x] Apply parallax to top-left blob with 0.2x speed
 - [x] Test layered depth effect
+- [x] Save checkpoint
+
+## Optimize Parallax Performance with requestAnimationFrame (User Request - Feb 10, 2026)
+- [x] Replace direct scroll listener with requestAnimationFrame throttling
+- [x] Add ticking flag to prevent multiple RAF calls
+- [x] Test performance improvement and smoothness
 - [ ] Save checkpoint
