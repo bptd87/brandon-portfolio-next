@@ -329,10 +329,9 @@ export default function Header() {
         <div className="container py-4">
           <nav className="flex items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="text-xl font-black tracking-tighter hover:text-primary transition-all group">
-              <span className="relative">
+            <Link href="/" className="text-xl font-black tracking-tighter transition-all group relative">
+              <span className="relative group-hover:drop-shadow-[0_0_12px_rgba(33,150,243,0.6)] transition-all duration-300">
                 BRANDON PT DAVIS
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-[#FF5722] to-[#2196F3] group-hover:w-full transition-all duration-300"></span>
               </span>
               <span className="block text-[10px] font-normal tracking-[0.2em] text-muted-foreground mt-0.5">
                 SCENIC DESIGNER
@@ -354,7 +353,7 @@ export default function Header() {
                     isActive("/projects") ? "text-[#2196F3]" : ""
                   }`}
                 >
-                  WORK
+                  PORTFOLIO
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${portfolioOpen ? "rotate-180" : ""}`} />
                   <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#2196F3] group-hover:w-full transition-all duration-300"></span>
                 </Link>
@@ -383,47 +382,16 @@ export default function Header() {
                 )}
               </div>
 
-              {/* News Dropdown - Hover Based with Delay */}
-              <div 
-                className="relative" 
-                ref={newsDropdownRef}
-                onMouseEnter={handleNewsMouseEnter}
-                onMouseLeave={handleNewsMouseLeave}
+              {/* News - Direct Link (No Dropdown) */}
+              <Link
+                href="/news"
+                className={`text-sm font-bold tracking-wide transition-all hover:text-[#FF5722] relative group ${
+                  isActive("/news") ? "text-[#FF5722]" : ""
+                }`}
               >
-                <Link
-                  href="/news"
-                  className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-[#FF5722] relative group ${
-                    isActive("/news") ? "text-[#FF5722]" : ""
-                  }`}
-                >
-                  NEWS
-                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${newsOpen ? "rotate-180" : ""}`} />
-                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#FF5722] group-hover:w-full transition-all duration-300"></span>
-                </Link>
-
-                {/* Dropdown Menu */}
-                {newsOpen && (
-                  <div 
-                    className="absolute top-full left-0 mt-3 w-64 bg-popover backdrop-blur-xl border border-border rounded-lg overflow-hidden shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200"
-                    onMouseEnter={handleNewsMouseEnter}
-                    onMouseLeave={handleNewsMouseLeave}
-                  >
-                    {newsCategories.map((category) => (
-                      <Link
-                        key={category.slug || "all"}
-                        href={category.slug ? `/news?category=${category.slug}` : "/news"}
-                        className="block px-5 py-3 text-sm font-semibold hover:bg-[#FF5722]/10 hover:text-[#FF5722] transition-all border-b border-border last:border-0 relative group"
-                      >
-                        <span className="relative z-10 flex items-center">
-                          {category.icon}
-                          {category.name}
-                        </span>
-                        <span className="absolute left-0 top-0 w-1 h-0 bg-[#FF5722] group-hover:h-full transition-all duration-300"></span>
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
+                NEWS
+                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#FF5722] group-hover:w-full transition-all duration-300"></span>
+              </Link>
 
               {/* About Dropdown - Hover Based with Delay */}
               <div 
@@ -492,6 +460,16 @@ export default function Header() {
                     onMouseLeave={handleStudioMouseLeave}
                   >
                     <Link
+                      href="/articles"
+                      className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border relative group"
+                    >
+                      <span className="relative z-10 flex items-center">
+                        <ArticleIcon />
+                        Articles
+                      </span>
+                      <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
+                    </Link>
+                    <Link
                       href="/tutorials"
                       className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border relative group"
                     >
@@ -508,6 +486,16 @@ export default function Header() {
                       <span className="relative z-10 flex items-center">
                         <AppStudioIcon />
                         App Studio
+                      </span>
+                      <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
+                    </Link>
+                    <Link
+                      href="/directory"
+                      className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border relative group"
+                    >
+                      <span className="relative z-10 flex items-center">
+                        <DirectoryIcon />
+                        Scenic Directory
                       </span>
                       <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
                     </Link>
@@ -545,13 +533,12 @@ export default function Header() {
                 )}
               </div>
 
-              {/* Contact Button */}
+              {/* Contact Button - Minimal White Frame */}
               <Link 
                 href="/contact" 
-                className="text-sm font-black tracking-wide bg-gradient-to-r from-[#FF5722] to-[#FF1744] text-white px-6 py-2.5 rounded-full hover:shadow-[0_0_20px_rgba(255,87,34,0.5)] hover:scale-105 transition-all relative overflow-hidden group"
+                className="text-sm font-bold tracking-wide text-white border-2 border-white px-5 py-2 rounded-md hover:bg-white hover:text-background transition-all duration-300"
               >
-                <span className="relative z-10">CONTACT</span>
-                <span className="absolute inset-0 bg-gradient-to-r from-[#FF1744] to-[#FF5722] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                CONTACT
               </Link>
             </div>
 

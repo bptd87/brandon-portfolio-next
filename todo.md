@@ -2622,4 +2622,18 @@
 - [x] Remove parallax transform from headshot image
 - [x] Keep parallax on decorative blobs only
 - [x] Test static headshot appearance
+- [x] Save checkpoint
+
+## Update Navigation and Design (User Request - Feb 10, 2026)
+- [x] Add Studio dropdown with Articles, Tutorials, App Studio, Scenic Directory, Vault
+- [x] Remove News dropdown (make it a direct link)
+- [x] Redesign Contact button to minimal white frame with white text
+- [x] Add glow effect to Brandon PT Davis logo on hover
+- [x] Remove underline from Brandon PT Davis logo on hover
+- [x] Change WORK to PORTFOLIO in navigation
+- [x] Add blue background to Portfolio/Work sections
+- [x] Add orange background to News sections
+- [ ] Add green background to About sections
+- [ ] Add purple background to Studio sections
+- [ ] Test all navigation and color changes
 - [ ] Save checkpoint

@@ -237,7 +237,7 @@ export default function Home() {
       {/* Featured Scenic Design Projects - 2-Column Grid */}
       {projects && projects.length > 0 && (
         <AnimatedSection>
-          <section className="py-24 md:py-32 bg-background">
+          <section className="py-24 md:py-32 bg-[#0D47A1]/5">
             <div className="container">
               <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-16">
@@ -344,7 +344,7 @@ export default function Home() {
       {/* Latest News Section */}
       {newsItems && newsItems.length > 0 && (
         <AnimatedSection>
-          <section className="py-24 md:py-32 bg-secondary/20">
+          <section className="py-24 md:py-32 bg-[#FF5722]/5">
             <div className="container">
               <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-16">
