@@ -1,0 +1,8 @@
+{
+  "query": "\nSELECT \n  id,\n  title,\n  excerpt,\n  LENGTH(content) as content_length,\n  blocks,\n  coverImageUrl\nFROM news \nORDER BY date DESC \nLIMIT 5;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute \nSELECT \n  id,\n  title,\n  excerpt,\n  LENGTH(content) as content_length,\n  blocks,\n  coverImageUrl\nFROM news \nORDER BY date DESC \nLIMIT 5;\n",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 2: Unknown column 'content' in 'field list'"
+  ]
+}

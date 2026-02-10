@@ -1,0 +1,60 @@
+{
+  "query": "SELECT id, title, JSON_LENGTH(blocks) as block_count \nFROM news \nWHERE blocks IS NOT NULL AND blocks != '[]'\nORDER BY date DESC \nLIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT id, title, JSON_LENGTH(blocks) as block_count \nFROM news \nWHERE blocks IS NOT NULL AND blocks != '[]'\nORDER BY date DESC \nLIMIT 10;",
+  "rows": [
+    {
+      "id": "30001",
+      "title": "Returning to New Swan Theatre Festival in 2026",
+      "block_count": "4"
+    },
+    {
+      "id": "30005",
+      "title": "The Orange Curtain Review Praises Million Dollar Quartet at South Coast Repertory",
+      "block_count": "5"
+    },
+    {
+      "id": "1",
+      "title": "Making My SCR Debut: Million Dollar Quartet (2025)",
+      "block_count": "7"
+    },
+    {
+      "id": "2",
+      "title": "Assisting Tom Buderwitz on The Play That Goes Wrong at Seattle Rep",
+      "block_count": "4"
+    },
+    {
+      "id": "3",
+      "title": "40 Productions at Okoboji Summer Theatre",
+      "block_count": "46"
+    },
+    {
+      "id": "30009",
+      "title": "Opening Night: Deathtrap at Okoboji Summer Theatre",
+      "block_count": "12"
+    },
+    {
+      "id": "4",
+      "title": "Fifth Season Assisting Jo Winiarski — Utah Shakespeare Festival",
+      "block_count": "27"
+    },
+    {
+      "id": "30011",
+      "title": "My Season as Scenic Designer for New Swan Shakespeare Festival (2025)",
+      "block_count": "26"
+    },
+    {
+      "id": "30012",
+      "title": "Opening Night: Romero at University of Missouri",
+      "block_count": "13"
+    },
+    {
+      "id": "30013",
+      "title": "Scenic Design for Okoboji Summer Theatre — Summer 2025 Season",
+      "block_count": "7"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tblock_count\n30001\tReturning to New Swan Theatre Festival in 2026\t4\n30005\tThe Orange Curtain Review Praises Million Dollar Quartet at South Coast Repertory\t5\n1\tMaking My SCR Debut: Million Dollar Quartet (2025)\t7\n2\tAssisting Tom Buderwitz on The Play That Goes Wrong at Seattle Rep\t4\n3\t40 Productions at Okoboji Summer Theatre\t46\n30009\tOpening Night: Deathtrap at Okoboji Summer Theatre\t12\n4\tFifth Season Assisting Jo Winiarski — Utah Shakespeare Festival\t27\n30011\tMy Season as Scenic Designer for New Swan Shakespeare Festival (2025)\t26\n30012\tOpening Night: Romero at University of Missouri\t13\n30013\tScenic Design for Okoboji Summer Theatre — Summer 2025 Season\t7\n",
+  "stderr": "",
+  "execution_time_ms": 52
+}

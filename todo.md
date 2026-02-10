@@ -2144,3 +2144,17 @@
 - [x] Complete all missing news article content and images (17/30 have images, all have content)
 - [x] Add images to 8 more news articles using title-based fuzzy matching (17 total articles with images)
 - [x] Extract all news articles and actual images from Squarespace WordPress export (50 articles extracted, 874 images downloaded, 50 hero images uploaded to S3)
+
+## Extract Full News Content from Squarespace (User Requested - Feb 9, 2026)
+- [ ] Analyze what content currently exists in database (check blocks JSON structure)
+- [ ] Parse WordPress XML export to extract full article content/copy for all 65 news articles
+- [ ] Match Squarespace articles to database articles by title
+- [ ] Convert article content to blocks format (text blocks with paragraphs)
+- [ ] Update database with full content for all news articles
+- [ ] Verify news detail pages display complete content
+- [ ] Save checkpoint with complete news content
+
+## Bulk Update News Articles with Full Content (User Requested - Feb 9, 2026)
+- [x] Execute all SQL UPDATE statements to add full content blocks to news articles (26/30 articles updated)
+- [x] Verify news articles display complete content
+- [ ] Save checkpoint

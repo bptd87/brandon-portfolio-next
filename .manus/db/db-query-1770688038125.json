@@ -1,0 +1,45 @@
+{
+  "query": "\nSELECT \n  id,\n  title,\n  excerpt,\n  JSON_LENGTH(blocks) as blocks_count,\n  coverImageUrl\nFROM news \nORDER BY date DESC \nLIMIT 5;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute \nSELECT \n  id,\n  title,\n  excerpt,\n  JSON_LENGTH(blocks) as blocks_count,\n  coverImageUrl\nFROM news \nORDER BY date DESC \nLIMIT 5;\n",
+  "rows": [
+    {
+      "id": "30001",
+      "title": "Returning to New Swan Theatre Festival in 2026",
+      "excerpt": "Scenic designer Brandon PT Davis returns to the New Swan Shakespeare Festival for the 2026 season, bringing his narrative-driven design approach to a repertory lineup spanning two distinct American eras.",
+      "blocks_count": "4",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/FlARIIXPqvRDxDht.webp"
+    },
+    {
+      "id": "30005",
+      "title": "The Orange Curtain Review Praises Million Dollar Quartet at South Coast Repertory",
+      "excerpt": "The Orange Curtain Review praises Million Dollar Quartet at South Coast Repertory for its high-energy performances and thoughtful engagement with the cultural and economic realities behind early rock ’n’ roll.",
+      "blocks_count": "5",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/WlXamhfSkZPInGSH.webp"
+    },
+    {
+      "id": "1",
+      "title": "Making My SCR Debut: Million Dollar Quartet (2025)",
+      "excerpt": "Co-designing my first production at South Coast Repertory, one of the nation's leading regional theaters.",
+      "blocks_count": "4",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/pOtllUHbMSKjInbH.jpg"
+    },
+    {
+      "id": "2",
+      "title": "Assisting Tom Buderwitz on The Play That Goes Wrong at Seattle Rep",
+      "excerpt": "Working with Tom Buderwitz on this hilarious comedy at Seattle Repertory Theatre.",
+      "blocks_count": "3",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/ZYhiirEHuSmUbKSa.jpeg"
+    },
+    {
+      "id": "3",
+      "title": "40 Productions at Okoboji Summer Theatre",
+      "excerpt": "Celebrating a milestone: my 40th scenic design for Okoboji Summer Theatre.",
+      "blocks_count": "4",
+      "coverImageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/bmcCPzQIAhSpPWNu.jpeg"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\texcerpt\tblocks_count\tcoverImageUrl\n30001\tReturning to New Swan Theatre Festival in 2026\tScenic designer Brandon PT Davis returns to the New Swan Shakespeare Festival for the 2026 season, bringing his narrative-driven design approach to a repertory lineup spanning two distinct American eras.\t4\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/FlARIIXPqvRDxDht.webp\n30005\tThe Orange Curtain Review Praises Million Dollar Quartet at South Coast Repertory\tThe Orange Curtain Review praises Million Dollar Quartet at South Coast Repertory for its high-energy performances and thoughtful engagement with the cultural and economic realities behind early rock ’n’ roll.\t5\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/WlXamhfSkZPInGSH.webp\n1\tMaking My SCR Debut: Million Dollar Quartet (2025)\tCo-designing my first production at South Coast Repertory, one of the nation's leading regional theaters.\t4\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/pOtllUHbMSKjInbH.jpg\n2\tAssisting Tom Buderwitz on The Play That Goes Wrong at Seattle Rep\tWorking with Tom Buderwitz on this hilarious comedy at Seattle Repertory Theatre.\t3\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/ZYhiirEHuSmUbKSa.jpeg\n3\t40 Productions at Okoboji Summer Theatre\tCelebrating a milestone: my 40th scenic design for Okoboji Summer Theatre.\t4\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/bmcCPzQIAhSpPWNu.jpeg\n",
+  "stderr": "",
+  "execution_time_ms": 51
+}
