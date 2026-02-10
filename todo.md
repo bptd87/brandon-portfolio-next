@@ -2242,4 +2242,14 @@
 - [x] Update MDQ article to use single image block instead of gallery
 - [x] Add newsworthy caption to scenic model image
 - [x] Test image display with caption
+- [x] Save checkpoint
+
+## Rebuild "The Play That Goes Wrong" Article (User Request - Feb 10, 2026)
+- [x] Review current article content and structure
+- [x] Research production details from Seattle Rep
+- [x] Write comprehensive article focusing on drafting and 3D modeling work
+- [x] Add creative team credits with Tom Buderwitz as lead scenic designer
+- [x] Find and upload production photo from Seattle Rep
+- [x] Add newsworthy caption to production image
+- [x] Test article display
 - [ ] Save checkpoint
