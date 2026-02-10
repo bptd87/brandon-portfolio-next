@@ -2373,4 +2373,20 @@
 - [x] Create separate CV page for Google indexing
 - [x] Upload Resume and CV PDF files to S3
 - [x] Test table display and download functionality
+- [x] Save checkpoint
+
+## Debug Resume Page Display (User Report - Feb 10, 2026)
+- [ ] Check browser console for errors
+- [ ] Verify Resume.tsx is being loaded
+- [ ] Check if tables are rendering
+- [ ] Verify download button is visible
+- [ ] Fix any issues found
+- [ ] Save checkpoint
+
+## Remove Phantom Resume Page and Fix Navigation (User Request - Feb 10, 2026)
+- [x] Delete old AboutResume.tsx file
+- [x] Remove /about/resume route from App.tsx
+- [x] Remove AboutNav from Resume.tsx page
+- [x] Remove AboutNav from CV.tsx page
+- [x] Test that only /resume and /cv pages exist
 - [ ] Save checkpoint

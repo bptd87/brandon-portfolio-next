@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import AboutNav from "@/components/AboutNav";
+
 import { Download, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -11,8 +11,7 @@ export default function CV() {
       
       <section className="min-h-screen bg-background pt-20 pb-20">
         <div className="container max-w-6xl">
-          {/* About Navigation */}
-          <AboutNav />
+
 
           {/* Hero */}
           <div className="mb-12">

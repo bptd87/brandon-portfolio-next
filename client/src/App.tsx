@@ -23,7 +23,7 @@ import NewsDetail from "./pages/NewsDetail";
 import ArticleDetail from "./pages/ArticleDetail";
 
 // Non-critical routes - lazy load for better initial performance
-const AboutResume = lazy(() => import("./pages/AboutResume"));
+
 const TeachingPhilosophy = lazy(() => import("./pages/TeachingPhilosophy"));
 const Resume = lazy(() => import("./pages/Resume"));
 const CV = lazy(() => import("./pages/CV"));
@@ -83,7 +83,7 @@ function Router() {
       <Route path={"/admin/import-news"} component={AdminImportNews} />
       <Route path={"/about"} component={About} />
       <Route path={"/about/collaborators"} component={Collaborators} />
-      <Route path={"/about/resume"} component={AboutResume} />
+
       <Route path={"/about/teaching"} component={TeachingPhilosophy} />
       <Route path={"/about/philosophy"} component={CreativeStatement} />
       <Route path={"/teaching-philosophy"} component={TeachingPhilosophy} />
