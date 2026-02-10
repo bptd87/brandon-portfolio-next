@@ -2682,4 +2682,20 @@
 - [x] Add cover image for article (uploaded to S3)
 - [x] Set publish date (Feb 10, 2026)
 - [x] Verify article displays on homepage and news page
+- [x] Save checkpoint
+
+## Add Missing Tags to Scenic Design Projects Section (User Request - Feb 10, 2026)
+- [ ] Investigate current tags display in project cards
+- [ ] Add tags to bottom of each project card
+- [ ] Style tags with rounded corners and appropriate colors
+- [ ] Test visual appearance
 - [ ] Save checkpoint
+
+## Add Missing Tags to Scenic Design Projects (User Request - Feb 10, 2026)
+- [x] Identify which projects are missing tags (tags weren't being fetched in list view)
+- [x] Update getAllProjects to fetch tags for each project
+- [x] Add tags display UI to bottom of project cards with color-coded badges
+- [x] Verify tags display correctly (working for projects that have tags)
+- [x] Save checkpoint
+
+Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) have few or no tags in database. Tags can be added later as needed.

@@ -248,7 +248,17 @@ export async function getAllProjects(filters?: {
   }
 
   // Sort by publishedAt (most recent first), then by year if publishedAt is null
-  return await query.orderBy(desc(projects.publishedAt), desc(projects.year));
+  const projectsList = await query.orderBy(desc(projects.publishedAt), desc(projects.year));
+  
+  // Fetch tags for each project
+  const projectsWithTags = await Promise.all(
+    projectsList.map(async (project) => {
+      const tags = await getProjectTags(project.id);
+      return { ...project, tags };
+    })
+  );
+  
+  return projectsWithTags;
 }
 
 export async function getProjectById(id: number) {
