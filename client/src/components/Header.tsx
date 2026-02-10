@@ -443,13 +443,13 @@ export default function Header() {
               >
                 <Link
                   href="/studio"
-                  className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-foreground relative group ${
-                    isActive("/studio") || isActive("/tutorials") || isActive("/vault") || isActive("/directory") ? "text-foreground" : ""
+                  className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-[#9C27B0] relative group ${
+                    isActive("/studio") || isActive("/tutorials") || isActive("/vault") || isActive("/directory") ? "text-[#9C27B0]" : ""
                   }`}
                 >
                   STUDIO
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${studioOpen ? "rotate-180" : ""}`} />
-                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-foreground group-hover:w-full transition-all duration-300"></span>
+                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#9C27B0] group-hover:w-full transition-all duration-300"></span>
                 </Link>
 
                 {/* Dropdown Menu */}
@@ -536,7 +536,7 @@ export default function Header() {
               {/* Contact Button - Minimal White Frame */}
               <Link 
                 href="/contact" 
-                className="text-sm font-bold tracking-wide text-white border-2 border-white px-5 py-2 rounded-md hover:bg-white hover:text-background transition-all duration-300"
+                className="text-sm font-bold tracking-wide text-white border-2 border-white px-5 py-2 rounded-md hover:bg-white/10 hover:border-white/80 transition-all duration-300"
               >
                 CONTACT
               </Link>
