@@ -2261,4 +2261,15 @@
 - [x] Added all 3 Assistant Scenic Designers (Brandon PT Davis, Atria Pirouzmand, Ali Roustaei)
 - [x] Added Movement & Fight Director (Brian Danner)
 - [x] Note: Always check for Sound Design and Projection Design credits in future articles
+- [x] Save checkpoint
+
+## Rebuild "40 Productions at Okoboji Summer Theatre" Article (User Request - Feb 10, 2026)
+- [x] Review current article content and structure
+- [x] Research Okoboji Summer Theatre 2025 season
+- [x] Write comprehensive article covering milestone journey
+- [x] Keep complete list of 40 productions with directors (no individual creative teams)
+- [x] Find production photos from Okoboji (Freaky Friday, Music Man, venue)
+- [x] Add newsworthy captions to 3 images
+- [x] Format production list using details block for clean display
+- [x] Test article display
 - [ ] Save checkpoint
