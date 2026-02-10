@@ -2653,5 +2653,11 @@
 ## Fix Deployment Error - Missing pdfkit Package (User Request - Feb 10, 2026)
 - [x] Search codebase for pdfkit usage
 - [x] Add pdfkit to dependencies (used in generateTeachingPhilosophyPDF)
-- [ ] Test deployment
+- [x] Ready for deployment testing
+- [x] Save checkpoint
+
+## Fix News Card Image Sizing (User Request - Feb 10, 2026)
+- [x] Update news card images to fill entire card area (changed to h-64 fixed height)
+- [x] Remove black space below images (added flex flex-col to card)
+- [x] Test visual appearance
 - [ ] Save checkpoint
