@@ -141,50 +141,6 @@ export default function About() {
               <p className="text-xl md:text-2xl text-foreground/90 leading-relaxed max-w-2xl">
                 Transforming theatrical spaces into <span className="text-primary font-bold">immersive visual landscapes</span> where story and space move together in harmony
               </p>
-              
-              {/* Contact Info Grid - Refined */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-4">
-                <div className="flex items-center gap-4 group cursor-default">
-                  <div className="p-3 rounded-xl bg-muted/50 group-hover:bg-primary/10 transition-all duration-300 border border-border group-hover:border-primary/30">
-                    <MapPin className="w-5 h-5 text-primary" />
-                  </div>
-                  <span className="text-base font-medium text-foreground/80">Southern California</span>
-                </div>
-                <div className="flex items-center gap-4 group">
-                  <div className="p-3 rounded-xl bg-muted/50 group-hover:bg-primary/10 transition-all duration-300 border border-border group-hover:border-primary/30">
-                    <Mail className="w-5 h-5 text-primary" />
-                  </div>
-                  <a href="mailto:info@brandonptdavis.com" className="text-base font-medium text-foreground/80 hover:text-primary transition-colors">
-                    info@brandonptdavis.com
-                  </a>
-                </div>
-                <div className="flex items-center gap-4 group cursor-default">
-                  <div className="p-3 rounded-xl bg-muted/50 group-hover:bg-primary/10 transition-all duration-300 border border-border group-hover:border-primary/30">
-                    <Award className="w-5 h-5 text-primary" />
-                  </div>
-                  <span className="text-base font-medium text-foreground/80">USA 829 Member</span>
-                </div>
-                <div className="flex items-center gap-4 group cursor-default">
-                  <div className="p-3 rounded-xl bg-muted/50 group-hover:bg-primary/10 transition-all duration-300 border border-border group-hover:border-primary/30">
-                    <Briefcase className="w-5 h-5 text-primary" />
-                  </div>
-                  <span className="text-base font-medium text-foreground/80">Adaptive Design Services</span>
-                </div>
-                <div className="flex items-center gap-4 group cursor-default">
-                  <div className="p-3 rounded-xl bg-muted/50 group-hover:bg-primary/10 transition-all duration-300 border border-border group-hover:border-primary/30">
-                    <GraduationCap className="w-5 h-5 text-primary" />
-                  </div>
-                  <span className="text-base font-medium text-foreground/80">MFA, UC Irvine</span>
-                </div>
-                <div className="flex items-center gap-4 group">
-                  <div className="p-3 rounded-xl bg-muted/50 group-hover:bg-primary/10 transition-all duration-300 border border-border group-hover:border-primary/30">
-                    <Linkedin className="w-5 h-5 text-primary" />
-                  </div>
-                  <a href="https://www.linkedin.com/in/brandonptdavis" target="_blank" rel="noopener noreferrer" className="text-base font-medium text-foreground/80 hover:text-primary transition-colors">
-                    LinkedIn Profile
-                  </a>
-                </div>
-              </div>
             </div>
           </div>
         </div>

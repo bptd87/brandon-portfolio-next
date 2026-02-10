@@ -2570,4 +2570,9 @@
 - [x] Add better visual balance between image and text (items-start → items-center)
 - [x] Polish overall presentation and professional appearance (shadows, decorative elements)
 - [x] Test all improvements
+- [x] Save checkpoint
+
+## Remove Contact Information Grid from About Hero (User Request - Feb 10, 2026)
+- [x] Remove contact information grid section
+- [x] Test layout after removal
 - [ ] Save checkpoint
