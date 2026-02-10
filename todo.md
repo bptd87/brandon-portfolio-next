@@ -2540,4 +2540,10 @@
 - [x] Remove pixel font styling (font-pixel class)
 - [x] Update hero layout to accommodate profile image
 - [x] Test visual appearance
+- [x] Save checkpoint
+
+## Update About Page with Correct Headshot (User Request - Feb 10, 2026)
+- [x] Search file storage for correct headshot image
+- [x] Update About page with correct headshot URL
+- [x] Test image display
 - [ ] Save checkpoint

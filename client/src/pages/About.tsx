@@ -61,7 +61,7 @@ export default function About() {
           name: "Brandon PT Davis",
           jobTitle: "Scenic and Experiential Designer",
           url: `${baseUrl}/about`,
-          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YiqCsZPgtoSSsQyE.png",
+          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/jDUthZkmakLJRTiP.jpeg",
           description: "Scenic and experiential designer based in Southern California with over 120 design credits across regional theatre, summer stock, academic theatre, immersive experiences, and live entertainment. Member of USA 829. Educator teaching scenic design, rendering, and collaborative design processes at the university level.",
           email: "info@brandonptdavis.com",
           address: {
@@ -117,7 +117,7 @@ export default function About() {
             <div className="relative">
               <div className="aspect-square rounded-2xl overflow-hidden border-4 border-primary/20">
                 <img 
-                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YiqCsZPgtoSSsQyE.png"
+                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/jDUthZkmakLJRTiP.jpeg"
                   alt="Brandon PT Davis"
                   className="w-full h-full object-cover"
                 />
