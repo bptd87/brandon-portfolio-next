@@ -2667,4 +2667,11 @@
 - [x] Use object-cover to fill area without gaps on top
 - [x] Ensure images span full card width
 - [x] Test visual appearance
+- [x] Save checkpoint
+
+## Remove Black Space Above News Card Images (User Request - Feb 10, 2026)
+- [x] Identify source of gap above images in card (Card component has py-6 padding)
+- [x] Remove padding/spacing from top of card (added p-0 to override)
+- [x] Ensure images start at very top edge of card
+- [x] Test visual appearance
 - [ ] Save checkpoint

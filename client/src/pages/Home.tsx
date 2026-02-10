@@ -361,7 +361,7 @@ export default function Home() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                   {newsItems.slice(0, 3).map((news) => (
                     <Link key={news.id} href={`/news/${news.slug}`}>
-                      <Card className="h-full hover:shadow-2xl transition-all hover:scale-[1.02] cursor-pointer border-2 bg-background overflow-hidden group">
+                      <Card className="h-full hover:shadow-2xl transition-all hover:scale-[1.02] cursor-pointer border-2 bg-background overflow-hidden group p-0">
                         {news.coverImageUrl && (
                           <div className="relative w-full aspect-[16/9] overflow-hidden">
                             <img
