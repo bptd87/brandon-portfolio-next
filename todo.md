@@ -2718,3 +2718,21 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Add quality tags to Company project (Stephen Sondheim, 2019, University Theatre, Musical Theatre, New York City, Relationships)
 - [x] Verify tags display correctly on project pages only (removed from homepage cards)
 - [x] Save checkpoint
+
+## Ensure All Projects Have Minimum 5 Tags (User Request - Feb 10, 2026)
+- [x] Audit all projects to count current tags (26 projects need more tags)
+- [ ] Add tags to projects with fewer than 5 tags
+- [ ] Verify all projects meet minimum 5 tag requirement
+- [ ] Save checkpoint
+
+## Fix Duplicate Tag Key Errors (User Request - Feb 10, 2026)
+- [ ] Identify duplicate tag associations in projectTags table
+- [ ] Remove duplicate entries causing React key errors
+- [ ] Verify project pages no longer show duplicate tag errors
+- [ ] Save checkpoint
+
+## Fix Duplicate Tag Key Errors - COMPLETED
+- [x] Identify duplicate tag associations in projectTags table
+- [x] Remove duplicate entries causing React key errors (cleared table and re-added with INSERT IGNORE)
+- [x] Verify project pages no longer show duplicate tag errors (Urinetown now shows 5 unique tags)
+- [x] Save checkpoint

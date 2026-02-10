@@ -1,0 +1,270 @@
+{
+  "query": "SELECT \n  p.id,\n  p.title,\n  p.year,\n  p.client,\n  p.location,\n  p.excerpt,\n  GROUP_CONCAT(t.name ORDER BY t.name SEPARATOR ' | ') as current_tags,\n  COUNT(pt.tagId) as tag_count\nFROM projects p\nLEFT JOIN projectTags pt ON p.id = pt.projectId\nLEFT JOIN tags t ON pt.tagId = t.id\nGROUP BY p.id, p.title, p.year, p.client, p.location, p.excerpt\nHAVING tag_count < 5\nORDER BY p.year DESC, p.title;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT \n  p.id,\n  p.title,\n  p.year,\n  p.client,\n  p.location,\n  p.excerpt,\n  GROUP_CONCAT(t.name ORDER BY t.name SEPARATOR ' | ') as current_tags,\n  COUNT(pt.tagId) as tag_count\nFROM projects p\nLEFT JOIN projectTags pt ON p.id = pt.projectId\nLEFT JOIN tags t ON pt.tagId = t.id\nGROUP BY p.id, p.title, p.year, p.client, p.location, p.excerpt\nHAVING tag_count < 5\nORDER BY p.year DESC, p.title;",
+  "rows": [
+    {
+      "id": "120001",
+      "title": "The Northwind Mare Tavern",
+      "year": "2026",
+      "client": "NULL",
+      "location": "NULL",
+      "excerpt": "A fantasy tavern emerges from twilight mist—carved horse-head gables, glowing lanterns, stone walls weathered by imagined centuries. Emberreach invites guests into a Tamriel-inspired realm where dining becomes adventure, and every detail whispers of distant quests and fireside tales.",
+      "current_tags": "NULL",
+      "tag_count": "0"
+    },
+    {
+      "id": "90045",
+      "title": "Guys on Ice",
+      "year": "2025",
+      "client": "The Great American Melodrama",
+      "location": "Oceano, CA",
+      "excerpt": "Scenic design for the musical comedy about two Wisconsin fishermen on a frozen lake.",
+      "current_tags": "2025 | Comedy | Regional Theatre",
+      "tag_count": "3"
+    },
+    {
+      "id": "90008",
+      "title": "Rab Bothy Activation",
+      "year": "2025",
+      "client": "Lumenati // Rab",
+      "location": "Denver, CO",
+      "excerpt": "Cool Project",
+      "current_tags": "2025 | Brand Experience | Lumenati | Outdoor Activation",
+      "tag_count": "4"
+    },
+    {
+      "id": "90077",
+      "title": "Romero",
+      "year": "2025",
+      "client": "University of Missouri",
+      "location": "Columbia, MO",
+      "excerpt": "Scenic design for the world premiere exploring the life and martyrdom of Archbishop Óscar Romero.",
+      "current_tags": "2024 | 2024 | University Theatre",
+      "tag_count": "3"
+    },
+    {
+      "id": "90042",
+      "title": "Barefoot in the Park",
+      "year": "2024",
+      "client": "Okoboji Summer Theatre",
+      "location": "Okoboji, IA",
+      "excerpt": "Scenic design for Neil Simon's romantic comedy about newlyweds in a New York City walk-up.",
+      "current_tags": "NULL",
+      "tag_count": "0"
+    },
+    {
+      "id": "90056",
+      "title": "Freaky Friday",
+      "year": "2024",
+      "client": "Okoboji Summer Theatre",
+      "location": "Okoboji, IA",
+      "excerpt": "Scenic design for the musical adaptation of the beloved body-swap story.",
+      "current_tags": "2024 | Musical Theatre | Summer Stock",
+      "tag_count": "3"
+    },
+    {
+      "id": "90047",
+      "title": "Scenic Models",
+      "year": "2024",
+      "client": "NULL",
+      "location": "NULL",
+      "excerpt": "Collection of Scenic Models",
+      "current_tags": "2024 | Craftsmanship | Model Making | Scale Models",
+      "tag_count": "4"
+    },
+    {
+      "id": "90041",
+      "title": "Urinetown",
+      "year": "2024",
+      "client": "University of Missouri",
+      "location": "Columbia, MO",
+      "excerpt": "Explore the innovative scenic design of Urinetown, a satirical musical that cleverly tackles a dystopian water shortage. Discover how visuals enhance storytelling!",
+      "current_tags": "NULL",
+      "tag_count": "0"
+    },
+    {
+      "id": "90009",
+      "title": "¡LOTERIA: GAME ON!",
+      "year": "2023",
+      "client": "Theatre SilCo",
+      "location": "Silverthorne, CO",
+      "excerpt": "¡Lotería: Game On! is the world premiere of a bilingual play by Mabelle Reynoso, directed by Sara Rodriguez. The scenic design transforms a familiar suburban basement living room into a vibrant, game-driven world inspired by Lotería, video games, and imaginative play, blending physical scenery, projection, and dynamic lighting to support a fast-moving theatrical experience.",
+      "current_tags": "NULL",
+      "tag_count": "0"
+    },
+    {
+      "id": "90054",
+      "title": "Boeing, Boeing",
+      "year": "2023",
+      "client": "Stephens College",
+      "location": "Columbia, MO",
+      "excerpt": "Scenic design for Marc Camoletti's French farce about an American architect juggling three stewardess fiancées.",
+      "current_tags": "1960s | 2024 | Summer Stock",
+      "tag_count": "3"
+    },
+    {
+      "id": "90044",
+      "title": "Head Over Heels",
+      "year": "2023",
+      "client": "Theatre SilCo",
+      "location": "Silverthorne, CO",
+      "excerpt": "Explore the vibrant scenic design of \"Head Over Heels,\" the jukebox musical that celebrates The Go-Go's. Uncover creativity and inspiration behind the stage!",
+      "current_tags": "2024 | Summer Stock",
+      "tag_count": "2"
+    },
+    {
+      "id": "90049",
+      "title": "A Funny Thing Happened on the Way to the Forum",
+      "year": "2022",
+      "client": "Lake Dillon Theatre",
+      "location": "Silverthorne, CO",
+      "excerpt": "Scenic design for the Sondheim musical comedy set in ancient Rome.",
+      "current_tags": "NULL",
+      "tag_count": "0"
+    },
+    {
+      "id": "90036",
+      "title": "An Inspector Calls",
+      "year": "2022",
+      "client": "Okoboji Summer Theatre",
+      "location": "Spirit Lake, IA",
+      "excerpt": "Explore the captivating scenic design of J.B. Priestley's \"An Inspector Calls\" and discover how it enhances this gripping moral thriller on class and responsibility.",
+      "current_tags": "2024 | Summer Stock",
+      "tag_count": "2"
+    },
+    {
+      "id": "90053",
+      "title": "The Merry Wives of Windsor",
+      "year": "2022",
+      "client": "Stephens College",
+      "location": "Columbia, MO",
+      "excerpt": "Scenic design for Shakespeare's comedy set in Windsor, England.",
+      "current_tags": "2024 | Shakespeare | Theatre Festival",
+      "tag_count": "3"
+    },
+    {
+      "id": "90039",
+      "title": "Tomás and the Library Lady",
+      "year": "2022",
+      "client": "Lake Dillon Theatre",
+      "location": "Silverthorne, CO",
+      "excerpt": "Explore the vibrant scenic design of \"Tomás and the Library Lady,\" a bilingual play that celebrates literacy and the transformative power of libraries.",
+      "current_tags": "2024 | Theatre Festival",
+      "tag_count": "2"
+    },
+    {
+      "id": "90013",
+      "title": "Ashes of the Underworld",
+      "year": "2021",
+      "client": "NULL",
+      "location": "Chicago, IL",
+      "excerpt": "A liminal space between life and death, inspired by The Penelopiad. Grecian ruins decay among lifeless trees while fire burns eternal. Created during pandemic isolation in Chicago, when artists found themselves suspended between the theatre that was and whatever might come next.",
+      "current_tags": "NULL",
+      "tag_count": "0"
+    },
+    {
+      "id": "90015",
+      "title": "Isolation",
+      "year": "2020",
+      "client": "NULL",
+      "location": "Chicago, IL",
+      "excerpt": "Set in a quiet, imagined interior, this rendering explores themes of isolation, distance, and the weight of solitude. A contemplative space where architecture becomes emotion, and emptiness speaks volumes.",
+      "current_tags": "NULL",
+      "tag_count": "0"
+    },
+    {
+      "id": "90012",
+      "title": "New Swan Venue File",
+      "year": "2020",
+      "client": "NULL",
+      "location": "Irvine, CA",
+      "excerpt": "Complete Vectorworks venue file for the New Swan Theatre, documenting the outdoor performance space with technical precision. A digital archive of architectural detail and theatrical infrastructure.",
+      "current_tags": "2020 | Technical Documentation | Vectorworks | Venue File",
+      "tag_count": "4"
+    },
+    {
+      "id": "90051",
+      "title": "The Penelopiad",
+      "year": "2020",
+      "client": "University of California Irvine",
+      "location": "Irvine, CA",
+      "excerpt": "Explore the innovative scenic design of Margaret Atwood's The Penelopiad, a captivating retelling of The Odyssey from Penelope's unique perspective.",
+      "current_tags": "2020 | University Theatre",
+      "tag_count": "2"
+    },
+    {
+      "id": "90019",
+      "title": "Company",
+      "year": "2019",
+      "client": "University of California Irvine",
+      "location": "Irvine, CA",
+      "excerpt": "Explore the captivating scenic design of Sondheim's musical, showcasing the complexities of marriage and relationships in vibrant New York City.",
+      "current_tags": "2019 | Musical Theatre | University Theatre",
+      "tag_count": "3"
+    },
+    {
+      "id": "90018",
+      "title": "Parliament Square",
+      "year": "2019",
+      "client": "University of California Irvine",
+      "location": "Irvine, CA",
+      "excerpt": "Explore the stunning theatrical and scenic design of Parliament Square. Discover its history, artistry, and how it enhances the cultural landscape.",
+      "current_tags": "NULL",
+      "tag_count": "0"
+    },
+    {
+      "id": "90048",
+      "title": "The Pajama Game",
+      "year": "2019",
+      "client": "University of California Irvine",
+      "location": "Irvine, CA",
+      "excerpt": "Explore the vibrant scenic design of \"The Pajama Game,\" a 1950s musical comedy that masterfully intertwines labor relations and romance. Discover more!",
+      "current_tags": "NULL",
+      "tag_count": "0"
+    },
+    {
+      "id": "90038",
+      "title": "American Idiot",
+      "year": "2018",
+      "client": "University of California Irvine",
+      "location": "Irvine, CA",
+      "excerpt": "Explore the stunning scenic design of the Green Day rock musical \"American Idiot.\" Discover how innovative visuals enhance this powerful theatrical experience.",
+      "current_tags": "NULL",
+      "tag_count": "0"
+    },
+    {
+      "id": "90014",
+      "title": "Angel Food Cake",
+      "year": "2017",
+      "client": "Western Summer Theatre",
+      "location": "Bellingham, WA",
+      "excerpt": "A mobile home interior for the West Coast premiere of Angel Food Cake at Western Summer Theatre. Plaid upholstery, red-checkered backsplash, wood-paneled walls—everyday space holding extraordinary emotional weight. The home itself becomes a character.",
+      "current_tags": "NULL",
+      "tag_count": "0"
+    },
+    {
+      "id": "90043",
+      "title": "Angel Street",
+      "year": "2013",
+      "client": "Okoboji Summer Theatre",
+      "location": "Columbia, MO",
+      "excerpt": "Explore the captivating scenic design of \"Angel Street,\" Patrick Hamilton's Victorian thriller. Discover how visual elements enhance this gripping Gaslight tale!",
+      "current_tags": "2024 | Summer Stock",
+      "tag_count": "2"
+    },
+    {
+      "id": "90017",
+      "title": "All My Sons",
+      "year": "2010",
+      "client": "Stephens College",
+      "location": "Columbia, MO",
+      "excerpt": "Discover the scenic design of All My Sons, showcasing the idealized postwar American Dream with a charming home, inviting porch, and expansive backyard.",
+      "current_tags": "2024 | Summer Stock",
+      "tag_count": "2"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tyear\tclient\tlocation\texcerpt\tcurrent_tags\ttag_count\n120001\tThe Northwind Mare Tavern\t2026\tNULL\tNULL\tA fantasy tavern emerges from twilight mist—carved horse-head gables, glowing lanterns, stone walls weathered by imagined centuries. Emberreach invites guests into a Tamriel-inspired realm where dining becomes adventure, and every detail whispers of distant quests and fireside tales.\tNULL\t0\n90045\tGuys on Ice\t2025\tThe Great American Melodrama\tOceano, CA\tScenic design for the musical comedy about two Wisconsin fishermen on a frozen lake.\t2025 | Comedy | Regional Theatre\t3\n90008\tRab Bothy Activation\t2025\tLumenati // Rab\tDenver, CO\tCool Project\t2025 | Brand Experience | Lumenati | Outdoor Activation\t4\n90077\tRomero\t2025\tUniversity of Missouri\tColumbia, MO\tScenic design for the world premiere exploring the life and martyrdom of Archbishop Óscar Romero.\t2024 | 2024 | University Theatre\t3\n90042\tBarefoot in the Park\t2024\tOkoboji Summer Theatre\tOkoboji, IA\tScenic design for Neil Simon's romantic comedy about newlyweds in a New York City walk-up.\tNULL\t0\n90056\tFreaky Friday\t2024\tOkoboji Summer Theatre\tOkoboji, IA\tScenic design for the musical adaptation of the beloved body-swap story.\t2024 | Musical Theatre | Summer Stock\t3\n90047\tScenic Models\t2024\tNULL\tNULL\tCollection of Scenic Models\t2024 | Craftsmanship | Model Making | Scale Models\t4\n90041\tUrinetown\t2024\tUniversity of Missouri\tColumbia, MO\tExplore the innovative scenic design of Urinetown, a satirical musical that cleverly tackles a dystopian water shortage. Discover how visuals enhance storytelling!\tNULL\t0\n90009\t¡LOTERIA: GAME ON!\t2023\tTheatre SilCo\tSilverthorne, CO\t¡Lotería: Game On! is the world premiere of a bilingual play by Mabelle Reynoso, directed by Sara Rodriguez. The scenic design transforms a familiar suburban basement living room into a vibrant, game-driven world inspired by Lotería, video games, and imaginative play, blending physical scenery, projection, and dynamic lighting to support a fast-moving theatrical experience.\tNULL\t0\n90054\tBoeing, Boeing\t2023\tStephens College\tColumbia, MO\tScenic design for Marc Camoletti's French farce about an American architect juggling three stewardess fiancées.\t1960s | 2024 | Summer Stock\t3\n90044\tHead Over Heels\t2023\tTheatre SilCo\tSilverthorne, CO\tExplore the vibrant scenic design of \"Head Over Heels,\" the jukebox musical that celebrates The Go-Go's. Uncover creativity and inspiration behind the stage!\t2024 | Summer Stock\t2\n90049\tA Funny Thing Happened on the Way to the Forum\t2022\tLake Dillon Theatre\tSilverthorne, CO\tScenic design for the Sondheim musical comedy set in ancient Rome.\tNULL\t0\n90036\tAn Inspector Calls\t2022\tOkoboji Summer Theatre\tSpirit Lake, IA\tExplore the captivating scenic design of J.B. Priestley's \"An Inspector Calls\" and discover how it enhances this gripping moral thriller on class and responsibility.\t2024 | Summer Stock\t2\n90053\tThe Merry Wives of Windsor\t2022\tStephens College\tColumbia, MO\tScenic design for Shakespeare's comedy set in Windsor, England.\t2024 | Shakespeare | Theatre Festival\t3\n90039\tTomás and the Library Lady\t2022\tLake Dillon Theatre\tSilverthorne, CO\tExplore the vibrant scenic design of \"Tomás and the Library Lady,\" a bilingual play that celebrates literacy and the transformative power of libraries.\t2024 | Theatre Festival\t2\n90013\tAshes of the Underworld\t2021\tNULL\tChicago, IL\tA liminal space between life and death, inspired by The Penelopiad. Grecian ruins decay among lifeless trees while fire burns eternal. Created during pandemic isolation in Chicago, when artists found themselves suspended between the theatre that was and whatever might come next.\tNULL\t0\n90015\tIsolation\t2020\tNULL\tChicago, IL\tSet in a quiet, imagined interior, this rendering explores themes of isolation, distance, and the weight of solitude. A contemplative space where architecture becomes emotion, and emptiness speaks volumes.\tNULL\t0\n90012\tNew Swan Venue File\t2020\tNULL\tIrvine, CA\tComplete Vectorworks venue file for the New Swan Theatre, documenting the outdoor performance space with technical precision. A digital archive of architectural detail and theatrical infrastructure.\t2020 | Technical Documentation | Vectorworks | Venue File\t4\n90051\tThe Penelopiad\t2020\tUniversity of California Irvine\tIrvine, CA\tExplore the innovative scenic design of Margaret Atwood's The Penelopiad, a captivating retelling of The Odyssey from Penelope's unique perspective.\t2020 | University Theatre\t2\n90019\tCompany\t2019\tUniversity of California Irvine\tIrvine, CA\tExplore the captivating scenic design of Sondheim's musical, showcasing the complexities of marriage and relationships in vibrant New York City.\t2019 | Musical Theatre | University Theatre\t3\n90018\tParliament Square\t2019\tUniversity of California Irvine\tIrvine, CA\tExplore the stunning theatrical and scenic design of Parliament Square. Discover its history, artistry, and how it enhances the cultural landscape.\tNULL\t0\n90048\tThe Pajama Game\t2019\tUniversity of California Irvine\tIrvine, CA\tExplore the vibrant scenic design of \"The Pajama Game,\" a 1950s musical comedy that masterfully intertwines labor relations and romance. Discover more!\tNULL\t0\n90038\tAmerican Idiot\t2018\tUniversity of California Irvine\tIrvine, CA\tExplore the stunning scenic design of the Green Day rock musical \"American Idiot.\" Discover how innovative visuals enhance this powerful theatrical experience.\tNULL\t0\n90014\tAngel Food Cake\t2017\tWestern Summer Theatre\tBellingham, WA\tA mobile home interior for the West Coast premiere of Angel Food Cake at Western Summer Theatre. Plaid upholstery, red-checkered backsplash, wood-paneled walls—everyday space holding extraordinary emotional weight. The home itself becomes a character.\tNULL\t0\n90043\tAngel Street\t2013\tOkoboji Summer Theatre\tColumbia, MO\tExplore the captivating scenic design of \"Angel Street,\" Patrick Hamilton's Victorian thriller. Discover how visual elements enhance this gripping Gaslight tale!\t2024 | Summer Stock\t2\n90017\tAll My Sons\t2010\tStephens College\tColumbia, MO\tDiscover the scenic design of All My Sons, showcasing the idealized postwar American Dream with a charming home, inviting porch, and expansive backyard.\t2024 | Summer Stock\t2\n",
+  "stderr": "",
+  "execution_time_ms": 68
+}

@@ -1,0 +1,13 @@
+{
+  "query": "SELECT \n  COUNT(*) as projects_needing_tags\nFROM (\n  SELECT p.id\n  FROM projects p\n  LEFT JOIN projectTags pt ON p.id = pt.projectId\n  GROUP BY p.id\n  HAVING COUNT(pt.tagId) < 5\n) as subquery;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT \n  COUNT(*) as projects_needing_tags\nFROM (\n  SELECT p.id\n  FROM projects p\n  LEFT JOIN projectTags pt ON p.id = pt.projectId\n  GROUP BY p.id\n  HAVING COUNT(pt.tagId) < 5\n) as subquery;",
+  "rows": [
+    {
+      "projects_needing_tags": "15"
+    }
+  ],
+  "messages": [],
+  "stdout": "projects_needing_tags\n15\n",
+  "stderr": "",
+  "execution_time_ms": 59
+}

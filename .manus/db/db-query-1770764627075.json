@@ -1,0 +1,9 @@
+{
+  "query": "-- Angel Street (2013) - thriller/mystery\nINSERT INTO projectTags (projectId, tagId)\nSELECT p.id, t.id FROM projects p CROSS JOIN tags t\nWHERE p.title = 'Angel Street' AND t.name IN ('Drama', '2013', 'Mystery', 'Thriller', 'Victorian Era', 'Summer Stock')\nON DUPLICATE KEY UPDATE projectId = projectId;\n\n-- All My Sons (2010) - Arthur Miller drama\nINSERT INTO projectTags (projectId, tagId)\nSELECT p.id, t.id FROM projects p CROSS JOIN tags t\nWHERE p.title = 'All My Sons' AND t.name IN ('Drama', '2010', 'Arthur Miller', 'Historical', 'Family Drama', 'College Theatre')\nON DUPLICATE KEY UPDATE projectId = projectId;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute -- Angel Street (2013) - thriller/mystery\nINSERT INTO projectTags (projectId, tagId)\nSELECT p.id, t.id FROM projects p CROSS JOIN tags t\nWHERE p.title = 'Angel Street' AND t.name IN ('Drama', '2013', 'Mystery', 'Thriller', 'Victorian Era', 'Summer Stock')\nON DUPLICATE KEY UPDATE projectId = projectId;\n\n-- All My Sons (2010) - Arthur Miller drama\nINSERT INTO projectTags (projectId, tagId)\nSELECT p.id, t.id FROM projects p CROSS JOIN tags t\nWHERE p.title = 'All My Sons' AND t.name IN ('Drama', '2010', 'Arthur Miller', 'Historical', 'Family Drama', 'College Theatre')\nON DUPLICATE KEY UPDATE projectId = projectId;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 76
+}

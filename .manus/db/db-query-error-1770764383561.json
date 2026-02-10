@@ -1,0 +1,8 @@
+{
+  "query": "-- Add tags to projects that need them\n-- Using direct project IDs from the query results\n\n-- Project ID 2: Much Ado About Nothing (has 8 tags already, skip)\n\n-- Project ID 15: New Swan Gala (needs tags)\nINSERT INTO projectTags (projectId, tagId)\nSELECT 15, id FROM tags WHERE name IN ('2025', 'Theatre Festival', 'Gala Event', 'Irvine', 'Special Event', 'Fundraiser')\nON DUPLICATE KEY UPDATE projectId = projectId;\n\n-- Project ID 6: Romero (has 6 tags, skip)\n-- Project ID 14: Guys on Ice (has 6 tags, skip)\n-- Project ID 12: Freaky Friday (has 6 tags, skip)",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute -- Add tags to projects that need them\n-- Using direct project IDs from the query results\n\n-- Project ID 2: Much Ado About Nothing (has 8 tags already, skip)\n\n-- Project ID 15: New Swan Gala (needs tags)\nINSERT INTO projectTags (projectId, tagId)\nSELECT 15, id FROM tags WHERE name IN ('2025', 'Theatre Festival', 'Gala Event', 'Irvine', 'Special Event', 'Fundraiser')\nON DUPLICATE KEY UPDATE projectId = projectId;\n\n-- Project ID 6: Romero (has 6 tags, skip)\n-- Project ID 14: Guys on Ice (has 6 tags, skip)\n-- Project ID 12: Freaky Friday (has 6 tags, skip)",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1452 (23000) at line 7: Cannot add or update a child row: a foreign key constraint fails (`w7mo5vqmuldedzme7vxhyq`.`projecttags`, CONSTRAINT `projectTags_projectId_projects_id_fk` FOREIGN KEY (`projectId`) REFERENCES `projects` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION)"
+  ]
+}

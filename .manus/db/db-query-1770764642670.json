@@ -1,0 +1,598 @@
+{
+  "query": "SELECT name FROM tags ORDER BY name;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT name FROM tags ORDER BY name;",
+  "rows": [
+    {
+      "name": "1930s"
+    },
+    {
+      "name": "1950s"
+    },
+    {
+      "name": "1960s"
+    },
+    {
+      "name": "2019"
+    },
+    {
+      "name": "2020"
+    },
+    {
+      "name": "2021"
+    },
+    {
+      "name": "2022"
+    },
+    {
+      "name": "2023"
+    },
+    {
+      "name": "2024"
+    },
+    {
+      "name": "2025"
+    },
+    {
+      "name": "2026"
+    },
+    {
+      "name": "A Funny Thing Happened"
+    },
+    {
+      "name": "Abstract"
+    },
+    {
+      "name": "Academic Career"
+    },
+    {
+      "name": "Academic Theatre"
+    },
+    {
+      "name": "Acting"
+    },
+    {
+      "name": "AI & Machine Learning"
+    },
+    {
+      "name": "AI & Technology"
+    },
+    {
+      "name": "Arena"
+    },
+    {
+      "name": "Art Deco"
+    },
+    {
+      "name": "Art Direction"
+    },
+    {
+      "name": "Arthur Miller"
+    },
+    {
+      "name": "Assistant Designer"
+    },
+    {
+      "name": "Assistant Professor"
+    },
+    {
+      "name": "August Wilson"
+    },
+    {
+      "name": "Black Box"
+    },
+    {
+      "name": "Brand Experience"
+    },
+    {
+      "name": "Broadway"
+    },
+    {
+      "name": "Brutalism"
+    },
+    {
+      "name": "Career Development"
+    },
+    {
+      "name": "Career Milestone"
+    },
+    {
+      "name": "Case Study"
+    },
+    {
+      "name": "Church Design"
+    },
+    {
+      "name": "Cinema"
+    },
+    {
+      "name": "Classic Play"
+    },
+    {
+      "name": "Classical Theatre"
+    },
+    {
+      "name": "CNC Fabrication"
+    },
+    {
+      "name": "Co-Design"
+    },
+    {
+      "name": "Collaborations"
+    },
+    {
+      "name": "Comedy"
+    },
+    {
+      "name": "Commercial Campaign"
+    },
+    {
+      "name": "Communication"
+    },
+    {
+      "name": "Company"
+    },
+    {
+      "name": "Computer Hardware"
+    },
+    {
+      "name": "Concept Rendering"
+    },
+    {
+      "name": "Contemporary Design"
+    },
+    {
+      "name": "Contemporary Drama"
+    },
+    {
+      "name": "Craftsmanship"
+    },
+    {
+      "name": "Curtain Architecture"
+    },
+    {
+      "name": "Deathtrap"
+    },
+    {
+      "name": "Design Education"
+    },
+    {
+      "name": "Design Philosophy"
+    },
+    {
+      "name": "Design Process"
+    },
+    {
+      "name": "Design Trends"
+    },
+    {
+      "name": "Design Visualization"
+    },
+    {
+      "name": "Dystopian"
+    },
+    {
+      "name": "Dystopian Design"
+    },
+    {
+      "name": "Dystopian Theatre"
+    },
+    {
+      "name": "Education"
+    },
+    {
+      "name": "Edwardian"
+    },
+    {
+      "name": "Elizabethan"
+    },
+    {
+      "name": "Environmental Storytelling"
+    },
+    {
+      "name": "Eugene O'Neill"
+    },
+    {
+      "name": "Expressionist"
+    },
+    {
+      "name": "Fabrication"
+    },
+    {
+      "name": "Family Show"
+    },
+    {
+      "name": "Film & Television"
+    },
+    {
+      "name": "Freaky Friday"
+    },
+    {
+      "name": "Gothic"
+    },
+    {
+      "name": "Graduate School"
+    },
+    {
+      "name": "Graduation"
+    },
+    {
+      "name": "Great American Melodrama"
+    },
+    {
+      "name": "Greek Comedy"
+    },
+    {
+      "name": "Greek Theatre"
+    },
+    {
+      "name": "Guys on Ice"
+    },
+    {
+      "name": "Historic Renovation"
+    },
+    {
+      "name": "Historical Drama"
+    },
+    {
+      "name": "How to Succeed"
+    },
+    {
+      "name": "Immersive"
+    },
+    {
+      "name": "Immersive Experiences"
+    },
+    {
+      "name": "Independent Project"
+    },
+    {
+      "name": "Industrial"
+    },
+    {
+      "name": "Industrial Aesthetic"
+    },
+    {
+      "name": "Insights"
+    },
+    {
+      "name": "Jo Winiarski"
+    },
+    {
+      "name": "Keynote"
+    },
+    {
+      "name": "Latinx Theatre"
+    },
+    {
+      "name": "LED Integration"
+    },
+    {
+      "name": "Live Event"
+    },
+    {
+      "name": "Lotería"
+    },
+    {
+      "name": "Lumenati"
+    },
+    {
+      "name": "Lysistrata"
+    },
+    {
+      "name": "Maude Adams"
+    },
+    {
+      "name": "Memory & Narrative"
+    },
+    {
+      "name": "Memory Play"
+    },
+    {
+      "name": "MFA"
+    },
+    {
+      "name": "Mid-Century Modern"
+    },
+    {
+      "name": "Milestones"
+    },
+    {
+      "name": "Million Dollar Quartet"
+    },
+    {
+      "name": "Minimalism"
+    },
+    {
+      "name": "Minimalist"
+    },
+    {
+      "name": "Model Making"
+    },
+    {
+      "name": "Modernist"
+    },
+    {
+      "name": "Musical Theatre"
+    },
+    {
+      "name": "Musical Theatre History"
+    },
+    {
+      "name": "Mystery"
+    },
+    {
+      "name": "New Play"
+    },
+    {
+      "name": "New Swan Theatre Festival"
+    },
+    {
+      "name": "New Work"
+    },
+    {
+      "name": "New York"
+    },
+    {
+      "name": "Off-Broadway"
+    },
+    {
+      "name": "Okoboji Summer Theatre"
+    },
+    {
+      "name": "Opening Night"
+    },
+    {
+      "name": "Opera"
+    },
+    {
+      "name": "Operatic Design"
+    },
+    {
+      "name": "Outdoor Activation"
+    },
+    {
+      "name": "Pop-Up Installation"
+    },
+    {
+      "name": "Portfolio Development"
+    },
+    {
+      "name": "Presentation Skills"
+    },
+    {
+      "name": "Process"
+    },
+    {
+      "name": "Production Analysis"
+    },
+    {
+      "name": "Production Debuts"
+    },
+    {
+      "name": "Professional Achievement"
+    },
+    {
+      "name": "Professional Debut"
+    },
+    {
+      "name": "Professional Development"
+    },
+    {
+      "name": "Professor"
+    },
+    {
+      "name": "Projection Design"
+    },
+    {
+      "name": "Proscenium"
+    },
+    {
+      "name": "Realistic Interior"
+    },
+    {
+      "name": "Recording Studio"
+    },
+    {
+      "name": "Regional Theatre"
+    },
+    {
+      "name": "Rendering Techniques"
+    },
+    {
+      "name": "Resident Design"
+    },
+    {
+      "name": "Retail Design"
+    },
+    {
+      "name": "Reviews & Press"
+    },
+    {
+      "name": "Rock and Roll"
+    },
+    {
+      "name": "Romantic"
+    },
+    {
+      "name": "Romero"
+    },
+    {
+      "name": "Saloon Design"
+    },
+    {
+      "name": "Sam Shepard"
+    },
+    {
+      "name": "Scale Models"
+    },
+    {
+      "name": "Scenic Design"
+    },
+    {
+      "name": "Season Announcements"
+    },
+    {
+      "name": "Season Designer"
+    },
+    {
+      "name": "Seattle Rep"
+    },
+    {
+      "name": "SEO"
+    },
+    {
+      "name": "Shakespeare"
+    },
+    {
+      "name": "Shut Up Sherlock"
+    },
+    {
+      "name": "Site-Specific"
+    },
+    {
+      "name": "Sondheim"
+    },
+    {
+      "name": "South Coast Repertory"
+    },
+    {
+      "name": "Southern Gothic"
+    },
+    {
+      "name": "Spaghetti Western"
+    },
+    {
+      "name": "Speculative Design"
+    },
+    {
+      "name": "Stephens College"
+    },
+    {
+      "name": "Summer Stock"
+    },
+    {
+      "name": "Teaching"
+    },
+    {
+      "name": "Technical Documentation"
+    },
+    {
+      "name": "Technical Skills"
+    },
+    {
+      "name": "Technology in Theatre"
+    },
+    {
+      "name": "Tennessee Williams"
+    },
+    {
+      "name": "The Fears"
+    },
+    {
+      "name": "The Pajama Game"
+    },
+    {
+      "name": "Theatre Design"
+    },
+    {
+      "name": "Theatre Festival"
+    },
+    {
+      "name": "Theatre History"
+    },
+    {
+      "name": "Theatre Production"
+    },
+    {
+      "name": "Theatre SilCo"
+    },
+    {
+      "name": "Theme Parks"
+    },
+    {
+      "name": "Themed Entertainment"
+    },
+    {
+      "name": "Thriller"
+    },
+    {
+      "name": "Thrust Stage"
+    },
+    {
+      "name": "Tom Buderwitz"
+    },
+    {
+      "name": "Tragedy"
+    },
+    {
+      "name": "UC Irvine"
+    },
+    {
+      "name": "Undegraduate Teaching"
+    },
+    {
+      "name": "Union"
+    },
+    {
+      "name": "Unit Set"
+    },
+    {
+      "name": "University of Missouri"
+    },
+    {
+      "name": "University Theatre"
+    },
+    {
+      "name": "Urban Design"
+    },
+    {
+      "name": "Urinetown"
+    },
+    {
+      "name": "URTAS"
+    },
+    {
+      "name": "USA 829"
+    },
+    {
+      "name": "Utah Shakespeare Festival"
+    },
+    {
+      "name": "UTEP"
+    },
+    {
+      "name": "Vectorworks"
+    },
+    {
+      "name": "Venue File"
+    },
+    {
+      "name": "Victorian"
+    },
+    {
+      "name": "Video Games"
+    },
+    {
+      "name": "Videogame Design"
+    },
+    {
+      "name": "Web Portfolio"
+    },
+    {
+      "name": "Website"
+    },
+    {
+      "name": "Wild West"
+    },
+    {
+      "name": "Willaim Inge"
+    },
+    {
+      "name": "William Shakespeare"
+    }
+  ],
+  "messages": [],
+  "stdout": "name\n1930s\n1950s\n1960s\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\nA Funny Thing Happened\nAbstract\nAcademic Career\nAcademic Theatre\nActing\nAI & Machine Learning\nAI & Technology\nArena\nArt Deco\nArt Direction\nArthur Miller\nAssistant Designer\nAssistant Professor\nAugust Wilson\nBlack Box\nBrand Experience\nBroadway\nBrutalism\nCareer Development\nCareer Milestone\nCase Study\nChurch Design\nCinema\nClassic Play\nClassical Theatre\nCNC Fabrication\nCo-Design\nCollaborations\nComedy\nCommercial Campaign\nCommunication\nCompany\nComputer Hardware\nConcept Rendering\nContemporary Design\nContemporary Drama\nCraftsmanship\nCurtain Architecture\nDeathtrap\nDesign Education\nDesign Philosophy\nDesign Process\nDesign Trends\nDesign Visualization\nDystopian\nDystopian Design\nDystopian Theatre\nEducation\nEdwardian\nElizabethan\nEnvironmental Storytelling\nEugene O'Neill\nExpressionist\nFabrication\nFamily Show\nFilm & Television\nFreaky Friday\nGothic\nGraduate School\nGraduation\nGreat American Melodrama\nGreek Comedy\nGreek Theatre\nGuys on Ice\nHistoric Renovation\nHistorical Drama\nHow to Succeed\nImmersive\nImmersive Experiences\nIndependent Project\nIndustrial\nIndustrial Aesthetic\nInsights\nJo Winiarski\nKeynote\nLatinx Theatre\nLED Integration\nLive Event\nLotería\nLumenati\nLysistrata\nMaude Adams\nMemory & Narrative\nMemory Play\nMFA\nMid-Century Modern\nMilestones\nMillion Dollar Quartet\nMinimalism\nMinimalist\nModel Making\nModernist\nMusical Theatre\nMusical Theatre History\nMystery\nNew Play\nNew Swan Theatre Festival\nNew Work\nNew York\nOff-Broadway\nOkoboji Summer Theatre\nOpening Night\nOpera\nOperatic Design\nOutdoor Activation\nPop-Up Installation\nPortfolio Development\nPresentation Skills\nProcess\nProduction Analysis\nProduction Debuts\nProfessional Achievement\nProfessional Debut\nProfessional Development\nProfessor\nProjection Design\nProscenium\nRealistic Interior\nRecording Studio\nRegional Theatre\nRendering Techniques\nResident Design\nRetail Design\nReviews & Press\nRock and Roll\nRomantic\nRomero\nSaloon Design\nSam Shepard\nScale Models\nScenic Design\nSeason Announcements\nSeason Designer\nSeattle Rep\nSEO\nShakespeare\nShut Up Sherlock\nSite-Specific\nSondheim\nSouth Coast Repertory\nSouthern Gothic\nSpaghetti Western\nSpeculative Design\nStephens College\nSummer Stock\nTeaching\nTechnical Documentation\nTechnical Skills\nTechnology in Theatre\nTennessee Williams\nThe Fears\nThe Pajama Game\nTheatre Design\nTheatre Festival\nTheatre History\nTheatre Production\nTheatre SilCo\nTheme Parks\nThemed Entertainment\nThriller\nThrust Stage\nTom Buderwitz\nTragedy\nUC Irvine\nUndegraduate Teaching\nUnion\nUnit Set\nUniversity of Missouri\nUniversity Theatre\nUrban Design\nUrinetown\nURTAS\nUSA 829\nUtah Shakespeare Festival\nUTEP\nVectorworks\nVenue File\nVictorian\nVideo Games\nVideogame Design\nWeb Portfolio\nWebsite\nWild West\nWillaim Inge\nWilliam Shakespeare\n",
+  "stderr": "",
+  "execution_time_ms": 73
+}

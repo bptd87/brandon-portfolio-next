@@ -1,0 +1,8 @@
+{
+  "query": "-- Create a temporary table with unique projectId-tagId pairs\nCREATE TEMPORARY TABLE temp_unique_tags AS\nSELECT MIN(CONCAT(projectId, '-', tagId)) as keep_key, projectId, tagId\nFROM projectTags\nGROUP BY projectId, tagId;\n\n-- Delete all from projectTags\nDELETE FROM projectTags;\n\n-- Re-insert unique pairs\nINSERT INTO projectTags (projectId, tagId)\nSELECT projectId, tagId FROM temp_unique_tags;\n\n-- Drop temp table\nDROP TEMPORARY TABLE temp_unique_tags;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute -- Create a temporary table with unique projectId-tagId pairs\nCREATE TEMPORARY TABLE temp_unique_tags AS\nSELECT MIN(CONCAT(projectId, '-', tagId)) as keep_key, projectId, tagId\nFROM projectTags\nGROUP BY projectId, tagId;\n\n-- Delete all from projectTags\nDELETE FROM projectTags;\n\n-- Re-insert unique pairs\nINSERT INTO projectTags (projectId, tagId)\nSELECT projectId, tagId FROM temp_unique_tags;\n\n-- Drop temp table\nDROP TEMPORARY TABLE temp_unique_tags;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1105 (HY000) at line 2: 'CREATE TABLE ... SELECT' is not implemented yet"
+  ]
+}

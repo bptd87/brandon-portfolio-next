@@ -1,0 +1,232 @@
+{
+  "query": "SELECT \n  p.id,\n  p.title,\n  p.year,\n  COUNT(pt.tagId) as tag_count\nFROM projects p\nLEFT JOIN projectTags pt ON p.id = pt.projectId\nGROUP BY p.id, p.title, p.year\nORDER BY tag_count ASC, p.year DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT \n  p.id,\n  p.title,\n  p.year,\n  COUNT(pt.tagId) as tag_count\nFROM projects p\nLEFT JOIN projectTags pt ON p.id = pt.projectId\nGROUP BY p.id, p.title, p.year\nORDER BY tag_count ASC, p.year DESC;",
+  "rows": [
+    {
+      "id": "120001",
+      "title": "The Northwind Mare Tavern",
+      "year": "2026",
+      "tag_count": "0"
+    },
+    {
+      "id": "90042",
+      "title": "Barefoot in the Park",
+      "year": "2024",
+      "tag_count": "0"
+    },
+    {
+      "id": "90041",
+      "title": "Urinetown",
+      "year": "2024",
+      "tag_count": "0"
+    },
+    {
+      "id": "90009",
+      "title": "¡LOTERIA: GAME ON!",
+      "year": "2023",
+      "tag_count": "0"
+    },
+    {
+      "id": "90049",
+      "title": "A Funny Thing Happened on the Way to the Forum",
+      "year": "2022",
+      "tag_count": "0"
+    },
+    {
+      "id": "90013",
+      "title": "Ashes of the Underworld",
+      "year": "2021",
+      "tag_count": "0"
+    },
+    {
+      "id": "90015",
+      "title": "Isolation",
+      "year": "2020",
+      "tag_count": "0"
+    },
+    {
+      "id": "90018",
+      "title": "Parliament Square",
+      "year": "2019",
+      "tag_count": "0"
+    },
+    {
+      "id": "90048",
+      "title": "The Pajama Game",
+      "year": "2019",
+      "tag_count": "0"
+    },
+    {
+      "id": "90038",
+      "title": "American Idiot",
+      "year": "2018",
+      "tag_count": "0"
+    },
+    {
+      "id": "90014",
+      "title": "Angel Food Cake",
+      "year": "2017",
+      "tag_count": "0"
+    },
+    {
+      "id": "90044",
+      "title": "Head Over Heels",
+      "year": "2023",
+      "tag_count": "2"
+    },
+    {
+      "id": "90039",
+      "title": "Tomás and the Library Lady",
+      "year": "2022",
+      "tag_count": "2"
+    },
+    {
+      "id": "90036",
+      "title": "An Inspector Calls",
+      "year": "2022",
+      "tag_count": "2"
+    },
+    {
+      "id": "90051",
+      "title": "The Penelopiad",
+      "year": "2020",
+      "tag_count": "2"
+    },
+    {
+      "id": "90043",
+      "title": "Angel Street",
+      "year": "2013",
+      "tag_count": "2"
+    },
+    {
+      "id": "90017",
+      "title": "All My Sons",
+      "year": "2010",
+      "tag_count": "2"
+    },
+    {
+      "id": "90077",
+      "title": "Romero",
+      "year": "2025",
+      "tag_count": "3"
+    },
+    {
+      "id": "90045",
+      "title": "Guys on Ice",
+      "year": "2025",
+      "tag_count": "3"
+    },
+    {
+      "id": "90056",
+      "title": "Freaky Friday",
+      "year": "2024",
+      "tag_count": "3"
+    },
+    {
+      "id": "90054",
+      "title": "Boeing, Boeing",
+      "year": "2023",
+      "tag_count": "3"
+    },
+    {
+      "id": "90053",
+      "title": "The Merry Wives of Windsor",
+      "year": "2022",
+      "tag_count": "3"
+    },
+    {
+      "id": "90019",
+      "title": "Company",
+      "year": "2019",
+      "tag_count": "3"
+    },
+    {
+      "id": "90008",
+      "title": "Rab Bothy Activation",
+      "year": "2025",
+      "tag_count": "4"
+    },
+    {
+      "id": "90047",
+      "title": "Scenic Models",
+      "year": "2024",
+      "tag_count": "4"
+    },
+    {
+      "id": "90012",
+      "title": "New Swan Venue File",
+      "year": "2020",
+      "tag_count": "4"
+    },
+    {
+      "id": "90071",
+      "title": "All's Well That Ends Well",
+      "year": "2025",
+      "tag_count": "5"
+    },
+    {
+      "id": "90007",
+      "title": "Red Bull Jukebox",
+      "year": "2024",
+      "tag_count": "5"
+    },
+    {
+      "id": "90037",
+      "title": "Red Line Café",
+      "year": "2019",
+      "tag_count": "5"
+    },
+    {
+      "id": "90016",
+      "title": "Bell, Book, and Candle",
+      "year": "2025",
+      "tag_count": "6"
+    },
+    {
+      "id": "90011",
+      "title": "First Bank Lollipop Pop Up",
+      "year": "2025",
+      "tag_count": "6"
+    },
+    {
+      "id": "90010",
+      "title": "The Glass Menagerie",
+      "year": "2025",
+      "tag_count": "6"
+    },
+    {
+      "id": "90087",
+      "title": "Million Dollar Quartet",
+      "year": "2025",
+      "tag_count": "7"
+    },
+    {
+      "id": "90089",
+      "title": "Much Ado About Nothing",
+      "year": "2025",
+      "tag_count": "7"
+    },
+    {
+      "id": "90057",
+      "title": "Park & Shop",
+      "year": "2021",
+      "tag_count": "7"
+    },
+    {
+      "id": "90035",
+      "title": "Southside Bethel Baptist Church",
+      "year": "2020",
+      "tag_count": "8"
+    },
+    {
+      "id": "90055",
+      "title": "Lysistrata",
+      "year": "2021",
+      "tag_count": "9"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tyear\ttag_count\n120001\tThe Northwind Mare Tavern\t2026\t0\n90042\tBarefoot in the Park\t2024\t0\n90041\tUrinetown\t2024\t0\n90009\t¡LOTERIA: GAME ON!\t2023\t0\n90049\tA Funny Thing Happened on the Way to the Forum\t2022\t0\n90013\tAshes of the Underworld\t2021\t0\n90015\tIsolation\t2020\t0\n90018\tParliament Square\t2019\t0\n90048\tThe Pajama Game\t2019\t0\n90038\tAmerican Idiot\t2018\t0\n90014\tAngel Food Cake\t2017\t0\n90044\tHead Over Heels\t2023\t2\n90039\tTomás and the Library Lady\t2022\t2\n90036\tAn Inspector Calls\t2022\t2\n90051\tThe Penelopiad\t2020\t2\n90043\tAngel Street\t2013\t2\n90017\tAll My Sons\t2010\t2\n90077\tRomero\t2025\t3\n90045\tGuys on Ice\t2025\t3\n90056\tFreaky Friday\t2024\t3\n90054\tBoeing, Boeing\t2023\t3\n90053\tThe Merry Wives of Windsor\t2022\t3\n90019\tCompany\t2019\t3\n90008\tRab Bothy Activation\t2025\t4\n90047\tScenic Models\t2024\t4\n90012\tNew Swan Venue File\t2020\t4\n90071\tAll's Well That Ends Well\t2025\t5\n90007\tRed Bull Jukebox\t2024\t5\n90037\tRed Line Café\t2019\t5\n90016\tBell, Book, and Candle\t2025\t6\n90011\tFirst Bank Lollipop Pop Up\t2025\t6\n90010\tThe Glass Menagerie\t2025\t6\n90087\tMillion Dollar Quartet\t2025\t7\n90089\tMuch Ado About Nothing\t2025\t7\n90057\tPark & Shop\t2021\t7\n90035\tSouthside Bethel Baptist Church\t2020\t8\n90055\tLysistrata\t2021\t9\n",
+  "stderr": "",
+  "execution_time_ms": 58
+}
