@@ -18,8 +18,6 @@ export default function Syllabus3DModeling() {
             </p>
             <div className="text-foreground/60">
               <p><strong>Instructor:</strong> Brandon PT Davis</p>
-              <p><strong>Email:</strong> bdavis@stephens.edu</p>
-              <p><strong>Phone:</strong> 573.881.0430</p>
               <p><strong>Office Hours:</strong> By Appointment</p>
             </div>
           </div>

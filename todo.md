@@ -2420,4 +2420,15 @@
 - [x] Add routes for both pages in App.tsx
 - [x] Link pages from Teaching Philosophy page
 - [x] Style pages with clean, professional layout
+- [x] Save checkpoint
+
+## Link Course Materials to Syllabi (User Request - Feb 10, 2026)
+- [ ] Find Vectorworks tutorial URL/slug
+- [ ] Add link/button on 3D Modeling syllabus page to Vectorworks tutorial
+- [ ] Find Studio Ghibli blog article URL/slug
+- [ ] Add link/button on Experiential Design syllabus page to Studio Ghibli article
+- [ ] Save checkpoint
+
+## Remove Contact Info from Syllabi (User Request - Feb 10, 2026)
+- [x] Remove phone and email from 3D Modeling syllabus
 - [ ] Save checkpoint
