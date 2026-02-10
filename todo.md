@@ -2338,9 +2338,16 @@
 ## Update Location Metadata to Include Theatre Companies (User Feedback - Feb 10, 2026)
 - [x] Update all 16 articles to include theatre company names in location field
 - [x] Format: "Theatre Company, City, State" (e.g., "Pioneer Theatre Company, Salt Lake City, UT")
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 ## Fix PublishedAt Dates for Backdated Articles (User Feedback - Feb 10, 2026)
 - [x] Update all 16 articles publishedAt to match production dates (not 2026)
 - [x] Use realistic publish dates based on when productions occurred
+- [x] Save checkpoint
+
+## Update Dallas Theatre Center Clue Article (User Request - Feb 10, 2026)
+- [x] Upload 4 production photos to S3
+- [x] Update article date to September 8, 2022
+- [x] Update cover image to showcase scenic design
+- [x] Add production photos to article body
 - [ ] Save checkpoint
