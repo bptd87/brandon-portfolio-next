@@ -2405,4 +2405,11 @@
 - [x] Remove /cv route from App.tsx
 - [x] Update ABOUT dropdown order: About → Resume / CV → Creative Statement → Teaching Philosophy → Collaborators
 - [x] Update route to /resume-cv or keep as /resume
+- [x] Save checkpoint
+
+## Remove Pixel Fonts from Resume Page (User Request - Feb 10, 2026)
+- [x] Replace font-pixel class with cleaner typography
+- [x] Update "RESUME / CV" header styling
+- [x] Update "SCENIC DESIGN" and "ASSISTANT SCENIC DESIGN" section headers
+- [x] Test new typography looks professional
 - [ ] Save checkpoint

@@ -15,7 +15,7 @@ export default function Resume() {
 
           {/* Hero */}
           <div className="mb-12">
-            <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4 font-pixel">RESUME / CV</p>
+            <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">RESUME / CV</p>
             <div className="flex items-end justify-between gap-8 flex-wrap">
               <div>
                 <h1 className="text-5xl md:text-7xl font-serif mb-4 leading-tight">Production History</h1>
@@ -42,7 +42,7 @@ export default function Resume() {
 
           {/* Scenic Design Table */}
           <div className="mb-16">
-            <h2 className="text-xs uppercase tracking-widest text-muted-foreground mb-6 font-pixel">SCENIC DESIGN</h2>
+            <h2 className="text-xs uppercase tracking-widest text-muted-foreground mb-6 font-semibold">SCENIC DESIGN</h2>
             
             <div className="backdrop-blur-md bg-card/30 border border-border/50 rounded-2xl overflow-hidden">
               <div className="overflow-x-auto">
@@ -796,7 +796,7 @@ export default function Resume() {
 
           {/* Assistant Scenic Design Table */}
           <div className="mb-20">
-            <h2 className="text-xs uppercase tracking-widest text-muted-foreground mb-6 font-pixel">ASSISTANT SCENIC DESIGN</h2>
+            <h2 className="text-xs uppercase tracking-widest text-muted-foreground mb-6 font-semibold">ASSISTANT SCENIC DESIGN</h2>
             
             <div className="backdrop-blur-md bg-card/30 border border-border/50 rounded-2xl overflow-hidden">
               <div className="overflow-x-auto">
