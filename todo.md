@@ -2291,13 +2291,14 @@
 - [x] Souvenir (2024, Pioneer Theatre)
 - [x] Ragtime (2024, The Ruth: Hale Orem)
 - [x] Natasha, Pierre, and the Great Comet of 1812 (2024, Pioneer Theatre Company)
+- [x] Checkpoint saved with 10 articles complete
 - [ ] Jersey Boys (2024, Pioneer Theatre Company)
 - [ ] Native Gardens (2023, Pioneer Theatre Company)
 - [ ] Bottle Shock (2023, California Center for the Arts, Escondido)
 - [ ] A Distinct Society (2022, Pioneer Theatre/Theatre Works Silicon Valley)
 - [ ] Clue On Stage (2022, Dallas Theatre Center)
 - [ ] The King and I (2010, Arrow Rock Lyceum Theatre, designer: Ryan J Zirngibl)
-- [ ] Save checkpoint after all articles complete
+- [ ] Save final checkpoint after all 16 articles complete
 
 ## Fix Production Dates in All Articles (User Feedback - Feb 10, 2026)
 - [x] Research actual production dates for all created articles
@@ -2310,3 +2311,17 @@
 - [x] The Book Club Play dates correct (March 22 - April 20, 2025)
 - [x] Souvenir dates correct (December 6-21, 2024)
 - [x] Ragtime dates correct (January 4 - February 22, 2025)
+
+## Fix Utah Shakespeare Festival Articles (User Feedback - Feb 10, 2026)
+- [ ] Fix USF 2021: Research individual show dates, directors, complete creative teams for Pirates of Penzance and Ragtime
+- [ ] Fix USF 2021: Find production photos showcasing scenic design for each show
+- [ ] Fix USF 2022: Research individual show dates, directors, complete creative teams for Trouble in Mind, Clue, Sound of Music
+- [ ] Fix USF 2022: Find production photos showcasing scenic design for each show
+- [ ] Fix USF 2023: Research individual show dates, directors, complete creative teams for Romeo & Juliet, Midsummer Night's Dream
+- [ ] Fix USF 2023: Find production photos showcasing scenic design for each show
+- [ ] Fix USF 2024: Research individual show dates, directors, complete creative teams for Mountain Top, Silent Sky
+- [ ] Fix USF 2024: Find production photos showcasing scenic design for each show
+- [ ] Fix USF 2025: Research individual show dates, directors, complete creative teams for Importance of Being Earnest, Gentleman's Guide, Steel Magnolias
+- [ ] Fix USF 2025: Find production photos showcasing scenic design for each show
+- [ ] Update all 5 USF articles with corrected information
+- [ ] Save checkpoint
