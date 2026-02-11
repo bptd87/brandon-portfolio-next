@@ -3071,3 +3071,8 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Verified 1,812.7 KiB savings on this batch
 - [x] Combined total: 33 projects resized, 2,353.2 KiB (2.3 MB) total savings
 - [ ] Save checkpoint
+
+## Preconnect Optimization - Feb 11
+- [x] Remove unused CloudFront preconnect hint
+- [x] Add manus-analytics.com preconnect (310ms LCP savings)
+- [ ] Save checkpoint
