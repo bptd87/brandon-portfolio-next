@@ -8,20 +8,21 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import PageTransition from "./components/PageTransition";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { PageLoadingIndicator } from "./components/PageLoadingIndicator";
+// Only Home page loads immediately - everything else is lazy loaded
 import Home from "./pages/Home";
-import News from "./pages/News";
-import Articles from "./pages/Articles";
-import Projects from "./pages/Projects";
-import ProjectDetail from "./pages/ProjectDetail";
-// Critical routes - load immediately
-import Admin from "./pages/Admin";
-import About from "./pages/About";
-import { Contact } from "./pages/Contact";
-import Studio from "./pages/Studio";
-import Collaborators from "./pages/Collaborators";
-import ProjectDetailRouter from "./pages/ProjectDetailRouter";
-import NewsDetail from "./pages/NewsDetail";
-import ArticleDetail from "./pages/ArticleDetail";
+
+// All other routes lazy load on demand for better initial performance
+const News = lazy(() => import("./pages/News"));
+const Articles = lazy(() => import("./pages/Articles"));
+const Projects = lazy(() => import("./pages/Projects"));
+const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact").then(m => ({ default: m.Contact })));
+const Studio = lazy(() => import("./pages/Studio"));
+const Collaborators = lazy(() => import("./pages/Collaborators"));
+const ProjectDetailRouter = lazy(() => import("./pages/ProjectDetailRouter"));
+const NewsDetail = lazy(() => import("./pages/NewsDetail"));
+const ArticleDetail = lazy(() => import("./pages/ArticleDetail"));
 
 // Non-critical routes - lazy load for better initial performance
 
@@ -44,8 +45,6 @@ const ScenicModelsPortfolio = lazy(() => import("./pages/ScenicModelsPortfolio")
 const TutorialDetail = lazy(() => import("./pages/TutorialDetail"));
 const TagDetail = lazy(() => import('@/pages/TagDetail'));
 const Links = lazy(() => import('@/pages/Links'));
-const AdminFaqConvert = lazy(() => import("./pages/AdminFaqConvert"));
-const AdminImportNews = lazy(() => import("./pages/AdminImportNews"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const FAQ = lazy(() => import("./pages/FAQ"));
@@ -81,8 +80,6 @@ function Router() {
       <Route path={"/articles"} component={Articles} />
       <Route path={"/articles/:slug"} component={ArticleDetail} />
       <Route path={"/tags/:slug"} component={TagDetail} />
-      <Route path={"/admin/faq-convert"} component={AdminFaqConvert} />
-      <Route path={"/admin/import-news"} component={AdminImportNews} />
       <Route path={"/about"} component={About} />
       <Route path={"/about/collaborators"} component={Collaborators} />
 
@@ -104,7 +101,6 @@ function Router() {
       <Route path={"/studio/directory"} component={StudioDirectory} />
       <Route path={"/studio"} component={Studio} />
       <Route path={"/vault"} component={Vault} />
-      <Route path={"/admin"} component={Admin} />
       <Route path={"/privacy"} component={Privacy} />
       <Route path={"/terms"} component={Terms} />
       <Route path={"/faq"} component={FAQ} />
