@@ -2799,4 +2799,11 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Upload all images to S3 (90/90 successful, created mapping for all 582 URLs)
 - [x] Update all articles with S3 URLs (15 articles updated)
 - [x] Verify all articles render correctly (tested sample article - all 7 images loading from S3)
-- [ ] Save checkpoint
+- [x] Save checkpoint
+
+## Improve PageSpeed Insights Performance and Accessibility Scores (Feb 10, 2026)
+- [x] Analyze current PageSpeed Insights scores and identify issues (Performance: 57, Accessibility: 84, LCP: 32.1s!)
+- [x] Fix performance issues (added responsive srcset to all images, improved lazy loading, better contrast)
+- [x] Fix accessibility issues (improved color contrast for muted-foreground, verified ARIA labels present)
+- [ ] Retest with PageSpeed Insights to verify improvements (after publish)
+- [x] Save checkpoint

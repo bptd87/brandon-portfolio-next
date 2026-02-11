@@ -1,5 +1,23 @@
 import { useState, useEffect } from 'react';
 
+// Generate srcset for responsive images
+function generateSrcSet(src: string): string {
+  // Check if URL is from manuscdn or cloudfront
+  if (src.includes('manuscdn.com') || src.includes('cloudfront.net')) {
+    // For CDN images, generate multiple sizes
+    const widths = [640, 750, 828, 1080, 1200, 1920];
+    return widths
+      .map(w => {
+        // Add width parameter to URL (works with most CDNs)
+        const separator = src.includes('?') ? '&' : '?';
+        return `${src}${separator}w=${w} ${w}w`;
+      })
+      .join(', ');
+  }
+  // For other images, return empty srcset (will use src only)
+  return '';
+}
+
 interface ProgressiveImageProps {
   src: string;
   alt: string;
@@ -9,6 +27,7 @@ interface ProgressiveImageProps {
   aspectRatio?: string;
   objectFit?: 'cover' | 'contain';
   smartPosition?: boolean; // Enable automatic orientation detection
+  sizes?: string; // Responsive sizes attribute
 }
 
 export function ProgressiveImage({
@@ -20,6 +39,7 @@ export function ProgressiveImage({
   aspectRatio,
   objectFit = 'cover',
   smartPosition = false,
+  sizes,
 }: ProgressiveImageProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -67,6 +87,8 @@ export function ProgressiveImage({
       {/* Actual image - NO transitions at all */}
       <img
         src={src}
+        srcSet={generateSrcSet(src)}
+        sizes={sizes || '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
         alt={alt}
         className={`
           w-full h-full 

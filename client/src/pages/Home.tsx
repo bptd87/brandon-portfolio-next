@@ -144,8 +144,20 @@ export default function Home() {
             >
               <img
                 src={image.url}
+                srcSet={`
+                  ${image.url}?w=640 640w,
+                  ${image.url}?w=750 750w,
+                  ${image.url}?w=828 828w,
+                  ${image.url}?w=1080 1080w,
+                  ${image.url}?w=1200 1200w,
+                  ${image.url}?w=1920 1920w,
+                  ${image.url}?w=2048 2048w
+                `}
+                sizes="100vw"
                 alt={`${image.title} - Scenic design by Brandon PT Davis`}
                 className="w-full h-full object-cover"
+                loading={index === 0 ? 'eager' : 'lazy'}
+                decoding="async"
               />
               {/* Dark overlay for text readability */}
               <div className="absolute inset-0 bg-black/40" />
@@ -274,6 +286,7 @@ export default function Home() {
                               aspectRatio="4/3"
                               smartPosition={true}
                               loading="lazy"
+                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                             />
                           ) : (
                             <div className="w-full h-full bg-muted flex items-center justify-center">
@@ -366,8 +379,17 @@ export default function Home() {
                           <div className="relative w-full aspect-[16/9] overflow-hidden">
                             <img
                               src={news.coverImageUrl}
+                              srcSet={`
+                                ${news.coverImageUrl}?w=640 640w,
+                                ${news.coverImageUrl}?w=750 750w,
+                                ${news.coverImageUrl}?w=828 828w,
+                                ${news.coverImageUrl}?w=1080 1080w
+                              `}
+                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                               alt={news.title}
                               className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                              loading="lazy"
+                              decoding="async"
                             />
                           </div>
                         )}
