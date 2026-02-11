@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 // Apply Cloudinary transformations for automatic optimization
-function applyCloudinaryTransformations(src: string, width?: number): string {
+function applyCloudinaryTransformations(src: string, width?: number, pixelated?: boolean): string {
   // Only transform Cloudinary URLs
   if (!src.includes('cloudinary.com')) {
     return src;
@@ -17,19 +17,26 @@ function applyCloudinaryTransformations(src: string, width?: number): string {
   // Build transformation string
   const transformations = [];
   
-  // Automatic format (WebP with fallback)
-  transformations.push('f_auto');
-  
-  // Quality optimization (85% - good balance)
-  transformations.push('q_85');
-  
-  // Responsive width if specified
-  if (width) {
-    transformations.push(`w_${width}`);
+  if (pixelated) {
+    // Pixelated placeholder: tiny 20px width, pixelated effect
+    transformations.push('w_20');
+    transformations.push('e_pixelate:8');
+    transformations.push('q_auto:low');
+  } else {
+    // Normal image: automatic format (WebP with fallback)
+    transformations.push('f_auto');
+    
+    // Quality optimization (85% - good balance)
+    transformations.push('q_85');
+    
+    // Responsive width if specified
+    if (width) {
+      transformations.push(`w_${width}`);
+    }
+    
+    // Auto DPR (device pixel ratio)
+    transformations.push('dpr_auto');
   }
-  
-  // Auto DPR (device pixel ratio)
-  transformations.push('dpr_auto');
 
   const transformString = transformations.join(',');
   
@@ -63,6 +70,7 @@ interface ProgressiveImageProps {
   smartPosition?: boolean; // Enable automatic orientation detection
   sizes?: string; // Responsive sizes attribute
   width?: number; // Target width for optimization
+  preloadMargin?: string; // Intersection observer margin for preloading (default: '200px')
 }
 
 export function ProgressiveImage({
@@ -77,13 +85,40 @@ export function ProgressiveImage({
   smartPosition = false,
   sizes,
   width,
+  preloadMargin = '200px',
 }: ProgressiveImageProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [shouldLoad, setShouldLoad] = useState(loading === 'eager');
   const [objectPosition, setObjectPosition] = useState<string>('object-center');
+  const imgRef = useRef<HTMLDivElement>(null);
 
+  // Intersection Observer for preloading
   useEffect(() => {
-    if (!smartPosition) return;
+    if (loading === 'eager' || !imgRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setShouldLoad(true);
+            observer.disconnect();
+          }
+        });
+      },
+      {
+        rootMargin: preloadMargin, // Start loading before entering viewport
+      }
+    );
+
+    observer.observe(imgRef.current);
+
+    return () => observer.disconnect();
+  }, [loading, preloadMargin]);
+
+  // Smart positioning for portrait vs landscape
+  useEffect(() => {
+    if (!smartPosition || !shouldLoad) return;
     
     const img = new Image();
     img.src = src;
@@ -96,23 +131,34 @@ export function ProgressiveImage({
         setObjectPosition('object-center');
       }
     };
-  }, [src, smartPosition]);
+  }, [src, smartPosition, shouldLoad]);
 
   // Apply Cloudinary transformations to src
   const optimizedSrc = applyCloudinaryTransformations(src, width);
+  const pixelatedSrc = applyCloudinaryTransformations(src, undefined, true);
   const srcSet = generateSrcSet(src);
 
   return (
     <div 
+      ref={imgRef}
       className="relative overflow-hidden bg-muted/10"
       style={aspectRatio ? { aspectRatio } : undefined}
     >
-      {/* Skeleton loader - shown while loading */}
-      {!imageLoaded && !imageError && (
+      {/* Pixelated placeholder - shown while loading */}
+      {!imageLoaded && !imageError && shouldLoad && (
+        <img
+          src={pixelatedSrc}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover blur-[2px] scale-105"
+          style={{ imageRendering: 'pixelated' }}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Skeleton loader - shown before intersection */}
+      {!shouldLoad && (
         <div className="absolute inset-0 bg-muted/30">
-          <div 
-            className="w-full h-full relative overflow-hidden"
-          >
+          <div className="w-full h-full relative overflow-hidden">
             {/* Shimmer effect */}
             <div 
               className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite]"
@@ -125,26 +171,28 @@ export function ProgressiveImage({
       )}
 
       {/* Actual image with Cloudinary optimizations */}
-      <img
-        src={optimizedSrc}
-        srcSet={srcSet}
-        sizes={sizes || '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
-        alt={alt}
-        className={`
-          w-full h-full 
-          ${objectFit === 'cover' ? 'object-cover' : 'object-contain'}
-          ${smartPosition ? objectPosition : ''}
-          ${imageLoaded ? 'opacity-100' : 'opacity-0'}
-          ${className}
-        `}
-        style={{ transition: 'none' }} // Explicitly disable all transitions
-        onClick={onClick}
-        loading={loading}
-        fetchPriority={fetchPriority}
-        decoding="async"
-        onLoad={() => setImageLoaded(true)}
-        onError={() => setImageError(true)}
-      />
+      {shouldLoad && (
+        <img
+          src={optimizedSrc}
+          srcSet={srcSet}
+          sizes={sizes || '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
+          alt={alt}
+          className={`
+            w-full h-full 
+            ${objectFit === 'cover' ? 'object-cover' : 'object-contain'}
+            ${smartPosition ? objectPosition : ''}
+            ${imageLoaded ? 'opacity-100' : 'opacity-0'}
+            transition-opacity duration-300
+            ${className}
+          `}
+          onClick={onClick}
+          loading={loading}
+          fetchPriority={fetchPriority}
+          decoding="async"
+          onLoad={() => setImageLoaded(true)}
+          onError={() => setImageError(true)}
+        />
+      )}
 
       {/* Error state */}
       {imageError && (

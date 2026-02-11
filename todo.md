@@ -3094,3 +3094,7 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [ ] Update frontend to use Cloudinary transformation URLs (auto-resize, WebP)
 - [ ] Test image loading and verify performance improvements
 - [ ] Save checkpoint
+
+## Advanced Image Loading Features
+- [x] Implement intersection observer with preload thresholds for smoother scrolling
+- [x] Add pixelated placeholder system using Cloudinary transformations
