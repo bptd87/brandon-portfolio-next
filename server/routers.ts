@@ -1018,6 +1018,52 @@ export const appRouter = router({
         return await db.getCollaboratorProjects(input.collaboratorId);
       }),
   }),
+
+  // ============ IMAGE UPLOAD WITH COMPRESSION ============
+  images: router({
+    uploadOptimized: protectedProcedure
+      .input(z.object({
+        base64: z.string(),
+        filename: z.string(),
+        maxWidth: z.number().optional().default(2048),
+        quality: z.number().min(1).max(100).optional().default(85),
+      }))
+      .mutation(async ({ input }) => {
+        const { compressImage } = await import('./imageCompression');
+        
+        // Decode base64 to buffer
+        const base64Data = input.base64.replace(/^data:image\/\w+;base64,/, '');
+        const inputBuffer = Buffer.from(base64Data, 'base64');
+        
+        // Compress image
+        const compressed = await compressImage(inputBuffer, {
+          maxWidth: input.maxWidth,
+          quality: input.quality,
+          format: 'webp'
+        });
+        
+        // Generate filename with .webp extension
+        const baseFilename = input.filename.replace(/\.[^/.]+$/, '');
+        const filename = `${baseFilename}-optimized.webp`;
+        
+        // Upload to S3
+        const result = await storagePut(
+          `optimized-images/${filename}`,
+          compressed.buffer,
+          'image/webp'
+        );
+        
+        return {
+          url: result.url,
+          originalSize: inputBuffer.length,
+          compressedSize: compressed.size,
+          compressionRatio: ((1 - compressed.size / inputBuffer.length) * 100).toFixed(1) + '%',
+          width: compressed.width,
+          height: compressed.height,
+          format: compressed.format
+        };
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

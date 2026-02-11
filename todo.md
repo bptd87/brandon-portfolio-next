@@ -2851,4 +2851,16 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Update news table coverImageUrl (0 - none had CloudFront URLs)
 - [x] Update articles table (0 - already migrated earlier)  
 - [x] Verify no CloudFront URLs remain in any table (4 remaining in projects - URLs with spaces that couldn't be downloaded)
+- [x] Save checkpoint
+
+## Verify PageSpeed Improvements After S3 Migration (Feb 11, 2026)
+- [x] Run fresh PageSpeed Insights test on published site
+- [x] Compare to previous scores (Performance: 49, LCP: 15.3s)
+- [x] Document improvements and remaining issues (Performance: 54, LCP: 15.1s)
+
+## Implement Server-Side Image Compression (Feb 11, 2026)
+- [x] Install sharp image processing library
+- [x] Create image compression utility function
+- [x] Create tRPC procedure for optimized image upload (images.uploadOptimized)
+- [x] Test image upload and verify compression (endpoint ready, tested with 505KB image)
 - [ ] Save checkpoint
