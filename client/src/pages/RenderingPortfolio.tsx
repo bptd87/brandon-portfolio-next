@@ -4,34 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { AnimatedSection } from "@/components/AnimatedSection";
-import { FAQSection } from "@/components/FAQSection";
-
-const renderingFaqs = [
-  {
-    question: "What makes a rendering successful?",
-    answer: "A successful rendering doesn't just document space\u2014it communicates emotion, narrative, and atmosphere. It's about choosing what to reveal and what to withhold. Composition guides the eye. Light establishes mood. Material choices carry memory and history. When these elements align with the story you're telling, the rendering transcends technical accuracy and becomes a piece of visual storytelling."
-  },
-  {
-    question: "How do you approach composition in renderings?",
-    answer: "Every frame is a deliberate choice. I start by asking: where should the viewer's eye enter? What's the focal point? What remains in shadow? Composition isn't about filling space\u2014it's about building visual hierarchy that serves the narrative. I use the rule of thirds, leading lines, and negative space to create tension, balance, or unease depending on what the project demands."
-  },
-  {
-    question: "What's your philosophy on light and atmosphere?",
-    answer: "Light is emotion. It defines time of day, temperature, and psychological tension. I approach lighting like a cinematographer\u2014motivated sources, intentional shadows, and atmospheric depth. Fog, haze, and volumetric effects aren't decoration; they create separation between foreground and background, add mystery, and remind the viewer they're looking at a moment in time, not just geometry."
-  },
-  {
-    question: "How do you collaborate with directors and designers?",
-    answer: "I start by understanding the narrative and emotional goals of the project. What feeling should this space evoke? What's the story being told? From there, I work iteratively\u2014sharing early compositions, testing lighting scenarios, and refining based on feedback. The best collaborations happen when the rendering process becomes part of the design conversation, not just documentation of decisions already made."
-  },
-  {
-    question: "What's the difference between documentation and storytelling?",
-    answer: "Documentation shows what a space looks like. Storytelling shows what it feels like. Documentation is neutral, objective, complete. Storytelling is authored\u2014it has a point of view, a mood, a sense of time and place. I'm not interested in creating architectural photography. I'm interested in creating images that make you want to step into the world they depict."
-  },
-  {
-    question: "What is Authored Composite Rendering?",
-    answer: "It's my approach to blending traditional 3D rendering with modern post-production techniques. Every image begins with authored geometry, intentional lighting, and curated materials. The composite phase\u2014whether through Photoshop, AI tools, or other methods\u2014refines atmospherics, enhances textures, and accelerates iteration. The result is faster turnaround without sacrificing artistic control. The craft is in knowing what to build, what to enhance, and what to leave alone."
-  }
-];
+import { RenderingFAQ } from "@/components/RenderingFAQ";
 
 export default function RenderingPortfolio() {
   const { data: projects, isLoading } = trpc.projects.list.useQuery({ 
@@ -286,11 +259,7 @@ export default function RenderingPortfolio() {
         </div>
       </section>
 
-      <FAQSection
-        title="The Craft"
-        subtitle="On rendering as an art form, design philosophy, and the process behind the images."
-        items={renderingFaqs}
-      />
+      <RenderingFAQ />
 
       <Footer />
     </div>

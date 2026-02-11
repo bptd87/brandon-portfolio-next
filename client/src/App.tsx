@@ -5,7 +5,9 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch, useLocation } from "wouter";
 import { lazy, Suspense } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
+import PageTransition from "./components/PageTransition";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { PageLoadingIndicator } from "./components/PageLoadingIndicator";
 // Only Home page loads immediately - everything else is lazy loaded
 import Home from "./pages/Home";
 
@@ -59,6 +61,7 @@ function Router() {
   
   // make sure to consider if you need authentication for certain routes
   return (
+    <PageTransition>
       <Suspense fallback={
         <div className="min-h-screen flex items-center justify-center bg-background">
           <div className="animate-pulse text-muted-foreground">Loading...</div>
@@ -109,6 +112,7 @@ function Router() {
       <Route component={NotFound} />
       </Switch>
       </Suspense>
+    </PageTransition>
   );
 }
 
@@ -125,6 +129,7 @@ function App() {
         switchable={false}
       >
         <div className="min-h-screen bg-gradient-premium">
+          <PageLoadingIndicator />
           <TooltipProvider>
             <Toaster />
             <Router />
