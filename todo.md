@@ -3064,3 +3064,10 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Update database with new URLs
 - [x] Verified 540.5 KiB total savings (Guys on Ice: 233→74.5, Romero: 158→41.3, plus 6 more: 539→273)
 - [ ] Save checkpoint
+
+## Resize Remaining 29 Project Images - Feb 11
+- [x] Identify all projects that haven't been resized yet (29 found)
+- [x] Resize all remaining images to 800px width (25 succeeded, 4 failed with 403)
+- [x] Verified 1,812.7 KiB savings on this batch
+- [x] Combined total: 33 projects resized, 2,353.2 KiB (2.3 MB) total savings
+- [ ] Save checkpoint
