@@ -2889,4 +2889,11 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Add lazy loading to carousel images (except first) - eager for first, lazy for rest
 - [x] Add lazy loading to project grid images - ProgressiveImage defaults to lazy
 - [x] Test lazy loading behavior - verified in code, will test in browser after deploy
-- [ ] Save checkpoint
+- [x] Save checkpoint - checkpoint 3ae00a9a ready
+
+## Fix Critical Performance Regressions (Feb 11, 2026)
+- [x] Replace carousel raw img tags with ProgressiveImage component
+- [x] Restore viewport zoom (remove maximum-scale=1)
+- [x] Restore carousel dot touch targets - 48px with invisible padding
+- [x] Verify database has uncompressed image URLs - has compressed, but proxy will handle sizing
+- [ ] Test and save checkpoint

@@ -142,22 +142,11 @@ export default function Home() {
                 index === currentSlide ? 'opacity-100' : 'opacity-0'
               }`}
             >
-              <img
+              <ProgressiveImage
                 src={image.url}
-                srcSet={`
-                  ${image.url}?w=640 640w,
-                  ${image.url}?w=750 750w,
-                  ${image.url}?w=828 828w,
-                  ${image.url}?w=1080 1080w,
-                  ${image.url}?w=1200 1200w,
-                  ${image.url}?w=1920 1920w,
-                  ${image.url}?w=2048 2048w
-                `}
-                sizes="100vw"
                 alt={image.title}
                 loading={index === 0 ? 'eager' : 'lazy'}
-                fetchPriority={index === 0 ? 'high' : undefined}
-                decoding="async"
+                sizes="100vw"
                 className="w-full h-full object-cover"
               />
               {/* Dark overlay for text readability */}
@@ -193,11 +182,11 @@ export default function Home() {
                     setCurrentSlide(index);
                     setIsAutoPlaying(false);
                   }}
-                  className={`w-2 h-2 rounded-full transition-all ${
+                  className={`relative p-4 ${
                     index === currentSlide
-                      ? 'bg-white w-8'
-                      : 'bg-white/50 hover:bg-white/75'
-                  }`}
+                      ? 'after:bg-white after:w-8 after:h-2'
+                      : 'after:bg-white/50 hover:after:bg-white/75 after:w-2 after:h-2'
+                  } after:content-[''] after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:transition-all`}
                   aria-label={`Go to slide ${index + 1}`}
                 />
               ))}
