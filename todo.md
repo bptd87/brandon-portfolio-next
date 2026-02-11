@@ -2885,10 +2885,19 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [ ] Fix color contrast for VIEW WORK button
 - [ ] Fix color contrast for START A PROJECT link
 - [ ] Test accessibility improvements
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 ## Revised Accessibility Approach (Feb 11, 2026)
 - [x] Revert carousel dots to small visual size (8px) with invisible padding for 48px touch targets
 - [x] Skip color contrast changes (buttons already use white text on orange background, which passes for large/bold text)
 - [x] Test carousel dots with new approach
+- [x] Save checkpoint
+
+## Batch Compress Project Cover Images (Feb 11, 2026)
+- [x] Query database for all project cover image URLs
+- [x] Download all cover images
+- [x] Compress each image using sharp (WebP, 80% quality)
+- [x] Upload compressed images to S3
+- [x] Update database with new compressed URLs
+- [x] Verify file size reductions (expecting 50-70% reduction) - achieved 82% reduction!
 - [ ] Save checkpoint
