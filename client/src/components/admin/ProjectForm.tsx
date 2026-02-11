@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useId } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,6 +18,24 @@ import { Badge } from "@/components/ui/badge";
 import { Loader2, X, Plus, GripVertical, ArrowLeft, Save, Info, Search } from "lucide-react";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+  rectSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 interface ProjectFormProps {
   projectId?: number;
@@ -62,6 +80,172 @@ const COMMON_ROLES = [
   "Producer",
   "Associate Director",
 ];
+
+/* ===== Sortable Team Member Item ===== */
+function SortableTeamMember({
+  id,
+  member,
+  index,
+  onUpdate,
+  onRemove,
+}: {
+  id: string;
+  member: TeamMember;
+  index: number;
+  onUpdate: (index: number, field: 'name' | 'role', value: string) => void;
+  onRemove: (index: number) => void;
+}) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+    zIndex: isDragging ? 50 : undefined,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className={`flex items-center gap-3 p-3 rounded-lg border bg-card ${
+        isDragging ? 'shadow-lg ring-2 ring-primary' : ''
+      }`}
+    >
+      <button
+        type="button"
+        className="cursor-grab active:cursor-grabbing touch-none p-1 rounded hover:bg-accent"
+        {...attributes}
+        {...listeners}
+      >
+        <GripVertical className="h-4 w-4 text-muted-foreground" />
+      </button>
+      <div className="flex-1 grid grid-cols-2 gap-3">
+        <Input
+          value={member.role}
+          onChange={(e) => onUpdate(index, 'role', e.target.value)}
+          placeholder="Role"
+          className="font-medium"
+        />
+        <Input
+          value={member.name}
+          onChange={(e) => onUpdate(index, 'name', e.target.value)}
+          placeholder="Name"
+        />
+      </div>
+      <Button
+        type="button"
+        variant="ghost"
+        size="sm"
+        onClick={() => onRemove(index)}
+        className="flex-shrink-0 text-destructive hover:text-destructive"
+      >
+        <X className="h-4 w-4" />
+      </Button>
+    </div>
+  );
+}
+
+/* ===== Sortable Gallery Image Item ===== */
+function SortableGalleryImage({
+  id,
+  img,
+  index,
+  onUpdateField,
+  onRemove,
+}: {
+  id: string;
+  img: ImageUpload;
+  index: number;
+  onUpdateField: (index: number, field: string, value: string) => void;
+  onRemove: (index: number) => void;
+}) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+    zIndex: isDragging ? 50 : undefined,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className={`relative rounded-lg border overflow-hidden ${
+        isDragging ? 'shadow-lg ring-2 ring-primary' : ''
+      }`}
+    >
+      {/* Drag handle overlay */}
+      <button
+        type="button"
+        className="absolute top-2 left-2 z-10 cursor-grab active:cursor-grabbing touch-none p-1.5 rounded bg-black/60 hover:bg-black/80 text-white"
+        {...attributes}
+        {...listeners}
+      >
+        <GripVertical className="h-4 w-4" />
+      </button>
+
+      {img.videoUrl ? (
+        <div className="aspect-video bg-muted flex items-center justify-center p-4">
+          <span className="text-xs text-center break-all text-muted-foreground">
+            Video: {img.videoUrl}
+          </span>
+        </div>
+      ) : (
+        <img
+          src={img.url}
+          alt={img.caption || "Gallery image"}
+          className="w-full aspect-video object-cover"
+        />
+      )}
+      <div className="p-3 space-y-2">
+        <Input
+          placeholder="Caption"
+          value={img.caption || ""}
+          onChange={(e) => onUpdateField(index, 'caption', e.target.value)}
+          className="text-sm"
+        />
+        <Input
+          placeholder="Alt text"
+          value={img.altText || ""}
+          onChange={(e) => onUpdateField(index, 'altText', e.target.value)}
+          className="text-sm"
+        />
+        <div className="flex items-center justify-between">
+          <Badge variant="outline" className="text-xs">
+            {img.imageType}
+          </Badge>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={() => onRemove(index)}
+            className="text-destructive hover:text-destructive h-7"
+          >
+            <X className="h-3 w-3 mr-1" />
+            Remove
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function ProjectForm({ projectId }: ProjectFormProps) {
   const [, navigate] = useLocation();
@@ -207,6 +391,47 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
       }
     }
   }, [fullProject]);
+
+  // DnD sensors
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  );
+
+  // Stable IDs for sortable items
+  const teamMemberIds = useMemo(
+    () => teamMembers.map((_, i) => `team-${i}`),
+    [teamMembers.length]
+  );
+
+  const galleryImageIds = useMemo(
+    () => galleryImages.map((_, i) => `gallery-${i}`),
+    [galleryImages.length]
+  );
+
+  const handleTeamDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+    const oldIndex = teamMemberIds.indexOf(active.id as string);
+    const newIndex = teamMemberIds.indexOf(over.id as string);
+    if (oldIndex !== -1 && newIndex !== -1) {
+      setTeamMembers((prev) => arrayMove(prev, oldIndex, newIndex));
+    }
+  };
+
+  const handleGalleryDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+    const oldIndex = galleryImageIds.indexOf(active.id as string);
+    const newIndex = galleryImageIds.indexOf(over.id as string);
+    if (oldIndex !== -1 && newIndex !== -1) {
+      setGalleryImages((prev) => {
+        const reordered = arrayMove(prev, oldIndex, newIndex);
+        // Update sortOrder to match new positions
+        return reordered.map((img, i) => ({ ...img, sortOrder: i }));
+      });
+    }
+  };
 
   // Filtered tags for search
   const filteredTags = useMemo(() => {
@@ -738,37 +963,31 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    {/* Existing team members */}
+                    {/* Existing team members - drag to reorder */}
                     {teamMembers.length > 0 && (
-                      <div className="space-y-2">
-                        {teamMembers.map((member, index) => (
-                          <div key={index} className="flex items-center gap-3 p-3 rounded-lg border bg-card">
-                            <GripVertical className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                            <div className="flex-1 grid grid-cols-2 gap-3">
-                              <Input
-                                value={member.role}
-                                onChange={(e) => handleUpdateTeamMember(index, 'role', e.target.value)}
-                                placeholder="Role"
-                                className="font-medium"
+                      <DndContext
+                        sensors={sensors}
+                        collisionDetection={closestCenter}
+                        onDragEnd={handleTeamDragEnd}
+                      >
+                        <SortableContext items={teamMemberIds} strategy={verticalListSortingStrategy}>
+                          <div className="space-y-2">
+                            <p className="text-xs text-muted-foreground flex items-center gap-1">
+                              <GripVertical className="h-3 w-3" /> Drag to reorder team members
+                            </p>
+                            {teamMembers.map((member, index) => (
+                              <SortableTeamMember
+                                key={teamMemberIds[index]}
+                                id={teamMemberIds[index]}
+                                member={member}
+                                index={index}
+                                onUpdate={handleUpdateTeamMember}
+                                onRemove={handleRemoveTeamMember}
                               />
-                              <Input
-                                value={member.name}
-                                onChange={(e) => handleUpdateTeamMember(index, 'name', e.target.value)}
-                                placeholder="Name"
-                              />
-                            </div>
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => handleRemoveTeamMember(index)}
-                              className="flex-shrink-0 text-destructive hover:text-destructive"
-                            >
-                              <X className="h-4 w-4" />
-                            </Button>
+                            ))}
                           </div>
-                        ))}
-                      </div>
+                        </SortableContext>
+                      </DndContext>
                     )}
 
                     {/* Add new member */}
@@ -885,54 +1104,29 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
                   </CardHeader>
                   <CardContent>
                     {galleryImages.length > 0 ? (
-                      <div className="grid grid-cols-3 gap-4">
-                        {galleryImages.map((img, index) => (
-                          <div key={index} className="relative rounded-lg border overflow-hidden">
-                            {img.videoUrl ? (
-                              <div className="aspect-video bg-muted flex items-center justify-center p-4">
-                                <span className="text-xs text-center break-all text-muted-foreground">
-                                  Video: {img.videoUrl}
-                                </span>
-                              </div>
-                            ) : (
-                              <img
-                                src={img.url}
-                                alt={img.caption || "Gallery image"}
-                                className="w-full aspect-video object-cover"
+                      <DndContext
+                        sensors={sensors}
+                        collisionDetection={closestCenter}
+                        onDragEnd={handleGalleryDragEnd}
+                      >
+                        <SortableContext items={galleryImageIds} strategy={rectSortingStrategy}>
+                          <p className="text-xs text-muted-foreground flex items-center gap-1 mb-3">
+                            <GripVertical className="h-3 w-3" /> Drag images to reorder them in the gallery
+                          </p>
+                          <div className="grid grid-cols-3 gap-4">
+                            {galleryImages.map((img, index) => (
+                              <SortableGalleryImage
+                                key={galleryImageIds[index]}
+                                id={galleryImageIds[index]}
+                                img={img}
+                                index={index}
+                                onUpdateField={handleUpdateImageField}
+                                onRemove={handleRemoveGalleryImage}
                               />
-                            )}
-                            <div className="p-3 space-y-2">
-                              <Input
-                                placeholder="Caption"
-                                value={img.caption || ""}
-                                onChange={(e) => handleUpdateImageField(index, 'caption', e.target.value)}
-                                className="text-sm"
-                              />
-                              <Input
-                                placeholder="Alt text"
-                                value={img.altText || ""}
-                                onChange={(e) => handleUpdateImageField(index, 'altText', e.target.value)}
-                                className="text-sm"
-                              />
-                              <div className="flex items-center justify-between">
-                                <Badge variant="outline" className="text-xs">
-                                  {img.imageType}
-                                </Badge>
-                                <Button
-                                  type="button"
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => handleRemoveGalleryImage(index)}
-                                  className="text-destructive hover:text-destructive h-7"
-                                >
-                                  <X className="h-3 w-3 mr-1" />
-                                  Remove
-                                </Button>
-                              </div>
-                            </div>
+                            ))}
                           </div>
-                        ))}
-                      </div>
+                        </SortableContext>
+                      </DndContext>
                     ) : (
                       <div className="text-center py-12 text-muted-foreground">
                         <p>No images added yet. Click the buttons above to add production photos, renderings, or videos.</p>

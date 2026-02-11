@@ -3210,3 +3210,11 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Audit Categories admin page for all issues
 - [x] Audit Tags admin page for all issues
 - [x] Write/update tests for all changes - all 62 tests passing
+
+## Drag-and-Drop Reordering (Feb 11, 2026)
+- [x] Install drag-and-drop library (@dnd-kit)
+- [x] Implement drag-and-drop reordering for Creative Team members
+- [x] Implement drag-and-drop reordering for Gallery images
+- [x] Test both drag-and-drop features in browser
+- [x] Ensure reordered data persists on save (sortOrder updated on drag)
+- [x] Run all tests to verify no regressions - all 62 tests passing
