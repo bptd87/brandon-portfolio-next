@@ -67,7 +67,7 @@ export default function Footer() {
               <h3 className="text-sm font-black tracking-wider text-[#9C27B0] mb-6">STUDIO</h3>
               <ul className="space-y-3">
                 <li>
-                  <Link href="/tutorials" className="text-foreground/70 hover:text-[#9C27B0] transition-colors font-medium">
+                  <Link href="/studio/tutorials" className="text-foreground/70 hover:text-[#9C27B0] transition-colors font-medium">
                     Tutorials
                   </Link>
                 </li>
@@ -82,7 +82,7 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/scenic-directory" className="text-foreground/70 hover:text-[#9C27B0] transition-colors font-medium">
+                  <Link href="/studio/directory" className="text-foreground/70 hover:text-[#9C27B0] transition-colors font-medium">
                     Scenic Directory
                   </Link>
                 </li>

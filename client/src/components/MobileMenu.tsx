@@ -172,7 +172,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             {studioOpen && (
               <div className="ml-4 mt-2 space-y-1">
                 <Link
-                  href="/tutorials"
+                  href="/studio/tutorials"
                   onClick={onClose}
                   className="block py-2 px-4 rounded-lg hover:bg-[#9C27B0]/10 hover:text-[#9C27B0] transition-colors"
                 >
@@ -193,7 +193,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   Vault
                 </Link>
                 <Link
-                  href="/scenic-directory"
+                  href="/studio/directory"
                   onClick={onClose}
                   className="block py-2 px-4 rounded-lg hover:bg-[#9C27B0]/10 hover:text-[#9C27B0] transition-colors"
                 >

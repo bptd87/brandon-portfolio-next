@@ -314,7 +314,7 @@ export default function Header() {
   const aboutPages = [
     { name: "About", slug: "/about" },
     { name: "Resume / CV", slug: "/resume" },
-    { name: "Creative Statement", slug: "/about/philosophy" },
+    { name: "Creative Statement", slug: "/creative-statement" },
     { name: "Teaching Philosophy", slug: "/about/teaching" },
     { name: "Collaborators", slug: "/about/collaborators" },
   ];
@@ -444,7 +444,7 @@ export default function Header() {
                 <Link
                   href="/studio"
                   className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-[#9C27B0] relative group ${
-                    isActive("/studio") || isActive("/tutorials") || isActive("/vault") || isActive("/directory") ? "text-[#9C27B0]" : ""
+                    isActive("/studio") || isActive("/articles") || isActive("/vault") ? "text-[#9C27B0]" : ""
                   }`}
                 >
                   STUDIO
@@ -470,7 +470,7 @@ export default function Header() {
                       <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
                     </Link>
                     <Link
-                      href="/tutorials"
+                      href="/studio/tutorials"
                       className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border relative group"
                     >
                       <span className="relative z-10 flex items-center">
@@ -490,7 +490,7 @@ export default function Header() {
                       <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
                     </Link>
                     <Link
-                      href="/directory"
+                      href="/studio/directory"
                       className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border relative group"
                     >
                       <span className="relative z-10 flex items-center">
@@ -501,31 +501,11 @@ export default function Header() {
                     </Link>
                     <Link
                       href="/vault"
-                      className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border relative group"
+                      className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border last:border-0 relative group"
                     >
                       <span className="relative z-10 flex items-center">
                         <VaultIcon />
                         Vault
-                      </span>
-                      <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
-                    </Link>
-                    <Link
-                      href="/directory"
-                      className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border relative group"
-                    >
-                      <span className="relative z-10 flex items-center">
-                        <DirectoryIcon />
-                        Scenic Directory
-                      </span>
-                      <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
-                    </Link>
-                    <Link
-                      href="/articles"
-                      className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border last:border-0 relative group"
-                    >
-                      <span className="relative z-10 flex items-center">
-                        <ArticleIcon />
-                        Articles
                       </span>
                       <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
                     </Link>

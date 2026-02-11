@@ -2985,3 +2985,8 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Assign tags to all untagged articles
 - [x] Assign tags to all untagged news items
 - [x] Assign tags to all untagged projects (done - 0 projects without tags)
+
+## Bug Fixes - Feb 11
+- [x] Creative Statement and Teaching Philosophy showing same page
+- [x] Tutorials not loading / nav bar link is wrong
+- [x] Studio dropdown has duplicate data
