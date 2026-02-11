@@ -21,9 +21,15 @@ export function ProjectsManager() {
 
   const { data: allProjects, isLoading, refetch } = trpc.projects.list.useQuery({});
   
-  const projects = allProjects?.filter(p => 
-    disciplineFilter === 'all' ? true : p.discipline === disciplineFilter
-  );
+  const projects = allProjects
+    ?.filter(p => disciplineFilter === 'all' ? true : p.discipline === disciplineFilter)
+    ?.sort((a, b) => {
+      // Sort by year descending, then by month descending
+      if ((a.year || 0) !== (b.year || 0)) {
+        return (b.year || 0) - (a.year || 0);
+      }
+      return (b.month || 0) - (a.month || 0);
+    });
   const deleteProject = trpc.projects.delete.useMutation({
     onSuccess: () => {
       toast.success("Project deleted successfully");
@@ -99,7 +105,7 @@ export function ProjectsManager() {
                   <TableHead>Images</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Featured</TableHead>
-                  <TableHead>Year</TableHead>
+                  <TableHead>Date</TableHead>
                   <TableHead>Created</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
@@ -151,7 +157,17 @@ export function ProjectsManager() {
                     <TableCell>
                       {project.featured && <Badge variant="outline">Featured</Badge>}
                     </TableCell>
-                    <TableCell>{project.year || "-"}</TableCell>
+                    <TableCell>
+                      {project.year ? (
+                        project.month ? (
+                          `${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][project.month - 1]} ${project.year}`
+                        ) : (
+                          project.year
+                        )
+                      ) : (
+                        "-"
+                      )}
+                    </TableCell>
                     <TableCell>{new Date(project.createdAt).toLocaleDateString()}</TableCell>
                     <TableCell className="text-right">
                       <div className="flex items-center justify-end gap-2">

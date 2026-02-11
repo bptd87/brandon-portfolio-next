@@ -81,6 +81,7 @@ export const projects = mysqlTable("projects", {
   location: varchar("location", { length: 255 }),
   client: varchar("client", { length: 255 }),
   year: int("year"),
+  month: int("month"), // 1-12 for sorting projects chronologically
   status: mysqlEnum("status", ["draft", "published", "archived"]).default("draft").notNull(),
   featured: boolean("featured").default(false).notNull(),
   metadata: json("metadata").$type<{

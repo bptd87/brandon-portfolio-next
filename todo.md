@@ -3218,3 +3218,16 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Test both drag-and-drop features in browser
 - [x] Ensure reordered data persists on save (sortOrder updated on drag)
 - [x] Run all tests to verify no regressions - all 62 tests passing
+
+## Project Management Fixes (Feb 11, 2026)
+- [x] Audit: Check if project tags are using article tag system incorrectly (CONFIRMED: separate - projectTags junction)
+- [x] Remove category dropdown from ProjectForm (projects use disciplines, not categories)
+- [x] Add publish status field to projects (draft/published) - already exists in schema, now visible
+- [x] Add month field to projects for proper chronological sorting
+- [x] Update projects schema and run migration
+- [x] Add "technical_drawing" as image type option in gallery
+- [x] Conditionally hide Content section for "rendering" and "scenic models" disciplines
+- [x] Update ProjectsManager to sort by year + month descending
+- [x] Update ProjectsManager to show publish status badge
+- [x] Test all changes end-to-end
+- [x] Run vitest to ensure no regressions - all 62 tests passing

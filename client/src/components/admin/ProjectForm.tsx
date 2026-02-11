@@ -52,7 +52,7 @@ interface ImageUpload {
   url?: string;
   key?: string;
   videoUrl?: string;
-  imageType: "production" | "rendering" | "video";
+  imageType: "production" | "rendering" | "technical_drawing" | "video";
   caption?: string;
   altText?: string;
   sortOrder: number;
@@ -261,9 +261,9 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
     status: "draft" as "draft" | "published" | "archived",
     featured: false,
     year: new Date().getFullYear(),
+    month: undefined as number | undefined, // 1-12 for chronological sorting
     location: "",
     client: "",
-    categoryId: undefined as number | undefined,
     // SEO - for search engines only
     seoTitle: "",
     seoDescription: "",
@@ -284,7 +284,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
   const [galleryImages, setGalleryImages] = useState<ImageUpload[]>([]);
   const [uploadingImages, setUploadingImages] = useState(false);
 
-  const { data: categories } = trpc.categories.list.useQuery({ type: "project" });
+  // Categories removed - projects use disciplines, not categories
   const { data: allTags } = trpc.tags.list.useQuery();
   const uploadImage = trpc.projects.uploadImage.useMutation();
 
@@ -329,7 +329,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
         year: fullProject.year || new Date().getFullYear(),
         location: fullProject.location || "",
         client: fullProject.client || "",
-        categoryId: fullProject.categoryId ?? undefined,
+        month: fullProject.month ?? undefined,
         seoTitle: fullProject.seoTitle || "",
         seoDescription: fullProject.seoDescription || "",
         seoKeywords: fullProject.seoKeywords || "",
@@ -484,7 +484,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
     }
   };
 
-  const handleAddGalleryImage = (type: "production" | "rendering" | "video") => {
+  const handleAddGalleryImage = (type: "production" | "rendering" | "technical_drawing" | "video") => {
     if (type === "video") {
       const videoUrl = prompt("Enter YouTube video URL:");
       if (videoUrl) {
@@ -594,7 +594,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
         designNotes: formData.designNotes || undefined,
         discipline: formData.discipline,
         subcategory: formData.subcategory || undefined,
-        categoryId: formData.categoryId || undefined,
+        month: formData.month || undefined,
         coverImageUrl: coverImageUrl || undefined,
         coverImageKey: coverImageKey || undefined,
         location: formData.location || undefined,
@@ -678,9 +678,11 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
       <div className="container mx-auto py-8">
         <form id="project-form" onSubmit={handleSubmit}>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-6 mb-8">
+            <TabsList className={`grid w-full ${formData.discipline === 'rendering' || formData.discipline === 'scenic_models' ? 'grid-cols-5' : 'grid-cols-6'} mb-8`}>
               <TabsTrigger value="basic">Basic Info</TabsTrigger>
-              <TabsTrigger value="content">Content</TabsTrigger>
+              {formData.discipline !== 'rendering' && formData.discipline !== 'scenic_models' && (
+                <TabsTrigger value="content">Content</TabsTrigger>
+              )}
               <TabsTrigger value="team">
                 Creative Team
                 {teamMembers.length > 0 && (
@@ -816,21 +818,28 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
                         </div>
 
                         <div className="space-y-2">
-                          <Label htmlFor="category">Category</Label>
+                          <Label htmlFor="month">Month</Label>
                           <Select
-                            value={formData.categoryId?.toString() || "none"}
-                            onValueChange={(value) => setFormData({ ...formData, categoryId: value === "none" ? undefined : parseInt(value) })}
+                            value={formData.month?.toString() || "none"}
+                            onValueChange={(value) => setFormData({ ...formData, month: value === "none" ? undefined : parseInt(value) })}
                           >
                             <SelectTrigger>
-                              <SelectValue placeholder="Select category" />
+                              <SelectValue placeholder="Select month" />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="none">No Category</SelectItem>
-                              {categories?.map((cat) => (
-                                <SelectItem key={cat.id} value={cat.id.toString()}>
-                                  {cat.name}
-                                </SelectItem>
-                              ))}
+                              <SelectItem value="none">No Month</SelectItem>
+                              <SelectItem value="1">January</SelectItem>
+                              <SelectItem value="2">February</SelectItem>
+                              <SelectItem value="3">March</SelectItem>
+                              <SelectItem value="4">April</SelectItem>
+                              <SelectItem value="5">May</SelectItem>
+                              <SelectItem value="6">June</SelectItem>
+                              <SelectItem value="7">July</SelectItem>
+                              <SelectItem value="8">August</SelectItem>
+                              <SelectItem value="9">September</SelectItem>
+                              <SelectItem value="10">October</SelectItem>
+                              <SelectItem value="11">November</SelectItem>
+                              <SelectItem value="12">December</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -1089,6 +1098,25 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
                         >
                           <Plus className="mr-2 h-4 w-4" />
                           Renderings
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleAddGalleryImage("rendering")}
+                        >
+                          <Plus className="mr-2 h-4 w-4" />
+                          Renderings
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleAddGalleryImage("technical_drawing")}
+                          className="whitespace-nowrap"
+                        >
+                          <Plus className="mr-2 h-4 w-4" />
+                          Technical Drawings
                         </Button>
                         <Button
                           type="button"

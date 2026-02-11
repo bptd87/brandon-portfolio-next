@@ -106,6 +106,13 @@
       "when": 1770812236338,
       "tag": "0014_gigantic_shinko_yamashiro",
       "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "5",
+      "when": 1770853786612,
+      "tag": "0015_motionless_firestar",
+      "breakpoints": true
     }
   ]
 }
