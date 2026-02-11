@@ -1,19 +1,8 @@
 import { useState, useEffect } from 'react';
 
-// Generate srcset for responsive images using image proxy
+// Serve images directly without proxy (CloudFront blocks proxy access)
 function generateSrcSet(src: string): string {
-  // Check if URL is from manuscdn or cloudfront
-  if (src.includes('manuscdn.com') || src.includes('cloudfront.net')) {
-    // Use our image proxy for resizing (preserves PNG, converts JPEG to WebP at 90%)
-    const widths = [640, 768, 1024, 1536, 1920];
-    return widths
-      .map(w => {
-        const proxyUrl = `/api/img?url=${encodeURIComponent(src)}&w=${w}`;
-        return `${proxyUrl} ${w}w`;
-      })
-      .join(', ');
-  }
-  // For other images, return empty srcset (will use src only)
+  // Return empty srcset - browser will use src only
   return '';
 }
 
@@ -86,7 +75,7 @@ export function ProgressiveImage({
 
       {/* Actual image - NO transitions at all */}
       <img
-        src={(src.includes('manuscdn.com') || src.includes('cloudfront.net')) ? `/api/img?url=${encodeURIComponent(src)}&w=1920` : src}
+        src={src}
         srcSet={generateSrcSet(src)}
         sizes={sizes || '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
         alt={alt}

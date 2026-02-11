@@ -3026,3 +3026,11 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [ ] Test individual tRPC endpoints (auth.me, projects.list, news.list, categories.list)
 - [ ] Fix root cause and restore performance
 - [ ] Re-test PageSpeed to verify fix
+
+## Performance Still Poor After Cache Clear - Feb 11
+- [x] Investigated image proxy 403 errors - CloudFront blocks direct access by design
+- [x] Removed image proxy - now serving images directly from CloudFront URLs
+- [ ] Test if direct image serving resolves 403 errors
+- [ ] Run PageSpeed test to measure performance without proxy
+- [ ] Investigate why tRPC batch request takes 1,486ms in production (vs 156ms in dev)
+- [ ] Target PageSpeed score above 80 (currently 51)
