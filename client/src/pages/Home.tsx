@@ -28,9 +28,7 @@ export default function Home() {
   const heroImages = projects?.slice(0, 5).filter(p => p.coverImageUrl).map(p => ({
     url: p.coverImageUrl!,
     title: p.title,
-    slug: p.slug,
-    width: p.coverImageWidth,
-    height: p.coverImageHeight
+    slug: p.slug
   })) || [];
 
   // Auto-advance carousel
@@ -151,8 +149,6 @@ export default function Home() {
               <ProgressiveImage
                 src={image.url}
                 alt={image.title}
-                width={image.width || undefined}
-                height={image.height || undefined}
                 loading={index === 0 ? 'eager' : 'lazy'}
                 fetchPriority={index === 0 ? 'high' : undefined}
                 sizes="100vw"
@@ -284,8 +280,6 @@ export default function Home() {
                             <ProgressiveImage
                               src={project.coverImageUrl}
                               alt={`${project.title} - Scenic design by Brandon PT Davis`}
-                              width={project.coverImageWidth || undefined}
-                              height={project.coverImageHeight || undefined}
                               className="group-hover:scale-110 transition-transform duration-700"
                               aspectRatio="4/3"
                               smartPosition={true}

@@ -17,8 +17,6 @@ interface ProgressiveImageProps {
   objectFit?: 'cover' | 'contain';
   smartPosition?: boolean; // Enable automatic orientation detection
   sizes?: string; // Responsive sizes attribute
-  width?: number; // Intrinsic width to prevent layout shift
-  height?: number; // Intrinsic height to prevent layout shift
 }
 
 export function ProgressiveImage({
@@ -32,8 +30,6 @@ export function ProgressiveImage({
   objectFit = 'cover',
   smartPosition = false,
   sizes,
-  width,
-  height,
 }: ProgressiveImageProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -83,8 +79,6 @@ export function ProgressiveImage({
         srcSet={generateSrcSet(src)}
         sizes={sizes || '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
         alt={alt}
-        width={width}
-        height={height}
         className={`
           w-full h-full 
           ${objectFit === 'cover' ? 'object-cover' : 'object-contain'}
