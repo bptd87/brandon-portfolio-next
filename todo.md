@@ -1034,12 +1034,12 @@
 ## News Pages Redesign
 - [x] Separate News, Articles, Portfolio, Categories in navigation
 - [x] Add title overlays on news hero images
-- [x] Implement dynamic pixelated gradient backgrounds from image colors
+- [x] Implement dynamic blurred gradient backgrounds from image colors
 - [x] Redesign news cards with bold typography
 - [x] Test visual impact and performance
 
 ## News Timeline Redesign
-- [x] Remove pixelated gradients from news landing page
+- [x] Remove blurred gradients from news landing page
 - [x] Create timeline layout organized by year
 - [x] Add visual timeline markers and year headers
 - [x] Group news items under respective years
@@ -3097,4 +3097,9 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 
 ## Advanced Image Loading Features
 - [x] Implement intersection observer with preload thresholds for smoother scrolling
-- [x] Add pixelated placeholder system using Cloudinary transformations
+- [x] Add blurred placeholder system using Cloudinary transformations
+
+## Enhanced Pixelated Loading Effect
+- [x] Implement smooth cross-fade from blurred to sharp image
+- [x] Use heavy blur effect (e_blur:2000) for smooth transition
+- [x] Add minimum display time for blurred placeholder

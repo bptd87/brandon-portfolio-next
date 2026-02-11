@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 
 // Apply Cloudinary transformations for automatic optimization
-function applyCloudinaryTransformations(src: string, width?: number, pixelated?: boolean): string {
+function applyCloudinaryTransformations(src: string, width?: number, blurred?: boolean): string {
   // Only transform Cloudinary URLs
   if (!src.includes('cloudinary.com')) {
     return src;
@@ -17,11 +17,11 @@ function applyCloudinaryTransformations(src: string, width?: number, pixelated?:
   // Build transformation string
   const transformations = [];
   
-  if (pixelated) {
-    // Pixelated placeholder: tiny 20px width, pixelated effect
-    transformations.push('w_20');
-    transformations.push('e_pixelate:8');
-    transformations.push('q_auto:low');
+  if (blurred) {
+    // Blurred placeholder: tiny width with heavy blur
+    transformations.push('w_40'); // Small size for fast load
+    transformations.push('e_blur:2000'); // Heavy blur effect
+    transformations.push('q_auto:low'); // Low quality for speed
   } else {
     // Normal image: automatic format (WebP with fallback)
     transformations.push('f_auto');
@@ -71,6 +71,7 @@ interface ProgressiveImageProps {
   sizes?: string; // Responsive sizes attribute
   width?: number; // Target width for optimization
   preloadMargin?: string; // Intersection observer margin for preloading (default: '200px')
+  blurFadeDuration?: number; // Duration in ms to hold blurred version (default: 400)
 }
 
 export function ProgressiveImage({
@@ -86,10 +87,12 @@ export function ProgressiveImage({
   sizes,
   width,
   preloadMargin = '200px',
+  blurFadeDuration = 400,
 }: ProgressiveImageProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [shouldLoad, setShouldLoad] = useState(loading === 'eager');
+  const [showSharpImage, setShowSharpImage] = useState(false);
   const [objectPosition, setObjectPosition] = useState<string>('object-center');
   const imgRef = useRef<HTMLDivElement>(null);
 
@@ -133,9 +136,20 @@ export function ProgressiveImage({
     };
   }, [src, smartPosition, shouldLoad]);
 
+  // Hold blurred version for minimum duration, then fade to sharp
+  useEffect(() => {
+    if (!imageLoaded) return;
+
+    const timer = setTimeout(() => {
+      setShowSharpImage(true);
+    }, blurFadeDuration);
+
+    return () => clearTimeout(timer);
+  }, [imageLoaded, blurFadeDuration]);
+
   // Apply Cloudinary transformations to src
   const optimizedSrc = applyCloudinaryTransformations(src, width);
-  const pixelatedSrc = applyCloudinaryTransformations(src, undefined, true);
+  const blurredSrc = applyCloudinaryTransformations(src, undefined, true);
   const srcSet = generateSrcSet(src);
 
   return (
@@ -144,13 +158,17 @@ export function ProgressiveImage({
       className="relative overflow-hidden bg-muted/10"
       style={aspectRatio ? { aspectRatio } : undefined}
     >
-      {/* Pixelated placeholder - shown while loading */}
-      {!imageLoaded && !imageError && shouldLoad && (
+      {/* Blurred placeholder - stays visible during fade */}
+      {!imageError && shouldLoad && (
         <img
-          src={pixelatedSrc}
+          src={blurredSrc}
           alt=""
-          className="absolute inset-0 w-full h-full object-cover blur-[2px] scale-105"
-          style={{ imageRendering: 'pixelated' }}
+          className={`
+            absolute inset-0 w-full h-full object-cover
+            scale-105
+            transition-opacity duration-700 ease-out
+            ${showSharpImage ? 'opacity-0' : 'opacity-100'}
+          `}
           aria-hidden="true"
         />
       )}
@@ -170,7 +188,7 @@ export function ProgressiveImage({
         </div>
       )}
 
-      {/* Actual image with Cloudinary optimizations */}
+      {/* Sharp image - fades in over blurred version */}
       {shouldLoad && (
         <img
           src={optimizedSrc}
@@ -181,8 +199,8 @@ export function ProgressiveImage({
             w-full h-full 
             ${objectFit === 'cover' ? 'object-cover' : 'object-contain'}
             ${smartPosition ? objectPosition : ''}
-            ${imageLoaded ? 'opacity-100' : 'opacity-0'}
-            transition-opacity duration-300
+            transition-opacity duration-700 ease-out
+            ${showSharpImage ? 'opacity-100' : 'opacity-0'}
             ${className}
           `}
           onClick={onClick}
