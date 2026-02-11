@@ -46,7 +46,7 @@ export function ThemeProvider({
     }
   }, [effectiveTheme, theme, switchable, forceTheme]);
 
-  const toggleTheme = switchable
+  const toggleTheme = (switchable || forceTheme === null)
     ? () => {
         setTheme(prev => (prev === "light" ? "dark" : "light"));
       }

@@ -11,6 +11,7 @@ import { trpc } from "@/lib/trpc";
 import { Calendar, Clock, ArrowLeft, Share2, Twitter, Linkedin, Mail, Link as LinkIcon, Heart, Eye, User } from "lucide-react";
 import { Link, useParams } from "wouter";
 import { useEffect, useRef, useState } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
 import { toast } from "sonner";
 import { getCategoryColor } from "@/lib/categoryColors";
 
@@ -27,11 +28,28 @@ const decodeHTMLEntities = (text: string): string => {
 
 export default function ArticleDetail() {
   return (
-    <PageThemeWrapper forceTheme={null}>
+    <ArticleThemeWrapper>
       <ArticleDetailContent />
       <ThemeToggle />
-    </PageThemeWrapper>
+    </ArticleThemeWrapper>
   );
+}
+
+// Special wrapper for articles that enables theme switching
+function ArticleThemeWrapper({ children }: { children: React.ReactNode }) {
+  const { setForceTheme } = useTheme();
+  
+  useEffect(() => {
+    // Allow theme switching on articles (remove force)
+    setForceTheme(null);
+    
+    // When leaving article page, force back to dark mode
+    return () => {
+      setForceTheme('dark');
+    };
+  }, [setForceTheme]);
+  
+  return <>{children}</>;
 }
 
 function ArticleDetailContent() {

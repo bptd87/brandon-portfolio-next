@@ -129,7 +129,7 @@ function App() {
     <ErrorBoundary>
       <ThemeProvider
         defaultTheme="dark"
-        switchable
+        switchable={false}
       >
         <div className="min-h-screen bg-gradient-premium">
           <TooltipProvider>

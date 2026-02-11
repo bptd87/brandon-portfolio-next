@@ -2807,3 +2807,10 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Fix accessibility issues (improved color contrast for muted-foreground, verified ARIA labels present)
 - [ ] Retest with PageSpeed Insights to verify improvements (after publish)
 - [x] Save checkpoint
+
+## Lock Site to Dark Mode Except Articles (Feb 10, 2026)
+- [x] Modify theme system to force dark mode on all non-article pages
+- [x] Update ArticleDetail to allow theme toggle
+- [x] Ensure site resets to dark mode when navigating away from articles
+- [x] Test theme behavior across page transitions (verified: homepage locked to dark, articles allow toggle, returns to dark on exit)
+- [ ] Save checkpoint
