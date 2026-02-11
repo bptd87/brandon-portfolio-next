@@ -108,6 +108,18 @@ export const appRouter = router({
         return { id };
       }),
     
+    update: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        name: z.string().min(1).max(100),
+        slug: z.string().min(1).max(100),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, ...data } = input;
+        await db.updateTag(id, data);
+        return { success: true };
+      }),
+    
     delete: adminProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
@@ -452,6 +464,21 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         await db.deleteNews(input.id);
         return { success: true };
+      }),
+    
+    uploadImage: adminProcedure
+      .input(z.object({
+        fileName: z.string(),
+        fileType: z.string(),
+        base64Data: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        const buffer = Buffer.from(input.base64Data, 'base64');
+        const ext = input.fileName.split('.').pop() || 'jpg';
+        const key = `news/${Date.now()}-${Math.random().toString(36).substring(7)}.${ext}`;
+        
+        const result = await storagePut(key, buffer, input.fileType);
+        return { url: result.url, key: result.key };
       }),
     
     bulkImport: publicProcedure

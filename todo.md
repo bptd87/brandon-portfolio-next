@@ -3129,3 +3129,26 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Document development workflow
 - [x] Create CONTRIBUTING.md guide
 - [x] Push to GitHub
+
+## Admin Panel Issues
+- [ ] Investigate missing tags in admin
+- [ ] Investigate missing news in admin
+- [ ] Investigate missing images in admin
+- [ ] Fix data display issues
+
+## Admin Panel Issues (Reported)
+- [ ] Fix incorrect/wrong tags - too many generated
+- [ ] Show tags in project admin view/edit
+- [ ] Show gallery images in project admin (not just cover image)
+- [ ] Build News Manager (currently placeholder)
+- [ ] Check Articles Manager
+- [ ] Check Categories Manager
+
+## Build Real Admin Panel
+- [ ] Analyze current admin implementation and identify gaps
+- [x] Build News Manager with full CRUD (create, edit, delete, image upload)
+- [x] Enhance Projects Manager - add gallery image management
+- [ ] Enhance Projects Manager - add tag assignment UI (tags already work in form)
+- [x] Build Articles Manager with full CRUD (already exists)
+- [ ] Add tag cleanup tools (bulk delete, edit, merge)
+- [ ] Test all admin functionality

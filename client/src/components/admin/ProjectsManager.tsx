@@ -75,7 +75,9 @@ export function ProjectsManager() {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead>Cover</TableHead>
                   <TableHead>Title</TableHead>
+                  <TableHead>Images</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Featured</TableHead>
                   <TableHead>Year</TableHead>
@@ -86,7 +88,25 @@ export function ProjectsManager() {
               <TableBody>
                 {projects.map((project) => (
                   <TableRow key={project.id}>
+                    <TableCell>
+                      {project.coverImageUrl ? (
+                        <img 
+                          src={project.coverImageUrl} 
+                          alt={project.title}
+                          className="h-12 w-12 object-cover rounded"
+                        />
+                      ) : (
+                        <div className="h-12 w-12 bg-muted rounded flex items-center justify-center text-xs text-muted-foreground">
+                          No image
+                        </div>
+                      )}
+                    </TableCell>
                     <TableCell className="font-medium">{project.title}</TableCell>
+                    <TableCell>
+                      <Badge variant="secondary">
+                        {project.images?.length || 0} images
+                      </Badge>
+                    </TableCell>
                     <TableCell>
                       <Badge
                         variant={

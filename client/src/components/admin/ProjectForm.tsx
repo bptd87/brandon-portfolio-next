@@ -131,6 +131,21 @@ export function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
       if (project.coverImageUrl) {
         setCoverImage({ url: project.coverImageUrl, key: project.coverImageKey });
       }
+      
+      // Load existing gallery images
+      if (project.images && Array.isArray(project.images)) {
+        const existingImages: ImageUpload[] = project.images.map((img: any, index: number) => ({
+          id: img.id,
+          url: img.imageUrl,
+          key: img.imageKey,
+          videoUrl: img.videoUrl,
+          imageType: img.imageType || 'production',
+          caption: img.caption,
+          altText: img.altText,
+          sortOrder: img.sortOrder !== undefined ? img.sortOrder : index,
+        }));
+        setGalleryImages(existingImages);
+      }
     }
   }, [project]);
 

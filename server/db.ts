@@ -218,6 +218,13 @@ export async function createTag(tag: InsertTag) {
   return Number(result[0].insertId);
 }
 
+export async function updateTag(id: number, data: { name: string; slug: string }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db.update(tags).set(data).where(eq(tags.id, id));
+}
+
 export async function deleteTag(id: number) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
@@ -251,11 +258,14 @@ export async function getAllProjects(filters?: {
   // Sort by publishedAt (most recent first), then by year if publishedAt is null
   const projectsList = await query.orderBy(desc(projects.publishedAt), desc(projects.year));
   
-  // Fetch tags for each project
+  // Fetch tags and image count for each project
   const projectsWithTags = await Promise.all(
     projectsList.map(async (project) => {
-      const tags = await getProjectTags(project.id);
-      return { ...project, tags };
+      const [tags, images] = await Promise.all([
+        getProjectTags(project.id),
+        getProjectImages(project.id),
+      ]);
+      return { ...project, tags, images };
     })
   );
   
