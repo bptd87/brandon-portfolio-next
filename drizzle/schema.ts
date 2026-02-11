@@ -400,6 +400,7 @@ export const projectTeamMembersRelations = relations(projectTeamMembers, ({ one 
 export const tutorials = mysqlTable("tutorials", {
   id: int("id").autoincrement().primaryKey(),
   title: varchar("title", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }),
   youtubeUrl: varchar("youtubeUrl", { length: 500 }).notNull(),
   youtubeId: varchar("youtubeId", { length: 50 }),
   description: text("description"),

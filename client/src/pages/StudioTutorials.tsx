@@ -20,7 +20,7 @@ export default function StudioTutorials() {
   
   const watchedMap = new Map(progressData.map((p: any) => [p.tutorialSlug, p.watched]));
 
-  const slugify = (title: string) => title.replace('Vectorworks Tutorial: ', '').replace('Vectorworks Quick Tip: ', '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  // Slug comes from the database
 
   const categories = [
     { slug: "getting-started", name: "Getting Started", color: "bg-blue-500/10 text-blue-500 border-blue-500/30" },
@@ -189,7 +189,7 @@ export default function StudioTutorials() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-visible">
             {filteredTutorials.map((tutorial: any) => {
-              const slug = slugify(tutorial.title);
+              const slug = tutorial.slug || tutorial.id.toString();
               return (
               <Link key={tutorial.id} href={`/studio/tutorials/${slug}`}>
               <Card className="group hover:shadow-xl transition-all duration-300 overflow-hidden border border-border hover:border-[#2196F3]/50 rounded-lg bg-card p-0">
@@ -210,7 +210,7 @@ export default function StudioTutorials() {
                     <Clock className="w-3 h-3" />
                     {formatDuration(tutorial.duration)}
                   </div>
-                  {user && watchedMap.get(slug) && (
+                  {user && watchedMap.get(tutorial.slug || '') && (
                     <div className="absolute top-3 right-3 bg-green-500 text-white p-1.5 rounded-full shadow-lg">
                       <CheckCircle className="w-4 h-4" />
                     </div>

@@ -2990,3 +2990,4 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Creative Statement and Teaching Philosophy showing same page
 - [x] Tutorials not loading / nav bar link is wrong
 - [x] Studio dropdown has duplicate data
+- [x] Fix tutorials page - content not displaying despite data in database

@@ -1,0 +1,124 @@
+{
+  "query": "UPDATE tutorials SET slug = '3d-modeling-basics' WHERE youtubeId = 'Jjz1zXDXafs';\nSELECT id, title, youtubeId, slug FROM tutorials ORDER BY id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute UPDATE tutorials SET slug = '3d-modeling-basics' WHERE youtubeId = 'Jjz1zXDXafs';\nSELECT id, title, youtubeId, slug FROM tutorials ORDER BY id;",
+  "rows": [
+    {
+      "id": "1",
+      "title": "Vectorworks Tutorial: Navigating the User Interface",
+      "youtubeId": "jRI33g1oSt0",
+      "slug": "navigating-user-interface"
+    },
+    {
+      "id": "2",
+      "title": "Vectorworks Tutorial: Understanding Classes",
+      "youtubeId": "tXQcTdGiwT4",
+      "slug": "understanding-classes"
+    },
+    {
+      "id": "3",
+      "title": "Vectorworks Tutorial: Understanding Design Layers",
+      "youtubeId": "CwCxmhQAFwI",
+      "slug": "understanding-design-layers"
+    },
+    {
+      "id": "4",
+      "title": "Vectorworks Tutorial: Installing a Workspace and Template",
+      "youtubeId": "CXBfG2L3ZmI",
+      "slug": "installing-workspace-template"
+    },
+    {
+      "id": "5",
+      "title": "Vectorworks Tutorial: Drawing Tools",
+      "youtubeId": "orjqcNYveOg",
+      "slug": "basics-tool-palette"
+    },
+    {
+      "id": "6",
+      "title": "Vectorworks Tutorial: Reshape & Modification Tools",
+      "youtubeId": "D4AXwNQgdBI",
+      "slug": "sheet-layers"
+    },
+    {
+      "id": "7",
+      "title": "Vectorworks Tutorial: Dimensioning & Annotation",
+      "youtubeId": "EZB5O-Wmsk4",
+      "slug": "creating-trim-profiles-polyline"
+    },
+    {
+      "id": "8",
+      "title": "Vectorworks Tutorial: Attributes & Graphic Properties",
+      "youtubeId": "8lTla9cvIPk",
+      "slug": "2d-edit-modify-tricks"
+    },
+    {
+      "id": "9",
+      "title": "Vectorworks Tutorial: Symbols & Resources",
+      "youtubeId": "Y7trPdHxRxM",
+      "slug": "resource-manager-basics"
+    },
+    {
+      "id": "10",
+      "title": "Vectorworks Tutorial: Viewports & Sheet Layers",
+      "youtubeId": "ib2-H14Cx5I",
+      "slug": "understanding-symbols"
+    },
+    {
+      "id": "11",
+      "title": "Vectorworks Tutorial: 3D Navigation",
+      "youtubeId": "JOlFjmY_R7o",
+      "slug": "2d-annotations-dimensioning"
+    },
+    {
+      "id": "12",
+      "title": "Vectorworks Tutorial: 3D Modeling Basics",
+      "youtubeId": "Jjz1zXDXafs",
+      "slug": "3d-modeling-basics"
+    },
+    {
+      "id": "13",
+      "title": "Vectorworks Tutorial: Hybrid Symbols",
+      "youtubeId": "XeBfq6Kv1LY",
+      "slug": "hybrid-symbols"
+    },
+    {
+      "id": "14",
+      "title": "Vectorworks Tutorial: Basics of Textures",
+      "youtubeId": "9iApEa1XTug",
+      "slug": "basics-of-textures"
+    },
+    {
+      "id": "15",
+      "title": "Vectorworks Tutorial: 3D Modeling Tools",
+      "youtubeId": "8dm9ZMTXypE",
+      "slug": "3d-modeling-tools"
+    },
+    {
+      "id": "16",
+      "title": "Vectorworks Tutorial: Creating 24x36 PDFs Without a Plotter",
+      "youtubeId": "Gd9_hB5USkQ",
+      "slug": "creating-24x36-pdfs"
+    },
+    {
+      "id": "17",
+      "title": "Vectorworks Tutorial: Modeling a Table",
+      "youtubeId": "TdZeKdL-DVc",
+      "slug": "modeling-a-table"
+    },
+    {
+      "id": "18",
+      "title": "Vectorworks Tutorial: Creating a Camera and Rendering",
+      "youtubeId": "Jp4eG5n3esc",
+      "slug": "creating-camera-rendering"
+    },
+    {
+      "id": "19",
+      "title": "Vectorworks Tutorial: Creating 2D Drafting from 3D Models",
+      "youtubeId": "Q-oM0jkKuS0",
+      "slug": "creating-2d-drafting-from-3d"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tyoutubeId\tslug\n1\tVectorworks Tutorial: Navigating the User Interface\tjRI33g1oSt0\tnavigating-user-interface\n2\tVectorworks Tutorial: Understanding Classes\ttXQcTdGiwT4\tunderstanding-classes\n3\tVectorworks Tutorial: Understanding Design Layers\tCwCxmhQAFwI\tunderstanding-design-layers\n4\tVectorworks Tutorial: Installing a Workspace and Template\tCXBfG2L3ZmI\tinstalling-workspace-template\n5\tVectorworks Tutorial: Drawing Tools\torjqcNYveOg\tbasics-tool-palette\n6\tVectorworks Tutorial: Reshape & Modification Tools\tD4AXwNQgdBI\tsheet-layers\n7\tVectorworks Tutorial: Dimensioning & Annotation\tEZB5O-Wmsk4\tcreating-trim-profiles-polyline\n8\tVectorworks Tutorial: Attributes & Graphic Properties\t8lTla9cvIPk\t2d-edit-modify-tricks\n9\tVectorworks Tutorial: Symbols & Resources\tY7trPdHxRxM\tresource-manager-basics\n10\tVectorworks Tutorial: Viewports & Sheet Layers\tib2-H14Cx5I\tunderstanding-symbols\n11\tVectorworks Tutorial: 3D Navigation\tJOlFjmY_R7o\t2d-annotations-dimensioning\n12\tVectorworks Tutorial: 3D Modeling Basics\tJjz1zXDXafs\t3d-modeling-basics\n13\tVectorworks Tutorial: Hybrid Symbols\tXeBfq6Kv1LY\thybrid-symbols\n14\tVectorworks Tutorial: Basics of Textures\t9iApEa1XTug\tbasics-of-textures\n15\tVectorworks Tutorial: 3D Modeling Tools\t8dm9ZMTXypE\t3d-modeling-tools\n16\tVectorworks Tutorial: Creating 24x36 PDFs Without a Plotter\tGd9_hB5USkQ\tcreating-24x36-pdfs\n17\tVectorworks Tutorial: Modeling a Table\tTdZeKdL-DVc\tmodeling-a-table\n18\tVectorworks Tutorial: Creating a Camera and Rendering\tJp4eG5n3esc\tcreating-camera-rendering\n19\tVectorworks Tutorial: Creating 2D Drafting from 3D Models\tQ-oM0jkKuS0\tcreating-2d-drafting-from-3d\n",
+  "stderr": "",
+  "execution_time_ms": 67
+}
