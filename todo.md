@@ -2769,3 +2769,16 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Verified links (ChatGPT, Schema.org) work correctly
 - [x] Verified table of contents sidebar works with active section highlighting
 - [x] Save checkpoint
+
+## Reduce Article Heading Sizes (User Request - Feb 10, 2026)
+- [ ] Inspect current H2 and H3 sizes in ArticleDetail component
+- [ ] Reduce H2 and H3 to smaller, more appropriate sizes
+- [ ] Verify heading sizes look correct across multiple articles
+- [ ] Save checkpoint
+
+## Fix Article Heading Sizes + Restore Drop Cap (User Request - Feb 10, 2026)
+- [x] Investigate why H2 renders at 64px and H3 at 38px despite prose class changes
+- [x] Fix H2 and H3 to render at smaller, appropriate sizes
+- [x] Drop cap confirmed working on all articles (was never broken)
+- [x] Verify fixes on multiple articles
+- [ ] Save checkpoint

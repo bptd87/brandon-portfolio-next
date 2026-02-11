@@ -521,9 +521,9 @@ function ArticleDetailContent() {
                   className="article-content article-content-${article.id} article-html-content max-w-[65ch] mx-auto
                   prose prose-lg prose-invert
                   prose-headings:font-['Playfair_Display'] prose-headings:font-bold prose-headings:font-normal prose-headings:leading-[1.2]
-                  prose-h2:text-[1.875rem] prose-h2:mt-16 prose-h2:mb-4 prose-h2:scroll-mt-24 prose-h2:leading-[1.3]
-                  prose-h3:text-[1.5rem] prose-h3:mt-10 prose-h3:mb-3 prose-h3:leading-[1.4]
-                  prose-h4:text-[1.25rem] prose-h4:mt-8 prose-h4:mb-2 prose-h4:leading-[1.4]
+                  prose-h2:text-[1.375rem] prose-h2:mt-16 prose-h2:mb-4 prose-h2:scroll-mt-24 prose-h2:leading-[1.3]
+                  prose-h3:text-[1.125rem] prose-h3:mt-10 prose-h3:mb-3 prose-h3:leading-[1.4]
+                  prose-h4:text-[1rem] prose-h4:mt-8 prose-h4:mb-2 prose-h4:leading-[1.4]
                   prose-p:text-foreground/90 prose-p:leading-[1.75] prose-p:mb-6 prose-p:text-[1.0625rem] prose-p:font-normal prose-p:tracking-normal
                   prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-a:font-medium
                   prose-strong:font-bold prose-strong:text-[1.125rem]
@@ -714,7 +714,7 @@ function ArticleDetailContent() {
                     case 'faq':
                       return (
                         <div key={index} className="my-16">
-                          <h2 className="text-3xl font-['Playfair_Display'] italic mb-8">Frequently Asked Questions</h2>
+                          <h2 className="text-xl font-['Playfair_Display'] italic mb-8">Frequently Asked Questions</h2>
                           <Accordion type="single" collapsible className="space-y-4">
                             {section.items?.map((item: any, faqIndex: number) => (
                               <AccordionItem key={faqIndex} value={`faq-${faqIndex}`} className="border border-border rounded-lg px-6">
@@ -803,7 +803,7 @@ function ArticleDetailContent() {
               {/* Related Articles */}
               {related.length > 0 && (
                 <div className="mt-20 pt-12 border-t">
-                  <h2 className="text-3xl font-['Playfair_Display'] italic mb-8">Continue Reading</h2>
+                  <h2 className="text-xl font-['Playfair_Display'] italic mb-8">Continue Reading</h2>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {related.map((relatedArticle) => {
                       const categoryColor = relatedArticle.category?.name 
