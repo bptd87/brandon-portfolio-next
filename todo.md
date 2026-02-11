@@ -2877,3 +2877,9 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Add preconnect hints for Google Fonts to HTML template
 - [x] Verify preconnect hints appear in page source
 - [ ] Save checkpoint
+
+## Add LCP Preload Hint (Feb 11, 2026)
+- [x] Identify first carousel image - Glass Menagerie
+- [x] Add preload link to HTML head - added with responsive srcset
+- [x] Test preload hint in browser - verified in HTML source
+- [ ] Save checkpoint
