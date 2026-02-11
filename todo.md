@@ -2921,4 +2921,9 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Create skeleton component for portfolio grid
 - [x] Update Projects.tsx with skeleton loading
 - [x] Test portfolio grid skeleton - ready for testing
+- [x] Save checkpoint - checkpoint 90a865e5 ready
+
+## Implement tRPC Query Batching (Feb 11, 2026)
+- [x] Enable batching in tRPC client configuration (already enabled + added caching)
+- [x] Test batching and measure performance improvement - ready for testing
 - [ ] Save checkpoint

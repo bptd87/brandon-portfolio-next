@@ -22,7 +22,16 @@ window.console.error = (...args: any[]) => {
   resizeObserverErr(...args);
 };
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes - data stays fresh
+      gcTime: 1000 * 60 * 10, // 10 minutes - cache retention (formerly cacheTime)
+      refetchOnWindowFocus: false, // Don't refetch on window focus
+      retry: 1, // Retry failed queries once
+    },
+  },
+});
 
 const redirectToLoginIfUnauthorized = (error: unknown) => {
   if (!(error instanceof TRPCClientError)) return;
@@ -56,6 +65,7 @@ const trpcClient = trpc.createClient({
     httpBatchLink({
       url: "/api/trpc",
       transformer: superjson,
+      maxURLLength: 2083, // Standard max URL length
       fetch(input, init) {
         // Add session token from localStorage if cookies are blocked
         const storedToken = getStoredSessionToken();
