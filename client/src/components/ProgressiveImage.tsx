@@ -23,6 +23,7 @@ interface ProgressiveImageProps {
   className?: string;
   onClick?: () => void;
   loading?: 'eager' | 'lazy';
+  fetchPriority?: 'high' | 'low' | 'auto';
   aspectRatio?: string;
   objectFit?: 'cover' | 'contain';
   smartPosition?: boolean; // Enable automatic orientation detection
@@ -35,6 +36,7 @@ export function ProgressiveImage({
   className = '',
   onClick,
   loading = 'lazy',
+  fetchPriority,
   aspectRatio,
   objectFit = 'cover',
   smartPosition = false,
@@ -98,6 +100,7 @@ export function ProgressiveImage({
         style={{ transition: 'none' }} // Explicitly disable all transitions
         onClick={onClick}
         loading={loading}
+        fetchPriority={fetchPriority}
         decoding="async"
         onLoad={() => setImageLoaded(true)}
         onError={() => setImageError(true)}

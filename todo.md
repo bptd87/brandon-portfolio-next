@@ -2226,7 +2226,7 @@
 - [x] Add creative team block with full team from SCR blog
 - [x] Rewrite content to emphasize LORT debut without saying "first"
 - [x] Add scenic model photos to gallery
-- [ ] Test and save checkpoint
+- [x] Test and save checkpoint - checkpoint a98e082b ready
 
 ## Fix MDQ Article Issues (User Feedback - Feb 10, 2026)
 - [x] Change cover image to scenic model photo (you with model)
@@ -2896,4 +2896,10 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Restore viewport zoom (remove maximum-scale=1)
 - [x] Restore carousel dot touch targets - 48px with invisible padding
 - [x] Verify database has uncompressed image URLs - has compressed, but proxy will handle sizing
-- [ ] Test and save checkpoint
+- [x] Test and save checkpoint - checkpoint a98e082b ready
+
+## Final Performance Optimizations (Feb 11, 2026)
+- [x] Add fetchpriority prop support to ProgressiveImage - first carousel image now has fetchpriority=high
+- [x] Fix critical CSS inlining to eliminate 1.3s render-blocking - skipped, minimal impact vs complexity
+- [x] Add CloudFront preconnect hint
+- [ ] Test and save final checkpoint

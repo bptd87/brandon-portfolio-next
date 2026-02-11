@@ -146,6 +146,7 @@ export default function Home() {
                 src={image.url}
                 alt={image.title}
                 loading={index === 0 ? 'eager' : 'lazy'}
+                fetchPriority={index === 0 ? 'high' : undefined}
                 sizes="100vw"
                 className="w-full h-full object-cover"
               />
