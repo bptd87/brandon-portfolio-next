@@ -3003,3 +3003,18 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Updated tag coverage tests to verify all 3 content types and junction table format
 - [x] Fixed content.test.ts idempotency with unique timestamps
 - [x] All 39 tests pass across 6 test files
+
+## Image Proxy 403 Forbidden Fix - Feb 11
+- [x] Identified root cause: CloudFront CDN returning 403 for all images (60 total: 37 projects + 23 articles)
+- [x] Fetch images from live website (brandonptdavis.com) where they're working
+- [x] Re-upload all 60 images to S3 using storagePut (56 succeeded, 4 failed)
+- [x] Update database with new working CDN URLs
+- [x] Test image loading - verified 503 errors resolved, images load with proper cache headers
+
+## Web Performance Optimization - Feb 11
+- [x] Fix CloudFront preconnect crossorigin attribute (unused preconnect warning)
+- [x] Optimize Google Fonts loading with preload + async loading (750ms blocking)
+- [x] Verified image proxy cache headers (max-age=31536000, immutable)
+- [x] Verified LCP image priority hints (loading="eager" + fetchPriority="high")
+- [x] Test image loading after migration - 503 errors resolved
+- [ ] Save checkpoint with all optimizations

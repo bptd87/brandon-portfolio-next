@@ -29,8 +29,15 @@ async function resizeImage(sourceUrl: string, width: number): Promise<{ buffer: 
     return { buffer: cached.buffer, contentType: cached.contentType };
   }
   
-  // Download original image
-  const response = await fetch(sourceUrl);
+  // Download original image with proper headers to avoid CloudFront blocking
+  const response = await fetch(sourceUrl, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+      'Accept-Encoding': 'gzip, deflate, br',
+      'Referer': 'https://www.brandonptdavis.com/',
+    },
+  });
   if (!response.ok) {
     throw new Error(`Failed to fetch image: ${response.statusText}`);
   }

@@ -1,0 +1,14 @@
+{
+  "query": "\nSELECT \n  SUBSTRING_INDEX(SUBSTRING_INDEX(coverImageUrl, '/', 3), '/', -1) as domain,\n  COUNT(*) as count\nFROM projects \nWHERE coverImageUrl IS NOT NULL\nGROUP BY domain;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute \nSELECT \n  SUBSTRING_INDEX(SUBSTRING_INDEX(coverImageUrl, '/', 3), '/', -1) as domain,\n  COUNT(*) as count\nFROM projects \nWHERE coverImageUrl IS NOT NULL\nGROUP BY domain;\n",
+  "rows": [
+    {
+      "domain": "d2xsxph8kpxj0f.cloudfront.net",
+      "count": "37"
+    }
+  ],
+  "messages": [],
+  "stdout": "domain\tcount\nd2xsxph8kpxj0f.cloudfront.net\t37\n",
+  "stderr": "",
+  "execution_time_ms": 244
+}
