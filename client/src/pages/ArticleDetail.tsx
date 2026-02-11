@@ -14,6 +14,8 @@ import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { toast } from "sonner";
 import { getCategoryColor } from "@/lib/categoryColors";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
 
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
@@ -66,6 +68,9 @@ function ArticleDetailContent() {
   const [activeHeading, setActiveHeading] = useState<string>("");
   const [readProgress, setReadProgress] = useState(0);
   const [hasLiked, setHasLiked] = useState(false);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [lightboxImages, setLightboxImages] = useState<Array<{ src: string; alt?: string }>>([]);
   
   const incrementViews = trpc.articles.incrementViews.useMutation();
   const toggleLikeMutation = trpc.articles.toggleLike.useMutation();
@@ -621,14 +626,17 @@ function ArticleDetailContent() {
                     case 'image':
                       return (
                         <figure key={index} className="rounded-xl overflow-hidden">
-                          <ProgressiveImage
+                           <ProgressiveImage
                             src={section.url}
                             alt={section.alt || section.caption || ''}
                             loading="lazy"
-                            aspectRatio="16/9"
-                            objectFit="cover"
-                            className="cursor-pointer hover:scale-[1.02] transition-transform"
-                            onClick={() => window.open(section.url, '_blank')}
+                            objectFit="contain"
+                            className="cursor-pointer hover:opacity-90 transition-opacity"
+                            onClick={() => {
+                              setLightboxImages([{ src: section.url, alt: section.alt || section.caption }]);
+                              setLightboxIndex(0);
+                              setLightboxOpen(true);
+                            }}
                           />
                           {section.caption && (
                             <figcaption>
@@ -680,8 +688,13 @@ function ArticleDetailContent() {
                                   loading="lazy"
                                   aspectRatio="16/9"
                                   objectFit="cover"
-                                  className="cursor-pointer hover:scale-[1.02] transition-transform h-[400px]"
-                                  onClick={() => window.open(img.url, '_blank')}
+                                  className="cursor-pointer hover:opacity-90 transition-opacity h-[400px]"
+                                  onClick={() => {
+                                    const galleryImages = section.images.map((i: any) => ({ src: i.url, alt: i.alt || i.caption }));
+                                    setLightboxImages(galleryImages);
+                                    setLightboxIndex(imgIndex);
+                                    setLightboxOpen(true);
+                                  }}
                                 />
                                 {img.caption && (
                                   <figcaption className="text-sm text-muted-foreground mt-4 text-center">
@@ -1007,6 +1020,17 @@ function ArticleDetailContent() {
           font-family: 'Playfair Display', serif;
         }
       `}</style>
+
+      {/* Lightbox for image viewing */}
+      <Lightbox
+        open={lightboxOpen}
+        close={() => setLightboxOpen(false)}
+        index={lightboxIndex}
+        slides={lightboxImages}
+        styles={{
+          container: { backgroundColor: "rgba(0, 0, 0, 0.95)" },
+        }}
+      />
     </div>
   );
 }

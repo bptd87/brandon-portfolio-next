@@ -2825,4 +2825,11 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Make ProgressiveImage skeleton loader more visible (increased opacity, added shimmer animation)
 - [x] Add page transition loading indicator (progress bar at top of page)
 - [x] Test loading states across pages (verified page loading bar and image skeletons working)
+- [x] Save checkpoint
+
+## Fix Images in "What Makes a Good Scenic Design Rendering" Article (Feb 10, 2026)
+- [x] Inspect article images to identify aspect ratio issues (images stretched, no lightbox)
+- [x] Add lightbox functionality to ArticleDetail component (installed yet-another-react-lightbox)
+- [x] Fix image aspect ratios in article content (removed forced 16/9, using contain for single images)
+- [x] Test lightbox and image display (verified: lightbox opens, aspect ratios fixed, images clickable)
 - [ ] Save checkpoint
