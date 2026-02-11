@@ -157,31 +157,21 @@ function vitePluginCriticalCSS(): Plugin {
   return {
     name: 'vite-plugin-critical-css',
     apply: 'build',
-    async closeBundle() {
-      const distPath = path.resolve(import.meta.dirname, 'dist/public');
-      const indexPath = path.join(distPath, 'index.html');
-      
-      if (!fs.existsSync(indexPath)) {
-        console.warn('index.html not found, skipping critical CSS inlining');
-        return;
-      }
-      
+    async transformIndexHtml(html) {
       const critters = new Critters({
-        path: distPath,
+        path: path.resolve(import.meta.dirname, 'dist/public'),
         publicPath: '/',
         preload: 'swap',
         noscriptFallback: true,
-        inlineFonts: false, // Don't inline fonts, too large
+        inlineFonts: true,
         pruneSource: false,
       });
       
       try {
-        const html = fs.readFileSync(indexPath, 'utf-8');
-        const inlined = await critters.process(html);
-        fs.writeFileSync(indexPath, inlined, 'utf-8');
-        console.log('✅ Critical CSS inlined successfully');
+        return await critters.process(html);
       } catch (error) {
-        console.error('❌ Critical CSS inlining failed:', error);
+        console.error('Critical CSS inlining failed:', error);
+        return html;
       }
     },
   };

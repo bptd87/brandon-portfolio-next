@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 
-// Generate srcset for responsive images using image proxy
+// Generate srcset for responsive images
 function generateSrcSet(src: string): string {
   // Check if URL is from manuscdn or cloudfront
   if (src.includes('manuscdn.com') || src.includes('cloudfront.net')) {
-    // Use our image proxy for resizing at 90% quality
-    const widths = [640, 768, 1024, 1536, 1920];
+    // For CDN images, generate multiple sizes
+    const widths = [640, 750, 828, 1080, 1200, 1920];
     return widths
       .map(w => {
-        const proxyUrl = `/api/img?url=${encodeURIComponent(src)}&w=${w}`;
-        return `${proxyUrl} ${w}w`;
+        // Add width parameter to URL (works with most CDNs)
+        const separator = src.includes('?') ? '&' : '?';
+        return `${src}${separator}w=${w} ${w}w`;
       })
       .join(', ');
   }
@@ -84,9 +85,9 @@ export function ProgressiveImage({
 
       {/* Actual image - NO transitions at all */}
       <img
-        src={(src.includes('manuscdn.com') || src.includes('cloudfront.net')) ? `/api/img?url=${encodeURIComponent(src)}&w=1920` : src}
+        src={src}
         srcSet={generateSrcSet(src)}
-        sizes={sizes || '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'}
+        sizes={sizes || '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
         alt={alt}
         className={`
           w-full h-full 

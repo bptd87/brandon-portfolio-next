@@ -192,17 +192,13 @@ export default function Home() {
                     setCurrentSlide(index);
                     setIsAutoPlaying(false);
                   }}
-                  className="p-4 transition-all group"
+                  className={`w-2 h-2 rounded-full transition-all ${
+                    index === currentSlide
+                      ? 'bg-white w-8'
+                      : 'bg-white/50 hover:bg-white/75'
+                  }`}
                   aria-label={`Go to slide ${index + 1}`}
-                >
-                  <span
-                    className={`block rounded-full transition-all ${
-                      index === currentSlide
-                        ? 'bg-white w-8 h-2'
-                        : 'bg-white/50 w-2 h-2 group-hover:bg-white/75 group-hover:w-3'
-                    }`}
-                  />
-                </button>
+                />
               ))}
             </div>
           </>
