@@ -1,6 +1,8 @@
 import { jsxLocPlugin } from "@builder.io/vite-plugin-jsx-loc";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
+// @ts-ignore - critters has type issues with package.json exports
+import Critters from "critters";
 import fs from "node:fs";
 import path from "node:path";
 import { defineConfig, type Plugin, type ViteDevServer } from "vite";
@@ -150,7 +152,32 @@ function vitePluginManusDebugCollector(): Plugin {
   };
 }
 
-const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
+// Critical CSS inlining plugin using Critters
+function vitePluginCriticalCSS(): Plugin {
+  return {
+    name: 'vite-plugin-critical-css',
+    apply: 'build',
+    async transformIndexHtml(html) {
+      const critters = new Critters({
+        path: path.resolve(import.meta.dirname, 'dist/public'),
+        publicPath: '/',
+        preload: 'swap',
+        noscriptFallback: true,
+        inlineFonts: true,
+        pruneSource: false,
+      });
+      
+      try {
+        return await critters.process(html);
+      } catch (error) {
+        console.error('Critical CSS inlining failed:', error);
+        return html;
+      }
+    },
+  };
+}
+
+const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector(), vitePluginCriticalCSS()];
 
 export default defineConfig({
   plugins,

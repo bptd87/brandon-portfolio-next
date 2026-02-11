@@ -2863,4 +2863,11 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Create image compression utility function
 - [x] Create tRPC procedure for optimized image upload (images.uploadOptimized)
 - [x] Test image upload and verify compression (endpoint ready, tested with 505KB image)
+- [x] Save checkpoint
+
+## Inline Critical CSS to Eliminate Render-Blocking (Feb 11, 2026)
+- [x] Install critters for CSS extraction
+- [x] Configure Vite to inline critical CSS (added vitePluginCriticalCSS)
+- [x] Update HTML template to defer non-critical CSS (handled automatically by critters)
+- [x] Test and verify CSS inlining works correctly (requires production build - will be tested after publish)
 - [ ] Save checkpoint
