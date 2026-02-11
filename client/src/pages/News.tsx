@@ -12,6 +12,7 @@ import { trpc } from "@/lib/trpc";
 import { Calendar, MapPin, ArrowRight, Search, Rss } from "lucide-react";
 import { Link } from "wouter";
 import { NewsListSkeleton } from "@/components/SkeletonLoaders";
+import { SEO } from "@/components/SEO";
 
 export default function News() {
   return (
@@ -25,26 +26,26 @@ export default function News() {
 function NewsContent() {
   const { data: newsItems = [], isLoading } = trpc.news.list.useQuery({});
   const { data: allCategories = [] } = trpc.categories.list.useQuery({});
-  
+
   // Filter to show only news categories
   const newsCategories = useMemo(() => {
     return allCategories.filter(cat => cat.type === 'news');
   }, [allCategories]);
-  
+
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
   // Filter news items
   const filteredNews = useMemo(() => {
     return newsItems.filter((item) => {
-      const matchesSearch = searchQuery === "" || 
+      const matchesSearch = searchQuery === "" ||
         item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.excerpt?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.location?.toLowerCase().includes(searchQuery.toLowerCase());
-      
-      const matchesCategory = selectedCategory === "all" || 
+
+      const matchesCategory = selectedCategory === "all" ||
         item.categoryId === parseInt(selectedCategory);
-      
+
       return matchesSearch && matchesCategory;
     });
   }, [newsItems, searchQuery, selectedCategory]);
@@ -52,7 +53,7 @@ function NewsContent() {
   // Group news by year
   const newsByYear = useMemo(() => {
     const grouped: Record<number, typeof newsItems> = {};
-    
+
     filteredNews.forEach((item) => {
       const year = new Date(item.publishedAt || item.createdAt).getFullYear();
       if (!grouped[year]) {
@@ -60,14 +61,14 @@ function NewsContent() {
       }
       grouped[year].push(item);
     });
-    
+
     // Sort years descending
     return Object.entries(grouped)
       .sort(([yearA], [yearB]) => parseInt(yearB) - parseInt(yearA))
       .map(([year, items]) => ({
         year: parseInt(year),
-        items: items.sort((a, b) => 
-          new Date(b.publishedAt || b.createdAt).getTime() - 
+        items: items.sort((a, b) =>
+          new Date(b.publishedAt || b.createdAt).getTime() -
           new Date(a.publishedAt || a.createdAt).getTime()
         ),
       }));
@@ -88,6 +89,10 @@ function NewsContent() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="News & Updates | Brandon PT Davis"
+        description="Latest news, project launches, and design updates from Brandon PT Davis."
+      />
       <Header />
 
       {/* Hero Section */}
@@ -145,8 +150,8 @@ function NewsContent() {
                   <div className="grid md:grid-cols-2 gap-0">
                     {featuredNews.coverImageUrl && (
                       <div className="aspect-[16/9] md:aspect-auto overflow-hidden">
-                        <img 
-                          src={featuredNews.coverImageUrl} 
+                        <img
+                          src={featuredNews.coverImageUrl}
                           alt={featuredNews.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                         />
@@ -168,10 +173,10 @@ function NewsContent() {
                         <div className="flex items-center gap-2">
                           <Calendar className="h-4 w-4" />
                           <span>
-                            {new Date(featuredNews.publishedAt || featuredNews.createdAt).toLocaleDateString('en-US', { 
-                              year: 'numeric', 
-                              month: 'long', 
-                              day: 'numeric' 
+                            {new Date(featuredNews.publishedAt || featuredNews.createdAt).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric'
                             })}
                           </span>
                         </div>
@@ -224,14 +229,14 @@ function NewsContent() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {items.map((item) => {
                         const category = newsCategories.find(c => c.id === item.categoryId);
-                        
+
                         return (
                           <Link key={item.id} href={`/news/${item.slug}`}>
                             <Card className="h-full hover:shadow-xl transition-all duration-300 group cursor-pointer overflow-hidden p-0">
                               {item.coverImageUrl && (
                                 <div className="aspect-[16/9] overflow-hidden">
-                                  <img 
-                                    src={item.coverImageUrl} 
+                                  <img
+                                    src={item.coverImageUrl}
                                     alt={item.title}
                                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                   />
@@ -255,9 +260,9 @@ function NewsContent() {
                                   <div className="flex items-center gap-1.5">
                                     <Calendar className="h-3.5 w-3.5" />
                                     <span>
-                                      {new Date(item.publishedAt || item.createdAt).toLocaleDateString('en-US', { 
-                                        month: 'short', 
-                                        day: 'numeric' 
+                                      {new Date(item.publishedAt || item.createdAt).toLocaleDateString('en-US', {
+                                        month: 'short',
+                                        day: 'numeric'
                                       })}
                                     </span>
                                   </div>

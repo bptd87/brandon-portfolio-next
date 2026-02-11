@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { SEO } from '@/components/SEO';
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -23,6 +24,10 @@ export function Contact() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Contact Brandon PT Davis | Scenic Design Inquiries"
+        description="Get in touch with Brandon PT Davis for scenic design, experiential projects, or educational collaborations."
+      />
       <Header />
       {/* Animated Background Orbs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
@@ -32,7 +37,7 @@ export function Contact() {
       </div>
 
       <div className="container relative z-10 py-20">
-        
+
         {/* Hero Section */}
         <div className="text-center mb-16">
           <h1 className="text-6xl md:text-7xl font-['Playfair_Display'] italic font-normal mb-6 text-foreground">
@@ -45,7 +50,7 @@ export function Contact() {
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-12 max-w-6xl mx-auto mb-20">
-          
+
           {/* LEFT: Contact Form - THE HERO */}
           <div>
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -99,8 +104,8 @@ export function Contact() {
                 />
               </div>
 
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 size="lg"
                 className="w-full md:w-auto px-12 h-14 text-lg bg-primary hover:bg-primary/90 text-primary-foreground font-medium shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transition-all hover:scale-105"
               >
@@ -148,7 +153,7 @@ export function Contact() {
                   animation: float 3s ease-in-out infinite, rainbow-glow 1.5s ease-in-out infinite;
                 }
               `}</style>
-              <img 
+              <img
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/sTGFAGStMbEkLyGw.png"
                 alt="Brandon at desk with cat"
                 className="w-full rounded-2xl brandon-illustration cursor-pointer"
@@ -161,15 +166,15 @@ export function Contact() {
         {/* Stats Section */}
         <div className="max-w-4xl mx-auto mb-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
+
             {/* Response Time */}
             <div className="flex flex-col items-center gap-3 p-8 rounded-2xl border-2 border-primary/50 bg-card/50 backdrop-blur">
               <div className="h-20 w-20 relative">
                 <div className="absolute inset-0 rounded-full border-4 border-primary/20"></div>
                 <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-primary animate-spin" style={{ animationDuration: '2s' }}></div>
-                <div className="absolute top-1/2 left-1/2 w-1 h-6 bg-primary origin-bottom -translate-x-1/2 -translate-y-full rounded-full" 
+                <div className="absolute top-1/2 left-1/2 w-1 h-6 bg-primary origin-bottom -translate-x-1/2 -translate-y-full rounded-full"
                   style={{ animation: 'spin 60s linear infinite', transformOrigin: 'bottom center' }}></div>
-                <div className="absolute top-1/2 left-1/2 w-1 h-7 bg-primary origin-bottom -translate-x-1/2 -translate-y-full rounded-full" 
+                <div className="absolute top-1/2 left-1/2 w-1 h-7 bg-primary origin-bottom -translate-x-1/2 -translate-y-full rounded-full"
                   style={{ animation: 'spin 5s linear infinite', transformOrigin: 'bottom center' }}></div>
                 <div className="absolute top-1/2 left-1/2 w-2 h-2 bg-primary rounded-full -translate-x-1/2 -translate-y-1/2"></div>
               </div>
@@ -184,7 +189,7 @@ export function Contact() {
               style={{ borderImage: 'linear-gradient(135deg, rgb(6 182 212), rgb(168 85 247)) 1' }}>
               <div className="h-20 w-20 relative flex items-center justify-center">
                 <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500 to-purple-500 opacity-20 animate-ping"></div>
-                <CheckCircle2 className="h-14 w-14 relative z-10" 
+                <CheckCircle2 className="h-14 w-14 relative z-10"
                   style={{
                     stroke: 'url(#checkGradient)',
                     strokeWidth: 2
@@ -215,9 +220,9 @@ export function Contact() {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
+
             {/* Email */}
-            <a 
+            <a
               href="mailto:info@brandonptdavis.com"
               className="flex flex-col items-center gap-3 p-6 rounded-2xl border-2 border-primary/30 bg-card/50 backdrop-blur hover:border-primary hover:bg-card/80 transition-all group hover:scale-105"
             >
@@ -231,7 +236,7 @@ export function Contact() {
             </a>
 
             {/* LinkedIn */}
-            <a 
+            <a
               href="https://linkedin.com/in/brandonptdavis"
               target="_blank"
               rel="noopener noreferrer"
@@ -247,7 +252,7 @@ export function Contact() {
             </a>
 
             {/* Instagram */}
-            <a 
+            <a
               href="https://instagram.com/brandonptdavis"
               target="_blank"
               rel="noopener noreferrer"

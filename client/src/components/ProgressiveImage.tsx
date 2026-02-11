@@ -16,7 +16,7 @@ function applyCloudinaryTransformations(src: string, width?: number, blurred?: b
 
   // Build transformation string
   const transformations = [];
-  
+
   if (blurred) {
     // Blurred placeholder: TINY width with blur for smooth color wash
     transformations.push('w_10');
@@ -25,21 +25,21 @@ function applyCloudinaryTransformations(src: string, width?: number, blurred?: b
   } else {
     // Normal image: automatic format (WebP with fallback)
     transformations.push('f_auto');
-    
-    // Quality optimization (85% - good balance)
-    transformations.push('q_85');
-    
+
+    // Quality optimization (auto - balances quality and size)
+    transformations.push('q_auto');
+
     // Responsive width if specified
     if (width) {
       transformations.push(`w_${width}`);
     }
-    
+
     // Auto DPR (device pixel ratio)
     transformations.push('dpr_auto');
   }
 
   const transformString = transformations.join(',');
-  
+
   return `${baseUrl}${transformString}/${pathAfterUpload}`;
 }
 
@@ -154,10 +154,10 @@ export function ProgressiveImage({
   // Smart positioning for portrait vs landscape
   useEffect(() => {
     if (!smartPosition || !shouldLoad) return;
-    
+
     const img = new Image();
     img.src = src;
-    
+
     img.onload = () => {
       if (img.naturalHeight > img.naturalWidth) {
         setObjectPosition('object-top');
@@ -171,12 +171,18 @@ export function ProgressiveImage({
   useEffect(() => {
     if (!imageLoaded) return;
 
+    // If eager loading, show immediately without delay
+    if (loading === 'eager') {
+      setShowSharpImage(true);
+      return;
+    }
+
     const timer = setTimeout(() => {
       setShowSharpImage(true);
     }, blurFadeDuration);
 
     return () => clearTimeout(timer);
-  }, [imageLoaded, blurFadeDuration]);
+  }, [imageLoaded, blurFadeDuration, loading]);
 
   // Apply Cloudinary transformations to src
   const optimizedSrc = applyCloudinaryTransformations(src, width);
@@ -184,10 +190,10 @@ export function ProgressiveImage({
   const srcSet = generateSrcSet(src);
 
   return (
-    <div 
+    <div
       ref={imgRef}
       className={`
-        relative overflow-hidden bg-muted/10
+        relative overflow-hidden
         ${enableScrollAnimation ? 'transition-all duration-700 ease-out' : ''}
         ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
       `}
@@ -209,13 +215,13 @@ export function ProgressiveImage({
 
       {/* Skeleton loader - shown before intersection */}
       {!shouldLoad && (
-        <div className="absolute inset-0 bg-muted/30">
+        <div className="absolute inset-0">
           <div className="w-full h-full relative overflow-hidden">
-            {/* Shimmer effect */}
-            <div 
+            {/* Shimmer effect - subtle */}
+            <div
               className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite]"
               style={{
-                background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%)',
+                background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%)',
               }}
             />
           </div>

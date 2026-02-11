@@ -4,6 +4,8 @@ import { MapPin, Calendar, ArrowRight } from "lucide-react";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { trpc } from "@/lib/trpc";
 import { Link, useLocation, useSearch } from "wouter";
+import { StaggerList, StaggerItem } from "@/components/animations/Stagger";
+import { SEO } from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useState, useMemo } from "react";
@@ -15,7 +17,7 @@ export default function Projects() {
   const disciplineParam = searchParams.get('discipline') || 'scenic_design';
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>('all');
 
-  const { data: projects, isLoading } = trpc.projects.list.useQuery({ 
+  const { data: projects, isLoading } = trpc.projects.list.useQuery({
     status: 'published',
     discipline: disciplineParam as any
   });
@@ -57,6 +59,10 @@ export default function Projects() {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title={`${currentDiscipline.title} | Brandon PT Davis`}
+        description={`Explore ${currentDiscipline.title.toLowerCase()} projects by Brandon PT Davis. ${currentDiscipline.subtitle}.`}
+      />
       <Header />
 
       {/* Page Header */}
@@ -93,8 +99,8 @@ export default function Projects() {
                 >
                   {cat?.toUpperCase()}
                 </Button>
-                  ))}
-                </div>
+              ))}
+            </div>
           </div>
         </section>
       )}
@@ -107,7 +113,7 @@ export default function Projects() {
           {filteredProjects && filteredProjects.length > 0 ? (
             <section className="py-16 overflow-visible">
               <div className="container overflow-visible">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-visible">
+                <StaggerList className="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-visible">
                   {filteredProjects.map((project, index) => {
                     // Cycle through brand colors for variety
                     const brandColors = [
@@ -117,58 +123,60 @@ export default function Projects() {
                       '#FFC107', // Amber
                     ];
                     const hoverColor = brandColors[index % brandColors.length];
-                    
+
                     return (
-                    <Link key={project.id} href={`/projects/${project.slug}`}>
-                      <div className="relative overflow-hidden rounded-lg cursor-pointer group aspect-[3/2]">
-                        {project.coverImageUrl ? (
-                          <>
-                            <ProgressiveImage
-                              src={project.coverImageUrl}
-                              alt={project.title}
-                              className="group-hover:scale-110 transition-transform duration-700"
-                              aspectRatio="3/2"
-                              smartPosition={true}
-                              loading="lazy"
-                            />
-                            {/* Gradient overlay - fades out on hover to reveal full image */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent group-hover:opacity-0 transition-all duration-500" />
-                            
-                            {/* Project info - fades out on hover */}
-                            <div className="absolute bottom-0 left-0 right-0 p-6 text-white group-hover:opacity-0 transition-all duration-500">
-                              {project.client && (
-                                <p className="text-xs tracking-widest mb-2 opacity-80">
-                                  {project.client.toUpperCase()}
-                                </p>
-                              )}
-                              <h3 className="text-2xl md:text-3xl font-['Playfair_Display'] italic mb-2" style={{ color: hoverColor }}>
-                                {project.title}
-                              </h3>
-                              {project.year && (
-                                <p className="text-sm opacity-80">
-                                  {project.year}
-                                </p>
-                              )}
-                            </div>
-                          </>
-                        ) : (
-                          <div className="w-full h-full bg-muted flex items-center justify-center">
-                            <p className="text-muted-foreground">No image</p>
+                      <StaggerItem key={project.id}>
+                        <Link href={`/projects/${project.slug}`}>
+                          <div className="relative overflow-hidden rounded-lg cursor-pointer group aspect-[3/2]">
+                            {project.coverImageUrl ? (
+                              <>
+                                <ProgressiveImage
+                                  src={project.coverImageUrl}
+                                  alt={project.title}
+                                  className="group-hover:scale-110 transition-transform duration-700"
+                                  aspectRatio="3/2"
+                                  smartPosition={true}
+                                  loading="lazy"
+                                />
+                                {/* Gradient overlay - fades out on hover to reveal full image */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent group-hover:opacity-0 transition-all duration-500" />
+
+                                {/* Project info - fades out on hover */}
+                                <div className="absolute bottom-0 left-0 right-0 p-6 text-white group-hover:opacity-0 transition-all duration-500">
+                                  {project.client && (
+                                    <p className="text-xs tracking-widest mb-2 opacity-80">
+                                      {project.client.toUpperCase()}
+                                    </p>
+                                  )}
+                                  <h3 className="text-2xl md:text-3xl font-['Playfair_Display'] italic mb-2" style={{ color: hoverColor }}>
+                                    {project.title}
+                                  </h3>
+                                  {project.year && (
+                                    <p className="text-sm opacity-80">
+                                      {project.year}
+                                    </p>
+                                  )}
+                                </div>
+                              </>
+                            ) : (
+                              <div className="w-full h-full bg-muted flex items-center justify-center">
+                                <p className="text-muted-foreground">No image</p>
+                              </div>
+                            )}
                           </div>
-                        )}
-                      </div>
-                    </Link>
+                        </Link>
+                      </StaggerItem>
                     );
                   })}
-                </div>
+                </StaggerList>
               </div>
             </section>
           ) : (
             <div className="container py-16">
               <div className="text-center">
                 <p className="text-muted-foreground">
-                  {selectedSubcategory === 'all' 
-                    ? 'No projects in this discipline yet.' 
+                  {selectedSubcategory === 'all'
+                    ? 'No projects in this discipline yet.'
                     : `No projects in the "${selectedSubcategory}" category.`}
                 </p>
               </div>

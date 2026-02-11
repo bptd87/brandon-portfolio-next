@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { Mail, MapPin, Sparkles, FileText, Lightbulb, GraduationCap, Users, ArrowRight, Briefcase, Award, Linkedin } from "lucide-react";
 import StructuredData from "@/components/StructuredData";
 import { Link } from "wouter";
+import { SEO } from "@/components/SEO";
 import { useState, useEffect } from "react";
 
 export default function About() {
@@ -74,6 +75,10 @@ export default function About() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="About Brandon PT Davis | Scenic Designer & Educator"
+        description="Learn about Brandon PT Davis, a scenic and experiential designer with over 15 years of experience in theatre, themed entertainment, and education."
+      />
       <StructuredData
         type="Person"
         person={{
@@ -134,21 +139,21 @@ export default function About() {
           <div className="grid grid-cols-1 md:grid-cols-[480px_1fr] gap-12 md:gap-16 items-center">
             {/* Profile Image - Left Side */}
             <div className="relative group animate-in fade-in slide-in-from-left-8 duration-700">
-              <div 
+              <div
                 className="aspect-[4/5] rounded-3xl overflow-hidden border-4 border-primary/30 shadow-2xl shadow-primary/10 transition-all duration-300 group-hover:border-primary/50 group-hover:shadow-primary/20"
               >
-                <img 
+                <img
                   src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/jDUthZkmakLJRTiP.jpeg"
                   alt="Brandon PT Davis - Scenic Designer"
                   className="w-full h-full object-cover object-center"
                 />
               </div>
               {/* Enhanced decorative elements with parallax */}
-              <div 
+              <div
                 className="absolute -bottom-8 -right-8 w-40 h-40 bg-primary/10 rounded-full blur-3xl -z-10"
                 style={{ transform: `translateY(${scrollY * 0.1}px)` }}
               ></div>
-              <div 
+              <div
                 className="absolute -top-8 -left-8 w-32 h-32 bg-accent/10 rounded-full blur-3xl -z-10"
                 style={{ transform: `translateY(${scrollY * 0.2}px)` }}
               ></div>
@@ -160,26 +165,26 @@ export default function About() {
                 <Sparkles className="w-4 h-4 text-primary animate-pulse" />
                 <span className="text-sm uppercase tracking-widest text-primary font-bold">Scenic Designer</span>
               </div>
-              
+
               <h1 className="text-5xl md:text-8xl font-serif leading-[0.85] mb-8">
                 Brandon<br />PT Davis
               </h1>
-              
+
               <p className="text-lg md:text-2xl text-foreground/90 leading-relaxed max-w-2xl">
                 Transforming theatrical spaces into <span className="text-primary font-bold">immersive visual landscapes</span> where story and space move together in harmony
               </p>
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <a 
-                  href="/contact" 
+                <a
+                  href="/contact"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5"
                 >
                   <Mail className="w-5 h-5" />
                   Get in Touch
                 </a>
-                <a 
-                  href="/resume" 
+                <a
+                  href="/resume"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-muted/50 text-foreground rounded-xl font-semibold hover:bg-muted transition-all duration-300 border border-border hover:border-primary/30"
                 >
                   <FileText className="w-5 h-5" />
@@ -199,19 +204,19 @@ export default function About() {
               <p className="text-2xl text-foreground/90 leading-relaxed first-letter:text-7xl first-letter:font-serif first-letter:text-primary first-letter:mr-3 first-letter:float-left">
                 I believe scenic design is a form of storytelling—one that starts before the actors speak and lingers after the final bow. My work lives at the intersection of craft and concept, using physical space to shape emotion, tension, and rhythm.
               </p>
-              
+
               <p className="text-xl text-foreground/80 leading-relaxed">
                 With over 15 years of experience in theatre and immersive environments, I've designed 130+ productions across the country, from intimate black box theatres to grand regional stages. Each project is an opportunity to collaborate with inspiring directors, actors, and technicians—creative partnerships that push the boundaries of what a theatrical space can be.
               </p>
-              
+
               <p className="text-xl text-foreground/80 leading-relaxed">
                 As a proud member of United Scenic Artists Local 829, I bring both rigor and play to every project. My training includes an MFA in Scenic Design from UC Irvine and a BFA in Theatre Arts from Stephens College, where I learned that great design comes from equal parts vision and technical mastery.
               </p>
-              
+
               <p className="text-xl text-foreground/80 leading-relaxed">
                 Beyond the theatre, I work as a Senior Scenic and Experiential Designer at Adaptive Design Services, bringing theatrical storytelling techniques to branded events, theme parks, and immersive installations. I also teach scenic design, mentoring the next generation of designers and helping them navigate the complex, rewarding path of a creative career.
               </p>
-              
+
               <p className="text-xl text-foreground/80 leading-relaxed">
                 Whether I'm designing a musical, a contemporary drama, or an experiential activation, my goal is always the same: to create spaces that feel inevitable—as if the story could only happen here, in this world, at this moment.
               </p>
@@ -235,7 +240,7 @@ export default function About() {
               const Icon = card.icon;
               return (
                 <Link key={card.href} href={card.href}>
-                  <div 
+                  <div
                     className={`group relative overflow-hidden rounded-2xl border ${card.borderColor} bg-gradient-to-br ${card.color} p-8 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl cursor-pointer animate-in fade-in slide-in-from-bottom duration-700`}
                     style={{ animationDelay: `${index * 150}ms` }}
                   >
@@ -282,8 +287,8 @@ export default function About() {
                 <div className="relative aspect-square overflow-hidden rounded-2xl group">
                   {/* Skeleton placeholder */}
                   <div className="absolute inset-0 bg-gradient-to-r from-muted/50 via-muted/30 to-muted/50 animate-pulse" />
-                  <img 
-                    src={galleryImages[0].url} 
+                  <img
+                    src={galleryImages[0].url}
                     alt={galleryImages[0].alt}
                     className="relative w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     loading="lazy"
@@ -294,15 +299,15 @@ export default function About() {
 
               {/* Smaller images */}
               {galleryImages.slice(1, 5).map((image, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className="relative aspect-square overflow-hidden rounded-2xl group animate-in fade-in zoom-in-50 duration-700"
                   style={{ animationDelay: `${(index + 1) * 100}ms` }}
                 >
                   {/* Skeleton placeholder */}
                   <div className="absolute inset-0 bg-gradient-to-r from-muted/50 via-muted/30 to-muted/50 animate-pulse" />
-                  <img 
-                    src={image.url} 
+                  <img
+                    src={image.url}
                     alt={image.alt}
                     className="relative w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     loading="lazy"
@@ -313,15 +318,15 @@ export default function About() {
 
               {/* Bottom row */}
               {galleryImages.slice(5).map((image, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className="relative aspect-square overflow-hidden rounded-2xl group animate-in fade-in zoom-in-50 duration-700"
                   style={{ animationDelay: `${(index + 5) * 100}ms` }}
                 >
                   {/* Skeleton placeholder */}
                   <div className="absolute inset-0 bg-gradient-to-r from-muted/50 via-muted/30 to-muted/50 animate-pulse" />
-                  <img 
-                    src={image.url} 
+                  <img
+                    src={image.url}
                     alt={image.alt}
                     className="relative w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     loading="lazy"

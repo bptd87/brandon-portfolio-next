@@ -23,6 +23,7 @@ const Collaborators = lazy(() => import("./pages/Collaborators"));
 const ProjectDetailRouter = lazy(() => import("./pages/ProjectDetailRouter"));
 const NewsDetail = lazy(() => import("./pages/NewsDetail"));
 const ArticleDetail = lazy(() => import("./pages/ArticleDetail"));
+const Admin = lazy(() => import("./pages/Admin"));
 
 // Non-critical routes - lazy load for better initial performance
 
@@ -53,12 +54,12 @@ const Sitemap = lazy(() => import("./pages/Sitemap"));
 
 function Router() {
   const [location] = useLocation();
-  
+
   // Scroll to top on route change
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
-  
+
   // make sure to consider if you need authentication for certain routes
   return (
     <PageTransition>
@@ -67,50 +68,51 @@ function Router() {
           <div className="animate-pulse text-muted-foreground">Loading...</div>
         </div>
       }>
-      <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/projects"} component={Projects} />
-      <Route path={"/projects/scenic-design"} component={Projects} />
-      <Route path={"/projects/experiential"} component={ExperientialPortfolio} />
-      <Route path={"/projects/rendering"} component={RenderingPortfolio} />
-      <Route path={"/projects/scenic-models"} component={ScenicModelsPortfolio} />
-      <Route path={"/projects/:slug"} component={ProjectDetailRouter} />
-      <Route path={"/news"} component={News} />
-      <Route path={"/news/:slug"} component={NewsDetail} />
-      <Route path={"/articles"} component={Articles} />
-      <Route path={"/articles/:slug"} component={ArticleDetail} />
-      <Route path={"/tags/:slug"} component={TagDetail} />
-      <Route path={"/about"} component={About} />
-      <Route path={"/about/collaborators"} component={Collaborators} />
+        <Switch>
+          <Route path={"/"} component={Home} />
+          <Route path={"/projects"} component={Projects} />
+          <Route path={"/projects/scenic-design"} component={Projects} />
+          <Route path={"/projects/experiential"} component={ExperientialPortfolio} />
+          <Route path={"/projects/rendering"} component={RenderingPortfolio} />
+          <Route path={"/projects/scenic-models"} component={ScenicModelsPortfolio} />
+          <Route path={"/projects/:slug"} component={ProjectDetailRouter} />
+          <Route path={"/news"} component={News} />
+          <Route path={"/news/:slug"} component={NewsDetail} />
+          <Route path={"/articles"} component={Articles} />
+          <Route path={"/articles/:slug"} component={ArticleDetail} />
+          <Route path={"/tags/:slug"} component={TagDetail} />
+          <Route path={"/about"} component={About} />
+          <Route path={"/about/collaborators"} component={Collaborators} />
 
-      <Route path={"/about/teaching"} component={TeachingPhilosophy} />
-      <Route path={"/about/philosophy"} component={TeachingPhilosophy} />
-      <Route path={"/teaching-philosophy"} component={TeachingPhilosophy} />
-      <Route path={"/syllabus/experiential-design"} component={SyllabusExperiential} />
-      <Route path={"/syllabus/3d-modeling"} component={Syllabus3DModeling} />
-      <Route path={"/resume"} component={Resume} />
-      <Route path={"/creative-statement"} component={CreativeStatement} />
-      <Route path={"/contact"} component={Contact} />
-      <Route path={"/studio/tutorials/:slug"} component={TutorialDetail} />
-      <Route path={"/studio/tutorials"} component={StudioTutorials} />
-      <Route path={"/studio/apps/scale-calculator"} component={ScaleCalculator} />
-      <Route path={"/studio/apps/dimension-reference"} component={DimensionReference} />
-      <Route path={"/studio/apps/design-history-timeline"} component={DesignHistoryTimeline} />
-      <Route path={"/studio/apps/rosco-paint-calculator"} component={RoscoPaintCalculator} />
-      <Route path={"/studio/apps"} component={StudioApps} />
-      <Route path={"/studio/directory"} component={StudioDirectory} />
-      <Route path={"/studio"} component={Studio} />
-      <Route path={"/vault"} component={Vault} />
-      <Route path={"/privacy"} component={Privacy} />
-      <Route path={"/terms"} component={Terms} />
-      <Route path={"/faq"} component={FAQ} />
-      <Route path={"/accessibility"} component={Accessibility} />
-      <Route path={"/sitemap"} component={Sitemap} />
-      <Route path={"/links"} component={Links} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
-      <Route component={NotFound} />
-      </Switch>
+          <Route path={"/about/teaching"} component={TeachingPhilosophy} />
+          <Route path={"/about/philosophy"} component={TeachingPhilosophy} />
+          <Route path={"/teaching-philosophy"} component={TeachingPhilosophy} />
+          <Route path={"/syllabus/experiential-design"} component={SyllabusExperiential} />
+          <Route path={"/syllabus/3d-modeling"} component={Syllabus3DModeling} />
+          <Route path={"/resume"} component={Resume} />
+          <Route path={"/creative-statement"} component={CreativeStatement} />
+          <Route path={"/contact"} component={Contact} />
+          <Route path={"/studio/tutorials/:slug"} component={TutorialDetail} />
+          <Route path={"/studio/tutorials"} component={StudioTutorials} />
+          <Route path={"/studio/apps/scale-calculator"} component={ScaleCalculator} />
+          <Route path={"/studio/apps/dimension-reference"} component={DimensionReference} />
+          <Route path={"/studio/apps/design-history-timeline"} component={DesignHistoryTimeline} />
+          <Route path={"/studio/apps/rosco-paint-calculator"} component={RoscoPaintCalculator} />
+          <Route path={"/studio/apps"} component={StudioApps} />
+          <Route path={"/studio/directory"} component={StudioDirectory} />
+          <Route path={"/studio"} component={Studio} />
+          <Route path={"/vault"} component={Vault} />
+          <Route path={"/admin"} component={Admin} />
+          <Route path={"/privacy"} component={Privacy} />
+          <Route path={"/terms"} component={Terms} />
+          <Route path={"/faq"} component={FAQ} />
+          <Route path={"/accessibility"} component={Accessibility} />
+          <Route path={"/sitemap"} component={Sitemap} />
+          <Route path={"/links"} component={Links} />
+          <Route path={"/404"} component={NotFound} />
+          {/* Final fallback route */}
+          <Route component={NotFound} />
+        </Switch>
       </Suspense>
     </PageTransition>
   );

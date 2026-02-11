@@ -10,6 +10,10 @@ import { serveStatic, setupVite } from "./vite";
 import { generateRSSFeed } from "../rss";
 import * as sitemap from "../sitemap";
 import imageProxyRouter from "../imageProxy";
+import { sdk } from "./sdk";
+import * as db from "../db";
+import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
+import { getSessionCookieOptions } from "./cookies";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -38,6 +42,50 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
+
+  // Dev Login Bypass
+  app.get("/api/dev-login", async (req, res) => {
+    try {
+      if (process.env.NODE_ENV === "production") {
+        res.status(404).send("Not found");
+        return;
+      }
+
+      const openId = process.env.OWNER_OPEN_ID;
+      if (!openId) {
+        res.status(500).send("OWNER_OPEN_ID not set in environment");
+        return;
+      }
+
+      const name = process.env.OWNER_NAME || "Dev User";
+
+      // 1. Upsert User
+      await db.upsertUser({
+        openId,
+        name,
+        email: "dev@local.host",
+        loginMethod: "dev-bypass",
+        lastSignedIn: new Date(),
+        role: "admin", // Force admin role for owner
+      });
+
+      // 2. Create Session
+      const sessionToken = await sdk.createSessionToken(openId, {
+        name,
+        expiresInMs: ONE_YEAR_MS,
+      });
+
+      // 3. Set Cookie
+      const cookieOptions = getSessionCookieOptions(req);
+      res.cookie(COOKIE_NAME, sessionToken, { ...cookieOptions, maxAge: ONE_YEAR_MS });
+
+      // 4. Redirect to Admin
+      res.redirect("/admin");
+    } catch (error) {
+      console.error("Dev login failed:", error);
+      res.status(500).send("Dev login failed");
+    }
+  });
   
   // Sitemaps
   app.get("/sitemap.xml", async (req, res) => {
