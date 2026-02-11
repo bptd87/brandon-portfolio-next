@@ -2979,3 +2979,17 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Gzipped size reduced from 354 KB to 254 KB (100 KB saved)
 - [x] Each page now loads its own small chunk on demand
 - [x] Tested site - all pages working correctly
+
+## Codebase Cleanup
+- [ ] Delete unused page files (Admin.tsx, AdminFaqConvert.tsx, AdminImportNews.tsx, ComponentShowcase.tsx, ExperientialProjectDetail.tsx, RenderingProjectDetail.tsx)
+- [ ] Check for unused components
+- [ ] Check for unused server routes
+- [x] Site tested - all pages working correctly
+
+## Cleanup Results
+- [x] Deleted 6 unused page files (Admin.tsx, AdminFaqConvert.tsx, AdminImportNews.tsx, ComponentShowcase.tsx, ExperientialProjectDetail.tsx, RenderingProjectDetail.tsx)
+- [x] Deleted admin/ components folder (7 files)
+- [x] Deleted 6 unused component files (AIChatBox, ManusDialog, SmartImage, DashboardLayout, DashboardLayoutSkeleton, Comments)
+- [x] Identified heroImage.ts as unused (route not registered)
+- [x] Deleted heroImage.ts server file
+- [x] Site tested - all pages working correctly

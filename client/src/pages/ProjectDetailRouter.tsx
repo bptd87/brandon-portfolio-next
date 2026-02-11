@@ -1,8 +1,6 @@
 import { useParams } from "wouter";
 import { trpc } from "@/lib/trpc";
 import ProjectDetail from "./ProjectDetail";
-import RenderingProjectDetail from "./RenderingProjectDetail";
-import ExperientialProjectDetail from "./ExperientialProjectDetail";
 
 /**
  * Router component that determines which project detail page to render
@@ -30,17 +28,6 @@ export default function ProjectDetailRouter() {
     );
   }
 
-  // Route to discipline-specific detail page
-  switch (project.discipline) {
-    case 'rendering':
-      return <RenderingProjectDetail />;
-    case 'experiential_design':
-      return <ExperientialProjectDetail />;
-    case 'scenic_models':
-      // TODO: Create ScenicModelsProjectDetail component
-      return <ProjectDetail />;
-    case 'scenic_design':
-    default:
-      return <ProjectDetail />;
-  }
+  // All projects now use the unified ProjectDetail component
+  return <ProjectDetail />;
 }
