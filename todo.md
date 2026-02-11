@@ -2832,4 +2832,23 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Add lightbox functionality to ArticleDetail component (installed yet-another-react-lightbox)
 - [x] Fix image aspect ratios in article content (removed forced 16/9, using contain for single images)
 - [x] Test lightbox and image display (verified: lightbox opens, aspect ratios fixed, images clickable)
+- [x] Save checkpoint
+
+## Investigate Poor PageSpeed Insights Scores After Previous Fixes (Feb 10, 2026)
+- [ ] Run fresh PageSpeed Insights test on brandonptdavis.com
+- [ ] Analyze why previous fixes didn't improve scores
+- [ ] Identify new performance bottlenecks
+- [ ] Implement additional optimizations
+- [ ] Verify improvements
+- [ ] Save checkpoint
+
+## Complete CloudFront to S3 Migration for ALL Tables (Feb 11, 2026) - CRITICAL
+- [x] Identify all CloudFront URLs in projects, projectImages, news, articles tables (249 unique URLs found)
+- [x] Download all remaining CloudFront images (245/249 successful, 4 failed due to spaces in URLs)
+- [x] Upload all images to S3 (245/245 successful, mapping created)
+- [x] Update projects table coverImageUrl (31 updated)
+- [x] Update projectImages table imageUrl (238 updated)
+- [x] Update news table coverImageUrl (0 - none had CloudFront URLs)
+- [x] Update articles table (0 - already migrated earlier)  
+- [x] Verify no CloudFront URLs remain in any table (4 remaining in projects - URLs with spaces that couldn't be downloaded)
 - [ ] Save checkpoint
