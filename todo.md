@@ -2900,4 +2900,11 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Upload compressed images to S3
 - [x] Update database with new compressed URLs
 - [x] Verify file size reductions (expecting 50-70% reduction) - achieved 82% reduction!
+- [x] Save checkpoint
+
+## Batch Compress Article Images (Feb 11, 2026)
+- [x] Extract all image URLs from article content (JSON blocks) - found 21 unique images
+- [x] Download, compress, and re-upload all article images
+- [x] Update article content with new compressed URLs
+- [x] Verify compression results - achieved 89.2% reduction (38.18 MB → 4.11 MB)
 - [ ] Save checkpoint
