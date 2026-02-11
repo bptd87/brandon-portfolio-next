@@ -2947,4 +2947,18 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Fixed render-blocking registerSW.js by inlining service worker registration
 - [x] Reduced WebP quality from 90% to 85% for better compression (67 KiB savings)
 - [x] Removed unused manuscdn.com preconnect hint
-- [ ] Test PageSpeed score after publishing these fixes
+- [x] Checkpoint 353b6cea saved with performance fixes
+
+## Critical CSS Optimization
+- [ ] Investigate why Critters isn't extracting critical CSS properly
+- [ ] Fix Critters configuration to inline above-the-fold styles
+- [ ] Test build output to verify critical CSS is inlined
+- [ ] Verify non-critical CSS is deferred
+- [ ] Measure render-blocking CSS reduction (target: eliminate 820ms delay)
+
+## Critical CSS Results
+- [x] Fixed Critters to run in closeBundle hook after files are written
+- [x] Successfully inlined 15.63 kB (7% of 211 KiB) critical CSS
+- [x] Non-critical CSS deferred with onload="this.rel='stylesheet'"
+- [x] Noscript fallback added for users without JavaScript
+- [x] Build verified: style tag present in index.html
