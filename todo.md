@@ -3018,3 +3018,11 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Verified LCP image priority hints (loading="eager" + fetchPriority="high")
 - [x] Test image loading after migration - 503 errors resolved
 - [ ] Save checkpoint with all optimizations
+
+## Performance Regression After Image Migration - Feb 11
+- [ ] Investigate why tRPC batch request now takes 4,029ms (was ~2,000ms before)
+- [ ] Check if database queries are slow after image URL updates
+- [ ] Verify image migration didn't cause N+1 query issues
+- [ ] Test individual tRPC endpoints (auth.me, projects.list, news.list, categories.list)
+- [ ] Fix root cause and restore performance
+- [ ] Re-test PageSpeed to verify fix
