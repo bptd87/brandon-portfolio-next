@@ -1,9 +1,54 @@
 import { useState, useEffect } from 'react';
 
-// Serve images directly without proxy (CloudFront blocks proxy access)
+// Apply Cloudinary transformations for automatic optimization
+function applyCloudinaryTransformations(src: string, width?: number): string {
+  // Only transform Cloudinary URLs
+  if (!src.includes('cloudinary.com')) {
+    return src;
+  }
+
+  // Parse Cloudinary URL: https://res.cloudinary.com/{cloud_name}/image/upload/v{version}/{path}
+  const uploadIndex = src.indexOf('/upload/');
+  if (uploadIndex === -1) return src;
+
+  const baseUrl = src.substring(0, uploadIndex + 8); // Include '/upload/'
+  const pathAfterUpload = src.substring(uploadIndex + 8);
+
+  // Build transformation string
+  const transformations = [];
+  
+  // Automatic format (WebP with fallback)
+  transformations.push('f_auto');
+  
+  // Quality optimization (85% - good balance)
+  transformations.push('q_85');
+  
+  // Responsive width if specified
+  if (width) {
+    transformations.push(`w_${width}`);
+  }
+  
+  // Auto DPR (device pixel ratio)
+  transformations.push('dpr_auto');
+
+  const transformString = transformations.join(',');
+  
+  return `${baseUrl}${transformString}/${pathAfterUpload}`;
+}
+
+// Generate responsive srcset for Cloudinary images
 function generateSrcSet(src: string): string {
-  // Return empty srcset - browser will use src only
-  return '';
+  if (!src.includes('cloudinary.com')) {
+    return '';
+  }
+
+  const widths = [400, 800, 1200, 1600];
+  const srcsetEntries = widths.map(width => {
+    const transformedUrl = applyCloudinaryTransformations(src, width);
+    return `${transformedUrl} ${width}w`;
+  });
+
+  return srcsetEntries.join(', ');
 }
 
 interface ProgressiveImageProps {
@@ -17,6 +62,7 @@ interface ProgressiveImageProps {
   objectFit?: 'cover' | 'contain';
   smartPosition?: boolean; // Enable automatic orientation detection
   sizes?: string; // Responsive sizes attribute
+  width?: number; // Target width for optimization
 }
 
 export function ProgressiveImage({
@@ -30,6 +76,7 @@ export function ProgressiveImage({
   objectFit = 'cover',
   smartPosition = false,
   sizes,
+  width,
 }: ProgressiveImageProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -50,6 +97,10 @@ export function ProgressiveImage({
       }
     };
   }, [src, smartPosition]);
+
+  // Apply Cloudinary transformations to src
+  const optimizedSrc = applyCloudinaryTransformations(src, width);
+  const srcSet = generateSrcSet(src);
 
   return (
     <div 
@@ -73,10 +124,10 @@ export function ProgressiveImage({
         </div>
       )}
 
-      {/* Actual image - NO transitions at all */}
+      {/* Actual image with Cloudinary optimizations */}
       <img
-        src={src}
-        srcSet={generateSrcSet(src)}
+        src={optimizedSrc}
+        srcSet={srcSet}
         sizes={sizes || '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
         alt={alt}
         className={`

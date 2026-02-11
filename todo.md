@@ -3076,3 +3076,21 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Remove unused CloudFront preconnect hint
 - [x] Add manus-analytics.com preconnect (310ms LCP savings)
 - [ ] Save checkpoint
+
+## Database Query Errors - Feb 11
+- [ ] Investigate why categories, news, and projects queries are failing
+- [ ] Check database connection status
+- [ ] Verify table schemas match query expectations
+- [ ] Fix any schema mismatches or connection issues
+- [ ] Test all queries work correctly
+- [ ] Save checkpoint
+
+## Cloudinary Image Migration - Feb 11
+- [ ] Create Cloudinary account (free tier: 25 GB/month)
+- [ ] Get API credentials (Cloud Name, API Key, API Secret)
+- [ ] Add Cloudinary credentials to project secrets
+- [ ] Create migration script to upload all images (projects, news, articles)
+- [ ] Run migration and update database with Cloudinary URLs
+- [ ] Update frontend to use Cloudinary transformation URLs (auto-resize, WebP)
+- [ ] Test image loading and verify performance improvements
+- [ ] Save checkpoint
