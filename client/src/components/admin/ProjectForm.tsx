@@ -1,17 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import {
   Select,
   SelectContent,
@@ -21,14 +13,19 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, Upload, X, Plus, GripVertical } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Loader2, X, Plus, GripVertical, ArrowLeft, Save, Info, Search } from "lucide-react";
 import { toast } from "sonner";
+import { useLocation } from "wouter";
 
 interface ProjectFormProps {
-  project?: any;
-  onClose: () => void;
-  onSuccess: () => void;
+  projectId?: number;
+}
+
+interface TeamMember {
+  name: string;
+  role: string;
 }
 
 interface ImageUpload {
@@ -43,7 +40,31 @@ interface ImageUpload {
   sortOrder: number;
 }
 
-export function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
+const COMMON_ROLES = [
+  "Director",
+  "Playwright",
+  "Scenic Design",
+  "Co-Scenic Designer",
+  "Associate Scenic Designer",
+  "Costume Design",
+  "Lighting Design",
+  "Sound Design",
+  "Projection Design",
+  "Music Director",
+  "Choreographer",
+  "Stage Manager",
+  "Technical Director",
+  "Properties Design",
+  "Scenic Charge",
+  "Head of Fabrication",
+  "Technical Designer / CNC Documentation",
+  "Account Manager",
+  "Producer",
+  "Associate Director",
+];
+
+export function ProjectForm({ projectId }: ProjectFormProps) {
+  const [, navigate] = useLocation();
   const [activeTab, setActiveTab] = useState("basic");
   const [formData, setFormData] = useState({
     title: "",
@@ -59,31 +80,34 @@ export function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
     location: "",
     client: "",
     categoryId: undefined as number | undefined,
-    // Creative team
-    director: "",
-    associateDirector: "",
-    musicDirector: "",
-    coScenicDesigner: "",
-    costumeDesigner: "",
-    lightingDesigner: "",
-    soundDesigner: "",
-    // SEO
+    // SEO - for search engines only
     seoTitle: "",
     seoDescription: "",
     seoKeywords: "",
   });
+
+  // Dynamic creative team members
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [newMemberRole, setNewMemberRole] = useState("");
+  const [newMemberName, setNewMemberName] = useState("");
+  const [showRoleSuggestions, setShowRoleSuggestions] = useState(false);
+
+  // Tags (user-facing content labels)
+  const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
+  const [tagSearch, setTagSearch] = useState("");
 
   const [coverImage, setCoverImage] = useState<{ file?: File; url?: string; key?: string }>();
   const [galleryImages, setGalleryImages] = useState<ImageUpload[]>([]);
   const [uploadingImages, setUploadingImages] = useState(false);
 
   const { data: categories } = trpc.categories.list.useQuery({ type: "project" });
+  const { data: allTags } = trpc.tags.list.useQuery();
   const uploadImage = trpc.projects.uploadImage.useMutation();
 
   const createProject = trpc.projects.create.useMutation({
     onSuccess: () => {
       toast.success("Project created successfully");
-      onSuccess();
+      navigate("/admin");
     },
     onError: (error) => {
       toast.error(`Failed to create project: ${error.message}`);
@@ -93,57 +117,83 @@ export function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
   const updateProject = trpc.projects.update.useMutation({
     onSuccess: () => {
       toast.success("Project updated successfully");
-      onSuccess();
+      navigate("/admin");
     },
     onError: (error) => {
       toast.error(`Failed to update project: ${error.message}`);
     },
   });
 
-  // Fetch full project data by ID when editing (list query may not include all fields)
+  // Fetch full project data by ID when editing
   const { data: fullProject, isLoading: isLoadingProject } = trpc.projects.getById.useQuery(
-    { id: project?.id },
-    { enabled: !!project?.id }
+    { id: projectId! },
+    { enabled: !!projectId }
   );
 
-  // Use full project data when available, fall back to prop
-  const projectData = fullProject || project;
-
   useEffect(() => {
-    if (projectData) {
+    if (fullProject) {
       setFormData({
-        title: projectData.title || "",
-        slug: projectData.slug || "",
-        excerpt: projectData.excerpt || "",
-        description: projectData.description || "",
-        designNotes: projectData.designNotes || "",
-        discipline: projectData.discipline || "scenic_design",
-        subcategory: projectData.subcategory || "",
-        status: projectData.status || "draft",
-        featured: projectData.featured || false,
-        year: projectData.year || new Date().getFullYear(),
-        location: projectData.location || "",
-        client: projectData.client || "",
-        categoryId: projectData.categoryId,
-        director: projectData.creativeTeam?.director || "",
-        associateDirector: projectData.creativeTeam?.associateDirector || "",
-        musicDirector: projectData.creativeTeam?.musicDirector || "",
-        coScenicDesigner: projectData.creativeTeam?.coScenicDesigner || "",
-        costumeDesigner: projectData.creativeTeam?.costumeDesigner || "",
-        lightingDesigner: projectData.creativeTeam?.lightingDesigner || "",
-        soundDesigner: projectData.creativeTeam?.soundDesigner || "",
-        seoTitle: projectData.seoTitle || "",
-        seoDescription: projectData.seoDescription || "",
-        seoKeywords: projectData.seoKeywords || "",
+        title: fullProject.title || "",
+        slug: fullProject.slug || "",
+        excerpt: fullProject.excerpt || "",
+        description: fullProject.description || "",
+        designNotes: fullProject.designNotes || "",
+        discipline: fullProject.discipline || "scenic_design",
+        subcategory: fullProject.subcategory || "",
+        status: fullProject.status || "draft",
+        featured: fullProject.featured || false,
+        year: fullProject.year || new Date().getFullYear(),
+        location: fullProject.location || "",
+        client: fullProject.client || "",
+        categoryId: fullProject.categoryId ?? undefined,
+        seoTitle: fullProject.seoTitle || "",
+        seoDescription: fullProject.seoDescription || "",
+        seoKeywords: fullProject.seoKeywords || "",
       });
-      
-      if (projectData.coverImageUrl) {
-        setCoverImage({ url: projectData.coverImageUrl, key: projectData.coverImageKey });
+
+      // Load creative team as dynamic array
+      if (fullProject.creativeTeam) {
+        let team: any = fullProject.creativeTeam;
+        // Handle double-encoded JSON string from DB
+        if (typeof team === 'string') {
+          try { team = JSON.parse(team); } catch { team = undefined; }
+        }
+        if (Array.isArray(team)) {
+          // Already in [{name, role}] format
+          setTeamMembers(team.filter((m: any) => m.name && m.role));
+        } else if (team && typeof team === 'object') {
+          // Legacy {director: "name"} format - convert
+          const members: TeamMember[] = [];
+          const roleMap: Record<string, string> = {
+            director: "Director",
+            associateDirector: "Associate Director",
+            musicDirector: "Music Director",
+            coScenicDesigner: "Co-Scenic Designer",
+            costumeDesigner: "Costume Design",
+            lightingDesigner: "Lighting Design",
+            soundDesigner: "Sound Design",
+          };
+          for (const [key, value] of Object.entries(team)) {
+            if (value && typeof value === 'string' && roleMap[key]) {
+              members.push({ name: value, role: roleMap[key] });
+            }
+          }
+          setTeamMembers(members);
+        }
       }
-      
+
+      // Load tags
+      if (fullProject.tags && Array.isArray(fullProject.tags)) {
+        setSelectedTagIds(fullProject.tags.map((t: any) => t.id));
+      }
+
+      if (fullProject.coverImageUrl) {
+        setCoverImage({ url: fullProject.coverImageUrl, key: fullProject.coverImageKey ?? undefined });
+      }
+
       // Load existing gallery images
-      if (projectData.images && Array.isArray(projectData.images)) {
-        const existingImages: ImageUpload[] = projectData.images.map((img: any, index: number) => ({
+      if (fullProject.images && Array.isArray(fullProject.images)) {
+        const existingImages: ImageUpload[] = fullProject.images.map((img: any, index: number) => ({
           id: img.id,
           url: img.imageUrl,
           key: img.imageKey,
@@ -156,7 +206,51 @@ export function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
         setGalleryImages(existingImages);
       }
     }
-  }, [projectData]);
+  }, [fullProject]);
+
+  // Filtered tags for search
+  const filteredTags = useMemo(() => {
+    if (!allTags) return [];
+    if (!tagSearch.trim()) return allTags.slice(0, 50);
+    const q = tagSearch.toLowerCase();
+    return allTags.filter(t => t.name.toLowerCase().includes(q)).slice(0, 50);
+  }, [allTags, tagSearch]);
+
+  // Role suggestions filtered by input
+  const filteredRoles = useMemo(() => {
+    if (!newMemberRole.trim()) return COMMON_ROLES;
+    const q = newMemberRole.toLowerCase();
+    return COMMON_ROLES.filter(r => r.toLowerCase().includes(q));
+  }, [newMemberRole]);
+
+  const handleAddTeamMember = () => {
+    if (!newMemberName.trim() || !newMemberRole.trim()) {
+      toast.error("Both role and name are required");
+      return;
+    }
+    setTeamMembers([...teamMembers, { name: newMemberName.trim(), role: newMemberRole.trim() }]);
+    setNewMemberName("");
+    setNewMemberRole("");
+    setShowRoleSuggestions(false);
+  };
+
+  const handleRemoveTeamMember = (index: number) => {
+    setTeamMembers(teamMembers.filter((_, i) => i !== index));
+  };
+
+  const handleUpdateTeamMember = (index: number, field: 'name' | 'role', value: string) => {
+    const updated = [...teamMembers];
+    updated[index] = { ...updated[index], [field]: value };
+    setTeamMembers(updated);
+  };
+
+  const handleToggleTag = (tagId: number) => {
+    setSelectedTagIds(prev =>
+      prev.includes(tagId)
+        ? prev.filter(id => id !== tagId)
+        : [...prev, tagId]
+    );
+  };
 
   const handleCoverImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -171,11 +265,7 @@ export function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
       if (videoUrl) {
         setGalleryImages([
           ...galleryImages,
-          {
-            videoUrl,
-            imageType: "video",
-            sortOrder: galleryImages.length,
-          },
+          { videoUrl, imageType: "video", sortOrder: galleryImages.length },
         ]);
       }
     } else {
@@ -201,9 +291,9 @@ export function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
     setGalleryImages(galleryImages.filter((_, i) => i !== index));
   };
 
-  const handleUpdateImageCaption = (index: number, caption: string) => {
+  const handleUpdateImageField = (index: number, field: string, value: string) => {
     const updated = [...galleryImages];
-    updated[index] = { ...updated[index], caption };
+    updated[index] = { ...updated[index], [field]: value };
     setGalleryImages(updated);
   };
 
@@ -213,9 +303,9 @@ export function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
 
     try {
       // Upload cover image if provided
-      let coverImageUrl = project?.coverImageUrl;
-      let coverImageKey = project?.coverImageKey;
-      
+      let coverImageUrl = fullProject?.coverImageUrl;
+      let coverImageKey = fullProject?.coverImageKey;
+
       if (coverImage?.file) {
         const buffer = await coverImage.file.arrayBuffer();
         const base64 = btoa(String.fromCharCode(...Array.from(new Uint8Array(buffer))));
@@ -271,7 +361,7 @@ export function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
         })
       );
 
-      const projectData = {
+      const projectPayload = {
         title: formData.title,
         slug: formData.slug,
         excerpt: formData.excerpt || undefined,
@@ -287,25 +377,18 @@ export function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
         year: formData.year || undefined,
         status: formData.status,
         featured: formData.featured,
-        creativeTeam: {
-          director: formData.director || undefined,
-          associateDirector: formData.associateDirector || undefined,
-          musicDirector: formData.musicDirector || undefined,
-          coScenicDesigner: formData.coScenicDesigner || undefined,
-          costumeDesigner: formData.costumeDesigner || undefined,
-          lightingDesigner: formData.lightingDesigner || undefined,
-          soundDesigner: formData.soundDesigner || undefined,
-        },
+        creativeTeam: teamMembers.length > 0 ? teamMembers : undefined,
         seoTitle: formData.seoTitle || undefined,
         seoDescription: formData.seoDescription || undefined,
         seoKeywords: formData.seoKeywords || undefined,
+        tagIds: selectedTagIds.length > 0 ? selectedTagIds : undefined,
         images: uploadedGalleryImages,
       };
 
-      if (project) {
-        await updateProject.mutateAsync({ id: project.id, ...projectData });
+      if (projectId) {
+        await updateProject.mutateAsync({ id: projectId, ...projectPayload });
       } else {
-        await createProject.mutateAsync(projectData);
+        await createProject.mutateAsync(projectPayload);
       }
     } catch (error) {
       console.error("Error submitting project:", error);
@@ -325,430 +408,705 @@ export function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
 
   const isLoading = createProject.isPending || updateProject.isPending || uploadingImages;
 
-  return (
-    <Dialog open onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>{project ? "Edit Project" : "Create New Project"}</DialogTitle>
-          <DialogDescription>
-            {project ? "Update project details" : "Add a new project with gallery and design notes"}
-          </DialogDescription>
-        </DialogHeader>
+  if (projectId && isLoadingProject) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <div className="border-b sticky top-0 bg-background/95 backdrop-blur z-10">
+        <div className="container mx-auto py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <Button variant="ghost" size="sm" onClick={() => navigate("/admin")}>
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back to Admin
+              </Button>
+              <div className="h-6 w-px bg-border" />
+              <h1 className="text-xl font-bold">
+                {projectId ? "Edit Project" : "New Project"}
+              </h1>
+              {formData.title && (
+                <span className="text-muted-foreground text-sm">— {formData.title}</span>
+              )}
+            </div>
+            <div className="flex items-center gap-3">
+              <Badge variant={formData.status === 'published' ? 'default' : 'secondary'}>
+                {formData.status}
+              </Badge>
+              <Button type="submit" form="project-form" disabled={isLoading}>
+                {isLoading && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+                <Save className="h-4 w-4 mr-2" />
+                {projectId ? "Update" : "Create"} Project
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Form Content */}
+      <div className="container mx-auto py-8">
+        <form id="project-form" onSubmit={handleSubmit}>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-5">
-              <TabsTrigger value="basic">Basic</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-6 mb-8">
+              <TabsTrigger value="basic">Basic Info</TabsTrigger>
               <TabsTrigger value="content">Content</TabsTrigger>
-              <TabsTrigger value="team">Team</TabsTrigger>
-              <TabsTrigger value="gallery">Gallery</TabsTrigger>
+              <TabsTrigger value="team">
+                Creative Team
+                {teamMembers.length > 0 && (
+                  <Badge variant="secondary" className="ml-2 text-xs">{teamMembers.length}</Badge>
+                )}
+              </TabsTrigger>
+              <TabsTrigger value="gallery">
+                Gallery
+                {galleryImages.length > 0 && (
+                  <Badge variant="secondary" className="ml-2 text-xs">{galleryImages.length}</Badge>
+                )}
+              </TabsTrigger>
+              <TabsTrigger value="tags">
+                Tags
+                {selectedTagIds.length > 0 && (
+                  <Badge variant="secondary" className="ml-2 text-xs">{selectedTagIds.length}</Badge>
+                )}
+              </TabsTrigger>
               <TabsTrigger value="seo">SEO</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="basic" className="space-y-4 mt-4">
-              <div className="space-y-2">
-                <Label htmlFor="title">Title *</Label>
-                <Input
-                  id="title"
-                  value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  required
-                  placeholder="Million Dollar Quartet"
-                />
-              </div>
+            {/* ===== BASIC INFO TAB ===== */}
+            <TabsContent value="basic">
+              <div className="grid grid-cols-3 gap-8">
+                {/* Left column - main fields */}
+                <div className="col-span-2 space-y-6">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Project Details</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="title">Title *</Label>
+                        <Input
+                          id="title"
+                          value={formData.title}
+                          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                          required
+                          placeholder="Million Dollar Quartet"
+                          className="text-lg"
+                        />
+                      </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="slug">Slug *</Label>
-                <div className="flex gap-2">
-                  <Input
-                    id="slug"
-                    value={formData.slug}
-                    onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-                    required
-                    placeholder="million-dollar-quartet"
-                  />
-                  <Button type="button" variant="outline" onClick={generateSlug}>
-                    Generate
-                  </Button>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="excerpt">Excerpt</Label>
-                <Textarea
-                  id="excerpt"
-                  value={formData.excerpt}
-                  onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
-                  rows={3}
-                  placeholder="Brief summary..."
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="discipline">Discipline *</Label>
-                  <Select
-                    value={formData.discipline}
-                    onValueChange={(value: any) => setFormData({ ...formData, discipline: value })}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select discipline" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="scenic_design">Scenic Design</SelectItem>
-                      <SelectItem value="experiential_design">Experiential Design</SelectItem>
-                      <SelectItem value="rendering">Rendering</SelectItem>
-                      <SelectItem value="scenic_models">Scenic Models</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="subcategory">Subcategory</Label>
-                  <Input
-                    id="subcategory"
-                    value={formData.subcategory}
-                    onChange={(e) => setFormData({ ...formData, subcategory: e.target.value })}
-                    placeholder="e.g., Musical Theatre, Comedy, Drama"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="category">Category</Label>
-                  <Select
-                    value={formData.categoryId?.toString() || ""}
-                    onValueChange={(value) => setFormData({ ...formData, categoryId: value ? parseInt(value) : undefined })}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {categories?.map((cat) => (
-                        <SelectItem key={cat.id} value={cat.id.toString()}>
-                          {cat.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="year">Year</Label>
-                  <Input
-                    id="year"
-                    type="number"
-                    value={formData.year}
-                    onChange={(e) => setFormData({ ...formData, year: parseInt(e.target.value) })}
-                    placeholder="2024"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="location">Location</Label>
-                  <Input
-                    id="location"
-                    value={formData.location}
-                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                    placeholder="New York, NY"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="client">Client/Theatre</Label>
-                  <Input
-                    id="client"
-                    value={formData.client}
-                    onChange={(e) => setFormData({ ...formData, client: e.target.value })}
-                    placeholder="Broadway Theatre"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="status">Status</Label>
-                  <Select
-                    value={formData.status}
-                    onValueChange={(value: any) => setFormData({ ...formData, status: value })}
-                  >
-                    <SelectTrigger id="status">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="draft">Draft</SelectItem>
-                      <SelectItem value="published">Published</SelectItem>
-                      <SelectItem value="archived">Archived</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="flex items-center space-x-2 pt-8">
-                  <Switch
-                    id="featured"
-                    checked={formData.featured}
-                    onCheckedChange={(checked) => setFormData({ ...formData, featured: checked })}
-                  />
-                  <Label htmlFor="featured">Featured Project</Label>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="coverImage">Cover Image</Label>
-                {coverImage?.url ? (
-                  <div className="relative inline-block">
-                    <img
-                      src={coverImage.url}
-                      alt="Cover"
-                      className="h-32 w-auto rounded border"
-                    />
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      size="sm"
-                      className="absolute -right-2 -top-2"
-                      onClick={() => setCoverImage(undefined)}
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                ) : (
-                  <Input
-                    id="coverImage"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleCoverImageChange}
-                  />
-                )}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="content" className="space-y-4 mt-4">
-              <div className="space-y-2">
-                <Label htmlFor="description">Description</Label>
-                <Textarea
-                  id="description"
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  rows={6}
-                  placeholder="Detailed project description..."
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="designNotes">Design Notes</Label>
-                <Textarea
-                  id="designNotes"
-                  value={formData.designNotes}
-                  onChange={(e) => setFormData({ ...formData, designNotes: e.target.value })}
-                  rows={10}
-                  placeholder="Design philosophy, concept development, technical notes..."
-                  className="font-mono text-sm"
-                />
-                <p className="text-sm text-muted-foreground">
-                  Supports Markdown formatting
-                </p>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="team" className="space-y-4 mt-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="director">Director</Label>
-                  <Input
-                    id="director"
-                    value={formData.director}
-                    onChange={(e) => setFormData({ ...formData, director: e.target.value })}
-                    placeholder="John Doe"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="associateDirector">Associate Director</Label>
-                  <Input
-                    id="associateDirector"
-                    value={formData.associateDirector}
-                    onChange={(e) => setFormData({ ...formData, associateDirector: e.target.value })}
-                    placeholder="Jane Smith"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="musicDirector">Music Director</Label>
-                  <Input
-                    id="musicDirector"
-                    value={formData.musicDirector}
-                    onChange={(e) => setFormData({ ...formData, musicDirector: e.target.value })}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="coScenicDesigner">Co-Scenic Designer</Label>
-                  <Input
-                    id="coScenicDesigner"
-                    value={formData.coScenicDesigner}
-                    onChange={(e) => setFormData({ ...formData, coScenicDesigner: e.target.value })}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="costumeDesigner">Costume Designer</Label>
-                  <Input
-                    id="costumeDesigner"
-                    value={formData.costumeDesigner}
-                    onChange={(e) => setFormData({ ...formData, costumeDesigner: e.target.value })}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="lightingDesigner">Lighting Designer</Label>
-                  <Input
-                    id="lightingDesigner"
-                    value={formData.lightingDesigner}
-                    onChange={(e) => setFormData({ ...formData, lightingDesigner: e.target.value })}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="soundDesigner">Sound Designer</Label>
-                  <Input
-                    id="soundDesigner"
-                    value={formData.soundDesigner}
-                    onChange={(e) => setFormData({ ...formData, soundDesigner: e.target.value })}
-                  />
-                </div>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="gallery" className="space-y-4 mt-4">
-              <div className="flex gap-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleAddGalleryImage("production")}
-                >
-                  <Plus className="mr-2 h-4 w-4" />
-                  Production Photos
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleAddGalleryImage("rendering")}
-                >
-                  <Plus className="mr-2 h-4 w-4" />
-                  Renderings
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleAddGalleryImage("video")}
-                >
-                  <Plus className="mr-2 h-4 w-4" />
-                  Video
-                </Button>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                {galleryImages.map((img, index) => (
-                  <div key={index} className="relative rounded border p-2">
-                    <div className="flex items-start gap-2">
-                      <GripVertical className="h-5 w-5 text-muted-foreground flex-shrink-0" />
-                      <div className="flex-1 min-w-0">
-                        {img.videoUrl ? (
-                          <div className="aspect-video rounded bg-muted flex items-center justify-center p-2">
-                            <span className="text-xs text-center break-all">Video: {img.videoUrl}</span>
-                          </div>
-                        ) : (
-                          <img
-                            src={img.url}
-                            alt={img.caption || "Gallery image"}
-                            className="w-full rounded"
-                          />
-                        )}
-                        <div className="mt-2 space-y-2">
+                      <div className="space-y-2">
+                        <Label htmlFor="slug">URL Slug *</Label>
+                        <div className="flex gap-2">
                           <Input
-                            placeholder="Caption"
-                            value={img.caption || ""}
-                            onChange={(e) => handleUpdateImageCaption(index, e.target.value)}
-                            className="text-sm"
+                            id="slug"
+                            value={formData.slug}
+                            onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                            required
+                            placeholder="million-dollar-quartet"
                           />
-                          <div className="text-xs text-muted-foreground">
-                            Type: {img.imageType}
-                          </div>
+                          <Button type="button" variant="outline" onClick={generateSlug}>
+                            Generate
+                          </Button>
+                        </div>
+                        <p className="text-xs text-muted-foreground">/projects/{formData.slug || "..."}</p>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="excerpt">Excerpt</Label>
+                        <Textarea
+                          id="excerpt"
+                          value={formData.excerpt}
+                          onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
+                          rows={3}
+                          placeholder="Brief summary shown in project listings..."
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="discipline">Discipline *</Label>
+                          <Select
+                            value={formData.discipline}
+                            onValueChange={(value: any) => setFormData({ ...formData, discipline: value })}
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select discipline" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="scenic_design">Scenic Design</SelectItem>
+                              <SelectItem value="experiential_design">Experiential Design</SelectItem>
+                              <SelectItem value="rendering">Rendering</SelectItem>
+                              <SelectItem value="scenic_models">Scenic Models</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        <div className="space-y-2">
+                          <Label htmlFor="subcategory">Subcategory</Label>
+                          <Input
+                            id="subcategory"
+                            value={formData.subcategory}
+                            onChange={(e) => setFormData({ ...formData, subcategory: e.target.value })}
+                            placeholder="e.g., Musical Theatre, Comedy, Drama"
+                          />
                         </div>
                       </div>
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleRemoveGalleryImage(index)}
-                        className="flex-shrink-0"
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
 
-              {galleryImages.length === 0 && (
-                <p className="text-sm text-muted-foreground text-center py-8">
-                  No images added yet. Click the buttons above to add production photos, renderings, or videos.
-                </p>
-              )}
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="location">Location</Label>
+                          <Input
+                            id="location"
+                            value={formData.location}
+                            onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                            placeholder="New York, NY"
+                          />
+                        </div>
+
+                        <div className="space-y-2">
+                          <Label htmlFor="client">Client / Theatre</Label>
+                          <Input
+                            id="client"
+                            value={formData.client}
+                            onChange={(e) => setFormData({ ...formData, client: e.target.value })}
+                            placeholder="Broadway Theatre"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="year">Year</Label>
+                          <Input
+                            id="year"
+                            type="number"
+                            value={formData.year}
+                            onChange={(e) => setFormData({ ...formData, year: parseInt(e.target.value) })}
+                          />
+                        </div>
+
+                        <div className="space-y-2">
+                          <Label htmlFor="category">Category</Label>
+                          <Select
+                            value={formData.categoryId?.toString() || "none"}
+                            onValueChange={(value) => setFormData({ ...formData, categoryId: value === "none" ? undefined : parseInt(value) })}
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select category" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="none">No Category</SelectItem>
+                              {categories?.map((cat) => (
+                                <SelectItem key={cat.id} value={cat.id.toString()}>
+                                  {cat.name}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Right column - cover image & status */}
+                <div className="space-y-6">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Cover Image</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      {coverImage?.url ? (
+                        <div className="relative">
+                          <img
+                            src={coverImage.url}
+                            alt="Cover"
+                            className="w-full rounded border aspect-[16/10] object-cover"
+                          />
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            size="sm"
+                            className="absolute top-2 right-2"
+                            onClick={() => setCoverImage(undefined)}
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      ) : (
+                        <div className="border-2 border-dashed rounded-lg p-8 text-center">
+                          <Input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleCoverImageChange}
+                            className="cursor-pointer"
+                          />
+                          <p className="text-sm text-muted-foreground mt-2">
+                            Recommended: 1600x1000px
+                          </p>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Publishing</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="status">Status</Label>
+                        <Select
+                          value={formData.status}
+                          onValueChange={(value: any) => setFormData({ ...formData, status: value })}
+                        >
+                          <SelectTrigger id="status">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="draft">Draft</SelectItem>
+                            <SelectItem value="published">Published</SelectItem>
+                            <SelectItem value="archived">Archived</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <Label htmlFor="featured">Featured Project</Label>
+                        <Switch
+                          id="featured"
+                          checked={formData.featured}
+                          onCheckedChange={(checked) => setFormData({ ...formData, featured: checked })}
+                        />
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
             </TabsContent>
 
-            <TabsContent value="seo" className="space-y-4 mt-4">
-              <div className="space-y-2">
-                <Label htmlFor="seoTitle">SEO Title</Label>
-                <Input
-                  id="seoTitle"
-                  value={formData.seoTitle}
-                  onChange={(e) => setFormData({ ...formData, seoTitle: e.target.value })}
-                  placeholder={formData.title || "Project title for search engines"}
-                />
-              </div>
+            {/* ===== CONTENT TAB ===== */}
+            <TabsContent value="content">
+              <div className="max-w-4xl space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Description</CardTitle>
+                    <CardDescription>Main project description shown on the detail page</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Textarea
+                      value={formData.description}
+                      onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                      rows={8}
+                      placeholder="Detailed project description..."
+                    />
+                  </CardContent>
+                </Card>
 
-              <div className="space-y-2">
-                <Label htmlFor="seoDescription">SEO Description</Label>
-                <Textarea
-                  id="seoDescription"
-                  value={formData.seoDescription}
-                  onChange={(e) => setFormData({ ...formData, seoDescription: e.target.value })}
-                  rows={3}
-                  placeholder="Meta description for search engines..."
-                />
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Design Notes</CardTitle>
+                    <CardDescription>Design philosophy, concept development, technical notes (supports Markdown)</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Textarea
+                      value={formData.designNotes}
+                      onChange={(e) => setFormData({ ...formData, designNotes: e.target.value })}
+                      rows={14}
+                      placeholder="Design philosophy, concept development, technical notes..."
+                      className="font-mono text-sm"
+                    />
+                  </CardContent>
+                </Card>
               </div>
+            </TabsContent>
 
-              <div className="space-y-2">
-                <Label htmlFor="seoKeywords">SEO Keywords</Label>
-                <Input
-                  id="seoKeywords"
-                  value={formData.seoKeywords}
-                  onChange={(e) => setFormData({ ...formData, seoKeywords: e.target.value })}
-                  placeholder="scenic design, theatre, broadway"
-                />
+            {/* ===== CREATIVE TEAM TAB ===== */}
+            <TabsContent value="team">
+              <div className="max-w-4xl space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Creative Team</CardTitle>
+                    <CardDescription>
+                      Add team members with custom roles. Each project can have different roles — 
+                      type a role name or select from common suggestions.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {/* Existing team members */}
+                    {teamMembers.length > 0 && (
+                      <div className="space-y-2">
+                        {teamMembers.map((member, index) => (
+                          <div key={index} className="flex items-center gap-3 p-3 rounded-lg border bg-card">
+                            <GripVertical className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                            <div className="flex-1 grid grid-cols-2 gap-3">
+                              <Input
+                                value={member.role}
+                                onChange={(e) => handleUpdateTeamMember(index, 'role', e.target.value)}
+                                placeholder="Role"
+                                className="font-medium"
+                              />
+                              <Input
+                                value={member.name}
+                                onChange={(e) => handleUpdateTeamMember(index, 'name', e.target.value)}
+                                placeholder="Name"
+                              />
+                            </div>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleRemoveTeamMember(index)}
+                              className="flex-shrink-0 text-destructive hover:text-destructive"
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Add new member */}
+                    <div className="border-2 border-dashed rounded-lg p-4">
+                      <p className="text-sm font-medium mb-3">Add Team Member</p>
+                      <div className="flex items-end gap-3">
+                        <div className="flex-1 space-y-2 relative">
+                          <Label className="text-xs text-muted-foreground">Role</Label>
+                          <Input
+                            value={newMemberRole}
+                            onChange={(e) => {
+                              setNewMemberRole(e.target.value);
+                              setShowRoleSuggestions(true);
+                            }}
+                            onFocus={() => setShowRoleSuggestions(true)}
+                            onBlur={() => setTimeout(() => setShowRoleSuggestions(false), 200)}
+                            placeholder="e.g., Director, Scenic Design..."
+                          />
+                          {showRoleSuggestions && filteredRoles.length > 0 && (
+                            <div className="absolute top-full left-0 right-0 z-20 mt-1 max-h-48 overflow-y-auto rounded-md border bg-popover text-popover-foreground shadow-md">
+                              {filteredRoles.map((role) => (
+                                <button
+                                  key={role}
+                                  type="button"
+                                  className="w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground"
+                                  onMouseDown={(e) => {
+                                    e.preventDefault();
+                                    setNewMemberRole(role);
+                                    setShowRoleSuggestions(false);
+                                  }}
+                                >
+                                  {role}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex-1 space-y-2">
+                          <Label className="text-xs text-muted-foreground">Name</Label>
+                          <Input
+                            value={newMemberName}
+                            onChange={(e) => setNewMemberName(e.target.value)}
+                            placeholder="Full name"
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') {
+                                e.preventDefault();
+                                handleAddTeamMember();
+                              }
+                            }}
+                          />
+                        </div>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={handleAddTeamMember}
+                          className="flex-shrink-0"
+                        >
+                          <Plus className="h-4 w-4 mr-2" />
+                          Add
+                        </Button>
+                      </div>
+                    </div>
+
+                    {teamMembers.length === 0 && (
+                      <p className="text-sm text-muted-foreground text-center py-4">
+                        No team members added yet. Use the form above to add creative team members with custom roles.
+                      </p>
+                    )}
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+
+            {/* ===== GALLERY TAB ===== */}
+            <TabsContent value="gallery">
+              <div className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <CardTitle>Gallery Images</CardTitle>
+                        <CardDescription>Production photos, renderings, and videos</CardDescription>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleAddGalleryImage("production")}
+                        >
+                          <Plus className="mr-2 h-4 w-4" />
+                          Production Photos
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleAddGalleryImage("rendering")}
+                        >
+                          <Plus className="mr-2 h-4 w-4" />
+                          Renderings
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleAddGalleryImage("video")}
+                        >
+                          <Plus className="mr-2 h-4 w-4" />
+                          Video
+                        </Button>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    {galleryImages.length > 0 ? (
+                      <div className="grid grid-cols-3 gap-4">
+                        {galleryImages.map((img, index) => (
+                          <div key={index} className="relative rounded-lg border overflow-hidden">
+                            {img.videoUrl ? (
+                              <div className="aspect-video bg-muted flex items-center justify-center p-4">
+                                <span className="text-xs text-center break-all text-muted-foreground">
+                                  Video: {img.videoUrl}
+                                </span>
+                              </div>
+                            ) : (
+                              <img
+                                src={img.url}
+                                alt={img.caption || "Gallery image"}
+                                className="w-full aspect-video object-cover"
+                              />
+                            )}
+                            <div className="p-3 space-y-2">
+                              <Input
+                                placeholder="Caption"
+                                value={img.caption || ""}
+                                onChange={(e) => handleUpdateImageField(index, 'caption', e.target.value)}
+                                className="text-sm"
+                              />
+                              <Input
+                                placeholder="Alt text"
+                                value={img.altText || ""}
+                                onChange={(e) => handleUpdateImageField(index, 'altText', e.target.value)}
+                                className="text-sm"
+                              />
+                              <div className="flex items-center justify-between">
+                                <Badge variant="outline" className="text-xs">
+                                  {img.imageType}
+                                </Badge>
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => handleRemoveGalleryImage(index)}
+                                  className="text-destructive hover:text-destructive h-7"
+                                >
+                                  <X className="h-3 w-3 mr-1" />
+                                  Remove
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-12 text-muted-foreground">
+                        <p>No images added yet. Click the buttons above to add production photos, renderings, or videos.</p>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+
+            {/* ===== TAGS TAB ===== */}
+            <TabsContent value="tags">
+              <div className="max-w-4xl space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      Tags
+                      <Badge variant="outline" className="font-normal">User-Facing</Badge>
+                    </CardTitle>
+                    <CardDescription>
+                      Tags are visible to visitors and used for browsing/filtering content on the site.
+                      They appear as clickable badges on the project page and link to tag pages.
+                      <br />
+                      <span className="text-xs italic mt-1 inline-block">
+                        Different from SEO Keywords, which are hidden meta tags only for search engines.
+                      </span>
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {/* Selected tags */}
+                    {selectedTagIds.length > 0 && (
+                      <div className="space-y-2">
+                        <Label className="text-sm">Selected Tags ({selectedTagIds.length})</Label>
+                        <div className="flex flex-wrap gap-2">
+                          {selectedTagIds.map((tagId) => {
+                            const tag = allTags?.find(t => t.id === tagId);
+                            return tag ? (
+                              <Badge
+                                key={tagId}
+                                variant="default"
+                                className="cursor-pointer hover:bg-destructive hover:text-destructive-foreground transition-colors"
+                                onClick={() => handleToggleTag(tagId)}
+                              >
+                                {tag.name}
+                                <X className="h-3 w-3 ml-1" />
+                              </Badge>
+                            ) : null;
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Tag search */}
+                    <div className="space-y-2">
+                      <div className="relative">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input
+                          value={tagSearch}
+                          onChange={(e) => setTagSearch(e.target.value)}
+                          placeholder="Search tags..."
+                          className="pl-9"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Available tags */}
+                    <div className="border rounded-lg p-4 max-h-64 overflow-y-auto">
+                      <div className="flex flex-wrap gap-2">
+                        {filteredTags.map((tag) => {
+                          const isSelected = selectedTagIds.includes(tag.id);
+                          return (
+                            <Badge
+                              key={tag.id}
+                              variant={isSelected ? "default" : "outline"}
+                              className="cursor-pointer hover:bg-accent hover:text-accent-foreground transition-colors"
+                              onClick={() => handleToggleTag(tag.id)}
+                            >
+                              {tag.name}
+                              {isSelected && <X className="h-3 w-3 ml-1" />}
+                            </Badge>
+                          );
+                        })}
+                        {filteredTags.length === 0 && (
+                          <p className="text-sm text-muted-foreground">No tags found matching "{tagSearch}"</p>
+                        )}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+
+            {/* ===== SEO TAB ===== */}
+            <TabsContent value="seo">
+              <div className="max-w-4xl space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      SEO Settings
+                      <Badge variant="outline" className="font-normal">Search Engines Only</Badge>
+                    </CardTitle>
+                    <CardDescription>
+                      These fields control how the project appears in search engine results (Google, Bing, etc.).
+                      They are <strong>not visible</strong> to visitors on the site itself.
+                      <br />
+                      <span className="text-xs italic mt-1 inline-block">
+                        For visitor-facing labels, use the Tags tab instead.
+                      </span>
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="seoTitle">SEO Title</Label>
+                      <Input
+                        id="seoTitle"
+                        value={formData.seoTitle}
+                        onChange={(e) => setFormData({ ...formData, seoTitle: e.target.value })}
+                        placeholder={formData.title || "Project title for search engines"}
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Appears as the page title in search results. Leave blank to use the project title.
+                      </p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="seoDescription">SEO Description</Label>
+                      <Textarea
+                        id="seoDescription"
+                        value={formData.seoDescription}
+                        onChange={(e) => setFormData({ ...formData, seoDescription: e.target.value })}
+                        rows={3}
+                        placeholder="Meta description for search engines (150-160 characters ideal)..."
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        {formData.seoDescription.length}/160 characters — shown as the snippet below the title in search results.
+                      </p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="seoKeywords">SEO Keywords</Label>
+                      <Input
+                        id="seoKeywords"
+                        value={formData.seoKeywords}
+                        onChange={(e) => setFormData({ ...formData, seoKeywords: e.target.value })}
+                        placeholder="scenic design, theatre, broadway, set design"
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Comma-separated keywords for the &lt;meta name="keywords"&gt; tag. 
+                        Most search engines no longer use this, but it doesn't hurt to include them.
+                      </p>
+                    </div>
+
+                    {/* Preview */}
+                    <div className="border rounded-lg p-4 bg-muted/30">
+                      <p className="text-xs text-muted-foreground mb-2">Search Result Preview</p>
+                      <div className="space-y-1">
+                        <p className="text-blue-600 text-lg font-medium truncate">
+                          {formData.seoTitle || formData.title || "Project Title"}
+                        </p>
+                        <p className="text-green-700 text-sm">
+                          brandonptdavis.com/projects/{formData.slug || "..."}
+                        </p>
+                        <p className="text-sm text-muted-foreground line-clamp-2">
+                          {formData.seoDescription || formData.excerpt || "Project description will appear here..."}
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             </TabsContent>
           </Tabs>
-
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={onClose} disabled={isLoading}>
-              Cancel
-            </Button>
-            <Button type="submit" disabled={isLoading}>
-              {isLoading && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-              {project ? "Update" : "Create"} Project
-            </Button>
-          </DialogFooter>
         </form>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </div>
   );
 }

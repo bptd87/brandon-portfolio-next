@@ -961,7 +961,10 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
 
             {/* SEO */}
             <div className="space-y-4 border-t pt-4">
-              <h4 className="font-semibold">SEO</h4>
+              <h4 className="font-semibold">SEO (Search Engines Only)</h4>
+              <p className="text-xs text-muted-foreground">
+                These fields control how this article appears in search results. They are not visible to visitors. Tags (above) are the visitor-facing labels.
+              </p>
               <Input
                 value={formData.seoTitle}
                 onChange={(e) => setFormData({ ...formData, seoTitle: e.target.value })}
@@ -982,6 +985,9 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                 }
                 placeholder="SEO Keywords (comma separated)"
               />
+              <p className="text-xs text-muted-foreground">
+                Comma-separated keywords for &lt;meta name="keywords"&gt;. Different from Tags which are visible to visitors.
+              </p>
             </div>
           </div>
         </div>

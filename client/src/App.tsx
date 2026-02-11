@@ -24,6 +24,7 @@ const ProjectDetailRouter = lazy(() => import("./pages/ProjectDetailRouter"));
 const NewsDetail = lazy(() => import("./pages/NewsDetail"));
 const ArticleDetail = lazy(() => import("./pages/ArticleDetail"));
 const Admin = lazy(() => import("./pages/Admin"));
+const AdminProjectEdit = lazy(() => import("./pages/AdminProjectEdit"));
 
 // Non-critical routes - lazy load for better initial performance
 
@@ -102,6 +103,8 @@ function Router() {
           <Route path={"/studio/directory"} component={StudioDirectory} />
           <Route path={"/studio"} component={Studio} />
           <Route path={"/vault"} component={Vault} />
+          <Route path="/admin/projects/new" component={AdminProjectEdit} />
+          <Route path="/admin/projects/:id/edit" component={AdminProjectEdit} />
           <Route path={"/admin"} component={Admin} />
           <Route path={"/privacy"} component={Privacy} />
           <Route path={"/terms"} component={Terms} />

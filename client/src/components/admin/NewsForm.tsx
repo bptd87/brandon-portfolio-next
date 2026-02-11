@@ -425,6 +425,9 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
             </TabsContent>
 
             <TabsContent value="seo" className="space-y-4 mt-4">
+              <div className="rounded-lg border border-dashed p-3 mb-2 text-sm text-muted-foreground">
+                <strong>SEO fields</strong> control how this news item appears in search engine results (Google, Bing). They are <em>not visible</em> to visitors on the site. For visitor-facing labels, use Tags in the main admin panel.
+              </div>
               <div>
                 <Label htmlFor="seoTitle">SEO Title</Label>
                 <Input
@@ -454,6 +457,9 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
                   onChange={(e) => setFormData(prev => ({ ...prev, seoKeywords: e.target.value }))}
                   placeholder="keyword1, keyword2, keyword3"
                 />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Comma-separated keywords for the &lt;meta name="keywords"&gt; tag. Different from Tags which are visible to visitors.
+                </p>
               </div>
             </TabsContent>
           </Tabs>

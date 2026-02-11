@@ -12,12 +12,11 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Plus, Pencil, Trash2, Eye } from "lucide-react";
-import { ProjectForm } from "./ProjectForm";
 import { toast } from "sonner";
+import { useLocation } from "wouter";
 
 export function ProjectsManager() {
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const [editingProject, setEditingProject] = useState<any>(null);
+  const [, navigate] = useLocation();
   const [disciplineFilter, setDisciplineFilter] = useState<string>('all');
 
   const { data: allProjects, isLoading, refetch } = trpc.projects.list.useQuery({});
@@ -35,21 +34,10 @@ export function ProjectsManager() {
     },
   });
 
-  const handleEdit = (project: any) => {
-    setEditingProject(project);
-    setIsFormOpen(true);
-  };
-
   const handleDelete = async (id: number, title: string) => {
     if (confirm(`Are you sure you want to delete "${title}"?`)) {
       deleteProject.mutate({ id });
     }
-  };
-
-  const handleFormClose = () => {
-    setIsFormOpen(false);
-    setEditingProject(null);
-    refetch();
   };
 
   if (isLoading) {
@@ -70,7 +58,7 @@ export function ProjectsManager() {
                 <CardTitle>Portfolio Projects ({allProjects?.length || 0})</CardTitle>
                 <CardDescription>Manage your portfolio projects and case studies</CardDescription>
               </div>
-              <Button onClick={() => setIsFormOpen(true)}>
+              <Button onClick={() => navigate("/admin/projects/new")}>
                 <Plus className="h-4 w-4 mr-2" />
                 New Project
               </Button>
@@ -128,7 +116,7 @@ export function ProjectsManager() {
                         />
                       ) : (
                         <div className="h-12 w-12 bg-muted rounded flex items-center justify-center text-xs text-muted-foreground">
-                          No image
+                          No img
                         </div>
                       )}
                     </TableCell>
@@ -174,7 +162,11 @@ export function ProjectsManager() {
                             </a>
                           </Button>
                         )}
-                        <Button variant="ghost" size="sm" onClick={() => handleEdit(project)}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => navigate(`/admin/projects/${project.id}/edit`)}
+                        >
                           <Pencil className="h-4 w-4" />
                         </Button>
                         <Button
@@ -197,14 +189,6 @@ export function ProjectsManager() {
           )}
         </CardContent>
       </Card>
-
-      {isFormOpen && (
-        <ProjectForm
-          project={editingProject}
-          onClose={handleFormClose}
-          onSuccess={handleFormClose}
-        />
-      )}
     </div>
   );
 }

@@ -3197,3 +3197,16 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] All 62 tests passing across 8 test files
 - [x] Verify frontend articles listing page displays all 23 articles correctly
 - [x] Verify frontend article detail page renders all content blocks
+
+## Admin Page-by-Page Audit & Fixes (Feb 11, 2026)
+- [x] Clarify SEO Keywords vs Tags - they are different concepts, ensure proper separation
+- [x] SEO Keywords: meta-level for search engines (<meta> tags), not user-facing
+- [x] Tags: user-facing content labels for filtering/browsing on the site
+- [x] Rebuild Portfolio/Project editor as full-page instead of popup dialog
+- [x] Fix creative team system - needs custom fields per project, not fixed template
+- [x] Audit Projects admin page for all issues
+- [x] Audit News admin page for all issues
+- [x] Audit Articles admin page for all issues
+- [x] Audit Categories admin page for all issues
+- [x] Audit Tags admin page for all issues
+- [x] Write/update tests for all changes - all 62 tests passing
