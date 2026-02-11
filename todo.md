@@ -3103,3 +3103,13 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Implement smooth cross-fade from blurred to sharp image
 - [x] Use heavy blur effect (e_blur:2000) for smooth transition
 - [x] Add minimum display time for blurred placeholder
+
+## Dominant Color Backgrounds
+- [ ] Extract dominant colors from Cloudinary images
+- [ ] Display dominant color as instant background before blur loads
+- [ ] Create seamless color → blur → sharp transition
+
+## Fix Ugly Blur Loading
+- [x] Reduce blur placeholder size to prevent pixelation when stretched
+- [x] Optimize blur intensity for smoother appearance
+- [x] Remove scale-105 that makes blur more visible

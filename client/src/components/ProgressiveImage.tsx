@@ -18,10 +18,10 @@ function applyCloudinaryTransformations(src: string, width?: number, blurred?: b
   const transformations = [];
   
   if (blurred) {
-    // Blurred placeholder: tiny width with heavy blur
-    transformations.push('w_40'); // Small size for fast load
-    transformations.push('e_blur:2000'); // Heavy blur effect
-    transformations.push('q_auto:low'); // Low quality for speed
+    // Blurred placeholder: TINY width with EXTREME blur for smooth color wash
+    transformations.push('w_10'); // Reduced from 40 to 10 for smoother appearance
+    transformations.push('e_blur:1000'); // Reduced from 2000 - less blur on smaller image = smoother
+    transformations.push('q_1'); // Lowest quality for tiny file size
   } else {
     // Normal image: automatic format (WebP with fallback)
     transformations.push('f_auto');
@@ -71,7 +71,7 @@ interface ProgressiveImageProps {
   sizes?: string; // Responsive sizes attribute
   width?: number; // Target width for optimization
   preloadMargin?: string; // Intersection observer margin for preloading (default: '200px')
-  blurFadeDuration?: number; // Duration in ms to hold blurred version (default: 400)
+  blurFadeDuration?: number; // Duration in ms to hold blurred version (default: 300)
 }
 
 export function ProgressiveImage({
@@ -87,7 +87,7 @@ export function ProgressiveImage({
   sizes,
   width,
   preloadMargin = '200px',
-  blurFadeDuration = 400,
+  blurFadeDuration = 300,
 }: ProgressiveImageProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -158,15 +158,14 @@ export function ProgressiveImage({
       className="relative overflow-hidden bg-muted/10"
       style={aspectRatio ? { aspectRatio } : undefined}
     >
-      {/* Blurred placeholder - stays visible during fade */}
+      {/* Blurred placeholder - tiny smooth color wash */}
       {!imageError && shouldLoad && (
         <img
           src={blurredSrc}
           alt=""
           className={`
             absolute inset-0 w-full h-full object-cover
-            scale-105
-            transition-opacity duration-700 ease-out
+            transition-opacity duration-500 ease-out
             ${showSharpImage ? 'opacity-0' : 'opacity-100'}
           `}
           aria-hidden="true"
@@ -199,7 +198,7 @@ export function ProgressiveImage({
             w-full h-full 
             ${objectFit === 'cover' ? 'object-cover' : 'object-contain'}
             ${smartPosition ? objectPosition : ''}
-            transition-opacity duration-700 ease-out
+            transition-opacity duration-500 ease-out
             ${showSharpImage ? 'opacity-100' : 'opacity-0'}
             ${className}
           `}
