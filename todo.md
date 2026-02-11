@@ -2991,3 +2991,15 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Tutorials not loading / nav bar link is wrong
 - [x] Studio dropdown has duplicate data
 - [x] Fix tutorials page - content not displaying despite data in database
+
+## Tag Persistence Investigation - Feb 11
+- [x] Investigate why tags for articles, news, and projects are not saved correctly
+- [x] Identify root cause of tag loss (news.list and articles.list used legacy JSON column instead of junction table)
+- [x] Fix tag persistence issue (updated getAllNews and getAllArticles to fetch from junction table)
+- [x] Add safeguards to prevent future tag loss (double safeguard: router + DB helper level)
+- [x] Deduplicated all junction tables (articleTags, newsTags, projectTags)
+- [x] Deleted test/junk data (Test Project, Test Article)
+- [x] Fixed tutorial Invalid Date badge (uploadDate vs publishDate inconsistency)
+- [x] Updated tag coverage tests to verify all 3 content types and junction table format
+- [x] Fixed content.test.ts idempotency with unique timestamps
+- [x] All 39 tests pass across 6 test files

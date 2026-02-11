@@ -1,0 +1,12 @@
+{
+  "query": "SELECT 'projectTags' as tbl, COUNT(*) as cnt FROM projectTags\nUNION ALL SELECT 'newsTags', COUNT(*) FROM newsTags\nUNION ALL SELECT 'articleTags', COUNT(*) FROM articleTags;\n\nSELECT 'projects_without_tags' as metric, COUNT(*) as cnt FROM projects p LEFT JOIN projectTags pt ON p.id = pt.projectId WHERE pt.id IS NULL\nUNION ALL SELECT 'news_without_tags', COUNT(*) FROM news n LEFT JOIN newsTags nt ON n.id = nt.newsId WHERE nt.id IS NULL\nUNION ALL SELECT 'articles_without_tags', COUNT(*) FROM articles a LEFT JOIN articleTags at2 ON a.id = at2.articleId WHERE at2.id IS NULL;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT 'projectTags' as tbl, COUNT(*) as cnt FROM projectTags\nUNION ALL SELECT 'newsTags', COUNT(*) FROM newsTags\nUNION ALL SELECT 'articleTags', COUNT(*) FROM articleTags;\n\nSELECT 'projects_without_tags' as metric, COUNT(*) as cnt FROM projects p LEFT JOIN projectTags pt ON p.id = pt.projectId WHERE pt.id IS NULL\nUNION ALL SELECT 'news_without_tags', COUNT(*) FROM news n LEFT JOIN newsTags nt ON n.id = nt.newsId WHERE nt.id IS NULL\nUNION ALL SELECT 'articles_without_tags', COUNT(*) FROM articles a LEFT JOIN articleTags at2 ON a.id = at2.articleId WHERE at2.id IS NULL;",
+  "returncode": 1,
+  "logs": [
+    "tbl\tcnt",
+    "articleTags\t202",
+    "newsTags\t216",
+    "projectTags\t178",
+    "ERROR 1054 (42S22) at line 5: Unknown column 'pt.id' in 'where clause'"
+  ]
+}

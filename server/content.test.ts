@@ -68,10 +68,11 @@ describe("Content Management API", () => {
     it("allows admin to create categories", async () => {
       const ctx = createAdminContext();
       const caller = appRouter.createCaller(ctx);
+      const ts = Date.now();
 
       const result = await caller.categories.create({
-        name: "Test Project Category",
-        slug: "test-project-category",
+        name: `Test Project Category ${ts}`,
+        slug: `test-project-category-${ts}`,
         type: "project",
       });
 
@@ -126,10 +127,11 @@ describe("Content Management API", () => {
     it("allows admin to create projects", async () => {
       const ctx = createAdminContext();
       const caller = appRouter.createCaller(ctx);
+      const ts = Date.now();
 
       const result = await caller.projects.create({
-        title: "Test Project",
-        slug: "test-project-unique",
+        title: `Test Project ${ts}`,
+        slug: `test-project-${ts}`,
         excerpt: "A test project",
         status: "draft",
       });
@@ -189,10 +191,11 @@ describe("Content Management API", () => {
     it("allows admin to create articles with author", async () => {
       const ctx = createAdminContext();
       const caller = appRouter.createCaller(ctx);
+      const ts = Date.now();
 
       const result = await caller.articles.create({
-        title: "Test Article",
-        slug: "test-article-unique",
+        title: `Test Article ${ts}`,
+        slug: `test-article-${ts}`,
         excerpt: "A test article",
         content: "This is test content",
         status: "draft",

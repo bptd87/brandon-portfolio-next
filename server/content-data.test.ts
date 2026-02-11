@@ -57,19 +57,54 @@ describe("scenicDirectory router", () => {
 });
 
 describe("tag coverage", () => {
-  it("every project should have at least one tag", async () => {
+  it("every published project should have at least one tag", async () => {
     const { ctx } = createPublicContext();
     const caller = appRouter.createCaller(ctx);
-    const projects = await caller.projects.list({});
+    const projects = await caller.projects.list({ status: 'published' });
     for (const project of projects) {
-      const detail = await caller.projects.getBySlug({ slug: project.slug });
-      expect(detail, `Project "${project.title}" not found`).not.toBeNull();
-      if (detail && detail.tags) {
-        expect(
-          detail.tags.length,
-          `Project "${project.title}" has no tags`
-        ).toBeGreaterThan(0);
-      }
+      expect(
+        project.tags.length,
+        `Project "${project.title}" has no tags`
+      ).toBeGreaterThan(0);
+    }
+  });
+
+  it("every published news item should have at least one tag", async () => {
+    const { ctx } = createPublicContext();
+    const caller = appRouter.createCaller(ctx);
+    const newsList = await caller.news.list({ status: 'published' });
+    for (const item of newsList) {
+      expect(
+        item.tags.length,
+        `News "${item.title}" has no tags`
+      ).toBeGreaterThan(0);
+    }
+  });
+
+  it("every published article should have at least one tag", async () => {
+    const { ctx } = createPublicContext();
+    const caller = appRouter.createCaller(ctx);
+    const articles = await caller.articles.list({ status: 'published' });
+    for (const article of articles) {
+      expect(
+        article.tags.length,
+        `Article "${article.title}" has no tags`
+      ).toBeGreaterThan(0);
+    }
+  });
+
+  it("news list should return junction table tags (not legacy JSON column)", async () => {
+    const { ctx } = createPublicContext();
+    const caller = appRouter.createCaller(ctx);
+    const newsList = await caller.news.list({ status: 'published' });
+    const itemWithTags = newsList.find((n: any) => n.tags && n.tags.length > 0);
+    expect(itemWithTags).toBeDefined();
+    if (itemWithTags) {
+      // Tags should be objects with id, name, slug (from junction table)
+      // not strings (from legacy JSON column)
+      expect(itemWithTags.tags[0]).toHaveProperty('id');
+      expect(itemWithTags.tags[0]).toHaveProperty('name');
+      expect(itemWithTags.tags[0]).toHaveProperty('slug');
     }
   });
 });

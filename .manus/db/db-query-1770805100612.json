@@ -1,0 +1,60 @@
+{
+  "query": "SELECT n.id, LEFT(n.title, 50) as title, COUNT(nt.tagId) as junction_tags FROM news n LEFT JOIN newsTags nt ON n.id = nt.newsId GROUP BY n.id ORDER BY junction_tags DESC LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT n.id, LEFT(n.title, 50) as title, COUNT(nt.tagId) as junction_tags FROM news n LEFT JOIN newsTags nt ON n.id = nt.newsId GROUP BY n.id ORDER BY junction_tags DESC LIMIT 10;",
+  "rows": [
+    {
+      "id": "30012",
+      "title": "Opening Night: Romero at University of Missouri",
+      "junction_tags": "7"
+    },
+    {
+      "id": "2",
+      "title": "Assisting Tom Buderwitz on The Play That Goes Wron",
+      "junction_tags": "7"
+    },
+    {
+      "id": "30009",
+      "title": "Opening Night: Deathtrap at Okoboji Summer Theatre",
+      "junction_tags": "7"
+    },
+    {
+      "id": "30016",
+      "title": "Guys on Ice Receives Praise in SLO Review",
+      "junction_tags": "6"
+    },
+    {
+      "id": "5",
+      "title": "Joining United Scenic Artists, Local USA 829",
+      "junction_tags": "6"
+    },
+    {
+      "id": "30014",
+      "title": "Shut Up, Sherlock Praised in SLO Review",
+      "junction_tags": "6"
+    },
+    {
+      "id": "30005",
+      "title": "The Orange Curtain Review Praises Million Dollar Q",
+      "junction_tags": "6"
+    },
+    {
+      "id": "30021",
+      "title": "Scenic Design for ¡Lotería: Game On! at Theatre Si",
+      "junction_tags": "6"
+    },
+    {
+      "id": "30017",
+      "title": "Freaky Friday at Okoboji Summer Theatre Receives P",
+      "junction_tags": "6"
+    },
+    {
+      "id": "30028",
+      "title": "Company at UC Irvine Highlighted in StageSceneLA",
+      "junction_tags": "6"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tjunction_tags\n30012\tOpening Night: Romero at University of Missouri\t7\n2\tAssisting Tom Buderwitz on The Play That Goes Wron\t7\n30009\tOpening Night: Deathtrap at Okoboji Summer Theatre\t7\n30016\tGuys on Ice Receives Praise in SLO Review\t6\n5\tJoining United Scenic Artists, Local USA 829\t6\n30014\tShut Up, Sherlock Praised in SLO Review\t6\n30005\tThe Orange Curtain Review Praises Million Dollar Q\t6\n30021\tScenic Design for ¡Lotería: Game On! at Theatre Si\t6\n30017\tFreaky Friday at Okoboji Summer Theatre Receives P\t6\n30028\tCompany at UC Irvine Highlighted in StageSceneLA\t6\n",
+  "stderr": "",
+  "execution_time_ms": 56
+}

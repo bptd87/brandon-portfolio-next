@@ -2331,7 +2331,7 @@ The final section introduces the powerful Duplicate Along Path feature, which al
           name: tutorial.title,
           description: tutorial.description,
           thumbnailUrl: `https://img.youtube.com/vi/${tutorial.youtubeId}/maxresdefault.jpg`,
-          uploadDate: tutorial.uploadDate,
+          uploadDate: tutorial.uploadDate || tutorial.publishDate,
           duration: durationISO,
           embedUrl: `https://www.youtube.com/embed/${tutorial.youtubeId}`,
           contentUrl: `https://www.youtube.com/watch?v=${tutorial.youtubeId}`,
@@ -2383,7 +2383,7 @@ The final section introduces the powerful Duplicate Along Path feature, which al
             </Badge>
             <Badge className="bg-transparent text-foreground border border-border flex items-center gap-1.5 uppercase tracking-wider font-bold px-4 py-1.5 text-xs">
               <Calendar className="w-3.5 h-3.5" />
-              {formatDate(tutorial.publishDate)}
+              {formatDate(tutorial.publishDate || tutorial.uploadDate)}
             </Badge>
           </div>
 

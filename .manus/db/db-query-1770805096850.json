@@ -1,0 +1,60 @@
+{
+  "query": "SELECT n.id, n.title, COUNT(nt.tagId) as tag_count FROM news n LEFT JOIN newsTags nt ON n.id = nt.newsId GROUP BY n.id ORDER BY tag_count DESC LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT n.id, n.title, COUNT(nt.tagId) as tag_count FROM news n LEFT JOIN newsTags nt ON n.id = nt.newsId GROUP BY n.id ORDER BY tag_count DESC LIMIT 10;",
+  "rows": [
+    {
+      "id": "2",
+      "title": "Assisting Tom Buderwitz on The Play That Goes Wrong at Seattle Rep",
+      "tag_count": "7"
+    },
+    {
+      "id": "30009",
+      "title": "Opening Night: Deathtrap at Okoboji Summer Theatre",
+      "tag_count": "7"
+    },
+    {
+      "id": "30012",
+      "title": "Opening Night: Romero at University of Missouri",
+      "tag_count": "7"
+    },
+    {
+      "id": "30024",
+      "title": "Returning to Stephens College as Assistant Professor of Scenic Design",
+      "tag_count": "6"
+    },
+    {
+      "id": "30027",
+      "title": "New Role at UTEP — Assistant Professor of Scenic Design & Technology",
+      "tag_count": "6"
+    },
+    {
+      "id": "30022",
+      "title": "Assisting My First Off-Broadway Show — The Fears (April–May 2023)",
+      "tag_count": "6"
+    },
+    {
+      "id": "30011",
+      "title": "My Season as Scenic Designer for New Swan Shakespeare Festival (2025)",
+      "tag_count": "6"
+    },
+    {
+      "id": "30005",
+      "title": "The Orange Curtain Review Praises Million Dollar Quartet at South Coast Repertory",
+      "tag_count": "6"
+    },
+    {
+      "id": "30021",
+      "title": "Scenic Design for ¡Lotería: Game On! at Theatre SilCo",
+      "tag_count": "6"
+    },
+    {
+      "id": "30019",
+      "title": "Forum at Theatre SilCo Featured in Summit Daily",
+      "tag_count": "6"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\ttag_count\n2\tAssisting Tom Buderwitz on The Play That Goes Wrong at Seattle Rep\t7\n30009\tOpening Night: Deathtrap at Okoboji Summer Theatre\t7\n30012\tOpening Night: Romero at University of Missouri\t7\n30024\tReturning to Stephens College as Assistant Professor of Scenic Design\t6\n30027\tNew Role at UTEP — Assistant Professor of Scenic Design & Technology\t6\n30022\tAssisting My First Off-Broadway Show — The Fears (April–May 2023)\t6\n30011\tMy Season as Scenic Designer for New Swan Shakespeare Festival (2025)\t6\n30005\tThe Orange Curtain Review Praises Million Dollar Quartet at South Coast Repertory\t6\n30021\tScenic Design for ¡Lotería: Game On! at Theatre SilCo\t6\n30019\tForum at Theatre SilCo Featured in Summit Daily\t6\n",
+  "stderr": "",
+  "execution_time_ms": 76
+}

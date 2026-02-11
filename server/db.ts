@@ -346,11 +346,15 @@ export async function setProjectTags(projectId: number, tagIds: number[]) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
-  await db.delete(projectTags).where(eq(projectTags.projectId, projectId));
-
-  if (tagIds.length > 0) {
-    await db.insert(projectTags).values(tagIds.map(tagId => ({ projectId, tagId })));
+  // Safety: never delete existing tags if no new tags are provided
+  // This prevents accidental tag wipe when update calls don't include tags
+  if (tagIds.length === 0) {
+    console.warn(`[setProjectTags] Skipping empty tagIds for project ${projectId} - would delete all tags`);
+    return;
   }
+
+  await db.delete(projectTags).where(eq(projectTags.projectId, projectId));
+  await db.insert(projectTags).values(tagIds.map(tagId => ({ projectId, tagId })));
 }
 
 // ============ NEWS OPERATIONS ============
@@ -370,7 +374,6 @@ export async function getAllNews(filters?: { status?: 'draft' | 'published' | 'a
     location: news.location,
     date: news.date,
     externalLink: news.externalLink,
-    tags: news.tags,
     blocks: news.blocks,
     status: news.status,
     featured: news.featured,
@@ -392,7 +395,17 @@ export async function getAllNews(filters?: { status?: 'draft' | 'published' | 'a
     query = query.where(and(...conditions));
   }
 
-  return await query.orderBy(desc(news.date));
+  const newsList = await query.orderBy(desc(news.date));
+
+  // Fetch tags from junction table for each news item
+  const newsWithTags = await Promise.all(
+    newsList.map(async (item) => {
+      const itemTags = await getNewsTags(item.id);
+      return { ...item, tags: itemTags };
+    })
+  );
+
+  return newsWithTags;
 }
 
 export async function getNewsById(id: number) {
@@ -450,11 +463,14 @@ export async function setNewsTags(newsId: number, tagIds: number[]) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
-  await db.delete(newsTags).where(eq(newsTags.newsId, newsId));
-
-  if (tagIds.length > 0) {
-    await db.insert(newsTags).values(tagIds.map(tagId => ({ newsId, tagId })));
+  // Safety: never delete existing tags if no new tags are provided
+  if (tagIds.length === 0) {
+    console.warn(`[setNewsTags] Skipping empty tagIds for news ${newsId} - would delete all tags`);
+    return;
   }
+
+  await db.delete(newsTags).where(eq(newsTags.newsId, newsId));
+  await db.insert(newsTags).values(tagIds.map(tagId => ({ newsId, tagId })));
 }
 
 // ============ ARTICLE OPERATIONS ============
@@ -495,7 +511,17 @@ export async function getAllArticles(filters?: { status?: 'draft' | 'published' 
     query = query.where(and(...conditions));
   }
 
-  return await query.orderBy(desc(articles.publishedAt));
+  const articlesList = await query.orderBy(desc(articles.publishedAt));
+
+  // Fetch tags from junction table for each article
+  const articlesWithTags = await Promise.all(
+    articlesList.map(async (article) => {
+      const articleTagsList = await getArticleTags(article.id);
+      return { ...article, tags: articleTagsList };
+    })
+  );
+
+  return articlesWithTags;
 }
 
 export async function getArticleById(id: number) {
@@ -553,11 +579,14 @@ export async function setArticleTags(articleId: number, tagIds: number[]) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
-  await db.delete(articleTags).where(eq(articleTags.articleId, articleId));
-
-  if (tagIds.length > 0) {
-    await db.insert(articleTags).values(tagIds.map(tagId => ({ articleId, tagId })));
+  // Safety: never delete existing tags if no new tags are provided
+  if (tagIds.length === 0) {
+    console.warn(`[setArticleTags] Skipping empty tagIds for article ${articleId} - would delete all tags`);
+    return;
   }
+
+  await db.delete(articleTags).where(eq(articleTags.articleId, articleId));
+  await db.insert(articleTags).values(tagIds.map(tagId => ({ articleId, tagId })));
 }
 
 export async function incrementArticleViews(id: number) {

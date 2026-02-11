@@ -260,7 +260,7 @@ export const appRouter = router({
         
         await db.updateProject(id, dataToUpdate);
         
-        if (tagIds !== undefined) {
+        if (tagIds !== undefined && tagIds.length > 0) {
           await db.setProjectTags(id, tagIds);
         }
         
@@ -440,7 +440,7 @@ export const appRouter = router({
         
         await db.updateNews(id, dataToUpdate);
         
-        if (tagIds !== undefined) {
+        if (tagIds !== undefined && tagIds.length > 0) {
           await db.setNewsTags(id, tagIds);
         }
         
@@ -616,7 +616,7 @@ export const appRouter = router({
         
         await db.updateArticle(id, dataToUpdate);
         
-        if (tagIds !== undefined) {
+        if (tagIds !== undefined && tagIds.length > 0) {
           await db.setArticleTags(id, tagIds);
         }
         
