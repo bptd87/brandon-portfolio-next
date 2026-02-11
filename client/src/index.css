@@ -247,7 +247,7 @@
   }
   
   .article-html-content h2.wp-block-heading {
-    @apply text-[1.375rem] mt-16 mb-4 leading-[1.3];
+    @apply text-[1.5rem] mt-16 mb-4 leading-[1.3];
   }
   
   .article-html-content h3.wp-block-heading {
@@ -256,7 +256,7 @@
 
   /* Override global h2/h3/h4 clamp sizes inside article content */
   .article-html-content h2 {
-    font-size: 1.375rem !important;
+    font-size: 1.5rem !important;
     line-height: 1.3;
     letter-spacing: -0.01em;
   }

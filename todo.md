@@ -2781,4 +2781,4 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Fix H2 and H3 to render at smaller, appropriate sizes
 - [x] Drop cap confirmed working on all articles (was never broken)
 - [x] Verify fixes on multiple articles
-- [ ] Save checkpoint
+- [x] Save checkpoint
