@@ -2902,4 +2902,10 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Add fetchpriority prop support to ProgressiveImage - first carousel image now has fetchpriority=high
 - [x] Fix critical CSS inlining to eliminate 1.3s render-blocking - skipped, minimal impact vs complexity
 - [x] Add CloudFront preconnect hint
-- [ ] Test and save final checkpoint
+- [x] Test and save final checkpoint - checkpoint 91db4639 ready
+
+## Implement Skeleton UI for Perceived Performance (Feb 11, 2026)
+- [x] Create skeleton components for carousel, project grid, and news
+- [x] Update Home.tsx to show skeleton while tRPC data loads
+- [x] Test skeleton UI loading states - ready for testing
+- [ ] Save checkpoint

@@ -11,12 +11,13 @@ import { Link } from "wouter";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import StructuredData from "@/components/StructuredData";
 import { useState, useEffect } from "react";
+import { CarouselSkeleton, ProjectGridSkeleton, NewsSectionSkeleton } from "@/components/SkeletonLoaders";
 
 export default function Home() {
   const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://www.brandonptdavis.com';
   const { user } = useAuth();
-  const { data: projects } = trpc.projects.list.useQuery({ featured: true, status: 'published', discipline: 'scenic_design' });
-  const { data: newsItems } = trpc.news.list.useQuery({});
+  const { data: projects, isLoading: projectsLoading } = trpc.projects.list.useQuery({ featured: true, status: 'published', discipline: 'scenic_design' });
+  const { data: newsItems, isLoading: newsLoading } = trpc.news.list.useQuery({});
   const { data: categories } = trpc.categories.list.useQuery({});
 
   // Hero carousel state
@@ -132,6 +133,9 @@ export default function Home() {
       <Header />
 
       {/* Hero Section - Full-Screen Carousel */}
+      {projectsLoading || heroImages.length === 0 ? (
+        <CarouselSkeleton />
+      ) : (
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Carousel Images */}
         <div className="absolute inset-0">
@@ -236,9 +240,12 @@ export default function Home() {
           <ChevronDown className="h-8 w-8 animate-bounce" />
         </button>
       </section>
+      )}
 
       {/* Featured Scenic Design Projects - 2-Column Grid */}
-      {projects && projects.length > 0 && (
+      {projectsLoading ? (
+        <ProjectGridSkeleton />
+      ) : projects && projects.length > 0 ? (
         <AnimatedSection>
           <section className="py-24 md:py-32 bg-[#0D47A1]/5">
             <div className="container">
@@ -343,10 +350,12 @@ export default function Home() {
             </div>
           </section>
         </AnimatedSection>
-      )}
+      ) : null}
 
       {/* Latest News Section */}
-      {newsItems && newsItems.length > 0 && (
+      {newsLoading ? (
+        <NewsSectionSkeleton />
+      ) : newsItems && newsItems.length > 0 ? (
         <AnimatedSection>
           <section className="py-24 md:py-32 bg-[#FF5722]/5">
             <div className="container">
@@ -423,7 +432,7 @@ export default function Home() {
             </div>
           </section>
         </AnimatedSection>
-      )}
+      ) : null}
 
       <Footer />
     </>
