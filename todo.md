@@ -2813,4 +2813,16 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Update ArticleDetail to allow theme toggle
 - [x] Ensure site resets to dark mode when navigating away from articles
 - [x] Test theme behavior across page transitions (verified: homepage locked to dark, articles allow toggle, returns to dark on exit)
+- [x] Save checkpoint
+
+## Fix Dark Mode Lock Bug - localStorage Override (Feb 10, 2026)
+- [x] Fix ThemeContext to ignore localStorage on non-article pages (forceTheme now starts as 'dark' and overrides localStorage)
+- [x] Ensure dark mode is forced regardless of stored theme preference
+- [ ] Test across all page types (home, portfolio, news, articles)
+- [ ] Save checkpoint
+
+## Add Visible Loading Indicators (Feb 10, 2026)
+- [x] Make ProgressiveImage skeleton loader more visible (increased opacity, added shimmer animation)
+- [x] Add page transition loading indicator (progress bar at top of page)
+- [x] Test loading states across pages (verified page loading bar and image skeletons working)
 - [ ] Save checkpoint

@@ -7,6 +7,7 @@ import { lazy, Suspense } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import PageTransition from "./components/PageTransition";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { PageLoadingIndicator } from "./components/PageLoadingIndicator";
 import Home from "./pages/Home";
 import News from "./pages/News";
 import Articles from "./pages/Articles";
@@ -132,6 +133,7 @@ function App() {
         switchable={false}
       >
         <div className="min-h-screen bg-gradient-premium">
+          <PageLoadingIndicator />
           <TooltipProvider>
             <Toaster />
             <Router />

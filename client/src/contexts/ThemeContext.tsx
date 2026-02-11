@@ -22,7 +22,7 @@ export function ThemeProvider({
   defaultTheme = "light",
   switchable = false,
 }: ThemeProviderProps) {
-  const [forceTheme, setForceTheme] = useState<Theme | null>(null);
+  const [forceTheme, setForceTheme] = useState<Theme | null>('dark'); // Start with dark forced
   const [theme, setTheme] = useState<Theme>(() => {
     if (switchable) {
       const stored = localStorage.getItem("theme");
@@ -31,7 +31,8 @@ export function ThemeProvider({
     return defaultTheme;
   });
 
-  const effectiveTheme = forceTheme || theme;
+  // When forceTheme is set, it overrides everything (including localStorage)
+  const effectiveTheme = forceTheme !== null ? forceTheme : theme;
 
   useEffect(() => {
     const root = document.documentElement;

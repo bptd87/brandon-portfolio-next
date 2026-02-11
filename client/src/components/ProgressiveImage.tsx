@@ -68,19 +68,18 @@ export function ProgressiveImage({
     >
       {/* Skeleton loader - shown while loading */}
       {!imageLoaded && !imageError && (
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-muted/30">
           <div 
-            className="w-full h-full animate-pulse"
-            style={{
-              backgroundImage: `
-                linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%),
-                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px),
-                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px)
-              `,
-              backgroundColor: 'hsl(var(--muted) / 0.2)',
-              filter: 'blur(1px)',
-            }}
-          />
+            className="w-full h-full relative overflow-hidden"
+          >
+            {/* Shimmer effect */}
+            <div 
+              className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite]"
+              style={{
+                background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%)',
+              }}
+            />
+          </div>
         </div>
       )}
 
