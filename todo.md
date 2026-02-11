@@ -3034,3 +3034,12 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [ ] Run PageSpeed test to measure performance without proxy
 - [ ] Investigate why tRPC batch request takes 1,486ms in production (vs 156ms in dev)
 - [ ] Target PageSpeed score above 80 (currently 51)
+
+## Achievable Performance Optimizations - Feb 11
+- [x] Removed unused CloudFront preconnect hint (replaced with analytics preconnect)
+- [x] Removed outdated image preload that was causing warnings
+- [x] Verified code splitting already implemented (all routes lazy-loaded except Home)
+- [x] Verified tRPC query caching already optimal (5min staleTime, 10min cache retention)
+- [x] Verified critical CSS inlining already implemented via Critters
+- [ ] Database performance issue (2,027ms tRPC response) - requires Manus platform support
+- [ ] Image optimization (672 KiB savings) - blocked by CloudFront access restrictions
