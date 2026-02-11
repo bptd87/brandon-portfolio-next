@@ -4,7 +4,34 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { AnimatedSection } from "@/components/AnimatedSection";
-import { ExperientialFAQ } from "@/components/ExperientialFAQ";
+import { FAQSection } from "@/components/FAQSection";
+
+const experientialFaqs = [
+  {
+    question: "What is Authored Composite Visualization?",
+    answer: "A hybrid visualization workflow combining authored spatial design, real-time rendering, and selective AI-assisted post-production. Every environment begins with scaled geometry and intentional composition. AI tools support environmental density, atmospheric depth, and surface refinement\u2014always grounded in real-world proportion and authored design intent."
+  },
+  {
+    question: "Are these visuals buildable?",
+    answer: "Yes. All visualization is grounded in scaled geometry and technical drawing logic. Spatial relationships, circulation paths, and structural elements maintain real-world proportion throughout the design and visualization process. The design and the visualization describe the same space."
+  },
+  {
+    question: "How does this benefit agile teams?",
+    answer: "One author across design and visualization means faster iteration without rescaling or reinterpretation. Changes happen in the same file, maintaining spatial consistency. Visuals stay grounded in real circulation and proportion, creating clear communication between creative and production teams without adding complexity."
+  },
+  {
+    question: "What is point-cloud\u2013driven visualization?",
+    answer: "An approach that treats space as a field of information rather than isolated objects. Point-cloud visualization emphasizes density, scale, and human perception\u2014allowing environments to be evaluated as they will be experienced. Like a portrait composed of thousands of points, the environment resolves through accumulation rather than surface detail alone."
+  },
+  {
+    question: "Can this support pitch presentations?",
+    answer: "Yes\u2014particularly where clarity, scale, and speed matter. The workflow allows rapid exploration of multiple compositions, lighting scenarios, and spatial configurations. More options in less time means better design decisions and more confident presentations that communicate both vision and feasibility."
+  },
+  {
+    question: "What makes experiential design different from scenic design?",
+    answer: "Experiential design prioritizes audience interaction and spatial navigation over theatrical sightlines. While scenic design frames a performance for a seated audience, experiential design creates environments people move through, touch, and explore. The design must work from every angle, accommodate circulation, and maintain coherence across multiple viewpoints and scales."
+  }
+];
 import { ArrowRight, Layers, Ruler, Video, Sparkles, Cloud, Box, Hammer, Zap } from "lucide-react";
 
 export default function ExperientialPortfolio() {
@@ -363,11 +390,11 @@ export default function ExperientialPortfolio() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-32 border-t border-border bg-muted/20">
-        <div className="container max-w-4xl">
-          <ExperientialFAQ />
-        </div>
-      </section>
+      <FAQSection
+        title="Process & Approach"
+        subtitle="On experiential design methodology, spatial thinking, and visualization workflow."
+        items={experientialFaqs}
+      />
 
       {/* Closing Statement */}
       <section className="py-32 border-t border-border">

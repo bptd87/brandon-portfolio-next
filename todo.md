@@ -2993,3 +2993,19 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Identified heroImage.ts as unused (route not registered)
 - [x] Deleted heroImage.ts server file
 - [x] Site tested - all pages working correctly
+
+## Bold Minimal Design Refinement
+- [ ] Review current homepage structure
+- [ ] Identify components to consolidate/simplify
+- [ ] Redesign with bold minimal aesthetic (keep colors, reduce complexity)
+- [ ] Test new design
+
+## Component Consolidation
+- [x] Kept SEO + StructuredData separate (different purposes)
+- [x] Created generic FAQSection component, replaced ExperientialFAQ and RenderingFAQ
+- [x] Removed PageLoadingIndicator (was in App.tsx but unnecessary)
+- [x] Removed PageTransition (inlined Suspense directly in Router)
+- [x] Updated all imports in ExperientialPortfolio and RenderingPortfolio
+- [x] All 28 tests pass, site working correctly
+- [x] Deleted 39 unused shadcn/ui component files (36 initial + 3 more: sheet, skeleton, toggle)
+- [x] Reduced shadcn/ui from 53 to 13 component files
