@@ -9,6 +9,7 @@ import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { generateRSSFeed } from "../rss";
 import * as sitemap from "../sitemap";
+import imageProxyRouter from "../imageProxy";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -98,6 +99,9 @@ async function startServer() {
       res.status(500).send("Error generating robots.txt");
     }
   });
+  
+  // Image proxy for on-demand resizing
+  app.use("/api", imageProxyRouter);
   
   // RSS feeds
   app.get("/api/news/rss", generateRSSFeed);
