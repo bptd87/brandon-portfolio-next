@@ -60,7 +60,7 @@ async function resizeImage(sourceUrl: string, width: number): Promise<{ buffer: 
         withoutEnlargement: true,
         fit: 'inside',
       })
-      .webp({ quality: 90 })
+      .webp({ quality: 85 })
       .toBuffer();
     contentType = 'image/webp';
   }

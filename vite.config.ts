@@ -187,6 +187,7 @@ const plugins = [
   vitePluginCriticalCSS(),
   VitePWA({
     registerType: 'autoUpdate',
+    injectRegister: 'inline', // Inline SW registration to avoid render-blocking
     includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
     manifest: {
       name: 'Brandon PT Davis | Scenic & Experiential Design',

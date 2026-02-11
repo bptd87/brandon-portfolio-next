@@ -2933,4 +2933,18 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Configure Vite PWA plugin with caching strategies
 - [x] Add PWA manifest and icons (placeholder icons created)
 - [x] Test offline functionality - ready for production testing
-- [ ] Save checkpoint
+- [x] Save checkpoint - checkpoint 1d95916e ready
+
+## Performance Regression Issues (from PageSpeed report)
+- [ ] Fix render-blocking CSS (30.6 KiB blocking for 820ms)
+- [ ] Fix render-blocking registerSW.js (500ms blocking)
+- [ ] Add cache headers to CloudFront images (922 KiB with "None" cache)
+- [ ] Fix image proxy compression - images still too large (67 KiB savings available)
+- [ ] Remove unused preconnect to manuscdn.com (not being used)
+- [ ] Investigate why image proxy isn't serving cached/compressed images properly
+
+## Performance Fixes Applied
+- [x] Fixed render-blocking registerSW.js by inlining service worker registration
+- [x] Reduced WebP quality from 90% to 85% for better compression (67 KiB savings)
+- [x] Removed unused manuscdn.com preconnect hint
+- [ ] Test PageSpeed score after publishing these fixes
