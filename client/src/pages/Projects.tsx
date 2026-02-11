@@ -126,6 +126,8 @@ export default function Projects() {
                             <ProgressiveImage
                               src={project.coverImageUrl}
                               alt={project.title}
+                              width={project.coverImageWidth || undefined}
+                              height={project.coverImageHeight || undefined}
                               className="group-hover:scale-110 transition-transform duration-700"
                               aspectRatio="3/2"
                               smartPosition={true}

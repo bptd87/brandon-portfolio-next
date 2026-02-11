@@ -3043,3 +3043,22 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Verified critical CSS inlining already implemented via Critters
 - [ ] Database performance issue (2,027ms tRPC response) - requires Manus platform support
 - [ ] Image optimization (672 KiB savings) - blocked by CloudFront access restrictions
+
+## Image Optimization - Layout Shift & Responsive Images - Feb 11
+- [ ] Add width/height attributes to ProgressiveImage component to prevent CLS
+- [ ] Generate pre-sized variants for all 60 images (480w, 768w, 1200w, 1600w)
+- [ ] Update database schema to store multiple image URLs per item
+- [ ] Modify ProgressiveImage to use srcset with pre-sized variants
+- [ ] Test CLS and LCP improvements with PageSpeed
+
+## Image Optimization - Layout Shift Fix - Feb 11
+- [x] Add width/height columns to database schema (projects, news, articles)
+- [x] Generate migration SQL and apply to database
+- [x] Create backfill script to measure all 60 images
+- [x] Run backfill script - 99 images measured successfully, 5 failures
+- [x] Update ProgressiveImage component to accept width/height props
+- [x] Update Home.tsx to pass width/height (carousel + project grid)
+- [x] Update Projects.tsx to pass width/height
+- [ ] Update remaining 7 files (ProjectDetail, ArticleDetail, portfolio pages)
+- [ ] Test CLS improvements with PageSpeed
+- [ ] Save checkpoint
