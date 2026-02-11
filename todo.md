@@ -3034,3 +3034,33 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [ ] Run PageSpeed test to measure performance without proxy
 - [ ] Investigate why tRPC batch request takes 1,486ms in production (vs 156ms in dev)
 - [ ] Target PageSpeed score above 80 (currently 51)
+
+## Rollback CLS Fix - Feb 11
+- [x] Rolled back code to checkpoint d0724d75 (before CLS fix)
+- [x] Dropped width/height columns from database
+- [x] Verified rollback completed successfully
+
+## Lessons Learned - Performance Optimization Attempts
+- CLS fix (width/height) made performance WORSE (score 50 → 43)
+- Image migration to S3 didn't help (same CloudFront CDN, same issues)
+- Image proxy removal didn't help (direct CloudFront access works but no optimization)
+- Core bottlenecks are platform-level and cannot be fixed with code:
+  1. Database query time: 2.5 seconds (vs 156ms in dev) - MANUS PLATFORM ISSUE
+  2. CloudFront blocks proxy access - cannot implement responsive images
+  3. Images are oversized (1776x1333px served when only 748x499px needed - 672 KiB wasted)
+  4. CloudFront has no cache headers (934 KiB with "None" TTL)
+
+## Current State
+- Performance score: 50 (was 51 before attempts)
+- All optimization attempts have been reverted
+- Site is functional but slow due to platform limitations
+- Recommend contacting Manus support about database performance
+
+## Image Resize - Reduce File Sizes - Feb 11
+- [x] Identify images over 150 KiB (worst offenders from PageSpeed report)
+- [x] Download oversized images (8 total)
+- [x] Resize to 800px width (maintain aspect ratio)
+- [x] Re-upload resized images to S3
+- [x] Update database with new URLs
+- [x] Verified 540.5 KiB total savings (Guys on Ice: 233→74.5, Romero: 158→41.3, plus 6 more: 539→273)
+- [ ] Save checkpoint
