@@ -11,6 +11,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { trpc } from "@/lib/trpc";
 import { Calendar, MapPin, ArrowRight, Search, Rss } from "lucide-react";
 import { Link } from "wouter";
+import { NewsListSkeleton } from "@/components/SkeletonLoaders";
 
 export default function News() {
   return (
@@ -77,14 +78,11 @@ function NewsContent() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background">
+      <>
         <Header />
-        <div className="container py-20 text-center">
-          <div className="animate-spin h-12 w-12 border-4 border-primary border-t-transparent rounded-full mx-auto"></div>
-          <p className="text-muted-foreground mt-4">Loading news...</p>
-        </div>
+        <NewsListSkeleton />
         <Footer />
-      </div>
+      </>
     );
   }
 

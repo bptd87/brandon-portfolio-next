@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { NewsDetailSkeleton } from "@/components/SkeletonLoaders";
 
 // Helper function to create pixelated gradient from image
 function createPixelatedGradient(imageUrl: string, callback: (gradient: string) => void) {
@@ -175,14 +176,11 @@ function NewsDetailContent() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background">
+      <>
         <Header />
-        <div className="container py-20 text-center">
-          <div className="animate-spin h-12 w-12 border-4 border-primary border-t-transparent rounded-full mx-auto"></div>
-          <p className="text-muted-foreground mt-4">Loading...</p>
-        </div>
+        <NewsDetailSkeleton />
         <Footer />
-      </div>
+      </>
     );
   }
 

@@ -2908,4 +2908,11 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Create skeleton components for carousel, project grid, and news
 - [x] Update Home.tsx to show skeleton while tRPC data loads
 - [x] Test skeleton UI loading states - ready for testing
+- [x] Save checkpoint - checkpoint 7e7fbd86 ready
+
+## Extend Skeleton UI to Detail Pages (Feb 11, 2026)
+- [x] Create skeleton components for project detail and news pages
+- [x] Update project detail page with skeleton loading
+- [x] Update news list and detail pages with skeleton loading
+- [x] Test all skeleton implementations - ready for testing
 - [ ] Save checkpoint

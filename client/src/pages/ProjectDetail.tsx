@@ -14,6 +14,7 @@ import { Lightbox } from "@/components/Lightbox";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { ProjectDetailSkeleton } from "@/components/SkeletonLoaders";
 
 // Convert YouTube/Vimeo URLs to embed format
 function getEmbedUrl(url: string): string {
@@ -64,11 +65,7 @@ export default function ProjectDetail() {
   const [lightboxImages, setLightboxImages] = useState<Array<{imageUrl: string | null; caption: string | null; altText: string | null}>>([]);
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <p className="text-muted-foreground">Loading project...</p>
-      </div>
-    );
+    return <ProjectDetailSkeleton />;
   }
 
   if (!project) {
