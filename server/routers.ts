@@ -955,6 +955,29 @@ export const appRouter = router({
       }),
   }),
 
+  // ============ TUTORIALS ============
+  tutorials: router({
+    list: publicProcedure
+      .input(z.object({
+        category: z.string().optional(),
+        difficultyLevel: z.string().optional(),
+      }).optional())
+      .query(async ({ input }) => {
+        return await db.getAllTutorials(input);
+      }),
+  }),
+
+  // ============ SCENIC DIRECTORY ============
+  scenicDirectory: router({
+    list: publicProcedure
+      .input(z.object({
+        categorySlug: z.string().optional(),
+      }).optional())
+      .query(async ({ input }) => {
+        return await db.getAllScenicDirectory(input);
+      }),
+  }),
+
   // ============ TUTORIAL PROGRESS TRACKING ============
   tutorialProgress: router({
     // Get user's progress for all tutorials

@@ -10,7 +10,8 @@ import {
   comments, InsertComment,
   tutorialProgress, InsertTutorialProgress,
   paintRecipes, InsertPaintRecipe,
-  collaborators, InsertCollaborator, projectCollaborators
+  collaborators, InsertCollaborator, projectCollaborators,
+  tutorials, scenicDirectory
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -853,6 +854,48 @@ export async function getCollaboratorProjects(collaboratorId: number) {
     return result.map(r => r.project);
   } catch (error) {
     console.error("[Database] Failed to fetch collaborator projects:", error);
+    return [];
+  }
+}
+
+
+// ============ TUTORIALS ============
+
+export async function getAllTutorials(filters?: { category?: string; difficultyLevel?: string }) {
+  const db = await getDb();
+  if (!db) return [];
+  try {
+    const { eq, and, asc } = await import("drizzle-orm");
+    const conditions: any[] = [eq(tutorials.enabled, true)];
+    if (filters?.category) conditions.push(eq(tutorials.category, filters.category as any));
+    if (filters?.difficultyLevel) conditions.push(eq(tutorials.difficultyLevel, filters.difficultyLevel as any));
+    return await db
+      .select()
+      .from(tutorials)
+      .where(and(...conditions))
+      .orderBy(asc(tutorials.displayOrder));
+  } catch (error) {
+    console.error("[Database] Failed to fetch tutorials:", error);
+    return [];
+  }
+}
+
+// ============ SCENIC DIRECTORY ============
+
+export async function getAllScenicDirectory(filters?: { categorySlug?: string }) {
+  const db = await getDb();
+  if (!db) return [];
+  try {
+    const { eq, and, asc } = await import("drizzle-orm");
+    const conditions: any[] = [eq(scenicDirectory.enabled, true)];
+    if (filters?.categorySlug) conditions.push(eq(scenicDirectory.categorySlug, filters.categorySlug));
+    return await db
+      .select()
+      .from(scenicDirectory)
+      .where(and(...conditions))
+      .orderBy(asc(scenicDirectory.displayOrder));
+  } catch (error) {
+    console.error("[Database] Failed to fetch scenic directory:", error);
     return [];
   }
 }

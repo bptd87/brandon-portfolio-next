@@ -2979,3 +2979,9 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Gzipped size reduced from 354 KB to 254 KB (100 KB saved)
 - [x] Each page now loads its own small chunk on demand
 - [x] Tested site - all pages working correctly
+## Tag Coverage - Every Content Item Must Have Tags
+- [x] Audit articles for missing tags
+- [x] Audit news items for missing tags
+- [x] Assign tags to all untagged articles
+- [x] Assign tags to all untagged news items
+- [x] Assign tags to all untagged projects (done - 0 projects without tags)
