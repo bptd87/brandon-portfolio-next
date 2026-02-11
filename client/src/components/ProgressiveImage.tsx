@@ -18,10 +18,10 @@ function applyCloudinaryTransformations(src: string, width?: number, blurred?: b
   const transformations = [];
   
   if (blurred) {
-    // Blurred placeholder: TINY width with EXTREME blur for smooth color wash
-    transformations.push('w_10'); // Reduced from 40 to 10 for smoother appearance
-    transformations.push('e_blur:1000'); // Reduced from 2000 - less blur on smaller image = smoother
-    transformations.push('q_1'); // Lowest quality for tiny file size
+    // Blurred placeholder: TINY width with blur for smooth color wash
+    transformations.push('w_10');
+    transformations.push('e_blur:1000');
+    transformations.push('q_1');
   } else {
     // Normal image: automatic format (WebP with fallback)
     transformations.push('f_auto');
@@ -67,11 +67,13 @@ interface ProgressiveImageProps {
   fetchPriority?: 'high' | 'low' | 'auto';
   aspectRatio?: string;
   objectFit?: 'cover' | 'contain';
-  smartPosition?: boolean; // Enable automatic orientation detection
-  sizes?: string; // Responsive sizes attribute
-  width?: number; // Target width for optimization
-  preloadMargin?: string; // Intersection observer margin for preloading (default: '200px')
-  blurFadeDuration?: number; // Duration in ms to hold blurred version (default: 300)
+  smartPosition?: boolean;
+  sizes?: string;
+  width?: number;
+  preloadMargin?: string;
+  blurFadeDuration?: number;
+  enableScrollAnimation?: boolean; // Enable fade-in on scroll (default: true)
+  animationDelay?: number; // Delay in ms before animation starts (for stagger effect)
 }
 
 export function ProgressiveImage({
@@ -88,13 +90,43 @@ export function ProgressiveImage({
   width,
   preloadMargin = '200px',
   blurFadeDuration = 300,
+  enableScrollAnimation = true,
+  animationDelay = 0,
 }: ProgressiveImageProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [shouldLoad, setShouldLoad] = useState(loading === 'eager');
   const [showSharpImage, setShowSharpImage] = useState(false);
+  const [isInView, setIsInView] = useState(!enableScrollAnimation); // Start visible if animation disabled
   const [objectPosition, setObjectPosition] = useState<string>('object-center');
   const imgRef = useRef<HTMLDivElement>(null);
+
+  // Intersection Observer for scroll animation
+  useEffect(() => {
+    if (!enableScrollAnimation || !imgRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Add delay before triggering animation
+            setTimeout(() => {
+              setIsInView(true);
+            }, animationDelay);
+            observer.disconnect();
+          }
+        });
+      },
+      {
+        threshold: 0.1, // Trigger when 10% visible
+        rootMargin: '50px', // Start slightly before entering viewport
+      }
+    );
+
+    observer.observe(imgRef.current);
+
+    return () => observer.disconnect();
+  }, [enableScrollAnimation, animationDelay]);
 
   // Intersection Observer for preloading
   useEffect(() => {
@@ -110,7 +142,7 @@ export function ProgressiveImage({
         });
       },
       {
-        rootMargin: preloadMargin, // Start loading before entering viewport
+        rootMargin: preloadMargin,
       }
     );
 
@@ -127,7 +159,6 @@ export function ProgressiveImage({
     img.src = src;
     
     img.onload = () => {
-      // Portrait images: show top (faces), Landscape: center
       if (img.naturalHeight > img.naturalWidth) {
         setObjectPosition('object-top');
       } else {
@@ -155,7 +186,11 @@ export function ProgressiveImage({
   return (
     <div 
       ref={imgRef}
-      className="relative overflow-hidden bg-muted/10"
+      className={`
+        relative overflow-hidden bg-muted/10
+        ${enableScrollAnimation ? 'transition-all duration-700 ease-out' : ''}
+        ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
+      `}
       style={aspectRatio ? { aspectRatio } : undefined}
     >
       {/* Blurred placeholder - tiny smooth color wash */}

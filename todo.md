@@ -3113,3 +3113,13 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Reduce blur placeholder size to prevent pixelation when stretched
 - [x] Optimize blur intensity for smoother appearance
 - [x] Remove scale-105 that makes blur more visible
+
+## Scroll Fade-In Animation
+- [x] Add intersection observer for viewport entrance detection
+- [x] Implement fade-in + slide-up animation on scroll
+- [x] Add stagger delay for multiple images
+
+## Scroll Fade-In Animation
+- [x] Add intersection observer for viewport entrance detection
+- [x] Implement fade-in + slide-up animation on scroll
+- [x] Add stagger delay for multiple images
