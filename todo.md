@@ -3151,4 +3151,49 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [ ] Enhance Projects Manager - add tag assignment UI (tags already work in form)
 - [x] Build Articles Manager with full CRUD (already exists)
 - [ ] Add tag cleanup tools (bulk delete, edit, merge)
-- [ ] Test all admin functionality
+- [x] Test all admin functionality
+
+## Comprehensive System Audit & Fixes
+- [ ] Audit database - check actual disciplines distribution across projects
+- [ ] Fix project disciplines - ensure all 4 types are properly assigned
+- [ ] Audit categories - align with actual page structure and navigation
+- [x] Fix article content display - ensure articles show properly
+- [ ] Audit SEO metadata - check coverage across all pages and content types
+- [ ] Add missing SEO descriptions to pages without them
+- [x] Verify admin forms match database schema and frontend expectations
+- [x] Test all content types display correctly on frontend
+
+## CRITICAL: Fix All Admin & Content Issues
+- [x] Fix article admin - content blocks not editable, can't add/edit article content
+- [x] Fix news admin - ensure full editing works with block content
+- [ ] Fix project admin - add discipline filter/display, category assignment, SEO fields
+- [ ] Add SEO description fields to ALL admin forms (projects, news, articles)
+- [ ] Fix /projects page to show all 4 disciplines (not just scenic design)
+- [ ] Generate missing SEO descriptions for all 37 projects
+- [ ] Generate missing SEO descriptions for 40 news items
+- [x] Clean up categories - delete test categories, align with site structure
+- [ ] Assign projects to proper categories (all currently null)
+- [x] Ensure admin article editor actually shows and edits content blocks
+- [x] Test every admin form - create, edit, delete for all content types
+
+## Admin Panel Fix Session (Feb 11, 2026)
+- [x] Fix BlockArticleEditor crash - toString on undefined (block format mismatch)
+- [x] Rewrite BlockArticleEditor to handle all DB block formats (paragraph, heading, image, list, quote, faq, html, update_note, video, gallery, accordion)
+- [x] Add normalizeDbBlock function to convert DB format to editor format
+- [x] Add serializeBlockToDb function to convert editor format back to DB format
+- [x] Fix article save - strip tags from formData (not accepted by router)
+- [x] Fix NewsForm - add getById fetch for consistency with ProjectForm
+- [x] Fix NewsForm - strip externalLink from submit (not in router schema)
+- [x] Fix Select controlled/uncontrolled warning in BlockArticleEditor categoryId
+- [x] Clean up unused categories (deleted "Scenic Design" news cat 90001, "Project Launch" article cat 60009)
+- [x] Assign all unassigned news items to proper categories
+- [x] Verify all 14 categories properly typed (9 news, 5 article)
+- [x] Verify 0 unassigned news items, 0 unassigned articles
+- [x] Test article editing end-to-end (load, edit, save with 200 response)
+- [x] Test news editing end-to-end
+- [x] Test project editing end-to-end (all tabs: Basic, Content, Team, Gallery, SEO)
+- [x] Test new article creation form renders correctly
+- [x] Write 22 new vitest tests for article/news/category CRUD operations
+- [x] All 62 tests passing across 8 test files
+- [x] Verify frontend articles listing page displays all 23 articles correctly
+- [x] Verify frontend article detail page renders all content blocks

@@ -100,41 +100,50 @@ export function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
     },
   });
 
+  // Fetch full project data by ID when editing (list query may not include all fields)
+  const { data: fullProject, isLoading: isLoadingProject } = trpc.projects.getById.useQuery(
+    { id: project?.id },
+    { enabled: !!project?.id }
+  );
+
+  // Use full project data when available, fall back to prop
+  const projectData = fullProject || project;
+
   useEffect(() => {
-    if (project) {
+    if (projectData) {
       setFormData({
-        title: project.title || "",
-        slug: project.slug || "",
-        excerpt: project.excerpt || "",
-        description: project.description || "",
-        designNotes: project.designNotes || "",
-        discipline: project.discipline || "scenic_design",
-        subcategory: project.subcategory || "",
-        status: project.status || "draft",
-        featured: project.featured || false,
-        year: project.year || new Date().getFullYear(),
-        location: project.location || "",
-        client: project.client || "",
-        categoryId: project.categoryId,
-        director: project.creativeTeam?.director || "",
-        associateDirector: project.creativeTeam?.associateDirector || "",
-        musicDirector: project.creativeTeam?.musicDirector || "",
-        coScenicDesigner: project.creativeTeam?.coScenicDesigner || "",
-        costumeDesigner: project.creativeTeam?.costumeDesigner || "",
-        lightingDesigner: project.creativeTeam?.lightingDesigner || "",
-        soundDesigner: project.creativeTeam?.soundDesigner || "",
-        seoTitle: project.seoTitle || "",
-        seoDescription: project.seoDescription || "",
-        seoKeywords: project.seoKeywords || "",
+        title: projectData.title || "",
+        slug: projectData.slug || "",
+        excerpt: projectData.excerpt || "",
+        description: projectData.description || "",
+        designNotes: projectData.designNotes || "",
+        discipline: projectData.discipline || "scenic_design",
+        subcategory: projectData.subcategory || "",
+        status: projectData.status || "draft",
+        featured: projectData.featured || false,
+        year: projectData.year || new Date().getFullYear(),
+        location: projectData.location || "",
+        client: projectData.client || "",
+        categoryId: projectData.categoryId,
+        director: projectData.creativeTeam?.director || "",
+        associateDirector: projectData.creativeTeam?.associateDirector || "",
+        musicDirector: projectData.creativeTeam?.musicDirector || "",
+        coScenicDesigner: projectData.creativeTeam?.coScenicDesigner || "",
+        costumeDesigner: projectData.creativeTeam?.costumeDesigner || "",
+        lightingDesigner: projectData.creativeTeam?.lightingDesigner || "",
+        soundDesigner: projectData.creativeTeam?.soundDesigner || "",
+        seoTitle: projectData.seoTitle || "",
+        seoDescription: projectData.seoDescription || "",
+        seoKeywords: projectData.seoKeywords || "",
       });
       
-      if (project.coverImageUrl) {
-        setCoverImage({ url: project.coverImageUrl, key: project.coverImageKey });
+      if (projectData.coverImageUrl) {
+        setCoverImage({ url: projectData.coverImageUrl, key: projectData.coverImageKey });
       }
       
       // Load existing gallery images
-      if (project.images && Array.isArray(project.images)) {
-        const existingImages: ImageUpload[] = project.images.map((img: any, index: number) => ({
+      if (projectData.images && Array.isArray(projectData.images)) {
+        const existingImages: ImageUpload[] = projectData.images.map((img: any, index: number) => ({
           id: img.id,
           url: img.imageUrl,
           key: img.imageKey,
@@ -147,7 +156,7 @@ export function ProjectForm({ project, onClose, onSuccess }: ProjectFormProps) {
         setGalleryImages(existingImages);
       }
     }
-  }, [project]);
+  }, [projectData]);
 
   const handleCoverImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

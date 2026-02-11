@@ -18,8 +18,13 @@ import { toast } from "sonner";
 export function ProjectsManager() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<any>(null);
+  const [disciplineFilter, setDisciplineFilter] = useState<string>('all');
 
-  const { data: projects, isLoading, refetch } = trpc.projects.list.useQuery({});
+  const { data: allProjects, isLoading, refetch } = trpc.projects.list.useQuery({});
+  
+  const projects = allProjects?.filter(p => 
+    disciplineFilter === 'all' ? true : p.discipline === disciplineFilter
+  );
   const deleteProject = trpc.projects.delete.useMutation({
     onSuccess: () => {
       toast.success("Project deleted successfully");
@@ -59,15 +64,40 @@ export function ProjectsManager() {
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle>Portfolio Projects</CardTitle>
-              <CardDescription>Manage your portfolio projects and case studies</CardDescription>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle>Portfolio Projects ({allProjects?.length || 0})</CardTitle>
+                <CardDescription>Manage your portfolio projects and case studies</CardDescription>
+              </div>
+              <Button onClick={() => setIsFormOpen(true)}>
+                <Plus className="h-4 w-4 mr-2" />
+                New Project
+              </Button>
             </div>
-            <Button onClick={() => setIsFormOpen(true)}>
-              <Plus className="h-4 w-4 mr-2" />
-              New Project
-            </Button>
+            <div className="flex gap-2 flex-wrap">
+              {[
+                { value: 'all', label: 'All' },
+                { value: 'scenic_design', label: 'Scenic Design' },
+                { value: 'experiential_design', label: 'Experiential' },
+                { value: 'rendering', label: 'Rendering' },
+                { value: 'scenic_models', label: 'Models' },
+              ].map((d) => (
+                <Button
+                  key={d.value}
+                  variant={disciplineFilter === d.value ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setDisciplineFilter(d.value)}
+                >
+                  {d.label}
+                  {d.value !== 'all' && allProjects && (
+                    <span className="ml-1 text-xs opacity-70">
+                      ({allProjects.filter(p => p.discipline === d.value).length})
+                    </span>
+                  )}
+                </Button>
+              ))}
+            </div>
           </div>
         </CardHeader>
         <CardContent>
@@ -77,6 +107,7 @@ export function ProjectsManager() {
                 <TableRow>
                   <TableHead>Cover</TableHead>
                   <TableHead>Title</TableHead>
+                  <TableHead>Discipline</TableHead>
                   <TableHead>Images</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Featured</TableHead>
@@ -102,6 +133,15 @@ export function ProjectsManager() {
                       )}
                     </TableCell>
                     <TableCell className="font-medium">{project.title}</TableCell>
+                    <TableCell>
+                      <Badge variant="outline" className="text-xs">
+                        {project.discipline === 'scenic_design' ? 'Scenic' :
+                         project.discipline === 'experiential_design' ? 'Experiential' :
+                         project.discipline === 'rendering' ? 'Rendering' :
+                         project.discipline === 'scenic_models' ? 'Models' :
+                         project.discipline || 'Unknown'}
+                      </Badge>
+                    </TableCell>
                     <TableCell>
                       <Badge variant="secondary">
                         {project.images?.length || 0} images

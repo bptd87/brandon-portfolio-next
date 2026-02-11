@@ -1,0 +1,122 @@
+{
+  "query": "SELECT id, name, slug, type, color FROM categories ORDER BY type, name;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT id, name, slug, type, color FROM categories ORDER BY type, name;",
+  "rows": [
+    {
+      "id": "90003",
+      "name": "Academia",
+      "slug": "academia",
+      "type": "news",
+      "color": "#9C27B0"
+    },
+    {
+      "id": "90002",
+      "name": "Assistant Scenic Design",
+      "slug": "assistant-scenic-design",
+      "type": "news",
+      "color": "#2196F3"
+    },
+    {
+      "id": "60011",
+      "name": "Collaborations",
+      "slug": "collaborations",
+      "type": "news",
+      "color": "#2196F3"
+    },
+    {
+      "id": "120003",
+      "name": "Life Updates",
+      "slug": "life-updates",
+      "type": "news",
+      "color": "#9C27B0"
+    },
+    {
+      "id": "60012",
+      "name": "Milestones",
+      "slug": "milestones",
+      "type": "news",
+      "color": "#4CAF50"
+    },
+    {
+      "id": "60014",
+      "name": "Opening Nights",
+      "slug": "opening-nights",
+      "type": "news",
+      "color": "#FF9800"
+    },
+    {
+      "id": "60010",
+      "name": "Production Debuts",
+      "slug": "production-debuts",
+      "type": "news",
+      "color": "#FF5722"
+    },
+    {
+      "id": "60013",
+      "name": "Reviews & Press",
+      "slug": "reviews-press",
+      "type": "news",
+      "color": "#9C27B0"
+    },
+    {
+      "id": "90001",
+      "name": "Scenic Design",
+      "slug": "scenic-design",
+      "type": "news",
+      "color": "#FF5722"
+    },
+    {
+      "id": "60015",
+      "name": "Season Announcements",
+      "slug": "season-announcements",
+      "type": "news",
+      "color": "#00BCD4"
+    },
+    {
+      "id": "60004",
+      "name": "Design Philosophy",
+      "slug": "design-philosophy",
+      "type": "article",
+      "color": "#FF5722"
+    },
+    {
+      "id": "60005",
+      "name": "Musical Theatre & Cinema",
+      "slug": "musical-theatre-cinema",
+      "type": "article",
+      "color": "#FF5722"
+    },
+    {
+      "id": "60009",
+      "name": "Project Launch",
+      "slug": "project-launch",
+      "type": "article",
+      "color": "#FF5722"
+    },
+    {
+      "id": "60006",
+      "name": "Scenic Design Process",
+      "slug": "scenic-design-process",
+      "type": "article",
+      "color": "#FF5722"
+    },
+    {
+      "id": "60007",
+      "name": "Technology & Tutorials",
+      "slug": "technology-tutorials",
+      "type": "article",
+      "color": "#FF5722"
+    },
+    {
+      "id": "60008",
+      "name": "Themed Entertainment",
+      "slug": "themed-entertainment",
+      "type": "article",
+      "color": "#FF5722"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\tslug\ttype\tcolor\n90003\tAcademia\tacademia\tnews\t#9C27B0\n90002\tAssistant Scenic Design\tassistant-scenic-design\tnews\t#2196F3\n60011\tCollaborations\tcollaborations\tnews\t#2196F3\n120003\tLife Updates\tlife-updates\tnews\t#9C27B0\n60012\tMilestones\tmilestones\tnews\t#4CAF50\n60014\tOpening Nights\topening-nights\tnews\t#FF9800\n60010\tProduction Debuts\tproduction-debuts\tnews\t#FF5722\n60013\tReviews & Press\treviews-press\tnews\t#9C27B0\n90001\tScenic Design\tscenic-design\tnews\t#FF5722\n60015\tSeason Announcements\tseason-announcements\tnews\t#00BCD4\n60004\tDesign Philosophy\tdesign-philosophy\tarticle\t#FF5722\n60005\tMusical Theatre & Cinema\tmusical-theatre-cinema\tarticle\t#FF5722\n60009\tProject Launch\tproject-launch\tarticle\t#FF5722\n60006\tScenic Design Process\tscenic-design-process\tarticle\t#FF5722\n60007\tTechnology & Tutorials\ttechnology-tutorials\tarticle\t#FF5722\n60008\tThemed Entertainment\tthemed-entertainment\tarticle\t#FF5722\n",
+  "stderr": "",
+  "execution_time_ms": 64
+}

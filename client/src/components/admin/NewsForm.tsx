@@ -56,6 +56,15 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
   const { data: categories } = trpc.categories.list.useQuery({ type: "news" });
   const uploadImage = trpc.news.uploadImage.useMutation();
 
+  // Fetch full news data by ID when editing (ensures all fields are loaded)
+  const { data: fullNews, isLoading: isLoadingNews } = trpc.news.getById.useQuery(
+    { id: news?.id },
+    { enabled: !!news?.id }
+  );
+
+  // Use full data when available, fall back to prop
+  const newsData = fullNews || news;
+
   const createNews = trpc.news.create.useMutation({
     onSuccess: () => {
       toast.success("News item created successfully");
@@ -78,27 +87,27 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
 
   // Load existing news data
   useEffect(() => {
-    if (news) {
+    if (newsData) {
       setFormData({
-        title: news.title || "",
-        slug: news.slug || "",
-        excerpt: news.excerpt || "",
-        location: news.location || "",
-        date: news.date ? new Date(news.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
-        externalLink: news.externalLink || "",
-        categoryId: news.categoryId,
-        status: news.status || "draft",
-        featured: news.featured || false,
-        blocks: news.blocks || [],
-        seoTitle: news.seoTitle || "",
-        seoDescription: news.seoDescription || "",
-        seoKeywords: news.seoKeywords || "",
+        title: newsData.title || "",
+        slug: newsData.slug || "",
+        excerpt: newsData.excerpt || "",
+        location: newsData.location || "",
+        date: newsData.date ? new Date(newsData.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+        externalLink: newsData.externalLink || "",
+        categoryId: newsData.categoryId ?? undefined,
+        status: newsData.status || "draft",
+        featured: newsData.featured || false,
+        blocks: newsData.blocks || [],
+        seoTitle: newsData.seoTitle || "",
+        seoDescription: newsData.seoDescription || "",
+        seoKeywords: newsData.seoKeywords || "",
       });
-      if (news.coverImageUrl) {
-        setCoverImage({ url: news.coverImageUrl, key: news.coverImageKey });
+      if (newsData.coverImageUrl) {
+        setCoverImage({ url: newsData.coverImageUrl, key: newsData.coverImageKey });
       }
     }
-  }, [news]);
+  }, [newsData]);
 
   // Auto-generate slug from title
   const handleTitleChange = (title: string) => {
@@ -137,9 +146,11 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Strip fields not in the router schema
+    const { externalLink: _ext, ...cleanData } = formData;
     const newsData = {
-      ...formData,
-      date: new Date(formData.date),
+      ...cleanData,
+      date: new Date(cleanData.date),
       coverImageUrl: coverImage?.url,
       coverImageKey: coverImage?.key,
     };

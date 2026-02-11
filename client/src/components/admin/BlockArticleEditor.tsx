@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,10 +22,16 @@ import {
   ChevronDown,
   Maximize2,
   Minimize2,
+  Loader2,
+  Code,
+  MessageSquareQuote,
+  HelpCircle,
+  FileText,
 } from "lucide-react";
 import { toast } from "sonner";
 
-type BlockType = "text" | "heading" | "image" | "gallery" | "video" | "accordion" | "quote" | "list";
+// All block types the editor supports (including DB-stored types)
+type BlockType = "text" | "paragraph" | "heading" | "image" | "gallery" | "video" | "accordion" | "quote" | "list" | "faq" | "html" | "update_note";
 
 interface Block {
   id: string;
@@ -39,10 +45,138 @@ interface BlockArticleEditorProps {
   onCancel?: () => void;
 }
 
+/**
+ * Normalize a block from DB format to editor format.
+ * DB blocks store data at top level (e.g., { type: "paragraph", text: "..." })
+ * Editor blocks store data nested in content (e.g., { type: "text", content: { text: "..." } })
+ */
+function normalizeDbBlock(dbBlock: any, index: number): Block {
+  const id = dbBlock.id || String(index + 1);
+  const type = dbBlock.type || "text";
+
+  switch (type) {
+    case "paragraph":
+      return {
+        id,
+        type: "paragraph",
+        content: { text: dbBlock.text || dbBlock.content || "" },
+      };
+    case "text":
+      return {
+        id,
+        type: "text",
+        content: { text: dbBlock.content || dbBlock.text || "" },
+      };
+    case "heading":
+      return {
+        id,
+        type: "heading",
+        content: { level: dbBlock.level || 2, text: dbBlock.text || "" },
+      };
+    case "image":
+      return {
+        id,
+        type: "image",
+        content: { url: dbBlock.url || "", caption: dbBlock.caption || "", alt: dbBlock.alt || "" },
+      };
+    case "video":
+      return {
+        id,
+        type: "video",
+        content: { url: dbBlock.url || "", caption: dbBlock.caption || "" },
+      };
+    case "quote":
+      return {
+        id,
+        type: "quote",
+        content: { text: dbBlock.text || "", author: dbBlock.author || "" },
+      };
+    case "list":
+      return {
+        id,
+        type: "list",
+        content: { type: dbBlock.listType || "bullet", items: dbBlock.items || [""] },
+      };
+    case "faq":
+      return {
+        id,
+        type: "faq",
+        content: { items: (dbBlock.items || []).map((item: any) => ({
+          question: item.question || "",
+          answer: item.answer || "",
+        })) },
+      };
+    case "gallery":
+      return {
+        id,
+        type: "gallery",
+        content: { images: dbBlock.images || dbBlock.content?.images || [] },
+      };
+    case "accordion":
+      return {
+        id,
+        type: "accordion",
+        content: { items: dbBlock.items || dbBlock.content?.items || [{ title: "", content: "" }] },
+      };
+    case "html":
+      return {
+        id,
+        type: "html",
+        content: { code: dbBlock.content || "" },
+      };
+    case "update_note":
+      return {
+        id,
+        type: "update_note",
+        content: { text: dbBlock.text || "" },
+      };
+    default:
+      // Fallback: treat as text
+      return {
+        id,
+        type: "text",
+        content: { text: dbBlock.text || dbBlock.content || JSON.stringify(dbBlock) },
+      };
+  }
+}
+
+/**
+ * Convert editor block back to DB format for saving.
+ */
+function blockToDbFormat(block: Block): any {
+  switch (block.type) {
+    case "paragraph":
+    case "text":
+      return { type: "paragraph", text: block.content.text || "" };
+    case "heading":
+      return { type: "heading", level: block.content.level || 2, text: block.content.text || "" };
+    case "image":
+      return { type: "image", url: block.content.url || "", caption: block.content.caption || "", alt: block.content.alt || "" };
+    case "video":
+      return { type: "video", url: block.content.url || "", caption: block.content.caption || "" };
+    case "quote":
+      return { type: "quote", text: block.content.text || "", author: block.content.author || "" };
+    case "list":
+      return { type: "list", listType: block.content.type || "bullet", items: block.content.items || [] };
+    case "faq":
+      return { type: "faq", items: block.content.items || [] };
+    case "gallery":
+      return { type: "gallery", images: block.content.images || [] };
+    case "accordion":
+      return { type: "accordion", items: block.content.items || [] };
+    case "html":
+      return { type: "html", content: block.content.code || "" };
+    case "update_note":
+      return { type: "update_note", text: block.content.text || "" };
+    default:
+      return { type: block.type, text: block.content.text || "" };
+  }
+}
+
 export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticleEditorProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [blocks, setBlocks] = useState<Block[]>([
-    { id: "1", type: "text", content: { text: "" } },
+    { id: "1", type: "paragraph", content: { text: "" } },
   ]);
   const [formData, setFormData] = useState({
     title: "",
@@ -63,6 +197,48 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
   const createMutation = trpc.articles.create.useMutation();
   const updateMutation = trpc.articles.update.useMutation();
 
+  // Fetch existing article data when editing
+  const { data: existingArticle, isLoading: isLoadingArticle } = trpc.articles.getById.useQuery(
+    { id: articleId! },
+    { enabled: !!articleId }
+  );
+
+  // Populate form with existing data
+  useEffect(() => {
+    if (existingArticle) {
+      setFormData({
+        title: existingArticle.title || "",
+        slug: existingArticle.slug || "",
+        excerpt: existingArticle.excerpt || "",
+        coverImageUrl: existingArticle.coverImageUrl || "",
+        categoryId: existingArticle.categoryId ?? undefined,
+        tags: existingArticle.tags?.map((t: any) => typeof t === 'string' ? t : t.name) || [],
+        status: existingArticle.status || "draft",
+        featured: existingArticle.featured || false,
+        seoTitle: existingArticle.seoTitle || "",
+        seoDescription: existingArticle.seoDescription || "",
+        seoKeywords: existingArticle.seoKeywords || "",
+      });
+
+      // Parse content blocks
+      if (existingArticle.content) {
+        try {
+          const parsed = typeof existingArticle.content === 'string'
+            ? JSON.parse(existingArticle.content)
+            : existingArticle.content;
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setBlocks(parsed.map((block: any, i: number) => normalizeDbBlock(block, i)));
+          }
+        } catch (e) {
+          // If content is plain text, wrap it in a paragraph block
+          if (typeof existingArticle.content === 'string' && existingArticle.content.trim()) {
+            setBlocks([{ id: '1', type: 'paragraph', content: { text: existingArticle.content } }]);
+          }
+        }
+      }
+    }
+  }, [existingArticle]);
+
   const addBlock = (type: BlockType) => {
     const newBlock: Block = {
       id: Date.now().toString(),
@@ -75,6 +251,7 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
   const getDefaultContent = (type: BlockType) => {
     switch (type) {
       case "text":
+      case "paragraph":
         return { text: "" };
       case "heading":
         return { level: 2, text: "" };
@@ -86,10 +263,16 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
         return { url: "", caption: "" };
       case "accordion":
         return { items: [{ title: "", content: "" }] };
+      case "faq":
+        return { items: [{ question: "", answer: "" }] };
       case "quote":
         return { text: "", author: "" };
       case "list":
         return { type: "bullet", items: [""] };
+      case "html":
+        return { code: "" };
+      case "update_note":
+        return { text: "" };
       default:
         return {};
     }
@@ -134,13 +317,17 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
   };
 
   const handleSave = async () => {
-    const content = JSON.stringify(blocks);
+    // Convert blocks to DB format for saving
+    const dbBlocks = blocks.map(blockToDbFormat);
+    const content = JSON.stringify(dbBlocks);
     try {
+      // Extract tags (string[]) from formData - these are not sent to the API
+      const { tags: _tags, ...saveData } = formData;
       if (articleId) {
-        await updateMutation.mutateAsync({ id: articleId, ...formData, content });
+        await updateMutation.mutateAsync({ id: articleId, ...saveData, content });
         toast.success("Article updated");
       } else {
-        await createMutation.mutateAsync({ ...formData, content });
+        await createMutation.mutateAsync({ ...saveData, content });
         toast.success("Article created");
       }
       onSave?.();
@@ -148,6 +335,15 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
       toast.error(error.message || "Failed to save");
     }
   };
+
+  if (articleId && isLoadingArticle) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        <span className="ml-2">Loading article...</span>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -244,18 +440,21 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                     ↓
                   </Button>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="absolute -right-2 -top-2 opacity-0 group-hover:opacity-100"
-                  onClick={() => removeBlock(block.id)}
-                >
-                  <X className="w-4 h-4" />
-                </Button>
+                <div className="absolute -right-2 -top-2 flex gap-1 opacity-0 group-hover:opacity-100">
+                  <span className="text-xs bg-muted px-2 py-1 rounded">{block.type}</span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => removeBlock(block.id)}
+                  >
+                    <X className="w-4 h-4" />
+                  </Button>
+                </div>
 
-                {block.type === "text" && (
+                {/* Text / Paragraph block */}
+                {(block.type === "text" || block.type === "paragraph") && (
                   <Textarea
-                    value={block.content.text}
+                    value={block.content.text || ""}
                     onChange={(e) =>
                       updateBlock(block.id, { text: e.target.value })
                     }
@@ -265,10 +464,11 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                   />
                 )}
 
+                {/* Heading block */}
                 {block.type === "heading" && (
                   <div className="space-y-2">
                     <Select
-                      value={block.content.level.toString()}
+                      value={String(block.content.level || 2)}
                       onValueChange={(v) =>
                         updateBlock(block.id, { ...block.content, level: parseInt(v) })
                       }
@@ -283,7 +483,7 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                       </SelectContent>
                     </Select>
                     <Input
-                      value={block.content.text}
+                      value={block.content.text || ""}
                       onChange={(e) =>
                         updateBlock(block.id, { ...block.content, text: e.target.value })
                       }
@@ -299,10 +499,11 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                   </div>
                 )}
 
+                {/* Image block */}
                 {block.type === "image" && (
                   <div className="space-y-2">
                     <Input
-                      value={block.content.url}
+                      value={block.content.url || ""}
                       onChange={(e) =>
                         updateBlock(block.id, { ...block.content, url: e.target.value })
                       }
@@ -311,19 +512,19 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                     {block.content.url && (
                       <img
                         src={block.content.url}
-                        alt={block.content.alt}
+                        alt={block.content.alt || ""}
                         className="w-full rounded"
                       />
                     )}
                     <Input
-                      value={block.content.caption}
+                      value={block.content.caption || ""}
                       onChange={(e) =>
                         updateBlock(block.id, { ...block.content, caption: e.target.value })
                       }
                       placeholder="Caption"
                     />
                     <Input
-                      value={block.content.alt}
+                      value={block.content.alt || ""}
                       onChange={(e) =>
                         updateBlock(block.id, { ...block.content, alt: e.target.value })
                       }
@@ -332,17 +533,18 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                   </div>
                 )}
 
+                {/* Video block */}
                 {block.type === "video" && (
                   <div className="space-y-2">
                     <Input
-                      value={block.content.url}
+                      value={block.content.url || ""}
                       onChange={(e) =>
                         updateBlock(block.id, { ...block.content, url: e.target.value })
                       }
                       placeholder="Video URL (YouTube, Vimeo, or direct link)"
                     />
                     <Input
-                      value={block.content.caption}
+                      value={block.content.caption || ""}
                       onChange={(e) =>
                         updateBlock(block.id, { ...block.content, caption: e.target.value })
                       }
@@ -351,14 +553,15 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                   </div>
                 )}
 
+                {/* Gallery block */}
                 {block.type === "gallery" && (
                   <div className="space-y-2">
-                    {block.content.images.map((img: any, idx: number) => (
+                    {(block.content.images || []).map((img: any, idx: number) => (
                       <div key={idx} className="border p-3 rounded space-y-2">
                         <Input
                           value={img.url || ""}
                           onChange={(e) => {
-                            const newImages = [...block.content.images];
+                            const newImages = [...(block.content.images || [])];
                             newImages[idx] = { ...newImages[idx], url: e.target.value };
                             updateBlock(block.id, { images: newImages });
                           }}
@@ -367,7 +570,7 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                         <Input
                           value={img.caption || ""}
                           onChange={(e) => {
-                            const newImages = [...block.content.images];
+                            const newImages = [...(block.content.images || [])];
                             newImages[idx] = { ...newImages[idx], caption: e.target.value };
                             updateBlock(block.id, { images: newImages });
                           }}
@@ -376,7 +579,7 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                         <Input
                           value={img.alt || ""}
                           onChange={(e) => {
-                            const newImages = [...block.content.images];
+                            const newImages = [...(block.content.images || [])];
                             newImages[idx] = { ...newImages[idx], alt: e.target.value };
                             updateBlock(block.id, { images: newImages });
                           }}
@@ -386,7 +589,7 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                           variant="ghost"
                           size="sm"
                           onClick={() => {
-                            const newImages = block.content.images.filter((_: any, i: number) => i !== idx);
+                            const newImages = (block.content.images || []).filter((_: any, i: number) => i !== idx);
                             updateBlock(block.id, { images: newImages });
                           }}
                         >
@@ -399,7 +602,7 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                       size="sm"
                       onClick={() =>
                         updateBlock(block.id, {
-                          images: [...block.content.images, { url: "", caption: "", alt: "" }],
+                          images: [...(block.content.images || []), { url: "", caption: "", alt: "" }],
                         })
                       }
                     >
@@ -408,10 +611,11 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                   </div>
                 )}
 
+                {/* Quote block */}
                 {block.type === "quote" && (
                   <div className="space-y-2">
                     <Textarea
-                      value={block.content.text}
+                      value={block.content.text || ""}
                       onChange={(e) =>
                         updateBlock(block.id, { ...block.content, text: e.target.value })
                       }
@@ -420,7 +624,7 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                       className="text-xl italic"
                     />
                     <Input
-                      value={block.content.author}
+                      value={block.content.author || ""}
                       onChange={(e) =>
                         updateBlock(block.id, { ...block.content, author: e.target.value })
                       }
@@ -429,10 +633,11 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                   </div>
                 )}
 
+                {/* List block */}
                 {block.type === "list" && (
                   <div className="space-y-2">
                     <Select
-                      value={block.content.type}
+                      value={block.content.type || "bullet"}
                       onValueChange={(v) =>
                         updateBlock(block.id, { ...block.content, type: v })
                       }
@@ -445,12 +650,12 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                         <SelectItem value="numbered">Numbered List</SelectItem>
                       </SelectContent>
                     </Select>
-                    {block.content.items.map((item: string, idx: number) => (
+                    {(block.content.items || []).map((item: string, idx: number) => (
                       <div key={idx} className="flex gap-2">
                         <Input
                           value={item}
                           onChange={(e) => {
-                            const newItems = [...block.content.items];
+                            const newItems = [...(block.content.items || [])];
                             newItems[idx] = e.target.value;
                             updateBlock(block.id, { ...block.content, items: newItems });
                           }}
@@ -460,7 +665,7 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                           variant="ghost"
                           size="sm"
                           onClick={() => {
-                            const newItems = block.content.items.filter((_: string, i: number) => i !== idx);
+                            const newItems = (block.content.items || []).filter((_: string, i: number) => i !== idx);
                             updateBlock(block.id, { ...block.content, items: newItems });
                           }}
                         >
@@ -474,7 +679,7 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                       onClick={() =>
                         updateBlock(block.id, {
                           ...block.content,
-                          items: [...block.content.items, ""],
+                          items: [...(block.content.items || []), ""],
                         })
                       }
                     >
@@ -483,24 +688,76 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                   </div>
                 )}
 
-                {block.type === "accordion" && (
+                {/* FAQ block */}
+                {block.type === "faq" && (
                   <div className="space-y-2">
-                    {block.content.items.map((item: any, idx: number) => (
+                    <p className="text-sm text-muted-foreground font-medium">FAQ Items</p>
+                    {(block.content.items || []).map((item: any, idx: number) => (
                       <div key={idx} className="border p-3 rounded space-y-2">
                         <Input
-                          value={item.title}
+                          value={item.question || ""}
                           onChange={(e) => {
-                            const newItems = [...block.content.items];
-                            newItems[idx].title = e.target.value;
+                            const newItems = [...(block.content.items || [])];
+                            newItems[idx] = { ...newItems[idx], question: e.target.value };
+                            updateBlock(block.id, { items: newItems });
+                          }}
+                          placeholder="Question"
+                        />
+                        <Textarea
+                          value={item.answer || ""}
+                          onChange={(e) => {
+                            const newItems = [...(block.content.items || [])];
+                            newItems[idx] = { ...newItems[idx], answer: e.target.value };
+                            updateBlock(block.id, { items: newItems });
+                          }}
+                          placeholder="Answer"
+                          rows={3}
+                        />
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => {
+                            const newItems = (block.content.items || []).filter((_: any, i: number) => i !== idx);
+                            updateBlock(block.id, { items: newItems });
+                          }}
+                        >
+                          <X className="w-3 h-3 mr-1" /> Remove
+                        </Button>
+                      </div>
+                    ))}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() =>
+                        updateBlock(block.id, {
+                          items: [...(block.content.items || []), { question: "", answer: "" }],
+                        })
+                      }
+                    >
+                      Add FAQ Item
+                    </Button>
+                  </div>
+                )}
+
+                {/* Accordion block */}
+                {block.type === "accordion" && (
+                  <div className="space-y-2">
+                    {(block.content.items || []).map((item: any, idx: number) => (
+                      <div key={idx} className="border p-3 rounded space-y-2">
+                        <Input
+                          value={item.title || ""}
+                          onChange={(e) => {
+                            const newItems = [...(block.content.items || [])];
+                            newItems[idx] = { ...newItems[idx], title: e.target.value };
                             updateBlock(block.id, { items: newItems });
                           }}
                           placeholder="Section title"
                         />
                         <Textarea
-                          value={item.content}
+                          value={item.content || ""}
                           onChange={(e) => {
-                            const newItems = [...block.content.items];
-                            newItems[idx].content = e.target.value;
+                            const newItems = [...(block.content.items || [])];
+                            newItems[idx] = { ...newItems[idx], content: e.target.value };
                             updateBlock(block.id, { items: newItems });
                           }}
                           placeholder="Section content"
@@ -513,12 +770,43 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                       size="sm"
                       onClick={() =>
                         updateBlock(block.id, {
-                          items: [...block.content.items, { title: "", content: "" }],
+                          items: [...(block.content.items || []), { title: "", content: "" }],
                         })
                       }
                     >
                       Add Section
                     </Button>
+                  </div>
+                )}
+
+                {/* HTML block */}
+                {block.type === "html" && (
+                  <div className="space-y-2">
+                    <p className="text-sm text-muted-foreground font-medium">Custom HTML</p>
+                    <Textarea
+                      value={block.content.code || ""}
+                      onChange={(e) =>
+                        updateBlock(block.id, { code: e.target.value })
+                      }
+                      placeholder="<div>Custom HTML content...</div>"
+                      rows={6}
+                      className="font-mono text-sm"
+                    />
+                  </div>
+                )}
+
+                {/* Update Note block */}
+                {block.type === "update_note" && (
+                  <div className="space-y-2 bg-muted/50 p-3 rounded">
+                    <p className="text-sm text-muted-foreground font-medium">Update Note</p>
+                    <Textarea
+                      value={block.content.text || ""}
+                      onChange={(e) =>
+                        updateBlock(block.id, { text: e.target.value })
+                      }
+                      placeholder="Update note text..."
+                      rows={2}
+                    />
                   </div>
                 )}
               </div>
@@ -527,7 +815,7 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
 
           {/* Add Block Menu */}
           <div className="flex gap-2 flex-wrap">
-            <Button variant="outline" size="sm" onClick={() => addBlock("text")}>
+            <Button variant="outline" size="sm" onClick={() => addBlock("paragraph")}>
               <Type className="w-4 h-4 mr-2" />
               Text
             </Button>
@@ -543,6 +831,18 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
               <Video className="w-4 h-4 mr-2" />
               Video
             </Button>
+            <Button variant="outline" size="sm" onClick={() => addBlock("quote")}>
+              <MessageSquareQuote className="w-4 h-4 mr-2" />
+              Quote
+            </Button>
+            <Button variant="outline" size="sm" onClick={() => addBlock("list")}>
+              <List className="w-4 h-4 mr-2" />
+              List
+            </Button>
+            <Button variant="outline" size="sm" onClick={() => addBlock("faq")}>
+              <HelpCircle className="w-4 h-4 mr-2" />
+              FAQ
+            </Button>
             <Button variant="outline" size="sm" onClick={() => addBlock("accordion")}>
               <ChevronDown className="w-4 h-4 mr-2" />
               Accordion
@@ -551,13 +851,13 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
               <ImageIcon className="w-4 h-4 mr-2" />
               Gallery
             </Button>
-            <Button variant="outline" size="sm" onClick={() => addBlock("quote")}>
-              <Type className="w-4 h-4 mr-2" />
-              Quote
+            <Button variant="outline" size="sm" onClick={() => addBlock("html")}>
+              <Code className="w-4 h-4 mr-2" />
+              HTML
             </Button>
-            <Button variant="outline" size="sm" onClick={() => addBlock("list")}>
-              <List className="w-4 h-4 mr-2" />
-              List
+            <Button variant="outline" size="sm" onClick={() => addBlock("update_note")}>
+              <FileText className="w-4 h-4 mr-2" />
+              Update Note
             </Button>
           </div>
 
@@ -576,7 +876,7 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
               <div className="space-y-2">
                 <Label>Category</Label>
                 <Select
-                  value={formData.categoryId?.toString()}
+                  value={formData.categoryId?.toString() || ""}
                   onValueChange={(v) =>
                     setFormData({ ...formData, categoryId: parseInt(v) })
                   }

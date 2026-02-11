@@ -3,6 +3,7 @@ import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
   DialogContent,
@@ -26,6 +27,7 @@ import { toast } from "sonner";
 export function CategoriesManager() {
   const [open, setOpen] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
+  const [typeFilter, setTypeFilter] = useState<string>("all");
   const [formData, setFormData] = useState({
     name: "",
     slug: "",
@@ -35,7 +37,12 @@ export function CategoriesManager() {
   });
 
   const utils = trpc.useUtils();
-  const { data: categories, isLoading } = trpc.categories.list.useQuery();
+  const { data: allCategories, isLoading } = trpc.categories.list.useQuery();
+
+  const categories = allCategories?.filter(
+    (c) => typeFilter === "all" || c.type === typeFilter
+  );
+
   const createMutation = trpc.categories.create.useMutation({
     onSuccess: () => {
       utils.categories.list.invalidate();
@@ -107,13 +114,22 @@ export function CategoriesManager() {
     }
   };
 
-  // Auto-generate slug from name
   const handleNameChange = (name: string) => {
     setFormData({
       ...formData,
       name,
-      slug: name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
+      slug: name
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, ""),
     });
+  };
+
+  const typeCounts = {
+    all: allCategories?.length || 0,
+    article: allCategories?.filter((c) => c.type === "article").length || 0,
+    news: allCategories?.filter((c) => c.type === "news").length || 0,
+    project: allCategories?.filter((c) => c.type === "project").length || 0,
   };
 
   if (isLoading) {
@@ -128,8 +144,8 @@ export function CategoriesManager() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold">Categories</h2>
-          <p className="text-muted-foreground">Manage categories with custom colors</p>
+          <h2 className="text-2xl font-bold">Categories ({allCategories?.length || 0})</h2>
+          <p className="text-muted-foreground">Manage categories for articles and news</p>
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
@@ -177,7 +193,6 @@ export function CategoriesManager() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="project">Project</SelectItem>
                       <SelectItem value="news">News</SelectItem>
                       <SelectItem value="article">Article</SelectItem>
                     </SelectContent>
@@ -204,9 +219,6 @@ export function CategoriesManager() {
                       style={{ backgroundColor: formData.color }}
                     />
                   </div>
-                  <p className="text-xs text-muted-foreground">
-                    This color will be used for badges, accents, and hover effects
-                  </p>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="description">Description</Label>
@@ -238,6 +250,27 @@ export function CategoriesManager() {
         </Dialog>
       </div>
 
+      {/* Type filter tabs */}
+      <div className="flex gap-2 flex-wrap">
+        {[
+          { value: "all", label: "All" },
+          { value: "article", label: "Article" },
+          { value: "news", label: "News" },
+        ].map((t) => (
+          <Button
+            key={t.value}
+            variant={typeFilter === t.value ? "default" : "outline"}
+            size="sm"
+            onClick={() => setTypeFilter(t.value)}
+          >
+            {t.label}
+            <span className="ml-1 text-xs opacity-70">
+              ({typeCounts[t.value as keyof typeof typeCounts]})
+            </span>
+          </Button>
+        ))}
+      </div>
+
       <div className="grid gap-4">
         {categories?.map((category) => (
           <div
@@ -246,15 +279,20 @@ export function CategoriesManager() {
           >
             <div className="flex items-center gap-4">
               <div
-                className="w-12 h-12 rounded-lg flex items-center justify-center font-black text-white"
+                className="w-12 h-12 rounded-lg flex items-center justify-center font-black text-white shrink-0"
                 style={{ backgroundColor: category.color }}
               >
                 {category.name.charAt(0)}
               </div>
               <div>
-                <h3 className="font-semibold">{category.name}</h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="font-semibold">{category.name}</h3>
+                  <Badge variant="outline" className="text-xs">
+                    {category.type}
+                  </Badge>
+                </div>
                 <p className="text-sm text-muted-foreground">
-                  {category.type} • {category.slug}
+                  /{category.slug}
                 </p>
                 {category.description && (
                   <p className="text-sm text-muted-foreground mt-1">{category.description}</p>
@@ -278,7 +316,7 @@ export function CategoriesManager() {
         ))}
         {categories?.length === 0 && (
           <div className="text-center py-12 text-muted-foreground">
-            <p>No categories yet. Create your first category to get started.</p>
+            <p>No categories found for this filter.</p>
           </div>
         )}
       </div>

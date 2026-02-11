@@ -1,0 +1,9 @@
+{
+  "query": "\n-- \"Returning to Stephens College\" -> Academia (90003)\nUPDATE news SET categoryId = 90003 WHERE id = 30024;\n-- \"New Role at UTEP\" -> Academia (90003)  \nUPDATE news SET categoryId = 90003 WHERE id = 30027;\n-- \"Featured in VoyageLA\" -> Reviews & Press (60013)\nUPDATE news SET categoryId = 60013 WHERE id = 150001;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute \n-- \"Returning to Stephens College\" -> Academia (90003)\nUPDATE news SET categoryId = 90003 WHERE id = 30024;\n-- \"New Role at UTEP\" -> Academia (90003)  \nUPDATE news SET categoryId = 90003 WHERE id = 30027;\n-- \"Featured in VoyageLA\" -> Reviews & Press (60013)\nUPDATE news SET categoryId = 60013 WHERE id = 150001;\n",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 95
+}
