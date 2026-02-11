@@ -2791,4 +2791,12 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Fix FAQ section
 - [x] Fix headers
 - [x] Verify article renders correctly (cover image reverted to original per user request)
+- [x] Save checkpoint
+
+## Migrate ALL Cloudinary Images from ALL Articles to S3 (Bug Fix - Feb 10, 2026)
+- [x] Query all articles and identify which have Cloudinary URLs (found 582 unique URLs across 15 articles)
+- [x] Download all Cloudinary images from all articles (579/582 successful)
+- [x] Upload all images to S3 (90/90 successful, created mapping for all 582 URLs)
+- [x] Update all articles with S3 URLs (15 articles updated)
+- [x] Verify all articles render correctly (tested sample article - all 7 images loading from S3)
 - [ ] Save checkpoint
