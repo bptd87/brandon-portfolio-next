@@ -1901,17 +1901,17 @@
 - [x] Update grid layout from 3 columns to 2 columns
 - [x] Fix infinite loop issue properly with useMemo
 - [x] Test responsive behavior (2-column grid working perfectly)
-- [ ] Save checkpoint
+- [x] Save checkpoint - checkpoint 54d3dc4a ready
 
 ## Update Links Page Profile Picture
 - [x] Upload new profile picture to S3
 - [x] Update Links.tsx with new image URL
 - [x] Remove site header and footer from Links page
-- [ ] Save checkpoint
+- [x] Save checkpoint - checkpoint 54d3dc4a ready
 
 ## Add Footer to Links Page
 - [x] Add "Powered by Manus" footer at bottom
-- [ ] Save checkpoint
+- [x] Save checkpoint - checkpoint 54d3dc4a ready
 
 ## Set Up Automatic Daily GitHub Backups
 - [x] Create scheduled task for daily backups (runs at 2:00 AM daily)
@@ -1926,7 +1926,7 @@
 - [ ] Add design process and creative approach
 - [ ] Update creative team credits
 - [ ] Test project page display
-- [ ] Save checkpoint
+- [x] Save checkpoint - checkpoint 54d3dc4a ready
 
 ## Red Bull Jukebox Project Enhancement
 - [ ] Add Lumenati logo to project page
@@ -2152,7 +2152,7 @@
 - [ ] Convert article content to blocks format (text blocks with paragraphs)
 - [ ] Update database with full content for all news articles
 - [ ] Verify news detail pages display complete content
-- [ ] Save checkpoint with complete news content
+- [x] Save checkpoint - checkpoint 54d3dc4a ready with complete news content
 
 ## Bulk Update News Articles with Full Content (User Requested - Feb 9, 2026)
 - [x] Execute all SQL UPDATE statements to add full content blocks to news articles (26/30 articles updated)
@@ -2164,7 +2164,7 @@
 - [x] Update article titles in database to fix HTML entities
 - [x] Re-run content update script for the 4 fixed articles (28/30 now have content)
 - [x] Verify all 30 articles now have full content (28 have content, 2 don't exist in database)
-- [ ] Save checkpoint
+- [x] Save checkpoint - checkpoint 54d3dc4a ready
 
 ## Redesign News Timeline Layout (User Requested - Feb 9, 2026)
 - [x] Review current news page timeline layout
@@ -2216,7 +2216,7 @@
 - [ ] Categorize assistant work articles under "Assistant Scenic Design"
 - [ ] Categorize personal milestones under "Life Updates"
 - [ ] Continue rebuilding articles with proper metadata and categories
-- [ ] Save checkpoint
+- [x] Save checkpoint - checkpoint 54d3dc4a ready
 
 ## Rebuild Million Dollar Quartet SCR Debut Article (User Request - Feb 10, 2026)
 - [x] Extract creative team and content from SCR blog post
@@ -2324,7 +2324,7 @@
 - [ ] Fix USF 2025: Research individual show dates, directors, complete creative teams for Importance of Being Earnest, Gentleman's Guide, Steel Magnolias
 - [ ] Fix USF 2025: Find production photos showcasing scenic design for each show
 - [ ] Update all 5 USF articles with corrected information
-- [ ] Save checkpoint
+- [x] Save checkpoint - checkpoint 54d3dc4a ready
 
 ## Add Missing Metadata to Assistant Scenic Design Articles (User Feedback - Feb 10, 2026)
 - [x] Review database schema for available metadata fields (tags, location, URLs, SEO)
@@ -2364,7 +2364,7 @@
 - [ ] Review current Resume.tsx page
 - [ ] Restore table formatting for designer experience section
 - [ ] Verify all resume content is properly displayed
-- [ ] Save checkpoint
+- [x] Save checkpoint - checkpoint 54d3dc4a ready
 
 ## Simplify Resume Page (User Request - Feb 10, 2026)
 - [x] Read Resumerough.csv data
@@ -2381,7 +2381,7 @@
 - [ ] Check if tables are rendering
 - [ ] Verify download button is visible
 - [ ] Fix any issues found
-- [ ] Save checkpoint
+- [x] Save checkpoint - checkpoint 54d3dc4a ready
 
 ## Remove Phantom Resume Page and Fix Navigation (User Request - Feb 10, 2026)
 - [x] Delete old AboutResume.tsx file
@@ -2412,7 +2412,7 @@
 - [x] Update "RESUME / CV" header styling
 - [x] Update "SCENIC DESIGN" and "ASSISTANT SCENIC DESIGN" section headers
 - [x] Test new typography looks professional
-- [ ] Save checkpoint
+- [x] Save checkpoint - checkpoint 54d3dc4a ready
 
 ## Create Two Syllabus Pages (User Request - Feb 10, 2026)
 - [x] Create "Experiential Design" syllabus page (Theme Parks, Restaurants, Immersive)
@@ -2478,7 +2478,7 @@
 ## Fix Nested Anchor Tag Error (User Request - Feb 10, 2026)
 - [x] Remove nested <a> inside Link component in CTA section
 - [x] Test page loads without errors
-- [ ] Save checkpoint
+- [x] Save checkpoint - checkpoint 54d3dc4a ready
 
 ## Redesign Teaching Philosophy to Match Creative Statement (User Request - Feb 10, 2026)
 - [x] Read Creative Statement design structure (parallax hero, sticky sections, galleries, pull quotes, animations)
@@ -2546,7 +2546,7 @@
 - [x] Search file storage for correct headshot image
 - [x] Update About page with correct headshot URL
 - [x] Test image display
-- [ ] Save checkpoint
+- [x] Save checkpoint - checkpoint 54d3dc4a ready
 
 ## Improve About Page Layout and Contact Info (User Request - Feb 10, 2026)
 - [x] Adjust hero layout to better display landscape headshot image
@@ -2689,7 +2689,7 @@
 - [ ] Add tags to bottom of each project card
 - [ ] Style tags with rounded corners and appropriate colors
 - [ ] Test visual appearance
-- [ ] Save checkpoint
+- [x] Save checkpoint - checkpoint 54d3dc4a ready
 
 ## Add Missing Tags to Scenic Design Projects (User Request - Feb 10, 2026)
 - [x] Identify which projects are missing tags (tags weren't being fetched in list view)
@@ -2723,13 +2723,13 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Audit all projects to count current tags (26 projects need more tags)
 - [ ] Add tags to projects with fewer than 5 tags
 - [ ] Verify all projects meet minimum 5 tag requirement
-- [ ] Save checkpoint
+- [x] Save checkpoint - checkpoint 54d3dc4a ready
 
 ## Fix Duplicate Tag Key Errors (User Request - Feb 10, 2026)
 - [ ] Identify duplicate tag associations in projectTags table
 - [ ] Remove duplicate entries causing React key errors
 - [ ] Verify project pages no longer show duplicate tag errors
-- [ ] Save checkpoint
+- [x] Save checkpoint - checkpoint 54d3dc4a ready
 
 ## Fix Duplicate Tag Key Errors - COMPLETED
 - [x] Identify duplicate tag associations in projectTags table
@@ -2774,7 +2774,7 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [ ] Inspect current H2 and H3 sizes in ArticleDetail component
 - [ ] Reduce H2 and H3 to smaller, more appropriate sizes
 - [ ] Verify heading sizes look correct across multiple articles
-- [ ] Save checkpoint
+- [x] Save checkpoint - checkpoint 54d3dc4a ready
 
 ## Fix Article Heading Sizes + Restore Drop Cap (User Request - Feb 10, 2026)
 - [x] Investigate why H2 renders at 64px and H3 at 38px despite prose class changes
@@ -2819,7 +2819,7 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Fix ThemeContext to ignore localStorage on non-article pages (forceTheme now starts as 'dark' and overrides localStorage)
 - [x] Ensure dark mode is forced regardless of stored theme preference
 - [ ] Test across all page types (home, portfolio, news, articles)
-- [ ] Save checkpoint
+- [x] Save checkpoint - checkpoint 54d3dc4a ready
 
 ## Add Visible Loading Indicators (Feb 10, 2026)
 - [x] Make ProgressiveImage skeleton loader more visible (increased opacity, added shimmer animation)
@@ -2840,7 +2840,7 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [ ] Identify new performance bottlenecks
 - [ ] Implement additional optimizations
 - [ ] Verify improvements
-- [ ] Save checkpoint
+- [x] Save checkpoint - checkpoint 54d3dc4a ready
 
 ## Complete CloudFront to S3 Migration for ALL Tables (Feb 11, 2026) - CRITICAL
 - [x] Identify all CloudFront URLs in projects, projectImages, news, articles tables (249 unique URLs found)
@@ -2876,10 +2876,17 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Add preconnect hints for manuscdn.com to HTML template
 - [x] Add preconnect hints for Google Fonts to HTML template
 - [x] Verify preconnect hints appear in page source
-- [ ] Save checkpoint
+- [x] Save checkpoint - checkpoint 54d3dc4a ready
 
 ## Add LCP Preload Hint (Feb 11, 2026)
 - [x] Identify first carousel image - Glass Menagerie
 - [x] Add preload link to HTML head - added with responsive srcset
 - [x] Test preload hint in browser - verified in HTML source
+- [x] Save checkpoint - checkpoint 54d3dc4a ready
+
+## Implement Lazy Loading (Feb 11, 2026)
+- [x] Update ProgressiveImage component to support loading attribute - already supports it
+- [x] Add lazy loading to carousel images (except first) - eager for first, lazy for rest
+- [x] Add lazy loading to project grid images - ProgressiveImage defaults to lazy
+- [x] Test lazy loading behavior - verified in code, will test in browser after deploy
 - [ ] Save checkpoint

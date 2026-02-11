@@ -154,10 +154,11 @@ export default function Home() {
                   ${image.url}?w=2048 2048w
                 `}
                 sizes="100vw"
-                alt={`${image.title} - Scenic design by Brandon PT Davis`}
-                className="w-full h-full object-cover"
+                alt={image.title}
                 loading={index === 0 ? 'eager' : 'lazy'}
+                fetchPriority={index === 0 ? 'high' : undefined}
                 decoding="async"
+                className="w-full h-full object-cover"
               />
               {/* Dark overlay for text readability */}
               <div className="absolute inset-0 bg-black/40" />
@@ -387,9 +388,9 @@ export default function Home() {
                               `}
                               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                               alt={news.title}
-                              className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                               loading="lazy"
                               decoding="async"
+                              className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                             />
                           </div>
                         )}
