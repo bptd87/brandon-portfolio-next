@@ -7,6 +7,7 @@ import { Link, useLocation, useSearch } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useState, useMemo } from "react";
+import { PortfolioGridSkeleton } from "@/components/SkeletonLoaders";
 
 export default function Projects() {
   const search = useSearch();
@@ -99,11 +100,7 @@ export default function Projects() {
       )}
 
       {isLoading ? (
-        <div className="container py-16">
-          <div className="text-center">
-            <p className="text-muted-foreground">Loading projects...</p>
-          </div>
-        </div>
+        <PortfolioGridSkeleton />
       ) : (
         <>
           {/* Projects Grid */}

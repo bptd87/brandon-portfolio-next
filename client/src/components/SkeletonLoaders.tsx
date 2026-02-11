@@ -264,3 +264,53 @@ export function NewsListSkeleton() {
     </div>
   );
 }
+
+export function PortfolioGridSkeleton() {
+  return (
+    <div className="min-h-screen bg-background py-20">
+      <div className="container">
+        {/* Header skeleton */}
+        <div className="mb-12 space-y-4">
+          <div className="h-4 w-32 bg-muted/20 rounded mx-auto" />
+          <div className="h-12 w-96 max-w-full bg-muted/30 rounded mx-auto" />
+          <div className="h-6 w-[600px] max-w-full bg-muted/20 rounded mx-auto" />
+        </div>
+
+        {/* Filter tabs skeleton */}
+        <div className="flex justify-center gap-4 mb-12 flex-wrap">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="h-10 w-32 bg-muted/20 rounded-full" />
+          ))}
+        </div>
+
+        {/* Portfolio grid skeleton */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[...Array(9)].map((_, i) => (
+            <div key={i} className="group cursor-pointer">
+              {/* Image skeleton */}
+              <div className="relative aspect-[4/3] bg-muted/20 rounded-lg overflow-hidden mb-4">
+                <div 
+                  className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite]"
+                  style={{
+                    background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%)',
+                    animationDelay: `${i * 0.1}s`,
+                  }}
+                />
+              </div>
+              
+              {/* Content skeleton */}
+              <div className="space-y-3">
+                <div className="h-6 w-full bg-muted/30 rounded" />
+                <div className="h-4 w-3/4 bg-muted/20 rounded" />
+                <div className="flex gap-2">
+                  <div className="h-6 w-20 bg-muted/20 rounded-full" />
+                  <div className="h-6 w-24 bg-muted/20 rounded-full" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
