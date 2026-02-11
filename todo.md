@@ -2744,8 +2744,28 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Fix FAQ format with proper H2/H3 structure
 - [x] Add 5th FAQ question about custom domains
 - [x] Generate card-style images matching digital clouds aesthetic (3 images created and embedded)
-- [ ] Test article page display
-- [ ] Save checkpoint
+- [x] Test article page display
+- [x] Save checkpoint
 
 - [x] Fix content format (converted from JSON to proper HTML)
 - [x] Test article page display (all elements rendering correctly)
+
+## Fix Heading Size Inconsistency in Online Portfolio Article (User Request - Feb 10, 2026)
+- [x] Investigate heading size rules in ArticleDetail component (H2: 1.875rem, H3: 1.5rem, H4: 1.25rem)
+- [x] Compare heading sizes between Video Game Environments and Online Portfolio articles
+- [x] Fix heading tags in Online Portfolio article to match established rules (all section headings now H2)
+- [x] Convert FAQ from plain H3 headings to accordion format (H2 + H3 structure for auto-accordion)
+- [x] Test article display
+- [x] Save checkpoint
+
+## Fix Broken Article Images - Online Portfolio Article (Feb 10, 2026)
+- [x] Identified broken image URLs (expired manuscdn session URLs)
+- [x] Generated 3 new images matching digital clouds/nature+tech aesthetic
+- [x] Uploaded images to S3 via manus-upload-file for permanent CDN URLs
+- [x] Updated article content in database with new S3 image URLs
+- [x] Verified all 3 images load correctly on article page
+- [x] Verified FAQ accordion opens/closes correctly (tested "What is an FAQ section" question)
+- [x] Verified heading hierarchy (H2 for sections, H3 for subsections)
+- [x] Verified links (ChatGPT, Schema.org) work correctly
+- [x] Verified table of contents sidebar works with active section highlighting
+- [x] Save checkpoint
