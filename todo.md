@@ -3389,3 +3389,34 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Test admin panel with Supabase - 37 projects loaded and editable
 - [x] Migrate all images to Supabase Storage (340/340 complete - 10.4 minutes)
 - [ ] Deploy to production
+
+## Fix Articles and News Display (Feb 12, 2026)
+- [x] Fix articles page showing "No articles yet" despite 47 articles in database
+- [ ] Fix news images not displaying
+- [ ] Fix NaN error on news page (incomplete data mapping from Supabase)
+- [ ] Fix scenic directory table not connected to Supabase
+- [ ] Update supabase-db.ts to properly map all article fields (snake_case to camelCase)
+- [ ] Update supabase-db.ts to properly map all news fields (snake_case to camelCase)
+- [ ] Add scenic directory functions to supabase-db.ts
+- [ ] Test articles page displays all 47 articles
+- [ ] Test news page displays all news with images
+- [ ] Test scenic directory page
+- [ ] Save checkpoint after fixes
+- [ ] Fix Red Bull Jukebox project page - missing gallery images, missing project details, missing logos
+- [ ] Fix "Invalid Date" showing on news items - date field not parsing correctly
+
+## Supabase Migration Status (Feb 12, 2026 - 6:44 AM)
+- [x] All 340 images migrated to Supabase Storage as WebP
+- [x] All database tables migrated to Supabase
+- [x] Website connected to Supabase
+- [x] Red Bull project page working (images + content)
+- [x] News page working (images + dates)
+- [x] Fixed getAllProjects, getAllNews, getAllArticles mapping
+- [x] Fixed getProjectBySlug, getNewsBySlug, getArticleBySlug mapping
+- [x] Fixed getProjectImages mapping
+- [x] Added getNewsById function
+- [x] Articles page not loading (shows "No articles yet") - FIXED: changed order by from published_at to created_at
+- [ ] Admin panel missing many functions (getNewsById, getArticleById, getProjectById, create/update/delete functions)
+- [ ] Add all missing CRUD functions to supabase-db.ts for admin panel
+- [ ] Scenic directory table not connected
+- [ ] Save final checkpoint

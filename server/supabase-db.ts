@@ -289,7 +289,7 @@ export async function getAllProjects(filters?: {
   }));
 }
 
-export async function getProjectBySlug(slug: string): Promise<Project | undefined> {
+export async function getProjectBySlug(slug: string): Promise<any> {
   const { data } = await supabase
     .from('projects')
     .select('*')
@@ -299,13 +299,29 @@ export async function getProjectBySlug(slug: string): Promise<Project | undefine
   if (!data) return undefined;
 
   return {
-    ...data,
-    created_at: new Date(data.created_at),
-    updated_at: new Date(data.updated_at),
+    id: data.id,
+    title: data.title,
+    slug: data.slug,
+    excerpt: data.excerpt,
+    designNotes: data.design_notes,
+    coverImageUrl: data.cover_image,
+    client: data.client,
+    location: data.location,
+    year: data.year,
+    month: data.month,
+    discipline: data.discipline,
+    status: data.status,
+    featured: data.featured,
+    categoryId: data.category_id,
+    seoTitle: data.seo_title,
+    seoDescription: data.seo_description,
+    seoKeywords: data.seo_keywords,
+    createdAt: new Date(data.created_at),
+    updatedAt: new Date(data.updated_at),
   };
 }
 
-export async function getProjectImages(projectId: number): Promise<ProjectImage[]> {
+export async function getProjectImages(projectId: number): Promise<any[]> {
   const { data } = await supabase
     .from('project_images')
     .select('*')
@@ -315,8 +331,14 @@ export async function getProjectImages(projectId: number): Promise<ProjectImage[
   if (!data) return [];
 
   return data.map(img => ({
-    ...img,
-    created_at: new Date(img.created_at),
+    id: img.id,
+    projectId: img.project_id,
+    imageUrl: img.image_url,
+    videoUrl: img.video_url,
+    caption: img.caption,
+    imageType: img.image_type,
+    sortOrder: img.sort_order,
+    createdAt: new Date(img.created_at),
   }));
 }
 
@@ -344,7 +366,7 @@ export async function getAllNews(filters?: {
   status?: 'draft' | 'published' | 'archived';
   featured?: boolean;
   categoryId?: number;
-}): Promise<News[]> {
+}): Promise<any[]> {
   let query = supabase
     .from('news')
     .select('*')
@@ -364,15 +386,26 @@ export async function getAllNews(filters?: {
   if (!data) return [];
 
   return data.map(item => ({
-    ...item,
+    id: item.id,
+    title: item.title,
+    slug: item.slug,
+    excerpt: item.excerpt,
+    content: item.content,
+    coverImageUrl: item.cover_image,
     date: item.date ? new Date(item.date) : null,
-    created_at: new Date(item.created_at),
-    updated_at: new Date(item.updated_at),
-    published_at: item.published_at ? new Date(item.published_at) : null,
+    status: item.status,
+    featured: item.featured,
+    categoryId: item.category_id,
+    seoTitle: item.seo_title,
+    seoDescription: item.seo_description,
+    seoKeywords: item.seo_keywords,
+    createdAt: new Date(item.created_at),
+    updatedAt: new Date(item.updated_at),
+    publishedAt: item.published_at ? new Date(item.published_at) : null,
   }));
 }
 
-export async function getNewsBySlug(slug: string): Promise<News | undefined> {
+export async function getNewsBySlug(slug: string): Promise<any> {
   const { data } = await supabase
     .from('news')
     .select('*')
@@ -382,12 +415,63 @@ export async function getNewsBySlug(slug: string): Promise<News | undefined> {
   if (!data) return undefined;
 
   return {
-    ...data,
+    id: data.id,
+    title: data.title,
+    slug: data.slug,
+    excerpt: data.excerpt,
+    content: data.content,
+    coverImageUrl: data.cover_image,
     date: data.date ? new Date(data.date) : null,
-    created_at: new Date(data.created_at),
-    updated_at: new Date(data.updated_at),
-    published_at: data.published_at ? new Date(data.published_at) : null,
+    status: data.status,
+    featured: data.featured,
+    categoryId: data.category_id,
+    seoTitle: data.seo_title,
+    seoDescription: data.seo_description,
+    seoKeywords: data.seo_keywords,
+    createdAt: new Date(data.created_at),
+    updatedAt: new Date(data.updated_at),
+    publishedAt: data.published_at ? new Date(data.published_at) : null,
   };
+}
+
+export async function getNewsById(id: number): Promise<any> {
+  const { data } = await supabase
+    .from('news')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (!data) return undefined;
+
+  return {
+    id: data.id,
+    title: data.title,
+    slug: data.slug,
+    excerpt: data.excerpt,
+    content: data.content,
+    coverImageUrl: data.cover_image,
+    date: data.date ? new Date(data.date) : null,
+    status: data.status,
+    featured: data.featured,
+    categoryId: data.category_id,
+    seoTitle: data.seo_title,
+    seoDescription: data.seo_description,
+    seoKeywords: data.seo_keywords,
+    createdAt: new Date(data.created_at),
+    updatedAt: new Date(data.updated_at),
+    publishedAt: data.published_at ? new Date(data.published_at) : null,
+  };
+}
+
+export async function getNewsTags(newsId: number): Promise<Tag[]> {
+  const { data } = await supabase
+    .from('news_tags')
+    .select('tag_id, tags(*)')
+    .eq('news_id', newsId);
+
+  if (!data) return [];
+
+  return data.map(item => item.tags as Tag);
 }
 
 // ============ ARTICLE OPERATIONS ============
@@ -397,11 +481,11 @@ export async function getAllArticles(filters?: {
   featured?: boolean;
   categoryId?: number;
   authorId?: number;
-}): Promise<Article[]> {
+}): Promise<any[]> {
   let query = supabase
     .from('articles')
     .select('*')
-    .order('published_at', { ascending: false, nullsFirst: false });
+    .order('created_at', { ascending: false });
 
   if (filters?.status) {
     query = query.eq('status', filters.status);
@@ -420,14 +504,26 @@ export async function getAllArticles(filters?: {
   if (!data) return [];
 
   return data.map(article => ({
-    ...article,
-    created_at: new Date(article.created_at),
-    updated_at: new Date(article.updated_at),
-    published_at: article.published_at ? new Date(article.published_at) : null,
+    id: article.id,
+    title: article.title,
+    slug: article.slug,
+    excerpt: article.excerpt,
+    content: article.content,
+    coverImageUrl: article.cover_image,
+    status: article.status,
+    featured: article.featured,
+    categoryId: article.category_id,
+    authorId: article.author_id,
+    seoTitle: article.seo_title,
+    seoDescription: article.seo_description,
+    seoKeywords: article.seo_keywords,
+    createdAt: new Date(article.created_at),
+    updatedAt: new Date(article.updated_at),
+    publishedAt: article.published_at ? new Date(article.published_at) : null,
   }));
 }
 
-export async function getArticleBySlug(slug: string): Promise<Article | undefined> {
+export async function getArticleBySlug(slug: string): Promise<any> {
   const { data } = await supabase
     .from('articles')
     .select('*')
@@ -437,10 +533,22 @@ export async function getArticleBySlug(slug: string): Promise<Article | undefine
   if (!data) return undefined;
 
   return {
-    ...data,
-    created_at: new Date(data.created_at),
-    updated_at: new Date(data.updated_at),
-    published_at: data.published_at ? new Date(data.published_at) : null,
+    id: data.id,
+    title: data.title,
+    slug: data.slug,
+    excerpt: data.excerpt,
+    content: data.content,
+    coverImageUrl: data.cover_image,
+    status: data.status,
+    featured: data.featured,
+    categoryId: data.category_id,
+    authorId: data.author_id,
+    seoTitle: data.seo_title,
+    seoDescription: data.seo_description,
+    seoKeywords: data.seo_keywords,
+    createdAt: new Date(data.created_at),
+    updatedAt: new Date(data.updated_at),
+    publishedAt: data.published_at ? new Date(data.published_at) : null,
   };
 }
 
