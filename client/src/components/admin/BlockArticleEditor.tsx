@@ -191,6 +191,8 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
     seoDescription: "",
     seoKeywords: "",
   });
+  const [uploadingCover, setUploadingCover] = useState(false);
+  const uploadImage = trpc.articles.uploadImage.useMutation();
   const [newTag, setNewTag] = useState("");
 
   const { data: categories } = trpc.categories.list.useQuery({ type: "article" });
@@ -378,18 +380,54 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
           {/* Cover Image */}
           <div className="space-y-2">
             <Label className="text-lg font-semibold">Cover Image *</Label>
-            <Input
-              value={formData.coverImageUrl}
-              onChange={(e) => setFormData({ ...formData, coverImageUrl: e.target.value })}
-              placeholder="https://..."
-              className="text-lg"
-            />
-            {formData.coverImageUrl && (
-              <img
-                src={formData.coverImageUrl}
-                alt="Cover"
-                className="w-full h-64 object-cover rounded-lg"
-              />
+            {formData.coverImageUrl ? (
+              <div className="relative inline-block">
+                <img
+                  src={formData.coverImageUrl}
+                  alt="Cover"
+                  className="w-full h-64 object-cover rounded-lg"
+                />
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="icon"
+                  className="absolute -top-2 -right-2"
+                  onClick={() => setFormData({ ...formData, coverImageUrl: "" })}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+            ) : (
+              <div className="border-2 border-dashed rounded-lg p-4">
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    
+                    setUploadingCover(true);
+                    try {
+                      const buffer = await file.arrayBuffer();
+                      const bytes = new Uint8Array(buffer);
+                      const result = await uploadImage.mutateAsync({
+                        fileName: file.name,
+                        fileType: file.type,
+                        base64Data: btoa(String.fromCharCode(...Array.from(bytes))),
+                      });
+                      
+                      setFormData({ ...formData, coverImageUrl: result.url });
+                      toast.success("Image uploaded successfully");
+                    } catch (error: any) {
+                      toast.error(`Failed to upload image: ${error.message}`);
+                    } finally {
+                      setUploadingCover(false);
+                    }
+                  }}
+                  disabled={uploadingCover}
+                />
+                {uploadingCover && <Loader2 className="h-4 w-4 animate-spin mt-2" />}
+              </div>
             )}
           </div>
 

@@ -324,32 +324,30 @@ export const appRouter = router({
         data: z.string(), // base64 encoded
       }))
       .mutation(async ({ input }) => {
-        const { optimizeImage } = await import('./imageOptimizer.js');
+        const { uploadToCloudinary } = await import('./cloudinary.js');
         
         const buffer = Buffer.from(input.data, 'base64');
         
-        // Optimize image (convert to WebP, resize, compress)
-        const optimized = await optimizeImage(buffer, {
-          maxWidth: 2000,
-          maxHeight: 2000,
-          quality: 85,
-          format: 'webp',
-        });
-        
-        // Generate filename with .webp extension
+        // Generate unique public ID
         const baseFilename = input.filename.replace(/\.[^.]+$/, '');
-        const key = `projects/${Date.now()}-${baseFilename}.webp`;
+        const publicId = `${Date.now()}-${baseFilename}`;
         
-        const result = await storagePut(key, optimized.buffer, 'image/webp');
+        // Upload to Cloudinary (automatic optimization)
+        const result = await uploadToCloudinary(
+          buffer,
+          'brandon-portfolio/projects',
+          publicId
+        );
+        
         return { 
           url: result.url, 
           key: result.key,
           optimized: {
             originalSize: buffer.length,
-            optimizedSize: optimized.size,
-            savings: Math.round((1 - optimized.size / buffer.length) * 100),
-            width: optimized.width,
-            height: optimized.height,
+            optimizedSize: result.bytes,
+            savings: Math.round((1 - result.bytes / buffer.length) * 100),
+            width: result.width,
+            height: result.height,
           }
         };
       }),
@@ -475,11 +473,21 @@ export const appRouter = router({
         base64Data: z.string(),
       }))
       .mutation(async ({ input }) => {
-        const buffer = Buffer.from(input.base64Data, 'base64');
-        const ext = input.fileName.split('.').pop() || 'jpg';
-        const key = `news/${Date.now()}-${Math.random().toString(36).substring(7)}.${ext}`;
+        const { uploadToCloudinary } = await import('./cloudinary.js');
         
-        const result = await storagePut(key, buffer, input.fileType);
+        const buffer = Buffer.from(input.base64Data, 'base64');
+        
+        // Generate unique public ID
+        const baseFilename = input.fileName.replace(/\.[^.]+$/, '');
+        const publicId = `${Date.now()}-${baseFilename}`;
+        
+        // Upload to Cloudinary (automatic optimization)
+        const result = await uploadToCloudinary(
+          buffer,
+          'brandon-portfolio/news',
+          publicId
+        );
+        
         return { url: result.url, key: result.key };
       }),
     
@@ -657,6 +665,31 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         await db.deleteArticle(input.id);
         return { success: true };
+      }),
+    
+    uploadImage: adminProcedure
+      .input(z.object({
+        fileName: z.string(),
+        fileType: z.string(),
+        base64Data: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        const { uploadToCloudinary } = await import('./cloudinary.js');
+        
+        const buffer = Buffer.from(input.base64Data, 'base64');
+        
+        // Generate unique public ID
+        const baseFilename = input.fileName.replace(/\.[^.]+$/, '');
+        const publicId = `${Date.now()}-${baseFilename}`;
+        
+        // Upload to Cloudinary (automatic optimization)
+        const result = await uploadToCloudinary(
+          buffer,
+          'brandon-portfolio/articles',
+          publicId
+        );
+        
+        return { url: result.url, key: result.key };
       }),
     
     incrementViews: publicProcedure

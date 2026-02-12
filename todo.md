@@ -3295,3 +3295,16 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Add or fix image optimization for portfolio uploads - already working (WebP, 2000px max, 85% quality)
 - [x] Test image upload with optimization - confirmed working
 - [x] Run database migration to remove description column
+
+## Image Upload System Audit (Feb 12, 2026)
+- [x] Check where article images are currently stored - mix of Cloudinary and old URLs
+- [x] Check where news images are currently stored - migrated to Cloudinary
+- [x] Verify S3 storage configuration in storage.ts - currently using S3
+- [x] Check if articles admin form has image upload functionality - only manual URL input
+- [x] Check if news admin form has image upload functionality - has upload but uses S3
+- [x] Create Cloudinary upload helper function - created server/cloudinary.ts
+- [x] Update projects.uploadImage to use Cloudinary
+- [x] Update news.uploadImage to use Cloudinary
+- [x] Add articles.uploadImage endpoint using Cloudinary
+- [x] Update ArticleEditor to have file upload UI - added file input with upload
+- [x] Test image uploads in all three admin sections - verified UI working
