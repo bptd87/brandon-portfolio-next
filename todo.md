@@ -3534,11 +3534,14 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Solution: Republish site with latest checkpoint to deploy updated server config
 - [ ] Test admin panel access on published site after republishing
 
-## Fix OAuth Callback Double-Encoding (Feb 12, 2026)
-- [x] Investigated OAuth state encoding in getLoginUrl function
-- [x] Investigated OAuth callback handler in server/_core/oauth.ts
-- [x] Confirmed OAuth logic is correct - state contains full callback URL with returnPath
-- [x] Tested admin login flow on dev environment - works correctly
-- [x] Root cause: Published site is using an older build
-- [x] Solution: Republish site with latest checkpoint
-- [ ] Test admin login flow on published site after republishing
+## CRITICAL: Server Not Running on Published Site (Feb 12, 2026)
+- [x] Confirmed: ALL API endpoints return 404 on published site
+- [x] /api/oauth/callback returns 404
+- [x] /api/trpc/projects.list returns 404
+- [x] /sitemap.xml returns 404
+- [x] Server works perfectly in dev environment
+- [x] Root cause: Express server is not starting/deploying on published site
+- [ ] Check package.json for production start script
+- [ ] Check if build output includes server files
+- [ ] Fix deployment configuration to start Express server
+- [ ] Verify server is running on published site after fix
