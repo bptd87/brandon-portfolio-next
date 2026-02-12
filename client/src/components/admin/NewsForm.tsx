@@ -39,6 +39,7 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
     excerpt: "",
     location: "",
     date: new Date().toISOString().split('T')[0],
+    publishedAt: "" as string,
     categoryId: undefined as number | undefined,
     status: "draft" as "draft" | "published" | "archived",
     featured: false,
@@ -93,6 +94,7 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
         excerpt: newsData.excerpt || "",
         location: newsData.location || "",
         date: newsData.date ? new Date(newsData.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+        publishedAt: newsData.publishedAt ? new Date(newsData.publishedAt).toISOString().split('T')[0] : "",
         categoryId: newsData.categoryId ?? undefined,
         status: newsData.status || "draft",
         featured: newsData.featured || false,
@@ -149,11 +151,12 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const cleanData = { ...formData };
+    const { publishedAt, ...cleanData } = formData;
 
     const newsData = {
       ...cleanData,
       date: new Date(cleanData.date),
+      publishedAt: publishedAt ? new Date(publishedAt) : null,
       coverImageUrl: coverImage?.url,
       coverImageKey: coverImage?.key,
     };
@@ -256,7 +259,7 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
                 </div>
 
                 <div>
-                  <Label htmlFor="date">Date *</Label>
+                  <Label htmlFor="date">Event Date *</Label>
                   <Input
                     id="date"
                     type="date"
@@ -264,6 +267,18 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
                     onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
                     required
                   />
+                </div>
+
+                <div>
+                  <Label htmlFor="publishedAt">Published Date (optional)</Label>
+                  <Input
+                    id="publishedAt"
+                    type="date"
+                    value={formData.publishedAt}
+                    onChange={(e) => setFormData(prev => ({ ...prev, publishedAt: e.target.value }))}
+                    placeholder="Leave empty to use creation date"
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">For migrated content</p>
                 </div>
 
                 <div>

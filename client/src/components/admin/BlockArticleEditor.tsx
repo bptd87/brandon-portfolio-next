@@ -187,6 +187,7 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
     tags: [] as string[],
     status: "draft" as "draft" | "published" | "archived",
     featured: false,
+    publishedAt: "" as string,
     seoTitle: "",
     seoDescription: "",
     seoKeywords: "",
@@ -217,6 +218,7 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
         tags: existingArticle.tags?.map((t: any) => typeof t === 'string' ? t : t.name) || [],
         status: existingArticle.status || "draft",
         featured: existingArticle.featured || false,
+        publishedAt: existingArticle.publishedAt ? new Date(existingArticle.publishedAt).toISOString().split('T')[0] : "",
         seoTitle: existingArticle.seoTitle || "",
         seoDescription: existingArticle.seoDescription || "",
         seoKeywords: existingArticle.seoKeywords || "",
@@ -324,12 +326,16 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
     const content = JSON.stringify(dbBlocks);
     try {
       // Extract tags (string[]) from formData - these are not sent to the API
-      const { tags: _tags, ...saveData } = formData;
+      const { tags: _tags, publishedAt, ...saveData } = formData;
+      
+      // Convert publishedAt string to Date if provided
+      const publishedAtDate = publishedAt ? new Date(publishedAt) : null;
+      
       if (articleId) {
-        await updateMutation.mutateAsync({ id: articleId, ...saveData, content });
+        await updateMutation.mutateAsync({ id: articleId, ...saveData, publishedAt: publishedAtDate, content });
         toast.success("Article updated");
       } else {
-        await createMutation.mutateAsync({ ...saveData, content });
+        await createMutation.mutateAsync({ ...saveData, publishedAt: publishedAtDate, content });
         toast.success("Article created");
       }
       onSave?.();
@@ -995,6 +1001,17 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                   </SelectContent>
                 </Select>
               </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Published Date (optional)</Label>
+              <Input
+                type="date"
+                value={formData.publishedAt}
+                onChange={(e) => setFormData({ ...formData, publishedAt: e.target.value })}
+                placeholder="Leave empty to use creation date"
+              />
+              <p className="text-xs text-muted-foreground">Set a custom publication date for migrated content. Leave empty to use the creation date.</p>
             </div>
 
             {/* SEO */}

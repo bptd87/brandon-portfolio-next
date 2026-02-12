@@ -546,7 +546,10 @@ export async function getAllArticles(filters?: {
 }): Promise<any[]> {
   let query = supabase
     .from('articles')
-    .select('*')
+    .select(`
+      *,
+      category:categories!category_id(id, name, slug)
+    `)
     .order('created_at', { ascending: false });
 
   if (filters?.status) {
@@ -572,16 +575,22 @@ export async function getAllArticles(filters?: {
     excerpt: article.excerpt,
     content: article.content,
     coverImageUrl: article.cover_image,
+    readTime: article.read_time,
     status: article.status,
     featured: article.featured,
     categoryId: article.category_id,
     authorId: article.author_id,
+    category: article.category ? {
+      id: article.category.id,
+      name: article.category.name,
+      slug: article.category.slug,
+    } : null,
     seoTitle: article.seo_title,
     seoDescription: article.seo_description,
     seoKeywords: article.seo_keywords,
     createdAt: new Date(article.created_at),
     updatedAt: new Date(article.updated_at),
-    publishedAt: article.published_at ? new Date(article.published_at) : null,
+    publishedAt: article.published_at ? new Date(article.published_at) : new Date(article.created_at),
   }));
 }
 

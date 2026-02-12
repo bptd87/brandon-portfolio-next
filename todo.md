@@ -3481,3 +3481,18 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [ ] Check if frontend is sending correct status value format
 - [ ] Test project edit/save functionality
 - [ ] Verify all form fields validate correctly
+
+## URGENT: Fix Admin Panel & Articles Page (Feb 12, 2026 - 7:18 AM)
+- [ ] Fix admin panel project save error - status field sending "Published" instead of "published"
+- [ ] Find and fix status field capitalization in admin panel forms
+- [ ] Fix articles landing page design - wrong layout/styling
+- [ ] Compare current articles page with previous design
+- [ ] Test admin panel save functionality
+- [ ] Test articles page displays correctly
+
+## Admin Panel Date Picker Enhancement
+- [x] Fix articles page metadata display (category, read time, published date)
+- [x] Add published_at date picker to article admin form
+- [x] Add published_at date picker to news admin form
+- [x] Allow manual date selection for migrated content
+- [ ] Test saving articles/news with custom publication dates

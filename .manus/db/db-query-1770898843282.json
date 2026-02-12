@@ -1,0 +1,90 @@
+{
+  "query": "\nSELECT column_name, data_type \nFROM information_schema.columns \nWHERE table_name = 'articles' \nORDER BY ordinal_position;\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute \nSELECT column_name, data_type \nFROM information_schema.columns \nWHERE table_name = 'articles' \nORDER BY ordinal_position;\n",
+  "rows": [
+    {
+      "column_name": "id",
+      "data_type": "int"
+    },
+    {
+      "column_name": "title",
+      "data_type": "varchar"
+    },
+    {
+      "column_name": "slug",
+      "data_type": "varchar"
+    },
+    {
+      "column_name": "excerpt",
+      "data_type": "text"
+    },
+    {
+      "column_name": "content",
+      "data_type": "text"
+    },
+    {
+      "column_name": "categoryId",
+      "data_type": "int"
+    },
+    {
+      "column_name": "coverImageUrl",
+      "data_type": "text"
+    },
+    {
+      "column_name": "coverImageKey",
+      "data_type": "text"
+    },
+    {
+      "column_name": "authorId",
+      "data_type": "int"
+    },
+    {
+      "column_name": "readTime",
+      "data_type": "int"
+    },
+    {
+      "column_name": "status",
+      "data_type": "enum"
+    },
+    {
+      "column_name": "featured",
+      "data_type": "tinyint"
+    },
+    {
+      "column_name": "seoTitle",
+      "data_type": "varchar"
+    },
+    {
+      "column_name": "seoDescription",
+      "data_type": "text"
+    },
+    {
+      "column_name": "seoKeywords",
+      "data_type": "text"
+    },
+    {
+      "column_name": "createdAt",
+      "data_type": "timestamp"
+    },
+    {
+      "column_name": "updatedAt",
+      "data_type": "timestamp"
+    },
+    {
+      "column_name": "publishedAt",
+      "data_type": "timestamp"
+    },
+    {
+      "column_name": "likes",
+      "data_type": "int"
+    },
+    {
+      "column_name": "views",
+      "data_type": "int"
+    }
+  ],
+  "messages": [],
+  "stdout": "column_name\tdata_type\nid\tint\ntitle\tvarchar\nslug\tvarchar\nexcerpt\ttext\ncontent\ttext\ncategoryId\tint\ncoverImageUrl\ttext\ncoverImageKey\ttext\nauthorId\tint\nreadTime\tint\nstatus\tenum\nfeatured\ttinyint\nseoTitle\tvarchar\nseoDescription\ttext\nseoKeywords\ttext\ncreatedAt\ttimestamp\nupdatedAt\ttimestamp\npublishedAt\ttimestamp\nlikes\tint\nviews\tint\n",
+  "stderr": "",
+  "execution_time_ms": 106
+}
