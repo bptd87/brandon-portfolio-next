@@ -289,6 +289,39 @@ export async function getAllProjects(filters?: {
   }));
 }
 
+export async function getProjectById(id: number): Promise<any> {
+  const { data } = await supabase
+    .from('projects')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (!data) return undefined;
+
+  return {
+    id: data.id,
+    title: data.title,
+    slug: data.slug,
+    discipline: data.discipline,
+    year: data.year,
+    month: data.month,
+    venue: data.venue,
+    location: data.location,
+    excerpt: data.excerpt,
+    coverImageUrl: data.cover_image,
+    designNotes: data.design_notes,
+    client: data.client,
+    status: data.status,
+    featured: data.featured,
+    categoryId: data.category_id,
+    seoTitle: data.seo_title,
+    seoDescription: data.seo_description,
+    seoKeywords: data.seo_keywords,
+    createdAt: new Date(data.created_at),
+    updatedAt: new Date(data.updated_at),
+  };
+}
+
 export async function getProjectBySlug(slug: string): Promise<any> {
   const { data } = await supabase
     .from('projects')
@@ -521,6 +554,34 @@ export async function getAllArticles(filters?: {
     updatedAt: new Date(article.updated_at),
     publishedAt: article.published_at ? new Date(article.published_at) : null,
   }));
+}
+
+export async function getArticleById(id: number): Promise<any> {
+  const { data } = await supabase
+    .from('articles')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (!data) return undefined;
+
+  return {
+    id: data.id,
+    title: data.title,
+    slug: data.slug,
+    excerpt: data.excerpt,
+    content: data.content,
+    coverImageUrl: data.cover_image,
+    readTime: data.read_time,
+    status: data.status,
+    featured: data.featured,
+    categoryId: data.category_id,
+    seoTitle: data.seo_title,
+    seoDescription: data.seo_description,
+    seoKeywords: data.seo_keywords,
+    createdAt: new Date(data.created_at),
+    updatedAt: new Date(data.updated_at),
+  };
 }
 
 export async function getArticleBySlug(slug: string): Promise<any> {
@@ -905,4 +966,352 @@ export async function getAllScenicDirectory(filters?: {
 
   const { data } = await query;
   return data || [];
+}
+
+
+export async function incrementArticleViews(id: number) {
+  const { data } = await supabase
+    .from('articles')
+    .select('views')
+    .eq('id', id)
+    .single();
+  
+  if (data) {
+    await supabase
+      .from('articles')
+      .update({ views: (data.views || 0) + 1 })
+      .eq('id', id);
+  }
+}
+
+export async function incrementNewsViews(id: number) {
+  const { data } = await supabase
+    .from('news')
+    .select('views')
+    .eq('id', id)
+    .single();
+  
+  if (data) {
+    await supabase
+      .from('news')
+      .update({ views: (data.views || 0) + 1 })
+      .eq('id', id);
+  }
+}
+
+export async function incrementProjectViews(id: number) {
+  const { data } = await supabase
+    .from('projects')
+    .select('views')
+    .eq('id', id)
+    .single();
+  
+  if (data) {
+    await supabase
+      .from('projects')
+      .update({ views: (data.views || 0) + 1 })
+      .eq('id', id);
+  }
+}
+
+
+// ============ PROJECT CRUD OPERATIONS ============
+
+export async function createProject(project: any) {
+  const { data, error } = await supabase
+    .from('projects')
+    .insert({
+      title: project.title,
+      slug: project.slug,
+      discipline: project.discipline,
+      year: project.year,
+      month: project.month,
+      venue: project.venue,
+      location: project.location,
+      excerpt: project.excerpt,
+      cover_image: project.coverImageUrl,
+      design_notes: project.designNotes,
+      client: project.client,
+      status: project.status || 'draft',
+      featured: project.featured || false,
+      category_id: project.categoryId,
+      seo_title: project.seoTitle,
+      seo_description: project.seoDescription,
+      seo_keywords: project.seoKeywords,
+    })
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return data.id;
+}
+
+export async function updateProject(id: number, project: any) {
+  const updateData: any = {};
+  
+  if (project.title !== undefined) updateData.title = project.title;
+  if (project.slug !== undefined) updateData.slug = project.slug;
+  if (project.discipline !== undefined) updateData.discipline = project.discipline;
+  if (project.year !== undefined) updateData.year = project.year;
+  if (project.month !== undefined) updateData.month = project.month;
+  if (project.venue !== undefined) updateData.venue = project.venue;
+  if (project.location !== undefined) updateData.location = project.location;
+  if (project.excerpt !== undefined) updateData.excerpt = project.excerpt;
+  if (project.coverImageUrl !== undefined) updateData.cover_image = project.coverImageUrl;
+  if (project.designNotes !== undefined) updateData.design_notes = project.designNotes;
+  if (project.client !== undefined) updateData.client = project.client;
+  if (project.status !== undefined) updateData.status = project.status;
+  if (project.featured !== undefined) updateData.featured = project.featured;
+  if (project.categoryId !== undefined) updateData.category_id = project.categoryId;
+  if (project.seoTitle !== undefined) updateData.seo_title = project.seoTitle;
+  if (project.seoDescription !== undefined) updateData.seo_description = project.seoDescription;
+  if (project.seoKeywords !== undefined) updateData.seo_keywords = project.seoKeywords;
+  
+  const { error } = await supabase
+    .from('projects')
+    .update(updateData)
+    .eq('id', id);
+  
+  if (error) throw error;
+}
+
+export async function deleteProject(id: number) {
+  const { error } = await supabase
+    .from('projects')
+    .delete()
+    .eq('id', id);
+  
+  if (error) throw error;
+}
+
+export async function addProjectImage(image: any) {
+  const { data, error } = await supabase
+    .from('project_images')
+    .insert({
+      project_id: image.projectId,
+      image_url: image.imageUrl,
+      video_url: image.videoUrl,
+      caption: image.caption,
+      category: image.category,
+      sort_order: image.sortOrder || 0,
+    })
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return data.id;
+}
+
+export async function deleteProjectImage(id: number) {
+  const { error } = await supabase
+    .from('project_images')
+    .delete()
+    .eq('id', id);
+  
+  if (error) throw error;
+}
+
+export async function deleteProjectImages(projectId: number) {
+  const { error } = await supabase
+    .from('project_images')
+    .delete()
+    .eq('project_id', projectId);
+  
+  if (error) throw error;
+}
+
+export async function setProjectTags(projectId: number, tagIds: number[]) {
+  // Delete existing tags
+  await supabase
+    .from('project_tags')
+    .delete()
+    .eq('project_id', projectId);
+  
+  // Insert new tags
+  if (tagIds.length > 0) {
+    const { error } = await supabase
+      .from('project_tags')
+      .insert(tagIds.map(tagId => ({
+        project_id: projectId,
+        tag_id: tagId,
+      })));
+    
+    if (error) throw error;
+  }
+}
+
+
+// ============ NEWS CRUD OPERATIONS ============
+
+export async function createNews(news: any) {
+  const { data, error } = await supabase
+    .from('news')
+    .insert({
+      title: news.title,
+      slug: news.slug,
+      excerpt: news.excerpt,
+      content: news.content,
+      cover_image: news.coverImageUrl,
+      date: news.date,
+      status: news.status || 'draft',
+      featured: news.featured || false,
+      category_id: news.categoryId,
+      seo_title: news.seoTitle,
+      seo_description: news.seoDescription,
+      seo_keywords: news.seoKeywords,
+    })
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return data.id;
+}
+
+export async function updateNews(id: number, news: any) {
+  const updateData: any = {};
+  
+  if (news.title !== undefined) updateData.title = news.title;
+  if (news.slug !== undefined) updateData.slug = news.slug;
+  if (news.excerpt !== undefined) updateData.excerpt = news.excerpt;
+  if (news.content !== undefined) updateData.content = news.content;
+  if (news.coverImageUrl !== undefined) updateData.cover_image = news.coverImageUrl;
+  if (news.date !== undefined) updateData.date = news.date;
+  if (news.status !== undefined) updateData.status = news.status;
+  if (news.featured !== undefined) updateData.featured = news.featured;
+  if (news.categoryId !== undefined) updateData.category_id = news.categoryId;
+  if (news.seoTitle !== undefined) updateData.seo_title = news.seoTitle;
+  if (news.seoDescription !== undefined) updateData.seo_description = news.seoDescription;
+  if (news.seoKeywords !== undefined) updateData.seo_keywords = news.seoKeywords;
+  
+  const { error } = await supabase
+    .from('news')
+    .update(updateData)
+    .eq('id', id);
+  
+  if (error) throw error;
+}
+
+export async function deleteNews(id: number) {
+  const { error } = await supabase
+    .from('news')
+    .delete()
+    .eq('id', id);
+  
+  if (error) throw error;
+}
+
+export async function setNewsTags(newsId: number, tagIds: number[]) {
+  // Delete existing tags
+  await supabase
+    .from('news_tags')
+    .delete()
+    .eq('news_id', newsId);
+  
+  // Insert new tags
+  if (tagIds.length > 0) {
+    const { error } = await supabase
+      .from('news_tags')
+      .insert(tagIds.map(tagId => ({
+        news_id: newsId,
+        tag_id: tagId,
+      })));
+    
+    if (error) throw error;
+  }
+}
+
+
+// ============ ARTICLE CRUD OPERATIONS ============
+
+export async function createArticle(article: any) {
+  const { data, error } = await supabase
+    .from('articles')
+    .insert({
+      title: article.title,
+      slug: article.slug,
+      excerpt: article.excerpt,
+      content: article.content,
+      cover_image: article.coverImageUrl,
+      read_time: article.readTime,
+      status: article.status || 'draft',
+      featured: article.featured || false,
+      category_id: article.categoryId,
+      seo_title: article.seoTitle,
+      seo_description: article.seoDescription,
+      seo_keywords: article.seoKeywords,
+    })
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return data.id;
+}
+
+export async function updateArticle(id: number, article: any) {
+  const updateData: any = {};
+  
+  if (article.title !== undefined) updateData.title = article.title;
+  if (article.slug !== undefined) updateData.slug = article.slug;
+  if (article.excerpt !== undefined) updateData.excerpt = article.excerpt;
+  if (article.content !== undefined) updateData.content = article.content;
+  if (article.coverImageUrl !== undefined) updateData.cover_image = article.coverImageUrl;
+  if (article.readTime !== undefined) updateData.read_time = article.readTime;
+  if (article.status !== undefined) updateData.status = article.status;
+  if (article.featured !== undefined) updateData.featured = article.featured;
+  if (article.categoryId !== undefined) updateData.category_id = article.categoryId;
+  if (article.seoTitle !== undefined) updateData.seo_title = article.seoTitle;
+  if (article.seoDescription !== undefined) updateData.seo_description = article.seoDescription;
+  if (article.seoKeywords !== undefined) updateData.seo_keywords = article.seoKeywords;
+  
+  const { error } = await supabase
+    .from('articles')
+    .update(updateData)
+    .eq('id', id);
+  
+  if (error) throw error;
+}
+
+export async function deleteArticle(id: number) {
+  const { error} = await supabase
+    .from('articles')
+    .delete()
+    .eq('id', id);
+  
+  if (error) throw error;
+}
+
+export async function setArticleTags(articleId: number, tagIds: number[]) {
+  // Delete existing tags
+  await supabase
+    .from('article_tags')
+    .delete()
+    .eq('article_id', articleId);
+  
+  // Insert new tags
+  if (tagIds.length > 0) {
+    const { error } = await supabase
+      .from('article_tags')
+      .insert(tagIds.map(tagId => ({
+        article_id: articleId,
+        tag_id: tagId,
+      })));
+    
+    if (error) throw error;
+  }
+}
+
+export async function toggleArticleLike(id: number, liked: boolean) {
+  const { data } = await supabase
+    .from('articles')
+    .select('likes')
+    .eq('id', id)
+    .single();
+  
+  if (data) {
+    const newLikes = liked ? (data.likes || 0) + 1 : Math.max((data.likes || 0) - 1, 0);
+    await supabase
+      .from('articles')
+      .update({ likes: newLikes })
+      .eq('id', id);
+  }
 }

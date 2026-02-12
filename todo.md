@@ -3420,3 +3420,39 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [ ] Add all missing CRUD functions to supabase-db.ts for admin panel
 - [ ] Scenic directory table not connected
 - [ ] Save final checkpoint
+
+## URGENT: Add Missing Admin Panel CRUD Functions (Feb 12, 2026 - 6:55 AM)
+- [x] Add getProjectById function
+- [x] Add getArticleById function
+- [x] Add getNewsById function
+- [x] Add createProject, updateProject, deleteProject
+- [x] Add createArticle, updateArticle, deleteArticle
+- [x] Add createNews, updateNews, deleteNews
+- [x] Add addProjectImage, deleteProjectImage, deleteProjectImages
+- [x] Add setProjectTags, setNewsTags, setArticleTags
+- [x] Add incrementArticleViews, incrementNewsViews, incrementProjectViews
+- [x] Add toggleArticleLike
+- [ ] Test admin panel edit/delete operations
+- [ ] Save checkpoint after admin panel works
+
+## Fix Articles Page Design & Homepage Tutorial Cards (Feb 12, 2026 - 6:50 AM)
+- [ ] Articles page design changed from previous version - restore original design
+- [ ] Tutorial cards missing from homepage landing page
+- [ ] Investigate what tutorials data exists in Supabase
+- [ ] Check if getAllTutorials function exists in supabase-db.ts
+- [ ] Restore tutorial cards section on homepage
+- [ ] Test articles page matches previous design
+- [ ] Test homepage shows tutorial cards
+- [ ] Save checkpoint after fixes
+- [ ] Add incrementArticleViews, incrementNewsViews, incrementProjectViews functions
+- [ ] Fix articles/news to display published_at instead of created_at dates
+- [ ] Add published_at column to articles and news tables if missing
+
+## Fix Article Categories Display (Feb 12, 2026 - 6:59 AM)
+- [ ] Article categories not showing on articles page
+- [ ] Categories missing colors
+- [ ] Categories not sorted properly
+- [ ] "Musical Theatre" should be separate category
+- [ ] Check if categories table has color column in Supabase
+- [ ] Check if categories are being loaded on articles page
+- [ ] Fix category display and filtering
