@@ -1,63 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 
-// Apply Cloudinary transformations for automatic optimization
-function applyCloudinaryTransformations(src: string, width?: number, blurred?: boolean): string {
-  // Only transform Cloudinary URLs
-  if (!src.includes('cloudinary.com')) {
-    return src;
-  }
-
-  // Parse Cloudinary URL: https://res.cloudinary.com/{cloud_name}/image/upload/v{version}/{path}
-  const uploadIndex = src.indexOf('/upload/');
-  if (uploadIndex === -1) return src;
-
-  const baseUrl = src.substring(0, uploadIndex + 8); // Include '/upload/'
-  const pathAfterUpload = src.substring(uploadIndex + 8);
-
-  // Build transformation string
-  const transformations = [];
-
-  if (blurred) {
-    // Blurred placeholder: TINY width with blur for smooth color wash
-    transformations.push('w_10');
-    transformations.push('e_blur:1000');
-    transformations.push('q_1');
-  } else {
-    // Normal image: automatic format (WebP with fallback)
-    transformations.push('f_auto');
-
-    // Quality optimization (auto - balances quality and size)
-    transformations.push('q_auto');
-
-    // Responsive width if specified
-    if (width) {
-      transformations.push(`w_${width}`);
-    }
-
-    // Auto DPR (device pixel ratio)
-    transformations.push('dpr_auto');
-  }
-
-  const transformString = transformations.join(',');
-
-  return `${baseUrl}${transformString}/${pathAfterUpload}`;
-}
-
-// Generate responsive srcset for Cloudinary images
-function generateSrcSet(src: string): string {
-  if (!src.includes('cloudinary.com')) {
-    return '';
-  }
-
-  const widths = [400, 800, 1200, 1600];
-  const srcsetEntries = widths.map(width => {
-    const transformedUrl = applyCloudinaryTransformations(src, width);
-    return `${transformedUrl} ${width}w`;
-  });
-
-  return srcsetEntries.join(', ');
-}
-
 interface ProgressiveImageProps {
   src: string;
   alt: string;
@@ -184,11 +126,6 @@ export function ProgressiveImage({
     return () => clearTimeout(timer);
   }, [imageLoaded, blurFadeDuration, loading]);
 
-  // Apply Cloudinary transformations to src
-  const optimizedSrc = applyCloudinaryTransformations(src, width);
-  const blurredSrc = applyCloudinaryTransformations(src, undefined, true);
-  const srcSet = generateSrcSet(src);
-
   return (
     <div
       ref={imgRef}
@@ -199,18 +136,9 @@ export function ProgressiveImage({
       `}
       style={aspectRatio ? { aspectRatio } : undefined}
     >
-      {/* Blurred placeholder - tiny smooth color wash */}
-      {!imageError && shouldLoad && (
-        <img
-          src={blurredSrc}
-          alt=""
-          className={`
-            absolute inset-0 w-full h-full object-cover
-            transition-opacity duration-500 ease-out
-            ${showSharpImage ? 'opacity-0' : 'opacity-100'}
-          `}
-          aria-hidden="true"
-        />
+      {/* Placeholder - simple loading state */}
+      {!imageError && !imageLoaded && shouldLoad && (
+        <div className="absolute inset-0 bg-muted/20 animate-pulse" aria-hidden="true" />
       )}
 
       {/* Skeleton loader - shown before intersection */}
@@ -228,12 +156,10 @@ export function ProgressiveImage({
         </div>
       )}
 
-      {/* Sharp image - fades in over blurred version */}
+      {/* Main image */}
       {shouldLoad && (
         <img
-          src={optimizedSrc}
-          srcSet={srcSet}
-          sizes={sizes || '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
+          src={src}
           alt={alt}
           className={`
             w-full h-full 
