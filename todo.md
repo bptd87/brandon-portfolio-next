@@ -3257,3 +3257,9 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Audit news listing page sorting logic
 - [x] Fix News.tsx to sort filtered news by date descending
 - [x] Test news page displays in correct chronological order
+
+## Project Form Validation Errors (Feb 11, 2026)
+- [x] Fix status field validation error (sending invalid value)
+- [x] Fix image videoUrl field sending null instead of empty string
+- [x] Fix image caption field sending null instead of empty string
+- [ ] Test project save with all validation fixes (awaiting user test)

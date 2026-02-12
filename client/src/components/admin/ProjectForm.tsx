@@ -324,7 +324,9 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
         designNotes: fullProject.designNotes || "",
         discipline: fullProject.discipline || "scenic_design",
         subcategory: fullProject.subcategory || "",
-        status: fullProject.status || "draft",
+        status: (fullProject.status === 'draft' || fullProject.status === 'published' || fullProject.status === 'archived') 
+          ? fullProject.status 
+          : "draft",
         featured: fullProject.featured || false,
         year: fullProject.year || new Date().getFullYear(),
         location: fullProject.location || "",
@@ -559,8 +561,8 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
               imageKey: result.key,
               videoUrl: undefined,
               imageType: img.imageType,
-              caption: img.caption,
-              altText: img.altText,
+              caption: img.caption || undefined,
+              altText: img.altText || undefined,
               sortOrder: img.sortOrder,
             };
           } else if (img.videoUrl) {
@@ -569,18 +571,18 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
               imageKey: undefined,
               videoUrl: img.videoUrl,
               imageType: "video" as const,
-              caption: img.caption,
-              altText: img.altText,
+              caption: img.caption || undefined,
+              altText: img.altText || undefined,
               sortOrder: img.sortOrder,
             };
           }
           return {
             imageUrl: img.url,
             imageKey: img.key,
-            videoUrl: img.videoUrl,
+            videoUrl: img.videoUrl || undefined,
             imageType: img.imageType,
-            caption: img.caption,
-            altText: img.altText,
+            caption: img.caption || undefined,
+            altText: img.altText || undefined,
             sortOrder: img.sortOrder,
           };
         })
