@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { trpc } from '@/lib/trpc';
 import { Mail, Linkedin, Instagram, Send, Clock, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -16,10 +17,33 @@ export function Contact() {
     message: ''
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  
+  const submitContact = trpc.contact.submit.useMutation({
+    onSuccess: () => {
+      setSubmitStatus('success');
+      // Reset form
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      setIsSubmitting(false);
+      // Scroll to top of form to show success message
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Clear success message after 8 seconds
+      setTimeout(() => setSubmitStatus('idle'), 8000);
+    },
+    onError: (error) => {
+      setSubmitStatus('error');
+      setIsSubmitting(false);
+      // Clear error message after 5 seconds
+      setTimeout(() => setSubmitStatus('idle'), 5000);
+    },
+  });
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // TODO: Implement form submission
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    submitContact.mutate(formData);
   };
 
   return (
@@ -53,6 +77,18 @@ export function Contact() {
 
           {/* LEFT: Contact Form - THE HERO */}
           <div>
+            {/* Status Messages - At Top for Visibility */}
+            {submitStatus === 'success' && (
+              <div className="mb-6 p-4 rounded-lg bg-green-500/20 border-2 border-green-500/50 text-green-400 font-medium animate-in fade-in duration-300">
+                ✓ Message sent! Thanks for reaching out. I'll get back to you within 24-48 hours.
+              </div>
+            )}
+            {submitStatus === 'error' && (
+              <div className="mb-6 p-4 rounded-lg bg-red-500/20 border-2 border-red-500/50 text-red-400 font-medium animate-in fade-in duration-300">
+                ✗ Failed to send message. Please try again or email me directly at info@brandonptdavis.com
+              </div>
+            )}
+            
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
@@ -107,9 +143,10 @@ export function Contact() {
               <Button
                 type="submit"
                 size="lg"
-                className="w-full md:w-auto px-12 h-14 text-lg bg-primary hover:bg-primary/90 text-primary-foreground font-medium shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transition-all hover:scale-105"
+                disabled={isSubmitting}
+                className="w-full md:w-auto px-12 h-14 text-lg bg-primary hover:bg-primary/90 text-primary-foreground font-medium shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
-                Send Message
+                {isSubmitting ? 'Sending...' : 'Send Message'}
                 <Send className="ml-2 h-5 w-5" />
               </Button>
             </form>

@@ -3277,3 +3277,10 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Verify all 4 disciplines have proper routes (scenic_design, experiential, rendering, scenic_models)
 - [x] Fix any missing or broken discipline filters - added visible tab navigation
 - [x] Test all discipline pages display correct projects - all 4 disciplines working
+
+## Contact Form Bug Fix (Feb 12, 2026)
+- [x] Investigate why contact form submission does nothing - form had no backend endpoint
+- [x] Check if tRPC endpoint exists for contact form - created contact.submit endpoint
+- [x] Check if form is calling the correct endpoint - updated Contact.tsx to use tRPC mutation
+- [x] Add proper success/error feedback to user - green success banner at top of form
+- [x] Test contact form submission end-to-end - verified working with owner notifications

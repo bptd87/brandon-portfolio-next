@@ -1071,6 +1071,34 @@ export const appRouter = router({
       }),
   }),
 
+  // ============ CONTACT FORM ============
+  contact: router({
+    submit: publicProcedure
+      .input(z.object({
+        name: z.string().min(1).max(255),
+        email: z.string().email(),
+        subject: z.string().min(1).max(255),
+        message: z.string().min(1).max(5000),
+      }))
+      .mutation(async ({ input }) => {
+        // Send notification to owner
+        const { notifyOwner } = await import('./_core/notification');
+        
+        const title = `New Contact Form Submission: ${input.subject}`;
+        const content = `
+From: ${input.name} (${input.email})
+Subject: ${input.subject}
+
+Message:
+${input.message}
+`;
+        
+        await notifyOwner({ title, content });
+        
+        return { success: true };
+      }),
+  }),
+
   // ============ IMAGE UPLOAD WITH COMPRESSION ============
   images: router({
     uploadOptimized: protectedProcedure
