@@ -17,19 +17,19 @@ import { useTheme } from "@/contexts/ThemeContext";
 // Convert YouTube/Vimeo URLs to embed format
 function getEmbedUrl(url: string): string {
   if (!url) return '';
-  
+
   // YouTube
   const youtubeMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
   if (youtubeMatch) {
     return `https://www.youtube.com/embed/${youtubeMatch[1]}`;
   }
-  
+
   // Vimeo
   const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
   if (vimeoMatch) {
     return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
   }
-  
+
   // Already an embed URL or unknown format
   return url;
 }
@@ -44,13 +44,13 @@ export default function ProjectDetail() {
   const { data: project, isLoading } = trpc.projects.getBySlug.useQuery({ slug: slug! });
   // Fetch projects in same discipline for navigation
   const { data: allProjects } = trpc.projects.list.useQuery(
-    { discipline: project?.discipline },
+    { discipline: project?.discipline || undefined },
     { enabled: !!project?.discipline }
   );
-  
+
   // Fetch related projects (same discipline) for "More Projects" section
   const { data: allRelatedProjects } = trpc.projects.list.useQuery(
-    { discipline: project?.discipline },
+    { discipline: project?.discipline || undefined },
     { enabled: !!project?.discipline }
   );
   const relatedProjects = allRelatedProjects?.slice(0, 10);
@@ -61,7 +61,7 @@ export default function ProjectDetail() {
   const [videosOpen, setVideosOpen] = useState(true);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
-  const [lightboxImages, setLightboxImages] = useState<Array<{imageUrl: string | null; caption: string | null; altText: string | null}>>([]);
+  const [lightboxImages, setLightboxImages] = useState<Array<{ imageUrl: string | null; caption: string | null; altText: string | null }>>([]);
 
   if (isLoading) {
     return (
@@ -103,7 +103,7 @@ export default function ProjectDetail() {
   }
 
   // Parse creative team from JSON array
-  let creativeTeamArray: Array<{name: string, role: string}> = [];
+  let creativeTeamArray: Array<{ name: string, role: string }> = [];
   try {
     if (typeof project.creativeTeam === 'string') {
       creativeTeamArray = JSON.parse(project.creativeTeam);
@@ -121,7 +121,7 @@ export default function ProjectDetail() {
 
   // Get related projects excluding current one
   const relatedProjectsFiltered = relatedProjects?.filter(p => p.id !== project.id).slice(0, 3) || [];
-  
+
   // Find prev/next projects from same discipline only
   const currentIndex = allProjects?.findIndex(p => p.id === project.id) ?? -1;
   const prevProject = currentIndex > 0 ? allProjects?.[currentIndex - 1] : null;
@@ -214,7 +214,7 @@ export default function ProjectDetail() {
           <ArrowLeft className="h-6 w-6" style={{ color: accentColor }} />
         </button>
       )}
-      
+
       {nextProject && (
         <button
           onClick={() => setLocation(`/projects/${nextProject.slug}`)}
@@ -229,20 +229,20 @@ export default function ProjectDetail() {
       {/* Full-Screen Hero Section */}
       <section className="relative h-[45vh] overflow-hidden">
         {project.coverImageUrl ? (
-          <img 
-            src={project.coverImageUrl} 
+          <img
+            src={project.coverImageUrl}
             alt={project.title}
             className="w-full h-full object-cover"
           />
         ) : (
           <div className="w-full h-full bg-background" />
         )}
-        
+
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-        
+
         {/* Color accent overlay */}
-        <div 
+        <div
           className="absolute inset-0 mix-blend-multiply opacity-10"
           style={{ backgroundColor: accentColor }}
         />
@@ -250,22 +250,22 @@ export default function ProjectDetail() {
         {/* Project info overlay - SIMPLIFIED HERO */}
         <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16 lg:p-24">
           <div className="container max-w-5xl">
-            
+
             {/* CLIENT LOGOS - Theme-Aware */}
             {((metadata.redBullLogoDark && metadata.redBullLogoLight) || (metadata.lumenatiLogoDark && metadata.lumenatiLogoLight)) && (
               <div className="mb-6">
                 <div className="flex items-center gap-6 flex-wrap mb-4">
                   {(metadata.redBullLogoDark && metadata.redBullLogoLight) && (
-                    <img 
-                      src={metadata.redBullLogoLight} 
-                      alt="Red Bull" 
+                    <img
+                      src={metadata.redBullLogoLight}
+                      alt="Red Bull"
                       className="h-10 md:h-12 w-auto"
                     />
                   )}
                   {(metadata.lumenatiLogoDark && metadata.lumenatiLogoLight) && (
-                    <img 
-                      src={theme === 'dark' ? metadata.lumenatiLogoDark : metadata.lumenatiLogoLight} 
-                      alt="Lumenati" 
+                    <img
+                      src={theme === 'dark' ? metadata.lumenatiLogoDark : metadata.lumenatiLogoLight}
+                      alt="Lumenati"
                       className="h-10 md:h-12 w-auto"
                     />
                   )}
@@ -275,7 +275,7 @@ export default function ProjectDetail() {
                 </div>
               </div>
             )}
-            
+
             {/* TITLE ONLY - Big & Bold */}
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-none">
               {project.title}
@@ -286,7 +286,7 @@ export default function ProjectDetail() {
 
       {/* Content Sections */}
       <div className="container max-w-5xl py-16 space-y-16">
-        
+
         {/* PROJECT INTRO - Excerpt + Details */}
         <AnimatedSection>
           <div className="space-y-6">
@@ -374,12 +374,12 @@ export default function ProjectDetail() {
                 Technical Drawings
                 <span className="ml-4 text-muted-foreground text-lg">({technicalDrawings.length})</span>
               </h2>
-              
+
               {/* FULL-WIDTH GRID - Like Lumenati */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {technicalDrawings.map((img, idx) => (
                   <AnimatedSection key={img.id} delay={idx * 50}>
-                    <div 
+                    <div
                       className="group relative overflow-hidden rounded-lg cursor-pointer aspect-[3/2]"
                       onClick={() => {
                         setLightboxImages(technicalDrawings);
@@ -393,13 +393,13 @@ export default function ProjectDetail() {
                         className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
                       />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
-                      
+
                       {img.caption && (
                         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/95 via-background/70 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                           <p className="text-sm text-foreground/90">{img.caption}</p>
                         </div>
                       )}
-                      
+
                       <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <div className="px-3 py-1.5 rounded-full bg-background/90 backdrop-blur-sm border border-border">
                           <p className="text-xs font-semibold">Click to expand</p>
@@ -443,7 +443,7 @@ export default function ProjectDetail() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {productionPhotos.filter(img => img.imageUrl !== project.coverImageUrl).map((img, idx) => (
                   <AnimatedSection key={img.id} delay={idx * 50}>
-                    <div 
+                    <div
                       className="group relative overflow-hidden rounded-lg cursor-pointer aspect-[16/9]"
                       onClick={() => {
                         setLightboxImages(productionPhotos.filter(img => img.imageUrl !== project.coverImageUrl));
@@ -457,13 +457,13 @@ export default function ProjectDetail() {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      
+
                       {img.caption && (
                         <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                           <p className="text-sm font-medium text-white drop-shadow-lg">{img.caption}</p>
                         </div>
                       )}
-                      
+
                       <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <div className="px-3 py-1.5 rounded-full bg-background/90 backdrop-blur-sm border border-border">
                           <p className="text-xs font-semibold">Click to expand</p>
@@ -530,12 +530,12 @@ export default function ProjectDetail() {
                   <ChevronDown className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
                 )}
               </button>
-              
+
               {renderingsOpen && (
                 <div className="space-y-8">
                   {renderings.map((img, idx) => (
                     <AnimatedSection key={img.id} delay={idx * 50}>
-                      <div 
+                      <div
                         className="group relative overflow-hidden rounded-lg cursor-pointer"
                         onClick={() => {
                           setLightboxImages(renderings);
@@ -549,13 +549,13 @@ export default function ProjectDetail() {
                           className="w-full h-auto object-cover group-hover:scale-102 group-hover:brightness-110 transition-all duration-500"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        
+
                         {img.caption && (
                           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/95 via-background/70 to-transparent p-6">
                             <p className="text-sm text-foreground/90">{img.caption}</p>
                           </div>
                         )}
-                        
+
                         <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                           <div className="px-3 py-1.5 rounded-full bg-background/90 backdrop-blur-sm border border-border">
                             <p className="text-xs font-semibold">Click to expand</p>
@@ -577,18 +577,18 @@ export default function ProjectDetail() {
               <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: accentColor }}>
                 Event Footage
               </h2>
-              <a 
-                href={metadata.videoUrl} 
-                target="_blank" 
+              <a
+                href={metadata.videoUrl}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="block group"
               >
                 <div className="relative rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl" style={{ borderColor: accentColor }}>
-                  <div className="relative w-full bg-muted" style={{ paddingBottom: '56.25%' }}>
+                  <div className="relative w-full bg-muted pb-[56.25%]">
                     <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-8 text-center">
                       <div className="w-20 h-20 rounded-full flex items-center justify-center transition-transform group-hover:scale-110" style={{ backgroundColor: accentColor }}>
                         <svg className="w-10 h-10 text-background" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z"/>
+                          <path d="M8 5v14l11-7z" />
                         </svg>
                       </div>
                       <div>
@@ -622,7 +622,7 @@ export default function ProjectDetail() {
                   <ChevronDown className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
                 )}
               </button>
-              
+
               {videosOpen && (
                 <div className="grid grid-cols-1 gap-8">
                   {videos.map((video) => (
@@ -665,7 +665,7 @@ export default function ProjectDetail() {
                   <ChevronDown className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
                 )}
               </button>
-              
+
               {teamOpen && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {creativeTeamArray.map((member, idx) => (

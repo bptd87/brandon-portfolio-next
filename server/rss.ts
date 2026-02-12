@@ -1,26 +1,14 @@
 import { Request, Response } from "express";
-import { getDb } from "./db";
-import { news, categories } from "../drizzle/schema";
-import { desc } from "drizzle-orm";
+import { getAllNews, getAllCategories } from "./db";
 
 export async function generateRSSFeed(req: Request, res: Response) {
   try {
-    const db = await getDb();
-    if (!db) {
-      res.status(500).send('Database not available');
-      return;
-    }
-
     // Fetch all published news items
-    const newsItems = await db
-      .select()
-      .from(news)
-      .orderBy(desc(news.publishedAt), desc(news.createdAt))
-      .limit(50);
+    const newsItems = await getAllNews({ status: 'published' });
 
     // Get all categories for mapping
-    const allCategories = await db.select().from(categories);
-    const categoryMap = new Map(allCategories.map((c: any) => [c.id, c.name]));
+    const allCategories = await getAllCategories();
+    const categoryMap = new Map(allCategories.map(c => [c.id, c.name]));
 
     // Build RSS feed
     const siteUrl = process.env.VITE_APP_URL || `https://${req.get('host')}`;
@@ -40,7 +28,7 @@ export async function generateRSSFeed(req: Request, res: Response) {
 
     for (const item of newsItems) {
       const itemUrl = `${siteUrl}/news/${item.slug}`;
-      const pubDate = new Date(item.publishedAt || item.createdAt).toUTCString();
+      const pubDate = (item.publishedAt || item.createdAt).toUTCString();
       const categoryName = item.categoryId ? categoryMap.get(item.categoryId) : null;
 
       // Escape XML special characters

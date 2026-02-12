@@ -1,4 +1,5 @@
 import { trpc } from "@/lib/trpc";
+import { supabase } from "@/lib/supabase";
 import { UNAUTHED_ERR_MSG } from '@shared/const';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, TRPCClientError } from "@trpc/client";
@@ -66,20 +67,23 @@ const trpcClient = trpc.createClient({
       url: "/api/trpc",
       transformer: superjson,
       maxURLLength: 2083, // Standard max URL length
-      fetch(input, init) {
-        // Add session token from localStorage if cookies are blocked
-        const storedToken = getStoredSessionToken();
-        const headers = new Headers(init?.headers);
-        
-        if (storedToken && !headers.has('Cookie')) {
-          headers.set('Authorization', `Bearer ${storedToken}`);
+      async headers() {
+        const headers: Record<string, string> = {};
+
+        // Try getting Supabase session first
+        const { data } = await supabase.auth.getSession();
+        const token = data.session?.access_token;
+
+        if (token) {
+          headers['Authorization'] = `Bearer ${token}`;
+        } else {
+          // Fallback to stored token for legacy/dev-login
+          const storedToken = getStoredSessionToken();
+          if (storedToken) {
+            headers['Authorization'] = `Bearer ${storedToken}`;
+          }
         }
-        
-        return globalThis.fetch(input, {
-          ...(init ?? {}),
-          credentials: "include",
-          headers,
-        });
+        return headers;
       },
     }),
   ],

@@ -15,15 +15,15 @@ import { SEO } from "@/components/SEO";
 export default function TutorialDetail() {
   const params = useParams();
   const slug = params.slug;
-  
+
   // Get current user
   const { data: user } = trpc.auth.me.useQuery();
-  
+
   // Fetch tutorial progress
   const { data: progressData = [] } = trpc.tutorialProgress.getProgress.useQuery(undefined, {
     enabled: !!user,
   });
-  
+
   // Toggle watched mutation
   const utils = trpc.useUtils();
   const toggleWatched = trpc.tutorialProgress.toggleWatched.useMutation({
@@ -35,145 +35,145 @@ export default function TutorialDetail() {
       toast.error("Failed to update progress");
     },
   });
-  
+
   // Check if current tutorial is watched
-  const isWatched = progressData.some(p => p.tutorialSlug === slug && p.watched);
+  const isWatched = progressData.some(p => p.tutorialSlug === slug && p.completed);
 
   // This will be replaced with database query
   const tutorials: Record<string, any> = {
     "navigating-user-interface": {
-    id: 1,
-    slug: "navigating-user-interface",
-    title: "Vectorworks Tutorial: Navigating the User Interface for Scenic Designers",
-    description: "Master the Vectorworks workspace, palettes, and coordinate system to build an efficient scenic design workflow.",
-    youtubeId: "jRI33g1oSt0",
-    category: "Getting Started",
-    difficulty: "Beginner",
-    duration: 634, // 10:34 in seconds
-    uploadDate: "2020-08-15",
-    
-    learningObjectives: [
-      "Understand the Vectorworks menu bar and its theatrical design applications",
-      "Navigate the Basic Tool Palette and Attributes Palette",
-      "Master the Object Info Palette for precise object control",
-      "Use the Navigation Palette to manage classes, layers, and viewports",
-      "Understand the X, Y, and Z axis system and coordinate origin",
-      "Toggle between 2D and 3D views using keyboard shortcuts",
-      "Configure workspace palettes for optimal workflow",
-    ],
+      id: 1,
+      slug: "navigating-user-interface",
+      title: "Vectorworks Tutorial: Navigating the User Interface for Scenic Designers",
+      description: "Master the Vectorworks workspace, palettes, and coordinate system to build an efficient scenic design workflow.",
+      youtubeId: "jRI33g1oSt0",
+      category: "Getting Started",
+      difficulty: "Beginner",
+      duration: 634, // 10:34 in seconds
+      uploadDate: "2020-08-15",
 
-    overview: `This tutorial introduces the Vectorworks user interface specifically for scenic designers. You'll learn how to navigate the workspace, understand the coordinate system, and configure palettes for theatrical drafting and 3D modeling.
+      learningObjectives: [
+        "Understand the Vectorworks menu bar and its theatrical design applications",
+        "Navigate the Basic Tool Palette and Attributes Palette",
+        "Master the Object Info Palette for precise object control",
+        "Use the Navigation Palette to manage classes, layers, and viewports",
+        "Understand the X, Y, and Z axis system and coordinate origin",
+        "Toggle between 2D and 3D views using keyboard shortcuts",
+        "Configure workspace palettes for optimal workflow",
+      ],
+
+      overview: `This tutorial introduces the Vectorworks user interface specifically for scenic designers. You'll learn how to navigate the workspace, understand the coordinate system, and configure palettes for theatrical drafting and 3D modeling.
 
 The walkthrough covers the menu bar, tool palettes, and the critical Object Info and Navigation palettes that control your drawing organization. You'll also learn the X/Y/Z axis system and why keeping your model near the origin (0,0) is essential for rendering.
 
 Finally, the tutorial explores view controls, zoom functions, and workspace customization—showing how to set up an efficient environment for scenic design work.`,
 
-    keyConcepts: [
-      {
-        title: "THE COORDINATE ORIGIN (0,0)",
-        content: "All Vectorworks models should be created as close to the origin (0,0) as possible. Straying too far from zero will affect Vectorworks' ability to render perspectives correctly. The origin is where the X and Y axes intersect.",
-      },
-      {
-        title: "X, Y, AND Z AXES",
-        content: "Green axis = North/South (Y-axis), Red axis = East/West (X-axis), Blue axis = Up/Down (Z-axis). Positive numbers extend East, North, and Up from origin. Negative numbers extend West, South, and Down.",
-      },
-      {
-        title: "TOP/PLAN VIEW VS 3D VIEWS",
-        content: "Top/Plan view is the default 2D drafting view. Use Right Isometric, Front, Left, and other 3D views to visualize and model scenic elements in three dimensions. Toggle views using the View Bar or number pad shortcuts.",
-      },
-    ],
+      keyConcepts: [
+        {
+          title: "THE COORDINATE ORIGIN (0,0)",
+          content: "All Vectorworks models should be created as close to the origin (0,0) as possible. Straying too far from zero will affect Vectorworks' ability to render perspectives correctly. The origin is where the X and Y axes intersect.",
+        },
+        {
+          title: "X, Y, AND Z AXES",
+          content: "Green axis = North/South (Y-axis), Red axis = East/West (X-axis), Blue axis = Up/Down (Z-axis). Positive numbers extend East, North, and Up from origin. Negative numbers extend West, South, and Down.",
+        },
+        {
+          title: "TOP/PLAN VIEW VS 3D VIEWS",
+          content: "Top/Plan view is the default 2D drafting view. Use Right Isometric, Front, Left, and other 3D views to visualize and model scenic elements in three dimensions. Toggle views using the View Bar or number pad shortcuts.",
+        },
+      ],
 
-    proTips: [
-      "Customize your workspace layout early and save it as a workspace preset for consistency across projects.",
-      "Use the number pad to quickly switch between views: 1=Front, 3=Right, 7=Top, 0=Isometric.",
-      "Keep the Object Info Palette visible at all times—it's your primary tool for precise object control.",
-      "If palettes disappear, go to Window > Palettes to restore them.",
-    ],
+      proTips: [
+        "Customize your workspace layout early and save it as a workspace preset for consistency across projects.",
+        "Use the number pad to quickly switch between views: 1=Front, 3=Right, 7=Top, 0=Isometric.",
+        "Keep the Object Info Palette visible at all times—it's your primary tool for precise object control.",
+        "If palettes disappear, go to Window > Palettes to restore them.",
+      ],
 
-    shortcuts: [
-      { keys: "0-9 (Number Pad)", action: "Switch between standard views" },
-      { keys: "Cmd/Ctrl + Scroll", action: "Zoom in and out" },
-      { keys: "Spacebar + Drag", action: "Pan around the workspace" },
-    ],
+      shortcuts: [
+        { keys: "0-9 (Number Pad)", action: "Switch between standard views" },
+        { keys: "Cmd/Ctrl + Scroll", action: "Zoom in and out" },
+        { keys: "Spacebar + Drag", action: "Pan around the workspace" },
+      ],
 
-    commonPitfalls: [
-      "Placing models too far from the origin (0,0), which breaks perspective rendering",
-      "Not understanding the difference between Design Layers and Sheet Layers",
-      "Closing critical palettes (Object Info, Navigation) and not knowing how to restore them",
-      "Confusing the View Bar with the Navigation Palette—they offer similar but different controls",
-      "Not customizing the workspace layout, leading to inefficient palette placement",
-    ],
+      commonPitfalls: [
+        "Placing models too far from the origin (0,0), which breaks perspective rendering",
+        "Not understanding the difference between Design Layers and Sheet Layers",
+        "Closing critical palettes (Object Info, Navigation) and not knowing how to restore them",
+        "Confusing the View Bar with the Navigation Palette—they offer similar but different controls",
+        "Not customizing the workspace layout, leading to inefficient palette placement",
+      ],
 
-    transcript: [
-      { time: "0:00", text: "[Music]" },
-      { time: "0:05", text: "Hello, this is Brandon PT Davis. I'm a theatrical scenic designer, and today I'm going to share with you a Vectorworks tutorial about the user interface." },
-      { time: "0:17", text: "We're going to start off by opening the software. I have the software here on my desktop." },
-      { time: "0:23", text: "As you notice, the Vectorworks software takes time to open. This is normal because the software is very large." },
-      { time: "0:32", text: "As the software opens, you'll notice that the Vectorworks template user template here is set as a default that says 'Do not use the sheet.' It recommends to close the file, click the file, and select an existing file or open a template." },
-      { time: "0:53", text: "My students at UTEP have been provided with a specific template for them to learn the software, so now I'm going to close this file." },
-      { time: "1:04", text: "To open the file, I'm going to go to File > New, and under here I have the UTEP Basics template. I'm going to press OK." },
-      { time: "1:18", text: "Now that we have the proper Vectorworks template installed, I'm going to speak with you about the Vectorworks user interface." },
-      { time: "1:25", text: "Like many software programs, the Vectorworks user interface has a menu bar across the top—items such as File, Edit, Tools, Text, View, Window, Cloud, and Help." },
-      { time: "1:39", text: "You may have seen in other software programs Vectorworks will use these similar but also differently than other programs you may be used to. We will talk specifically about these tools, these menu items, as we move forward." },
-      { time: "1:55", text: "We also have the Modify, Model, Spotlight, and Event menu items. These items are more specific to Vectorworks." },
-      { time: "2:09", text: "On the left side here, we have the Basic Tool Palette. The Basic Tool Palette is a combination of tools that you use most frequently throughout the Vectorworks software. This would include things like the square tool, 2D line tool, measuring tools, and annotations. We'll speak more specifically about the basic tool set in the next video." },
-      { time: "2:32", text: "The Attributes Palette allows you to edit and modify specific attributes within the 2D objects that you are creating in Vectorworks." },
-      { time: "2:44", text: "The Tool Set Palette—this palette is very specific to the Vectorworks workspace that you're using. There is a variety of tools that you can use throughout the Vectorworks software, and we will speak specifically to how they apply to theatrical design during the course of these tutorials." },
-      { time: "3:01", text: "We also have a Snapping Palette. A Snapping Palette modifies the way that you interact with the object through Vectorworks. We can move the Snapping Palette right now into the top left corner. We can also change where we have all the palettes in Vectorworks so that we can work in our most effective manner. My preference is to have the workspace configured as shown here." },
-      { time: "3:36", text: "To the right side, we have the Object Info Palette. The Object Info Palette provides information about objects that you're working with in Vectorworks. I will draw a rectangle to show you some of the functionality of the Object Info Palette." },
-      { time: "3:53", text: "So here we can see class, layer, and plane information, as well as width and height. We can modify the rotation of the object as well. There's also data information, and if we're working with 3D objects, we can modify the textures that are applied to the object through the window render options in the Object Info Palette." },
-      { time: "4:18", text: "Below the Object Info Palette is the Navigation Palette. The Navigation Palette is a way to navigate through many aspects of the software. We have our classes here, layers, sheet layers, viewports, saved views, and file references." },
-      { time: "4:50", text: "On the top, we have the Resource Manager. The Resource Manager is a way to store lots of information throughout Vectorworks. Resource Manager items include gradients, hatches, images, line types, materials, record formats, Renderworks backgrounds, Renderworks styles, Renderworks textures, a resource folder, roof styles, script, sketch styles, slab styles, text style, tiles, wall style, and worksheet." },
-      { time: "5:29", text: "At the center, we have the Vectorworks workspace. This large square in the center—the Vectorworks workspace by default is in Top/Plan view. Top/Plan view is also the 2D view." },
-      { time: "5:45", text: "We also have a ruler on the X and Y axis, and at the center we have zero, zero. In order to explain the X, Y, and Z axis and our views, I will show you these arrow symbols that I've created." },
-      { time: "6:04", text: "Thinking of the green North and South as the Y-axis, and red East and West as the X-axis. At the center and the ruler, we have zero, zero. It is recommended that your models be as close and/or on zero, zero as possible when creating your model." },
-      { time: "6:31", text: "Straying too far away from zero, zero will affect Vectorworks' ability to render the view in perspective." },
-      { time: "6:48", text: "Now I will go to a Right Isometric view and show you the axis. We have the green axis—the North and South as our Y-axis. The red East and West as our X-axis. And the Z-axis is up and down." },
-      { time: "7:08", text: "If we look at the ruler again from this view, we have East as positive numbers—four inches, eight inches, further on it's infinite. If we look towards the West from zero, we go into negative numbers—negative four, et cetera. The same applies both to North and South and the Z-axis up and down—negative, positive numbers." },
-      { time: "7:47", text: "The View Bar across the top offers some of the same functionality as the Navigation Palette. Here we can toggle through the classes and change the active class that we're using. We can toggle through our design and sheet layers. We can also change our screen and layer plane views. Saved views will be stored here." },
-      { time: "8:19", text: "These items here affect how you zoom into Vectorworks, so I can zoom to page or I can zoom to the object. We can also zoom in with this functionality. This is a numeric way to view the zoom functions." },
-      { time: "8:49", text: "These are the working plane views, which we will talk more about when we get into 3D. But we can toggle through the views using this slider. So here is top, right, left. You can also use the number pad and change the views as well." },
-      { time: "9:22", text: "This icon here will change to your previous and next views that you are looking at within your Vectorworks file." },
-      { time: "9:35", text: "This icon is the Rotate Plan. This would be used if you were working in 3D and wanted to adjust the ground plan to a different view." },
-      { time: "9:50", text: "You can also modify the perspective with this dropdown, and the render settings can be modified with this dropdown." },
-      { time: "10:02", text: "The View Bar located here will be changed depending on the tools that you have accessed." },
-      { time: "10:12", text: "And this palette here will give you access to shortcuts from both document preferences and Vectorworks preferences." },
-      { time: "10:22", text: "This concludes the Vectorworks tutorial on user interface. If you have any questions, please let me know. Thank you." },
-    ],
+      transcript: [
+        { time: "0:00", text: "[Music]" },
+        { time: "0:05", text: "Hello, this is Brandon PT Davis. I'm a theatrical scenic designer, and today I'm going to share with you a Vectorworks tutorial about the user interface." },
+        { time: "0:17", text: "We're going to start off by opening the software. I have the software here on my desktop." },
+        { time: "0:23", text: "As you notice, the Vectorworks software takes time to open. This is normal because the software is very large." },
+        { time: "0:32", text: "As the software opens, you'll notice that the Vectorworks template user template here is set as a default that says 'Do not use the sheet.' It recommends to close the file, click the file, and select an existing file or open a template." },
+        { time: "0:53", text: "My students at UTEP have been provided with a specific template for them to learn the software, so now I'm going to close this file." },
+        { time: "1:04", text: "To open the file, I'm going to go to File > New, and under here I have the UTEP Basics template. I'm going to press OK." },
+        { time: "1:18", text: "Now that we have the proper Vectorworks template installed, I'm going to speak with you about the Vectorworks user interface." },
+        { time: "1:25", text: "Like many software programs, the Vectorworks user interface has a menu bar across the top—items such as File, Edit, Tools, Text, View, Window, Cloud, and Help." },
+        { time: "1:39", text: "You may have seen in other software programs Vectorworks will use these similar but also differently than other programs you may be used to. We will talk specifically about these tools, these menu items, as we move forward." },
+        { time: "1:55", text: "We also have the Modify, Model, Spotlight, and Event menu items. These items are more specific to Vectorworks." },
+        { time: "2:09", text: "On the left side here, we have the Basic Tool Palette. The Basic Tool Palette is a combination of tools that you use most frequently throughout the Vectorworks software. This would include things like the square tool, 2D line tool, measuring tools, and annotations. We'll speak more specifically about the basic tool set in the next video." },
+        { time: "2:32", text: "The Attributes Palette allows you to edit and modify specific attributes within the 2D objects that you are creating in Vectorworks." },
+        { time: "2:44", text: "The Tool Set Palette—this palette is very specific to the Vectorworks workspace that you're using. There is a variety of tools that you can use throughout the Vectorworks software, and we will speak specifically to how they apply to theatrical design during the course of these tutorials." },
+        { time: "3:01", text: "We also have a Snapping Palette. A Snapping Palette modifies the way that you interact with the object through Vectorworks. We can move the Snapping Palette right now into the top left corner. We can also change where we have all the palettes in Vectorworks so that we can work in our most effective manner. My preference is to have the workspace configured as shown here." },
+        { time: "3:36", text: "To the right side, we have the Object Info Palette. The Object Info Palette provides information about objects that you're working with in Vectorworks. I will draw a rectangle to show you some of the functionality of the Object Info Palette." },
+        { time: "3:53", text: "So here we can see class, layer, and plane information, as well as width and height. We can modify the rotation of the object as well. There's also data information, and if we're working with 3D objects, we can modify the textures that are applied to the object through the window render options in the Object Info Palette." },
+        { time: "4:18", text: "Below the Object Info Palette is the Navigation Palette. The Navigation Palette is a way to navigate through many aspects of the software. We have our classes here, layers, sheet layers, viewports, saved views, and file references." },
+        { time: "4:50", text: "On the top, we have the Resource Manager. The Resource Manager is a way to store lots of information throughout Vectorworks. Resource Manager items include gradients, hatches, images, line types, materials, record formats, Renderworks backgrounds, Renderworks styles, Renderworks textures, a resource folder, roof styles, script, sketch styles, slab styles, text style, tiles, wall style, and worksheet." },
+        { time: "5:29", text: "At the center, we have the Vectorworks workspace. This large square in the center—the Vectorworks workspace by default is in Top/Plan view. Top/Plan view is also the 2D view." },
+        { time: "5:45", text: "We also have a ruler on the X and Y axis, and at the center we have zero, zero. In order to explain the X, Y, and Z axis and our views, I will show you these arrow symbols that I've created." },
+        { time: "6:04", text: "Thinking of the green North and South as the Y-axis, and red East and West as the X-axis. At the center and the ruler, we have zero, zero. It is recommended that your models be as close and/or on zero, zero as possible when creating your model." },
+        { time: "6:31", text: "Straying too far away from zero, zero will affect Vectorworks' ability to render the view in perspective." },
+        { time: "6:48", text: "Now I will go to a Right Isometric view and show you the axis. We have the green axis—the North and South as our Y-axis. The red East and West as our X-axis. And the Z-axis is up and down." },
+        { time: "7:08", text: "If we look at the ruler again from this view, we have East as positive numbers—four inches, eight inches, further on it's infinite. If we look towards the West from zero, we go into negative numbers—negative four, et cetera. The same applies both to North and South and the Z-axis up and down—negative, positive numbers." },
+        { time: "7:47", text: "The View Bar across the top offers some of the same functionality as the Navigation Palette. Here we can toggle through the classes and change the active class that we're using. We can toggle through our design and sheet layers. We can also change our screen and layer plane views. Saved views will be stored here." },
+        { time: "8:19", text: "These items here affect how you zoom into Vectorworks, so I can zoom to page or I can zoom to the object. We can also zoom in with this functionality. This is a numeric way to view the zoom functions." },
+        { time: "8:49", text: "These are the working plane views, which we will talk more about when we get into 3D. But we can toggle through the views using this slider. So here is top, right, left. You can also use the number pad and change the views as well." },
+        { time: "9:22", text: "This icon here will change to your previous and next views that you are looking at within your Vectorworks file." },
+        { time: "9:35", text: "This icon is the Rotate Plan. This would be used if you were working in 3D and wanted to adjust the ground plan to a different view." },
+        { time: "9:50", text: "You can also modify the perspective with this dropdown, and the render settings can be modified with this dropdown." },
+        { time: "10:02", text: "The View Bar located here will be changed depending on the tools that you have accessed." },
+        { time: "10:12", text: "And this palette here will give you access to shortcuts from both document preferences and Vectorworks preferences." },
+        { time: "10:22", text: "This concludes the Vectorworks tutorial on user interface. If you have any questions, please let me know. Thank you." },
+      ],
 
-    relatedResources: [
-      {
-        title: "Vectorworks Quick Start Tutorials",
-        url: "https://app-help.vectorworks.net/2025/eng/VW2025_Guide/QuickStart/Quick_Start_tutorials.htm",
-        type: "Official Documentation",
-      },
-      {
-        title: "Customizing Workspaces Guide",
-        url: "https://app-help.vectorworks.net/2026/eng/VW2026_Guide/Start/Customizing_workspaces.htm",
-        type: "Official Documentation",
-      },
-      {
-        title: "Vectorworks 101's: User Interface Playlist",
-        url: "https://www.youtube.com/playlist?list=PLiLCoe7DU1HYNYeFLC3R1C-C7JshE_a0G",
-        type: "Video Series",
-      },
-      {
-        title: "Scenic and Set Design with Vectorworks Course",
-        url: "https://university.vectorworks.net/course/view.php?id=331",
-        type: "Online Course",
-      },
-      {
-        title: "Vectorworks Community Board",
-        url: "https://forum.vectorworks.net/",
-        type: "Community",
-      },
-    ],
+      relatedResources: [
+        {
+          title: "Vectorworks Quick Start Tutorials",
+          url: "https://app-help.vectorworks.net/2025/eng/VW2025_Guide/QuickStart/Quick_Start_tutorials.htm",
+          type: "Official Documentation",
+        },
+        {
+          title: "Customizing Workspaces Guide",
+          url: "https://app-help.vectorworks.net/2026/eng/VW2026_Guide/Start/Customizing_workspaces.htm",
+          type: "Official Documentation",
+        },
+        {
+          title: "Vectorworks 101's: User Interface Playlist",
+          url: "https://www.youtube.com/playlist?list=PLiLCoe7DU1HYNYeFLC3R1C-C7JshE_a0G",
+          type: "Video Series",
+        },
+        {
+          title: "Scenic and Set Design with Vectorworks Course",
+          url: "https://university.vectorworks.net/course/view.php?id=331",
+          type: "Online Course",
+        },
+        {
+          title: "Vectorworks Community Board",
+          url: "https://forum.vectorworks.net/",
+          type: "Community",
+        },
+      ],
 
-    relatedTutorials: [
-      { title: "Vectorworks 2: Classes and Layers", slug: "classes-and-layers" },
-      { title: "Vectorworks 3: Basic 2D Tools", slug: "basic-2d-tools" },
-      { title: "Vectorworks 5: 2D Theater Ground Plan", slug: "2d-theater-ground-plan" },
-    ],
+      relatedTutorials: [
+        { title: "Vectorworks 2: Classes and Layers", slug: "classes-and-layers" },
+        { title: "Vectorworks 3: Basic 2D Tools", slug: "basic-2d-tools" },
+        { title: "Vectorworks 5: 2D Theater Ground Plan", slug: "2d-theater-ground-plan" },
+      ],
     },
     "understanding-classes": {
       id: 2,
@@ -185,7 +185,7 @@ Finally, the tutorial explores view controls, zoom functions, and workspace cust
       difficulty: "Beginner",
       duration: 587, // 9:47 in seconds
       uploadDate: "2021-01-24",
-      
+
       learningObjectives: [
         "Understand what classes are and how they differ from design layers",
         "Navigate and manage classes using the Navigation palette",
@@ -269,7 +269,7 @@ Finally, the tutorial explores how grouping objects interacts with class visibil
       difficulty: "Beginner",
       duration: 474, // 7:54 in seconds
       uploadDate: "2021-01-25",
-      
+
       learningObjectives: [
         "Understand what design layers are and how they organize drawing information",
         "Navigate and manage design layers using the Navigation palette",
@@ -383,7 +383,7 @@ Finally, the tutorial explores layer viewing options that control whether you ca
       difficulty: "Beginner",
       duration: 340, // 5:40 in seconds
       uploadDate: "2021-01-25",
-      
+
       learningObjectives: [
         "Understand the purpose of workspaces and templates in Vectorworks",
         "Locate and install a Vectorworks User Folder",
@@ -463,7 +463,7 @@ The tutorial covers copying the Vectorworks User Folder to your documents, acces
       difficulty: "Beginner",
       duration: 897, // 14:57 in seconds
       uploadDate: "2021-01-27",
-      
+
       learningObjectives: [
         "Navigate and use the Selection tool to modify objects",
         "Use Pan and Zoom tools to navigate your workspace",
@@ -579,9 +579,9 @@ The tutorial covers 15+ essential tools organized into categories: navigation to
       difficulty: "Beginner",
       duration: 476, // 7:56 in seconds
       uploadDate: "2021-01-27",
-      
+
       overview: "This tutorial covers the essential workflow for creating professional print documentation in Vectorworks using sheet layers. You'll learn how to set up sheet layers as virtual pages, create viewports that reference your design layer content, add title blocks and borders, and manage drawing scales. By the end of this tutorial, you'll understand how to organize multiple drawings on a single sheet and create a complete drawing package ready for printing or PDF export.\n\nSheet layers are fundamental to professional documentation workflow, allowing you to present your design work in a standardized format with proper title blocks, drawing numbers, and scales. This tutorial demonstrates the complete process from creating a blank sheet to populating it with multiple viewports at different scales.",
-      
+
       learningObjectives: [
         "Understand the difference between design layers and sheet layers",
         "Create and manage sheet layers for print documentation",
@@ -590,7 +590,7 @@ The tutorial covers 15+ essential tools organized into categories: navigation to
         "Control viewport scales and drawing labels",
         "Organize multiple viewports on a single sheet",
       ],
-      
+
       keyConcepts: [
         { title: "SHEET LAYER", content: "A layer within Vectorworks used to lay out pages for printing, similar to a physical sheet of paper where you arrange your drawings. Sheet layers are the final output format for documentation." },
         { title: "VIEWPORT", content: "A window into a design layer that displays specific content on a sheet layer, allowing you to show the same drawing at different scales or views. Viewports link design content to print layouts." },
@@ -599,7 +599,7 @@ The tutorial covers 15+ essential tools organized into categories: navigation to
         { title: "DRAWING LABEL", content: "Text that identifies a viewport with a drawing number and title, automatically linked to the viewport properties for easy updates. Drawing labels maintain consistency across documentation." },
         { title: "SCALE", content: "The ratio between the size of the drawing on the sheet and the actual size of the object, such as 1/2\" = 1'-0\" for architectural drawings. Proper scale control ensures accurate documentation." },
       ],
-      
+
       proTips: [
         "Name your viewports descriptively (e.g., 'Wall Front', 'Plan View') in the Object Info palette to easily identify them in complex drawing packages.",
         "Use the keyboard shortcut Ctrl/Cmd + ' (apostrophe) to quickly create a viewport from a selected crop rectangle.",
@@ -609,12 +609,12 @@ The tutorial covers 15+ essential tools organized into categories: navigation to
         "Use the Navigation palette to quickly switch between sheet layers and see all viewports associated with each sheet.",
         "Set viewport scales in the Object Info palette for precise control over how your drawings appear at different sizes on the same sheet.",
       ],
-      
+
       shortcuts: [
         { keys: "Ctrl/Cmd + '", action: "Create Viewport", description: "Quickly create a viewport from a selected crop rectangle" },
         { keys: "Fit to Page", action: "Zoom to Sheet", description: "View the entire sheet layer in the viewport (use zoom icons)" },
       ],
-      
+
       commonPitfalls: [
         "Forgetting to create a crop rectangle before making a viewport - the crop defines what content will be visible.",
         "Not naming viewports descriptively, making it difficult to identify them later in complex drawing sets.",
@@ -622,7 +622,7 @@ The tutorial covers 15+ essential tools organized into categories: navigation to
         "Creating viewports at incorrect scales and not checking the Object Info palette scale settings.",
         "Placing too many viewports on a single sheet, making the documentation cluttered and hard to read.",
       ],
-      
+
       transcript: [
         { time: "0:00", text: "[Music]" },
         { time: "0:06", text: "Hello, this is Brandon PT Davis and in this Vectorworks tutorial we will discuss sheet layers." },
@@ -665,13 +665,13 @@ The tutorial covers 15+ essential tools organized into categories: navigation to
         { time: "7:34", text: "Directly above our viewport we have the wall plan viewport." },
         { time: "7:42", text: "This concludes the Vectorworks tutorial on sheet layers. If you have any questions, feel free to ask." },
       ],
-      
+
       relatedResources: [
         { type: "Documentation", title: "Vectorworks Sheet Layers Guide", url: "https://app-help.vectorworks.net/" },
         { type: "Video", title: "Title Block Manager Tutorial", url: "https://www.youtube.com/vectorworks" },
         { type: "Template", title: "Professional Title Block Templates", url: "https://www.vectorworks.net/" },
       ],
-      
+
       relatedTutorials: [
         { title: "Vectorworks Tutorial: Understanding Design Layers", slug: "understanding-design-layers" },
         { title: "Vectorworks Tutorial: Basics Tool Palette", slug: "basics-tool-palette" },
@@ -688,13 +688,13 @@ The tutorial covers 15+ essential tools organized into categories: navigation to
       difficultyLevel: "Intermediate",
       duration: 374,
       uploadDate: "2021-01-28",
-      
+
       overview: `This quick-tip tutorial demonstrates a practical workflow for creating accurate architectural trim and molding profiles in Vectorworks. The tutorial walks through the complete process: sourcing reference images with real-world dimensions from manufacturer websites, importing images into Vectorworks, tracing profiles using the polyline tool with multiple vertex modes, scaling traced geometry to match actual dimensions, and converting finished profiles into reusable 2D symbols.
 
 The workflow emphasizes efficiency by showing how to trace profiles directly without pre-scaling the reference image, then applying accurate dimensions after tracing is complete. This approach saves time and reduces complexity compared to traditional scaling methods. The tutorial covers essential polyline techniques including corner vertex mode, radius point arc mode, and polygon point editing for achieving smooth curves that match the reference profile.
 
 Finally, the tutorial demonstrates how to convert the finished profile into a 2D symbol stored in the Resource Manager, making it instantly available for reuse across multiple drawings. This symbol workflow ensures consistency across documentation and eliminates the need to redraw common trim profiles repeatedly.`,
-      
+
       learningObjectives: [
         "Source trim profile reference images with dimensional data from manufacturer websites",
         "Import and configure reference images in Vectorworks (JPEG vs PNG considerations)",
@@ -703,7 +703,7 @@ Finally, the tutorial demonstrates how to convert the finished profile into a 2D
         "Convert traced profiles to reusable 2D symbols with proper class assignments",
         "Organize trim profile symbols in Resource Manager for efficient reuse",
       ],
-      
+
       keyConcepts: [
         { title: "POLYLINE TOOL", content: "A versatile drawing tool that creates connected line segments and curves in a single object. The polyline tool supports multiple vertex modes (corner, radius arc, bezier) that can be toggled during drawing, making it ideal for tracing complex shapes like trim profiles." },
         { title: "VERTEX MODES", content: "Different point types available in the polyline tool: Corner Vertex creates sharp angles, Radius Point Arc creates smooth curves with adjustable radius, and Bezier creates flowing curves with control handles. Toggle between modes using the 'U' hotkey while drawing." },
@@ -712,7 +712,7 @@ Finally, the tutorial demonstrates how to convert the finished profile into a 2D
         { title: "2D SYMBOLS", content: "Reusable graphic elements stored in the Resource Manager that can be placed multiple times in drawings. Converting trim profiles to symbols ensures consistency, saves time, and allows instant updates across all instances when the symbol definition is edited." },
         { title: "CLASS ASSIGNMENT", content: "The process of assigning drawn geometry to specific classes that control graphic appearance and visibility. Trim profiles should be assigned to appropriate classes (e.g., 'Section Hatch') before converting to symbols to ensure proper display in different drawing contexts." },
       ],
-      
+
       proTips: [
         "Source trim profiles from manufacturer websites like uDecor.com that provide both profile images and accurate dimensional data in a single location.",
         "Save reference images with descriptive filenames that include product codes or profile names to maintain organization and traceability.",
@@ -725,14 +725,14 @@ Finally, the tutorial demonstrates how to convert the finished profile into a 2D
         "Use 'Next Mouse Click' insertion mode when creating symbols to control exactly where the symbol's origin point will be located.",
         "Store completed trim profile symbols in a dedicated library file that can be shared across projects and team members for consistency.",
       ],
-      
+
       shortcuts: [
         { keys: ["5"], action: "Activate Polyline Tool", description: "Quickly switch to the polyline tool for tracing profiles" },
         { keys: ["U"], action: "Toggle Vertex Mode", description: "Cycle between corner, arc, and bezier vertex modes while drawing" },
         { keys: ["Cmd/Ctrl", "K"], action: "Create Symbol", description: "Convert selected geometry to a reusable 2D or 3D symbol" },
         { keys: ["Double Click"], action: "Complete Polyline", description: "Finish drawing the current polyline and exit the tool" },
       ],
-      
+
       commonPitfalls: [
         "Attempting to scale reference images before tracing instead of tracing first and scaling geometry afterward—this adds unnecessary complexity and steps.",
         "Not sourcing dimensional data along with profile images, forcing guesswork when scaling traced geometry to real-world sizes.",
@@ -740,7 +740,7 @@ Finally, the tutorial demonstrates how to convert the finished profile into a 2D
         "Not using 'Convert to Group' option when creating 2D symbols, making it harder to edit symbol geometry later in 2D workflows.",
         "Creating symbols without descriptive names, leading to confusion when selecting from dozens of similar trim profiles in the Resource Manager.",
       ],
-      
+
       transcript: [
         { time: "0:04", text: "Hello, this is Brandon PT Davis, theatrical scenic designer. In this Vectorworks tutorial, we'll be using the polyline tool to show how you can quickly create trim profiles for your drawings." },
         { time: "0:21", text: "To start this tutorial, I'm going to go to uDecor.com to get a trim profile that has real-world information. In the website, I can see the trim profile here, and I also have the size information and material." },
@@ -757,13 +757,13 @@ Finally, the tutorial demonstrates how to convert the finished profile into a 2D
         { time: "5:53", text: "Now when I return to my Resource Manager, I can find the 2D shape that was created. If I double-click on this object, I can then place an instance of it in the document." },
         { time: "6:07", text: "This completes the Vectorworks tutorial on the Polyline Tool. If you have any questions, feel free to ask. Thank you." },
       ],
-      
+
       relatedResources: [
         { title: "Vectorworks Polyline Tool Documentation", url: "https://app-help.vectorworks.net/2024/eng/VW2024_Guide/Shapes2/Polyline_Tool.htm" },
         { title: "uDecor Architectural Trim Catalog", url: "https://www.udecor.com" },
         { title: "Vectorworks Symbol Creation Guide", url: "https://university.vectorworks.net" },
       ],
-      
+
       relatedTutorials: [
         { title: "Vectorworks Tutorial: Basics Tool Palette", slug: "basics-tool-palette" },
         { title: "Vectorworks Tutorial: Understanding Classes", slug: "understanding-classes" },
@@ -780,13 +780,13 @@ Finally, the tutorial demonstrates how to convert the finished profile into a 2D
       difficultyLevel: "Intermediate",
       duration: 767,
       uploadDate: "2021-01-29",
-      
+
       overview: `This comprehensive tutorial covers the essential 2D editing and modification tools that form the foundation of efficient drafting workflows in Vectorworks. The tutorial systematically demonstrates ten powerful tools and commands: Mirror Tool (standard and duplicate modes), Reshape Tool (move polygon handles, move edges parallel, add/delete vertex), Offset Tool (distance and point modes), Split Tool (line, point, and trim modes), Connect/Combine Tool (single, dual, and multiple object modes), and key Modify menu commands including Move, Align/Distribute, Rotate, Scale, Add/Subtract surfaces, Convert to Lines, and Compose/Decompose.
 
 The tutorial emphasizes practical workflows for each tool, showing how to access them via tool palettes, hotkeys, and right-click context menus. Each tool section demonstrates multiple modes and options, helping users understand when to use standard versus duplicate modes, symmetric versus asymmetric scaling, and single versus multiple object operations. The tutorial also covers essential shape manipulation techniques like closing open polylines, converting between lines and polygons, and using Boolean operations (add, subtract, intersect) to create complex shapes from simple primitives.
 
 The final section introduces the powerful Duplicate Along Path feature, which allows users to distribute objects evenly along curved or straight paths with precise control over spacing, offset, and tangency. This advanced technique is essential for creating repeating elements like fence posts, lighting fixtures, or decorative patterns in scenic design documentation.`,
-      
+
       learningObjectives: [
         "Master Mirror Tool in both standard and duplicate modes for creating symmetrical designs",
         "Use Reshape Tool to modify polygon geometry including moving handles, edges, and adding/deleting vertices",
@@ -798,7 +798,7 @@ The final section introduces the powerful Duplicate Along Path feature, which al
         "Convert between lines and polygons using Compose and Decompose commands",
         "Duplicate objects along paths with control over spacing, offset, and tangency options",
       ],
-      
+
       keyConcepts: [
         { title: "MIRROR TOOL", content: "A transformation tool that creates mirrored copies of objects across a user-defined axis. Standard mode moves the object to the mirrored position, while Duplicate mode creates a copy and leaves the original in place. Essential for creating symmetrical scenic elements." },
         { title: "RESHAPE TOOL", content: "An editing tool that allows direct manipulation of polygon geometry through multiple modes: Move Polygon Handles adjusts individual vertices, Move Edges Parallel shifts entire edges, Add Vertex creates new points (with corner or radius options), and Delete Vertex removes points. Activated by double-clicking 2D shapes." },
@@ -808,7 +808,7 @@ The final section introduces the powerful Duplicate Along Path feature, which al
         { title: "BOOLEAN OPERATIONS", content: "Geometric operations that combine or subtract shapes: Add Surface merges multiple shapes into one polygon, Clip Surface subtracts one shape from another, and Intersect Surface creates a new shape from overlapping areas. Found in Modify menu and right-click context menu." },
         { title: "DUPLICATE ALONG PATH", content: "An advanced feature (Edit > Duplicate Along Path) that distributes copies of an object along a curved or straight path. Options include duplicate by number or fixed distance, start offset, and tangency control. Center Object to Path places object centers on the path, while Tangent to Path rotates objects to follow path direction." },
       ],
-      
+
       proTips: [
         "Access Mirror Tool from Basics Tool Palette; always select the object first, then activate the tool to see mode options.",
         "Double-click any 2D shape to instantly enter Reshape Tool mode without navigating through menus.",
@@ -821,7 +821,7 @@ The final section introduces the powerful Duplicate Along Path feature, which al
         "In Duplicate Along Path, use 'Center Object to Path' for circular objects and 'Tangent to Path' for directional objects like arrows or posts.",
         "Combine Boolean operations (Add, Clip, Intersect) with Reshape Tool to create complex architectural trim profiles and scenic details efficiently.",
       ],
-      
+
       shortcuts: [
         { keys: ["X"], action: "Selection Tool", description: "Activate selection tool to select objects before applying modifications" },
         { keys: ["O"], action: "Offset Tool", description: "Quick access to offset tool for creating parallel geometry" },
@@ -833,7 +833,7 @@ The final section introduces the powerful Duplicate Along Path feature, which al
         { keys: ["Double Click"], action: "Enter Reshape Mode", description: "Double-click any 2D shape to enter Reshape Tool" },
         { keys: ["U"], action: "Toggle Vertex Mode", description: "Switch between corner and radius arc modes in Reshape Tool" },
       ],
-      
+
       commonPitfalls: [
         "Forgetting to select objects before activating Mirror, Offset, or Split tools—tools require active selection to function.",
         "Using Offset Tool in 'Offset Original' mode when you meant to keep the original—always check the mode before clicking.",
@@ -844,7 +844,7 @@ The final section introduces the powerful Duplicate Along Path feature, which al
         "Not understanding the difference between Dual Object Connect (keeps separate lines) and Dual Object Combine (creates single polygon).",
         "Applying Boolean operations (Add/Clip/Intersect) to objects on different layers or classes, which can produce unexpected results.",
       ],
-      
+
       transcript: [
         { time: "0:04", text: "Hello, this is Brandon PT Davis, theatrical scenic designer. This Vectorworks tutorial is going to cover 2D Edit and Modify tricks and tools." },
         { time: "0:17", text: "The first tool I'm going to show you in this tutorial is the Mirror Tool. The Mirror Tool can be accessed in the Basics Tool Palette. In order to use the tool, you first need to select an object. I'm going to hit X for the Select tool, and now I'm going to select the Mirror Tool." },
@@ -878,13 +878,13 @@ The final section introduces the powerful Duplicate Along Path feature, which al
         { time: "11:49", text: "I'm going to choose to duplicate the path by 1 foot and will offset the path by 6 inches. By selecting 'Center Object to Path,' the circle will be duplicated from its center. If you have an object like a square, you can select 'Tangent to Path' to keep the objects tangent to the path. I'm going to press OK." },
         { time: "12:22", text: "I have three circles that are evenly spaced by 1 foot along the path. The first object is 6 inches offset from the start. This concludes the Vectorworks tutorial. If you have any questions, please feel free to ask. Thank you." },
       ],
-      
+
       relatedResources: [
         { title: "Vectorworks 2D Editing Tools Documentation", url: "https://app-help.vectorworks.net/2024/eng/VW2024_Guide/Shapes2/2D_editing_tools.htm" },
         { title: "Vectorworks Modify Menu Commands Guide", url: "https://university.vectorworks.net" },
         { title: "Duplicate Along Path Tutorial Video", url: "https://www.youtube.com/vectorworks" },
       ],
-      
+
       relatedTutorials: [
         { title: "Vectorworks Tutorial: Basics Tool Palette", slug: "basics-tool-palette" },
         { title: "Vectorworks Quick Tip: Creating Trim Profiles with the Polyline Tool", slug: "creating-trim-profiles-polyline" },
@@ -1464,824 +1464,824 @@ The final section introduces the powerful Duplicate Along Path feature, which al
         { title: "Community Forum: Symbol Best Practices", url: "https://forum.vectorworks.net" },
       ],
       relatedTutorials: [
-      { title: "Vectorworks Tutorial: Understanding Symbols", slug: "understanding-symbols" },
-      { title: "Vectorworks Tutorial: 3D Modeling Basics", slug: "3d-modeling-basics" },
-    ],
-  },
-  "basics-of-textures": {
-    id: 14,
-    title: "Vectorworks Tutorial: Basics of Textures",
-    slug: "basics-of-textures",
-    youtubeId: "9iApEa1XTug",
-    category: "3d-modeling",
-    difficulty: "Intermediate",
-    duration: "13:21",
-    publishDate: "Feb 08, 2021",
-    description: "Learn how to apply, edit, and create custom Renderworks textures to bring life to your 3D models in Vectorworks.",
-    overview: "This tutorial introduces Renderworks textures in Vectorworks, covering how to apply pre-made textures, adjust mapping types, edit texture parameters, and create custom textures from scratch. You'll learn the differences between OpenGL and Renderworks rendering modes, understand texture shaders (color, reflectivity, transparency, bump), and master the controls for scaling, rotating, and mapping textures onto 3D objects. The tutorial demonstrates practical workflows for wood, stone, glass, and marble textures, showing how to achieve realistic results through proper texture configuration and lighting.\n\n**Note:** In current versions of Vectorworks, OpenGL rendering mode has been renamed to \"Shaded.\" The concepts and workflows remain the same.",
-    learningObjectives: [
-      "Understand the differences between OpenGL (now called 'Shaded'), Fast Renderworks, and Final Quality Renderworks",
-      "Apply pre-made Renderworks textures from the Resource Manager to 3D objects",
-      "Adjust texture mapping types (Plane, Auto-Align Plane, Perimeter, Sphere, Cylinder)",
-      "Edit texture parameters including scale, offset, rotation, and mapping mode",
-      "Understand and modify texture shaders: color, reflectivity, transparency, and bump",
-      "Apply textures by face to create multi-material objects",
-      "Create custom Renderworks textures from imported images",
-      "Configure lighting (spotlights) to enhance texture visualization",
-      "Optimize texture scale settings within the texture definition vs. Object Info Palette",
-    ],
-    keyConcepts: [
-      {
-        title: "RENDERWORKS RENDERING MODES",
-        content: "OpenGL (now called 'Shaded' in current Vectorworks versions) is the fastest, simplified render mode that doesn't calculate lighting. Fast Renderworks adds basic lighting calculations. Final Quality Renderworks produces photorealistic results with full lighting, shadows, and reflections—but requires more processing time. Use Shaded/OpenGL for modeling, Renderworks for presentation.",
-      },
-      {
-        title: "TEXTURE MAPPING TYPES",
-        content: "Plane projects texture from a single direction. Auto-Align Plane projects texture perpendicular to each face. Perimeter wraps texture around the object's perimeter. Sphere and Cylinder are optimized for spherical and cylindrical geometry. Choose the map type that best matches your object's shape.",
-      },
-      {
-        title: "TEXTURE SHADERS",
-        content: "Color shader defines the base image or color. Reflectivity controls how light bounces off the surface (mirror, glossy, matte). Transparency controls how see-through the material is (glass = high transparency). Bump creates simulated surface texture without changing geometry.",
-      },
-      {
-        title: "TEXTURE SCALE SETTINGS",
-        content: "Texture scale can be adjusted in two places: in the Object Info Palette (per-object override) or within the texture definition itself (affects all instances). Editing the texture definition is preferred for consistency across multiple objects using the same material.",
-      },
-      {
-        title: "APPLY BY FACE",
-        content: "Instead of applying one texture to an entire object, you can apply different textures to individual faces. This allows multi-material objects like a wooden box with a stone top. Select the face in the Object Info Palette and assign the texture.",
-      },
-      {
-        title: "FRESNEL REFLECTIVITY",
-        content: "Fresnel is a physically-accurate reflection model where surfaces reflect more light at glancing angles. This creates realistic reflections on materials like water, glass, and polished surfaces. Adjusting Fresnel values affects how reflections change based on viewing angle.",
-      },
-    ],
-    proTips: [
-      "Work in Shaded mode (formerly OpenGL) while modeling and adjusting textures—only switch to Renderworks when you need to check the final appearance",
-      "Rename long texture names to shorter, descriptive names (e.g., 'Stonework') to keep your Resource Manager organized",
-      "Edit texture scale in the texture definition (Resource Manager > Edit) rather than per-object for consistency across your model",
-      "Start with Vectorworks' pre-made textures and modify them rather than building from scratch—they have well-tuned shader settings",
-      "Use bump mapping at 20-50% for subtle surface texture; 100% bump can look unrealistic unless you're creating rough materials",
-      "Set reflectivity to Mirror mode at 5-15% for realistic glossy surfaces like polished stone or finished wood",
-      "Add a spotlight when testing reflective materials—reflections are more visible with directional lighting",
-      "For glass materials, keep transparency at 80-95% and add slight reflectivity for realism",
-      "When creating custom textures from images, ensure the image tiles seamlessly or use large enough scale to avoid visible repeats",
-      "Use Auto-Align Plane mapping for architectural objects (boxes, walls) and Perimeter for cylindrical objects (columns, pipes)",
-      "Adjust blurriness on mirror reflections to soften them—sharp mirror reflections (0% blur) rarely occur in real materials",
-      "Save custom textures to your user library so you can reuse them across projects",
-      "Test textures on simple geometry (cubes, cylinders) before applying to complex models",
-      "Keep texture file sizes reasonable—high-resolution images (4K+) can slow down rendering without noticeable quality improvement",
-    ],
-    shortcuts: [
-      { keys: "Cmd/Ctrl + Click", action: "Select individual faces for face-specific texture application" },
-      { keys: "Resource Manager", action: "Access pre-made Renderworks textures and edit texture definitions" },
-      { keys: "Object Info > Render", action: "View and modify textures applied to selected objects" },
-    ],
-    commonPitfalls: [
-      "Using Final Quality Renderworks while modeling—it's too slow. Stick to OpenGL and only render for final checks",
-      "Not adjusting texture scale, resulting in unrealistic material appearance (e.g., wood grain that's 10 feet wide)",
-      "Applying textures without considering the mapping type—Plane mapping on a cylinder will look distorted",
-      "Setting bump to 100% on every texture, creating overly rough, unrealistic surfaces",
-      "Not renaming textures, leading to a cluttered Resource Manager with cryptic names",
-      "Adjusting texture scale in Object Info Palette instead of the texture definition, causing inconsistency across objects",
-      "Forgetting to add lighting when testing reflective materials—reflections won't be visible without light sources",
-      "Using high-resolution texture images that slow down rendering without improving visual quality",
-      "Not understanding the difference between bump (simulated texture) and actual 3D geometry—bump doesn't change the silhouette",
-      "Applying glass textures without adjusting transparency, resulting in opaque 'glass' objects",
-    ],
-    transcript: [
-      { time: "0:06", text: "Hello, this is Brandon PT Davis, theatrical scenic designer. In this Vectorworks tutorial, we're going to cover the basics of textures." },
-      { time: "0:13", text: "Textures in Vectorworks are what give you the ability to bring life to your 3D objects." },
-      { time: "0:20", text: "Currently, the object we're looking at in OpenGL is just a white cube with no textures on it." },
-      { time: "0:34", text: "If you're not familiar with the render options, OpenGL is the most simplified render mode in Vectorworks." },
-      { time: "0:45", text: "We can also change our render options to Fast Renderworks and Final Quality Renderworks." },
-      { time: "0:53", text: "You can build your own library of render styles, and we'll go over how to modify those in another video." },
-      { time: "1:01", text: "If I click Final Quality Renderworks, you'll see it generates an image that shows shadows and how light reflects on your model." },
-      { time: "1:16", text: "Now I'm going to switch back to OpenGL, because when you use Renderworks, your computer has to process how light affects the object, and that takes time." },
-      { time: "1:36", text: "So OpenGL is a simplified version of that." },
-      { time: "1:40", text: "In the Resource Manager, Vectorworks has hundreds of pre-made Renderworks textures that you can select." },
-      { time: "1:52", text: "I've selected three to start this tutorial: a glass, a stone, and a wood texture." },
-      { time: "2:00", text: "The first one I'm going to show you is the wood texture. I'm going to select it and drop it onto our one-foot by one-foot cube." },
-      { time: "2:19", text: "In the Object Info Palette, I can go to the Render settings. Here we have the texture that's been applied." },
-      { time: "2:30", text: "From the dropdown, I can change the texture easily." },
-      { time: "2:32", text: "We also have the map type, scale, offset, and rotation." },
-      { time: "2:41", text: "These controls let you quickly adjust the texture, including flipping it if needed." },
-      { time: "2:51", text: "The map type controls how the texture is projected onto the object." },
-      { time: "2:59", text: "For mapping, we have Plane, Auto-Align Plane, Sphere, Cylinder, and Perimeter." },
-      { time: "3:06", text: "My process is to choose the map type that seems best for the object, and then adjust if needed." },
-      { time: "3:18", text: "Right now it's set to Perimeter." },
-      { time: "3:22", text: "Before changing the map type, I can also adjust the scale to make the texture smaller, since we're dealing with a one-foot cube." },
-      { time: "3:31", text: "I can also change the rotation." },
-      { time: "3:37", text: "In Plane mode, it maps the texture based on a single plane across the object. That can look less accurate on some faces." },
-      { time: "4:02", text: "Auto-Align Plane chooses each face and projects the texture onto that face." },
-      { time: "4:15", text: "Perimeter maps around the perimeter of the object. With a cube, it can feel similar to Auto-Align, but it's handling the mapping differently." },
-      { time: "4:34", text: "There are also Sphere and Cylinder modes, which make more sense when you're mapping spherical or cylindrical objects." },
-      { time: "4:52", text: "Another thing we can do is apply textures by face. For example, I can map stone only to the top face, while the rest stays wood." },
-      { time: "5:18", text: "Now I'm going to switch to Final Quality Renderworks so you can see how it looks with more realistic lighting and shadows." },
-      { time: "5:34", text: "Now with our stone texture, I'm going to show you that we can edit the texture parameters." },
-      { time: "5:41", text: "In the Resource Manager, I can right-click the stone texture and choose Edit." },
-      { time: "5:49", text: "The name is long, so I can rename it to something simpler, like 'Stonework,' to keep the file organized." },
-      { time: "6:05", text: "Then we can adjust the shaders. Textures aren't just images—you can also control reflectivity, transparency, and bump." },
-      { time: "6:13", text: "If I look at the color shader, I can edit it and see the image the shader is based on." },
-      { time: "6:28", text: "From the dropdown, I can also adjust the color and Fresnel, or build my own color shaders in Vectorworks." },
-      { time: "6:42", text: "Reflectivity affects how light hits the object. For now, I'll keep it using the image's reflectivity." },
-      { time: "6:54", text: "Transparency controls how transparent the object is. Stone isn't transparent, so we keep that low." },
-      { time: "7:02", text: "Bump creates a simulated surface texture. Right now the bump is set to 20, so I'm going to increase it to 100% for the sake of the tutorial." },
-      { time: "7:20", text: "I'll press OK." },
-      { time: "7:25", text: "Now I'll go back to Final Quality Renderworks and re-render." },
-      { time: "7:41", text: "Watch the stone—you'll see it gains a little more depth. It's subtle, but it looks more realistic." },
-      { time: "7:56", text: "Now I'm going to copy these cubes, reset the mapping, and reapply textures." },
-      { time: "8:19", text: "We want to revert to Overall mapping, then I'll apply the glass texture to one cube and the stonework texture to another." },
-      { time: "8:36", text: "Glass has a lot of transparency. If I edit the glass texture, we can see the transparency is set to 90%." },
-      { time: "8:54", text: "If I render in Final Quality Renderworks, the textures look more realistic than OpenGL, and we can continue to modify them as needed." },
-      { time: "9:13", text: "If I wanted the stonework to be glossier, I could right-click and edit it." },
-      { time: "9:20", text: "I'm going to change the reflectivity to Mirror." },
-      { time: "9:26", text: "100% would be too intense, so I'll set it to about 15% and press OK. It will re-render, and now it's a bit shinier." },
-      { time: "9:44", text: "You can see the glossiness better if we add a light." },
-      { time: "9:48", text: "In the Visualization palette, I'm going to add a spotlight and press OK." },
-      { time: "10:03", text: "Then I'll adjust the spotlight so it's pointing directly down." },
-      { time: "10:46", text: "Now you can see the mirror glossiness more clearly—but it's too intense." },
-      { time: "10:53", text: "So I'll go back, edit the mirror reflectivity, and reduce it to around 5% so it looks more realistic." },
-      { time: "11:06", text: "This is a few of the things you can do with textures in Vectorworks." },
-      { time: "11:13", text: "You can also create your own textures. If I go down to the bottom and create a new Renderworks texture, I can import an image." },
-      { time: "11:31", text: "Here's a marble image." },
-      { time: "11:36", text: "I'll change the reflectivity to Mirror, maybe set it to 10%." },
-      { time: "11:44", text: "You can also adjust blurriness. The dialog explains that this controls how blurry the reflection is, so increasing it makes reflections softer." },
-      { time: "11:59", text: "I can also modify the texture so it reflects a bit of green, keep transparency at none, and set bump to around 9." },
-      { time: "12:10", text: "And we'll name it 'Marble.'" },
-      { time: "12:16", text: "Press OK, go into our 3D view, and apply the marble texture." },
-      { time: "12:22", text: "At first, the marble pattern may look too small." },
-      { time: "12:29", text: "You can adjust the scale in the Object Info Palette, but it's better to edit the texture and set the scale there." },
-      { time: "12:46", text: "I'll set it to one foot for now, and that works nicely." },
-      { time: "12:52", text: "Now if I go to Final Quality Renderworks, it looks more realistic." },
-      { time: "13:02", text: "That's how you can create a marble texture—or any texture—in Vectorworks." },
-      { time: "13:09", text: "As you move forward in Vectorworks, you'll probably become more interested in studying how Renderworks textures affect your model." },
-      { time: "13:21", text: "But as a basic introduction, I think this is a good start. If you have any questions, let me know." },
-    ],
-    relatedResources: [
-      { type: "Documentation", title: "Vectorworks Renderworks Guide", url: "https://www.vectorworks.net/" },
-      { type: "Video", title: "Advanced Renderworks Techniques", url: "https://www.youtube.com/vectorworks" },
-      { type: "Community", title: "Vectorworks Forum - Rendering", url: "https://forum.vectorworks.net/" },
-    ],
-    relatedTutorials: [
-      { title: "Vectorworks Tutorial: 3D Modeling Basics", slug: "3d-modeling-basics" },
-      { title: "Vectorworks Tutorial: Hybrid Symbols", slug: "hybrid-symbols" },
-      { title: "Vectorworks Tutorial: Resource Manager Basics", slug: "resource-manager-basics" },
-    ],
-  },
-  "3d-modeling-tools": {
-    id: 15,
-    title: "Vectorworks Tutorial: 3D Modeling Tools",
-    slug: "3d-modeling-tools",
-    youtubeId: "8dm9ZMTXypE",
-    category: "3d-modeling",
-    difficulty: "Intermediate",
-    duration: "18:19",
-    publishDate: "Feb 08, 2021",
-    description: "Master the essential 3D modeling tools in Vectorworks including primitive objects, push/pull, extract, fillet, chamfer, taper, deform, and shell solid.",
-    overview: "This comprehensive tutorial covers the complete 3D modeling toolkit in Vectorworks. You'll learn how to create primitive objects (sphere, hemisphere, cone, pyramid, ellipsoidal), use the push/pull tool for quick extrusions, extract surfaces and curves from complex objects, add fillets and chamfers to edges, taper faces at specific angles, deform solids with twist/bend/bulge modes, and create hollow objects with the shell solid tool. Each tool is demonstrated with practical examples showing how to adjust parameters, select faces and edges, and combine tools for complex modeling workflows.",
-    learningObjectives: [
-      "Create primitive 3D objects: sphere, hemisphere, cone, pyramid, and ellipsoidal shapes",
-      "Use push/pull tool to extrude and move faces in different modes",
-      "Extract surfaces and curves from complex 3D objects for texture application",
-      "Apply fillets and chamfers to edges and faces with precise radius control",
-      "Taper faces using tangent and picked face modes",
-      "Deform solids using twist, bend (finite/symmetric), and bulge modes",
-      "Create hollow objects with shell solid tool by selecting faces and setting thickness",
-      "Understand the difference between extrude face mode and move face mode",
-      "Modify 3D objects using the Object Info Palette after creation",
-    ],
-    keyConcepts: [
-      {
-        title: "PRIMITIVE OBJECTS",
-        content: "Vectorworks provides tools to create basic 3D shapes without manual modeling: Sphere (Shift+3), Hemisphere (half sphere), Cone (with radius/height or radius/tip modes), Pyramid (adjustable sides, regular or frustrum), and Ellipsoidal (adjustable height/width/length). These primitives use familiar circle-tool modes (radius, diameter, center-radius) and can be modified in the Object Info Palette after creation.",
-      },
-      {
-        title: "PUSH/PULL TOOL",
-        content: "Press P to access push/pull for quick face manipulation. Extrude Face Mode follows the angle of the selected face (useful for tapered objects). Move Face Mode moves the face perpendicular to the object regardless of face angle. Both modes work on closed faces and can be applied to multiple areas of the same object. This is the fastest way to add height variations to extruded shapes.",
-      },
-      {
-        title: "EXTRACT TOOL",
-        content: "Extract (Shift+E) pulls surfaces or curves from complex 3D objects. Extract Surface Mode isolates individual faces for separate texturing—extracted surfaces sit on top of the original. Extract Curve Mode pulls edge curves that can be combined with Connect/Combine tool and used for extrude-along-path operations. Use Shift+arrow keys to nudge extracted surfaces away from the original object.",
-      },
-      {
-        title: "FILLET & CHAMFER EDGES",
-        content: "Fillet Edge Tool (Ctrl+F) rounds edges with adjustable radius. Chamfer Tool creates angled cuts instead of curves. Both tools let you select individual edges (Shift+click), entire faces, or all faces at once. Fillets and chamfers remain editable in the Object Info Palette. Use Ctrl+U to ungroup and return to the original shape. Fillet is essential for realistic product modeling and architectural details.",
-      },
-      {
-        title: "TAPER FACE TOOL",
-        content: "Taper Face has two modes: Tangent Face Mode (select anchor face first, then the face to taper) and Picked Face Mode (pick two faces to taper between them). Press Tab to enter specific angles numerically. Tapering is useful for creating sloped walls, angled surfaces, and architectural features without manual vertex manipulation.",
-      },
-      {
-        title: "DEFORM TOOL",
-        content: "Deform Tool offers three modes: Twist Solid (rotate object around center point—keep angles moderate to avoid computation issues), Bend Solid (finite mode bends from one point, symmetric mode bends from both sides), and Bulge Mode (select point and bulge outward). Extreme deformations require more processing power. Deformed objects remain editable in Object Info Palette.",
-      },
-      {
-        title: "SHELL SOLID TOOL",
-        content: "Shell Solid (Shift+S) hollows out 3D objects by adding thickness to selected faces. Select a face, set thickness (e.g., 0.5\"), and check to create a hollow object like a vase or container. Works on both complex organic shapes and simple extrudes. Essential for creating objects that need interior volume, such as vessels, boxes, and architectural elements.",
-      },
-    ],
-    proTips: [
-      "Work in a rotated 3D view when using cone, pyramid, and deform tools—it's easier to visualize the results",
-      "Use Shift+click to select multiple edges for fillet or chamfer operations, then adjust radius uniformly",
-      "Extract surfaces to apply different textures to specific faces without affecting the entire object",
-      "Press Tab while using taper, fillet, or deform tools to enter precise numeric values instead of dragging",
-      "Keep twist deformations under 180 degrees to avoid excessive processing time and visual artifacts",
-      "Use symmetric bend mode for creating arches and curved structures that need to be balanced",
-      "Shell solid works on any face—select the top of an extrude to create a box, or the side of an organic shape for a vase",
-      "Combine extract curve with extrude-along-path to create pipes, railings, and decorative elements that follow complex surfaces",
-      "Use Ctrl+U to ungroup filleted or chamfered objects and return to the original shape if you need to start over",
-      "Modify primitive objects in the Object Info Palette after creation—you can adjust radius, height, sides, and more",
-      "Use push/pull's move face mode when you need to adjust depth without following the object's angle",
-      "Create a library of primitive objects with common dimensions to speed up your modeling workflow",
-    ],
-    shortcuts: [
-      { keys: "Shift + 3", action: "Activate Sphere tool" },
-      { keys: "P", action: "Activate Push/Pull tool" },
-      { keys: "Shift + E", action: "Activate Extract tool" },
-      { keys: "Ctrl + F", action: "Activate Fillet Edge tool" },
-      { keys: "Shift + S", action: "Activate Shell Solid tool" },
-      { keys: "Tab", action: "Enter numeric value while using tools" },
-      { keys: "Shift + Arrow", action: "Nudge extracted surfaces" },
-      { keys: "Ctrl + U", action: "Ungroup object to return to original shape" },
-    ],
-    commonPitfalls: [
-      "Forgetting to work in 3D view when using cone or pyramid tools—results are hard to visualize in top/plan view",
-      "Selecting the wrong face when using shell solid—always verify which face is highlighted before confirming",
-      "Using extreme twist angles (over 180°) that cause long processing times and potential crashes",
-      "Not using Shift+click to select multiple edges for fillet/chamfer—results in inconsistent edge treatments",
-      "Confusing extrude face mode with move face mode in push/pull—leads to unexpected angles on tapered objects",
-      "Forgetting to press Tab to enter numeric values—dragging is less precise than typing exact measurements",
-      "Not extracting surfaces before applying textures to specific faces—results in entire object being textured",
-      "Attempting to fillet or chamfer edges on objects with complex geometry—simplify first or select edges carefully",
-      "Not checking Object Info Palette after creating primitives—missing opportunities to adjust parameters precisely",
-      "Using bend solid without understanding finite vs symmetric modes—creates unbalanced or unexpected curves",
-    ],
-    transcript: [
-      { time: "0:06", text: "Hello, this is Brandon PT Davis, theatrical scenic designer, and in this Vectorworks tutorial video we're going to be going over the 3D modeling tools in the tool palette." },
-      { time: "0:18", text: "The 3D modeling tools are located here in the tool palette. You'll see a variety of tools which you can use for 3D modeling." },
-      { time: "0:29", text: "The first set of tools I'm going to show you are probably the more simple tools. These are ways to create primitive objects in Vectorworks without a lot of effort." },
-      { time: "0:43", text: "As you've probably recognized from the last video, creating a cube is relatively easy with the extrude function." },
-      { time: "0:50", text: "But creating a sphere may be more difficult, so here is the sphere tool." },
-      { time: "0:56", text: "You can access the sphere tool by hitting Shift+3." },
-      { time: "1:01", text: "It's like using the circle tool—you pick the radius, in this case a radius of 6 inches, and it will create a sphere." },
-      { time: "1:15", text: "As we fly over, we'll see this is a sphere." },
-      { time: "1:22", text: "You can also use radius mode, diameter mode, and center radius mode—all modes you're familiar with using the circle tool." },
-      { time: "1:32", text: "Going back into the top plan, we'll next look at the hemisphere." },
-      { time: "1:37", text: "A hemisphere is essentially a half circle. The hemisphere works exactly like the sphere tool, only when you look in 3D mode it will be the half sphere." },
-      { time: "1:52", text: "The next primitive object you can find in the 3D modeling tools palette is the cone tool." },
-      { time: "2:02", text: "The cone tool is best to have in a rotated view. Selecting the cone tool, I can use the radius and height mode." },
-      { time: "2:10", text: "First I'll select the center point, then select the radius just as you would with the circle tool, then one click and we pick the height." },
-      { time: "2:25", text: "In this case I'm going to make the height 12 inches, and now we have a cone." },
-      { time: "2:34", text: "You can also create a cone using radius and tip mode. Here we select the radius and then adjust the angle of the tip for a more organic shape." },
-      { time: "2:52", text: "Another primitive we can create is the pyramid object tool." },
-      { time: "3:00", text: "To adjust the pyramid object, we can change the number of sides, decide if it's regular or frustrum, change the mode—inscribed or circumscribed—and adjust the base radius, top, and the height." },
-      { time: "3:22", text: "I'm going to go with the defaults and place our pyramid. Now we have our three-sided pyramid." },
-      { time: "3:34", text: "You can go to the Object Info Palette and adjust the settings there as well." },
-      { time: "3:56", text: "The last primitive object tool I'm going to be showing you is the ellipsoidal object tool." },
-      { time: "4:03", text: "After selecting this object, we can manage its attributes in the ellipsoidal object palette and place the object in the document." },
-      { time: "4:17", text: "We can also go to the Object Info Palette and further change the height, width, and length of the object." },
-      { time: "4:28", text: "The next tool I'm going to show you is the push/pull tool." },
-      { time: "4:35", text: "You can access push/pull by pressing P. I'm going to start with a rectangle and press P for push/pull." },
-      { time: "4:46", text: "We start in extrude face mode. This allows you to select a closed face, click once, and adjust the height of the face." },
-      { time: "4:56", text: "You can do this in multiple areas." },
-      { time: "5:02", text: "With this tapered object, I'll show you the difference between extrude face mode and move face mode." },
-      { time: "5:11", text: "In extrude face mode, when we extrude the face it follows the angle of the object." },
-      { time: "5:20", text: "But if I go back to the extruded object and select move face mode, you'll see we move the face perpendicular to the object." },
-      { time: "5:36", text: "This is different than extrude face mode, where we extrude the face in the direction the face is oriented." },
-      { time: "5:48", text: "Next I'm going to show you the extract tool. The extract tool is located here and can also be accessed by hitting Shift+E." },
-      { time: "6:00", text: "To show you how it works, I have this odd shape with a wood grain texture. Imagine I want just one face—this face—and I want it to be blue." },
-      { time: "6:17", text: "Because this is a complex object, Vectorworks doesn't always know what to define as the top or sides." },
-      { time: "6:42", text: "So using the extract tool, I can choose different modes. There's extract by point, extract curve, extract iso parametric curve, and extract surface mode." },
-      { time: "7:09", text: "I'm going to select extract surface mode, I click this surface, and hit the check mark." },
-      { time: "7:16", text: "Now we've created another surface on top, so now I can go to my Resource Manager and apply a blue texture." },
-      { time: "7:28", text: "We can't see it yet, so a trick is to go into a front, left, or right view, hold Shift and nudge it with the arrow key one time." },
-      { time: "7:45", text: "Now it looks like we have our texture. If I go to a fast Renderworks mode, we can see the texture sitting on top." },
-      { time: "8:04", text: "Another useful mode is extract curve mode. I can select any number of curves, then check this." },
-      { time: "8:24", text: "Now I have these curves in a group. I can click into the group and modify them." },
-      { time: "8:28", text: "Using the connect/combine tool, I can combine these in 3D. We'll use position matching and connect." },
-      { time: "8:50", text: "Make sure you're in the right mode, then I could draw a circle on the bottom and extrude along path." },
-      { time: "9:15", text: "Press OK. Now I have a cylinder that runs along the object." },
-      { time: "9:25", text: "The next tool I'm going to show you is the fillet edge tool. This is a tool you'll use often." },
-      { time: "9:30", text: "It's similar to the fillet tool in the basic tool palette, but for 3D objects." },
-      { time: "9:43", text: "I have a 10 inch by 10 inch by 10 inch cube. I'm going to select the fillet tool—you can also access it with Ctrl+F." },
-      { time: "9:52", text: "We can adjust the radius. I'll start with a half inch, then I can select edges by holding Shift and clicking the lines." },
-      { time: "10:08", text: "When I hit the check box, the fillet is created." },
-      { time: "10:16", text: "You can adjust the fillet in the Object Info Palette, and there we are." },
-      { time: "10:31", text: "To remove the fillet, I can select remove and they're all gone, or I can modify which edges are selected and recheck the box." },
-      { time: "10:51", text: "You can also unselect edges with Shift and then hit the check box again." },
-      { time: "11:00", text: "In tool preferences you can also select faces instead of edges. Here's a face selected, and it selects the entire face." },
-      { time: "11:16", text: "You can also choose all faces and hit the check box. Now the entire object has a half-inch fillet." },
-      { time: "11:31", text: "You can also hit Ctrl+U to ungroup and return to the original shape." },
-      { time: "11:38", text: "Next I'll show you the chamfer tool. This is similar to what you're used to in the basic tool palette." },
-      { time: "11:47", text: "I have the chamfer set to 1. I select the edges and hit the check box." },
-      { time: "11:57", text: "Now instead of a fillet, we have a chamfer. You'll see similar options as fillet, and you can modify chamfers in the Object Info Palette as well." },
-      { time: "12:17", text: "The next tool is the taper face tool." },
-      { time: "12:21", text: "In tangent face mode, first select the anchor face—the face you will not modify—then select the second face and taper it at an angle." },
-      { time: "12:46", text: "By hitting Tab, I can type a specific angle. Here I'll set it to 15 degrees." },
-      { time: "12:55", text: "With picked face mode, you pick one face, then the other face, and it tapers the face like that." },
-      { time: "13:25", text: "The next tool I'm showing you is the deform tool. It's located here and it has several modes." },
-      { time: "13:40", text: "I'm going to take this rectangle and show a few. First is twist solid mode." },
-      { time: "13:48", text: "Select the mode, then select the object, choose a point—I'll pick the center—then I can rotate the object." },
-      { time: "14:04", text: "Here it's at 90 degrees." },
-      { time: "14:17", text: "Keep in mind the more extreme the twist, the harder it can be for your computer to compute, so I'll keep it at 90 degrees." },
-      { time: "14:36", text: "Now we've twisted the rectangle to create this shape. I can still modify the height in the Object Info Palette." },
-      { time: "14:57", text: "I'll set this to six feet, then I'll go to front view and adjust it closer to zero." },
-      { time: "15:13", text: "Next, I'll show bend solid mode. With bend solid, we can use finite mode where you bend from a point, like this." },
-      { time: "15:44", text: "Or symmetric mode, where it bends from both sides." },
-      { time: "16:03", text: "The last mode I'll share is bulge mode. Select the object, pick a point, and bulge it out like that." },
-      { time: "16:50", text: "The last 3D modeling tool I'm going to show you is the shell solid tool. You can access it by hitting Shift+S." },
-      { time: "17:02", text: "With this organic shape we created, let's say we want to make it like a vase." },
-      { time: "17:18", text: "I'll select the shell tool, choose this face, and set the thickness to a half inch." },
-      { time: "17:29", text: "With the face selected, hit the check mark. Now it's added thickness and hollowed out the object." },
-      { time: "17:48", text: "You can also do this with a simple extrude—select the face and shell it to add thickness." },
-      { time: "18:14", text: "This concludes our Vectorworks tutorial. If you have any questions, please feel free to ask. Thank you." },
-    ],
-    relatedResources: [
-      { type: "Documentation", title: "Vectorworks 3D Modeling Guide", url: "https://www.vectorworks.net/" },
-      { type: "Video", title: "Advanced 3D Modeling Techniques", url: "https://www.youtube.com/vectorworks" },
-      { type: "Community", title: "Vectorworks Forum - 3D Modeling", url: "https://forum.vectorworks.net/" },
-    ],
-    relatedTutorials: [
-      { title: "Vectorworks Tutorial: 3D Modeling Basics", slug: "3d-modeling-basics" },
-      { title: "Vectorworks Tutorial: Basics of Textures", slug: "basics-of-textures" },
-      { title: "Vectorworks Tutorial: Hybrid Symbols", slug: "hybrid-symbols" },
-    ],
-  },
-  "creating-24x36-pdfs": {
-    id: 16,
-    title: "Vectorworks Tutorial: Creating 24x36 PDFs Without a Plotter",
-    slug: "creating-24x36-pdfs",
-    youtubeId: "Gd9_hB5USkQ",
-    category: "2d-drafting",
-    difficulty: "Beginner",
-    duration: "3:28",
-    publishDate: "Feb 10, 2021",
-    description: "Learn how to export large format sheets (24x36) to PDF when you don't have Adobe PDF or a plotter connected to your computer.",
-    overview: "This quick tutorial demonstrates the essential workflow for exporting large format sheets to PDF without requiring Adobe PDF or a physical plotter connection. You'll learn how to configure page setup to recognize 24x36 dimensions, understand how Vectorworks handles page breaks for standard letter-size printers, and use the Publish command with the correct settings to export your entire sheet as a single PDF page. This technique is critical for students and professionals who need to submit or share large format drawings but don't have access to professional printing equipment.",
-    learningObjectives: [
-      "Create a new sheet layer and configure it for 24x36 output",
-      "Access and configure Page Setup for large format sheets without a plotter",
-      "Understand how Vectorworks displays page breaks for standard printers",
-      "Use the 'Export the whole printable area to one page' option in Publish settings",
-      "Successfully export a single 24x36 PDF from multiple letter-size pages",
-      "Avoid common pitfalls that result in multi-page PDFs instead of single sheets",
-    ],
-    keyConcepts: [
-      {
-        title: "PAGE SETUP WITHOUT A PLOTTER",
-        content: "When you don't have Adobe PDF or a plotter connected, Vectorworks defaults to letter-size (8.5x11) pages. Access Edit > Page Setup, select your default PDF writer (e.g., Microsoft Print to PDF), and uncheck 'Choose available print sizes.' Then select Arch D (24x36) from the Pages section. Vectorworks will show the sheet as 3.272 pages horizontally and 2.8235 pages vertically—this represents how many letter-size pages would tile to cover your 24x36 sheet.",
-      },
-      {
-        title: "UNDERSTANDING PAGE BREAKS",
-        content: "Enable 'Show page breaks' in Page Setup to visualize how Vectorworks divides your 24x36 sheet into letter-size pages. Gray dashed lines represent individual 8.5x11 pages arranged in a grid. This helps you understand what Vectorworks sees as the 'auto page' layout. Turn off page breaks before publishing to avoid confusion during layout work.",
-      },
-      {
-        title: "PUBLISH TO PDF WORKFLOW",
-        content: "Go to File > Publish, add your sheet layer, and ensure output format is set to PDF (not DWG or image). In Options, the critical setting is 'Export the whole printable area to one page'—this merges all letter-size tiles into a single 24x36 PDF. If you select 'Pages' or 'All pages' instead, Vectorworks will export individual letter-size pages, resulting in a multi-page PDF instead of one large sheet.",
-      },
-      {
-        title: "LAYOUT WORKFLOW",
-        content: "After configuring page setup, lay out your viewports, add your title block, and build your sheet content as normal. The page setup configuration only affects how Vectorworks exports the final PDF—it doesn't change how you work on the sheet. Think of it as a 'print driver workaround' that tells Vectorworks to treat multiple letter pages as one large sheet during export.",
-      },
-    ],
-    proTips: [
-      "Always uncheck 'Choose available print sizes' in Page Setup when working without a plotter—this unlocks larger format options",
-      "Use 'Show page breaks' temporarily to verify your sheet is correctly divided, then turn it off to avoid visual clutter",
-      "The 'Export the whole printable area to one page' option is the key setting—memorize this to avoid multi-page exports",
-      "You can use this technique for any large format size (30x42, 36x48, etc.), not just 24x36—just select the appropriate Arch size",
-      "Save your Publish settings as a named set if you export sheets regularly—this saves time on future exports",
-      "If your PDF comes out as multiple pages, you likely forgot to select 'Export the whole printable area to one page'—go back and check Options",
-      "This workflow works with any PDF writer (Microsoft Print to PDF, CutePDF, etc.)—you don't need Adobe Acrobat",
-      "The page count display (3.272 x 2.8235) is normal—it's just Vectorworks calculating how many letter pages fit in 24x36",
-    ],
-    shortcuts: [
-      { keys: "File > Publish", action: "Open Publish dialog to export sheets to PDF" },
-      { keys: "Edit > Page Setup", action: "Configure page size and print settings" },
-    ],
-    commonPitfalls: [
-      "Forgetting to uncheck 'Choose available print sizes'—results in only letter-size options being available",
-      "Selecting 'Pages' or 'All pages' instead of 'Export the whole printable area to one page'—creates multi-page PDFs",
-      "Not verifying the Arch D (24x36) selection in Page Setup—may result in incorrect sheet dimensions",
-      "Leaving 'Show page breaks' enabled during layout work—creates visual confusion with dashed lines everywhere",
-      "Assuming you need Adobe Acrobat or a plotter to export large format sheets—this workaround works with any PDF writer",
-      "Not saving Publish settings as a named set—wastes time reconfiguring options for every export",
-      "Confusing the page count display (3.272 x 2.8235) with an error—this is normal and represents letter-page tiling",
-    ],
-    transcript: [
-      { time: "0:06", text: "Hello, this is Brandon PT Davis. I'm just going to quickly show you how to create a 24 by 36 page if you don't have Adobe PDF or if you are not connected to a plotter on your computer." },
-      { time: "0:26", text: "So what I'm going to do is I'm going to start with the sheet layer. I'm going to create a new sheet layer. I'm just going to leave it as sheet layer one, sheet title for the example." },
-      { time: "0:37", text: "So currently I have a 24 by 36 page because I do have Adobe, but a way around this if you don't is we're going to go to Edit and then Page Setup." },
-      { time: "0:50", text: "If we're on Microsoft Print to PDF or whatever default PDF writer you have, and it's set to letter size, it doesn't really matter." },
-      { time: "1:05", text: "Then we're going to uncheck 'Choose available print sizes.' Right now Vectorworks is showing the page as one sheet. You can select Arch D, which is 24 by 36." },
-      { time: "1:23", text: "In the pages section, horizontally it's 3.272 and vertically it's 2.8235. To show you what that means, I'm going to turn on 'Show page breaks.'" },
-      { time: "1:37", text: "I'll press OK and press OK again. Each gray dashed line represents the pages from what Vectorworks thinks your auto page is." },
-      { time: "1:52", text: "So these are a series of 8.5 by 11 pages and how they're lined up on the grid." },
-      { time: "1:59", text: "Now I'm going to go back to Edit, Page Setup, and uncheck 'Show page breaks' and press OK." },
-      { time: "2:04", text: "Now I'm just going to draw an X through the center as an example, but normally you would lay out your viewports, add your title block, and build everything you want on the page." },
-      { time: "2:20", text: "Then we go to File and Publish. I'm going to add the new page that we just created." },
-      { time: "2:31", text: "And right now it's publishing to PDF. You can change it to DWG or an image, but we want PDF." },
-      { time: "2:40", text: "Select Options. Make sure 'Export the whole printable area to one page' is selected." },
-      { time: "2:49", text: "If you select 'Pages' or 'All pages,' it may export individual pages instead." },
-      { time: "2:57", text: "So select 'Export the whole printable area,' press OK, and then press Publish." },
-      { time: "3:04", text: "I'm not going to save the set for this example. I'll leave it as untitled two." },
-      { time: "3:11", text: "And what you'll see is one singular 24 by 36 page." },
-      { time: "3:18", text: "So if you're having issues with printing your RD plates, that's basically the Vectorworks solution. If you have any other questions, let me know. Thank you." },
-    ],
-    relatedResources: [
-      { type: "Documentation", title: "Vectorworks Publishing Guide", url: "https://www.vectorworks.net/" },
-      { type: "Video", title: "Advanced PDF Export Techniques", url: "https://www.youtube.com/vectorworks" },
-      { type: "Community", title: "Vectorworks Forum - Printing & Publishing", url: "https://forum.vectorworks.net/" },
-    ],
-    relatedTutorials: [
-      { title: "Vectorworks Tutorial: Sheet Layers", slug: "sheet-layers" },
-      { title: "Vectorworks Tutorial: 2D Annotations and Dimensioning", slug: "2d-annotations-dimensioning" },
-      { title: "Vectorworks Tutorial: Navigating the User Interface", slug: "navigating-user-interface" },
-    ],
-  },
-  "modeling-a-table": {
-    id: 17,
-    title: "Vectorworks Tutorial: Modeling a Table",
-    slug: "modeling-a-table",
-    youtubeId: "TdZeKdL-DVc",
-    category: "3d-modeling",
-    difficulty: "Advanced",
-    duration: "37:48",
-    publishDate: "Feb 12, 2021",
-    description: "Master the complete workflow for 3D modeling furniture from a reference image, including scaling, drafting profiles, creating sweeps, solid modeling operations, texturing, and creating hybrid symbols.",
-    overview: "This comprehensive tutorial demonstrates a professional workflow for modeling complex furniture objects in Vectorworks. You'll learn how to use reference images effectively, scale them to real-world dimensions, draft accurate 2D profiles, create swept geometry for curved legs, use solid modeling operations (add solid, edit solid), apply and map textures correctly, and convert the final model into a hybrid symbol with clean 2D and 3D representations. This tutorial is essential for scenic designers who need to model custom furniture, props, or set pieces with realistic detail and efficient workflow practices.",
-    learningObjectives: [
-      "Import and scale reference images to real-world dimensions for accurate modeling",
-      "Draft 2D profiles for table components (top, legs, supports) using measurement tools",
-      "Create swept geometry for curved table legs using profile and path curves",
-      "Use solid modeling operations (Add Solid, Edit Solid) to combine and refine geometry",
-      "Apply and map wood textures with correct grain direction using Auto Plane",
-      "Create hybrid symbols with clean 2D top-plan representations and detailed 3D geometry",
-      "Follow professional modeling practices (modeling at origin, organized workflow)",
-      "Troubleshoot common modeling issues (extrude direction, sweep alignment, texture mapping)",
-    ],
-    keyConcepts: [
-      {
-        title: "REFERENCE IMAGE WORKFLOW",
-        content: "Start by importing a reference photo or sketch of the object you're modeling. Scale the image to real-world dimensions by measuring a known dimension (e.g., table height ~30 inches) and using the scale tool. This gives you an accurate tracing guide. Always save your project immediately after importing references to avoid losing work. Keep the reference on a separate layer or class so you can toggle visibility during modeling.",
-      },
-      {
-        title: "DRAFTING PROFILES FIRST",
-        content: "Before creating 3D geometry, draft all 2D profiles in top/plan view: table top circles, leg squares, cross supports. Use measurement tools (tape measure) to extract dimensions from the scaled reference. Round measurements to practical increments (e.g., 2.447' becomes 2'5\" exactly). Use duplication and mirror tools to create symmetrical elements efficiently. This 2D foundation ensures accurate 3D extrusions and sweeps.",
-      },
-      {
-        title: "SWEEP TOOL FOR CURVED LEGS",
-        content: "For curved furniture legs, use the Sweep tool: (1) Draw the path curve (centerline of the leg) in front view, (2) Draw the profile shape (cross-section) perpendicular to the path, (3) Right-click the profile and choose Model > Sweep. The profile follows the path to create the 3D leg. Leave gaps in the sweep path where square blocks will be inserted. Use polyline or oval tools to create smooth, organic curves that match the reference.",
-      },
-      {
-        title: "SOLID MODELING OPERATIONS",
-        content: "Combine multiple 3D objects into a single solid using Add Solid. This merges separate extrudes, sweeps, and primitives into one unified object. Use Edit Solid to modify geometry after creation—you can delete faces, add new sweeps, or adjust dimensions without starting over. Always model components at Z=0 (origin) for easier duplication and symbol creation. Use front view to verify vertical alignment of stacked components.",
-      },
-      {
-        title: "TEXTURE MAPPING",
-        content: "Apply wood textures from the Resource Manager by dragging onto 3D objects. If grain direction is wrong (e.g., vertical grain on horizontal surfaces), select the object, go to Render > Texture > Auto Plane, then rotate the texture 90 degrees in the Object Info Palette. For complex objects, ungroup and apply textures per part with individual rotations. Use realistic wood textures with visible grain for presentation-quality renders.",
-      },
-      {
-        title: "HYBRID SYMBOL CREATION",
-        content: "Convert finished 3D models to hybrid symbols: (1) Select the model, press Cmd+K, (2) Name it, set insertion point to center, use world-based units, (3) Double-click the symbol to edit, (4) Draw a simple 2D circle or rectangle in the 2D component (set to medium line weight class, attributes by class), (5) Exit and convert to hybrid when prompted. Hybrid symbols show clean 2D graphics in top/plan view and full 3D detail in other views—essential for efficient drawing sets.",
-      },
-    ],
-    proTips: [
-      "Always save your project immediately after importing reference images—Vectorworks can crash during complex modeling",
-      "Scale reference images to real-world dimensions before tracing—this ensures accurate measurements throughout the modeling process",
-      "Round measurements to practical increments (e.g., 2'5\" instead of 2'4.447\")—this simplifies modeling and matches real-world fabrication",
-      "Use the mirror tool to create symmetrical elements—model one leg, mirror at 45°, then mirror again to complete the set",
-      "Hold 'B' key to see behind selected objects—useful for aligning circles or checking overlap during drafting",
-      "For sweeps, draw the path curve first, then duplicate and offset it by the leg thickness—this ensures consistent wall thickness",
-      "Use polyline or oval tools for organic curves—they're easier to control than freehand bezier curves",
-      "Model all components at Z=0 (origin)—this makes duplication, mirroring, and symbol creation much easier",
-      "Use front view to verify vertical alignment—top/plan view can't show if components are stacked correctly",
-      "If an extrude disappears, check the extrude height in Object Info Palette—you may have extruded to zero or negative",
-      "Use Edit Solid to refine geometry after creation—you can delete faces and paste in revised sweeps without starting over",
-      "Apply textures after modeling is complete—texture mapping is easier on finalized geometry",
-      "Use Auto Plane for texture mapping—it automatically aligns textures to faces, then rotate 90° if grain direction is wrong",
-      "Create hybrid symbols for all furniture—2D circles in top/plan view keep drawings clean while preserving 3D detail",
-      "Set symbol insertion point to center—this makes placement and rotation much easier in floor plans",
-    ],
-    shortcuts: [
-      { keys: "Cmd/Ctrl + M", action: "Mirror selected objects" },
-      { keys: "B (hold)", action: "See behind selected objects" },
-      { keys: "X", action: "Resize/scale selected objects" },
-      { keys: "Cmd/Ctrl + K", action: "Create symbol from selected objects" },
-      { keys: "Cmd/Ctrl + S", action: "Save project" },
-    ],
-    commonPitfalls: [
-      "Forgetting to scale reference images—results in wildly incorrect dimensions (e.g., 12-foot-tall table)",
-      "Not saving the project immediately—risk losing hours of work if Vectorworks crashes during modeling",
-      "Extruding to zero or negative height—causes geometry to disappear; always check Object Info Palette",
-      "Drawing sweep paths without leaving gaps for square blocks—requires redrawing the entire sweep",
-      "Not modeling at Z=0 (origin)—makes duplication and mirroring much harder",
-      "Applying textures before modeling is complete—texture mapping breaks when geometry changes",
-      "Using wrong texture mapping plane—results in stretched or incorrectly oriented grain",
-      "Not rotating textures 90° on vertical surfaces—grain runs wrong direction (e.g., horizontal grain on legs)",
-      "Creating 3D-only symbols instead of hybrid symbols—results in cluttered top/plan views with full 3D detail",
-      "Not setting symbol insertion point to center—makes placement and rotation awkward",
-      "Forgetting to set 2D component to 'by class' attributes—symbol doesn't respond to class visibility changes",
-      "Not using Add Solid to combine components—results in multiple separate objects instead of one unified solid",
-    ],
-    transcript: [
-      { time: "0:04", text: "Hello, this is Brandon PT Davis, theatrical scene designer. In this tutorial I'm going to show you how I would approach modeling a table." },
-      { time: "0:17", text: "The first step is of course finding the table in the real world, or perhaps you're designing a table from your mind. Either way, I like to have a reference. I've copied and pasted this reference into my Vectorworks file." },
-      { time: "0:38", text: "One of the things that I always recommend when starting a new project is to save your Vectorworks file so you won't lose it. So I'm going to go to Save and call this project 'table project.' But you might have a specific workflow in which you need to save your project, and if that's the case then do so." },
-      { time: "1:05", text: "With this image here, one of the first things you want to do is check the size. Right now it says it's 12 foot tall by 12 foot 9 by 14 foot 9 and a half, which I think is a little bit big." },
-      { time: "1:17", text: "So what I recommend is scaling your project so that when we're tracing elements, we have something to base reality off of. Knowing what I know about tables, this table is probably about 30 inches tall." },
-      { time: "1:37", text: "As I look at this object, I see a top which is probably a couple simple extrudes, and we have these legs which I would say are going to be a sweep, and then we have these cross pieces which again are probably a simple extrude." },
-      { time: "2:03", text: "I'm going to start by getting the top laid out. I'm going to take the circle tool and go outside to outside. Right now it says it's roughly 2 foot 5, so I'm going to round this down. Let's say the table top is 2 foot 5." },
-      { time: "2:40", text: "Then I'm going to duplicate it. If I hold B, I can see behind my shape. I'm going to select, hit X, and make the inner circle smaller for the detail. It says about 1 foot 1.447, so we'll round that to a half inch." },
-      { time: "3:20", text: "We have four legs. You can take the tape measure tool—it says about 2 inches, so I'm going to do a 2 inch by 2 inch square. From the center it's about here. It looks inset a little bit, so I'm going to offset the leg in using Ctrl or Command M." },
-      { time: "4:34", text: "To get these equally distributed, I'm going to use the mirror tool. Mirror at 45 degrees for the other side, then mirror again to complete the set. Now we have the leg locations." },
-      { time: "5:01", text: "This cross piece looks about an inch and a half because it's inset from the leg. So I'll duplicate the leg block, reduce the width by about a half inch, stretch it to reach the other side, duplicate and rotate for the second direction." },
-      { time: "5:58", text: "Now I'm going to do the sweep for the leg. I'll draw the bottom curve and focus on the center of the curved parts." },
-      { time: "6:25", text: "Since we're doing a sweep, I'm going to duplicate this line and move it over one inch, because we decided the leg thickness is 2 inches. Right now the line is about 2 foot 3.6. Since we're tracing, I'm going to call it 2 foot 4 just to simplify." },
-      { time: "7:14", text: "Now I'm going to draw the rectangular parts because these will be extruded later. This is about 3 inches, and the top one is a little shorter. From the top down let's say it's 2 and three quarters and 1 inch thick." },
-      { time: "8:27", text: "Now I'm going to use the polyline tool and trace the leg profile the best that I can." },
-      { time: "9:23", text: "If tracing gets messy, another approach is using oval tools and duplicating to keep consistent curves." },
-      { time: "13:05", text: "Once the profile is drawn, I'll use Add Surface, then use the Split tool to clean up extra segments. Now we just have the profile." },
-      { time: "15:20", text: "Now I have a full profile. I'm going to change the plane to screen plane, change the view to front view, right-click and go to Model Sweep. Now we have the swept leg with a gap for the square pieces." },
-      { time: "15:52", text: "Back in top plan view, I'll use the 2 inch by 2 inch block we drafted, center it on the post. I'm going to extrude the block to 2.75 inches." },
-      { time: "16:30", text: "If it disappears, it usually means the extrude height was wrong, so double check that you didn't extrude to zero. Then move it into place, duplicate for the second block, and stretch as needed." },
-      { time: "17:36", text: "Then select everything and use Add Solid. Now the leg is sitting at zero, which is good practice for modeling." },
-      { time: "23:05", text: "If I want a taper detail at the bottom, I can go into Edit Solid, delete the old piece, and paste in a revised sweep. Sometimes scaling the sweep profile is faster so the size hits 2 inches exactly." },
-      { time: "26:46", text: "If we only have half of one element, mirror it inside the solid edit so it becomes complete when we exit." },
-      { time: "27:54", text: "Now we need the height. This is about 1 and a half inches proud, and this is about another inch and a half. So I'm going to extrude the top circle 1.5 inches and the lower ring 1.5 inches, then align them in front view based on the reference." },
-      { time: "29:03", text: "If you want the underside inset, you can offset in and clip surface, then delete the inner boundary." },
-      { time: "30:09", text: "Now we need the mid supports. I'll extrude them, then adjust their Z height in front view until they sit about midway like the reference." },
-      { time: "31:14", text: "Once the 3D is working, delete the 2D tracing geometry and extra references." },
-      { time: "31:51", text: "Last detail is a fillet on the top edge. Go to the 3D fillet tool, set it to about three quarter inch, then fine tune in the Object Info Palette." },
-      { time: "32:50", text: "Now we can add a texture. Go to the Resource Manager, search for wood, drag a wood texture into the file, and apply it to the table." },
-      { time: "34:07", text: "If the grain direction is wrong on the posts, select the posts, go to Render, try Auto Plane, then rotate the texture 90 degrees. If needed you can ungroup and adjust rotations per part." },
-      { time: "35:46", text: "Once the table looks good, keep it near zero zero. Select the table, hit Command K to create a symbol. Name it 'table,' set insertion point to center, use world-based units, press OK. Now it's a 3D symbol." },
-      { time: "36:49", text: "To make it a hybrid symbol, double-click, edit the 2D component, draw a simple 2D circle for top plan, set it to your 2D medium line weight class, make attributes by class, exit. When asked to convert to hybrid, say yes. Now you have a hybrid symbol with a clean 2D top plan and the 3D table." },
-      { time: "37:41", text: "If you have any questions, feel free to reach out. Thank you." },
-    ],
-    relatedResources: [
-      { type: "Documentation", title: "Vectorworks 3D Modeling Guide", url: "https://www.vectorworks.net/" },
-      { type: "Video", title: "Advanced Sweep and Loft Techniques", url: "https://www.youtube.com/vectorworks" },
-      { type: "Community", title: "Vectorworks Forum - 3D Modeling", url: "https://forum.vectorworks.net/" },
-    ],
-    relatedTutorials: [
-      { title: "Vectorworks Tutorial: 3D Modeling Tools", slug: "3d-modeling-tools" },
-      { title: "Vectorworks Tutorial: 3D Modeling Basics", slug: "3d-modeling-basics" },
-      { title: "Vectorworks Tutorial: Hybrid Symbols", slug: "hybrid-symbols" },
-    ],
-  },
-  "creating-camera-rendering": {
-    id: 18,
-    title: "Vectorworks Tutorial: Creating a Camera and Rendering",
-    slug: "creating-camera-rendering",
-    youtubeId: "Jp4eG5n3esc",
-    category: "rendering",
-    difficulty: "Intermediate",
-    duration: "10:36",
-    publishDate: "Feb 15, 2021",
-    description: "Learn the complete workflow for creating cameras, setting up dramatic lighting, configuring viewports, and exporting high-quality renderings in Vectorworks.",
-    overview: "This tutorial demonstrates the essential workflow for creating presentation-quality renderings in Vectorworks. You'll learn how to add and configure spotlights and point lights for dramatic effects, create and adjust cameras with proper aspect ratios (16:9), use the walkthrough tool to frame your shot, create viewports from cameras, apply Renderworks styles, enhance scenes with colored lighting, and export high-resolution images. This workflow is critical for scenic designers who need to create compelling visualizations of their designs for clients, directors, and production teams.",
-    learningObjectives: [
-      "Add and configure spotlights and point lights with proper tilt and positioning",
-      "Create and organize lighting classes for easy visibility control",
-      "Set up cameras with 16:9 aspect ratio for film/screen-standard renderings",
-      "Use the walkthrough tool to frame and compose camera views effectively",
-      "Create linked viewports from cameras on dedicated rendering sheet layers",
-      "Apply Renderworks styles (Realistic Final/Fast) for high-quality output",
-      "Enhance scenes with dramatic colored lighting (pink, blue) for visual impact",
-      "Export high-resolution image files with proper settings (120 DPI, single page)",
-    ],
-    keyConcepts: [
-      {
-        title: "LIGHTING SETUP",
-        content: "Start by adding lights to your scene using the Light tool from the Visualization palette (lightbulb icon). Use spotlights for directional lighting (like stage lights) and point lights for ambient fill (like lamps). Configure spotlight tilt to 90 degrees for top-down lighting, and position additional spotlights as side/front lights to reveal form. Always create a dedicated 's light' class and assign all lights to it so you can toggle visibility easily. White lights provide realistic illumination, while colored lights (saturated pink, blue) create dramatic theatrical effects.",
-      },
-      {
-        title: "CAMERA CONFIGURATION",
-        content: "Use the Camera tool (looks like a 35mm DSLR, NOT the video camera icon) to create a camera object. The most important setting is aspect ratio: change it to 16:9 (1.7869) to match film and computer screen standards. This ensures your renderings display correctly in presentations and on screens. After placing the camera, double-click it to enter camera view, then use the Walkthrough tool (NOT Flyover) to adjust the framing. Walk backwards to zoom out, use elevated mode to adjust height, and zoom in to compose your shot.",
-      },
-      {
-        title: "VIEWPORT WORKFLOW",
-        content: "Create a viewport from your camera by going to View > Create Viewport. Choose 'Link the camera' so the camera moves from the design layer to the viewport—this keeps your design layer clean and makes the camera easier to manage. Place the viewport on a dedicated rendering sheet layer (16:9 format). Uncheck 'Show title' and give the viewport a descriptive name (e.g., 'Rendering'). This viewport-based workflow allows you to update renderings without re-exporting, and keeps all presentation views organized on sheet layers.",
-      },
-      {
-        title: "RENDERWORKS STYLES",
-        content: "Apply Renderworks styles from the viewport's Object Info Palette. Use 'Realistic Final' for highest quality (slower) or 'Realistic Fast' for quick previews. These styles calculate realistic lighting, shadows, reflections, and textures. After changing lights or materials, click 'Update' in the viewport to re-render. The UTEP template includes black backgrounds by default, which creates dramatic high-contrast renderings perfect for theatrical presentations.",
-      },
-      {
-        title: "DRAMATIC LIGHTING",
-        content: "Enhance your renderings with colored point lights for theatrical drama. Add a saturated pink light and a saturated blue light in addition to your white key light. Position these colored lights to create rim lighting or accent specific areas. This technique—borrowed from stage lighting—helps viewers 'read the object quickly' by creating visual separation and depth. The contrast between warm (pink) and cool (blue) lights adds professional polish to your renderings.",
-      },
-      {
-        title: "IMAGE EXPORT",
-        content: "Export your rendering by going to File > Export > Image File. Set resolution to 120 pixels (DPI) for high-quality prints and presentations. Choose 'All pages as a single page' to export the entire sheet layer as one image. Use wireframe preview to verify the export area matches your viewport. Save as PNG or JPEG depending on your needs (PNG for transparency, JPEG for smaller file size). This creates a standalone image file you can use in portfolios, presentations, or client deliverables.",
-      },
-    ],
-    proTips: [
-      "Always create a dedicated 's light' class for all lights—makes it easy to toggle visibility when modeling vs. rendering",
-      "Use spotlights (not point lights) for directional lighting—they're more controllable and realistic for stage-style lighting",
-      "Set spotlight tilt to exactly 90 degrees for top-down lighting—prevents unwanted shadows or light spill",
-      "Check your lighting in perspective view with Fast Renderworks before finalizing—saves time vs. full renders",
-      "Change camera aspect ratio to 16:9 immediately after creating the camera—this matches film/screen standards",
-      "Use the Walkthrough tool (not Flyover) to adjust camera framing—it's more intuitive for architectural/scenic views",
-      "Link the camera to the viewport when creating it—keeps your design layer clean and camera management simple",
-      "Place viewports on dedicated rendering sheet layers (16:9 format)—keeps all presentation views organized",
-      "Use 'Realistic Fast' for testing lighting, 'Realistic Final' for final exports—saves rendering time during iteration",
-      "Add colored lights (pink, blue) after establishing white key lighting—builds drama without losing readability",
-      "Position colored lights as rim/accent lights—creates visual separation and depth in your renderings",
-      "Export at 120 DPI for presentations and portfolios—balances file size with print quality",
-      "Use 'All pages as a single page' export option—ensures the entire sheet layer exports as one image",
-      "Check wireframe preview before exporting—verifies the export area matches your intended frame",
-    ],
-    shortcuts: [
-      { keys: "Double-click camera", action: "Enter camera view" },
-      { keys: "Cmd/Ctrl + U", action: "Update viewport rendering" },
-    ],
-    commonPitfalls: [
-      "Using point lights instead of spotlights for directional lighting—results in unfocused, unrealistic illumination",
-      "Forgetting to tilt spotlights 90 degrees—causes lights to shine horizontally instead of down",
-      "Not creating a dedicated light class—makes it hard to toggle lights on/off during modeling",
-      "Forgetting to change camera aspect ratio to 16:9—results in distorted renderings that don't match screen formats",
-      "Using Flyover tool instead of Walkthrough tool—less intuitive for framing architectural/scenic views",
-      "Not linking the camera to the viewport—leaves camera objects cluttering your design layer",
-      "Placing viewports on design layers instead of sheet layers—makes presentation organization messy",
-      "Using 'Realistic Final' for every test render—wastes time; use 'Realistic Fast' for iteration",
-      "Adding colored lights before establishing white key lighting—makes scenes unreadable and chaotic",
-      "Exporting at low resolution (72 DPI)—results in pixelated images unsuitable for presentations",
-      "Forgetting to select 'All pages as a single page'—exports multiple tiled images instead of one complete image",
-      "Not checking wireframe preview before exporting—may export wrong area or cropped frame",
-    ],
-    transcript: [
-      { time: "0:06", text: "Hello, this is Brandon PT Davis, theatrical scenic designer. In this Vectorworks quick tip tutorial I'm going to show you how to create a camera and render a model." },
-      { time: "0:17", text: "Let's start with we have this table model that we've created. The first thing I think we need to do is drop some lights." },
-      { time: "0:40", text: "Go to the tools palette and the visualization palette (the one with the little light bulb). Select the light tool, choose a spotlight." },
-      { time: "0:55", text: "Drop a spotlight in the center of the model, keep it a white light. Go down to tilt, tilt the light 90 degrees so it's pointing straight down." },
-      { time: "1:16", text: "If I go to front view we have our light. Position it where you want, make sure tilt stays 90 degrees." },
-      { time: "1:45", text: "Now I want to check this in perspective. Change the view from orthogonal to normal perspective. That gives us a little bit of perspective. Then do a Fast Renderworks just to see how the light affects the object." },
-      { time: "2:13", text: "I think I want a little bit of a front light, so I'll drop another light. I accidentally dropped a point light—point light is like a lamp in your living room. I want a spotlight so it's directional." },
-      { time: "2:46", text: "Go into right view, select the light, drag it about here, and point the light at the table. Maybe make it more of a side light. Now we have two lights, we should be good to go." },
-      { time: "3:19", text: "We need to class the lights so we can turn them on and off. Create a new class: 's light.' Press OK." },
-      { time: "3:37", text: "Next step is to drop a camera. The camera tool is located here in the tool sets. It looks like the 35 millimeter DSLR camera—that is the camera tool, not the video camera." },
-      { time: "3:52", text: "Start with the camera, drag it about center, double click. The main thing you need to change is aspect ratio. Change it to 16:9. 16:9 is the same aspect ratio used in film or your computer screen. It's 1.7869. We won't worry about other settings yet. Press OK." },
-      { time: "4:30", text: "To see what the camera sees, hover over the camera and double click. I don't like what the camera sees at first. You can use the flyover tool, but I recommend using the walkthrough tool." },
-      { time: "4:50", text: "Use walk mode, walk backwards. These blue lines are the picture frame. Use elevated mode to slide it down, zoom in, slide down a little, and zoom in again. That's probably pretty good." },
-      { time: "5:29", text: "Next step is create a viewport out of this camera. Go to View > Create Viewport. It says create a viewport from camera. Choose to link the camera, so the camera is moved from the design layer to the viewport." },
-      { time: "5:57", text: "You can also keep the original camera in the drawing, but the best plan is link the camera in the viewport. Uncheck the title. You can give it a name: rendering name 'rendering.' Put this on the rendering sheet layer. The rendering sheet layer is a 16:9 image. Press OK." },
-      { time: "6:48", text: "Now we have our rendering, and it's on the sheet layer perfectly. That's why we have that layer in the document." },
-      { time: "7:05", text: "Now choose a render mode. Go to Renderworks styles, use UTEP Realistic Final, or Realistic Fast depending on your computer. Press update. It creates the image." },
-      { time: "7:31", text: "In our UTEP file we have black backgrounds. It's a little dark, but it's pretty cool. If we add a point light we can get more response." },
-      { time: "7:47", text: "Go back to the design layer, then back to the sheet layer. Go into your lights, add a light. Add a point light. I want more dramatic lighting. Change the colors." },
-      { time: "8:30", text: "Make this light a saturated pink, make another one blue, keep the main light white. Now go back to the rendering sheet layer, update." },
-      { time: "9:09", text: "Now you can see the added light created a good effect. It helps you read the object quickly, and the dramatic lighting looks good." },
-      { time: "9:25", text: "Now we want to create an image file. Go to File > Export > Image File. Change the resolution to 120 pixels. Change the area to all pages as a single page." },
-      { time: "10:01", text: "Wireframe preview shows the export area—that's the image. Keep print size the same, press save. The name is good. And there's your image." },
-      { time: "10:32", text: "That concludes this Vectorworks tutorial. If you have any questions please let me know. Thank you." },
-    ],
-    relatedResources: [
-      { type: "Documentation", title: "Vectorworks Rendering Guide", url: "https://www.vectorworks.net/" },
-      { type: "Video", title: "Advanced Renderworks Techniques", url: "https://www.youtube.com/vectorworks" },
-      { type: "Community", title: "Vectorworks Forum - Rendering & Visualization", url: "https://forum.vectorworks.net/" },
-    ],
-    relatedTutorials: [
-      { title: "Vectorworks Tutorial: Basics of Textures", slug: "basics-of-textures" },
-      { title: "Vectorworks Tutorial: 3D Modeling Basics", slug: "3d-modeling-basics" },
-      { title: "Vectorworks Tutorial: Modeling a Table", slug: "modeling-a-table" },
-    ],
-  },
-  "creating-2d-drafting-from-3d": {
-    id: 19,
-    title: "Vectorworks Tutorial: Creating 2D Drafting from 3D Models",
-    slug: "creating-2d-drafting-from-3d",
-    youtubeId: "Q-oM0jkKuS0",
-    category: "2d-drafting",
-    difficulty: "Advanced",
-    duration: "24:00",
-    publishDate: "Feb 18, 2021",
-    description: "Master the complete workflow for generating professional construction drawings from 3D models, including viewports, sections, details, and dimensioning.",
-    overview: "This tutorial demonstrates the professional workflow for converting 3D models into production-ready 2D construction drawings. You'll learn how to create viewports from hybrid symbols, adjust rendering modes (wireframe, hidden line, custom Renderworks) for optimal linework, create section viewports with proper cut lines, generate detail viewports at larger scales, adjust line weights for clarity, add dimensions and annotations, organize drawings on sheet layers, and publish final PDFs. This workflow is essential for scenic designers who need to communicate 3D designs to carpenters and builders through clear, dimensioned construction documents.",
-    learningObjectives: [
-      "Create viewports from design layers and place them on sheet layers with proper scale",
-      "Adjust rendering modes (wireframe, hidden line, Renderworks) for optimal 2D linework",
-      "Create custom Renderworks styles for model drafting with subtle shadows",
-      "Generate section viewports with proper cut lines and directional markers",
-      "Create detail viewports at larger scales (3-inch) to highlight trim profiles",
-      "Adjust line weights in Advanced Properties to emphasize cut sections",
-      "Add dimensions, annotations, and drawing labels with proper class organization",
-      "Update out-of-date viewports and publish final PDFs with Title Block Manager",
-    ],
-    keyConcepts: [
-      {
-        title: "VIEWPORT WORKFLOW",
-        content: "Start by creating viewports from your design layer (View > Create Viewport). Vectorworks auto-generates drawing numbers and names. Place viewports on dedicated sheet layers (e.g., 'Elevations'). Set the scale to half-inch (1/2\" = 1'-0\") for elevations and plans. Initially, viewports display in wireframe—you'll adjust rendering later. Use Ctrl+Shift+drag to duplicate viewports, then change the view (Top/Plan, Front, Left, etc.) in Object Info Palette. This viewport-based workflow keeps your design layer clean and makes it easy to update drawings when the model changes.",
-      },
-      {
-        title: "RENDERING MODES FOR DRAFTING",
-        content: "Wireframe rendering shows all edges (visible and hidden), which isn't ideal for construction drawings. Change Background Render to 'Hidden Line' to show only visible edges—this creates clean 2D linework. For enhanced clarity, use a custom Renderworks style (e.g., 'Model Drafting') with Background Render set to Renderworks and Foreground Render set to Hidden Line. Enable anti-aliasing, shadows, and textures; disable color. This adds subtle shadows where elements meet, helping details 'pop' and making drawings easier to read for carpenters.",
-      },
-      {
-        title: "SECTION VIEWPORTS",
-        content: "Create section viewports by drawing a cut line (use a simple line) where you want to slice through the model. Extend the line half an inch above and below the drawing to avoid overlap. Select the viewport, go to View > Create Section Viewport, define the top and bottom of the cut line, then choose the direction (left or right). Vectorworks auto-generates the drawing number. Set scale to half-inch and name the section (e.g., 'Section 1'). Sections reveal internal construction details like door reveals, trim profiles, and wall assemblies—critical for builders.",
-      },
-      {
-        title: "DETAIL VIEWPORTS",
-        content: "Detail viewports zoom in on specific areas at larger scales (e.g., 3-inch scale = 3\" = 1'-0\"). Draw a circle around the trim profile or detail you want to highlight (place the circle on the 'None' class). With the circle selected, go to View > Create Detail Viewport, change the scale to 3-inch, and name it (e.g., 'Baseboard'). Detail viewports show trim profiles, joinery, and fastener locations at a scale where carpenters can read dimensions clearly. These are essential for communicating construction intent.",
-      },
-      {
-        title: "LINE WEIGHT CONTROL",
-        content: "Adjust line weights in the viewport's Advanced Properties to emphasize cut sections. Set 'Section Line' to medium line weight so cut elements stand out from elements beyond the cut plane. Set 'Extents Beyond' to a lighter line weight to de-emphasize background elements. If wall and molding blend together, enable 'Separate Cross Sections' to create clearer delineation. These adjustments make it easier for carpenters to understand where different components meet, especially trim and molding intersections.",
-      },
-      {
-        title: "DIMENSIONING AND ANNOTATIONS",
-        content: "Add dimensions and annotations after all viewports are created. Place drawing labels on the correct class (e.g., 'Drawing Label'). Dimension overall wall width, door width, reveal depth, and key trim features. Keep dimensions clear and readable with space between text and linework. Add human figures for scale (place on 'Entourage' class). Adjust section markers so they're smaller and don't overlap drawings. Align drawing labels and viewports for visual cleanliness. Before publishing, update any out-of-date viewports (red dashed lines indicate outdated viewports).",
-      },
-    ],
-    proTips: [
-      "Use Ctrl+Shift+drag to duplicate viewports quickly—saves time when creating multiple views of the same model",
-      "Set viewport scale to half-inch (1/2\" = 1'-0\") for elevations and plans—standard construction drawing scale",
-      "Change Background Render to 'Hidden Line' for clean 2D linework—removes hidden edges that clutter drawings",
-      "Create a custom Renderworks style called 'Model Drafting' with subtle shadows—helps details pop without overwhelming linework",
-      "Extend section cut lines half an inch above and below drawings—prevents overlap with viewport borders",
-      "Set section line weight to medium in Advanced Properties—makes cut elements stand out from background",
-      "Enable 'Separate Cross Sections' to clarify where trim meets wall—critical for carpenter readability",
-      "Use 3-inch scale for detail viewports—large enough to show trim profiles and fastener locations clearly",
-      "Place circles for detail viewports on 'None' class—keeps them invisible in final drawings",
-      "Organize all viewports on 'Viewport' class—makes it easy to select and manage all viewports at once",
-      "Add human figures for scale on 'Entourage' class—helps builders understand real-world dimensions",
-      "Keep dimensions clear with space between text and linework—prevents visual clutter",
-      "Align drawing labels and viewports for visual cleanliness—creates professional-looking sheet layouts",
-      "Update out-of-date viewports (red dashed lines) before publishing—ensures drawings reflect latest model changes",
-      "Use Title Block Manager to update drawing information before publishing—keeps metadata consistent",
-    ],
-    shortcuts: [
-      { keys: "Ctrl + Shift + Drag", action: "Duplicate viewport" },
-      { keys: "Cmd/Ctrl + U", action: "Update selected viewport" },
-      { keys: "Cmd/Ctrl + A", action: "Select all (useful for updating all viewports)" },
-    ],
-    commonPitfalls: [
-      "Leaving viewports in wireframe rendering—shows hidden edges and creates cluttered, unreadable drawings",
-      "Not using Hidden Line or Renderworks for Background Render—results in linework that doesn't match construction drawing standards",
-      "Placing section cut lines directly on top of drawings—causes overlap and visual confusion",
-      "Not adjusting line weights in Advanced Properties—makes cut sections blend with background elements",
-      "Using the same scale for details as elevations—trim profiles are too small to read at half-inch scale",
-      "Placing detail circles on visible classes—circles appear in final drawings and look unprofessional",
-      "Not organizing viewports on 'Viewport' class—makes it hard to select and manage all viewports at once",
-      "Forgetting to add dimensions to key features—builders can't construct without dimensions",
-      "Overlapping section markers with drawings—creates visual clutter and makes drawings hard to read",
-      "Not aligning drawing labels and viewports—creates messy, unprofessional sheet layouts",
-      "Publishing without updating out-of-date viewports—final drawings don't reflect latest model changes",
-      "Not using Title Block Manager before publishing—drawing metadata is inconsistent or missing",
-    ],
-    transcript: [
-      { time: "0:05", text: "Hello. This is Brandon PT Davis, theatrical scenic designer. In this Vectorworks tutorial video, I'm going to show you how to take a 3D model and create 2D drafting." },
-      { time: "0:14", text: "So the first thing I have is a 2D/3D symbol, also known as a hybrid symbol. This is the 2D element, and here's the 3D element of our basic wall. I'm going to go back into Top/Plan view." },
-      { time: "0:32", text: "Currently, I have this class called 'Set Wall.' If you had a more complex drawing, you might have a lot of different classes, which would give you the ability to turn different elements on and off. That lets you control what you're showing in your viewports." },
-      { time: "0:58", text: "We want to transfer this to a sheet layer. I'm going to put this on Sheet Layer 1, Elevations. I'll go to View and create a viewport. I'll let Vectorworks generate the viewport drawing number and name." },
-      { time: "1:12", text: "We want to create this on the Elevations sheet layer, using the default drawing label that comes with this file. We'll let this be Drawing 1. This is the wall plan. We'll do the wall front later." },
-      { time: "1:44", text: "Make sure your layers are selected. We have one layer in this file. This is also where you could toggle different classes on and off, but this file is simple, so we'll use all of the classes that are currently in the file." },
-      { time: "2:01", text: "We're going to change our scale to half-inch scale. We'll keep the rendering set to wireframe and the view set to Top/Plan. Then I'll press OK." },
-      { time: "2:14", text: "Now it's transferred me to the sheet layer. What I'm going to do is shift this to the top. If I hold Control and Shift, I can drag and duplicate, so now I have two of these viewports." },
-      { time: "2:32", text: "In the Object Info palette, if I scroll down to the View section, I can change this to Front view. Now we have the front view, but it's still in wireframe, so it doesn't really look like 2D drafting yet." },
-      { time: "2:54", text: "To fix that, we need to adjust the rendering mode. Under Background Render, I'm going to select Hidden Line and press Update. That gives us the linework we would expect in 2D drafting." },
-      { time: "3:12", text: "Now, because we're using 3D models, we can enhance this further. I have a custom Renderworks style called 'Model Drafting,' which gives a white model drafting look." },
-      { time: "3:41", text: "If I go into the Renderworks style and edit it, you can see the settings I'm using. Anti-aliasing, shadows, and textures are turned on. Color is turned off. Camera effects and grass are off. Anti-aliasing and curved geometry are set to high, soft shadows are low, indirect lighting is low, and environmental lighting is enabled." },
-      { time: "4:28", text: "I'm going to set the Background Render to that custom Renderworks style and the Foreground Render to Hidden Line, then update the viewport. This gives us a little bit of shadowing that helps the details pop." },
-      { time: "4:59", text: "You can see subtle shadows where the wall meets other elements. That's where we'll start with this document." },
-      { time: "5:10", text: "Next, I'm going to create two sections. I'll draw a line centered between the door so we can get a section through the door. I want the section marker to extend half an inch above and below so it doesn't sit directly on top of the drawing." },
-      { time: "5:57", text: "I'll select the viewport, go to View, and create a Section Viewport. I'll define the top and bottom of the cut line, then choose the direction of the section. I want the section to cut to the right of the drawing." },
-      { time: "6:42", text: "I'll double-click to confirm. Vectorworks generates the drawing number automatically. I'll name this Section 1, keep it at half-inch scale, and press OK." },
-      { time: "7:23", text: "Now I have my first section. I'll slide it over so it lines up with the drawing above." },
-      { time: "7:35", text: "I'm going to repeat the process to create another section, placing the cut line closer to the center of the wall. Again, I'll go to View, create Section Viewport, verify the drawing label, and press OK." },
-      { time: "8:16", text: "Now I have two sections, and I'll align them so they line up properly." },
-      { time: "8:31", text: "If I go into the Advanced Properties of the section viewport, I can adjust the line weights. Sometimes I'll set the section line to a medium line weight so it stands out more." },
-      { time: "9:19", text: "If the wall and molding blend together too much, I can go back into Advanced Properties and separate cross sections. I'll also make sure the extents beyond are set to a lighter line weight. After updating, you can see clearer delineation between elements." },
-      { time: "9:57", text: "This makes it easier for carpenters to understand where different components meet, especially trim and molding." },
-      { time: "10:09", text: "Next, I'm going to create some detail viewports. I'll draw circles around the trim profiles I want to highlight. These circles are on the None class." },
-      { time: "10:44", text: "I'll start with the baseboard. With the circle selected, I'll go to View, create a Detail Viewport, and change the scale to three-inch scale. I'll name it Baseboard and press OK." },
-      { time: "11:18", text: "I'll quickly repeat this process for the other trim details." },
-      { time: "12:21", text: "Now that all the viewports are created, we need to organize and annotate them. First, I'll make sure all viewports are on the Viewport class." },
-      { time: "12:38", text: "I'll go into Annotations and start adding dimensions. I'll place the drawing labels on the correct class and dimension the overall wall width and key elements." },
-      { time: "13:21", text: "I like to keep dimensions clear and readable, with some space between text and linework." },
-      { time: "14:06", text: "I'll add a human figure for scale and make sure it's on the correct class." },
-      { time: "15:01", text: "For the sections, I'll adjust the section markers so they're smaller and not overlapping the drawing. I'll also dimension key features like door width and reveal depth." },
-      { time: "17:35", text: "This is a good place to communicate important construction information to the builders, especially around doors and trim details." },
-      { time: "19:08", text: "I'll align the drawing labels and viewports so everything is evenly spaced and visually clean." },
-      { time: "22:27", text: "If you see red dashed lines, that means the viewport is out of date. It's a good idea to update everything before publishing." },
-      { time: "23:01", text: "Finally, I'll go to the Title Block Manager and update any drawing information as needed." },
-      { time: "23:34", text: "I'll publish the drawing, making sure Sheet Layer 1 is selected, and save the PDF." },
-      { time: "24:00", text: "Here's the final drawing with clean linework and dimensions. That concludes this Vectorworks tutorial. If you have any questions, let me know. Thank you." },
-    ],
-    relatedResources: [
-      { type: "Documentation", title: "Vectorworks Viewports Guide", url: "https://www.vectorworks.net/" },
-      { type: "Video", title: "Advanced Section Viewport Techniques", url: "https://www.youtube.com/vectorworks" },
-      { type: "Community", title: "Vectorworks Forum - Viewports & Sheet Layers", url: "https://forum.vectorworks.net/" },
-    ],
-    relatedTutorials: [
-      { title: "Vectorworks Tutorial: Sheet Layers", slug: "sheet-layers" },
-      { title: "Vectorworks Tutorial: 2D Annotations and Dimensioning", slug: "2d-annotations-dimensioning" },
-      { title: "Vectorworks Tutorial: Hybrid Symbols", slug: "hybrid-symbols" },
-    ],
-  },
-};
+        { title: "Vectorworks Tutorial: Understanding Symbols", slug: "understanding-symbols" },
+        { title: "Vectorworks Tutorial: 3D Modeling Basics", slug: "3d-modeling-basics" },
+      ],
+    },
+    "basics-of-textures": {
+      id: 14,
+      title: "Vectorworks Tutorial: Basics of Textures",
+      slug: "basics-of-textures",
+      youtubeId: "9iApEa1XTug",
+      category: "3d-modeling",
+      difficulty: "Intermediate",
+      duration: "13:21",
+      publishDate: "Feb 08, 2021",
+      description: "Learn how to apply, edit, and create custom Renderworks textures to bring life to your 3D models in Vectorworks.",
+      overview: "This tutorial introduces Renderworks textures in Vectorworks, covering how to apply pre-made textures, adjust mapping types, edit texture parameters, and create custom textures from scratch. You'll learn the differences between OpenGL and Renderworks rendering modes, understand texture shaders (color, reflectivity, transparency, bump), and master the controls for scaling, rotating, and mapping textures onto 3D objects. The tutorial demonstrates practical workflows for wood, stone, glass, and marble textures, showing how to achieve realistic results through proper texture configuration and lighting.\n\n**Note:** In current versions of Vectorworks, OpenGL rendering mode has been renamed to \"Shaded.\" The concepts and workflows remain the same.",
+      learningObjectives: [
+        "Understand the differences between OpenGL (now called 'Shaded'), Fast Renderworks, and Final Quality Renderworks",
+        "Apply pre-made Renderworks textures from the Resource Manager to 3D objects",
+        "Adjust texture mapping types (Plane, Auto-Align Plane, Perimeter, Sphere, Cylinder)",
+        "Edit texture parameters including scale, offset, rotation, and mapping mode",
+        "Understand and modify texture shaders: color, reflectivity, transparency, and bump",
+        "Apply textures by face to create multi-material objects",
+        "Create custom Renderworks textures from imported images",
+        "Configure lighting (spotlights) to enhance texture visualization",
+        "Optimize texture scale settings within the texture definition vs. Object Info Palette",
+      ],
+      keyConcepts: [
+        {
+          title: "RENDERWORKS RENDERING MODES",
+          content: "OpenGL (now called 'Shaded' in current Vectorworks versions) is the fastest, simplified render mode that doesn't calculate lighting. Fast Renderworks adds basic lighting calculations. Final Quality Renderworks produces photorealistic results with full lighting, shadows, and reflections—but requires more processing time. Use Shaded/OpenGL for modeling, Renderworks for presentation.",
+        },
+        {
+          title: "TEXTURE MAPPING TYPES",
+          content: "Plane projects texture from a single direction. Auto-Align Plane projects texture perpendicular to each face. Perimeter wraps texture around the object's perimeter. Sphere and Cylinder are optimized for spherical and cylindrical geometry. Choose the map type that best matches your object's shape.",
+        },
+        {
+          title: "TEXTURE SHADERS",
+          content: "Color shader defines the base image or color. Reflectivity controls how light bounces off the surface (mirror, glossy, matte). Transparency controls how see-through the material is (glass = high transparency). Bump creates simulated surface texture without changing geometry.",
+        },
+        {
+          title: "TEXTURE SCALE SETTINGS",
+          content: "Texture scale can be adjusted in two places: in the Object Info Palette (per-object override) or within the texture definition itself (affects all instances). Editing the texture definition is preferred for consistency across multiple objects using the same material.",
+        },
+        {
+          title: "APPLY BY FACE",
+          content: "Instead of applying one texture to an entire object, you can apply different textures to individual faces. This allows multi-material objects like a wooden box with a stone top. Select the face in the Object Info Palette and assign the texture.",
+        },
+        {
+          title: "FRESNEL REFLECTIVITY",
+          content: "Fresnel is a physically-accurate reflection model where surfaces reflect more light at glancing angles. This creates realistic reflections on materials like water, glass, and polished surfaces. Adjusting Fresnel values affects how reflections change based on viewing angle.",
+        },
+      ],
+      proTips: [
+        "Work in Shaded mode (formerly OpenGL) while modeling and adjusting textures—only switch to Renderworks when you need to check the final appearance",
+        "Rename long texture names to shorter, descriptive names (e.g., 'Stonework') to keep your Resource Manager organized",
+        "Edit texture scale in the texture definition (Resource Manager > Edit) rather than per-object for consistency across your model",
+        "Start with Vectorworks' pre-made textures and modify them rather than building from scratch—they have well-tuned shader settings",
+        "Use bump mapping at 20-50% for subtle surface texture; 100% bump can look unrealistic unless you're creating rough materials",
+        "Set reflectivity to Mirror mode at 5-15% for realistic glossy surfaces like polished stone or finished wood",
+        "Add a spotlight when testing reflective materials—reflections are more visible with directional lighting",
+        "For glass materials, keep transparency at 80-95% and add slight reflectivity for realism",
+        "When creating custom textures from images, ensure the image tiles seamlessly or use large enough scale to avoid visible repeats",
+        "Use Auto-Align Plane mapping for architectural objects (boxes, walls) and Perimeter for cylindrical objects (columns, pipes)",
+        "Adjust blurriness on mirror reflections to soften them—sharp mirror reflections (0% blur) rarely occur in real materials",
+        "Save custom textures to your user library so you can reuse them across projects",
+        "Test textures on simple geometry (cubes, cylinders) before applying to complex models",
+        "Keep texture file sizes reasonable—high-resolution images (4K+) can slow down rendering without noticeable quality improvement",
+      ],
+      shortcuts: [
+        { keys: "Cmd/Ctrl + Click", action: "Select individual faces for face-specific texture application" },
+        { keys: "Resource Manager", action: "Access pre-made Renderworks textures and edit texture definitions" },
+        { keys: "Object Info > Render", action: "View and modify textures applied to selected objects" },
+      ],
+      commonPitfalls: [
+        "Using Final Quality Renderworks while modeling—it's too slow. Stick to OpenGL and only render for final checks",
+        "Not adjusting texture scale, resulting in unrealistic material appearance (e.g., wood grain that's 10 feet wide)",
+        "Applying textures without considering the mapping type—Plane mapping on a cylinder will look distorted",
+        "Setting bump to 100% on every texture, creating overly rough, unrealistic surfaces",
+        "Not renaming textures, leading to a cluttered Resource Manager with cryptic names",
+        "Adjusting texture scale in Object Info Palette instead of the texture definition, causing inconsistency across objects",
+        "Forgetting to add lighting when testing reflective materials—reflections won't be visible without light sources",
+        "Using high-resolution texture images that slow down rendering without improving visual quality",
+        "Not understanding the difference between bump (simulated texture) and actual 3D geometry—bump doesn't change the silhouette",
+        "Applying glass textures without adjusting transparency, resulting in opaque 'glass' objects",
+      ],
+      transcript: [
+        { time: "0:06", text: "Hello, this is Brandon PT Davis, theatrical scenic designer. In this Vectorworks tutorial, we're going to cover the basics of textures." },
+        { time: "0:13", text: "Textures in Vectorworks are what give you the ability to bring life to your 3D objects." },
+        { time: "0:20", text: "Currently, the object we're looking at in OpenGL is just a white cube with no textures on it." },
+        { time: "0:34", text: "If you're not familiar with the render options, OpenGL is the most simplified render mode in Vectorworks." },
+        { time: "0:45", text: "We can also change our render options to Fast Renderworks and Final Quality Renderworks." },
+        { time: "0:53", text: "You can build your own library of render styles, and we'll go over how to modify those in another video." },
+        { time: "1:01", text: "If I click Final Quality Renderworks, you'll see it generates an image that shows shadows and how light reflects on your model." },
+        { time: "1:16", text: "Now I'm going to switch back to OpenGL, because when you use Renderworks, your computer has to process how light affects the object, and that takes time." },
+        { time: "1:36", text: "So OpenGL is a simplified version of that." },
+        { time: "1:40", text: "In the Resource Manager, Vectorworks has hundreds of pre-made Renderworks textures that you can select." },
+        { time: "1:52", text: "I've selected three to start this tutorial: a glass, a stone, and a wood texture." },
+        { time: "2:00", text: "The first one I'm going to show you is the wood texture. I'm going to select it and drop it onto our one-foot by one-foot cube." },
+        { time: "2:19", text: "In the Object Info Palette, I can go to the Render settings. Here we have the texture that's been applied." },
+        { time: "2:30", text: "From the dropdown, I can change the texture easily." },
+        { time: "2:32", text: "We also have the map type, scale, offset, and rotation." },
+        { time: "2:41", text: "These controls let you quickly adjust the texture, including flipping it if needed." },
+        { time: "2:51", text: "The map type controls how the texture is projected onto the object." },
+        { time: "2:59", text: "For mapping, we have Plane, Auto-Align Plane, Sphere, Cylinder, and Perimeter." },
+        { time: "3:06", text: "My process is to choose the map type that seems best for the object, and then adjust if needed." },
+        { time: "3:18", text: "Right now it's set to Perimeter." },
+        { time: "3:22", text: "Before changing the map type, I can also adjust the scale to make the texture smaller, since we're dealing with a one-foot cube." },
+        { time: "3:31", text: "I can also change the rotation." },
+        { time: "3:37", text: "In Plane mode, it maps the texture based on a single plane across the object. That can look less accurate on some faces." },
+        { time: "4:02", text: "Auto-Align Plane chooses each face and projects the texture onto that face." },
+        { time: "4:15", text: "Perimeter maps around the perimeter of the object. With a cube, it can feel similar to Auto-Align, but it's handling the mapping differently." },
+        { time: "4:34", text: "There are also Sphere and Cylinder modes, which make more sense when you're mapping spherical or cylindrical objects." },
+        { time: "4:52", text: "Another thing we can do is apply textures by face. For example, I can map stone only to the top face, while the rest stays wood." },
+        { time: "5:18", text: "Now I'm going to switch to Final Quality Renderworks so you can see how it looks with more realistic lighting and shadows." },
+        { time: "5:34", text: "Now with our stone texture, I'm going to show you that we can edit the texture parameters." },
+        { time: "5:41", text: "In the Resource Manager, I can right-click the stone texture and choose Edit." },
+        { time: "5:49", text: "The name is long, so I can rename it to something simpler, like 'Stonework,' to keep the file organized." },
+        { time: "6:05", text: "Then we can adjust the shaders. Textures aren't just images—you can also control reflectivity, transparency, and bump." },
+        { time: "6:13", text: "If I look at the color shader, I can edit it and see the image the shader is based on." },
+        { time: "6:28", text: "From the dropdown, I can also adjust the color and Fresnel, or build my own color shaders in Vectorworks." },
+        { time: "6:42", text: "Reflectivity affects how light hits the object. For now, I'll keep it using the image's reflectivity." },
+        { time: "6:54", text: "Transparency controls how transparent the object is. Stone isn't transparent, so we keep that low." },
+        { time: "7:02", text: "Bump creates a simulated surface texture. Right now the bump is set to 20, so I'm going to increase it to 100% for the sake of the tutorial." },
+        { time: "7:20", text: "I'll press OK." },
+        { time: "7:25", text: "Now I'll go back to Final Quality Renderworks and re-render." },
+        { time: "7:41", text: "Watch the stone—you'll see it gains a little more depth. It's subtle, but it looks more realistic." },
+        { time: "7:56", text: "Now I'm going to copy these cubes, reset the mapping, and reapply textures." },
+        { time: "8:19", text: "We want to revert to Overall mapping, then I'll apply the glass texture to one cube and the stonework texture to another." },
+        { time: "8:36", text: "Glass has a lot of transparency. If I edit the glass texture, we can see the transparency is set to 90%." },
+        { time: "8:54", text: "If I render in Final Quality Renderworks, the textures look more realistic than OpenGL, and we can continue to modify them as needed." },
+        { time: "9:13", text: "If I wanted the stonework to be glossier, I could right-click and edit it." },
+        { time: "9:20", text: "I'm going to change the reflectivity to Mirror." },
+        { time: "9:26", text: "100% would be too intense, so I'll set it to about 15% and press OK. It will re-render, and now it's a bit shinier." },
+        { time: "9:44", text: "You can see the glossiness better if we add a light." },
+        { time: "9:48", text: "In the Visualization palette, I'm going to add a spotlight and press OK." },
+        { time: "10:03", text: "Then I'll adjust the spotlight so it's pointing directly down." },
+        { time: "10:46", text: "Now you can see the mirror glossiness more clearly—but it's too intense." },
+        { time: "10:53", text: "So I'll go back, edit the mirror reflectivity, and reduce it to around 5% so it looks more realistic." },
+        { time: "11:06", text: "This is a few of the things you can do with textures in Vectorworks." },
+        { time: "11:13", text: "You can also create your own textures. If I go down to the bottom and create a new Renderworks texture, I can import an image." },
+        { time: "11:31", text: "Here's a marble image." },
+        { time: "11:36", text: "I'll change the reflectivity to Mirror, maybe set it to 10%." },
+        { time: "11:44", text: "You can also adjust blurriness. The dialog explains that this controls how blurry the reflection is, so increasing it makes reflections softer." },
+        { time: "11:59", text: "I can also modify the texture so it reflects a bit of green, keep transparency at none, and set bump to around 9." },
+        { time: "12:10", text: "And we'll name it 'Marble.'" },
+        { time: "12:16", text: "Press OK, go into our 3D view, and apply the marble texture." },
+        { time: "12:22", text: "At first, the marble pattern may look too small." },
+        { time: "12:29", text: "You can adjust the scale in the Object Info Palette, but it's better to edit the texture and set the scale there." },
+        { time: "12:46", text: "I'll set it to one foot for now, and that works nicely." },
+        { time: "12:52", text: "Now if I go to Final Quality Renderworks, it looks more realistic." },
+        { time: "13:02", text: "That's how you can create a marble texture—or any texture—in Vectorworks." },
+        { time: "13:09", text: "As you move forward in Vectorworks, you'll probably become more interested in studying how Renderworks textures affect your model." },
+        { time: "13:21", text: "But as a basic introduction, I think this is a good start. If you have any questions, let me know." },
+      ],
+      relatedResources: [
+        { type: "Documentation", title: "Vectorworks Renderworks Guide", url: "https://www.vectorworks.net/" },
+        { type: "Video", title: "Advanced Renderworks Techniques", url: "https://www.youtube.com/vectorworks" },
+        { type: "Community", title: "Vectorworks Forum - Rendering", url: "https://forum.vectorworks.net/" },
+      ],
+      relatedTutorials: [
+        { title: "Vectorworks Tutorial: 3D Modeling Basics", slug: "3d-modeling-basics" },
+        { title: "Vectorworks Tutorial: Hybrid Symbols", slug: "hybrid-symbols" },
+        { title: "Vectorworks Tutorial: Resource Manager Basics", slug: "resource-manager-basics" },
+      ],
+    },
+    "3d-modeling-tools": {
+      id: 15,
+      title: "Vectorworks Tutorial: 3D Modeling Tools",
+      slug: "3d-modeling-tools",
+      youtubeId: "8dm9ZMTXypE",
+      category: "3d-modeling",
+      difficulty: "Intermediate",
+      duration: "18:19",
+      publishDate: "Feb 08, 2021",
+      description: "Master the essential 3D modeling tools in Vectorworks including primitive objects, push/pull, extract, fillet, chamfer, taper, deform, and shell solid.",
+      overview: "This comprehensive tutorial covers the complete 3D modeling toolkit in Vectorworks. You'll learn how to create primitive objects (sphere, hemisphere, cone, pyramid, ellipsoidal), use the push/pull tool for quick extrusions, extract surfaces and curves from complex objects, add fillets and chamfers to edges, taper faces at specific angles, deform solids with twist/bend/bulge modes, and create hollow objects with the shell solid tool. Each tool is demonstrated with practical examples showing how to adjust parameters, select faces and edges, and combine tools for complex modeling workflows.",
+      learningObjectives: [
+        "Create primitive 3D objects: sphere, hemisphere, cone, pyramid, and ellipsoidal shapes",
+        "Use push/pull tool to extrude and move faces in different modes",
+        "Extract surfaces and curves from complex 3D objects for texture application",
+        "Apply fillets and chamfers to edges and faces with precise radius control",
+        "Taper faces using tangent and picked face modes",
+        "Deform solids using twist, bend (finite/symmetric), and bulge modes",
+        "Create hollow objects with shell solid tool by selecting faces and setting thickness",
+        "Understand the difference between extrude face mode and move face mode",
+        "Modify 3D objects using the Object Info Palette after creation",
+      ],
+      keyConcepts: [
+        {
+          title: "PRIMITIVE OBJECTS",
+          content: "Vectorworks provides tools to create basic 3D shapes without manual modeling: Sphere (Shift+3), Hemisphere (half sphere), Cone (with radius/height or radius/tip modes), Pyramid (adjustable sides, regular or frustrum), and Ellipsoidal (adjustable height/width/length). These primitives use familiar circle-tool modes (radius, diameter, center-radius) and can be modified in the Object Info Palette after creation.",
+        },
+        {
+          title: "PUSH/PULL TOOL",
+          content: "Press P to access push/pull for quick face manipulation. Extrude Face Mode follows the angle of the selected face (useful for tapered objects). Move Face Mode moves the face perpendicular to the object regardless of face angle. Both modes work on closed faces and can be applied to multiple areas of the same object. This is the fastest way to add height variations to extruded shapes.",
+        },
+        {
+          title: "EXTRACT TOOL",
+          content: "Extract (Shift+E) pulls surfaces or curves from complex 3D objects. Extract Surface Mode isolates individual faces for separate texturing—extracted surfaces sit on top of the original. Extract Curve Mode pulls edge curves that can be combined with Connect/Combine tool and used for extrude-along-path operations. Use Shift+arrow keys to nudge extracted surfaces away from the original object.",
+        },
+        {
+          title: "FILLET & CHAMFER EDGES",
+          content: "Fillet Edge Tool (Ctrl+F) rounds edges with adjustable radius. Chamfer Tool creates angled cuts instead of curves. Both tools let you select individual edges (Shift+click), entire faces, or all faces at once. Fillets and chamfers remain editable in the Object Info Palette. Use Ctrl+U to ungroup and return to the original shape. Fillet is essential for realistic product modeling and architectural details.",
+        },
+        {
+          title: "TAPER FACE TOOL",
+          content: "Taper Face has two modes: Tangent Face Mode (select anchor face first, then the face to taper) and Picked Face Mode (pick two faces to taper between them). Press Tab to enter specific angles numerically. Tapering is useful for creating sloped walls, angled surfaces, and architectural features without manual vertex manipulation.",
+        },
+        {
+          title: "DEFORM TOOL",
+          content: "Deform Tool offers three modes: Twist Solid (rotate object around center point—keep angles moderate to avoid computation issues), Bend Solid (finite mode bends from one point, symmetric mode bends from both sides), and Bulge Mode (select point and bulge outward). Extreme deformations require more processing power. Deformed objects remain editable in Object Info Palette.",
+        },
+        {
+          title: "SHELL SOLID TOOL",
+          content: "Shell Solid (Shift+S) hollows out 3D objects by adding thickness to selected faces. Select a face, set thickness (e.g., 0.5\"), and check to create a hollow object like a vase or container. Works on both complex organic shapes and simple extrudes. Essential for creating objects that need interior volume, such as vessels, boxes, and architectural elements.",
+        },
+      ],
+      proTips: [
+        "Work in a rotated 3D view when using cone, pyramid, and deform tools—it's easier to visualize the results",
+        "Use Shift+click to select multiple edges for fillet or chamfer operations, then adjust radius uniformly",
+        "Extract surfaces to apply different textures to specific faces without affecting the entire object",
+        "Press Tab while using taper, fillet, or deform tools to enter precise numeric values instead of dragging",
+        "Keep twist deformations under 180 degrees to avoid excessive processing time and visual artifacts",
+        "Use symmetric bend mode for creating arches and curved structures that need to be balanced",
+        "Shell solid works on any face—select the top of an extrude to create a box, or the side of an organic shape for a vase",
+        "Combine extract curve with extrude-along-path to create pipes, railings, and decorative elements that follow complex surfaces",
+        "Use Ctrl+U to ungroup filleted or chamfered objects and return to the original shape if you need to start over",
+        "Modify primitive objects in the Object Info Palette after creation—you can adjust radius, height, sides, and more",
+        "Use push/pull's move face mode when you need to adjust depth without following the object's angle",
+        "Create a library of primitive objects with common dimensions to speed up your modeling workflow",
+      ],
+      shortcuts: [
+        { keys: "Shift + 3", action: "Activate Sphere tool" },
+        { keys: "P", action: "Activate Push/Pull tool" },
+        { keys: "Shift + E", action: "Activate Extract tool" },
+        { keys: "Ctrl + F", action: "Activate Fillet Edge tool" },
+        { keys: "Shift + S", action: "Activate Shell Solid tool" },
+        { keys: "Tab", action: "Enter numeric value while using tools" },
+        { keys: "Shift + Arrow", action: "Nudge extracted surfaces" },
+        { keys: "Ctrl + U", action: "Ungroup object to return to original shape" },
+      ],
+      commonPitfalls: [
+        "Forgetting to work in 3D view when using cone or pyramid tools—results are hard to visualize in top/plan view",
+        "Selecting the wrong face when using shell solid—always verify which face is highlighted before confirming",
+        "Using extreme twist angles (over 180°) that cause long processing times and potential crashes",
+        "Not using Shift+click to select multiple edges for fillet/chamfer—results in inconsistent edge treatments",
+        "Confusing extrude face mode with move face mode in push/pull—leads to unexpected angles on tapered objects",
+        "Forgetting to press Tab to enter numeric values—dragging is less precise than typing exact measurements",
+        "Not extracting surfaces before applying textures to specific faces—results in entire object being textured",
+        "Attempting to fillet or chamfer edges on objects with complex geometry—simplify first or select edges carefully",
+        "Not checking Object Info Palette after creating primitives—missing opportunities to adjust parameters precisely",
+        "Using bend solid without understanding finite vs symmetric modes—creates unbalanced or unexpected curves",
+      ],
+      transcript: [
+        { time: "0:06", text: "Hello, this is Brandon PT Davis, theatrical scenic designer, and in this Vectorworks tutorial video we're going to be going over the 3D modeling tools in the tool palette." },
+        { time: "0:18", text: "The 3D modeling tools are located here in the tool palette. You'll see a variety of tools which you can use for 3D modeling." },
+        { time: "0:29", text: "The first set of tools I'm going to show you are probably the more simple tools. These are ways to create primitive objects in Vectorworks without a lot of effort." },
+        { time: "0:43", text: "As you've probably recognized from the last video, creating a cube is relatively easy with the extrude function." },
+        { time: "0:50", text: "But creating a sphere may be more difficult, so here is the sphere tool." },
+        { time: "0:56", text: "You can access the sphere tool by hitting Shift+3." },
+        { time: "1:01", text: "It's like using the circle tool—you pick the radius, in this case a radius of 6 inches, and it will create a sphere." },
+        { time: "1:15", text: "As we fly over, we'll see this is a sphere." },
+        { time: "1:22", text: "You can also use radius mode, diameter mode, and center radius mode—all modes you're familiar with using the circle tool." },
+        { time: "1:32", text: "Going back into the top plan, we'll next look at the hemisphere." },
+        { time: "1:37", text: "A hemisphere is essentially a half circle. The hemisphere works exactly like the sphere tool, only when you look in 3D mode it will be the half sphere." },
+        { time: "1:52", text: "The next primitive object you can find in the 3D modeling tools palette is the cone tool." },
+        { time: "2:02", text: "The cone tool is best to have in a rotated view. Selecting the cone tool, I can use the radius and height mode." },
+        { time: "2:10", text: "First I'll select the center point, then select the radius just as you would with the circle tool, then one click and we pick the height." },
+        { time: "2:25", text: "In this case I'm going to make the height 12 inches, and now we have a cone." },
+        { time: "2:34", text: "You can also create a cone using radius and tip mode. Here we select the radius and then adjust the angle of the tip for a more organic shape." },
+        { time: "2:52", text: "Another primitive we can create is the pyramid object tool." },
+        { time: "3:00", text: "To adjust the pyramid object, we can change the number of sides, decide if it's regular or frustrum, change the mode—inscribed or circumscribed—and adjust the base radius, top, and the height." },
+        { time: "3:22", text: "I'm going to go with the defaults and place our pyramid. Now we have our three-sided pyramid." },
+        { time: "3:34", text: "You can go to the Object Info Palette and adjust the settings there as well." },
+        { time: "3:56", text: "The last primitive object tool I'm going to be showing you is the ellipsoidal object tool." },
+        { time: "4:03", text: "After selecting this object, we can manage its attributes in the ellipsoidal object palette and place the object in the document." },
+        { time: "4:17", text: "We can also go to the Object Info Palette and further change the height, width, and length of the object." },
+        { time: "4:28", text: "The next tool I'm going to show you is the push/pull tool." },
+        { time: "4:35", text: "You can access push/pull by pressing P. I'm going to start with a rectangle and press P for push/pull." },
+        { time: "4:46", text: "We start in extrude face mode. This allows you to select a closed face, click once, and adjust the height of the face." },
+        { time: "4:56", text: "You can do this in multiple areas." },
+        { time: "5:02", text: "With this tapered object, I'll show you the difference between extrude face mode and move face mode." },
+        { time: "5:11", text: "In extrude face mode, when we extrude the face it follows the angle of the object." },
+        { time: "5:20", text: "But if I go back to the extruded object and select move face mode, you'll see we move the face perpendicular to the object." },
+        { time: "5:36", text: "This is different than extrude face mode, where we extrude the face in the direction the face is oriented." },
+        { time: "5:48", text: "Next I'm going to show you the extract tool. The extract tool is located here and can also be accessed by hitting Shift+E." },
+        { time: "6:00", text: "To show you how it works, I have this odd shape with a wood grain texture. Imagine I want just one face—this face—and I want it to be blue." },
+        { time: "6:17", text: "Because this is a complex object, Vectorworks doesn't always know what to define as the top or sides." },
+        { time: "6:42", text: "So using the extract tool, I can choose different modes. There's extract by point, extract curve, extract iso parametric curve, and extract surface mode." },
+        { time: "7:09", text: "I'm going to select extract surface mode, I click this surface, and hit the check mark." },
+        { time: "7:16", text: "Now we've created another surface on top, so now I can go to my Resource Manager and apply a blue texture." },
+        { time: "7:28", text: "We can't see it yet, so a trick is to go into a front, left, or right view, hold Shift and nudge it with the arrow key one time." },
+        { time: "7:45", text: "Now it looks like we have our texture. If I go to a fast Renderworks mode, we can see the texture sitting on top." },
+        { time: "8:04", text: "Another useful mode is extract curve mode. I can select any number of curves, then check this." },
+        { time: "8:24", text: "Now I have these curves in a group. I can click into the group and modify them." },
+        { time: "8:28", text: "Using the connect/combine tool, I can combine these in 3D. We'll use position matching and connect." },
+        { time: "8:50", text: "Make sure you're in the right mode, then I could draw a circle on the bottom and extrude along path." },
+        { time: "9:15", text: "Press OK. Now I have a cylinder that runs along the object." },
+        { time: "9:25", text: "The next tool I'm going to show you is the fillet edge tool. This is a tool you'll use often." },
+        { time: "9:30", text: "It's similar to the fillet tool in the basic tool palette, but for 3D objects." },
+        { time: "9:43", text: "I have a 10 inch by 10 inch by 10 inch cube. I'm going to select the fillet tool—you can also access it with Ctrl+F." },
+        { time: "9:52", text: "We can adjust the radius. I'll start with a half inch, then I can select edges by holding Shift and clicking the lines." },
+        { time: "10:08", text: "When I hit the check box, the fillet is created." },
+        { time: "10:16", text: "You can adjust the fillet in the Object Info Palette, and there we are." },
+        { time: "10:31", text: "To remove the fillet, I can select remove and they're all gone, or I can modify which edges are selected and recheck the box." },
+        { time: "10:51", text: "You can also unselect edges with Shift and then hit the check box again." },
+        { time: "11:00", text: "In tool preferences you can also select faces instead of edges. Here's a face selected, and it selects the entire face." },
+        { time: "11:16", text: "You can also choose all faces and hit the check box. Now the entire object has a half-inch fillet." },
+        { time: "11:31", text: "You can also hit Ctrl+U to ungroup and return to the original shape." },
+        { time: "11:38", text: "Next I'll show you the chamfer tool. This is similar to what you're used to in the basic tool palette." },
+        { time: "11:47", text: "I have the chamfer set to 1. I select the edges and hit the check box." },
+        { time: "11:57", text: "Now instead of a fillet, we have a chamfer. You'll see similar options as fillet, and you can modify chamfers in the Object Info Palette as well." },
+        { time: "12:17", text: "The next tool is the taper face tool." },
+        { time: "12:21", text: "In tangent face mode, first select the anchor face—the face you will not modify—then select the second face and taper it at an angle." },
+        { time: "12:46", text: "By hitting Tab, I can type a specific angle. Here I'll set it to 15 degrees." },
+        { time: "12:55", text: "With picked face mode, you pick one face, then the other face, and it tapers the face like that." },
+        { time: "13:25", text: "The next tool I'm showing you is the deform tool. It's located here and it has several modes." },
+        { time: "13:40", text: "I'm going to take this rectangle and show a few. First is twist solid mode." },
+        { time: "13:48", text: "Select the mode, then select the object, choose a point—I'll pick the center—then I can rotate the object." },
+        { time: "14:04", text: "Here it's at 90 degrees." },
+        { time: "14:17", text: "Keep in mind the more extreme the twist, the harder it can be for your computer to compute, so I'll keep it at 90 degrees." },
+        { time: "14:36", text: "Now we've twisted the rectangle to create this shape. I can still modify the height in the Object Info Palette." },
+        { time: "14:57", text: "I'll set this to six feet, then I'll go to front view and adjust it closer to zero." },
+        { time: "15:13", text: "Next, I'll show bend solid mode. With bend solid, we can use finite mode where you bend from a point, like this." },
+        { time: "15:44", text: "Or symmetric mode, where it bends from both sides." },
+        { time: "16:03", text: "The last mode I'll share is bulge mode. Select the object, pick a point, and bulge it out like that." },
+        { time: "16:50", text: "The last 3D modeling tool I'm going to show you is the shell solid tool. You can access it by hitting Shift+S." },
+        { time: "17:02", text: "With this organic shape we created, let's say we want to make it like a vase." },
+        { time: "17:18", text: "I'll select the shell tool, choose this face, and set the thickness to a half inch." },
+        { time: "17:29", text: "With the face selected, hit the check mark. Now it's added thickness and hollowed out the object." },
+        { time: "17:48", text: "You can also do this with a simple extrude—select the face and shell it to add thickness." },
+        { time: "18:14", text: "This concludes our Vectorworks tutorial. If you have any questions, please feel free to ask. Thank you." },
+      ],
+      relatedResources: [
+        { type: "Documentation", title: "Vectorworks 3D Modeling Guide", url: "https://www.vectorworks.net/" },
+        { type: "Video", title: "Advanced 3D Modeling Techniques", url: "https://www.youtube.com/vectorworks" },
+        { type: "Community", title: "Vectorworks Forum - 3D Modeling", url: "https://forum.vectorworks.net/" },
+      ],
+      relatedTutorials: [
+        { title: "Vectorworks Tutorial: 3D Modeling Basics", slug: "3d-modeling-basics" },
+        { title: "Vectorworks Tutorial: Basics of Textures", slug: "basics-of-textures" },
+        { title: "Vectorworks Tutorial: Hybrid Symbols", slug: "hybrid-symbols" },
+      ],
+    },
+    "creating-24x36-pdfs": {
+      id: 16,
+      title: "Vectorworks Tutorial: Creating 24x36 PDFs Without a Plotter",
+      slug: "creating-24x36-pdfs",
+      youtubeId: "Gd9_hB5USkQ",
+      category: "2d-drafting",
+      difficulty: "Beginner",
+      duration: "3:28",
+      publishDate: "Feb 10, 2021",
+      description: "Learn how to export large format sheets (24x36) to PDF when you don't have Adobe PDF or a plotter connected to your computer.",
+      overview: "This quick tutorial demonstrates the essential workflow for exporting large format sheets to PDF without requiring Adobe PDF or a physical plotter connection. You'll learn how to configure page setup to recognize 24x36 dimensions, understand how Vectorworks handles page breaks for standard letter-size printers, and use the Publish command with the correct settings to export your entire sheet as a single PDF page. This technique is critical for students and professionals who need to submit or share large format drawings but don't have access to professional printing equipment.",
+      learningObjectives: [
+        "Create a new sheet layer and configure it for 24x36 output",
+        "Access and configure Page Setup for large format sheets without a plotter",
+        "Understand how Vectorworks displays page breaks for standard printers",
+        "Use the 'Export the whole printable area to one page' option in Publish settings",
+        "Successfully export a single 24x36 PDF from multiple letter-size pages",
+        "Avoid common pitfalls that result in multi-page PDFs instead of single sheets",
+      ],
+      keyConcepts: [
+        {
+          title: "PAGE SETUP WITHOUT A PLOTTER",
+          content: "When you don't have Adobe PDF or a plotter connected, Vectorworks defaults to letter-size (8.5x11) pages. Access Edit > Page Setup, select your default PDF writer (e.g., Microsoft Print to PDF), and uncheck 'Choose available print sizes.' Then select Arch D (24x36) from the Pages section. Vectorworks will show the sheet as 3.272 pages horizontally and 2.8235 pages vertically—this represents how many letter-size pages would tile to cover your 24x36 sheet.",
+        },
+        {
+          title: "UNDERSTANDING PAGE BREAKS",
+          content: "Enable 'Show page breaks' in Page Setup to visualize how Vectorworks divides your 24x36 sheet into letter-size pages. Gray dashed lines represent individual 8.5x11 pages arranged in a grid. This helps you understand what Vectorworks sees as the 'auto page' layout. Turn off page breaks before publishing to avoid confusion during layout work.",
+        },
+        {
+          title: "PUBLISH TO PDF WORKFLOW",
+          content: "Go to File > Publish, add your sheet layer, and ensure output format is set to PDF (not DWG or image). In Options, the critical setting is 'Export the whole printable area to one page'—this merges all letter-size tiles into a single 24x36 PDF. If you select 'Pages' or 'All pages' instead, Vectorworks will export individual letter-size pages, resulting in a multi-page PDF instead of one large sheet.",
+        },
+        {
+          title: "LAYOUT WORKFLOW",
+          content: "After configuring page setup, lay out your viewports, add your title block, and build your sheet content as normal. The page setup configuration only affects how Vectorworks exports the final PDF—it doesn't change how you work on the sheet. Think of it as a 'print driver workaround' that tells Vectorworks to treat multiple letter pages as one large sheet during export.",
+        },
+      ],
+      proTips: [
+        "Always uncheck 'Choose available print sizes' in Page Setup when working without a plotter—this unlocks larger format options",
+        "Use 'Show page breaks' temporarily to verify your sheet is correctly divided, then turn it off to avoid visual clutter",
+        "The 'Export the whole printable area to one page' option is the key setting—memorize this to avoid multi-page exports",
+        "You can use this technique for any large format size (30x42, 36x48, etc.), not just 24x36—just select the appropriate Arch size",
+        "Save your Publish settings as a named set if you export sheets regularly—this saves time on future exports",
+        "If your PDF comes out as multiple pages, you likely forgot to select 'Export the whole printable area to one page'—go back and check Options",
+        "This workflow works with any PDF writer (Microsoft Print to PDF, CutePDF, etc.)—you don't need Adobe Acrobat",
+        "The page count display (3.272 x 2.8235) is normal—it's just Vectorworks calculating how many letter pages fit in 24x36",
+      ],
+      shortcuts: [
+        { keys: "File > Publish", action: "Open Publish dialog to export sheets to PDF" },
+        { keys: "Edit > Page Setup", action: "Configure page size and print settings" },
+      ],
+      commonPitfalls: [
+        "Forgetting to uncheck 'Choose available print sizes'—results in only letter-size options being available",
+        "Selecting 'Pages' or 'All pages' instead of 'Export the whole printable area to one page'—creates multi-page PDFs",
+        "Not verifying the Arch D (24x36) selection in Page Setup—may result in incorrect sheet dimensions",
+        "Leaving 'Show page breaks' enabled during layout work—creates visual confusion with dashed lines everywhere",
+        "Assuming you need Adobe Acrobat or a plotter to export large format sheets—this workaround works with any PDF writer",
+        "Not saving Publish settings as a named set—wastes time reconfiguring options for every export",
+        "Confusing the page count display (3.272 x 2.8235) with an error—this is normal and represents letter-page tiling",
+      ],
+      transcript: [
+        { time: "0:06", text: "Hello, this is Brandon PT Davis. I'm just going to quickly show you how to create a 24 by 36 page if you don't have Adobe PDF or if you are not connected to a plotter on your computer." },
+        { time: "0:26", text: "So what I'm going to do is I'm going to start with the sheet layer. I'm going to create a new sheet layer. I'm just going to leave it as sheet layer one, sheet title for the example." },
+        { time: "0:37", text: "So currently I have a 24 by 36 page because I do have Adobe, but a way around this if you don't is we're going to go to Edit and then Page Setup." },
+        { time: "0:50", text: "If we're on Microsoft Print to PDF or whatever default PDF writer you have, and it's set to letter size, it doesn't really matter." },
+        { time: "1:05", text: "Then we're going to uncheck 'Choose available print sizes.' Right now Vectorworks is showing the page as one sheet. You can select Arch D, which is 24 by 36." },
+        { time: "1:23", text: "In the pages section, horizontally it's 3.272 and vertically it's 2.8235. To show you what that means, I'm going to turn on 'Show page breaks.'" },
+        { time: "1:37", text: "I'll press OK and press OK again. Each gray dashed line represents the pages from what Vectorworks thinks your auto page is." },
+        { time: "1:52", text: "So these are a series of 8.5 by 11 pages and how they're lined up on the grid." },
+        { time: "1:59", text: "Now I'm going to go back to Edit, Page Setup, and uncheck 'Show page breaks' and press OK." },
+        { time: "2:04", text: "Now I'm just going to draw an X through the center as an example, but normally you would lay out your viewports, add your title block, and build everything you want on the page." },
+        { time: "2:20", text: "Then we go to File and Publish. I'm going to add the new page that we just created." },
+        { time: "2:31", text: "And right now it's publishing to PDF. You can change it to DWG or an image, but we want PDF." },
+        { time: "2:40", text: "Select Options. Make sure 'Export the whole printable area to one page' is selected." },
+        { time: "2:49", text: "If you select 'Pages' or 'All pages,' it may export individual pages instead." },
+        { time: "2:57", text: "So select 'Export the whole printable area,' press OK, and then press Publish." },
+        { time: "3:04", text: "I'm not going to save the set for this example. I'll leave it as untitled two." },
+        { time: "3:11", text: "And what you'll see is one singular 24 by 36 page." },
+        { time: "3:18", text: "So if you're having issues with printing your RD plates, that's basically the Vectorworks solution. If you have any other questions, let me know. Thank you." },
+      ],
+      relatedResources: [
+        { type: "Documentation", title: "Vectorworks Publishing Guide", url: "https://www.vectorworks.net/" },
+        { type: "Video", title: "Advanced PDF Export Techniques", url: "https://www.youtube.com/vectorworks" },
+        { type: "Community", title: "Vectorworks Forum - Printing & Publishing", url: "https://forum.vectorworks.net/" },
+      ],
+      relatedTutorials: [
+        { title: "Vectorworks Tutorial: Sheet Layers", slug: "sheet-layers" },
+        { title: "Vectorworks Tutorial: 2D Annotations and Dimensioning", slug: "2d-annotations-dimensioning" },
+        { title: "Vectorworks Tutorial: Navigating the User Interface", slug: "navigating-user-interface" },
+      ],
+    },
+    "modeling-a-table": {
+      id: 17,
+      title: "Vectorworks Tutorial: Modeling a Table",
+      slug: "modeling-a-table",
+      youtubeId: "TdZeKdL-DVc",
+      category: "3d-modeling",
+      difficulty: "Advanced",
+      duration: "37:48",
+      publishDate: "Feb 12, 2021",
+      description: "Master the complete workflow for 3D modeling furniture from a reference image, including scaling, drafting profiles, creating sweeps, solid modeling operations, texturing, and creating hybrid symbols.",
+      overview: "This comprehensive tutorial demonstrates a professional workflow for modeling complex furniture objects in Vectorworks. You'll learn how to use reference images effectively, scale them to real-world dimensions, draft accurate 2D profiles, create swept geometry for curved legs, use solid modeling operations (add solid, edit solid), apply and map textures correctly, and convert the final model into a hybrid symbol with clean 2D and 3D representations. This tutorial is essential for scenic designers who need to model custom furniture, props, or set pieces with realistic detail and efficient workflow practices.",
+      learningObjectives: [
+        "Import and scale reference images to real-world dimensions for accurate modeling",
+        "Draft 2D profiles for table components (top, legs, supports) using measurement tools",
+        "Create swept geometry for curved table legs using profile and path curves",
+        "Use solid modeling operations (Add Solid, Edit Solid) to combine and refine geometry",
+        "Apply and map wood textures with correct grain direction using Auto Plane",
+        "Create hybrid symbols with clean 2D top-plan representations and detailed 3D geometry",
+        "Follow professional modeling practices (modeling at origin, organized workflow)",
+        "Troubleshoot common modeling issues (extrude direction, sweep alignment, texture mapping)",
+      ],
+      keyConcepts: [
+        {
+          title: "REFERENCE IMAGE WORKFLOW",
+          content: "Start by importing a reference photo or sketch of the object you're modeling. Scale the image to real-world dimensions by measuring a known dimension (e.g., table height ~30 inches) and using the scale tool. This gives you an accurate tracing guide. Always save your project immediately after importing references to avoid losing work. Keep the reference on a separate layer or class so you can toggle visibility during modeling.",
+        },
+        {
+          title: "DRAFTING PROFILES FIRST",
+          content: "Before creating 3D geometry, draft all 2D profiles in top/plan view: table top circles, leg squares, cross supports. Use measurement tools (tape measure) to extract dimensions from the scaled reference. Round measurements to practical increments (e.g., 2.447' becomes 2'5\" exactly). Use duplication and mirror tools to create symmetrical elements efficiently. This 2D foundation ensures accurate 3D extrusions and sweeps.",
+        },
+        {
+          title: "SWEEP TOOL FOR CURVED LEGS",
+          content: "For curved furniture legs, use the Sweep tool: (1) Draw the path curve (centerline of the leg) in front view, (2) Draw the profile shape (cross-section) perpendicular to the path, (3) Right-click the profile and choose Model > Sweep. The profile follows the path to create the 3D leg. Leave gaps in the sweep path where square blocks will be inserted. Use polyline or oval tools to create smooth, organic curves that match the reference.",
+        },
+        {
+          title: "SOLID MODELING OPERATIONS",
+          content: "Combine multiple 3D objects into a single solid using Add Solid. This merges separate extrudes, sweeps, and primitives into one unified object. Use Edit Solid to modify geometry after creation—you can delete faces, add new sweeps, or adjust dimensions without starting over. Always model components at Z=0 (origin) for easier duplication and symbol creation. Use front view to verify vertical alignment of stacked components.",
+        },
+        {
+          title: "TEXTURE MAPPING",
+          content: "Apply wood textures from the Resource Manager by dragging onto 3D objects. If grain direction is wrong (e.g., vertical grain on horizontal surfaces), select the object, go to Render > Texture > Auto Plane, then rotate the texture 90 degrees in the Object Info Palette. For complex objects, ungroup and apply textures per part with individual rotations. Use realistic wood textures with visible grain for presentation-quality renders.",
+        },
+        {
+          title: "HYBRID SYMBOL CREATION",
+          content: "Convert finished 3D models to hybrid symbols: (1) Select the model, press Cmd+K, (2) Name it, set insertion point to center, use world-based units, (3) Double-click the symbol to edit, (4) Draw a simple 2D circle or rectangle in the 2D component (set to medium line weight class, attributes by class), (5) Exit and convert to hybrid when prompted. Hybrid symbols show clean 2D graphics in top/plan view and full 3D detail in other views—essential for efficient drawing sets.",
+        },
+      ],
+      proTips: [
+        "Always save your project immediately after importing reference images—Vectorworks can crash during complex modeling",
+        "Scale reference images to real-world dimensions before tracing—this ensures accurate measurements throughout the modeling process",
+        "Round measurements to practical increments (e.g., 2'5\" instead of 2'4.447\")—this simplifies modeling and matches real-world fabrication",
+        "Use the mirror tool to create symmetrical elements—model one leg, mirror at 45°, then mirror again to complete the set",
+        "Hold 'B' key to see behind selected objects—useful for aligning circles or checking overlap during drafting",
+        "For sweeps, draw the path curve first, then duplicate and offset it by the leg thickness—this ensures consistent wall thickness",
+        "Use polyline or oval tools for organic curves—they're easier to control than freehand bezier curves",
+        "Model all components at Z=0 (origin)—this makes duplication, mirroring, and symbol creation much easier",
+        "Use front view to verify vertical alignment—top/plan view can't show if components are stacked correctly",
+        "If an extrude disappears, check the extrude height in Object Info Palette—you may have extruded to zero or negative",
+        "Use Edit Solid to refine geometry after creation—you can delete faces and paste in revised sweeps without starting over",
+        "Apply textures after modeling is complete—texture mapping is easier on finalized geometry",
+        "Use Auto Plane for texture mapping—it automatically aligns textures to faces, then rotate 90° if grain direction is wrong",
+        "Create hybrid symbols for all furniture—2D circles in top/plan view keep drawings clean while preserving 3D detail",
+        "Set symbol insertion point to center—this makes placement and rotation much easier in floor plans",
+      ],
+      shortcuts: [
+        { keys: "Cmd/Ctrl + M", action: "Mirror selected objects" },
+        { keys: "B (hold)", action: "See behind selected objects" },
+        { keys: "X", action: "Resize/scale selected objects" },
+        { keys: "Cmd/Ctrl + K", action: "Create symbol from selected objects" },
+        { keys: "Cmd/Ctrl + S", action: "Save project" },
+      ],
+      commonPitfalls: [
+        "Forgetting to scale reference images—results in wildly incorrect dimensions (e.g., 12-foot-tall table)",
+        "Not saving the project immediately—risk losing hours of work if Vectorworks crashes during modeling",
+        "Extruding to zero or negative height—causes geometry to disappear; always check Object Info Palette",
+        "Drawing sweep paths without leaving gaps for square blocks—requires redrawing the entire sweep",
+        "Not modeling at Z=0 (origin)—makes duplication and mirroring much harder",
+        "Applying textures before modeling is complete—texture mapping breaks when geometry changes",
+        "Using wrong texture mapping plane—results in stretched or incorrectly oriented grain",
+        "Not rotating textures 90° on vertical surfaces—grain runs wrong direction (e.g., horizontal grain on legs)",
+        "Creating 3D-only symbols instead of hybrid symbols—results in cluttered top/plan views with full 3D detail",
+        "Not setting symbol insertion point to center—makes placement and rotation awkward",
+        "Forgetting to set 2D component to 'by class' attributes—symbol doesn't respond to class visibility changes",
+        "Not using Add Solid to combine components—results in multiple separate objects instead of one unified solid",
+      ],
+      transcript: [
+        { time: "0:04", text: "Hello, this is Brandon PT Davis, theatrical scene designer. In this tutorial I'm going to show you how I would approach modeling a table." },
+        { time: "0:17", text: "The first step is of course finding the table in the real world, or perhaps you're designing a table from your mind. Either way, I like to have a reference. I've copied and pasted this reference into my Vectorworks file." },
+        { time: "0:38", text: "One of the things that I always recommend when starting a new project is to save your Vectorworks file so you won't lose it. So I'm going to go to Save and call this project 'table project.' But you might have a specific workflow in which you need to save your project, and if that's the case then do so." },
+        { time: "1:05", text: "With this image here, one of the first things you want to do is check the size. Right now it says it's 12 foot tall by 12 foot 9 by 14 foot 9 and a half, which I think is a little bit big." },
+        { time: "1:17", text: "So what I recommend is scaling your project so that when we're tracing elements, we have something to base reality off of. Knowing what I know about tables, this table is probably about 30 inches tall." },
+        { time: "1:37", text: "As I look at this object, I see a top which is probably a couple simple extrudes, and we have these legs which I would say are going to be a sweep, and then we have these cross pieces which again are probably a simple extrude." },
+        { time: "2:03", text: "I'm going to start by getting the top laid out. I'm going to take the circle tool and go outside to outside. Right now it says it's roughly 2 foot 5, so I'm going to round this down. Let's say the table top is 2 foot 5." },
+        { time: "2:40", text: "Then I'm going to duplicate it. If I hold B, I can see behind my shape. I'm going to select, hit X, and make the inner circle smaller for the detail. It says about 1 foot 1.447, so we'll round that to a half inch." },
+        { time: "3:20", text: "We have four legs. You can take the tape measure tool—it says about 2 inches, so I'm going to do a 2 inch by 2 inch square. From the center it's about here. It looks inset a little bit, so I'm going to offset the leg in using Ctrl or Command M." },
+        { time: "4:34", text: "To get these equally distributed, I'm going to use the mirror tool. Mirror at 45 degrees for the other side, then mirror again to complete the set. Now we have the leg locations." },
+        { time: "5:01", text: "This cross piece looks about an inch and a half because it's inset from the leg. So I'll duplicate the leg block, reduce the width by about a half inch, stretch it to reach the other side, duplicate and rotate for the second direction." },
+        { time: "5:58", text: "Now I'm going to do the sweep for the leg. I'll draw the bottom curve and focus on the center of the curved parts." },
+        { time: "6:25", text: "Since we're doing a sweep, I'm going to duplicate this line and move it over one inch, because we decided the leg thickness is 2 inches. Right now the line is about 2 foot 3.6. Since we're tracing, I'm going to call it 2 foot 4 just to simplify." },
+        { time: "7:14", text: "Now I'm going to draw the rectangular parts because these will be extruded later. This is about 3 inches, and the top one is a little shorter. From the top down let's say it's 2 and three quarters and 1 inch thick." },
+        { time: "8:27", text: "Now I'm going to use the polyline tool and trace the leg profile the best that I can." },
+        { time: "9:23", text: "If tracing gets messy, another approach is using oval tools and duplicating to keep consistent curves." },
+        { time: "13:05", text: "Once the profile is drawn, I'll use Add Surface, then use the Split tool to clean up extra segments. Now we just have the profile." },
+        { time: "15:20", text: "Now I have a full profile. I'm going to change the plane to screen plane, change the view to front view, right-click and go to Model Sweep. Now we have the swept leg with a gap for the square pieces." },
+        { time: "15:52", text: "Back in top plan view, I'll use the 2 inch by 2 inch block we drafted, center it on the post. I'm going to extrude the block to 2.75 inches." },
+        { time: "16:30", text: "If it disappears, it usually means the extrude height was wrong, so double check that you didn't extrude to zero. Then move it into place, duplicate for the second block, and stretch as needed." },
+        { time: "17:36", text: "Then select everything and use Add Solid. Now the leg is sitting at zero, which is good practice for modeling." },
+        { time: "23:05", text: "If I want a taper detail at the bottom, I can go into Edit Solid, delete the old piece, and paste in a revised sweep. Sometimes scaling the sweep profile is faster so the size hits 2 inches exactly." },
+        { time: "26:46", text: "If we only have half of one element, mirror it inside the solid edit so it becomes complete when we exit." },
+        { time: "27:54", text: "Now we need the height. This is about 1 and a half inches proud, and this is about another inch and a half. So I'm going to extrude the top circle 1.5 inches and the lower ring 1.5 inches, then align them in front view based on the reference." },
+        { time: "29:03", text: "If you want the underside inset, you can offset in and clip surface, then delete the inner boundary." },
+        { time: "30:09", text: "Now we need the mid supports. I'll extrude them, then adjust their Z height in front view until they sit about midway like the reference." },
+        { time: "31:14", text: "Once the 3D is working, delete the 2D tracing geometry and extra references." },
+        { time: "31:51", text: "Last detail is a fillet on the top edge. Go to the 3D fillet tool, set it to about three quarter inch, then fine tune in the Object Info Palette." },
+        { time: "32:50", text: "Now we can add a texture. Go to the Resource Manager, search for wood, drag a wood texture into the file, and apply it to the table." },
+        { time: "34:07", text: "If the grain direction is wrong on the posts, select the posts, go to Render, try Auto Plane, then rotate the texture 90 degrees. If needed you can ungroup and adjust rotations per part." },
+        { time: "35:46", text: "Once the table looks good, keep it near zero zero. Select the table, hit Command K to create a symbol. Name it 'table,' set insertion point to center, use world-based units, press OK. Now it's a 3D symbol." },
+        { time: "36:49", text: "To make it a hybrid symbol, double-click, edit the 2D component, draw a simple 2D circle for top plan, set it to your 2D medium line weight class, make attributes by class, exit. When asked to convert to hybrid, say yes. Now you have a hybrid symbol with a clean 2D top plan and the 3D table." },
+        { time: "37:41", text: "If you have any questions, feel free to reach out. Thank you." },
+      ],
+      relatedResources: [
+        { type: "Documentation", title: "Vectorworks 3D Modeling Guide", url: "https://www.vectorworks.net/" },
+        { type: "Video", title: "Advanced Sweep and Loft Techniques", url: "https://www.youtube.com/vectorworks" },
+        { type: "Community", title: "Vectorworks Forum - 3D Modeling", url: "https://forum.vectorworks.net/" },
+      ],
+      relatedTutorials: [
+        { title: "Vectorworks Tutorial: 3D Modeling Tools", slug: "3d-modeling-tools" },
+        { title: "Vectorworks Tutorial: 3D Modeling Basics", slug: "3d-modeling-basics" },
+        { title: "Vectorworks Tutorial: Hybrid Symbols", slug: "hybrid-symbols" },
+      ],
+    },
+    "creating-camera-rendering": {
+      id: 18,
+      title: "Vectorworks Tutorial: Creating a Camera and Rendering",
+      slug: "creating-camera-rendering",
+      youtubeId: "Jp4eG5n3esc",
+      category: "rendering",
+      difficulty: "Intermediate",
+      duration: "10:36",
+      publishDate: "Feb 15, 2021",
+      description: "Learn the complete workflow for creating cameras, setting up dramatic lighting, configuring viewports, and exporting high-quality renderings in Vectorworks.",
+      overview: "This tutorial demonstrates the essential workflow for creating presentation-quality renderings in Vectorworks. You'll learn how to add and configure spotlights and point lights for dramatic effects, create and adjust cameras with proper aspect ratios (16:9), use the walkthrough tool to frame your shot, create viewports from cameras, apply Renderworks styles, enhance scenes with colored lighting, and export high-resolution images. This workflow is critical for scenic designers who need to create compelling visualizations of their designs for clients, directors, and production teams.",
+      learningObjectives: [
+        "Add and configure spotlights and point lights with proper tilt and positioning",
+        "Create and organize lighting classes for easy visibility control",
+        "Set up cameras with 16:9 aspect ratio for film/screen-standard renderings",
+        "Use the walkthrough tool to frame and compose camera views effectively",
+        "Create linked viewports from cameras on dedicated rendering sheet layers",
+        "Apply Renderworks styles (Realistic Final/Fast) for high-quality output",
+        "Enhance scenes with dramatic colored lighting (pink, blue) for visual impact",
+        "Export high-resolution image files with proper settings (120 DPI, single page)",
+      ],
+      keyConcepts: [
+        {
+          title: "LIGHTING SETUP",
+          content: "Start by adding lights to your scene using the Light tool from the Visualization palette (lightbulb icon). Use spotlights for directional lighting (like stage lights) and point lights for ambient fill (like lamps). Configure spotlight tilt to 90 degrees for top-down lighting, and position additional spotlights as side/front lights to reveal form. Always create a dedicated 's light' class and assign all lights to it so you can toggle visibility easily. White lights provide realistic illumination, while colored lights (saturated pink, blue) create dramatic theatrical effects.",
+        },
+        {
+          title: "CAMERA CONFIGURATION",
+          content: "Use the Camera tool (looks like a 35mm DSLR, NOT the video camera icon) to create a camera object. The most important setting is aspect ratio: change it to 16:9 (1.7869) to match film and computer screen standards. This ensures your renderings display correctly in presentations and on screens. After placing the camera, double-click it to enter camera view, then use the Walkthrough tool (NOT Flyover) to adjust the framing. Walk backwards to zoom out, use elevated mode to adjust height, and zoom in to compose your shot.",
+        },
+        {
+          title: "VIEWPORT WORKFLOW",
+          content: "Create a viewport from your camera by going to View > Create Viewport. Choose 'Link the camera' so the camera moves from the design layer to the viewport—this keeps your design layer clean and makes the camera easier to manage. Place the viewport on a dedicated rendering sheet layer (16:9 format). Uncheck 'Show title' and give the viewport a descriptive name (e.g., 'Rendering'). This viewport-based workflow allows you to update renderings without re-exporting, and keeps all presentation views organized on sheet layers.",
+        },
+        {
+          title: "RENDERWORKS STYLES",
+          content: "Apply Renderworks styles from the viewport's Object Info Palette. Use 'Realistic Final' for highest quality (slower) or 'Realistic Fast' for quick previews. These styles calculate realistic lighting, shadows, reflections, and textures. After changing lights or materials, click 'Update' in the viewport to re-render. The UTEP template includes black backgrounds by default, which creates dramatic high-contrast renderings perfect for theatrical presentations.",
+        },
+        {
+          title: "DRAMATIC LIGHTING",
+          content: "Enhance your renderings with colored point lights for theatrical drama. Add a saturated pink light and a saturated blue light in addition to your white key light. Position these colored lights to create rim lighting or accent specific areas. This technique—borrowed from stage lighting—helps viewers 'read the object quickly' by creating visual separation and depth. The contrast between warm (pink) and cool (blue) lights adds professional polish to your renderings.",
+        },
+        {
+          title: "IMAGE EXPORT",
+          content: "Export your rendering by going to File > Export > Image File. Set resolution to 120 pixels (DPI) for high-quality prints and presentations. Choose 'All pages as a single page' to export the entire sheet layer as one image. Use wireframe preview to verify the export area matches your viewport. Save as PNG or JPEG depending on your needs (PNG for transparency, JPEG for smaller file size). This creates a standalone image file you can use in portfolios, presentations, or client deliverables.",
+        },
+      ],
+      proTips: [
+        "Always create a dedicated 's light' class for all lights—makes it easy to toggle visibility when modeling vs. rendering",
+        "Use spotlights (not point lights) for directional lighting—they're more controllable and realistic for stage-style lighting",
+        "Set spotlight tilt to exactly 90 degrees for top-down lighting—prevents unwanted shadows or light spill",
+        "Check your lighting in perspective view with Fast Renderworks before finalizing—saves time vs. full renders",
+        "Change camera aspect ratio to 16:9 immediately after creating the camera—this matches film/screen standards",
+        "Use the Walkthrough tool (not Flyover) to adjust camera framing—it's more intuitive for architectural/scenic views",
+        "Link the camera to the viewport when creating it—keeps your design layer clean and camera management simple",
+        "Place viewports on dedicated rendering sheet layers (16:9 format)—keeps all presentation views organized",
+        "Use 'Realistic Fast' for testing lighting, 'Realistic Final' for final exports—saves rendering time during iteration",
+        "Add colored lights (pink, blue) after establishing white key lighting—builds drama without losing readability",
+        "Position colored lights as rim/accent lights—creates visual separation and depth in your renderings",
+        "Export at 120 DPI for presentations and portfolios—balances file size with print quality",
+        "Use 'All pages as a single page' export option—ensures the entire sheet layer exports as one image",
+        "Check wireframe preview before exporting—verifies the export area matches your intended frame",
+      ],
+      shortcuts: [
+        { keys: "Double-click camera", action: "Enter camera view" },
+        { keys: "Cmd/Ctrl + U", action: "Update viewport rendering" },
+      ],
+      commonPitfalls: [
+        "Using point lights instead of spotlights for directional lighting—results in unfocused, unrealistic illumination",
+        "Forgetting to tilt spotlights 90 degrees—causes lights to shine horizontally instead of down",
+        "Not creating a dedicated light class—makes it hard to toggle lights on/off during modeling",
+        "Forgetting to change camera aspect ratio to 16:9—results in distorted renderings that don't match screen formats",
+        "Using Flyover tool instead of Walkthrough tool—less intuitive for framing architectural/scenic views",
+        "Not linking the camera to the viewport—leaves camera objects cluttering your design layer",
+        "Placing viewports on design layers instead of sheet layers—makes presentation organization messy",
+        "Using 'Realistic Final' for every test render—wastes time; use 'Realistic Fast' for iteration",
+        "Adding colored lights before establishing white key lighting—makes scenes unreadable and chaotic",
+        "Exporting at low resolution (72 DPI)—results in pixelated images unsuitable for presentations",
+        "Forgetting to select 'All pages as a single page'—exports multiple tiled images instead of one complete image",
+        "Not checking wireframe preview before exporting—may export wrong area or cropped frame",
+      ],
+      transcript: [
+        { time: "0:06", text: "Hello, this is Brandon PT Davis, theatrical scenic designer. In this Vectorworks quick tip tutorial I'm going to show you how to create a camera and render a model." },
+        { time: "0:17", text: "Let's start with we have this table model that we've created. The first thing I think we need to do is drop some lights." },
+        { time: "0:40", text: "Go to the tools palette and the visualization palette (the one with the little light bulb). Select the light tool, choose a spotlight." },
+        { time: "0:55", text: "Drop a spotlight in the center of the model, keep it a white light. Go down to tilt, tilt the light 90 degrees so it's pointing straight down." },
+        { time: "1:16", text: "If I go to front view we have our light. Position it where you want, make sure tilt stays 90 degrees." },
+        { time: "1:45", text: "Now I want to check this in perspective. Change the view from orthogonal to normal perspective. That gives us a little bit of perspective. Then do a Fast Renderworks just to see how the light affects the object." },
+        { time: "2:13", text: "I think I want a little bit of a front light, so I'll drop another light. I accidentally dropped a point light—point light is like a lamp in your living room. I want a spotlight so it's directional." },
+        { time: "2:46", text: "Go into right view, select the light, drag it about here, and point the light at the table. Maybe make it more of a side light. Now we have two lights, we should be good to go." },
+        { time: "3:19", text: "We need to class the lights so we can turn them on and off. Create a new class: 's light.' Press OK." },
+        { time: "3:37", text: "Next step is to drop a camera. The camera tool is located here in the tool sets. It looks like the 35 millimeter DSLR camera—that is the camera tool, not the video camera." },
+        { time: "3:52", text: "Start with the camera, drag it about center, double click. The main thing you need to change is aspect ratio. Change it to 16:9. 16:9 is the same aspect ratio used in film or your computer screen. It's 1.7869. We won't worry about other settings yet. Press OK." },
+        { time: "4:30", text: "To see what the camera sees, hover over the camera and double click. I don't like what the camera sees at first. You can use the flyover tool, but I recommend using the walkthrough tool." },
+        { time: "4:50", text: "Use walk mode, walk backwards. These blue lines are the picture frame. Use elevated mode to slide it down, zoom in, slide down a little, and zoom in again. That's probably pretty good." },
+        { time: "5:29", text: "Next step is create a viewport out of this camera. Go to View > Create Viewport. It says create a viewport from camera. Choose to link the camera, so the camera is moved from the design layer to the viewport." },
+        { time: "5:57", text: "You can also keep the original camera in the drawing, but the best plan is link the camera in the viewport. Uncheck the title. You can give it a name: rendering name 'rendering.' Put this on the rendering sheet layer. The rendering sheet layer is a 16:9 image. Press OK." },
+        { time: "6:48", text: "Now we have our rendering, and it's on the sheet layer perfectly. That's why we have that layer in the document." },
+        { time: "7:05", text: "Now choose a render mode. Go to Renderworks styles, use UTEP Realistic Final, or Realistic Fast depending on your computer. Press update. It creates the image." },
+        { time: "7:31", text: "In our UTEP file we have black backgrounds. It's a little dark, but it's pretty cool. If we add a point light we can get more response." },
+        { time: "7:47", text: "Go back to the design layer, then back to the sheet layer. Go into your lights, add a light. Add a point light. I want more dramatic lighting. Change the colors." },
+        { time: "8:30", text: "Make this light a saturated pink, make another one blue, keep the main light white. Now go back to the rendering sheet layer, update." },
+        { time: "9:09", text: "Now you can see the added light created a good effect. It helps you read the object quickly, and the dramatic lighting looks good." },
+        { time: "9:25", text: "Now we want to create an image file. Go to File > Export > Image File. Change the resolution to 120 pixels. Change the area to all pages as a single page." },
+        { time: "10:01", text: "Wireframe preview shows the export area—that's the image. Keep print size the same, press save. The name is good. And there's your image." },
+        { time: "10:32", text: "That concludes this Vectorworks tutorial. If you have any questions please let me know. Thank you." },
+      ],
+      relatedResources: [
+        { type: "Documentation", title: "Vectorworks Rendering Guide", url: "https://www.vectorworks.net/" },
+        { type: "Video", title: "Advanced Renderworks Techniques", url: "https://www.youtube.com/vectorworks" },
+        { type: "Community", title: "Vectorworks Forum - Rendering & Visualization", url: "https://forum.vectorworks.net/" },
+      ],
+      relatedTutorials: [
+        { title: "Vectorworks Tutorial: Basics of Textures", slug: "basics-of-textures" },
+        { title: "Vectorworks Tutorial: 3D Modeling Basics", slug: "3d-modeling-basics" },
+        { title: "Vectorworks Tutorial: Modeling a Table", slug: "modeling-a-table" },
+      ],
+    },
+    "creating-2d-drafting-from-3d": {
+      id: 19,
+      title: "Vectorworks Tutorial: Creating 2D Drafting from 3D Models",
+      slug: "creating-2d-drafting-from-3d",
+      youtubeId: "Q-oM0jkKuS0",
+      category: "2d-drafting",
+      difficulty: "Advanced",
+      duration: "24:00",
+      publishDate: "Feb 18, 2021",
+      description: "Master the complete workflow for generating professional construction drawings from 3D models, including viewports, sections, details, and dimensioning.",
+      overview: "This tutorial demonstrates the professional workflow for converting 3D models into production-ready 2D construction drawings. You'll learn how to create viewports from hybrid symbols, adjust rendering modes (wireframe, hidden line, custom Renderworks) for optimal linework, create section viewports with proper cut lines, generate detail viewports at larger scales, adjust line weights for clarity, add dimensions and annotations, organize drawings on sheet layers, and publish final PDFs. This workflow is essential for scenic designers who need to communicate 3D designs to carpenters and builders through clear, dimensioned construction documents.",
+      learningObjectives: [
+        "Create viewports from design layers and place them on sheet layers with proper scale",
+        "Adjust rendering modes (wireframe, hidden line, Renderworks) for optimal 2D linework",
+        "Create custom Renderworks styles for model drafting with subtle shadows",
+        "Generate section viewports with proper cut lines and directional markers",
+        "Create detail viewports at larger scales (3-inch) to highlight trim profiles",
+        "Adjust line weights in Advanced Properties to emphasize cut sections",
+        "Add dimensions, annotations, and drawing labels with proper class organization",
+        "Update out-of-date viewports and publish final PDFs with Title Block Manager",
+      ],
+      keyConcepts: [
+        {
+          title: "VIEWPORT WORKFLOW",
+          content: "Start by creating viewports from your design layer (View > Create Viewport). Vectorworks auto-generates drawing numbers and names. Place viewports on dedicated sheet layers (e.g., 'Elevations'). Set the scale to half-inch (1/2\" = 1'-0\") for elevations and plans. Initially, viewports display in wireframe—you'll adjust rendering later. Use Ctrl+Shift+drag to duplicate viewports, then change the view (Top/Plan, Front, Left, etc.) in Object Info Palette. This viewport-based workflow keeps your design layer clean and makes it easy to update drawings when the model changes.",
+        },
+        {
+          title: "RENDERING MODES FOR DRAFTING",
+          content: "Wireframe rendering shows all edges (visible and hidden), which isn't ideal for construction drawings. Change Background Render to 'Hidden Line' to show only visible edges—this creates clean 2D linework. For enhanced clarity, use a custom Renderworks style (e.g., 'Model Drafting') with Background Render set to Renderworks and Foreground Render set to Hidden Line. Enable anti-aliasing, shadows, and textures; disable color. This adds subtle shadows where elements meet, helping details 'pop' and making drawings easier to read for carpenters.",
+        },
+        {
+          title: "SECTION VIEWPORTS",
+          content: "Create section viewports by drawing a cut line (use a simple line) where you want to slice through the model. Extend the line half an inch above and below the drawing to avoid overlap. Select the viewport, go to View > Create Section Viewport, define the top and bottom of the cut line, then choose the direction (left or right). Vectorworks auto-generates the drawing number. Set scale to half-inch and name the section (e.g., 'Section 1'). Sections reveal internal construction details like door reveals, trim profiles, and wall assemblies—critical for builders.",
+        },
+        {
+          title: "DETAIL VIEWPORTS",
+          content: "Detail viewports zoom in on specific areas at larger scales (e.g., 3-inch scale = 3\" = 1'-0\"). Draw a circle around the trim profile or detail you want to highlight (place the circle on the 'None' class). With the circle selected, go to View > Create Detail Viewport, change the scale to 3-inch, and name it (e.g., 'Baseboard'). Detail viewports show trim profiles, joinery, and fastener locations at a scale where carpenters can read dimensions clearly. These are essential for communicating construction intent.",
+        },
+        {
+          title: "LINE WEIGHT CONTROL",
+          content: "Adjust line weights in the viewport's Advanced Properties to emphasize cut sections. Set 'Section Line' to medium line weight so cut elements stand out from elements beyond the cut plane. Set 'Extents Beyond' to a lighter line weight to de-emphasize background elements. If wall and molding blend together, enable 'Separate Cross Sections' to create clearer delineation. These adjustments make it easier for carpenters to understand where different components meet, especially trim and molding intersections.",
+        },
+        {
+          title: "DIMENSIONING AND ANNOTATIONS",
+          content: "Add dimensions and annotations after all viewports are created. Place drawing labels on the correct class (e.g., 'Drawing Label'). Dimension overall wall width, door width, reveal depth, and key trim features. Keep dimensions clear and readable with space between text and linework. Add human figures for scale (place on 'Entourage' class). Adjust section markers so they're smaller and don't overlap drawings. Align drawing labels and viewports for visual cleanliness. Before publishing, update any out-of-date viewports (red dashed lines indicate outdated viewports).",
+        },
+      ],
+      proTips: [
+        "Use Ctrl+Shift+drag to duplicate viewports quickly—saves time when creating multiple views of the same model",
+        "Set viewport scale to half-inch (1/2\" = 1'-0\") for elevations and plans—standard construction drawing scale",
+        "Change Background Render to 'Hidden Line' for clean 2D linework—removes hidden edges that clutter drawings",
+        "Create a custom Renderworks style called 'Model Drafting' with subtle shadows—helps details pop without overwhelming linework",
+        "Extend section cut lines half an inch above and below drawings—prevents overlap with viewport borders",
+        "Set section line weight to medium in Advanced Properties—makes cut elements stand out from background",
+        "Enable 'Separate Cross Sections' to clarify where trim meets wall—critical for carpenter readability",
+        "Use 3-inch scale for detail viewports—large enough to show trim profiles and fastener locations clearly",
+        "Place circles for detail viewports on 'None' class—keeps them invisible in final drawings",
+        "Organize all viewports on 'Viewport' class—makes it easy to select and manage all viewports at once",
+        "Add human figures for scale on 'Entourage' class—helps builders understand real-world dimensions",
+        "Keep dimensions clear with space between text and linework—prevents visual clutter",
+        "Align drawing labels and viewports for visual cleanliness—creates professional-looking sheet layouts",
+        "Update out-of-date viewports (red dashed lines) before publishing—ensures drawings reflect latest model changes",
+        "Use Title Block Manager to update drawing information before publishing—keeps metadata consistent",
+      ],
+      shortcuts: [
+        { keys: "Ctrl + Shift + Drag", action: "Duplicate viewport" },
+        { keys: "Cmd/Ctrl + U", action: "Update selected viewport" },
+        { keys: "Cmd/Ctrl + A", action: "Select all (useful for updating all viewports)" },
+      ],
+      commonPitfalls: [
+        "Leaving viewports in wireframe rendering—shows hidden edges and creates cluttered, unreadable drawings",
+        "Not using Hidden Line or Renderworks for Background Render—results in linework that doesn't match construction drawing standards",
+        "Placing section cut lines directly on top of drawings—causes overlap and visual confusion",
+        "Not adjusting line weights in Advanced Properties—makes cut sections blend with background elements",
+        "Using the same scale for details as elevations—trim profiles are too small to read at half-inch scale",
+        "Placing detail circles on visible classes—circles appear in final drawings and look unprofessional",
+        "Not organizing viewports on 'Viewport' class—makes it hard to select and manage all viewports at once",
+        "Forgetting to add dimensions to key features—builders can't construct without dimensions",
+        "Overlapping section markers with drawings—creates visual clutter and makes drawings hard to read",
+        "Not aligning drawing labels and viewports—creates messy, unprofessional sheet layouts",
+        "Publishing without updating out-of-date viewports—final drawings don't reflect latest model changes",
+        "Not using Title Block Manager before publishing—drawing metadata is inconsistent or missing",
+      ],
+      transcript: [
+        { time: "0:05", text: "Hello. This is Brandon PT Davis, theatrical scenic designer. In this Vectorworks tutorial video, I'm going to show you how to take a 3D model and create 2D drafting." },
+        { time: "0:14", text: "So the first thing I have is a 2D/3D symbol, also known as a hybrid symbol. This is the 2D element, and here's the 3D element of our basic wall. I'm going to go back into Top/Plan view." },
+        { time: "0:32", text: "Currently, I have this class called 'Set Wall.' If you had a more complex drawing, you might have a lot of different classes, which would give you the ability to turn different elements on and off. That lets you control what you're showing in your viewports." },
+        { time: "0:58", text: "We want to transfer this to a sheet layer. I'm going to put this on Sheet Layer 1, Elevations. I'll go to View and create a viewport. I'll let Vectorworks generate the viewport drawing number and name." },
+        { time: "1:12", text: "We want to create this on the Elevations sheet layer, using the default drawing label that comes with this file. We'll let this be Drawing 1. This is the wall plan. We'll do the wall front later." },
+        { time: "1:44", text: "Make sure your layers are selected. We have one layer in this file. This is also where you could toggle different classes on and off, but this file is simple, so we'll use all of the classes that are currently in the file." },
+        { time: "2:01", text: "We're going to change our scale to half-inch scale. We'll keep the rendering set to wireframe and the view set to Top/Plan. Then I'll press OK." },
+        { time: "2:14", text: "Now it's transferred me to the sheet layer. What I'm going to do is shift this to the top. If I hold Control and Shift, I can drag and duplicate, so now I have two of these viewports." },
+        { time: "2:32", text: "In the Object Info palette, if I scroll down to the View section, I can change this to Front view. Now we have the front view, but it's still in wireframe, so it doesn't really look like 2D drafting yet." },
+        { time: "2:54", text: "To fix that, we need to adjust the rendering mode. Under Background Render, I'm going to select Hidden Line and press Update. That gives us the linework we would expect in 2D drafting." },
+        { time: "3:12", text: "Now, because we're using 3D models, we can enhance this further. I have a custom Renderworks style called 'Model Drafting,' which gives a white model drafting look." },
+        { time: "3:41", text: "If I go into the Renderworks style and edit it, you can see the settings I'm using. Anti-aliasing, shadows, and textures are turned on. Color is turned off. Camera effects and grass are off. Anti-aliasing and curved geometry are set to high, soft shadows are low, indirect lighting is low, and environmental lighting is enabled." },
+        { time: "4:28", text: "I'm going to set the Background Render to that custom Renderworks style and the Foreground Render to Hidden Line, then update the viewport. This gives us a little bit of shadowing that helps the details pop." },
+        { time: "4:59", text: "You can see subtle shadows where the wall meets other elements. That's where we'll start with this document." },
+        { time: "5:10", text: "Next, I'm going to create two sections. I'll draw a line centered between the door so we can get a section through the door. I want the section marker to extend half an inch above and below so it doesn't sit directly on top of the drawing." },
+        { time: "5:57", text: "I'll select the viewport, go to View, and create a Section Viewport. I'll define the top and bottom of the cut line, then choose the direction of the section. I want the section to cut to the right of the drawing." },
+        { time: "6:42", text: "I'll double-click to confirm. Vectorworks generates the drawing number automatically. I'll name this Section 1, keep it at half-inch scale, and press OK." },
+        { time: "7:23", text: "Now I have my first section. I'll slide it over so it lines up with the drawing above." },
+        { time: "7:35", text: "I'm going to repeat the process to create another section, placing the cut line closer to the center of the wall. Again, I'll go to View, create Section Viewport, verify the drawing label, and press OK." },
+        { time: "8:16", text: "Now I have two sections, and I'll align them so they line up properly." },
+        { time: "8:31", text: "If I go into the Advanced Properties of the section viewport, I can adjust the line weights. Sometimes I'll set the section line to a medium line weight so it stands out more." },
+        { time: "9:19", text: "If the wall and molding blend together too much, I can go back into Advanced Properties and separate cross sections. I'll also make sure the extents beyond are set to a lighter line weight. After updating, you can see clearer delineation between elements." },
+        { time: "9:57", text: "This makes it easier for carpenters to understand where different components meet, especially trim and molding." },
+        { time: "10:09", text: "Next, I'm going to create some detail viewports. I'll draw circles around the trim profiles I want to highlight. These circles are on the None class." },
+        { time: "10:44", text: "I'll start with the baseboard. With the circle selected, I'll go to View, create a Detail Viewport, and change the scale to three-inch scale. I'll name it Baseboard and press OK." },
+        { time: "11:18", text: "I'll quickly repeat this process for the other trim details." },
+        { time: "12:21", text: "Now that all the viewports are created, we need to organize and annotate them. First, I'll make sure all viewports are on the Viewport class." },
+        { time: "12:38", text: "I'll go into Annotations and start adding dimensions. I'll place the drawing labels on the correct class and dimension the overall wall width and key elements." },
+        { time: "13:21", text: "I like to keep dimensions clear and readable, with some space between text and linework." },
+        { time: "14:06", text: "I'll add a human figure for scale and make sure it's on the correct class." },
+        { time: "15:01", text: "For the sections, I'll adjust the section markers so they're smaller and not overlapping the drawing. I'll also dimension key features like door width and reveal depth." },
+        { time: "17:35", text: "This is a good place to communicate important construction information to the builders, especially around doors and trim details." },
+        { time: "19:08", text: "I'll align the drawing labels and viewports so everything is evenly spaced and visually clean." },
+        { time: "22:27", text: "If you see red dashed lines, that means the viewport is out of date. It's a good idea to update everything before publishing." },
+        { time: "23:01", text: "Finally, I'll go to the Title Block Manager and update any drawing information as needed." },
+        { time: "23:34", text: "I'll publish the drawing, making sure Sheet Layer 1 is selected, and save the PDF." },
+        { time: "24:00", text: "Here's the final drawing with clean linework and dimensions. That concludes this Vectorworks tutorial. If you have any questions, let me know. Thank you." },
+      ],
+      relatedResources: [
+        { type: "Documentation", title: "Vectorworks Viewports Guide", url: "https://www.vectorworks.net/" },
+        { type: "Video", title: "Advanced Section Viewport Techniques", url: "https://www.youtube.com/vectorworks" },
+        { type: "Community", title: "Vectorworks Forum - Viewports & Sheet Layers", url: "https://forum.vectorworks.net/" },
+      ],
+      relatedTutorials: [
+        { title: "Vectorworks Tutorial: Sheet Layers", slug: "sheet-layers" },
+        { title: "Vectorworks Tutorial: 2D Annotations and Dimensioning", slug: "2d-annotations-dimensioning" },
+        { title: "Vectorworks Tutorial: Hybrid Symbols", slug: "hybrid-symbols" },
+      ],
+    },
+  };
 
   const tutorial = slug ? tutorials[slug] : null;
 
@@ -2313,7 +2313,7 @@ The final section introduces the powerful Duplicate Along Path feature, which al
   };
 
   // Convert duration to ISO 8601 format (PT10M30S)
-  const durationISO = typeof tutorial.duration === 'number' 
+  const durationISO = typeof tutorial.duration === 'number'
     ? `PT${Math.floor(tutorial.duration / 60)}M${tutorial.duration % 60}S`
     : undefined;
 
@@ -2368,7 +2368,7 @@ The final section introduces the powerful Duplicate Along Path feature, which al
           <Link href="/studio/tutorials" className="text-sm text-muted-foreground hover:text-[#2196F3] mb-6 inline-flex items-center gap-2 transition-colors">
             ← Back to Tutorials
           </Link>
-          
+
           <div className="flex flex-wrap gap-3 mb-6">
             <Badge className="bg-[#2196F3] text-white border border-[#2196F3] uppercase tracking-wider font-bold px-4 py-1.5 text-xs">
               {tutorial.category}
@@ -2431,32 +2431,32 @@ The final section introduces the powerful Duplicate Along Path feature, which al
         <div className="container max-w-6xl">
           <Tabs defaultValue="overview" className="w-full">
             <TabsList className="grid w-full grid-cols-5 bg-muted/50 p-1 rounded-lg mb-8 h-auto gap-1">
-              <TabsTrigger 
-                value="overview" 
+              <TabsTrigger
+                value="overview"
                 className="data-[state=active]:bg-[#2196F3] data-[state=active]:text-white data-[state=active]:shadow-lg text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
               >
                 Overview
               </TabsTrigger>
-              <TabsTrigger 
-                value="concepts" 
+              <TabsTrigger
+                value="concepts"
                 className="data-[state=active]:bg-[#FF5722] data-[state=active]:text-white data-[state=active]:shadow-lg text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
               >
                 Concepts
               </TabsTrigger>
-              <TabsTrigger 
-                value="reference" 
+              <TabsTrigger
+                value="reference"
                 className="data-[state=active]:bg-[#9C27B0] data-[state=active]:text-white data-[state=active]:shadow-lg text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
               >
                 Quick Ref
               </TabsTrigger>
-              <TabsTrigger 
-                value="transcript" 
+              <TabsTrigger
+                value="transcript"
                 className="data-[state=active]:bg-[#F44336] data-[state=active]:text-white data-[state=active]:shadow-lg text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
               >
                 Transcript
               </TabsTrigger>
-              <TabsTrigger 
-                value="resources" 
+              <TabsTrigger
+                value="resources"
                 className="data-[state=active]:bg-[#00BCD4] data-[state=active]:text-white data-[state=active]:shadow-lg text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
               >
                 Resources
@@ -2589,7 +2589,7 @@ The final section introduces the powerful Duplicate Along Path feature, which al
             <TabsContent value="resources" className="mt-0">
               <div className="border border-border rounded-lg p-8 bg-card">
                 <h2 className="text-2xl font-bold mb-8 text-[#00BCD4] uppercase tracking-wider">Related Resources</h2>
-                
+
                 <div className="space-y-4 mb-12">
                   {tutorial.relatedResources.map((resource: any, index: number) => (
                     <a

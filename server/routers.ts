@@ -7,8 +7,7 @@ import { TRPCError } from "@trpc/server";
 import { storagePut } from "./storage";
 import { invokeLLM } from "./_core/llm";
 import { generateImage } from "./_core/imageGeneration";
-import * as db from "./supabase-db";
-import * as airtableDb from "./airtableDb";
+import * as db from "./db";
 
 // Admin-only procedure
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
@@ -618,6 +617,7 @@ export const appRouter = router({
         coverImageUrl: z.string().optional(),
         coverImageKey: z.string().optional(),
         readTime: z.number().optional(),
+        publishedAt: z.date().optional(),
         status: z.enum(['draft', 'published', 'archived']).default('draft'),
         featured: z.boolean().default(false),
         seoTitle: z.string().max(255).optional(),
@@ -654,6 +654,7 @@ export const appRouter = router({
         coverImageUrl: z.string().optional(),
         coverImageKey: z.string().optional(),
         readTime: z.number().optional(),
+        publishedAt: z.date().optional(),
         status: z.enum(['draft', 'published', 'archived']).optional(),
         featured: z.boolean().optional(),
         seoTitle: z.string().max(255).optional(),
@@ -1005,7 +1006,7 @@ export const appRouter = router({
           userId: ctx.user.id,
           ...input,
         });
-        return { id: result.insertId };
+        return { id: result };
       }),
 
     getRecipes: protectedProcedure.query(async ({ ctx }) => {
@@ -1077,22 +1078,20 @@ export const appRouter = router({
         const existing = await db.getTutorialProgress(ctx.user.id, input.tutorialSlug);
         
         if (existing) {
-          // Toggle watched status
-          const newWatchedStatus = !existing.watched;
+          // Toggle completion status
+          const newCompletedStatus = !existing.completed;
           await db.updateTutorialProgress(existing.id, {
-            watched: newWatchedStatus,
-            watchedAt: newWatchedStatus ? new Date() : null,
+            completed: newCompletedStatus,
           });
-          return { watched: newWatchedStatus };
+          return { completed: newCompletedStatus };
         } else {
           // Create new progress entry
           const id = await db.createTutorialProgress({
             userId: ctx.user.id,
             tutorialSlug: input.tutorialSlug,
-            watched: true,
-            watchedAt: new Date(),
+            completed: true,
           });
-          return { watched: true, id };
+          return { completed: true, id };
         }
       }),
   }),
@@ -1198,6 +1197,35 @@ ${input.message}
         };
       }),
   }),
+  // ============ TODO MANAGEMENT ============
+  todos: router({
+    list: protectedProcedure.query(async ({ ctx }) => {
+      return await db.getAllTodos(ctx.user.openId);
+    }),
+
+    create: protectedProcedure
+      .input(z.object({ text: z.string().min(1) }))
+      .mutation(async ({ ctx, input }) => {
+        // Pass null for the first argument to match db.createTodo signature
+        const id = await db.createTodo(null, { text: input.text, userId: ctx.user.openId });
+        return { id };
+      }),
+
+    toggle: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        const completed = await db.toggleTodo(input.id, ctx.user.openId);
+        return { completed };
+      }),
+
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        await db.deleteTodo(input.id, ctx.user.openId);
+        return { success: true };
+      }),
+  }),
+
 });
 
 export type AppRouter = typeof appRouter;

@@ -1,9 +1,8 @@
 import "dotenv/config";
-import express from "express";
-import { createServer } from "http";
+import express, { type Express } from "express";
+import { createServer, type Server } from "http";
 import net from "net";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { registerOAuthRoutes } from "./oauth";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
@@ -14,6 +13,7 @@ import { sdk } from "./sdk";
 import * as db from "../db";
 import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 import { getSessionCookieOptions } from "./cookies";
+import { fileURLToPath } from 'url';
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -34,17 +34,15 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
   throw new Error(`No available port found starting from ${startPort}`);
 }
 
-async function startServer() {
-  const app = express();
-  const server = createServer(app);
+export async function createConfiguredApp(app?: Express, server?: Server): Promise<Express> {
+  const expressApp = app || express();
+  
   // Configure body parser with larger size limit for file uploads
-  app.use(express.json({ limit: "50mb" }));
-  app.use(express.urlencoded({ limit: "50mb", extended: true }));
-  // OAuth callback under /api/oauth/callback
-  registerOAuthRoutes(app);
+  expressApp.use(express.json({ limit: "50mb" }));
+  expressApp.use(express.urlencoded({ limit: "50mb", extended: true }));
 
   // Dev Login Bypass
-  app.get("/api/dev-login", async (req, res) => {
+  expressApp.get("/api/dev-login", async (req, res) => {
     try {
       if (process.env.NODE_ENV === "production") {
         res.status(404).send("Not found");
@@ -88,7 +86,7 @@ async function startServer() {
   });
   
   // Sitemaps
-  app.get("/sitemap.xml", async (req, res) => {
+  expressApp.get("/sitemap.xml", async (req, res) => {
     try {
       const baseUrl = `${req.protocol}://${req.get('host')}`;
       const xml = await sitemap.generateMainSitemap(baseUrl);
@@ -100,7 +98,7 @@ async function startServer() {
     }
   });
   
-  app.get("/image-sitemap.xml", async (req, res) => {
+  expressApp.get("/image-sitemap.xml", async (req, res) => {
     try {
       const baseUrl = `${req.protocol}://${req.get('host')}`;
       const xml = await sitemap.generateImageSitemap(baseUrl);
@@ -112,7 +110,7 @@ async function startServer() {
     }
   });
   
-  app.get("/video-sitemap.xml", async (req, res) => {
+  expressApp.get("/video-sitemap.xml", async (req, res) => {
     try {
       const baseUrl = `${req.protocol}://${req.get('host')}`;
       const xml = await sitemap.generateVideoSitemap(baseUrl);
@@ -124,7 +122,7 @@ async function startServer() {
     }
   });
   
-  app.get("/sitemap-index.xml", (req, res) => {
+  expressApp.get("/sitemap-index.xml", (req, res) => {
     try {
       const baseUrl = `${req.protocol}://${req.get('host')}`;
       const xml = sitemap.generateSitemapIndex(baseUrl);
@@ -136,7 +134,7 @@ async function startServer() {
     }
   });
   
-  app.get("/robots.txt", (req, res) => {
+  expressApp.get("/robots.txt", (req, res) => {
     try {
       const baseUrl = `${req.protocol}://${req.get('host')}`;
       const txt = sitemap.generateRobotsTxt(baseUrl);
@@ -149,12 +147,12 @@ async function startServer() {
   });
   
   // Image proxy for on-demand resizing
-  app.use("/api", imageProxyRouter);
+  expressApp.use("/api", imageProxyRouter);
   
   // RSS feeds
-  app.get("/api/news/rss", generateRSSFeed);
+  expressApp.get("/api/news/rss", generateRSSFeed);
   
-  app.get("/articles/rss.xml", async (req, res) => {
+  expressApp.get("/articles/rss.xml", async (req, res) => {
     try {
       const baseUrl = `${req.protocol}://${req.get('host')}`;
       const xml = await sitemap.generateArticlesRSS(baseUrl);
@@ -166,7 +164,7 @@ async function startServer() {
     }
   });
   
-  app.get("/news/rss.xml", async (req, res) => {
+  expressApp.get("/news/rss.xml", async (req, res) => {
     try {
       const baseUrl = `${req.protocol}://${req.get('host')}`;
       const xml = await sitemap.generateNewsRSS(baseUrl);
@@ -178,7 +176,7 @@ async function startServer() {
     }
   });
   
-  app.get("/studio/tutorials/rss.xml", (req, res) => {
+  expressApp.get("/studio/tutorials/rss.xml", (req, res) => {
     try {
       const baseUrl = `${req.protocol}://${req.get('host')}`;
       const xml = sitemap.generateTutorialsRSS(baseUrl);
@@ -189,31 +187,46 @@ async function startServer() {
       res.status(500).send("Error generating tutorials RSS");
     }
   });
+
   // tRPC API
-  app.use(
+  expressApp.use(
     "/api/trpc",
     createExpressMiddleware({
       router: appRouter,
       createContext,
     })
   );
+
   // development mode uses Vite, production mode uses static files
-  if (process.env.NODE_ENV === "development") {
-    await setupVite(app, server);
+  if (process.env.NODE_ENV === "development" && server) {
+    await setupVite(expressApp, server);
   } else {
-    serveStatic(app);
+    serveStatic(expressApp);
   }
 
-  const preferredPort = parseInt(process.env.PORT || "3000");
-  const port = await findAvailablePort(preferredPort);
-
-  if (port !== preferredPort) {
-    console.log(`Port ${preferredPort} is busy, using port ${port} instead`);
-  }
-
-  server.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}/`);
-  });
+  return expressApp;
 }
 
-startServer().catch(console.error);
+// Standalone server startup (for local dev or non-serverless prod)
+// Check if this module is the main module
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  const startServer = async () => {
+    const app = express();
+    const server = createServer(app);
+    
+    await createConfiguredApp(app, server);
+    
+    const preferredPort = parseInt(process.env.PORT || "3000");
+    const port = await findAvailablePort(preferredPort);
+
+    if (port !== preferredPort) {
+      console.log(`Port ${preferredPort} is busy, using port ${port} instead`);
+    }
+
+    server.listen(port, () => {
+      console.log(`Server running on http://localhost:${port}/`);
+    });
+  };
+  
+  startServer().catch(console.error);
+}

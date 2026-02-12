@@ -1,939 +1,1735 @@
-import { eq, and, desc, asc, like, or, inArray, sql } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
-import { 
-  InsertUser, users,
-  categories, InsertCategory,
-  tags, InsertTag,
-  projects, InsertProject, projectImages, InsertProjectImage, projectTags,
-  news, InsertNews, newsTags,
-  articles, InsertArticle, articleTags,
-  comments, InsertComment,
-  tutorialProgress, InsertTutorialProgress,
-  paintRecipes, InsertPaintRecipe,
-  collaborators, InsertCollaborator, projectCollaborators,
-  tutorials, scenicDirectory
-} from "../drizzle/schema";
+import { supabase } from './supabase';
 import { ENV } from './_core/env';
 
-let _db: ReturnType<typeof drizzle> | null = null;
+// ============ TYPES ============
 
-export async function getDb() {
-  if (!_db && process.env.DATABASE_URL) {
-    try {
-      _db = drizzle(process.env.DATABASE_URL);
-    } catch (error) {
-      console.warn("[Database] Failed to connect:", error);
-      _db = null;
-    }
-  }
-  return _db;
+export interface User {
+  id: number;
+  openId: string;
+  name: string | null;
+  email: string | null;
+  loginMethod: string | null;
+  role: 'admin' | 'user';
+  createdAt: Date;
+  updatedAt: Date;
+  lastSignedIn: Date | null;
+}
+
+export interface Category {
+  id: number;
+  name: string;
+  slug: string;
+  type: 'project' | 'news' | 'article';
+  description: string | null;
+  color: string | null;
+  createdAt: Date;
+}
+
+export interface Tag {
+  id: number;
+  name: string;
+  slug: string;
+  createdAt: Date;
+}
+
+export interface Project {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  designNotes: string | null;
+  coverImageUrl: string | null;
+  coverImageKey: string | null;
+  client: string | null;
+  location: string | null;
+
+  year: number | null;
+  month: number | null;
+  venue?: string | null;
+  discipline: 'scenic_design' | 'experiential_design' | 'rendering' | 'scenic_models' | null;
+  subcategory: string | null;
+  status: 'draft' | 'published' | 'archived';
+  featured: boolean;
+  categoryId: number | null;
+  creativeTeam: any;
+  metadata: any;
+  publishedAt: Date | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  seoKeywords: string | null;
+  images: ProjectImage[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface ProjectImage {
+  id: number;
+  project_id: number;
+  image_url: string | null;
+  video_url: string | null;
+  caption: string | null;
+  alt_text: string | null;
+  sort_order: number;
+  created_at: Date;
+}
+
+export interface News {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  content: string | null;
+  categoryId: number | null;
+  coverImageUrl: string | null;
+  coverImageKey?: string | null;
+  location: string | null;
+  date: Date | null;
+  blocks: any;
+  status: 'draft' | 'published' | 'archived';
+  featured: boolean;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  seoKeywords: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  publishedAt: Date | null;
+  externalLink: string | null;
+  tags: string | null;
+}
+
+export interface Article {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  content: string | null;
+  categoryId: number | null;
+  coverImageUrl: string | null;
+  authorId: number | null;
+  readTime: number | null;
+  status: 'draft' | 'published' | 'archived';
+  featured: boolean;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  seoKeywords: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  publishedAt: Date | null;
+  likes: number;
+  views: number;
+}
+
+export interface Todo {
+  id: number;
+  text: string;
+  completed: boolean;
+  user_id: string;
+  created_at: Date;
+}
+
+
+export interface Todo {
+  id: number;
+  text: string;
+  completed: boolean;
+  user_id: string;
+  created_at: Date;
+}
+
+
+export interface Todo {
+  id: number;
+  text: string;
+  completed: boolean;
+  user_id: string;
+  created_at: Date;
 }
 
 // ============ USER OPERATIONS ============
 
-export async function upsertUser(user: InsertUser): Promise<void> {
-  if (!user.openId) {
-    throw new Error("User openId is required for upsert");
+
+export async function upsertUser(user: {
+  openId: string;
+  name?: string | null;
+  email?: string | null;
+  loginMethod?: string | null;
+  role?: 'admin' | 'user';
+  lastSignedIn?: Date;
+}): Promise<void> {
+  const { data: existing } = await supabase
+    .from('users')
+    .select('id')
+    .eq('open_id', user.openId)
+    .single();
+
+  const userData: any = {
+    open_id: user.openId,
+    name: user.name ?? null,
+  };
+
+  // Set role to admin if this is the owner
+  if (user.openId === ENV.ownerOpenId) {
+    userData.role = 'admin';
+  } else if (user.role) {
+    userData.role = user.role;
   }
 
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot upsert user: database not available");
-    return;
-  }
-
-  try {
-    const values: InsertUser = {
-      openId: user.openId,
-    };
-    const updateSet: Record<string, unknown> = {};
-
-    const textFields = ["name", "email", "loginMethod"] as const;
-    type TextField = (typeof textFields)[number];
-
-    const assignNullable = (field: TextField) => {
-      const value = user[field];
-      if (value === undefined) return;
-      const normalized = value ?? null;
-      values[field] = normalized;
-      updateSet[field] = normalized;
-    };
-
-    textFields.forEach(assignNullable);
-
-    if (user.lastSignedIn !== undefined) {
-      values.lastSignedIn = user.lastSignedIn;
-      updateSet.lastSignedIn = user.lastSignedIn;
-    }
-    if (user.role !== undefined) {
-      values.role = user.role;
-      updateSet.role = user.role;
-    } else if (user.openId === ENV.ownerOpenId) {
-      values.role = 'admin';
-      updateSet.role = 'admin';
-    }
-
-    if (!values.lastSignedIn) {
-      values.lastSignedIn = new Date();
-    }
-
-    if (Object.keys(updateSet).length === 0) {
-      updateSet.lastSignedIn = new Date();
-    }
-
-    await db.insert(users).values(values).onDuplicateKeyUpdate({
-      set: updateSet,
-    });
-  } catch (error) {
-    console.error("[Database] Failed to upsert user:", error);
-    throw error;
+  if (existing) {
+    await supabase
+      .from('users')
+      .update(userData)
+      .eq('open_id', user.openId);
+  } else {
+    await supabase
+      .from('users')
+      .insert(userData);
   }
 }
 
-export async function getUserByOpenId(openId: string) {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot get user: database not available");
-    return undefined;
-  }
+export async function getUserByOpenId(openId: string): Promise<User | undefined> {
+  const { data } = await supabase
+    .from('users')
+    .select('*')
+    .eq('open_id', openId)
+    .single();
 
-  const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
-  return result.length > 0 ? result[0] : undefined;
+  if (!data) return undefined;
+
+  return {
+    id: data.id,
+    openId: data.open_id,
+    name: data.name,
+    email: data.email || null,
+    role: data.role,
+    loginMethod: null,
+    createdAt: new Date(data.created_at),
+    updatedAt: new Date(data.updated_at),
+    lastSignedIn: null,
+  };
 }
 
 // ============ CATEGORY OPERATIONS ============
 
-export async function getAllCategories(type?: 'project' | 'news' | 'article') {
-  const db = await getDb();
-  if (!db) return [];
+export async function getAllCategories(type?: 'project' | 'news' | 'article'): Promise<Category[]> {
+  let query = supabase.from('categories').select('*').order('name');
 
   if (type) {
-    return await db.select().from(categories).where(eq(categories.type, type)).orderBy(asc(categories.name));
+    query = query.eq('type', type);
   }
-  return await db.select().from(categories).orderBy(asc(categories.name));
+
+  const { data } = await query;
+  if (!data) return [];
+
+  return data.map(cat => ({
+    ...cat,
+    createdAt: new Date(cat.created_at),
+  }));
 }
 
-export async function getCategoryById(id: number) {
-  const db = await getDb();
-  if (!db) return undefined;
+export async function getCategoryById(id: number): Promise<Category | undefined> {
+  const { data } = await supabase
+    .from('categories')
+    .select('*')
+    .eq('id', id)
+    .single();
 
-  const result = await db.select().from(categories).where(eq(categories.id, id)).limit(1);
-  return result[0];
+  if (!data) return undefined;
+
+  return {
+    ...data,
+    createdAt: new Date(data.created_at),
+  };
 }
 
-export async function createCategory(category: InsertCategory) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  const result = await db.insert(categories).values(category);
-  return Number(result[0].insertId);
+export async function createCategory(category: any) {
+  const { data, error } = await supabase
+    .from('categories')
+    .insert({
+      name: category.name,
+      slug: category.slug,
+      type: category.type,
+      description: category.description,
+      ...(category.color ? { color: category.color } : {}),
+    })
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return data.id;
 }
 
-export async function updateCategory(id: number, category: Partial<InsertCategory>) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
+export async function updateCategory(id: number, updates: any) {
+  const updateData: any = {};
+  if (updates.name !== undefined) updateData.name = updates.name;
+  if (updates.slug !== undefined) updateData.slug = updates.slug;
+  if (updates.description !== undefined) updateData.description = updates.description;
+  if (updates.color !== undefined) updateData.color = updates.color;
 
-  await db.update(categories).set(category).where(eq(categories.id, id));
+  const { error } = await supabase
+    .from('categories')
+    .update(updateData)
+    .eq('id', id);
+  
+  if (error) throw error;
 }
 
 export async function deleteCategory(id: number) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  await db.delete(categories).where(eq(categories.id, id));
+  const { error } = await supabase
+    .from('categories')
+    .delete()
+    .eq('id', id);
+  
+  if (error) throw error;
 }
 
 // ============ TAG OPERATIONS ============
 
-export async function getAllTags() {
-  const db = await getDb();
-  if (!db) return [];
+export async function getAllTags(): Promise<Tag[]> {
+  const { data } = await supabase
+    .from('tags')
+    .select('*')
+    .order('name');
 
-  return await db.select().from(tags).orderBy(asc(tags.name));
+  if (!data) return [];
+
+  return data.map(tag => ({
+    ...tag,
+    createdAt: new Date(tag.created_at),
+  }));
 }
 
-export async function getTagById(id: number) {
-  const db = await getDb();
-  if (!db) return undefined;
+export async function getTagBySlug(slug: string): Promise<Tag | undefined> {
+  const { data } = await supabase
+    .from('tags')
+    .select('*')
+    .eq('slug', slug)
+    .single();
 
-  const result = await db.select().from(tags).where(eq(tags.id, id)).limit(1);
-  return result[0];
+  if (!data) return undefined;
+
+  return {
+    ...data,
+    createdAt: new Date(data.created_at),
+  };
 }
 
-export async function getTagBySlug(slug: string) {
-  const db = await getDb();
-  if (!db) return undefined;
-
-  const result = await db.select().from(tags).where(eq(tags.slug, slug)).limit(1);
-  return result[0];
+export async function createTag(tag: { name: string; slug: string }) {
+  const { data, error } = await supabase
+    .from('tags')
+    .insert({ name: tag.name, slug: tag.slug })
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return data.id;
 }
 
-export async function getProjectsByTag(tagId: number) {
-  const db = await getDb();
-  if (!db) return [];
-
-  const result = await db
-    .select({ project: projects })
-    .from(projectTags)
-    .innerJoin(projects, eq(projectTags.projectId, projects.id))
-    .where(and(eq(projectTags.tagId, tagId), eq(projects.status, 'published')))
-    .orderBy(desc(projects.publishedAt));
-
-  return result.map(r => r.project);
-}
-
-export async function getArticlesByTag(tagId: number) {
-  const db = await getDb();
-  if (!db) return [];
-
-  const result = await db
-    .select({ article: articles })
-    .from(articleTags)
-    .innerJoin(articles, eq(articleTags.articleId, articles.id))
-    .where(and(eq(articleTags.tagId, tagId), eq(articles.status, 'published')))
-    .orderBy(desc(articles.publishedAt));
-
-  return result.map(r => r.article);
-}
-
-export async function getNewsByTag(tagId: number) {
-  const db = await getDb();
-  if (!db) return [];
-
-  const result = await db
-    .select({ news: news })
-    .from(newsTags)
-    .innerJoin(news, eq(newsTags.newsId, news.id))
-    .where(and(eq(newsTags.tagId, tagId), eq(news.status, 'published')))
-    .orderBy(desc(news.date));
-
-  return result.map(r => r.news);
-}
-
-export async function createTag(tag: InsertTag) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  const result = await db.insert(tags).values(tag);
-  return Number(result[0].insertId);
-}
-
-export async function updateTag(id: number, data: { name: string; slug: string }) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  await db.update(tags).set(data).where(eq(tags.id, id));
+export async function updateTag(id: number, updates: { name?: string; slug?: string }) {
+  const { error } = await supabase
+    .from('tags')
+    .update(updates)
+    .eq('id', id);
+  
+  if (error) throw error;
 }
 
 export async function deleteTag(id: number) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
+  const { error } = await supabase
+    .from('tags')
+    .delete()
+    .eq('id', id);
+  
+  if (error) throw error;
+}
 
-  await db.delete(tags).where(eq(tags.id, id));
+export async function getProjectsByTag(tagId: number): Promise<any[]> {
+   const { data } = await supabase
+    .from('project_tags')
+    .select('project_id, projects(*)')
+    .eq('tag_id', tagId);
+    
+   if (!data) return [];
+   return data.map(pt => pt.projects).filter(Boolean).map((p: any) => ({
+       ...p,
+       createdAt: new Date(p.created_at),
+       updatedAt: new Date(p.updated_at)
+   }));
+}
+
+export async function getArticlesByTag(tagId: number): Promise<any[]> {
+   const { data } = await supabase
+    .from('article_tags')
+    .select('article_id, articles(*)')
+    .eq('tag_id', tagId);
+    
+   if (!data) return [];
+   return data.map(at => at.articles).filter(Boolean).map((a: any) => ({
+       ...a,
+       createdAt: new Date(a.created_at),
+       updatedAt: new Date(a.updated_at)
+   }));
+}
+
+export async function getNewsByTag(tagId: number): Promise<any[]> {
+   const { data } = await supabase
+    .from('news_tags')
+    .select('news_id, news(*)')
+    .eq('tag_id', tagId);
+    
+   if (!data) return [];
+   return data.map(nt => nt.news).filter(Boolean).map((n: any) => ({
+       ...n,
+       createdAt: new Date(n.created_at),
+       updatedAt: new Date(n.updated_at)
+   }));
 }
 
 // ============ PROJECT OPERATIONS ============
 
-export async function getAllProjects(filters?: { 
-  status?: 'draft' | 'published' | 'archived'; 
-  featured?: boolean; 
+export async function getAllProjects(filters?: {
+  status?: 'draft' | 'published' | 'archived';
+  featured?: boolean;
   categoryId?: number;
-  discipline?: 'scenic_design' | 'experiential_design' | 'rendering' | 'scenic_models';
-}) {
-  const db = await getDb();
-  if (!db) return [];
+  year?: number;
+  discipline?: string;
+}): Promise<Project[]> {
+  let query = supabase
+    .from('projects')
+    .select('*')
+    .order('year', { ascending: false })
+    .order('month', { ascending: false });
 
-  let query = db.select().from(projects).$dynamic();
-
-  const conditions = [];
-  if (filters?.status) conditions.push(eq(projects.status, filters.status));
-  if (filters?.featured !== undefined) conditions.push(eq(projects.featured, filters.featured));
-  if (filters?.categoryId) conditions.push(eq(projects.categoryId, filters.categoryId));
-  if (filters?.discipline) conditions.push(eq(projects.discipline, filters.discipline));
-
-  if (conditions.length > 0) {
-    query = query.where(and(...conditions));
+  if (filters?.status) {
+    query = query.eq('status', filters.status);
+  }
+  if (filters?.featured !== undefined) {
+    query = query.eq('featured', filters.featured);
+  }
+  if (filters?.categoryId) {
+    query = query.eq('category_id', filters.categoryId);
+  }
+  if (filters?.year) {
+    query = query.eq('year', filters.year);
+  }
+  if (filters?.discipline) {
+    query = query.eq('discipline', filters.discipline);
   }
 
-  // Sort by publishedAt (most recent first), then by year if publishedAt is null
-  const projectsList = await query.orderBy(desc(projects.publishedAt), desc(projects.year));
-  
-  // Fetch tags and image count for each project
-  const projectsWithTags = await Promise.all(
-    projectsList.map(async (project) => {
-      const [tags, images] = await Promise.all([
-        getProjectTags(project.id),
-        getProjectImages(project.id),
-      ]);
-      return { ...project, tags, images };
-    })
-  );
-  
-  return projectsWithTags;
-}
+  const { data } = await query;
+  if (!data) return [];
 
-export async function getProjectById(id: number) {
-  const db = await getDb();
-  if (!db) return undefined;
+  // Fetch images for all projects
+  const projectIds = data.map(p => p.id);
+  const { data: allImages } = await supabase
+    .from('project_images')
+    .select('*')
+    .in('project_id', projectIds)
+    .order('sort_order', { ascending: true });
 
-  const result = await db.select().from(projects).where(eq(projects.id, id)).limit(1);
-  return result[0];
-}
-
-export async function getProjectBySlug(slug: string) {
-  const db = await getDb();
-  if (!db) return undefined;
-
-  const result = await db.select().from(projects).where(eq(projects.slug, slug)).limit(1);
-  return result[0];
-}
-
-export async function createProject(project: InsertProject) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  const result = await db.insert(projects).values(project);
-  return Number(result[0].insertId);
-}
-
-export async function updateProject(id: number, project: Partial<InsertProject>) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  await db.update(projects).set(project).where(eq(projects.id, id));
-}
-
-export async function deleteProject(id: number) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  await db.delete(projects).where(eq(projects.id, id));
-}
-
-export async function getProjectImages(projectId: number) {
-  const db = await getDb();
-  if (!db) return [];
-
-  return await db.select().from(projectImages).where(eq(projectImages.projectId, projectId)).orderBy(asc(projectImages.sortOrder));
-}
-
-export async function addProjectImage(image: InsertProjectImage) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  const result = await db.insert(projectImages).values(image);
-  return Number(result[0].insertId);
-}
-
-export async function deleteProjectImage(id: number) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  await db.delete(projectImages).where(eq(projectImages.id, id));
-}
-
-export async function deleteProjectImages(projectId: number) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  await db.delete(projectImages).where(eq(projectImages.projectId, projectId));
-}
-
-export async function getProjectTags(projectId: number) {
-  const db = await getDb();
-  if (!db) return [];
-
-  const result = await db
-    .select({ tag: tags })
-    .from(projectTags)
-    .innerJoin(tags, eq(projectTags.tagId, tags.id))
-    .where(eq(projectTags.projectId, projectId));
-
-  return result.map(r => r.tag);
-}
-
-export async function setProjectTags(projectId: number, tagIds: number[]) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  // Safety: never delete existing tags if no new tags are provided
-  // This prevents accidental tag wipe when update calls don't include tags
-  if (tagIds.length === 0) {
-    console.warn(`[setProjectTags] Skipping empty tagIds for project ${projectId} - would delete all tags`);
-    return;
+  // Group images by project_id
+  const imagesByProject = new Map<number, ProjectImage[]>();
+  if (allImages) {
+    for (const img of allImages) {
+      if (!imagesByProject.has(img.project_id)) {
+        imagesByProject.set(img.project_id, []);
+      }
+      imagesByProject.get(img.project_id)!.push({
+        id: img.id,
+        project_id: img.project_id,
+        image_url: img.image_url,
+        video_url: img.video_url,
+        caption: img.caption,
+        alt_text: img.alt_text,
+        sort_order: img.sort_order,
+        created_at: new Date(img.created_at),
+      });
+    }
   }
 
-  await db.delete(projectTags).where(eq(projectTags.projectId, projectId));
-  await db.insert(projectTags).values(tagIds.map(tagId => ({ projectId, tagId })));
+  return data.map(proj => ({
+    id: proj.id,
+    title: proj.title,
+    slug: proj.slug,
+    excerpt: proj.excerpt,
+    designNotes: proj.design_notes,
+    coverImageUrl: proj.cover_image,
+    coverImageKey: proj.cover_image_key,
+    client: proj.client,
+    location: proj.location,
+    year: proj.year,
+    month: proj.month,
+    discipline: proj.discipline,
+    status: proj.status,
+    featured: proj.featured,
+    categoryId: proj.category_id,
+    creativeTeam: proj.creative_team,
+    metadata: proj.metadata,
+    publishedAt: proj.published_at ? new Date(proj.published_at) : null,
+    subcategory: proj.subcategory,
+    seoTitle: proj.seo_title,
+    seoDescription: proj.seo_description,
+    seoKeywords: proj.seo_keywords,
+    images: imagesByProject.get(proj.id) || [],
+    createdAt: new Date(proj.created_at),
+    updatedAt: new Date(proj.updated_at),
+  }));
+}
+
+export async function getProjectById(id: number): Promise<Project | undefined> {
+  const { data } = await supabase
+    .from('projects')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (!data) return undefined;
+
+  const { data: images } = await supabase
+    .from('project_images')
+    .select('*')
+    .eq('project_id', data.id)
+    .order('sort_order', { ascending: true });
+
+  const projectImages: ProjectImage[] = (images || []).map(img => ({
+    id: img.id,
+    project_id: img.project_id,
+    image_url: img.image_url,
+    video_url: img.video_url,
+    caption: img.caption,
+    alt_text: img.alt_text,
+    sort_order: img.sort_order,
+    created_at: new Date(img.created_at),
+  }));
+
+  return {
+    id: data.id,
+    title: data.title,
+    slug: data.slug,
+    excerpt: data.excerpt,
+    designNotes: data.design_notes,
+    coverImageUrl: data.cover_image,
+    coverImageKey: data.cover_image_key,
+    client: data.client,
+    location: data.location,
+    year: data.year,
+    month: data.month,
+    venue: data.venue,
+    discipline: data.discipline,
+    subcategory: data.subcategory,
+    status: data.status,
+    featured: data.featured,
+    categoryId: data.category_id,
+    creativeTeam: data.creative_team,
+    metadata: data.metadata,
+    publishedAt: data.published_at ? new Date(data.published_at) : null,
+    seoTitle: data.seo_title,
+    seoDescription: data.seo_description,
+    seoKeywords: data.seo_keywords,
+    images: projectImages,
+    createdAt: new Date(data.created_at),
+    updatedAt: new Date(data.updated_at),
+  };
+}
+
+export async function getProjectBySlug(slug: string): Promise<Project | undefined> {
+  const { data } = await supabase
+    .from('projects')
+    .select('*')
+    .eq('slug', slug)
+    .single();
+
+  if (!data) return undefined;
+
+  const { data: images } = await supabase
+    .from('project_images')
+    .select('*')
+    .eq('project_id', data.id)
+    .order('sort_order', { ascending: true });
+
+  const projectImages: ProjectImage[] = (images || []).map(img => ({
+    id: img.id,
+    project_id: img.project_id,
+    image_url: img.image_url,
+    video_url: img.video_url,
+    caption: img.caption,
+    alt_text: img.alt_text,
+    sort_order: img.sort_order,
+    created_at: new Date(img.created_at),
+  }));
+
+  return {
+    id: data.id,
+    title: data.title,
+    slug: data.slug,
+    excerpt: data.excerpt,
+    designNotes: data.design_notes,
+    coverImageUrl: data.cover_image,
+    coverImageKey: data.cover_image_key,
+    client: data.client,
+    location: data.location,
+    year: data.year,
+    month: data.month,
+    discipline: data.discipline,
+    subcategory: data.subcategory,
+    status: data.status,
+    featured: data.featured,
+    categoryId: data.category_id,
+    creativeTeam: data.creative_team,
+    metadata: data.metadata,
+    publishedAt: data.published_at ? new Date(data.published_at) : null,
+    seoTitle: data.seo_title,
+    seoDescription: data.seo_description,
+    seoKeywords: data.seo_keywords,
+    images: projectImages,
+    createdAt: new Date(data.created_at),
+    updatedAt: new Date(data.updated_at),
+  };
+}
+
+export async function getProjectImages(projectId: number): Promise<any[]> {
+  const { data } = await supabase
+    .from('project_images')
+    .select('*')
+    .eq('project_id', projectId)
+    .order('sort_order');
+
+  if (!data) return [];
+
+  return data.map(img => ({
+    id: img.id,
+    projectId: img.project_id,
+    imageUrl: img.image_url,
+    videoUrl: img.video_url,
+    caption: img.caption,
+    imageType: img.image_type,
+    sortOrder: img.sort_order,
+    createdAt: new Date(img.created_at),
+  }));
+}
+
+export async function getProjectTags(projectId: number): Promise<Tag[]> {
+  const { data } = await supabase
+    .from('project_tags')
+    .select('tag_id, tags(*)')
+    .eq('project_id', projectId);
+
+  if (!data) return [];
+
+  return data
+    .filter(pt => pt.tags)
+    .map(pt => ({
+      id: (pt.tags as any).id,
+      name: (pt.tags as any).name,
+      slug: (pt.tags as any).slug,
+      createdAt: new Date((pt.tags as any).created_at),
+    }));
 }
 
 // ============ NEWS OPERATIONS ============
 
-export async function getAllNews(filters?: { status?: 'draft' | 'published' | 'archived'; featured?: boolean; categoryId?: number }) {
-  const db = await getDb();
-  if (!db) return [];
+export async function getAllNews(filters?: {
+  status?: 'draft' | 'published' | 'archived';
+  featured?: boolean;
+  categoryId?: number;
+}): Promise<News[]> {
+  let query = supabase
+    .from('news')
+    .select('*')
+    .order('date', { ascending: false });
 
-  let query = db.select({
-    id: news.id,
-    title: news.title,
-    slug: news.slug,
-    excerpt: news.excerpt,
-    categoryId: news.categoryId,
-    coverImageUrl: news.coverImageUrl,
-    coverImageKey: news.coverImageKey,
-    location: news.location,
-    date: news.date,
-    externalLink: news.externalLink,
-    blocks: news.blocks,
-    status: news.status,
-    featured: news.featured,
-    seoTitle: news.seoTitle,
-    seoDescription: news.seoDescription,
-    seoKeywords: news.seoKeywords,
-    createdAt: news.createdAt,
-    updatedAt: news.updatedAt,
-    publishedAt: news.publishedAt,
-    category: categories,
-  }).from(news).leftJoin(categories, eq(news.categoryId, categories.id)).$dynamic();
-
-  const conditions = [];
-  if (filters?.status) conditions.push(eq(news.status, filters.status));
-  if (filters?.featured !== undefined) conditions.push(eq(news.featured, filters.featured));
-  if (filters?.categoryId) conditions.push(eq(news.categoryId, filters.categoryId));
-
-  if (conditions.length > 0) {
-    query = query.where(and(...conditions));
+  if (filters?.status) {
+    query = query.eq('status', filters.status);
+  }
+  if (filters?.featured !== undefined) {
+    query = query.eq('featured', filters.featured);
+  }
+  if (filters?.categoryId) {
+    query = query.eq('category_id', filters.categoryId);
   }
 
-  const newsList = await query.orderBy(desc(news.date));
+  const { data } = await query;
+  if (!data) return [];
 
-  // Fetch tags from junction table for each news item
-  const newsWithTags = await Promise.all(
-    newsList.map(async (item) => {
-      const itemTags = await getNewsTags(item.id);
-      return { ...item, tags: itemTags };
-    })
-  );
-
-  return newsWithTags;
+  return data.map(item => ({
+    id: item.id,
+    title: item.title,
+    slug: item.slug,
+    excerpt: item.excerpt,
+    content: item.content,
+    coverImageUrl: item.cover_image,
+    date: item.date ? new Date(item.date) : null,
+    status: item.status,
+    featured: item.featured,
+    categoryId: item.category_id,
+    seoTitle: item.seo_title,
+    seoDescription: item.seo_description,
+    seoKeywords: item.seo_keywords,
+    createdAt: new Date(item.created_at),
+    updatedAt: new Date(item.updated_at),
+    publishedAt: item.published_at ? new Date(item.published_at) : null,
+    location: item.location,
+    blocks: item.blocks,
+    externalLink: item.external_link,
+    tags: item.tags,
+  }));
 }
 
-export async function getNewsById(id: number) {
-  const db = await getDb();
-  if (!db) return undefined;
+export async function getNewsBySlug(slug: string): Promise<News | undefined> {
+  const { data } = await supabase
+    .from('news')
+    .select('*')
+    .eq('slug', slug)
+    .single();
 
-  const result = await db.select().from(news).where(eq(news.id, id)).limit(1);
-  return result[0];
+  if (!data) return undefined;
+
+  return {
+    id: data.id,
+    title: data.title,
+    slug: data.slug,
+    excerpt: data.excerpt,
+    content: data.content,
+    blocks: data.blocks || [],
+    coverImageUrl: data.cover_image,
+    coverImageKey: data.cover_image_key,
+    location: data.location,
+    date: data.date ? new Date(data.date) : null,
+    status: data.status,
+    featured: data.featured,
+    categoryId: data.category_id,
+    seoTitle: data.seo_title,
+    seoDescription: data.seo_description,
+    seoKeywords: data.seo_keywords,
+    createdAt: new Date(data.created_at),
+    updatedAt: new Date(data.updated_at),
+    publishedAt: data.published_at ? new Date(data.published_at) : null,
+    externalLink: data.external_link,
+    tags: data.tags,
+  };
 }
 
-export async function getNewsBySlug(slug: string) {
-  const db = await getDb();
-  if (!db) return undefined;
+export async function getNewsById(id: number): Promise<any> {
+  const { data } = await supabase
+    .from('news')
+    .select('*')
+    .eq('id', id)
+    .single();
 
-  const result = await db.select().from(news).where(eq(news.slug, slug)).limit(1);
-  return result[0];
+  if (!data) return undefined;
+
+  return {
+    id: data.id,
+    title: data.title,
+    slug: data.slug,
+    excerpt: data.excerpt,
+    content: data.content,
+    blocks: data.blocks || [],
+    coverImageUrl: data.cover_image,
+    coverImageKey: data.cover_image_key,
+    location: data.location,
+    date: data.date ? new Date(data.date) : null,
+    status: data.status,
+    featured: data.featured,
+    categoryId: data.category_id,
+    seoTitle: data.seo_title,
+    seoDescription: data.seo_description,
+    seoKeywords: data.seo_keywords,
+    createdAt: new Date(data.created_at),
+    updatedAt: new Date(data.updated_at),
+    publishedAt: data.published_at ? new Date(data.published_at) : null,
+  };
 }
 
-export async function createNews(newsItem: InsertNews) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
+export async function getNewsTags(newsId: number): Promise<Tag[]> {
+  const { data } = await supabase
+    .from('news_tags')
+    .select('tag_id, tags(*)')
+    .eq('news_id', newsId);
 
-  const result = await db.insert(news).values(newsItem);
-  return Number(result[0].insertId);
-}
+  if (!data) return [];
 
-export async function updateNews(id: number, newsItem: Partial<InsertNews>) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  await db.update(news).set(newsItem).where(eq(news.id, id));
-}
-
-export async function deleteNews(id: number) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  await db.delete(news).where(eq(news.id, id));
-}
-
-export async function getNewsTags(newsId: number) {
-  const db = await getDb();
-  if (!db) return [];
-
-  const result = await db
-    .select({ tag: tags })
-    .from(newsTags)
-    .innerJoin(tags, eq(newsTags.tagId, tags.id))
-    .where(eq(newsTags.newsId, newsId));
-
-  return result.map(r => r.tag);
-}
-
-export async function setNewsTags(newsId: number, tagIds: number[]) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  // Safety: never delete existing tags if no new tags are provided
-  if (tagIds.length === 0) {
-    console.warn(`[setNewsTags] Skipping empty tagIds for news ${newsId} - would delete all tags`);
-    return;
-  }
-
-  await db.delete(newsTags).where(eq(newsTags.newsId, newsId));
-  await db.insert(newsTags).values(tagIds.map(tagId => ({ newsId, tagId })));
+  // Use as unknown as Tag to avoid any[] inference mismatch
+  return data.map(item => (item.tags as unknown as Tag));
 }
 
 // ============ ARTICLE OPERATIONS ============
 
-export async function getAllArticles(filters?: { status?: 'draft' | 'published' | 'archived'; featured?: boolean; categoryId?: number; authorId?: number }) {
-  const db = await getDb();
-  if (!db) return [];
+export async function getAllArticles(filters?: {
+  status?: 'draft' | 'published' | 'archived';
+  featured?: boolean;
+  categoryId?: number;
+  authorId?: number;
+}): Promise<any[]> {
+  let query = supabase
+    .from('articles')
+    .select(`
+      *,
+      category:categories!category_id(id, name, slug)
+    `)
+    .order('created_at', { ascending: false });
 
-  let query = db.select({
-    id: articles.id,
-    title: articles.title,
-    slug: articles.slug,
-    excerpt: articles.excerpt,
-    content: articles.content,
-    categoryId: articles.categoryId,
-    coverImageUrl: articles.coverImageUrl,
-    coverImageKey: articles.coverImageKey,
-    authorId: articles.authorId,
-    status: articles.status,
-    featured: articles.featured,
-    readTime: articles.readTime,
-    seoTitle: articles.seoTitle,
-    seoDescription: articles.seoDescription,
-    seoKeywords: articles.seoKeywords,
-    createdAt: articles.createdAt,
-    updatedAt: articles.updatedAt,
-    publishedAt: articles.publishedAt,
-    category: categories,
-  }).from(articles).leftJoin(categories, eq(articles.categoryId, categories.id)).$dynamic();
-
-  const conditions = [];
-  if (filters?.status) conditions.push(eq(articles.status, filters.status));
-  if (filters?.featured !== undefined) conditions.push(eq(articles.featured, filters.featured));
-  if (filters?.categoryId) conditions.push(eq(articles.categoryId, filters.categoryId));
-  if (filters?.authorId) conditions.push(eq(articles.authorId, filters.authorId));
-
-  if (conditions.length > 0) {
-    query = query.where(and(...conditions));
+  if (filters?.status) {
+    query = query.eq('status', filters.status);
+  }
+  if (filters?.featured !== undefined) {
+    query = query.eq('featured', filters.featured);
+  }
+  if (filters?.categoryId) {
+    query = query.eq('category_id', filters.categoryId);
+  }
+  if (filters?.authorId) {
+    query = query.eq('author_id', filters.authorId);
   }
 
-  const articlesList = await query.orderBy(desc(articles.publishedAt));
+  const { data } = await query;
+  if (!data) return [];
 
-  // Fetch tags from junction table for each article
-  const articlesWithTags = await Promise.all(
-    articlesList.map(async (article) => {
-      const articleTagsList = await getArticleTags(article.id);
-      return { ...article, tags: articleTagsList };
-    })
-  );
-
-  return articlesWithTags;
-}
-
-export async function getArticleById(id: number) {
-  const db = await getDb();
-  if (!db) return undefined;
-
-  const result = await db.select().from(articles).where(eq(articles.id, id)).limit(1);
-  return result[0];
-}
-
-export async function getArticleBySlug(slug: string) {
-  const db = await getDb();
-  if (!db) return undefined;
-
-  const result = await db.select().from(articles).where(eq(articles.slug, slug)).limit(1);
-  return result[0];
-}
-
-export async function createArticle(article: InsertArticle) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  const result = await db.insert(articles).values(article);
-  return Number(result[0].insertId);
-}
-
-export async function updateArticle(id: number, article: Partial<InsertArticle>) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  await db.update(articles).set(article).where(eq(articles.id, id));
-}
-
-export async function deleteArticle(id: number) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  await db.delete(articles).where(eq(articles.id, id));
-}
-
-export async function getArticleTags(articleId: number) {
-  const db = await getDb();
-  if (!db) return [];
-
-  const result = await db
-    .select({ tag: tags })
-    .from(articleTags)
-    .innerJoin(tags, eq(articleTags.tagId, tags.id))
-    .where(eq(articleTags.articleId, articleId));
-
-  return result.map(r => r.tag);
-}
-
-export async function setArticleTags(articleId: number, tagIds: number[]) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  // Safety: never delete existing tags if no new tags are provided
-  if (tagIds.length === 0) {
-    console.warn(`[setArticleTags] Skipping empty tagIds for article ${articleId} - would delete all tags`);
-    return;
-  }
-
-  await db.delete(articleTags).where(eq(articleTags.articleId, articleId));
-  await db.insert(articleTags).values(tagIds.map(tagId => ({ articleId, tagId })));
-}
-
-export async function incrementArticleViews(id: number) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  await db.update(articles)
-    .set({ views: sql`${articles.views} + 1` })
-    .where(eq(articles.id, id));
-}
-
-export async function toggleArticleLike(id: number, liked: boolean) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-
-  if (liked) {
-    await db.update(articles)
-      .set({ likes: sql`${articles.likes} + 1` })
-      .where(eq(articles.id, id));
-  } else {
-    await db.update(articles)
-      .set({ likes: sql`GREATEST(${articles.likes} - 1, 0)` })
-      .where(eq(articles.id, id));
-  }
-}
-
-// ============ SEARCH OPERATIONS ============
-
-export async function searchContent(query: string) {
-  const db = await getDb();
-  if (!db) return { projects: [], news: [], articles: [] };
-
-  const searchPattern = `%${query}%`;
-
-  const [projectResults, newsResults, articleResults] = await Promise.all([
-    db.select().from(projects).where(
-      and(
-        eq(projects.status, 'published'),
-        or(
-          like(projects.title, searchPattern),
-          like(projects.excerpt, searchPattern)
-        )
-      )
-    ).limit(10),
-    db.select().from(news).where(
-      and(
-        eq(news.status, 'published'),
-        or(
-          like(news.title, searchPattern),
-          like(news.excerpt, searchPattern)
-        )
-      )
-    ).limit(10),
-    db.select().from(articles).where(
-      and(
-        eq(articles.status, 'published'),
-        or(
-          like(articles.title, searchPattern),
-          like(articles.excerpt, searchPattern),
-          like(articles.content, searchPattern)
-        )
-      )
-    ).limit(10)
-  ]);
-
-  return {
-    projects: projectResults,
-    news: newsResults,
-    articles: articleResults
-  };
-}
-
-// ============ COMMENT OPERATIONS ============
-
-export async function getArticleComments(articleId: number) {
-  const db = await getDb();
-  if (!db) return [];
-
-  const result = await db
-    .select({
-      comment: comments,
-      user: {
-        id: users.id,
-        name: users.name,
-        email: users.email,
-      },
-    })
-    .from(comments)
-    .leftJoin(users, eq(comments.userId, users.id))
-    .where(eq(comments.articleId, articleId))
-    .orderBy(asc(comments.createdAt));
-
-  return result.map(r => ({
-    ...r.comment,
-    user: r.user,
+  return data.map(article => ({
+    id: article.id,
+    title: article.title,
+    slug: article.slug,
+    excerpt: article.excerpt,
+    content: article.content,
+    coverImageUrl: article.cover_image,
+    readTime: article.read_time,
+    status: article.status,
+    featured: article.featured,
+    categoryId: article.category_id,
+    authorId: article.author_id,
+    category: article.category ? {
+      id: article.category.id,
+      name: article.category.name,
+      slug: article.category.slug,
+    } : null,
+    seoTitle: article.seo_title,
+    seoDescription: article.seo_description,
+    seoKeywords: article.seo_keywords,
+    createdAt: new Date(article.created_at),
+    updatedAt: new Date(article.updated_at),
+    publishedAt: article.published_at ? new Date(article.published_at) : new Date(article.created_at),
   }));
 }
 
-export async function createComment(comment: InsertComment) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
+export async function getArticleById(id: number): Promise<any> {
+  const { data } = await supabase
+    .from('articles')
+    .select('*')
+    .eq('id', id)
+    .single();
 
-  const result = await db.insert(comments).values(comment);
-  return Number(result[0].insertId);
+  if (!data) return undefined;
+
+  return {
+    id: data.id,
+    title: data.title,
+    slug: data.slug,
+    excerpt: data.excerpt,
+    content: data.content,
+    coverImageUrl: data.cover_image,
+    readTime: data.read_time,
+    status: data.status,
+    featured: data.featured,
+    categoryId: data.category_id,
+    seoTitle: data.seo_title,
+    seoDescription: data.seo_description,
+    seoKeywords: data.seo_keywords,
+    createdAt: new Date(data.created_at),
+    updatedAt: new Date(data.updated_at),
+  };
 }
 
-export async function deleteComment(id: number) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
+export async function getArticleBySlug(slug: string): Promise<Article | undefined> {
+  const { data } = await supabase
+    .from('articles')
+    .select('*')
+    .eq('slug', slug)
+    .single();
 
-  await db.delete(comments).where(eq(comments.id, id));
+  if (!data) return undefined;
+
+  return {
+    id: data.id,
+    title: data.title,
+    slug: data.slug,
+    excerpt: data.excerpt,
+    content: data.content,
+    coverImageUrl: data.cover_image,
+    status: data.status,
+    featured: data.featured,
+    categoryId: data.category_id,
+    authorId: data.author_id,
+    seoTitle: data.seo_title,
+    seoDescription: data.seo_description,
+    seoKeywords: data.seo_keywords,
+    createdAt: new Date(data.created_at),
+    updatedAt: new Date(data.updated_at),
+    publishedAt: data.published_at ? new Date(data.published_at) : null,
+    readTime: data.read_time,
+    likes: data.likes || 0,
+    views: data.views || 0,
+  };
 }
 
-export async function getCommentById(id: number) {
-  const db = await getDb();
-  if (!db) return undefined;
+export async function getArticleTags(articleId: number): Promise<Tag[]> {
+  const { data } = await supabase
+    .from('article_tags')
+    .select('tag_id, tags(*)')
+    .eq('article_id', articleId);
 
-  const result = await db.select().from(comments).where(eq(comments.id, id)).limit(1);
-  return result[0];
+  if (!data) return [];
+
+  return data
+    .filter(at => at.tags)
+    .map(at => ({
+      id: (at.tags as any).id,
+      name: (at.tags as any).name,
+      slug: (at.tags as any).slug,
+      createdAt: new Date((at.tags as any).created_at),
+    }));
 }
 
-// ============ TUTORIAL PROGRESS OPERATIONS ============
+// ============ SEARCH ============
 
-export async function getTutorialProgressByUser(userId: number) {
-  const db = await getDb();
-  if (!db) return [];
+export async function searchContent(query: string) {
+  const searchTerm = `%${query}%`;
 
-  const result = await db
-    .select()
-    .from(tutorialProgress)
-    .where(eq(tutorialProgress.userId, userId));
+  const [projectsResult, newsResult, articlesResult] = await Promise.all([
+    supabase
+      .from('projects')
+      .select('id, title, slug, excerpt')
+      .eq('status', 'published')
+      .or(`title.ilike.${searchTerm},excerpt.ilike.${searchTerm}`)
+      .limit(10),
+    supabase
+      .from('news')
+      .select('id, title, slug, excerpt')
+      .eq('status', 'published')
+      .or(`title.ilike.${searchTerm},excerpt.ilike.${searchTerm}`)
+      .limit(10),
+    supabase
+      .from('articles')
+      .select('id, title, slug, excerpt')
+      .eq('status', 'published')
+      .or(`title.ilike.${searchTerm},excerpt.ilike.${searchTerm}`)
+      .limit(10),
+  ]);
 
-  return result;
+  return {
+    projects: projectsResult.data || [],
+    news: newsResult.data || [],
+    articles: articlesResult.data || [],
+  };
 }
 
-export async function getTutorialProgress(userId: number, tutorialSlug: string) {
-  const db = await getDb();
-  if (!db) return undefined;
+// ============ COLLABORATOR OPERATIONS ============
 
-  const result = await db
-    .select()
-    .from(tutorialProgress)
-    .where(
-      and(
-        eq(tutorialProgress.userId, userId),
-        eq(tutorialProgress.tutorialSlug, tutorialSlug)
-      )
-    )
-    .limit(1);
-
-  return result[0];
+export interface Collaborator {
+  id: number;
+  name: string;
+  slug: string;
+  role: string | null;
+  bio: string | null;
+  website: string | null;
+  portfolioUrl: string | null;
+  instagramUrl: string | null;
+  instagramHandle: string | null;
+  created_at: Date;
 }
 
-export async function createTutorialProgress(data: InsertTutorialProgress) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
+export async function getAllCollaborators(filters?: {
+  role?: string;
+  featured?: boolean;
+}): Promise<Collaborator[]> {
+  let query = supabase
+    .from('collaborators')
+    .select('*')
+    .order('name');
 
-  const result = await db.insert(tutorialProgress).values(data);
-  return Number(result[0].insertId);
+  if (filters?.role) {
+    query = query.eq('role', filters.role);
+  }
+
+  const { data } = await query;
+  if (!data) return [];
+
+  return data.map(collab => ({
+    ...collab,
+    portfolioUrl: collab.portfolio_url,
+    instagramUrl: collab.instagram_url,
+    instagramHandle: collab.instagram_handle,
+    created_at: new Date(collab.created_at),
+  }));
 }
 
-export async function updateTutorialProgress(id: number, data: Partial<InsertTutorialProgress>) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
+export async function getCollaboratorBySlug(slug: string): Promise<Collaborator | undefined> {
+  const { data } = await supabase
+    .from('collaborators')
+    .select('*')
+    .eq('slug', slug)
+    .single();
 
-  await db.update(tutorialProgress).set(data).where(eq(tutorialProgress.id, id));
+  if (!data) return undefined;
+
+  return {
+    ...data,
+    created_at: new Date(data.created_at),
+  };
+}
+
+export async function getCollaboratorProjects(collaboratorId: number) {
+  const { data } = await supabase
+    .from('project_collaborators')
+    .select('project_id, projects(*)')
+    .eq('collaborator_id', collaboratorId);
+
+  if (!data) return [];
+
+  return data
+    .filter(pc => pc.projects)
+    .map(pc => ({
+      ...(pc.projects as any),
+      created_at: new Date((pc.projects as any).created_at),
+      updated_at: new Date((pc.projects as any).updated_at),
+    }));
+}
+
+// ============ TUTORIAL OPERATIONS ============
+
+export interface Tutorial {
+  id: number;
+  title: string;
+  slug: string;
+  content: string | null;
+  category: string | null;
+  difficulty: string | null;
+  duration: number | null;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface TutorialProgress {
+  id: number;
+  userId: number;
+  tutorialSlug: string;
+  completed: boolean;
+  progressData: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export async function getAllTutorials(filters?: {
+  category?: string;
+  difficultyLevel?: string;
+}): Promise<Tutorial[]> {
+  let query = supabase
+    .from('tutorials')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (filters?.category) {
+    query = query.eq('category', filters.category);
+  }
+  if (filters?.difficultyLevel) {
+    query = query.eq('difficulty', filters.difficultyLevel);
+  }
+
+  const { data } = await query;
+  if (!data) return [];
+
+  return data.map(tutorial => ({
+    ...tutorial,
+    created_at: new Date(tutorial.created_at),
+    updated_at: new Date(tutorial.updated_at),
+  }));
+}
+
+export async function getTutorialProgressByUser(userId: number): Promise<TutorialProgress[]> {
+  const { data } = await supabase
+    .from('tutorial_progress')
+    .select('*')
+    .eq('user_id', userId);
+
+  if (!data) return [];
+
+  return data.map(progress => ({
+    id: progress.id,
+    userId: progress.user_id,
+    tutorialSlug: progress.tutorial_slug,
+    completed: progress.completed,
+    progressData: progress.progress_data,
+    createdAt: new Date(progress.created_at),
+    updatedAt: new Date(progress.updated_at),
+  }));
+}
+
+export async function getTutorialProgress(userId: number, tutorialSlug: string): Promise<TutorialProgress | undefined> {
+  const { data } = await supabase
+    .from('tutorial_progress')
+    .select('*')
+    .eq('user_id', userId)
+    .eq('tutorial_slug', tutorialSlug)
+    .single();
+
+  if (!data) return undefined;
+
+  return {
+    id: data.id,
+    userId: data.user_id,
+    tutorialSlug: data.tutorial_slug,
+    completed: data.completed,
+    progressData: data.progress_data,
+    createdAt: new Date(data.created_at),
+    updatedAt: new Date(data.updated_at),
+  };
+}
+
+export async function createTutorialProgress(progressData: {
+  userId: number;
+  tutorialSlug: string;
+  completed?: boolean;
+  progressData?: string;
+}): Promise<number> {
+  const { data, error } = await supabase
+    .from('tutorial_progress')
+    .insert({
+      user_id: progressData.userId,
+      tutorial_slug: progressData.tutorialSlug,
+      completed: progressData.completed ?? false,
+      progress_data: progressData.progressData ?? null,
+    })
+    .select('id')
+    .single();
+
+  if (error) throw error;
+  return data.id;
+}
+
+export async function updateTutorialProgress(
+  id: number,
+  updates: {
+    completed?: boolean;
+    progressData?: string;
+  }
+): Promise<void> {
+  const updateData: any = {};
+  if (updates.completed !== undefined) updateData.completed = updates.completed;
+  if (updates.progressData !== undefined) updateData.progress_data = updates.progressData;
+
+  await supabase
+    .from('tutorial_progress')
+    .update(updateData)
+    .eq('id', id);
 }
 
 // ============ PAINT RECIPE OPERATIONS ============
 
-export async function createPaintRecipe(recipe: InsertPaintRecipe) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-  
-  const [result] = await db.insert(paintRecipes).values(recipe);
-  return result;
+export interface PaintRecipe {
+  id: number;
+  user_id: number;
+  name: string;
+  base_color: string | null;
+  components: string | null;
+  notes: string | null;
+  created_at: Date;
+  updated_at: Date;
 }
 
-export async function getUserPaintRecipes(userId: number) {
-  const db = await getDb();
-  if (!db) return [];
+export async function createPaintRecipe(recipe: {
+  userId: number;
+  name: string;
+  baseColor?: string;
+  components?: string;
+  notes?: string;
+}): Promise<number> {
+  const { data, error } = await supabase
+    .from('paint_recipes')
+    .insert({
+      user_id: recipe.userId,
+      name: recipe.name,
+      base_color: recipe.baseColor ?? null,
+      components: recipe.components ?? null,
+      notes: recipe.notes ?? null,
+    })
+    .select('id')
+    .single();
+
+  if (error) throw error;
+  return data.id;
+}
+
+export async function getUserPaintRecipes(userId: number): Promise<PaintRecipe[]> {
+  const { data } = await supabase
+    .from('paint_recipes')
+    .select('*')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false });
+
+  if (!data) return [];
+
+  return data.map(recipe => ({
+    ...recipe,
+    created_at: new Date(recipe.created_at),
+    updated_at: new Date(recipe.updated_at),
+  }));
+}
+
+export async function getPaintRecipeById(id: number, userId: number): Promise<PaintRecipe | undefined> {
+  const { data } = await supabase
+    .from('paint_recipes')
+    .select('*')
+    .eq('id', id)
+    .eq('user_id', userId)
+    .single();
+
+  if (!data) return undefined;
+
+  return {
+    ...data,
+    created_at: new Date(data.created_at),
+    updated_at: new Date(data.updated_at),
+  };
+}
+
+export async function updatePaintRecipe(
+  id: number,
+  userId: number,
+  updates: {
+    name?: string;
+    baseColor?: string;
+    components?: string;
+    notes?: string;
+  }
+): Promise<void> {
+  const updateData: any = {};
+  if (updates.name) updateData.name = updates.name;
+  if (updates.baseColor !== undefined) updateData.base_color = updates.baseColor;
+  if (updates.components !== undefined) updateData.components = updates.components;
+  if (updates.notes !== undefined) updateData.notes = updates.notes;
+
+  await supabase
+    .from('paint_recipes')
+    .update(updateData)
+    .eq('id', id)
+    .eq('user_id', userId);
+}
+
+export async function deletePaintRecipe(id: number, userId: number): Promise<void> {
+  await supabase
+    .from('paint_recipes')
+    .delete()
+    .eq('id', id)
+    .eq('user_id', userId);
+}
+
+// ============ SCENIC DIRECTORY OPERATIONS ============
+
+export async function getAllScenicDirectory(filters?: {
+  categorySlug?: string;
+}): Promise<any[]> {
+  let query = supabase
+    .from('scenic_directory')
+    .select('*')
+    .order('name');
+
+  if (filters?.categorySlug) {
+    query = query.eq('category_slug', filters.categorySlug);
+  }
+
+  const { data } = await query;
+  return data || [];
+}
+
+
+export async function incrementArticleViews(id: number) {
+  const { data } = await supabase
+    .from('articles')
+    .select('views')
+    .eq('id', id)
+    .single();
   
-  const recipes = await db
+  if (data) {
+    await supabase
+      .from('articles')
+      .update({ views: (data.views || 0) + 1 })
+      .eq('id', id);
+  }
+}
+
+export async function incrementNewsViews(id: number) {
+  const { data } = await supabase
+    .from('news')
+    .select('views')
+    .eq('id', id)
+    .single();
+  
+  if (data) {
+    await supabase
+      .from('news')
+      .update({ views: (data.views || 0) + 1 })
+      .eq('id', id);
+  }
+}
+
+export async function incrementProjectViews(id: number) {
+  const { data } = await supabase
+    .from('projects')
+    .select('views')
+    .eq('id', id)
+    .single();
+  
+  if (data) {
+    await supabase
+      .from('projects')
+      .update({ views: (data.views || 0) + 1 })
+      .eq('id', id);
+  }
+}
+
+
+// ============ PROJECT CRUD OPERATIONS ============
+
+export async function createProject(project: any) {
+  const { data, error } = await supabase
+    .from('projects')
+    .insert({
+      title: project.title,
+      slug: project.slug,
+      discipline: project.discipline,
+      year: project.year,
+      month: project.month,
+      venue: project.venue,
+      location: project.location,
+      excerpt: project.excerpt,
+      cover_image: project.coverImageUrl,
+      design_notes: project.designNotes,
+      client: project.client,
+      status: project.status || 'draft',
+      featured: project.featured || false,
+      category_id: project.categoryId,
+      seo_title: project.seoTitle,
+      seo_description: project.seoDescription,
+      seo_keywords: project.seoKeywords,
+    })
     .select()
-    .from(paintRecipes)
-    .where(eq(paintRecipes.userId, userId))
-    .orderBy(desc(paintRecipes.createdAt));
+    .single();
   
-  return recipes;
+  if (error) throw error;
+  return data.id;
 }
 
-export async function getPaintRecipeById(id: number, userId: number) {
-  const db = await getDb();
-  if (!db) return null;
+export async function updateProject(id: number, project: any) {
+  const updateData: any = {};
   
-  const [recipe] = await db
+  if (project.title !== undefined) updateData.title = project.title;
+  if (project.slug !== undefined) updateData.slug = project.slug;
+  if (project.discipline !== undefined) updateData.discipline = project.discipline;
+  if (project.year !== undefined) updateData.year = project.year;
+  if (project.month !== undefined) updateData.month = project.month;
+  if (project.venue !== undefined) updateData.venue = project.venue;
+  if (project.location !== undefined) updateData.location = project.location;
+  if (project.excerpt !== undefined) updateData.excerpt = project.excerpt;
+  if (project.coverImageUrl !== undefined) updateData.cover_image = project.coverImageUrl;
+  if (project.designNotes !== undefined) updateData.design_notes = project.designNotes;
+  if (project.client !== undefined) updateData.client = project.client;
+  if (project.status !== undefined) updateData.status = project.status;
+  if (project.featured !== undefined) updateData.featured = project.featured;
+  if (project.categoryId !== undefined) updateData.category_id = project.categoryId;
+  if (project.seoTitle !== undefined) updateData.seo_title = project.seoTitle;
+  if (project.seoDescription !== undefined) updateData.seo_description = project.seoDescription;
+  if (project.seoKeywords !== undefined) updateData.seo_keywords = project.seoKeywords;
+  
+  const { error } = await supabase
+    .from('projects')
+    .update(updateData)
+    .eq('id', id);
+  
+  if (error) throw error;
+}
+
+export async function deleteProject(id: number) {
+  const { error } = await supabase
+    .from('projects')
+    .delete()
+    .eq('id', id);
+  
+  if (error) throw error;
+}
+
+export async function addProjectImage(image: any) {
+  const { data, error } = await supabase
+    .from('project_images')
+    .insert({
+      project_id: image.projectId,
+      image_url: image.imageUrl,
+      video_url: image.videoUrl,
+      caption: image.caption,
+      category: image.category,
+      sort_order: image.sortOrder || 0,
+    })
     .select()
-    .from(paintRecipes)
-    .where(and(eq(paintRecipes.id, id), eq(paintRecipes.userId, userId)));
+    .single();
   
-  return recipe || null;
+  if (error) throw error;
+  return data.id;
 }
 
-export async function updatePaintRecipe(id: number, userId: number, data: Partial<InsertPaintRecipe>) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
+export async function deleteProjectImage(id: number) {
+  const { error } = await supabase
+    .from('project_images')
+    .delete()
+    .eq('id', id);
   
-  await db
-    .update(paintRecipes)
-    .set(data)
-    .where(and(eq(paintRecipes.id, id), eq(paintRecipes.userId, userId)));
+  if (error) throw error;
 }
 
-export async function deletePaintRecipe(id: number, userId: number) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
+export async function deleteProjectImages(projectId: number) {
+  const { error } = await supabase
+    .from('project_images')
+    .delete()
+    .eq('project_id', projectId);
   
-  await db
-    .delete(paintRecipes)
-    .where(and(eq(paintRecipes.id, id), eq(paintRecipes.userId, userId)));
+  if (error) throw error;
 }
 
-
-// ============ COLLABORATOR OPERATIONS ============
-
-export async function getAllCollaborators(filters?: { role?: string; featured?: boolean }) {
-  const db = await getDb();
-  if (!db) return [];
-
-  try {
-    const { collaborators } = await import("../drizzle/schema");
-    const { eq, and } = await import("drizzle-orm");
-
-    const conditions = [];
-    if (filters?.role) {
-      conditions.push(eq(collaborators.role, filters.role as any));
-    }
-    if (filters?.featured !== undefined) {
-      conditions.push(eq(collaborators.featured, filters.featured));
-    }
-
-    const whereClause = conditions.length > 0 ? and(...conditions) : undefined;
-
-    return await db
-      .select()
-      .from(collaborators)
-      .where(whereClause)
-      .orderBy(collaborators.sortOrder, collaborators.name);
-  } catch (error) {
-    console.error("[Database] Failed to fetch collaborators:", error);
-    return [];
-  }
-}
-
-export async function getCollaboratorBySlug(slug: string) {
-  const db = await getDb();
-  if (!db) return null;
-
-  try {
-    const { collaborators } = await import("../drizzle/schema");
-    const { eq } = await import("drizzle-orm");
-
-    const result = await db
-      .select()
-      .from(collaborators)
-      .where(eq(collaborators.slug, slug))
-      .limit(1);
-
-    return result[0] || null;
-  } catch (error) {
-    console.error("[Database] Failed to fetch collaborator by slug:", error);
-    return null;
-  }
-}
-
-export async function getCollaboratorProjects(collaboratorId: number) {
-  const db = await getDb();
-  if (!db) return [];
-
-  try {
-    const { projectCollaborators, projects } = await import("../drizzle/schema");
-    const { eq } = await import("drizzle-orm");
-
-    const result = await db
-      .select({
-        project: projects,
-      })
-      .from(projectCollaborators)
-      .innerJoin(projects, eq(projectCollaborators.projectId, projects.id))
-      .where(eq(projectCollaborators.collaboratorId, collaboratorId))
-      .orderBy(projects.publishedAt);
-
-    return result.map(r => r.project);
-  } catch (error) {
-    console.error("[Database] Failed to fetch collaborator projects:", error);
-    return [];
+export async function setProjectTags(projectId: number, tagIds: number[]) {
+  // Delete existing tags
+  await supabase
+    .from('project_tags')
+    .delete()
+    .eq('project_id', projectId);
+  
+  // Insert new tags
+  if (tagIds.length > 0) {
+    const { error } = await supabase
+      .from('project_tags')
+      .insert(tagIds.map(tagId => ({
+        project_id: projectId,
+        tag_id: tagId,
+      })));
+    
+    if (error) throw error;
   }
 }
 
 
-// ============ TUTORIALS ============
+// ============ NEWS CRUD OPERATIONS ============
 
-export async function getAllTutorials(filters?: { category?: string; difficultyLevel?: string }) {
-  const db = await getDb();
-  if (!db) return [];
-  try {
-    const { eq, and, asc } = await import("drizzle-orm");
-    const conditions: any[] = [eq(tutorials.enabled, true)];
-    if (filters?.category) conditions.push(eq(tutorials.category, filters.category as any));
-    if (filters?.difficultyLevel) conditions.push(eq(tutorials.difficultyLevel, filters.difficultyLevel as any));
-    return await db
-      .select()
-      .from(tutorials)
-      .where(and(...conditions))
-      .orderBy(asc(tutorials.displayOrder));
-  } catch (error) {
-    console.error("[Database] Failed to fetch tutorials:", error);
-    return [];
+export async function createNews(news: any) {
+  const { data, error } = await supabase
+    .from('news')
+    .insert({
+      title: news.title,
+      slug: news.slug,
+      excerpt: news.excerpt,
+      content: news.content,
+      cover_image: news.coverImageUrl,
+      date: news.date,
+      status: news.status || 'draft',
+      featured: news.featured || false,
+      category_id: news.categoryId,
+      seo_title: news.seoTitle,
+      seo_description: news.seoDescription,
+      seo_keywords: news.seoKeywords,
+    })
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return data.id;
+}
+
+export async function updateNews(id: number, news: any) {
+  const updateData: any = {};
+  
+  if (news.title !== undefined) updateData.title = news.title;
+  if (news.slug !== undefined) updateData.slug = news.slug;
+  if (news.excerpt !== undefined) updateData.excerpt = news.excerpt;
+  if (news.content !== undefined) updateData.content = news.content;
+  if (news.coverImageUrl !== undefined) updateData.cover_image = news.coverImageUrl;
+  if (news.date !== undefined) updateData.date = news.date;
+  if (news.status !== undefined) updateData.status = news.status;
+  if (news.featured !== undefined) updateData.featured = news.featured;
+  if (news.categoryId !== undefined) updateData.category_id = news.categoryId;
+  if (news.seoTitle !== undefined) updateData.seo_title = news.seoTitle;
+  if (news.seoDescription !== undefined) updateData.seo_description = news.seoDescription;
+  if (news.seoKeywords !== undefined) updateData.seo_keywords = news.seoKeywords;
+  
+  const { error } = await supabase
+    .from('news')
+    .update(updateData)
+    .eq('id', id);
+  
+  if (error) throw error;
+}
+
+export async function deleteNews(id: number) {
+  const { error } = await supabase
+    .from('news')
+    .delete()
+    .eq('id', id);
+  
+  if (error) throw error;
+}
+
+export async function setNewsTags(newsId: number, tagIds: number[]) {
+  // Delete existing tags
+  await supabase
+    .from('news_tags')
+    .delete()
+    .eq('news_id', newsId);
+  
+  // Insert new tags
+  if (tagIds.length > 0) {
+    const { error } = await supabase
+      .from('news_tags')
+      .insert(tagIds.map(tagId => ({
+        news_id: newsId,
+        tag_id: tagId,
+      })));
+    
+    if (error) throw error;
   }
 }
 
-// ============ SCENIC DIRECTORY ============
 
-export async function getAllScenicDirectory(filters?: { categorySlug?: string }) {
-  const db = await getDb();
-  if (!db) return [];
-  try {
-    const { eq, and, asc } = await import("drizzle-orm");
-    const conditions: any[] = [eq(scenicDirectory.enabled, true)];
-    if (filters?.categorySlug) conditions.push(eq(scenicDirectory.categorySlug, filters.categorySlug));
-    return await db
-      .select()
-      .from(scenicDirectory)
-      .where(and(...conditions))
-      .orderBy(asc(scenicDirectory.displayOrder));
-  } catch (error) {
-    console.error("[Database] Failed to fetch scenic directory:", error);
-    return [];
+// ============ ARTICLE CRUD OPERATIONS ============
+
+export async function createArticle(article: any) {
+  const { data, error } = await supabase
+    .from('articles')
+    .insert({
+      title: article.title,
+      slug: article.slug,
+      excerpt: article.excerpt,
+      content: article.content,
+      cover_image: article.coverImageUrl,
+      read_time: article.readTime,
+      status: article.status || 'draft',
+      featured: article.featured || false,
+      category_id: article.categoryId,
+      seo_title: article.seoTitle,
+      seo_description: article.seoDescription,
+      seo_keywords: article.seoKeywords,
+    })
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return data.id;
+}
+
+export async function updateArticle(id: number, article: any) {
+  const updateData: any = {};
+  
+  if (article.title !== undefined) updateData.title = article.title;
+  if (article.slug !== undefined) updateData.slug = article.slug;
+  if (article.excerpt !== undefined) updateData.excerpt = article.excerpt;
+  if (article.content !== undefined) updateData.content = article.content;
+  if (article.coverImageUrl !== undefined) updateData.cover_image = article.coverImageUrl;
+  if (article.readTime !== undefined) updateData.read_time = article.readTime;
+  if (article.status !== undefined) updateData.status = article.status;
+  if (article.featured !== undefined) updateData.featured = article.featured;
+  if (article.categoryId !== undefined) updateData.category_id = article.categoryId;
+  if (article.seoTitle !== undefined) updateData.seo_title = article.seoTitle;
+  if (article.seoDescription !== undefined) updateData.seo_description = article.seoDescription;
+  if (article.seoKeywords !== undefined) updateData.seo_keywords = article.seoKeywords;
+  
+  const { error } = await supabase
+    .from('articles')
+    .update(updateData)
+    .eq('id', id);
+  
+  if (error) throw error;
+}
+
+export async function deleteArticle(id: number) {
+  const { error} = await supabase
+    .from('articles')
+    .delete()
+    .eq('id', id);
+  
+  if (error) throw error;
+}
+
+export async function setArticleTags(articleId: number, tagIds: number[]) {
+  // Delete existing tags
+  await supabase
+    .from('article_tags')
+    .delete()
+    .eq('article_id', articleId);
+  
+  // Insert new tags
+  if (tagIds.length > 0) {
+    const { error } = await supabase
+      .from('article_tags')
+      .insert(tagIds.map(tagId => ({
+        article_id: articleId,
+        tag_id: tagId,
+      })));
+    
+    if (error) throw error;
   }
+}
+
+export async function toggleArticleLike(id: number, liked: boolean) {
+  const { data } = await supabase
+    .from('articles')
+    .select('likes')
+    .eq('id', id)
+    .single();
+  
+  if (data) {
+    const newLikes = liked ? (data.likes || 0) + 1 : Math.max((data.likes || 0) - 1, 0);
+    await supabase
+      .from('articles')
+      .update({ likes: newLikes })
+      .eq('id', id);
+  }
+}
+
+// ============ COMMENT OPERATIONS ============
+
+export interface Comment {
+  id: number;
+  articleId: number;
+  userId: number;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+  user?: {
+      id: number;
+      name: string;
+      openId: string;
+  }
+}
+
+export async function getArticleComments(articleId: number): Promise<Comment[]> {
+  const { data } = await supabase
+    .from('comments')
+    .select('*, user:users(id, name, openId)')
+    .eq('article_id', articleId)
+    .order('created_at', { ascending: true });
+
+  if (!data) return [];
+
+  return data.map(c => ({
+    id: c.id,
+    articleId: c.article_id,
+    userId: c.user_id,
+    content: c.content,
+    createdAt: new Date(c.created_at),
+    updatedAt: new Date(c.updated_at),
+    user: c.user
+  }));
+}
+
+export async function createComment(comment: {
+  articleId: number;
+  userId: number;
+  content: string;
+}): Promise<number> {
+  const { data, error } = await supabase
+    .from('comments')
+    .insert({
+      article_id: comment.articleId,
+      user_id: comment.userId,
+      content: comment.content
+    })
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data.id;
+}
+
+export async function getCommentById(id: number): Promise<Comment | undefined> {
+  const { data } = await supabase
+    .from('comments')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (!data) return undefined;
+
+  return {
+    id: data.id,
+    articleId: data.article_id,
+    userId: data.user_id,
+    content: data.content,
+    createdAt: new Date(data.created_at),
+    updatedAt: new Date(data.updated_at)
+  };
+}
+
+export async function deleteComment(id: number) {
+  const { error } = await supabase
+    .from('comments')
+    .delete()
+    .eq('id', id);
+
+  if (error) throw error;
+}
+
+// ============ TODO OPERATIONS ============
+
+export async function getAllTodos(userId: string): Promise<Todo[]> {
+  const { data } = await supabase
+    .from('todos')
+    .select('*')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false });
+
+  if (!data) return [];
+
+  return data.map(todo => ({
+    ...todo,
+    created_at: new Date(todo.created_at),
+  }));
+}
+
+export async function createTodo(exclude: any, todo: { text: string; userId: string }) {
+  const { data, error } = await supabase
+    .from('todos')
+    .insert({ 
+      text: todo.text, 
+      user_id: todo.userId 
+    })
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return data.id;
+}
+
+export async function toggleTodo(id: number, userId: string): Promise<boolean> {
+  // First get current status
+  const { data: current } = await supabase
+    .from('todos')
+    .select('completed')
+    .eq('id', id)
+    .eq('user_id', userId)
+    .single();
+    
+  if (!current) throw new Error("Todo not found");
+
+  const { data, error } = await supabase
+    .from('todos')
+    .update({ completed: !current.completed })
+    .eq('id', id)
+    .eq('user_id', userId)
+    .select()
+    .single();
+  
+  if (error) throw error;
+  return data.completed;
+}
+
+export async function deleteTodo(id: number, userId: string) {
+  const { error } = await supabase
+    .from('todos')
+    .delete()
+    .eq('id', id)
+    .eq('user_id', userId);
+  
+  if (error) throw error;
 }

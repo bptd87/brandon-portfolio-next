@@ -19,19 +19,19 @@ import { ProjectDetailSkeleton } from "@/components/SkeletonLoaders";
 // Convert YouTube/Vimeo URLs to embed format
 function getEmbedUrl(url: string): string {
   if (!url) return '';
-  
+
   // YouTube
   const youtubeMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
   if (youtubeMatch) {
     return `https://www.youtube.com/embed/${youtubeMatch[1]}`;
   }
-  
+
   // Vimeo
   const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
   if (vimeoMatch) {
     return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
   }
-  
+
   // Already an embed URL or unknown format
   return url;
 }
@@ -45,13 +45,13 @@ export default function ProjectDetail() {
   const { data: project, isLoading } = trpc.projects.getBySlug.useQuery({ slug: slug! });
   // Fetch projects in same discipline for navigation
   const { data: allProjects } = trpc.projects.list.useQuery(
-    { discipline: project?.discipline },
+    { discipline: project?.discipline || undefined },
     { enabled: !!project?.discipline }
   );
-  
+
   // Fetch related projects (same discipline) for "More Projects" section
   const { data: allRelatedProjects } = trpc.projects.list.useQuery(
-    { discipline: project?.discipline },
+    { discipline: project?.discipline || undefined },
     { enabled: !!project?.discipline }
   );
   const relatedProjects = allRelatedProjects; // Show all projects
@@ -62,7 +62,7 @@ export default function ProjectDetail() {
   const [videosOpen, setVideosOpen] = useState(true);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
-  const [lightboxImages, setLightboxImages] = useState<Array<{imageUrl: string | null; caption: string | null; altText: string | null}>>([]);
+  const [lightboxImages, setLightboxImages] = useState<Array<{ imageUrl: string | null; caption: string | null; altText: string | null }>>([]);
 
   if (isLoading) {
     return <ProjectDetailSkeleton />;
@@ -87,7 +87,7 @@ export default function ProjectDetail() {
   const videos = images.filter(img => img.imageType === 'video');
 
   // Parse creative team from JSON array
-  let creativeTeamArray: Array<{name: string, role: string}> = [];
+  let creativeTeamArray: Array<{ name: string, role: string }> = [];
   try {
     if (typeof project.creativeTeam === 'string') {
       creativeTeamArray = JSON.parse(project.creativeTeam);
@@ -105,7 +105,7 @@ export default function ProjectDetail() {
 
   // Get related projects excluding current one
   const relatedProjectsFiltered = relatedProjects?.filter(p => p.id !== project.id) || [];
-  
+
   // Find prev/next projects from same discipline only
   const currentIndex = allProjects?.findIndex(p => p.id === project.id) ?? -1;
   const prevProject = currentIndex > 0 ? allProjects?.[currentIndex - 1] : null;
@@ -204,12 +204,12 @@ export default function ProjectDetail() {
             <p className="text-muted-foreground text-2xl">No cover image</p>
           </div>
         )}
-        
+
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-        
+
         {/* Color accent overlay */}
-        <div 
+        <div
           className="absolute inset-0 mix-blend-multiply opacity-10"
           style={{ backgroundColor: accentColor }}
         />
@@ -219,8 +219,8 @@ export default function ProjectDetail() {
           <div className="container max-w-4xl text-center px-8">
             {/* Subcategory badge */}
             <div className="flex justify-center mb-6">
-              <Badge 
-                variant="outline" 
+              <Badge
+                variant="outline"
                 className="text-xs tracking-widest font-bold bg-background/90 backdrop-blur-md px-6 py-2.5 border-2 rounded-full"
                 style={{
                   borderColor: accentColor,
@@ -230,7 +230,7 @@ export default function ProjectDetail() {
                 {project.subcategory?.toUpperCase() || project.discipline?.replace('_', ' ').toUpperCase() || 'PROJECT'}
               </Badge>
             </div>
-            
+
             {/* Project title */}
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-8 leading-[0.9]">
               {project.title}
@@ -264,7 +264,7 @@ export default function ProjectDetail() {
 
       {/* Content Sections */}
       <div className="container max-w-5xl py-16 space-y-16">
-        
+
         {/* Design Notes */}
         {designNotes && (
           <AnimatedSection>
@@ -311,12 +311,12 @@ export default function ProjectDetail() {
                   <ChevronDown className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
                 )}
               </button>
-              
+
               {galleryOpen && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {productionPhotos.map((img, idx) => (
                     <AnimatedSection key={img.id} delay={idx * 50}>
-                      <div 
+                      <div
                         className="group relative overflow-hidden rounded-lg cursor-pointer aspect-[3/2]"
                         onClick={() => {
                           setLightboxImages(productionPhotos);
@@ -333,13 +333,13 @@ export default function ProjectDetail() {
                           loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        
+
                         {img.caption && (
                           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/95 via-background/70 to-transparent p-6">
                             <p className="text-sm text-foreground/90">{img.caption}</p>
                           </div>
                         )}
-                        
+
                         <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                           <div className="px-3 py-1.5 rounded-full bg-background/90 backdrop-blur-sm border border-border">
                             <p className="text-xs font-semibold">Click to expand</p>
@@ -372,12 +372,12 @@ export default function ProjectDetail() {
                   <ChevronDown className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
                 )}
               </button>
-              
+
               {renderingsOpen && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {renderings.map((img, idx) => (
                     <AnimatedSection key={img.id} delay={idx * 50}>
-                      <div 
+                      <div
                         className="group relative overflow-hidden rounded-lg cursor-pointer aspect-[3/2]"
                         onClick={() => {
                           setLightboxImages(renderings);
@@ -394,13 +394,13 @@ export default function ProjectDetail() {
                           loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        
+
                         {img.caption && (
                           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/95 via-background/70 to-transparent p-6">
                             <p className="text-sm text-foreground/90">{img.caption}</p>
                           </div>
                         )}
-                        
+
                         <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                           <div className="px-3 py-1.5 rounded-full bg-background/90 backdrop-blur-sm border border-border">
                             <p className="text-xs font-semibold">Click to expand</p>
@@ -433,12 +433,12 @@ export default function ProjectDetail() {
                   <ChevronDown className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
                 )}
               </button>
-              
+
               {videosOpen && (
                 <div className="grid grid-cols-1 gap-8">
                   {videos.map((video) => (
                     <div key={video.id} className="relative rounded-lg overflow-hidden border-2 border-border">
-                      <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                      <div className="relative w-full pb-[56.25%]">
                         <iframe
                           src={getEmbedUrl(video.videoUrl || '')}
                           className="absolute inset-0 w-full h-full"
@@ -476,16 +476,16 @@ export default function ProjectDetail() {
                   <ChevronDown className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
                 )}
               </button>
-              
+
               {teamOpen && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {creativeTeamArray.map((member, idx) => {
                     // Create slug from name for collaborator link
                     const slug = member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-                    
+
                     return (
                       <Link key={idx} href={`/about/collaborators#${slug}`}>
-                        <div 
+                        <div
                           className="flex items-start gap-4 p-4 rounded-lg bg-muted/50 border border-border hover:bg-muted transition-all duration-300 cursor-pointer group"
                           onMouseEnter={(e) => {
                             e.currentTarget.style.borderColor = accentColor;
@@ -554,42 +554,42 @@ export default function ProjectDetail() {
                     '#FFC107', // Amber
                   ];
                   const hoverColor = brandColors[idx % brandColors.length];
-                  
+
                   return (
-                  <Link key={relatedProject.id} href={`/projects/${relatedProject.slug}`}>
-                    <Card className="group cursor-pointer overflow-hidden border-0 bg-transparent hover:scale-[1.02] transition-all duration-500">
-                      <div className="relative aspect-[3/2] overflow-hidden rounded-lg">
-                        {relatedProject.coverImageUrl ? (
-                          <ProgressiveImage
-                            src={relatedProject.coverImageUrl}
-                            alt={`${relatedProject.title} - Scenic design by Brandon PT Davis`}
-                            className="group-hover:scale-110 transition-transform duration-700"
-                            aspectRatio="3/2"
-                            smartPosition={true}
-                            loading="lazy"
-                          />
-                        ) : (
-                          <div className="w-full h-full bg-muted flex items-center justify-center">
-                            <p className="text-muted-foreground">No image</p>
-                          </div>
-                        )}
-                        {/* Gradient overlay - fades out on hover */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-500">
-                          <div className="absolute bottom-0 left-0 right-0 p-6">
-                            <p className="text-xs font-semibold text-white/70 uppercase tracking-wider mb-2">
-                              {relatedProject.client}
-                            </p>
-                            <h3 className="text-2xl font-bold text-white italic font-serif">
-                              {relatedProject.title}
-                            </h3>
-                            {relatedProject.year && (
-                              <p className="text-sm text-white/80 mt-2">{relatedProject.year}</p>
-                            )}
+                    <Link key={relatedProject.id} href={`/projects/${relatedProject.slug}`}>
+                      <Card className="group cursor-pointer overflow-hidden border-0 bg-transparent hover:scale-[1.02] transition-all duration-500">
+                        <div className="relative aspect-[3/2] overflow-hidden rounded-lg">
+                          {relatedProject.coverImageUrl ? (
+                            <ProgressiveImage
+                              src={relatedProject.coverImageUrl}
+                              alt={`${relatedProject.title} - Scenic design by Brandon PT Davis`}
+                              className="group-hover:scale-110 transition-transform duration-700"
+                              aspectRatio="3/2"
+                              smartPosition={true}
+                              loading="lazy"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-muted flex items-center justify-center">
+                              <p className="text-muted-foreground">No image</p>
+                            </div>
+                          )}
+                          {/* Gradient overlay - fades out on hover */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-500">
+                            <div className="absolute bottom-0 left-0 right-0 p-6">
+                              <p className="text-xs font-semibold text-white/70 uppercase tracking-wider mb-2">
+                                {relatedProject.client}
+                              </p>
+                              <h3 className="text-2xl font-bold text-white italic font-serif">
+                                {relatedProject.title}
+                              </h3>
+                              {relatedProject.year && (
+                                <p className="text-sm text-white/80 mt-2">{relatedProject.year}</p>
+                              )}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </Card>
-                  </Link>
+                      </Card>
+                    </Link>
                   );
                 })}
               </div>

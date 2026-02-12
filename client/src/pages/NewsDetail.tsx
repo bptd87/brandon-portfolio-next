@@ -20,20 +20,20 @@ function createPixelatedGradient(imageUrl: string, callback: (gradient: string) 
   const img = new Image();
   img.crossOrigin = "Anonymous";
   img.src = imageUrl;
-  
+
   img.onload = () => {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    
+
     // Sample colors from image
     canvas.width = 10;
     canvas.height = 10;
     ctx.drawImage(img, 0, 0, 10, 10);
-    
+
     const imageData = ctx.getImageData(0, 0, 10, 10);
     const pixels = imageData.data;
-    
+
     // Extract dominant colors
     const colors: string[] = [];
     for (let i = 0; i < pixels.length; i += 40) {
@@ -42,7 +42,7 @@ function createPixelatedGradient(imageUrl: string, callback: (gradient: string) 
       const b = pixels[i + 2];
       colors.push(`rgb(${r}, ${g}, ${b})`);
     }
-    
+
     // Create pixelated gradient
     const gradient = `
       repeating-linear-gradient(
@@ -62,7 +62,7 @@ function createPixelatedGradient(imageUrl: string, callback: (gradient: string) 
         ${colors[9] || colors[4]} 80px
       )
     `;
-    
+
     callback(gradient);
   };
 }
@@ -84,7 +84,7 @@ function NewsDetailContent() {
     { id: newsItem?.categoryId || 0 },
     { enabled: !!newsItem?.categoryId }
   );
-  
+
   const [heroGradient, setHeroGradient] = useState<string>("");
 
   // Generate gradient for hero
@@ -98,7 +98,7 @@ function NewsDetailContent() {
   useEffect(() => {
     if (newsItem) {
       document.title = `${newsItem.title} | Brandon PT Davis`;
-      
+
       // Update meta description
       const metaDescription = document.querySelector('meta[name="description"]');
       if (metaDescription) {
@@ -162,7 +162,7 @@ function NewsDetailContent() {
       try {
         await navigator.share({
           title: newsItem?.title,
-          text: newsItem?.excerpt,
+          text: newsItem?.excerpt || undefined,
           url: window.location.href,
         });
       } catch (err) {
@@ -212,17 +212,17 @@ function NewsDetailContent() {
     .map(n => ({
       ...n,
       timeDiff: Math.abs(
-        new Date(n.publishedAt || n.createdAt).getTime() - 
+        new Date(n.publishedAt || n.createdAt).getTime() -
         new Date(newsItem.publishedAt || newsItem.createdAt).getTime()
       )
     }))
     .sort((a, b) => a.timeDiff - b.timeDiff)
     .slice(0, 3) || [];
-  
+
   // Get prev/next articles chronologically
   const allNewsSorted = relatedNews
-    ?.sort((a, b) => 
-      new Date(b.publishedAt || b.createdAt).getTime() - 
+    ?.sort((a, b) =>
+      new Date(b.publishedAt || b.createdAt).getTime() -
       new Date(a.publishedAt || a.createdAt).getTime()
     ) || [];
   const currentIndex = allNewsSorted.findIndex(n => n.id === newsItem.id);
@@ -289,7 +289,7 @@ function NewsDetailContent() {
       </div>
 
       {/* Hero Section with Title Overlay */}
-      <section 
+      <section
         className="relative min-h-[70vh] overflow-hidden"
         style={{
           background: heroGradient || 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -297,18 +297,18 @@ function NewsDetailContent() {
         }}
       >
         {/* Pixelated gradient background */}
-        <div 
+        <div
           className="absolute inset-0 opacity-20"
           style={{
             backgroundImage: heroGradient || 'none',
             filter: 'blur(60px)',
           }}
         />
-        
+
         {newsItem.coverImageUrl && (
           <>
-            <img 
-              src={newsItem.coverImageUrl} 
+            <img
+              src={newsItem.coverImageUrl}
               alt={newsItem.title}
               className="absolute inset-0 w-full h-full object-cover"
             />
@@ -316,7 +316,7 @@ function NewsDetailContent() {
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
           </>
         )}
-        
+
         <div className="relative container h-full flex items-end pb-16 pt-32 min-h-[70vh]">
           <div className="max-w-5xl w-full">
             {/* Navigation Row: Back Button + Category Badge */}
@@ -327,7 +327,7 @@ function NewsDetailContent() {
                   Back to News
                 </Button>
               </Link>
-              
+
               {category && (
                 <Badge className="bg-[#00E5FF] text-black font-black tracking-wider text-sm px-4 py-2">
                   {category.name.toUpperCase()}
@@ -352,10 +352,10 @@ function NewsDetailContent() {
               <div className="flex items-center gap-2">
                 <Calendar className="h-5 w-5" />
                 <span className="text-lg font-medium">
-                  {new Date(newsItem.publishedAt || newsItem.createdAt).toLocaleDateString('en-US', { 
-                    month: 'long', 
-                    day: 'numeric', 
-                    year: 'numeric' 
+                  {new Date(newsItem.publishedAt || newsItem.createdAt).toLocaleDateString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric'
                   })}
                 </span>
               </div>
@@ -365,7 +365,7 @@ function NewsDetailContent() {
                   <span className="text-lg font-medium">{newsItem.location}</span>
                 </div>
               )}
-              <Button 
+              <Button
                 onClick={handleShare}
                 variant="outline"
                 size="lg"
@@ -386,9 +386,9 @@ function NewsDetailContent() {
             {/* External Link Button */}
             {newsItem.externalLink && (
               <div className="mb-12">
-                <a 
-                  href={newsItem.externalLink} 
-                  target="_blank" 
+                <a
+                  href={newsItem.externalLink}
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block"
                 >
@@ -410,24 +410,23 @@ function NewsDetailContent() {
                         <p className="text-foreground/90 leading-relaxed text-lg">{block.content}</p>
                       </div>
                     );
-                  
+
                   case 'header':
                     const headerLevel = block.level || 2;
-                    const headerClasses = `font-['Playfair_Display'] italic font-bold text-foreground ${
-                      headerLevel === 3 ? 'text-2xl' : headerLevel === 4 ? 'text-xl' : 'text-3xl'
-                    }`;
+                    const headerClasses = `font-['Playfair_Display'] italic font-bold text-foreground ${headerLevel === 3 ? 'text-2xl' : headerLevel === 4 ? 'text-xl' : 'text-3xl'
+                      }`;
                     return (
                       <div key={index} className="mb-8">
                         {createElement(`h${headerLevel}`, { className: headerClasses }, block.content)}
                       </div>
                     );
-                  
+
                   case 'link':
                     return (
                       <div key={index} className="mb-8">
-                        <a 
-                          href={block.url} 
-                          target="_blank" 
+                        <a
+                          href={block.url}
+                          target="_blank"
                           rel="noopener noreferrer"
                           className="inline-block"
                         >
@@ -438,12 +437,12 @@ function NewsDetailContent() {
                         </a>
                       </div>
                     );
-                  
+
                   case 'image':
                     return (
                       <div key={index} className="mb-12">
-                        <img 
-                          src={block.url} 
+                        <img
+                          src={block.url}
                           alt={block.caption || ''}
                           className="w-full rounded-xl shadow-lg"
                         />
@@ -454,15 +453,15 @@ function NewsDetailContent() {
                         )}
                       </div>
                     );
-                  
+
                   case 'gallery':
                     return (
                       <div key={index} className="mb-12">
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                           {block.images?.map((img: any, imgIndex: number) => (
-                            <img 
+                            <img
                               key={imgIndex}
-                              src={img.url} 
+                              src={img.url}
                               alt={img.caption || ''}
                               className="w-full aspect-square object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow"
                             />
@@ -470,7 +469,7 @@ function NewsDetailContent() {
                         </div>
                       </div>
                     );
-                  
+
                   case 'details':
                     return (
                       <div key={index} className="mb-12">
@@ -487,7 +486,7 @@ function NewsDetailContent() {
                         </div>
                       </div>
                     );
-                  
+
                   case 'quote':
                     return (
                       <div key={index} className="mb-12">
@@ -504,7 +503,7 @@ function NewsDetailContent() {
                         </blockquote>
                       </div>
                     );
-                  
+
                   case 'team':
                     return (
                       <div key={index} className="mb-12">
@@ -521,7 +520,7 @@ function NewsDetailContent() {
                         </div>
                       </div>
                     );
-                  
+
                   case 'list':
                     const ListTag = block.ordered ? 'ol' : 'ul';
                     return (
@@ -533,7 +532,7 @@ function NewsDetailContent() {
                         </ListTag>
                       </div>
                     );
-                  
+
                   case 'video':
                     return (
                       <div key={index} className="mb-12">
@@ -552,7 +551,7 @@ function NewsDetailContent() {
                         )}
                       </div>
                     );
-                  
+
                   case 'faq':
                     return (
                       <div key={index} className="mb-12">
@@ -566,7 +565,7 @@ function NewsDetailContent() {
                         </div>
                       </div>
                     );
-                  
+
                   default:
                     return null;
                 }
@@ -582,8 +581,8 @@ function NewsDetailContent() {
                 <div className="flex flex-wrap gap-2">
                   {newsItem.tags.map((tag: any) => (
                     <Link key={tag.id} href={`/tags/${tag.slug}`}>
-                      <Badge 
-                        variant="outline" 
+                      <Badge
+                        variant="outline"
                         className="text-sm font-normal px-4 py-2 rounded-full transition-all hover:scale-105 cursor-pointer"
                         style={{
                           borderColor: `hsl(var(--accent))`,
@@ -616,8 +615,8 @@ function NewsDetailContent() {
                         <div className="flex items-center gap-2 text-sm text-muted-foreground mt-2">
                           <Calendar className="h-3.5 w-3.5" />
                           <span>
-                            {new Date(prevArticle.publishedAt || prevArticle.createdAt).toLocaleDateString('en-US', { 
-                              month: 'short', 
+                            {new Date(prevArticle.publishedAt || prevArticle.createdAt).toLocaleDateString('en-US', {
+                              month: 'short',
                               day: 'numeric',
                               year: 'numeric'
                             })}
@@ -639,8 +638,8 @@ function NewsDetailContent() {
                         <div className="flex items-center justify-end gap-2 text-sm text-muted-foreground mt-2">
                           <Calendar className="h-3.5 w-3.5" />
                           <span>
-                            {new Date(nextArticle.publishedAt || nextArticle.createdAt).toLocaleDateString('en-US', { 
-                              month: 'short', 
+                            {new Date(nextArticle.publishedAt || nextArticle.createdAt).toLocaleDateString('en-US', {
+                              month: 'short',
                               day: 'numeric',
                               year: 'numeric'
                             })}
@@ -669,8 +668,8 @@ function NewsDetailContent() {
                   <Card className="h-full hover:shadow-xl transition-all duration-300 group cursor-pointer p-0">
                     {item.coverImageUrl && (
                       <div className="aspect-[16/9] overflow-hidden">
-                        <img 
-                          src={item.coverImageUrl} 
+                        <img
+                          src={item.coverImageUrl}
                           alt={item.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
@@ -683,10 +682,10 @@ function NewsDetailContent() {
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Calendar className="h-4 w-4" />
                         <span>
-                          {new Date(item.publishedAt || item.createdAt).toLocaleDateString('en-US', { 
-                            year: 'numeric', 
-                            month: 'long', 
-                            day: 'numeric' 
+                          {new Date(item.publishedAt || item.createdAt).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
                           })}
                         </span>
                       </div>

@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,6 +9,9 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import PageTransition from "./components/PageTransition";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { PageLoadingIndicator } from "./components/PageLoadingIndicator";
+import { useState, useEffect } from "react";
+import { TodoDialog } from "@/components/TodoDialog";
+
 // Only Home page loads immediately - everything else is lazy loaded
 import Home from "./pages/Home";
 
@@ -24,7 +28,9 @@ const ProjectDetailRouter = lazy(() => import("./pages/ProjectDetailRouter"));
 const NewsDetail = lazy(() => import("./pages/NewsDetail"));
 const ArticleDetail = lazy(() => import("./pages/ArticleDetail"));
 const Admin = lazy(() => import("./pages/Admin"));
+const Login = lazy(() => import("./pages/Login"));
 const AdminProjectEdit = lazy(() => import("./pages/AdminProjectEdit"));
+const AuthDebug = lazy(() => import("./pages/AuthDebug"));
 
 // Non-critical routes - lazy load for better initial performance
 
@@ -70,6 +76,8 @@ function Router() {
         </div>
       }>
         <Switch>
+          <Route path={"/login"} component={Login} />
+          <Route path={"/auth-debug"} component={AuthDebug} />
           <Route path={"/"} component={Home} />
           <Route path={"/projects"} component={Projects} />
           <Route path={"/projects/scenic-design"} component={Projects} />
@@ -127,6 +135,21 @@ function Router() {
 // - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
 
 function App() {
+  const [isTodoOpen, setIsTodoOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Command + Shift + C
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.code === 'KeyC') {
+        e.preventDefault();
+        setIsTodoOpen((prev) => !prev);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
     <ErrorBoundary>
       <ThemeProvider
@@ -137,6 +160,8 @@ function App() {
           <PageLoadingIndicator />
           <TooltipProvider>
             <Toaster />
+            <TodoDialog open={isTodoOpen} onOpenChange={setIsTodoOpen} />
+
             <Router />
           </TooltipProvider>
         </div>

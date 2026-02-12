@@ -101,10 +101,12 @@ function normalizeDbBlock(dbBlock: any, index: number): Block {
       return {
         id,
         type: "faq",
-        content: { items: (dbBlock.items || []).map((item: any) => ({
-          question: item.question || "",
-          answer: item.answer || "",
-        })) },
+        content: {
+          items: (dbBlock.items || []).map((item: any) => ({
+            question: item.question || "",
+            answer: item.answer || "",
+          }))
+        },
       };
     case "gallery":
       return {
@@ -327,15 +329,15 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
     try {
       // Extract tags (string[]) from formData - these are not sent to the API
       const { tags: _tags, publishedAt, ...saveData } = formData;
-      
+
       // Convert publishedAt string to Date if provided
       const publishedAtDate = publishedAt ? new Date(publishedAt) : null;
-      
+
       if (articleId) {
-        await updateMutation.mutateAsync({ id: articleId, ...saveData, publishedAt: publishedAtDate, content });
+        await updateMutation.mutateAsync({ id: articleId, ...saveData, publishedAt: publishedAtDate || undefined, content });
         toast.success("Article updated");
       } else {
-        await createMutation.mutateAsync({ ...saveData, publishedAt: publishedAtDate, content });
+        await createMutation.mutateAsync({ ...saveData, publishedAt: publishedAtDate || undefined, content });
         toast.success("Article created");
       }
       onSave?.();
@@ -355,9 +357,8 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
 
   return (
     <div
-      className={`${
-        isFullscreen ? "fixed inset-0 z-50 bg-background" : ""
-      } flex flex-col h-full`}
+      className={`${isFullscreen ? "fixed inset-0 z-50 bg-background" : ""
+        } flex flex-col h-full`}
     >
       {/* Header */}
       <div className="border-b p-4 flex justify-between items-center">
@@ -411,7 +412,7 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                   onChange={async (e) => {
                     const file = e.target.files?.[0];
                     if (!file) return;
-                    
+
                     setUploadingCover(true);
                     try {
                       const buffer = await file.arrayBuffer();
@@ -421,7 +422,7 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                         fileType: file.type,
                         base64Data: btoa(String.fromCharCode(...Array.from(bytes))),
                       });
-                      
+
                       setFormData({ ...formData, coverImageUrl: result.url });
                       toast.success("Image uploaded successfully");
                     } catch (error: any) {
@@ -532,13 +533,12 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                         updateBlock(block.id, { ...block.content, text: e.target.value })
                       }
                       placeholder="Heading text..."
-                      className={`font-bold ${
-                        block.content.level === 2
+                      className={`font-bold ${block.content.level === 2
                           ? "text-3xl"
                           : block.content.level === 3
-                          ? "text-2xl"
-                          : "text-xl"
-                      }`}
+                            ? "text-2xl"
+                            : "text-xl"
+                        }`}
                     />
                   </div>
                 )}

@@ -35,32 +35,33 @@ const roleIcons: Record<RoleFilter, any> = {
 
 export default function Collaborators() {
   const [activeFilter, setActiveFilter] = useState<RoleFilter>("all");
-  
+
   const { data: allCollaborators, isLoading } = trpc.collaborators.list.useQuery();
 
   // Group collaborators by role
   const groupedCollaborators = allCollaborators?.reduce((acc, collab) => {
-    if (!acc[collab.role]) {
-      acc[collab.role] = [];
+    const role = collab.role || 'other';
+    if (!acc[role]) {
+      acc[role] = [];
     }
-    acc[collab.role].push(collab);
+    acc[role].push(collab);
     return acc;
   }, {} as Record<string, typeof allCollaborators>);
 
-  const filteredGroups = activeFilter === "all" 
-    ? groupedCollaborators 
+  const filteredGroups = activeFilter === "all"
+    ? groupedCollaborators
     : { [activeFilter]: groupedCollaborators?.[activeFilter] || [] };
 
   return (
     <>
-      <SEO 
+      <SEO
         title="Collaborators"
         description="Directors, designers, theatre companies, and creative partners who have collaborated with Brandon PT Davis on scenic and experiential design projects."
       />
       <div className="min-h-screen flex flex-col bg-background">
         <Header />
         <AboutNav />
-        
+
         <main className="flex-1 pt-24 pb-20">
           <div className="container">
             {/* Header */}
@@ -77,21 +78,20 @@ export default function Collaborators() {
             <div className="flex flex-wrap gap-3 mb-12 border-b border-border pb-6">
               {(Object.keys(roleLabels) as RoleFilter[]).map((role) => {
                 const Icon = roleIcons[role];
-                const count = role === "all" 
+                const count = role === "all"
                   ? allCollaborators?.length || 0
                   : groupedCollaborators?.[role]?.length || 0;
-                
+
                 if (role !== "all" && count === 0) return null;
 
                 return (
                   <button
                     key={role}
                     onClick={() => setActiveFilter(role)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
-                      activeFilter === role
+                    className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${activeFilter === role
                         ? "bg-foreground text-background"
                         : "bg-card text-muted-foreground hover:text-foreground hover:bg-card/80"
-                    }`}
+                      }`}
                   >
                     <Icon className="w-4 h-4" />
                     {roleLabels[role]}
@@ -131,67 +131,67 @@ export default function Collaborators() {
                         <Icon className="w-8 h-8 text-[#FF5722]" />
                         {roleLabels[role as RoleFilter]}
                       </h2>
-                      
+
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {collaborators.map((collaborator) => {
                           // Create slug from name for anchor link
                           const slug = collaborator.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-                          
+
                           return (
-                          <div
-                            key={collaborator.id}
-                            id={slug}
-                            className="bg-card border border-border rounded-lg p-6 hover:border-foreground/20 transition-all group scroll-mt-32"
-                          >
-                            {/* Name */}
-                            <h3 className="text-xl font-bold mb-2 group-hover:text-[#FF5722] transition-colors">
-                              {collaborator.name}
-                            </h3>
+                            <div
+                              key={collaborator.id}
+                              id={slug}
+                              className="bg-card border border-border rounded-lg p-6 hover:border-foreground/20 transition-all group scroll-mt-32"
+                            >
+                              {/* Name */}
+                              <h3 className="text-xl font-bold mb-2 group-hover:text-[#FF5722] transition-colors">
+                                {collaborator.name}
+                              </h3>
 
-                            {/* Bio */}
-                            {collaborator.bio && (
-                              <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
-                                {collaborator.bio}
-                              </p>
-                            )}
+                              {/* Bio */}
+                              {collaborator.bio && (
+                                <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
+                                  {collaborator.bio}
+                                </p>
+                              )}
 
-                            {/* Links */}
-                            <div className="flex flex-wrap gap-3 mt-4">
-                              {collaborator.portfolioUrl && (
-                                <a
-                                  href={collaborator.portfolioUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors"
-                                >
-                                  <ExternalLink className="w-3.5 h-3.5" />
-                                  {collaborator.role === 'theatre_company' || collaborator.role === 'partner_company' ? 'Website' : 'Portfolio'}
-                                </a>
-                              )}
-                              {collaborator.websiteUrl && collaborator.websiteUrl !== collaborator.portfolioUrl && (
-                                <a
-                                  href={collaborator.websiteUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors"
-                                >
-                                  <ExternalLink className="w-3.5 h-3.5" />
-                                  Website
-                                </a>
-                              )}
-                              {collaborator.instagramUrl && (
-                                <a
-                                  href={collaborator.instagramUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors"
-                                >
-                                  <Instagram className="w-3.5 h-3.5" />
-                                  @{collaborator.instagramHandle || "Instagram"}
-                                </a>
-                              )}
+                              {/* Links */}
+                              <div className="flex flex-wrap gap-3 mt-4">
+                                {collaborator.portfolioUrl && (
+                                  <a
+                                    href={collaborator.portfolioUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors"
+                                  >
+                                    <ExternalLink className="w-3.5 h-3.5" />
+                                    {collaborator.role === 'theatre_company' || collaborator.role === 'partner_company' ? 'Website' : 'Portfolio'}
+                                  </a>
+                                )}
+                                {collaborator.website && collaborator.website !== collaborator.portfolioUrl && (
+                                  <a
+                                    href={collaborator.website}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors"
+                                  >
+                                    <ExternalLink className="w-3.5 h-3.5" />
+                                    Website
+                                  </a>
+                                )}
+                                {collaborator.instagramUrl && (
+                                  <a
+                                    href={collaborator.instagramUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors"
+                                  >
+                                    <Instagram className="w-3.5 h-3.5" />
+                                    @{collaborator.instagramHandle || "Instagram"}
+                                  </a>
+                                )}
+                              </div>
                             </div>
-                          </div>
                           );
                         })}
                       </div>

@@ -280,7 +280,7 @@ export function CategoriesManager() {
             <div className="flex items-center gap-4">
               <div
                 className="w-12 h-12 rounded-lg flex items-center justify-center font-black text-white shrink-0"
-                style={{ backgroundColor: category.color }}
+                style={{ backgroundColor: category.color || undefined }}
               >
                 {category.name.charAt(0)}
               </div>
