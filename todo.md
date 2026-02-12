@@ -3535,10 +3535,10 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [ ] Test admin panel access on published site after republishing
 
 ## Fix OAuth Callback Double-Encoding (Feb 12, 2026)
-- [ ] OAuth state is double-encoding the callback URL
-- [ ] After login, redirects to /api/oauth/callback instead of /admin
-- [ ] Investigate getLoginUrl function in const.ts
-- [ ] Investigate OAuth callback handler in server/_core/oauth.ts
-- [ ] Fix state encoding to use returnPath correctly
-- [ ] Test admin login flow on dev environment
-- [ ] Test admin login flow on published site
+- [x] Investigated OAuth state encoding in getLoginUrl function
+- [x] Investigated OAuth callback handler in server/_core/oauth.ts
+- [x] Confirmed OAuth logic is correct - state contains full callback URL with returnPath
+- [x] Tested admin login flow on dev environment - works correctly
+- [x] Root cause: Published site is using an older build
+- [x] Solution: Republish site with latest checkpoint
+- [ ] Test admin login flow on published site after republishing
