@@ -35,19 +35,24 @@ function NewsContent() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  // Filter news items
+  // Filter news items and sort by date descending
   const filteredNews = useMemo(() => {
-    return newsItems.filter((item) => {
-      const matchesSearch = searchQuery === "" ||
-        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.excerpt?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.location?.toLowerCase().includes(searchQuery.toLowerCase());
+    return newsItems
+      .filter((item) => {
+        const matchesSearch = searchQuery === "" ||
+          item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.excerpt?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.location?.toLowerCase().includes(searchQuery.toLowerCase());
 
-      const matchesCategory = selectedCategory === "all" ||
-        item.categoryId === parseInt(selectedCategory);
+        const matchesCategory = selectedCategory === "all" ||
+          item.categoryId === parseInt(selectedCategory);
 
-      return matchesSearch && matchesCategory;
-    });
+        return matchesSearch && matchesCategory;
+      })
+      .sort((a, b) =>
+        new Date(b.publishedAt || b.createdAt || b.date).getTime() -
+        new Date(a.publishedAt || a.createdAt || a.date).getTime()
+      );
   }, [newsItems, searchQuery, selectedCategory]);
 
   // Group news by year

@@ -3246,3 +3246,14 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Test creating articles with FAQ blocks - already working
 - [x] Test frontend display of all block types - added list, video, faq renderers to NewsDetail
 - [x] Run tests to verify no regressions - all 62 tests passing
+
+## News Listing Sorting Fix (Feb 11, 2026)
+- [ ] Audit news listing page (News.tsx) to check current sorting
+- [ ] Audit news router (news.list) to check current sorting logic
+- [ ] Fix news router to sort by date descending (newest first)
+- [ ] Test news listing page displays in correct chronological order
+
+## News Listing Sorting Fix (Feb 11, 2026)
+- [x] Audit news listing page sorting logic
+- [x] Fix News.tsx to sort filtered news by date descending
+- [x] Test news page displays in correct chronological order
