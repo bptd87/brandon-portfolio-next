@@ -29,6 +29,25 @@ const decodeHTMLEntities = (text: string): string => {
   return textarea.value;
 };
 
+// Process HTML content to proxy external images
+const processHTMLImages = (html: string): string => {
+  if (!html) return html;
+
+  const div = document.createElement('div');
+  div.innerHTML = html;
+
+  // Find all img tags and proxy their src
+  const images = div.querySelectorAll('img');
+  images.forEach(img => {
+    const src = img.getAttribute('src');
+    if (src) {
+      img.setAttribute('src', proxyImageUrl(src, 1920));
+    }
+  });
+
+  return div.innerHTML;
+};
+
 export default function ArticleDetail() {
   return (
     <ArticleThemeWrapper>
@@ -628,13 +647,13 @@ function ArticleDetailContent() {
                         return (
                           <figure key={index} className="rounded-xl overflow-hidden">
                             <ProgressiveImage
-                              src={section.url}
+                              src={proxyImageUrl(section.url, 1920)}
                               alt={section.alt || section.caption || ''}
                               loading="lazy"
                               objectFit="contain"
                               className="cursor-pointer hover:opacity-90 transition-opacity"
                               onClick={() => {
-                                setLightboxImages([{ src: section.url, alt: section.alt || section.caption }]);
+                                setLightboxImages([{ src: proxyImageUrl(section.url, 1920), alt: section.alt || section.caption }]);
                                 setLightboxIndex(0);
                                 setLightboxOpen(true);
                               }}
@@ -684,14 +703,14 @@ function ArticleDetailContent() {
                               {section.images?.map((img: any, imgIndex: number) => (
                                 <figure key={imgIndex} className="flex-none w-[80%] md:w-[60%] snap-center rounded-2xl overflow-hidden shadow-xl">
                                   <ProgressiveImage
-                                    src={img.url}
+                                    src={proxyImageUrl(img.url, 1920)}
                                     alt={img.alt || img.caption || ''}
                                     loading="lazy"
                                     aspectRatio="16/9"
                                     objectFit="cover"
                                     className="cursor-pointer hover:opacity-90 transition-opacity h-[400px]"
                                     onClick={() => {
-                                      const galleryImages = section.images.map((i: any) => ({ src: i.url, alt: i.alt || i.caption }));
+                                      const galleryImages = section.images.map((i: any) => ({ src: proxyImageUrl(i.url, 1920), alt: i.alt || i.caption }));
                                       setLightboxImages(galleryImages);
                                       setLightboxIndex(imgIndex);
                                       setLightboxOpen(true);
