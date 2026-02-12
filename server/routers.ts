@@ -170,6 +170,12 @@ export const appRouter = router({
         return { ...project, images, tags };
       }),
     
+    getImages: publicProcedure
+      .input(z.object({ projectId: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getProjectImages(input.projectId);
+      }),
+    
     create: adminProcedure
       .input(z.object({
         title: z.string().min(1).max(255),
@@ -386,6 +392,13 @@ export const appRouter = router({
         return { ...newsItem, tags };
       }),
     
+    getImages: publicProcedure
+      .input(z.object({ newsId: z.number() }))
+      .query(async ({ input }) => {
+        // News items don't have galleries, just return empty array
+        return [];
+      }),
+    
     create: adminProcedure
       .input(z.object({
         title: z.string().min(1).max(255),
@@ -586,6 +599,13 @@ export const appRouter = router({
         
         const tags = await db.getArticleTags(article.id);
         return { ...article, tags };
+      }),
+    
+    getImages: publicProcedure
+      .input(z.object({ articleId: z.number() }))
+      .query(async ({ input }) => {
+        // Articles don't have galleries, just return empty array
+        return [];
       }),
     
     create: adminProcedure

@@ -3456,3 +3456,12 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [ ] Check if categories table has color column in Supabase
 - [ ] Check if categories are being loaded on articles page
 - [ ] Fix category display and filtering
+
+## CRITICAL: Admin Panel Showing 0 Images and Missing Data (Feb 12, 2026 - 7:04 AM)
+- [x] Projects showing "0 images" - FIXED: Added projects.getImages procedure
+- [ ] News showing "0 images" - Need to add news.getImages procedure
+- [ ] Articles showing "0 images" - Need to add articles.getImages procedure
+- [x] Check browser console for API errors - Found missing procedures
+- [x] Fix getProjectImages query - Working correctly
+- [x] Verify image counts are being returned correctly - API returns 8 images for Red Bull
+- [ ] Test admin panel after all fixes
