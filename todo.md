@@ -3336,3 +3336,56 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Test full sync - all data synced successfully
 - [x] Create AIRTABLE_SYNC.md documentation
 - [x] Verify website works with synced data
+
+## Admin Panel Airtable Integration (Feb 12, 2026)
+- [ ] Update projects router to use airtableDb
+- [ ] Update news router to use airtableDb
+- [ ] Update articles router to use airtableDb
+- [ ] Update categories/tags routers to use airtableDb
+- [ ] Change ID validation from z.number() to z.string() in all routers
+- [ ] Update ProjectForm to handle string IDs
+- [ ] Update NewsForm to handle string IDs
+- [ ] Update ArticlesManager to handle string IDs
+- [ ] Test creating new project through admin
+- [ ] Test editing existing project through admin
+- [ ] Test deleting project through admin
+- [ ] Test image uploads through admin
+- [ ] Verify changes in admin appear in Airtable
+- [ ] Verify changes in Airtable appear in admin
+
+## Supabase Migration (Feb 12, 2026)
+- [x] Export all data from MySQL (projects, news, articles, categories, tags, images, users)
+- [x] Create Supabase database schema
+- [x] Migrate all database content to Supabase - 20 categories, 133 tags, 37 projects, 241 images, 45 news, 47 articles, 43 users
+- [x] Create Supabase Storage buckets for images (project-images, news-images, article-images)
+- [x] Install @supabase/supabase-js package
+- [x] Create Supabase client configuration (server/supabase.ts)
+- [x] Replace MySQL connection with Supabase (created server/supabase-db.ts)
+- [x] Update all database queries to use Supabase client
+- [x] Test admin panel with Supabase - 37 projects loading
+- [x] Test public pages with Supabase - projects page working
+- [x] Download all images from Airtable/Cloudinary (340/340 complete)
+- [x] Upload images to Supabase Storage as WebP (340/340 complete)
+- [x] Update database image URLs to point to Supabase Storage (340/340 complete)
+- [x] Verify all images load correctly - tested on homepage and projects page
+- [ ] Save checkpoint after successful migration - READY TO SAVE
+
+## Migrate Remaining Tables to Supabase (Feb 12, 2026)
+- [ ] Create schemas for remaining tables (paint recipes, tutorials, collaborators, team members, comments, scenic directory)
+- [ ] Export data from MySQL for remaining tables
+- [ ] Import remaining tables to Supabase
+- [ ] Verify all data migrated correctly
+
+- [x] Create schemas for remaining tables (tutorials, collaborators, project_collaborators) in Supabase
+- [x] Migrate tutorials data (19 rows) to Supabase
+- [x] Migrate collaborators data (126 rows) to Supabase
+- [x] Migrate project_collaborators relationships (76 rows) to Supabase
+
+## Connect Website to Supabase (Feb 12, 2026)
+- [x] Create Supabase client helper (server/supabase.ts)
+- [x] Create Supabase database functions (server/supabase-db.ts)
+- [x] Update all tRPC routers to use Supabase (changed import from db to supabase-db)
+- [x] Test website with Supabase connection - projects loading successfully
+- [x] Test admin panel with Supabase - 37 projects loaded and editable
+- [x] Migrate all images to Supabase Storage (340/340 complete - 10.4 minutes)
+- [ ] Deploy to production

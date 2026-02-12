@@ -7,7 +7,7 @@ import { TRPCError } from "@trpc/server";
 import { storagePut } from "./storage";
 import { invokeLLM } from "./_core/llm";
 import { generateImage } from "./_core/imageGeneration";
-import * as db from "./db";
+import * as db from "./supabase-db";
 import * as airtableDb from "./airtableDb";
 
 // Admin-only procedure
