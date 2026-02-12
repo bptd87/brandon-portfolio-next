@@ -3270,3 +3270,10 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Check if there's a deployment configuration issue - server not serving index.html for all routes
 - [x] Fix routing or deployment settings to enable /admin access in production - added _redirects file
 - [ ] Test /admin route on production site after fix
+
+## Projects Page Discipline Filtering Fix (Feb 11, 2026)
+- [x] Audit /projects page to understand current discipline filtering
+- [x] Check navigation menu for discipline links
+- [x] Verify all 4 disciplines have proper routes (scenic_design, experiential, rendering, scenic_models)
+- [x] Fix any missing or broken discipline filters - added visible tab navigation
+- [x] Test all discipline pages display correct projects - all 4 disciplines working

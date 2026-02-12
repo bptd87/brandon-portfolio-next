@@ -66,13 +66,57 @@ export default function Projects() {
       <Header />
 
       {/* Page Header */}
-      <section className="pt-32 pb-20 border-b border-border">
+      <section className="pt-32 pb-12 border-b border-border">
         <div className="container">
           <p className="text-xs tracking-widest text-muted-foreground mb-4">PORTFOLIO</p>
           <h1 className="mb-4">{currentDiscipline.title}</h1>
           <p className="text-xl text-muted-foreground max-w-2xl">
             {currentDiscipline.subtitle}
           </p>
+        </div>
+      </section>
+
+      {/* Discipline Navigation Tabs */}
+      <section className="py-6 border-b border-border glass">
+        <div className="container">
+          <div className="flex flex-wrap gap-2">
+            <Link href="/projects?discipline=scenic_design">
+              <Button
+                variant={disciplineParam === 'scenic_design' ? 'default' : 'outline'}
+                size="sm"
+                className="transition-smooth"
+              >
+                SCENIC DESIGN
+              </Button>
+            </Link>
+            <Link href="/projects?discipline=experiential_design">
+              <Button
+                variant={disciplineParam === 'experiential_design' ? 'default' : 'outline'}
+                size="sm"
+                className="transition-smooth"
+              >
+                EXPERIENTIAL
+              </Button>
+            </Link>
+            <Link href="/projects?discipline=rendering">
+              <Button
+                variant={disciplineParam === 'rendering' ? 'default' : 'outline'}
+                size="sm"
+                className="transition-smooth"
+              >
+                RENDERING
+              </Button>
+            </Link>
+            <Link href="/projects?discipline=scenic_models">
+              <Button
+                variant={disciplineParam === 'scenic_models' ? 'default' : 'outline'}
+                size="sm"
+                className="transition-smooth"
+              >
+                SCENIC MODELS
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
