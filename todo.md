@@ -3496,3 +3496,16 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Add published_at date picker to news admin form
 - [x] Allow manual date selection for migrated content
 - [ ] Test saving articles/news with custom publication dates
+
+## CRITICAL: Admin Panel Save Errors & Wrong Dates (Feb 12, 2026)
+- [ ] Admin panel showing 404 on published site (not accessible)
+- [x] Fix admin panel - articles CAN be saved (tested successfully)
+- [x] Fix admin panel - news CAN be saved (tested successfully)
+- [x] News detail pages showing "No content available" - FIXED (added blocks to getNewsById)
+- [x] Check if news items in Supabase have blocks data (confirmed: blocks exist)
+- [x] Fix getNewsById and getNewsBySlug to return blocks field
+- [ ] All articles showing Feb 7, 2026 (migration date) instead of original dates
+- [ ] All news showing Feb 10, 2026 instead of original dates
+- [ ] Bulk update all article published_at dates to original dates
+- [ ] Bulk update all news published_at dates to original dates
+- [ ] Verify dates display correctly on public pages
