@@ -3308,3 +3308,31 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Add articles.uploadImage endpoint using Cloudinary
 - [x] Update ArticleEditor to have file upload UI - added file input with upload
 - [x] Test image uploads in all three admin sections - verified UI working
+
+## Airtable Migration (Feb 12, 2026)
+- [x] Export current database schema and data - reviewed schema.ts
+- [x] Design Airtable base structure (Projects, News, Articles, Categories, Tags, etc.)
+- [x] Create Airtable base and tables with proper field types - all 6 tables created
+- [ ] Set up Airtable API credentials
+- [ ] Create Airtable API integration layer (server/airtable.ts)
+- [ ] Replace projects database calls with Airtable API
+- [ ] Replace news database calls with Airtable API
+- [ ] Replace articles database calls with Airtable API
+- [ ] Replace categories/tags database calls with Airtable API
+- [ ] Update image handling to work with Airtable attachments
+- [ ] Import existing projects data to Airtable
+- [ ] Import existing news data to Airtable
+- [ ] Import existing articles data to Airtable
+- [ ] Test all CRUD operations (create, read, update, delete)
+- [ ] Test web admin functionality with Airtable backend
+- [ ] Test public-facing pages with Airtable data
+- [ ] Document Airtable setup and collaboration workflow
+
+## Airtable Sync Integration (Feb 12, 2026)
+- [x] Create Airtable base with all tables (Categories, Tags, Projects, Project Images, News, Articles)
+- [x] Import all existing data to Airtable (37 projects, 245 images, 45 news, 23 articles)
+- [x] Build Airtable → MySQL sync script
+- [x] Add pnpm sync:airtable command
+- [x] Test full sync - all data synced successfully
+- [x] Create AIRTABLE_SYNC.md documentation
+- [x] Verify website works with synced data
