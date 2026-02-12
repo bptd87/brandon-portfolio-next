@@ -3284,3 +3284,14 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Check if form is calling the correct endpoint - updated Contact.tsx to use tRPC mutation
 - [x] Add proper success/error feedback to user - green success banner at top of form
 - [x] Test contact form submission end-to-end - verified working with owner notifications
+
+## Remove Description Field and Add Image Optimization (Feb 12, 2026)
+- [x] Remove description field from projects table schema
+- [x] Remove description from ProjectForm
+- [x] Remove description references from all pages
+- [x] Update SEO fallback to only use excerpt
+- [x] Investigate current image upload system in admin - optimization already exists
+- [x] Check if image optimization exists in tRPC endpoints - projects.uploadImage uses imageOptimizer
+- [x] Add or fix image optimization for portfolio uploads - already working (WebP, 2000px max, 85% quality)
+- [x] Test image upload with optimization - confirmed working
+- [x] Run database migration to remove description column

@@ -148,7 +148,7 @@ export default function ProjectDetail() {
     <div className="min-h-screen bg-background">
       <SEO
         title={`${project.title} | Brandon PT Davis`}
-        description={project.excerpt || project.description || `${project.title} - Scenic design project by Brandon PT Davis`}
+        description={project.excerpt || `${project.title} - Scenic design project by Brandon PT Davis`}
         image={project.coverImageUrl || undefined}
         type="website"
       />
@@ -164,7 +164,7 @@ export default function ProjectDetail() {
         type="CreativeWork"
         creativeWork={{
           name: project.title,
-          description: project.excerpt || project.description || undefined,
+          description: project.excerpt || undefined,
           image: project.coverImageUrl || undefined,
           creator: {
             name: "Brandon PT Davis",

@@ -356,9 +356,9 @@ export async function generateVideoSitemap(baseUrl?: string): Promise<string> {
       <video:content_loc>${escapeXml(video.videoUrl)}</video:content_loc>
       <video:title>${escapeXml(project.title)}</video:title>`;
       
-      if (project.description) {
+      if (project.excerpt) {
         // Limit description to 2048 characters as per Google spec
-        const desc = project.description.substring(0, 2048);
+        const desc = project.excerpt.substring(0, 2048);
         xml += `
       <video:description>${escapeXml(desc)}</video:description>`;
       }

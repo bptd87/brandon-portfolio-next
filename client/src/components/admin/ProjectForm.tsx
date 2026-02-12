@@ -254,7 +254,6 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
     title: "",
     slug: "",
     excerpt: "",
-    description: "",
     designNotes: "",
     discipline: "scenic_design" as "scenic_design" | "experiential_design" | "rendering" | "scenic_models",
     subcategory: "",
@@ -320,7 +319,6 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
         title: fullProject.title || "",
         slug: fullProject.slug || "",
         excerpt: fullProject.excerpt || "",
-        description: fullProject.description || "",
         designNotes: fullProject.designNotes || "",
         discipline: fullProject.discipline || "scenic_design",
         subcategory: fullProject.subcategory || "",
@@ -592,7 +590,6 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
         title: formData.title,
         slug: formData.slug,
         excerpt: formData.excerpt || undefined,
-        description: formData.description || undefined,
         designNotes: formData.designNotes || undefined,
         discipline: formData.discipline,
         subcategory: formData.subcategory || undefined,
@@ -929,20 +926,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
             {/* ===== CONTENT TAB ===== */}
             <TabsContent value="content">
               <div className="max-w-4xl space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Description</CardTitle>
-                    <CardDescription>Main project description shown on the detail page</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Textarea
-                      value={formData.description}
-                      onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                      rows={8}
-                      placeholder="Detailed project description..."
-                    />
-                  </CardContent>
-                </Card>
+
 
                 <Card>
                   <CardHeader>

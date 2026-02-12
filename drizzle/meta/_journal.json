@@ -113,6 +113,13 @@
       "when": 1770853786612,
       "tag": "0015_motionless_firestar",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "5",
+      "when": 1770885222649,
+      "tag": "0016_empty_proudstar",
+      "breakpoints": true
     }
   ]
 }

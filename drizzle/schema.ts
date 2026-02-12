@@ -59,7 +59,6 @@ export const projects = mysqlTable("projects", {
   title: varchar("title", { length: 255 }).notNull(),
   slug: varchar("slug", { length: 255 }).notNull().unique(),
   excerpt: text("excerpt"),
-  description: text("description"),
   designNotes: text("designNotes"),
   discipline: mysqlEnum("discipline", ["scenic_design", "experiential_design", "rendering", "scenic_models"]).default("scenic_design").notNull(),
   subcategory: varchar("subcategory", { length: 100 }),

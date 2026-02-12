@@ -85,9 +85,9 @@ export default function ScenicModelsPortfolio() {
                         </p>
                       )}
 
-                      {project.description && (
+                      {project.excerpt && (
                         <p className="text-sm text-muted-foreground line-clamp-2">
-                          {project.description}
+                          {project.excerpt}
                         </p>
                       )}
                     </div>

@@ -637,8 +637,7 @@ export async function searchContent(query: string) {
         eq(projects.status, 'published'),
         or(
           like(projects.title, searchPattern),
-          like(projects.excerpt, searchPattern),
-          like(projects.description, searchPattern)
+          like(projects.excerpt, searchPattern)
         )
       )
     ).limit(10),
