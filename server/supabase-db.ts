@@ -266,6 +266,34 @@ export async function getAllProjects(filters?: {
   const { data } = await query;
   if (!data) return [];
 
+  // Fetch images for all projects
+  const projectIds = data.map(p => p.id);
+  const { data: allImages } = await supabase
+    .from('project_images')
+    .select('*')
+    .in('project_id', projectIds)
+    .order('sort_order', { ascending: true });
+
+  // Group images by project_id
+  const imagesByProject = new Map<number, any[]>();
+  if (allImages) {
+    for (const img of allImages) {
+      if (!imagesByProject.has(img.project_id)) {
+        imagesByProject.set(img.project_id, []);
+      }
+      imagesByProject.get(img.project_id)!.push({
+        id: img.id,
+        projectId: img.project_id,
+        imageUrl: img.image_url,
+        videoUrl: img.video_url,
+        caption: img.caption,
+        altText: img.alt_text,
+        sortOrder: img.sort_order,
+        createdAt: new Date(img.created_at),
+      });
+    }
+  }
+
   return data.map(proj => ({
     id: proj.id,
     title: proj.title,
@@ -284,6 +312,7 @@ export async function getAllProjects(filters?: {
     seoTitle: proj.seo_title,
     seoDescription: proj.seo_description,
     seoKeywords: proj.seo_keywords,
+    images: imagesByProject.get(proj.id) || [],
     createdAt: new Date(proj.created_at),
     updatedAt: new Date(proj.updated_at),
   }));

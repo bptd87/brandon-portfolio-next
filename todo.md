@@ -3465,3 +3465,19 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Fix getProjectImages query - Working correctly
 - [x] Verify image counts are being returned correctly - API returns 8 images for Red Bull
 - [ ] Test admin panel after all fixes
+
+## CRITICAL: Fix Admin Panel Frontend (Feb 12, 2026 - 7:12 AM)
+- [ ] Find admin panel component files
+- [ ] Fix tRPC query calls - change from projects.getAll to projects.list
+- [ ] Fix image count display for projects
+- [ ] Fix image count display for news
+- [ ] Fix image count display for articles
+- [ ] Test create/edit/delete operations in admin panel
+- [ ] Verify all admin panel tabs work (Projects, News, Articles, Categories, Tags)
+- [ ] Save checkpoint with fully working admin panel
+
+## Fix Admin Panel Validation Errors (Feb 12, 2026 - 7:14 AM)
+- [ ] Fix project status validation error - "Invalid option: expected one of draft|published|archived"
+- [ ] Check if frontend is sending correct status value format
+- [ ] Test project edit/save functionality
+- [ ] Verify all form fields validate correctly
