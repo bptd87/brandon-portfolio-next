@@ -3509,3 +3509,36 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [ ] Bulk update all article published_at dates to original dates
 - [ ] Bulk update all news published_at dates to original dates
 - [ ] Verify dates display correctly on public pages
+
+## Bulk Update Publication Dates (Feb 12, 2026)
+- [ ] Retrieve original publication dates from Airtable for articles
+- [ ] Retrieve original publication dates from Airtable for news
+- [ ] Create bulk update script to set article publication dates in Supabase
+- [ ] Create bulk update script to set news publication dates in Supabase
+- [ ] Run script and verify dates are updated correctly
+- [ ] Test articles page shows correct dates
+- [ ] Test news page shows correct dates
+
+## Fix Home Page API Error (Feb 12, 2026)
+- [ ] Identify which tRPC query is failing on Home page (TRPCClientError: Failed to fetch)
+- [ ] Check browser console and network logs for failing endpoint
+- [ ] Debug and fix the failing API query
+- [ ] Test Home page loads without errors
+
+## Fix Admin Panel 404 on Published Site (Feb 12, 2026)
+- [x] Investigate admin panel routing configuration
+- [x] Check if admin route is properly configured in App.tsx
+- [x] Check if there are any deployment-specific routing issues
+- [x] Confirmed: SPA fallback routing is correctly configured in server/_core/vite.ts
+- [x] Root cause: Published site is using an older build without proper routing
+- [x] Solution: Republish site with latest checkpoint to deploy updated server config
+- [ ] Test admin panel access on published site after republishing
+
+## Fix OAuth Callback Double-Encoding (Feb 12, 2026)
+- [ ] OAuth state is double-encoding the callback URL
+- [ ] After login, redirects to /api/oauth/callback instead of /admin
+- [ ] Investigate getLoginUrl function in const.ts
+- [ ] Investigate OAuth callback handler in server/_core/oauth.ts
+- [ ] Fix state encoding to use returnPath correctly
+- [ ] Test admin login flow on dev environment
+- [ ] Test admin login flow on published site
