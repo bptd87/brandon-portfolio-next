@@ -98,7 +98,7 @@ router.get('/img', async (req: Request, res: Response) => {
     }
     
     // Only allow resizing from our own CDN domains for security
-    const allowedDomains = ['manuscdn.com', 'cloudfront.net'];
+    const allowedDomains = ['manuscdn.com', 'cloudfront.net', 's3.amazonaws.com', 's3.us-west-1.amazonaws.com', 'manus-user-assets'];
     const urlObj = new URL(url);
     if (!allowedDomains.some(domain => urlObj.hostname.includes(domain))) {
       return res.status(403).send('URL domain not allowed');

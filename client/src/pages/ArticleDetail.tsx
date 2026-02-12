@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { trpc } from "@/lib/trpc";
+import { proxyImageUrl } from "@/lib/imageProxy";
 import { Calendar, Clock, ArrowLeft, Share2, Twitter, Linkedin, Mail, Link as LinkIcon, Heart, Eye, User } from "lucide-react";
 import { Link, useParams } from "wouter";
 import { useEffect, useRef, useState } from "react";
@@ -40,17 +41,17 @@ export default function ArticleDetail() {
 // Special wrapper for articles that enables theme switching
 function ArticleThemeWrapper({ children }: { children: React.ReactNode }) {
   const { setForceTheme } = useTheme();
-  
+
   useEffect(() => {
     // Allow theme switching on articles (remove force)
     setForceTheme(null);
-    
+
     // When leaving article page, force back to dark mode
     return () => {
       setForceTheme('dark');
     };
   }, [setForceTheme]);
-  
+
   return <>{children}</>;
 }
 
@@ -62,7 +63,7 @@ function ArticleDetailContent() {
     { enabled: !!article?.categoryId }
   );
   const { data: relatedArticles } = trpc.articles.list.useQuery({});
-  
+
   const contentRef = useRef<HTMLDivElement>(null);
   const [headings, setHeadings] = useState<Array<{ id: string; text: string; level: number }>>([]);
   const [activeHeading, setActiveHeading] = useState<string>("");
@@ -71,33 +72,33 @@ function ArticleDetailContent() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxImages, setLightboxImages] = useState<Array<{ src: string; alt?: string }>>([]);
-  
+
   const incrementViews = trpc.articles.incrementViews.useMutation();
   const toggleLikeMutation = trpc.articles.toggleLike.useMutation();
-  
+
   // Track view on page load
   useEffect(() => {
     if (article?.id) {
       incrementViews.mutate({ id: article.id });
     }
   }, [article?.id]);
-  
+
   const handleLikeToggle = async () => {
     if (!article?.id) return;
-    
+
     const newLikedState = !hasLiked;
     setHasLiked(newLikedState);
-    
-    await toggleLikeMutation.mutateAsync({ 
-      id: article.id, 
-      liked: newLikedState 
+
+    await toggleLikeMutation.mutateAsync({
+      id: article.id,
+      liked: newLikedState
     });
   };
 
   // Extract headings for TOC
   useEffect(() => {
     if (!contentRef.current) return;
-    
+
     const h2Elements = contentRef.current.querySelectorAll('h2');
     const extractedHeadings = Array.from(h2Elements).map((heading, index) => {
       // Use existing ID if present, otherwise create one
@@ -112,7 +113,7 @@ function ArticleDetailContent() {
         level: 2
       };
     });
-    
+
     setHeadings(extractedHeadings);
   }, [article]);
 
@@ -120,14 +121,14 @@ function ArticleDetailContent() {
   useEffect(() => {
     // Detect Safari
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-    
+
     // Skip scroll tracking on Safari to prevent ResizeObserver errors
     if (isSafari) {
       return;
     }
-    
+
     let ticking = false;
-    
+
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
@@ -147,11 +148,11 @@ function ArticleDetailContent() {
             const nextRect = next.getBoundingClientRect();
             return rect.top <= 200 && nextRect.top > 200;
           });
-          
+
           if (current) {
             setActiveHeading(current.id);
           }
-          
+
           ticking = false;
         });
         ticking = true;
@@ -211,8 +212,8 @@ function ArticleDetailContent() {
   // Parse content sections
   let contentSections: any[] = [];
   try {
-    contentSections = typeof article.content === 'string' 
-      ? JSON.parse(article.content) 
+    contentSections = typeof article.content === 'string'
+      ? JSON.parse(article.content)
       : article.content || [];
   } catch (e) {
     contentSections = [{ type: 'html', content: article.content }];
@@ -223,65 +224,65 @@ function ArticleDetailContent() {
   let i = 0;
   while (i < contentSections.length) {
     const section = contentSections[i];
-    
+
     // Check if this is an FAQ heading
-    if (section.type === 'heading' && section.level === 2 && 
-        (section.text || '').toLowerCase().includes('frequently asked questions')) {
+    if (section.type === 'heading' && section.level === 2 &&
+      (section.text || '').toLowerCase().includes('frequently asked questions')) {
       // Collect all FAQ items (H3 questions followed by paragraphs)
       const faqItems: Array<{ question: string; answer: string }> = [];
       i++; // Move past FAQ heading
-      
+
       while (i < contentSections.length) {
         const current = contentSections[i];
-        
+
         // FAQ question (H3 ending with ?)
         if (current.type === 'heading' && current.level === 3) {
           const question = (current.text || '').replace(/\+$/, ''); // Remove trailing +
           i++;
-          
+
           // Collect answer text/paragraphs until next heading
           const answerParts: string[] = [];
-          while (i < contentSections.length && 
-                 !(contentSections[i].type === 'heading')) {
+          while (i < contentSections.length &&
+            !(contentSections[i].type === 'heading')) {
             if (contentSections[i].type === 'paragraph' || contentSections[i].type === 'text') {
               answerParts.push(contentSections[i].content || contentSections[i].text || '');
             }
             i++;
           }
-          
+
           faqItems.push({ question, answer: answerParts.join('\n\n') });
-          
+
           // If we hit another H2, break out of FAQ section
-          if (i < contentSections.length && 
-              contentSections[i].type === 'heading' && 
-              contentSections[i].level === 2) {
+          if (i < contentSections.length &&
+            contentSections[i].type === 'heading' &&
+            contentSections[i].level === 2) {
             break;
           }
         } else {
           break;
         }
       }
-      
+
       if (faqItems.length > 0) {
         processedSections.push({ type: 'faq', items: faqItems });
       }
       continue; // Don't increment i, already moved past FAQ
     }
-    
+
     // Check for plain-text FAQ format in HTML content (Q: and A: pattern)
     if (section.type === 'html' && section.content) {
       const htmlContent = section.content;
-      
-      
+
+
       // Extract text content from HTML to find Q&A pairs
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = htmlContent;
       const textContent = tempDiv.textContent || '';
-      
+
       // Look for Q: and A: pattern in the text content
       const lines = textContent.split('\n').map(l => l.trim()).filter(l => l.length > 0);
       const faqItems: Array<{ question: string; answer: string }> = [];
-      
+
 
       let qCount = 0;
       for (let i = 0; i < lines.length; i++) {
@@ -297,12 +298,12 @@ function ArticleDetailContent() {
           }
         }
       }
-      
-      
+
+
       // If we found FAQ items (at least 3 Q&A pairs), convert this section to FAQ accordion
       if (faqItems.length >= 3) {
 
-        
+
         // Check if there's an FAQ heading in this section
         const faqHeadingMatch = htmlContent.match(/<h2[^>]*>.*?FAQ.*?<\/h2>/i);
         if (faqHeadingMatch) {
@@ -312,14 +313,14 @@ function ArticleDetailContent() {
             processedSections.push({ type: 'html', content: beforeFaq });
           }
         }
-        
+
         // FAQ accordion
         processedSections.push({ type: 'faq', items: faqItems });
-        
+
         continue;
       }
     }
-    
+
     processedSections.push(section);
     i++;
   }
@@ -387,9 +388,9 @@ function ArticleDetailContent() {
 
       {/* Reading Progress Bar */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-muted/30 z-50">
-        <div 
+        <div
           className="h-full transition-all duration-150"
-          style={{ 
+          style={{
             width: `${readProgress}%`,
             backgroundColor: category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))'
           }}
@@ -413,8 +414,8 @@ function ArticleDetailContent() {
               <header className="mb-12">
                 <div className="flex items-center gap-3 mb-6 text-sm uppercase tracking-wider">
                   {category && (
-                    <Badge 
-                      variant="secondary" 
+                    <Badge
+                      variant="secondary"
                       className="font-bold"
                       style={{
                         backgroundColor: `${getCategoryColor(category.name).hex}20`,
@@ -429,10 +430,10 @@ function ArticleDetailContent() {
                   <div className="flex items-center gap-2 text-muted-foreground">
                     <Calendar className="h-3 w-3" />
                     <time dateTime={new Date(article.publishedAt || article.createdAt).toISOString()}>
-                      {new Date(article.publishedAt || article.createdAt).toLocaleDateString('en-US', { 
-                        month: 'long', 
-                        day: 'numeric', 
-                        year: 'numeric' 
+                      {new Date(article.publishedAt || article.createdAt).toLocaleDateString('en-US', {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric'
                       })}
                     </time>
                   </div>
@@ -442,7 +443,7 @@ function ArticleDetailContent() {
                     <span>{readTime} min read</span>
                   </div>
                   <span className="text-muted-foreground">|</span>
-                  <button 
+                  <button
                     onClick={handleLikeToggle}
                     className="flex items-center gap-2 transition-colors hover:scale-110 transform"
                     style={hasLiked && category ? {
@@ -475,7 +476,7 @@ function ArticleDetailContent() {
                 {article.coverImageUrl && (
                   <div className="mt-12 -mx-4 md:mx-0 rounded-2xl overflow-hidden shadow-2xl">
                     <ProgressiveImage
-                      src={article.coverImageUrl}
+                      src={proxyImageUrl(article.coverImageUrl, 1920)}
                       alt={article.title}
                       loading="eager"
                       aspectRatio="16/9"
@@ -487,32 +488,32 @@ function ArticleDetailContent() {
                 {/* Share Buttons */}
                 <div className="flex items-center gap-3 mt-8">
                   <span className="text-sm text-muted-foreground uppercase tracking-wider">Share:</span>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     size="sm"
                     onClick={() => handleShare('twitter')}
                     className="gap-2"
                   >
                     <Twitter className="h-4 w-4" />
                   </Button>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     size="sm"
                     onClick={() => handleShare('linkedin')}
                     className="gap-2"
                   >
                     <Linkedin className="h-4 w-4" />
                   </Button>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     size="sm"
                     onClick={() => handleShare('email')}
                     className="gap-2"
                   >
                     <Mail className="h-4 w-4" />
                   </Button>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     size="sm"
                     onClick={() => handleShare('copy')}
                     className="gap-2"
@@ -538,8 +539,8 @@ function ArticleDetailContent() {
                     font-size: 1.125rem;
                   }
                 `}</style>
-                
-                <div 
+
+                <div
                   ref={contentRef}
                   className="article-content article-content-${article.id} article-html-content max-w-[65ch] mx-auto
                   prose prose-lg prose-invert
@@ -561,212 +562,212 @@ function ArticleDetailContent() {
                   [&_iframe]:w-full [&_iframe]:max-w-[65ch] [&_iframe]:mx-auto [&_iframe]:my-12 [&_iframe]:rounded-2xl [&_iframe]:shadow-xl [&_iframe]:aspect-[16/9] [&_iframe]:h-auto
                   [&_video]:w-full [&_video]:max-w-[65ch] [&_video]:mx-auto [&_video]:my-12 [&_video]:rounded-2xl [&_video]:shadow-xl [&_video]:aspect-[16/9]
                   [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased]"
-              >
-                {Array.isArray(processedSections) && processedSections.map((section: any, index: number) => {
-                  // Track if this is the first paragraph (for drop cap)
-                  const isFirstParagraph = section.type === 'paragraph' && 
-                    !processedSections.slice(0, index).some((s: any) => s.type === 'paragraph');
-                  
-                  switch (section.type) {
-                    case 'update_note':
-                      return (
-                        <div key={index} className="mb-12 p-6 rounded-xl border-2 border-primary/30 bg-primary/5 backdrop-blur-sm">
-                          <div className="flex items-start gap-3">
-                            <div className="flex-shrink-0 w-2 h-2 rounded-full bg-primary mt-2 animate-pulse" />
-                            <p 
-                              className="text-sm leading-relaxed text-foreground/80 [&_strong]:font-bold [&_strong]:text-primary [&_strong]:text-base"
-                              dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(section.text || section.content || '') }}
-                            />
+                >
+                  {Array.isArray(processedSections) && processedSections.map((section: any, index: number) => {
+                    // Track if this is the first paragraph (for drop cap)
+                    const isFirstParagraph = section.type === 'paragraph' &&
+                      !processedSections.slice(0, index).some((s: any) => s.type === 'paragraph');
+
+                    switch (section.type) {
+                      case 'update_note':
+                        return (
+                          <div key={index} className="mb-12 p-6 rounded-xl border-2 border-primary/30 bg-primary/5 backdrop-blur-sm">
+                            <div className="flex items-start gap-3">
+                              <div className="flex-shrink-0 w-2 h-2 rounded-full bg-primary mt-2 animate-pulse" />
+                              <p
+                                className="text-sm leading-relaxed text-foreground/80 [&_strong]:font-bold [&_strong]:text-primary [&_strong]:text-base"
+                                dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(section.text || section.content || '') }}
+                              />
+                            </div>
                           </div>
-                        </div>
-                      );
-                    
-                    case 'heading':
-                      const categoryColorObj = category ? getCategoryColor(category.name) : undefined;
-                      const level = section.level || 2;
-                      const headingClassName = level === 2 ? "mt-12 mb-8" : level === 3 ? "mt-10 mb-6" : "mt-8 mb-4";
-                      const headingStyle = categoryColorObj ? { color: `${categoryColorObj.hex} !important` } : undefined;
-                      const headingText = decodeHTMLEntities(section.text || section.content || '');
-                      
-                      if (level === 2) {
-                        return <h2 key={index} className={headingClassName} style={headingStyle}>{headingText}</h2>;
-                      } else if (level === 3) {
-                        return <h3 key={index} className={headingClassName} style={headingStyle}>{headingText}</h3>;
-                      } else if (level === 4) {
-                        return <h4 key={index} className={headingClassName} style={headingStyle}>{headingText}</h4>;
-                      } else {
-                        return <h2 key={index} className={headingClassName} style={headingStyle}>{headingText}</h2>;
-                      }
-                    
-                    case 'paragraph':
-                      const categoryColor = category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))';
-                      return (
-                        <p 
-                          key={index} 
-                          className={`mb-6 leading-relaxed [&_strong]:font-bold [&_strong]:text-[1.125rem] ${isFirstParagraph ? 'first-paragraph-drop-cap' : ''}`}
-                          style={{
-                            ['--strong-color' as any]: categoryColor
-                          }}
-                          dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(section.text || section.content || '') }}
-                        />
-                      );
-                    
-                    case 'quote':
-                      return (
-                        <blockquote key={index} className="my-8">
-                          "{decodeHTMLEntities(section.text || section.content || '')}"
-                          {section.author && (
-                            <footer className="text-base text-muted-foreground mt-4 not-italic font-sans">
-                              — {decodeHTMLEntities(section.author)}
-                            </footer>
-                          )}
-                        </blockquote>
-                      );
-                    
-                    case 'image':
-                      return (
-                        <figure key={index} className="rounded-xl overflow-hidden">
-                           <ProgressiveImage
-                            src={section.url}
-                            alt={section.alt || section.caption || ''}
-                            loading="lazy"
-                            objectFit="contain"
-                            className="cursor-pointer hover:opacity-90 transition-opacity"
-                            onClick={() => {
-                              setLightboxImages([{ src: section.url, alt: section.alt || section.caption }]);
-                              setLightboxIndex(0);
-                              setLightboxOpen(true);
+                        );
+
+                      case 'heading':
+                        const categoryColorObj = category ? getCategoryColor(category.name) : undefined;
+                        const level = section.level || 2;
+                        const headingClassName = level === 2 ? "mt-12 mb-8" : level === 3 ? "mt-10 mb-6" : "mt-8 mb-4";
+                        const headingStyle = categoryColorObj ? { color: `${categoryColorObj.hex} !important` } : undefined;
+                        const headingText = decodeHTMLEntities(section.text || section.content || '');
+
+                        if (level === 2) {
+                          return <h2 key={index} className={headingClassName} style={headingStyle}>{headingText}</h2>;
+                        } else if (level === 3) {
+                          return <h3 key={index} className={headingClassName} style={headingStyle}>{headingText}</h3>;
+                        } else if (level === 4) {
+                          return <h4 key={index} className={headingClassName} style={headingStyle}>{headingText}</h4>;
+                        } else {
+                          return <h2 key={index} className={headingClassName} style={headingStyle}>{headingText}</h2>;
+                        }
+
+                      case 'paragraph':
+                        const categoryColor = category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))';
+                        return (
+                          <p
+                            key={index}
+                            className={`mb-6 leading-relaxed [&_strong]:font-bold [&_strong]:text-[1.125rem] ${isFirstParagraph ? 'first-paragraph-drop-cap' : ''}`}
+                            style={{
+                              ['--strong-color' as any]: categoryColor
                             }}
+                            dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(section.text || section.content || '') }}
                           />
-                          {section.caption && (
-                            <figcaption>
-                              {decodeHTMLEntities(section.caption)}
-                            </figcaption>
-                          )}
-                        </figure>
-                      );
-                    
-                    case 'video':
-                      // Extract YouTube video ID from URL
-                      const getYouTubeId = (url: string) => {
-                        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-                        const match = url.match(regExp);
-                        return (match && match[2].length === 11) ? match[2] : null;
-                      };
-                      
-                      const videoId = getYouTubeId(section.url || '');
-                      
-                      return (
-                        <figure key={index} className="my-12">
-                          <div className="relative w-full rounded-xl overflow-hidden shadow-2xl" style={{ paddingBottom: '56.25%' }}>
-                            <iframe
-                              className="absolute top-0 left-0 w-full h-full"
-                              src={`https://www.youtube.com/embed/${videoId}`}
-                              title={section.caption || 'Video'}
-                              frameBorder="0"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
+                        );
+
+                      case 'quote':
+                        return (
+                          <blockquote key={index} className="my-8">
+                            "{decodeHTMLEntities(section.text || section.content || '')}"
+                            {section.author && (
+                              <footer className="text-base text-muted-foreground mt-4 not-italic font-sans">
+                                — {decodeHTMLEntities(section.author)}
+                              </footer>
+                            )}
+                          </blockquote>
+                        );
+
+                      case 'image':
+                        return (
+                          <figure key={index} className="rounded-xl overflow-hidden">
+                            <ProgressiveImage
+                              src={section.url}
+                              alt={section.alt || section.caption || ''}
+                              loading="lazy"
+                              objectFit="contain"
+                              className="cursor-pointer hover:opacity-90 transition-opacity"
+                              onClick={() => {
+                                setLightboxImages([{ src: section.url, alt: section.alt || section.caption }]);
+                                setLightboxIndex(0);
+                                setLightboxOpen(true);
+                              }}
                             />
+                            {section.caption && (
+                              <figcaption>
+                                {decodeHTMLEntities(section.caption)}
+                              </figcaption>
+                            )}
+                          </figure>
+                        );
+
+                      case 'video':
+                        // Extract YouTube video ID from URL
+                        const getYouTubeId = (url: string) => {
+                          const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+                          const match = url.match(regExp);
+                          return (match && match[2].length === 11) ? match[2] : null;
+                        };
+
+                        const videoId = getYouTubeId(section.url || '');
+
+                        return (
+                          <figure key={index} className="my-12">
+                            <div className="relative w-full rounded-xl overflow-hidden shadow-2xl" style={{ paddingBottom: '56.25%' }}>
+                              <iframe
+                                className="absolute top-0 left-0 w-full h-full"
+                                src={`https://www.youtube.com/embed/${videoId}`}
+                                title={section.caption || 'Video'}
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                              />
+                            </div>
+                            {section.caption && (
+                              <figcaption className="text-sm text-muted-foreground mt-4 text-center">
+                                {decodeHTMLEntities(section.caption)}
+                              </figcaption>
+                            )}
+                          </figure>
+                        );
+
+                      case 'gallery':
+                        return (
+                          <div key={index} className="my-12 -mx-4 md:mx-0">
+                            <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-primary scrollbar-track-muted">
+                              {section.images?.map((img: any, imgIndex: number) => (
+                                <figure key={imgIndex} className="flex-none w-[80%] md:w-[60%] snap-center rounded-2xl overflow-hidden shadow-xl">
+                                  <ProgressiveImage
+                                    src={img.url}
+                                    alt={img.alt || img.caption || ''}
+                                    loading="lazy"
+                                    aspectRatio="16/9"
+                                    objectFit="cover"
+                                    className="cursor-pointer hover:opacity-90 transition-opacity h-[400px]"
+                                    onClick={() => {
+                                      const galleryImages = section.images.map((i: any) => ({ src: i.url, alt: i.alt || i.caption }));
+                                      setLightboxImages(galleryImages);
+                                      setLightboxIndex(imgIndex);
+                                      setLightboxOpen(true);
+                                    }}
+                                  />
+                                  {img.caption && (
+                                    <figcaption className="text-sm text-muted-foreground mt-4 text-center">
+                                      {decodeHTMLEntities(img.caption)}
+                                    </figcaption>
+                                  )}
+                                </figure>
+                              ))}
+                            </div>
                           </div>
-                          {section.caption && (
-                            <figcaption className="text-sm text-muted-foreground mt-4 text-center">
-                              {decodeHTMLEntities(section.caption)}
-                            </figcaption>
-                          )}
-                        </figure>
-                      );
-                    
-                    case 'gallery':
-                      return (
-                        <div key={index} className="my-12 -mx-4 md:mx-0">
-                          <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-primary scrollbar-track-muted">
-                            {section.images?.map((img: any, imgIndex: number) => (
-                              <figure key={imgIndex} className="flex-none w-[80%] md:w-[60%] snap-center rounded-2xl overflow-hidden shadow-xl">
-                                <ProgressiveImage
-                                  src={img.url}
-                                  alt={img.alt || img.caption || ''}
-                                  loading="lazy"
-                                  aspectRatio="16/9"
-                                  objectFit="cover"
-                                  className="cursor-pointer hover:opacity-90 transition-opacity h-[400px]"
-                                  onClick={() => {
-                                    const galleryImages = section.images.map((i: any) => ({ src: i.url, alt: i.alt || i.caption }));
-                                    setLightboxImages(galleryImages);
-                                    setLightboxIndex(imgIndex);
-                                    setLightboxOpen(true);
-                                  }}
-                                />
-                                {img.caption && (
-                                  <figcaption className="text-sm text-muted-foreground mt-4 text-center">
-                                    {decodeHTMLEntities(img.caption)}
-                                  </figcaption>
-                                )}
-                              </figure>
+                        );
+
+                      case 'list':
+                        const ListTag = section.listType === 'numbered' ? 'ol' : 'ul';
+                        const listCategoryColor = category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))';
+                        return (
+                          <ListTag
+                            key={index}
+                            className={`my-6 space-y-3 ml-6 ${section.listType === 'numbered' ? 'list-decimal' : 'list-disc'} [&_strong]:font-bold [&_strong]:text-[1.125rem]`}
+                            style={{
+                              ['--strong-color' as any]: listCategoryColor
+                            }}
+                          >
+                            {section.items?.map((item: string, itemIndex: number) => (
+                              <li key={itemIndex} className="leading-relaxed" dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(item) }} />
                             ))}
+                          </ListTag>
+                        );
+
+                      case 'text':
+                        return (
+                          <div
+                            key={index}
+                            className="article-html-content [&_p]:mb-8 [&_p]:leading-[2] [&_p]:text-justify"
+                            dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(section.content) }}
+                          />
+                        );
+
+                      case 'html':
+                        return (
+                          <div
+                            key={index}
+                            className="[&_p]:mb-8 [&_p]:leading-[2] [&_p]:text-justify"
+                            dangerouslySetInnerHTML={{ __html: section.content }}
+                          />
+                        );
+
+                      case 'faq':
+                        return (
+                          <div key={index} className="my-16">
+                            <h2 className="text-xl font-['Playfair_Display'] italic mb-8">Frequently Asked Questions</h2>
+                            <Accordion type="single" collapsible className="space-y-4">
+                              {section.items?.map((item: any, faqIndex: number) => (
+                                <AccordionItem key={faqIndex} value={`faq-${faqIndex}`} className="border border-border rounded-lg px-6">
+                                  <AccordionTrigger className="text-lg font-semibold hover:no-underline py-6">
+                                    {decodeHTMLEntities(item.question)}
+                                  </AccordionTrigger>
+                                  <AccordionContent className="text-muted-foreground pb-6">
+                                    <div dangerouslySetInnerHTML={{ __html: item.answer }} />
+                                  </AccordionContent>
+                                </AccordionItem>
+                              ))}
+                            </Accordion>
                           </div>
-                        </div>
-                      );
-                    
-                    case 'list':
-                      const ListTag = section.listType === 'numbered' ? 'ol' : 'ul';
-                      const listCategoryColor = category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))';
-                      return (
-                        <ListTag 
-                          key={index} 
-                          className={`my-6 space-y-3 ml-6 ${section.listType === 'numbered' ? 'list-decimal' : 'list-disc'} [&_strong]:font-bold [&_strong]:text-[1.125rem]`}
-                          style={{
-                            ['--strong-color' as any]: listCategoryColor
-                          }}
-                        >
-                          {section.items?.map((item: string, itemIndex: number) => (
-                            <li key={itemIndex} className="leading-relaxed" dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(item) }} />
-                          ))}
-                        </ListTag>
-                      );
-                    
-                    case 'text':
-                      return (
-                        <div 
-                          key={index}
-                          className="article-html-content [&_p]:mb-8 [&_p]:leading-[2] [&_p]:text-justify"
-                          dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(section.content) }}
-                        />
-                      );
-                    
-                    case 'html':
-                      return (
-                        <div 
-                          key={index}
-                          className="[&_p]:mb-8 [&_p]:leading-[2] [&_p]:text-justify"
-                          dangerouslySetInnerHTML={{ __html: section.content }}
-                        />
-                      );
-                    
-                    case 'faq':
-                      return (
-                        <div key={index} className="my-16">
-                          <h2 className="text-xl font-['Playfair_Display'] italic mb-8">Frequently Asked Questions</h2>
-                          <Accordion type="single" collapsible className="space-y-4">
-                            {section.items?.map((item: any, faqIndex: number) => (
-                              <AccordionItem key={faqIndex} value={`faq-${faqIndex}`} className="border border-border rounded-lg px-6">
-                                <AccordionTrigger className="text-lg font-semibold hover:no-underline py-6">
-                                  {decodeHTMLEntities(item.question)}
-                                </AccordionTrigger>
-                                <AccordionContent className="text-muted-foreground pb-6">
-                                  <div dangerouslySetInnerHTML={{ __html: item.answer }} />
-                                </AccordionContent>
-                              </AccordionItem>
-                            ))}
-                          </Accordion>
-                        </div>
-                      );
-                    
-                    default:
-                      return null;
-                  }
-                 })}
+                        );
+
+                      default:
+                        return null;
+                    }
+                  })}
+                </div>
               </div>
-            </div>
 
               {/* Tags Section */}
               {article.tags && article.tags.length > 0 && (
@@ -775,8 +776,8 @@ function ArticleDetailContent() {
                   <div className="flex flex-wrap gap-2">
                     {article.tags.map((tag: any) => (
                       <Link key={tag.id} href={`/tags/${tag.slug}`}>
-                        <Badge 
-                          variant="outline" 
+                        <Badge
+                          variant="outline"
                           className="text-sm font-normal px-4 py-2 rounded-full transition-all hover:scale-105 cursor-pointer"
                           style={category ? {
                             borderColor: `${getCategoryColor(category.name).hex}40`,
@@ -806,13 +807,13 @@ function ArticleDetailContent() {
                     <h3 className="text-2xl font-['Playfair_Display'] italic mb-2">Brandon PT Davis</h3>
                     <p className="text-sm text-muted-foreground mb-4 uppercase tracking-wider">Scenic & Experiential Designer</p>
                     <p className="text-foreground/80 leading-relaxed mb-6">
-                      Brandon PT Davis is a Scenic and Experiential Designer based in Los Angeles. 
+                      Brandon PT Davis is a Scenic and Experiential Designer based in Los Angeles.
                       His work explores the intersection of physical space, digital technology, and narrative storytelling.
                     </p>
-                    
+
                     {/* Engagement Metrics */}
                     <div className="flex items-center gap-6 text-sm">
-                      <button 
+                      <button
                         onClick={handleLikeToggle}
                         className="flex items-center gap-2 transition-colors hover:scale-110 transform"
                         style={hasLiked && category ? {
@@ -837,63 +838,63 @@ function ArticleDetailContent() {
                   <h2 className="text-xl font-['Playfair_Display'] italic mb-8">Continue Reading</h2>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {related.map((relatedArticle) => {
-                      const categoryColor = relatedArticle.category?.name 
+                      const categoryColor = relatedArticle.category?.name
                         ? getCategoryColor(relatedArticle.category.name).hex
                         : '#FF6B35';
                       return (
-                      <Link key={relatedArticle.id} href={`/articles/${relatedArticle.slug}`}>
-                        <div className="group bg-card rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl cursor-pointer border border-border">
-                          {/* Cover Image */}
-                          {relatedArticle.coverImageUrl && (
-                            <div className="aspect-[16/9] overflow-hidden">
-                              <img 
-                                src={relatedArticle.coverImageUrl}
-                                alt={decodeHTMLEntities(relatedArticle.title)}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                loading="lazy"
-                              />
-                            </div>
-                          )}
-                          
-                          <div className="p-6">
-                            {/* Category Badge */}
-                            {relatedArticle.category && (
-                              <Badge className={`${getCategoryColor(relatedArticle.category.name).badge} text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider border border-white/20`}>
-                                {relatedArticle.category.name}
-                              </Badge>
+                        <Link key={relatedArticle.id} href={`/articles/${relatedArticle.slug}`}>
+                          <div className="group bg-card rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl cursor-pointer border border-border">
+                            {/* Cover Image */}
+                            {relatedArticle.coverImageUrl && (
+                              <div className="aspect-[16/9] overflow-hidden">
+                                <img
+                                  src={relatedArticle.coverImageUrl}
+                                  alt={decodeHTMLEntities(relatedArticle.title)}
+                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                  loading="lazy"
+                                />
+                              </div>
                             )}
-                            
-                            <h3 className="text-xl font-bold mb-2 transition-colors line-clamp-2"
-                              style={{ color: 'inherit' }}
-                              onMouseEnter={(e) => e.currentTarget.style.color = categoryColor}
-                              onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>
-                              {decodeHTMLEntities(relatedArticle.title)}
-                            </h3>
-                            
-                            {relatedArticle.excerpt && (
-                              <p className="text-sm text-muted-foreground line-clamp-2 mb-3 leading-relaxed">
-                                {decodeHTMLEntities(relatedArticle.excerpt)}
-                              </p>
-                            )}
-                            
-                            <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                              <span>
-                                {relatedArticle.publishedAt && new Date(relatedArticle.publishedAt).toLocaleDateString('en-US', { 
-                                  month: 'short',
-                                  day: 'numeric',
-                                  year: 'numeric'
-                                })}
-                              </span>
-                              {relatedArticle.readTime && (
-                                <>
-                                  <span>•</span>
-                                  <span>{relatedArticle.readTime} min read</span>
-                                </>
+
+                            <div className="p-6">
+                              {/* Category Badge */}
+                              {relatedArticle.category && (
+                                <Badge className={`${getCategoryColor(relatedArticle.category.name).badge} text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider border border-white/20`}>
+                                  {relatedArticle.category.name}
+                                </Badge>
                               )}
+
+                              <h3 className="text-xl font-bold mb-2 transition-colors line-clamp-2"
+                                style={{ color: 'inherit' }}
+                                onMouseEnter={(e) => e.currentTarget.style.color = categoryColor}
+                                onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>
+                                {decodeHTMLEntities(relatedArticle.title)}
+                              </h3>
+
+                              {relatedArticle.excerpt && (
+                                <p className="text-sm text-muted-foreground line-clamp-2 mb-3 leading-relaxed">
+                                  {decodeHTMLEntities(relatedArticle.excerpt)}
+                                </p>
+                              )}
+
+                              <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                                <span>
+                                  {relatedArticle.publishedAt && new Date(relatedArticle.publishedAt).toLocaleDateString('en-US', {
+                                    month: 'short',
+                                    day: 'numeric',
+                                    year: 'numeric'
+                                  })}
+                                </span>
+                                {relatedArticle.readTime && (
+                                  <>
+                                    <span>•</span>
+                                    <span>{relatedArticle.readTime} min read</span>
+                                  </>
+                                )}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </Link>
+                        </Link>
                       );
                     })}
                   </div>
@@ -911,11 +912,10 @@ function ArticleDetailContent() {
                       <a
                         key={heading.id}
                         href={`#${heading.id}`}
-                        className={`block text-sm py-1 border-l-2 pl-4 transition-colors cursor-pointer ${
-                          activeHeading === heading.id
-                            ? 'font-medium'
-                            : 'border-border text-muted-foreground hover:text-foreground hover:border-muted-foreground'
-                        }`}
+                        className={`block text-sm py-1 border-l-2 pl-4 transition-colors cursor-pointer ${activeHeading === heading.id
+                          ? 'font-medium'
+                          : 'border-border text-muted-foreground hover:text-foreground hover:border-muted-foreground'
+                          }`}
                         style={activeHeading === heading.id && category ? {
                           borderColor: getCategoryColor(category.name).hex,
                           color: getCategoryColor(category.name).hex
