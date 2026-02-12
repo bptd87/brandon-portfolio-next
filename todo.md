@@ -3263,3 +3263,10 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Fix image videoUrl field sending null instead of empty string
 - [x] Fix image caption field sending null instead of empty string
 - [ ] Test project save with all validation fixes (awaiting user test)
+
+## Production /admin Route 404 Error (Feb 11, 2026)
+- [x] Investigate why /admin route shows 404 on production (https://www.brandonptdavis.com/admin) - CONFIRMED: SPA routing not configured
+- [x] Check if admin routes are excluded from production build - routes exist in App.tsx
+- [x] Check if there's a deployment configuration issue - server not serving index.html for all routes
+- [x] Fix routing or deployment settings to enable /admin access in production - added _redirects file
+- [ ] Test /admin route on production site after fix
