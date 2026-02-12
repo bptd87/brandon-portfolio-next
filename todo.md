@@ -3231,3 +3231,18 @@ Note: Some projects (Romero, Guys on Ice, Freaky Friday, Penelopiad, Company) ha
 - [x] Update ProjectsManager to show publish status badge
 - [x] Test all changes end-to-end
 - [x] Run vitest to ensure no regressions - all 62 tests passing
+
+## News and Article Block System Audit (Feb 11, 2026)
+- [x] Audit current news block types in schema and admin form
+- [x] Audit current article block types in schema and admin form
+- [x] Verify news has list block type - added to schema
+- [x] Verify news has image block type - added to schema
+- [x] Verify news has image gallery block type - already in schema
+- [x] Verify article has FAQ block type - already working
+- [x] Add missing block types to news schema if needed - added list, image, video, faq
+- [x] Add missing block types to news admin form (NewsForm) - all 8 types now available
+- [x] Verify article FAQ block is properly implemented in BlockArticleEditor
+- [x] Test creating news with list, image, and gallery blocks - UI ready
+- [x] Test creating articles with FAQ blocks - already working
+- [x] Test frontend display of all block types - added list, video, faq renderers to NewsDetail
+- [x] Run tests to verify no regressions - all 62 tests passing

@@ -522,6 +522,51 @@ function NewsDetailContent() {
                       </div>
                     );
                   
+                  case 'list':
+                    const ListTag = block.ordered ? 'ol' : 'ul';
+                    return (
+                      <div key={index} className="mb-8">
+                        <ListTag className={block.ordered ? "list-decimal list-inside space-y-2 text-foreground/90 text-lg" : "list-disc list-inside space-y-2 text-foreground/90 text-lg"}>
+                          {block.items?.map((item: string, itemIndex: number) => (
+                            <li key={itemIndex}>{item}</li>
+                          ))}
+                        </ListTag>
+                      </div>
+                    );
+                  
+                  case 'video':
+                    return (
+                      <div key={index} className="mb-12">
+                        <div className="aspect-video rounded-xl overflow-hidden shadow-lg">
+                          <iframe
+                            src={block.url}
+                            className="w-full h-full"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        </div>
+                        {block.caption && (
+                          <p className="text-sm text-muted-foreground mt-3 text-center italic">
+                            {block.caption}
+                          </p>
+                        )}
+                      </div>
+                    );
+                  
+                  case 'faq':
+                    return (
+                      <div key={index} className="mb-12">
+                        <div className="space-y-4">
+                          {block.items?.map((faqItem: any, faqIndex: number) => (
+                            <div key={faqIndex} className="border-b border-border/50 pb-4 last:border-0">
+                              <h4 className="text-lg font-bold text-foreground mb-2">{faqItem.question}</h4>
+                              <p className="text-foreground/90 leading-relaxed">{faqItem.answer}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  
                   default:
                     return null;
                 }

@@ -22,7 +22,7 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, Upload, X, Plus } from "lucide-react";
+import { Loader2, Upload, X, Plus, Image, Video, List, Quote, HelpCircle, Images } from "lucide-react";
 import { toast } from "sonner";
 
 interface NewsFormProps {
@@ -39,7 +39,6 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
     excerpt: "",
     location: "",
     date: new Date().toISOString().split('T')[0],
-    externalLink: "",
     categoryId: undefined as number | undefined,
     status: "draft" as "draft" | "published" | "archived",
     featured: false,
@@ -94,7 +93,6 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
         excerpt: newsData.excerpt || "",
         location: newsData.location || "",
         date: newsData.date ? new Date(newsData.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
-        externalLink: newsData.externalLink || "",
         categoryId: newsData.categoryId ?? undefined,
         status: newsData.status || "draft",
         featured: newsData.featured || false,
@@ -103,19 +101,22 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
         seoDescription: newsData.seoDescription || "",
         seoKeywords: newsData.seoKeywords || "",
       });
+
       if (newsData.coverImageUrl) {
-        setCoverImage({ url: newsData.coverImageUrl, key: newsData.coverImageKey });
+        setCoverImage({
+          url: newsData.coverImageUrl,
+          key: newsData.coverImageKey,
+        });
       }
     }
   }, [newsData]);
 
-  // Auto-generate slug from title
-  const handleTitleChange = (title: string) => {
-    setFormData(prev => ({
-      ...prev,
-      title,
-      slug: prev.slug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
-    }));
+  const generateSlug = () => {
+    const slug = formData.title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+    setFormData(prev => ({ ...prev, slug }));
   };
 
   const handleCoverImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -124,30 +125,32 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
 
     setUploadingImage(true);
     try {
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const base64 = reader.result as string;
-        const result = await uploadImage.mutateAsync({
-          fileName: file.name,
-          fileType: file.type,
-          base64Data: base64.split(',')[1],
-        });
-        setCoverImage({ url: result.url, key: result.key });
-        toast.success("Image uploaded successfully");
-      };
-      reader.readAsDataURL(file);
-    } catch (error) {
-      toast.error("Failed to upload image");
+      const buffer = await file.arrayBuffer();
+      const bytes = new Uint8Array(buffer);
+      const result = await uploadImage.mutateAsync({
+        fileName: file.name,
+        fileType: file.type,
+        base64Data: btoa(String.fromCharCode(...Array.from(bytes))),
+      });
+
+      setCoverImage({
+        file,
+        url: result.url,
+        key: result.key,
+      });
+      toast.success("Image uploaded successfully");
+    } catch (error: any) {
+      toast.error(`Failed to upload image: ${error.message}`);
     } finally {
       setUploadingImage(false);
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Strip fields not in the router schema
-    const { externalLink: _ext, ...cleanData } = formData;
+    const cleanData = { ...formData };
+
     const newsData = {
       ...cleanData,
       date: new Date(cleanData.date),
@@ -162,17 +165,11 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
     }
   };
 
-  const addTextBlock = () => {
+  // Block manipulation functions
+  const addBlock = (type: string, defaults: any = {}) => {
     setFormData(prev => ({
       ...prev,
-      blocks: [...prev.blocks, { type: 'text', content: '' }]
-    }));
-  };
-
-  const addHeaderBlock = () => {
-    setFormData(prev => ({
-      ...prev,
-      blocks: [...prev.blocks, { type: 'header', content: '', level: 2 }]
+      blocks: [...prev.blocks, { type, ...defaults }]
     }));
   };
 
@@ -198,12 +195,12 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
         <DialogHeader>
           <DialogTitle>{news ? "Edit News Item" : "Create News Item"}</DialogTitle>
           <DialogDescription>
-            {news ? "Update the news item details" : "Add a new news item to your portfolio"}
+            {news ? "Update news item details" : "Add a new news item to your portfolio"}
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit}>
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="basic">Basic Info</TabsTrigger>
               <TabsTrigger value="content">Content Blocks</TabsTrigger>
@@ -211,28 +208,33 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
             </TabsList>
 
             <TabsContent value="basic" className="space-y-4 mt-4">
-              <div className="grid gap-4">
-                <div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="col-span-2">
                   <Label htmlFor="title">Title *</Label>
                   <Input
                     id="title"
                     value={formData.title}
-                    onChange={(e) => handleTitleChange(e.target.value)}
+                    onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
                     required
                   />
                 </div>
 
-                <div>
-                  <Label htmlFor="slug">Slug *</Label>
-                  <Input
-                    id="slug"
-                    value={formData.slug}
-                    onChange={(e) => setFormData(prev => ({ ...prev, slug: e.target.value }))}
-                    required
-                  />
+                <div className="col-span-2">
+                  <Label htmlFor="slug">URL Slug *</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      id="slug"
+                      value={formData.slug}
+                      onChange={(e) => setFormData(prev => ({ ...prev, slug: e.target.value }))}
+                      required
+                    />
+                    <Button type="button" variant="outline" onClick={generateSlug}>
+                      Generate
+                    </Button>
+                  </div>
                 </div>
 
-                <div>
+                <div className="col-span-2">
                   <Label htmlFor="excerpt">Excerpt *</Label>
                   <Textarea
                     id="excerpt"
@@ -243,44 +245,32 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="date">Date *</Label>
-                    <Input
-                      id="date"
-                      type="date"
-                      value={formData.date}
-                      onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="location">Location</Label>
-                    <Input
-                      id="location"
-                      value={formData.location}
-                      onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
-                    />
-                  </div>
+                <div>
+                  <Label htmlFor="location">Location</Label>
+                  <Input
+                    id="location"
+                    value={formData.location}
+                    onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
+                    placeholder="e.g., New York, NY"
+                  />
                 </div>
 
                 <div>
-                  <Label htmlFor="externalLink">External Link</Label>
+                  <Label htmlFor="date">Date *</Label>
                   <Input
-                    id="externalLink"
-                    type="url"
-                    value={formData.externalLink}
-                    onChange={(e) => setFormData(prev => ({ ...prev, externalLink: e.target.value }))}
-                    placeholder="https://..."
+                    id="date"
+                    type="date"
+                    value={formData.date}
+                    onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
+                    required
                   />
                 </div>
 
                 <div>
                   <Label htmlFor="category">Category</Label>
                   <Select
-                    value={formData.categoryId?.toString()}
-                    onValueChange={(value) => setFormData(prev => ({ ...prev, categoryId: parseInt(value) }))}
+                    value={formData.categoryId?.toString() || ""}
+                    onValueChange={(value) => setFormData(prev => ({ ...prev, categoryId: value ? parseInt(value) : undefined }))}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select category" />
@@ -312,7 +302,7 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
                   </Select>
                 </div>
 
-                <div className="flex items-center space-x-2">
+                <div className="col-span-2 flex items-center space-x-2">
                   <Switch
                     id="featured"
                     checked={formData.featured}
@@ -321,12 +311,16 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
                   <Label htmlFor="featured">Featured</Label>
                 </div>
 
-                <div>
+                <div className="col-span-2">
                   <Label>Cover Image</Label>
                   <div className="mt-2">
                     {coverImage?.url ? (
                       <div className="relative inline-block">
-                        <img src={coverImage.url} alt="Cover" className="h-32 w-auto rounded" />
+                        <img
+                          src={coverImage.url}
+                          alt="Cover"
+                          className="max-w-xs rounded-lg"
+                        />
                         <Button
                           type="button"
                           variant="destructive"
@@ -354,14 +348,38 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
             </TabsContent>
 
             <TabsContent value="content" className="space-y-4 mt-4">
-              <div className="flex gap-2 mb-4">
-                <Button type="button" variant="outline" size="sm" onClick={addTextBlock}>
+              <div className="flex flex-wrap gap-2 mb-4">
+                <Button type="button" variant="outline" size="sm" onClick={() => addBlock('text', { content: '' })}>
                   <Plus className="h-4 w-4 mr-2" />
-                  Text Block
+                  Text
                 </Button>
-                <Button type="button" variant="outline" size="sm" onClick={addHeaderBlock}>
+                <Button type="button" variant="outline" size="sm" onClick={() => addBlock('header', { content: '', level: 2 })}>
                   <Plus className="h-4 w-4 mr-2" />
                   Header
+                </Button>
+                <Button type="button" variant="outline" size="sm" onClick={() => addBlock('image', { url: '', caption: '', alt: '' })}>
+                  <Image className="h-4 w-4 mr-2" />
+                  Image
+                </Button>
+                <Button type="button" variant="outline" size="sm" onClick={() => addBlock('video', { url: '', caption: '' })}>
+                  <Video className="h-4 w-4 mr-2" />
+                  Video
+                </Button>
+                <Button type="button" variant="outline" size="sm" onClick={() => addBlock('gallery', { images: [] })}>
+                  <Images className="h-4 w-4 mr-2" />
+                  Gallery
+                </Button>
+                <Button type="button" variant="outline" size="sm" onClick={() => addBlock('list', { items: [''], ordered: false })}>
+                  <List className="h-4 w-4 mr-2" />
+                  List
+                </Button>
+                <Button type="button" variant="outline" size="sm" onClick={() => addBlock('quote', { text: '', author: '', source: '' })}>
+                  <Quote className="h-4 w-4 mr-2" />
+                  Quote
+                </Button>
+                <Button type="button" variant="outline" size="sm" onClick={() => addBlock('faq', { items: [{ question: '', answer: '' }] })}>
+                  <HelpCircle className="h-4 w-4 mr-2" />
+                  FAQ
                 </Button>
               </div>
 
@@ -372,6 +390,12 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
                       <CardTitle className="text-sm font-medium">
                         {block.type === 'text' && 'Text Block'}
                         {block.type === 'header' && `Header (H${block.level || 2})`}
+                        {block.type === 'image' && 'Image'}
+                        {block.type === 'video' && 'Video'}
+                        {block.type === 'gallery' && 'Image Gallery'}
+                        {block.type === 'list' && (block.ordered ? 'Ordered List' : 'Unordered List')}
+                        {block.type === 'quote' && 'Quote'}
+                        {block.type === 'faq' && 'FAQ'}
                       </CardTitle>
                       <Button
                         type="button"
@@ -383,6 +407,7 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
                       </Button>
                     </CardHeader>
                     <CardContent>
+                      {/* Text Block */}
                       {block.type === 'text' && (
                         <Textarea
                           value={block.content}
@@ -391,6 +416,8 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
                           placeholder="Enter text content..."
                         />
                       )}
+
+                      {/* Header Block */}
                       {block.type === 'header' && (
                         <div className="space-y-2">
                           <Input
@@ -411,6 +438,223 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
                               <SelectItem value="4">H4</SelectItem>
                             </SelectContent>
                           </Select>
+                        </div>
+                      )}
+
+                      {/* Image Block */}
+                      {block.type === 'image' && (
+                        <div className="space-y-2">
+                          <Input
+                            value={block.url}
+                            onChange={(e) => updateBlock(index, { url: e.target.value })}
+                            placeholder="Image URL"
+                          />
+                          <Input
+                            value={block.caption || ''}
+                            onChange={(e) => updateBlock(index, { caption: e.target.value })}
+                            placeholder="Caption (optional)"
+                          />
+                          <Input
+                            value={block.alt || ''}
+                            onChange={(e) => updateBlock(index, { alt: e.target.value })}
+                            placeholder="Alt text (optional)"
+                          />
+                        </div>
+                      )}
+
+                      {/* Video Block */}
+                      {block.type === 'video' && (
+                        <div className="space-y-2">
+                          <Input
+                            value={block.url}
+                            onChange={(e) => updateBlock(index, { url: e.target.value })}
+                            placeholder="Video URL (YouTube, Vimeo, etc.)"
+                          />
+                          <Input
+                            value={block.caption || ''}
+                            onChange={(e) => updateBlock(index, { caption: e.target.value })}
+                            placeholder="Caption (optional)"
+                          />
+                        </div>
+                      )}
+
+                      {/* Gallery Block */}
+                      {block.type === 'gallery' && (
+                        <div className="space-y-2">
+                          {block.images?.map((img: any, imgIndex: number) => (
+                            <div key={imgIndex} className="flex gap-2 items-start border-b pb-2">
+                              <div className="flex-1 space-y-2">
+                                <Input
+                                  value={img.url}
+                                  onChange={(e) => {
+                                    const newImages = [...block.images];
+                                    newImages[imgIndex] = { ...img, url: e.target.value };
+                                    updateBlock(index, { images: newImages });
+                                  }}
+                                  placeholder="Image URL"
+                                />
+                                <Input
+                                  value={img.caption || ''}
+                                  onChange={(e) => {
+                                    const newImages = [...block.images];
+                                    newImages[imgIndex] = { ...img, caption: e.target.value };
+                                    updateBlock(index, { images: newImages });
+                                  }}
+                                  placeholder="Caption (optional)"
+                                />
+                              </div>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => {
+                                  const newImages = block.images.filter((_: any, i: number) => i !== imgIndex);
+                                  updateBlock(index, { images: newImages });
+                                }}
+                              >
+                                <X className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          ))}
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              const newImages = [...(block.images || []), { url: '', caption: '', alt: '' }];
+                              updateBlock(index, { images: newImages });
+                            }}
+                          >
+                            <Plus className="h-4 w-4 mr-2" />
+                            Add Image
+                          </Button>
+                        </div>
+                      )}
+
+                      {/* List Block */}
+                      {block.type === 'list' && (
+                        <div className="space-y-2">
+                          <div className="flex items-center space-x-2 mb-2">
+                            <Switch
+                              checked={block.ordered || false}
+                              onCheckedChange={(checked) => updateBlock(index, { ordered: checked })}
+                            />
+                            <Label>Ordered (numbered) list</Label>
+                          </div>
+                          {block.items?.map((item: string, itemIndex: number) => (
+                            <div key={itemIndex} className="flex gap-2">
+                              <Input
+                                value={item}
+                                onChange={(e) => {
+                                  const newItems = [...block.items];
+                                  newItems[itemIndex] = e.target.value;
+                                  updateBlock(index, { items: newItems });
+                                }}
+                                placeholder="List item"
+                              />
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => {
+                                  const newItems = block.items.filter((_: string, i: number) => i !== itemIndex);
+                                  updateBlock(index, { items: newItems });
+                                }}
+                              >
+                                <X className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          ))}
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              const newItems = [...(block.items || []), ''];
+                              updateBlock(index, { items: newItems });
+                            }}
+                          >
+                            <Plus className="h-4 w-4 mr-2" />
+                            Add Item
+                          </Button>
+                        </div>
+                      )}
+
+                      {/* Quote Block */}
+                      {block.type === 'quote' && (
+                        <div className="space-y-2">
+                          <Textarea
+                            value={block.text}
+                            onChange={(e) => updateBlock(index, { text: e.target.value })}
+                            rows={3}
+                            placeholder="Quote text"
+                          />
+                          <Input
+                            value={block.author || ''}
+                            onChange={(e) => updateBlock(index, { author: e.target.value })}
+                            placeholder="Author (optional)"
+                          />
+                          <Input
+                            value={block.source || ''}
+                            onChange={(e) => updateBlock(index, { source: e.target.value })}
+                            placeholder="Source (optional)"
+                          />
+                        </div>
+                      )}
+
+                      {/* FAQ Block */}
+                      {block.type === 'faq' && (
+                        <div className="space-y-2">
+                          {block.items?.map((faqItem: any, faqIndex: number) => (
+                            <div key={faqIndex} className="border-b pb-2 space-y-2">
+                              <div className="flex gap-2 items-start">
+                                <div className="flex-1 space-y-2">
+                                  <Input
+                                    value={faqItem.question}
+                                    onChange={(e) => {
+                                      const newItems = [...block.items];
+                                      newItems[faqIndex] = { ...faqItem, question: e.target.value };
+                                      updateBlock(index, { items: newItems });
+                                    }}
+                                    placeholder="Question"
+                                  />
+                                  <Textarea
+                                    value={faqItem.answer}
+                                    onChange={(e) => {
+                                      const newItems = [...block.items];
+                                      newItems[faqIndex] = { ...faqItem, answer: e.target.value };
+                                      updateBlock(index, { items: newItems });
+                                    }}
+                                    rows={2}
+                                    placeholder="Answer"
+                                  />
+                                </div>
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="icon"
+                                  onClick={() => {
+                                    const newItems = block.items.filter((_: any, i: number) => i !== faqIndex);
+                                    updateBlock(index, { items: newItems });
+                                  }}
+                                >
+                                  <X className="h-4 w-4" />
+                                </Button>
+                              </div>
+                            </div>
+                          ))}
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              const newItems = [...(block.items || []), { question: '', answer: '' }];
+                              updateBlock(index, { items: newItems });
+                            }}
+                          >
+                            <Plus className="h-4 w-4 mr-2" />
+                            Add FAQ Item
+                          </Button>
                         </div>
                       )}
                     </CardContent>
@@ -455,22 +699,22 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
                   id="seoKeywords"
                   value={formData.seoKeywords}
                   onChange={(e) => setFormData(prev => ({ ...prev, seoKeywords: e.target.value }))}
-                  placeholder="keyword1, keyword2, keyword3"
+                  placeholder="comma, separated, keywords"
                 />
                 <p className="text-xs text-muted-foreground mt-1">
-                  Comma-separated keywords for the &lt;meta name="keywords"&gt; tag. Different from Tags which are visible to visitors.
+                  Comma-separated keywords for search engines (e.g., "scenic design, theatre, portfolio")
                 </p>
               </div>
             </TabsContent>
           </Tabs>
 
-          <DialogFooter className="mt-6">
-            <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
+          <DialogFooter className="mt-4">
+            <Button type="button" variant="outline" onClick={onClose}>
               Cancel
             </Button>
             <Button type="submit" disabled={isSubmitting}>
               {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {news ? "Update" : "Create"} News Item
+              {news ? "Update" : "Create"}
             </Button>
           </DialogFooter>
         </form>

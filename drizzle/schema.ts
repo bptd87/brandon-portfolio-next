@@ -159,11 +159,15 @@ export const news = mysqlTable("news", {
   blocks: json("blocks").$type<Array<
     | { type: 'text'; content: string }
     | { type: 'header'; content: string; level?: 2 | 3 | 4 }
-    | { type: 'gallery'; images: { url: string; caption?: string }[] }
+    | { type: 'image'; url: string; caption?: string; alt?: string }
+    | { type: 'video'; url: string; caption?: string }
+    | { type: 'gallery'; images: { url: string; caption?: string; alt?: string }[] }
+    | { type: 'list'; items: string[]; ordered?: boolean }
+    | { type: 'quote'; text: string; author?: string; source?: string }
+    | { type: 'faq'; items: { question: string; answer: string }[] }
     | { type: 'team'; title: string; members: { role: string; name: string }[] }
     | { type: 'details'; title: string; items: { label: string; value: string }[] }
     | { type: 'link'; url: string; label: string }
-    | { type: 'quote'; text: string; author?: string; source?: string }
   >>(),
   status: mysqlEnum("status", ["draft", "published", "archived"]).default("draft").notNull(),
   featured: boolean("featured").default(false).notNull(),
