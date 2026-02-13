@@ -6,18 +6,19 @@ import { useState, useMemo } from "react";
 import { PlayCircle, Clock, TrendingUp, ArrowRight, Search, CheckCircle } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { Link } from "wouter";
+import { SEO } from "@/components/SEO";
 
 export default function StudioTutorials() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  
+
   const { data: user } = trpc.auth.me.useQuery();
   const { data: tutorials = [], isLoading } = trpc.tutorials.list.useQuery();
   const { data: progressData = [] } = trpc.tutorialProgress.getProgress.useQuery(undefined, {
     enabled: !!user,
   });
-  
+
   const watchedMap = new Map(progressData.map((p: any) => [p.tutorialSlug, p.watched]));
 
   // Slug comes from the database
@@ -38,10 +39,10 @@ export default function StudioTutorials() {
 
   const filteredTutorials = useMemo(() => tutorials.filter((tutorial: any) => {
     if (selectedCategory && tutorial.category !== selectedCategory) return false;
-    if (selectedDifficulty && tutorial.difficultyLevel !== selectedDifficulty) return false;
+    if (selectedDifficulty && tutorial.difficulty !== selectedDifficulty) return false;
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      if (!tutorial.title.toLowerCase().includes(query) && !tutorial.description.toLowerCase().includes(query)) return false;
+      if (!tutorial.title.toLowerCase().includes(query) && !tutorial.description?.toLowerCase().includes(query)) return false;
     }
     return true;
   }), [tutorials, selectedCategory, selectedDifficulty, searchQuery]);
@@ -50,6 +51,12 @@ export default function StudioTutorials() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Vectorworks Tutorials | Brandon PT Davis"
+        description="Free Vectorworks tutorials for scenic designers. Step-by-step video lessons covering 2D drafting, 3D modeling, rendering, and advanced techniques for theatrical design."
+        keywords="Vectorworks tutorials, scenic design software, 3D modeling theatre, rendering tutorials, CAD for theatre, Vectorworks training, theatrical design software"
+        type="website"
+      />
       <Header />
 
       <section className="pt-32 pb-20 border-b border-border bg-gradient-to-br from-[#2196F3]/5 to-transparent">
@@ -57,7 +64,7 @@ export default function StudioTutorials() {
           <p className="text-xs tracking-widest text-muted-foreground mb-4">STUDIO / TUTORIALS</p>
           <h1 className="mb-4">Vectorworks Tutorials</h1>
           <p className="text-xl text-muted-foreground max-w-2xl">
-            Master scenic design software with step-by-step video tutorials covering everything from 
+            Master scenic design software with step-by-step video tutorials covering everything from
             basic workspace setup to advanced 3D modeling techniques.
           </p>
           {user && progressData.length > 0 && (
@@ -67,7 +74,7 @@ export default function StudioTutorials() {
                 <span>{progressData.filter((p: any) => p.watched).length} of {tutorials.length} tutorials completed</span>
               </div>
               <div className="flex-1 max-w-xs h-2 bg-muted rounded-full overflow-hidden">
-                <div 
+                <div
                   className="h-full bg-green-500 transition-all duration-500"
                   style={{ width: `${Math.round((progressData.filter((p: any) => p.watched).length / tutorials.length) * 100)}%` }}
                 />
@@ -117,11 +124,10 @@ export default function StudioTutorials() {
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setSelectedCategory(null)}
-                className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${
-                  selectedCategory === null
-                    ? 'bg-primary text-primary-foreground border-primary shadow-lg'
-                    : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
-                }`}
+                className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${selectedCategory === null
+                  ? 'bg-primary text-primary-foreground border-primary shadow-lg'
+                  : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
+                  }`}
               >
                 All Categories
               </button>
@@ -129,11 +135,10 @@ export default function StudioTutorials() {
                 <button
                   key={category.slug}
                   onClick={() => setSelectedCategory(category.slug)}
-                  className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${
-                    selectedCategory === category.slug
-                      ? category.color + ' shadow-lg'
-                      : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
-                  }`}
+                  className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${selectedCategory === category.slug
+                    ? category.color + ' shadow-lg'
+                    : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
+                    }`}
                 >
                   {category.name}
                 </button>
@@ -146,11 +151,10 @@ export default function StudioTutorials() {
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setSelectedDifficulty(null)}
-                className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${
-                  selectedDifficulty === null
-                    ? 'bg-primary text-primary-foreground border-primary shadow-lg'
-                    : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
-                }`}
+                className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${selectedDifficulty === null
+                  ? 'bg-primary text-primary-foreground border-primary shadow-lg'
+                  : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
+                  }`}
               >
                 All Levels
               </button>
@@ -158,11 +162,10 @@ export default function StudioTutorials() {
                 <button
                   key={difficulty.slug}
                   onClick={() => setSelectedDifficulty(difficulty.slug)}
-                  className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${
-                    selectedDifficulty === difficulty.slug
-                      ? 'bg-primary text-primary-foreground border-primary shadow-lg'
-                      : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
-                  }`}
+                  className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${selectedDifficulty === difficulty.slug
+                    ? 'bg-primary text-primary-foreground border-primary shadow-lg'
+                    : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
+                    }`}
                 >
                   {difficulty.name}
                 </button>
@@ -191,42 +194,42 @@ export default function StudioTutorials() {
             {filteredTutorials.map((tutorial: any) => {
               const slug = tutorial.slug || tutorial.id.toString();
               return (
-              <Link key={tutorial.id} href={`/studio/tutorials/${slug}`}>
-              <Card className="group hover:shadow-xl transition-all duration-300 overflow-hidden border border-border hover:border-[#2196F3]/50 rounded-lg bg-card p-0">
-                <div className="relative aspect-video bg-muted overflow-hidden">
-                  <img 
-                    src={tutorial.thumbnailUrl} 
-                    alt={tutorial.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center">
-                      <PlayCircle className="w-8 h-8 text-black fill-white" />
+                <Link key={tutorial.id} href={`/studio/tutorials/${slug}`}>
+                  <Card className="group hover:shadow-xl transition-all duration-300 overflow-hidden border border-border hover:border-[#2196F3]/50 rounded-lg bg-card p-0">
+                    <div className="relative aspect-video bg-muted overflow-hidden">
+                      <img
+                        src={tutorial.cover_image}
+                        alt={tutorial.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center">
+                          <PlayCircle className="w-8 h-8 text-black fill-white" />
+                        </div>
+                      </div>
+                      <div className="absolute bottom-3 right-3 bg-black/90 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded flex items-center gap-1.5">
+                        <Clock className="w-3 h-3" />
+                        {formatDuration(tutorial.duration)}
+                      </div>
+                      {user && watchedMap.get(tutorial.slug || '') && (
+                        <div className="absolute top-3 right-3 bg-green-500 text-white p-1.5 rounded-full shadow-lg">
+                          <CheckCircle className="w-4 h-4" />
+                        </div>
+                      )}
                     </div>
-                  </div>
-                  <div className="absolute bottom-3 right-3 bg-black/90 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded flex items-center gap-1.5">
-                    <Clock className="w-3 h-3" />
-                    {formatDuration(tutorial.duration)}
-                  </div>
-                  {user && watchedMap.get(tutorial.slug || '') && (
-                    <div className="absolute top-3 right-3 bg-green-500 text-white p-1.5 rounded-full shadow-lg">
-                      <CheckCircle className="w-4 h-4" />
-                    </div>
-                  )}
-                </div>
 
-                <CardContent className="p-4 space-y-3 bg-card">
-                  <h3 className="font-bold text-base leading-tight group-hover:text-[#2196F3] transition-colors line-clamp-2">
-                    {tutorial.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
-                    {tutorial.description}
-                  </p>
-                </CardContent>
-              </Card>
-              </Link>
+                    <CardContent className="p-4 space-y-3 bg-card">
+                      <h3 className="font-bold text-base leading-tight group-hover:text-[#2196F3] transition-colors line-clamp-2">
+                        {tutorial.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                        {tutorial.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </Link>
               );
             })}
           </div>
@@ -249,7 +252,7 @@ export default function StudioTutorials() {
         <div className="bg-gradient-to-br from-[#2196F3]/10 to-transparent border border-[#2196F3]/30 rounded-2xl p-12">
           <h2 className="text-2xl font-bold mb-4">Looking for More?</h2>
           <p className="text-muted-foreground mb-6 max-w-2xl">
-            These tutorials are designed to complement your scenic design education. For official Vectorworks 
+            These tutorials are designed to complement your scenic design education. For official Vectorworks
             training and certification, visit Vectorworks University.
           </p>
           <div className="flex flex-wrap gap-4">

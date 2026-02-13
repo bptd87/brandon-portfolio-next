@@ -1,4 +1,5 @@
 import { supabase } from './supabase';
+export { supabase };
 import { ENV } from './_core/env';
 
 // ============ TYPES ============
@@ -64,13 +65,14 @@ export interface Project {
 
 export interface ProjectImage {
   id: number;
-  project_id: number;
-  image_url: string | null;
-  video_url: string | null;
+  projectId: number;
+  imageUrl: string | null;
+  videoUrl: string | null;
   caption: string | null;
-  alt_text: string | null;
-  sort_order: number;
-  created_at: Date;
+  altText: string | null;
+  imageType?: string | null;
+  sortOrder: number;
+  createdAt: Date;
 }
 
 export interface News {
@@ -435,13 +437,14 @@ export async function getAllProjects(filters?: {
       }
       imagesByProject.get(img.project_id)!.push({
         id: img.id,
-        project_id: img.project_id,
-        image_url: img.image_url,
-        video_url: img.video_url,
+        projectId: img.project_id,
+        imageUrl: img.image_url,
+        videoUrl: img.video_url,
         caption: img.caption,
-        alt_text: img.alt_text,
-        sort_order: img.sort_order,
-        created_at: new Date(img.created_at),
+        altText: img.alt_text,
+        imageType: img.image_type,
+        sortOrder: img.sort_order,
+        createdAt: new Date(img.created_at),
       });
     }
   }
@@ -492,13 +495,14 @@ export async function getProjectById(id: number): Promise<Project | undefined> {
 
   const projectImages: ProjectImage[] = (images || []).map(img => ({
     id: img.id,
-    project_id: img.project_id,
-    image_url: img.image_url,
-    video_url: img.video_url,
+    projectId: img.project_id,
+    imageUrl: img.image_url,
+    videoUrl: img.video_url,
     caption: img.caption,
-    alt_text: img.alt_text,
-    sort_order: img.sort_order,
-    created_at: new Date(img.created_at),
+    altText: img.alt_text,
+    imageType: img.image_type,
+    sortOrder: img.sort_order,
+    createdAt: new Date(img.created_at),
   }));
 
   return {
@@ -548,13 +552,14 @@ export async function getProjectBySlug(slug: string): Promise<Project | undefine
 
   const projectImages: ProjectImage[] = (images || []).map(img => ({
     id: img.id,
-    project_id: img.project_id,
-    image_url: img.image_url,
-    video_url: img.video_url,
+    projectId: img.project_id,
+    imageUrl: img.image_url,
+    videoUrl: img.video_url,
     caption: img.caption,
-    alt_text: img.alt_text,
-    sort_order: img.sort_order,
-    created_at: new Date(img.created_at),
+    altText: img.alt_text,
+    imageType: img.image_type,
+    sortOrder: img.sort_order,
+    createdAt: new Date(img.created_at),
   }));
 
   return {
@@ -933,7 +938,15 @@ export interface Collaborator {
   portfolioUrl: string | null;
   instagramUrl: string | null;
   instagramHandle: string | null;
+  coverImage: string | null;
+  status: 'published' | 'draft' | 'archived';
+  featured: boolean;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  seoKeywords: string | null;
+  gallery: any[] | null;
   created_at: Date;
+  updated_at?: Date;
 }
 
 export async function getAllCollaborators(filters?: {
@@ -957,6 +970,13 @@ export async function getAllCollaborators(filters?: {
     portfolioUrl: collab.portfolio_url,
     instagramUrl: collab.instagram_url,
     instagramHandle: collab.instagram_handle,
+    coverImage: collab.cover_image,
+    status: collab.status,
+    featured: collab.featured,
+    seoTitle: collab.seo_title,
+    seoDescription: collab.seo_description,
+    seoKeywords: collab.seo_keywords,
+    gallery: collab.gallery,
     created_at: new Date(collab.created_at),
   }));
 }
@@ -972,6 +992,17 @@ export async function getCollaboratorBySlug(slug: string): Promise<Collaborator 
 
   return {
     ...data,
+    ...data,
+    portfolioUrl: data.portfolio_url,
+    instagramUrl: data.instagram_url,
+    instagramHandle: data.instagram_handle,
+    coverImage: data.cover_image,
+    status: data.status,
+    featured: data.featured,
+    seoTitle: data.seo_title,
+    seoDescription: data.seo_description,
+    seoKeywords: data.seo_keywords,
+    gallery: data.gallery,
     created_at: new Date(data.created_at),
   };
 }
@@ -999,10 +1030,28 @@ export interface Tutorial {
   id: number;
   title: string;
   slug: string;
+  description: string | null;
+  overview: string | null;
   content: string | null;
   category: string | null;
   difficulty: string | null;
   duration: number | null;
+  video_url: string | null;
+  cover_image: string | null;
+  blocks: any[] | null;
+  status: 'draft' | 'published' | 'archived';
+  featured: boolean;
+  seo_title: string | null;
+  seo_description: string | null;
+  seo_keywords: string | null;
+  learning_objectives: string[] | null;
+  key_concepts: any[] | null;
+  pro_tips: string[] | null;
+  shortcuts: any[] | null;
+  common_pitfalls: string[] | null;
+  transcript: any[] | null;
+  related_resources: any[] | null;
+  related_tutorials: any[] | null;
   created_at: Date;
   updated_at: Date;
 }
@@ -1731,5 +1780,273 @@ export async function deleteTodo(id: number, userId: string) {
     .eq('id', id)
     .eq('user_id', userId);
   
+  if (error) throw error;
+}
+
+
+export async function getTutorialById(id: number): Promise<Tutorial | undefined> {
+  const { data } = await supabase
+    .from('tutorials')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (!data) return undefined;
+
+  return {
+    ...data,
+    created_at: new Date(data.created_at),
+    updated_at: new Date(data.updated_at),
+  };
+}
+
+export async function getTutorialBySlug(slug: string): Promise<Tutorial | undefined> {
+  const { data } = await supabase
+    .from('tutorials')
+    .select('*')
+    .eq('slug', slug)
+    .single();
+
+  if (!data) return undefined;
+
+  return {
+    ...data,
+    created_at: new Date(data.created_at),
+    updated_at: new Date(data.updated_at),
+  };
+}
+
+export async function createTutorial(tutorial: any) {
+  const { data, error } = await supabase
+    .from('tutorials')
+    .insert({
+      title: tutorial.title,
+      slug: tutorial.slug,
+      content: tutorial.content,
+      blocks: tutorial.blocks,
+      category: tutorial.category,
+      difficulty: tutorial.difficulty,
+      duration: tutorial.duration,
+      video_url: tutorial.videoUrl,
+      cover_image: tutorial.coverImageUrl,
+      status: tutorial.status || 'draft',
+      featured: tutorial.featured || false,
+      seo_title: tutorial.seoTitle,
+      seo_description: tutorial.seoDescription,
+      seo_keywords: tutorial.seoKeywords,
+      learning_objectives: tutorial.learningObjectives,
+      key_concepts: tutorial.keyConcepts,
+      pro_tips: tutorial.proTips,
+      shortcuts: tutorial.shortcuts,
+      common_pitfalls: tutorial.commonPitfalls,
+      transcript: tutorial.transcript,
+      related_resources: tutorial.relatedResources,
+      related_tutorials: tutorial.relatedTutorials,
+    })
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data.id;
+}
+
+export async function updateTutorial(id: number, updates: any) {
+  const updateData: any = {};
+  if (updates.title !== undefined) updateData.title = updates.title;
+  if (updates.slug !== undefined) updateData.slug = updates.slug;
+  if (updates.content !== undefined) updateData.content = updates.content;
+  if (updates.blocks !== undefined) updateData.blocks = updates.blocks;
+  if (updates.category !== undefined) updateData.category = updates.category;
+  if (updates.difficulty !== undefined) updateData.difficulty = updates.difficulty;
+  if (updates.duration !== undefined) updateData.duration = updates.duration;
+  if (updates.videoUrl !== undefined) updateData.video_url = updates.videoUrl;
+  if (updates.coverImageUrl !== undefined) updateData.cover_image = updates.coverImageUrl;
+  if (updates.status !== undefined) updateData.status = updates.status;
+  if (updates.featured !== undefined) updateData.featured = updates.featured;
+  if (updates.seoTitle !== undefined) updateData.seo_title = updates.seoTitle;
+  if (updates.seoDescription !== undefined) updateData.seo_description = updates.seoDescription;
+  if (updates.seoKeywords !== undefined) updateData.seo_keywords = updates.seoKeywords;
+  if (updates.learningObjectives !== undefined) updateData.learning_objectives = updates.learningObjectives;
+  if (updates.keyConcepts !== undefined) updateData.key_concepts = updates.keyConcepts;
+  if (updates.proTips !== undefined) updateData.pro_tips = updates.proTips;
+  if (updates.shortcuts !== undefined) updateData.shortcuts = updates.shortcuts;
+  if (updates.commonPitfalls !== undefined) updateData.common_pitfalls = updates.commonPitfalls;
+  if (updates.transcript !== undefined) updateData.transcript = updates.transcript;
+  if (updates.relatedResources !== undefined) updateData.related_resources = updates.relatedResources;
+  if (updates.relatedTutorials !== undefined) updateData.related_tutorials = updates.relatedTutorials;
+
+  const { error } = await supabase
+    .from('tutorials')
+    .update(updateData)
+    .eq('id', id);
+
+  if (error) throw error;
+}
+
+export async function deleteTutorial(id: number) {
+  const { error } = await supabase
+    .from('tutorials')
+    .delete()
+    .eq('id', id);
+
+  if (error) throw error;
+}
+
+// ============ SCENIC DIRECTORY CRUD ============
+
+export async function getScenicEntryById(id: number): Promise<any | undefined> {
+  const { data } = await supabase
+    .from('scenic_directory')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  return data || undefined;
+}
+
+export async function createScenicEntry(entry: any) {
+  const { data, error } = await supabase
+    .from('scenic_directory')
+    .insert({
+      name: entry.name,
+      description: entry.description,
+      category_name: entry.categoryName,
+      category_slug: entry.categorySlug,
+      url: entry.url,
+      location: entry.location,
+      cover_image: entry.coverImage,
+      status: entry.status || 'published',
+      featured: entry.featured || false,
+      seo_title: entry.seoTitle,
+      seo_description: entry.seoDescription,
+      seo_keywords: entry.seoKeywords,
+      gallery: entry.gallery || [],
+    })
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data.id;
+}
+
+export async function updateScenicEntry(id: number, updates: any) {
+  const updateData: any = {};
+  if (updates.name !== undefined) updateData.name = updates.name;
+  if (updates.description !== undefined) updateData.description = updates.description;
+  if (updates.categoryName !== undefined) updateData.category_name = updates.categoryName;
+  if (updates.categorySlug !== undefined) updateData.category_slug = updates.categorySlug;
+  if (updates.url !== undefined) updateData.url = updates.url;
+  if (updates.location !== undefined) updateData.location = updates.location;
+  if (updates.coverImage !== undefined) updateData.cover_image = updates.coverImage;
+  if (updates.status !== undefined) updateData.status = updates.status;
+  if (updates.featured !== undefined) updateData.featured = updates.featured;
+  if (updates.seoTitle !== undefined) updateData.seo_title = updates.seoTitle;
+  if (updates.seoDescription !== undefined) updateData.seo_description = updates.seoDescription;
+  if (updates.seoKeywords !== undefined) updateData.seo_keywords = updates.seoKeywords;
+  if (updates.gallery !== undefined) updateData.gallery = updates.gallery;
+
+  const { error } = await supabase
+    .from('scenic_directory')
+    .update(updateData)
+    .eq('id', id);
+
+  if (error) throw error;
+}
+
+export async function deleteScenicEntry(id: number) {
+  const { error } = await supabase
+    .from('scenic_directory')
+    .delete()
+    .eq('id', id);
+
+  if (error) throw error;
+}
+
+// ============ COLLABORATOR CRUD ============
+
+export async function getCollaboratorById(id: number): Promise<Collaborator | undefined> {
+  const { data } = await supabase
+    .from('collaborators')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (!data) return undefined;
+
+  return {
+    ...data,
+    portfolioUrl: data.portfolio_url,
+    instagramUrl: data.instagram_url,
+    instagramHandle: data.instagram_handle,
+    coverImage: data.cover_image,
+    status: data.status,
+    featured: data.featured,
+    seoTitle: data.seo_title,
+    seoDescription: data.seo_description,
+    seoKeywords: data.seo_keywords,
+    gallery: data.gallery,
+    created_at: new Date(data.created_at),
+  };
+}
+
+export async function createCollaborator(collaborator: any) {
+  const { data, error } = await supabase
+    .from('collaborators')
+    .insert({
+      name: collaborator.name,
+      slug: collaborator.slug,
+      role: collaborator.role,
+      bio: collaborator.bio,
+      website: collaborator.website,
+      portfolio_url: collaborator.portfolioUrl,
+      instagram_url: collaborator.instagramUrl,
+      instagram_handle: collaborator.instagramHandle,
+      cover_image: collaborator.coverImage,
+      status: collaborator.status || 'published',
+      featured: collaborator.featured || false,
+      seo_title: collaborator.seoTitle,
+      seo_description: collaborator.seoDescription,
+      seo_keywords: collaborator.seoKeywords,
+      gallery: collaborator.gallery || [],
+    })
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data.id;
+}
+
+export async function updateCollaborator(id: number, updates: any) {
+  const updateData: any = {};
+  if (updates.name !== undefined) updateData.name = updates.name;
+  if (updates.slug !== undefined) updateData.slug = updates.slug;
+  if (updates.role !== undefined) updateData.role = updates.role;
+  if (updates.bio !== undefined) updateData.bio = updates.bio;
+  if (updates.website !== undefined) updateData.website = updates.website;
+  if (updates.portfolioUrl !== undefined) updateData.portfolio_url = updates.portfolioUrl;
+  if (updates.instagramUrl !== undefined) updateData.instagram_url = updates.instagramUrl;
+  if (updates.instagramHandle !== undefined) updateData.instagram_handle = updates.instagramHandle;
+  if (updates.coverImage !== undefined) updateData.cover_image = updates.coverImage;
+  if (updates.status !== undefined) updateData.status = updates.status;
+  if (updates.featured !== undefined) updateData.featured = updates.featured;
+  if (updates.seoTitle !== undefined) updateData.seo_title = updates.seoTitle;
+  if (updates.seoDescription !== undefined) updateData.seo_description = updates.seoDescription;
+  if (updates.seoKeywords !== undefined) updateData.seo_keywords = updates.seoKeywords;
+  if (updates.gallery !== undefined) updateData.gallery = updates.gallery;
+
+  const { error } = await supabase
+    .from('collaborators')
+    .update(updateData)
+    .eq('id', id);
+
+  if (error) throw error;
+}
+
+export async function deleteCollaborator(id: number) {
+  const { error } = await supabase
+    .from('collaborators')
+    .delete()
+    .eq('id', id);
+
   if (error) throw error;
 }

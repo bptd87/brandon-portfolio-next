@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Heart } from "lucide-react";
 import { useState, useMemo } from "react";
 import { trpc } from "@/lib/trpc";
+import { SEO } from "@/components/SEO";
 
 export default function StudioDirectory() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -30,6 +31,12 @@ export default function StudioDirectory() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Scenic Directory | Brandon PT Davis"
+        description="Curated collection of essential resources for scenic designers—industry organizations, design software, theatrical suppliers, research archives, and professional communities."
+        keywords="scenic design resources, theatre suppliers, design software, theatrical organizations, scenic design community, Vectorworks, USITT, USA 829"
+        type="website"
+      />
       <Header />
 
       {/* Page Header */}
@@ -38,7 +45,7 @@ export default function StudioDirectory() {
           <p className="text-xs tracking-widest text-muted-foreground mb-4">STUDIO / SCENIC DIRECTORY</p>
           <h1 className="mb-4">Scenic Directory</h1>
           <p className="text-xl text-muted-foreground max-w-2xl">
-            A curated collection of essential resources for scenic designers—organizations, software, 
+            A curated collection of essential resources for scenic designers—organizations, software,
             suppliers, research archives, and professional communities.
           </p>
         </div>
@@ -51,11 +58,10 @@ export default function StudioDirectory() {
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setSelectedCategory(null)}
-              className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${
-                selectedCategory === null
-                  ? 'bg-primary text-primary-foreground border-primary shadow-lg'
-                  : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
-              }`}
+              className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${selectedCategory === null
+                ? 'bg-primary text-primary-foreground border-primary shadow-lg'
+                : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
+                }`}
             >
               All Resources
             </button>
@@ -63,11 +69,10 @@ export default function StudioDirectory() {
               <button
                 key={category.slug}
                 onClick={() => setSelectedCategory(category.slug)}
-                className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${
-                  selectedCategory === category.slug
-                    ? category.color + ' shadow-lg'
-                    : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
-                }`}
+                className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${selectedCategory === category.slug
+                  ? category.color + ' shadow-lg'
+                  : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
+                  }`}
               >
                 {category.name}
               </button>
@@ -145,7 +150,7 @@ export default function StudioDirectory() {
         <div className="bg-gradient-to-br from-[#F44336]/10 to-transparent border border-[#F44336]/30 rounded-2xl p-12 text-center">
           <h2 className="text-2xl font-bold mb-4">Know a Great Resource?</h2>
           <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-            This directory is curated to help scenic designers discover valuable tools, communities, 
+            This directory is curated to help scenic designers discover valuable tools, communities,
             and suppliers. If you know of a resource that should be included, let me know!
           </p>
           <a

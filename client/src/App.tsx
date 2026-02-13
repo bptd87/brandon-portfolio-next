@@ -11,6 +11,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { PageLoadingIndicator } from "./components/PageLoadingIndicator";
 import { useState, useEffect } from "react";
 import { TodoDialog } from "@/components/TodoDialog";
+import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 
 // Only Home page loads immediately - everything else is lazy loaded
 import Home from "./pages/Home";
@@ -30,6 +31,20 @@ const ArticleDetail = lazy(() => import("./pages/ArticleDetail"));
 const Admin = lazy(() => import("./pages/Admin"));
 const Login = lazy(() => import("./pages/Login"));
 const AdminProjectEdit = lazy(() => import("./pages/AdminProjectEdit"));
+const AdminProjects = lazy(() => import("./pages/admin/AdminProjects"));
+const AdminNews = lazy(() => import("./pages/admin/AdminNews"));
+const AdminArticles = lazy(() => import("./pages/admin/AdminArticles"));
+const AdminCategories = lazy(() => import("./pages/admin/AdminCategories"));
+const AdminTags = lazy(() => import("./pages/admin/AdminTags"));
+const AdminAnalytics = lazy(() => import("./pages/admin/AdminAnalytics"));
+const AdminNewsEdit = lazy(() => import("./pages/admin/AdminNewsEdit"));
+const AdminArticleEdit = lazy(() => import("./pages/admin/AdminArticleEdit"));
+const AdminTutorials = lazy(() => import("./pages/admin/AdminTutorials"));
+const AdminTutorialEdit = lazy(() => import("./pages/admin/AdminTutorialEdit"));
+const AdminScenicDirectory = lazy(() => import("./pages/admin/AdminScenicDirectory"));
+const AdminScenicDirectoryEdit = lazy(() => import("./pages/admin/AdminScenicDirectoryEdit"));
+const AdminCollaborators = lazy(() => import("./pages/admin/AdminCollaborators"));
+const AdminCollaboratorEdit = lazy(() => import("./pages/admin/AdminCollaboratorEdit"));
 const AuthDebug = lazy(() => import("./pages/AuthDebug"));
 
 // Non-critical routes - lazy load for better initial performance
@@ -113,6 +128,27 @@ function Router() {
           <Route path={"/vault"} component={Vault} />
           <Route path="/admin/projects/new" component={AdminProjectEdit} />
           <Route path="/admin/projects/:id/edit" component={AdminProjectEdit} />
+          <Route path="/admin/news/new" component={AdminNewsEdit} />
+          <Route path="/admin/news/:id/edit" component={AdminNewsEdit} />
+          <Route path="/admin/articles/new" component={AdminArticleEdit} />
+          <Route path="/admin/articles/:id/edit" component={AdminArticleEdit} />
+          <Route path="/admin/projects" component={AdminProjects} />
+          <Route path="/admin/news" component={AdminNews} />
+          <Route path="/admin/analytics" component={AdminAnalytics} />
+          <Route path="/admin/articles" component={AdminArticles} />
+          <Route path="/admin/categories" component={AdminCategories} />
+          <Route path="/admin/tags" component={AdminTags} />
+          <Route path="/admin/tutorials/new" component={AdminTutorialEdit} />
+          <Route path="/admin/tutorials/:id/edit" component={AdminTutorialEdit} />
+          <Route path="/admin/tutorials" component={AdminTutorials} />
+
+          <Route path="/admin/scenic-directory/new" component={AdminScenicDirectoryEdit} />
+          <Route path="/admin/scenic-directory/:id/edit" component={AdminScenicDirectoryEdit} />
+          <Route path="/admin/scenic-directory" component={AdminScenicDirectory} />
+
+          <Route path="/admin/collaborators/new" component={AdminCollaboratorEdit} />
+          <Route path="/admin/collaborators/:id/edit" component={AdminCollaboratorEdit} />
+          <Route path="/admin/collaborators" component={AdminCollaborators} />
           <Route path={"/admin"} component={Admin} />
           <Route path={"/privacy"} component={Privacy} />
           <Route path={"/terms"} component={Terms} />
@@ -161,7 +197,7 @@ function App() {
           <TooltipProvider>
             <Toaster />
             <TodoDialog open={isTodoOpen} onOpenChange={setIsTodoOpen} />
-
+            <AnalyticsTracker />
             <Router />
           </TooltipProvider>
         </div>

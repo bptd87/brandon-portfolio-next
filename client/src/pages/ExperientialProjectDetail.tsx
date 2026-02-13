@@ -151,6 +151,7 @@ export default function ProjectDetail() {
         description={project.excerpt || `${project.title} - Scenic design project by Brandon PT Davis`}
         image={project.coverImageUrl || undefined}
         type="website"
+        keywords={project.seoKeywords || undefined}
       />
       <StructuredData
         type="BreadcrumbList"
@@ -231,7 +232,7 @@ export default function ProjectDetail() {
         {project.coverImageUrl ? (
           <img
             src={project.coverImageUrl}
-            alt={project.title}
+            alt={`${project.title} - ${project.discipline === 'experiential_design' ? 'Experiential design' : 'Scenic design'} by Brandon PT Davis`}
             className="w-full h-full object-cover"
           />
         ) : (

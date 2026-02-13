@@ -78,6 +78,7 @@ export default function About() {
       <SEO
         title="About Brandon PT Davis | Scenic Designer & Educator"
         description="Learn about Brandon PT Davis, a scenic and experiential designer with over 15 years of experience in theatre, themed entertainment, and education."
+        keywords="Brandon Davis scenic designer, USA 829, theatrical designer California, experiential designer, scenic design educator, UC Irvine, regional theatre designer"
       />
       <StructuredData
         type="Person"

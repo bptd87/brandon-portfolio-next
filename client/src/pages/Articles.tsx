@@ -83,6 +83,7 @@ function ArticlesContent() {
       <SEO
         title="Scenic Insights | Articles by Brandon PT Davis"
         description="Articles on design philosophy, process, and the craft of scenic and experiential design."
+        image={articles?.[0]?.coverImageUrl || undefined}
       />
       <Header />
 
@@ -114,8 +115,8 @@ function ArticlesContent() {
               <button
                 onClick={() => setSelectedCategory(null)}
                 className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${selectedCategory === null
-                    ? 'bg-primary text-primary-foreground shadow-lg'
-                    : 'bg-background border border-border text-muted-foreground hover:border-primary hover:text-foreground'
+                  ? 'bg-primary text-primary-foreground shadow-lg'
+                  : 'bg-background border border-border text-muted-foreground hover:border-primary hover:text-foreground'
                   }`}
               >
                 All Articles
@@ -125,8 +126,8 @@ function ArticlesContent() {
                   key={category}
                   onClick={() => setSelectedCategory(category)}
                   className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${selectedCategory === category
-                      ? 'shadow-lg'
-                      : 'bg-background border border-border hover:shadow-md'
+                    ? 'shadow-lg'
+                    : 'bg-background border border-border hover:shadow-md'
                     }`}
                   style={{
                     backgroundColor: selectedCategory === category ? getCategoryColor(category).hex : undefined,

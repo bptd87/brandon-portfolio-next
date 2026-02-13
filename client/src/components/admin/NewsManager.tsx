@@ -14,11 +14,10 @@ import { Badge } from "@/components/ui/badge";
 import { Loader2, Plus, Pencil, Trash2, Eye } from "lucide-react";
 import { NewsForm } from "./NewsForm";
 import { toast } from "sonner";
+import { useLocation } from "wouter";
 
 export function NewsManager() {
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const [editingNews, setEditingNews] = useState<any>(null);
-
+  const [, navigate] = useLocation();
   const { data: news, isLoading, refetch } = trpc.news.list.useQuery({});
   const deleteNews = trpc.news.delete.useMutation({
     onSuccess: () => {
@@ -31,8 +30,7 @@ export function NewsManager() {
   });
 
   const handleEdit = (newsItem: any) => {
-    setEditingNews(newsItem);
-    setIsFormOpen(true);
+    navigate(`/admin/news/${newsItem.id}/edit`);
   };
 
   const handleDelete = async (id: number, title: string) => {
@@ -42,8 +40,6 @@ export function NewsManager() {
   };
 
   const handleFormClose = () => {
-    setIsFormOpen(false);
-    setEditingNews(null);
     refetch();
   };
 
@@ -64,7 +60,7 @@ export function NewsManager() {
               <CardTitle>News & Updates</CardTitle>
               <CardDescription>Manage news items and career updates</CardDescription>
             </div>
-            <Button onClick={() => setIsFormOpen(true)}>
+            <Button onClick={() => navigate("/admin/news/new")}>
               <Plus className="h-4 w-4 mr-2" />
               New News Item
             </Button>
@@ -79,57 +75,82 @@ export function NewsManager() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Title</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Featured</TableHead>
+                  <TableHead className="w-[60px]">Cover</TableHead>
+                  <TableHead>Title & Info</TableHead>
+                  <TableHead>Meta</TableHead>
                   <TableHead>Date</TableHead>
-                  <TableHead>Created</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {news.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell className="font-medium">{item.title}</TableCell>
-                    <TableCell>
-                      <Badge variant={item.status === 'published' ? 'default' : 'secondary'}>
-                        {item.status}
-                      </Badge>
+                  <TableRow
+                    key={item.id}
+                    className="cursor-pointer hover:bg-muted/50 transition-colors group"
+                    onClick={() => navigate(`/admin/news/${item.id}/edit`)}
+                  >
+                    <TableCell className="py-2">
+                      {item.coverImageUrl ? (
+                        <img
+                          src={item.coverImageUrl}
+                          alt={item.title}
+                          className="h-10 w-10 object-cover rounded border border-border"
+                        />
+                      ) : (
+                        <div className="h-10 w-10 bg-muted rounded flex items-center justify-center text-[10px] text-muted-foreground border border-dashed">
+                          None
+                        </div>
+                      )}
                     </TableCell>
-                    <TableCell>
-                      {item.featured && <Badge variant="outline">Featured</Badge>}
+                    <TableCell className="py-2">
+                      <div className="flex flex-col">
+                        <span className="font-medium text-sm leading-tight group-hover:text-primary transition-colors">
+                          {item.title}
+                        </span>
+                        <span className="text-[10px] text-muted-foreground mt-0.5">
+                          /{item.slug}
+                        </span>
+                      </div>
                     </TableCell>
-                    <TableCell>
-                      {item.date ? new Date(item.date).toLocaleDateString() : '-'}
+                    <TableCell className="py-2">
+                      <div className="flex items-center gap-1.5">
+                        <Badge
+                          variant={item.status === 'published' ? 'default' : 'secondary'}
+                          className="text-[10px] px-1.5 py-0 h-4"
+                        >
+                          {item.status}
+                        </Badge>
+                        {item.featured && (
+                          <div title="Featured News">
+                            <Badge variant="outline" className="text-[10px] px-1 py-0 h-4 border-amber-500/50 text-amber-500 dark:text-amber-400 bg-amber-500/10">
+                              ★
+                            </Badge>
+                          </div>
+                        )}
+                      </div>
                     </TableCell>
-                    <TableCell>
-                      {new Date(item.createdAt).toLocaleDateString()}
+                    <TableCell className="py-2 text-[11px] text-muted-foreground">
+                      {item.date ? new Date(item.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : '-'}
                     </TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex items-center justify-end gap-2">
+                    <TableCell className="py-2 text-right">
+                      <div className="flex items-center justify-end gap-1" onClick={(e) => e.stopPropagation()}>
                         <Button
                           variant="ghost"
                           size="icon"
-                          onClick={() => window.open(`/news/${item.slug}`, '_blank')}
-                          title="View"
+                          className="h-7 w-7"
+                          onClick={() => navigate(`/admin/news/${item.id}/edit`)}
+                          title="Edit News Item"
                         >
-                          <Eye className="h-4 w-4" />
+                          <Pencil className="h-3.5 w-3.5" />
                         </Button>
                         <Button
                           variant="ghost"
                           size="icon"
-                          onClick={() => handleEdit(item)}
-                          title="Edit"
-                        >
-                          <Pencil className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
+                          className="h-7 w-7 text-destructive hover:text-destructive"
                           onClick={() => handleDelete(item.id, item.title)}
-                          title="Delete"
+                          title="Delete News Item"
                         >
-                          <Trash2 className="h-4 w-4 text-destructive" />
+                          <Trash2 className="h-3.5 w-3.5" />
                         </Button>
                       </div>
                     </TableCell>
@@ -141,13 +162,6 @@ export function NewsManager() {
         </CardContent>
       </Card>
 
-      {isFormOpen && (
-        <NewsForm
-          news={editingNews}
-          onClose={handleFormClose}
-          onSuccess={handleFormClose}
-        />
-      )}
     </>
   );
 }

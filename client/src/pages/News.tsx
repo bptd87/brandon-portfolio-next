@@ -97,6 +97,7 @@ function NewsContent() {
       <SEO
         title="News & Updates | Brandon PT Davis"
         description="Latest news, project launches, and design updates from Brandon PT Davis."
+        image={featuredNews?.coverImageUrl || undefined}
       />
       <Header />
 

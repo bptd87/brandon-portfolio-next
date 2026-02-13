@@ -14,7 +14,7 @@ export async function uploadToCloudinary(
     publicId?: string;
     resourceType?: 'image' | 'video' | 'raw' | 'auto';
   } = {}
-): Promise<{ url: string; publicId: string }> {
+): Promise<{ url: string; publicId: string; bytes: number; width: number; height: number }> {
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
       {
@@ -29,6 +29,9 @@ export async function uploadToCloudinary(
           resolve({
             url: result.secure_url,
             publicId: result.public_id,
+            bytes: result.bytes,
+            width: result.width,
+            height: result.height,
           });
         } else {
           reject(new Error('Upload failed - no result'));

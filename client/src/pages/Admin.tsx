@@ -2,16 +2,17 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Loader2, FolderKanban, Newspaper, FileText, FolderTree, Tag as TagIcon } from "lucide-react";
-import { ProjectsManager } from "@/components/admin/ProjectsManager";
-import { NewsManager } from "@/components/admin/NewsManager";
-import { ArticlesManager } from "@/components/admin/ArticlesManager";
-import { CategoriesManager } from "@/components/admin/CategoriesManager";
-import { TagsManager } from "@/components/admin/TagsManager";
+import { Loader2, FolderKanban, Newspaper, FileText, ArrowUpRight, TrendingUp } from "lucide-react";
+import { Link } from "wouter";
+import { AdminLayout } from "@/components/admin/AdminLayout";
+import { trpc } from "@/lib/trpc";
 
 export default function Admin() {
   const { user, loading, isAuthenticated } = useAuth();
+
+  const { data: projects } = trpc.projects.list.useQuery({});
+  const { data: news } = trpc.news.list.useQuery({});
+  const { data: articles } = trpc.articles.list.useQuery({});
 
   if (loading) {
     return (
@@ -52,73 +53,121 @@ export default function Admin() {
     );
   }
 
+  const stats = [
+    {
+      label: "Projects",
+      value: projects?.length || 0,
+      icon: FolderKanban,
+      href: "/admin/projects",
+      color: "text-blue-500",
+      bg: "bg-blue-500/10"
+    },
+    {
+      label: "News Posts",
+      value: news?.length || 0,
+      icon: Newspaper,
+      href: "/admin/news",
+      color: "text-orange-500",
+      bg: "bg-orange-500/10"
+    },
+    {
+      label: "Articles",
+      value: articles?.length || 0,
+      icon: FileText,
+      href: "/admin/articles",
+      color: "text-purple-500",
+      bg: "bg-purple-500/10"
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-background">
-      <div className="border-b">
-        <div className="container mx-auto py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-              <p className="text-muted-foreground mt-1">Manage your portfolio content</p>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-muted-foreground">
-                Signed in as <span className="font-medium text-foreground">{user.name || user.email}</span>
-              </span>
-              <Button variant="outline" asChild>
-                <a href="/">View Site</a>
-              </Button>
-            </div>
-          </div>
-        </div>
+    <AdminLayout
+      title={`Welcome back, ${user.name || 'Admin'}`}
+      description="Here's what's happening with your portfolio today."
+    >
+      <div className="grid gap-6 md:grid-cols-3">
+        {stats.map((stat) => (
+          <Link key={stat.label} href={stat.href}>
+            <Card className="hover:border-primary/50 transition-all duration-300 cursor-pointer group">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div className={`p-3 rounded-xl ${stat.bg} ${stat.color}`}>
+                    <stat.icon className="h-6 w-6" />
+                  </div>
+                  <ArrowUpRight className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                </div>
+                <div className="mt-4">
+                  <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider">{stat.label}</p>
+                  <h3 className="text-3xl font-bold mt-1">{stat.value}</h3>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        ))}
       </div>
 
-      <div className="container mx-auto py-8">
-        <Tabs defaultValue="projects" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
-            <TabsTrigger value="projects" className="flex items-center gap-2">
-              <FolderKanban className="h-4 w-4" />
-              Projects
-            </TabsTrigger>
-            <TabsTrigger value="news" className="flex items-center gap-2">
-              <Newspaper className="h-4 w-4" />
-              News
-            </TabsTrigger>
-            <TabsTrigger value="articles" className="flex items-center gap-2">
-              <FileText className="h-4 w-4" />
-              Articles
-            </TabsTrigger>
-            <TabsTrigger value="categories" className="flex items-center gap-2">
-              <FolderTree className="h-4 w-4" />
-              Categories
-            </TabsTrigger>
-            <TabsTrigger value="tags" className="flex items-center gap-2">
-              <TagIcon className="h-4 w-4" />
-              Tags
-            </TabsTrigger>
-          </TabsList>
+      <div className="grid gap-6 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-primary" />
+              Quick Actions
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="grid gap-4">
+            <Button className="w-full justify-start gap-3 h-12 text-base" variant="outline" asChild>
+              <Link href="/admin/projects/new">
+                <FolderKanban className="h-5 w-5" />
+                Create New Project
+              </Link>
+            </Button>
+            <Button className="w-full justify-start gap-3 h-12 text-base" variant="outline" asChild>
+              <Link href="/admin/news/new">
+                <Newspaper className="h-5 w-5" />
+                Post News Update
+              </Link>
+            </Button>
+            <Button className="w-full justify-start gap-3 h-12 text-base" variant="outline" asChild>
+              <Link href="/admin/articles/new">
+                <FileText className="h-5 w-5" />
+                Write New Article
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
 
-          <TabsContent value="projects">
-            <ProjectsManager />
-          </TabsContent>
-
-          <TabsContent value="news">
-            <NewsManager />
-          </TabsContent>
-
-          <TabsContent value="articles">
-            <ArticlesManager />
-          </TabsContent>
-
-          <TabsContent value="categories">
-            <CategoriesManager />
-          </TabsContent>
-
-          <TabsContent value="tags">
-            <TagsManager />
-          </TabsContent>
-        </Tabs>
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent Activity</CardTitle>
+            <CardDescription>Your latest content updates</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {projects?.slice(0, 3).map((p) => (
+                <div key={p.id} className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded bg-muted flex-shrink-0">
+                    {p.coverImageUrl ? (
+                      <img src={p.coverImageUrl} className="w-full h-full object-cover rounded" alt="" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <FolderKanban className="h-4 w-4 text-muted-foreground" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium truncate">{p.title}</p>
+                    <p className="text-xs text-muted-foreground uppercase tracking-tight">{p.discipline?.replace('_', ' ')}</p>
+                  </div>
+                  <span className="text-xs text-muted-foreground">Updated</span>
+                </div>
+              ))}
+              {!projects?.length && (
+                <p className="text-sm text-muted-foreground text-center py-4">No recent activity</p>
+              )}
+            </div>
+          </CardContent>
+        </Card>
       </div>
-    </div>
+    </AdminLayout>
   );
 }

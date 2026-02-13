@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Loader2 } from "lucide-react";
 import { ProjectForm } from "@/components/admin/ProjectForm";
 import { useParams } from "wouter";
+import { AdminLayout } from "@/components/admin/AdminLayout";
 
 export default function AdminProjectEdit() {
   const { user, loading, isAuthenticated } = useAuth();
@@ -50,5 +51,12 @@ export default function AdminProjectEdit() {
     );
   }
 
-  return <ProjectForm projectId={projectId} />;
+  return (
+    <AdminLayout
+      title={projectId ? "Edit Project" : "New Project"}
+      description={projectId ? "Update your project details and gallery." : "Create a new portfolio piece."}
+    >
+      <ProjectForm projectId={projectId} />
+    </AdminLayout>
+  );
 }

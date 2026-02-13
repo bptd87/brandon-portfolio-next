@@ -115,9 +115,8 @@ function SortableTeamMember({
     <div
       ref={setNodeRef}
       style={style}
-      className={`flex items-center gap-3 p-3 rounded-lg border bg-card ${
-        isDragging ? 'shadow-lg ring-2 ring-primary' : ''
-      }`}
+      className={`flex items-center gap-3 p-3 rounded-lg border bg-card ${isDragging ? 'shadow-lg ring-2 ring-primary' : ''
+        }`}
     >
       <button
         type="button"
@@ -187,9 +186,8 @@ function SortableGalleryImage({
     <div
       ref={setNodeRef}
       style={style}
-      className={`relative rounded-lg border overflow-hidden ${
-        isDragging ? 'shadow-lg ring-2 ring-primary' : ''
-      }`}
+      className={`relative rounded-lg border overflow-hidden ${isDragging ? 'shadow-lg ring-2 ring-primary' : ''
+        }`}
     >
       {/* Drag handle overlay */}
       <button
@@ -322,8 +320,8 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
         designNotes: fullProject.designNotes || "",
         discipline: fullProject.discipline || "scenic_design",
         subcategory: fullProject.subcategory || "",
-        status: (fullProject.status === 'draft' || fullProject.status === 'published' || fullProject.status === 'archived') 
-          ? fullProject.status 
+        status: (fullProject.status && (fullProject.status.toLowerCase() === 'draft' || fullProject.status.toLowerCase() === 'published' || fullProject.status.toLowerCase() === 'archived'))
+          ? fullProject.status.toLowerCase() as "draft" | "published" | "archived"
           : "draft",
         featured: fullProject.featured || false,
         year: fullProject.year || new Date().getFullYear(),
@@ -382,7 +380,9 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
           url: img.imageUrl,
           key: img.imageKey,
           videoUrl: img.videoUrl,
-          imageType: img.imageType || 'production',
+          imageType: (img.imageType?.toLowerCase() === 'production' || img.imageType?.toLowerCase() === 'rendering' || img.imageType?.toLowerCase() === 'technical_drawing' || img.imageType?.toLowerCase() === 'video')
+            ? img.imageType.toLowerCase() as any
+            : 'production',
           caption: img.caption,
           altText: img.altText,
           sortOrder: img.sortOrder !== undefined ? img.sortOrder : index,
@@ -591,7 +591,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
         slug: formData.slug,
         excerpt: formData.excerpt || undefined,
         designNotes: formData.designNotes || undefined,
-        discipline: formData.discipline,
+        discipline: formData.discipline.toLowerCase() as any,
         subcategory: formData.subcategory || undefined,
         month: formData.month || undefined,
         coverImageUrl: coverImageUrl || undefined,
@@ -599,14 +599,17 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
         location: formData.location || undefined,
         client: formData.client || undefined,
         year: formData.year || undefined,
-        status: formData.status,
+        status: formData.status.toLowerCase() as any,
         featured: formData.featured,
         creativeTeam: teamMembers.length > 0 ? teamMembers : undefined,
         seoTitle: formData.seoTitle || undefined,
         seoDescription: formData.seoDescription || undefined,
         seoKeywords: formData.seoKeywords || undefined,
         tagIds: selectedTagIds.length > 0 ? selectedTagIds : undefined,
-        images: uploadedGalleryImages,
+        images: uploadedGalleryImages.map(img => ({
+          ...img,
+          imageType: img.imageType.toLowerCase() as any
+        })),
       };
 
       if (projectId) {
@@ -953,7 +956,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
                   <CardHeader>
                     <CardTitle>Creative Team</CardTitle>
                     <CardDescription>
-                      Add team members with custom roles. Each project can have different roles — 
+                      Add team members with custom roles. Each project can have different roles —
                       type a role name or select from common suggestions.
                     </CardDescription>
                   </CardHeader>
@@ -1288,7 +1291,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
                         placeholder="scenic design, theatre, broadway, set design"
                       />
                       <p className="text-xs text-muted-foreground">
-                        Comma-separated keywords for the &lt;meta name="keywords"&gt; tag. 
+                        Comma-separated keywords for the &lt;meta name="keywords"&gt; tag.
                         Most search engines no longer use this, but it doesn't hurt to include them.
                       </p>
                     </div>

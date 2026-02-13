@@ -135,6 +135,7 @@ export default function ProjectDetail() {
         description={project.excerpt || `${project.title} - Scenic design project by Brandon PT Davis`}
         image={project.coverImageUrl || undefined}
         type="website"
+        keywords={project.seoKeywords || undefined}
       />
       <StructuredData
         type="BreadcrumbList"
@@ -194,7 +195,7 @@ export default function ProjectDetail() {
         {project.coverImageUrl ? (
           <ProgressiveImage
             src={project.coverImageUrl}
-            alt={project.title}
+            alt={`${project.title} - Scenic design by Brandon PT Davis`}
             className=""
             smartPosition={true}
             loading="eager"

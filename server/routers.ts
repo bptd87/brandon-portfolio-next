@@ -4,10 +4,12 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { TRPCError } from "@trpc/server";
+import { analyticsRouter } from "./routers/analytics";
 import { storagePut } from "./storage";
 import { invokeLLM } from "./_core/llm";
 import { generateImage } from "./_core/imageGeneration";
 import * as db from "./db";
+import { supabase } from "./db";
 
 // Admin-only procedure
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
@@ -28,6 +30,9 @@ export const appRouter = router({
       return { success: true } as const;
     }),
   }),
+
+  // ============ ANALYTICS ============
+  analytics: analyticsRouter,
 
   // ============ CATEGORY MANAGEMENT ============
   categories: router({
@@ -132,10 +137,10 @@ export const appRouter = router({
   projects: router({
     list: publicProcedure
       .input(z.object({
-        status: z.enum(['draft', 'published', 'archived']).optional(),
+        status: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['draft', 'published', 'archived'])).optional(),
         featured: z.boolean().optional(),
         categoryId: z.number().optional(),
-        discipline: z.enum(['scenic_design', 'experiential_design', 'rendering', 'scenic_models']).optional(),
+        discipline: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['scenic_design', 'experiential_design', 'rendering', 'scenic_models'])).optional(),
       }).optional())
       .query(async ({ input }) => {
         return await db.getAllProjects(input);
@@ -182,7 +187,7 @@ export const appRouter = router({
         excerpt: z.string().optional(),
         description: z.string().optional(),
         designNotes: z.string().optional(),
-        discipline: z.enum(['scenic_design', 'experiential_design', 'rendering', 'scenic_models']).default('scenic_design'),
+        discipline: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['scenic_design', 'experiential_design', 'rendering', 'scenic_models'])).default('scenic_design'),
         subcategory: z.string().max(100).optional(),
         categoryId: z.number().optional(),
         coverImageUrl: z.string().optional(),
@@ -191,7 +196,7 @@ export const appRouter = router({
         client: z.string().max(255).optional(),
         year: z.number().optional(),
         month: z.number().min(1).max(12).optional(),
-        status: z.enum(['draft', 'published', 'archived']).default('draft'),
+        status: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['draft', 'published', 'archived'])).default('draft'),
         featured: z.boolean().default(false),
         creativeTeam: z.any().optional(),
         metadata: z.any().optional(),
@@ -203,7 +208,7 @@ export const appRouter = router({
           imageUrl: z.string().optional(),
           imageKey: z.string().optional(),
           videoUrl: z.string().optional(),
-          imageType: z.enum(['production', 'rendering', 'technical_drawing', 'video']),
+          imageType: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['production', 'rendering', 'technical_drawing', 'video'])),
           caption: z.string().optional(),
           altText: z.string().optional(),
           sortOrder: z.number(),
@@ -240,7 +245,7 @@ export const appRouter = router({
         excerpt: z.string().optional(),
         description: z.string().optional(),
         designNotes: z.string().optional(),
-        discipline: z.enum(['scenic_design', 'experiential_design', 'rendering', 'scenic_models']).optional(),
+        discipline: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['scenic_design', 'experiential_design', 'rendering', 'scenic_models'])).optional(),
         subcategory: z.string().max(100).optional(),
         categoryId: z.number().optional(),
         coverImageUrl: z.string().optional(),
@@ -249,7 +254,7 @@ export const appRouter = router({
         client: z.string().max(255).optional(),
         year: z.number().optional(),
         month: z.number().min(1).max(12).optional(),
-        status: z.enum(['draft', 'published', 'archived']).optional(),
+        status: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['draft', 'published', 'archived'])).optional(),
         featured: z.boolean().optional(),
         creativeTeam: z.any().optional(),
         metadata: z.any().optional(),
@@ -261,7 +266,7 @@ export const appRouter = router({
           imageUrl: z.string().optional(),
           imageKey: z.string().optional(),
           videoUrl: z.string().optional(),
-          imageType: z.enum(['production', 'rendering', 'technical_drawing', 'video']),
+          imageType: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['production', 'rendering', 'technical_drawing', 'video'])),
           caption: z.string().optional(),
           altText: z.string().optional(),
           sortOrder: z.number(),
@@ -341,13 +346,15 @@ export const appRouter = router({
         // Upload to Cloudinary (automatic optimization)
         const result = await uploadToCloudinary(
           buffer,
-          'brandon-portfolio/projects',
-          publicId
+          {
+            folder: 'brandon-portfolio/projects',
+            publicId: publicId
+          }
         );
         
         return { 
           url: result.url, 
-          key: result.key,
+          key: result.publicId,
           optimized: {
             originalSize: buffer.length,
             optimizedSize: result.bytes,
@@ -497,11 +504,13 @@ export const appRouter = router({
         // Upload to Cloudinary (automatic optimization)
         const result = await uploadToCloudinary(
           buffer,
-          'brandon-portfolio/news',
-          publicId
+          {
+            folder: 'brandon-portfolio/news',
+            publicId: publicId
+          }
         );
         
-        return { url: result.url, key: result.key };
+        return { url: result.url, key: result.publicId };
       }),
     
     bulkImport: publicProcedure
@@ -707,11 +716,13 @@ export const appRouter = router({
         // Upload to Cloudinary (automatic optimization)
         const result = await uploadToCloudinary(
           buffer,
-          'brandon-portfolio/articles',
-          publicId
+          {
+            folder: 'brandon-portfolio/articles',
+            publicId: publicId
+          }
         );
         
-        return { url: result.url, key: result.key };
+        return { url: result.url, key: result.publicId };
       }),
     
     incrementViews: publicProcedure
@@ -1049,16 +1060,167 @@ export const appRouter = router({
       .query(async ({ input }) => {
         return await db.getAllTutorials(input);
       }),
+    
+    getById: publicProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getTutorialById(input.id);
+      }),
+
+    getBySlug: publicProcedure
+      .input(z.object({ slug: z.string() }))
+      .query(async ({ input }) => {
+        return await db.getTutorialBySlug(input.slug);
+      }),
+    
+    create: adminProcedure
+      .input(z.object({
+        title: z.string().min(1).max(255),
+        slug: z.string().min(1).max(255),
+        description: z.string().optional(),
+        overview: z.string().optional(),
+        content: z.string().optional(),
+        blocks: z.array(z.any()).optional(),
+        category: z.string().optional(),
+        difficulty: z.string().optional(),
+        duration: z.number().optional(),
+        videoUrl: z.string().optional(),
+        coverImageUrl: z.string().optional(),
+        status: z.enum(['draft', 'published', 'archived']).default('draft'),
+        featured: z.boolean().default(false),
+        seoTitle: z.string().max(255).optional(),
+        seoDescription: z.string().optional(),
+        seoKeywords: z.string().optional(),
+        learningObjectives: z.array(z.string()).optional(),
+        keyConcepts: z.array(z.any()).optional(),
+        proTips: z.array(z.string()).optional(),
+        shortcuts: z.array(z.any()).optional(),
+        commonPitfalls: z.array(z.string()).optional(),
+        transcript: z.array(z.any()).optional(),
+        relatedResources: z.array(z.any()).optional(),
+        relatedTutorials: z.array(z.any()).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const id = await db.createTutorial(input);
+        return { id };
+      }),
+    
+    update: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        title: z.string().min(1).max(255).optional(),
+        slug: z.string().min(1).max(255).optional(),
+        description: z.string().optional(),
+        overview: z.string().optional(),
+        content: z.string().optional(),
+        blocks: z.array(z.any()).optional(),
+        category: z.string().optional(),
+        difficulty: z.string().optional(),
+        duration: z.number().optional(),
+        videoUrl: z.string().optional(),
+        coverImageUrl: z.string().optional(),
+        status: z.enum(['draft', 'published', 'archived']).optional(),
+        featured: z.boolean().optional(),
+        seoTitle: z.string().max(255).optional(),
+        seoDescription: z.string().optional(),
+        seoKeywords: z.string().optional(),
+        learningObjectives: z.array(z.string()).optional(),
+        keyConcepts: z.array(z.any()).optional(),
+        proTips: z.array(z.string()).optional(),
+        shortcuts: z.array(z.any()).optional(),
+        commonPitfalls: z.array(z.string()).optional(),
+        transcript: z.array(z.any()).optional(),
+        relatedResources: z.array(z.any()).optional(),
+        relatedTutorials: z.array(z.any()).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, ...data } = input;
+        await db.updateTutorial(id, data);
+        return { success: true };
+      }),
+    
+    delete: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await db.deleteTutorial(input.id);
+        return { success: true };
+      }),
   }),
+
+
 
   // ============ SCENIC DIRECTORY ============
   scenicDirectory: router({
-    list: publicProcedure
-      .input(z.object({
-        categorySlug: z.string().optional(),
-      }).optional())
+    list: publicProcedure.query(async () => {
+      // Create a getAllScenicEntries function in db.ts if it doesn't exist, or use a direct query here for now
+      const { data } = await supabase
+        .from('scenic_directory')
+        .select('*')
+        .order('name');
+      return (data || []).map(entry => ({
+        ...entry,
+        categoryName: entry.category_name,
+        categorySlug: entry.category_slug,
+        coverImage: entry.cover_image,
+        createdAt: new Date(entry.created_at),
+      })); 
+    }),
+
+    getById: publicProcedure
+      .input(z.object({ id: z.number() }))
       .query(async ({ input }) => {
-        return await db.getAllScenicDirectory(input);
+        return await db.getScenicEntryById(input.id);
+      }),
+
+    create: adminProcedure
+      .input(z.object({
+        name: z.string().min(1).max(255),
+        description: z.string().optional(),
+        categoryName: z.string().optional(),
+        categorySlug: z.string().optional(),
+        url: z.string().url().optional(),
+        location: z.string().optional(),
+        coverImage: z.string().optional(),
+        status: z.enum(['published', 'draft', 'archived']).default('published'),
+        featured: z.boolean().default(false),
+        seoTitle: z.string().optional(),
+        seoDescription: z.string().optional(),
+        seoKeywords: z.string().optional(),
+        gallery: z.array(z.any()).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const id = await db.createScenicEntry(input);
+        return { id };
+      }),
+
+    update: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        name: z.string().min(1).max(255).optional(),
+        description: z.string().optional(),
+        categoryName: z.string().optional(),
+        categorySlug: z.string().optional(),
+        url: z.string().url().optional(),
+        location: z.string().optional(),
+        coverImage: z.string().optional(),
+        status: z.enum(['published', 'draft', 'archived']).optional(),
+        featured: z.boolean().optional(),
+        seoTitle: z.string().optional(),
+        seoDescription: z.string().optional(),
+        seoKeywords: z.string().optional(),
+        gallery: z.array(z.any()).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, ...data } = input;
+        await db.updateScenicEntry(id, data);
+        return { success: true };
+      }),
+
+    delete: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await db.deleteScenicEntry(input.id);
+        return { success: true };
       }),
   }),
 
@@ -1107,6 +1269,12 @@ export const appRouter = router({
         return await db.getAllCollaborators(input);
       }),
     
+    getById: publicProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getCollaboratorById(input.id);
+      }),
+    
     getBySlug: publicProcedure
       .input(z.object({ slug: z.string() }))
       .query(async ({ input }) => {
@@ -1121,6 +1289,61 @@ export const appRouter = router({
       .input(z.object({ collaboratorId: z.number() }))
       .query(async ({ input }) => {
         return await db.getCollaboratorProjects(input.collaboratorId);
+      }),
+    
+    create: adminProcedure
+      .input(z.object({
+        name: z.string().min(1).max(255),
+        slug: z.string().min(1).max(255),
+        role: z.string().optional(),
+        bio: z.string().optional(),
+        website: z.string().url().optional(),
+        portfolioUrl: z.string().url().optional(),
+        instagramUrl: z.string().url().optional(),
+        instagramHandle: z.string().optional(),
+        coverImage: z.string().optional(),
+        status: z.enum(['published', 'draft', 'archived']).default('published'),
+        featured: z.boolean().default(false),
+        seoTitle: z.string().optional(),
+        seoDescription: z.string().optional(),
+        seoKeywords: z.string().optional(),
+        gallery: z.array(z.any()).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const id = await db.createCollaborator(input);
+        return { id };
+      }),
+    
+    update: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        name: z.string().min(1).max(255).optional(),
+        slug: z.string().min(1).max(255).optional(),
+        role: z.string().optional(),
+        bio: z.string().optional(),
+        website: z.string().url().optional(),
+        portfolioUrl: z.string().url().optional(),
+        instagramUrl: z.string().url().optional(),
+        instagramHandle: z.string().optional(),
+        coverImage: z.string().optional(),
+        status: z.enum(['published', 'draft', 'archived']).optional(),
+        featured: z.boolean().optional(),
+        seoTitle: z.string().optional(),
+        seoDescription: z.string().optional(),
+        seoKeywords: z.string().optional(),
+        gallery: z.array(z.any()).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, ...data } = input;
+        await db.updateCollaborator(id, data);
+        return { success: true };
+      }),
+    
+    delete: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await db.deleteCollaborator(input.id);
+        return { success: true };
       }),
   }),
 

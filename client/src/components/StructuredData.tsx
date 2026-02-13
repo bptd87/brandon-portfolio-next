@@ -120,17 +120,51 @@ interface VideoObjectSchema {
   };
 }
 
+interface FAQPageSchema {
+  mainEntity: Array<{
+    question: string;
+    answer: string;
+  }>;
+}
+
+interface HowToSchema {
+  name: string;
+  description?: string;
+  image?: string;
+  totalTime?: string; // ISO 8601 duration format (e.g., "PT30M")
+  estimatedCost?: {
+    currency: string;
+    value: string;
+  };
+  supply?: Array<{
+    name: string;
+    url?: string;
+  }>;
+  tool?: Array<{
+    name: string;
+    url?: string;
+  }>;
+  step: Array<{
+    name: string;
+    text?: string;
+    url?: string;
+    image?: string;
+  }>;
+}
+
 interface StructuredDataProps {
-  type: 'Person' | 'Organization' | 'Both' | 'CreativeWork' | 'BreadcrumbList' | 'Article' | 'VideoObject';
+  type: 'Person' | 'Organization' | 'Both' | 'CreativeWork' | 'BreadcrumbList' | 'Article' | 'VideoObject' | 'FAQPage' | 'HowTo';
   person?: PersonSchema;
   organization?: OrganizationSchema;
   creativeWork?: CreativeWorkSchema;
   breadcrumbs?: BreadcrumbItem[];
   article?: ArticleSchema;
   videoObject?: VideoObjectSchema;
+  faqPage?: FAQPageSchema;
+  howTo?: HowToSchema;
 }
 
-export default function StructuredData({ type, person, organization, creativeWork, breadcrumbs, article, videoObject }: StructuredDataProps) {
+export default function StructuredData({ type, person, organization, creativeWork, breadcrumbs, article, videoObject, faqPage, howTo }: StructuredDataProps) {
   const generatePersonSchema = (data: PersonSchema) => {
     const schema: any = {
       '@context': 'https://schema.org',
@@ -144,18 +178,18 @@ export default function StructuredData({ type, person, organization, creativeWor
     if (data.description) schema.description = data.description;
     if (data.email) schema.email = `mailto:${data.email}`;
     if (data.telephone) schema.telephone = data.telephone;
-    
+
     if (data.address) {
       schema.address = {
         '@type': 'PostalAddress',
         ...data.address,
       };
     }
-    
+
     if (data.sameAs && data.sameAs.length > 0) {
       schema.sameAs = data.sameAs;
     }
-    
+
     if (data.alumniOf && data.alumniOf.length > 0) {
       schema.alumniOf = data.alumniOf.map(school => ({
         '@type': 'EducationalOrganization',
@@ -163,11 +197,11 @@ export default function StructuredData({ type, person, organization, creativeWor
         ...(school.url && { url: school.url }),
       }));
     }
-    
+
     if (data.knowsAbout && data.knowsAbout.length > 0) {
       schema.knowsAbout = data.knowsAbout;
     }
-    
+
     if (data.awards && data.awards.length > 0) {
       schema.award = data.awards;
     }
@@ -187,7 +221,7 @@ export default function StructuredData({ type, person, organization, creativeWor
     if (data.description) schema.description = data.description;
     if (data.email) schema.email = `mailto:${data.email}`;
     if (data.foundingDate) schema.foundingDate = data.foundingDate;
-    
+
     if (data.founder) {
       schema.founder = {
         '@type': 'Person',
@@ -195,14 +229,14 @@ export default function StructuredData({ type, person, organization, creativeWor
         ...(data.founder.url && { url: data.founder.url }),
       };
     }
-    
+
     if (data.address) {
       schema.address = {
         '@type': 'PostalAddress',
         ...data.address,
       };
     }
-    
+
     if (data.sameAs && data.sameAs.length > 0) {
       schema.sameAs = data.sameAs;
     }
@@ -224,7 +258,7 @@ export default function StructuredData({ type, person, organization, creativeWor
     if (data.datePublished) schema.datePublished = data.datePublished;
     if (data.genre) schema.genre = data.genre;
     if (data.about) schema.about = data.about;
-    
+
     if (data.creator) {
       schema.creator = {
         '@type': 'Person',
@@ -232,7 +266,7 @@ export default function StructuredData({ type, person, organization, creativeWor
         ...(data.creator.url && { url: data.creator.url }),
       };
     }
-    
+
     if (data.locationCreated) {
       schema.locationCreated = {
         '@type': 'Place',
@@ -245,11 +279,11 @@ export default function StructuredData({ type, person, organization, creativeWor
         }),
       };
     }
-    
+
     if (data.keywords && data.keywords.length > 0) {
       schema.keywords = data.keywords.join(', ');
     }
-    
+
     if (data.workExample && data.workExample.length > 0) {
       schema.workExample = data.workExample.map(work => ({
         '@type': work.type,
@@ -258,7 +292,7 @@ export default function StructuredData({ type, person, organization, creativeWor
         ...(work.name && { name: work.name }),
       }));
     }
-    
+
     if (data.contributor && data.contributor.length > 0) {
       schema.contributor = data.contributor.map(person => ({
         '@type': person.type,
@@ -271,19 +305,19 @@ export default function StructuredData({ type, person, organization, creativeWor
   };
 
   const schemas = [];
-  
+
   if ((type === 'Person' || type === 'Both') && person) {
     schemas.push(generatePersonSchema(person));
   }
-  
+
   if ((type === 'Organization' || type === 'Both') && organization) {
     schemas.push(generateOrganizationSchema(organization));
   }
-  
+
   if (type === 'CreativeWork' && creativeWork) {
     schemas.push(generateCreativeWorkSchema(creativeWork));
   }
-  
+
   if (type === 'BreadcrumbList' && breadcrumbs && breadcrumbs.length > 0) {
     schemas.push({
       '@context': 'https://schema.org',
@@ -296,7 +330,7 @@ export default function StructuredData({ type, person, organization, creativeWor
       })),
     });
   }
-  
+
   if (type === 'Article' && article) {
     const schema: any = {
       '@context': 'https://schema.org',
@@ -320,7 +354,7 @@ export default function StructuredData({ type, person, organization, creativeWor
       },
       url: article.url,
     };
-    
+
     if (article.description) schema.description = article.description;
     if (article.image) schema.image = article.image;
     if (article.dateModified) schema.dateModified = article.dateModified;
@@ -329,10 +363,10 @@ export default function StructuredData({ type, person, organization, creativeWor
     if (article.keywords && article.keywords.length > 0) {
       schema.keywords = article.keywords.join(', ');
     }
-    
+
     schemas.push(schema);
   }
-  
+
   if (type === 'VideoObject' && videoObject) {
     const schema: any = {
       '@context': 'https://schema.org',
@@ -341,7 +375,7 @@ export default function StructuredData({ type, person, organization, creativeWor
       thumbnailUrl: videoObject.thumbnailUrl,
       uploadDate: videoObject.uploadDate,
     };
-    
+
     if (videoObject.description) schema.description = videoObject.description;
     if (videoObject.duration) schema.duration = videoObject.duration;
     if (videoObject.contentUrl) schema.contentUrl = videoObject.contentUrl;
@@ -358,7 +392,63 @@ export default function StructuredData({ type, person, organization, creativeWor
         }),
       };
     }
-    
+
+    schemas.push(schema);
+  }
+
+  if (type === 'FAQPage' && faqPage) {
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      'mainEntity': faqPage.mainEntity.map(item => ({
+        '@type': 'Question',
+        'name': item.question,
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': item.answer
+        }
+      }))
+    });
+  }
+
+  if (type === 'HowTo' && howTo) {
+    const schema: any = {
+      '@context': 'https://schema.org',
+      '@type': 'HowTo',
+      name: howTo.name,
+      step: howTo.step.map((s, i) => ({
+        '@type': 'HowToStep',
+        position: i + 1,
+        name: s.name,
+        ...(s.text && { text: s.text }),
+        ...(s.url && { url: s.url }),
+        ...(s.image && { image: s.image })
+      }))
+    };
+
+    if (howTo.description) schema.description = howTo.description;
+    if (howTo.image) schema.image = howTo.image;
+    if (howTo.totalTime) schema.totalTime = howTo.totalTime;
+    if (howTo.estimatedCost) schema.estimatedCost = {
+      '@type': 'MonetaryAmount',
+      currency: howTo.estimatedCost.currency,
+      value: howTo.estimatedCost.value
+    };
+    if (howTo.supply && howTo.supply.length > 0) {
+      schema.supply = howTo.supply.map(s => ({
+        '@type': 'HowToSupply',
+        name: s.name,
+        ...(s.url && { url: s.url })
+      }));
+    }
+    if (howTo.tool && howTo.tool.length > 0) {
+      schema.tool = howTo.tool.map(t => ({
+        '@type': 'HowToTool',
+        name: t.name,
+        ...(t.url && { url: t.url })
+      }));
+    }
+
     schemas.push(schema);
   }
 

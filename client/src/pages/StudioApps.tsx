@@ -73,6 +73,7 @@ export default function StudioApps() {
       <SEO
         title="App Studio | Brandon PT Davis"
         description="Free web apps for scenic designers. Scale calculators, dimension references, paint mixers, and design tools."
+        keywords="scenic design calculator, architecture scale converter, paint mixing calculator, Rosco paint, design history timeline, theatrical design tools"
         type="website"
       />
       <Header />
@@ -86,14 +87,14 @@ export default function StudioApps() {
               Back to Studio
             </Button>
           </Link>
-          
+
           <div className="max-w-4xl">
             <p className="text-xs tracking-[0.3em] text-muted-foreground mb-6 font-semibold">STUDIO / APP STUDIO</p>
             <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 leading-[0.9]">
               Tools built for<br />scenic designers
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl leading-relaxed">
-              A collection of practical web apps for theatrical design professionals. Calculate scales, 
+              A collection of practical web apps for theatrical design professionals. Calculate scales,
               convert dimensions, reference standards, and explore design history—all in your browser.
             </p>
           </div>
@@ -109,19 +110,19 @@ export default function StudioApps() {
                 <Card className="h-full border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 overflow-hidden rounded-2xl">
                   {/* App Image */}
                   <div className="relative aspect-[16/10] overflow-hidden">
-                    <img 
-                      src={app.image} 
+                    <img
+                      src={app.image}
                       alt={app.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent"></div>
-                    
+
                     {/* Color accent */}
-                    <div 
+                    <div
                       className="absolute inset-0 mix-blend-multiply opacity-20 group-hover:opacity-30 transition-opacity duration-300"
                       style={{ backgroundColor: app.accentColor }}
                     />
-                    
+
                     {/* Category badge */}
                     <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm text-foreground text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider border border-border">
                       {app.category}
@@ -136,7 +137,7 @@ export default function StudioApps() {
                     <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
                       {app.description}
                     </p>
-                    
+
                     <div className="inline-flex items-center gap-2 font-bold text-sm group-hover:gap-3 transition-all duration-300" style={{ color: app.accentColor }}>
                       Launch App <ArrowRight className="w-4 h-4" />
                     </div>
@@ -154,8 +155,8 @@ export default function StudioApps() {
           <div className="max-w-4xl mx-auto bg-gradient-to-br from-primary/5 to-primary/0 border-2 border-border rounded-3xl p-12 text-center">
             <h2 className="text-3xl md:text-4xl font-black tracking-tighter mb-4">Mobile-First Design</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Each app is designed to work seamlessly on your phone, tablet, or desktop. 
-              Access these tools on-site during tech rehearsals, in the shop, or at your drafting table. 
+              Each app is designed to work seamlessly on your phone, tablet, or desktop.
+              Access these tools on-site during tech rehearsals, in the shop, or at your drafting table.
               No installation required—just open and use.
             </p>
           </div>

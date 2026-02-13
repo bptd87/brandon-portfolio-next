@@ -62,6 +62,7 @@ export default function Projects() {
       <SEO
         title={`${currentDiscipline.title} | Brandon PT Davis`}
         description={`Explore ${currentDiscipline.title.toLowerCase()} projects by Brandon PT Davis. ${currentDiscipline.subtitle}.`}
+        image={projects?.[0]?.coverImageUrl || undefined}
       />
       <Header />
 
