@@ -36,7 +36,22 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 
 export async function createConfiguredApp(app?: Express, server?: Server): Promise<Express> {
   const expressApp = app || express();
-  
+
+  // Health check endpoint for deployment debugging
+  expressApp.get("/health", (req: express.Request, res: express.Response) => {
+    res.json({
+      status: "ok",
+      uptime: process.uptime(),
+      env: {
+        NODE_ENV: process.env.NODE_ENV,
+        PORT: process.env.PORT,
+        HAS_SUPABASE_URL: !!process.env.SUPABASE_URL,
+        HAS_SUPABASE_SERVICE_KEY: !!process.env.SUPABASE_SERVICE_KEY,
+        HAS_DATABASE_URL: !!process.env.DATABASE_URL
+      }
+    });
+  });
+
   // Configure body parser with larger size limit for file uploads
   expressApp.use(express.json({ limit: "50mb" }));
   expressApp.use(express.urlencoded({ limit: "50mb", extended: true }));
