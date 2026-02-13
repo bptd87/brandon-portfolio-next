@@ -1,10 +1,14 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY!;
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
 
 if (!supabaseUrl || !supabaseServiceKey) {
-  throw new Error('Missing Supabase environment variables');
+  const missing = [];
+  if (!supabaseUrl) missing.push('SUPABASE_URL');
+  if (!supabaseServiceKey) missing.push('SUPABASE_SERVICE_KEY');
+  console.error(`Missing Supabase environment variables: ${missing.join(', ')}`);
+  throw new Error(`Missing Supabase environment variables: ${missing.join(', ')}`);
 }
 
 // Create a single supabase client for interacting with your database
