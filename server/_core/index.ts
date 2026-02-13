@@ -204,6 +204,19 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
     serveStatic(expressApp);
   }
 
+  // Global Error Handler
+  expressApp.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    console.error("Global Port Error Handler Captured:", err);
+    const status = err.status || err.statusCode || 500;
+    res.status(status).json({
+      error: {
+        message: err.message || "An unexpected error occurred",
+        code: err.code || "INTERNAL_SERVER_ERROR",
+        details: process.env.NODE_ENV === "development" ? err.stack : undefined
+      }
+    });
+  });
+
   return expressApp;
 }
 
