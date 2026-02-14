@@ -15,7 +15,7 @@ interface SEOProps {
 export function SEO({
   title,
   description,
-  image = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YiqCsZPgtoSSsQyE.png",
+  image = "https://www.brandonptdavis.com/android-chrome-512x512.png",
   url,
   type = "website",
   author,
@@ -25,7 +25,7 @@ export function SEO({
 }: SEOProps) {
   const siteName = "Brandon PT Davis";
   const twitterHandle = "@brandonptdavis";
-  
+
   // Use provided URL or fallback to current page URL
   const canonicalUrl = url || (typeof window !== 'undefined' ? window.location.href : 'https://www.brandonptdavis.com');
 

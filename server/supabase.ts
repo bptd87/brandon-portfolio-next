@@ -8,11 +8,12 @@ if (!supabaseUrl || !supabaseServiceKey) {
   if (!supabaseUrl) missing.push('SUPABASE_URL');
   if (!supabaseServiceKey) missing.push('SUPABASE_SERVICE_KEY');
   console.error(`Missing Supabase environment variables: ${missing.join(', ')}`);
-  throw new Error(`Missing Supabase environment variables: ${missing.join(', ')}`);
+  // Do not throw here, allow server to start so we can see logs in production
 }
 
 // Create a single supabase client for interacting with your database
-export const supabase = createClient(supabaseUrl, supabaseServiceKey);
+// If keys are missing, allow empty client (will fail on use but server stays up)
+export const supabase = createClient(supabaseUrl || '', supabaseServiceKey || '');
 
 // Helper to convert Supabase timestamp to Date
 export function parseDate(dateString: string | null): Date | null {

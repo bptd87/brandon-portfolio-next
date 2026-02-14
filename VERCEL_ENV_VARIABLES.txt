@@ -23,4 +23,4 @@ JWT_SECRET=aGiM5g6EU3ZrRWe8PFqGSD
 
 # Application
 VITE_APP_TITLE=Brandon PT Davis | Scenic & Experiential Design
-VITE_APP_LOGO=https://files.manuscdn.com/user_upload_by_module/web_dev_logo/310519663337866878/GXeHYoBhEgOFNqlz.png
+VITE_APP_LOGO=https://www.brandonptdavis.com/android-chrome-512x512.png

@@ -19,7 +19,7 @@ export function Contact() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  
+
   const submitContact = trpc.contact.submit.useMutation({
     onSuccess: () => {
       setSubmitStatus('success');
@@ -88,7 +88,7 @@ export function Contact() {
                 ✗ Failed to send message. Please try again or email me directly at info@brandonptdavis.com
               </div>
             )}
-            
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
@@ -191,7 +191,7 @@ export function Contact() {
                 }
               `}</style>
               <img
-                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/sTGFAGStMbEkLyGw.png"
+                src="/android-chrome-512x512.png"
                 alt="Brandon at desk with cat"
                 className="w-full rounded-2xl brandon-illustration cursor-pointer"
               />
