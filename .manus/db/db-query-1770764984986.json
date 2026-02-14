@@ -1,9 +1,0 @@
-{
-  "query": "INSERT INTO tags (name, slug) VALUES\n('2018', '2018'),\n('2013', '2013'),\n('2010', '2010'),\n('Dystopian', 'dystopian'),\n('Political Satire', 'political-satire'),\n('Jukebox Musical', 'jukebox-musical'),\n('LGBTQ+ Themes', 'lgbtq-themes'),\n('Fairy Tale', 'fairy-tale'),\n('Latinx Theatre', 'latinx-theatre'),\n('Labor Movement', 'labor-movement'),\n('Victorian Era', 'victorian-era')\nON DUPLICATE KEY UPDATE name = name;",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute INSERT INTO tags (name, slug) VALUES\n('2018', '2018'),\n('2013', '2013'),\n('2010', '2010'),\n('Dystopian', 'dystopian'),\n('Political Satire', 'political-satire'),\n('Jukebox Musical', 'jukebox-musical'),\n('LGBTQ+ Themes', 'lgbtq-themes'),\n('Fairy Tale', 'fairy-tale'),\n('Latinx Theatre', 'latinx-theatre'),\n('Labor Movement', 'labor-movement'),\n('Victorian Era', 'victorian-era')\nON DUPLICATE KEY UPDATE name = name;",
-  "rows": [],
-  "messages": [],
-  "stdout": "",
-  "stderr": "",
-  "execution_time_ms": 68
-}

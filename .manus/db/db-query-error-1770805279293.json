@@ -1,8 +1,0 @@
-{
-  "query": "DELETE t1 FROM articleTags t1 INNER JOIN articleTags t2 WHERE t1.articleId = t2.articleId AND t1.tagId = t2.tagId AND t1.id > t2.id;",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute DELETE t1 FROM articleTags t1 INNER JOIN articleTags t2 WHERE t1.articleId = t2.articleId AND t1.tagId = t2.tagId AND t1.id > t2.id;",
-  "returncode": 1,
-  "logs": [
-    "ERROR 1054 (42S22) at line 1: Unknown column 't1.id' in 'where clause'"
-  ]
-}

@@ -1,9 +1,0 @@
-{
-  "query": "CREATE TEMPORARY TABLE projectTags_unique (projectId INT, tagId INT); INSERT INTO projectTags_unique SELECT DISTINCT projectId, tagId FROM projectTags; DELETE FROM projectTags; INSERT INTO projectTags (projectId, tagId) SELECT projectId, tagId FROM projectTags_unique; DROP TEMPORARY TABLE projectTags_unique;",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute CREATE TEMPORARY TABLE projectTags_unique (projectId INT, tagId INT); INSERT INTO projectTags_unique SELECT DISTINCT projectId, tagId FROM projectTags; DELETE FROM projectTags; INSERT INTO projectTags (projectId, tagId) SELECT projectId, tagId FROM projectTags_unique; DROP TEMPORARY TABLE projectTags_unique;",
-  "rows": [],
-  "messages": [],
-  "stdout": "",
-  "stderr": "",
-  "execution_time_ms": 110
-}

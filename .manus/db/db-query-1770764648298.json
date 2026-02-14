@@ -1,9 +1,0 @@
-{
-  "query": "INSERT INTO tags (name, slug) VALUES\n('Witchcraft', 'witchcraft'),\n('Farce', 'farce'),\n('Elizabethan', 'elizabethan'),\n('British Theatre', 'british-theatre'),\n('Ancient Rome', 'ancient-rome'),\n('Bilingual', 'bilingual'),\n('Rock Musical', 'rock-musical'),\n('Green Day', 'green-day'),\n('Thriller', 'thriller')\nON DUPLICATE KEY UPDATE name = name;",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute INSERT INTO tags (name, slug) VALUES\n('Witchcraft', 'witchcraft'),\n('Farce', 'farce'),\n('Elizabethan', 'elizabethan'),\n('British Theatre', 'british-theatre'),\n('Ancient Rome', 'ancient-rome'),\n('Bilingual', 'bilingual'),\n('Rock Musical', 'rock-musical'),\n('Green Day', 'green-day'),\n('Thriller', 'thriller')\nON DUPLICATE KEY UPDATE name = name;",
-  "rows": [],
-  "messages": [],
-  "stdout": "",
-  "stderr": "",
-  "execution_time_ms": 65
-}

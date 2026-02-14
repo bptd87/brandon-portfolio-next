@@ -1,9 +1,0 @@
-{
-  "query": "-- Much Ado About Nothing currently has: 2025, Comedy, New Swan Theatre Festival, Spaghetti Western, Saloon Design, Shakespeare, Theatre Festival, Wild West (need to verify and add if < 5)\nSET @much_ado_id = (SELECT id FROM projects WHERE title = 'Much Ado About Nothing' LIMIT 1);\n\nINSERT INTO projectTags (projectId, tagId)\nSELECT @much_ado_id, id FROM tags WHERE name IN ('American Southwest', 'Bluegrass Music', 'Romantic Comedy', 'Outdoor Theatre', 'Contemporary Setting')\nON DUPLICATE KEY UPDATE projectId = projectId;",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute -- Much Ado About Nothing currently has: 2025, Comedy, New Swan Theatre Festival, Spaghetti Western, Saloon Design, Shakespeare, Theatre Festival, Wild West (need to verify and add if < 5)\nSET @much_ado_id = (SELECT id FROM projects WHERE title = 'Much Ado About Nothing' LIMIT 1);\n\nINSERT INTO projectTags (projectId, tagId)\nSELECT @much_ado_id, id FROM tags WHERE name IN ('American Southwest', 'Bluegrass Music', 'Romantic Comedy', 'Outdoor Theatre', 'Contemporary Setting')\nON DUPLICATE KEY UPDATE projectId = projectId;",
-  "rows": [],
-  "messages": [],
-  "stdout": "",
-  "stderr": "",
-  "execution_time_ms": 59
-}

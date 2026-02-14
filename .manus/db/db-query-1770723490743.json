@@ -1,9 +1,0 @@
-{
-  "query": "SELECT id, title, slug FROM articles WHERE title LIKE '%Ghibli%' OR title LIKE '%Studio Ghibli%' LIMIT 5;",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute SELECT id, title, slug FROM articles WHERE title LIKE '%Ghibli%' OR title LIKE '%Studio Ghibli%' LIMIT 5;",
-  "rows": [],
-  "messages": [],
-  "stdout": "",
-  "stderr": "",
-  "execution_time_ms": 58
-}

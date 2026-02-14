@@ -1,9 +1,0 @@
-{
-  "query": "-- First get the project ID\nSET @project_id = (SELECT id FROM projects WHERE slug = 'the-northwind-mare-tavern');\n\n-- Insert the image\nINSERT INTO projectImages (projectId, imageUrl, imageType, altText, sortOrder, createdAt)\nVALUES (\n  @project_id,\n  'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/ujGShEvDjRVuPKWI.jpg',\n  'rendering',\n  'The Northwind Mare Tavern - Fantasy tavern exterior rendering by Brandon PT Davis',\n  0,\n  NOW()\n);",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute -- First get the project ID\nSET @project_id = (SELECT id FROM projects WHERE slug = 'the-northwind-mare-tavern');\n\n-- Insert the image\nINSERT INTO projectImages (projectId, imageUrl, imageType, altText, sortOrder, createdAt)\nVALUES (\n  @project_id,\n  'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/ujGShEvDjRVuPKWI.jpg',\n  'rendering',\n  'The Northwind Mare Tavern - Fantasy tavern exterior rendering by Brandon PT Davis',\n  0,\n  NOW()\n);",
-  "rows": [],
-  "messages": [],
-  "stdout": "",
-  "stderr": "",
-  "execution_time_ms": 409
-}

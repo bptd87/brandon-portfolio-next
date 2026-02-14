@@ -1,9 +1,0 @@
-{
-  "query": "\nSELECT \n  (SELECT id FROM projects WHERE slug = 'the-glass-menagerie') as project_id,\n  t.id as tag_id,\n  t.name as tag_name\nFROM tags t\nWHERE t.name IN ('Memory Play', 'Southern Gothic', '1930s');\n",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute \nSELECT \n  (SELECT id FROM projects WHERE slug = 'the-glass-menagerie') as project_id,\n  t.id as tag_id,\n  t.name as tag_name\nFROM tags t\nWHERE t.name IN ('Memory Play', 'Southern Gothic', '1930s');\n",
-  "rows": [],
-  "messages": [],
-  "stdout": "",
-  "stderr": "",
-  "execution_time_ms": 387
-}

@@ -1,9 +1,0 @@
-{
-  "query": "UPDATE news SET date = '2021-06-15' WHERE slug = 'utah-shakespeare-festival-2021-season';\nUPDATE news SET date = '2022-06-15' WHERE slug = 'utah-shakespeare-festival-2022-season';\nUPDATE news SET date = '2023-06-15' WHERE slug = 'utah-shakespeare-festival-2023-season';\nUPDATE news SET date = '2024-06-15' WHERE slug = 'utah-shakespeare-festival-2024-season';\nUPDATE news SET date = '2025-06-15' WHERE slug = 'utah-shakespeare-festival-2025-season';",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute UPDATE news SET date = '2021-06-15' WHERE slug = 'utah-shakespeare-festival-2021-season';\nUPDATE news SET date = '2022-06-15' WHERE slug = 'utah-shakespeare-festival-2022-season';\nUPDATE news SET date = '2023-06-15' WHERE slug = 'utah-shakespeare-festival-2023-season';\nUPDATE news SET date = '2024-06-15' WHERE slug = 'utah-shakespeare-festival-2024-season';\nUPDATE news SET date = '2025-06-15' WHERE slug = 'utah-shakespeare-festival-2025-season';",
-  "rows": [],
-  "messages": [],
-  "stdout": "",
-  "stderr": "",
-  "execution_time_ms": 125
-}

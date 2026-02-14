@@ -1,9 +1,0 @@
-{
-  "query": "UPDATE projects SET discipline = 'scenic_models' WHERE subcategory = 'SCENIC MODELS';\nUPDATE projects SET discipline = 'rendering' WHERE subcategory IN ('CONCEPT RENDERING', 'INDEPENDENT PROJECT');\nUPDATE projects SET discipline = 'scenic_models' WHERE subcategory = 'ARCHIVE' AND title LIKE '%Archive%';",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute UPDATE projects SET discipline = 'scenic_models' WHERE subcategory = 'SCENIC MODELS';\nUPDATE projects SET discipline = 'rendering' WHERE subcategory IN ('CONCEPT RENDERING', 'INDEPENDENT PROJECT');\nUPDATE projects SET discipline = 'scenic_models' WHERE subcategory = 'ARCHIVE' AND title LIKE '%Archive%';",
-  "rows": [],
-  "messages": [],
-  "stdout": "",
-  "stderr": "",
-  "execution_time_ms": 559
-}

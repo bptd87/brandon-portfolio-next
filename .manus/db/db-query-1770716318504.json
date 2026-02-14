@@ -1,9 +1,0 @@
-{
-  "query": "UPDATE news \nSET date = '2024-09-28',\n    coverImageUrl = 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/PwMxyHdaVTOMDtPN.jpg'\nWHERE slug = 'jersey-boys-pioneer-theatre';",
-  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3qok7f2GpzFARVw.497aceeada8e --database W7Mo5vQmuLDeDzmE7vXHYq --execute UPDATE news \nSET date = '2024-09-28',\n    coverImageUrl = 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/PwMxyHdaVTOMDtPN.jpg'\nWHERE slug = 'jersey-boys-pioneer-theatre';",
-  "rows": [],
-  "messages": [],
-  "stdout": "",
-  "stderr": "",
-  "execution_time_ms": 63
-}
