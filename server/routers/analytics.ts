@@ -109,17 +109,30 @@ export const analyticsRouter = router({
         if (error) {
           console.error('Click tracking error:', error);
           // Fallback to manual update if RPC doesn't exist
-          const { error: updateError } = await supabase
+          // Since we can't easily do atomic increment without RPC or raw SQL (which isn't exposed on client),
+          // we'll just fetch, increment, and update. Ideally use RPC.
+          const { data: dirItem } = await supabase
             .from('scenic_directory')
-            .update({
-              click_count: supabase.sql`click_count + 1`,
-              last_clicked_at: new Date().toISOString()
-            })
-            .eq('id', input.id);
+            .select('click_count')
+            .eq('id', input.id)
+            .single();
 
-          if (updateError) {
-            console.error('Manual click update error:', updateError);
+          if (dirItem) {
+            const { error: updateError } = await supabase
+              .from('scenic_directory')
+              .update({
+                click_count: (dirItem.click_count || 0) + 1,
+                last_clicked_at: new Date().toISOString()
+              })
+              .eq('id', input.id);
+
+            if (updateError) {
+              console.error('Manual click update error:', updateError);
+            }
           }
+
+
+
         }
 
         return { success: true };
