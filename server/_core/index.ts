@@ -99,7 +99,7 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
       res.status(500).send("Dev login failed");
     }
   });
-  
+
   // Sitemaps
   expressApp.get("/sitemap.xml", async (req, res) => {
     try {
@@ -112,7 +112,7 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
       res.status(500).send("Error generating sitemap");
     }
   });
-  
+
   expressApp.get("/image-sitemap.xml", async (req, res) => {
     try {
       const baseUrl = `${req.protocol}://${req.get('host')}`;
@@ -124,7 +124,7 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
       res.status(500).send("Error generating image sitemap");
     }
   });
-  
+
   expressApp.get("/video-sitemap.xml", async (req, res) => {
     try {
       const baseUrl = `${req.protocol}://${req.get('host')}`;
@@ -136,7 +136,7 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
       res.status(500).send("Error generating video sitemap");
     }
   });
-  
+
   expressApp.get("/sitemap-index.xml", (req, res) => {
     try {
       const baseUrl = `${req.protocol}://${req.get('host')}`;
@@ -148,7 +148,7 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
       res.status(500).send("Error generating sitemap index");
     }
   });
-  
+
   expressApp.get("/robots.txt", (req, res) => {
     try {
       const baseUrl = `${req.protocol}://${req.get('host')}`;
@@ -160,13 +160,13 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
       res.status(500).send("Error generating robots.txt");
     }
   });
-  
+
   // Image proxy for on-demand resizing
   expressApp.use("/api", imageProxyRouter);
-  
+
   // RSS feeds
   expressApp.get("/api/news/rss", generateRSSFeed);
-  
+
   expressApp.get("/articles/rss.xml", async (req, res) => {
     try {
       const baseUrl = `${req.protocol}://${req.get('host')}`;
@@ -178,7 +178,7 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
       res.status(500).send("Error generating articles RSS");
     }
   });
-  
+
   expressApp.get("/news/rss.xml", async (req, res) => {
     try {
       const baseUrl = `${req.protocol}://${req.get('host')}`;
@@ -190,7 +190,7 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
       res.status(500).send("Error generating news RSS");
     }
   });
-  
+
   expressApp.get("/studio/tutorials/rss.xml", (req, res) => {
     try {
       const baseUrl = `${req.protocol}://${req.get('host')}`;
@@ -241,20 +241,26 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const startServer = async () => {
     const app = express();
     const server = createServer(app);
-    
-    await createConfiguredApp(app, server);
-    
-    const preferredPort = parseInt(process.env.PORT || "8080");
-    const port = await findAvailablePort(preferredPort);
 
-    if (port !== preferredPort) {
-      console.log(`Port ${preferredPort} is busy, using port ${port} instead`);
+    await createConfiguredApp(app, server);
+
+    const preferredPort = parseInt(process.env.PORT || "8080");
+    const preferredPort = parseInt(process.env.PORT || "8080");
+    let port = preferredPort;
+
+    if (process.env.NODE_ENV !== "production") {
+      port = await findAvailablePort(preferredPort);
+      if (port !== preferredPort) {
+        console.log(`Port ${preferredPort} is busy, using port ${port} instead`);
+      }
+    } else {
+      console.log(`Production mode: Binding strictly to PORT ${port}`);
     }
 
     server.listen(port, "0.0.0.0", () => {
       console.log(`Server running on http://0.0.0.0:${port}/`);
     });
   };
-  
+
   startServer().catch(console.error);
 }
