@@ -458,8 +458,77 @@ export default function DesignHistoryTimeline() {
 
       {/* Compact Hero with Header Image */}
       <section className="relative h-[30vh] md:h-[35vh] overflow-hidden border-b border-border">
-        <img 
-          src="/android-chrome-512x512.png'border-black dark:border-white bg-black dark:bg-white scale-125'
+        <img
+          src="/assets/studio/design-history.webp"
+          alt="Design History Timeline - Architectural design through history"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/20" />
+
+        <div className="absolute bottom-0 left-0 right-0 container max-w-5xl pb-4 md:pb-6">
+          <div className="flex items-center gap-2 mb-2">
+            <Calendar className="w-4 h-4 text-[#9C27B0]" />
+            <span className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
+              DESIGN HISTORY TIMELINE
+            </span>
+            <span className="ml-2 px-2 py-0.5 text-[10px] font-semibold tracking-wider bg-amber-500/20 text-amber-700 dark:text-amber-400 border border-amber-500/30 rounded-full">
+              BETA
+            </span>
+          </div>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-2">
+            Architectural Design Through History
+          </h1>
+          <p className="text-sm md:text-base text-muted-foreground max-w-2xl">
+            Explore 28 design periods from Ancient Egypt to Contemporary. Click any period to view reference images, characteristics, and key figures.
+          </p>
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <section className="container max-w-5xl py-6 md:py-8">
+        {/* Search Bar */}
+        <div className="mb-6">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search periods, regions, or characteristics..."
+              className="w-full h-10 pl-10 pr-4 bg-background border border-input rounded-md text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            />
+          </div>
+        </div>
+
+        {/* Results Count */}
+        <div className="mb-6">
+          <p className="text-sm text-muted-foreground">
+            {filteredPeriods.length} periods found
+          </p>
+        </div>
+
+        {/* Timeline */}
+        <div className="relative max-w-5xl mx-auto">
+          {/* Timeline Line */}
+          <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-black/10 dark:bg-white/10 hidden md:block" />
+
+          {/* Timeline Items */}
+          <div className="space-y-6">
+            {filteredPeriods.map((period, index) => {
+              const isExpanded = expandedId === period.id;
+
+              return (
+                <motion.div
+                  key={period.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.02 }}
+                  className="relative"
+                >
+                  {/* Timeline Dot */}
+                  <div
+                    className={`absolute left-6 top-8 w-5 h-5 rounded-full border-2 transition-all z-10 hidden md:block ${isExpanded
+                      ? 'border-black dark:border-white bg-black dark:bg-white scale-125'
                       : 'border-black/20 dark:border-white/20 bg-white dark:bg-black'
                       }`}
                   />
@@ -472,7 +541,10 @@ export default function DesignHistoryTimeline() {
                       : 'border-black/10 dark:border-white/10 hover:border-black/30 dark:hover:border-white/30'
                       }`}
                   >
-                    <div className="grid md:grid-cols-[200px_1fr] gap-6 p-6">
+                    <div
+                      className="grid gap-6 p-6"
+                      style={{ gridTemplateColumns: window.innerWidth >= 768 ? "200px 1fr" : "1fr" }}
+                    >
                       {/* Thumbnail */}
                       <div className="aspect-video md:aspect-square overflow-hidden rounded-2xl">
                         <img
