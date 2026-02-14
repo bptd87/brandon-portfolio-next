@@ -2,8 +2,13 @@ import express, { type Express } from "express";
 import fs from "fs";
 import { type Server } from "http";
 import { nanoid } from "nanoid";
+import { fileURLToPath } from "url";
 import path from "path";
 import { createServer as createViteServer } from "vite";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 import viteConfig from "../../vite.config";
 
 export async function setupVite(app: Express, server: Server) {
@@ -26,7 +31,7 @@ export async function setupVite(app: Express, server: Server) {
 
     try {
       const clientTemplate = path.resolve(
-        import.meta.dirname,
+        __dirname,
         "../..",
         "client",
         "index.html"
@@ -50,7 +55,7 @@ export async function setupVite(app: Express, server: Server) {
 export function serveStatic(app: Express) {
   // Static files are always in dist/public relative to the project root
   // We can find the project root relative to this file
-  const distPath = path.resolve(import.meta.dirname, "../..", "dist", "public");
+  const distPath = path.resolve(__dirname, "../..", "dist", "public");
 
   if (!fs.existsSync(distPath)) {
     console.error(
