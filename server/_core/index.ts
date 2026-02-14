@@ -253,11 +253,18 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
 
     await createConfiguredApp(app, server);
 
-    const preferredPort = parseInt(process.env.PORT || "8080");
-    let port = preferredPort;
+    const rawPort = process.env.PORT || "8080";
+    const preferredPort = parseInt(rawPort);
+
+    // Prevent binding to PostgreSQL port (common Railway env variable issue)
+    if (preferredPort === 5432) {
+      console.warn(`⚠️  PORT is set to 5432 (PostgreSQL). Using 8080 for HTTP server instead.`);
+    }
+
+    let port = preferredPort === 5432 ? 8080 : preferredPort;
 
     if (process.env.NODE_ENV !== "production") {
-      port = await findAvailablePort(preferredPort);
+      port = await findAvailablePort(port);
       if (port !== preferredPort) {
         console.log(`Port ${preferredPort} is busy, using port ${port} instead`);
       }
