@@ -376,7 +376,7 @@ function ArticleDetailContent() {
           dateModified: article.updatedAt ? new Date(article.updatedAt).toISOString() : undefined,
           publisher: {
             name: "Brandon PT Davis Design",
-            logo: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YiqCsZPgtoSSsQyE.png",
+            logo: "https://www.brandonptdavis.com/android-chrome-512x512.png",
           },
           url: `https://www.brandonptdavis.com/articles/${article.slug}`,
           wordCount: wordCount,

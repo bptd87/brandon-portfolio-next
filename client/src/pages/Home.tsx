@@ -65,7 +65,7 @@ export default function Home() {
           name: "Brandon PT Davis",
           jobTitle: "Scenic and Experiential Designer",
           url: baseUrl,
-          image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YiqCsZPgtoSSsQyE.png",
+          image: "https://www.brandonptdavis.com/android-chrome-512x512.png",
           description: "Scenic and experiential designer based in Southern California with over 120 design credits across regional theatre, summer stock, academic theatre, immersive experiences, and live entertainment. Member of USA 829.",
           email: "info@brandonptdavis.com",
           address: {
@@ -110,7 +110,7 @@ export default function Home() {
         organization={{
           name: "Brandon PT Davis Design",
           url: baseUrl,
-          logo: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YiqCsZPgtoSSsQyE.png",
+          image: "https://www.brandonptdavis.com/android-chrome-512x512.png",
           description: "Professional scenic and experiential design studio specializing in regional theatre, summer stock, academic theatre, immersive experiences, event design, and themed entertainment.",
           founder: {
             name: "Brandon PT Davis",
