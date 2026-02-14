@@ -2,7 +2,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, FolderKanban, Newspaper, FileText, ArrowUpRight, TrendingUp } from "lucide-react";
+import { Loader2, FolderKanban, Newspaper, FileText, ArrowUpRight, TrendingUp, Layout } from "lucide-react";
 import { Link } from "wouter";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { trpc } from "@/lib/trpc";
@@ -131,6 +131,12 @@ export default function Admin() {
               <Link href="/admin/articles/new">
                 <FileText className="h-5 w-5" />
                 Write New Article
+              </Link>
+            </Button>
+            <Button className="w-full justify-start gap-3 h-12 text-base" variant="outline" asChild>
+              <Link href="/admin/rendering-gallery">
+                <Layout className="h-5 w-5" />
+                Manage Rendering Gallery
               </Link>
             </Button>
           </CardContent>

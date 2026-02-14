@@ -45,6 +45,9 @@ const AdminScenicDirectory = lazy(() => import("./pages/admin/AdminScenicDirecto
 const AdminScenicDirectoryEdit = lazy(() => import("./pages/admin/AdminScenicDirectoryEdit"));
 const AdminCollaborators = lazy(() => import("./pages/admin/AdminCollaborators"));
 const AdminCollaboratorEdit = lazy(() => import("./pages/admin/AdminCollaboratorEdit"));
+const AdminRenderingGallery = lazy(() => import("./pages/admin/AdminRenderingGallery"));
+const AdminModelGallery = lazy(() => import("./pages/admin/AdminModelGallery"));
+const AdminExperientialGallery = lazy(() => import("./pages/admin/AdminExperientialGallery"));
 const AuthDebug = lazy(() => import("./pages/AuthDebug"));
 
 // Non-critical routes - lazy load for better initial performance
@@ -149,6 +152,9 @@ function Router() {
           <Route path="/admin/collaborators/new" component={AdminCollaboratorEdit} />
           <Route path="/admin/collaborators/:id/edit" component={AdminCollaboratorEdit} />
           <Route path="/admin/collaborators" component={AdminCollaborators} />
+          <Route path="/admin/rendering-gallery" component={AdminRenderingGallery} />
+          <Route path="/admin/model-gallery" component={AdminModelGallery} />
+          <Route path="/admin/experiential-gallery" component={AdminExperientialGallery} />
           <Route path={"/admin"} component={Admin} />
           <Route path={"/privacy"} component={Privacy} />
           <Route path={"/terms"} component={Terms} />

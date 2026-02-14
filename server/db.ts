@@ -1,4 +1,5 @@
 import { supabase } from './supabase';
+
 export { supabase };
 import { ENV } from './_core/env';
 
@@ -14,6 +15,16 @@ export interface User {
   createdAt: Date;
   updatedAt: Date;
   lastSignedIn: Date | null;
+}
+
+export interface RenderingGalleryItem {
+  id: number;
+  projectId: number;
+  project?: Project; // Joined project data
+  sortOrder: number;
+  altText: string | null;
+  displayTitle: string | null;
+  createdAt: Date;
 }
 
 export interface Category {
@@ -49,7 +60,7 @@ export interface Project {
   venue?: string | null;
   discipline: 'scenic_design' | 'experiential_design' | 'rendering' | 'scenic_models' | null;
   subcategory: string | null;
-  status: 'draft' | 'published' | 'archived';
+  status: 'draft' | 'published' | 'archived' | 'gallery_only';
   featured: boolean;
   categoryId: number | null;
   creativeTeam: any;
@@ -255,7 +266,7 @@ export async function createCategory(category: any) {
     })
     .select()
     .single();
-  
+
   if (error) throw error;
   return data.id;
 }
@@ -271,7 +282,7 @@ export async function updateCategory(id: number, updates: any) {
     .from('categories')
     .update(updateData)
     .eq('id', id);
-  
+
   if (error) throw error;
 }
 
@@ -280,7 +291,7 @@ export async function deleteCategory(id: number) {
     .from('categories')
     .delete()
     .eq('id', id);
-  
+
   if (error) throw error;
 }
 
@@ -321,7 +332,7 @@ export async function createTag(tag: { name: string; slug: string }) {
     .insert({ name: tag.name, slug: tag.slug })
     .select()
     .single();
-  
+
   if (error) throw error;
   return data.id;
 }
@@ -331,7 +342,7 @@ export async function updateTag(id: number, updates: { name?: string; slug?: str
     .from('tags')
     .update(updates)
     .eq('id', id);
-  
+
   if (error) throw error;
 }
 
@@ -340,56 +351,56 @@ export async function deleteTag(id: number) {
     .from('tags')
     .delete()
     .eq('id', id);
-  
+
   if (error) throw error;
 }
 
 export async function getProjectsByTag(tagId: number): Promise<any[]> {
-   const { data } = await supabase
+  const { data } = await supabase
     .from('project_tags')
     .select('project_id, projects(*)')
     .eq('tag_id', tagId);
-    
-   if (!data) return [];
-   return data.map(pt => pt.projects).filter(Boolean).map((p: any) => ({
-       ...p,
-       createdAt: new Date(p.created_at),
-       updatedAt: new Date(p.updated_at)
-   }));
+
+  if (!data) return [];
+  return data.map(pt => pt.projects).filter(Boolean).map((p: any) => ({
+    ...p,
+    createdAt: new Date(p.created_at),
+    updatedAt: new Date(p.updated_at)
+  }));
 }
 
 export async function getArticlesByTag(tagId: number): Promise<any[]> {
-   const { data } = await supabase
+  const { data } = await supabase
     .from('article_tags')
     .select('article_id, articles(*)')
     .eq('tag_id', tagId);
-    
-   if (!data) return [];
-   return data.map(at => at.articles).filter(Boolean).map((a: any) => ({
-       ...a,
-       createdAt: new Date(a.created_at),
-       updatedAt: new Date(a.updated_at)
-   }));
+
+  if (!data) return [];
+  return data.map(at => at.articles).filter(Boolean).map((a: any) => ({
+    ...a,
+    createdAt: new Date(a.created_at),
+    updatedAt: new Date(a.updated_at)
+  }));
 }
 
 export async function getNewsByTag(tagId: number): Promise<any[]> {
-   const { data } = await supabase
+  const { data } = await supabase
     .from('news_tags')
     .select('news_id, news(*)')
     .eq('tag_id', tagId);
-    
-   if (!data) return [];
-   return data.map(nt => nt.news).filter(Boolean).map((n: any) => ({
-       ...n,
-       createdAt: new Date(n.created_at),
-       updatedAt: new Date(n.updated_at)
-   }));
+
+  if (!data) return [];
+  return data.map(nt => nt.news).filter(Boolean).map((n: any) => ({
+    ...n,
+    createdAt: new Date(n.created_at),
+    updatedAt: new Date(n.updated_at)
+  }));
 }
 
 // ============ PROJECT OPERATIONS ============
 
 export async function getAllProjects(filters?: {
-  status?: 'draft' | 'published' | 'archived';
+  status?: 'draft' | 'published' | 'archived' | 'gallery_only';
   featured?: boolean;
   categoryId?: number;
   year?: number;
@@ -1295,7 +1306,7 @@ export async function incrementArticleViews(id: number) {
     .select('views')
     .eq('id', id)
     .single();
-  
+
   if (data) {
     await supabase
       .from('articles')
@@ -1310,7 +1321,7 @@ export async function incrementNewsViews(id: number) {
     .select('views')
     .eq('id', id)
     .single();
-  
+
   if (data) {
     await supabase
       .from('news')
@@ -1325,7 +1336,7 @@ export async function incrementProjectViews(id: number) {
     .select('views')
     .eq('id', id)
     .single();
-  
+
   if (data) {
     await supabase
       .from('projects')
@@ -1361,14 +1372,14 @@ export async function createProject(project: any) {
     })
     .select()
     .single();
-  
+
   if (error) throw error;
   return data.id;
 }
 
 export async function updateProject(id: number, project: any) {
   const updateData: any = {};
-  
+
   if (project.title !== undefined) updateData.title = project.title;
   if (project.slug !== undefined) updateData.slug = project.slug;
   if (project.discipline !== undefined) updateData.discipline = project.discipline;
@@ -1386,12 +1397,12 @@ export async function updateProject(id: number, project: any) {
   if (project.seoTitle !== undefined) updateData.seo_title = project.seoTitle;
   if (project.seoDescription !== undefined) updateData.seo_description = project.seoDescription;
   if (project.seoKeywords !== undefined) updateData.seo_keywords = project.seoKeywords;
-  
+
   const { error } = await supabase
     .from('projects')
     .update(updateData)
     .eq('id', id);
-  
+
   if (error) throw error;
 }
 
@@ -1400,7 +1411,7 @@ export async function deleteProject(id: number) {
     .from('projects')
     .delete()
     .eq('id', id);
-  
+
   if (error) throw error;
 }
 
@@ -1417,7 +1428,7 @@ export async function addProjectImage(image: any) {
     })
     .select()
     .single();
-  
+
   if (error) throw error;
   return data.id;
 }
@@ -1427,7 +1438,7 @@ export async function deleteProjectImage(id: number) {
     .from('project_images')
     .delete()
     .eq('id', id);
-  
+
   if (error) throw error;
 }
 
@@ -1436,7 +1447,7 @@ export async function deleteProjectImages(projectId: number) {
     .from('project_images')
     .delete()
     .eq('project_id', projectId);
-  
+
   if (error) throw error;
 }
 
@@ -1446,7 +1457,7 @@ export async function setProjectTags(projectId: number, tagIds: number[]) {
     .from('project_tags')
     .delete()
     .eq('project_id', projectId);
-  
+
   // Insert new tags
   if (tagIds.length > 0) {
     const { error } = await supabase
@@ -1455,7 +1466,7 @@ export async function setProjectTags(projectId: number, tagIds: number[]) {
         project_id: projectId,
         tag_id: tagId,
       })));
-    
+
     if (error) throw error;
   }
 }
@@ -1482,14 +1493,14 @@ export async function createNews(news: any) {
     })
     .select()
     .single();
-  
+
   if (error) throw error;
   return data.id;
 }
 
 export async function updateNews(id: number, news: any) {
   const updateData: any = {};
-  
+
   if (news.title !== undefined) updateData.title = news.title;
   if (news.slug !== undefined) updateData.slug = news.slug;
   if (news.excerpt !== undefined) updateData.excerpt = news.excerpt;
@@ -1502,12 +1513,12 @@ export async function updateNews(id: number, news: any) {
   if (news.seoTitle !== undefined) updateData.seo_title = news.seoTitle;
   if (news.seoDescription !== undefined) updateData.seo_description = news.seoDescription;
   if (news.seoKeywords !== undefined) updateData.seo_keywords = news.seoKeywords;
-  
+
   const { error } = await supabase
     .from('news')
     .update(updateData)
     .eq('id', id);
-  
+
   if (error) throw error;
 }
 
@@ -1516,7 +1527,7 @@ export async function deleteNews(id: number) {
     .from('news')
     .delete()
     .eq('id', id);
-  
+
   if (error) throw error;
 }
 
@@ -1526,7 +1537,7 @@ export async function setNewsTags(newsId: number, tagIds: number[]) {
     .from('news_tags')
     .delete()
     .eq('news_id', newsId);
-  
+
   // Insert new tags
   if (tagIds.length > 0) {
     const { error } = await supabase
@@ -1535,7 +1546,7 @@ export async function setNewsTags(newsId: number, tagIds: number[]) {
         news_id: newsId,
         tag_id: tagId,
       })));
-    
+
     if (error) throw error;
   }
 }
@@ -1562,14 +1573,14 @@ export async function createArticle(article: any) {
     })
     .select()
     .single();
-  
+
   if (error) throw error;
   return data.id;
 }
 
 export async function updateArticle(id: number, article: any) {
   const updateData: any = {};
-  
+
   if (article.title !== undefined) updateData.title = article.title;
   if (article.slug !== undefined) updateData.slug = article.slug;
   if (article.excerpt !== undefined) updateData.excerpt = article.excerpt;
@@ -1582,21 +1593,21 @@ export async function updateArticle(id: number, article: any) {
   if (article.seoTitle !== undefined) updateData.seo_title = article.seoTitle;
   if (article.seoDescription !== undefined) updateData.seo_description = article.seoDescription;
   if (article.seoKeywords !== undefined) updateData.seo_keywords = article.seoKeywords;
-  
+
   const { error } = await supabase
     .from('articles')
     .update(updateData)
     .eq('id', id);
-  
+
   if (error) throw error;
 }
 
 export async function deleteArticle(id: number) {
-  const { error} = await supabase
+  const { error } = await supabase
     .from('articles')
     .delete()
     .eq('id', id);
-  
+
   if (error) throw error;
 }
 
@@ -1606,7 +1617,7 @@ export async function setArticleTags(articleId: number, tagIds: number[]) {
     .from('article_tags')
     .delete()
     .eq('article_id', articleId);
-  
+
   // Insert new tags
   if (tagIds.length > 0) {
     const { error } = await supabase
@@ -1615,7 +1626,7 @@ export async function setArticleTags(articleId: number, tagIds: number[]) {
         article_id: articleId,
         tag_id: tagId,
       })));
-    
+
     if (error) throw error;
   }
 }
@@ -1626,7 +1637,7 @@ export async function toggleArticleLike(id: number, liked: boolean) {
     .select('likes')
     .eq('id', id)
     .single();
-  
+
   if (data) {
     const newLikes = liked ? (data.likes || 0) + 1 : Math.max((data.likes || 0) - 1, 0);
     await supabase
@@ -1646,9 +1657,9 @@ export interface Comment {
   createdAt: Date;
   updatedAt: Date;
   user?: {
-      id: number;
-      name: string;
-      openId: string;
+    id: number;
+    name: string;
+    openId: string;
   }
 }
 
@@ -1739,13 +1750,13 @@ export async function getAllTodos(userId: string): Promise<Todo[]> {
 export async function createTodo(exclude: any, todo: { text: string; userId: string }) {
   const { data, error } = await supabase
     .from('todos')
-    .insert({ 
-      text: todo.text, 
-      user_id: todo.userId 
+    .insert({
+      text: todo.text,
+      user_id: todo.userId
     })
     .select()
     .single();
-  
+
   if (error) throw error;
   return data.id;
 }
@@ -1758,7 +1769,7 @@ export async function toggleTodo(id: number, userId: string): Promise<boolean> {
     .eq('id', id)
     .eq('user_id', userId)
     .single();
-    
+
   if (!current) throw new Error("Todo not found");
 
   const { data, error } = await supabase
@@ -1768,7 +1779,7 @@ export async function toggleTodo(id: number, userId: string): Promise<boolean> {
     .eq('user_id', userId)
     .select()
     .single();
-  
+
   if (error) throw error;
   return data.completed;
 }
@@ -1779,7 +1790,7 @@ export async function deleteTodo(id: number, userId: string) {
     .delete()
     .eq('id', id)
     .eq('user_id', userId);
-  
+
   if (error) throw error;
 }
 
@@ -2046,6 +2057,396 @@ export async function deleteCollaborator(id: number) {
   const { error } = await supabase
     .from('collaborators')
     .delete()
+    .eq('id', id);
+
+  if (error) throw error;
+}
+
+// ============ RENDERING GALLERY OPERATIONS ============
+
+export async function getRenderingGallery(): Promise<RenderingGalleryItem[]> {
+  try {
+    const { data: galleryItems, error: galleryError } = await supabase
+      .from('rendering_gallery')
+      .select('*')
+      .order('sort_order', { ascending: true });
+
+    if (galleryError) throw galleryError;
+    if (!galleryItems || galleryItems.length === 0) return [];
+
+    const projectIds = Array.from(new Set(galleryItems.map(item => item.project_id)));
+    const { data: projects, error } = await supabase
+      .from('projects')
+      .select('*')
+      .in('id', projectIds);
+
+    if (error) {
+      console.warn('Error fetching projects for rendering gallery:', error);
+      return [];
+    }
+
+    const projectMap = new Map(projects?.map(p => [p.id, p]));
+
+    return galleryItems.map(item => {
+      const project = projectMap.get(item.project_id);
+      return {
+        id: item.id,
+        projectId: item.project_id,
+        sortOrder: item.sort_order,
+        altText: item.alt_text,
+        displayTitle: item.display_title,
+        createdAt: new Date(item.created_at),
+        project: project ? {
+          id: project.id,
+          title: project.title,
+          slug: project.slug,
+          excerpt: project.excerpt,
+          designNotes: project.design_notes,
+          coverImageUrl: project.cover_image,
+          coverImageKey: project.cover_image_key,
+          client: project.client,
+          location: project.location,
+          venue: project.venue,
+          year: project.year,
+          month: project.month,
+          discipline: project.discipline,
+          subcategory: project.subcategory,
+          status: project.status,
+          featured: project.featured,
+          categoryId: project.category_id,
+          creativeTeam: project.creative_team,
+          metadata: project.metadata,
+          publishedAt: project.published_at ? new Date(project.published_at) : null,
+          seoTitle: project.seo_title,
+          seoDescription: project.seo_description,
+          seoKeywords: project.seo_keywords,
+          images: [],
+          createdAt: new Date(project.created_at),
+          updatedAt: new Date(project.updated_at),
+        } : undefined,
+      };
+    });
+  } catch (e) {
+    console.error('Supabase Rendering Gallery Error:', e);
+    return [];
+  }
+}
+
+export async function addProjectToRenderingGallery(projectId: number, altText?: string, displayTitle?: string) {
+  try {
+    // Get max sort order
+    const { data: maxItem } = await supabase
+      .from('rendering_gallery')
+      .select('sort_order')
+      .order('sort_order', { ascending: false })
+      .limit(1)
+      .single();
+
+    const nextOrder = (maxItem?.sort_order ?? 0) + 1;
+
+    const { error } = await supabase
+      .from('rendering_gallery')
+      .insert({
+        project_id: projectId,
+        sort_order: nextOrder,
+        alt_text: altText || null,
+        display_title: displayTitle || null,
+        active: true
+      });
+
+    if (error) throw error;
+  } catch (e) {
+    console.error('Failed to add to rendering gallery (Supabase)', e);
+    throw e;
+  }
+}
+
+export async function removeProjectFromRenderingGallery(galleryId: number) {
+  const { error } = await supabase
+    .from('rendering_gallery')
+    .delete()
+    .eq('id', galleryId);
+
+  if (error) throw error;
+}
+
+export async function updateRenderingGalleryOrder(items: { id: number; sortOrder: number }[]) {
+  // Supabase doesn't support bulk update with different values easily in one query without RPC
+  // So we'll do promise.all for now, or sequential. Sequential is safer for rate limits.
+  for (const item of items) {
+    await supabase
+      .from('rendering_gallery')
+      .update({ sort_order: item.sortOrder })
+      .eq('id', item.id);
+  }
+}
+
+export async function updateRenderingGalleryMetadata(id: number, active: boolean, altText?: string, displayTitle?: string) {
+  const updateData: any = { active };
+  if (altText !== undefined) updateData.alt_text = altText;
+  if (displayTitle !== undefined) updateData.display_title = displayTitle;
+
+  const { error } = await supabase
+    .from('rendering_gallery')
+    .update(updateData)
+    .eq('id', id);
+
+  if (error) throw error;
+}
+
+// ============ MODEL GALLERY OPERATIONS ============
+
+export async function getModelGallery(): Promise<RenderingGalleryItem[]> {
+  try {
+    const { data: galleryItems, error: galleryError } = await supabase
+      .from('model_gallery')
+      .select('*')
+      .order('sort_order', { ascending: true });
+
+    if (galleryError) throw galleryError;
+    if (!galleryItems || galleryItems.length === 0) return [];
+
+    const projectIds = Array.from(new Set(galleryItems.map(item => item.project_id)));
+    const { data: projects, error } = await supabase
+      .from('projects')
+      .select('*')
+      .in('id', projectIds);
+
+    if (error) {
+      console.warn('Error fetching projects for model gallery:', error);
+      return [];
+    }
+
+    const projectMap = new Map(projects?.map(p => [p.id, p]));
+
+    return galleryItems.map(item => {
+      const project = projectMap.get(item.project_id);
+      return {
+        id: item.id,
+        projectId: item.project_id,
+        sortOrder: item.sort_order,
+        altText: item.alt_text,
+        displayTitle: item.display_title,
+        createdAt: new Date(item.created_at),
+        project: project ? {
+          id: project.id,
+          title: project.title,
+          slug: project.slug,
+          excerpt: project.excerpt,
+          designNotes: project.design_notes,
+          coverImageUrl: project.cover_image,
+          coverImageKey: project.cover_image_key,
+          client: project.client,
+          location: project.location,
+          venue: project.venue,
+          year: project.year,
+          month: project.month,
+          discipline: project.discipline,
+          subcategory: project.subcategory,
+          status: project.status,
+          featured: project.featured,
+          categoryId: project.category_id,
+          creativeTeam: project.creative_team,
+          metadata: project.metadata,
+          publishedAt: project.published_at ? new Date(project.published_at) : null,
+          seoTitle: project.seo_title,
+          seoDescription: project.seo_description,
+          seoKeywords: project.seo_keywords,
+          images: [],
+          createdAt: new Date(project.created_at),
+          updatedAt: new Date(project.updated_at),
+        } : undefined,
+      };
+    });
+  } catch (e) {
+    console.error('Supabase Model Gallery Error:', e);
+    return [];
+  }
+}
+
+export async function addProjectToModelGallery(projectId: number, altText?: string, displayTitle?: string) {
+  try {
+    const { data: maxItem } = await supabase
+      .from('model_gallery')
+      .select('sort_order')
+      .order('sort_order', { ascending: false })
+      .limit(1)
+      .single();
+
+    const nextOrder = (maxItem?.sort_order ?? 0) + 1;
+
+    const { error } = await supabase
+      .from('model_gallery')
+      .insert({
+        project_id: projectId,
+        sort_order: nextOrder,
+        alt_text: altText || null,
+        display_title: displayTitle || null,
+        active: true
+      });
+
+    if (error) throw error;
+  } catch (e) {
+    console.error('Failed to add to model gallery (Supabase)', e);
+    throw e;
+  }
+}
+
+export async function removeProjectFromModelGallery(galleryId: number) {
+  const { error } = await supabase
+    .from('model_gallery')
+    .delete()
+    .eq('id', galleryId);
+
+  if (error) throw error;
+}
+
+export async function updateModelGalleryOrder(items: { id: number; sortOrder: number }[]) {
+  for (const item of items) {
+    await supabase
+      .from('model_gallery')
+      .update({ sort_order: item.sortOrder })
+      .eq('id', item.id);
+  }
+}
+
+export async function updateModelGalleryMetadata(id: number, active: boolean, altText?: string, displayTitle?: string) {
+  const updateData: any = { active };
+  if (altText !== undefined) updateData.alt_text = altText;
+  if (displayTitle !== undefined) updateData.display_title = displayTitle;
+
+  const { error } = await supabase
+    .from('model_gallery')
+    .update(updateData)
+    .eq('id', id);
+
+  if (error) throw error;
+}
+
+// ============ EXPERIENTIAL GALLERY OPERATIONS ============
+
+export async function getExperientialGallery(): Promise<RenderingGalleryItem[]> {
+  try {
+    const { data: galleryItems, error: galleryError } = await supabase
+      .from('experiential_gallery')
+      .select('*')
+      .order('sort_order', { ascending: true });
+
+    if (galleryError) throw galleryError;
+    if (!galleryItems || galleryItems.length === 0) return [];
+
+    const projectIds = Array.from(new Set(galleryItems.map(item => item.project_id)));
+    const { data: projects, error } = await supabase
+      .from('projects')
+      .select('*')
+      .in('id', projectIds);
+
+    if (error) {
+      console.warn('Error fetching projects for experiential gallery:', error);
+      return [];
+    }
+
+    const projectMap = new Map(projects?.map(p => [p.id, p]));
+
+    return galleryItems.map(item => {
+      const project = projectMap.get(item.project_id);
+      return {
+        id: item.id,
+        projectId: item.project_id,
+        sortOrder: item.sort_order,
+        altText: item.alt_text,
+        displayTitle: item.display_title,
+        createdAt: new Date(item.created_at),
+        project: project ? {
+          id: project.id,
+          title: project.title,
+          slug: project.slug,
+          excerpt: project.excerpt,
+          designNotes: project.design_notes,
+          coverImageUrl: project.cover_image,
+          coverImageKey: project.cover_image_key,
+          client: project.client,
+          location: project.location,
+          venue: project.venue,
+          year: project.year,
+          month: project.month,
+          discipline: project.discipline,
+          subcategory: project.subcategory,
+          status: project.status,
+          featured: project.featured,
+          categoryId: project.category_id,
+          creativeTeam: project.creative_team,
+          metadata: project.metadata,
+          publishedAt: project.published_at ? new Date(project.published_at) : null,
+          seoTitle: project.seo_title,
+          seoDescription: project.seo_description,
+          seoKeywords: project.seo_keywords,
+          images: [],
+          createdAt: new Date(project.created_at),
+          updatedAt: new Date(project.updated_at),
+        } : undefined,
+      };
+    });
+  } catch (e) {
+    console.error('Supabase Experiential Gallery Error:', e);
+    return [];
+  }
+}
+
+export async function addProjectToExperientialGallery(projectId: number, altText?: string, displayTitle?: string) {
+  try {
+    const { data: maxItem } = await supabase
+      .from('experiential_gallery')
+      .select('sort_order')
+      .order('sort_order', { ascending: false })
+      .limit(1)
+      .single();
+
+    const nextOrder = (maxItem?.sort_order ?? 0) + 1;
+
+    const { error } = await supabase
+      .from('experiential_gallery')
+      .insert({
+        project_id: projectId,
+        sort_order: nextOrder,
+        alt_text: altText || null,
+        display_title: displayTitle || null,
+        active: true
+      });
+
+    if (error) throw error;
+  } catch (e) {
+    console.error('Failed to add to experiential gallery (Supabase)', e);
+    throw e;
+  }
+}
+
+export async function removeProjectFromExperientialGallery(galleryId: number) {
+  const { error } = await supabase
+    .from('experiential_gallery')
+    .delete()
+    .eq('id', galleryId);
+
+  if (error) throw error;
+}
+
+export async function updateExperientialGalleryOrder(items: { id: number; sortOrder: number }[]) {
+  for (const item of items) {
+    await supabase
+      .from('experiential_gallery')
+      .update({ sort_order: item.sortOrder })
+      .eq('id', item.id);
+  }
+}
+
+export async function updateExperientialGalleryMetadata(id: number, active: boolean, altText?: string, displayTitle?: string) {
+  const updateData: any = { active };
+  if (altText !== undefined) updateData.alt_text = altText;
+  if (displayTitle !== undefined) updateData.display_title = displayTitle;
+
+  const { error } = await supabase
+    .from('experiential_gallery')
+    .update(updateData)
     .eq('id', id);
 
   if (error) throw error;

@@ -10,6 +10,9 @@ import { invokeLLM } from "./_core/llm";
 import { generateImage } from "./_core/imageGeneration";
 import * as db from "./db";
 import { supabase } from "./db";
+import { renderingGalleryRouter } from "./routers/renderingGallery";
+import { modelGalleryRouter } from "./routers/modelGallery";
+import { experientialGalleryRouter } from "./routers/experientialGallery";
 
 // Admin-only procedure
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
@@ -33,6 +36,11 @@ export const appRouter = router({
 
   // ============ ANALYTICS ============
   analytics: analyticsRouter,
+
+  // ============ RENDERING GALLERY ============
+  renderingGallery: renderingGalleryRouter,
+  modelGallery: modelGalleryRouter,
+  experientialGallery: experientialGalleryRouter,
 
   // ============ CATEGORY MANAGEMENT ============
   categories: router({
@@ -137,7 +145,7 @@ export const appRouter = router({
   projects: router({
     list: publicProcedure
       .input(z.object({
-        status: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['draft', 'published', 'archived'])).optional(),
+        status: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['draft', 'published', 'archived', 'gallery_only'])).optional(),
         featured: z.boolean().optional(),
         categoryId: z.number().optional(),
         discipline: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['scenic_design', 'experiential_design', 'rendering', 'scenic_models'])).optional(),
@@ -196,7 +204,7 @@ export const appRouter = router({
         client: z.string().max(255).optional(),
         year: z.number().optional(),
         month: z.number().min(1).max(12).optional(),
-        status: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['draft', 'published', 'archived'])).default('draft'),
+        status: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['draft', 'published', 'archived', 'gallery_only'])).default('draft'),
         featured: z.boolean().default(false),
         creativeTeam: z.any().optional(),
         metadata: z.any().optional(),
@@ -254,7 +262,7 @@ export const appRouter = router({
         client: z.string().max(255).optional(),
         year: z.number().optional(),
         month: z.number().min(1).max(12).optional(),
-        status: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['draft', 'published', 'archived'])).optional(),
+        status: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['draft', 'published', 'archived', 'gallery_only'])).optional(),
         featured: z.boolean().optional(),
         creativeTeam: z.any().optional(),
         metadata: z.any().optional(),
@@ -305,6 +313,24 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         await db.deleteProject(input.id);
         return { success: true };
+      }),
+
+    createSignedUploadUrl: adminProcedure
+      .input(z.object({
+        bucket: z.string(),
+        path: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        const { data, error } = await supabase.storage
+          .from(input.bucket)
+          .createSignedUploadUrl(input.path);
+
+        if (error) {
+          console.error('Failed to create signed upload URL:', error);
+          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message });
+        }
+
+        return { signedUrl: data.signedUrl, token: data.token, path: data.path }; // path might be needed
       }),
 
     addImage: adminProcedure

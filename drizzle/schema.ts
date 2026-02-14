@@ -6,7 +6,7 @@ import { relations } from "drizzle-orm";
  */
 export const users = mysqlTable("users", {
   id: int("id").autoincrement().primaryKey(),
-  openId: varchar("openId", { length: 64 }).notNull().unique(),
+  openId: varchar("openId", { length: 64 }).notNull(), // Removed unique to match DB state
   name: text("name"),
   email: varchar("email", { length: 320 }),
   loginMethod: varchar("loginMethod", { length: 64 }),
@@ -24,8 +24,8 @@ export type InsertUser = typeof users.$inferInsert;
  */
 export const categories = mysqlTable("categories", {
   id: int("id").autoincrement().primaryKey(),
-  name: varchar("name", { length: 100 }).notNull().unique(),
-  slug: varchar("slug", { length: 100 }).notNull().unique(),
+  name: varchar("name", { length: 100 }).notNull(), // Removed unique
+  slug: varchar("slug", { length: 100 }).notNull(), // Removed unique
   type: mysqlEnum("type", ["project", "news", "article"]).notNull(),
   color: varchar("color", { length: 7 }).default("#FF5722").notNull(), // Hex color code
   description: text("description"),
@@ -43,8 +43,8 @@ export type InsertCategory = typeof categories.$inferInsert;
  */
 export const tags = mysqlTable("tags", {
   id: int("id").autoincrement().primaryKey(),
-  name: varchar("name", { length: 100 }).notNull().unique(),
-  slug: varchar("slug", { length: 100 }).notNull().unique(),
+  name: varchar("name", { length: 100 }).notNull(), // Removed unique
+  slug: varchar("slug", { length: 100 }).notNull(), // Removed unique
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
@@ -57,7 +57,7 @@ export type InsertTag = typeof tags.$inferInsert;
 export const projects = mysqlTable("projects", {
   id: int("id").autoincrement().primaryKey(),
   title: varchar("title", { length: 255 }).notNull(),
-  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  slug: varchar("slug", { length: 255 }).notNull(), // Removed unique
   excerpt: text("excerpt"),
   designNotes: text("designNotes"),
   discipline: mysqlEnum("discipline", ["scenic_design", "experiential_design", "rendering", "scenic_models"]).default("scenic_design").notNull(),
@@ -146,7 +146,7 @@ export const projectTags = mysqlTable("projectTags", {
 export const news = mysqlTable("news", {
   id: int("id").autoincrement().primaryKey(),
   title: varchar("title", { length: 255 }).notNull(),
-  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  slug: varchar("slug", { length: 255 }).notNull(), // Removed unique
   excerpt: text("excerpt").notNull(),
   categoryId: int("categoryId").references(() => categories.id),
   coverImageUrl: text("coverImageUrl"),
@@ -203,7 +203,7 @@ export const newsTags = mysqlTable("newsTags", {
 export const articles = mysqlTable("articles", {
   id: int("id").autoincrement().primaryKey(),
   title: varchar("title", { length: 255 }).notNull(),
-  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  slug: varchar("slug", { length: 255 }).notNull(), // Removed unique
   excerpt: text("excerpt").notNull(),
   content: text("content").notNull(),
   categoryId: int("categoryId").references(() => categories.id),
@@ -480,7 +480,7 @@ export type InsertPaintRecipe = typeof paintRecipes.$inferInsert;
 export const collaborators = mysqlTable("collaborators", {
   id: int("id").autoincrement().primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
-  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  slug: varchar("slug", { length: 255 }).notNull(), // Removed unique
   role: mysqlEnum("role", [
     "director",
     "scenic_designer",
@@ -539,3 +539,51 @@ export const projectCollaboratorsRelations = relations(projectCollaborators, ({ 
     references: [collaborators.id],
   }),
 }));
+
+/**
+ * Rendering Gallery
+ */
+export const renderingGallery = mysqlTable("rendering_gallery", {
+  id: int("id").autoincrement().primaryKey(),
+  projectId: int("project_id").references(() => projects.id, { onDelete: "cascade" }),
+  sortOrder: int("sort_order").default(0).notNull(),
+  altText: text("alt_text"),
+  displayTitle: text("display_title"),
+  active: boolean("active").default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export type RenderingGalleryItem = typeof renderingGallery.$inferSelect;
+export type InsertRenderingGalleryItem = typeof renderingGallery.$inferInsert;
+
+/**
+ * Model Gallery
+ */
+export const modelGallery = mysqlTable("model_gallery", {
+  id: int("id").autoincrement().primaryKey(),
+  projectId: int("project_id").references(() => projects.id, { onDelete: "cascade" }),
+  sortOrder: int("sort_order").default(0).notNull(),
+  altText: text("alt_text"),
+  displayTitle: text("display_title"),
+  active: boolean("active").default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export type ModelGalleryItem = typeof modelGallery.$inferSelect;
+export type InsertModelGalleryItem = typeof modelGallery.$inferInsert;
+
+/**
+ * Experiential Gallery
+ */
+export const experientialGallery = mysqlTable("experiential_gallery", {
+  id: int("id").autoincrement().primaryKey(),
+  projectId: int("project_id").references(() => projects.id, { onDelete: "cascade" }),
+  sortOrder: int("sort_order").default(0).notNull(),
+  altText: text("alt_text"),
+  displayTitle: text("display_title"),
+  active: boolean("active").default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export type ExperientialGalleryItem = typeof experientialGallery.$inferSelect;
+export type InsertExperientialGalleryItem = typeof experientialGallery.$inferInsert;
