@@ -541,12 +541,9 @@ export default function DesignHistoryTimeline() {
                       : 'border-black/10 dark:border-white/10 hover:border-black/30 dark:hover:border-white/30'
                       }`}
                   >
-                    <div
-                      className="grid gap-6 p-6"
-                      style={{ gridTemplateColumns: window.innerWidth >= 768 ? "200px 1fr" : "1fr" }}
-                    >
+                    <div className="flex flex-col md:flex-row gap-6 p-6">
                       {/* Thumbnail */}
-                      <div className="aspect-video md:aspect-square overflow-hidden rounded-2xl">
+                      <div className="w-full md:w-[200px] flex-shrink-0 aspect-video md:aspect-square overflow-hidden rounded-2xl">
                         <img
                           src={period.imageUrl}
                           alt={period.name}
