@@ -29,7 +29,10 @@ export const analyticsRouter = router({
           try {
             // Use a free IP geolocation API (e.g., ip-api.com)
             // Note: This is rate limited and not for high-scale production without a key
-            const response = await fetch(`http://ip-api.com/json/${ipString}`);
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 3000); // 3s timeout
+            const response = await fetch(`http://ip-api.com/json/${ipString}`, { signal: controller.signal });
+            clearTimeout(timeoutId);
             const data = await response.json();
             if (data.status === 'success') {
               geoData = {
@@ -42,7 +45,7 @@ export const analyticsRouter = router({
               geoCache.set(ipString, geoData);
             }
           } catch (e) {
-            console.error('Geo lookup failed', e);
+            console.error('Geo lookup failed or timed out', e);
           }
         }
       } else if (ipString === '127.0.0.1' || ipString === '::1') {

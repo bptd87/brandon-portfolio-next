@@ -45,11 +45,11 @@ const PRINTER_BEDS: PrinterBed[] = [
 
 export default function ScaleCalculator() {
   const [activeTab, setActiveTab] = useState<'real-to-scale' | 'scale-to-real'>('real-to-scale');
-  
+
   // Real → Scale Inputs
   const [realFeet, setRealFeet] = useState<string>('10');
   const [realInches, setRealInches] = useState<string>('0');
-  
+
   // Scale → Real Inputs
   const [modelMM, setModelMM] = useState<string>('50');
 
@@ -115,7 +115,7 @@ export default function ScaleCalculator() {
     if (!resultMM) return null;
     const printer = PRINTER_BEDS.find(p => p.name === selectedPrinter);
     if (!printer) return null;
-    
+
     const fits = resultMM <= printer.width && resultMM <= printer.depth;
     return { fits, printer };
   };
@@ -124,7 +124,7 @@ export default function ScaleCalculator() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <SEO 
+      <SEO
         title="Scale Calculator - 3D Printing & Model Making"
         description="Convert between architectural and model scales for 3D printing scenic design models. Calculate dimensions for 1/4 scale, 1:50, and custom ratios."
       />
@@ -132,13 +132,13 @@ export default function ScaleCalculator() {
 
       {/* Compact Hero with Header Image */}
       <section className="relative h-[30vh] md:h-[35vh] overflow-hidden border-b border-border">
-        <img 
-          src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/lnzkWrrrBVEdEMDu.webp"
-          alt="Scale Calculator - Precision conversion for theatrical drafting" 
+        <img
+          src="/assets/studio/scale-calculator.webp"
+          alt="Scale Calculator - Precision conversion for theatrical drafting"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/20" />
-        
+
         <div className="absolute bottom-0 left-0 right-0 container max-w-5xl pb-4 md:pb-6">
           <div className="flex items-center gap-2 mb-2">
             <Ruler className="w-4 h-4 text-[#2196F3]" />
@@ -161,21 +161,19 @@ export default function ScaleCalculator() {
             <div className="flex border-b border-border">
               <button
                 onClick={() => setActiveTab('real-to-scale')}
-                className={`flex-1 py-4 text-xs md:text-sm font-bold uppercase tracking-widest transition-all ${
-                  activeTab === 'real-to-scale'
-                    ? 'bg-[#2196F3] text-white'
-                    : 'text-muted-foreground hover:bg-muted/50'
-                }`}
+                className={`flex-1 py-4 text-xs md:text-sm font-bold uppercase tracking-widest transition-all ${activeTab === 'real-to-scale'
+                  ? 'bg-[#2196F3] text-white'
+                  : 'text-muted-foreground hover:bg-muted/50'
+                  }`}
               >
                 Real → Scale
               </button>
               <button
                 onClick={() => setActiveTab('scale-to-real')}
-                className={`flex-1 py-4 text-xs md:text-sm font-bold uppercase tracking-widest transition-all ${
-                  activeTab === 'scale-to-real'
-                    ? 'bg-[#2196F3] text-white'
-                    : 'text-muted-foreground hover:bg-muted/50'
-                }`}
+                className={`flex-1 py-4 text-xs md:text-sm font-bold uppercase tracking-widest transition-all ${activeTab === 'scale-to-real'
+                  ? 'bg-[#2196F3] text-white'
+                  : 'text-muted-foreground hover:bg-muted/50'
+                  }`}
               >
                 Scale → Real
               </button>
@@ -189,7 +187,7 @@ export default function ScaleCalculator() {
                   <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
                     Input
                   </Label>
-                  
+
                   {activeTab === 'real-to-scale' ? (
                     <div className="flex gap-2">
                       <div className="relative flex-1">
@@ -247,9 +245,9 @@ export default function ScaleCalculator() {
                   <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground text-right">
                     Result
                   </Label>
-                  
+
                   <div className="rounded-xl p-4 relative h-16 flex items-center justify-center border-2 border-[#2196F3]/20 bg-[#2196F3]/5">
-                    <button 
+                    <button
                       onClick={() => {
                         if (activeTab === 'real-to-scale' && resultMM) {
                           copyToClipboard(resultMM.toFixed(2));
@@ -298,9 +296,9 @@ export default function ScaleCalculator() {
                     {getSelectedScaleLabel()}
                   </span>
                 </div>
-                
+
                 <div className="relative border-2 rounded-xl flex items-center overflow-hidden bg-muted/30">
-                  <button 
+                  <button
                     onClick={() => scrollScales('left')}
                     className="absolute left-0 top-0 bottom-0 z-20 px-2 flex items-center justify-center transition-colors hover:bg-black/5 bg-gradient-to-r from-background to-transparent"
                     aria-label="Scroll left"
@@ -308,7 +306,7 @@ export default function ScaleCalculator() {
                     <ChevronLeft size={20} className="text-muted-foreground" />
                   </button>
 
-                  <div 
+                  <div
                     ref={scrollContainerRef}
                     className="flex gap-2 overflow-x-auto w-full scrollbar-hide px-10 snap-x snap-mandatory items-center py-3 scroll-smooth"
                   >
@@ -316,18 +314,17 @@ export default function ScaleCalculator() {
                       <button
                         key={scale.ratio}
                         onClick={() => setSelectedScale(scale.ratio)}
-                        className={`flex-shrink-0 snap-center px-4 py-2 rounded-lg border-2 transition-all duration-300 font-mono text-xs font-bold whitespace-nowrap ${
-                          selectedScale === scale.ratio
-                            ? 'bg-[#2196F3]/20 border-[#2196F3] text-[#2196F3] shadow-lg'
-                            : 'bg-card border-border text-muted-foreground hover:border-[#2196F3]/50'
-                        }`}
+                        className={`flex-shrink-0 snap-center px-4 py-2 rounded-lg border-2 transition-all duration-300 font-mono text-xs font-bold whitespace-nowrap ${selectedScale === scale.ratio
+                          ? 'bg-[#2196F3]/20 border-[#2196F3] text-[#2196F3] shadow-lg'
+                          : 'bg-card border-border text-muted-foreground hover:border-[#2196F3]/50'
+                          }`}
                       >
                         {scale.label}
                       </button>
                     ))}
                   </div>
 
-                  <button 
+                  <button
                     onClick={() => scrollScales('right')}
                     className="absolute right-0 top-0 bottom-0 z-20 px-2 flex items-center justify-center transition-colors hover:bg-black/5 bg-gradient-to-l from-background to-transparent"
                     aria-label="Scroll right"
@@ -345,7 +342,7 @@ export default function ScaleCalculator() {
                     Printer Bed Check
                   </span>
                 </div>
-                
+
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <Label className="text-xs mb-2 block">Select Printer</Label>
@@ -365,11 +362,10 @@ export default function ScaleCalculator() {
 
                   <div>
                     {printerFitInfo && resultMM && (
-                      <div className={`p-3 rounded-lg border-2 ${
-                        printerFitInfo.fits 
-                          ? 'bg-green-500/10 border-green-500/50 text-green-700 dark:text-green-400' 
-                          : 'bg-red-500/10 border-red-500/50 text-red-700 dark:text-red-400'
-                      }`}>
+                      <div className={`p-3 rounded-lg border-2 ${printerFitInfo.fits
+                        ? 'bg-green-500/10 border-green-500/50 text-green-700 dark:text-green-400'
+                        : 'bg-red-500/10 border-red-500/50 text-red-700 dark:text-red-400'
+                        }`}>
                         <div className="font-bold text-sm mb-1">
                           {printerFitInfo.fits ? '✓ Will Fit' : '✗ Too Large'}
                         </div>

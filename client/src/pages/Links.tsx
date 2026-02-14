@@ -28,7 +28,7 @@ export default function Links() {
   const [bioData] = useState<BioData>({
     name: 'BRANDON PT DAVIS',
     tagline: 'Scenic & Experiential Designer',
-    profileImage: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/uRNxMuYEkdakBfeA.jpeg',
+    profileImage: '/assets/studio/profile-image.jpeg',
   });
 
   // Pagination
@@ -287,7 +287,7 @@ export default function Links() {
             {pinnedItems.map(item => {
               const Icon = getIcon(item.icon);
               const isExternal = item.url.startsWith('http');
-              
+
               if (isExternal) {
                 return (
                   <a
@@ -427,7 +427,7 @@ export default function Links() {
         </div>
 
         <div className="h-20" /> {/* Bottom spacer */}
-        
+
         {/* Footer */}
         <footer className="py-8 text-center">
           <p className="text-xs text-muted-foreground">

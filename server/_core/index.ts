@@ -8,7 +8,7 @@ import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { generateRSSFeed } from "../rss";
 import * as sitemap from "../sitemap";
-import imageProxyRouter from "../imageProxy";
+// import imageProxyRouter from "../imageProxy"; // Import inside function to prevent crash on startup if sharp fails
 import { sdk } from "./sdk";
 import * as db from "../db";
 import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
@@ -162,7 +162,16 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
   });
 
   // Image proxy for on-demand resizing
-  expressApp.use("/api", imageProxyRouter);
+  // Lazy load image proxy to prevent server crash if sharp fails
+  expressApp.use("/api", async (req, res, next) => {
+    try {
+      const { default: imageProxyRouter } = await import("../imageProxy");
+      imageProxyRouter(req, res, next);
+    } catch (error) {
+      console.error("Failed to load image proxy:", error);
+      res.status(500).send("Image proxy unavailable");
+    }
+  });
 
   // RSS feeds
   expressApp.get("/api/news/rss", generateRSSFeed);

@@ -13,7 +13,7 @@ export default function StudioApps() {
     {
       title: "Scale Calculator",
       description: "Convert between architectural and model scales. Essential for drafting and model building.",
-      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/pUUxwGnztzjjGFym.webp",
+      image: "/assets/studio/scale-calculator.webp",
       href: "/studio/apps/scale-calculator",
       accentColor: "#00E5FF",
       category: "Calculator",
@@ -21,7 +21,7 @@ export default function StudioApps() {
     {
       title: "Dimension Reference",
       description: "Quick reference for standard dimensions and unit conversions.",
-      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/dUkThrifpMxEkplH.webp",
+      image: "/assets/studio/dimension-ref.webp",
       href: "/studio/apps/dimension-reference",
       accentColor: "#FF1744",
       category: "Reference",
@@ -29,7 +29,7 @@ export default function StudioApps() {
     {
       title: "Rosco Paint Calculator",
       description: "Professional scenic paint mixing calculator with advanced 5-step color matching engine for Rosco Off-Broadway paints.",
-      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/MtnVhwckqruzlJNJ.webp",
+      image: "/assets/studio/rosco-paint.webp",
       href: "/studio/apps/rosco-paint-calculator",
       accentColor: "#00E676",
       category: "Calculator",
@@ -37,7 +37,7 @@ export default function StudioApps() {
     {
       title: "Design History Timeline",
       description: "Explore 30 major design periods from Ancient Egypt to Contemporary architecture with detailed information, color palettes, and key figures.",
-      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/JWtmSLqTxNiBvvea.webp",
+      image: "/assets/studio/design-history.webp",
       href: "/studio/apps/design-history-timeline",
       accentColor: "#FFEA00",
       category: "Reference",
@@ -45,7 +45,7 @@ export default function StudioApps() {
     {
       title: "Classical Orders",
       description: "Reference guide for classical architecture and column orders.",
-      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/XPuTTIxLVRHncWpw.webp",
+      image: "/assets/studio/classical-orders.webp",
       href: "/studio/apps/classical-orders",
       accentColor: "#D500F9",
       category: "Reference",
@@ -53,7 +53,7 @@ export default function StudioApps() {
     {
       title: "Paint Finder",
       description: "Search and compare theatrical paint colors from major manufacturers.",
-      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/abfCgRFgIIVNtmbG.webp",
+      image: "/assets/studio/paint-finder.webp",
       href: "/studio/apps/paint-finder",
       accentColor: "#FF6D00",
       category: "Tool",
@@ -61,7 +61,7 @@ export default function StudioApps() {
     {
       title: "Model Scaler",
       description: "Calculate dimensions for scale models and physical mockups.",
-      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/yoZOkgjsdFdxjSBl.webp",
+      image: "/assets/studio/model-scaler.webp",
       href: "/studio/apps/model-scaler",
       accentColor: "#00BFA5",
       category: "Calculator",
