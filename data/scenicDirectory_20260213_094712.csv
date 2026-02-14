@@ -1,0 +1,18 @@
+id,title,url,description,categorySlug,enabled,displayOrder,likes,createdAt,updatedAt
+1,Control Booth Forum,https://www.controlbooth.com/,Online forums for technical theatre and scenic design discussions.,industry,1,1,0,2026-02-11 09:21:50,2026-02-11 09:21:50
+2,Skene,https://www.skene.pub/,"A digital magazine connecting performers and creators across theatre, opera, and dance—on stage, backstage, and around the world!",industry,1,2,4,2026-02-11 09:21:50,2026-02-11 09:21:50
+3,United States Institute of Theatre Technology,https://www.usitt.org/,Professional organization for theatre technology and design.,industry,1,3,1,2026-02-11 09:21:50,2026-02-11 09:21:50
+4,"United Scenic Artists, Local 829",https://www.usa829.org/,A labor union for scenic designers and artists in entertainment.,industry,1,4,4,2026-02-11 09:21:50,2026-02-11 09:21:50
+5,Rise Theatre,https://www.risetheatre.org/,A directory connecting underrepresented theatre professionals with job opportunities.,industry,1,5,2,2026-02-11 09:21:50,2026-02-11 09:21:50
+6,Fonts in Use,https://fontsinuse.com,"This site offers visual examples of real-world design application across print, film, branding, and stage.",research,1,6,2,2026-02-11 09:21:50,2026-02-11 09:21:50
+7,Archive.org,https://archive.org/,Historic scenic design documents and period research.,research,1,7,0,2026-02-11 09:21:50,2026-02-11 09:21:50
+8,Love the Work More,https://lovetheworkmore.com,A free archive of Cannes Lions-winning ad campaigns from 1954 to today.,research,1,8,1,2026-02-11 09:21:50,2026-02-11 09:21:50
+9,PureRef,https://www.pureref.com/,Free tool for organizing reference images.,software,1,9,2,2026-02-11 09:21:51,2026-02-11 09:21:51
+10,Twinmotion,https://www.twinmotion.com/,Visualization tool for architecture and scenic design.,software,1,10,2,2026-02-11 09:21:51,2026-02-11 09:21:51
+11,Convert3D,https://convert3d.org/,"Found the perfect model, but it's not compatible with your software. Use this site.",modeling,1,11,1,2026-02-11 09:21:51,2026-02-11 09:21:51
+12,AFR Furniture Rental,https://www.afrevents.com/AFR_Events_3D/,An event company offering a large free collection of 3D models.,modeling,1,12,1,2026-02-11 09:21:51,2026-02-11 09:21:51
+13,fab.com,https://www.fab.com/,Epic Games' new 3D asset marketplace.,modeling,1,13,2,2026-02-11 09:21:51,2026-02-11 09:21:51
+14,SketchUp 3D Warehouse,https://3dwarehouse.sketchup.com,Free 3D models compatible with Vectorworks.,modeling,1,14,0,2026-02-11 09:21:51,2026-02-11 09:21:51
+15,Gladsbuy,https://www.gladsbuy.com/,Affordable Backdrop Printer,supplies,1,15,2,2026-02-11 09:21:51,2026-02-11 09:21:51
+16,Paramount Studios,https://www.paramountstudios.com/wood-moulding.html,Downloadable DWGs for scenic moulding profiles.,supplies,1,16,1,2026-02-11 09:21:51,2026-02-11 09:21:51
+17,Rose Brand,https://www.rosebrand.com/,"Theatrical fabrics, materials, and scenic supplies.",supplies,1,17,0,2026-02-11 09:21:51,2026-02-11 09:21:51

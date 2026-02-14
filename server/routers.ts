@@ -21,7 +21,7 @@ const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
 
 export const appRouter = router({
   system: systemRouter,
-  
+
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {
@@ -41,13 +41,13 @@ export const appRouter = router({
       .query(async ({ input }) => {
         return await db.getAllCategories(input?.type);
       }),
-    
+
     getById: publicProcedure
       .input(z.object({ id: z.number() }))
       .query(async ({ input }) => {
         return await db.getCategoryById(input.id);
       }),
-    
+
     create: adminProcedure
       .input(z.object({
         name: z.string().min(1).max(100),
@@ -60,7 +60,7 @@ export const appRouter = router({
         const id = await db.createCategory(input);
         return { id };
       }),
-    
+
     update: adminProcedure
       .input(z.object({
         id: z.number(),
@@ -74,7 +74,7 @@ export const appRouter = router({
         await db.updateCategory(id, data);
         return { success: true };
       }),
-    
+
     delete: adminProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
@@ -88,21 +88,21 @@ export const appRouter = router({
     list: publicProcedure.query(async () => {
       return await db.getAllTags();
     }),
-    
+
     getBySlug: publicProcedure
       .input(z.object({ slug: z.string().min(1).max(100) }))
       .query(async ({ input }) => {
         const tag = await db.getTagBySlug(input.slug);
         if (!tag) return null;
-        
+
         // Get all content associated with this tag
         const projects = await db.getProjectsByTag(tag.id);
         const articles = await db.getArticlesByTag(tag.id);
         const news = await db.getNewsByTag(tag.id);
-        
+
         return { tag, projects, articles, news };
       }),
-    
+
     create: adminProcedure
       .input(z.object({
         name: z.string().min(1).max(100),
@@ -112,7 +112,7 @@ export const appRouter = router({
         const id = await db.createTag(input);
         return { id };
       }),
-    
+
     update: adminProcedure
       .input(z.object({
         id: z.number(),
@@ -124,7 +124,7 @@ export const appRouter = router({
         await db.updateTag(id, data);
         return { success: true };
       }),
-    
+
     delete: adminProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
@@ -145,41 +145,41 @@ export const appRouter = router({
       .query(async ({ input }) => {
         return await db.getAllProjects(input);
       }),
-    
+
     getById: publicProcedure
       .input(z.object({ id: z.number() }))
       .query(async ({ input }) => {
         const project = await db.getProjectById(input.id);
         if (!project) return null;
-        
+
         const [images, tags] = await Promise.all([
           db.getProjectImages(input.id),
           db.getProjectTags(input.id),
         ]);
-        
+
         return { ...project, images, tags };
       }),
-    
+
     getBySlug: publicProcedure
       .input(z.object({ slug: z.string().min(1).max(255).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/) }))
       .query(async ({ input }) => {
         const project = await db.getProjectBySlug(input.slug);
         if (!project) return null;
-        
+
         const [images, tags] = await Promise.all([
           db.getProjectImages(project.id),
           db.getProjectTags(project.id),
         ]);
-        
+
         return { ...project, images, tags };
       }),
-    
+
     getImages: publicProcedure
       .input(z.object({ projectId: z.number() }))
       .query(async ({ input }) => {
         return await db.getProjectImages(input.projectId);
       }),
-    
+
     create: adminProcedure
       .input(z.object({
         title: z.string().min(1).max(255),
@@ -216,27 +216,27 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
         const { tagIds, images, ...projectData } = input;
-        
+
         const dataToInsert = {
           ...projectData,
           publishedAt: projectData.status === 'published' ? new Date() : undefined,
         };
-        
+
         const id = await db.createProject(dataToInsert);
-        
+
         if (tagIds && tagIds.length > 0) {
           await db.setProjectTags(id, tagIds);
         }
-        
+
         if (images && images.length > 0) {
           for (const image of images) {
             await db.addProjectImage({ projectId: id, ...image });
           }
         }
-        
+
         return { id };
       }),
-    
+
     update: adminProcedure
       .input(z.object({
         id: z.number(),
@@ -274,21 +274,21 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
         const { id, tagIds, images, ...projectData } = input;
-        
+
         const currentProject = await db.getProjectById(id);
         const dataToUpdate = {
           ...projectData,
-          publishedAt: (projectData.status === 'published' && currentProject?.status !== 'published') 
-            ? new Date() 
+          publishedAt: (projectData.status === 'published' && currentProject?.status !== 'published')
+            ? new Date()
             : undefined,
         };
-        
+
         await db.updateProject(id, dataToUpdate);
-        
+
         if (tagIds !== undefined && tagIds.length > 0) {
           await db.setProjectTags(id, tagIds);
         }
-        
+
         if (images !== undefined) {
           // Delete existing images and add new ones
           await db.deleteProjectImages(id);
@@ -296,17 +296,17 @@ export const appRouter = router({
             await db.addProjectImage({ projectId: id, ...image });
           }
         }
-        
+
         return { success: true };
       }),
-    
+
     delete: adminProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         await db.deleteProject(input.id);
         return { success: true };
       }),
-    
+
     addImage: adminProcedure
       .input(z.object({
         projectId: z.number(),
@@ -320,14 +320,14 @@ export const appRouter = router({
         const id = await db.addProjectImage(input);
         return { id };
       }),
-    
+
     deleteImage: adminProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         await db.deleteProjectImage(input.id);
         return { success: true };
       }),
-    
+
     uploadImage: adminProcedure
       .input(z.object({
         filename: z.string(),
@@ -336,13 +336,13 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
         const { uploadToCloudinary } = await import('./cloudinary.js');
-        
+
         const buffer = Buffer.from(input.data, 'base64');
-        
+
         // Generate unique public ID
         const baseFilename = input.filename.replace(/\.[^.]+$/, '');
         const publicId = `${Date.now()}-${baseFilename}`;
-        
+
         // Upload to Cloudinary (automatic optimization)
         const result = await uploadToCloudinary(
           buffer,
@@ -351,9 +351,9 @@ export const appRouter = router({
             publicId: publicId
           }
         );
-        
-        return { 
-          url: result.url, 
+
+        return {
+          url: result.url,
           key: result.publicId,
           optimized: {
             originalSize: buffer.length,
@@ -377,34 +377,34 @@ export const appRouter = router({
       .query(async ({ input }) => {
         return await db.getAllNews(input);
       }),
-    
+
     getById: publicProcedure
       .input(z.object({ id: z.number() }))
       .query(async ({ input }) => {
         const newsItem = await db.getNewsById(input.id);
         if (!newsItem) return null;
-        
+
         const tags = await db.getNewsTags(input.id);
         return { ...newsItem, tags };
       }),
-    
+
     getBySlug: publicProcedure
       .input(z.object({ slug: z.string().min(1).max(255).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/) }))
       .query(async ({ input }) => {
         const newsItem = await db.getNewsBySlug(input.slug);
         if (!newsItem) return null;
-        
+
         const tags = await db.getNewsTags(newsItem.id);
         return { ...newsItem, tags };
       }),
-    
+
     getImages: publicProcedure
       .input(z.object({ newsId: z.number() }))
       .query(async ({ input }) => {
         // News items don't have galleries, just return empty array
         return [];
       }),
-    
+
     create: adminProcedure
       .input(z.object({
         title: z.string().min(1).max(255),
@@ -425,21 +425,21 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
         const { tagIds, ...newsData } = input;
-        
+
         const dataToInsert = {
           ...newsData,
           publishedAt: newsData.status === 'published' ? new Date() : undefined,
         };
-        
+
         const id = await db.createNews(dataToInsert);
-        
+
         if (tagIds && tagIds.length > 0) {
           await db.setNewsTags(id, tagIds);
         }
-        
+
         return { id };
       }),
-    
+
     update: adminProcedure
       .input(z.object({
         id: z.number(),
@@ -461,31 +461,31 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
         const { id, tagIds, ...newsData } = input;
-        
+
         const currentNews = await db.getNewsById(id);
         const dataToUpdate = {
           ...newsData,
-          publishedAt: (newsData.status === 'published' && currentNews?.status !== 'published') 
-            ? new Date() 
+          publishedAt: (newsData.status === 'published' && currentNews?.status !== 'published')
+            ? new Date()
             : undefined,
         };
-        
+
         await db.updateNews(id, dataToUpdate);
-        
+
         if (tagIds !== undefined && tagIds.length > 0) {
           await db.setNewsTags(id, tagIds);
         }
-        
+
         return { success: true };
       }),
-    
+
     delete: adminProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         await db.deleteNews(input.id);
         return { success: true };
       }),
-    
+
     uploadImage: adminProcedure
       .input(z.object({
         fileName: z.string(),
@@ -494,13 +494,13 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
         const { uploadToCloudinary } = await import('./cloudinary.js');
-        
+
         const buffer = Buffer.from(input.base64Data, 'base64');
-        
+
         // Generate unique public ID
         const baseFilename = input.fileName.replace(/\.[^.]+$/, '');
         const publicId = `${Date.now()}-${baseFilename}`;
-        
+
         // Upload to Cloudinary (automatic optimization)
         const result = await uploadToCloudinary(
           buffer,
@@ -509,15 +509,15 @@ export const appRouter = router({
             publicId: publicId
           }
         );
-        
+
         return { url: result.url, key: result.publicId };
       }),
-    
+
     bulkImport: publicProcedure
       .mutation(async () => {
         const newsData = await import('./newsData.json');
         const imageMap = await import('./newsImageMap.json');
-        
+
         const categoryMap: Record<string, number | null> = {
           'Project Launch': null,
           'Publication': null,
@@ -528,11 +528,11 @@ export const appRouter = router({
           'Life Updates': null,
           'Publication/Feature': null,
         };
-        
+
         function blocksToJson(content: any): any[] {
           if (!content) return [];
           if (typeof content === 'string') return [{ type: 'text', content }];
-          
+
           const blocks = [];
           for (const block of content) {
             if (block.type === 'paragraph' && block.content) {
@@ -542,14 +542,14 @@ export const appRouter = router({
           }
           return blocks;
         }
-        
+
         let inserted = 0;
         const articles = newsData.default || newsData;
         const images: Record<string, string> = imageMap.default || imageMap;
-        
+
         for (let idx = 0; idx < articles.length; idx++) {
           const article = articles[idx];
-          
+
           try {
             const id = await db.createNews({
               slug: article.slug,
@@ -571,7 +571,7 @@ export const appRouter = router({
             console.error(`Failed to insert ${article.title}:`, e.message);
           }
         }
-        
+
         return { inserted, total: articles.length };
       }),
   }),
@@ -588,34 +588,34 @@ export const appRouter = router({
       .query(async ({ input }) => {
         return await db.getAllArticles(input);
       }),
-    
+
     getById: publicProcedure
       .input(z.object({ id: z.number() }))
       .query(async ({ input }) => {
         const article = await db.getArticleById(input.id);
         if (!article) return null;
-        
+
         const tags = await db.getArticleTags(input.id);
         return { ...article, tags };
       }),
-    
+
     getBySlug: publicProcedure
       .input(z.object({ slug: z.string().min(1).max(255).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/) }))
       .query(async ({ input }) => {
         const article = await db.getArticleBySlug(input.slug);
         if (!article) return null;
-        
+
         const tags = await db.getArticleTags(article.id);
         return { ...article, tags };
       }),
-    
+
     getImages: publicProcedure
       .input(z.object({ articleId: z.number() }))
       .query(async ({ input }) => {
         // Articles don't have galleries, just return empty array
         return [];
       }),
-    
+
     create: adminProcedure
       .input(z.object({
         title: z.string().min(1).max(255),
@@ -636,22 +636,22 @@ export const appRouter = router({
       }))
       .mutation(async ({ input, ctx }) => {
         const { tagIds, ...articleData } = input;
-        
+
         const dataToInsert = {
           ...articleData,
           authorId: ctx.user.id,
-          publishedAt: articleData.status === 'published' ? new Date() : undefined,
+          publishedAt: articleData.publishedAt || (articleData.status === 'published' ? new Date() : undefined),
         };
-        
+
         const id = await db.createArticle(dataToInsert);
-        
+
         if (tagIds && tagIds.length > 0) {
           await db.setArticleTags(id, tagIds);
         }
-        
+
         return { id };
       }),
-    
+
     update: adminProcedure
       .input(z.object({
         id: z.number(),
@@ -673,31 +673,31 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
         const { id, tagIds, ...articleData } = input;
-        
+
         const currentArticle = await db.getArticleById(id);
         const dataToUpdate = {
           ...articleData,
-          publishedAt: (articleData.status === 'published' && currentArticle?.status !== 'published') 
-            ? new Date() 
-            : undefined,
+          publishedAt: articleData.publishedAt || ((articleData.status === 'published' && currentArticle?.status !== 'published')
+            ? new Date()
+            : undefined),
         };
-        
+
         await db.updateArticle(id, dataToUpdate);
-        
+
         if (tagIds !== undefined && tagIds.length > 0) {
           await db.setArticleTags(id, tagIds);
         }
-        
+
         return { success: true };
       }),
-    
+
     delete: adminProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         await db.deleteArticle(input.id);
         return { success: true };
       }),
-    
+
     uploadImage: adminProcedure
       .input(z.object({
         fileName: z.string(),
@@ -706,13 +706,13 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
         const { uploadToCloudinary } = await import('./cloudinary.js');
-        
+
         const buffer = Buffer.from(input.base64Data, 'base64');
-        
+
         // Generate unique public ID
         const baseFilename = input.fileName.replace(/\.[^.]+$/, '');
         const publicId = `${Date.now()}-${baseFilename}`;
-        
+
         // Upload to Cloudinary (automatic optimization)
         const result = await uploadToCloudinary(
           buffer,
@@ -721,10 +721,10 @@ export const appRouter = router({
             publicId: publicId
           }
         );
-        
+
         return { url: result.url, key: result.publicId };
       }),
-    
+
     incrementViews: publicProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
@@ -732,7 +732,7 @@ export const appRouter = router({
         const article = await db.getArticleById(input.id);
         return { views: article?.views || 0 };
       }),
-    
+
     toggleLike: publicProcedure
       .input(z.object({ id: z.number(), liked: z.boolean() }))
       .mutation(async ({ input }) => {
@@ -740,7 +740,7 @@ export const appRouter = router({
         const article = await db.getArticleById(input.id);
         return { likes: article?.likes || 0 };
       }),
-    
+
     convertFaqToAccordion: adminProcedure
       .input(z.object({ slug: z.string() }))
       .mutation(async ({ input }) => {
@@ -748,9 +748,9 @@ export const appRouter = router({
         if (!article) {
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Article not found' });
         }
-        
+
         const content = JSON.parse(article.content as string);
-        
+
         // Find the section with FAQ content - look for any section containing FAQ heading or Q: pattern
         let faqSectionIndex = -1;
         for (let i = 0; i < content.length; i++) {
@@ -763,23 +763,23 @@ export const appRouter = router({
             }
           }
         }
-        
+
         if (faqSectionIndex === -1) {
           throw new TRPCError({ code: 'NOT_FOUND', message: `FAQ section not found. Content sections: ${content.length}` });
         }
-        
+
         const faqSection = content[faqSectionIndex];
         const htmlContent = faqSection.content;
-        
+
         // Find where the FAQ heading starts
         const faqHeadingMatch = htmlContent.match(/<h2[^>]*>FAQs About Lighting in AI Art Generation<\/h2>/);
         if (!faqHeadingMatch) {
           throw new TRPCError({ code: 'BAD_REQUEST', message: 'FAQ heading not found' });
         }
-        
+
         const faqHeadingIndex = htmlContent.indexOf(faqHeadingMatch[0]);
         const beforeFaqHtml = htmlContent.substring(0, faqHeadingIndex).trim();
-        
+
         // Create FAQ items
         const faqItems = [
           {
@@ -811,37 +811,38 @@ export const appRouter = router({
             answer: "Absolutely. LLMs can help translate your creative vision into technical prompt language, suggesting specific lighting terms that might enhance your concept. They can also help troubleshoot why certain prompts aren't yielding the results you want."
           }
         ];
-        
+
         // Create new content array
         const newContent = [
           ...content.slice(0, faqSectionIndex),
         ];
-        
+
         // Add content before FAQ if it exists
         if (beforeFaqHtml) {
           newContent.push({ type: 'html', content: beforeFaqHtml });
         }
-        
+
         // Add FAQ section
         newContent.push({
           type: 'faq',
           items: faqItems
         });
-        
+
         // Update the article
         await db.updateArticle(article.id, { content: JSON.stringify(newContent) });
-        
+
         return { success: true, faqItemsCount: faqItems.length };
       }),
   }),
 
   // ============ COMMENTS ============
-  comments: router({    list: publicProcedure
+  comments: router({
+    list: publicProcedure
       .input(z.object({ articleId: z.number() }))
       .query(async ({ input }) => {
         return await db.getArticleComments(input.articleId);
       }),
-    
+
     create: protectedProcedure
       .input(z.object({
         articleId: z.number(),
@@ -855,7 +856,7 @@ export const appRouter = router({
         });
         return { id };
       }),
-    
+
     delete: protectedProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input, ctx }) => {
@@ -863,12 +864,12 @@ export const appRouter = router({
         if (!comment) {
           throw new TRPCError({ code: 'NOT_FOUND', message: 'Comment not found' });
         }
-        
+
         // Only allow deletion by comment author or admin
         if (comment.userId !== ctx.user.id && ctx.user.role !== 'admin') {
           throw new TRPCError({ code: 'FORBIDDEN', message: 'Not authorized to delete this comment' });
         }
-        
+
         await db.deleteComment(input.id);
         return { success: true };
       }),
@@ -896,9 +897,9 @@ export const appRouter = router({
         const timestamp = Date.now();
         const randomSuffix = Math.random().toString(36).substring(2, 8);
         const fileKey = `portfolio/${timestamp}-${randomSuffix}-${input.filename}`;
-        
+
         const { url } = await storagePut(fileKey, buffer, input.contentType);
-        
+
         return { url, key: fileKey };
       }),
   }),
@@ -915,8 +916,8 @@ export const appRouter = router({
         const systemPrompt = input.type === 'project'
           ? "You are a professional architecture and design writer. Generate compelling, detailed project descriptions that highlight design innovation, spatial concepts, and creative vision."
           : input.type === 'article'
-          ? "You are a skilled content writer specializing in architecture and design. Create engaging, informative article content that educates and inspires readers."
-          : "You are a professional writer creating news updates for an architecture portfolio. Write concise, newsworthy content that highlights achievements and milestones.";
+            ? "You are a skilled content writer specializing in architecture and design. Create engaging, informative article content that educates and inspires readers."
+            : "You are a professional writer creating news updates for an architecture portfolio. Write concise, newsworthy content that highlights achievements and milestones.";
 
         const userPrompt = `Generate a detailed description for: "${input.title}"${input.context ? `\n\nContext: ${input.context}` : ''}`;
 
@@ -980,20 +981,20 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
         const result = await generateImage({ prompt: input.prompt });
-        
+
         if (!result.url) {
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Failed to generate image' });
         }
-        
+
         // Upload generated image to S3
         const response = await fetch(result.url);
         const buffer = Buffer.from(await response.arrayBuffer());
         const timestamp = Date.now();
         const randomSuffix = Math.random().toString(36).substring(2, 8);
         const fileKey = `portfolio/ai-generated/${timestamp}-${randomSuffix}.png`;
-        
+
         const { url } = await storagePut(fileKey, buffer, 'image/png');
-        
+
         return { url, key: fileKey };
       }),
   }),
@@ -1060,7 +1061,7 @@ export const appRouter = router({
       .query(async ({ input }) => {
         return await db.getAllTutorials(input);
       }),
-    
+
     getById: publicProcedure
       .input(z.object({ id: z.number() }))
       .query(async ({ input }) => {
@@ -1072,7 +1073,7 @@ export const appRouter = router({
       .query(async ({ input }) => {
         return await db.getTutorialBySlug(input.slug);
       }),
-    
+
     create: adminProcedure
       .input(z.object({
         title: z.string().min(1).max(255),
@@ -1104,7 +1105,7 @@ export const appRouter = router({
         const id = await db.createTutorial(input);
         return { id };
       }),
-    
+
     update: adminProcedure
       .input(z.object({
         id: z.number(),
@@ -1138,7 +1139,7 @@ export const appRouter = router({
         await db.updateTutorial(id, data);
         return { success: true };
       }),
-    
+
     delete: adminProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
@@ -1152,7 +1153,6 @@ export const appRouter = router({
   // ============ SCENIC DIRECTORY ============
   scenicDirectory: router({
     list: publicProcedure.query(async () => {
-      // Create a getAllScenicEntries function in db.ts if it doesn't exist, or use a direct query here for now
       const { data } = await supabase
         .from('scenic_directory')
         .select('*')
@@ -1163,8 +1163,38 @@ export const appRouter = router({
         categorySlug: entry.category_slug,
         coverImage: entry.cover_image,
         createdAt: new Date(entry.created_at),
-      })); 
+        like_count: entry.like_count || 0,
+        click_count: entry.click_count || 0,
+      }));
     }),
+
+    toggleLike: publicProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        const { data, error } = await supabase.rpc('toggle_scenic_directory_like', {
+          directory_id: input.id
+        });
+
+        if (error) {
+          console.error('Error toggling like:', error);
+          // Fallback to simple increment (Read then Write)
+          const { data: current } = await supabase
+            .from('scenic_directory')
+            .select('like_count')
+            .eq('id', input.id)
+            .single();
+
+          const newCount = (current?.like_count || 0) + 1;
+
+          await supabase.from('scenic_directory')
+            .update({ like_count: newCount })
+            .eq('id', input.id);
+
+          return { success: true };
+        }
+
+        return { success: true, newCount: data };
+      }),
 
     getById: publicProcedure
       .input(z.object({ id: z.number() }))
@@ -1230,7 +1260,7 @@ export const appRouter = router({
     getProgress: protectedProcedure.query(async ({ ctx }) => {
       return await db.getTutorialProgressByUser(ctx.user.id);
     }),
-    
+
     // Toggle watched status for a tutorial
     toggleWatched: protectedProcedure
       .input(z.object({
@@ -1238,7 +1268,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ ctx, input }) => {
         const existing = await db.getTutorialProgress(ctx.user.id, input.tutorialSlug);
-        
+
         if (existing) {
           // Toggle completion status
           const newCompletedStatus = !existing.completed;
@@ -1261,20 +1291,20 @@ export const appRouter = router({
   // ============ COLLABORATORS ============
   collaborators: router({
     list: publicProcedure
-      .input(z.object({ 
+      .input(z.object({
         role: z.enum(['director', 'scenic_designer', 'costume_designer', 'lighting_designer', 'sound_designer', 'projection_designer', 'theatre_company', 'partner_company']).optional(),
         featured: z.boolean().optional()
       }).optional())
       .query(async ({ input }) => {
         return await db.getAllCollaborators(input);
       }),
-    
+
     getById: publicProcedure
       .input(z.object({ id: z.number() }))
       .query(async ({ input }) => {
         return await db.getCollaboratorById(input.id);
       }),
-    
+
     getBySlug: publicProcedure
       .input(z.object({ slug: z.string() }))
       .query(async ({ input }) => {
@@ -1284,13 +1314,13 @@ export const appRouter = router({
         }
         return collaborator;
       }),
-    
+
     getProjects: publicProcedure
       .input(z.object({ collaboratorId: z.number() }))
       .query(async ({ input }) => {
         return await db.getCollaboratorProjects(input.collaboratorId);
       }),
-    
+
     create: adminProcedure
       .input(z.object({
         name: z.string().min(1).max(255),
@@ -1313,7 +1343,7 @@ export const appRouter = router({
         const id = await db.createCollaborator(input);
         return { id };
       }),
-    
+
     update: adminProcedure
       .input(z.object({
         id: z.number(),
@@ -1338,7 +1368,7 @@ export const appRouter = router({
         await db.updateCollaborator(id, data);
         return { success: true };
       }),
-    
+
     delete: adminProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
@@ -1359,7 +1389,7 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         // Send notification to owner
         const { notifyOwner } = await import('./_core/notification');
-        
+
         const title = `New Contact Form Submission: ${input.subject}`;
         const content = `
 From: ${input.name} (${input.email})
@@ -1368,9 +1398,9 @@ Subject: ${input.subject}
 Message:
 ${input.message}
 `;
-        
+
         await notifyOwner({ title, content });
-        
+
         return { success: true };
       }),
   }),
@@ -1386,29 +1416,29 @@ ${input.message}
       }))
       .mutation(async ({ input }) => {
         const { compressImage } = await import('./imageCompression');
-        
+
         // Decode base64 to buffer
         const base64Data = input.base64.replace(/^data:image\/\w+;base64,/, '');
         const inputBuffer = Buffer.from(base64Data, 'base64');
-        
+
         // Compress image
         const compressed = await compressImage(inputBuffer, {
           maxWidth: input.maxWidth,
           quality: input.quality,
           format: 'webp'
         });
-        
+
         // Generate filename with .webp extension
         const baseFilename = input.filename.replace(/\.[^/.]+$/, '');
         const filename = `${baseFilename}-optimized.webp`;
-        
+
         // Upload to S3
         const result = await storagePut(
           `optimized-images/${filename}`,
           compressed.buffer,
           'image/webp'
         );
-        
+
         return {
           url: result.url,
           originalSize: inputBuffer.length,

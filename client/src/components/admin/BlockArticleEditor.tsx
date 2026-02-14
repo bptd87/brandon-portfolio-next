@@ -27,11 +27,12 @@ import {
   MessageSquareQuote,
   HelpCircle,
   FileText,
+  Sparkles,
 } from "lucide-react";
 import { toast } from "sonner";
 
 // All block types the editor supports (including DB-stored types)
-type BlockType = "text" | "paragraph" | "heading" | "image" | "gallery" | "video" | "accordion" | "quote" | "list" | "faq" | "html" | "update_note";
+type BlockType = "text" | "paragraph" | "heading" | "image" | "gallery" | "video" | "accordion" | "quote" | "list" | "faq" | "html" | "update_note" | "ai_prompt";
 
 interface Block {
   id: string;
@@ -132,6 +133,12 @@ function normalizeDbBlock(dbBlock: any, index: number): Block {
         type: "update_note",
         content: { text: dbBlock.text || "" },
       };
+    case "ai_prompt":
+      return {
+        id,
+        type: "ai_prompt",
+        content: { prompt: dbBlock.prompt || dbBlock.content || "" },
+      };
     default:
       // Fallback: treat as text
       return {
@@ -170,10 +177,17 @@ function blockToDbFormat(block: Block): any {
       return { type: "html", content: block.content.code || "" };
     case "update_note":
       return { type: "update_note", text: block.content.text || "" };
+    case "ai_prompt":
+      return { type: "ai_prompt", prompt: block.content.prompt || "" };
     default:
       return { type: block.type, text: block.content.text || "" };
   }
 }
+
+import { processImageForUpload } from "@/utils/imageUtils";
+import { uploadImage as uploadToStorage } from "@/utils/storageUtils";
+
+// ... existing imports
 
 export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticleEditorProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -195,7 +209,8 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
     seoKeywords: "",
   });
   const [uploadingCover, setUploadingCover] = useState(false);
-  const uploadImage = trpc.articles.uploadImage.useMutation();
+  const [uploadingBlockId, setUploadingBlockId] = useState<string | null>(null);
+  // const uploadImage = trpc.articles.uploadImage.useMutation(); // No longer using TRPC for uploads
   const [newTag, setNewTag] = useState("");
 
   const { data: categories } = trpc.categories.list.useQuery({ type: "article" });
@@ -279,6 +294,8 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
         return { code: "" };
       case "update_note":
         return { text: "" };
+      case "ai_prompt":
+        return { prompt: "" };
       default:
         return {};
     }
@@ -415,17 +432,16 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
 
                     setUploadingCover(true);
                     try {
-                      const buffer = await file.arrayBuffer();
-                      const bytes = new Uint8Array(buffer);
-                      const result = await uploadImage.mutateAsync({
-                        fileName: file.name,
-                        fileType: file.type,
-                        base64Data: btoa(String.fromCharCode(...Array.from(bytes))),
-                      });
+                      // 1. Optimize
+                      const optimizedFile = await processImageForUpload(file);
 
-                      setFormData({ ...formData, coverImageUrl: result.url });
-                      toast.success("Image uploaded successfully");
+                      // 2. Upload to Supabase Storage
+                      const publicUrl = await uploadToStorage(optimizedFile, 'portfolio'); // Assuming 'portfolio' bucket exists
+
+                      setFormData({ ...formData, coverImageUrl: publicUrl });
+                      toast.success("Cover image optimized & uploaded!");
                     } catch (error: any) {
+                      console.error(error);
                       toast.error(`Failed to upload image: ${error.message}`);
                     } finally {
                       setUploadingCover(false);
@@ -534,10 +550,10 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                       }
                       placeholder="Heading text..."
                       className={`font-bold ${block.content.level === 2
-                          ? "text-3xl"
-                          : block.content.level === 3
-                            ? "text-2xl"
-                            : "text-xl"
+                        ? "text-3xl"
+                        : block.content.level === 3
+                          ? "text-2xl"
+                          : "text-xl"
                         }`}
                     />
                   </div>
@@ -546,13 +562,47 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                 {/* Image block */}
                 {block.type === "image" && (
                   <div className="space-y-2">
-                    <Input
-                      value={block.content.url || ""}
-                      onChange={(e) =>
-                        updateBlock(block.id, { ...block.content, url: e.target.value })
-                      }
-                      placeholder="Image URL"
-                    />
+                    <div className="flex gap-2 items-center">
+                      <Input
+                        value={block.content.url || ""}
+                        onChange={(e) =>
+                          updateBlock(block.id, { ...block.content, url: e.target.value })
+                        }
+                        placeholder="Image URL"
+                      />
+                      <div className="relative">
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          className="absolute inset-0 opacity-0 cursor-pointer"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (!file) return;
+
+                            setUploadingBlockId(block.id);
+                            try {
+                              // 1. Optimize
+                              const optimizedFile = await processImageForUpload(file);
+
+                              // 2. Upload
+                              const publicUrl = await uploadToStorage(optimizedFile, 'portfolio', 'articles');
+
+                              updateBlock(block.id, { ...block.content, url: publicUrl });
+                              toast.success("Image uploaded!");
+                            } catch (error: any) {
+                              console.error(error);
+                              toast.error(`Upload failed: ${error.message}`);
+                            } finally {
+                              setUploadingBlockId(null);
+                            }
+                          }}
+                          disabled={uploadingBlockId === block.id}
+                        />
+                        <Button variant="outline" size="icon" disabled={uploadingBlockId === block.id}>
+                          {uploadingBlockId === block.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <ImageIcon className="h-4 w-4" />}
+                        </Button>
+                      </div>
+                    </div>
                     {block.content.url && (
                       <img
                         src={block.content.url}
@@ -602,15 +652,50 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                   <div className="space-y-2">
                     {(block.content.images || []).map((img: any, idx: number) => (
                       <div key={idx} className="border p-3 rounded space-y-2">
-                        <Input
-                          value={img.url || ""}
-                          onChange={(e) => {
-                            const newImages = [...(block.content.images || [])];
-                            newImages[idx] = { ...newImages[idx], url: e.target.value };
-                            updateBlock(block.id, { images: newImages });
-                          }}
-                          placeholder="Image URL"
-                        />
+                        <div className="flex gap-2 items-center">
+                          <Input
+                            value={img.url || ""}
+                            onChange={(e) => {
+                              const newImages = [...(block.content.images || [])];
+                              newImages[idx] = { ...newImages[idx], url: e.target.value };
+                              updateBlock(block.id, { images: newImages });
+                            }}
+                            placeholder="Image URL"
+                          />
+                          <div className="relative">
+                            <Input
+                              type="file"
+                              accept="image/*"
+                              className="absolute inset-0 opacity-0 cursor-pointer"
+                              onChange={async (e) => {
+                                const file = e.target.files?.[0];
+                                if (!file) return;
+
+                                const uploadId = `${block.id}-gallery-${idx}`;
+                                setUploadingBlockId(uploadId);
+                                try {
+                                  const optimizedFile = await processImageForUpload(file);
+                                  const publicUrl = await uploadToStorage(optimizedFile, 'portfolio', 'gallery');
+
+                                  const newImages = [...(block.content.images || [])];
+                                  newImages[idx] = { ...newImages[idx], url: publicUrl };
+                                  updateBlock(block.id, { images: newImages });
+
+                                  toast.success("Image uploaded!");
+                                } catch (error: any) {
+                                  console.error(error);
+                                  toast.error(`Upload failed: ${error.message}`);
+                                } finally {
+                                  setUploadingBlockId(null);
+                                }
+                              }}
+                              disabled={uploadingBlockId === `${block.id}-gallery-${idx}`}
+                            />
+                            <Button variant="outline" size="icon" disabled={uploadingBlockId === `${block.id}-gallery-${idx}`}>
+                              {uploadingBlockId === `${block.id}-gallery-${idx}` ? <Loader2 className="h-4 w-4 animate-spin" /> : <ImageIcon className="h-4 w-4" />}
+                            </Button>
+                          </div>
+                        </div>
                         <Input
                           value={img.caption || ""}
                           onChange={(e) => {
@@ -853,6 +938,24 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                     />
                   </div>
                 )}
+
+                {/* AI Prompt block */}
+                {block.type === "ai_prompt" && (
+                  <div className="space-y-2 bg-purple-500/10 p-3 rounded border border-purple-500/30">
+                    <p className="text-sm font-medium text-purple-400 flex items-center gap-2">
+                      <Sparkles className="w-4 h-4" /> AI Prompt
+                    </p>
+                    <Textarea
+                      value={block.content.prompt || ""}
+                      onChange={(e) =>
+                        updateBlock(block.id, { prompt: e.target.value })
+                      }
+                      placeholder="Enter the prompt text..."
+                      rows={3}
+                      className="font-mono text-sm"
+                    />
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -902,6 +1005,10 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
             <Button variant="outline" size="sm" onClick={() => addBlock("update_note")}>
               <FileText className="w-4 h-4 mr-2" />
               Update Note
+            </Button>
+            <Button variant="outline" size="sm" onClick={() => addBlock("ai_prompt")}>
+              <Sparkles className="w-4 h-4 mr-2" />
+              AI Prompt
             </Button>
           </div>
 

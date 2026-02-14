@@ -17,13 +17,13 @@ export const analyticsRouter = router({
       // Get IP from request context (Express request)
       const ip = ctx.req.ip || ctx.req.headers['x-forwarded-for'] || 'unknown';
       const ipString = Array.isArray(ip) ? ip[0] : ip;
-      
+
       let geoData: { city: string | null, region: string | null, country: string | null } = { city: null, region: null, country: null };
 
       // Try to get geo data if IP is valid and not localhost
       if (ipString && ipString !== 'unknown' && ipString !== '127.0.0.1' && ipString !== '::1') {
         if (geoCache.has(ipString)) {
-            // @ts-ignore
+          // @ts-ignore
           geoData = geoCache.get(ipString)!;
         } else {
           try {
@@ -53,7 +53,7 @@ export const analyticsRouter = router({
           country: 'United States'
         };
       }
-      
+
       try {
         const { error } = await supabase
           .from('analytics_visits')
@@ -65,9 +65,9 @@ export const analyticsRouter = router({
             region: geoData.region,
             city: geoData.city
           });
-          
+
         if (error) {
-             console.error('Supabase Analytics Error:', error);
+          console.error('Supabase Analytics Error:', error);
         }
       } catch (e) {
         console.error('Analytics insert failed', e);
@@ -75,25 +75,57 @@ export const analyticsRouter = router({
 
       return { success: true };
     }),
-    
-    getStats: publicProcedure
+
+  getStats: publicProcedure
     .query(async ({ ctx }: { ctx: any }) => {
-        // This should technically be admin-only, but let's just fetch it
-        // The RLS policy will prevent non-admins from seeing data if we use standard client
-        // But here we are on server, so we should use service key or ensure user is admin.
-        
-        // For now, let's just fetch recent visits
-        const { data, error } = await supabase
-            .from('analytics_visits')
-            .select('*')
-            .order('created_at', { ascending: false })
-            .limit(100);
-            
+      // This should technically be admin-only, but let's just fetch it
+      // The RLS policy will prevent non-admins from seeing data if we use standard client
+      // But here we are on server, so we should use service key or ensure user is admin.
+
+      // For now, let's just fetch recent visits
+      const { data, error } = await supabase
+        .from('analytics_visits')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(100);
+
+      if (error) {
+        console.error('Error fetching stats:', error);
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message });
+      }
+
+      return data || [];
+    }),
+
+  trackScenicDirectoryClick: publicProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(async ({ input }) => {
+      try {
+        // Increment click count and update last clicked timestamp
+        const { error } = await supabase.rpc('increment_scenic_directory_clicks', {
+          directory_id: input.id
+        });
+
         if (error) {
-            console.error('Error fetching stats:', error);
-            throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message });
+          console.error('Click tracking error:', error);
+          // Fallback to manual update if RPC doesn't exist
+          const { error: updateError } = await supabase
+            .from('scenic_directory')
+            .update({
+              click_count: supabase.sql`click_count + 1`,
+              last_clicked_at: new Date().toISOString()
+            })
+            .eq('id', input.id);
+
+          if (updateError) {
+            console.error('Manual click update error:', updateError);
+          }
         }
-        
-        return data || [];
+
+        return { success: true };
+      } catch (e) {
+        console.error('Track click failed:', e);
+        return { success: false };
+      }
     })
 });

@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { trpc } from "@/lib/trpc";
 import { proxyImageUrl } from "@/lib/imageProxy";
-import { Calendar, Clock, ArrowLeft, Share2, Twitter, Linkedin, Mail, Link as LinkIcon, Heart, Eye, User } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, Share2, Twitter, Linkedin, Mail, Link as LinkIcon, Heart, Eye, User, Sparkles, Copy, Check } from "lucide-react";
 import { Link, useParams } from "wouter";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -778,6 +778,38 @@ function ArticleDetailContent() {
                                 </AccordionItem>
                               ))}
                             </Accordion>
+                          </div>
+                        );
+
+                      case 'ai_prompt':
+                        return (
+                          <div key={index} className="my-10 p-6 rounded-xl border border-purple-500/20 bg-purple-500/5 relative group">
+                            <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 text-purple-400 hover:text-purple-300 hover:bg-purple-500/10"
+                                onClick={() => {
+                                  // Handle both flat (prompt) and nested (content) structures
+                                  const text = section.prompt || section.content?.prompt || section.content || '';
+                                  navigator.clipboard.writeText(text);
+                                  toast.success("Prompt copied to clipboard!");
+                                }}
+                              >
+                                <Copy className="h-4 w-4" />
+                              </Button>
+                            </div>
+                            <div className="flex items-start gap-3">
+                              <div className="mt-1 p-1.5 rounded-md bg-purple-500/10 text-purple-400">
+                                <Sparkles className="w-4 h-4" />
+                              </div>
+                              <div className="flex-1">
+                                <p className="text-xs font-bold text-purple-400 uppercase tracking-wider mb-2">AI Prompt</p>
+                                <p className="font-mono text-sm leading-relaxed text-foreground/90 whitespace-pre-wrap">
+                                  {section.prompt || section.content?.prompt || section.content || ''}
+                                </p>
+                              </div>
+                            </div>
                           </div>
                         );
 

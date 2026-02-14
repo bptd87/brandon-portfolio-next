@@ -31,6 +31,11 @@ interface NewsFormProps {
   onSuccess: () => void;
 }
 
+import { processImageForUpload } from "@/utils/imageUtils";
+import { uploadImage as uploadToStorage } from "@/utils/storageUtils";
+
+// ... existing imports
+
 export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
   const [activeTab, setActiveTab] = useState("basic");
   const [formData, setFormData] = useState({
@@ -52,9 +57,10 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
 
   const [coverImage, setCoverImage] = useState<{ file?: File; url?: string; key?: string }>();
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadingBlockId, setUploadingBlockId] = useState<string | null>(null);
 
   const { data: categories } = trpc.categories.list.useQuery({ type: "news" });
-  const uploadImage = trpc.news.uploadImage.useMutation();
+  // const uploadImage = trpc.news.uploadImage.useMutation(); // Replaced by client-side upload
 
   // Fetch full news data by ID when editing (ensures all fields are loaded)
   const { data: fullNews, isLoading: isLoadingNews } = trpc.news.getById.useQuery(
@@ -127,21 +133,17 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
 
     setUploadingImage(true);
     try {
-      const buffer = await file.arrayBuffer();
-      const bytes = new Uint8Array(buffer);
-      const result = await uploadImage.mutateAsync({
-        fileName: file.name,
-        fileType: file.type,
-        base64Data: btoa(String.fromCharCode(...Array.from(bytes))),
-      });
+      const optimizedFile = await processImageForUpload(file);
+      const publicUrl = await uploadToStorage(optimizedFile, 'portfolio', 'news');
 
       setCoverImage({
-        file,
-        url: result.url,
-        key: result.key,
+        file, // Keep original file ref if needed, but url is what matters for DB
+        url: publicUrl,
+        key: undefined, // Key is no longer needed/returned by storageUtils in this simplified flow, publicUrl is stored
       });
       toast.success("Image uploaded successfully");
     } catch (error: any) {
+      console.error(error);
       toast.error(`Failed to upload image: ${error.message}`);
     } finally {
       setUploadingImage(false);
@@ -459,11 +461,42 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
                       {/* Image Block */}
                       {block.type === 'image' && (
                         <div className="space-y-2">
-                          <Input
-                            value={block.url}
-                            onChange={(e) => updateBlock(index, { url: e.target.value })}
-                            placeholder="Image URL"
-                          />
+                          <div className="flex gap-2 items-center">
+                            <Input
+                              value={block.url}
+                              onChange={(e) => updateBlock(index, { url: e.target.value })}
+                              placeholder="Image URL"
+                            />
+                            <div className="relative">
+                              <Input
+                                type="file"
+                                accept="image/*"
+                                className="absolute inset-0 opacity-0 cursor-pointer"
+                                onChange={async (e) => {
+                                  const file = e.target.files?.[0];
+                                  if (!file) return;
+
+                                  setUploadingBlockId(`block-${index}`);
+                                  try {
+                                    const optimizedFile = await processImageForUpload(file);
+                                    const publicUrl = await uploadToStorage(optimizedFile, 'portfolio', 'news');
+
+                                    updateBlock(index, { url: publicUrl });
+                                    toast.success("Image uploaded!");
+                                  } catch (error: any) {
+                                    console.error(error);
+                                    toast.error(`Upload failed: ${error.message}`);
+                                  } finally {
+                                    setUploadingBlockId(null);
+                                  }
+                                }}
+                                disabled={uploadingBlockId === `block-${index}`}
+                              />
+                              <Button variant="outline" size="icon" disabled={uploadingBlockId === `block-${index}`}>
+                                {uploadingBlockId === `block-${index}` ? <Loader2 className="h-4 w-4 animate-spin" /> : <Image className="h-4 w-4" />}
+                              </Button>
+                            </div>
+                          </div>
                           <Input
                             value={block.caption || ''}
                             onChange={(e) => updateBlock(index, { caption: e.target.value })}
@@ -499,15 +532,50 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
                           {block.images?.map((img: any, imgIndex: number) => (
                             <div key={imgIndex} className="flex gap-2 items-start border-b pb-2">
                               <div className="flex-1 space-y-2">
-                                <Input
-                                  value={img.url}
-                                  onChange={(e) => {
-                                    const newImages = [...block.images];
-                                    newImages[imgIndex] = { ...img, url: e.target.value };
-                                    updateBlock(index, { images: newImages });
-                                  }}
-                                  placeholder="Image URL"
-                                />
+                                <div className="flex gap-2 items-center">
+                                  <Input
+                                    value={img.url}
+                                    onChange={(e) => {
+                                      const newImages = [...block.images];
+                                      newImages[imgIndex] = { ...img, url: e.target.value };
+                                      updateBlock(index, { images: newImages });
+                                    }}
+                                    placeholder="Image URL"
+                                  />
+                                  <div className="relative">
+                                    <Input
+                                      type="file"
+                                      accept="image/*"
+                                      className="absolute inset-0 opacity-0 cursor-pointer"
+                                      onChange={async (e) => {
+                                        const file = e.target.files?.[0];
+                                        if (!file) return;
+
+                                        const uploadId = `block-${index}-gallery-${imgIndex}`;
+                                        setUploadingBlockId(uploadId);
+                                        try {
+                                          const optimizedFile = await processImageForUpload(file);
+                                          const publicUrl = await uploadToStorage(optimizedFile, 'portfolio', 'news_gallery');
+
+                                          const newImages = [...block.images];
+                                          newImages[imgIndex] = { ...img, url: publicUrl };
+                                          updateBlock(index, { images: newImages });
+
+                                          toast.success("Image uploaded!");
+                                        } catch (error: any) {
+                                          console.error(error);
+                                          toast.error(`Upload failed: ${error.message}`);
+                                        } finally {
+                                          setUploadingBlockId(null);
+                                        }
+                                      }}
+                                      disabled={uploadingBlockId === `block-${index}-gallery-${imgIndex}`}
+                                    />
+                                    <Button variant="outline" size="icon" disabled={uploadingBlockId === `block-${index}-gallery-${imgIndex}`}>
+                                      {uploadingBlockId === `block-${index}-gallery-${imgIndex}` ? <Loader2 className="h-4 w-4 animate-spin" /> : <Image className="h-4 w-4" />}
+                                    </Button>
+                                  </div>
+                                </div>
                                 <Input
                                   value={img.caption || ''}
                                   onChange={(e) => {

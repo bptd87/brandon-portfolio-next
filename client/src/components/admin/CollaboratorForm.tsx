@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
+import { processImageForUpload } from "@/utils/imageUtils";
+import { uploadImage as uploadToStorage } from "@/utils/storageUtils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -41,6 +43,7 @@ export function CollaboratorForm({ collaboratorId }: CollaboratorFormProps) {
         seoDescription: "",
         seoKeywords: "",
     });
+    const [uploading, setUploading] = useState(false);
 
     const { data: collaborator, isLoading } = trpc.collaborators.getById.useQuery(
         { id: collaboratorId! },
@@ -90,6 +93,24 @@ export function CollaboratorForm({ collaboratorId }: CollaboratorFormProps) {
             .replace(/[^a-z0-9]+/g, '-')
             .replace(/^-+|-+$/g, '');
         setFormData(prev => ({ ...prev, slug }));
+    };
+
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        try {
+            setUploading(true);
+            const optimizedFile = await processImageForUpload(file);
+            const publicUrl = await uploadToStorage(optimizedFile, 'portfolio', 'collaborators');
+            setFormData(prev => ({ ...prev, coverImage: publicUrl }));
+            toast.success("Image uploaded successfully");
+        } catch (error) {
+            console.error("Upload failed:", error);
+            toast.error("Failed to upload image");
+        } finally {
+            setUploading(false);
+        }
     };
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -244,11 +265,49 @@ export function CollaboratorForm({ collaboratorId }: CollaboratorFormProps) {
                                 <Label>Cover Image URL (Portrait/Headshot)</Label>
                                 <div className="flex gap-4 items-start">
                                     <div className="flex-1 space-y-2">
-                                        <Input
-                                            value={formData.coverImage}
-                                            onChange={e => setFormData(prev => ({ ...prev, coverImage: e.target.value }))}
-                                            placeholder="Paste image URL here"
-                                        />
+                                        <div className="flex gap-2">
+                                            <Input
+                                                value={formData.coverImage}
+                                                onChange={e => setFormData(prev => ({ ...prev, coverImage: e.target.value }))}
+                                                placeholder="Paste image URL or upload ->"
+                                                className="flex-1"
+                                            />
+                                            <div className="relative">
+                                                <Button
+                                                    type="button"
+                                                    variant="outline"
+                                                    size="icon"
+                                                    className="relative overflow-hidden"
+                                                    disabled={uploading}
+                                                >
+                                                    {uploading ? (
+                                                        <Loader2 className="h-4 w-4 animate-spin" />
+                                                    ) : (
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            strokeWidth="2"
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            className="h-4 w-4"
+                                                        >
+                                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                                            <polyline points="17 8 12 3 7 8" />
+                                                            <line x1="12" x2="12" y1="3" y2="15" />
+                                                        </svg>
+                                                    )}
+                                                    <input
+                                                        type="file"
+                                                        accept="image/*"
+                                                        className="absolute inset-0 opacity-0 cursor-pointer"
+                                                        onChange={handleImageUpload}
+                                                        disabled={uploading}
+                                                    />
+                                                </Button>
+                                            </div>
+                                        </div>
                                         <p className="text-[10px] text-muted-foreground italic">
                                             Tip: Used for cards and profile headers.
                                         </p>

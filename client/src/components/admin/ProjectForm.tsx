@@ -1,5 +1,7 @@
 import { useState, useEffect, useMemo, useId } from "react";
 import { trpc } from "@/lib/trpc";
+import { processImageForUpload } from "@/utils/imageUtils";
+import { uploadImage as uploadToStorage } from "@/utils/storageUtils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,7 +17,7 @@ import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, X, Plus, GripVertical, ArrowLeft, Save, Info, Search } from "lucide-react";
+import { Loader2, X, Plus, GripVertical, ArrowLeft, Save, Info, Search, Image as ImageIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
 import {
@@ -52,7 +54,7 @@ interface ImageUpload {
   url?: string;
   key?: string;
   videoUrl?: string;
-  imageType: "production" | "rendering" | "technical_drawing" | "video";
+  imageType: "production" | "rendering" | "technical_drawing" | "scenic_models" | "video";
   caption?: string;
   altText?: string;
   sortOrder: number;
@@ -225,22 +227,32 @@ function SortableGalleryImage({
           onChange={(e) => onUpdateField(index, 'altText', e.target.value)}
           className="text-sm"
         />
-        <div className="flex items-center justify-between">
-          <Badge variant="outline" className="text-xs">
-            {img.imageType}
-          </Badge>
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            onClick={() => onRemove(index)}
-            className="text-destructive hover:text-destructive h-7"
-          >
-            <X className="h-3 w-3 mr-1" />
-            Remove
-          </Button>
-        </div>
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          onClick={() => onRemove(index)}
+          className="text-destructive hover:text-destructive h-7"
+        >
+          <X className="h-3 w-3 mr-1" />
+          Remove
+        </Button>
       </div>
+      <Select
+        value={img.imageType}
+        onValueChange={(val) => onUpdateField(index, 'imageType', val)}
+      >
+        <SelectTrigger className="h-7 text-xs w-full">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="production">Production</SelectItem>
+          <SelectItem value="rendering">Rendering</SelectItem>
+          <SelectItem value="scenic_models">Scenic Model</SelectItem>
+          <SelectItem value="technical_drawing">Technical Drawing</SelectItem>
+          <SelectItem value="video">Video</SelectItem>
+        </SelectContent>
+      </Select>
     </div>
   );
 }
@@ -280,10 +292,11 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
   const [coverImage, setCoverImage] = useState<{ file?: File; url?: string; key?: string }>();
   const [galleryImages, setGalleryImages] = useState<ImageUpload[]>([]);
   const [uploadingImages, setUploadingImages] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   // Categories removed - projects use disciplines, not categories
   const { data: allTags } = trpc.tags.list.useQuery();
-  const uploadImage = trpc.projects.uploadImage.useMutation();
+  // const uploadImage = trpc.projects.uploadImage.useMutation(); // Replaced by client-side upload
 
   const createProject = trpc.projects.create.useMutation({
     onSuccess: () => {
@@ -486,11 +499,15 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
 
   const handleAddGalleryImage = (type: "production" | "rendering" | "technical_drawing" | "video") => {
     if (type === "video") {
-      const videoUrl = prompt("Enter YouTube video URL:");
-      if (videoUrl) {
+      const url = prompt("Enter video URL (YouTube/Vimeo):");
+      if (url) {
         setGalleryImages([
           ...galleryImages,
-          { videoUrl, imageType: "video", sortOrder: galleryImages.length },
+          {
+            videoUrl: url,
+            imageType: "video",
+            sortOrder: galleryImages.length,
+          },
         ]);
       }
     } else {
@@ -499,18 +516,42 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
       input.accept = "image/*";
       input.multiple = true;
       input.onchange = (e) => {
-        const files = Array.from((e.target as HTMLInputElement).files || []);
-        const newImages: ImageUpload[] = files.map((file, index) => ({
-          file,
-          url: URL.createObjectURL(file),
-          imageType: type,
-          sortOrder: galleryImages.length + index,
-        }));
-        setGalleryImages([...galleryImages, ...newImages]);
+        handleFiles(Array.from((e.target as HTMLInputElement).files || []), type);
       };
       input.click();
     }
   };
+
+  const handleFiles = (files: File[], defaultType: "production" | "rendering" | "technical_drawing" | "scenic_models" = "production") => {
+    const newImages: ImageUpload[] = files.map((file, index) => ({
+      file,
+      url: URL.createObjectURL(file), // Create extensive preview
+      imageType: defaultType,
+      sortOrder: galleryImages.length + index,
+    }));
+    setGalleryImages([...galleryImages, ...newImages]);
+  };
+
+  const onDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const onDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const onDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+    if (files.length > 0) {
+      handleFiles(files);
+      toast.success(`Added ${files.length} images`);
+    }
+  };
+
 
   const handleRemoveGalleryImage = (index: number) => {
     setGalleryImages(galleryImages.filter((_, i) => i !== index));
@@ -532,37 +573,39 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
       let coverImageKey = fullProject?.coverImageKey;
 
       if (coverImage?.file) {
-        const buffer = await coverImage.file.arrayBuffer();
-        const base64 = btoa(String.fromCharCode(...Array.from(new Uint8Array(buffer))));
-        const result = await uploadImage.mutateAsync({
-          filename: coverImage.file.name,
-          contentType: coverImage.file.type,
-          data: base64,
-        });
-        coverImageUrl = result.url;
-        coverImageKey = result.key;
+        try {
+          const optimizedFile = await processImageForUpload(coverImage.file);
+          const publicUrl = await uploadToStorage(optimizedFile, 'portfolio', 'projects');
+          coverImageUrl = publicUrl;
+          coverImageKey = undefined; // We don't need to manage keys manually with the new system
+        } catch (error) {
+          console.error("Cover image upload failed:", error);
+          toast.error("Failed to upload cover image");
+          setUploadingImages(false);
+          return;
+        }
       }
 
       // Upload gallery images
       const uploadedGalleryImages = await Promise.all(
         galleryImages.map(async (img) => {
           if (img.file) {
-            const buffer = await img.file.arrayBuffer();
-            const base64 = btoa(String.fromCharCode(...Array.from(new Uint8Array(buffer))));
-            const result = await uploadImage.mutateAsync({
-              filename: img.file.name,
-              contentType: img.file.type,
-              data: base64,
-            });
-            return {
-              imageUrl: result.url,
-              imageKey: result.key,
-              videoUrl: undefined,
-              imageType: img.imageType,
-              caption: img.caption || undefined,
-              altText: img.altText || undefined,
-              sortOrder: img.sortOrder,
-            };
+            try {
+              const optimizedFile = await processImageForUpload(img.file);
+              const publicUrl = await uploadToStorage(optimizedFile, 'portfolio', 'projects');
+              return {
+                imageUrl: publicUrl,
+                imageKey: undefined,
+                videoUrl: undefined,
+                imageType: img.imageType,
+                caption: img.caption || undefined,
+                altText: img.altText || undefined,
+                sortOrder: img.sortOrder,
+              };
+            } catch (error) {
+              console.error(`Gallery image upload failed for ${img.file.name}:`, error);
+              return null; // Handle failure gracefully or throw
+            }
           } else if (img.videoUrl) {
             return {
               imageUrl: undefined,
@@ -586,6 +629,13 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
         })
       );
 
+      // Filter out any failed uploads (nulls)
+      const validGalleryImages = uploadedGalleryImages.filter(img => img !== null) as any[];
+
+      const safeStatus = formData.status && ['draft', 'published', 'archived'].includes(formData.status.toLowerCase())
+        ? formData.status.toLowerCase()
+        : 'draft';
+
       const projectPayload = {
         title: formData.title,
         slug: formData.slug,
@@ -599,14 +649,14 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
         location: formData.location || undefined,
         client: formData.client || undefined,
         year: formData.year || undefined,
-        status: formData.status.toLowerCase() as any,
+        status: safeStatus as any,
         featured: formData.featured,
         creativeTeam: teamMembers.length > 0 ? teamMembers : undefined,
         seoTitle: formData.seoTitle || undefined,
         seoDescription: formData.seoDescription || undefined,
         seoKeywords: formData.seoKeywords || undefined,
         tagIds: selectedTagIds.length > 0 ? selectedTagIds : undefined,
-        images: uploadedGalleryImages.map(img => ({
+        images: validGalleryImages.map(img => ({
           ...img,
           imageType: img.imageType.toLowerCase() as any
         })),
@@ -1064,62 +1114,76 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
               <div className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <CardTitle>Gallery Images</CardTitle>
-                        <CardDescription>Production photos, renderings, and videos</CardDescription>
-                      </div>
-                      <div className="flex gap-2">
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleAddGalleryImage("production")}
-                        >
-                          <Plus className="mr-2 h-4 w-4" />
-                          Production Photos
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleAddGalleryImage("rendering")}
-                        >
-                          <Plus className="mr-2 h-4 w-4" />
-                          Renderings
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleAddGalleryImage("rendering")}
-                        >
-                          <Plus className="mr-2 h-4 w-4" />
-                          Renderings
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleAddGalleryImage("technical_drawing")}
-                          className="whitespace-nowrap"
-                        >
-                          <Plus className="mr-2 h-4 w-4" />
-                          Technical Drawings
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleAddGalleryImage("video")}
-                        >
-                          <Plus className="mr-2 h-4 w-4" />
-                          Video
-                        </Button>
-                      </div>
+                    <div>
+                      <CardTitle>Gallery Images</CardTitle>
+                      <CardDescription>Production photos, renderings, and videos</CardDescription>
                     </div>
                   </CardHeader>
                   <CardContent>
+                    <div
+                      className={`border-2 border-dashed rounded-xl p-8 mb-6 transition-colors ${isDragging ? "border-primary bg-primary/10" : "border-border hover:border-primary/50"
+                        }`}
+                      onDragOver={onDragOver}
+                      onDragLeave={onDragLeave}
+                      onDrop={onDrop}
+                    >
+                      <div className="flex flex-col items-center justify-center text-center gap-2">
+                        <div className="p-3 bg-muted rounded-full">
+                          <ImageIcon className="h-6 w-6 text-muted-foreground" />
+                        </div>
+                        <h3 className="font-semibold text-lg">Drag & Drop Images Here</h3>
+                        <p className="text-sm text-muted-foreground max-w-sm">
+                          Upload production photos, renderings, or drawings. You can categorize them after uploading.
+                        </p>
+                        <div className="flex flex-wrap justify-center gap-2 mt-4">
+                          <Button
+                            type="button"
+                            variant="secondary"
+                            size="sm"
+                            onClick={() => handleAddGalleryImage("production")}
+                          >
+                            <Plus className="mr-2 h-4 w-4" />
+                            Production Photos
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="secondary"
+                            size="sm"
+                            onClick={() => handleAddGalleryImage("rendering")}
+                          >
+                            <Plus className="mr-2 h-4 w-4" />
+                            Renderings
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="secondary"
+                            size="sm"
+                            onClick={() => handleAddGalleryImage("scenic_models" as any)} // Cast since original param was stricter
+                          >
+                            <Plus className="mr-2 h-4 w-4" />
+                            Scenic Models
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="secondary"
+                            size="sm"
+                            onClick={() => handleAddGalleryImage("technical_drawing")}
+                          >
+                            <Plus className="mr-2 h-4 w-4" />
+                            Technical Drawings
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="secondary"
+                            size="sm"
+                            onClick={() => handleAddGalleryImage("video")}
+                          >
+                            <Plus className="mr-2 h-4 w-4" />
+                            Add Video URL
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
                     {galleryImages.length > 0 ? (
                       <DndContext
                         sensors={sensors}
@@ -1318,6 +1382,6 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
           </Tabs>
         </form>
       </div>
-    </div>
+    </div >
   );
 }

@@ -1,0 +1,153 @@
+<p>Lighting has always been a storytelling tool. In theatre, the way a scene is lit doesn&#8217;t just serve visibility — it drives narrative, evokes emotion, and guides the audience&#8217;s attention. Scenic designers know how crucial light is in creating worlds, shaping mood, and framing movement on stage.</p>
+
+<p>The world of AI image generation has evolved dramatically over the past few years. Midjourney, launched in 2022, revolutionized how we think about AI art by introducing a sophisticated prompt-based system that could interpret complex lighting instructions. Despite newer models emerging, Midjourney remains relevant today because it pioneered the language of lighting in AI prompts — establishing terms like "cinematic lighting," "golden hour," and "volumetric light" that have become standard vocabulary across platforms.</p>
+
+<p>Sora, released by OpenAI in early 2024, builds upon this foundation while making the process more intuitive. Where Midjourney requires specific technical terminology and syntax for best results, Sora embraces natural language prompting, allowing designers to describe lighting scenarios in conversational terms. This accessibility makes it particularly valuable for theatre professionals who may not be versed in AI prompt engineering.</p>
+
+<p>One particularly helpful approach I&#8217;ve discovered is using ChatGPT or other large language models (LLMs) as an intermediary when working with these art generators. The LLM can help translate your creative vision into the precise language that Midjourney or Sora responds to best. For example, telling ChatGPT "I want an artist&#8217;s studio at sunset with dramatic shadows" might yield a refined prompt like "An artist&#8217;s studio with scattered supplies, bathed in golden hour light with long, angular shadows stretching across wooden floorboards, cinematic composition, ultra-detailed."</p>
+
+<p>Now, with AI art tools like Sora and Midjourney, I have new ways to experiment with lighting digitally. These tools offer scenic designers fast, visual ways to explore tone, color, and visibility long before stepping into a theater. But what does that actually mean in practice?</p>
+
+<p>In this article, I&#8217;ll explore 20 lighting styles used in AI image generation. Each style is paired with example prompts for both Sora and Midjourney, showing how a single scene can transform entirely based on how it&#8217;s lit. While I&#8217;m showcasing the visual results from Sora exclusively, I&#8217;ve included the corresponding Midjourney prompt terminology to help those who might prefer that platform understand the different tagging approaches needed to achieve similar lighting effects.</p>
+
+<h2 class="wp-block-heading" id="heading-block-1766999279450-0">The Scene: An Artist&#8217;s Studio</h2>
+
+<p>To isolate the impact of lighting, I created a consistent base prompt:</p>
+
+<p>"An artist&#8217;s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail."</p>
+
+<p>I then applied 20 different lighting styles to this exact scene — nothing else changed. What emerged was a study of how powerful and nuanced lighting can be.</p>
+
+<h2 class="wp-block-heading" id="heading-block-1766999279450-1">Cinematic &amp; Realistic Lighting Styles</h2>
+
+<p>These lighting styles aim to replicate natural, believable light or evoke the refined, motivated setups seen in film. From the soft glow of daylight to the bold contrasts of low-key lighting, these techniques prioritize realism, storytelling, and emotional nuance. They&#8217;re ideal for use in AI-generated scenes that want to feel grounded, cinematic, or timeless.</p>
+
+<h3 class="wp-block-heading" id="heading-block-1766999279450-2">1. Cinematic Lighting</h3>
+
+<ul class="wp-block-list">
+<li><strong>Description:</strong> Polished, motivated lighting setups that create drama, depth, and mood, often mimicking film stills.</li>
+
+<li><strong>Sora Prompt Tag:</strong> "moody cinematic lighting with practicals and volumetric shadows"</li>
+
+<li><strong>MidJourney Tags:</strong> <em>cinematic lighting, film still, volumetric, anamorphic</em></li>
+</ul>
+
+<p><strong>Prompt:</strong> An artist&#8217;s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with moody cinematic lighting with practicals and volumetric shadows.</p>
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="1024" src="https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/cinematic-lighting-1024x1024.webp" alt="" class="wp-image-1766999279450-3" srcset="https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/cinematic-lighting-1024x1024.webp 1024w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/cinematic-lighting-300x300.webp 300w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/cinematic-lighting-150x150.webp 150w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/cinematic-lighting-768x768.webp 768w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/cinematic-lighting.webp 1792w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<h3 class="wp-block-heading" id="heading-block-1766999279450-4">2. Natural Lighting</h3>
+
+<ul class="wp-block-list">
+<li><strong>Description:</strong> Soft, ambient light that mimics daylight. Balanced and realistic.</li>
+
+<li><strong>Sora Prompt Tag:</strong> "soft natural daylight from a nearby window"</li>
+
+<li><strong>MidJourney Tags:</strong> <em>natural lighting, daylight, sunlit, soft shadows</em></li>
+</ul>
+
+<p><strong>Prompt:</strong> An artist&#8217;s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with soft natural daylight from a nearby window.</p>
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="1024" src="https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/natural-lighting-1024x1024.webp" alt="" class="wp-image-1766999279450-5" srcset="https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/natural-lighting-1024x1024.webp 1024w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/natural-lighting-300x300.webp 300w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/natural-lighting-150x150.webp 150w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/natural-lighting-768x768.webp 768w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/natural-lighting.webp 1792w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<h3 class="wp-block-heading" id="heading-block-1766999279450-6">3. Golden Hour Lighting</h3>
+
+<ul class="wp-block-list">
+<li><strong>Description:</strong> Warm, low-angle light occurring shortly after sunrise or before sunset. Enhances skin tones and colors.</li>
+
+<li><strong>Sora Prompt Tag:</strong> "warm golden hour light casting long soft shadows"</li>
+
+<li><strong>MidJourney Tags:</strong> <em>golden hour, sunset, warm glow, long shadows</em></li>
+</ul>
+
+<p><strong>Prompt:</strong> An artist&#8217;s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with warm golden hour light casting long soft shadows.</p>
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="1024" src="https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/golden-hour-lighting-1024x1024.webp" alt="" class="wp-image-1766999279450-7" srcset="https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/golden-hour-lighting-1024x1024.webp 1024w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/golden-hour-lighting-300x300.webp 300w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/golden-hour-lighting-150x150.webp 150w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/golden-hour-lighting-768x768.webp 768w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/golden-hour-lighting.webp 1792w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<h3 class="wp-block-heading" id="heading-block-1766999279450-8">4. Moonlight / Night Exterior</h3>
+
+<ul class="wp-block-list">
+<li><strong>Description:</strong> Cool, dim light from the moon or ambient night environment. Often serene or mysterious.</li>
+
+<li><strong>Sora Prompt Tag:</strong> "cool moonlight casting pale shadows through trees"</li>
+
+<li><strong>MidJourney Tags:</strong> <em>moonlight, night lighting, cool ambient, blue tones</em></li>
+</ul>
+
+<p><strong>Prompt:</strong>  An artist&#8217;s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with cool moonlight casting pale shadows through trees.</p>
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="1024" src="https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/moonlight-lighting-1024x1024.webp" alt="" class="wp-image-1766999279450-9" srcset="https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/moonlight-lighting-1024x1024.webp 1024w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/moonlight-lighting-300x300.webp 300w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/moonlight-lighting-150x150.webp 150w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/moonlight-lighting-768x768.webp 768w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/moonlight-lighting.webp 1792w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<h3 class="wp-block-heading" id="heading-block-1766999279450-10">5. Backlighting</h3>
+
+<ul class="wp-block-list">
+<li><strong>Description:</strong> Light source positioned behind the subject, creating silhouettes or rim lighting.</li>
+
+<li><strong>Sora Prompt Tag:</strong> "backlighting with soft glow outlining the subject"</li>
+
+<li><strong>MidJourney Tags:</strong> <em>backlit, silhouette, rim lighting</em></li>
+</ul>
+
+<p><strong>Prompt:</strong> An artist&#8217;s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with backlighting with soft glow outlining the subject.</p>
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="1024" src="https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/backlighting-1024x1024.webp" alt="" class="wp-image-1766999279450-11" srcset="https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/backlighting-1024x1024.webp 1024w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/backlighting-300x300.webp 300w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/backlighting-150x150.webp 150w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/backlighting-768x768.webp 768w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/backlighting.webp 1792w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<h3 class="wp-block-heading" id="heading-block-1766999279450-12">6. Soft Lighting</h3>
+
+<ul class="wp-block-list">
+<li><strong>Description:</strong> Diffused, even light that minimizes harsh shadows. Often used in portraits.</li>
+
+<li><strong>Sora Prompt Tag:</strong> "soft diffused lighting with gentle transitions"</li>
+
+<li><strong>MidJourney Tags:</strong> <em>soft lighting, diffused, low contrast, even lighting</em></li>
+</ul>
+
+<p><strong>Prompt:</strong> An artist&#8217;s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with soft diffused lighting with gentle transitions.</p>
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="1024" src="https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/soft-lighting-1024x1024.webp" alt="" class="wp-image-1766999279450-13" srcset="https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/soft-lighting-1024x1024.webp 1024w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/soft-lighting-300x300.webp 300w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/soft-lighting-150x150.webp 150w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/soft-lighting-768x768.webp 768w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/soft-lighting.webp 1792w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<h3 class="wp-block-heading" id="heading-block-1766999279450-14">7. Hard Lighting</h3>
+
+<ul class="wp-block-list">
+<li><strong>Description:</strong> Intense, direct lighting that creates sharp edges and deep contrast.</li>
+
+<li><strong>Sora Prompt Tag:</strong> "direct hard light casting sharp shadows"</li>
+
+<li><strong>MidJourney Tags:</strong> <em>hard lighting, high contrast, dramatic</em></li>
+</ul>
+
+<p><strong>Prompt:</strong> An artist&#8217;s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with direct hard light casting sharp shadows.</p>
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="1024" src="https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/hard-lighting-1024x1024.webp" alt="" class="wp-image-1766999279450-15" srcset="https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/hard-lighting-1024x1024.webp 1024w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/hard-lighting-300x300.webp 300w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/hard-lighting-150x150.webp 150w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/hard-lighting-768x768.webp 768w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/hard-lighting.webp 1792w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<h3 class="wp-block-heading" id="heading-block-1766999279450-16">8. High-Key Lighting</h3>
+
+<ul class="wp-block-list">
+<li><strong>Description:</strong> Bright, low-contrast lighting that eliminates shadows. Used in comedies or product visuals.</li>
+
+<li><strong>Sora Prompt Tag:</strong> "bright high-key lighting with minimal shadows"</li>
+
+<li><strong>MidJourney Tags:</strong> <em>high-key, bright, clean, even exposure</em></li>
+</ul>
+
+<p><strong>Prompt:</strong> An artist&#8217;s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with bright high-key lighting with minimal shadows.</p>
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="1024" src="https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/high-key-lighting-1024x1024.webp" alt="" class="wp-image-1766999279450-17" srcset="https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/high-key-lighting-1024x1024.webp 1024w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/high-key-lighting-300x300.webp 300w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/high-key-lighting-150x150.webp 150w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/high-key-lighting-768x768.webp 768w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/high-key-lighting.webp 1792w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<h3 class="wp-block-heading" id="heading-block-1766999279450-18">9. Low-Key Lighting</h3>
+
+<ul class="wp-block-list">
+<li><strong>Description:</strong> Dark, high-contrast lighting that emphasizes shadows and mystery. Often used in noir or horror.</li>
+
+<li><strong>Sora Prompt Tag:</strong> "dark low-key lighting with dramatic shadows"</li>
+
+<li><strong>MidJourney Tags:</strong> <em>low-key, dark, high contrast, noir</em></li>
+</ul>
+
+<p><strong>Prompt:</strong> An artist&#8217;s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with dark low-key lighting with dramatic shadows.</p>
+
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="1024" src="https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/low-key-lighting-1024x1024.webp" alt="" class="wp-image-1766999279450-19" srcset="https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/low-key-lighting-1024x1024.webp 1024w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/low-key-lighting-300x300.webp 300w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/low-key-lighting-150x150.webp 150w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/low-key-lighting-768x768.webp 768w, https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/low-key-lighting.webp 1792w" sizes="(max-width: 1024px) 100vw, 1024px"></figure>
+
+<h2 class="wp-block-heading" id="heading-block-1766999279450-20">Stylized &amp; Genre-Based Lighting Styles</h2>
+
+<p>These lighting styles lean into specific aesthetics, genres, or artistic movements. They&#8217;re less about realism and more about creating a distinct visual signature — whether it&#8217;s the neon glow of cyberpunk, the eerie shadows of horror, or the saturated warmth of retro photography. Use these when you want your AI-generated scene to evoke a particular mood, era, or cultural reference.</p>
