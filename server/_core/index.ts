@@ -245,7 +245,6 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     await createConfiguredApp(app, server);
 
     const preferredPort = parseInt(process.env.PORT || "8080");
-    const preferredPort = parseInt(process.env.PORT || "8080");
     let port = preferredPort;
 
     if (process.env.NODE_ENV !== "production") {
