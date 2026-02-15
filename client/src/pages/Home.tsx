@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { trpc } from "@/lib/trpc";
-import { ArrowRight, ChevronDown, ChevronLeft, ChevronRight, Calendar } from "lucide-react";
+import { ArrowRight, ChevronDown, Calendar } from "lucide-react";
 import { Link } from "wouter";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { SEO } from "@/components/SEO";
@@ -23,7 +23,6 @@ export default function Home() {
 
   // Hero carousel state
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   // Hero images from top featured scenic design projects
   const heroImages = projects?.slice(0, 5).filter(p => p.coverImageUrl).map(p => ({
@@ -34,24 +33,14 @@ export default function Home() {
 
   // Auto-advance carousel
   useEffect(() => {
-    if (!isAutoPlaying || heroImages.length === 0) return;
+    if (heroImages.length === 0) return;
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroImages.length);
     }, 5000); // Change slide every 5 seconds
 
     return () => clearInterval(interval);
-  }, [isAutoPlaying, heroImages.length]);
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % heroImages.length);
-    setIsAutoPlaying(false);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + heroImages.length) % heroImages.length);
-    setIsAutoPlaying(false);
-  };
+  }, [heroImages.length]);
 
   const scrollToContent = () => {
     window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
@@ -165,43 +154,7 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Carousel Controls */}
-          {heroImages.length > 1 && (
-            <>
-              <button
-                onClick={prevSlide}
-                className="absolute left-4 md:left-8 z-20 p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all text-white"
-                aria-label="Previous slide"
-              >
-                <ChevronLeft className="h-6 w-6" />
-              </button>
-              <button
-                onClick={nextSlide}
-                className="absolute right-4 md:right-8 z-20 p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all text-white"
-                aria-label="Next slide"
-              >
-                <ChevronRight className="h-6 w-6" />
-              </button>
 
-              {/* Slide Indicators */}
-              <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-                {heroImages.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => {
-                      setCurrentSlide(index);
-                      setIsAutoPlaying(false);
-                    }}
-                    className={`relative p-4 ${index === currentSlide
-                      ? 'after:bg-white after:w-8 after:h-2'
-                      : 'after:bg-white/50 hover:after:bg-white/75 after:w-2 after:h-2'
-                      } after:content-[''] after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-full after:transition-all`}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
-              </div>
-            </>
-          )}
 
           {/* Hero Content Overlay */}
           <div className="relative z-10 container text-center px-4">

@@ -159,6 +159,7 @@ const DirectoryIcon = () => (
 
 export default function Header() {
   const [location] = useLocation();
+  const isHomePage = location === "/";
   const [portfolioOpen, setPortfolioOpen] = useState(false);
   const [newsOpen, setNewsOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
@@ -322,8 +323,12 @@ export default function Header() {
   return (
     <>
       <header 
-        className={`fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/95 backdrop-blur-xl transition-transform duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isVisible ? "translate-y-0" : "-translate-y-full"
+        } ${
+          isHomePage 
+            ? "bg-transparent border-transparent" 
+            : "border-b border-border bg-background/95 backdrop-blur-xl"
         }`}
       >
         <div className="container py-4">
