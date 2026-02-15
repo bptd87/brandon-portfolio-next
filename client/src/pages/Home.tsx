@@ -131,9 +131,9 @@ export default function Home() {
       {projectsLoading || heroImages.length === 0 ? (
         <CarouselSkeleton />
       ) : (
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <section className="relative h-screen flex items-center justify-center overflow-hidden">
           {/* Carousel Images */}
-          <div className="absolute inset-0">
+          <div className="absolute inset-0 w-full h-full">
             {heroImages.map((image, index) => (
               <div
                 key={index}
