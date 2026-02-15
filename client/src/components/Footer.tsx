@@ -72,7 +72,7 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/studio" className="text-foreground/70 hover:text-[#9C27B0] transition-colors font-medium">
+                  <Link href="/studio/apps" className="text-foreground/70 hover:text-[#9C27B0] transition-colors font-medium">
                     App Studio
                   </Link>
                 </li>
