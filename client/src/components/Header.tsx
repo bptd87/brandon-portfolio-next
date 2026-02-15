@@ -485,7 +485,7 @@ export default function Header() {
                       <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
                     </Link>
                     <Link
-                      href="/studio"
+                      href="/studio/apps"
                       className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border relative group"
                     >
                       <span className="relative z-10 flex items-center">
