@@ -1,10 +1,6 @@
 [build]
-builder = "NIXPACKS"
-
-[build.nixpacksPlan]
-phases.setup.nixPackages = ["nodejs_20", "pnpm"]
-phases.install.cmds = ["pnpm install"]
-phases.build.cmds = ["pnpm run build"]
+# Using default builder (auto-detected) - works with Metal build environment
+buildCommand = "pnpm install && pnpm run build"
 
 [deploy]
 startCommand = "pnpm start"
