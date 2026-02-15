@@ -16,6 +16,11 @@ const getSessionId = (): string => {
 };
 
 export function AnalyticsTracker() {
+  // Temporarily disabled - analytics tables not yet created in Supabase
+  // This prevents thousands of failed API calls
+  return null;
+  
+  /* Original code - uncomment when analytics tables are created
   const [location] = useLocation();
   const sessionIdRef = useRef<string>(getSessionId());
   const trackPageMutation = trpc.analytics.trackPageView.useMutation();
@@ -55,6 +60,7 @@ export function AnalyticsTracker() {
       getSessionId: () => sessionIdRef.current
     };
   }, [location, trackProjectMutation, trackEventMutation]);
+  */
 
   return null; // Renderless component
 }
