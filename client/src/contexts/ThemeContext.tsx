@@ -22,7 +22,9 @@ export function ThemeProvider({
   defaultTheme = "light",
   switchable = false,
 }: ThemeProviderProps) {
-  const [forceTheme, setForceTheme] = useState<Theme | null>('dark'); // Start with dark forced
+  // Default forceTheme to 'dark' - site is dark by default
+  // Only Articles/News pages set this to null to allow switching
+  const [forceTheme, setForceTheme] = useState<Theme | null>('dark');
   const [theme, setTheme] = useState<Theme>(() => {
     if (switchable) {
       const stored = localStorage.getItem("theme");
@@ -32,6 +34,7 @@ export function ThemeProvider({
   });
 
   // When forceTheme is set, it overrides everything (including localStorage)
+  // When forceTheme is null, user can switch themes (only on Articles/News)
   const effectiveTheme = forceTheme !== null ? forceTheme : theme;
 
   useEffect(() => {

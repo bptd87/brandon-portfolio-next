@@ -12,9 +12,9 @@ export default function PageThemeWrapper({ children, forceTheme = "dark" }: Page
   useEffect(() => {
     setForceTheme(forceTheme);
     
-    // Cleanup: remove force theme when component unmounts
+    // Cleanup: reset to dark theme when component unmounts (leaving articles/news)
     return () => {
-      setForceTheme(null);
+      setForceTheme("dark");
     };
   }, [forceTheme, setForceTheme]);
 
