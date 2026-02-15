@@ -137,7 +137,7 @@ export default function Home() {
             {heroImages.map((image, index) => (
               <div
                 key={index}
-                className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'
+                className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'
                   }`}
               >
                 <ProgressiveImage
@@ -147,6 +147,8 @@ export default function Home() {
                   fetchPriority={index === 0 ? 'high' : undefined}
                   sizes="100vw"
                   className="w-full h-full object-cover"
+                  containerClassName="absolute inset-0 w-full h-full"
+                  enableScrollAnimation={false}
                 />
                 {/* Dark overlay for text readability */}
                 <div className="absolute inset-0 bg-black/40" />

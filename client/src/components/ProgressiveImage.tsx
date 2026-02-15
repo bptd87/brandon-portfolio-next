@@ -62,6 +62,7 @@ interface ProgressiveImageProps {
   src: string;
   alt: string;
   className?: string;
+  containerClassName?: string;
   onClick?: () => void;
   loading?: 'eager' | 'lazy';
   fetchPriority?: 'high' | 'low' | 'auto';
@@ -80,6 +81,7 @@ export function ProgressiveImage({
   src,
   alt,
   className = '',
+  containerClassName = '',
   onClick,
   loading = 'lazy',
   fetchPriority,
@@ -196,6 +198,7 @@ export function ProgressiveImage({
         relative overflow-hidden
         ${enableScrollAnimation ? 'transition-all duration-700 ease-out' : ''}
         ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
+        ${containerClassName}
       `}
       style={aspectRatio ? { aspectRatio } : undefined}
     >
