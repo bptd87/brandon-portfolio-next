@@ -8,11 +8,10 @@ import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export default function AdminAnalytics() {
-    // Temporarily disabled - analytics tables not yet created in Supabase
-    const { data: visits, isLoading } = trpc.analytics.getStats.useQuery(undefined, { enabled: false });
-    const { data: projectViews } = trpc.analytics.getProjectViews.useQuery(undefined, { enabled: false });
-    const { data: conversionFunnel } = trpc.analytics.getConversionFunnel.useQuery(undefined, { enabled: false });
-    const { data: geoBreakdown } = trpc.analytics.getGeographicBreakdown.useQuery(undefined, { enabled: false });
+    const { data: visits, isLoading } = trpc.analytics.getStats.useQuery();
+    const { data: projectViews } = trpc.analytics.getProjectViews.useQuery();
+    const { data: conversionFunnel } = trpc.analytics.getConversionFunnel.useQuery();
+    const { data: geoBreakdown } = trpc.analytics.getGeographicBreakdown.useQuery();
 
     return (
         <AdminLayout
