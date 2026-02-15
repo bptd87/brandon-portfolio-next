@@ -40,22 +40,22 @@ export default function Footer() {
               <h3 className="text-sm font-black tracking-wider text-[#FF5722] mb-6">WORK</h3>
               <ul className="space-y-3">
                 <li>
-                  <Link href="/projects?discipline=scenic_design" className="text-foreground/70 hover:text-[#00E5FF] transition-colors font-medium">
+                  <Link href="/projects/scenic-design" className="text-foreground/70 hover:text-[#00E5FF] transition-colors font-medium">
                     Scenic Design
                   </Link>
                 </li>
                 <li>
-                  <Link href="/projects?discipline=experiential_design" className="text-foreground/70 hover:text-[#00E5FF] transition-colors font-medium">
+                  <Link href="/projects/experiential" className="text-foreground/70 hover:text-[#00E5FF] transition-colors font-medium">
                     Experiential
                   </Link>
                 </li>
                 <li>
-                  <Link href="/projects?discipline=rendering" className="text-foreground/70 hover:text-[#00E5FF] transition-colors font-medium">
+                  <Link href="/projects/rendering" className="text-foreground/70 hover:text-[#00E5FF] transition-colors font-medium">
                     Rendering
                   </Link>
                 </li>
                 <li>
-                  <Link href="/projects?discipline=scenic_models" className="text-foreground/70 hover:text-[#00E5FF] transition-colors font-medium">
+                  <Link href="/projects/scenic-models" className="text-foreground/70 hover:text-[#00E5FF] transition-colors font-medium">
                     Scenic Models
                   </Link>
                 </li>
