@@ -437,6 +437,7 @@ export default function AdminExperientialGallery() {
                                     className="hidden"
                                     accept="image/*"
                                     onChange={handleFileSelect}
+                                    aria-label="Upload image file"
                                 />
                             </div>
 
