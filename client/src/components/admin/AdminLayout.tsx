@@ -9,7 +9,6 @@ import {
     LayoutDashboard,
     BarChart3,
     ExternalLink,
-    ChevronLeft,
     Settings,
     LogOut,
     User,
@@ -23,6 +22,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/_core/hooks/useAuth";
+import { AdminMobileNav } from "./AdminMobileNav";
 
 interface AdminLayoutProps {
     children: React.ReactNode;
@@ -32,7 +32,7 @@ interface AdminLayoutProps {
 
 export function AdminLayout({ children, title, description }: AdminLayoutProps) {
     const [location] = useLocation();
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
 
     const navItems = [
         { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
@@ -55,10 +55,17 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
         return location.startsWith(n.href);
     });
 
+    const handleSignOut = async () => {
+        await logout();
+    };
+
     return (
-        <div className="flex h-screen overflow-hidden bg-background text-foreground">
-            {/* Sidebar */}
-            <aside className="w-64 border-r bg-card/30 backdrop-blur-sm flex flex-col flex-shrink-0">
+        <div className="flex flex-col md:flex-row h-screen overflow-hidden bg-background text-foreground">
+            {/* Mobile Navigation */}
+            <AdminMobileNav user={user} onSignOut={handleSignOut} />
+
+            {/* Desktop Sidebar (Hidden on Mobile) */}
+            <aside className="hidden md:flex w-64 border-r bg-card/30 backdrop-blur-sm flex-col flex-shrink-0">
                 <div className="p-6 border-b">
                     <Link href="/admin">
                         <div className="flex items-center gap-2 font-serif text-xl font-bold cursor-pointer group">
@@ -111,7 +118,12 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
                                 View Site
                             </a>
                         </Button>
-                        <Button variant="ghost" size="sm" className="justify-start gap-2 h-8 text-xs text-destructive hover:text-destructive hover:bg-destructive/10">
+                        <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            className="justify-start gap-2 h-8 text-xs text-destructive hover:text-destructive hover:bg-destructive/10"
+                            onClick={handleSignOut}
+                        >
                             <LogOut className="h-3 w-3" />
                             Sign Out
                         </Button>
@@ -121,19 +133,7 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
 
             {/* Main Content Area */}
             <main className="flex-1 flex flex-col min-w-0 overflow-x-hidden">
-                {/* Mobile Header (Hidden on Desktop) */}
-                <header className="md:hidden border-b bg-card p-4 flex items-center justify-between">
-                    <Link href="/admin">
-                        <div className="font-serif font-bold text-lg">B-ADMIN</div>
-                    </Link>
-                    <div className="flex items-center gap-2">
-                        <Button variant="outline" size="icon" className="h-8 w-8">
-                            <LayoutDashboard className="h-4 w-4" />
-                        </Button>
-                    </div>
-                </header>
-
-                {/* Desktop Header / Breadcrumbs Area */}
+                {/* Desktop Header */}
                 <header className="hidden md:flex border-b bg-background/50 backdrop-blur-sm h-14 items-center px-8 border-l border-l-border/10">
                     <div className="flex-1 flex items-center gap-1 text-xs text-muted-foreground uppercase tracking-wider font-semibold">
                         <Link href="/admin">
@@ -154,12 +154,12 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
                 </header>
 
                 <div className="flex-1 overflow-y-auto bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent">
-                    <div className="p-8 md:p-12">
-                        <div className="max-w-6xl mx-auto space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div className="p-4 md:p-8 lg:p-12">
+                        <div className="w-full md:max-w-6xl md:mx-auto space-y-6 md:space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
                             {(title || description) && (
                                 <div className="space-y-1">
-                                    {title && <h2 className="text-4xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">{title}</h2>}
-                                    {description && <p className="text-lg text-muted-foreground">{description}</p>}
+                                    {title && <h2 className="text-2xl md:text-4xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">{title}</h2>}
+                                    {description && <p className="text-base md:text-lg text-muted-foreground">{description}</p>}
                                 </div>
                             )}
                             {children}

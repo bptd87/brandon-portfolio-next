@@ -24,6 +24,7 @@ export interface RenderingGalleryItem {
   sortOrder: number;
   altText: string | null;
   displayTitle: string | null;
+  description: string | null;
   createdAt: Date;
 }
 
@@ -425,7 +426,11 @@ export async function getAllProjects(filters?: {
     query = query.eq('year', filters.year);
   }
   if (filters?.discipline) {
-    query = query.eq('discipline', filters.discipline);
+    if (filters.discipline === 'scenic_design') {
+      query = query.or('discipline.eq.scenic_design,discipline.is.null');
+    } else {
+      query = query.eq('discipline', filters.discipline);
+    }
   }
 
   const { data } = await query;
@@ -617,6 +622,7 @@ export async function getProjectImages(projectId: number): Promise<any[]> {
     imageUrl: img.image_url,
     videoUrl: img.video_url,
     caption: img.caption,
+    altText: img.alt_text,
     imageType: img.image_type,
     sortOrder: img.sort_order,
     createdAt: new Date(img.created_at),
@@ -1355,6 +1361,7 @@ export async function createProject(project: any) {
       title: project.title,
       slug: project.slug,
       discipline: project.discipline,
+      subcategory: project.subcategory,
       year: project.year,
       month: project.month,
       venue: project.venue,
@@ -1383,6 +1390,7 @@ export async function updateProject(id: number, project: any) {
   if (project.title !== undefined) updateData.title = project.title;
   if (project.slug !== undefined) updateData.slug = project.slug;
   if (project.discipline !== undefined) updateData.discipline = project.discipline;
+  if (project.subcategory !== undefined) updateData.subcategory = project.subcategory;
   if (project.year !== undefined) updateData.year = project.year;
   if (project.month !== undefined) updateData.month = project.month;
   if (project.venue !== undefined) updateData.venue = project.venue;
@@ -1420,10 +1428,13 @@ export async function addProjectImage(image: any) {
     .from('project_images')
     .insert({
       project_id: image.projectId,
+      title: image.title,
       image_url: image.imageUrl,
+      image_key: image.imageKey,
       video_url: image.videoUrl,
       caption: image.caption,
-      category: image.category,
+      alt_text: image.altText,
+      image_type: image.imageType || 'production',
       sort_order: image.sortOrder || 0,
     })
     .select()
@@ -1431,6 +1442,33 @@ export async function addProjectImage(image: any) {
 
   if (error) throw error;
   return data.id;
+}
+
+export async function updateProjectImage(id: number, updates: any) {
+  const updateData: any = {};
+  if (updates.title !== undefined) updateData.title = updates.title;
+  if (updates.caption !== undefined) updateData.caption = updates.caption;
+  if (updates.altText !== undefined) updateData.alt_text = updates.altText;
+  if (updates.sortOrder !== undefined) updateData.sort_order = updates.sortOrder;
+  if (updates.imageType !== undefined) updateData.image_type = updates.imageType;
+
+  const { error } = await supabase
+    .from('project_images')
+    .update(updateData)
+    .eq('id', id);
+
+  if (error) throw error;
+}
+
+export async function reorderProjectImages(orders: { id: number; sortOrder: number }[]) {
+  // Supabase doesn't support bulk update easily in one go for different values
+  // We'll iterate for now, or use a specific RPC if performance matters (likely fine for small galleries)
+  for (const item of orders) {
+    await supabase
+      .from('project_images')
+      .update({ sort_order: item.sortOrder })
+      .eq('id', item.id);
+  }
 }
 
 export async function deleteProjectImage(id: number) {
@@ -2064,7 +2102,7 @@ export async function deleteCollaborator(id: number) {
 
 // ============ RENDERING GALLERY OPERATIONS ============
 
-export async function getRenderingGallery(): Promise<RenderingGalleryItem[]> {
+export async function getRenderingGallery() {
   try {
     const { data: galleryItems, error: galleryError } = await supabase
       .from('rendering_gallery')
@@ -2085,16 +2123,42 @@ export async function getRenderingGallery(): Promise<RenderingGalleryItem[]> {
       return [];
     }
 
+    // Fetch images for these projects
+    // Fetch images for these projects
+    const { data: images, error: imagesError } = await supabase
+      .from('project_images')
+      .select('*')
+      .in('project_id', projectIds)
+      .order('sort_order', { ascending: true });
+
+    if (imagesError) {
+      console.warn('Error fetching images for rendering gallery:', imagesError);
+    }
+
     const projectMap = new Map(projects?.map(p => [p.id, p]));
+    // Group images by project ID
+    const imagesMap = new Map<number, any[]>();
+    if (images) {
+      images.forEach(img => {
+        const projectId = img.project_id;
+        if (!imagesMap.has(projectId)) {
+          imagesMap.set(projectId, []);
+        }
+        imagesMap.get(projectId)?.push(img);
+      });
+    }
 
     return galleryItems.map(item => {
       const project = projectMap.get(item.project_id);
+      const projectImages = imagesMap.get(item.project_id) || [];
+
       return {
         id: item.id,
         projectId: item.project_id,
         sortOrder: item.sort_order,
         altText: item.alt_text,
         displayTitle: item.display_title,
+        description: item.description,
         createdAt: new Date(item.created_at),
         project: project ? {
           id: project.id,
@@ -2120,10 +2184,14 @@ export async function getRenderingGallery(): Promise<RenderingGalleryItem[]> {
           seoTitle: project.seo_title,
           seoDescription: project.seo_description,
           seoKeywords: project.seo_keywords,
-          images: [],
-          createdAt: new Date(project.created_at),
-          updatedAt: new Date(project.updated_at),
-        } : undefined,
+          images: projectImages.map((img: any) => ({
+            id: img.id,
+            imageUrl: img.image_url,
+            caption: img.caption,
+            altText: img.alt_text,
+            sortOrder: img.sort_order
+          }))
+        } : undefined
       };
     });
   } catch (e) {
@@ -2151,6 +2219,7 @@ export async function addProjectToRenderingGallery(projectId: number, altText?: 
         sort_order: nextOrder,
         alt_text: altText || null,
         display_title: displayTitle || null,
+        description: null,
         active: true
       });
 
@@ -2181,10 +2250,11 @@ export async function updateRenderingGalleryOrder(items: { id: number; sortOrder
   }
 }
 
-export async function updateRenderingGalleryMetadata(id: number, active: boolean, altText?: string, displayTitle?: string) {
+export async function updateRenderingGalleryMetadata(id: number, active: boolean, altText?: string, displayTitle?: string, description?: string) {
   const updateData: any = { active };
   if (altText !== undefined) updateData.alt_text = altText;
   if (displayTitle !== undefined) updateData.display_title = displayTitle;
+  if (description !== undefined) updateData.description = description;
 
   const { error } = await supabase
     .from('rendering_gallery')
@@ -2227,6 +2297,7 @@ export async function getModelGallery(): Promise<RenderingGalleryItem[]> {
         sortOrder: item.sort_order,
         altText: item.alt_text,
         displayTitle: item.display_title,
+        description: null,
         createdAt: new Date(item.created_at),
         project: project ? {
           id: project.id,
@@ -2356,6 +2427,7 @@ export async function getExperientialGallery(): Promise<RenderingGalleryItem[]> 
         sortOrder: item.sort_order,
         altText: item.alt_text,
         displayTitle: item.display_title,
+        description: null,
         createdAt: new Date(item.created_at),
         project: project ? {
           id: project.id,

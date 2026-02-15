@@ -44,6 +44,7 @@ interface OrganizationSchema {
     addressRegion?: string;
     addressCountry?: string;
   };
+  image?: string | string[];
 }
 
 interface CreativeWorkSchema {

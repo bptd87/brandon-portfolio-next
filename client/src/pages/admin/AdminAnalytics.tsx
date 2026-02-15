@@ -1,21 +1,141 @@
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { BarChart3, Globe, Users, Laptop, Smartphone, Info } from "lucide-react";
+import { BarChart3, Globe, Users, Laptop, Smartphone, Info, TrendingUp, Eye, Share2 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { format } from "date-fns";
-import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip as RechartsTooltip, Legend } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip as RechartsTooltip, Legend, LineChart, Line, CartesianGrid } from "recharts";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export default function AdminAnalytics() {
     const { data: visits, isLoading } = trpc.analytics.getStats.useQuery();
+    const { data: projectViews } = trpc.analytics.getProjectViews.useQuery();
+    const { data: conversionFunnel } = trpc.analytics.getConversionFunnel.useQuery();
+    const { data: geoBreakdown } = trpc.analytics.getGeographicBreakdown.useQuery();
 
     return (
         <AdminLayout
             title="Analytics & Tracking"
             description="Monitor site traffic and visitor engagement."
         >
+            {/* Top KPI Cards */}
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+                <Card className="bg-card">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">Total Visits</CardTitle>
+                        <BarChart3 className="h-4 w-4 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-2xl font-bold">{visits?.length || 0}</div>
+                        <p className="text-xs text-muted-foreground">
+                            Recorded page views
+                        </p>
+                    </CardContent>
+                </Card>
+                <Card className="bg-card">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">Unique Locations</CardTitle>
+                        <Globe className="h-4 w-4 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-2xl font-bold">
+                            {geoBreakdown?.length || 0}
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                            Unique cities reached
+                        </p>
+                    </CardContent>
+                </Card>
+                <Card className="bg-card">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">Top Project</CardTitle>
+                        <Eye className="h-4 w-4 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-2xl font-bold truncate text-ellipsis">
+                            {projectViews && projectViews.length > 0
+                                ? projectViews[0].views
+                                : '-'}
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                            {projectViews && projectViews.length > 0
+                                ? projectViews[0].title
+                                : 'No project views'}
+                        </p>
+                    </CardContent>
+                </Card>
+                <Card className="bg-card">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">Conversion Rate</CardTitle>
+                        <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-2xl font-bold">
+                            {conversionFunnel && conversionFunnel.length > 0
+                                ? conversionFunnel[2]?.percentage || 0
+                                : 0}%
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                            Home to Contact
+                        </p>
+                    </CardContent>
+                </Card>
+            </div>
+
+            {/* Conversion Funnel & Project Views */}
+            <div className="grid gap-6 md:grid-cols-2 mt-6">
+                <Card className="bg-card">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">Conversion Funnel</CardTitle>
+                        <Share2 className="h-4 w-4 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent className="pt-6">
+                        <div className="space-y-4">
+                            {conversionFunnel && conversionFunnel.length > 0 ? conversionFunnel.map((step: any, i: number) => (
+                                <div key={i} className="space-y-1">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-sm font-medium">{step.name}</span>
+                                        <span className="text-sm text-muted-foreground">{step.count} ({step.percentage}%)</span>
+                                    </div>
+                                    <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+                                        <div
+                                            className="bg-primary h-full rounded-full transition-all"
+                                            style={{ width: `${step.percentage}%` }}
+                                        />
+                                    </div>
+                                </div>
+                            )) : (
+                                <div className="text-muted-foreground text-sm">No funnel data yet</div>
+                            )}
+                        </div>
+                    </CardContent>
+                </Card>
+
+                <Card className="bg-card">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">Top Projects</CardTitle>
+                        <Eye className="h-4 w-4 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent className="pt-6">
+                        <div className="space-y-3">
+                            {projectViews && projectViews.length > 0 ? projectViews.slice(0, 6).map((project: any, i: number) => (
+                                <div key={i} className="flex items-center justify-between">
+                                    <div>
+                                        <div className="text-sm font-medium truncate">{project.title}</div>
+                                        <div className="text-xs text-muted-foreground">{project.slug}</div>
+                                    </div>
+                                    <div className="text-sm font-bold">{project.views}</div>
+                                </div>
+                            )) : (
+                                <div className="text-muted-foreground text-sm">No project views yet</div>
+                            )}
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+
+            {/* Location & Device Breakdown */}
+            <div className="grid gap-6 md:grid-cols-2 mt-6">
                 <Card className="bg-card">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">Total Visits</CardTitle>
@@ -68,30 +188,24 @@ export default function AdminAnalytics() {
                         <Globe className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div className="h-[200px] w-full mt-4">
-                            {visits && visits.length > 0 ? (
+                        <div className="h-[250px] w-full mt-4">
+                            {geoBreakdown && geoBreakdown.length > 0 ? (
                                 (() => {
-                                    const locs = visits.reduce((acc: any, v: any) => {
-                                        const loc = v.city ? v.city : (v.country || 'Unknown');
-                                        acc[loc] = (acc[loc] || 0) + 1;
-                                        return acc;
-                                    }, {});
-
-                                    const data = Object.entries(locs)
-                                        .sort((a: any, b: any) => b[1] - a[1])
-                                        .slice(0, 5)
-                                        .map(([name, value]) => ({ name, value }));
+                                    const data = geoBreakdown.slice(0, 8).map((loc: any) => ({
+                                        name: loc.label,
+                                        value: loc.count
+                                    }));
 
                                     return (
                                         <ResponsiveContainer width="100%" height="100%">
-                                            <BarChart data={data} layout="vertical" margin={{ top: 5, right: 30, left: 40, bottom: 5 }}>
+                                            <BarChart data={data} layout="vertical" margin={{ top: 5, right: 30, left: 100, bottom: 5 }}>
                                                 <XAxis type="number" hide />
-                                                <YAxis dataKey="name" type="category" width={80} tick={{ fontSize: 12 }} />
+                                                <YAxis dataKey="name" type="category" width={90} tick={{ fontSize: 11 }} />
                                                 <RechartsTooltip
                                                     contentStyle={{ backgroundColor: 'hsl(var(--popover))', borderColor: 'hsl(var(--border))', color: 'hsl(var(--popover-foreground))' }}
                                                     cursor={{ fill: 'hsl(var(--muted)/0.5)' }}
                                                 />
-                                                <Bar dataKey="value" fill="hsl(var(--primary))" radius={[0, 4, 4, 0]} barSize={20} />
+                                                <Bar dataKey="value" fill="hsl(var(--primary))" radius={[0, 4, 4, 0]} />
                                             </BarChart>
                                         </ResponsiveContainer>
                                     );
@@ -99,10 +213,6 @@ export default function AdminAnalytics() {
                             ) : (
                                 <div className="flex items-center justify-center h-full text-muted-foreground text-sm">No location data</div>
                             )}
-                        </div>
-                        <div className="mt-2 flex items-center justify-center gap-2 text-xs text-muted-foreground">
-                            <Info className="h-3 w-3" />
-                            <span>"Local Dev City" appears during development</span>
                         </div>
                     </CardContent>
                 </Card>
@@ -116,7 +226,7 @@ export default function AdminAnalytics() {
                         </div>
                     </CardHeader>
                     <CardContent>
-                        <div className="h-[200px] w-full mt-4">
+                        <div className="h-[250px] w-full mt-4">
                             {visits && visits.length > 0 ? (
                                 (() => {
                                     const devices = visits.reduce((acc: any, v: any) => {
@@ -163,6 +273,7 @@ export default function AdminAnalytics() {
                 </Card>
             </div>
 
+            {/* Recent Activity Table */}
             <Card className="md:col-span-2 lg:col-span-4 mt-6">
                 <CardHeader>
                     <CardTitle>Recent Activity</CardTitle>

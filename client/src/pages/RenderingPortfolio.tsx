@@ -34,7 +34,13 @@ export default function RenderingPortfolio() {
     venue: item.project?.venue,
     client: item.project?.client,
     designNotes: item.project?.designNotes,
-    excerpt: item.project?.excerpt
+    excerpt: item.project?.excerpt,
+    images: (item.project?.images || []).map(img => ({
+      id: img.id,
+      url: img.imageUrl || '',
+      caption: img.caption,
+      altText: img.altText
+    }))
   })) || [];
 
   // 2. Process Featured Items (for the top section)

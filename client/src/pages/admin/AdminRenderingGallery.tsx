@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
+import { AdminGalleryImageManager } from "@/components/admin/AdminGalleryImageManager";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, GripVertical, Plus, Trash2, Save, Image as ImageIcon, UploadCloud } from "lucide-react";
+import { Loader2, GripVertical, Plus, Trash2, Save, Image as ImageIcon, UploadCloud, ChevronDown, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import {
     DndContext,
@@ -46,10 +47,11 @@ interface SortableItemProps {
     id: number;
     item: any;
     onRemove: (id: number) => void;
+    onManageImages: (id: number, title: string) => void;
     onUpdateMetadata: (id: number, field: 'altText' | 'displayTitle', value: string) => void;
 }
 
-function SortableGalleryItem({ id, item, onRemove, onUpdateMetadata }: SortableItemProps) {
+function SortableGalleryItem({ id, item, onRemove, onManageImages, onUpdateMetadata }: SortableItemProps & { onUpdateMetadata: (id: number, field: 'altText' | 'displayTitle' | 'description', value: string) => void }) {
     const {
         attributes,
         listeners,
@@ -58,6 +60,8 @@ function SortableGalleryItem({ id, item, onRemove, onUpdateMetadata }: SortableI
         transition,
         isDragging
     } = useSortable({ id });
+
+    const [isOpen, setIsOpen] = useState(false);
 
     const style = {
         transform: CSS.Transform.toString(transform),
@@ -95,8 +99,27 @@ function SortableGalleryItem({ id, item, onRemove, onUpdateMetadata }: SortableI
                         <Button
                             variant="ghost"
                             size="icon"
+                            className="h-6 w-6 text-muted-foreground hover:text-foreground"
+                            onClick={() => onManageImages(item.project.id, item.project.title)}
+                            title="Manage Gallery Images"
+                        >
+                            <ImageIcon className="h-4 w-4" />
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-6 w-6 text-muted-foreground hover:text-foreground"
+                            onClick={() => setIsOpen(!isOpen)}
+                            title={isOpen ? "Collapse Details" : "Edit Metadata"}
+                        >
+                            {isOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            size="icon"
                             className="h-6 w-6 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
                             onClick={() => onRemove(item.id)}
+                            title="Remove from Gallery"
                         >
                             <Trash2 className="h-4 w-4" />
                         </Button>
@@ -105,26 +128,37 @@ function SortableGalleryItem({ id, item, onRemove, onUpdateMetadata }: SortableI
                 </div>
             </div>
 
-            <div className="grid gap-2 pl-8">
-                <div className="grid gap-1">
-                    <label className="text-[10px] font-medium uppercase text-muted-foreground">Display Title (Optional)</label>
-                    <Input
-                        value={item.displayTitle || ''}
-                        onChange={(e) => onUpdateMetadata(item.id, 'displayTitle', e.target.value)}
-                        placeholder="Title shown on gallery item"
-                        className="h-8 text-xs bg-background/50"
-                    />
+            {isOpen && (
+                <div className="grid gap-2 pl-8">
+                    <div className="grid gap-1">
+                        <label className="text-[10px] font-medium uppercase text-muted-foreground">Display Title (Optional)</label>
+                        <Input
+                            value={item.displayTitle || ''}
+                            onChange={(e) => onUpdateMetadata(item.id, 'displayTitle', e.target.value)}
+                            placeholder="Title shown on gallery item"
+                            className="h-8 text-xs bg-background/50"
+                        />
+                    </div>
+                    <div className="grid gap-1">
+                        <label className="text-[10px] font-medium uppercase text-muted-foreground">SEO Alt Text (Critical)</label>
+                        <Input
+                            value={item.altText || ''}
+                            onChange={(e) => onUpdateMetadata(item.id, 'altText', e.target.value)}
+                            placeholder="Describe image for SEO..."
+                            className="h-8 text-xs bg-background/50"
+                        />
+                    </div>
+                    <div className="grid gap-1">
+                        <label className="text-[10px] font-medium uppercase text-muted-foreground">Description (Optional)</label>
+                        <Textarea
+                            value={item.description || ''}
+                            onChange={(e) => onUpdateMetadata(item.id, 'description', e.target.value)}
+                            placeholder="Gallery item description..."
+                            className="min-h-[60px] text-xs bg-background/50"
+                        />
+                    </div>
                 </div>
-                <div className="grid gap-1">
-                    <label className="text-[10px] font-medium uppercase text-muted-foreground">SEO Alt Text (Critical)</label>
-                    <Input
-                        value={item.altText || ''}
-                        onChange={(e) => onUpdateMetadata(item.id, 'altText', e.target.value)}
-                        placeholder="Describe image for SEO..."
-                        className="h-8 text-xs bg-background/50"
-                    />
-                </div>
-            </div>
+            )}
         </div>
     );
 }
@@ -134,6 +168,7 @@ export default function AdminRenderingGallery() {
     const [activeId, setActiveId] = useState<number | null>(null);
     const [localGallery, setLocalGallery] = useState<any[]>([]);
     const [hasChanges, setHasChanges] = useState(false);
+    const [managingProject, setManagingProject] = useState<{ id: number, title: string } | null>(null);
 
     // Quick Add State
     const [quickFile, setQuickFile] = useState<File | null>(null);
@@ -343,7 +378,7 @@ export default function AdminRenderingGallery() {
         removeMutation.mutate({ id });
     };
 
-    const handleUpdateMetadata = (id: number, field: 'altText' | 'displayTitle', value: string) => {
+    const handleUpdateMetadata = (id: number, field: 'altText' | 'displayTitle' | 'description', value: string) => {
         setLocalGallery(prev => prev.map(item =>
             item.id === id ? { ...item, [field]: value } : item
         ));
@@ -355,12 +390,14 @@ export default function AdminRenderingGallery() {
             if (!galleryItems) return;
             localGallery.forEach(localItem => {
                 const original = galleryItems.find(g => g.id === localItem.id);
-                if (original && (original.altText !== localItem.altText || original.displayTitle !== localItem.displayTitle)) {
+                if (original && (original.altText !== localItem.altText || original.displayTitle !== localItem.displayTitle || original.description !== localItem.description)) {
                     updateMetaMutation.mutate({
                         id: localItem.id,
                         active: true,
                         altText: localItem.altText,
-                        displayTitle: localItem.displayTitle
+
+                        displayTitle: localItem.displayTitle,
+                        description: localItem.description
                     });
                 }
             });
@@ -436,6 +473,7 @@ export default function AdminRenderingGallery() {
                                     id="quick-file"
                                     className="hidden"
                                     accept="image/*"
+                                    aria-label="Upload image file"
                                     onChange={handleFileSelect}
                                 />
                             </div>
@@ -531,6 +569,7 @@ export default function AdminRenderingGallery() {
                                                 id={item.id}
                                                 item={item}
                                                 onRemove={handleRemove}
+                                                onManageImages={(pid, title) => setManagingProject({ id: pid, title })}
                                                 onUpdateMetadata={handleUpdateMetadata}
                                             />
                                         ))
@@ -597,6 +636,17 @@ export default function AdminRenderingGallery() {
 
                 </div>
             </div>
-        </AdminLayout>
+
+            {
+                managingProject && (
+                    <AdminGalleryImageManager
+                        projectId={managingProject.id}
+                        projectTitle={managingProject.title}
+                        isOpen={!!managingProject}
+                        onClose={() => setManagingProject(null)}
+                    />
+                )
+            }
+        </AdminLayout >
     );
 }

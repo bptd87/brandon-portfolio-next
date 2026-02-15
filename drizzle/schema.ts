@@ -114,6 +114,7 @@ export type InsertProject = typeof projects.$inferInsert;
 export const projectImages = mysqlTable("projectImages", {
   id: int("id").autoincrement().primaryKey(),
   projectId: int("projectId").notNull().references(() => projects.id, { onDelete: "cascade" }),
+  title: varchar("title", { length: 255 }), // New title column
   imageUrl: text("imageUrl"),
   imageKey: text("imageKey"),
   videoUrl: text("videoUrl"),
@@ -549,6 +550,7 @@ export const renderingGallery = mysqlTable("rendering_gallery", {
   sortOrder: int("sort_order").default(0).notNull(),
   altText: text("alt_text"),
   displayTitle: text("display_title"),
+  description: text("description"),
   active: boolean("active").default(true),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });

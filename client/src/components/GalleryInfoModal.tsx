@@ -59,6 +59,7 @@ export function GalleryInfoModal({
                 {/* Close Button - Absolute to be accessible */}
                 <button
                     onClick={onClose}
+                    aria-label="Close gallery modal"
                     className="absolute top-4 right-4 z-50 p-2 rounded-full bg-black/50 hover:bg-black/70 text-white backdrop-blur-sm transition-all"
                 >
                     <X className="h-5 w-5" />

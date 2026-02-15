@@ -8,7 +8,7 @@ import { ArrowLeft, ArrowRight, MapPin, Calendar, ChevronDown, ChevronUp } from 
 import { Link, useParams, useLocation } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Lightbox } from "@/components/Lightbox";
 import { SEO } from "@/components/SEO";
@@ -63,6 +63,19 @@ export default function ProjectDetail() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxImages, setLightboxImages] = useState<Array<{ imageUrl: string | null; caption: string | null; altText: string | null }>>([]);
+
+  // Track project view
+  useEffect(() => {
+    if (project && typeof window !== 'undefined' && (window as any).analyticsTracker) {
+      (window as any).analyticsTracker.trackProjectView(
+        project.id,
+        project.slug,
+        project.title,
+        project.discipline,
+        project.subcategory
+      );
+    }
+  }, [project?.id]);
 
   if (isLoading) {
     return <ProjectDetailSkeleton />;
@@ -212,7 +225,7 @@ export default function ProjectDetail() {
         {/* Color accent overlay */}
         <div
           className="absolute inset-0 mix-blend-multiply opacity-10"
-          style={{ backgroundColor: accentColor }}
+          style={{ backgroundColor: `var(--accent-color)` }}
         />
 
         {/* Project info overlay - centered */}
@@ -224,8 +237,8 @@ export default function ProjectDetail() {
                 variant="outline"
                 className="text-xs tracking-widest font-bold bg-background/90 backdrop-blur-md px-6 py-2.5 border-2 rounded-full"
                 style={{
-                  borderColor: accentColor,
-                  color: accentColor
+                  borderColor: `var(--accent-color)`,
+                  color: `var(--accent-color)`
                 }}
               >
                 {project.subcategory?.toUpperCase() || project.discipline?.replace('_', ' ').toUpperCase() || 'PROJECT'}
@@ -241,7 +254,7 @@ export default function ProjectDetail() {
             <div className="flex items-center justify-center gap-8 text-foreground/90 flex-wrap text-lg mb-4">
               {project.client && (
                 <div className="flex items-center gap-2.5">
-                  <MapPin className="h-5 w-5" style={{ color: accentColor }} />
+                  <MapPin className="h-5 w-5" style={{ color: `var(--accent-color)` }} />
                   <span className="font-medium">{project.client}</span>
                 </div>
               )}
@@ -254,7 +267,7 @@ export default function ProjectDetail() {
               {project.year && (
                 <div className="flex items-center gap-2.5">
                   <span className="text-muted-foreground">•</span>
-                  <Calendar className="h-5 w-5" style={{ color: accentColor }} />
+                  <Calendar className="h-5 w-5" style={{ color: `var(--accent-color)` }} />
                   <span className="font-medium">{project.year}</span>
                 </div>
               )}
@@ -264,13 +277,16 @@ export default function ProjectDetail() {
       </section>
 
       {/* Content Sections */}
-      <div className="container max-w-5xl py-16 space-y-16">
+      <div 
+        className="container max-w-5xl py-16 space-y-16"
+        style={{ '--accent-color': accentColor } as React.CSSProperties}
+      >
 
         {/* Design Notes */}
         {designNotes && (
           <AnimatedSection>
             <div className="prose prose-lg max-w-none">
-              <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: accentColor }}>
+              <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: `var(--accent-color)` }}>
                 Design Notes
               </h2>
               <div className="text-foreground/80 leading-relaxed whitespace-pre-wrap">
@@ -302,7 +318,7 @@ export default function ProjectDetail() {
                 onClick={() => setGalleryOpen(!galleryOpen)}
                 className="flex items-center justify-between w-full mb-8 group"
               >
-                <h2 className="text-4xl font-black tracking-tighter" style={{ color: accentColor }}>
+                <h2 className="text-4xl font-black tracking-tighter" style={{ color: `var(--accent-color)` }}>
                   Production Photos
                   <span className="ml-4 text-muted-foreground text-lg">({productionPhotos.length})</span>
                 </h2>
@@ -363,7 +379,7 @@ export default function ProjectDetail() {
                 onClick={() => setRenderingsOpen(!renderingsOpen)}
                 className="flex items-center justify-between w-full mb-8 group"
               >
-                <h2 className="text-4xl font-black tracking-tighter" style={{ color: accentColor }}>
+                <h2 className="text-4xl font-black tracking-tighter" style={{ color: `var(--accent-color)` }}>
                   Renderings
                   <span className="ml-4 text-muted-foreground text-lg">({renderings.length})</span>
                 </h2>
@@ -424,7 +440,7 @@ export default function ProjectDetail() {
                 onClick={() => setVideosOpen(!videosOpen)}
                 className="flex items-center justify-between w-full mb-8 group"
               >
-                <h2 className="text-4xl font-black tracking-tighter" style={{ color: accentColor }}>
+                <h2 className="text-4xl font-black tracking-tighter" style={{ color: `var(--accent-color)` }}>
                   Videos
                   <span className="ml-4 text-muted-foreground text-lg">({videos.length})</span>
                 </h2>
@@ -442,6 +458,7 @@ export default function ProjectDetail() {
                       <div className="relative w-full pb-[56.25%]">
                         <iframe
                           src={getEmbedUrl(video.videoUrl || '')}
+                          title={`Video: ${video.caption || 'embedded video'}`}
                           className="absolute inset-0 w-full h-full"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
@@ -468,7 +485,7 @@ export default function ProjectDetail() {
                 onClick={() => setTeamOpen(!teamOpen)}
                 className="flex items-center justify-between w-full mb-8 group"
               >
-                <h2 className="text-4xl font-black tracking-tighter" style={{ color: accentColor }}>
+                <h2 className="text-4xl font-black tracking-tighter" style={{ color: `var(--accent-color)` }}>
                   Creative Team
                 </h2>
                 {teamOpen ? (
@@ -488,10 +505,13 @@ export default function ProjectDetail() {
                       <Link key={idx} href={`/about/collaborators#${slug}`}>
                         <div
                           className="flex items-start gap-4 p-4 rounded-lg bg-muted/50 border border-border hover:bg-muted transition-all duration-300 cursor-pointer group"
+                          style={{
+                            '--team-accent': accentColor
+                          } as React.CSSProperties}
                           onMouseEnter={(e) => {
-                            e.currentTarget.style.borderColor = accentColor;
+                            e.currentTarget.style.borderColor = `var(--accent-color)`;
                             const nameEl = e.currentTarget.querySelector('p.font-semibold') as HTMLElement;
-                            if (nameEl) nameEl.style.color = accentColor;
+                            if (nameEl) nameEl.style.color = `var(--accent-color)`;
                           }}
                           onMouseLeave={(e) => {
                             e.currentTarget.style.borderColor = '';
@@ -517,7 +537,7 @@ export default function ProjectDetail() {
         {project.tags && project.tags.length > 0 && (
           <AnimatedSection>
             <div className="mt-16">
-              <h2 className="text-3xl font-black tracking-tighter mb-6" style={{ color: accentColor }}>
+              <h2 className="text-3xl font-black tracking-tighter mb-6" style={{ color: `var(--accent-color)` }}>
                 Tags
               </h2>
               <div className="flex flex-wrap gap-3">
@@ -525,7 +545,7 @@ export default function ProjectDetail() {
                   <Link key={tag.id} href={`/tags/${tag.slug}`}>
                     <span
                       className="px-5 py-2.5 rounded-full text-sm font-semibold text-background transition-all duration-300 hover:scale-105 hover:shadow-lg cursor-pointer"
-                      style={{ backgroundColor: accentColor }}
+                      style={{ backgroundColor: `var(--accent-color)` }}
                     >
                       {tag.name}
                     </span>
@@ -542,7 +562,7 @@ export default function ProjectDetail() {
         {relatedProjectsFiltered.length > 0 && (
           <AnimatedSection>
             <div>
-              <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: accentColor }}>
+              <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: `var(--accent-color)` }}>
                 More {project.discipline} Projects
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

@@ -217,6 +217,7 @@ export const appRouter = router({
           imageKey: z.string().optional(),
           videoUrl: z.string().optional(),
           imageType: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['production', 'rendering', 'technical_drawing', 'video'])),
+          title: z.string().optional(),
           caption: z.string().optional(),
           altText: z.string().optional(),
           sortOrder: z.number(),
@@ -275,6 +276,7 @@ export const appRouter = router({
           imageKey: z.string().optional(),
           videoUrl: z.string().optional(),
           imageType: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['production', 'rendering', 'technical_drawing', 'video'])),
+          title: z.string().optional(),
           caption: z.string().optional(),
           altText: z.string().optional(),
           sortOrder: z.number(),
@@ -338,8 +340,10 @@ export const appRouter = router({
         projectId: z.number(),
         imageUrl: z.string(),
         imageKey: z.string(),
+        title: z.string().optional(),
         caption: z.string().optional(),
         altText: z.string().optional(),
+        imageType: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['production', 'rendering', 'technical_drawing', 'video'])).optional(),
         sortOrder: z.number().default(0),
       }))
       .mutation(async ({ input }) => {
@@ -389,6 +393,31 @@ export const appRouter = router({
             height: result.height,
           }
         };
+      }),
+
+    updateImage: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        title: z.string().optional(),
+        caption: z.string().optional(),
+        altText: z.string().optional(),
+        sortOrder: z.number().optional(),
+        imageType: z.enum(['production', 'rendering', 'technical_drawing', 'video']).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, ...updates } = input;
+        await db.updateProjectImage(id, updates);
+        return { success: true };
+      }),
+
+    reorderImages: adminProcedure
+      .input(z.array(z.object({
+        id: z.number(),
+        sortOrder: z.number(),
+      })))
+      .mutation(async ({ input }) => {
+        await db.reorderProjectImages(input);
+        return { success: true };
       }),
   }),
 

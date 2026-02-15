@@ -44,14 +44,16 @@ export const renderingGalleryRouter = router({
             id: z.number(),
             active: z.boolean().default(true), // Kept for future use, though currently not in DB
             altText: z.string().optional(),
-            displayTitle: z.string().optional()
+            displayTitle: z.string().optional(),
+            description: z.string().optional()
         }))
         .mutation(async ({ input }) => {
             await db.updateRenderingGalleryMetadata(
                 input.id,
                 input.active,
                 input.altText,
-                input.displayTitle
+                input.displayTitle,
+                input.description
             );
             return { success: true };
         })

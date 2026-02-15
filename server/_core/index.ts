@@ -161,6 +161,15 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
     }
   });
 
+  // tRPC API - Mount before image proxy so TRPC routes have priority
+  expressApp.use(
+    "/api/trpc",
+    createExpressMiddleware({
+      router: appRouter,
+      createContext,
+    })
+  );
+
   // Image proxy for on-demand resizing
   // Lazy load image proxy to prevent server crash if sharp fails
   expressApp.use("/api", async (req, res, next) => {
@@ -169,7 +178,8 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
       imageProxyRouter(req, res, next);
     } catch (error) {
       console.error("Failed to load image proxy:", error);
-      res.status(500).send("Image proxy unavailable");
+      // Call next() instead of sending error so other middleware can handle it
+      next(error);
     }
   });
 
@@ -211,15 +221,6 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
       res.status(500).send("Error generating tutorials RSS");
     }
   });
-
-  // tRPC API
-  expressApp.use(
-    "/api/trpc",
-    createExpressMiddleware({
-      router: appRouter,
-      createContext,
-    })
-  );
 
   // development mode uses Vite, production mode uses static files
   if (process.env.NODE_ENV === "development" && server) {

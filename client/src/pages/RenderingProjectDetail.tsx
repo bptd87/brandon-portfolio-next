@@ -15,13 +15,13 @@ export default function RenderingProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
   const [, setLocation] = useLocation();
   const { data: project, isLoading } = trpc.projects.getBySlug.useQuery({ slug: slug! });
-  
+
   // Fetch projects in same discipline for navigation
   const { data: allProjects } = trpc.projects.list.useQuery(
-    { discipline: 'rendering' },
+    { discipline: 'rendering', status: 'published' },
     { enabled: !!project }
   );
-  
+
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   if (isLoading) {
@@ -47,7 +47,7 @@ export default function RenderingProjectDetail() {
 
   const images = project.images || [];
   const renderings = images.filter(img => img.imageType === 'rendering' || img.imageType === 'production');
-  
+
   // Parse tags for SEO (invisible)
   const tags = project.seoKeywords?.split(',').map(t => t.trim()).filter(Boolean) || [];
 
@@ -84,7 +84,7 @@ export default function RenderingProjectDetail() {
   };
 
   // Generate SEO-optimized description from excerpt or designNotes
-  const seoDescription = project.excerpt || project.designNotes?.substring(0, 160) || 
+  const seoDescription = project.excerpt || project.designNotes?.substring(0, 160) ||
     `${project.title} - Architectural rendering by Brandon PT Davis`;
 
   return (
@@ -144,7 +144,7 @@ export default function RenderingProjectDetail() {
           <ArrowLeft className="h-6 w-6" />
         </button>
       )}
-      
+
       {nextProject && (
         <button
           onClick={() => setLocation(`/projects/${nextProject.slug}`)}
@@ -157,12 +157,12 @@ export default function RenderingProjectDetail() {
 
       {/* Ultra-Minimal Gallery Layout */}
       <div className="container max-w-7xl pt-32 pb-16 space-y-12">
-        
+
         {/* Back Button - Subtle */}
         <AnimatedSection>
           <Link href="/projects/rendering">
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               size="sm"
               className="gap-2 text-muted-foreground hover:text-foreground"
             >
@@ -175,7 +175,7 @@ export default function RenderingProjectDetail() {
         {/* Main Image */}
         {renderings.length > 0 && (
           <AnimatedSection>
-            <div 
+            <div
               className="cursor-pointer group"
               onClick={() => openLightbox(0)}
             >
@@ -194,7 +194,7 @@ export default function RenderingProjectDetail() {
             <h1 className="text-4xl md:text-5xl font-black tracking-tight">
               {project.title}
             </h1>
-            
+
             {project.year && (
               <p className="text-sm text-muted-foreground tracking-wider">
                 {project.year}
@@ -212,18 +212,19 @@ export default function RenderingProjectDetail() {
 
         {/* Additional Images (if any) - Clean Grid */}
         {renderings.length > 1 && (
-          <div className="space-y-12 pt-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-8">
             {renderings.slice(1).map((image, index) => (
               <AnimatedSection key={image.id}>
-                <div 
-                  className="cursor-pointer group"
+                <div
+                  className="cursor-pointer group relative overflow-hidden rounded-2xl aspect-[16/9]"
                   onClick={() => openLightbox(index + 1)}
                 >
                   <img
                     src={image.imageUrl || ''}
                     alt={image.altText || `${project.title} - Image ${index + 2} - Rendering by Brandon PT Davis`}
-                    className="w-full h-auto rounded-2xl transition-opacity group-hover:opacity-95"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                 </div>
               </AnimatedSection>
             ))}

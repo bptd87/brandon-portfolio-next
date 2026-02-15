@@ -32,8 +32,8 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Monumentality', 'Symmetry', 'Religious symbolism', 'Stone construction'],
     keyFigures: ['Imhotep'],
     notableWorks: ['Great Pyramids of Giza', 'Temple of Karnak', 'Abu Simbel'],
-    imageUrl: '/assets/design-history/RbmPrTmOJuyxCrBB.jpg',
-    gallery: ['/assets/design-history/RbmPrTmOJuyxCrBB.jpg', '/android-chrome-512x512.png'],
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069180/design-history/RbmPrTmOJuyxCrBB.webp',
+    gallery: ['https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069180/design-history/RbmPrTmOJuyxCrBB.webp', '/android-chrome-512x512.png'],
     colors: ['#D4AF37', '#8B4513', '#F4E4C1', '#2C1810', '#E8D4A8']
   },
   {
@@ -46,8 +46,8 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Classical orders', 'Proportion', 'Harmony', 'Democratic spaces'],
     keyFigures: ['Iktinos', 'Kallikrates', 'Phidias'],
     notableWorks: ['Parthenon', 'Temple of Athena Nike', 'Erechtheion'],
-    imageUrl: '/assets/design-history/DbKsoYfWnwCnXBtw.png',
-    gallery: ['/assets/design-history/DbKsoYfWnwCnXBtw.png', '/android-chrome-512x512.png'],
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069172/design-history/DbKsoYfWnwCnXBtw.webp',
+    gallery: ['https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069172/design-history/DbKsoYfWnwCnXBtw.webp', '/android-chrome-512x512.png'],
     colors: ['#FFFFFF', '#F5F5DC', '#4A90E2', '#8B0000', '#DAA520']
   },
   {
@@ -60,7 +60,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Arches and vaults', 'Concrete', 'Engineering', 'Urban planning'],
     keyFigures: ['Vitruvius'],
     notableWorks: ['Colosseum', 'Pantheon', 'Roman aqueducts', 'Forum'],
-    imageUrl: '/assets/design-history/lUGVcqGkgPAPTBTm.jpg',
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069189/design-history/lUGVcqGkgPAPTBTm.webp',
     gallery: ['/android-chrome-512x512.png', '/android-chrome-512x512.png'],
     colors: ['#8B0000', '#DAA520', '#F5DEB3', '#8B4513', '#2F4F4F']
   },
@@ -75,7 +75,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     description: 'Domes, mosaics, religious iconography, centralized plans, rich decoration',
     characteristics: ['Domes', 'Mosaics', 'Religious iconography', 'Rich decoration'],
     notableWorks: ['Hagia Sophia', 'San Vitale', 'St. Mark\'s Basilica'],
-    imageUrl: '/assets/design-history/NNliXuwYhdKvklLt.webp',
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069176/design-history/NNliXuwYhdKvklLt.webp',
     gallery: ['/android-chrome-512x512.png', '/android-chrome-512x512.png'],
     colors: ['#FFD700', '#4B0082', '#8B0000', '#00008B', '#228B22']
   },
@@ -88,7 +88,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     description: 'Pointed arches, ribbed vaults, flying buttresses, large stained glass windows, verticality',
     characteristics: ['Pointed arches', 'Flying buttresses', 'Stained glass', 'Verticality'],
     notableWorks: ['Notre-Dame de Paris', 'Chartres Cathedral', 'Cologne Cathedral'],
-    imageUrl: '/assets/design-history/VftWcDsYMgyyGqcn.jpg',
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069182/design-history/VftWcDsYMgyyGqcn.webp',
     gallery: ['/android-chrome-512x512.png', '/android-chrome-512x512.png'],
     colors: ['#4169E1', '#DC143C', '#FFD700', '#4B0082', '#2F4F4F']
   },
@@ -104,7 +104,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Classical revival', 'Symmetry', 'Proportion', 'Humanism'],
     keyFigures: ['Brunelleschi', 'Alberti', 'Michelangelo', 'Palladio'],
     notableWorks: ['Florence Cathedral dome', 'St. Peter\'s Basilica', 'Villa Rotonda'],
-    imageUrl: '/assets/design-history/LvbmuucdrZuhcsEq.jpg',
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069175/design-history/LvbmuucdrZuhcsEq.webp',
     gallery: ['/android-chrome-512x512.png', '/android-chrome-512x512.png'],
     colors: ['#8B4513', '#D4AF37', '#F5DEB3', '#8B0000', '#2F4F4F']
   },
@@ -118,7 +118,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Drama', 'Grandeur', 'Curved forms', 'Ornate decoration'],
     keyFigures: ['Bernini', 'Borromini', 'Wren'],
     notableWorks: ['St. Peter\'s Square', 'Palace of Versailles', 'St. Paul\'s Cathedral'],
-    imageUrl: '/assets/design-history/czlAbJQAwJbYKQsB.jpg',
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069187/design-history/czlAbJQAwJbYKQsB.webp',
     gallery: ['/android-chrome-512x512.png', '/android-chrome-512x512.png'],
     colors: ['#FFD700', '#8B0000', '#4B0082', '#F5DEB3', '#2F4F4F']
   },
@@ -131,7 +131,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     description: 'Lightness, elegance, playfulness, ornate decoration, pastel colors, asymmetry',
     characteristics: ['Lightness', 'Elegance', 'Ornate', 'Asymmetry'],
     notableWorks: ['Hôtel de Soubise', 'Sanssouci Palace', 'Amalienburg'],
-    imageUrl: '/assets/design-history/hGkKoYbTvBtkIBcZ.jpeg',
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069189/design-history/hGkKoYbTvBtkIBcZ.webp',
     gallery: ['/android-chrome-512x512.png', '/android-chrome-512x512.png'],
     colors: ['#FFB6C1', '#E6E6FA', '#FFFACD', '#F0E68C', '#DDA0DD']
   },
@@ -147,7 +147,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Classical revival', 'Simplicity', 'Order', 'Symmetry'],
     keyFigures: ['Robert Adam', 'Thomas Jefferson', 'Karl Friedrich Schinkel'],
     notableWorks: ['Panthéon Paris', 'Brandenburg Gate', 'US Capitol'],
-    imageUrl: '/assets/design-history/GBVaYMkMjQCMvEMu.webp',
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069173/design-history/GBVaYMkMjQCMvEMu.webp',
     gallery: ['/android-chrome-512x512.png', '/android-chrome-512x512.png'],
     colors: ['#F5F5F5', '#DAA520', '#8B4513', '#2F4F4F', '#696969']
   },
@@ -161,7 +161,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Medieval revival', 'Pointed arches', 'Picturesque', 'Romantic'],
     keyFigures: ['Augustus Pugin', 'John Ruskin'],
     notableWorks: ['Palace of Westminster', 'St. Patrick\'s Cathedral NYC'],
-    imageUrl: '/assets/design-history/PPdIZEpdIrPbrtfJ.jpg',
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069177/design-history/PPdIZEpdIrPbrtfJ.webp',
     gallery: ['/android-chrome-512x512.png', '/android-chrome-512x512.png'],
     colors: ['#8B4513', '#2F4F4F', '#FFD700', '#8B0000', '#4B0082']
   },
@@ -176,7 +176,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     description: 'Academic classical design, grandeur, elaborate ornament, symmetry, hierarchy of spaces',
     characteristics: ['Academic classicism', 'Grandeur', 'Elaborate ornament', 'Symmetry'],
     notableWorks: ['Paris Opera', 'Grand Central Terminal', 'Boston Public Library'],
-    imageUrl: '/assets/design-history/lnTAmiYAuwXmFuNI.jpg',
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069190/design-history/lnTAmiYAuwXmFuNI.webp',
     gallery: ['/android-chrome-512x512.png', '/android-chrome-512x512.png'],
     colors: ['#F5F5DC', '#DAA520', '#8B4513', '#2F4F4F', '#FFD700']
   },
@@ -190,7 +190,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Handcraft', 'Natural materials', 'Simplicity', 'Anti-industrial'],
     keyFigures: ['William Morris', 'Charles Rennie Mackintosh'],
     notableWorks: ['Red House', 'Glasgow School of Art'],
-    imageUrl: '/assets/design-history/BQcdOdbkTzdxYHox.jpg',
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069171/design-history/BQcdOdbkTzdxYHox.webp',
     gallery: ['/android-chrome-512x512.png', '/android-chrome-512x512.png'],
     colors: ['#8B4513', '#556B2F', '#D2691E', '#8B7355', '#A0522D']
   },
@@ -204,7 +204,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Organic forms', 'Flowing lines', 'Nature motifs', 'Decorative arts'],
     keyFigures: ['Victor Horta', 'Antoni Gaudí', 'Hector Guimard'],
     notableWorks: ['Hôtel Tassel', 'Sagrada Família', 'Paris Métro entrances'],
-    imageUrl: '/assets/design-history/aEVpyRsNZldTYJFQ.jpg',
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069183/design-history/aEVpyRsNZldTYJFQ.webp',
     gallery: ['/android-chrome-512x512.png', '/android-chrome-512x512.png'],
     colors: ['#556B2F', '#DAA520', '#8B4513', '#9370DB', '#2F4F4F']
   },
@@ -220,7 +220,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Skyscrapers', 'Steel frame', 'Large windows', 'Commercial'],
     keyFigures: ['Louis Sullivan', 'Daniel Burnham', 'John Root'],
     notableWorks: ['Wainwright Building', 'Monadnock Building', 'Carson Pirie Scott'],
-    imageUrl: '/assets/design-history/acGEcUWOIukdPmzh.jpg',
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069184/design-history/acGEcUWOIukdPmzh.webp',
     gallery: ['/android-chrome-512x512.png', '/android-chrome-512x512.png'],
     colors: ['#8B4513', '#2F4F4F', '#696969', '#A9A9A9', '#BC8F8F']
   },
@@ -234,7 +234,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Geometric ornament', 'Luxury', 'Streamlined', 'Modern materials'],
     keyFigures: ['William Van Alen', 'Raymond Hood'],
     notableWorks: ['Chrysler Building', 'Rockefeller Center', 'Radio City Music Hall'],
-    imageUrl: '/assets/design-history/QeCJmseOsSWUfkJM.jpg',
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069179/design-history/QeCJmseOsSWUfkJM.webp',
     gallery: ['/android-chrome-512x512.png', '/android-chrome-512x512.png'],
     colors: ['#FFD700', '#000000', '#C0C0C0', '#8B0000', '#4B0082']
   },
@@ -250,7 +250,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Functionalism', 'Geometric', 'Integration of arts', 'Modern materials'],
     keyFigures: ['Walter Gropius', 'Ludwig Mies van der Rohe', 'Marcel Breuer'],
     notableWorks: ['Bauhaus Dessau', 'Fagus Factory', 'Barcelona Pavilion'],
-    imageUrl: '/assets/design-history/pvxoMjhiZWiJmLhB.jpg',
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069193/design-history/pvxoMjhiZWiJmLhB.webp',
     gallery: ['/android-chrome-512x512.png', '/android-chrome-512x512.png'],
     colors: ['#FF0000', '#FFFF00', '#0000FF', '#000000', '#FFFFFF']
   },
@@ -264,7 +264,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Abstraction', 'Primary colors', 'Orthogonal', 'Simplification'],
     keyFigures: ['Gerrit Rietveld', 'Theo van Doesburg', 'Piet Mondrian'],
     notableWorks: ['Rietveld Schröder House', 'Café Aubette'],
-    imageUrl: '/assets/design-history/bDdhpiAtpdkaawTj.jpg',
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069185/design-history/bDdhpiAtpdkaawTj.webp',
     gallery: ['/android-chrome-512x512.png', '/android-chrome-512x512.png'],
     colors: ['#FF0000', '#FFFF00', '#0000FF', '#000000', '#FFFFFF']
   },
@@ -278,7 +278,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Universal', 'Flat roofs', 'Ribbon windows', 'No ornament'],
     keyFigures: ['Le Corbusier', 'Mies van der Rohe', 'Walter Gropius'],
     notableWorks: ['Villa Savoye', 'Seagram Building', 'Farnsworth House'],
-    imageUrl: '/assets/design-history/IcMZkSYDKQaELpEn.jpg',
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069174/design-history/IcMZkSYDKQaELpEn.webp',
     gallery: ['/android-chrome-512x512.png', '/android-chrome-512x512.png'],
     colors: ['#FFFFFF', '#000000', '#808080', '#A9A9A9', '#2F4F4F']
   },
@@ -294,7 +294,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Clean lines', 'Organic forms', 'Indoor-outdoor', 'New materials'],
     keyFigures: ['Eero Saarinen', 'Richard Neutra', 'Charles & Ray Eames'],
     notableWorks: ['Farnsworth House', 'Case Study Houses', 'TWA Terminal'],
-    imageUrl: '/assets/design-history/IssWaEOXGirXkQMp.jpg',
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069175/design-history/IssWaEOXGirXkQMp.webp',
     gallery: ['/android-chrome-512x512.png', '/android-chrome-512x512.png'],
     colors: ['#D2691E', '#8B4513', '#556B2F', '#F4A460', '#2F4F4F']
   },
@@ -308,8 +308,8 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Raw concrete', 'Massive forms', 'Fortress-like', 'Honesty'],
     keyFigures: ['Le Corbusier', 'Paul Rudolph', 'Denys Lasdun'],
     notableWorks: ['Unité d\'Habitation', 'Yale Art & Architecture', 'National Theatre London'],
-    imageUrl: '/assets/design-history/fRzNIDPKmYRapEBE.webp',
-    gallery: ['/assets/design-history/fRzNIDPKmYRapEBE.webp', '/android-chrome-512x512.png'],
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069188/design-history/fRzNIDPKmYRapEBE.webp',
+    gallery: ['https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069188/design-history/fRzNIDPKmYRapEBE.webp', '/android-chrome-512x512.png'],
     colors: ['#696969', '#808080', '#A9A9A9', '#556B2F', '#2F4F4F']
   },
   {
@@ -322,7 +322,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Organic growth', 'Flexible', 'Prefab', 'Megastructures'],
     keyFigures: ['Kenzo Tange', 'Kisho Kurokawa', 'Fumihiko Maki'],
     notableWorks: ['Nakagin Capsule Tower', 'Osaka Expo \'70', 'Yamanashi Press Center'],
-    imageUrl: '/assets/design-history/RJEMBMLKcHkLRVNI.jpg',
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069180/design-history/RJEMBMLKcHkLRVNI.webp',
     gallery: ['/android-chrome-512x512.png', '/android-chrome-512x512.png'],
     colors: ['#FF6347', '#696969', '#F5F5F5', '#000000', '#FFD700']
   },
@@ -336,7 +336,7 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Exposed structure', 'Industrial aesthetic', 'Technology', 'Flexibility'],
     keyFigures: ['Norman Foster', 'Richard Rogers', 'Renzo Piano'],
     notableWorks: ['Pompidou Centre', 'Lloyd\'s Building', 'HSBC Building Hong Kong'],
-    imageUrl: '/assets/design-history/VSBJrsysMOKnOsBP.jpg',
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069181/design-history/VSBJrsysMOKnOsBP.webp',
     gallery: ['/android-chrome-512x512.png', '/android-chrome-512x512.png'],
     colors: ['#4169E1', '#C0C0C0', '#FF0000', '#FFFF00', '#000000']
   },
@@ -352,8 +352,8 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Historical references', 'Ornamentation', 'Irony', 'Pluralism'],
     keyFigures: ['Robert Venturi', 'Michael Graves', 'Philip Johnson'],
     notableWorks: ['Vanna Venturi House', 'Portland Building', 'AT&T Building'],
-    imageUrl: '/assets/design-history/PqxEdKXDmTyKCSMp.jpg',
-    gallery: ['/assets/design-history/PqxEdKXDmTyKCSMp.jpg', '/android-chrome-512x512.png'],
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069177/design-history/PqxEdKXDmTyKCSMp.webp',
+    gallery: ['https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069177/design-history/PqxEdKXDmTyKCSMp.webp', '/android-chrome-512x512.png'],
     colors: ['#FF69B4', '#00CED1', '#FFD700', '#9370DB', '#FF6347']
   },
   {
@@ -366,8 +366,8 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Fragmented', 'Non-rectilinear', 'Distorted', 'Chaotic'],
     keyFigures: ['Frank Gehry', 'Zaha Hadid', 'Daniel Libeskind'],
     notableWorks: ['Guggenheim Bilbao', 'Vitra Fire Station', 'Jewish Museum Berlin'],
-    imageUrl: '/assets/design-history/vQYjuUJkeUFnrMms.jpg',
-    gallery: ['/assets/design-history/vQYjuUJkeUFnrMms.jpg', '/android-chrome-512x512.png'],
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069194/design-history/vQYjuUJkeUFnrMms.webp',
+    gallery: ['https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069194/design-history/vQYjuUJkeUFnrMms.webp', '/android-chrome-512x512.png'],
     colors: ['#C0C0C0', '#696969', '#FF6347', '#4169E1', '#000000']
   },
   {
@@ -380,8 +380,8 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Simplicity', 'Essential', 'Clean lines', 'Spatial clarity'],
     keyFigures: ['Tadao Ando', 'John Pawson', 'Alberto Campo Baeza'],
     notableWorks: ['Church of the Light', 'Nový Dvůr Monastery', 'House of the Infinite'],
-    imageUrl: '/assets/design-history/VvjMYiUCNlvMjBex.jpg',
-    gallery: ['/assets/design-history/VvjMYiUCNlvMjBex.jpg', '/android-chrome-512x512.png'],
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069182/design-history/VvjMYiUCNlvMjBex.webp',
+    gallery: ['https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069182/design-history/VvjMYiUCNlvMjBex.webp', '/android-chrome-512x512.png'],
     colors: ['#FFFFFF', '#F5F5F5', '#E0E0E0', '#BEBEBE', '#808080']
   },
   {
@@ -394,8 +394,8 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Digital', 'Algorithmic', 'Complex curves', 'Computational'],
     keyFigures: ['Zaha Hadid', 'Patrik Schumacher', 'Greg Lynn'],
     notableWorks: ['Heydar Aliyev Center', 'Galaxy SOHO', 'Broad Museum'],
-    imageUrl: '/assets/design-history/pRlmxVHihDSUETbk.jpg',
-    gallery: ['/assets/design-history/pRlmxVHihDSUETbk.jpg', '/android-chrome-512x512.png'],
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069192/design-history/pRlmxVHihDSUETbk.webp',
+    gallery: ['https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069192/design-history/pRlmxVHihDSUETbk.webp', '/android-chrome-512x512.png'],
     colors: ['#FFFFFF', '#4169E1', '#C0C0C0', '#FF6347', '#000000']
   },
   {
@@ -408,8 +408,8 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Environmental', 'Energy efficient', 'Green building', 'Renewable'],
     keyFigures: ['Norman Foster', 'Renzo Piano', 'Ken Yeang'],
     notableWorks: ['California Academy of Sciences', 'The Edge Amsterdam', 'ACROS Fukuoka'],
-    imageUrl: '/assets/design-history/CqArXWEqrtDSspXH.jpg',
-    gallery: ['/assets/design-history/CqArXWEqrtDSspXH.jpg', '/android-chrome-512x512.png'],
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069172/design-history/CqArXWEqrtDSspXH.webp',
+    gallery: ['https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069172/design-history/CqArXWEqrtDSspXH.webp', '/android-chrome-512x512.png'],
     colors: ['#228B22', '#8FBC8F', '#F5F5DC', '#6B8E23', '#2F4F4F']
   },
   {
@@ -422,8 +422,8 @@ const DESIGN_PERIODS: DesignPeriod[] = [
     characteristics: ['Diversity', 'Sustainability', 'Technology', 'Biophilic'],
     keyFigures: ['Bjarke Ingels', 'Shigeru Ban', 'Thomas Heatherwick'],
     notableWorks: ['The Shed NYC', 'VIA 57 West', 'Vessel Hudson Yards'],
-    imageUrl: '/assets/design-history/pRLceAvYAVIDlvJR.jpg',
-    gallery: ['/assets/design-history/pRLceAvYAVIDlvJR.jpg', '/android-chrome-512x512.png'],
+    imageUrl: 'https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069191/design-history/pRLceAvYAVIDlvJR.webp',
+    gallery: ['https://res.cloudinary.com/dsq2xg1iw/image/upload/v1771069191/design-history/pRLceAvYAVIDlvJR.webp', '/android-chrome-512x512.png'],
     colors: ['#4169E1', '#32CD32', '#FFD700', '#FF6347', '#000000']
   },
 ];

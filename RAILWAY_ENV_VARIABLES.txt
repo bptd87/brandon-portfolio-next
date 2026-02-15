@@ -1,5 +1,5 @@
-# Vercel Environment Variables - MINIMAL (Only What's Actually Used)
-# Copy and paste this entire file content into Vercel's "Bulk Add" environment variables
+# Railway Environment Variables - MINIMAL (Only What's Actually Used)
+# Set these in Railway Dashboard → Variables → RAW Editor (bulk add)
 
 # Supabase (REQUIRED)
 SUPABASE_URL=https://xibkuwouvisabnfowthn.supabase.co

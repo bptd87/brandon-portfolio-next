@@ -436,6 +436,7 @@ export default function AdminModelGallery() {
                                     id="quick-file"
                                     className="hidden"
                                     accept="image/*"
+                                    aria-label="Upload image file"
                                     onChange={handleFileSelect}
                                 />
                             </div>

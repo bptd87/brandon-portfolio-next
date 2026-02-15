@@ -1,9 +1,16 @@
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { X, ChevronLeft, ChevronRight, MapPin, Calendar, User } from "lucide-react";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "wouter";
-import { ProgressiveImage } from "@/components/ProgressiveImage";
-import { useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { cn } from "@/lib/utils";
+import { AnimatePresence, motion } from "framer-motion";
+
+interface ProjectImage {
+    id: number;
+    url: string;
+    caption?: string | null;
+    altText?: string | null;
+}
 
 interface RenderingProject {
     id: number;
@@ -16,14 +23,16 @@ interface RenderingProject {
     client?: string | null;
     designNotes?: string | null;
     excerpt?: string | null;
+    description?: string | null;
+    images?: ProjectImage[];
 }
 
 interface RenderingInfoModalProps {
     isOpen: boolean;
     project: RenderingProject | null;
     onClose: () => void;
-    onNext: () => void;
-    onPrev: () => void;
+    onNext: () => void; // Next Project
+    onPrev: () => void; // Prev Project
     hasNext: boolean;
     hasPrev: boolean;
 }
@@ -37,125 +46,200 @@ export function RenderingInfoModal({
     hasNext,
     hasPrev,
 }: RenderingInfoModalProps) {
-    if (!project) return null;
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    // Reset image index when project changes
+    useEffect(() => {
+        setCurrentImageIndex(0);
+    }, [project?.id]);
+
+    // Combine main cover image with gallery images if valid
+    const allImages = project ? [
+        {
+            id: -1, // cover
+            url: project.imageUrl || '',
+            altText: project.altText,
+            caption: null
+        },
+        ...(project.images || [])
+    ].filter(img => img.url) : [];
+
+    // Use fallback if no images found
+    const displayImages = allImages.length > 0 ? allImages : [{ id: 0, url: '', altText: 'No image', caption: null }];
+    const currentImage = displayImages[currentImageIndex] || displayImages[0];
+    const totalImages = displayImages.length;
+
+    const handleNextImage = useCallback(() => {
+        if (currentImageIndex < totalImages - 1) {
+            setCurrentImageIndex(prev => prev + 1);
+        } else if (hasNext) {
+            onNext();
+        }
+    }, [currentImageIndex, totalImages, hasNext, onNext]);
+
+    const handlePrevImage = useCallback(() => {
+        if (currentImageIndex > 0) {
+            setCurrentImageIndex(prev => prev - 1);
+        } else if (hasPrev) {
+            onPrev();
+        }
+    }, [currentImageIndex, hasPrev, onPrev]);
 
     // Keyboard navigation
     useEffect(() => {
         if (!isOpen) return;
 
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'ArrowLeft') onPrev();
-            if (e.key === 'ArrowRight') onNext();
+            if (e.key === 'ArrowLeft') handlePrevImage();
+            if (e.key === 'ArrowRight') handleNextImage();
+            if (e.key === 'Escape') onClose();
         };
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [isOpen, onNext, onPrev]);
+    }, [isOpen, handleNextImage, handlePrevImage, onClose]);
+
+    if (!project) return null;
 
     return (
         <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-            <DialogContent className="max-w-[95vw] w-full h-[90vh] p-0 gap-0 bg-background/95 backdrop-blur-xl border-none overflow-hidden flex flex-col md:flex-row shadow-2xl">
+            <DialogContent showCloseButton={false} className="max-w-none w-screen h-screen sm:max-w-none md:max-w-none p-0 m-0 rounded-none bg-black/98 backdrop-blur-xl border-none overflow-hidden flex flex-col shadow-none outline-none">
+                <DialogTitle className="sr-only">{project.title}</DialogTitle>
 
-                {/* Close Button - Absolute to be accessible */}
-                <button
-                    onClick={onClose}
-                    className="absolute top-4 right-4 z-50 p-2 rounded-full bg-black/50 hover:bg-black/70 text-white backdrop-blur-sm transition-all"
-                >
-                    <X className="h-5 w-5" />
-                </button>
-
-                {/* IMAGE SECTION (Main Focus) */}
-                <div className="flex-1 relative bg-black flex items-center justify-center h-[50vh] md:h-full select-none">
-                    {project.imageUrl ? (
-                        <div className="relative w-full h-full p-4 md:p-8">
-                            <img
-                                src={project.imageUrl}
-                                alt={project.altText || project.title}
-                                className="w-full h-full object-contain drop-shadow-2xl"
-                            />
-                        </div>
-                    ) : (
-                        <div className="text-muted-foreground">No Image Available</div>
-                    )}
-
-                    {/* Navigation Overlay (Desktop) */}
-                    <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 pointer-events-none">
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className={`rounded-full bg-black/20 hover:bg-black/40 text-white backdrop-blur-md h-12 w-12 pointer-events-auto transition-opacity ${!hasPrev ? 'opacity-0 pointer-events-none' : ''}`}
-                            onClick={onPrev}
-                        >
-                            <ChevronLeft className="h-8 w-8" />
-                        </Button>
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className={`rounded-full bg-black/20 hover:bg-black/40 text-white backdrop-blur-md h-12 w-12 pointer-events-auto transition-opacity ${!hasNext ? 'opacity-0 pointer-events-none' : ''}`}
-                            onClick={onNext}
-                        >
-                            <ChevronRight className="h-8 w-8" />
-                        </Button>
-                    </div>
+                {/* Top Controls (Close Only) */}
+                <div className="absolute top-0 right-0 z-[60] p-6">
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={onClose}
+                        className="rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-md transition-all h-12 w-12"
+                        title="Close Gallery"
+                    >
+                        <X className="h-6 w-6" />
+                    </Button>
                 </div>
 
-                {/* INFO PANEL (Sidebar) */}
-                <div className="w-full md:w-[400px] lg:w-[450px] flex flex-col h-[50vh] md:h-full bg-background border-l border-border/50">
-                    <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-8">
+                {/* Main Content: Flex Column */}
+                <div className="flex-1 w-full h-full flex flex-col relative">
 
-                        {/* Header Info */}
-                        <div className="space-y-4">
-                            <div className="space-y-1">
-                                <Link href={`/projects/${project.slug}`} className="block group">
-                                    <h2 className="text-3xl font-bold tracking-tight group-hover:underline decoration-primary decoration-2 underline-offset-4 cursor-pointer">{project.title}</h2>
-                                </Link>
-                                {project.year && (
-                                    <p className="text-muted-foreground font-mono text-sm">{project.year}</p>
+                    {/* Stage: Image & Arrows (Flex-1 to take available space) */}
+                    <div className="flex-1 relative flex items-center justify-center min-h-0 p-4 md:p-8 pb-32"> {/* pb-32 leaves room for thumbnails/metadata if needed */}
+
+                        {/* Prev Arrow */}
+                        <button
+                            onClick={(e) => { e.stopPropagation(); handlePrevImage(); }}
+                            aria-label="Previous image"
+                            className="absolute left-4 md:left-8 z-50 p-4 rounded-full bg-black/50 text-white/70 hover:text-white hover:bg-black/70 hover:scale-110 transition-all outline-none"
+                        >
+                            <ChevronLeft className="w-8 h-8" />
+                        </button>
+
+                        {/* Main Image Container */}
+                        <div className="relative w-full h-full flex flex-col items-center justify-center gap-6">
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={currentImage.url}
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.3, ease: "easeOut" }}
+                                    className="relative max-w-full max-h-full flex flex-col items-center justify-center"
+                                >
+                                    {currentImage.url && (
+                                        <img
+                                            src={currentImage.url}
+                                            alt={currentImage.altText || project.title}
+                                            className="max-w-[80vw] max-h-[55vh] w-auto h-auto object-contain rounded-xl shadow-2xl ring-1 ring-white/10"
+                                        />
+                                    )}
+                                </motion.div>
+                            </AnimatePresence>
+
+                            {/* Prominent Image Description/Caption */}
+                            <div className="max-w-3xl text-center space-y-2 z-50 px-4">
+                                {currentImage.caption ? (
+                                    <p className="text-white text-lg md:text-xl font-light leading-relaxed">
+                                        "{currentImage.caption}"
+                                    </p>
+                                ) : (
+                                    <p className="text-white/60 text-sm md:text-base font-light leading-relaxed">
+                                        {/* Fallback to project description or generic text if no specific image caption */}
+                                        {project.description || project.designNotes || ""}
+                                    </p>
                                 )}
                             </div>
-
-                            {/* Metadata Grid */}
-                            {(project.venue || project.client) && (
-                                <div className="grid grid-cols-1 gap-2 text-sm text-foreground/80 py-4 border-y border-border/40">
-                                    {project.venue && (
-                                        <div className="flex items-center gap-2">
-                                            <MapPin className="h-4 w-4 text-primary" />
-                                            <span>{project.venue}</span>
-                                        </div>
-                                    )}
-                                    {project.client && (
-                                        <div className="flex items-center gap-2">
-                                            <User className="h-4 w-4 text-primary" />
-                                            <span>{project.client}</span>
-                                        </div>
-                                    )}
-                                </div>
-                            )}
                         </div>
 
-                        {/* Description / Story */}
-                        <div className="prose prose-stone dark:prose-invert prose-sm leading-relaxed">
-                            {project.designNotes ? (
-                                <p className="whitespace-pre-line">{project.designNotes}</p>
-                            ) : project.excerpt ? (
-                                <p>{project.excerpt}</p>
-                            ) : (
-                                <p className="italic text-muted-foreground">No documentation available for this project.</p>
-                            )}
+                        {/* Next Arrow */}
+                        <button
+                            onClick={(e) => { e.stopPropagation(); handleNextImage(); }}
+                            aria-label="Next image"
+                            className="absolute right-4 md:right-8 z-50 p-4 rounded-full bg-black/50 text-white/70 hover:text-white hover:bg-black/70 hover:scale-110 transition-all outline-none"
+                        >
+                            <ChevronRight className="w-8 h-8" />
+                        </button>
+                    </div>
+
+                    {/* Bottom Strip: Thumbnails & Metadata */}
+                    <div className="h-auto bg-black/40 border-t border-white/5 backdrop-blur-md p-6 flex flex-col gap-4 z-40">
+
+                        {/* Thumbnails (Only if > 1 image) */}
+                        {totalImages > 1 && (
+                            <div className="flex items-center justify-center gap-3 overflow-x-auto py-2 no-scrollbar">
+                                {displayImages.map((img, idx) => (
+                                    <button
+                                        key={img.id}
+                                        onClick={() => setCurrentImageIndex(idx)}
+                                        className={cn(
+                                            "relative h-16 w-24 flex-shrink-0 rounded-md overflow-hidden transition-all border-2",
+                                            currentImageIndex === idx
+                                                ? "border-white scale-105 opacity-100"
+                                                : "border-transparent opacity-50 hover:opacity-80"
+                                        )}
+                                    >
+                                        <img
+                                            src={img.url}
+                                            alt={`Thumbnail ${idx + 1}`}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+
+                        {/* Footer: Project Nav & Info (Simplified) */}
+                        <div className="flex flex-col md:flex-row items-center justify-between gap-4 max-w-7xl mx-auto w-full text-sm">
+
+                            {/* Left: Project Nav */}
+                            <div className="flex items-center gap-6">
+                                <button
+                                    onClick={onPrev}
+                                    disabled={!hasPrev}
+                                    className="flex items-center gap-2 text-white/50 hover:text-white disabled:opacity-30 transition-colors uppercase tracking-wider font-medium"
+                                >
+                                    <ChevronLeft className="w-4 h-4" /> Prev Project
+                                </button>
+                                <span className="text-white/20">|</span>
+                                <h3 className="text-white font-bold text-lg">{project.title}</h3>
+                                <span className="text-white/20">|</span>
+                                <button
+                                    onClick={onNext}
+                                    disabled={!hasNext}
+                                    className="flex items-center gap-2 text-white/50 hover:text-white disabled:opacity-30 transition-colors uppercase tracking-wider font-medium"
+                                >
+                                    Next Project <ChevronRight className="w-4 h-4" />
+                                </button>
+                            </div>
+
+                            {/* Right: Caption/Counter */}
+                            <div className="text-white/60 flex items-center gap-4 text-xs tracking-wider">
+                                {currentImage.caption && <span className="italic">"{currentImage.caption}"</span>}
+                                <span className="px-2 py-1 bg-white/10 rounded">{currentImageIndex + 1} / {totalImages}</span>
+                            </div>
                         </div>
-
                     </div>
 
-                    {/* Footer Actions */}
-                    <div className="p-6 border-t border-border bg-muted/20">
-                        <Link href={`/projects/${project.slug}`}>
-                            <Button className="w-full gap-2" size="lg">
-                                View Full Project Details
-                            </Button>
-                        </Link>
-                    </div>
                 </div>
-
             </DialogContent>
         </Dialog>
     );
