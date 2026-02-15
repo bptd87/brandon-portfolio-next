@@ -28,14 +28,14 @@ export default function About() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   const galleryImages = [
-    { url: "/android-chrome-512x512.png", alt: "Teaching scenic design to students" },
-    { url: "/android-chrome-512x512.png", alt: "UC Irvine graduate school days" },
-    { url: "/android-chrome-512x512.png", alt: "Collaborating with mentors" },
-    { url: "/android-chrome-512x512.png", alt: "Working with creative teams" },
-    { url: "/android-chrome-512x512.png", alt: "Creative collaborations" },
-    { url: "/android-chrome-512x512.png", alt: "Family and community" },
-    { url: "/android-chrome-512x512.png", alt: "Design partnerships" },
-    { url: "/android-chrome-512x512.png", alt: "Behind the scenes" },
+    { url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/TsVdekRTdTHOgGda.JPG", alt: "Teaching scenic design to students" },
+    { url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/sgcZKfoZzxPeTUel.JPG", alt: "UC Irvine graduate school days" },
+    { url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/ZGRhzttUHjtimPXQ.JPG", alt: "Collaborating with mentors" },
+    { url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/fPNAESGBIUQCJmkQ.JPG", alt: "Working with creative teams" },
+    { url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YgEJZLtqcTqihLMh.JPG", alt: "Creative collaborations" },
+    { url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/EeESHfPspBcRpEaU.JPG", alt: "Family and community" },
+    { url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/JbMFmQRXOBCttcpL.JPG", alt: "Design partnerships" },
+    { url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/GDSJlHzKeThOHVcF.JPG", alt: "Behind the scenes" },
   ];
 
   const navigationCards = [
@@ -144,7 +144,7 @@ export default function About() {
                 className="aspect-[4/5] rounded-3xl overflow-hidden border-4 border-primary/30 shadow-2xl shadow-primary/10 transition-all duration-300 group-hover:border-primary/50 group-hover:shadow-primary/20"
               >
                 <img
-                  src="/android-chrome-512x512.png"
+                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/jDUthZkmakLJRTiP.jpeg"
                   alt="Brandon PT Davis - Scenic Designer"
                   className="w-full h-full object-cover object-center"
                 />
