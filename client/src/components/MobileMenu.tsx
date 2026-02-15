@@ -44,13 +44,13 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
         {/* Navigation */}
         <nav className="p-6 space-y-2 overflow-y-auto h-[calc(100%-80px)]">
-          {/* Work Dropdown */}
+          {/* Portfolio Dropdown */}
           <div>
             <button
               onClick={() => setWorkOpen(!workOpen)}
               className="w-full flex items-center justify-between py-3 px-4 rounded-lg hover:bg-foreground/5 transition-colors text-left font-bold"
             >
-              <span>WORK</span>
+              <span>PORTFOLIO</span>
               <ChevronDown
                 className={`w-5 h-5 transition-transform ${
                   workOpen ? "rotate-180" : ""
@@ -60,32 +60,32 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             {workOpen && (
               <div className="ml-4 mt-2 space-y-1">
                 <Link
-                  href="/projects?discipline=scenic_design"
+                  href="/projects/scenic-design"
                   onClick={onClose}
                   className="block py-2 px-4 rounded-lg hover:bg-[#FF5722]/10 hover:text-[#FF5722] transition-colors"
                 >
                   Scenic Design
                 </Link>
                 <Link
-                  href="/projects?discipline=experiential_design"
+                  href="/projects/experiential"
                   onClick={onClose}
                   className="block py-2 px-4 rounded-lg hover:bg-[#00E5FF]/10 hover:text-[#00E5FF] transition-colors"
                 >
-                  Experiential Design
+                  Experiential
                 </Link>
                 <Link
-                  href="/projects?discipline=rendering"
+                  href="/projects/rendering"
                   onClick={onClose}
                   className="block py-2 px-4 rounded-lg hover:bg-[#FF1744]/10 hover:text-[#FF1744] transition-colors"
                 >
-                  Rendering
+                  Renderings
                 </Link>
                 <Link
-                  href="/projects?discipline=scenic_models"
+                  href="/projects/scenic-models"
                   onClick={onClose}
                   className="block py-2 px-4 rounded-lg hover:bg-[#FF5722]/10 hover:text-[#FF5722] transition-colors"
                 >
-                  Scenic Models
+                  Models
                 </Link>
               </div>
             )}
@@ -120,41 +120,39 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   onClick={onClose}
                   className="block py-2 px-4 rounded-lg hover:bg-[#00E5FF]/10 hover:text-[#00E5FF] transition-colors"
                 >
-                  About Brandon
+                  About
                 </Link>
                 <Link
                   href="/resume"
                   onClick={onClose}
                   className="block py-2 px-4 rounded-lg hover:bg-[#FF1744]/10 hover:text-[#FF1744] transition-colors"
                 >
-                  Resume
-                </Link>
-                <Link
-                  href="/teaching-philosophy"
-                  onClick={onClose}
-                  className="block py-2 px-4 rounded-lg hover:bg-[#FF5722]/10 hover:text-[#FF5722] transition-colors"
-                >
-                  Teaching Philosophy
+                  Resume / CV
                 </Link>
                 <Link
                   href="/creative-statement"
                   onClick={onClose}
-                  className="block py-2 px-4 rounded-lg hover:bg-[#00E5FF]/10 hover:text-[#00E5FF] transition-colors"
+                  className="block py-2 px-4 rounded-lg hover:bg-[#FF5722]/10 hover:text-[#FF5722] transition-colors"
                 >
                   Creative Statement
+                </Link>
+                <Link
+                  href="/about/teaching"
+                  onClick={onClose}
+                  className="block py-2 px-4 rounded-lg hover:bg-[#00E5FF]/10 hover:text-[#00E5FF] transition-colors"
+                >
+                  Teaching Philosophy
+                </Link>
+                <Link
+                  href="/about/collaborators"
+                  onClick={onClose}
+                  className="block py-2 px-4 rounded-lg hover:bg-[#FF1744]/10 hover:text-[#FF1744] transition-colors"
+                >
+                  Collaborators
                 </Link>
               </div>
             )}
           </div>
-
-          {/* Articles */}
-          <Link
-            href="/articles"
-            onClick={onClose}
-            className="block py-3 px-4 rounded-lg hover:bg-foreground/5 transition-colors font-bold"
-          >
-            ARTICLES
-          </Link>
 
           {/* Studio Dropdown */}
           <div>
@@ -172,6 +170,13 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             {studioOpen && (
               <div className="ml-4 mt-2 space-y-1">
                 <Link
+                  href="/articles"
+                  onClick={onClose}
+                  className="block py-2 px-4 rounded-lg hover:bg-[#9C27B0]/10 hover:text-[#9C27B0] transition-colors"
+                >
+                  Articles
+                </Link>
+                <Link
                   href="/studio/tutorials"
                   onClick={onClose}
                   className="block py-2 px-4 rounded-lg hover:bg-[#9C27B0]/10 hover:text-[#9C27B0] transition-colors"
@@ -179,18 +184,11 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   Tutorials
                 </Link>
                 <Link
-                  href="/studio"
+                  href="/studio/apps"
                   onClick={onClose}
                   className="block py-2 px-4 rounded-lg hover:bg-[#9C27B0]/10 hover:text-[#9C27B0] transition-colors"
                 >
                   App Studio
-                </Link>
-                <Link
-                  href="/vault"
-                  onClick={onClose}
-                  className="block py-2 px-4 rounded-lg hover:bg-[#9C27B0]/10 hover:text-[#9C27B0] transition-colors"
-                >
-                  Vault
                 </Link>
                 <Link
                   href="/studio/directory"
@@ -198,6 +196,13 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   className="block py-2 px-4 rounded-lg hover:bg-[#9C27B0]/10 hover:text-[#9C27B0] transition-colors"
                 >
                   Scenic Directory
+                </Link>
+                <Link
+                  href="/vault"
+                  onClick={onClose}
+                  className="block py-2 px-4 rounded-lg hover:bg-[#9C27B0]/10 hover:text-[#9C27B0] transition-colors"
+                >
+                  Vault
                 </Link>
               </div>
             )}
