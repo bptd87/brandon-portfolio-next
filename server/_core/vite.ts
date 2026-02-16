@@ -26,7 +26,16 @@ export async function setupVite(app: Express, server: Server) {
   });
 
   app.use(vite.middlewares);
+  
+  // Skip SPA rendering for API and static file routes
   app.use("*", async (req, res, next) => {
+    // Don't render SPA for these routes - let them fall through
+    if (req.path.match(/\.(xml|txt|rss|json)$/) || 
+        req.path.startsWith("/api/") ||
+        req.path.startsWith("/sitemap")) {
+      return next();
+    }
+
     const url = req.originalUrl;
 
     try {
@@ -65,8 +74,15 @@ export function serveStatic(app: Express) {
 
   app.use(express.static(distPath));
 
-  // fall through to index.html if the file doesn't exist
-  app.use("*", (_req, res) => {
+  // Fall through to index.html if the file doesn't exist
+  // BUT: don't serve index.html for API, static file, or sitemap requests
+  app.use("*", (req, res) => {
+    // Don't render SPA for these routes
+    if (req.path.match(/\.(xml|txt|rss|json)$/) || 
+        req.path.startsWith("/api/") ||
+        req.path.startsWith("/sitemap")) {
+      return res.status(404).send("Not found");
+    }
     res.sendFile(path.resolve(distPath, "index.html"));
   });
 }
