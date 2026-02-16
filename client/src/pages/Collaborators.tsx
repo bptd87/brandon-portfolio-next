@@ -7,7 +7,19 @@ import { ExternalLink, Instagram, Users, Building2, Briefcase } from "lucide-rea
 import { useState } from "react";
 import { Link } from "wouter";
 
-type RoleFilter = "all" | "director" | "scenic_designer" | "costume_designer" | "lighting_designer" | "sound_designer" | "projection_designer" | "theatre_company" | "partner_company";
+type RoleFilter = "all" | "director" | "scenic_designer" | "costume_designer" | "lighting_designer" | "sound_designer" | "projection_designer" | "partner_company" | "theatre_company";
+
+// Define the display order for roles
+const roleOrder: RoleFilter[] = [
+  "director",
+  "scenic_designer",
+  "costume_designer",
+  "lighting_designer",
+  "sound_designer",
+  "projection_designer",
+  "partner_company",
+  "theatre_company",
+];
 
 const roleLabels: Record<RoleFilter, string> = {
   all: "All Collaborators",
@@ -76,13 +88,27 @@ export default function Collaborators() {
 
             {/* Filter Tabs */}
             <div className="flex flex-wrap gap-3 mb-12 border-b border-border pb-6">
-              {(Object.keys(roleLabels) as RoleFilter[]).map((role) => {
-                const Icon = roleIcons[role];
-                const count = role === "all"
-                  ? allCollaborators?.length || 0
-                  : groupedCollaborators?.[role]?.length || 0;
+              {/* All filter first */}
+              <button
+                onClick={() => setActiveFilter("all")}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${activeFilter === "all"
+                    ? "bg-foreground text-background"
+                    : "bg-card text-muted-foreground hover:text-foreground hover:bg-card/80"
+                  }`}
+              >
+                <Users className="w-4 h-4" />
+                {roleLabels.all}
+                <span className={`text-xs ${activeFilter === "all" ? "opacity-70" : "opacity-50"}`}>
+                  ({allCollaborators?.length || 0})
+                </span>
+              </button>
 
-                if (role !== "all" && count === 0) return null;
+              {/* Then each role in order */}
+              {roleOrder.map((role) => {
+                const Icon = roleIcons[role];
+                const count = groupedCollaborators?.[role]?.length || 0;
+
+                if (count === 0) return null;
 
                 return (
                   <button
@@ -120,7 +146,8 @@ export default function Collaborators() {
             {/* Collaborators Grid */}
             {!isLoading && filteredGroups && (
               <div className="space-y-16">
-                {Object.entries(filteredGroups).map(([role, collaborators]) => {
+                {(activeFilter === "all" ? roleOrder : [activeFilter]).map((role) => {
+                  const collaborators = filteredGroups[role];
                   if (!collaborators || collaborators.length === 0) return null;
 
                   const Icon = roleIcons[role as RoleFilter];

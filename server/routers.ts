@@ -1349,8 +1349,7 @@ export const appRouter = router({
   collaborators: router({
     list: publicProcedure
       .input(z.object({
-        role: z.enum(['director', 'scenic_designer', 'costume_designer', 'lighting_designer', 'sound_designer', 'projection_designer', 'theatre_company', 'partner_company']).optional(),
-        featured: z.boolean().optional()
+        role: z.enum(['director', 'scenic_designer', 'costume_designer', 'lighting_designer', 'sound_designer', 'projection_designer', 'theatre_company', 'partner_company']).optional()
       }).optional())
       .query(async ({ input }) => {
         return await db.getAllCollaborators(input);
@@ -1381,20 +1380,12 @@ export const appRouter = router({
     create: adminProcedure
       .input(z.object({
         name: z.string().min(1).max(255),
-        slug: z.string().min(1).max(255),
-        role: z.string().optional(),
+        role: z.string(),
         bio: z.string().optional(),
-        website: z.string().url().optional(),
         portfolioUrl: z.string().url().optional(),
+        websiteUrl: z.string().url().optional(),
         instagramUrl: z.string().url().optional(),
         instagramHandle: z.string().optional(),
-        coverImage: z.string().optional(),
-        status: z.enum(['published', 'draft', 'archived']).default('published'),
-        featured: z.boolean().default(false),
-        seoTitle: z.string().optional(),
-        seoDescription: z.string().optional(),
-        seoKeywords: z.string().optional(),
-        gallery: z.array(z.any()).optional(),
       }))
       .mutation(async ({ input }) => {
         const id = await db.createCollaborator(input);
@@ -1405,19 +1396,12 @@ export const appRouter = router({
       .input(z.object({
         id: z.number(),
         name: z.string().min(1).max(255).optional(),
-        slug: z.string().min(1).max(255).optional(),
         role: z.string().optional(),
         bio: z.string().optional(),
-        website: z.string().url().optional(),
         portfolioUrl: z.string().url().optional(),
+        websiteUrl: z.string().url().optional(),
         instagramUrl: z.string().url().optional(),
         instagramHandle: z.string().optional(),
-        coverImage: z.string().optional(),
-        status: z.enum(['published', 'draft', 'archived']).optional(),
-        featured: z.boolean().optional(),
-        seoTitle: z.string().optional(),
-        seoDescription: z.string().optional(),
-        seoKeywords: z.string().optional(),
         gallery: z.array(z.any()).optional(),
       }))
       .mutation(async ({ input }) => {

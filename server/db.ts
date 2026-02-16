@@ -968,7 +968,6 @@ export interface Collaborator {
 
 export async function getAllCollaborators(filters?: {
   role?: string;
-  featured?: boolean;
 }): Promise<Collaborator[]> {
   let query = supabase
     .from('collaborators')
@@ -983,17 +982,14 @@ export async function getAllCollaborators(filters?: {
   if (!data) return [];
 
   return data.map(collab => ({
-    ...collab,
-    portfolioUrl: collab.portfolio_url,
-    instagramUrl: collab.instagram_url,
-    instagramHandle: collab.instagram_handle,
-    coverImage: collab.cover_image,
-    status: collab.status,
-    featured: collab.featured,
-    seoTitle: collab.seo_title,
-    seoDescription: collab.seo_description,
-    seoKeywords: collab.seo_keywords,
-    gallery: collab.gallery,
+    id: collab.id,
+    name: collab.name,
+    role: collab.role,
+    bio: collab.bio,
+    portfolioUrl: collab.portfolioUrl,
+    websiteUrl: collab.websiteUrl,
+    instagramUrl: collab.instagramUrl,
+    instagramHandle: collab.instagramHandle,
     created_at: new Date(collab.created_at),
   }));
 }
@@ -1008,18 +1004,14 @@ export async function getCollaboratorBySlug(slug: string): Promise<Collaborator 
   if (!data) return undefined;
 
   return {
-    ...data,
-    ...data,
-    portfolioUrl: data.portfolio_url,
-    instagramUrl: data.instagram_url,
-    instagramHandle: data.instagram_handle,
-    coverImage: data.cover_image,
-    status: data.status,
-    featured: data.featured,
-    seoTitle: data.seo_title,
-    seoDescription: data.seo_description,
-    seoKeywords: data.seo_keywords,
-    gallery: data.gallery,
+    id: data.id,
+    name: data.name,
+    role: data.role,
+    bio: data.bio,
+    portfolioUrl: data.portfolioUrl,
+    websiteUrl: data.websiteUrl,
+    instagramUrl: data.instagramUrl,
+    instagramHandle: data.instagramHandle,
     created_at: new Date(data.created_at),
   };
 }
@@ -2023,17 +2015,14 @@ export async function getCollaboratorById(id: number): Promise<Collaborator | un
   if (!data) return undefined;
 
   return {
-    ...data,
-    portfolioUrl: data.portfolio_url,
-    instagramUrl: data.instagram_url,
-    instagramHandle: data.instagram_handle,
-    coverImage: data.cover_image,
-    status: data.status,
-    featured: data.featured,
-    seoTitle: data.seo_title,
-    seoDescription: data.seo_description,
-    seoKeywords: data.seo_keywords,
-    gallery: data.gallery,
+    id: data.id,
+    name: data.name,
+    role: data.role,
+    bio: data.bio,
+    portfolioUrl: data.portfolioUrl,
+    websiteUrl: data.websiteUrl,
+    instagramUrl: data.instagramUrl,
+    instagramHandle: data.instagramHandle,
     created_at: new Date(data.created_at),
   };
 }
@@ -2043,20 +2032,12 @@ export async function createCollaborator(collaborator: any) {
     .from('collaborators')
     .insert({
       name: collaborator.name,
-      slug: collaborator.slug,
       role: collaborator.role,
       bio: collaborator.bio,
-      website: collaborator.website,
-      portfolio_url: collaborator.portfolioUrl,
-      instagram_url: collaborator.instagramUrl,
-      instagram_handle: collaborator.instagramHandle,
-      cover_image: collaborator.coverImage,
-      status: collaborator.status || 'published',
-      featured: collaborator.featured || false,
-      seo_title: collaborator.seoTitle,
-      seo_description: collaborator.seoDescription,
-      seo_keywords: collaborator.seoKeywords,
-      gallery: collaborator.gallery || [],
+      portfolioUrl: collaborator.portfolioUrl,
+      websiteUrl: collaborator.websiteUrl,
+      instagramUrl: collaborator.instagramUrl,
+      instagramHandle: collaborator.instagramHandle,
     })
     .select()
     .single();
@@ -2068,20 +2049,12 @@ export async function createCollaborator(collaborator: any) {
 export async function updateCollaborator(id: number, updates: any) {
   const updateData: any = {};
   if (updates.name !== undefined) updateData.name = updates.name;
-  if (updates.slug !== undefined) updateData.slug = updates.slug;
   if (updates.role !== undefined) updateData.role = updates.role;
   if (updates.bio !== undefined) updateData.bio = updates.bio;
-  if (updates.website !== undefined) updateData.website = updates.website;
-  if (updates.portfolioUrl !== undefined) updateData.portfolio_url = updates.portfolioUrl;
-  if (updates.instagramUrl !== undefined) updateData.instagram_url = updates.instagramUrl;
-  if (updates.instagramHandle !== undefined) updateData.instagram_handle = updates.instagramHandle;
-  if (updates.coverImage !== undefined) updateData.cover_image = updates.coverImage;
-  if (updates.status !== undefined) updateData.status = updates.status;
-  if (updates.featured !== undefined) updateData.featured = updates.featured;
-  if (updates.seoTitle !== undefined) updateData.seo_title = updates.seoTitle;
-  if (updates.seoDescription !== undefined) updateData.seo_description = updates.seoDescription;
-  if (updates.seoKeywords !== undefined) updateData.seo_keywords = updates.seoKeywords;
-  if (updates.gallery !== undefined) updateData.gallery = updates.gallery;
+  if (updates.portfolioUrl !== undefined) updateData.portfolioUrl = updates.portfolioUrl;
+  if (updates.websiteUrl !== undefined) updateData.websiteUrl = updates.websiteUrl;
+  if (updates.instagramUrl !== undefined) updateData.instagramUrl = updates.instagramUrl;
+  if (updates.instagramHandle !== undefined) updateData.instagramHandle = updates.instagramHandle;
 
   const { error } = await supabase
     .from('collaborators')
