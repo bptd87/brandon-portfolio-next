@@ -233,7 +233,7 @@ export default function About() {
             <div className="animate-in fade-in slide-in-from-left duration-700">
               <h2 className="text-5xl md:text-6xl font-serif mb-8 leading-tight">Background & Training</h2>
               
-              <div className="space-y-6 text-lg text-foreground/80 leading-relaxed">
+              <div className="space-y-6 text-lg text-foreground/80 leading-relaxed text-justify">
                 <p>
                   I'm a scenic designer and artist working at the intersection of craft, technology, and dramatic storytelling. With over 15 years in theatre and immersive design, I've designed more than 130 productions across regional theatre, summer stock, academic theatre, and themed entertainment.
                 </p>
@@ -253,7 +253,7 @@ export default function About() {
               <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl p-8 border border-primary/20 sticky top-24">
                 <div className="text-6xl font-black text-primary/20 mb-4">✦</div>
                 <h3 className="text-2xl font-serif mb-4 text-foreground">Recent Milestone</h3>
-                <p className="text-foreground/80 leading-relaxed mb-6">
+                <p className="text-foreground/80 leading-relaxed mb-6 text-justify">
                   South Coast Repertory debut as co-scenic designer on <span className="font-medium text-foreground">Million Dollar Quartet</span>—a milestone representing movement toward the kind of regional professional work I'm building toward.
                 </p>
                 <div className="flex flex-wrap gap-2">
@@ -291,7 +291,7 @@ export default function About() {
                     "A fluid, impressionistic landscape shaped by recollection. Not a literal apartment, but memory made spatial."
                   </blockquote>
                 </div>
-                <p className="text-lg text-foreground/70 leading-relaxed">
+                <p className="text-lg text-foreground/70 leading-relaxed text-justify">
                   The design sought to feel unstable and permeable—allowing memory to drift, overlap, and distort. The end result was a <span className="font-medium text-foreground">theatrical memoryscape shaped by absence as much as presence</span>. This is how I approach memory plays: not reconstruction, but impression.
                 </p>
               </div>
@@ -312,7 +312,7 @@ export default function About() {
                     "The design had to hold more than history—it had to hold ghosts."
                   </blockquote>
                 </div>
-                <p className="text-lg text-foreground/70 leading-relaxed">
+                <p className="text-lg text-foreground/70 leading-relaxed text-justify">
                   Set in the final hours of Archbishop Óscar Romero's life, the play bends time and invites the dead to speak. The scenic world emerged from tension between sacredness and rupture. Designing this work meant <span className="font-medium text-foreground">listening, holding space, and letting the silence speak</span>.
                 </p>
               </div>
@@ -326,7 +326,7 @@ export default function About() {
               <blockquote className="text-3xl md:text-4xl font-serif text-foreground mb-8 leading-tight">
                 "The strongest scenic work is invisible."
               </blockquote>
-              <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
+              <p className="text-lg text-foreground/70 max-w-2xl mx-auto text-justify">
                 Whether designing a memory play, a spiritual ritual, or grounded realism, every choice serves the same goal: <span className="font-medium text-foreground">clarity of intent</span>. I've worked across minimalism and conceptual design, using constraint as creative fuel. The play is always the boss.
               </p>
             </div>
