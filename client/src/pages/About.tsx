@@ -40,32 +40,32 @@ export default function About() {
 
   const navigationCards = [
     {
-      title: "Resume/CV",
-      description: "Over 130 realized productions since 2009 across scenic design and assistant scenic design roles",
-      icon: FileText,
-      href: "/resume",
-      color: "from-orange-500/10 to-pink-500/10",
-      borderColor: "border-orange-500/20"
-    },
-    {
-      title: "Creative Statement",
-      description: "Architecture, history, and narrative storytelling — the foundations of my scenic design philosophy",
+      title: "Process & Philosophy",
+      description: "How I approach design: from dramaturgical research to final realization. Why clarity and intention matter.",
       icon: Lightbulb,
       href: "/creative-statement",
       color: "from-purple-500/10 to-pink-500/10",
       borderColor: "border-purple-500/20"
     },
     {
-      title: "Teaching Philosophy",
-      description: "Equipping students with skills, confidence, and adaptability for today's evolving entertainment industry",
+      title: "Full Portfolio & Credits",
+      description: "Resume, credits across 130+ productions, and work in theatre, experiential design, and immersive environments.",
+      icon: FileText,
+      href: "/resume",
+      color: "from-orange-500/10 to-pink-500/10",
+      borderColor: "border-orange-500/20"
+    },
+    {
+      title: "Teaching & Mentorship",
+      description: "Perspectives on scenic design education, helping designers navigate craft, career, and artistic integrity.",
       icon: GraduationCap,
       href: "/about/philosophy",
       color: "from-cyan-500/10 to-blue-500/10",
       borderColor: "border-cyan-500/20"
     },
     {
-      title: "Collaborators",
-      description: "Directors, designers, theatre companies, and creative partners across 130+ productions",
+      title: "Collaborators & Directors",
+      description: "Directors, designers, theatre companies, and creative partners across 130+ productions. Some relationships span decades.",
       icon: Users,
       href: "/about/collaborators",
       color: "from-green-500/10 to-emerald-500/10",
@@ -84,10 +84,10 @@ export default function About() {
         type="Person"
         person={{
           name: "Brandon PT Davis",
-          jobTitle: "Scenic and Experiential Designer",
+          jobTitle: ["Scenic Designer", "Conceptual Artist"],
           url: `${baseUrl}/about`,
           image: "https://www.brandonptdavis.com/android-chrome-512x512.png",
-          description: "Scenic and experiential designer based in Southern California with over 120 design credits across regional theatre, summer stock, academic theatre, immersive experiences, and live entertainment. Member of USA 829. Educator teaching scenic design, rendering, and collaborative design processes at the university level.",
+          description: "Scenic designer and conceptual artist working at the intersection of Art × Technology × Design. Known for dramaturgical approach to scenic design with work at South Coast Repertory and 130+ productions across regional theatre, contemporary drama, and immersive experiences. Member of USA 829.",
           email: "info@brandonptdavis.com",
           address: {
             addressLocality: "Irvine",
@@ -115,18 +115,17 @@ export default function About() {
           knowsAbout: [
             "Scenic Design",
             "Experiential Design",
-            "Theatrical Design",
+            "Conceptual Design",
             "Regional Theatre",
-            "Summer Stock Theatre",
-            "Academic Theatre",
-            "Event Design",
-            "Concept Rendering",
+            "Contemporary Drama",
+            "Dramaturgical Design",
+            "Immersive Design",
+            "Themed Entertainment",
+            "Design Mentorship",
             "Vectorworks",
             "Twinmotion",
             "3D Modeling",
             "Digital Fabrication",
-            "Immersive Design",
-            "Themed Entertainment",
             "Scenic Design Education",
           ],
         }}
@@ -134,7 +133,7 @@ export default function About() {
       <Header />
       <AboutNav />
 
-      {/* Hero Section with Profile Picture */}
+      {/* Hero Section - Credibility First */}
       <section className="container py-20 md:py-32">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-[480px_1fr] gap-12 md:gap-16 items-center">
@@ -164,32 +163,37 @@ export default function About() {
             <div className="space-y-8 animate-in fade-in slide-in-from-right-8 duration-700 delay-200">
               <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 border border-primary/30 mb-2">
                 <Sparkles className="w-4 h-4 text-primary animate-pulse" />
-                <span className="text-sm uppercase tracking-widest text-primary font-bold">Scenic Designer</span>
+                <span className="text-sm uppercase tracking-widest text-primary font-bold">Scenic Designer & Artist</span>
               </div>
 
               <h1 className="text-5xl md:text-8xl font-serif leading-[0.85] mb-8">
                 Brandon<br />PT Davis
               </h1>
 
-              <p className="text-lg md:text-2xl text-foreground/90 leading-relaxed max-w-2xl">
-                Transforming theatrical spaces into <span className="text-primary font-bold">immersive visual landscapes</span> where story and space move together in harmony
-              </p>
+              <div className="space-y-6">
+                <p className="text-3xl md:text-4xl font-bold text-primary">
+                  Art × Technology × Design
+                </p>
+                <p className="text-lg text-foreground/80 leading-relaxed max-w-2xl">
+                  Scenic designer creating conceptual landscapes where design serves dramatic truth. Recent work includes co-design at South Coast Repertory and a body of work in contemporary and classical theatre across the US.
+                </p>
+              </div>
 
-              {/* CTA Buttons */}
+              {/* CTA Buttons - Clarified Hierarchy */}
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <a
-                  href="/contact"
+                  href="/resume"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5"
+                >
+                  <FileText className="w-5 h-5" />
+                  View Full Resume
+                </a>
+                <a
+                  href="/contact"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-muted/50 text-foreground rounded-xl font-semibold hover:bg-muted transition-all duration-300 border border-border hover:border-primary/30"
                 >
                   <Mail className="w-5 h-5" />
                   Get in Touch
-                </a>
-                <a
-                  href="/resume"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-muted/50 text-foreground rounded-xl font-semibold hover:bg-muted transition-all duration-300 border border-border hover:border-primary/30"
-                >
-                  <FileText className="w-5 h-5" />
-                  View Resume
                 </a>
               </div>
             </div>
@@ -197,29 +201,31 @@ export default function About() {
         </div>
       </section>
 
-      {/* Bio Section */}
+      {/* Artistic Approach Section */}
       <section className="container py-32">
         <div className="max-w-4xl mx-auto">
           <div className="animate-in fade-in slide-in-from-bottom duration-700">
+            <h2 className="text-5xl md:text-7xl font-serif mb-12">Design as Dramaturg</h2>
+            
             <div className="prose prose-xl dark:prose-invert max-w-none space-y-8">
-              <p className="text-2xl text-foreground/90 leading-relaxed first-letter:text-7xl first-letter:font-serif first-letter:text-primary first-letter:mr-3 first-letter:float-left">
-                I believe scenic design is a form of storytelling—one that starts before the actors speak and lingers after the final bow. My work lives at the intersection of craft and concept, using physical space to shape emotion, tension, and rhythm.
+              <p className="text-xl text-foreground/90 leading-relaxed">
+                My approach to scenic design begins with a central artistic question: <span className="text-primary font-semibold">What does this play need to say that words alone cannot?</span>
               </p>
 
-              <p className="text-xl text-foreground/80 leading-relaxed">
-                With over 15 years of experience in theatre and immersive environments, I've designed 130+ productions across the country, from intimate black box theatres to grand regional stages. Each project is an opportunity to collaborate with inspiring directors, actors, and technicians—creative partnerships that push the boundaries of what a theatrical space can be.
+              <p className="text-lg text-foreground/80 leading-relaxed">
+                For The Glass Menagerie, that question was about memory—how Tom recalls his mother, sisters, and the past he's trying to escape. Rather than a literal room, I created a <span className="font-medium">dimensional collage of memory fragments</span>, printed on canvas and assembled into a three-dimensional landscape. It's Tom's memory made visible: pieces that don't quite fit together, moments overlapping, time circling back. The design doesn't represent a place—it represents a psychological state.
               </p>
 
-              <p className="text-xl text-foreground/80 leading-relaxed">
-                As a proud member of United Scenic Artists Local 829, I bring both rigor and play to every project. My training includes an MFA in Scenic Design from UC Irvine and a BFA in Theatre Arts from Stephens College, where I learned that great design comes from equal parts vision and technical mastery.
+              <p className="text-lg text-foreground/80 leading-relaxed">
+                This is what interests me: design that serves the play's emotional and intellectual core. Whether minimalist (responding to constraints and dramatic clarity) or conceptual (exploring visual metaphors), every choice should deepen what the audience understands about the story.
               </p>
 
-              <p className="text-xl text-foreground/80 leading-relaxed">
-                Beyond the theatre, I work as a Senior Scenic and Experiential Designer at Adaptive Design Services, bringing theatrical storytelling techniques to branded events, theme parks, and immersive installations. I also teach scenic design, mentoring the next generation of designers and helping them navigate the complex, rewarding path of a creative career.
+              <p className="text-lg text-foreground/80 leading-relaxed">
+                I've had the privilege of co-designing at South Coast Repertory on Million Dollar Quartet—a show that asks how art survives in a commercial world. Working alongside accomplished directors and designers, I learned that the strongest scenic work is invisible: audiences see the story, not the designer's ego.
               </p>
 
-              <p className="text-xl text-foreground/80 leading-relaxed">
-                Whether I'm designing a musical, a contemporary drama, or an experiential activation, my goal is always the same: to create spaces that feel inevitable—as if the story could only happen here, in this world, at this moment.
+              <p className="text-lg text-foreground/80 leading-relaxed">
+                After years of intentional minimalism, I'm moving toward more conceptual work—designs that function as metaphors, that use space sculptally, that ask audiences to read design as a character in the drama. Art, technology, and craft are the tools. The play is always the boss.
               </p>
             </div>
           </div>
@@ -230,9 +236,9 @@ export default function About() {
       <section className="bg-gradient-to-b from-background to-muted/30 py-32">
         <div className="container">
           <div className="max-w-7xl mx-auto mb-16 animate-in fade-in slide-in-from-bottom duration-700">
-            <h2 className="text-5xl md:text-7xl font-serif mb-6">Explore More</h2>
+            <h2 className="text-5xl md:text-7xl font-serif mb-6">Learn More</h2>
             <p className="text-xl text-foreground/70 max-w-3xl">
-              Dive deeper into my work, philosophy, and collaborations across scenic design, education, and creative partnerships.
+              Dive into my process, teaching philosophy, full portfolio of work across theatre and experiential design, and the directors and designers I've had the privilege to collaborate with.
             </p>
           </div>
 
@@ -274,9 +280,9 @@ export default function About() {
       <section className="bg-gradient-to-b from-muted/30 to-background py-32">
         <div className="container">
           <div className="max-w-7xl mx-auto mb-16 animate-in fade-in slide-in-from-bottom duration-700">
-            <h2 className="text-5xl md:text-7xl font-serif mb-6">Behind the Scenes</h2>
+            <h2 className="text-5xl md:text-7xl font-serif mb-6">Art Requires Community</h2>
             <p className="text-xl text-foreground/70 max-w-3xl">
-              Design is collaborative. These moments capture the partnerships, mentorships, and creative communities that shape my work.
+              Design lives in collaboration. These moments capture the partnerships, mentorships, and creative communities that make the work possible. Also: the people who've influenced me most.
             </p>
           </div>
 
