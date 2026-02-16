@@ -201,32 +201,66 @@ export default function About() {
         </div>
       </section>
 
+      {/* Bio Section */}
+      <section className="container py-32 border-b border-border/30">
+        <div className="max-w-4xl mx-auto">
+          <div className="animate-in fade-in slide-in-from-bottom duration-700">
+            <h2 className="text-5xl md:text-7xl font-serif mb-12">Who I Am</h2>
+            
+            <div className="space-y-6 text-lg text-foreground/80 leading-relaxed">
+              <p>
+                I'm a scenic designer and artist working at the intersection of craft, technology, and dramatic storytelling. With over 15 years in theatre and immersive design, I've designed more than 130 productions across regional theatre, summer stock, academic theatre, and themed entertainment.
+              </p>
+
+              <p>
+                I'm a proud member of United Scenic Artists Local 829, which represents professional designers across live theatre, film, and television. My training includes an MFA in Scenic Design from UC Irvine and a BFA in Theatre Arts from Stephens College. Beyond the theatre, I work as a Senior Scenic and Experiential Designer at Adaptive Design Services, translating theatrical storytelling techniques into branded experiences and immersive installations.
+              </p>
+
+              <p>
+                I teach scenic design at the university level, mentoring the next generation of designers and helping them navigate both the technical mastery and creative courage required for a sustainable career in the arts.
+              </p>
+
+              <p>
+                My work has taken me across the US to regional theatres, university programs, summer stock, and experiential companies. Recently, I made my South Coast Repertory debut as co-scenic designer on Million Dollar Quartet—a milestone that represents moving toward the kind of artistic work I aspire to make.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Artistic Approach Section */}
       <section className="container py-32">
         <div className="max-w-4xl mx-auto">
           <div className="animate-in fade-in slide-in-from-bottom duration-700">
-            <h2 className="text-5xl md:text-7xl font-serif mb-12">Design as Dramaturg</h2>
+            <h2 className="text-5xl md:text-7xl font-serif mb-12">How I Work</h2>
             
-            <div className="prose prose-xl dark:prose-invert max-w-none space-y-8">
-              <p className="text-xl text-foreground/90 leading-relaxed">
-                My approach to scenic design begins with a central artistic question: <span className="text-primary font-semibold">What does this play need to say that words alone cannot?</span>
-              </p>
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <h3 className="text-2xl font-serif text-primary">Memory & Impression</h3>
+                <p className="text-lg text-foreground/80 leading-relaxed">
+                  The Glass Menagerie was built around a single architectural idea: <span className="font-medium">a fluid, impressionistic landscape shaped by Tom's recollection</span>. Not a literal apartment, but memory made spatial. The design sought to feel unstable and permeable—allowing memory to drift, overlap, and distort. The end result was <span className="font-medium">a theatrical memoryscape shaped by absence as much as presence</span>.
+                </p>
+              </div>
 
-              <p className="text-lg text-foreground/80 leading-relaxed">
-                For The Glass Menagerie, that question was about memory—how Tom recalls his mother, sisters, and the past he's trying to escape. Rather than a literal room, I created a <span className="font-medium">dimensional collage of memory fragments</span>, printed on canvas and assembled into a three-dimensional landscape. It's Tom's memory made visible: pieces that don't quite fit together, moments overlapping, time circling back. The design doesn't represent a place—it represents a psychological state.
-              </p>
+              <div className="space-y-4">
+                <h3 className="text-2xl font-serif text-primary">Holding Space for Transformation</h3>
+                <p className="text-lg text-foreground/80 leading-relaxed">
+                  When I first read Xiomara Cornejo's Romero, I knew the design had to hold more than history—it had to <span className="font-medium">hold ghosts</span>. Set in the final hours of Archbishop Óscar Romero's life, the play bends time and invites the dead to speak. The scenic world emerged from tension between sacredness and rupture. Designing Romero meant <span className="font-medium">listening, holding space, and letting the silence speak</span>.
+                </p>
+              </div>
 
-              <p className="text-lg text-foreground/80 leading-relaxed">
-                This is what interests me: design that serves the play's emotional and intellectual core. Whether minimalist (responding to constraints and dramatic clarity) or conceptual (exploring visual metaphors), every choice should deepen what the audience understands about the story.
-              </p>
+              <div className="space-y-4">
+                <h3 className="text-2xl font-serif text-primary">Disappearing into Story</h3>
+                <p className="text-lg text-foreground/80 leading-relaxed">
+                  The strongest scenic work is invisible. By committing fully to realism, a set can create a stable, believable world in which the play's humor, relationships, and undertones unfold organically. <span className="font-medium">The scenic design aims to disappear into the storytelling</span>, allowing performance and text to drive the experience.
+                </p>
+              </div>
 
-              <p className="text-lg text-foreground/80 leading-relaxed">
-                I've had the privilege of co-designing at South Coast Repertory on Million Dollar Quartet—a show that asks how art survives in a commercial world. Working alongside accomplished directors and designers, I learned that the strongest scenic work is invisible: audiences see the story, not the designer's ego.
-              </p>
-
-              <p className="text-lg text-foreground/80 leading-relaxed">
-                After years of intentional minimalism, I'm moving toward more conceptual work—designs that function as metaphors, that use space sculptally, that ask audiences to read design as a character in the drama. Art, technology, and craft are the tools. The play is always the boss.
-              </p>
+              <div className="space-y-4 pt-4 border-t border-border/50">
+                <p className="text-lg text-foreground/80 leading-relaxed">
+                  Whether designing a memory play, a spiritual ritual, or a grounded domestic realism, every choice serves the same goal: <span className="font-medium">clarity of intent</span>. I've worked across minimalism and conceptual design, using constraint as creative fuel. With my South Coast Repertory debut on Million Dollar Quartet, I'm exploring how scenic design captures not just place, but the transformative moment when artists create something that matters.
+                </p>
+              </div>
             </div>
           </div>
         </div>
