@@ -22,6 +22,7 @@ export default function Studio() {
         description="Free scenic design education portal featuring Vectorworks tutorials, interactive design tools, in-depth articles, and curated industry resources. Your complete learning hub for theatrical design students and professionals."
         keywords="scenic design education, Vectorworks tutorials, theatrical design learning, scenic design tools, theatre design resources, stage design education"
         type="website"
+        url="https://www.brandonptdavis.com/studio"
       />
       <Header />
 

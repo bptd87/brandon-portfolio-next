@@ -84,6 +84,7 @@ function ArticlesContent() {
         title="Scenic Insights | Articles by Brandon PT Davis"
         description="Articles on design philosophy, process, and the craft of scenic and experiential design."
         image={articles?.[0]?.coverImageUrl || undefined}
+        url="https://www.brandonptdavis.com/articles"
       />
       <Header />
 

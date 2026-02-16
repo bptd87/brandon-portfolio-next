@@ -69,6 +69,7 @@ export default function Collaborators() {
       <SEO
         title="Collaborators"
         description="Directors, designers, theatre companies, and creative partners who have collaborated with Brandon PT Davis on scenic and experiential design projects."
+        url="https://www.brandonptdavis.com/about/collaborators"
       />
       <div className="min-h-screen flex flex-col bg-background">
         <Header />

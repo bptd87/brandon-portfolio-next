@@ -125,6 +125,7 @@ export default function Home() {
         title="Brandon PT Davis | Scenic & Experiential Designer"
         description="Award-winning scenic and experiential designer transforming theatrical spaces into immersive visual landscapes. Portfolio of regional theatre and themed entertainment."
         keywords="scenic design, experiential design, theatre design, immersive experiences, Brandon Davis"
+        url="https://www.brandonptdavis.com"
       />
       <Header />
 
