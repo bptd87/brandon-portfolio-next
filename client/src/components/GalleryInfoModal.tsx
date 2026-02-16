@@ -3,6 +3,7 @@ import { X, ChevronLeft, ChevronRight, MapPin, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { useEffect } from "react";
+import { getProjectPath } from "@/lib/projectRoutes";
 
 interface GalleryProject {
     id: number;
@@ -11,6 +12,7 @@ interface GalleryProject {
     altText: string | null;
     slug: string;
     year: number | null;
+    discipline?: string | null;
     venue?: string | null;
     client?: string | null;
     designNotes?: string | null;
@@ -113,7 +115,7 @@ export function GalleryInfoModal({
                         {/* Header Info */}
                         <div className="space-y-4">
                             <div className="space-y-1">
-                                <Link href={`/projects/${project.slug}`} className="block group">
+                                <Link href={getProjectPath(project)} className="block group">
                                     <h2 className="text-3xl font-bold tracking-tight group-hover:underline decoration-primary decoration-2 underline-offset-4 cursor-pointer">{project.title}</h2>
                                 </Link>
                                 {project.year && (
@@ -155,7 +157,7 @@ export function GalleryInfoModal({
 
                     {/* Footer Actions */}
                     <div className="p-6 border-t border-border bg-muted/20">
-                        <Link href={`/projects/${project.slug}`}>
+                        <Link href={getProjectPath(project)}>
                             <Button className="w-full gap-2" size="lg">
                                 View Full Project Details
                             </Button>

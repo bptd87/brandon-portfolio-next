@@ -13,6 +13,7 @@ import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { useTheme } from "@/contexts/ThemeContext";
+import { getProjectPath } from "@/lib/projectRoutes";
 
 // Convert YouTube/Vimeo URLs to embed format
 function getEmbedUrl(url: string): string {
@@ -717,7 +718,7 @@ export default function ProjectDetail() {
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {relatedProjectsFiltered.map((relatedProject, idx) => (
-                  <Link key={relatedProject.id} href={`/projects/${relatedProject.slug}`}>
+                  <Link key={relatedProject.id} href={getProjectPath(relatedProject)}>
                     <div className="group cursor-pointer">
                       <div className="relative overflow-hidden rounded-lg mb-4 border-2 border-border hover:border-foreground/20 transition-all">
                         {relatedProject.coverImageUrl ? (

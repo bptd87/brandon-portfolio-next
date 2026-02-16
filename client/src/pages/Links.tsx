@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { ExternalLink, Instagram, Linkedin, Mail, FileText, Video, Github, Twitter, Facebook, Youtube, Newspaper, Image as ImageIcon, Link as LinkIcon, PenTool, Globe, Home } from 'lucide-react';
 import { Link } from 'wouter';
 import { trpc } from '@/lib/trpc';
+import { getProjectPath } from '@/lib/projectRoutes';
 import { SEO } from '@/components/SEO';
 
 // --- Interfaces ---
@@ -109,7 +110,7 @@ export default function Links() {
           type: 'project',
           title: p.title,
           subtitle: p.venue || 'Portfolio',
-          url: `/projects/${p.slug}`,
+          url: getProjectPath(p),
           image: p.coverImageUrl,
           date: d.toISOString(),
           icon: 'image',

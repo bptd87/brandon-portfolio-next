@@ -1,15 +1,22 @@
 /**
  * Optimizes an image file for web usage.
  * - Resizes to a maximum width/height (default 1920px)
- * - Converts to WebP format
- * - Compresses quality (default 0.8)
+ * - Converts JPG/JPEG to WebP format (PNG preserved for alpha channels)
+ * - Compresses quality (default 0.8 for WebP, 0.9 for PNG)
  * - Renames to a URL-friendly slug
+ * 
+ * PNG files are NOT converted to WebP to preserve alpha transparency.
  */
 export async function processImageForUpload(
     file: File,
     maxWidth = 1920,
     quality = 0.8
 ): Promise<File> {
+    // Determine if this is a PNG file (don't convert to WebP)
+    const isPNG = file.type === 'image/png' || file.name.toLowerCase().endsWith('.png');
+    const targetFormat = isPNG ? 'image/png' : 'image/webp';
+    const targetExtension = isPNG ? 'png' : 'webp';
+    const qualityForFormat = isPNG ? 0.9 : quality; // PNG quality can be slightly higher
     return new Promise((resolve, reject) => {
         // 1. Create an image element to load the file
         const img = new Image();
@@ -46,7 +53,7 @@ export async function processImageForUpload(
             ctx.imageSmoothingQuality = 'high';
             ctx.drawImage(img, 0, 0, width, height);
 
-            // 4. Convert to WebP blob
+            // 4. Convert to target format (WebP for JPG/JPEG, PNG for PNG)
             canvas.toBlob(
                 (blob) => {
                     if (!blob) {
@@ -63,18 +70,18 @@ export async function processImageForUpload(
                         .replace(/-+/g, '-');     // Remove duplicate dashes
 
                     const timestamp = Date.now().toString().slice(-4); // Add short timestamp for uniqueness
-                    const newName = `${text}-${timestamp}.webp`;
+                    const newName = `${text}-${timestamp}.${targetExtension}`;
 
-                    // 6. Create new File object
+                    // 6. Create new File object with appropriate format
                     const optimizedFile = new File([blob], newName, {
-                        type: 'image/webp',
+                        type: targetFormat,
                         lastModified: Date.now(),
                     });
 
                     resolve(optimizedFile);
                 },
-                'image/webp',
-                quality
+                targetFormat,
+                qualityForFormat
             );
         };
 

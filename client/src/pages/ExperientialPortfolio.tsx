@@ -1,46 +1,343 @@
 import { trpc } from "@/lib/trpc";
-import { Link } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { ExperientialFAQ } from "@/components/ExperientialFAQ";
-import { ArrowRight, Layers, Ruler, Video, Sparkles, Cloud, Box, Hammer, Zap, Search } from "lucide-react";
-import { useState } from "react";
-import { GalleryInfoModal } from "@/components/GalleryInfoModal";
+import { Layers, Ruler, Video, Sparkles, Cloud, Box, Hammer, Zap, Search, Play, ArrowDown, Image as ImageIcon } from "lucide-react";
+import { useState, useMemo } from "react";
+import { ProcessGalleryModal } from "@/components/ProcessGalleryModal";
+import { cn } from "@/lib/utils";
+import { getVideoThumbnail } from "@/lib/videoUtils";
+
+// Scrolling brand banner component with images from database
+function BrandsBanner() {
+  const { data: brands } = trpc.processGallery.brands.useQuery();
+
+  if (!brands || brands.length === 0) {
+    return null;
+  }
+
+  // Duplicate brands array for seamless infinite scroll
+  const allBrands = [...brands, ...brands];
+
+  return (
+    <div className="relative overflow-hidden py-12 border-y border-border/30 bg-muted/10">
+      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-background to-transparent z-10" />
+      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-background to-transparent z-10" />
+      
+      <div className="flex animate-marquee items-center">
+        {allBrands.map((brand, i) => (
+          <div
+            key={`${brand.id}-${i}`}
+            className="mx-8 flex-shrink-0 flex items-center justify-center"
+          >
+            {brand.websiteUrl ? (
+              <a
+                href={brand.websiteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all duration-300"
+              >
+                {brand.logoUrl ? (
+                  <img
+                    src={brand.logoUrl}
+                    alt={brand.name}
+                    className="h-12 w-auto object-contain"
+                  />
+                ) : (
+                  <span className="text-sm font-medium tracking-wider text-muted-foreground uppercase">
+                    {brand.name}
+                  </span>
+                )}
+              </a>
+            ) : (
+              <div className="grayscale opacity-60">
+                {brand.logoUrl ? (
+                  <img
+                    src={brand.logoUrl}
+                    alt={brand.name}
+                    className="h-12 w-auto object-contain"
+                  />
+                ) : (
+                  <span className="text-sm font-medium tracking-wider text-muted-foreground uppercase">
+                    {brand.name}
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Card Grid Gallery Component
+function GalleryCardGrid({ 
+  items,
+  onItemClick,
+  categoryLabel 
+}: { 
+  items: Array<{ 
+    id: number; 
+    imageUrl: string; 
+    videoUrl?: string | null;
+    altText: string | null; 
+    displayTitle: string | null; 
+  }>;
+  onItemClick: (index: number) => void;
+  categoryLabel: string;
+}) {
+  if (items.length === 0) {
+    return (
+      <div className="text-center py-16 border border-dashed border-border rounded-2xl bg-muted/10">
+        <ImageIcon className="w-12 h-12 mx-auto mb-4 text-muted-foreground/30" />
+        <p className="text-muted-foreground">No items in {categoryLabel} gallery yet.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {items.map((item, index) => {
+        // Get display image - use imageUrl or YouTube thumbnail for videos
+        const displayImage = item.imageUrl || (item.videoUrl ? getVideoThumbnail(item.videoUrl) : null);
+        
+        return (
+          <AnimatedSection key={item.id} delay={index * 0.08}>
+            <div
+              className="group cursor-pointer"
+              onClick={() => onItemClick(index)}
+            >
+              <div className="relative aspect-video rounded-xl overflow-hidden bg-muted border border-border/50 shadow-lg shadow-black/5">
+                {displayImage ? (
+                  <ProgressiveImage
+                    src={displayImage}
+                    alt={item.altText || item.displayTitle || categoryLabel}
+                    className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-500/10 to-blue-500/10">
+                    <Video className="w-12 h-12 text-muted-foreground/30" />
+                  </div>
+                )}
+
+              {/* Video indicator */}
+              {item.videoUrl && (
+                <div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/60 backdrop-blur flex items-center justify-center">
+                  <Play className="w-5 h-5 text-white ml-0.5" />
+                </div>
+              )}
+
+              {/* Hover overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300">
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  {item.displayTitle && (
+                    <h3 className="text-white font-bold text-sm mb-1 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                      {item.displayTitle}
+                    </h3>
+                  )}
+                </div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                  <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
+                    <Search className="w-5 h-5 text-white" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Title below for mobile */}
+            {item.displayTitle && (
+              <div className="mt-3 lg:hidden">
+                <h3 className="font-medium text-sm truncate">{item.displayTitle}</h3>
+              </div>
+            )}
+          </div>
+        </AnimatedSection>
+        );
+      })}
+    </div>
+  );
+}
+
+// Workflow Step Component
+function WorkflowStep({
+  image,
+  title,
+  description,
+  stepNumber,
+  icon: Icon,
+  reverse = false
+}: {
+  image?: { imageUrl: string; altText: string | null };
+  title: string;
+  description: string;
+  stepNumber: string;
+  icon: React.ElementType;
+  reverse?: boolean;
+}) {
+  const imageContent = (
+    <div className="relative group">
+      <div className="aspect-[16/10] rounded-2xl overflow-hidden border border-border bg-muted/20 shadow-lg">
+        {image ? (
+          <ProgressiveImage
+            src={image.imageUrl}
+            alt={image.altText || title}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <div className="text-center">
+              <Icon className="w-12 h-12 mx-auto mb-3 text-muted-foreground/30" />
+              <p className="text-sm text-muted-foreground">Image coming soon</p>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
+  const textContent = (
+    <div className="space-y-6">
+      <div className="flex items-center gap-4">
+        <span className="text-7xl md:text-8xl font-black text-pink-500/20">{stepNumber}</span>
+      </div>
+      <div className="flex items-center gap-3 mb-4">
+        <Icon className="w-8 h-8 text-pink-500" />
+        <h3 className="text-3xl md:text-4xl font-black">{title}</h3>
+      </div>
+      <p className="text-lg text-muted-foreground leading-relaxed">{description}</p>
+    </div>
+  );
+
+  return (
+    <AnimatedSection>
+      <div className={cn(
+        "grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center",
+        reverse && "lg:grid-flow-dense"
+      )}>
+        <div className={reverse ? "lg:col-start-2" : ""}>{imageContent}</div>
+        <div className={reverse ? "lg:col-start-1" : ""}>{textContent}</div>
+      </div>
+    </AnimatedSection>
+  );
+}
 
 export default function ExperientialPortfolio() {
-  const { data: projects, isLoading: projectsLoading } = trpc.projects.list.useQuery({
-    status: 'published',
-    discipline: 'experiential_design'
-  });
+  // Fetch process gallery images
+  const { data: processGalleryItems } = trpc.processGallery.list.useQuery();
 
-  const { data: galleryItems, isLoading: galleryLoading } = trpc.experientialGallery.list.useQuery(undefined, {
-    retry: false
-  });
+  // Organize process gallery by category
+  const processImagesByCategory = useMemo(() => {
+    if (!processGalleryItems) return {
+      'workflow-toolkit': [],
+      'workflow-drawing': [],
+      'workflow-modeling': [],
+      'workflow-buildability': [],
+      rendering: [],
+      'technical-drawing': [],
+      'live-events': []
+    };
+    return processGalleryItems.reduce((acc, item) => {
+      if (!acc[item.category]) acc[item.category] = [];
+      acc[item.category].push(item);
+      return acc;
+    }, {} as Record<string, typeof processGalleryItems>);
+  }, [processGalleryItems]);
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
+  // Process gallery modal state
+  const [processModalOpen, setProcessModalOpen] = useState(false);
+  const [processModalCategory, setProcessModalCategory] = useState<'rendering' | 'technical-drawing' | 'live-events'>('rendering');
+  const [projectIndex, setProjectIndex] = useState(0); // Index of current project in category
+  const [imageIndex, setImageIndex] = useState(0); // Index of current image within project
 
-  const isLoading = projectsLoading || galleryLoading;
+  // Get all items in current category
+  const categoryItems = processImagesByCategory[processModalCategory] || [];
 
-  // 1. Process Gallery Items
-  const galleryDisplayItems = galleryItems?.map(item => ({
-    id: item.project?.id || 0,
-    title: item.displayTitle || item.project?.title || '',
-    imageUrl: item.project?.coverImageUrl || null,
-    altText: item.altText || item.project?.title || '',
-    slug: item.project?.slug || '',
-    year: item.project?.year || null,
-    venue: item.project?.venue,
-    client: item.project?.client,
-    designNotes: item.project?.designNotes,
-    excerpt: item.project?.excerpt
-  })) || [];
+  // Group items by project, keeping single-image items as "projects" too
+  const groupedProjects = useMemo(() => {
+    const groups: Array<{
+      id: string; // unique identifier (projectId or `single-${id}`)
+      projectId: number | null;
+      mainItem?: typeof categoryItems[0];
+      images: typeof categoryItems;
+    }> = [];
 
-  // 2. Process Featured Items (only those NOT in gallery)
-  const galleryProjectIds = new Set(galleryDisplayItems.map(item => item.id));
-  const featuredProjects = projects?.filter(p => !galleryProjectIds.has(p.id)) || [];
+    const seenProjects = new Set<number>();
+
+    categoryItems.forEach((item) => {
+      if (item.projectId) {
+        if (!seenProjects.has(item.projectId)) {
+          seenProjects.add(item.projectId);
+          groups.push({
+            id: `project-${item.projectId}`,
+            projectId: item.projectId,
+            mainItem: item,
+            images: [] // Will be populated from project_images
+          });
+        }
+      } else {
+        // Single item without project
+        groups.push({
+          id: `single-${item.id}`,
+          projectId: null,
+          mainItem: item,
+          images: [item]
+        });
+      }
+    });
+
+    console.log('[Grouped Projects]', { category: processModalCategory, total: categoryItems.length, groupedTotal: groups.length, groups });
+    return groups;
+  }, [categoryItems, processModalCategory]);
+
+  // Fetch images for the current project
+  const currentProject = groupedProjects[projectIndex];
+  const { data: projectImages, isLoading: isLoadingProjectImages } = trpc.processGallery.projectImages.useQuery(
+    { projectId: currentProject?.projectId! },
+    { enabled: currentProject?.projectId !== null && currentProject?.projectId !== undefined }
+  );
+
+  // Get the images to display - use projectImages if available, otherwise fall back to mainItem or images array
+  const currentImages = projectImages && projectImages.length > 0 
+    ? projectImages 
+    : currentProject?.mainItem 
+      ? [currentProject.mainItem]
+      : currentProject?.images || [];
+  const currentImage = currentImages[imageIndex];
+
+  const canGoNextProject = projectIndex < groupedProjects.length - 1;
+  const canGoPrevProject = projectIndex > 0;
+  const canGoNextImage = imageIndex < currentImages.length - 1;
+  const canGoPrevImage = imageIndex > 0;
+
+  const handleGalleryItemClick = (index: number) => {
+    const item = categoryItems[index];
+    console.log('[Gallery Click] Item:', { id: item.id, projectId: item.projectId, category: item.category });
+    
+    // Find which project group this item belongs to
+    const projIndex = groupedProjects.findIndex((g) => {
+      if (g.projectId && item.projectId && g.projectId === item.projectId) {
+        console.log('[Gallery Click] Found project by projectId:', g.projectId);
+        return true;
+      }
+      if (g.projectId === null && g.mainItem?.id === item.id) {
+        console.log('[Gallery Click] Found single-image item:', item.id);
+        return true;
+      }
+      return false;
+    });
+    
+    console.log('[Gallery Click] Project index found:', projIndex, 'Total projects:', groupedProjects.length);
+    
+    if (projIndex >= 0) {
+      setProjectIndex(projIndex);
+      setImageIndex(0);
+      setProcessModalOpen(true);
+      console.log('[Gallery Click] Modal opened, projectIndex:', projIndex);
+    }
+  };
 
   const capabilities = [
     {
@@ -75,359 +372,234 @@ export default function ExperientialPortfolio() {
     }
   ];
 
-  const softwareTools = [
-    { name: "Vectorworks", color: "text-blue-400", description: "Technical CAD Drawings" },
-    { name: "Twinmotion", color: "text-green-400", description: "Real-Time 3D Visualization" },
-    { name: "Photoshop", color: "text-purple-400", description: "Layered Image Editing" },
-  ];
-
   return (
     <div className="min-h-screen">
+      {/* Custom marquee animation styles */}
+      <style>{`
+        @keyframes marquee {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          animation: marquee 30s linear infinite;
+        }
+      `}</style>
+
       <Header />
 
-      {/* Hero Section - Bold Agency Style */}
-      <section className="py-20 md:py-32 border-b border-border bg-gradient-to-b from-background to-muted/20">
-        <div className="container max-w-6xl">
+      {/* Hero Section */}
+      <section className="relative min-h-[80vh] flex items-center border-b border-border overflow-hidden">
+        {/* Animated background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-pink-500/5" />
+        <div className="absolute top-1/4 -right-1/4 w-[600px] h-[600px] bg-pink-500/10 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px]" />
+        
+        <div className="container max-w-6xl relative z-10 py-20">
           <AnimatedSection>
-            <div className="space-y-8">
+            <div className="space-y-8 max-w-4xl">
               <div>
-                <p className="text-xs tracking-widest text-pink-500 mb-4 font-bold">EXPERIENTIAL DESIGN</p>
-                <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight leading-none">
+                <p className="text-xs tracking-[0.3em] text-pink-500 mb-6 font-bold uppercase">
+                  Experiential Design
+                </p>
+                <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[0.9]">
                   Immersive<br />
-                  <span className="text-pink-500">Environments</span>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-pink-400">
+                    Environments
+                  </span>
                 </h1>
               </div>
 
-              <div className="max-w-2xl">
-                <p className="text-xl md:text-2xl leading-relaxed font-light text-muted-foreground">
-                  Artist-led spatial design grounded in real scale, buildable geometry, and authored visualization.
-                </p>
-              </div>
+              <p className="text-xl md:text-2xl leading-relaxed font-light text-muted-foreground max-w-2xl">
+                Artist-led spatial design grounded in real scale, buildable geometry, and authored visualization.
+              </p>
 
-              <div className="flex flex-wrap gap-4 pt-4">
-                <div className="flex items-center gap-2 px-4 py-2 border border-border rounded-full bg-background/50">
-                  <Zap className="w-4 h-4 text-yellow-400" />
-                  <span className="text-sm font-medium">Fast Turnaround</span>
-                </div>
-                <div className="flex items-center gap-2 px-4 py-2 border border-border rounded-full bg-background/50">
-                  <Hammer className="w-4 h-4 text-blue-400" />
-                  <span className="text-sm font-medium">Buildable Designs</span>
-                </div>
-                <div className="flex items-center gap-2 px-4 py-2 border border-border rounded-full bg-background/50">
-                  <Layers className="w-4 h-4 text-green-400" />
-                  <span className="text-sm font-medium">Integrated Workflow</span>
-                </div>
-              </div>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* Projects Grid - Portfolio First */}
-      {featuredProjects.length > 0 && (
-        <section className="py-20">
-          <div className="container">
-            <AnimatedSection>
-              <h2 className="text-sm uppercase tracking-[0.3em] text-muted-foreground font-medium text-center mb-16">
-                Selected Works
-              </h2>
-            </AnimatedSection>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {featuredProjects.map((project) => (
-                <Link
-                  key={project.id}
-                  href={`/projects/${project.slug}`}
-                  className="group block"
-                >
-                  <article className="space-y-4">
-                    {/* Project Image */}
-                    <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-muted">
-                      {project.coverImageUrl && (
-                        <ProgressiveImage
-                          src={project.coverImageUrl}
-                          alt={`${project.title} - Experiential Design by Brandon PT Davis`}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                      )}
-                    </div>
-
-                    {/* Project Info */}
-                    <div className="space-y-2">
-                      <h2 className="text-xl font-bold group-hover:text-pink-500 transition-colors">
-                        {project.title}
-                      </h2>
-
-                      {(project.client || project.year) && (
-                        <p className="text-sm text-muted-foreground">
-                          {project.client && <span>{project.client}</span>}
-                          {project.client && project.year && <span> · </span>}
-                          {project.year && <span>{project.year}</span>}
-                        </p>
-                      )}
-                    </div>
-                  </article>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Gallery / Archive Section */}
-      <section className="py-20 border-t border-border/50">
-        <div className="container max-w-7xl">
-          <AnimatedSection>
-            <h2 className="text-sm uppercase tracking-[0.3em] text-muted-foreground font-medium text-center mb-16">
-              Gallery & Archive
-            </h2>
-          </AnimatedSection>
-
-          {isLoading ? (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="aspect-video bg-muted rounded-xl animate-pulse" />
-              ))}
-            </div>
-          ) : galleryDisplayItems.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-              {galleryDisplayItems.map((item, index) => (
-                <AnimatedSection key={item.id} delay={index * 0.05}>
-                  <div
-                    className="group cursor-pointer"
-                    onClick={() => {
-                      setCurrentProjectIndex(index);
-                      setModalOpen(true);
-                    }}
+              <div className="flex flex-wrap gap-3 pt-4">
+                {[
+                  { icon: Zap, label: "Fast Turnaround", color: "text-yellow-400" },
+                  { icon: Hammer, label: "Buildable Designs", color: "text-blue-400" },
+                  { icon: Layers, label: "Integrated Workflow", color: "text-green-400" },
+                ].map((badge, i) => (
+                  <div 
+                    key={i}
+                    className="flex items-center gap-2 px-4 py-2 border border-border/50 rounded-full bg-background/50 backdrop-blur-sm hover:border-border transition-colors"
                   >
-                    <div className="relative aspect-video rounded-xl overflow-hidden bg-muted border border-border/50">
-                      {item.imageUrl && (
-                        <ProgressiveImage
-                          src={item.imageUrl}
-                          alt={item.altText}
-                          className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
-                        />
-                      )}
-
-                      {/* Overlay */}
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center">
-                        <div className="opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                          <div className="bg-background/90 backdrop-blur px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-2">
-                            <Search className="w-3 h-3" />
-                            View Detail
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="mt-3">
-                      <h3 className="font-medium text-sm truncate group-hover:text-primary transition-colors">{item.title}</h3>
-                      <p className="text-xs text-muted-foreground">{item.year}</p>
-                    </div>
+                    <badge.icon className={cn("w-4 h-4", badge.color)} />
+                    <span className="text-sm font-medium">{badge.label}</span>
                   </div>
-                </AnimatedSection>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12 border border-dashed rounded-xl">
-              <p className="text-muted-foreground">Gallery is being curated.</p>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Modal */}
-      <GalleryInfoModal
-        isOpen={modalOpen}
-        project={galleryDisplayItems[currentProjectIndex]}
-        onClose={() => setModalOpen(false)}
-        onNext={() => setCurrentProjectIndex((prev) => (prev + 1) % galleryDisplayItems.length)}
-        onPrev={() => setCurrentProjectIndex((prev) => (prev - 1 + galleryDisplayItems.length) % galleryDisplayItems.length)}
-        hasNext={galleryDisplayItems.length > 1}
-        hasPrev={galleryDisplayItems.length > 1}
-      />
-
-      {/* Technical Toolkit Showcase - Agency Style */}
-      <section className="py-32 border-t border-border bg-muted/20">
-        <div className="container max-w-6xl">
-          <AnimatedSection>
-            <div className="text-center mb-16">
-              <h2 className="text-5xl md:text-7xl font-black mb-6">
-                Technical Toolkit
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Industry-standard software for integrated design, modeling, and visualization workflows.
-              </p>
+                ))}
+              </div>
             </div>
           </AnimatedSection>
 
-          <AnimatedSection>
-            <div className="mb-16">
-              <img
-                src="https://private-us-east-1.manuscdn.com/sessionFile/erhSK1Z2iEewnSpDHueKVU/sandbox/cJm1wyoQmDkIbz1B0NNYZs-img-1_1770683225000_na1fn_ZXhwZXJpZW50aWFsLWludGVncmF0ZWQtd29ya2Zsb3ctdjI.jpg?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvZXJoU0sxWjJpRWV3blNwREh1ZUtWVS9zYW5kYm94L2NKbTF3eW9RbURrSWJ6MUIwTk5ZWnMtaW1nLTFfMTc3MDY4MzIyNTAwMF9uYTFmbl9aWGh3WlhKcFpXNTBhV0ZzTFdsdWRHVm5jbUYwWldRdGQyOXlhMlpzYjNjdGRqSS5qcGc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=jpemnXTZ-aklBX4ShVznToFGBVZJUMgxWYnlyCirrS4HOVPZXkqHaJs842Je3fpbK0b9GGM30GzAcgMIPrWyCwblY-4IqbfAb4rxpwj9zBVStyRCy~rgBkPvkVMiAA1cMZ3O3qTC2j-1ANZa8L2gGFbop5-n25rmUF4QUvco9b5KSTaT9oxOecI9iF~aeMuVHU~6Gt3T6TAO66-PsHKfCMlDy~s4FEtEd7x4vXj2XGuV93tIv1iOkdrI1Wc-dihGV3T~d~4THqmU7lyFSOopGBxljalig-GZFAa7q3xRqvxYu30QWDk-hOMtLHY9MzljFlliKgNg0I21Z~N7hCxgMQ__"
-                alt="Design Software Toolkit - Integrated Workflows"
-                className="w-full rounded-2xl border border-border"
-              />
-            </div>
-          </AnimatedSection>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {softwareTools.map((tool, index) => (
-              <AnimatedSection key={index}>
-                <div className="text-center p-6 border border-border rounded-xl bg-background hover:border-white/40 transition-all hover:scale-105">
-                  <h3 className={`text-2xl font-black mb-2 ${tool.color}`}>
-                    {tool.name}
-                  </h3>
-                  <p className="text-xs text-muted-foreground">
-                    {tool.description}
-                  </p>
-                </div>
-              </AnimatedSection>
-            ))}
+          {/* Scroll indicator */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+            <ArrowDown className="w-5 h-5 text-muted-foreground" />
           </div>
-
-          <AnimatedSection>
-            <div className="mt-12 text-center">
-              <p className="text-lg text-muted-foreground italic">
-                + Authored Composite Visualization workflow
-              </p>
-            </div>
-          </AnimatedSection>
         </div>
       </section>
 
-      {/* Workflow Showcase with Images */}
-      <section className="py-32 border-t border-border">
+      {/* Brands Banner */}
+      <BrandsBanner />
+
+      {/* Rendering Gallery Section */}
+      <section className="py-24 md:py-32">
         <div className="container max-w-6xl">
           <AnimatedSection>
-            <div className="text-center mb-16">
-              <h2 className="text-5xl md:text-7xl font-black mb-6">
-                Integrated Workflow
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                From technical drawings to real-time visualization to buildable documentation—one unified process.
+            <div className="max-w-3xl mb-16">
+              <p className="text-xs tracking-[0.3em] text-pink-500 mb-4 font-bold uppercase">Portfolio</p>
+              <h2 className="text-4xl md:text-5xl font-black mb-6">Rendering & Visualization</h2>
+              <p className="text-xl text-muted-foreground leading-relaxed">
+                Atmospheric stills and walkthrough videos grounded in authored geometry and real-world proportion. 
+                Created in Twinmotion and Cinema 4D with real-time rendering.
               </p>
             </div>
           </AnimatedSection>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            <AnimatedSection>
-              <div className="space-y-4">
-                <div className="aspect-video rounded-xl overflow-hidden border border-border">
-                  <img
-                    src="https://private-us-east-1.manuscdn.com/sessionFile/erhSK1Z2iEewnSpDHueKVU/sandbox/pRn7KB2SHCH92g5NCN7fw4-img-1_1770681296000_na1fn_ZXhwZXJpZW50aWFsLXRlY2huaWNhbC1kcmF3aW5n.jpg?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvZXJoU0sxWjJpRWV3blNwREh1ZUtWVS9zYW5kYm94L3BSbjdLQjJTSENIOTJnNU5DTjdmdzQtaW1nLTFfMTc3MDY4MTI5NjAwMF9uYTFmbl9aWGh3WlhKcFpXNTBhV0ZzTFhSbFkyaHVhV05oYkMxa2NtRjNhVzVuLmpwZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSx3XzE5MjAsaF8xOTIwL2Zvcm1hdCx3ZWJwL3F1YWxpdHkscV84MCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=XJfLFeDyTtPOJKferZWZjqbx53cb8ex9t1162d4RvMj86qdtXYGCNeEeYzAFcdm8nfa61OAUqqgPAh3OY2m9cobsCK0SsSBUidb8R4FbHuafpMtlPZwTfiOo8HXkhPeaEAoRWITN2XUkBdEHkc8IZMwbwVOQBwykscovr3XeF5AGXedOTHuTq1ngMA8VWWohgxvHdx22LBWHiu5tzWQ~sgi-5dmiTyZX~2PZiRLZwlEiYZSRLPodpsFbYEColB1AiWPAKyEe3L1-wjpol01lTU9JbVzvujUyJuXFVY2eGLVCvxOssEaoQJ7Gu8cMqrYIpqqAIUFz~CWUqy8IcS3xqw__"
-                    alt="Technical Drawing Workspace - Vectorworks CAD"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold mb-2">01. Technical Drawing</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Scaled plans, elevations, and sections in Vectorworks establish buildable geometry and spatial relationships.
-                  </p>
-                </div>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection>
-              <div className="space-y-4">
-                <div className="aspect-video rounded-xl overflow-hidden border border-border">
-                  <img
-                    src="https://private-us-east-1.manuscdn.com/sessionFile/erhSK1Z2iEewnSpDHueKVU/sandbox/pRn7KB2SHCH92g5NCN7fw4-img-2_1770681283000_na1fn_ZXhwZXJpZW50aWFsLTNkLW1vZGVsaW5n.jpg?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvZXJoU0sxWjJpRWV3blNwREh1ZUtWVS9zYW5kYm94L3BSbjdLQjJTSENIOTJnNU5DTjdmdzQtaW1nLTJfMTc3MDY4MTI4MzAwMF9uYTFmbl9aWGh3WlhKcFpXNTBhV0ZzTFROa0xXMXZaR1ZzYVc1bi5qcGc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=OipeVDqt9n4zuGxxfI6FK9gIKin1zXoW4jXpMJILtWKgLo4NfYQei6ICLsCJtHnD5wRCzqSWUsN6EDNdkQoOMs6O04JiotAdR9yVZ8wJzqiiGJ2FtytvK5awYAPXhgC8BQOrtUgWLamucUNYVL8NGIc6AiWNe8dqATOv9JUap7E813n8kVY-Q0W8kYIDm1jsDyZ1cByOgB2yhD0wU6kwM3m6IES5mV7XCqDoAHR4RKwlLButqi5ghI8aKafac1CdKkowmSPBXJq6YEGGqhfQPrELDJjWB4cMvn2pAyBvJ7unaqsAyqJQsMmvll7VbOfl0wzw~lV~h0ziiXOverW5Rw__"
-                    alt="3D Modeling Workflow - Twinmotion and Cinema 4D"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold mb-2">02. 3D Modeling & Real-Time Rendering</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Twinmotion and Cinema 4D transform technical drawings into immersive 3D environments with real-time lighting and materials.
-                  </p>
-                </div>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection>
-              <div className="space-y-4">
-                <div className="aspect-video rounded-xl overflow-hidden border border-border">
-                  <img
-                    src="https://private-us-east-1.manuscdn.com/sessionFile/erhSK1Z2iEewnSpDHueKVU/sandbox/pRn7KB2SHCH92g5NCN7fw4-img-3_1770681289000_na1fn_ZXhwZXJpZW50aWFsLWZhYnJpY2F0aW9u.jpg?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvZXJoU0sxWjJpRWV3blNwREh1ZUtWVS9zYW5kYm94L3BSbjdLQjJTSENIOTJnNU5DTjdmdzQtaW1nLTNfMTc3MDY4MTI4OTAwMF9uYTFmbl9aWGh3WlhKcFpXNTBhV0ZzTFdaaFluSnBZMkYwYVc5dS5qcGc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=ddyt52-UxXJSNppbUkKeV6~bwkXKs-nnUpnn5vdezRvhkLwQPWdT030NnKZaPLdRpFjwOada5z0E~0B2dyE32YjD0bvav7bku66f4fkX7wfXwEx91uvfBolXXkTzWVp~9hAei7pWa06WqmvJPCqnUXIPII6O71YXCuPL19MoUks7B0RFrjeHbwaj-Sq4ivKjg138Pd7sxH0mjtK9C2EAZxwz337QaljhAuC9C7cZ3tYql77FK8HOni-w6qfdw1zd~YqF-QjCFuFek5T2Fx-17eA0PCgEts5x1CNrEKBkf2xKs~Kr1g0UmdJ-ydek35Iq8fL-aGGQACfAtONPu6P-9Q__"
-                    alt="Fabrication and Buildability Documentation"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold mb-2">03. Buildability & Fabrication</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Technical documentation supports production teams from concept through construction with scaled drawings and material specifications.
-                  </p>
-                </div>
-              </div>
-            </AnimatedSection>
-          </div>
-
-          <AnimatedSection>
-            <div className="text-center max-w-3xl mx-auto">
-              <p className="text-2xl font-light italic border-t border-b border-border py-8">
-                The design and the visualization describe the same space—<br />
-                authored geometry ensures buildability from concept to completion.
-              </p>
-            </div>
-          </AnimatedSection>
+          <GalleryCardGrid
+            items={processImagesByCategory.rendering || []}
+            onItemClick={(index) => {
+              setProcessModalCategory('rendering');
+              handleGalleryItemClick(index);
+            }}
+            categoryLabel="Rendering"
+          />
         </div>
       </section>
 
-      {/* Buildability & Fabrication Experience */}
-      <section className="py-32 border-t border-border bg-muted/20">
-        <div className="container max-w-6xl">
-          <AnimatedSection>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              <div className="space-y-6">
-                <div>
-                  <p className="text-xs tracking-widest text-pink-500 mb-4 font-bold">PRODUCTION-READY</p>
-                  <h2 className="text-5xl md:text-6xl font-black mb-6">
-                    Built to Build
-                  </h2>
-                </div>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  Every experiential design is developed with fabrication and installation in mind. Technical drawings
-                  include construction details, material specifications, and scaled dimensions that translate directly
-                  to production.
-                </p>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  Experience collaborating with fabrication shops, technical directors, and production teams ensures
-                  designs are not only visually compelling but structurally sound and budget-conscious.
-                </p>
-                <div className="grid grid-cols-2 gap-4 pt-4">
-                  <div className="border border-border rounded-lg p-4 bg-background">
-                    <Hammer className="w-6 h-6 mb-2 text-blue-400" />
-                    <h4 className="font-bold mb-1">Fabrication-Ready</h4>
-                    <p className="text-sm text-muted-foreground">Scaled drawings with construction details</p>
-                  </div>
-                  <div className="border border-border rounded-lg p-4 bg-background">
-                    <Ruler className="w-6 h-6 mb-2 text-green-400" />
-                    <h4 className="font-bold mb-1">Material Specs</h4>
-                    <p className="text-sm text-muted-foreground">Detailed material and finish specifications</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <img
-                  src="https://private-us-east-1.manuscdn.com/sessionFile/erhSK1Z2iEewnSpDHueKVU/sandbox/pRn7KB2SHCH92g5NCN7fw4-img-3_1770681289000_na1fn_ZXhwZXJpZW50aWFsLWZhYnJpY2F0aW9u.jpg?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvZXJoU0sxWjJpRWV3blNwREh1ZUtWVS9zYW5kYm94L3BSbjdLQjJTSENIOTJnNU5DTjdmdzQtaW1nLTNfMTc3MDY4MTI4OTAwMF9uYTFmbl9aWGh3WlhKcFpXNTBhV0ZzTFdaaFluSnBZMkYwYVc5dS5qcGc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=ddyt52-UxXJSNppbUkKeV6~bwkXKs-nnUpnn5vdezRvhkLwQPWdT030NnKZaPLdRpFjwOada5z0E~0B2dyE32YjD0bvav7bku66f4fkX7wfXwEx91uvfBolXXkTzWVp~9hAei7pWa06WqmvJPCqnUXIPII6O71YXCuPL19MoUks7B0RFrjeHbwaj-Sq4ivKjg138Pd7sxH0mjtK9C2EAZxwz337QaljhAuC9C7cZ3tYql77FK8HOni-w6qfdw1zd~YqF-QjCFuFek5T2Fx-17eA0PCgEts5x1CNrEKBkf2xKs~Kr1g0UmdJ-ydek35Iq8fL-aGGQACfAtONPu6P-9Q__"
-                  alt="Production team reviewing technical drawings in fabrication shop"
-                  className="w-full rounded-2xl border border-border"
-                />
-              </div>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* Capabilities Overview */}
-      <section className="py-32 border-t border-border">
+      {/* Integrated Workflow Section - 4 Steps */}
+      <section className="py-24 md:py-32 border-t border-border bg-muted/10">
         <div className="container max-w-6xl">
           <AnimatedSection>
             <div className="text-center mb-20">
-              <h2 className="text-5xl md:text-6xl font-black mb-6">
+              <p className="text-xs tracking-[0.3em] text-pink-500 mb-4 font-bold uppercase">The Process</p>
+              <h2 className="text-4xl md:text-6xl font-black mb-6">
+                Integrated Workflow
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                From concept to completion—one unified design process.
+              </p>
+            </div>
+          </AnimatedSection>
+
+          <div className="space-y-24 md:space-y-32">
+            <WorkflowStep
+              image={processImagesByCategory['workflow-toolkit']?.[0]}
+              title="Technical Toolkit"
+              description="Industry-standard software for integrated design workflows. Vectorworks for technical CAD, Twinmotion for real-time visualization, and Photoshop for layered compositing."
+              stepNumber="01"
+              icon={Layers}
+            />
+
+            <WorkflowStep
+              image={processImagesByCategory['workflow-drawing']?.[0]}
+              title="Technical Drawing"
+              description="Scaled plans, elevations, and sections establish buildable geometry and spatial relationships. Every line serves construction—no decorative drafting."
+              stepNumber="02"
+              icon={Ruler}
+              reverse
+            />
+
+            <WorkflowStep
+              image={processImagesByCategory['workflow-modeling']?.[0]}
+              title="3D Modeling & Rendering"
+              description="Twinmotion and Cinema 4D transform technical drawings into immersive environments with real-time lighting, materials, and atmospheric effects."
+              stepNumber="03"
+              icon={Box}
+            />
+
+            <WorkflowStep
+              image={processImagesByCategory['workflow-buildability']?.[0]}
+              title="Buildability & Fabrication"
+              description="Technical documentation supports production teams from concept through construction with scaled drawings, material specifications, and assembly details."
+              stepNumber="04"
+              icon={Hammer}
+              reverse
+            />
+          </div>
+
+          <AnimatedSection>
+            <div className="text-center max-w-3xl mx-auto mt-20 pt-16 border-t border-border">
+              <p className="text-2xl font-light italic text-muted-foreground">
+                "The design and the visualization describe the same space—
+                authored geometry ensures buildability from concept to completion."
+              </p>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Technical Drawing Gallery Section */}
+      <section className="py-24 md:py-32 border-t border-border">
+        <div className="container max-w-6xl">
+          <AnimatedSection>
+            <div className="max-w-3xl mb-16">
+              <h2 className="text-4xl md:text-5xl font-black mb-6">Technical Drawing</h2>
+              <p className="text-xl text-muted-foreground leading-relaxed">
+                Scaled plans, elevations, and sections establish buildable geometry and spatial relationships. 
+                Every line serves construction—no decorative drafting.
+              </p>
+            </div>
+          </AnimatedSection>
+          <GalleryCardGrid
+            items={processImagesByCategory['technical-drawing'] || []}
+            onItemClick={(index) => {
+              setProcessModalCategory('technical-drawing');
+              handleGalleryItemClick(index);
+            }}
+            categoryLabel="Technical Drawing"
+          />
+        </div>
+      </section>
+
+      {/* Process Gallery Modal */}
+      <ProcessGalleryModal
+        isOpen={processModalOpen}
+        currentImage={currentImage}
+        currentProject={currentProject?.mainItem}
+        images={currentImages}
+        imageIndex={imageIndex}
+        projectIndex={projectIndex}
+        totalProjects={groupedProjects.length}
+        onClose={() => {
+          setProcessModalOpen(false);
+          setProjectIndex(0);
+          setImageIndex(0);
+        }}
+        onNextImage={() => {
+          if (canGoNextImage) setImageIndex((prev) => prev + 1);
+        }}
+        onPrevImage={() => {
+          if (canGoPrevImage) setImageIndex((prev) => prev - 1);
+        }}
+        onNextProject={() => {
+          if (canGoNextProject) {
+            setProjectIndex((prev) => prev + 1);
+            setImageIndex(0);
+          }
+        }}
+        onPrevProject={() => {
+          if (canGoPrevProject) {
+            setProjectIndex((prev) => prev - 1);
+            setImageIndex(0);
+          }
+        }}
+        canGoNextProject={canGoNextProject}
+        canGoPrevProject={canGoPrevProject}
+        canGoNextImage={canGoNextImage}
+        canGoPrevImage={canGoPrevImage}
+        isLoadingImages={isLoadingProjectImages}
+        categoryLabel={
+          processModalCategory === 'rendering' ? 'Rendering' :
+          processModalCategory === 'technical-drawing' ? 'Technical Drawing' :
+          'Live Events'
+        }
+      />
+
+      {/* Capabilities Grid */}
+      <section className="py-24 md:py-32 border-t border-border bg-muted/5">
+        <div className="container max-w-6xl">
+          <AnimatedSection>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-black mb-4">
                 Full-Service Capabilities
               </h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -436,11 +608,11 @@ export default function ExperientialPortfolio() {
             </div>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {capabilities.map((capability, index) => (
-              <AnimatedSection key={index}>
-                <div className="border border-border rounded-xl p-8 bg-background hover:border-pink-500/40 transition-all hover:scale-105">
-                  <capability.icon className="w-8 h-8 mb-4 text-pink-500" />
+              <AnimatedSection key={index} delay={index * 0.1}>
+                <div className="group h-full border border-border rounded-xl p-8 bg-background hover:border-pink-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/5">
+                  <capability.icon className="w-8 h-8 mb-4 text-pink-500 transition-transform duration-300 group-hover:scale-110" />
                   <h3 className="text-xl font-bold mb-3">{capability.title}</h3>
                   <p className="text-muted-foreground leading-relaxed">
                     {capability.description}
@@ -452,21 +624,46 @@ export default function ExperientialPortfolio() {
         </div>
       </section>
 
+      {/* Live Events Gallery Section */}
+      <section className="py-24 md:py-32 border-t border-border">
+        <div className="container max-w-6xl">
+          <AnimatedSection>
+            <div className="max-w-3xl mb-16">
+              <h2 className="text-4xl md:text-5xl font-black mb-6">Live Events & Installations</h2>
+              <p className="text-xl text-muted-foreground leading-relaxed">
+                Documentation of completed installations and activations. These projects represent the transition 
+                from design to real-world execution—demonstrating scope delivered and environments experienced.
+              </p>
+            </div>
+          </AnimatedSection>
+          <GalleryCardGrid
+            items={processImagesByCategory['live-events'] || []}
+            onItemClick={(index) => {
+              setProcessModalCategory('live-events');
+              handleGalleryItemClick(index);
+            }}
+            categoryLabel="Live Events"
+          />
+        </div>
+      </section>
+
       {/* FAQ Section */}
-      <section className="py-32 border-t border-border bg-muted/20">
+      <section className="py-24 md:py-32 border-t border-border bg-muted/10">
         <div className="container max-w-4xl">
-          <ExperientialFAQ />
+          <AnimatedSection>
+            <ExperientialFAQ />
+          </AnimatedSection>
         </div>
       </section>
 
       {/* Closing Statement */}
-      <section className="py-32 border-t border-border">
+      <section className="py-24 md:py-32 border-t border-border">
         <div className="container max-w-3xl">
           <AnimatedSection>
             <div className="text-center space-y-8">
               <p className="text-3xl md:text-4xl font-light leading-relaxed">
                 Experiential design sits at the intersection of<br />
-                art, technology, and real environments.
+                <span className="font-bold">art, technology, and real environments.</span>
               </p>
               <p className="text-xl text-muted-foreground">
                 This work is developed to be seen, shared, and built.

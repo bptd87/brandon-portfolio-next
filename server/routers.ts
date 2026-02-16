@@ -13,6 +13,7 @@ import { supabase } from "./db";
 import { renderingGalleryRouter } from "./routers/renderingGallery";
 import { modelGalleryRouter } from "./routers/modelGallery";
 import { experientialGalleryRouter } from "./routers/experientialGallery";
+import { processGalleryRouter } from "./routers/processGallery";
 
 // Admin-only procedure
 const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
@@ -41,6 +42,7 @@ export const appRouter = router({
   renderingGallery: renderingGalleryRouter,
   modelGallery: modelGalleryRouter,
   experientialGallery: experientialGalleryRouter,
+  processGallery: processGalleryRouter,
 
   // ============ CATEGORY MANAGEMENT ============
   categories: router({

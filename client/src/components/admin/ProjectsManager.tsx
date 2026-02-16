@@ -15,6 +15,7 @@ import { Loader2, Plus, Pencil, Trash2, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
 import { MobileTableView } from "./MobileTableView";
+import { getProjectPath } from "@/lib/projectRoutes";
 
 export function ProjectsManager() {
   const [, navigate] = useLocation();
@@ -189,7 +190,7 @@ export function ProjectsManager() {
                           <div className="flex items-center justify-end gap-1" onClick={(e) => e.stopPropagation()}>
                             {project.status === "published" && (
                               <Button variant="ghost" size="icon" className="h-7 w-7" asChild>
-                                <a href={`/projects/${project.slug}`} target="_blank" aria-label="View live project">
+                                <a href={getProjectPath(project)} target="_blank" aria-label="View live project">
                                   <Eye className="h-3.5 w-3.5" />
                                 </a>
                               </Button>
@@ -282,7 +283,7 @@ export function ProjectsManager() {
                   ]}
                   onEdit={(project) => navigate(`/admin/projects/${project.id}/edit`)}
                   onDelete={(project) => handleDelete(project.id, project.title)}
-                  onView={(project) => project.status === 'published' ? window.open(`/projects/${project.slug}`) : null}
+                  onView={(project) => project.status === 'published' ? window.open(getProjectPath(project)) : null}
                 />
               </div>
             </>

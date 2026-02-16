@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -10,11 +9,13 @@ import PageTransition from "./components/PageTransition";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { PageLoadingIndicator } from "./components/PageLoadingIndicator";
 import { useState, useEffect } from "react";
-import { TodoDialog } from "@/components/TodoDialog";
-import { AnalyticsTracker } from "@/components/AnalyticsTracker";
+import { AnalyticsTracker } from "./components/AnalyticsTracker";
 
 // Only Home page loads immediately - everything else is lazy loaded
 import Home from "./pages/Home";
+
+// Lazy load TodoDialog since it's only triggered by keyboard shortcut
+const TodoDialog = lazy(() => import("@/components/TodoDialog").then(m => ({ default: m.TodoDialog })));
 
 // All other routes lazy load on demand for better initial performance
 const News = lazy(() => import("./pages/News"));
@@ -46,8 +47,8 @@ const AdminScenicDirectoryEdit = lazy(() => import("./pages/admin/AdminScenicDir
 const AdminCollaborators = lazy(() => import("./pages/admin/AdminCollaborators"));
 const AdminCollaboratorEdit = lazy(() => import("./pages/admin/AdminCollaboratorEdit"));
 const AdminRenderingGallery = lazy(() => import("./pages/admin/AdminRenderingGallery"));
-const AdminModelGallery = lazy(() => import("./pages/admin/AdminModelGallery"));
 const AdminExperientialGallery = lazy(() => import("./pages/admin/AdminExperientialGallery"));
+const AdminProcessGallery = lazy(() => import("./pages/admin/AdminProcessGallery"));
 const AuthDebug = lazy(() => import("./pages/AuthDebug"));
 
 // Non-critical routes - lazy load for better initial performance
@@ -100,8 +101,11 @@ function Router() {
           <Route path={"/projects"} component={Projects} />
           <Route path={"/projects/scenic-design"} component={Projects} />
           <Route path={"/projects/experiential"} component={ExperientialPortfolio} />
+          <Route path={"/projects/experiential/rendering/:slug"} component={ProjectDetailRouter} />
           <Route path={"/projects/rendering"} component={RenderingPortfolio} />
+          <Route path={"/projects/rendering/:slug"} component={ProjectDetailRouter} />
           <Route path={"/projects/scenic-models"} component={ScenicModelsPortfolio} />
+          <Route path={"/projects/scenic-models/:slug"} component={ProjectDetailRouter} />
           <Route path={"/projects/:slug"} component={ProjectDetailRouter} />
           <Route path={"/news"} component={News} />
           <Route path={"/news/:slug"} component={NewsDetail} />
@@ -153,8 +157,7 @@ function Router() {
           <Route path="/admin/collaborators/:id/edit" component={AdminCollaboratorEdit} />
           <Route path="/admin/collaborators" component={AdminCollaborators} />
           <Route path="/admin/rendering-gallery" component={AdminRenderingGallery} />
-          <Route path="/admin/model-gallery" component={AdminModelGallery} />
-          <Route path="/admin/experiential-gallery" component={AdminExperientialGallery} />
+          <Route path="/admin/experiential-gallery" component={AdminProcessGallery} />
           <Route path={"/admin"} component={Admin} />
           <Route path={"/privacy"} component={Privacy} />
           <Route path={"/terms"} component={Terms} />
@@ -202,7 +205,9 @@ function App() {
           <PageLoadingIndicator />
           <TooltipProvider>
             <Toaster />
-            <TodoDialog open={isTodoOpen} onOpenChange={setIsTodoOpen} />
+            <Suspense fallback={null}>
+              <TodoDialog open={isTodoOpen} onOpenChange={setIsTodoOpen} />
+            </Suspense>
             <AnalyticsTracker />
             <Router />
           </TooltipProvider>

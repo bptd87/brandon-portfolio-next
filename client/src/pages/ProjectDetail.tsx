@@ -15,6 +15,7 @@ import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { ProjectDetailSkeleton } from "@/components/SkeletonLoaders";
+import { getProjectPath } from "@/lib/projectRoutes";
 
 // Convert YouTube/Vimeo URLs to embed format
 function getEmbedUrl(url: string): string {
@@ -41,7 +42,8 @@ const ACCENT_COLORS = ['#FF5722', '#00E5FF', '#FF1744'];
 
 export default function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
-  const [, setLocation] = useLocation();
+  const [location] = useLocation();
+  const isScenicModelsRoute = location.startsWith("/projects/scenic-models");
   const { data: project, isLoading } = trpc.projects.getBySlug.useQuery({ slug: slug! });
   // Fetch projects in same discipline for navigation
   const { data: allProjects } = trpc.projects.list.useQuery(
@@ -141,6 +143,25 @@ export default function ProjectDetail() {
     roleName: member.role,
   }));
 
+  const projectBasePath = isScenicModelsRoute ? "/projects/scenic-models" : "/projects";
+  const projectUrl = `https://www.brandonptdavis.com${projectBasePath}/${project.slug}`;
+  const disciplineLabel = project.discipline === 'scenic_design'
+    ? 'Scenic Design'
+    : project.discipline === 'experiential_design'
+      ? 'Experiential'
+      : project.discipline === 'rendering'
+        ? 'Rendering'
+        : 'Scenic Models';
+  const disciplineLink = project.discipline === 'scenic_models'
+    ? '/projects/scenic-models'
+    : project.discipline === 'rendering'
+      ? '/projects/rendering'
+      : project.discipline === 'experiential_design'
+        ? '/projects/experiential'
+        : project.discipline === 'scenic_design'
+          ? '/projects/scenic-design'
+          : `/projects?discipline=${project.discipline}`;
+
   return (
     <div className="min-h-screen bg-background">
       <SEO
@@ -149,13 +170,14 @@ export default function ProjectDetail() {
         image={project.coverImageUrl || undefined}
         type="website"
         keywords={project.seoKeywords || undefined}
+        url={projectUrl}
       />
       <StructuredData
         type="BreadcrumbList"
         breadcrumbs={[
           { name: "Home", url: "https://www.brandonptdavis.com" },
           { name: "Projects", url: "https://www.brandonptdavis.com/projects" },
-          { name: project.title, url: `https://www.brandonptdavis.com/projects/${project.slug}` },
+          { name: project.title, url: projectUrl },
         ]}
       />
       <StructuredData
@@ -182,7 +204,7 @@ export default function ProjectDetail() {
               },
             }),
           } : undefined,
-          url: `https://www.brandonptdavis.com/projects/${project.slug}`,
+          url: projectUrl,
           workExample: projectImages.length > 0 ? projectImages : undefined,
           about: project.designNotes || undefined,
           contributor: contributors.length > 0 ? contributors : undefined,
@@ -195,7 +217,7 @@ export default function ProjectDetail() {
         <Breadcrumb
           items={[
             { label: "Work", href: "/projects" },
-            { label: project.discipline === 'scenic_design' ? 'Scenic Design' : project.discipline === 'experiential_design' ? 'Experiential' : project.discipline === 'rendering' ? 'Rendering' : 'Scenic Models', href: `/projects?discipline=${project.discipline}` },
+            { label: disciplineLabel, href: disciplineLink },
             { label: project.title }
           ]}
         />
@@ -577,7 +599,7 @@ export default function ProjectDetail() {
                   const hoverColor = brandColors[idx % brandColors.length];
 
                   return (
-                    <Link key={relatedProject.id} href={`/projects/${relatedProject.slug}`}>
+                    <Link key={relatedProject.id} href={getProjectPath(relatedProject)}>
                       <Card className="group cursor-pointer overflow-hidden border-0 bg-transparent hover:scale-[1.02] transition-all duration-500">
                         <div className="relative aspect-[3/2] overflow-hidden rounded-lg">
                           {relatedProject.coverImageUrl ? (

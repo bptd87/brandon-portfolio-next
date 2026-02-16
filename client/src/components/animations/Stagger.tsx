@@ -38,15 +38,32 @@ export function StaggerList({
 interface StaggerItemProps {
     children: ReactNode;
     className?: string;
+    dramatic?: boolean; // More intense entrance animation
 }
 
-export function StaggerItem({ children, className = "" }: StaggerItemProps) {
+export function StaggerItem({ children, className = "", dramatic = false }: StaggerItemProps) {
+    const variants = dramatic
+        ? {
+            hidden: { opacity: 0, y: 60, scale: 0.92, rotateX: 8 },
+            show: { 
+                opacity: 1, 
+                y: 0, 
+                scale: 1, 
+                rotateX: 0,
+                transition: { 
+                    duration: 0.8, 
+                    ease: [0.25, 0.46, 0.45, 0.94] // Custom easing curve
+                } 
+            },
+        }
+        : {
+            hidden: { opacity: 0, y: 20 },
+            show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+        };
+
     return (
         <motion.div
-            variants={{
-                hidden: { opacity: 0, y: 20 },
-                show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-            }}
+            variants={variants}
             className={className}
         >
             {children}

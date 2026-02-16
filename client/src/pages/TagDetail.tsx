@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { ArrowLeft, Briefcase, FileText, Newspaper } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { getProjectPath } from "@/lib/projectRoutes";
 
 export default function TagDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -82,7 +83,7 @@ export default function TagDetail() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {projects.map((project) => (
-                  <Link key={project.id} href={`/projects/${project.slug}`}>
+                  <Link key={project.id} href={getProjectPath(project)}>
                     <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300 h-full">
                       {project.coverImageUrl && (
                         <div className="aspect-video overflow-hidden">

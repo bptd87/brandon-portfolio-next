@@ -178,6 +178,7 @@ export function AdminGalleryImageManager({ projectId, projectTitle, isOpen, onCl
     const utils = trpc.useContext();
     const [images, setImages] = useState<ProjectImage[]>([]);
     const [isUploading, setIsUploading] = useState(false);
+    const [isDraggingFile, setIsDraggingFile] = useState(false);
 
     // Fetch Images
     const { data: fetchedImages, isLoading } = trpc.projects.getImages.useQuery(
@@ -274,6 +275,77 @@ export function AdminGalleryImageManager({ projectId, projectTitle, isOpen, onCl
         }
     };
 
+    // Drag and drop handlers
+    const handleDragOver = (e: React.DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsDraggingFile(true);
+    };
+
+    const handleDragEnter = (e: React.DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsDraggingFile(true);
+    };
+
+    const handleDragLeave = (e: React.DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        // Only set to false if leaving the drop zone itself
+        if (e.currentTarget === e.target) {
+            setIsDraggingFile(false);
+        }
+    };
+
+    const handleDrop = async (e: React.DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsDraggingFile(false);
+
+        const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+        if (files.length === 0) {
+            toast.error("Please drop image files only");
+            return;
+        }
+
+        setIsUploading(true);
+        try {
+            for (const file of files) {
+                const reader = new FileReader();
+                const base64Promise = new Promise<string>((resolve, reject) => {
+                    reader.onload = () => {
+                        const str = reader.result as string;
+                        resolve(str.split(',')[1]);
+                    };
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+                const base64Data = await base64Promise;
+
+                const uploadRes = await uploadImageMutation.mutateAsync({
+                    filename: file.name,
+                    contentType: file.type,
+                    data: base64Data
+                });
+
+                await addImageMutation.mutateAsync({
+                    projectId,
+                    imageUrl: uploadRes.url,
+                    imageKey: uploadRes.key,
+                    imageType: "rendering",
+                    sortOrder: images.length,
+                });
+            }
+            toast.success("Images uploaded successfully");
+            utils.projects.getImages.invalidate({ projectId });
+        } catch (error) {
+            console.error(error);
+            toast.error("Failed to upload images");
+        } finally {
+            setIsUploading(false);
+        }
+    };
+
     const handleUpdateImage = async (id: number, updates: Partial<ProjectImage>) => {
         // Optimistic update local state
         setImages(prev => prev.map(img => img.id === id ? { ...img, ...updates } : img));
@@ -353,7 +425,17 @@ export function AdminGalleryImageManager({ projectId, projectTitle, isOpen, onCl
                 </div>
 
                 <div className="pt-4 border-t flex items-center justify-between bg-background">
-                    <div className="flex items-center gap-2">
+                    <div 
+                        className={`flex-1 flex items-center gap-2 mr-4 p-4 border-2 border-dashed rounded-lg transition-colors ${
+                            isDraggingFile 
+                                ? 'border-primary bg-primary/5' 
+                                : 'border-muted-foreground/25 hover:border-primary/50'
+                        }`}
+                        onDragOver={handleDragOver}
+                        onDragEnter={handleDragEnter}
+                        onDragLeave={handleDragLeave}
+                        onDrop={handleDrop}
+                    >
                         <Input
                             type="file"
                             accept="image/*"
@@ -371,7 +453,9 @@ export function AdminGalleryImageManager({ projectId, projectTitle, isOpen, onCl
                             {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
                             Upload Images
                         </Label>
-                        <span className="text-xs text-muted-foreground ml-2">Supported: JPG, PNG, WEBP</span>
+                        <span className="text-xs text-muted-foreground">
+                            {isDraggingFile ? 'Drop images here to upload' : 'Drag & drop images or click to browse'}
+                        </span>
                     </div>
 
                     <Button variant="outline" onClick={onClose} title="Close">Done</Button>

@@ -48,10 +48,11 @@ interface SortableItemProps {
     item: any;
     onRemove: (id: number) => void;
     onManageImages: (id: number, title: string) => void;
-    onUpdateMetadata: (id: number, field: 'altText' | 'displayTitle', value: string) => void;
+    onUpdateMetadata: (id: number, field: 'altText' | 'displayTitle' | 'description', value: string) => void;
+    onUpdateProject?: (projectId: number, field: 'title' | 'slug' | 'year', value: string | number | null) => void;
 }
 
-function SortableGalleryItem({ id, item, onRemove, onManageImages, onUpdateMetadata }: SortableItemProps & { onUpdateMetadata: (id: number, field: 'altText' | 'displayTitle' | 'description', value: string) => void }) {
+function SortableGalleryItem({ id, item, onRemove, onManageImages, onUpdateMetadata, onUpdateProject }: SortableItemProps) {
     const {
         attributes,
         listeners,
@@ -130,6 +131,49 @@ function SortableGalleryItem({ id, item, onRemove, onManageImages, onUpdateMetad
 
             {isOpen && (
                 <div className="grid gap-2 pl-8">
+                    {item.project && (
+                        <>
+                            <div className="grid gap-1 pb-2 border-b border-border">
+                                <label className="text-[10px] font-medium uppercase text-muted-foreground">Project Name</label>
+                                <Input
+                                    value={item.project.title || ''}
+                                    onChange={(e) => onUpdateProject?.(item.project.id, 'title', e.target.value)}
+                                    placeholder="Project name..."
+                                    className="h-8 text-xs bg-background/50"
+                                />
+                            </div>
+                            <div className="grid gap-1 pb-2 border-b border-border">
+                                <label className="text-[10px] font-medium uppercase text-muted-foreground">URL Slug</label>
+                                <Input
+                                    value={item.project.slug || ''}
+                                    onChange={(e) => onUpdateProject?.(
+                                        item.project.id,
+                                        'slug',
+                                        e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '-')
+                                    )}
+                                    placeholder="url-slug..."
+                                    className="h-8 text-xs bg-background/50 font-mono"
+                                />
+                                <p className="text-[9px] text-muted-foreground/60 mt-1">
+                                    Preview: /projects/rendering/{item.project.slug || 'url-slug'}
+                                </p>
+                            </div>
+                            <div className="grid gap-1">
+                                <label className="text-[10px] font-medium uppercase text-muted-foreground">Year</label>
+                                <Input
+                                    type="number"
+                                    value={item.project.year ?? ''}
+                                    onChange={(e) => onUpdateProject?.(
+                                        item.project.id,
+                                        'year',
+                                        e.target.value ? parseInt(e.target.value, 10) : null
+                                    )}
+                                    placeholder="YYYY"
+                                    className="h-8 text-xs bg-background/50"
+                                />
+                            </div>
+                        </>
+                    )}
                     <div className="grid gap-1">
                         <label className="text-[10px] font-medium uppercase text-muted-foreground">Display Title (Optional)</label>
                         <Input
@@ -216,6 +260,16 @@ export default function AdminRenderingGallery() {
 
     const updateMetaMutation = trpc.renderingGallery.updateMetadata.useMutation();
     const signedUrlMutation = trpc.projects.createSignedUploadUrl.useMutation();
+    const updateProjectMutation = trpc.projects.update.useMutation({
+        onSuccess: () => {
+            toast.success("Project updated");
+            refetchGallery();
+            refetchProjects();
+        },
+        onError: (e) => {
+            toast.error(`Failed to update project: ${e.message}`);
+        }
+    });
 
     // Sync local state when remote data loads
     useEffect(() => {
@@ -276,6 +330,24 @@ export default function AdminRenderingGallery() {
             setQuickTitle(formattedName);
         }
     };
+
+    const handleUpdateProject = useCallback((projectId: number, field: 'title' | 'slug' | 'year', value: string | number | null) => {
+        setLocalGallery((prev) =>
+            prev.map((item) =>
+                item.project?.id === projectId && item.project
+                    ? {
+                        ...item,
+                        project: {
+                            ...item.project,
+                            [field]: value,
+                        },
+                    }
+                    : item
+            )
+        );
+
+        updateProjectMutation.mutate({ id: projectId, [field]: value });
+    }, [updateProjectMutation]);
 
     const handleQuickAdd = async () => {
         if (!quickFile || !quickTitle) return;
@@ -571,6 +643,7 @@ export default function AdminRenderingGallery() {
                                                 onRemove={handleRemove}
                                                 onManageImages={(pid, title) => setManagingProject({ id: pid, title })}
                                                 onUpdateMetadata={handleUpdateMetadata}
+                                                onUpdateProject={handleUpdateProject}
                                             />
                                         ))
                                     )}

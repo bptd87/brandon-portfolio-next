@@ -4,9 +4,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { AnimatedSection } from "@/components/AnimatedSection";
-import { RenderingInfoModal } from "@/components/RenderingInfoModal";
+import { ProcessGalleryModal } from "@/components/ProcessGalleryModal";
 import { ScenicModelsFAQ } from "@/components/ScenicModelsFAQ";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Loader2, Box, Ruler, ExternalLink } from "lucide-react";
 
 interface DisplayItem {
@@ -39,7 +39,8 @@ export default function ScenicModelsPortfolio() {
   });
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [currentItemIndex, setCurrentItemIndex] = useState(0);
+  const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const isLoading = projectsLoading || galleryLoading;
 
@@ -62,6 +63,55 @@ export default function ScenicModelsPortfolio() {
       altText: img.altText
     }))
   })) || [];
+
+  const currentProject = galleryDisplayItems[currentProjectIndex] || null;
+  const currentProjectImages = useMemo(() => {
+    if (!currentProject) return [];
+    const coverImage = currentProject.imageUrl
+      ? [{
+          id: -1,
+          imageUrl: currentProject.imageUrl,
+          videoUrl: null,
+          altText: currentProject.altText || currentProject.title,
+          displayTitle: currentProject.title,
+          description: currentProject.excerpt || null,
+        }]
+      : [];
+
+    const galleryImages = (currentProject.images || []).map((img) => ({
+      id: img.id,
+      imageUrl: img.url,
+      videoUrl: null,
+      altText: img.altText || currentProject.title,
+      displayTitle: img.caption || null,
+      description: null,
+    }));
+
+    return [...coverImage, ...galleryImages].filter((img) => img.imageUrl);
+  }, [currentProject]);
+
+  const currentImage = currentProjectImages[currentImageIndex];
+  const totalProjects = galleryDisplayItems.length;
+
+  useEffect(() => {
+    setCurrentImageIndex(0);
+  }, [currentProjectIndex]);
+
+  const handleNextProject = () => {
+    setCurrentProjectIndex((prev) => Math.min(prev + 1, totalProjects - 1));
+  };
+
+  const handlePrevProject = () => {
+    setCurrentProjectIndex((prev) => Math.max(prev - 1, 0));
+  };
+
+  const handleNextImage = () => {
+    setCurrentImageIndex((prev) => Math.min(prev + 1, currentProjectImages.length - 1));
+  };
+
+  const handlePrevImage = () => {
+    setCurrentImageIndex((prev) => Math.max(prev - 1, 0));
+  };
 
   // Process Featured Items (projects NOT in gallery)
   const galleryProjectIds = new Set(galleryDisplayItems.map(item => item.id));
@@ -125,7 +175,7 @@ export default function ScenicModelsPortfolio() {
               {featuredProjects.map((project, index) => (
                 <AnimatedSection key={project.id} delay={index * 0.1}>
                   <Link
-                    href={`/projects/${project.slug}`}
+                    href={`/projects/scenic-models/${project.slug}`}
                     className="group block"
                   >
                     <article className="space-y-5">
@@ -181,7 +231,8 @@ export default function ScenicModelsPortfolio() {
                   <div
                     className="group cursor-pointer"
                     onClick={() => {
-                      setCurrentItemIndex(index);
+                      setCurrentProjectIndex(index);
+                      setCurrentImageIndex(0);
                       setModalOpen(true);
                     }}
                   >
@@ -373,16 +424,25 @@ export default function ScenicModelsPortfolio() {
         </div>
       </section>
 
-      {/* Modal Gallery */}
       {galleryDisplayItems.length > 0 && (
-        <RenderingInfoModal
+        <ProcessGalleryModal
           isOpen={modalOpen}
-          project={galleryDisplayItems[currentItemIndex] || null}
+          currentImage={currentImage}
+          currentProject={currentProject ? { displayTitle: currentProject.title, description: currentProject.excerpt || currentProject.designNotes } : undefined}
+          images={currentProjectImages}
+          imageIndex={currentImageIndex}
+          projectIndex={currentProjectIndex}
+          totalProjects={totalProjects}
           onClose={() => setModalOpen(false)}
-          onNext={() => setCurrentItemIndex((prev) => (prev + 1) % galleryDisplayItems.length)}
-          onPrev={() => setCurrentItemIndex((prev) => (prev - 1 + galleryDisplayItems.length) % galleryDisplayItems.length)}
-          hasNext={galleryDisplayItems.length > 1}
-          hasPrev={galleryDisplayItems.length > 1}
+          onNextImage={handleNextImage}
+          onPrevImage={handlePrevImage}
+          onNextProject={handleNextProject}
+          onPrevProject={handlePrevProject}
+          canGoNextProject={currentProjectIndex < totalProjects - 1}
+          canGoPrevProject={currentProjectIndex > 0}
+          canGoNextImage={currentImageIndex < currentProjectImages.length - 1}
+          canGoPrevImage={currentImageIndex > 0}
+          categoryLabel="Scenic Models"
         />
       )}
 

@@ -2287,10 +2287,31 @@ export async function getModelGallery(): Promise<RenderingGalleryItem[]> {
       return [];
     }
 
+    const { data: images, error: imagesError } = await supabase
+      .from('project_images')
+      .select('*')
+      .in('project_id', projectIds)
+      .order('sort_order', { ascending: true });
+
+    if (imagesError) {
+      console.warn('Error fetching images for model gallery:', imagesError);
+    }
+
     const projectMap = new Map(projects?.map(p => [p.id, p]));
+    const imagesMap = new Map<number, any[]>();
+    if (images) {
+      images.forEach(img => {
+        const projectId = img.project_id;
+        if (!imagesMap.has(projectId)) {
+          imagesMap.set(projectId, []);
+        }
+        imagesMap.get(projectId)?.push(img);
+      });
+    }
 
     return galleryItems.map(item => {
       const project = projectMap.get(item.project_id);
+      const projectImages = imagesMap.get(item.project_id) || [];
       return {
         id: item.id,
         projectId: item.project_id,
@@ -2323,7 +2344,13 @@ export async function getModelGallery(): Promise<RenderingGalleryItem[]> {
           seoTitle: project.seo_title,
           seoDescription: project.seo_description,
           seoKeywords: project.seo_keywords,
-          images: [],
+          images: projectImages.map((img: any) => ({
+            id: img.id,
+            imageUrl: img.image_url,
+            caption: img.caption,
+            altText: img.alt_text,
+            sortOrder: img.sort_order
+          })),
           createdAt: new Date(project.created_at),
           updatedAt: new Date(project.updated_at),
         } : undefined,
@@ -2522,4 +2549,397 @@ export async function updateExperientialGalleryMetadata(id: number, active: bool
     .eq('id', id);
 
   if (error) throw error;
+}
+
+// ============ EXPERIENTIAL PROCESS GALLERY OPERATIONS ============
+
+export type ProcessGalleryCategory = 
+  // Workflow showcase images (single per category)
+  | 'workflow-toolkit' 
+  | 'workflow-drawing' 
+  | 'workflow-modeling' 
+  | 'workflow-buildability'
+  // Portfolio galleries (multiple images per category)
+  | 'rendering' 
+  | 'technical-drawing' 
+  | 'live-events';
+
+export interface ProcessGalleryItem {
+  id: number;
+  category: ProcessGalleryCategory;
+  projectId: number | null;
+  imageUrl: string;
+  imageKey: string | null;
+  videoUrl: string | null;
+  altText: string | null;
+  displayTitle: string | null;
+  description: string | null;
+  year: number | null;
+  sortOrder: number;
+  active: boolean;
+  createdAt: Date;
+  project?: {
+    id: number;
+    title: string;
+    coverImageUrl: string | null;
+    year: number | null;
+  };
+}
+
+export async function getProcessGalleryByCategory(category?: ProcessGalleryCategory): Promise<ProcessGalleryItem[]> {
+  try {
+    let query = supabase
+      .from('experiential_process_gallery')
+      .select(`
+        *,
+        project:projects(id, title, slug, cover_image, year)
+      `)
+      .eq('active', true)
+      .order('sort_order', { ascending: true });
+
+    if (category) {
+      query = query.eq('category', category);
+    }
+
+    const { data, error } = await query;
+
+    if (error) throw error;
+    if (!data) return [];
+
+    return data.map(item => ({
+      id: item.id,
+      category: item.category as ProcessGalleryCategory,
+      projectId: item.project_id || null,
+      imageUrl: item.image_url,
+      imageKey: item.image_key,
+      videoUrl: item.video_url || null,
+      altText: item.alt_text,
+      displayTitle: item.display_title,
+      description: item.description,
+      year: item.year || null,
+      sortOrder: item.sort_order,
+      active: item.active,
+      createdAt: new Date(item.created_at),
+      project: item.project ? {
+        id: item.project.id,
+        title: item.project.title,
+        slug: item.project.slug,
+        coverImageUrl: item.project.cover_image,
+        year: item.project.year
+      } : undefined
+    }));
+  } catch (e) {
+    console.error('Supabase Process Gallery Error:', e);
+    return [];
+  }
+}
+
+export async function getAllProcessGallery(): Promise<ProcessGalleryItem[]> {
+  try {
+    const { data, error } = await supabase
+      .from('experiential_process_gallery')
+      .select(`
+        *,
+        project:projects(id, title, slug, cover_image, year)
+      `)
+      .order('category', { ascending: true })
+      .order('sort_order', { ascending: true });
+
+    if (error) {
+      console.error('Supabase getAllProcessGallery error:', error);
+      throw error;
+    }
+    if (!data) return [];
+
+    console.log(`[getAllProcessGallery] Found ${data.length} items`);
+
+    return data.map(item => ({
+      id: item.id,
+      category: item.category as ProcessGalleryCategory,
+      projectId: item.project_id || null,
+      imageUrl: item.image_url || '',
+      imageKey: item.image_key,
+      videoUrl: item.video_url || null,
+      altText: item.alt_text,
+      displayTitle: item.display_title,
+      description: item.description,
+      year: item.year || null,
+      sortOrder: item.sort_order,
+      active: item.active,
+      createdAt: new Date(item.created_at),
+      project: item.project ? {
+        id: item.project.id,
+        title: item.project.title,
+        slug: item.project.slug,
+        coverImageUrl: item.project.cover_image,
+        year: item.project.year
+      } : undefined
+    }));
+  } catch (e) {
+    console.error('Supabase Process Gallery Error:', e);
+    throw e;
+  }
+}
+
+export async function addProcessGalleryItem(
+  category: ProcessGalleryCategory,
+  imageUrl: string,
+  imageKey?: string,
+  videoUrl?: string,
+  altText?: string,
+  displayTitle?: string,
+  description?: string,
+  projectId?: number
+) {
+  try {
+    // Get max sort order for this category
+    const { data: maxItem } = await supabase
+      .from('experiential_process_gallery')
+      .select('sort_order')
+      .eq('category', category)
+      .order('sort_order', { ascending: false })
+      .limit(1)
+      .single();
+
+    const nextOrder = (maxItem?.sort_order ?? 0) + 1;
+
+    const { data, error } = await supabase
+      .from('experiential_process_gallery')
+      .insert({
+        category,
+        project_id: projectId || null,
+        image_url: imageUrl,
+        image_key: imageKey || null,
+        video_url: videoUrl || null,
+        alt_text: altText || null,
+        display_title: displayTitle || null,
+        description: description || null,
+        sort_order: nextOrder,
+        active: true
+      })
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  } catch (e) {
+    console.error('Failed to add process gallery item:', e);
+    throw e;
+  }
+}
+
+export async function updateProcessGalleryItem(
+  id: number,
+  updates: {
+    altText?: string;
+    displayTitle?: string;
+    description?: string;
+    videoUrl?: string;
+    year?: number;
+    active?: boolean;
+  }
+) {
+  const updateData: any = {};
+  if (updates.altText !== undefined) updateData.alt_text = updates.altText;
+  if (updates.displayTitle !== undefined) updateData.display_title = updates.displayTitle;
+  if (updates.description !== undefined) updateData.description = updates.description;
+  if (updates.videoUrl !== undefined) updateData.video_url = updates.videoUrl;
+  if (updates.year !== undefined) updateData.year = updates.year;
+  if (updates.active !== undefined) updateData.active = updates.active;
+
+  const { error } = await supabase
+    .from('experiential_process_gallery')
+    .update(updateData)
+    .eq('id', id);
+
+  if (error) throw error;
+}
+
+export async function deleteProcessGalleryItem(id: number) {
+  const { error } = await supabase
+    .from('experiential_process_gallery')
+    .delete()
+    .eq('id', id);
+
+  if (error) throw error;
+}
+
+export async function updateProcessGalleryOrder(items: { id: number; sortOrder: number }[]) {
+  for (const item of items) {
+    await supabase
+      .from('experiential_process_gallery')
+      .update({ sort_order: item.sortOrder })
+      .eq('id', item.id);
+  }
+}
+
+// ============ EXPERIENTIAL BRANDS OPERATIONS ============
+
+export interface ExperientialBrand {
+  id: number;
+  name: string;
+  logoUrl: string | null;
+  logoKey: string | null;
+  websiteUrl: string | null;
+  sortOrder: number;
+  active: boolean;
+  createdAt: Date;
+}
+
+export async function getExperientialBrands(): Promise<ExperientialBrand[]> {
+  try {
+    const { data, error } = await supabase
+      .from('experiential_brands')
+      .select('*')
+      .eq('active', true)
+      .order('sort_order', { ascending: true });
+
+    if (error) throw error;
+    if (!data) return [];
+
+    return data.map(item => ({
+      id: item.id,
+      name: item.name,
+      logoUrl: item.logo_url,
+      logoKey: item.logo_key,
+      websiteUrl: item.website_url,
+      sortOrder: item.sort_order,
+      active: item.active,
+      createdAt: new Date(item.created_at),
+    }));
+  } catch (e) {
+    console.error('Supabase Brands Error:', e);
+    return [];
+  }
+}
+
+export async function getAllExperientialBrands(): Promise<ExperientialBrand[]> {
+  try {
+    const { data, error } = await supabase
+      .from('experiential_brands')
+      .select('*')
+      .order('sort_order', { ascending: true });
+
+    if (error) throw error;
+    if (!data) return [];
+
+    return data.map(item => ({
+      id: item.id,
+      name: item.name,
+      logoUrl: item.logo_url,
+      logoKey: item.logo_key,
+      websiteUrl: item.website_url,
+      sortOrder: item.sort_order,
+      active: item.active,
+      createdAt: new Date(item.created_at),
+    }));
+  } catch (e) {
+    console.error('Supabase Brands Error:', e);
+    return [];
+  }
+}
+
+export async function addExperientialBrand(name: string, logoUrl?: string, logoKey?: string, websiteUrl?: string) {
+  try {
+    const { data: maxItem } = await supabase
+      .from('experiential_brands')
+      .select('sort_order')
+      .order('sort_order', { ascending: false })
+      .limit(1)
+      .single();
+
+    const nextOrder = (maxItem?.sort_order ?? 0) + 1;
+
+    const { data, error } = await supabase
+      .from('experiential_brands')
+      .insert({
+        name,
+        logo_url: logoUrl || null,
+        logo_key: logoKey || null,
+        website_url: websiteUrl || null,
+        sort_order: nextOrder,
+        active: true
+      })
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  } catch (e) {
+    console.error('Failed to add brand:', e);
+    throw e;
+  }
+}
+
+export async function updateExperientialBrand(
+  id: number,
+  updates: {
+    name?: string;
+    logoUrl?: string;
+    logoKey?: string;
+    websiteUrl?: string;
+    active?: boolean;
+  }
+) {
+  const updateData: any = {};
+  if (updates.name !== undefined) updateData.name = updates.name;
+  if (updates.logoUrl !== undefined) updateData.logo_url = updates.logoUrl;
+  if (updates.logoKey !== undefined) updateData.logo_key = updates.logoKey;
+  if (updates.websiteUrl !== undefined) updateData.website_url = updates.websiteUrl;
+  if (updates.active !== undefined) updateData.active = updates.active;
+
+  const { error } = await supabase
+    .from('experiential_brands')
+    .update(updateData)
+    .eq('id', id);
+
+  if (error) throw error;
+}
+
+export async function deleteExperientialBrand(id: number) {
+  const { error } = await supabase
+    .from('experiential_brands')
+    .delete()
+    .eq('id', id);
+
+  if (error) throw error;
+}
+
+export async function updateExperientialBrandsOrder(items: { id: number; sortOrder: number }[]) {
+  for (const item of items) {
+    await supabase
+      .from('experiential_brands')
+      .update({ sort_order: item.sortOrder })
+      .eq('id', item.id);
+  }
+}
+
+// ============ SITE SETTINGS OPERATIONS ============
+
+export async function getSiteSetting(key: string): Promise<string | null> {
+  try {
+    const { data, error } = await supabase
+      .from('site_settings')
+      .select('value')
+      .eq('key', key)
+      .single();
+
+    if (error) return null;
+    return data?.value || null;
+  } catch (e) {
+    return null;
+  }
+}
+
+export async function setSiteSetting(key: string, value: string | null) {
+  try {
+    const { error } = await supabase
+      .from('site_settings')
+      .upsert({ key, value, updated_at: new Date().toISOString() });
+
+    if (error) throw error;
+  } catch (e) {
+    console.error('Failed to set site setting:', e);
+    throw e;
+  }
 }

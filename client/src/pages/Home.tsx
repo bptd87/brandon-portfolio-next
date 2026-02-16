@@ -8,6 +8,7 @@ import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { trpc } from "@/lib/trpc";
 import { ArrowRight, ChevronDown, Calendar } from "lucide-react";
 import { Link } from "wouter";
+import { getProjectPath } from "@/lib/projectRoutes";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
@@ -232,7 +233,7 @@ export default function Home() {
                     const hoverColor = brandColors[index % brandColors.length];
 
                     return (
-                      <Link key={project.id} href={`/projects/${project.slug}`}>
+                      <Link key={project.id} href={getProjectPath(project)}>
                         <Card className="group cursor-pointer overflow-hidden border-0 bg-transparent hover:scale-[1.02] transition-all duration-500">
                           <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
                             {project.coverImageUrl ? (

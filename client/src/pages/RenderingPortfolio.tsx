@@ -5,8 +5,8 @@ import Footer from "@/components/Footer";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { RenderingFAQ } from "@/components/RenderingFAQ";
-import { RenderingInfoModal } from "@/components/RenderingInfoModal";
-import { useState } from "react";
+import { ProcessGalleryModal } from "@/components/ProcessGalleryModal";
+import { useEffect, useMemo, useState } from "react";
 
 export default function RenderingPortfolio() {
   const { data: projects, isLoading: projectsLoading } = trpc.projects.list.useQuery({
@@ -20,6 +20,7 @@ export default function RenderingPortfolio() {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const isLoading = projectsLoading || galleryLoading;
 
@@ -56,6 +57,55 @@ export default function RenderingPortfolio() {
     year: p.year,
     excerpt: p.excerpt
   })) || [];
+
+  const currentProject = galleryDisplayItems[currentProjectIndex] || null;
+  const currentProjectImages = useMemo(() => {
+    if (!currentProject) return [];
+    const coverImage = currentProject.imageUrl
+      ? [{
+          id: -1,
+          imageUrl: currentProject.imageUrl,
+          videoUrl: null,
+          altText: currentProject.altText || currentProject.title,
+          displayTitle: currentProject.title,
+          description: currentProject.excerpt || null,
+        }]
+      : [];
+
+    const galleryImages = (currentProject.images || []).map((img) => ({
+      id: img.id,
+      imageUrl: img.url,
+      videoUrl: null,
+      altText: img.altText || currentProject.title,
+      displayTitle: img.caption || null,
+      description: null,
+    }));
+
+    return [...coverImage, ...galleryImages].filter((img) => img.imageUrl);
+  }, [currentProject]);
+
+  const currentImage = currentProjectImages[currentImageIndex];
+  const totalProjects = galleryDisplayItems.length;
+
+  useEffect(() => {
+    setCurrentImageIndex(0);
+  }, [currentProjectIndex]);
+
+  const handleNextProject = () => {
+    setCurrentProjectIndex((prev) => Math.min(prev + 1, totalProjects - 1));
+  };
+
+  const handlePrevProject = () => {
+    setCurrentProjectIndex((prev) => Math.max(prev - 1, 0));
+  };
+
+  const handleNextImage = () => {
+    setCurrentImageIndex((prev) => Math.min(prev + 1, currentProjectImages.length - 1));
+  };
+
+  const handlePrevImage = () => {
+    setCurrentImageIndex((prev) => Math.max(prev - 1, 0));
+  };
 
   return (
     <div className="min-h-screen">
@@ -100,7 +150,7 @@ export default function RenderingPortfolio() {
               {featuredDisplayItems.map((item, index) => (
                 <AnimatedSection key={item.id}>
                   <div className="group block relative">
-                    <Link href={`/projects/${item.slug}`}>
+                    <Link href={`/projects/rendering/${item.slug}`}>
                       <article className="space-y-6 cursor-pointer">
                         <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-muted">
                           {item.imageUrl ? (
@@ -239,6 +289,7 @@ export default function RenderingPortfolio() {
                     className="group cursor-pointer"
                     onClick={() => {
                       setCurrentProjectIndex(index);
+                      setCurrentImageIndex(0);
                       setModalOpen(true);
                     }}
                   >
@@ -271,16 +322,27 @@ export default function RenderingPortfolio() {
         </section>
       )}
 
-      {/* Rich Info Modal */}
-      <RenderingInfoModal
-        isOpen={modalOpen}
-        project={galleryDisplayItems[currentProjectIndex]}
-        onClose={() => setModalOpen(false)}
-        onNext={() => setCurrentProjectIndex((prev) => (prev + 1) % galleryDisplayItems.length)}
-        onPrev={() => setCurrentProjectIndex((prev) => (prev - 1 + galleryDisplayItems.length) % galleryDisplayItems.length)}
-        hasNext={galleryDisplayItems.length > 1}
-        hasPrev={galleryDisplayItems.length > 1}
-      />
+      {galleryDisplayItems.length > 0 && (
+        <ProcessGalleryModal
+          isOpen={modalOpen}
+          currentImage={currentImage}
+          currentProject={currentProject ? { displayTitle: currentProject.title, description: currentProject.excerpt || currentProject.designNotes } : undefined}
+          images={currentProjectImages}
+          imageIndex={currentImageIndex}
+          projectIndex={currentProjectIndex}
+          totalProjects={totalProjects}
+          onClose={() => setModalOpen(false)}
+          onNextImage={handleNextImage}
+          onPrevImage={handlePrevImage}
+          onNextProject={handleNextProject}
+          onPrevProject={handlePrevProject}
+          canGoNextProject={currentProjectIndex < totalProjects - 1}
+          canGoPrevProject={currentProjectIndex > 0}
+          canGoNextImage={currentImageIndex < currentProjectImages.length - 1}
+          canGoPrevImage={currentImageIndex > 0}
+          categoryLabel="Rendering"
+        />
+      )}
 
       {/* Process as Layers */}
       <section className="py-32 border-t border-border">

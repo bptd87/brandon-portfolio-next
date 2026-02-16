@@ -353,9 +353,9 @@ export default function Header() {
                 onMouseLeave={handlePortfolioMouseLeave}
               >
                 <Link
-                  href="/projects"
+                  href="/projects/scenic-design"
                   className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-[#2196F3] relative group ${
-                    isActive("/projects") ? "text-[#2196F3]" : ""
+                    isActive("/projects") || isActive("/projects/scenic-design") ? "text-[#2196F3]" : ""
                   }`}
                 >
                   PORTFOLIO

@@ -144,12 +144,70 @@ export default defineConfig({
       "@assets": path.resolve(import.meta.dirname, "attached_assets"),
     },
   },
+  optimizeDeps: {
+    include: [
+      'react',
+      'react-dom',
+      'react-dom/client',
+      'wouter',
+      'lucide-react',
+      '@trpc/client',
+      '@trpc/react-query',
+      '@tanstack/react-query',
+      'framer-motion',
+    ],
+    exclude: ['@builder.io/vite-plugin-jsx-loc'],
+  },
   envDir: path.resolve(import.meta.dirname),
   root: path.resolve(import.meta.dirname, "client"),
   publicDir: path.resolve(import.meta.dirname, "client", "public"),
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Core React libraries
+          'react-vendor': ['react', 'react-dom', 'react-dom/client'],
+          // UI components and styling
+          'ui-vendor': [
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-tooltip',
+            '@radix-ui/react-scroll-area',
+            '@radix-ui/react-checkbox',
+            '@radix-ui/react-slot',
+            'framer-motion',
+            'tailwind-merge',
+            'clsx',
+            'class-variance-authority'
+          ],
+          // Data fetching and API
+          'data-vendor': [
+            '@trpc/client',
+            '@trpc/react-query',
+            '@tanstack/react-query',
+            'superjson'
+          ],
+          // Supabase (largest single dependency)
+          'supabase-vendor': ['@supabase/supabase-js'],
+          // Icons (separate chunk for better caching)
+          'icons': ['lucide-react'],
+          // Router and utils
+          'utils-vendor': ['wouter', 'sonner', 'react-helmet-async']
+        },
+      },
+    },
+    // Enable chunk size warnings
+    chunkSizeWarningLimit: 600,
+    // Optimize dependencies
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true, // Remove console.logs in production
+        drop_debugger: true,
+        pure_funcs: ['console.info', 'console.debug', 'console.warn'],
+      },
+    },
   },
   server: {
     host: true,

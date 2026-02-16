@@ -13,8 +13,17 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 
 export default function RenderingProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
-  const [, setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
+  const isExperientialRendering = location.startsWith("/projects/experiential/rendering");
+  const isRenderingRoute = location.startsWith("/projects/rendering");
+  const projectBasePath = isExperientialRendering
+    ? "/projects/experiential/rendering"
+    : isRenderingRoute
+      ? "/projects/rendering"
+      : "/projects";
   const { data: project, isLoading } = trpc.projects.getBySlug.useQuery({ slug: slug! });
+
+  const projectUrl = project ? `https://www.brandonptdavis.com${projectBasePath}/${project.slug}` : undefined;
 
   // Fetch projects in same discipline for navigation
   const { data: allProjects } = trpc.projects.list.useQuery(
@@ -95,13 +104,19 @@ export default function RenderingProjectDetail() {
         image={project.coverImageUrl || undefined}
         type="website"
         keywords={tags.join(', ')}
+        url={projectUrl}
       />
       <StructuredData
         type="BreadcrumbList"
         breadcrumbs={[
           { name: "Home", url: "https://www.brandonptdavis.com" },
-          { name: "Rendering", url: "https://www.brandonptdavis.com/projects/rendering" },
-          { name: project.title, url: `https://www.brandonptdavis.com/projects/${project.slug}` },
+          ...(isExperientialRendering
+            ? [
+                { name: "Experiential", url: "https://www.brandonptdavis.com/projects/experiential" },
+                { name: "Rendering", url: "https://www.brandonptdavis.com/projects/experiential/rendering" },
+              ]
+            : [{ name: "Rendering", url: "https://www.brandonptdavis.com/projects/rendering" }]),
+          { name: project.title, url: projectUrl || `https://www.brandonptdavis.com/projects/${project.slug}` },
         ]}
       />
       <StructuredData
@@ -118,7 +133,7 @@ export default function RenderingProjectDetail() {
           datePublished: project.publishedAt ? new Date(project.publishedAt).toISOString().split('T')[0] : undefined,
           genre: "Architectural Rendering",
           keywords: tags,
-          url: `https://www.brandonptdavis.com/projects/${project.slug}`,
+          url: projectUrl || `https://www.brandonptdavis.com/projects/${project.slug}`,
         }}
       />
       <Header />
@@ -126,18 +141,25 @@ export default function RenderingProjectDetail() {
       {/* Breadcrumb Navigation */}
       <div className="container py-6">
         <Breadcrumb
-          items={[
-            { label: "Work", href: "/projects" },
-            { label: "Rendering", href: "/projects/rendering" },
-            { label: project.title }
-          ]}
+          items={isExperientialRendering
+            ? [
+                { label: "Work", href: "/projects" },
+                { label: "Experiential", href: "/projects/experiential" },
+                { label: "Rendering", href: "/projects/experiential/rendering" },
+                { label: project.title }
+              ]
+            : [
+                { label: "Work", href: "/projects" },
+                { label: "Rendering", href: "/projects/rendering" },
+                { label: project.title }
+              ]}
         />
       </div>
 
       {/* Sticky Navigation Arrows */}
       {prevProject && (
         <button
-          onClick={() => setLocation(`/projects/${prevProject.slug}`)}
+          onClick={() => setLocation(`${projectBasePath}/${prevProject.slug}`)}
           className="fixed left-4 top-1/2 -translate-y-1/2 z-50 backdrop-blur-md bg-background/80 border-2 border-border hover:bg-background p-4 rounded-full transition-all hover:scale-110"
           aria-label="Previous rendering"
         >
@@ -147,7 +169,7 @@ export default function RenderingProjectDetail() {
 
       {nextProject && (
         <button
-          onClick={() => setLocation(`/projects/${nextProject.slug}`)}
+          onClick={() => setLocation(`${projectBasePath}/${nextProject.slug}`)}
           className="fixed right-4 top-1/2 -translate-y-1/2 z-50 backdrop-blur-md bg-background/80 border-2 border-border hover:bg-background p-4 rounded-full transition-all hover:scale-110"
           aria-label="Next rendering"
         >
@@ -160,7 +182,7 @@ export default function RenderingProjectDetail() {
 
         {/* Back Button - Subtle */}
         <AnimatedSection>
-          <Link href="/projects/rendering">
+          <Link href={isExperientialRendering ? "/projects/experiential" : "/projects/rendering"}>
             <Button
               variant="ghost"
               size="sm"

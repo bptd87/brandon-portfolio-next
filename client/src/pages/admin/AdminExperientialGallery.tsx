@@ -6,7 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, GripVertical, Plus, Trash2, Save, Image as ImageIcon, UploadCloud } from "lucide-react";
+import { Loader2, GripVertical, Plus, Trash2, Save, Image as ImageIcon, UploadCloud, ChevronDown, ChevronRight } from "lucide-react";
+import { AdminGalleryImageManager } from "@/components/admin/AdminGalleryImageManager";
 import { toast } from "sonner";
 import {
     DndContext,
@@ -47,9 +48,10 @@ interface SortableItemProps {
     item: any;
     onRemove: (id: number) => void;
     onUpdateMetadata: (id: number, field: 'altText' | 'displayTitle', value: string) => void;
+    onManageImages: (projectId: number, title: string) => void;
 }
 
-function SortableGalleryItem({ id, item, onRemove, onUpdateMetadata }: SortableItemProps) {
+function SortableGalleryItem({ id, item, onRemove, onUpdateMetadata, onManageImages }: SortableItemProps) {
     const {
         attributes,
         listeners,
@@ -90,13 +92,23 @@ function SortableGalleryItem({ id, item, onRemove, onUpdateMetadata }: SortableI
                 </div>
 
                 <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between gap-1">
                         <h4 className="font-semibold text-sm truncate">{item.project?.title || "Unknown Project"}</h4>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-6 w-6 text-muted-foreground hover:text-foreground"
+                            onClick={() => onManageImages(item.project.id, item.project.title)}
+                            title="Manage Gallery Images"
+                        >
+                            <ImageIcon className="h-4 w-4" />
+                        </Button>
                         <Button
                             variant="ghost"
                             size="icon"
                             className="h-6 w-6 text-destructive hover:text-destructive/90 hover:bg-destructive/10"
                             onClick={() => onRemove(item.id)}
+                            title="Remove from Gallery"
                         >
                             <Trash2 className="h-4 w-4" />
                         </Button>
@@ -134,6 +146,7 @@ export default function AdminExperientialGallery() {
     const [activeId, setActiveId] = useState<number | null>(null);
     const [localGallery, setLocalGallery] = useState<any[]>([]);
     const [hasChanges, setHasChanges] = useState(false);
+    const [managingProject, setManagingProject] = useState<{ id: number, title: string } | null>(null);
 
     // Quick Add State
     const [quickFile, setQuickFile] = useState<File | null>(null);
@@ -141,6 +154,7 @@ export default function AdminExperientialGallery() {
     const [quickTitle, setQuickTitle] = useState("");
     const [quickYear, setQuickYear] = useState(new Date().getFullYear().toString());
     const [quickAltText, setQuickAltText] = useState("");
+    const [quickVideoUrl, setQuickVideoUrl] = useState("");
     const [quickDesignNotes, setQuickDesignNotes] = useState("");
     const [isUploading, setIsUploading] = useState(false);
     const [isDraggingFile, setIsDraggingFile] = useState(false);
@@ -243,42 +257,61 @@ export default function AdminExperientialGallery() {
     };
 
     const handleQuickAdd = async () => {
-        if (!quickFile || !quickTitle) return;
+        // Require either an image OR a video URL (or both)
+        if ((!quickFile && !quickVideoUrl) || !quickTitle) {
+            toast.error("Please provide a title and at least an image or video URL");
+            return;
+        }
 
         setIsUploading(true);
         try {
-            // 1. Upload Image via Signed URL
-            const fileExt = quickFile.name.split('.').pop();
-            const fileName = `${Math.random().toString(36).substring(2, 15)}.${fileExt}`;
-            const filePath = `experiential-gallery/${fileName}`;
+            let coverImageUrl = null;
 
-            // Get signed URL
-            const { signedUrl, token, path } = await signedUrlMutation.mutateAsync({
-                bucket: 'portfolio',
-                path: filePath
-            });
+            // 1. Upload Image if provided
+            if (quickFile) {
+                const fileExt = quickFile.name.split('.').pop();
+                const fileName = `${Math.random().toString(36).substring(2, 15)}.${fileExt}`;
+                const filePath = `experiential-gallery/${fileName}`;
 
-            // Upload via signed URL
-            const { error: uploadError } = await supabase.storage
-                .from('portfolio')
-                .uploadToSignedUrl(path, token, quickFile);
+                // Get signed URL
+                const { signedUrl, token, path } = await signedUrlMutation.mutateAsync({
+                    bucket: 'portfolio',
+                    path: filePath
+                });
 
-            if (uploadError) throw uploadError;
+                // Upload via signed URL
+                const { error: uploadError } = await supabase.storage
+                    .from('portfolio')
+                    .uploadToSignedUrl(path, token, quickFile);
 
-            // Get public URL
-            const { data: { publicUrl } } = supabase.storage
-                .from('portfolio')
-                .getPublicUrl(filePath);
+                if (uploadError) throw uploadError;
 
-            // 2. Create Hidden Project
+                // Get public URL
+                const { data: { publicUrl } } = supabase.storage
+                    .from('portfolio')
+                    .getPublicUrl(filePath);
+
+                coverImageUrl = publicUrl;
+            }
+
+            // 2. Create Hidden Project with optional video
+            const projectImages = quickVideoUrl ? [{
+                videoUrl: quickVideoUrl,
+                imageType: 'video' as const,
+                title: `${quickTitle} - Walkthrough`,
+                caption: 'Video walkthrough',
+                sortOrder: 0,
+            }] : undefined;
+
             const projectResult = await createProjectMutation.mutateAsync({
                 title: quickTitle,
                 slug: slugify(quickTitle) + '-' + Math.random().toString(36).substring(2, 7),
                 year: parseInt(quickYear) || new Date().getFullYear(),
                 status: 'gallery_only',
                 discipline: 'experiential_design',
-                coverImageUrl: publicUrl,
-                designNotes: quickDesignNotes, // Now saving project details
+                coverImageUrl: coverImageUrl || undefined,
+                designNotes: quickDesignNotes,
+                images: projectImages,
             });
 
             // 3. Add to Gallery with Alt Text
@@ -293,6 +326,7 @@ export default function AdminExperientialGallery() {
             setQuickPreview(null);
             setQuickTitle("");
             setQuickAltText("");
+            setQuickVideoUrl("");
             setQuickDesignNotes("");
             toast.success("Image uploaded & added to gallery!");
 
@@ -397,7 +431,7 @@ export default function AdminExperientialGallery() {
                             <Plus className="h-5 w-5 text-primary" /> Quick Add Image
                         </CardTitle>
                         <CardDescription>
-                            Drag & drop an image here to start. We'll handle the project creation.
+                            Drag & drop an image here to start, or add a video URL. We'll handle the project creation.
                         </CardDescription>
                     </CardHeader>
                     <CardContent
@@ -475,6 +509,17 @@ export default function AdminExperientialGallery() {
                                 </div>
 
                                 <div className="grid gap-2">
+                                    <label className="text-sm font-medium">Video URL (Optional)</label>
+                                    <Input
+                                        placeholder="Vimeo, YouTube, or walkthrough video URL..."
+                                        value={quickVideoUrl}
+                                        onChange={(e) => setQuickVideoUrl(e.target.value)}
+                                        className="bg-background"
+                                    />
+                                    <p className="text-xs text-muted-foreground">Add a walkthrough or promotional video</p>
+                                </div>
+
+                                <div className="grid gap-2">
                                     <label className="text-sm font-medium">Project Details (Design Notes)</label>
                                     <Textarea
                                         placeholder="Add details about the event, experience, or installation..."
@@ -486,7 +531,7 @@ export default function AdminExperientialGallery() {
 
                                 <Button
                                     onClick={handleQuickAdd}
-                                    disabled={!quickFile || !quickTitle || isUploading}
+                                    disabled={(!quickFile && !quickVideoUrl) || !quickTitle || isUploading}
                                     className="w-full md:w-auto mt-2"
                                 >
                                     {isUploading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
@@ -533,6 +578,7 @@ export default function AdminExperientialGallery() {
                                                 item={item}
                                                 onRemove={handleRemove}
                                                 onUpdateMetadata={handleUpdateMetadata}
+                                                onManageImages={(pid, title) => setManagingProject({ id: pid, title })}
                                             />
                                         ))
                                     )}
@@ -598,6 +644,17 @@ export default function AdminExperientialGallery() {
 
                 </div>
             </div>
+
+            {
+                managingProject && (
+                    <AdminGalleryImageManager
+                        projectId={managingProject.id}
+                        projectTitle={managingProject.title}
+                        isOpen={!!managingProject}
+                        onClose={() => setManagingProject(null)}
+                    />
+                )
+            }
         </AdminLayout>
     );
 }

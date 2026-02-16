@@ -1,9 +1,14 @@
 import { supabase } from '@/lib/supabase';
 
 /**
- * Uploads a file to Supabase Storage with organized numbering.
+ * Uploads a file to Supabase Storage with 1-year cache and organization.
+ * 
  * Path format: [bucket]/[folder]/[year]/[month]/[filename]
  * Example: articles/2024/02/my-image.webp
+ * 
+ * Cache: 1 year (31536000 seconds) for all files
+ * - Files are cached by browser for repeat visits
+ * - Use versioned filenames for cache-busting if content changes
  */
 export async function uploadImage(
     file: File,
@@ -25,8 +30,8 @@ export async function uploadImage(
     const { data, error } = await supabase.storage
         .from(bucket)
         .upload(filePath, file, {
-            cacheControl: '3600',
-            upsert: true, // Overwrite if exists, or false if we want unique? user said organized. Upsert true mimics "replace"
+            cacheControl: '31536000', // 1 year in seconds for optimal browser caching
+            upsert: true,
         });
 
     if (error) {
