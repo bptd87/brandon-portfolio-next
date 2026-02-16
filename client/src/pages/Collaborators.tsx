@@ -168,9 +168,9 @@ export default function Collaborators() {
                                     {collaborator.role === 'theatre_company' || collaborator.role === 'partner_company' ? 'Website' : 'Portfolio'}
                                   </a>
                                 )}
-                                {collaborator.website && collaborator.website !== collaborator.portfolioUrl && (
+                                {collaborator.websiteUrl && collaborator.websiteUrl !== collaborator.portfolioUrl && (
                                   <a
-                                    href={collaborator.website}
+                                    href={collaborator.websiteUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors"
