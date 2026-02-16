@@ -201,66 +201,134 @@ export default function About() {
         </div>
       </section>
 
-      {/* Bio Section */}
-      <section className="container py-32 border-b border-border/30">
-        <div className="max-w-4xl mx-auto">
-          <div className="animate-in fade-in slide-in-from-bottom duration-700">
-            <h2 className="text-5xl md:text-7xl font-serif mb-12">Who I Am</h2>
-            
-            <div className="space-y-6 text-lg text-foreground/80 leading-relaxed">
-              <p>
-                I'm a scenic designer and artist working at the intersection of craft, technology, and dramatic storytelling. With over 15 years in theatre and immersive design, I've designed more than 130 productions across regional theatre, summer stock, academic theatre, and themed entertainment.
-              </p>
-
-              <p>
-                I'm a proud member of United Scenic Artists Local 829, which represents professional designers across live theatre, film, and television. My training includes an MFA in Scenic Design from UC Irvine and a BFA in Theatre Arts from Stephens College. Beyond the theatre, I work as a Senior Scenic and Experiential Designer at Adaptive Design Services, translating theatrical storytelling techniques into branded experiences and immersive installations.
-              </p>
-
-              <p>
-                I teach scenic design at the university level, mentoring the next generation of designers and helping them navigate both the technical mastery and creative courage required for a sustainable career in the arts.
-              </p>
-
-              <p>
-                My work has taken me across the US to regional theatres, university programs, summer stock, and experiential companies. Recently, I made my South Coast Repertory debut as co-scenic designer on Million Dollar Quartet—a milestone that represents moving toward the kind of artistic work I aspire to make.
-              </p>
+      {/* Stats Bar */}
+      <section className="bg-primary/5 border-y border-primary/10 py-16">
+        <div className="container">
+          <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="text-center animate-in fade-in duration-700">
+              <div className="text-5xl md:text-6xl font-black text-primary mb-2">130+</div>
+              <div className="text-sm uppercase tracking-wider text-foreground/60">Productions Designed</div>
+            </div>
+            <div className="text-center animate-in fade-in duration-700 delay-100">
+              <div className="text-5xl md:text-6xl font-black text-primary mb-2">15</div>
+              <div className="text-sm uppercase tracking-wider text-foreground/60">Years Experience</div>
+            </div>
+            <div className="text-center animate-in fade-in duration-700 delay-200">
+              <div className="text-5xl md:text-6xl font-black text-primary mb-2">USA</div>
+              <div className="text-sm uppercase tracking-wider text-foreground/60">829 Member</div>
+            </div>
+            <div className="text-center animate-in fade-in duration-700 delay-300">
+              <div className="text-5xl md:text-6xl font-black text-primary mb-2">SCR</div>
+              <div className="text-sm uppercase tracking-wider text-foreground/60">Recent Debut</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Artistic Approach Section */}
+      {/* Bio Section */}
       <section className="container py-32">
-        <div className="max-w-4xl mx-auto">
-          <div className="animate-in fade-in slide-in-from-bottom duration-700">
-            <h2 className="text-5xl md:text-7xl font-serif mb-12">How I Work</h2>
-            
-            <div className="space-y-8">
-              <div className="space-y-4">
-                <h3 className="text-2xl font-serif text-primary">Memory & Impression</h3>
-                <p className="text-lg text-foreground/80 leading-relaxed">
-                  The Glass Menagerie was built around a single architectural idea: <span className="font-medium">a fluid, impressionistic landscape shaped by Tom's recollection</span>. Not a literal apartment, but memory made spatial. The design sought to feel unstable and permeable—allowing memory to drift, overlap, and distort. The end result was <span className="font-medium">a theatrical memoryscape shaped by absence as much as presence</span>.
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-[1fr_400px] gap-16 items-start">
+            {/* Left: Text Content */}
+            <div className="animate-in fade-in slide-in-from-left duration-700">
+              <h2 className="text-5xl md:text-6xl font-serif mb-8 leading-tight">Background & Training</h2>
+              
+              <div className="space-y-6 text-lg text-foreground/80 leading-relaxed">
+                <p>
+                  I'm a scenic designer and artist working at the intersection of craft, technology, and dramatic storytelling. With over 15 years in theatre and immersive design, I've designed more than 130 productions across regional theatre, summer stock, academic theatre, and themed entertainment.
                 </p>
-              </div>
 
-              <div className="space-y-4">
-                <h3 className="text-2xl font-serif text-primary">Holding Space for Transformation</h3>
-                <p className="text-lg text-foreground/80 leading-relaxed">
-                  When I first read Xiomara Cornejo's Romero, I knew the design had to hold more than history—it had to <span className="font-medium">hold ghosts</span>. Set in the final hours of Archbishop Óscar Romero's life, the play bends time and invites the dead to speak. The scenic world emerged from tension between sacredness and rupture. Designing Romero meant <span className="font-medium">listening, holding space, and letting the silence speak</span>.
+                <p>
+                  My training includes an <span className="font-medium text-foreground">MFA in Scenic Design from UC Irvine</span> and a <span className="font-medium text-foreground">BFA in Theatre Arts from Stephens College</span>. I'm a proud member of <span className="font-medium text-foreground">United Scenic Artists Local 829</span>, the union representing professional designers across live theatre, film, and television.
                 </p>
-              </div>
 
-              <div className="space-y-4">
-                <h3 className="text-2xl font-serif text-primary">Disappearing into Story</h3>
-                <p className="text-lg text-foreground/80 leading-relaxed">
-                  The strongest scenic work is invisible. By committing fully to realism, a set can create a stable, believable world in which the play's humor, relationships, and undertones unfold organically. <span className="font-medium">The scenic design aims to disappear into the storytelling</span>, allowing performance and text to drive the experience.
+                <p>
+                  Beyond the theatre, I work as a Senior Scenic and Experiential Designer at Adaptive Design Services, translating theatrical storytelling techniques into branded experiences and immersive installations. I also teach scenic design at the university level, mentoring emerging designers through the technical mastery and creative courage required for sustainable artistic careers.
                 </p>
               </div>
+            </div>
 
-              <div className="space-y-4 pt-4 border-t border-border/50">
-                <p className="text-lg text-foreground/80 leading-relaxed">
-                  Whether designing a memory play, a spiritual ritual, or a grounded domestic realism, every choice serves the same goal: <span className="font-medium">clarity of intent</span>. I've worked across minimalism and conceptual design, using constraint as creative fuel. With my South Coast Repertory debut on Million Dollar Quartet, I'm exploring how scenic design captures not just place, but the transformative moment when artists create something that matters.
+            {/* Right: Milestone Callout */}
+            <div className="animate-in fade-in slide-in-from-right duration-700 delay-200">
+              <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl p-8 border border-primary/20 sticky top-24">
+                <div className="text-6xl font-black text-primary/20 mb-4">✦</div>
+                <h3 className="text-2xl font-serif mb-4 text-foreground">Recent Milestone</h3>
+                <p className="text-foreground/80 leading-relaxed mb-6">
+                  South Coast Repertory debut as co-scenic designer on <span className="font-medium text-foreground">Million Dollar Quartet</span>—a milestone representing movement toward the kind of regional professional work I'm building toward.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full">LORT Theatre</span>
+                  <span className="px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full">Co-Design</span>
+                  <span className="px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full">2025</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Design Philosophy - Visual Pull Quotes */}
+      <section className="bg-gradient-to-b from-muted/30 via-background to-background py-32">
+        <div className="container">
+          <div className="max-w-6xl mx-auto mb-20">
+            <h2 className="text-5xl md:text-7xl font-serif mb-6">Design Philosophy</h2>
+            <p className="text-xl text-foreground/70">
+              What I've learned from designing 130+ productions: design is dramaturg, collaborator, and ghost.
+            </p>
+          </div>
+
+         {/* Memory & Impression */}
+          <div className="max-w-6xl mx-auto mb-24 animate-in fade-in slide-in-from-bottom duration-700">
+            <div className="grid md:grid-cols-[300px_1fr] gap-12 items-start">
+              <div className="md:sticky md:top-24">
+                <div className="text-sm uppercase tracking-widest text-primary font-bold mb-2">Project</div>
+                <h3 className="text-3xl font-serif text-foreground">The Glass Menagerie</h3>
+                <div className="text-sm text-foreground/60 mt-2">Maples Repertory, 2025</div>
+              </div>
+              <div className="space-y-6">
+                <div className="border-l-4 border-primary/30 pl-8">
+                  <blockquote className="text-2xl md:text-3xl font-serif text-foreground/90 leading-relaxed mb-4">
+                    "A fluid, impressionistic landscape shaped by recollection. Not a literal apartment, but memory made spatial."
+                  </blockquote>
+                </div>
+                <p className="text-lg text-foreground/70 leading-relaxed">
+                  The design sought to feel unstable and permeable—allowing memory to drift, overlap, and distort. The end result was a <span className="font-medium text-foreground">theatrical memoryscape shaped by absence as much as presence</span>. This is how I approach memory plays: not reconstruction, but impression.
                 </p>
               </div>
+            </div>
+          </div>
+
+          {/* Holding Space */}
+          <div className="max-w-6xl mx-auto mb-24 animate-in fade-in slide-in-from-bottom duration-700 delay-100">
+            <div className="grid md:grid-cols-[300px_1fr] gap-12 items-start">
+              <div className="md:sticky md:top-24">
+                <div className="text-sm uppercase tracking-widest text-primary font-bold mb-2">Project</div>
+                <h3 className="text-3xl font-serif text-foreground">Romero</h3>
+                <div className="text-sm text-foreground/60 mt-2">University of Missouri, 2025</div>
+              </div>
+              <div className="space-y-6">
+                <div className="border-l-4 border-primary/30 pl-8">
+                  <blockquote className="text-2xl md:text-3xl font-serif text-foreground/90 leading-relaxed mb-4">
+                    "The design had to hold more than history—it had to hold ghosts."
+                  </blockquote>
+                </div>
+                <p className="text-lg text-foreground/70 leading-relaxed">
+                  Set in the final hours of Archbishop Óscar Romero's life, the play bends time and invites the dead to speak. The scenic world emerged from tension between sacredness and rupture. Designing this work meant <span className="font-medium text-foreground">listening, holding space, and letting the silence speak</span>.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Core Philosophy */}
+          <div className="max-w-4xl mx-auto animate-in fade-in duration-700 delay-200">
+            <div className="bg-primary/5 border border-primary/10 rounded-2xl p-12 text-center">
+              <div className="text-7xl font-black text-primary/20 mb-6">✦</div>
+              <blockquote className="text-3xl md:text-4xl font-serif text-foreground mb-8 leading-tight">
+                "The strongest scenic work is invisible."
+              </blockquote>
+              <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
+                Whether designing a memory play, a spiritual ritual, or grounded realism, every choice serves the same goal: <span className="font-medium text-foreground">clarity of intent</span>. I've worked across minimalism and conceptual design, using constraint as creative fuel. The play is always the boss.
+              </p>
             </div>
           </div>
         </div>
