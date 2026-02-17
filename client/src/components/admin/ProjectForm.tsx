@@ -1287,25 +1287,29 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
                           onChange={(e) => setNewTagInput(e.target.value)}
                           placeholder="e.g., 'Lighting Design', 'Digital', 'Projection'..."
                           onKeyDown={(e) => {
-                            if (e.key === "Enter" && newTagInput.trim()) {
+                            // Always prevent form submission on Enter in this field
+                            if (e.key === "Enter") {
                               e.preventDefault();
+                              e.stopPropagation();
                               
-                              // Check if tag already exists
-                              const existingTag = allTags?.find(
-                                t => t.name.toLowerCase() === newTagInput.trim().toLowerCase()
-                              );
-                              
-                              if (existingTag && !selectedTagIds.includes(existingTag.id)) {
-                                // Tag exists, just select it
-                                setSelectedTagIds([...selectedTagIds, existingTag.id]);
-                                setNewTagInput("");
-                              } else if (!existingTag) {
-                                // Tag doesn't exist, create it
-                                const slug = newTagInput
-                                  .toLowerCase()
-                                  .replace(/[^a-z0-9]+/g, "-")
-                                  .replace(/(^-|-$)/g, "");
-                                createTag.mutate({ name: newTagInput.trim(), slug });
+                              if (newTagInput.trim()) {
+                                // Check if tag already exists
+                                const existingTag = allTags?.find(
+                                  t => t.name.toLowerCase() === newTagInput.trim().toLowerCase()
+                                );
+                                
+                                if (existingTag && !selectedTagIds.includes(existingTag.id)) {
+                                  // Tag exists, just select it
+                                  setSelectedTagIds([...selectedTagIds, existingTag.id]);
+                                  setNewTagInput("");
+                                } else if (!existingTag) {
+                                  // Tag doesn't exist, create it
+                                  const slug = newTagInput
+                                    .toLowerCase()
+                                    .replace(/[^a-z0-9]+/g, "-")
+                                    .replace(/(^-|-$)/g, "");
+                                  createTag.mutate({ name: newTagInput.trim(), slug });
+                                }
                               }
                             }
                           }}
