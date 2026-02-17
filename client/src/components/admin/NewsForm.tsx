@@ -178,7 +178,7 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto p-8">
         <DialogHeader>
           <DialogTitle>{news ? "Edit News Item" : "Create News Item"}</DialogTitle>
           <DialogDescription>
@@ -346,13 +346,15 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
               </div>
             </TabsContent>
 
-            <TabsContent value="content" className="space-y-4 mt-4">
-              <BlockBuilder 
-                blocks={formData.blocks} 
-                onBlocksChange={handleBlocksChange}
-                type="news"
-                uploadPath="news"
-              />
+            <TabsContent value="content" className="space-y-4 mt-4 pr-4">
+              <div className="space-y-4">
+                <BlockBuilder 
+                  blocks={formData.blocks} 
+                  onBlocksChange={handleBlocksChange}
+                  type="news"
+                  uploadPath="news"
+                />
+              </div>
             </TabsContent>
 
             <TabsContent value="seo" className="space-y-4 mt-4">
