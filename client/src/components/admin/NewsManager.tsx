@@ -87,7 +87,9 @@ export function NewsManager() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {news.map((item) => (
+                    {news
+                      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+                      .map((item) => (
                       <TableRow
                         key={item.id}
                         className="cursor-pointer hover:bg-muted/50 transition-colors group"
@@ -167,7 +169,7 @@ export function NewsManager() {
               {/* Mobile Card View */}
               <div className="md:hidden">
                 <MobileTableView
-                  data={news}
+                  data={news.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())}
                   idKey="id"
                   columns={[
                     {

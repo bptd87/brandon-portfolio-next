@@ -437,7 +437,16 @@ function BlockContentEditor({
 
     case 'image':
       return (
-        <div className="space-y-2">
+        <div className="space-y-4">
+          {block.url && (
+            <div className="relative w-full max-h-48 overflow-hidden rounded-lg border border-border bg-muted">
+              <img 
+                src={block.url} 
+                alt={block.alt || 'Preview'} 
+                className="w-full h-full object-cover"
+              />
+            </div>
+          )}
           <div className="flex gap-2 items-center">
             <Input
               value={block.url || ''}
@@ -483,53 +492,64 @@ function BlockContentEditor({
 
     case 'gallery':
       return (
-        <div className="space-y-2">
+        <div className="space-y-4">
           {(block.images || []).map((img: any, imgIndex: number) => (
-            <div key={imgIndex} className="flex gap-2 items-start border-b pb-2">
-              <div className="flex-1 space-y-2">
-                <div className="flex gap-2 items-center">
+            <div key={imgIndex} className="space-y-2 border-b pb-4 last:border-b-0">
+              {img.url && (
+                <div className="relative w-full max-h-40 overflow-hidden rounded-lg border border-border bg-muted">
+                  <img 
+                    src={img.url} 
+                    alt={img.caption || 'Gallery image'} 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
+              <div className="flex gap-2 items-start">
+                <div className="flex-1 space-y-2">
+                  <div className="flex gap-2 items-center">
+                    <Input
+                      value={img.url || ''}
+                      onChange={(e) => {
+                        const newImages = [...(block.images || [])];
+                        newImages[imgIndex] = { ...img, url: e.target.value };
+                        onUpdate({ images: newImages });
+                      }}
+                      placeholder="Image URL"
+                    />
+                    <div className="relative">
+                      <Input
+                        type="file"
+                        accept="image/*"
+                        className="absolute inset-0 opacity-0 cursor-pointer"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) onImageUpload(file, imgIndex);
+                        }}
+                        disabled={uploadingBlockId === `block-${index}-gallery-${imgIndex}`}
+                      />
+                      <Button 
+                        variant="outline" 
+                        size="icon" 
+                        disabled={uploadingBlockId === `block-${index}-gallery-${imgIndex}`}
+                      >
+                        {uploadingBlockId === `block-${index}-gallery-${imgIndex}` ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <ImageIcon className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
+                  </div>
                   <Input
-                    value={img.url || ''}
+                    value={img.caption || ''}
                     onChange={(e) => {
                       const newImages = [...(block.images || [])];
-                      newImages[imgIndex] = { ...img, url: e.target.value };
+                      newImages[imgIndex] = { ...img, caption: e.target.value };
                       onUpdate({ images: newImages });
                     }}
-                    placeholder="Image URL"
+                    placeholder="Caption (optional)"
                   />
-                  <div className="relative">
-                    <Input
-                      type="file"
-                      accept="image/*"
-                      className="absolute inset-0 opacity-0 cursor-pointer"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) onImageUpload(file, imgIndex);
-                      }}
-                      disabled={uploadingBlockId === `block-${index}-gallery-${imgIndex}`}
-                    />
-                    <Button 
-                      variant="outline" 
-                      size="icon" 
-                      disabled={uploadingBlockId === `block-${index}-gallery-${imgIndex}`}
-                    >
-                      {uploadingBlockId === `block-${index}-gallery-${imgIndex}` ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <ImageIcon className="h-4 w-4" />
-                      )}
-                    </Button>
-                  </div>
                 </div>
-                <Input
-                  value={img.caption || ''}
-                  onChange={(e) => {
-                    const newImages = [...(block.images || [])];
-                    newImages[imgIndex] = { ...img, caption: e.target.value };
-                    onUpdate({ images: newImages });
-                  }}
-                  placeholder="Caption (optional)"
-                />
               </div>
               <Button
                 type="button"

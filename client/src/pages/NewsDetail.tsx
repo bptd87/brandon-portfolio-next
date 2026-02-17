@@ -212,8 +212,8 @@ function NewsDetailContent() {
     .map(n => ({
       ...n,
       timeDiff: Math.abs(
-        new Date(n.publishedAt || n.createdAt).getTime() -
-        new Date(newsItem.publishedAt || newsItem.createdAt).getTime()
+        new Date(n.date).getTime() -
+        new Date(newsItem.date).getTime()
       )
     }))
     .sort((a, b) => a.timeDiff - b.timeDiff)
@@ -222,8 +222,8 @@ function NewsDetailContent() {
   // Get prev/next articles chronologically
   const allNewsSorted = relatedNews
     ?.sort((a, b) =>
-      new Date(b.publishedAt || b.createdAt).getTime() -
-      new Date(a.publishedAt || a.createdAt).getTime()
+      new Date(b.date).getTime() -
+      new Date(a.date).getTime()
     ) || [];
   const currentIndex = allNewsSorted.findIndex(n => n.id === newsItem.id);
   const prevArticle = currentIndex > 0 ? allNewsSorted[currentIndex - 1] : null;
@@ -352,7 +352,7 @@ function NewsDetailContent() {
               <div className="flex items-center gap-2">
                 <Calendar className="h-5 w-5" />
                 <span className="text-lg font-medium">
-                  {new Date(newsItem.publishedAt || newsItem.createdAt).toLocaleDateString('en-US', {
+                  {new Date(newsItem.date).toLocaleDateString('en-US', {
                     month: 'long',
                     day: 'numeric',
                     year: 'numeric'

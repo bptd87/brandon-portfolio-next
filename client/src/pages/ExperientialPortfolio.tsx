@@ -288,7 +288,6 @@ export default function ExperientialPortfolio() {
       }
     });
 
-    console.log('[Grouped Projects]', { category: processModalCategory, total: categoryItems.length, groupedTotal: groups.length, groups });
     return groups;
   }, [categoryItems, processModalCategory]);
 
@@ -314,28 +313,22 @@ export default function ExperientialPortfolio() {
 
   const handleGalleryItemClick = (index: number) => {
     const item = categoryItems[index];
-    console.log('[Gallery Click] Item:', { id: item.id, projectId: item.projectId, category: item.category });
     
     // Find which project group this item belongs to
     const projIndex = groupedProjects.findIndex((g) => {
       if (g.projectId && item.projectId && g.projectId === item.projectId) {
-        console.log('[Gallery Click] Found project by projectId:', g.projectId);
         return true;
       }
       if (g.projectId === null && g.mainItem?.id === item.id) {
-        console.log('[Gallery Click] Found single-image item:', item.id);
         return true;
       }
       return false;
     });
     
-    console.log('[Gallery Click] Project index found:', projIndex, 'Total projects:', groupedProjects.length);
-    
     if (projIndex >= 0) {
       setProjectIndex(projIndex);
       setImageIndex(0);
       setProcessModalOpen(true);
-      console.log('[Gallery Click] Modal opened, projectIndex:', projIndex);
     }
   };
 

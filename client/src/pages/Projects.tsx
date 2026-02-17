@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { MapPin, Calendar, ArrowRight } from "lucide-react";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { trpc } from "@/lib/trpc";
-import { Link, useLocation, Redirect } from "wouter";
+import { Link } from "wouter";
 import { getProjectPath } from "@/lib/projectRoutes";
 import { StaggerList, StaggerItem } from "@/components/animations/Stagger";
 import { SEO } from "@/components/SEO";
@@ -14,13 +14,11 @@ import { PortfolioGridSkeleton } from "@/components/SkeletonLoaders";
 import { AnimatedSection } from "@/components/AnimatedSection";
 
 export default function Projects() {
-  const [location] = useLocation();
-  const isScenicDesign = location.startsWith('/projects/scenic-design') || location === '/projects';
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>('all');
 
   const { data: projects, isLoading } = trpc.projects.list.useQuery({
     status: 'published',
-    discipline: isScenicDesign ? 'scenic_design' : undefined
+    discipline: 'scenic_design'
   });
 
   const normalizeText = (value?: string | null) => {
@@ -35,41 +33,12 @@ export default function Projects() {
     return normalized;
   };
 
-  const normalizedDiscipline = (discipline?: string | null) => {
-    if (!discipline) return '';
-    return normalizeText(discipline).replace(/[-\s]+/g, '_');
-  };
-
-  const disciplineProjects = useMemo(() => {
-    if (!projects) return [];
-    if (!isScenicDesign) return projects;
-    
-    // Extra strict filtering for scenic design page
-    const filtered = projects.filter((p) => {
-      const normalized = normalizedDiscipline(p.discipline);
-      const isScenic = normalized === 'scenic_design';
-      
-      // Debug logging
-      if (!isScenic && p.discipline) {
-        console.log('[Projects] Filtering out non-scenic project:', {
-          title: p.title,
-          discipline: p.discipline,
-          normalized
-        });
-      }
-      
-      return isScenic;
-    });
-    
-    return filtered;
-  }, [projects, isScenicDesign]);
-
   // Get unique subcategories from projects
   const subcategories = useMemo(() => {
-    if (!disciplineProjects.length) return [] as Array<{ key: string; label: string }>;
+    if (!projects?.length) return [] as Array<{ key: string; label: string }>;
     const labels = new Map<string, string>();
 
-    for (const project of disciplineProjects) {
+    for (const project of projects) {
       const key = normalizeText(project.subcategory);
       if (!key) continue;
       if (!labels.has(key)) {
@@ -80,7 +49,7 @@ export default function Projects() {
     return Array.from(labels.entries())
       .sort((a, b) => a[0].localeCompare(b[0]))
       .map(([key, label]) => ({ key, label }));
-  }, [disciplineProjects]);
+  }, [projects]);
 
   useEffect(() => {
     if (selectedSubcategory === 'all') return;
@@ -92,72 +61,40 @@ export default function Projects() {
 
   // Filter projects by subcategory
   const filteredProjects = useMemo(() => {
-    if (!disciplineProjects.length) return [];
-    if (selectedSubcategory === 'all') return disciplineProjects;
-    return disciplineProjects.filter(
+    if (!projects?.length) return [];
+    if (selectedSubcategory === 'all') return projects;
+    return projects.filter(
       (p) => normalizeText(p.subcategory) === selectedSubcategory
     );
-  }, [disciplineProjects, selectedSubcategory]);
+  }, [projects, selectedSubcategory]);
 
-  useEffect(() => {
-    if (!projects) return;
-    const subcategoryKeys = subcategories.map((cat) => cat.key);
-    console.log('[Projects] count', {
-      total: projects.length,
-      scenic: disciplineProjects.length,
-      filtered: filteredProjects.length,
-      selected: selectedSubcategory,
-      subcategories: subcategoryKeys,
-    });
-  }, [projects, disciplineProjects, filteredProjects, selectedSubcategory, subcategories]);
+  // Performance monitoring removed for production
 
-  const disciplineInfo: Record<string, { title: string; subtitle: string }> = {
-    scenic_design: {
-      title: "Scenic Design",
-      subtitle: "Spatial Storytelling & Environments"
-    },
-    experiential_design: {
-      title: "Experiential Design",
-      subtitle: "Immersive Brand Activations"
-    },
-    rendering: {
-      title: "Rendering",
-      subtitle: "Visualization & Concept"
-    },
-    scenic_models: {
-      title: "Scenic Models",
-      subtitle: "Scale Model Archive"
-    }
-  };
-
-  const currentDiscipline = disciplineInfo.scenic_design;
+  const pageTitle = "Scenic Design";
+  const pageSubtitle = "Spatial Storytelling & Environments";
 
   return (
     <div className="min-h-screen">
       <SEO
-        title={`${currentDiscipline.title} | Brandon PT Davis`}
-        description={`Explore ${currentDiscipline.title.toLowerCase()} projects by Brandon PT Davis. ${currentDiscipline.subtitle}.`}
+        title={`${pageTitle} | Brandon PT Davis`}
+        description={`Explore ${pageTitle.toLowerCase()} projects by Brandon PT Davis. ${pageSubtitle}.`}
         image={projects?.[0]?.coverImageUrl || undefined}
         url="https://www.brandonptdavis.com/projects"
       />
       <Header />
 
       {/* Hero Section - Minimalist & Dramatic */}
-      <section className="py-40 md:py-56 border-b border-border">
-        <div className="container max-w-5xl">
+      <section className="py-32 md:py-40 border-b border-border">
+        <div className="container max-w-6xl">
           <AnimatedSection>
-            <div className="space-y-20 text-center">
-              <h1 className="text-7xl md:text-9xl font-black tracking-tighter leading-[0.9]">
-                Scenic
-                <br />
-                Design
+            <div className="space-y-8 text-center">
+              <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9]">
+                {pageTitle}
               </h1>
 
               <div className="max-w-2xl mx-auto">
-                <p className="text-2xl md:text-3xl leading-relaxed font-extralight text-muted-foreground">
-                  Spatial storytelling
-                  <br />
-                  for live performance
+                <p className="text-xl md:text-2xl leading-relaxed font-extralight text-muted-foreground">
+                  {pageSubtitle}
                 </p>
               </div>
             </div>

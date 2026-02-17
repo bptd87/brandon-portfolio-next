@@ -50,8 +50,7 @@ function NewsContent() {
         return matchesSearch && matchesCategory;
       })
       .sort((a, b) =>
-        new Date(b.publishedAt || b.createdAt || b.date).getTime() -
-        new Date(a.publishedAt || a.createdAt || a.date).getTime()
+        new Date(b.date).getTime() - new Date(a.date).getTime()
       );
   }, [newsItems, searchQuery, selectedCategory]);
 
@@ -60,7 +59,7 @@ function NewsContent() {
     const grouped: Record<number, typeof newsItems> = {};
 
     filteredNews.forEach((item) => {
-      const year = new Date(item.publishedAt || item.createdAt).getFullYear();
+      const year = new Date(item.date).getFullYear();
       if (!grouped[year]) {
         grouped[year] = [];
       }
@@ -73,8 +72,8 @@ function NewsContent() {
       .map(([year, items]) => ({
         year: parseInt(year),
         items: items.sort((a, b) =>
-          new Date(b.publishedAt || b.createdAt).getTime() -
-          new Date(a.publishedAt || a.createdAt).getTime()
+          new Date(b.date).getTime() -
+          new Date(a.date).getTime()
         ),
       }));
   }, [filteredNews]);
@@ -180,7 +179,7 @@ function NewsContent() {
                         <div className="flex items-center gap-2">
                           <Calendar className="h-4 w-4" />
                           <span>
-                            {new Date(featuredNews.publishedAt || featuredNews.createdAt).toLocaleDateString('en-US', {
+                            {new Date(featuredNews.date).toLocaleDateString('en-US', {
                               year: 'numeric',
                               month: 'long',
                               day: 'numeric'
@@ -267,7 +266,7 @@ function NewsContent() {
                                   <div className="flex items-center gap-1.5">
                                     <Calendar className="h-3.5 w-3.5" />
                                     <span>
-                                      {new Date(item.publishedAt || item.createdAt).toLocaleDateString('en-US', {
+                                      {new Date(item.date).toLocaleDateString('en-US', {
                                         month: 'short',
                                         day: 'numeric'
                                       })}

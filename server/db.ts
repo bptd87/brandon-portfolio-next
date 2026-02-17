@@ -1545,8 +1545,10 @@ export async function createNews(news: any) {
       title: news.title,
       slug: news.slug,
       excerpt: news.excerpt,
-      content: news.content,
+      blocks: news.blocks,
       cover_image: news.coverImageUrl,
+      cover_image_key: news.coverImageKey,
+      location: news.location,
       date: news.date,
       status: news.status || 'draft',
       featured: news.featured || false,
@@ -1568,8 +1570,10 @@ export async function updateNews(id: number, news: any) {
   if (news.title !== undefined) updateData.title = news.title;
   if (news.slug !== undefined) updateData.slug = news.slug;
   if (news.excerpt !== undefined) updateData.excerpt = news.excerpt;
-  if (news.content !== undefined) updateData.content = news.content;
+  if (news.blocks !== undefined) updateData.blocks = news.blocks;
   if (news.coverImageUrl !== undefined) updateData.cover_image = news.coverImageUrl;
+  if (news.coverImageKey !== undefined) updateData.cover_image_key = news.coverImageKey;
+  if (news.location !== undefined) updateData.location = news.location;
   if (news.date !== undefined) updateData.date = news.date;
   if (news.status !== undefined) updateData.status = news.status;
   if (news.featured !== undefined) updateData.featured = news.featured;

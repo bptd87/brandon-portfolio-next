@@ -162,6 +162,12 @@ export const appRouter = router({
         const project = await db.getProjectById(input.id);
         if (!project) return null;
 
+        console.log(`📦 Returning project ${input.id}:`, {
+          title: project.title,
+          hasCreativeTeam: !!project.creativeTeam,
+          creativeTeamLength: Array.isArray(project.creativeTeam) ? project.creativeTeam.length : 0
+        });
+
         const [images, tags] = await Promise.all([
           db.getProjectImages(input.id),
           db.getProjectTags(input.id),
@@ -198,7 +204,7 @@ export const appRouter = router({
         description: z.string().optional(),
         designNotes: z.string().optional(),
         discipline: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['scenic_design', 'experiential_design', 'rendering', 'scenic_models'])).default('scenic_design'),
-        subcategory: z.string().max(100).optional(),
+        subcategory: z.string().max(100).optional().nullable(),
         categoryId: z.number().optional(),
         coverImageUrl: z.string().optional(),
         coverImageKey: z.string().optional(),
@@ -257,7 +263,7 @@ export const appRouter = router({
         description: z.string().optional(),
         designNotes: z.string().optional(),
         discipline: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['scenic_design', 'experiential_design', 'rendering', 'scenic_models'])).optional(),
-        subcategory: z.string().max(100).optional(),
+        subcategory: z.string().max(100).optional().nullable(),
         categoryId: z.number().optional(),
         coverImageUrl: z.string().optional(),
         coverImageKey: z.string().optional(),
