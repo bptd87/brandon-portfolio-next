@@ -389,40 +389,42 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
 
             {activeTab === "seo" && (
               <div className="space-y-4">
-                <strong>SEO fields</strong> control how this news item appears in search engine results (Google, Bing). They are <em>not visible</em> to visitors on the site. For visitor-facing labels, use Tags in the main admin panel.
-              </div>
-              <div>
-                <Label htmlFor="seoTitle">SEO Title</Label>
-                <Input
-                  id="seoTitle"
-                  value={formData.seoTitle}
-                  onChange={(e) => setFormData(prev => ({ ...prev, seoTitle: e.target.value }))}
-                  placeholder="Leave empty to use title"
-                />
-              </div>
+                <div className="rounded-lg border border-dashed p-3 text-sm text-muted-foreground">
+                  <strong>SEO fields</strong> control how this news item appears in search engine results (Google, Bing). They are <em>not visible</em> to visitors on the site. For visitor-facing labels, use Tags in the main admin panel.
+                </div>
+                <div>
+                  <Label htmlFor="seoTitle">SEO Title</Label>
+                  <Input
+                    id="seoTitle"
+                    value={formData.seoTitle}
+                    onChange={(e) => setFormData(prev => ({ ...prev, seoTitle: e.target.value }))}
+                    placeholder="Leave empty to use title"
+                  />
+                </div>
 
-              <div>
-                <Label htmlFor="seoDescription">SEO Description</Label>
-                <Textarea
-                  id="seoDescription"
-                  value={formData.seoDescription}
-                  onChange={(e) => setFormData(prev => ({ ...prev, seoDescription: e.target.value }))}
-                  rows={3}
-                  placeholder="Leave empty to use excerpt"
-                />
-              </div>
+                <div>
+                  <Label htmlFor="seoDescription">SEO Description</Label>
+                  <Textarea
+                    id="seoDescription"
+                    value={formData.seoDescription}
+                    onChange={(e) => setFormData(prev => ({ ...prev, seoDescription: e.target.value }))}
+                    rows={3}
+                    placeholder="Leave empty to use excerpt"
+                  />
+                </div>
 
-              <div>
-                <Label htmlFor="seoKeywords">SEO Keywords</Label>
-                <Input
-                  id="seoKeywords"
-                  value={formData.seoKeywords}
-                  onChange={(e) => setFormData(prev => ({ ...prev, seoKeywords: e.target.value }))}
-                  placeholder="comma, separated, keywords"
-                />
-                <p className="text-xs text-muted-foreground mt-1">
-                  Comma-separated keywords for search engines (e.g., "scenic design, theatre, portfolio")
-                </p>
+                <div>
+                  <Label htmlFor="seoKeywords">SEO Keywords</Label>
+                  <Input
+                    id="seoKeywords"
+                    value={formData.seoKeywords}
+                    onChange={(e) => setFormData(prev => ({ ...prev, seoKeywords: e.target.value }))}
+                    placeholder="comma, separated, keywords"
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Comma-separated keywords for search engines (e.g., "scenic design, theatre, portfolio")
+                  </p>
+                </div>
               </div>
             )}
           </div>
