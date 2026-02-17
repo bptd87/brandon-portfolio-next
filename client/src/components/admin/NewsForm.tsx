@@ -178,15 +178,17 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogContent className="w-[95vw] h-[95vh] max-w-none overflow-y-auto p-8">
-        <DialogHeader>
-          <DialogTitle>{news ? "Edit News Item" : "Create News Item"}</DialogTitle>
-          <DialogDescription>
-            {news ? "Update news item details" : "Add a new news item to your portfolio"}
-          </DialogDescription>
-        </DialogHeader>
+      <DialogContent className="!w-[98vw] !h-[98vh] !max-w-none !fixed !left-[1vw] !top-[1vh] !p-0 border-none rounded-lg flex flex-col">
+        <div className="p-6 border-b">
+          <DialogHeader>
+            <DialogTitle>{news ? "Edit News Item" : "Create News Item"}</DialogTitle>
+            <DialogDescription>
+              {news ? "Update news item details" : "Add a new news item to your portfolio"}
+            </DialogDescription>
+          </DialogHeader>
+        </div>
 
-        <form onSubmit={handleSubmit}>
+        <form id="newsForm" onSubmit={handleSubmit} className="space-y-6 flex-1 overflow-y-auto px-6 py-4">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="basic">Basic Info</TabsTrigger>
@@ -346,7 +348,7 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
               </div>
             </TabsContent>
 
-            <TabsContent value="content" className="space-y-4 mt-4 pr-4">
+            <TabsContent value="content" className="space-y-4 mt-4">
               <div className="space-y-4">
                 <BlockBuilder 
                   blocks={formData.blocks} 
@@ -396,17 +398,19 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
               </div>
             </TabsContent>
           </Tabs>
+        </form>
 
-          <DialogFooter className="mt-4">
+        <div className="p-6 border-t mt-auto">
+          <DialogFooter>
             <Button type="button" variant="outline" onClick={onClose}>
               Cancel
             </Button>
-            <Button type="submit" disabled={isSubmitting}>
+            <Button type="submit" form="newsForm" disabled={isSubmitting}>
               {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               {news ? "Update" : "Create"}
             </Button>
           </DialogFooter>
-        </form>
+        </div>
       </DialogContent>
     </Dialog>
   );
