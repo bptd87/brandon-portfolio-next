@@ -2,8 +2,6 @@ import { z } from "zod";
 import { router, publicProcedure } from "../_core/trpc";
 import { TRPCError } from "@trpc/server";
 import { supabase } from "../db";
-// @ts-ignore - geoip-lite doesn't have TypeScript types
-import geoip from "geoip-lite";
 
 // Simple in-memory cache for IP geodata - now just for optimization
 const geoCache = new Map<string, { city: string | null, region: string | null, country: string | null }>();
@@ -35,16 +33,25 @@ export const analyticsRouter = router({
         };
         console.log('✅ Using CloudFlare geo headers:', geoData);
       } else {
-        // PRIORITY 2: Use geoip-lite for offline, accurate geolocation
+        // PRIORITY 2: Use ipinfo.io for accurate city-level geolocation
+        // Free tier has generous limits (50K requests/month = ~1,700/day, enough for most sites)
         if (ipString && ipString !== 'unknown' && ipString !== '127.0.0.1' && ipString !== '::1') {
-          const geo = geoip.lookup(ipString);
-          if (geo) {
-            geoData = {
-              city: geo.city || null,
-              region: geo.timezone?.split('/')[1] || null,
-              country: geo.country || null
-            };
-            console.log('✅ Fetched geo data from geoip-lite:', { ip: ipString, geo: geoData });
+          try {
+            const response = await fetch(`https://ipinfo.io/${ipString}/json?token=${process.env.IPINFO_TOKEN || ''}`, {
+              signal: AbortSignal.timeout(2000)
+            });
+            if (response.ok) {
+              const geo = await response.json();
+              geoData = {
+                city: geo.city || null,
+                region: geo.region || null,
+                country: geo.country || null
+              };
+              console.log('✅ Fetched geo data from ipinfo.io:', { ip: ipString, geo: geoData });
+            }
+          } catch (error) {
+            // If ipinfo.io fails, just use basic country data from CloudFlare header or fallback
+            console.log('⚠️ ipinfo.io lookup failed:', error instanceof Error ? error.message : String(error));
           }
         } else if (ipString === '127.0.0.1' || ipString === '::1') {
           // Local development
