@@ -32,7 +32,7 @@ import {
 import { toast } from "sonner";
 
 // All block types the editor supports (including DB-stored types)
-type BlockType = "text" | "paragraph" | "heading" | "image" | "gallery" | "video" | "accordion" | "quote" | "list" | "faq" | "html" | "update_note" | "ai_prompt";
+type BlockType = "text" | "paragraph" | "heading" | "image" | "gallery" | "video" | "accordion" | "quote" | "list" | "faq" | "html" | "update_note" | "ai_prompt" | "creative_team";
 
 interface Block {
   id: string;
@@ -139,6 +139,12 @@ function normalizeDbBlock(dbBlock: any, index: number): Block {
         type: "ai_prompt",
         content: { prompt: dbBlock.prompt || dbBlock.content || "" },
       };
+    case "creative_team":
+      return {
+        id,
+        type: "creative_team",
+        content: { members: Array.isArray(dbBlock.members) ? dbBlock.members : (dbBlock.content?.members || []) },
+      };
     default:
       // Fallback: treat as text
       return {
@@ -179,6 +185,8 @@ function blockToDbFormat(block: Block): any {
       return { type: "update_note", text: block.content.text || "" };
     case "ai_prompt":
       return { type: "ai_prompt", prompt: block.content.prompt || "" };
+    case "creative_team":
+      return { type: "creative_team", members: block.content.members || [] };
     default:
       return { type: block.type, text: block.content.text || "" };
   }
@@ -296,6 +304,8 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
         return { text: "" };
       case "ai_prompt":
         return { prompt: "" };
+      case "creative_team":
+        return { members: [{ name: "", role: "" }] };
       default:
         return {};
     }
@@ -956,6 +966,62 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
                     />
                   </div>
                 )}
+
+                {/* Creative Team block */}
+                {block.type === "creative_team" && (
+                  <div className="space-y-2 bg-blue-500/10 p-3 rounded border border-blue-500/30">
+                    <p className="text-sm font-medium text-blue-400 flex items-center gap-2">
+                      👥 Creative Team
+                    </p>
+                    <div className="space-y-2">
+                      {(block.content.members || []).map((member: any, idx: number) => (
+                        <div key={idx} className="flex gap-2 bg-background p-2 rounded">
+                          <Input
+                            placeholder="Name"
+                            value={member.name || ""}
+                            onChange={(e) => {
+                              const updated = [...(block.content.members || [])];
+                              updated[idx] = { ...updated[idx], name: e.target.value };
+                              updateBlock(block.id, { members: updated });
+                            }}
+                            className="flex-1 h-8 text-sm"
+                          />
+                          <Input
+                            placeholder="Role"
+                            value={member.role || ""}
+                            onChange={(e) => {
+                              const updated = [...(block.content.members || [])];
+                              updated[idx] = { ...updated[idx], role: e.target.value };
+                              updateBlock(block.id, { members: updated });
+                            }}
+                            className="flex-1 h-8 text-sm"
+                          />
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-destructive"
+                            onClick={() => {
+                              const updated = block.content.members.filter((_: any, i: number) => i !== idx);
+                              updateBlock(block.id, { members: updated });
+                            }}
+                          >
+                            <X className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      ))}
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          const updated = [...(block.content.members || []), { name: "", role: "" }];
+                          updateBlock(block.id, { members: updated });
+                        }}
+                      >
+                        <Plus className="w-4 h-4 mr-2" /> Add Team Member
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -1009,6 +1075,9 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
             <Button variant="outline" size="sm" onClick={() => addBlock("ai_prompt")}>
               <Sparkles className="w-4 h-4 mr-2" />
               AI Prompt
+            </Button>
+            <Button variant="outline" size="sm" onClick={() => addBlock("creative_team")}>
+              👥 Creative Team
             </Button>
           </div>
 
