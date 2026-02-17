@@ -2,9 +2,10 @@ import { z } from "zod";
 import { router, publicProcedure } from "../_core/trpc";
 import { TRPCError } from "@trpc/server";
 import { supabase } from "../db";
+// @ts-ignore - geoip-lite doesn't have TypeScript types
+import geoip from "geoip-lite";
 
-// Simple in-memory cache for IP geodata to avoid rate limits
-// In a real app, use Redis or a proper cache
+// Simple in-memory cache for IP geodata - now just for optimization
 const geoCache = new Map<string, { city: string | null, region: string | null, country: string | null }>();
 
 export const analyticsRouter = router({
@@ -20,91 +21,39 @@ export const analyticsRouter = router({
 
       let geoData: { city: string | null, region: string | null, country: string | null } = { city: null, region: null, country: null };
 
-      // PRIORITY 1: Use CloudFlare headers if site is behind CloudFlare (common with Railway)
+      // PRIORITY 1: Use CloudFlare headers if site is behind CloudFlare
       const cfCity = ctx.req.headers['cf-ipcity'];
       const cfCountry = ctx.req.headers['cf-ipcountry'];
       const cfRegion = ctx.req.headers['cf-region'];
       
-      // Debug: Log all CF headers to see what's available
-      const cfHeaders = Object.keys(ctx.req.headers).filter(h => h.toLowerCase().startsWith('cf-'));
-      if (cfHeaders.length > 0) {
-        console.log('🔍 CloudFlare headers available:', cfHeaders.map(h => `${h}: ${ctx.req.headers[h]}`).join(', '));
-      }
-      
-      if (cfCity) {
-        // CloudFlare has city data (Business plan+)
+      if (cfCity && cfCountry) {
+        // CloudFlare has full geo data
         geoData = {
           city: String(cfCity),
           region: cfRegion ? String(cfRegion) : null,
           country: cfCountry ? String(cfCountry) : null
         };
-        console.log('✅ Using CloudFlare geo headers (with city):', geoData);
-      } else if (cfCountry && (!cfCity)) {
-        // CloudFlare only has country (free plan) - use it and try to get city from ip-api.com
-        geoData.country = String(cfCountry);
-        geoData.region = cfRegion ? String(cfRegion) : null;
-        console.log('📍 CloudFlare provided country only, attempting to fetch city from ip-api.com for IP:', ipString);
-
-        // Try to get city data for the IP
+        console.log('✅ Using CloudFlare geo headers:', geoData);
+      } else {
+        // PRIORITY 2: Use geoip-lite for offline, accurate geolocation
         if (ipString && ipString !== 'unknown' && ipString !== '127.0.0.1' && ipString !== '::1') {
-          if (geoCache.has(ipString)) {
-            // @ts-ignore
-            const cached = geoCache.get(ipString)!;
-            geoData.city = cached.city;
-            console.log('✅ Using cached city data for', ipString);
-          } else {
-            try {
-              const controller = new AbortController();
-              const timeoutId = setTimeout(() => controller.abort(), 2000);
-              const response = await fetch(`http://ip-api.com/json/${ipString}?fields=status,message,city`, { signal: controller.signal });
-              clearTimeout(timeoutId);
-              const data = await response.json();
-              if (data.status === 'success' && data.city) {
-                geoData.city = data.city;
-                geoCache.set(ipString, { city: data.city, region: geoData.region, country: geoData.country });
-                console.log('✅ Fetched city from ip-api.com:', geoData);
-              }
-            } catch (e) {
-              console.warn('⚠️ Could not fetch city from ip-api.com:', e instanceof Error ? e.message : 'unknown error');
-            }
+          const geo = geoip.lookup(ipString);
+          if (geo) {
+            geoData = {
+              city: geo.city || null,
+              region: geo.timezone?.split('/')[1] || null,
+              country: geo.country || null
+            };
+            console.log('✅ Fetched geo data from geoip-lite:', { ip: ipString, geo: geoData });
           }
+        } else if (ipString === '127.0.0.1' || ipString === '::1') {
+          // Local development
+          geoData = {
+            city: 'Local Dev',
+            region: 'Development',
+            country: 'Local'
+          };
         }
-      }
-      // PRIORITY 3: Use free ip-api.com service (no key required, 45 req/min) as fallback
-      else if (ipString && ipString !== 'unknown' && ipString !== '127.0.0.1' && ipString !== '::1') {
-        if (geoCache.has(ipString)) {
-          // @ts-ignore
-          geoData = geoCache.get(ipString)!;
-          console.log('✅ Using cached geo data for', ipString);
-        } else {
-          try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 2000);
-            // Using ip-api.com instead - free tier allows 45 requests/minute
-            const response = await fetch(`http://ip-api.com/json/${ipString}?fields=status,message,country,regionName,city`, { signal: controller.signal });
-            clearTimeout(timeoutId);
-            const data = await response.json();
-            if (data.status === 'success' && data.city) {
-              geoData = {
-                city: data.city,
-                region: data.regionName,
-                country: data.country
-              };
-              geoCache.set(ipString, geoData);
-              console.log('✅ Fetched geo data from ip-api.com:', geoData);
-            } else if (data.status === 'fail') {
-              console.warn('⚠️ ip-api.com returned error:', data.message);
-            }
-          } catch (e) {
-            console.error('❌ IP geo lookup failed or timed out', e);
-          }
-        }
-      } else if (ipString === '127.0.0.1' || ipString === '::1') {
-        geoData = {
-          city: 'Local Dev City',
-          region: 'Test',
-          country: 'Testing'
-        };
       }
 
       try {
