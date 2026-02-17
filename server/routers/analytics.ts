@@ -17,6 +17,14 @@ export const analyticsRouter = router({
       const ip = ctx.req.ip || ctx.req.headers['x-forwarded-for'] || ctx.req.headers['x-real-ip'] || 'unknown';
       const ipString = Array.isArray(ip) ? ip[0] : ip;
 
+      console.log('📡 Analytics IP debug:', {
+        ip: ipString,
+        hasIpinfoToken: !!process.env.IPINFO_TOKEN,
+        cfCity: ctx.req.headers['cf-ipcity'],
+        cfRegion: ctx.req.headers['cf-region'],
+        cfCountry: ctx.req.headers['cf-ipcountry'],
+      });
+
       let geoData: { city: string | null, region: string | null, country: string | null } = { city: null, region: null, country: null };
 
       // PRIORITY 1: Use CloudFlare headers if site is behind CloudFlare
@@ -48,6 +56,11 @@ export const analyticsRouter = router({
                 country: geo.country || null
               };
               console.log('✅ Fetched geo data from ipinfo.io:', { ip: ipString, geo: geoData });
+            } else {
+              console.log('⚠️ ipinfo.io response not ok:', {
+                status: response.status,
+                statusText: response.statusText,
+              });
             }
           } catch (error) {
             // If ipinfo.io fails, just use basic country data from CloudFlare header or fallback
