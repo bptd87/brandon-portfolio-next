@@ -123,25 +123,6 @@ export function BlockBuilder({
 
   return (
     <div className="space-y-4">
-      {/* Block Type Menu */}
-      <div className="flex flex-wrap gap-2 mb-4">
-        {blockTypeButtons.map(({ type: blockType, label, icon: Icon }) => (
-          <Button
-            key={blockType}
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              const defaults = getDefaultBlockContent(blockType);
-              addBlock(blockType, defaults);
-            }}
-          >
-            <Plus className="h-4 w-4 mr-2" />
-            {label}
-          </Button>
-        ))}
-      </div>
-
       {/* Blocks List */}
       <div className="space-y-4">
         {blocks.length === 0 ? (
@@ -162,6 +143,25 @@ export function BlockBuilder({
             />
           ))
         )}
+      </div>
+
+      {/* Block Type Menu */}
+      <div className="flex flex-wrap gap-2 pt-4 border-t">
+        {blockTypeButtons.map(({ type: blockType, label, icon: Icon }) => (
+          <Button
+            key={blockType}
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              const defaults = getDefaultBlockContent(blockType);
+              addBlock(blockType, defaults);
+            }}
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            {label}
+          </Button>
+        ))}
       </div>
     </div>
   );
