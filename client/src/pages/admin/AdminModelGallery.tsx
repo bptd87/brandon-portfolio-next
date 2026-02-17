@@ -258,6 +258,7 @@ export default function AdminModelGallery() {
             refetchProjects();
         },
         onError: (e) => {
+            console.error('Project update error:', e);
             toast.error(`Failed to update project: ${e.message}`);
         }
     });
@@ -323,6 +324,7 @@ export default function AdminModelGallery() {
     };
 
     const handleUpdateProject = useCallback((projectId: number, field: 'title' | 'slug' | 'year', value: string | number | null) => {
+        console.log('Updating project', { projectId, field, value });
         setLocalGallery((prev) =>
             prev.map((item) =>
                 item.project?.id === projectId && item.project
