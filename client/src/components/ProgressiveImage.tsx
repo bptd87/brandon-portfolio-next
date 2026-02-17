@@ -273,8 +273,8 @@ export function ProgressiveImage({
       `}
       style={aspectRatio ? { aspectRatio } : undefined}
     >
-      {/* Blurred placeholder - tiny smooth color wash */}
-      {!imageError && shouldLoad && (
+      {/* Blurred placeholder - tiny smooth color wash (skip for eager loading) */}
+      {!imageError && shouldLoad && loading !== 'eager' && (
         <img
           src={blurredSrc}
           alt=""
@@ -287,8 +287,8 @@ export function ProgressiveImage({
         />
       )}
 
-      {/* Skeleton loader - shown before intersection */}
-      {!shouldLoad && (
+      {/* Skeleton loader - shown before intersection (not for eager loading) */}
+      {!shouldLoad && loading !== 'eager' && (
         <div className="absolute inset-0">
           <div className="w-full h-full relative overflow-hidden">
             {/* Shimmer effect - subtle */}
@@ -313,8 +313,7 @@ export function ProgressiveImage({
             w-full h-full 
             ${objectFit === 'cover' ? 'object-cover' : 'object-contain'}
             ${smartPosition ? objectPosition : ''}
-            transition-opacity duration-500 ease-out
-            ${showSharpImage ? 'opacity-100' : 'opacity-0'}
+            ${loading === 'eager' ? 'opacity-100' : `transition-opacity duration-500 ease-out ${showSharpImage ? 'opacity-100' : 'opacity-0'}`}
             ${className}
           `}
           onClick={onClick}

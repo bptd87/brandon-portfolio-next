@@ -2,13 +2,13 @@
 
 export function CarouselSkeleton() {
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-black">
-      {/* Shimmer overlay */}
+    <section className="relative h-screen w-full overflow-hidden bg-black">
+      {/* Subtle shimmer overlay - minimal animation */}
       <div className="absolute inset-0">
         <div 
-          className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite]"
+          className="absolute inset-0 -translate-x-full animate-[shimmer_3s_infinite]"
           style={{
-            background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%)',
+            background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.02) 50%, transparent 100%)',
           }}
         />
       </div>
