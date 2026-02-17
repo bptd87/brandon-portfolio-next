@@ -222,7 +222,7 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
       </div>
 
       <div className="flex-1 overflow-y-auto">
-        <div className="w-screen h-screen max-w-none p-8 space-y-6">
+        <div className="w-full max-w-6xl mx-auto p-8 space-y-6">
           {/* Cover Image */}
           <div className="space-y-2">
             <Label className="text-lg font-semibold">Cover Image *</Label>
