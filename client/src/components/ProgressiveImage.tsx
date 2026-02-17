@@ -7,6 +7,13 @@ function applySupabaseTransformations(src: string, width?: number, blurred?: boo
     return src;
   }
 
+  // Skip transformation for WebP images unless we need a blurred placeholder
+  // (Supabase converts WebP to JPEG which is larger)
+  const isWebP = src.toLowerCase().endsWith('.webp');
+  if (isWebP && !blurred) {
+    return src; // Keep original WebP, it's already optimized
+  }
+
   // Parse Supabase URL: https://{project}.supabase.co/storage/v1/object/public/{bucket}/{path}
   const publicIndex = src.indexOf('/storage/v1/object/public/');
   if (publicIndex === -1) return src;
@@ -16,21 +23,17 @@ function applySupabaseTransformations(src: string, width?: number, blurred?: boo
 
   if (blurred) {
     // Blurred placeholder: tiny width with heavy blur for fast loading
-    return `${baseUrl}/storage/v1/render/image/public/${pathAfterPublic}?width=20&quality=20&resize=contain`;
+    // Use very small width for minimal file size
+    return `${baseUrl}/storage/v1/render/image/public/${pathAfterPublic}?width=20&quality=20`;
   } else {
-    // Normal image: apply quality and width optimizations
+    // For non-WebP images, apply responsive sizing
     const params = new URLSearchParams();
     
-    // Responsive width if specified
     if (width) {
       params.set('width', width.toString());
     }
     
-    // Quality optimization (80 is a good balance)
     params.set('quality', '85');
-    
-    // Resize mode
-    params.set('resize', 'contain');
 
     return `${baseUrl}/storage/v1/render/image/public/${pathAfterPublic}?${params.toString()}`;
   }
@@ -83,6 +86,12 @@ function applyCloudinaryTransformations(src: string, width?: number, blurred?: b
 function generateSupabaseSrcSet(src: string): string {
   if (!src.includes('supabase.co/storage/v1/object/public/')) {
     return '';
+  }
+
+  // Skip srcset for WebP images (already optimized, and Supabase converts to JPEG)
+  const isWebP = src.toLowerCase().endsWith('.webp');
+  if (isWebP) {
+    return ''; // Browser will use original WebP
   }
 
   const widths = [400, 800, 1200, 1600, 2400];
