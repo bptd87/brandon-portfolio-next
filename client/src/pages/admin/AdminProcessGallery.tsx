@@ -124,7 +124,7 @@ function SortableGalleryItem({
   onRemove: (id: number) => void;
   onUpdate: (id: number, field: 'altText' | 'displayTitle' | 'description' | 'videoUrl' | 'year', value: string | number | null) => void;
   onManageImages?: (projectId: number, title: string) => void;
-  onUpdateProject?: (projectId: number, field: 'title' | 'slug', value: string) => void;
+  onUpdateProject?: (projectId: number, field: 'title' | 'slug' | 'year', value: string | number | null) => void;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
   const [isOpen, setIsOpen] = useState(false);
@@ -239,7 +239,7 @@ function SortableGalleryItem({
             <Input
               type="number"
               value={item.project?.year || ''}
-              onChange={(e) => onUpdate(item.id, 'year', e.target.value ? parseInt(e.target.value) : null)}
+              onChange={(e) => item.project && onUpdateProject?.(item.project.id, 'year', e.target.value ? parseInt(e.target.value) : null)}
               placeholder="YYYY"
               className="h-8 text-xs bg-background/50"
             />
@@ -913,7 +913,7 @@ export default function AdminProcessGallery() {
   );
 
   const handleUpdateProject = useCallback(
-    (projectId: number, field: 'title' | 'slug', value: string) => {
+    (projectId: number, field: 'title' | 'slug' | 'year', value: string | number | null) => {
       console.log(`[handleUpdateProject] Updating ${field} for project ${projectId}:`, value);
       
       // Update local state optimistically
