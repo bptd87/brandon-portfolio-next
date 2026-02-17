@@ -188,15 +188,16 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
           </DialogHeader>
         </div>
 
-        <form id="newsForm" onSubmit={handleSubmit} className="space-y-6 flex-1 overflow-y-auto px-6 py-4">
-          <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-3">
+        <form id="newsForm" onSubmit={handleSubmit} className="flex-1 overflow-hidden flex flex-col px-6 py-4">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col h-full">
+            <TabsList className="grid w-full grid-cols-3 mb-4">
               <TabsTrigger value="basic">Basic Info</TabsTrigger>
               <TabsTrigger value="content">Content Blocks</TabsTrigger>
               <TabsTrigger value="seo">SEO</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="basic" className="space-y-4 mt-4">
+            <div className="flex-1 overflow-y-auto">
+            <TabsContent value="basic" className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="col-span-2">
                   <Label htmlFor="title">Title *</Label>
@@ -348,7 +349,7 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
               </div>
             </TabsContent>
 
-            <TabsContent value="content" className="space-y-4 mt-4">
+            <TabsContent value="content" className="space-y-4">
               <div className="space-y-4">
                 <BlockBuilder 
                   blocks={formData.blocks} 
@@ -359,7 +360,7 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
               </div>
             </TabsContent>
 
-            <TabsContent value="seo" className="space-y-4 mt-4">
+            <TabsContent value="seo" className="space-y-4">
               <div className="rounded-lg border border-dashed p-3 mb-2 text-sm text-muted-foreground">
                 <strong>SEO fields</strong> control how this news item appears in search engine results (Google, Bing). They are <em>not visible</em> to visitors on the site. For visitor-facing labels, use Tags in the main admin panel.
               </div>
@@ -397,6 +398,7 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
                 </p>
               </div>
             </TabsContent>
+            </div>
           </Tabs>
         </form>
 
