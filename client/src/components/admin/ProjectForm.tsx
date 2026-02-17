@@ -269,6 +269,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
     subcategory: "",
     status: "draft" as "draft" | "published" | "archived",
     featured: false,
+    gallery_only: false,
     year: new Date().getFullYear(),
     month: undefined as number | undefined, // 1-12 for chronological sorting
     location: "",
@@ -351,6 +352,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
           ? fullProject.status.toLowerCase() as "draft" | "published" | "archived"
           : "draft",
         featured: fullProject.featured || false,
+        gallery_only: fullProject.gallery_only || false,
         year: fullProject.year || new Date().getFullYear(),
         location: fullProject.location || "",
         client: fullProject.client || "",
@@ -665,6 +667,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
         year: formData.year || undefined,
         status: safeStatus as any,
         featured: formData.featured,
+        gallery_only: formData.gallery_only,
         creativeTeam: teamMembers.length > 0 ? teamMembers : undefined,
         seoTitle: formData.seoTitle || undefined,
         seoDescription: formData.seoDescription || undefined,
@@ -982,6 +985,15 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
                           id="featured"
                           checked={formData.featured}
                           onCheckedChange={(checked) => setFormData({ ...formData, featured: checked })}
+                        />
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <Label htmlFor="gallery_only">Gallery Only (Hide from Projects)</Label>
+                        <Switch
+                          id="gallery_only"
+                          checked={formData.gallery_only}
+                          onCheckedChange={(checked) => setFormData({ ...formData, gallery_only: checked })}
                         />
                       </div>
                     </CardContent>
