@@ -404,11 +404,24 @@ export async function getNewsByTag(tagId: number): Promise<any[]> {
     .eq('tag_id', tagId);
 
   if (!data) return [];
-  return data.map(nt => nt.news).filter(Boolean).map((n: any) => ({
-    ...n,
-    createdAt: new Date(n.created_at),
-    updatedAt: new Date(n.updated_at)
-  }));
+  
+  // Sort by published_at descending
+  const news = data
+    .map(nt => nt.news)
+    .filter(Boolean)
+    .sort((a: any, b: any) => {
+      const dateA = new Date(a.published_at || a.date || a.created_at);
+      const dateB = new Date(b.published_at || b.date || b.created_at);
+      return dateB.getTime() - dateA.getTime();
+    })
+    .map((n: any) => ({
+      ...n,
+      createdAt: new Date(n.created_at),
+      updatedAt: new Date(n.updated_at),
+      publishedAt: n.published_at ? new Date(n.published_at) : new Date(n.date || n.created_at)
+    }));
+  
+  return news;
 }
 
 // ============ PROJECT OPERATIONS ============
@@ -678,7 +691,7 @@ export async function getAllNews(filters?: {
   let query = supabase
     .from('news')
     .select('*')
-    .order('date', { ascending: false });
+    .order('published_at', { ascending: false });
 
   if (filters?.status) {
     query = query.eq('status', filters.status);
