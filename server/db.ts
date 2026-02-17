@@ -377,11 +377,24 @@ export async function getArticlesByTag(tagId: number): Promise<any[]> {
     .eq('tag_id', tagId);
 
   if (!data) return [];
-  return data.map(at => at.articles).filter(Boolean).map((a: any) => ({
-    ...a,
-    createdAt: new Date(a.created_at),
-    updatedAt: new Date(a.updated_at)
-  }));
+  
+  // Sort by published_at descending
+  const articles = data
+    .map(at => at.articles)
+    .filter(Boolean)
+    .sort((a: any, b: any) => {
+      const dateA = new Date(a.published_at || a.created_at);
+      const dateB = new Date(b.published_at || b.created_at);
+      return dateB.getTime() - dateA.getTime();
+    })
+    .map((a: any) => ({
+      ...a,
+      createdAt: new Date(a.created_at),
+      updatedAt: new Date(a.updated_at),
+      publishedAt: a.published_at ? new Date(a.published_at) : new Date(a.created_at)
+    }));
+  
+  return articles;
 }
 
 export async function getNewsByTag(tagId: number): Promise<any[]> {
@@ -796,7 +809,7 @@ export async function getAllArticles(filters?: {
       *,
       category:categories!category_id(id, name, slug)
     `)
-    .order('created_at', { ascending: false });
+    .order('published_at', { ascending: false });
 
   if (filters?.status) {
     query = query.eq('status', filters.status);
