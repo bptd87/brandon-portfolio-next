@@ -74,6 +74,8 @@ export function MobileTableView<T extends Record<string, any>>({
                                                 <Badge variant="secondary" className="text-xs">
                                                     {displayValue}
                                                 </Badge>
+                                            ) : col.render ? (
+                                                displayValue
                                             ) : (
                                                 <p className="text-foreground break-words">{displayValue || "-"}</p>
                                             )}

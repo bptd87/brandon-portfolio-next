@@ -15,33 +15,51 @@ export const analyticsRouter = router({
       userAgent: z.string().optional(),
     }))
     .mutation(async ({ input, ctx }: { input: { sessionId: string, pagePath: string, userAgent?: string }, ctx: any }) => {
-      const ip = ctx.req.ip || ctx.req.headers['x-forwarded-for'] || 'unknown';
+      const ip = ctx.req.ip || ctx.req.headers['x-forwarded-for'] || ctx.req.headers['x-real-ip'] || 'unknown';
       const ipString = Array.isArray(ip) ? ip[0] : ip;
 
       let geoData: { city: string | null, region: string | null, country: string | null } = { city: null, region: null, country: null };
 
-      // Silent IP-based geolocation (no user permission needed)
-      if (ipString && ipString !== 'unknown' && ipString !== '127.0.0.1' && ipString !== '::1') {
+      // PRIORITY 1: Use CloudFlare headers if site is behind CloudFlare (common with Railway)
+      const cfCity = ctx.req.headers['cf-ipcity'];
+      const cfCountry = ctx.req.headers['cf-ipcountry'];
+      const cfRegion = ctx.req.headers['cf-region'];
+      
+      if (cfCity || cfCountry) {
+        geoData = {
+          city: cfCity ? String(cfCity) : null,
+          region: cfRegion ? String(cfRegion) : null,
+          country: cfCountry ? String(cfCountry) : null
+        };
+        console.log('✅ Using CloudFlare geo headers:', geoData);
+      }
+      // PRIORITY 2: Use free ip-api.com service (no key required, 45 req/min)
+      else if (ipString && ipString !== 'unknown' && ipString !== '127.0.0.1' && ipString !== '::1') {
         if (geoCache.has(ipString)) {
           // @ts-ignore
           geoData = geoCache.get(ipString)!;
+          console.log('✅ Using cached geo data for', ipString);
         } else {
           try {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 2000);
-            const response = await fetch(`https://ipapi.co/${ipString}/json/`, { signal: controller.signal });
+            // Using ip-api.com instead - free tier allows 45 requests/minute
+            const response = await fetch(`http://ip-api.com/json/${ipString}?fields=status,message,country,regionName,city`, { signal: controller.signal });
             clearTimeout(timeoutId);
             const data = await response.json();
-            if (data.city) {
+            if (data.status === 'success' && data.city) {
               geoData = {
                 city: data.city,
-                region: data.region,
-                country: data.country_name
+                region: data.regionName,
+                country: data.country
               };
               geoCache.set(ipString, geoData);
+              console.log('✅ Fetched geo data from ip-api.com:', geoData);
+            } else if (data.status === 'fail') {
+              console.warn('⚠️ ip-api.com returned error:', data.message);
             }
           } catch (e) {
-            console.error('IP geo lookup failed or timed out', e);
+            console.error('❌ IP geo lookup failed or timed out', e);
           }
         }
       } else if (ipString === '127.0.0.1' || ipString === '::1') {

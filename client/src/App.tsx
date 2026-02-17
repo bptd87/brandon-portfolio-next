@@ -47,6 +47,7 @@ const AdminScenicDirectoryEdit = lazy(() => import("./pages/admin/AdminScenicDir
 const AdminCollaborators = lazy(() => import("./pages/admin/AdminCollaborators"));
 const AdminCollaboratorEdit = lazy(() => import("./pages/admin/AdminCollaboratorEdit"));
 const AdminRenderingGallery = lazy(() => import("./pages/admin/AdminRenderingGallery"));
+const AdminModelGallery = lazy(() => import("./pages/admin/AdminModelGallery"));
 const AdminExperientialGallery = lazy(() => import("./pages/admin/AdminExperientialGallery"));
 const AdminProcessGallery = lazy(() => import("./pages/admin/AdminProcessGallery"));
 const AuthDebug = lazy(() => import("./pages/AuthDebug"));
@@ -157,6 +158,7 @@ function Router() {
           <Route path="/admin/collaborators/:id/edit" component={AdminCollaboratorEdit} />
           <Route path="/admin/collaborators" component={AdminCollaborators} />
           <Route path="/admin/rendering-gallery" component={AdminRenderingGallery} />
+          <Route path="/admin/model-gallery" component={AdminModelGallery} />
           <Route path="/admin/experiential-gallery" component={AdminProcessGallery} />
           <Route path={"/admin"} component={Admin} />
           <Route path={"/privacy"} component={Privacy} />
