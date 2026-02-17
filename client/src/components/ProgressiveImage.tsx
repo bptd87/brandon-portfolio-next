@@ -1,5 +1,41 @@
 import { useState, useEffect, useRef } from 'react';
 
+// Apply Supabase image transformations for optimization
+function applySupabaseTransformations(src: string, width?: number, blurred?: boolean): string {
+  // Only transform Supabase storage URLs
+  if (!src.includes('supabase.co/storage/v1/object/public/')) {
+    return src;
+  }
+
+  // Parse Supabase URL: https://{project}.supabase.co/storage/v1/object/public/{bucket}/{path}
+  const publicIndex = src.indexOf('/storage/v1/object/public/');
+  if (publicIndex === -1) return src;
+
+  const baseUrl = src.substring(0, publicIndex);
+  const pathAfterPublic = src.substring(publicIndex + '/storage/v1/object/public/'.length);
+
+  if (blurred) {
+    // Blurred placeholder: tiny width with heavy blur for fast loading
+    return `${baseUrl}/storage/v1/render/image/public/${pathAfterPublic}?width=20&quality=20&resize=contain`;
+  } else {
+    // Normal image: apply quality and width optimizations
+    const params = new URLSearchParams();
+    
+    // Responsive width if specified
+    if (width) {
+      params.set('width', width.toString());
+    }
+    
+    // Quality optimization (80 is a good balance)
+    params.set('quality', '85');
+    
+    // Resize mode
+    params.set('resize', 'contain');
+
+    return `${baseUrl}/storage/v1/render/image/public/${pathAfterPublic}?${params.toString()}`;
+  }
+}
+
 // Apply Cloudinary transformations for automatic optimization
 function applyCloudinaryTransformations(src: string, width?: number, blurred?: boolean): string {
   // Only transform Cloudinary URLs
@@ -41,6 +77,21 @@ function applyCloudinaryTransformations(src: string, width?: number, blurred?: b
   const transformString = transformations.join(',');
 
   return `${baseUrl}${transformString}/${pathAfterUpload}`;
+}
+
+// Generate responsive srcset for Supabase images
+function generateSupabaseSrcSet(src: string): string {
+  if (!src.includes('supabase.co/storage/v1/object/public/')) {
+    return '';
+  }
+
+  const widths = [400, 800, 1200, 1600, 2400];
+  const srcsetEntries = widths.map(width => {
+    const transformedUrl = applySupabaseTransformations(src, width);
+    return `${transformedUrl} ${width}w`;
+  });
+
+  return srcsetEntries.join(', ');
 }
 
 // Generate responsive srcset for Cloudinary images
@@ -186,10 +237,21 @@ export function ProgressiveImage({
     return () => clearTimeout(timer);
   }, [imageLoaded, blurFadeDuration, loading]);
 
-  // Apply Cloudinary transformations to src
-  const optimizedSrc = applyCloudinaryTransformations(src, width);
-  const blurredSrc = applyCloudinaryTransformations(src, undefined, true);
-  const srcSet = generateSrcSet(src);
+  // Apply image transformations based on source (Supabase or Cloudinary)
+  const isSupabase = src.includes('supabase.co/storage/v1/object/public/');
+  const isCloudinary = src.includes('cloudinary.com');
+  
+  const optimizedSrc = isSupabase 
+    ? applySupabaseTransformations(src, width)
+    : applyCloudinaryTransformations(src, width);
+    
+  const blurredSrc = isSupabase
+    ? applySupabaseTransformations(src, undefined, true)
+    : applyCloudinaryTransformations(src, undefined, true);
+    
+  const srcSet = isSupabase
+    ? generateSupabaseSrcSet(src)
+    : generateSrcSet(src);
 
   return (
     <div
