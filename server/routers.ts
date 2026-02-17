@@ -366,43 +366,6 @@ export const appRouter = router({
         return { success: true };
       }),
 
-    uploadImage: adminProcedure
-      .input(z.object({
-        filename: z.string(),
-        contentType: z.string(),
-        data: z.string(), // base64 encoded
-      }))
-      .mutation(async ({ input }) => {
-        const { uploadToCloudinary } = await import('./cloudinary.js');
-
-        const buffer = Buffer.from(input.data, 'base64');
-
-        // Generate unique public ID
-        const baseFilename = input.filename.replace(/\.[^.]+$/, '');
-        const publicId = `${Date.now()}-${baseFilename}`;
-
-        // Upload to Cloudinary (automatic optimization)
-        const result = await uploadToCloudinary(
-          buffer,
-          {
-            folder: 'brandon-portfolio/projects',
-            publicId: publicId
-          }
-        );
-
-        return {
-          url: result.url,
-          key: result.publicId,
-          optimized: {
-            originalSize: buffer.length,
-            optimizedSize: result.bytes,
-            savings: Math.round((1 - result.bytes / buffer.length) * 100),
-            width: result.width,
-            height: result.height,
-          }
-        };
-      }),
-
     updateImage: adminProcedure
       .input(z.object({
         id: z.number(),
@@ -547,33 +510,6 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         await db.deleteNews(input.id);
         return { success: true };
-      }),
-
-    uploadImage: adminProcedure
-      .input(z.object({
-        fileName: z.string(),
-        fileType: z.string(),
-        base64Data: z.string(),
-      }))
-      .mutation(async ({ input }) => {
-        const { uploadToCloudinary } = await import('./cloudinary.js');
-
-        const buffer = Buffer.from(input.base64Data, 'base64');
-
-        // Generate unique public ID
-        const baseFilename = input.fileName.replace(/\.[^.]+$/, '');
-        const publicId = `${Date.now()}-${baseFilename}`;
-
-        // Upload to Cloudinary (automatic optimization)
-        const result = await uploadToCloudinary(
-          buffer,
-          {
-            folder: 'brandon-portfolio/news',
-            publicId: publicId
-          }
-        );
-
-        return { url: result.url, key: result.publicId };
       }),
 
     bulkImport: publicProcedure
@@ -759,33 +695,6 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         await db.deleteArticle(input.id);
         return { success: true };
-      }),
-
-    uploadImage: adminProcedure
-      .input(z.object({
-        fileName: z.string(),
-        fileType: z.string(),
-        base64Data: z.string(),
-      }))
-      .mutation(async ({ input }) => {
-        const { uploadToCloudinary } = await import('./cloudinary.js');
-
-        const buffer = Buffer.from(input.base64Data, 'base64');
-
-        // Generate unique public ID
-        const baseFilename = input.fileName.replace(/\.[^.]+$/, '');
-        const publicId = `${Date.now()}-${baseFilename}`;
-
-        // Upload to Cloudinary (automatic optimization)
-        const result = await uploadToCloudinary(
-          buffer,
-          {
-            folder: 'brandon-portfolio/articles',
-            publicId: publicId
-          }
-        );
-
-        return { url: result.url, key: result.publicId };
       }),
 
     incrementViews: publicProcedure

@@ -197,7 +197,6 @@ export function AdminGalleryImageManager({ projectId, projectTitle, isOpen, onCl
     const updateImageMutation = trpc.projects.updateImage.useMutation();
     const deleteImageMutation = trpc.projects.deleteImage.useMutation();
     const reorderImagesMutation = trpc.projects.reorderImages.useMutation();
-    const uploadImageMutation = trpc.projects.uploadImage.useMutation();
 
     const sensors = useSensors(
         useSensor(PointerSensor),
@@ -233,27 +232,9 @@ export function AdminGalleryImageManager({ projectId, projectTitle, isOpen, onCl
 
         setIsUploading(true);
         try {
-            // Upload sequentially or parallel
+            // Upload to Supabase Storage
             for (const file of Array.from(files)) {
-                // Resize/Process if needed (skipping strict resize for now, rely on backend/cloudinary)
-                // Convert to base64 for upload endpoint
-                const reader = new FileReader();
-                const base64Promise = new Promise<string>((resolve, reject) => {
-                    reader.onload = () => {
-                        const str = reader.result as string;
-                        // Remove data:image/jpeg;base64, prefix
-                        resolve(str.split(',')[1]);
-                    };
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
-                });
-                const base64Data = await base64Promise;
-
-                const uploadRes = await uploadImageMutation.mutateAsync({
-                    filename: file.name,
-                    contentType: file.type,
-                    data: base64Data
-                });
+                const uploadRes = await uploadToStorage(file, 'portfolio');
 
                 await addImageMutation.mutateAsync({
                     projectId,
@@ -311,22 +292,7 @@ export function AdminGalleryImageManager({ projectId, projectTitle, isOpen, onCl
         setIsUploading(true);
         try {
             for (const file of files) {
-                const reader = new FileReader();
-                const base64Promise = new Promise<string>((resolve, reject) => {
-                    reader.onload = () => {
-                        const str = reader.result as string;
-                        resolve(str.split(',')[1]);
-                    };
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
-                });
-                const base64Data = await base64Promise;
-
-                const uploadRes = await uploadImageMutation.mutateAsync({
-                    filename: file.name,
-                    contentType: file.type,
-                    data: base64Data
-                });
+                const uploadRes = await uploadToStorage(file, 'portfolio');
 
                 await addImageMutation.mutateAsync({
                     projectId,
