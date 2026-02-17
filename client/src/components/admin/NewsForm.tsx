@@ -178,29 +178,25 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogContent className="!w-[98vw] !h-[98vh] !max-w-none !fixed !left-[1vw] !top-[1vh] !p-0 border-none rounded-lg flex flex-col">
-        <div className="p-6 border-b">
-          <DialogHeader>
-            <DialogTitle>{news ? "Edit News Item" : "Create News Item"}</DialogTitle>
-            <DialogDescription>
-              {news ? "Update news item details" : "Add a new news item to your portfolio"}
-            </DialogDescription>
-          </DialogHeader>
-        </div>
+      <DialogContent className="!w-[98vw] !h-[98vh] !max-w-none !fixed !left-[1vw] !top-[1vh] !p-0 border-none rounded-lg flex flex-col gap-0">
+        <DialogHeader className="p-6 border-b flex-shrink-0">
+          <DialogTitle>{news ? "Edit News Item" : "Create News Item"}</DialogTitle>
+          <DialogDescription>
+            {news ? "Update news item details" : "Add a new news item to your portfolio"}
+          </DialogDescription>
+        </DialogHeader>
 
-        <form id="newsForm" onSubmit={handleSubmit} className="flex-1 overflow-hidden flex flex-col w-full">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col h-full w-full">
-            <div className="px-6 pt-4 pb-2 border-b">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="basic">Basic Info</TabsTrigger>
-                <TabsTrigger value="content">Content Blocks</TabsTrigger>
-                <TabsTrigger value="seo">SEO</TabsTrigger>
-              </TabsList>
-            </div>
+        <form id="newsForm" onSubmit={handleSubmit} className="flex-1 overflow-hidden">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col">
+            <TabsList className="grid w-full grid-cols-3 rounded-none border-b px-6 py-0 h-auto bg-transparent">
+              <TabsTrigger value="basic" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary">Basic Info</TabsTrigger>
+              <TabsTrigger value="content" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary">Content Blocks</TabsTrigger>
+              <TabsTrigger value="seo" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary">SEO</TabsTrigger>
+            </TabsList>
 
-            <div className="flex-1 overflow-y-auto px-6 py-4 w-full min-h-0">
-            <TabsContent value="basic" className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+            <div className="flex-1 overflow-y-auto">
+              <TabsContent value="basic" className="space-y-4 p-6 m-0">
+                <div className="grid grid-cols-2 gap-4">
                 <div className="col-span-2">
                   <Label htmlFor="title">Title *</Label>
                   <Input
@@ -351,18 +347,16 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
               </div>
             </TabsContent>
 
-            <TabsContent value="content" className="space-y-4">
-              <div className="space-y-4">
+              <TabsContent value="content" className="space-y-4 p-6 m-0">
                 <BlockBuilder 
                   blocks={formData.blocks} 
                   onBlocksChange={handleBlocksChange}
                   type="news"
                   uploadPath="news"
                 />
-              </div>
-            </TabsContent>
+              </TabsContent>
 
-            <TabsContent value="seo" className="space-y-4">
+              <TabsContent value="seo" className="space-y-4 p-6 m-0">
               <div className="rounded-lg border border-dashed p-3 mb-2 text-sm text-muted-foreground">
                 <strong>SEO fields</strong> control how this news item appears in search engine results (Google, Bing). They are <em>not visible</em> to visitors on the site. For visitor-facing labels, use Tags in the main admin panel.
               </div>
@@ -399,22 +393,20 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
                   Comma-separated keywords for search engines (e.g., "scenic design, theatre, portfolio")
                 </p>
               </div>
-            </TabsContent>
+              </TabsContent>
             </div>
           </Tabs>
         </form>
 
-        <div className="p-6 border-t mt-auto">
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button type="submit" form="newsForm" disabled={isSubmitting}>
-              {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {news ? "Update" : "Create"}
-            </Button>
-          </DialogFooter>
-        </div>
+        <DialogFooter className="p-6 border-t flex-shrink-0">
+          <Button type="button" variant="outline" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button type="submit" form="newsForm" disabled={isSubmitting}>
+            {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {news ? "Update" : "Create"}
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
