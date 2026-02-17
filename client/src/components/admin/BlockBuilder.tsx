@@ -26,6 +26,7 @@ import {
   Sparkles,
   FileText,
   GripVertical,
+  ChevronDown,
 } from "lucide-react";
 import { toast } from "sonner";
 import { processImageForUpload } from "@/utils/imageUtils";
@@ -74,6 +75,17 @@ export function BlockBuilder({
   uploadPath = type === 'news' ? 'news' : 'articles'
 }: BlockBuilderProps) {
   const [uploadingBlockId, setUploadingBlockId] = useState<string | null>(null);
+  const [collapsedBlocks, setCollapsedBlocks] = useState<Set<number>>(new Set());
+
+  const toggleCollapse = (index: number) => {
+    const newCollapsed = new Set(collapsedBlocks);
+    if (newCollapsed.has(index)) {
+      newCollapsed.delete(index);
+    } else {
+      newCollapsed.add(index);
+    }
+    setCollapsedBlocks(newCollapsed);
+  };
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -192,6 +204,8 @@ export function BlockBuilder({
                   onRemove={() => removeBlock(index)}
                   onImageUpload={(file, imageIndex) => handleImageUpload(file, index, imageIndex)}
                   uploadingBlockId={uploadingBlockId}
+                  isCollapsed={collapsedBlocks.has(index)}
+                  onToggleCollapse={() => toggleCollapse(index)}
                 />
               ))
             )}
@@ -229,6 +243,8 @@ interface SortableBlockCardProps extends BlockCardProps {
   onRemove: () => void;
   onImageUpload: (file: File, imageIndex?: number) => void;
   uploadingBlockId: string | null;
+  isCollapsed: boolean;
+  onToggleCollapse: () => void;
 }
 
 function SortableBlockCard(props: SortableBlockCardProps) {
@@ -248,8 +264,9 @@ function SortableBlockCard(props: SortableBlockCardProps) {
   };
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div ref={setNodeRef} style={style}>
+    // eslint-disable-next-line
+    // @ts-ignore
+    <div ref={setNodeRef} style={style} className="w-full">
       <div className="flex gap-2 items-start">
         <div
           {...attributes}
@@ -274,6 +291,8 @@ interface BlockCardProps {
   onRemove: () => void;
   onImageUpload: (file: File, imageIndex?: number) => void;
   uploadingBlockId: string | null;
+  isCollapsed: boolean;
+  onToggleCollapse: () => void;
 }
 
 function BlockCard({
@@ -284,6 +303,8 @@ function BlockCard({
   onRemove,
   onImageUpload,
   uploadingBlockId,
+  isCollapsed,
+  onToggleCollapse,
 }: BlockCardProps) {
   const getBlockTitle = (block: Block) => {
     switch (block.type) {
@@ -323,7 +344,20 @@ function BlockCard({
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">{getBlockTitle(block)}</CardTitle>
+        <div className="flex items-center gap-2 flex-1">
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="h-6 w-6"
+            onClick={onToggleCollapse}
+          >
+            <ChevronDown 
+              className={`h-4 w-4 transition-transform ${isCollapsed ? '-rotate-90' : ''}`}
+            />
+          </Button>
+          <CardTitle className="text-sm font-medium">{getBlockTitle(block)}</CardTitle>
+        </div>
         <Button
           type="button"
           variant="ghost"
@@ -333,15 +367,17 @@ function BlockCard({
           <X className="h-4 w-4" />
         </Button>
       </CardHeader>
-      <CardContent>
-        <BlockContentEditor
-          block={block}
-          index={index}
-          onUpdate={onUpdate}
-          onImageUpload={onImageUpload}
-          uploadingBlockId={uploadingBlockId}
-        />
-      </CardContent>
+      {!isCollapsed && (
+        <CardContent>
+          <BlockContentEditor
+            block={block}
+            index={index}
+            onUpdate={onUpdate}
+            onImageUpload={onImageUpload}
+            uploadingBlockId={uploadingBlockId}
+          />
+        </CardContent>
+      )}
     </Card>
   );
 }
@@ -788,6 +824,3 @@ function getDefaultBlockContent(type: BlockType): any {
       return {};
   }
 }
-
-// Missing icon import
-import { ChevronDown } from "lucide-react";
