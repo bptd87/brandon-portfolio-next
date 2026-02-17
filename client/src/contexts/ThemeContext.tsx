@@ -22,9 +22,8 @@ export function ThemeProvider({
   defaultTheme = "light",
   switchable = false,
 }: ThemeProviderProps) {
-  // Default forceTheme to 'dark' - site is dark by default
-  // Only Articles/News pages set this to null to allow switching
-  const [forceTheme, setForceTheme] = useState<Theme | null>('dark');
+  // Default to light theme unless a page explicitly forces otherwise
+  const [forceTheme, setForceTheme] = useState<Theme | null>(null);
   const [theme, setTheme] = useState<Theme>(() => {
     if (switchable) {
       const stored = localStorage.getItem("theme");
