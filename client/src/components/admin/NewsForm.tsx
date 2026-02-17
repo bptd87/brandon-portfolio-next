@@ -177,23 +177,22 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogContent className="!w-[98vw] !h-[98vh] !max-w-none !fixed !left-[1vw] !top-[1vh] !p-0 border-none rounded-lg flex flex-col gap-0">
-        <DialogHeader className="p-6 border-b flex-shrink-0">
+      <DialogContent className="max-w-6xl max-h-[90vh] p-0 gap-0">
+        <DialogHeader className="p-6 border-b">
           <DialogTitle>{news ? "Edit News Item" : "Create News Item"}</DialogTitle>
           <DialogDescription>
             {news ? "Update news item details" : "Add a new news item to your portfolio"}
           </DialogDescription>
         </DialogHeader>
 
-        {/* Tab Navigation */}
-        <div className="border-b flex-shrink-0">
-          <div className="flex px-6">
+        <div className="border-b bg-muted/30">
+          <div className="flex px-6 gap-1">
             <button
               type="button"
               onClick={() => setActiveTab("basic")}
-              className={`px-4 py-3 font-medium border-b-2 transition-colors ${
+              className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === "basic"
-                  ? "border-primary text-primary"
+                  ? "border-primary text-foreground"
                   : "border-transparent text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -202,9 +201,9 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
             <button
               type="button"
               onClick={() => setActiveTab("content")}
-              className={`px-4 py-3 font-medium border-b-2 transition-colors ${
+              className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === "content"
-                  ? "border-primary text-primary"
+                  ? "border-primary text-foreground"
                   : "border-transparent text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -213,9 +212,9 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
             <button
               type="button"
               onClick={() => setActiveTab("seo")}
-              className={`px-4 py-3 font-medium border-b-2 transition-colors ${
+              className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === "seo"
-                  ? "border-primary text-primary"
+                  ? "border-primary text-foreground"
                   : "border-transparent text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -224,8 +223,8 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
           </div>
         </div>
 
-        <form id="newsForm" onSubmit={handleSubmit} className="flex-1 overflow-y-auto">
-          <div className="p-6 space-y-6">
+        <form id="newsForm" onSubmit={handleSubmit} className="overflow-y-auto max-h-[calc(90vh-200px)]">
+          <div className="p-6">
             {activeTab === "basic" && (
               <div className="grid grid-cols-2 gap-4">
                 <div className="col-span-2">
@@ -430,7 +429,7 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
           </div>
         </form>
 
-        <DialogFooter className="p-6 border-t flex-shrink-0">
+        <DialogFooter className="p-6 border-t">
           <Button type="button" variant="outline" onClick={onClose}>
             Cancel
           </Button>
