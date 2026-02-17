@@ -287,9 +287,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
 
   // Tags (user-facing content labels)
   const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
-  const [tagSearch, setTagSearch] = useState("");
   const [newTagInput, setNewTagInput] = useState("");
-  const [isCreatingTag, setIsCreatingTag] = useState(false);
 
   const [coverImage, setCoverImage] = useState<{ file?: File; url?: string; key?: string }>();
   const [galleryImages, setGalleryImages] = useState<ImageUpload[]>([]);
@@ -465,10 +463,10 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
   // Filtered tags for search
   const filteredTags = useMemo(() => {
     if (!allTags) return [];
-    if (!tagSearch.trim()) return allTags.slice(0, 50);
-    const q = tagSearch.toLowerCase();
+    if (!newTagInput.trim()) return [];
+    const q = newTagInput.toLowerCase();
     return allTags.filter(t => t.name.toLowerCase().includes(q)).slice(0, 50);
-  }, [allTags, tagSearch]);
+  }, [allTags, newTagInput]);
 
   // Role suggestions filtered by input
   const filteredRoles = useMemo(() => {
@@ -1276,102 +1274,73 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
                       </div>
                     )}
 
-                    {/* Tag search and create */}
-                    <div className="space-y-2">
-                      <div className="flex gap-2">
-                        <div className="flex-1 relative">
-                          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                          <Input
-                            value={tagSearch}
-                            onChange={(e) => setTagSearch(e.target.value)}
-                            placeholder="Search existing tags..."
-                            className="pl-9"
-                          />
-                        </div>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={() => setIsCreatingTag(!isCreatingTag)}
-                          className={isCreatingTag ? "bg-primary text-primary-foreground" : ""}
-                        >
-                          <Plus className="h-4 w-4 mr-1" />
-                          New Tag
-                        </Button>
+                    {/* Tag input - type any tag name and press Enter */}
+                    <div className="space-y-3">
+                      <div className="space-y-1">
+                        <Label htmlFor="tag-input">Add Tags</Label>
+                        <p className="text-xs text-muted-foreground">Type a tag name and press Enter. Creates new tags automatically.</p>
                       </div>
-
-                      {/* Inline tag creation */}
-                      {isCreatingTag && (
-                        <div className="flex gap-2 p-3 bg-muted rounded-lg">
-                          <Input
-                            value={newTagInput}
-                            onChange={(e) => setNewTagInput(e.target.value)}
-                            placeholder="e.g., 'Lighting Design', 'Digital Design'"
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                e.preventDefault();
-                                if (newTagInput.trim()) {
-                                  const slug = newTagInput
-                                    .toLowerCase()
-                                    .replace(/[^a-z0-9]+/g, "-")
-                                    .replace(/(^-|-$)/g, "");
-                                  createTag.mutate({ name: newTagInput.trim(), slug });
-                                }
-                              }
-                            }}
-                            autoFocus
-                          />
-                          <Button
-                            type="button"
-                            size="sm"
-                            onClick={() => {
-                              if (newTagInput.trim()) {
+                      <div className="relative">
+                        <Input
+                          id="tag-input"
+                          value={newTagInput}
+                          onChange={(e) => setNewTagInput(e.target.value)}
+                          placeholder="e.g., 'Lighting Design', 'Digital', 'Projection'..."
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" && newTagInput.trim()) {
+                              e.preventDefault();
+                              
+                              // Check if tag already exists
+                              const existingTag = allTags?.find(
+                                t => t.name.toLowerCase() === newTagInput.trim().toLowerCase()
+                              );
+                              
+                              if (existingTag && !selectedTagIds.includes(existingTag.id)) {
+                                // Tag exists, just select it
+                                setSelectedTagIds([...selectedTagIds, existingTag.id]);
+                                setNewTagInput("");
+                              } else if (!existingTag) {
+                                // Tag doesn't exist, create it
                                 const slug = newTagInput
                                   .toLowerCase()
                                   .replace(/[^a-z0-9]+/g, "-")
                                   .replace(/(^-|-$)/g, "");
                                 createTag.mutate({ name: newTagInput.trim(), slug });
                               }
-                            }}
-                            disabled={createTag.isPending || !newTagInput.trim()}
-                          >
-                            {createTag.isPending ? (
-                              <>
-                                <Loader2 className="h-4 w-4 mr-1 animate-spin" />
-                                Creating...
-                              </>
+                            }
+                          }}
+                          disabled={createTag.isPending}
+                        />
+                      </div>
+
+                      {/* Matching tags dropdown */}
+                      {newTagInput.trim() && (
+                        <div className="border rounded-lg p-3 bg-muted/30 space-y-2 max-h-60 overflow-y-auto">
+                          <p className="text-xs font-medium text-muted-foreground">Matching tags (click to select):</p>
+                          <div className="flex flex-wrap gap-2">
+                            {filteredTags.length > 0 ? (
+                              filteredTags.map((tag) => {
+                                const isSelected = selectedTagIds.includes(tag.id);
+                                return !isSelected ? (
+                                  <Badge
+                                    key={tag.id}
+                                    variant="outline"
+                                    className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
+                                    onClick={() => {
+                                      setSelectedTagIds([...selectedTagIds, tag.id]);
+                                      setNewTagInput("");
+                                    }}
+                                  >
+                                    {tag.name}
+                                  </Badge>
+                                ) : null;
+                              })
                             ) : (
-                              <>
-                                <Plus className="h-4 w-4 mr-1" />
-                                Create
-                              </>
+                              <p className="text-xs text-muted-foreground">No existing tags match. Press Enter to create "{newTagInput.trim()}".</p>
                             )}
-                          </Button>
+                          </div>
                         </div>
                       )}
-                    </div>
-
-                    {/* Available tags */}
-                    <div className="border rounded-lg p-4 max-h-64 overflow-y-auto">
-                      <div className="flex flex-wrap gap-2">
-                        {filteredTags.map((tag) => {
-                          const isSelected = selectedTagIds.includes(tag.id);
-                          return (
-                            <Badge
-                              key={tag.id}
-                              variant={isSelected ? "default" : "outline"}
-                              className="cursor-pointer hover:bg-accent hover:text-accent-foreground transition-colors"
-                              onClick={() => handleToggleTag(tag.id)}
-                            >
-                              {tag.name}
-                              {isSelected && <X className="h-3 w-3 ml-1" />}
-                            </Badge>
-                          );
-                        })}
-                        {filteredTags.length === 0 && (
-                          <p className="text-sm text-muted-foreground">No tags found matching "{tagSearch}"</p>
-                        )}
-                      </div>
                     </div>
                   </CardContent>
                 </Card>
