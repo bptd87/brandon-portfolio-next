@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, CSSProperties } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -25,10 +25,28 @@ import {
   Images,
   Sparkles,
   FileText,
+  GripVertical,
 } from "lucide-react";
 import { toast } from "sonner";
 import { processImageForUpload } from "@/utils/imageUtils";
 import { uploadImage as uploadToStorage } from "@/utils/storageUtils";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 type BlockType = 
   | "text" | "paragraph" 
@@ -57,6 +75,17 @@ export function BlockBuilder({
 }: BlockBuilderProps) {
   const [uploadingBlockId, setUploadingBlockId] = useState<string | null>(null);
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
   const addBlock = (blockType: BlockType, defaults: any = {}) => {
     const newBlock = { type: blockType, ...defaults };
     onBlocksChange([...blocks, newBlock]);
@@ -71,6 +100,20 @@ export function BlockBuilder({
 
   const removeBlock = (index: number) => {
     onBlocksChange(blocks.filter((_, i) => i !== index));
+  };
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = blocks.findIndex((_, i) => i === active.id);
+      const newIndex = blocks.findIndex((_, i) => i === over.id);
+
+      if (oldIndex !== -1 && newIndex !== -1) {
+        const newBlocks = arrayMove(blocks, oldIndex, newIndex);
+        onBlocksChange(newBlocks);
+      }
+    }
   };
 
   const handleImageUpload = async (
@@ -124,26 +167,37 @@ export function BlockBuilder({
   return (
     <div className="space-y-4">
       {/* Blocks List */}
-      <div className="space-y-4">
-        {blocks.length === 0 ? (
-          <div className="text-center py-8 text-muted-foreground">
-            No blocks yet. Add one to get started.
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+      >
+        <SortableContext
+          items={blocks.map((_, i) => i)}
+          strategy={verticalListSortingStrategy}
+        >
+          <div className="space-y-4">
+            {blocks.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                No blocks yet. Add one to get started.
+              </div>
+            ) : (
+              blocks.map((block, index) => (
+                <SortableBlockCard
+                  key={index}
+                  block={block}
+                  index={index}
+                  type={type}
+                  onUpdate={(updates) => updateBlock(index, updates)}
+                  onRemove={() => removeBlock(index)}
+                  onImageUpload={(file, imageIndex) => handleImageUpload(file, index, imageIndex)}
+                  uploadingBlockId={uploadingBlockId}
+                />
+              ))
+            )}
           </div>
-        ) : (
-          blocks.map((block, index) => (
-            <BlockCard
-              key={index}
-              block={block}
-              index={index}
-              type={type}
-              onUpdate={(updates) => updateBlock(index, updates)}
-              onRemove={() => removeBlock(index)}
-              onImageUpload={(file, imageIndex) => handleImageUpload(file, index, imageIndex)}
-              uploadingBlockId={uploadingBlockId}
-            />
-          ))
-        )}
-      </div>
+        </SortableContext>
+      </DndContext>
 
       {/* Block Type Menu */}
       <div className="flex flex-wrap gap-2 pt-4 border-t">
@@ -162,6 +216,51 @@ export function BlockBuilder({
             {label}
           </Button>
         ))}
+      </div>
+    </div>
+  );
+}
+
+interface SortableBlockCardProps extends BlockCardProps {
+  block: Block;
+  index: number;
+  type: 'news' | 'articles';
+  onUpdate: (updates: any) => void;
+  onRemove: () => void;
+  onImageUpload: (file: File, imageIndex?: number) => void;
+  uploadingBlockId: string | null;
+}
+
+function SortableBlockCard(props: SortableBlockCardProps) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: props.index });
+
+  const style: CSSProperties = {
+    transform: CSS.Transform.toString(transform) || undefined,
+    transition: transition || undefined,
+    opacity: isDragging ? 0.5 : 1,
+  };
+
+  return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+    <div ref={setNodeRef} style={style}>
+      <div className="flex gap-2 items-start">
+        <div
+          {...attributes}
+          {...listeners}
+          className="mt-3 cursor-grab active:cursor-grabbing text-muted-foreground hover:text-foreground transition-colors flex-shrink-0"
+        >
+          <GripVertical className="h-5 w-5" />
+        </div>
+        <div className="flex-1">
+          <BlockCard {...props} />
+        </div>
       </div>
     </div>
   );
@@ -443,13 +542,14 @@ function BlockContentEditor({
       return (
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <Label htmlFor={`list-ordered-${index}`}>Ordered List</Label>
             <input
               id={`list-ordered-${index}`}
               type="checkbox"
+              title="Toggle ordered/unordered list"
               checked={block.ordered || false}
               onChange={(e) => onUpdate({ ordered: e.target.checked })}
             />
+            <Label htmlFor={`list-ordered-${index}`}>Ordered List</Label>
           </div>
           {(block.items || []).map((item: string, itemIndex: number) => (
             <div key={itemIndex} className="flex gap-2">
