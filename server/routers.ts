@@ -347,7 +347,7 @@ export const appRouter = router({
       .input(z.object({
         projectId: z.number(),
         imageUrl: z.string(),
-        imageKey: z.string(),
+        imageKey: z.string().optional(), // Optional - legacy Cloudinary key no longer used
         title: z.string().optional(),
         caption: z.string().optional(),
         altText: z.string().optional(),

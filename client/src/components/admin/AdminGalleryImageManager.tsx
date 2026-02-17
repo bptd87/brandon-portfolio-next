@@ -12,6 +12,7 @@ import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, us
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy, horizontalListSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { uploadImage as uploadToStorage } from "@/utils/storageUtils";
+import { processImageForUpload } from "@/utils/imageUtils";
 
 interface AdminGalleryImageManagerProps {
     projectId: number;
@@ -234,12 +235,14 @@ export function AdminGalleryImageManager({ projectId, projectTitle, isOpen, onCl
         try {
             // Upload to Supabase Storage
             for (const file of Array.from(files)) {
-                const uploadRes = await uploadToStorage(file, 'portfolio');
+                // Process image: convert JPEG to WebP, preserve PNG
+                const optimizedFile = await processImageForUpload(file);
+                const publicUrl = await uploadToStorage(optimizedFile, 'portfolio');
 
                 await addImageMutation.mutateAsync({
                     projectId,
-                    imageUrl: uploadRes.url,
-                    imageKey: uploadRes.key,
+                    imageUrl: publicUrl,
+                    imageKey: undefined, // No longer using separate key
                     imageType: "rendering", // Default to rendering for this gallery
                     sortOrder: images.length, // Add to end
                 });
@@ -292,12 +295,14 @@ export function AdminGalleryImageManager({ projectId, projectTitle, isOpen, onCl
         setIsUploading(true);
         try {
             for (const file of files) {
-                const uploadRes = await uploadToStorage(file, 'portfolio');
+                // Process image: convert JPEG to WebP, preserve PNG
+                const optimizedFile = await processImageForUpload(file);
+                const publicUrl = await uploadToStorage(optimizedFile, 'portfolio');
 
                 await addImageMutation.mutateAsync({
                     projectId,
-                    imageUrl: uploadRes.url,
-                    imageKey: uploadRes.key,
+                    imageUrl: publicUrl,
+                    imageKey: undefined, // No longer using separate key
                     imageType: "rendering",
                     sortOrder: images.length,
                 });
