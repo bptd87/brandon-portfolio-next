@@ -178,7 +178,7 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto p-8">
+      <DialogContent className="w-[95vw] h-[95vh] max-w-none overflow-y-auto p-8">
         <DialogHeader>
           <DialogTitle>{news ? "Edit News Item" : "Create News Item"}</DialogTitle>
           <DialogDescription>

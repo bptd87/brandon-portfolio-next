@@ -404,9 +404,9 @@ function BlockContentEditor({
         <Textarea
           value={block.text || block.content || ''}
           onChange={(e) => onUpdate({ text: e.target.value })}
-          rows={8}
+          rows={5}
           placeholder="Enter text content..."
-          className="resize-vertical min-h-[200px]"
+          className="resize-vertical"
         />
       );
 
@@ -634,7 +634,7 @@ function BlockContentEditor({
             value={block.text || ''}
             onChange={(e) => onUpdate({ text: e.target.value })}
             placeholder="Quote text..."
-            rows={5}
+            rows={3}
             className="resize-vertical"
           />
           <Input
@@ -668,7 +668,7 @@ function BlockContentEditor({
                   onUpdate({ items: newItems });
                 }}
                 placeholder="Answer..."
-                rows={5}
+                rows={3}
                 className="resize-vertical"
               />
               <Button
@@ -767,7 +767,7 @@ function BlockContentEditor({
           value={block.prompt || ''}
           onChange={(e) => onUpdate({ prompt: e.target.value })}
           placeholder="Enter AI prompt..."
-          rows={5}
+          rows={3}
           className="resize-vertical"
         />
       );
@@ -785,7 +785,7 @@ function BlockContentEditor({
             value={block.note || ''}
             onChange={(e) => onUpdate({ note: e.target.value })}
             placeholder="Update note..."
-            rows={5}
+            rows={3}
             className="resize-vertical"
           />
         </div>
