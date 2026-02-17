@@ -72,7 +72,7 @@ export function AdminMobileNav({ user, onSignOut }: AdminMobileNavProps) {
                         className="h-8 w-8"
                         asChild
                     >
-                        <a href="/" target="_blank" rel="noreferrer">
+                        <a href="/" target="_blank" rel="noreferrer" title="Go to home">
                             <Home className="h-4 w-4" />
                         </a>
                     </Button>

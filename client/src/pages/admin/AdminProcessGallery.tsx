@@ -299,7 +299,7 @@ function CategorySection({
   onAddVideoUrl: (category: ProcessCategory, videoUrl: string, title: string) => void;
   isUploading: boolean;
   onManageImages?: (projectId: number, title: string) => void;
-  onUpdateProject?: (projectId: number, field: 'title' | 'slug', value: string) => void;
+  onUpdateProject?: (projectId: number, field: 'title' | 'slug' | 'year', value: string | number | null) => void;
 }) {
   const config = WORKFLOW_CATEGORIES[category] || GALLERY_CATEGORIES[category];
   const [isDraggingFile, setIsDraggingFile] = useState(false);
