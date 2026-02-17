@@ -31,15 +31,46 @@ export const analyticsRouter = router({
         console.log('🔍 CloudFlare headers available:', cfHeaders.map(h => `${h}: ${ctx.req.headers[h]}`).join(', '));
       }
       
-      if (cfCity || cfCountry) {
+      if (cfCity) {
+        // CloudFlare has city data (Business plan+)
         geoData = {
-          city: cfCity ? String(cfCity) : null,
+          city: String(cfCity),
           region: cfRegion ? String(cfRegion) : null,
           country: cfCountry ? String(cfCountry) : null
         };
-        console.log('✅ Using CloudFlare geo headers:', geoData);
+        console.log('✅ Using CloudFlare geo headers (with city):', geoData);
+      } else if (cfCountry && (!cfCity)) {
+        // CloudFlare only has country (free plan) - use it and try to get city from ip-api.com
+        geoData.country = String(cfCountry);
+        geoData.region = cfRegion ? String(cfRegion) : null;
+        console.log('📍 CloudFlare provided country only, attempting to fetch city from ip-api.com for IP:', ipString);
+
+        // Try to get city data for the IP
+        if (ipString && ipString !== 'unknown' && ipString !== '127.0.0.1' && ipString !== '::1') {
+          if (geoCache.has(ipString)) {
+            // @ts-ignore
+            const cached = geoCache.get(ipString)!;
+            geoData.city = cached.city;
+            console.log('✅ Using cached city data for', ipString);
+          } else {
+            try {
+              const controller = new AbortController();
+              const timeoutId = setTimeout(() => controller.abort(), 2000);
+              const response = await fetch(`http://ip-api.com/json/${ipString}?fields=status,message,city`, { signal: controller.signal });
+              clearTimeout(timeoutId);
+              const data = await response.json();
+              if (data.status === 'success' && data.city) {
+                geoData.city = data.city;
+                geoCache.set(ipString, { city: data.city, region: geoData.region, country: geoData.country });
+                console.log('✅ Fetched city from ip-api.com:', geoData);
+              }
+            } catch (e) {
+              console.warn('⚠️ Could not fetch city from ip-api.com:', e instanceof Error ? e.message : 'unknown error');
+            }
+          }
+        }
       }
-      // PRIORITY 2: Use free ip-api.com service (no key required, 45 req/min)
+      // PRIORITY 3: Use free ip-api.com service (no key required, 45 req/min) as fallback
       else if (ipString && ipString !== 'unknown' && ipString !== '127.0.0.1' && ipString !== '::1') {
         if (geoCache.has(ipString)) {
           // @ts-ignore
