@@ -21,7 +21,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Loader2, Upload, X, Image } from "lucide-react";
 import { toast } from "sonner";
 
@@ -186,15 +185,48 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
           </DialogDescription>
         </DialogHeader>
 
-        <form id="newsForm" onSubmit={handleSubmit} className="flex-1 overflow-hidden">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col">
-            <TabsList className="grid w-full grid-cols-3 rounded-none border-b px-6 py-0 h-auto bg-transparent flex-shrink-0">
-              <TabsTrigger value="basic" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary">Basic Info</TabsTrigger>
-              <TabsTrigger value="content" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary">Content Blocks</TabsTrigger>
-              <TabsTrigger value="seo" className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary">SEO</TabsTrigger>
-            </TabsList>
+        {/* Tab Navigation */}
+        <div className="border-b flex-shrink-0">
+          <div className="flex px-6">
+            <button
+              type="button"
+              onClick={() => setActiveTab("basic")}
+              className={`px-4 py-3 font-medium border-b-2 transition-colors ${
+                activeTab === "basic"
+                  ? "border-primary text-primary"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              Basic Info
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab("content")}
+              className={`px-4 py-3 font-medium border-b-2 transition-colors ${
+                activeTab === "content"
+                  ? "border-primary text-primary"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              Content Blocks
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab("seo")}
+              className={`px-4 py-3 font-medium border-b-2 transition-colors ${
+                activeTab === "seo"
+                  ? "border-primary text-primary"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              SEO
+            </button>
+          </div>
+        </div>
 
-            <TabsContent value="basic" className="flex-1 overflow-y-auto space-y-4 p-6 m-0">
+        <form id="newsForm" onSubmit={handleSubmit} className="flex-1 overflow-y-auto">
+          <div className="p-6 space-y-6">
+            {activeTab === "basic" && (
               <div className="grid grid-cols-2 gap-4">
                 <div className="col-span-2">
                   <Label htmlFor="title">Title *</Label>
@@ -344,19 +376,19 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
                   </div>
                 </div>
               </div>
-            </TabsContent>
+            )}
 
-            <TabsContent value="content" className="flex-1 overflow-y-auto space-y-4 p-6 m-0">
+            {activeTab === "content" && (
               <BlockBuilder 
                 blocks={formData.blocks} 
                 onBlocksChange={handleBlocksChange}
                 type="news"
                 uploadPath="news"
               />
-            </TabsContent>
+            )}
 
-            <TabsContent value="seo" className="flex-1 overflow-y-auto space-y-4 p-6 m-0">
-              <div className="rounded-lg border border-dashed p-3 mb-2 text-sm text-muted-foreground">
+            {activeTab === "seo" && (
+              <div className="space-y-4">
                 <strong>SEO fields</strong> control how this news item appears in search engine results (Google, Bing). They are <em>not visible</em> to visitors on the site. For visitor-facing labels, use Tags in the main admin panel.
               </div>
               <div>
@@ -392,8 +424,8 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
                   Comma-separated keywords for search engines (e.g., "scenic design, theatre, portfolio")
                 </p>
               </div>
-            </TabsContent>
-          </Tabs>
+            )}
+          </div>
         </form>
 
         <DialogFooter className="p-6 border-t flex-shrink-0">
