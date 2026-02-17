@@ -37,6 +37,9 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 export async function createConfiguredApp(app?: Express, server?: Server): Promise<Express> {
   const expressApp = app || express();
 
+  // Trust proxy headers so req.ip resolves correctly behind Cloudflare/Railway
+  expressApp.set("trust proxy", true);
+
   // Health check endpoint for deployment debugging
   expressApp.get("/health", (req: express.Request, res: express.Response) => {
     res.json({
