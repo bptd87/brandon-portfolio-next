@@ -189,6 +189,7 @@ export default function AdminExperientialGallery() {
     const reorderMutation = trpc.experientialGallery.updateOrder.useMutation({
         onSuccess: () => {
             setHasChanges(false);
+            refetchGallery();
             toast.success("Order saved");
         }
     });

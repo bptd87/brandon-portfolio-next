@@ -254,6 +254,7 @@ export default function AdminRenderingGallery() {
     const reorderMutation = trpc.renderingGallery.updateOrder.useMutation({
         onSuccess: () => {
             setHasChanges(false);
+            refetchGallery();
             toast.success("Order saved");
         }
     });
