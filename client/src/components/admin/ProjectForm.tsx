@@ -288,6 +288,8 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
   // Tags (user-facing content labels)
   const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
   const [tagSearch, setTagSearch] = useState("");
+  const [newTagInput, setNewTagInput] = useState("");
+  const [isCreatingTag, setIsCreatingTag] = useState(false);
 
   const [coverImage, setCoverImage] = useState<{ file?: File; url?: string; key?: string }>();
   const [galleryImages, setGalleryImages] = useState<ImageUpload[]>([]);
@@ -295,7 +297,21 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
   const [isDragging, setIsDragging] = useState(false);
 
   // Categories removed - projects use disciplines, not categories
-  const { data: allTags } = trpc.tags.list.useQuery();
+  const { data: allTags, refetch: refetchTags } = trpc.tags.list.useQuery();
+  
+  const createTag = trpc.tags.create.useMutation({
+    onSuccess: (newTag) => {
+      toast.success(`Tag "${newTag.name}" created`);
+      setNewTagInput("");
+      setIsCreatingTag(false);
+      refetchTags();
+      // Auto-select the newly created tag
+      setSelectedTagIds([...selectedTagIds, newTag.id]);
+    },
+    onError: (error) => {
+      toast.error(`Failed to create tag: ${error.message}`);
+    },
+  });
   // const uploadImage = trpc.projects.uploadImage.useMutation(); // Replaced by client-side upload
 
   const createProject = trpc.projects.create.useMutation({
@@ -1260,17 +1276,79 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
                       </div>
                     )}
 
-                    {/* Tag search */}
+                    {/* Tag search and create */}
                     <div className="space-y-2">
-                      <div className="relative">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                        <Input
-                          value={tagSearch}
-                          onChange={(e) => setTagSearch(e.target.value)}
-                          placeholder="Search tags..."
-                          className="pl-9"
-                        />
+                      <div className="flex gap-2">
+                        <div className="flex-1 relative">
+                          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                          <Input
+                            value={tagSearch}
+                            onChange={(e) => setTagSearch(e.target.value)}
+                            placeholder="Search existing tags..."
+                            className="pl-9"
+                          />
+                        </div>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setIsCreatingTag(!isCreatingTag)}
+                          className={isCreatingTag ? "bg-primary text-primary-foreground" : ""}
+                        >
+                          <Plus className="h-4 w-4 mr-1" />
+                          New Tag
+                        </Button>
                       </div>
+
+                      {/* Inline tag creation */}
+                      {isCreatingTag && (
+                        <div className="flex gap-2 p-3 bg-muted rounded-lg">
+                          <Input
+                            value={newTagInput}
+                            onChange={(e) => setNewTagInput(e.target.value)}
+                            placeholder="e.g., 'Lighting Design', 'Digital Design'"
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                e.preventDefault();
+                                if (newTagInput.trim()) {
+                                  const slug = newTagInput
+                                    .toLowerCase()
+                                    .replace(/[^a-z0-9]+/g, "-")
+                                    .replace(/(^-|-$)/g, "");
+                                  createTag.mutate({ name: newTagInput.trim(), slug });
+                                }
+                              }
+                            }}
+                            autoFocus
+                          />
+                          <Button
+                            type="button"
+                            size="sm"
+                            onClick={() => {
+                              if (newTagInput.trim()) {
+                                const slug = newTagInput
+                                  .toLowerCase()
+                                  .replace(/[^a-z0-9]+/g, "-")
+                                  .replace(/(^-|-$)/g, "");
+                                createTag.mutate({ name: newTagInput.trim(), slug });
+                              }
+                            }}
+                            disabled={createTag.isPending || !newTagInput.trim()}
+                          >
+                            {createTag.isPending ? (
+                              <>
+                                <Loader2 className="h-4 w-4 mr-1 animate-spin" />
+                                Creating...
+                              </>
+                            ) : (
+                              <>
+                                <Plus className="h-4 w-4 mr-1" />
+                                Create
+                              </>
+                            )}
+                          </Button>
+                        </div>
+                      )}
                     </div>
 
                     {/* Available tags */}
