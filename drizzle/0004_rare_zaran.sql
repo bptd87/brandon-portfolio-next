@@ -1,1 +1,0 @@
-ALTER TABLE `categories` ADD `color` varchar(7) DEFAULT '#FF5722' NOT NULL;

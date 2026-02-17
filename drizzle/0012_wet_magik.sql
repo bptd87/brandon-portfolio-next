@@ -1,1 +1,0 @@
-ALTER TABLE `tutorials` ADD `slug` varchar(255);

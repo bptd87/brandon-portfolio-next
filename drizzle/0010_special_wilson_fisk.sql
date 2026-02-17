@@ -1,1 +1,0 @@
-ALTER TABLE `projectImages` MODIFY COLUMN `imageType` enum('production','rendering','technical_drawing','video') NOT NULL DEFAULT 'production';
