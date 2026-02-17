@@ -571,69 +571,109 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
 
                 {/* Image block */}
                 {block.type === "image" && (
-                  <div className="space-y-2">
-                    <div className="flex gap-2 items-center">
-                      <Input
-                        value={block.content.url || ""}
-                        onChange={(e) =>
-                          updateBlock(block.id, { ...block.content, url: e.target.value })
-                        }
-                        placeholder="Image URL"
-                      />
-                      <div className="relative">
+                  <div className="space-y-3 bg-muted/50 p-3 rounded border">
+                    <div className="space-y-2">
+                      <Label className="text-sm">Image Source</Label>
+                      <div className="flex gap-2">
                         <Input
-                          type="file"
-                          accept="image/*"
-                          className="absolute inset-0 opacity-0 cursor-pointer"
-                          onChange={async (e) => {
-                            const file = e.target.files?.[0];
-                            if (!file) return;
-
-                            setUploadingBlockId(block.id);
-                            try {
-                              // 1. Optimize
-                              const optimizedFile = await processImageForUpload(file);
-
-                              // 2. Upload
-                              const publicUrl = await uploadToStorage(optimizedFile, 'portfolio', 'articles');
-
-                              updateBlock(block.id, { ...block.content, url: publicUrl });
-                              toast.success("Image uploaded!");
-                            } catch (error: any) {
-                              console.error(error);
-                              toast.error(`Upload failed: ${error.message}`);
-                            } finally {
-                              setUploadingBlockId(null);
-                            }
-                          }}
-                          disabled={uploadingBlockId === block.id}
+                          value={block.content.url || ""}
+                          onChange={(e) =>
+                            updateBlock(block.id, { ...block.content, url: e.target.value })
+                          }
+                          placeholder="Paste image URL or upload below"
+                          className="flex-1"
                         />
-                        <Button variant="outline" size="icon" disabled={uploadingBlockId === block.id}>
-                          {uploadingBlockId === block.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <ImageIcon className="h-4 w-4" />}
-                        </Button>
                       </div>
                     </div>
+
+                    <div className="border-t pt-3">
+                      <p className="text-xs font-medium text-muted-foreground mb-2">Or upload a file:</p>
+                      <div className="flex gap-2">
+                        <label className="flex-1">
+                          <Input
+                            id={`image-upload-${block.id}`}
+                            type="file"
+                            accept="image/*"
+                            onChange={async (e) => {
+                              const file = e.target.files?.[0];
+                              if (!file) return;
+
+                              setUploadingBlockId(block.id);
+                              try {
+                                const optimizedFile = await processImageForUpload(file);
+                                const publicUrl = await uploadToStorage(optimizedFile, 'portfolio', 'articles');
+                                updateBlock(block.id, { ...block.content, url: publicUrl });
+                                toast.success("Image uploaded successfully!");
+                              } catch (error: any) {
+                                console.error('Image upload error:', error);
+                                toast.error(`Upload failed: ${error.message}`);
+                              } finally {
+                                setUploadingBlockId(null);
+                              }
+                            }}
+                            className="hidden"
+                            disabled={uploadingBlockId === block.id}
+                          />
+                          <Button 
+                            asChild
+                            variant={uploadingBlockId === block.id ? "disabled" : "outline"}
+                            size="sm"
+                            className="w-full"
+                          >
+                            <span>
+                              {uploadingBlockId === block.id ? (
+                                <>
+                                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                                  Uploading...
+                                </>
+                              ) : (
+                                <>
+                                  <ImageIcon className="h-4 w-4 mr-2" />
+                                  Choose Image
+                                </>
+                              )}
+                            </span>
+                          </Button>
+                        </label>
+                      </div>
+                    </div>
+
                     {block.content.url && (
-                      <img
-                        src={block.content.url}
-                        alt={block.content.alt || ""}
-                        className="w-full rounded"
-                      />
+                      <div className="space-y-2">
+                        <img
+                          src={block.content.url}
+                          alt={block.content.alt || "Image preview"}
+                          className="w-full rounded max-h-48 object-cover border border-border"
+                        />
+                      </div>
                     )}
-                    <Input
-                      value={block.content.caption || ""}
-                      onChange={(e) =>
-                        updateBlock(block.id, { ...block.content, caption: e.target.value })
-                      }
-                      placeholder="Caption"
-                    />
-                    <Input
-                      value={block.content.alt || ""}
-                      onChange={(e) =>
-                        updateBlock(block.id, { ...block.content, alt: e.target.value })
-                      }
-                      placeholder="Alt text (for accessibility)"
-                    />
+
+                    <div className="grid grid-cols-1 gap-2 border-t pt-3">
+                      <div className="space-y-1">
+                        <Label htmlFor={`caption-${block.id}`} className="text-xs">Caption (optional)</Label>
+                        <Input
+                          id={`caption-${block.id}`}
+                          value={block.content.caption || ""}
+                          onChange={(e) =>
+                            updateBlock(block.id, { ...block.content, caption: e.target.value })
+                          }
+                          placeholder="Image caption"
+                          className="text-sm"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <Label htmlFor={`alt-${block.id}`} className="text-xs">Alt Text (SEO)</Label>
+                        <Input
+                          id={`alt-${block.id}`}
+                          value={block.content.alt || ""}
+                          onChange={(e) =>
+                            updateBlock(block.id, { ...block.content, alt: e.target.value })
+                          }
+                          placeholder="Describe the image for accessibility"
+                          className="text-sm"
+                        />
+                      </div>
+                    </div>
                   </div>
                 )}
 
