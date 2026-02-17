@@ -63,7 +63,7 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
     return (
         <div className="flex flex-col md:flex-row h-screen overflow-hidden bg-background text-foreground">
             {/* Mobile Navigation */}
-            <AdminMobileNav user={user} onSignOut={handleSignOut} />
+            <AdminMobileNav user={user as { name: string; role: string } | undefined} onSignOut={handleSignOut} />
 
             {/* Desktop Sidebar (Hidden on Mobile) */}
             <aside className="hidden md:flex w-64 border-r bg-card/30 backdrop-blur-sm flex-col flex-shrink-0">

@@ -120,7 +120,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
         const id = await db.createTag(input);
-        return { id };
+        return { id, name: input.name, slug: input.slug, createdAt: new Date() };
       }),
 
     update: adminProcedure

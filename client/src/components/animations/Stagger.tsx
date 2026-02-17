@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { ReactNode } from "react";
 
 interface StaggerListProps {
@@ -42,7 +42,7 @@ interface StaggerItemProps {
 }
 
 export function StaggerItem({ children, className = "", dramatic = false }: StaggerItemProps) {
-    const variants = dramatic
+    const variants: Variants = dramatic
         ? {
             hidden: { opacity: 0, y: 60, scale: 0.92, rotateX: 8 },
             show: { 

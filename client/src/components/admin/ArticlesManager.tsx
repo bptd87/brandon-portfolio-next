@@ -57,7 +57,11 @@ export function ArticlesManager() {
               <CardTitle className="text-xl md:text-2xl">Articles & Stories ({articles?.length || 0})</CardTitle>
               <CardDescription>Manage your blog posts, design stories, and long-form content</CardDescription>
             </div>
-            <Button onClick={handleCreate} size="sm" md:size="default">
+            <Button onClick={handleCreate} className="hidden md:inline-flex" size="default">
+              <Plus className="w-4 h-4 mr-2" />
+              New Article
+            </Button>
+            <Button onClick={handleCreate} className="md:hidden" size="sm">
               <Plus className="w-4 h-4 mr-2" />
               New Article
             </Button>

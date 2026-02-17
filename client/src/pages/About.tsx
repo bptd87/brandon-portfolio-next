@@ -85,7 +85,7 @@ export default function About() {
         type="Person"
         person={{
           name: "Brandon PT Davis",
-          jobTitle: ["Scenic Designer", "Conceptual Artist"],
+          jobTitle: "Scenic Designer",
           url: `${baseUrl}/about`,
           image: "https://www.brandonptdavis.com/android-chrome-512x512.png",
           description: "Scenic designer and conceptual artist working at the intersection of Art × Technology × Design. Known for dramaturgical approach to scenic design with work at South Coast Repertory and 130+ productions across regional theatre, contemporary drama, and immersive experiences. Member of USA 829.",

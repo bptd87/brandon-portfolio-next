@@ -66,7 +66,7 @@ export function ProjectsManager() {
                 <CardTitle className="text-xl md:text-2xl">Portfolio Projects ({allProjects?.length || 0})</CardTitle>
                 <CardDescription>Manage your portfolio projects and case studies</CardDescription>
               </div>
-              <Button onClick={() => navigate("/admin/projects/new")} size="sm" md:size="default">
+              <Button onClick={() => navigate("/admin/projects/new")} className="hidden md:inline-flex" size="default">
                 <Plus className="h-4 w-4 mr-2" />
                 New Project
               </Button>

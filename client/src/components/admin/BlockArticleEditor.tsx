@@ -22,9 +22,16 @@ import { BlockBuilder } from "./BlockBuilder";
 import { processImageForUpload } from "@/utils/imageUtils";
 import { uploadImage as uploadToStorage } from "@/utils/storageUtils";
 
+type BlockType = 
+  | "text" | "paragraph" 
+  | "header" | "heading" 
+  | "image" | "gallery" | "video" 
+  | "quote" | "list" | "faq" | "accordion" 
+  | "html" | "update_note" | "ai_prompt" | "creative_team";
+
 // Block structure (matches BlockBuilder format)
 interface Block {
-  type: string;
+  type: BlockType;
   [key: string]: any;
 }
 

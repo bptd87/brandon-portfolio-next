@@ -289,6 +289,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
   // Tags (user-facing content labels)
   const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
   const [newTagInput, setNewTagInput] = useState("");
+  const [isCreatingTag, setIsCreatingTag] = useState(false);
 
   const [coverImage, setCoverImage] = useState<{ file?: File; url?: string; key?: string }>();
   const [galleryImages, setGalleryImages] = useState<ImageUpload[]>([]);
@@ -352,7 +353,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
           ? fullProject.status.toLowerCase() as "draft" | "published" | "archived"
           : "draft",
         featured: fullProject.featured || false,
-        gallery_only: fullProject.gallery_only || false,
+        gallery_only: (fullProject as any).gallery_only || false,
         year: fullProject.year || new Date().getFullYear(),
         location: fullProject.location || "",
         client: fullProject.client || "",

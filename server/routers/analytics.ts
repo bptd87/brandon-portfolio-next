@@ -5,7 +5,7 @@ import { supabase } from "../db";
 
 // Simple in-memory cache for IP geodata to avoid rate limits
 // In a real app, use Redis or a proper cache
-const geoCache = new Map<string, { city: string, region: string, country: string }>();
+const geoCache = new Map<string, { city: string | null, region: string | null, country: string | null }>();
 
 export const analyticsRouter = router({
   trackPageView: publicProcedure
@@ -132,9 +132,9 @@ export const analyticsRouter = router({
             .insert({
               session_id: input.sessionId,
               ip_address: ipString,
-              city: geoData.city,
-              region: geoData.region,
-              country: geoData.country,
+              city: geoData.city ?? '',
+              region: geoData.region ?? '',
+              country: geoData.country ?? '',
               user_agent: input.userAgent,
               entry_page: input.pagePath
             });
@@ -147,7 +147,7 @@ export const analyticsRouter = router({
             page_path: input.pagePath,
             ip_address: ipString,
             user_agent: input.userAgent,
-            country: geoData.country,
+            country: geoData.country ?? '',
             region: geoData.region,
             city: geoData.city
           });

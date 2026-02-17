@@ -1018,14 +1018,23 @@ export async function getAllCollaborators(filters?: {
   return data.map(collab => ({
     id: collab.id,
     name: collab.name,
+    slug: collab.slug,
     role: collab.role,
     bio: collab.bio,
-    portfolioUrl: collab.portfolioUrl,
-    websiteUrl: collab.websiteUrl,
-    instagramUrl: collab.instagramUrl,
-    instagramHandle: collab.instagramHandle,
+    website: collab.website,
+    portfolioUrl: collab.portfolio_url,
+    instagramUrl: collab.instagram_url,
+    instagramHandle: collab.instagram_handle,
+    coverImage: collab.cover_image,
+    status: collab.status || 'published',
+    featured: collab.featured || false,
+    seoTitle: collab.seo_title,
+    seoDescription: collab.seo_description,
+    seoKeywords: collab.seo_keywords,
+    gallery: collab.gallery,
     created_at: new Date(collab.created_at),
-  }));
+    updated_at: collab.updated_at ? new Date(collab.updated_at) : undefined,
+  })) as Collaborator[];
 }
 
 export async function getCollaboratorBySlug(slug: string): Promise<Collaborator | undefined> {
@@ -1040,13 +1049,22 @@ export async function getCollaboratorBySlug(slug: string): Promise<Collaborator 
   return {
     id: data.id,
     name: data.name,
+    slug: data.slug,
     role: data.role,
     bio: data.bio,
-    portfolioUrl: data.portfolioUrl,
-    websiteUrl: data.websiteUrl,
-    instagramUrl: data.instagramUrl,
-    instagramHandle: data.instagramHandle,
+    website: data.website,
+    portfolioUrl: data.portfolio_url,
+    instagramUrl: data.instagram_url,
+    instagramHandle: data.instagram_handle,
+    coverImage: data.cover_image,
+    status: data.status || 'published',
+    featured: data.featured || false,
+    seoTitle: data.seo_title,
+    seoDescription: data.seo_description,
+    seoKeywords: data.seo_keywords,
+    gallery: data.gallery,
     created_at: new Date(data.created_at),
+    updated_at: data.updated_at ? new Date(data.updated_at) : undefined,
   };
 }
 
@@ -2055,13 +2073,22 @@ export async function getCollaboratorById(id: number): Promise<Collaborator | un
   return {
     id: data.id,
     name: data.name,
+    slug: data.slug,
     role: data.role,
     bio: data.bio,
-    portfolioUrl: data.portfolioUrl,
-    websiteUrl: data.websiteUrl,
-    instagramUrl: data.instagramUrl,
-    instagramHandle: data.instagramHandle,
+    website: data.website,
+    portfolioUrl: data.portfolio_url,
+    instagramUrl: data.instagram_url,
+    instagramHandle: data.instagram_handle,
+    coverImage: data.cover_image,
+    status: data.status || 'published',
+    featured: data.featured || false,
+    seoTitle: data.seo_title,
+    seoDescription: data.seo_description,
+    seoKeywords: data.seo_keywords,
+    gallery: data.gallery,
     created_at: new Date(data.created_at),
+    updated_at: data.updated_at ? new Date(data.updated_at) : undefined,
   };
 }
 
@@ -2070,12 +2097,20 @@ export async function createCollaborator(collaborator: any) {
     .from('collaborators')
     .insert({
       name: collaborator.name,
+      slug: collaborator.slug,
       role: collaborator.role,
       bio: collaborator.bio,
-      portfolioUrl: collaborator.portfolioUrl,
-      websiteUrl: collaborator.websiteUrl,
-      instagramUrl: collaborator.instagramUrl,
-      instagramHandle: collaborator.instagramHandle,
+      portfolio_url: collaborator.portfolioUrl,
+      website: collaborator.website,
+      instagram_url: collaborator.instagramUrl,
+      instagram_handle: collaborator.instagramHandle,
+      cover_image: collaborator.coverImage,
+      status: collaborator.status || 'published',
+      featured: collaborator.featured || false,
+      seo_title: collaborator.seoTitle,
+      seo_description: collaborator.seoDescription,
+      seo_keywords: collaborator.seoKeywords,
+      gallery: collaborator.gallery,
     })
     .select()
     .single();
@@ -2365,7 +2400,7 @@ export async function getModelGallery(): Promise<RenderingGalleryItem[]> {
           createdAt: new Date(project.created_at),
           updatedAt: new Date(project.updated_at),
         } : undefined,
-      };
+      } as RenderingGalleryItem;
     });
   } catch (e) {
     console.error('Supabase Model Gallery Error:', e);

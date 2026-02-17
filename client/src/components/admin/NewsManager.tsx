@@ -61,7 +61,11 @@ export function NewsManager() {
               <CardTitle className="text-xl md:text-2xl">News & Updates</CardTitle>
               <CardDescription>Manage news items and career updates</CardDescription>
             </div>
-            <Button onClick={() => navigate("/admin/news/new")} size="sm" md:size="default">
+            <Button onClick={() => navigate("/admin/news/new")} className="hidden md:inline-flex" size="default">
+              <Plus className="h-4 w-4 mr-2" />
+              New News Item
+            </Button>
+            <Button onClick={() => navigate("/admin/news/new")} className="md:hidden" size="sm">
               <Plus className="h-4 w-4 mr-2" />
               New News Item
             </Button>
@@ -88,7 +92,7 @@ export function NewsManager() {
                   </TableHeader>
                   <TableBody>
                     {news
-                      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+                      .sort((a, b) => new Date(b.date ?? new Date()).getTime() - new Date(a.date ?? new Date()).getTime())
                       .map((item) => (
                       <TableRow
                         key={item.id}
@@ -169,7 +173,7 @@ export function NewsManager() {
               {/* Mobile Card View */}
               <div className="md:hidden">
                 <MobileTableView
-                  data={news.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())}
+                  data={news.sort((a, b) => new Date(b.date ?? new Date()).getTime() - new Date(a.date ?? new Date()).getTime())}
                   idKey="id"
                   columns={[
                     {
