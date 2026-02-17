@@ -177,7 +177,7 @@ export function BlockBuilder({
   ];
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-2 w-full">
       {/* Blocks List */}
       <DndContext
         sensors={sensors}
@@ -188,7 +188,7 @@ export function BlockBuilder({
           items={blocks.map((_, i) => i)}
           strategy={verticalListSortingStrategy}
         >
-          <div className="space-y-4">
+          <div className="space-y-2">
             {blocks.length === 0 ? (
               <div className="text-center py-8 text-muted-foreground">
                 No blocks yet. Add one to get started.
@@ -267,11 +267,11 @@ function SortableBlockCard(props: SortableBlockCardProps) {
     // eslint-disable-next-line
     // @ts-ignore
     <div ref={setNodeRef} style={style} className="w-full">
-      <div className="flex gap-2 items-start">
+      <div className="flex gap-1 items-start">
         <div
           {...attributes}
           {...listeners}
-          className="mt-3 cursor-grab active:cursor-grabbing text-muted-foreground hover:text-foreground transition-colors flex-shrink-0"
+          className="mt-1 cursor-grab active:cursor-grabbing text-muted-foreground hover:text-foreground transition-colors flex-shrink-0"
         >
           <GripVertical className="h-5 w-5" />
         </div>
@@ -342,8 +342,8 @@ function BlockCard({
   };
 
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+    <Card className=\"p-0\">
+      <CardHeader className=\"flex flex-row items-center justify-between space-y-0 p-3 bg-muted/50\">
         <div className="flex items-center gap-2 flex-1">
           <Button
             type="button"
@@ -368,7 +368,7 @@ function BlockCard({
         </Button>
       </CardHeader>
       {!isCollapsed && (
-        <CardContent>
+        <CardContent className="p-3">
           <BlockContentEditor
             block={block}
             index={index}
