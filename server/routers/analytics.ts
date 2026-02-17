@@ -25,6 +25,12 @@ export const analyticsRouter = router({
       const cfCountry = ctx.req.headers['cf-ipcountry'];
       const cfRegion = ctx.req.headers['cf-region'];
       
+      // Debug: Log all CF headers to see what's available
+      const cfHeaders = Object.keys(ctx.req.headers).filter(h => h.toLowerCase().startsWith('cf-'));
+      if (cfHeaders.length > 0) {
+        console.log('🔍 CloudFlare headers available:', cfHeaders.map(h => `${h}: ${ctx.req.headers[h]}`).join(', '));
+      }
+      
       if (cfCity || cfCountry) {
         geoData = {
           city: cfCity ? String(cfCity) : null,
