@@ -406,6 +406,7 @@ export async function getAllProjects(filters?: {
   categoryId?: number;
   year?: number;
   discipline?: string;
+  includeGalleryOnly?: boolean; // For admin/gallery pages
 }): Promise<Project[]> {
   let query = supabase
     .from('projects')
@@ -431,6 +432,11 @@ export async function getAllProjects(filters?: {
     } else {
       query = query.eq('discipline', filters.discipline);
     }
+  }
+
+  // Exclude gallery-only items by default (unless specifically requested by admin)
+  if (!filters?.includeGalleryOnly) {
+    query = query.eq('gallery_only', false);
   }
 
   const { data } = await query;
@@ -499,6 +505,7 @@ export async function getProjectById(id: number): Promise<Project | undefined> {
     .from('projects')
     .select('*')
     .eq('id', id)
+    .eq('gallery_only', false) // Exclude gallery-only items from detail pages
     .single();
 
   if (!data) return undefined;
@@ -556,6 +563,7 @@ export async function getProjectBySlug(slug: string): Promise<Project | undefine
     .from('projects')
     .select('*')
     .eq('slug', slug)
+    .eq('gallery_only', false) // Exclude gallery-only items from detail pages
     .single();
 
   if (!data) return undefined;
