@@ -50,50 +50,55 @@ export function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#ffffff_0%,_#f6f3ef_55%,_#efe9e2_100%)] text-slate-900">
+    <div className="min-h-screen bg-[#0b0b0d] text-white">
       <SEO
         title="Contact Brandon PT Davis | Scenic Design Inquiries"
         description="Get in touch with Brandon PT Davis for scenic design, experiential projects, or educational collaborations."
       />
       <Header />
       <div className="container relative z-10 py-20">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute -top-32 left-1/3 h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,_rgba(255,153,102,0.24)_0%,_rgba(15,15,20,0)_60%)] blur-3xl" />
+          <div className="absolute bottom-0 right-0 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,_rgba(80,140,255,0.18)_0%,_rgba(15,15,20,0)_65%)] blur-3xl" />
+          <div className="absolute top-1/2 left-10 h-72 w-72 rounded-full bg-[radial-gradient(circle,_rgba(236,186,117,0.2)_0%,_rgba(12,12,16,0)_70%)] blur-3xl" />
+        </div>
 
         {/* Hero Section */}
         <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 items-end mb-16">
           <div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-300/70 bg-white/70 text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
               Contact
             </div>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-['Playfair_Display'] italic font-normal mt-6 mb-4 leading-[1.02]">
-              A calm, clear
-              <span className="block text-slate-700">start to your next build.</span>
+              Scenic worlds
+              <span className="block text-white/80">start with a conversation.</span>
             </h1>
-            <p className="text-lg md:text-xl text-slate-600 max-w-xl">
-              Tell me what you are shaping and when you need it. I will respond quickly with next steps and a clear plan.
+            <p className="text-lg md:text-xl text-white/70 max-w-xl">
+              Share your project, timeline, and the feeling you want on stage. I design environments that tell the story.
             </p>
           </div>
-          <div className="bg-white/70 backdrop-blur rounded-3xl border border-black/5 p-8 shadow-[0_20px_80px_rgba(15,23,42,0.08)]">
+          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-8 shadow-[0_20px_80px_rgba(0,0,0,0.45)]">
             <div className="flex items-center gap-4 mb-6">
-              <div className="h-12 w-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center text-lg font-semibold">
+              <div className="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">
                 BP
               </div>
               <div>
-                <p className="text-sm text-slate-500">Preferred contact</p>
-                <p className="text-base font-medium text-slate-900">info@brandonptdavis.com</p>
+                <p className="text-sm text-white/50">Preferred contact</p>
+                <p className="text-base font-medium text-white">info@brandonptdavis.com</p>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4 text-sm">
-              <div className="rounded-2xl border border-slate-200 bg-white/70 px-4 py-3">
-                <p className="text-slate-500">Response time</p>
-                <p className="text-slate-900 font-semibold">24-48 hours</p>
+              <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                <p className="text-white/50">Response time</p>
+                <p className="text-white font-semibold">24-48 hours</p>
               </div>
-              <div className="rounded-2xl border border-slate-200 bg-white/70 px-4 py-3">
-                <p className="text-slate-500">Availability</p>
-                <p className="text-slate-900 font-semibold">Limited openings</p>
+              <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                <p className="text-white/50">Availability</p>
+                <p className="text-white font-semibold">Limited openings</p>
               </div>
             </div>
-            <div className="mt-6 text-sm text-slate-500">
-              Share your scope, timeline, and budget range if you have it. It helps me respond faster.
+            <div className="mt-6 text-sm text-white/60">
+              Helpful details: venue, dates, budget range, and creative team.
             </div>
           </div>
         </div>
@@ -102,15 +107,15 @@ export function Contact() {
         <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-10 max-w-6xl mx-auto mb-20">
 
           {/* LEFT: Contact Form */}
-          <div className="rounded-3xl border border-black/10 bg-white/80 backdrop-blur p-8 md:p-10 shadow-[0_20px_80px_rgba(15,23,42,0.08)]">
+          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-8 md:p-10 shadow-[0_20px_80px_rgba(0,0,0,0.4)]">
             {/* Status Messages - At Top for Visibility */}
             {submitStatus === 'success' && (
-              <div className="mb-6 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 font-medium">
+              <div className="mb-6 p-4 rounded-2xl bg-emerald-500/10 border border-emerald-400/30 text-emerald-200 font-medium">
                 ✓ Message sent! Thanks for reaching out. I'll get back to you within 24-48 hours.
               </div>
             )}
             {submitStatus === 'error' && (
-              <div className="mb-6 p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 font-medium">
+              <div className="mb-6 p-4 rounded-2xl bg-rose-500/10 border border-rose-400/30 text-rose-200 font-medium">
                 ✗ Failed to send message. Please try again or email me directly at info@brandonptdavis.com
               </div>
             )}
@@ -118,60 +123,60 @@ export function Contact() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="name" className="text-slate-700 font-medium">Your Name</Label>
+                  <Label htmlFor="name" className="text-white/80 font-medium">Your Name</Label>
                   <Input
                     id="name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Brandon Davis"
-                    className="h-14 text-lg bg-white border border-slate-200 focus:border-slate-400 transition-colors"
+                    className="h-14 text-lg bg-white/5 text-white border border-white/10 focus:border-white/30 transition-colors"
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-slate-700 font-medium">Email Address</Label>
+                  <Label htmlFor="email" className="text-white/80 font-medium">Email Address</Label>
                   <Input
                     id="email"
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="hello@example.com"
-                    className="h-14 text-lg bg-white border border-slate-200 focus:border-slate-400 transition-colors"
+                    className="h-14 text-lg bg-white/5 text-white border border-white/10 focus:border-white/30 transition-colors"
                     required
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="subject" className="text-slate-700 font-medium">Subject</Label>
+                <Label htmlFor="subject" className="text-white/80 font-medium">Subject</Label>
                 <Input
                   id="subject"
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   placeholder="What's this about?"
-                  className="h-14 text-lg bg-white border border-slate-200 focus:border-slate-400 transition-colors"
+                  className="h-14 text-lg bg-white/5 text-white border border-white/10 focus:border-white/30 transition-colors"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="message" className="text-slate-700 font-medium">Your Message</Label>
+                <Label htmlFor="message" className="text-white/80 font-medium">Your Message</Label>
                 <Textarea
                   id="message"
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Tell me about your project, timeline, budget, or just say hi..."
-                  className="min-h-[200px] text-lg bg-white border border-slate-200 focus:border-slate-400 transition-colors resize-none"
+                  placeholder="Tell me about the production, venue, timeline, and any references..."
+                  className="min-h-[200px] text-lg bg-white/5 text-white border border-white/10 focus:border-white/30 transition-colors resize-none"
                   required
                 />
-                <p className="text-xs text-slate-500">Sharing a timeline and budget range helps me reply faster.</p>
+                <p className="text-xs text-white/50">If you have a budget range or schedule, include it for faster response.</p>
               </div>
 
               <Button
                 type="submit"
                 size="lg"
                 disabled={isSubmitting}
-                className="w-full md:w-auto px-12 h-14 text-lg bg-slate-900 hover:bg-slate-800 text-white font-medium shadow-lg shadow-slate-900/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full md:w-auto px-12 h-14 text-lg bg-white text-black hover:bg-white/90 font-medium shadow-lg shadow-black/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? 'Sending...' : 'Send Message'}
                 <Send className="ml-2 h-5 w-5" />
@@ -181,34 +186,34 @@ export function Contact() {
 
           {/* RIGHT: Project Fit + Details */}
           <div className="space-y-6">
-            <div className="rounded-3xl border border-slate-200 bg-white/70 backdrop-blur p-6">
+            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-6">
               <div className="flex items-center gap-3 mb-4">
-                <div className="h-10 w-10 rounded-2xl bg-slate-900 text-white flex items-center justify-center">
+                <div className="h-10 w-10 rounded-2xl bg-white/10 text-white flex items-center justify-center">
                   <Clock className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="text-sm text-slate-500">Typical turnaround</p>
-                  <p className="text-base font-semibold text-slate-900">Initial reply within 1-2 days</p>
+                  <p className="text-sm text-white/50">Typical turnaround</p>
+                  <p className="text-base font-semibold text-white">Initial reply within 1-2 days</p>
                 </div>
               </div>
-              <ul className="text-sm text-slate-600 space-y-2">
-                <li>• Scenic & experiential design inquiries</li>
-                <li>• Collaborative projects + installations</li>
-                <li>• Guest teaching + workshops</li>
+              <ul className="text-sm text-white/70 space-y-2">
+                <li>• Scenic design for theatre + live events</li>
+                <li>• Experiential environments + installations</li>
+                <li>• Educational collaborations + workshops</li>
               </ul>
             </div>
-            <div className="rounded-3xl border border-slate-200 bg-white/70 backdrop-blur p-6">
+            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-6">
               <div className="flex items-center gap-3 mb-4">
-                <div className="h-10 w-10 rounded-2xl bg-slate-100 text-slate-800 flex items-center justify-center">
+                <div className="h-10 w-10 rounded-2xl bg-white/10 text-white flex items-center justify-center">
                   <CheckCircle2 className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="text-sm text-slate-500">How I work</p>
-                  <p className="text-base font-semibold text-slate-900">Clear scope, clear timeline</p>
+                  <p className="text-sm text-white/50">How I work</p>
+                  <p className="text-base font-semibold text-white">Story-led, practical, on schedule</p>
                 </div>
               </div>
-              <p className="text-sm text-slate-600">
-                After your message, I will confirm scope, share next steps, and outline milestones.
+              <p className="text-sm text-white/70">
+                I translate narrative into space, then align with build realities. You will get clear next steps and milestones.
               </p>
             </div>
           </div>
@@ -217,7 +222,7 @@ export function Contact() {
 
         {/* Contact Methods Section */}
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-['Playfair_Display'] italic font-normal mb-8 text-center text-slate-800">
+          <h2 className="text-3xl font-['Playfair_Display'] italic font-normal mb-8 text-center text-white">
             Other Ways to Reach Me
           </h2>
 
@@ -226,14 +231,14 @@ export function Contact() {
             {/* Email */}
             <a
               href="mailto:info@brandonptdavis.com"
-              className="flex flex-col items-center gap-3 p-6 rounded-2xl border border-slate-200 bg-white/70 backdrop-blur hover:border-slate-300 hover:bg-white transition-all group"
+              className="flex flex-col items-center gap-3 p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur hover:border-white/30 hover:bg-white/10 transition-all group"
             >
-              <div className="h-16 w-16 rounded-full bg-slate-900 flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg shadow-slate-900/20">
+              <div className="h-16 w-16 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg shadow-black/30">
                 <Mail className="h-8 w-8 text-white" />
               </div>
               <div className="text-center">
-                <div className="text-sm text-slate-600 mb-1">Email</div>
-                <div className="font-medium text-slate-800 text-sm">info@brandonptdavis.com</div>
+                <div className="text-sm text-white/60 mb-1">Email</div>
+                <div className="font-medium text-white text-sm">info@brandonptdavis.com</div>
               </div>
             </a>
 
@@ -242,14 +247,14 @@ export function Contact() {
               href="https://linkedin.com/in/brandonptdavis"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-3 p-6 rounded-2xl border border-slate-200 bg-white/70 backdrop-blur hover:border-slate-300 hover:bg-white transition-all group"
+              className="flex flex-col items-center gap-3 p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur hover:border-white/30 hover:bg-white/10 transition-all group"
             >
-              <div className="h-16 w-16 rounded-full bg-slate-800 flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg shadow-slate-900/20">
+              <div className="h-16 w-16 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg shadow-black/30">
                 <Linkedin className="h-8 w-8 text-white" />
               </div>
               <div className="text-center">
-                <div className="text-sm text-slate-600 mb-1">LinkedIn</div>
-                <div className="font-medium text-slate-800">@brandonptdavis</div>
+                <div className="text-sm text-white/60 mb-1">LinkedIn</div>
+                <div className="font-medium text-white">@brandonptdavis</div>
               </div>
             </a>
 
@@ -258,14 +263,14 @@ export function Contact() {
               href="https://instagram.com/brandonptdavis"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-3 p-6 rounded-2xl border border-slate-200 bg-white/70 backdrop-blur hover:border-slate-300 hover:bg-white transition-all group"
+              className="flex flex-col items-center gap-3 p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur hover:border-white/30 hover:bg-white/10 transition-all group"
             >
-              <div className="h-16 w-16 rounded-full bg-slate-700 flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg shadow-slate-900/20">
+              <div className="h-16 w-16 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg shadow-black/30">
                 <Instagram className="h-8 w-8 text-white" />
               </div>
               <div className="text-center">
-                <div className="text-sm text-slate-600 mb-1">Instagram</div>
-                <div className="font-medium text-slate-800">@brandonptdavis</div>
+                <div className="text-sm text-white/60 mb-1">Instagram</div>
+                <div className="font-medium text-white">@brandonptdavis</div>
               </div>
             </a>
 
