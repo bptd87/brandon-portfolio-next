@@ -43,48 +43,74 @@ export function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus('idle');
-    submitContact.mutate(formData);
+    submitContact.mutate({
+      ...formData,
+      userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : undefined,
+    });
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#ffffff_0%,_#f6f3ef_55%,_#efe9e2_100%)] text-slate-900">
       <SEO
         title="Contact Brandon PT Davis | Scenic Design Inquiries"
         description="Get in touch with Brandon PT Davis for scenic design, experiential projects, or educational collaborations."
       />
       <Header />
-      {/* Animated Background Orbs */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 -left-40 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }}></div>
-        <div className="absolute bottom-20 -right-40 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '6s', animationDelay: '2s' }}></div>
-      </div>
-
       <div className="container relative z-10 py-20">
 
         {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-6xl md:text-7xl font-['Playfair_Display'] italic font-normal mb-6 text-foreground">
-            Let's Talk
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Got a project in mind? <span className="text-foreground font-medium">I'm all ears.</span>
-          </p>
+        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 items-end mb-16">
+          <div>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-300/70 bg-white/70 text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">
+              Contact
+            </div>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-['Playfair_Display'] italic font-normal mt-6 mb-4 leading-[1.02]">
+              A calm, clear
+              <span className="block text-slate-700">start to your next build.</span>
+            </h1>
+            <p className="text-lg md:text-xl text-slate-600 max-w-xl">
+              Tell me what you are shaping and when you need it. I will respond quickly with next steps and a clear plan.
+            </p>
+          </div>
+          <div className="bg-white/70 backdrop-blur rounded-3xl border border-black/5 p-8 shadow-[0_20px_80px_rgba(15,23,42,0.08)]">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="h-12 w-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center text-lg font-semibold">
+                BP
+              </div>
+              <div>
+                <p className="text-sm text-slate-500">Preferred contact</p>
+                <p className="text-base font-medium text-slate-900">info@brandonptdavis.com</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <div className="rounded-2xl border border-slate-200 bg-white/70 px-4 py-3">
+                <p className="text-slate-500">Response time</p>
+                <p className="text-slate-900 font-semibold">24-48 hours</p>
+              </div>
+              <div className="rounded-2xl border border-slate-200 bg-white/70 px-4 py-3">
+                <p className="text-slate-500">Availability</p>
+                <p className="text-slate-900 font-semibold">Limited openings</p>
+              </div>
+            </div>
+            <div className="mt-6 text-sm text-slate-500">
+              Share your scope, timeline, and budget range if you have it. It helps me respond faster.
+            </div>
+          </div>
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-12 max-w-6xl mx-auto mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-10 max-w-6xl mx-auto mb-20">
 
-          {/* LEFT: Contact Form - THE HERO */}
-          <div>
+          {/* LEFT: Contact Form */}
+          <div className="rounded-3xl border border-black/10 bg-white/80 backdrop-blur p-8 md:p-10 shadow-[0_20px_80px_rgba(15,23,42,0.08)]">
             {/* Status Messages - At Top for Visibility */}
             {submitStatus === 'success' && (
-              <div className="mb-6 p-4 rounded-lg bg-green-500/20 border-2 border-green-500/50 text-green-400 font-medium animate-in fade-in duration-300">
+              <div className="mb-6 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 font-medium">
                 ✓ Message sent! Thanks for reaching out. I'll get back to you within 24-48 hours.
               </div>
             )}
             {submitStatus === 'error' && (
-              <div className="mb-6 p-4 rounded-lg bg-red-500/20 border-2 border-red-500/50 text-red-400 font-medium animate-in fade-in duration-300">
+              <div className="mb-6 p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 font-medium">
                 ✗ Failed to send message. Please try again or email me directly at info@brandonptdavis.com
               </div>
             )}
@@ -92,59 +118,60 @@ export function Contact() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="name" className="text-foreground font-medium">Your Name</Label>
+                  <Label htmlFor="name" className="text-slate-700 font-medium">Your Name</Label>
                   <Input
                     id="name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Brandon Davis"
-                    className="h-14 text-lg bg-card/50 backdrop-blur border-2 border-primary/30 focus:border-primary transition-colors"
+                    className="h-14 text-lg bg-white border border-slate-200 focus:border-slate-400 transition-colors"
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-foreground font-medium">Email Address</Label>
+                  <Label htmlFor="email" className="text-slate-700 font-medium">Email Address</Label>
                   <Input
                     id="email"
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="hello@example.com"
-                    className="h-14 text-lg bg-card/50 backdrop-blur border-2 border-primary/30 focus:border-primary transition-colors"
+                    className="h-14 text-lg bg-white border border-slate-200 focus:border-slate-400 transition-colors"
                     required
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="subject" className="text-foreground font-medium">Subject</Label>
+                <Label htmlFor="subject" className="text-slate-700 font-medium">Subject</Label>
                 <Input
                   id="subject"
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   placeholder="What's this about?"
-                  className="h-14 text-lg bg-card/50 backdrop-blur border-2 border-cyan-500/30 focus:border-cyan-500 transition-colors"
+                  className="h-14 text-lg bg-white border border-slate-200 focus:border-slate-400 transition-colors"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="message" className="text-foreground font-medium">Your Message</Label>
+                <Label htmlFor="message" className="text-slate-700 font-medium">Your Message</Label>
                 <Textarea
                   id="message"
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Tell me about your project, timeline, budget, or just say hi..."
-                  className="min-h-[200px] text-lg bg-card/50 backdrop-blur border-2 border-purple-500/30 focus:border-purple-500 transition-colors resize-none"
+                  className="min-h-[200px] text-lg bg-white border border-slate-200 focus:border-slate-400 transition-colors resize-none"
                   required
                 />
+                <p className="text-xs text-slate-500">Sharing a timeline and budget range helps me reply faster.</p>
               </div>
 
               <Button
                 type="submit"
                 size="lg"
                 disabled={isSubmitting}
-                className="w-full md:w-auto px-12 h-14 text-lg bg-primary hover:bg-primary/90 text-primary-foreground font-medium shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="w-full md:w-auto px-12 h-14 text-lg bg-slate-900 hover:bg-slate-800 text-white font-medium shadow-lg shadow-slate-900/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? 'Sending...' : 'Send Message'}
                 <Send className="ml-2 h-5 w-5" />
@@ -152,107 +179,45 @@ export function Contact() {
             </form>
           </div>
 
-          {/* RIGHT: Illustration */}
-          <div className="flex items-start justify-center lg:justify-end">
-            <div className="relative group w-full max-w-sm">
-              <style>{`
-                @keyframes rainbow-glow {
-                  0%, 100% { 
-                    filter: drop-shadow(0 0 40px rgba(255, 100, 50, 0.8)) 
-                            drop-shadow(0 0 60px rgba(255, 100, 50, 0.4))
-                            drop-shadow(0 10px 30px rgba(0,0,0,0.3)); 
-                  }
-                  25% { 
-                    filter: drop-shadow(0 0 40px rgba(0, 255, 200, 0.8)) 
-                            drop-shadow(0 0 60px rgba(0, 255, 200, 0.4))
-                            drop-shadow(0 10px 30px rgba(0,0,0,0.3)); 
-                  }
-                  50% { 
-                    filter: drop-shadow(0 0 40px rgba(150, 100, 255, 0.8)) 
-                            drop-shadow(0 0 60px rgba(150, 100, 255, 0.4))
-                            drop-shadow(0 10px 30px rgba(0,0,0,0.3)); 
-                  }
-                  75% { 
-                    filter: drop-shadow(0 0 40px rgba(255, 200, 0, 0.8)) 
-                            drop-shadow(0 0 60px rgba(255, 200, 0, 0.4))
-                            drop-shadow(0 10px 30px rgba(0,0,0,0.3)); 
-                  }
-                }
-                @keyframes float {
-                  0%, 100% { transform: translateY(0); }
-                  50% { transform: translateY(-12px); }
-                }
-                .brandon-illustration {
-                  animation: float 3s ease-in-out infinite;
-                  filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
-                }
-                .brandon-illustration:hover {
-                  animation: float 3s ease-in-out infinite, rainbow-glow 1.5s ease-in-out infinite;
-                }
-              `}</style>
-              <img
-                src="/android-chrome-512x512.png"
-                alt="Brandon at desk with cat"
-                className="w-full rounded-2xl brandon-illustration cursor-pointer"
-              />
+          {/* RIGHT: Project Fit + Details */}
+          <div className="space-y-6">
+            <div className="rounded-3xl border border-slate-200 bg-white/70 backdrop-blur p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="h-10 w-10 rounded-2xl bg-slate-900 text-white flex items-center justify-center">
+                  <Clock className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-sm text-slate-500">Typical turnaround</p>
+                  <p className="text-base font-semibold text-slate-900">Initial reply within 1-2 days</p>
+                </div>
+              </div>
+              <ul className="text-sm text-slate-600 space-y-2">
+                <li>• Scenic & experiential design inquiries</li>
+                <li>• Collaborative projects + installations</li>
+                <li>• Guest teaching + workshops</li>
+              </ul>
+            </div>
+            <div className="rounded-3xl border border-slate-200 bg-white/70 backdrop-blur p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="h-10 w-10 rounded-2xl bg-slate-100 text-slate-800 flex items-center justify-center">
+                  <CheckCircle2 className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-sm text-slate-500">How I work</p>
+                  <p className="text-base font-semibold text-slate-900">Clear scope, clear timeline</p>
+                </div>
+              </div>
+              <p className="text-sm text-slate-600">
+                After your message, I will confirm scope, share next steps, and outline milestones.
+              </p>
             </div>
           </div>
 
-        </div>
-
-        {/* Stats Section */}
-        <div className="max-w-4xl mx-auto mb-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-            {/* Response Time */}
-            <div className="flex flex-col items-center gap-3 p-8 rounded-2xl border-2 border-primary/50 bg-card/50 backdrop-blur">
-              <div className="h-20 w-20 relative">
-                <div className="absolute inset-0 rounded-full border-4 border-primary/20"></div>
-                <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-primary animate-spin" style={{ animationDuration: '2s' }}></div>
-                <div className="absolute top-1/2 left-1/2 w-1 h-6 bg-primary origin-bottom -translate-x-1/2 -translate-y-full rounded-full"
-                  style={{ animation: 'spin 60s linear infinite', transformOrigin: 'bottom center' }}></div>
-                <div className="absolute top-1/2 left-1/2 w-1 h-7 bg-primary origin-bottom -translate-x-1/2 -translate-y-full rounded-full"
-                  style={{ animation: 'spin 5s linear infinite', transformOrigin: 'bottom center' }}></div>
-                <div className="absolute top-1/2 left-1/2 w-2 h-2 bg-primary rounded-full -translate-x-1/2 -translate-y-1/2"></div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-['Playfair_Display'] italic text-primary mb-1">24-48h</div>
-                <div className="text-sm text-muted-foreground">Response Time</div>
-              </div>
-            </div>
-
-            {/* Reply Rate */}
-            <div className="flex flex-col items-center gap-3 p-8 rounded-2xl border-2 border-transparent bg-card/50 backdrop-blur"
-              style={{ borderImage: 'linear-gradient(135deg, rgb(6 182 212), rgb(168 85 247)) 1' }}>
-              <div className="h-20 w-20 relative flex items-center justify-center">
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500 to-purple-500 opacity-20 animate-ping"></div>
-                <CheckCircle2 className="h-14 w-14 relative z-10"
-                  style={{
-                    stroke: 'url(#checkGradient)',
-                    strokeWidth: 2
-                  }}
-                />
-                <svg width="0" height="0">
-                  <defs>
-                    <linearGradient id="checkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="rgb(6 182 212)" />
-                      <stop offset="100%" stopColor="rgb(168 85 247)" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-['Playfair_Display'] italic bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent mb-1">100%</div>
-                <div className="text-sm text-muted-foreground">Reply Rate</div>
-              </div>
-            </div>
-
-          </div>
         </div>
 
         {/* Contact Methods Section */}
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-['Playfair_Display'] italic font-normal mb-8 text-center text-foreground">
+          <h2 className="text-3xl font-['Playfair_Display'] italic font-normal mb-8 text-center text-slate-800">
             Other Ways to Reach Me
           </h2>
 
@@ -261,14 +226,14 @@ export function Contact() {
             {/* Email */}
             <a
               href="mailto:info@brandonptdavis.com"
-              className="flex flex-col items-center gap-3 p-6 rounded-2xl border-2 border-primary/30 bg-card/50 backdrop-blur hover:border-primary hover:bg-card/80 transition-all group hover:scale-105"
+              className="flex flex-col items-center gap-3 p-6 rounded-2xl border border-slate-200 bg-white/70 backdrop-blur hover:border-slate-300 hover:bg-white transition-all group"
             >
-              <div className="h-16 w-16 rounded-full bg-primary flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-primary/30">
-                <Mail className="h-8 w-8 text-primary-foreground" />
+              <div className="h-16 w-16 rounded-full bg-slate-900 flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg shadow-slate-900/20">
+                <Mail className="h-8 w-8 text-white" />
               </div>
               <div className="text-center">
-                <div className="text-sm text-muted-foreground mb-1">Email</div>
-                <div className="font-medium text-foreground text-sm">info@brandonptdavis.com</div>
+                <div className="text-sm text-slate-600 mb-1">Email</div>
+                <div className="font-medium text-slate-800 text-sm">info@brandonptdavis.com</div>
               </div>
             </a>
 
@@ -277,14 +242,14 @@ export function Contact() {
               href="https://linkedin.com/in/brandonptdavis"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-3 p-6 rounded-2xl border-2 border-cyan-500/30 bg-card/50 backdrop-blur hover:border-cyan-500 hover:bg-card/80 transition-all group hover:scale-105"
+              className="flex flex-col items-center gap-3 p-6 rounded-2xl border border-slate-200 bg-white/70 backdrop-blur hover:border-slate-300 hover:bg-white transition-all group"
             >
-              <div className="h-16 w-16 rounded-full bg-cyan-500 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-cyan-500/30">
+              <div className="h-16 w-16 rounded-full bg-slate-800 flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg shadow-slate-900/20">
                 <Linkedin className="h-8 w-8 text-white" />
               </div>
               <div className="text-center">
-                <div className="text-sm text-muted-foreground mb-1">LinkedIn</div>
-                <div className="font-medium text-foreground">@brandonptdavis</div>
+                <div className="text-sm text-slate-600 mb-1">LinkedIn</div>
+                <div className="font-medium text-slate-800">@brandonptdavis</div>
               </div>
             </a>
 
@@ -293,14 +258,14 @@ export function Contact() {
               href="https://instagram.com/brandonptdavis"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-3 p-6 rounded-2xl border-2 border-purple-500/30 bg-card/50 backdrop-blur hover:border-purple-500 hover:bg-card/80 transition-all group hover:scale-105"
+              className="flex flex-col items-center gap-3 p-6 rounded-2xl border border-slate-200 bg-white/70 backdrop-blur hover:border-slate-300 hover:bg-white transition-all group"
             >
-              <div className="h-16 w-16 rounded-full bg-purple-500 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-purple-500/30">
+              <div className="h-16 w-16 rounded-full bg-slate-700 flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg shadow-slate-900/20">
                 <Instagram className="h-8 w-8 text-white" />
               </div>
               <div className="text-center">
-                <div className="text-sm text-muted-foreground mb-1">Instagram</div>
-                <div className="font-medium text-foreground">@brandonptdavis</div>
+                <div className="text-sm text-slate-600 mb-1">Instagram</div>
+                <div className="font-medium text-slate-800">@brandonptdavis</div>
               </div>
             </a>
 

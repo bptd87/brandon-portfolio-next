@@ -10,6 +10,8 @@ import { invokeLLM } from "./_core/llm";
 import { generateImage } from "./_core/imageGeneration";
 import * as db from "./db";
 import { supabase } from "./db";
+import { Resend } from "resend";
+import { ENV } from "./_core/env";
 import { renderingGalleryRouter } from "./routers/renderingGallery";
 import { modelGalleryRouter } from "./routers/modelGallery";
 import { experientialGalleryRouter } from "./routers/experientialGallery";
@@ -1341,21 +1343,53 @@ export const appRouter = router({
         email: z.string().email(),
         subject: z.string().min(1).max(255),
         message: z.string().min(1).max(5000),
+        userAgent: z.string().optional(),
       }))
-      .mutation(async ({ input }) => {
-        // Send notification to owner
-        const { notifyOwner } = await import('./_core/notification');
+      .mutation(async ({ input, ctx }) => {
+        const ip = ctx.req.ip || ctx.req.headers["x-forwarded-for"] || ctx.req.headers["x-real-ip"] || "unknown";
+        const ipString = Array.isArray(ip) ? ip[0] : ip;
+        const userAgent = input.userAgent || ctx.req.headers["user-agent"] || "";
+
+        const { error: insertError } = await supabase
+          .from("contact_submissions")
+          .insert({
+            name: input.name,
+            email: input.email,
+            subject: input.subject,
+            message: input.message,
+            ip_address: ipString,
+            user_agent: userAgent,
+            source: "contact-form",
+            status: "new",
+          });
+
+        if (insertError) {
+          console.error("Failed to store contact submission", insertError);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to store contact submission.",
+          });
+        }
+
+        if (!ENV.resendApiKey || !ENV.contactFromEmail || !ENV.contactToEmail) {
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Contact email service is not configured.",
+          });
+        }
+
+        const resend = new Resend(ENV.resendApiKey);
 
         const title = `New Contact Form Submission: ${input.subject}`;
-        const content = `
-From: ${input.name} (${input.email})
-Subject: ${input.subject}
+        const content = `From: ${input.name} (${input.email})\nSubject: ${input.subject}\n\nMessage:\n${input.message}`;
 
-Message:
-${input.message}
-`;
-
-        await notifyOwner({ title, content });
+        await resend.emails.send({
+          from: ENV.contactFromEmail,
+          to: ENV.contactToEmail,
+          replyTo: input.email,
+          subject: title,
+          text: content,
+        });
 
         return { success: true };
       }),
