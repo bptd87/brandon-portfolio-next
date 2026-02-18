@@ -710,6 +710,6 @@ Sitemap: ${SITE_URL}/video-sitemap.xml
 
 # Disallow admin and API routes
 Disallow: /admin
-Disallow: /api/
+Disallow: /api
 `;
 }

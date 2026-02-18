@@ -127,7 +127,8 @@ export default function Home() {
                               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                               aspectRatio="16/9"
                               smartPosition={true}
-                              loading="lazy"
+                              loading={index < 4 ? "eager" : "lazy"}
+                              fetchPriority={index === 0 ? "high" : undefined}
                               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                             />
                           ) : (
