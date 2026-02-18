@@ -56,7 +56,7 @@ export function Contact() {
         description="Get in touch with Brandon PT Davis for scenic design, experiential projects, or educational collaborations."
       />
       <Header />
-      <div className="container relative z-10 py-20">
+      <div className="container relative z-10 pt-28 pb-24">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute -top-32 left-1/3 h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,_rgba(255,153,102,0.24)_0%,_rgba(15,15,20,0)_60%)] blur-3xl" />
           <div className="absolute bottom-0 right-0 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,_rgba(80,140,255,0.18)_0%,_rgba(15,15,20,0)_65%)] blur-3xl" />
@@ -78,7 +78,7 @@ export function Contact() {
         </div>
 
         {/* Main Content Grid */}
-        <div className="flex justify-center mb-20">
+        <div className="flex justify-center mb-14">
           <div className="w-full max-w-3xl rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-8 md:p-10 shadow-[0_20px_80px_rgba(0,0,0,0.4)]">
             {/* Status Messages - At Top for Visibility */}
             {submitStatus === 'success' && (
@@ -156,6 +156,37 @@ export function Contact() {
             </form>
           </div>
 
+        </div>
+
+        <div className="flex flex-col items-center gap-4 text-center">
+          <p className="text-sm uppercase tracking-[0.2em] text-white/50">Social</p>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <a
+              href="mailto:info@brandonptdavis.com"
+              className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-white/80 transition hover:border-white/30 hover:bg-white/10"
+            >
+              <Mail className="h-4 w-4" />
+              info@brandonptdavis.com
+            </a>
+            <a
+              href="https://linkedin.com/in/brandonptdavis"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-white/80 transition hover:border-white/30 hover:bg-white/10"
+            >
+              <Linkedin className="h-4 w-4" />
+              LinkedIn
+            </a>
+            <a
+              href="https://instagram.com/brandonptdavis"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-white/80 transition hover:border-white/30 hover:bg-white/10"
+            >
+              <Instagram className="h-4 w-4" />
+              Instagram
+            </a>
+          </div>
         </div>
 
       </div>
