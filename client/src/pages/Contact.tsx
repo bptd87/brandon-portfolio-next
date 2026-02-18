@@ -158,33 +158,48 @@ export function Contact() {
 
         </div>
 
-        <div className="flex flex-col items-center gap-4 text-center">
-          <p className="text-sm uppercase tracking-[0.2em] text-white/50">Social</p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-sm uppercase tracking-[0.2em] text-white/50 mb-6">Social</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <a
               href="mailto:info@brandonptdavis.com"
-              className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-white/80 transition hover:border-white/30 hover:bg-white/10"
+              className="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-sm text-white/80 transition hover:border-white/30 hover:bg-white/10"
             >
-              <Mail className="h-4 w-4" />
-              info@brandonptdavis.com
+              <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center">
+                <Mail className="h-5 w-5" />
+              </div>
+              <div>
+                <div className="text-xs text-white/50 mb-1">Email</div>
+                <div className="font-medium text-white">info@brandonptdavis.com</div>
+              </div>
             </a>
             <a
               href="https://linkedin.com/in/brandonptdavis"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-white/80 transition hover:border-white/30 hover:bg-white/10"
+              className="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-sm text-white/80 transition hover:border-white/30 hover:bg-white/10"
             >
-              <Linkedin className="h-4 w-4" />
-              LinkedIn
+              <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center">
+                <Linkedin className="h-5 w-5" />
+              </div>
+              <div>
+                <div className="text-xs text-white/50 mb-1">LinkedIn</div>
+                <div className="font-medium text-white">@brandonptdavis</div>
+              </div>
             </a>
             <a
               href="https://instagram.com/brandonptdavis"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-white/80 transition hover:border-white/30 hover:bg-white/10"
+              className="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-sm text-white/80 transition hover:border-white/30 hover:bg-white/10"
             >
-              <Instagram className="h-4 w-4" />
-              Instagram
+              <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center">
+                <Instagram className="h-5 w-5" />
+              </div>
+              <div>
+                <div className="text-xs text-white/50 mb-1">Instagram</div>
+                <div className="font-medium text-white">@brandonptdavis</div>
+              </div>
             </a>
           </div>
         </div>
