@@ -452,7 +452,7 @@ export async function generateArticlesRSS(baseUrl?: string): Promise<string> {
 
     if (article.coverImageUrl) {
       xml += `
-      <enclosure url="${escapeXml(article.coverImageUrl)}" type="image/jpeg" />`;
+      <enclosure url="${escapeXml(article.coverImageUrl)}" type="image/jpeg" length="150000" />`;
     }
 
     xml += `
@@ -679,7 +679,7 @@ export function generateTutorialsRSS(baseUrl?: string): string {
     // Add YouTube video URL as enclosure
     if (tutorial.youtubeUrl) {
       xml += `
-      <enclosure url="${escapeXml(tutorial.youtubeUrl)}" type="video/mp4" />`;
+      <enclosure url="${escapeXml(tutorial.youtubeUrl)}" type="video/mp4" length="5000000" />`;
     }
 
     xml += `

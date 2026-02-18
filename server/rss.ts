@@ -66,7 +66,7 @@ export async function generateRSSFeed(req: Request, res: Response) {
       }
 
       if (item.coverImageUrl) {
-        rss += `      <enclosure url="${escapeXml(item.coverImageUrl)}" type="image/jpeg" />
+        rss += `      <enclosure url="${escapeXml(item.coverImageUrl)}" type="image/jpeg" length="150000" />
 `;
       }
 
