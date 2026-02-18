@@ -401,6 +401,10 @@ export async function generateVideoSitemap(baseUrl?: string): Promise<string> {
       <video:publication_date>${new Date(project.publishedAt).toISOString()}</video:publication_date>`;
       }
 
+      // Add default duration for videos (in seconds)
+      xml += `
+      <video:duration>300</video:duration>`;
+
       xml += `
     </video:video>`;
     }
