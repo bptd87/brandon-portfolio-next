@@ -1,51 +1,21 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { useAuth } from "@/_core/hooks/useAuth";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { trpc } from "@/lib/trpc";
-import { ArrowRight, ChevronDown, Calendar } from "lucide-react";
 import { Link } from "wouter";
 import { getProjectPath } from "@/lib/projectRoutes";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
-import { useState, useEffect } from "react";
-import { CarouselSkeleton, ProjectGridSkeleton, NewsSectionSkeleton } from "@/components/SkeletonLoaders";
+import { ProjectGridSkeleton } from "@/components/SkeletonLoaders";
 
 export default function Home() {
   const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://www.brandonptdavis.com';
-  const { user } = useAuth();
-  const { data: projects, isLoading: projectsLoading } = trpc.projects.list.useQuery({ featured: true, status: 'published', discipline: 'scenic_design' });
-  const { data: newsItems, isLoading: newsLoading } = trpc.news.list.useQuery({});
-  const { data: categories } = trpc.categories.list.useQuery({});
-
-  // Hero carousel state
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  // Hero images from top featured scenic design projects
-  const heroImages = projects?.slice(0, 5).filter(p => p.coverImageUrl).map(p => ({
-    url: p.coverImageUrl!,
-    title: p.title,
-    slug: p.slug
-  })) || [];
-
-  // Auto-advance carousel
-  useEffect(() => {
-    if (heroImages.length === 0) return;
-
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
-    }, 5000); // Change slide every 5 seconds
-
-    return () => clearInterval(interval);
-  }, [heroImages.length]);
-
-  const scrollToContent = () => {
-    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
-  };
+  const { data: projects, isLoading: projectsLoading } = trpc.projects.list.useQuery({
+    status: 'published',
+    discipline: 'scenic_design'
+  });
 
   return (
     <>
@@ -123,272 +93,59 @@ export default function Home() {
       />
       <SEO
         title="Brandon PT Davis | Scenic & Experiential Designer"
-        description="Award-winning scenic and experiential designer transforming theatrical spaces into immersive visual landscapes. Portfolio of regional theatre and themed entertainment."
-        keywords="scenic design, experiential design, theatre design, immersive experiences, Brandon Davis"
+        description="Award-winning Southern California scenic and experiential designer transforming theatrical spaces into immersive visual landscapes. Based in Orange County."
+        keywords="scenic design, experiential design, California scenic designer, Orange County, theatre design, immersive experiences, Brandon Davis, USA 829, regional theatre"
         url="https://www.brandonptdavis.com"
       />
       <Header />
 
-      {/* Hero Section - Full-Screen Carousel */}
-      {projectsLoading || heroImages.length === 0 ? (
-        <CarouselSkeleton />
-      ) : (
-        <section className="relative h-screen flex items-center justify-center overflow-hidden">
-          {/* Carousel Images */}
-          <div className="absolute inset-0 w-full h-full">
-            {heroImages.map((image, index) => (
-              <div
-                key={index}
-                className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'
-                  }`}
-              >
-                <ProgressiveImage
-                  src={image.url}
-                  alt={image.title}
-                  loading={index === 0 ? 'eager' : 'lazy'}
-                  fetchPriority={index === 0 ? 'high' : undefined}
-                  sizes="100vw"
-                  className="w-full h-full object-cover"
-                  containerClassName="absolute inset-0 w-full h-full"
-                  enableScrollAnimation={false}
-                />
-                {/* Dark overlay for text readability */}
-                <div className="absolute inset-0 bg-black/40" />
-              </div>
-            ))}
-          </div>
-
-
-
-          {/* Hero Content Overlay */}
-          <div className="relative z-10 container text-center px-4">
-            <h1 className="text-[8vw] md:text-[6vw] lg:text-[5vw] font-black leading-[0.9] tracking-tighter mb-6 text-white drop-shadow-2xl">
-              <span className="block">BRANDON</span>
-              <span className="block">PT DAVIS</span>
-            </h1>
-
-            <div className="flex items-center justify-center gap-3 text-base md:text-lg lg:text-xl font-bold tracking-wider mb-8">
-              <span className="text-[#FF5722] drop-shadow-lg">ART</span>
-              <span className="text-white/60">×</span>
-              <span className="text-[#00E5FF] drop-shadow-lg">TECHNOLOGY</span>
-              <span className="text-white/60">×</span>
-              <span className="text-[#FF1744] drop-shadow-lg">DESIGN</span>
-            </div>
-
-            <p className="text-sm md:text-base text-white/90 max-w-2xl mx-auto mb-8 leading-relaxed drop-shadow-lg">
-              Scenic & Experiential Designer transforming theatrical spaces into immersive visual landscapes
-            </p>
-
-            <div className="flex items-center justify-center gap-4">
-              <Link href="/projects">
-                <Button size="default" className="text-sm font-semibold px-6 py-5 bg-[#FF5722] hover:bg-[#FF5722]/90 text-white shadow-2xl">
-                  VIEW WORK
-                </Button>
-              </Link>
-              <Link href="/contact">
-                <Button size="default" variant="outline" className="text-sm font-semibold px-6 py-5 border-2 border-white text-white hover:bg-white hover:text-black shadow-2xl">
-                  GET IN TOUCH
-                </Button>
-              </Link>
-            </div>
-          </div>
-
-          <button
-            onClick={scrollToContent}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 text-white/60 hover:text-white transition-colors"
-            aria-label="Scroll to content"
-          >
-            <ChevronDown className="h-8 w-8 animate-bounce" />
-          </button>
-        </section>
-      )}
-
-      {/* Featured Scenic Design Projects - 2-Column Grid */}
       {projectsLoading ? (
         <ProjectGridSkeleton />
       ) : projects && projects.length > 0 ? (
         <FadeIn>
-          <section className="py-24 md:py-32 bg-[#0D47A1]/5">
+          <section className="pt-16 md:pt-24 pb-20 md:pb-28">
             <div className="container">
-              <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-16">
-                  <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">PORTFOLIO</p>
-                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6">
-                    Featured Scenic Design
-                  </h2>
-                  <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                    Selected works from regional theatre, summer stock, and academic productions
-                  </p>
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {projects.map((project, index) => {
+                  const accentColors = [
+                    '#FF5722',
+                    '#00BCD4',
+                    '#E91E63',
+                    '#FFC107',
+                    '#9C27B0',
+                  ];
+                  const accentColor = accentColors[index % accentColors.length];
 
-                {/* 2-Column Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                  {projects.slice(0, 8).map((project, index) => {
-                    // Cycle through brand colors for variety
-                    const brandColors = [
-                      '#FF5722', // Orange
-                      '#00BCD4', // Cyan
-                      '#E91E63', // Pink
-                      '#FFC107', // Amber
-                    ];
-                    const hoverColor = brandColors[index % brandColors.length];
-
-                    return (
-                      <Link key={project.id} href={getProjectPath(project)}>
-                        <Card className="group cursor-pointer overflow-hidden border-0 bg-transparent hover:scale-[1.02] transition-all duration-500">
-                          <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
-                            {project.coverImageUrl ? (
-                              <ProgressiveImage
-                                src={project.coverImageUrl}
-                                alt={`${project.title} - Scenic design by Brandon PT Davis`}
-                                className="group-hover:scale-110 transition-transform duration-700"
-                                aspectRatio="4/3"
-                                smartPosition={true}
-                                loading="lazy"
-                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                              />
-                            ) : (
-                              <div className="w-full h-full bg-muted flex items-center justify-center">
-                                <p className="text-muted-foreground">No image</p>
-                              </div>
-                            )}
-                            {/* Gradient overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                            {/* Project info on hover */}
-                            <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                              <div className="flex items-center gap-2 mb-2">
-                                <Badge variant="secondary" className="bg-white/20 text-white backdrop-blur-sm border-0 text-xs">
-                                  {project.discipline?.replace('_', ' ').toUpperCase()}
-                                </Badge>
-                                {project.year && (
-                                  <span className="text-xs text-white/80">{project.year}</span>
-                                )}
-                              </div>
-                              <div className="flex items-center gap-2 text-white font-semibold text-sm">
-                                VIEW PROJECT <ArrowRight className="h-4 w-4" />
-                              </div>
-                            </div>
-                          </div>
-
-                          <CardContent className="p-6 bg-card">
-                            <h3
-                              className="text-2xl font-bold mb-2 transition-colors"
-                              style={{ '--hover-color': hoverColor } as React.CSSProperties}
-                              onMouseEnter={(e) => (e.currentTarget.style.color = hoverColor)}
-                              onMouseLeave={(e) => (e.currentTarget.style.color = '')}
-                            >
-                              {project.title}
-                            </h3>
-                            {project.client && (
-                              <p className="text-sm font-medium text-foreground mb-1">{project.client}</p>
-                            )}
-                            {project.location && (
-                              <p className="text-sm text-muted-foreground mb-3">{project.location}</p>
-                            )}
-                            {project.excerpt && (
-                              <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
-                                {project.excerpt}
-                              </p>
-                            )}
-                          </CardContent>
-                        </Card>
-                      </Link>
-                    );
-                  })}
-                </div>
-
-                {/* View All Projects Button */}
-                <div className="text-center">
-                  <Link href="/projects/scenic-design">
-                    <Button size="lg" variant="outline" className="text-base font-semibold px-8 py-6">
-                      VIEW ALL SCENIC DESIGN PROJECTS
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </section>
-        </FadeIn>
-      ) : null}
-
-      {/* Latest News Section */}
-      {newsLoading ? (
-        <NewsSectionSkeleton />
-      ) : newsItems && newsItems.length > 0 ? (
-        <FadeIn>
-          <section className="py-24 md:py-32 bg-[#FF5722]/5">
-            <div className="container">
-              <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-16">
-                  <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">UPDATES</p>
-                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6">
-                    Latest News
-                  </h2>
-                  <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                    Recent announcements, show openings, and design updates
-                  </p>
-                </div>
-
-                {/* News Grid - 3 columns */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                  {newsItems.slice(0, 3).map((news) => (
-                    <Link key={news.id} href={`/news/${news.slug}`}>
-                      <Card className="h-full hover:shadow-2xl transition-all hover:scale-[1.02] cursor-pointer border-2 bg-background overflow-hidden group p-0">
-                        {news.coverImageUrl && (
-                          <div className="relative w-full aspect-[16/9] overflow-hidden">
-                            <img
-                              src={news.coverImageUrl}
-                              srcSet={`
-                                ${news.coverImageUrl}?w=640 640w,
-                                ${news.coverImageUrl}?w=750 750w,
-                                ${news.coverImageUrl}?w=828 828w,
-                                ${news.coverImageUrl}?w=1080 1080w
-                              `}
-                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                              alt={news.title}
+                  return (
+                    <Link key={project.id} href={getProjectPath(project)}>
+                      <Card className="group border-0 bg-transparent shadow-none">
+                        <div className="relative aspect-[16/9] overflow-hidden rounded-md">
+                          {project.coverImageUrl ? (
+                            <ProgressiveImage
+                              src={project.coverImageUrl}
+                              alt={project.title}
+                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                              aspectRatio="16/9"
+                              smartPosition={true}
                               loading="lazy"
-                              decoding="async"
-                              className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                             />
-                          </div>
-                        )}
-                        <CardContent className="p-6">
-                          {news.publishedAt && (
-                            <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-2">
-                              <Calendar className="h-3 w-3 flex-shrink-0" />
-                              <span>{new Date(news.publishedAt).toLocaleDateString('en-US', {
-                                year: 'numeric',
-                                month: 'short',
-                                day: 'numeric'
-                              })}</span>
-                            </div>
+                          ) : (
+                            <div className="h-full w-full bg-muted" />
                           )}
-                          <h3 className="text-xl font-bold mb-2 line-clamp-2 group-hover:text-[#FF5722] transition-colors">
-                            {news.title}
+                        </div>
+                        <div className="pt-2 text-center">
+                          <h3
+                            className="text-xs font-semibold tracking-[0.3em] uppercase"
+                            style={{ color: accentColor }}
+                          >
+                            {project.title}
                           </h3>
-                          <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed mb-4">
-                            {news.excerpt}
-                          </p>
-                          <div className="flex items-center gap-2 text-[#FF5722] font-semibold text-sm">
-                            READ MORE <ArrowRight className="h-4 w-4" />
-                          </div>
-                        </CardContent>
+                        </div>
                       </Card>
                     </Link>
-                  ))}
-                </div>
-
-                {/* View All News Button */}
-                <div className="text-center">
-                  <Link href="/news">
-                    <Button size="lg" variant="outline" className="text-base font-semibold px-8 py-6">
-                      VIEW ALL NEWS
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  </Link>
-                </div>
+                  );
+                })}
               </div>
             </div>
           </section>

@@ -77,7 +77,6 @@ export function ProjectsManager() {
                 { value: 'scenic_design', label: 'Scenic Design' },
                 { value: 'experiential_design', label: 'Experiential' },
                 { value: 'rendering', label: 'Rendering' },
-                { value: 'scenic_models', label: 'Models' },
               ].map((d) => (
                 <Button
                   key={d.value}
@@ -142,7 +141,6 @@ export function ProjectsManager() {
                                 {project.discipline === 'scenic_design' ? 'Scenic' :
                                   project.discipline === 'experiential_design' ? 'Experiential' :
                                     project.discipline === 'rendering' ? 'Rendering' :
-                                      project.discipline === 'scenic_models' ? 'Models' :
                                         project.discipline || 'Unknown'}
                               </span>
                               <span className="text-[10px] text-muted-foreground/60">•</span>
@@ -237,7 +235,6 @@ export function ProjectsManager() {
                             {project.discipline === 'scenic_design' ? 'Scenic' :
                               project.discipline === 'experiential_design' ? 'Experiential' :
                                 project.discipline === 'rendering' ? 'Rendering' :
-                                  project.discipline === 'scenic_models' ? 'Models' :
                                     project.discipline || 'Unknown'} • {project.images?.length || 0} images
                           </p>
                         </div>

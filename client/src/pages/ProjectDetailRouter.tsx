@@ -36,9 +36,6 @@ export default function ProjectDetailRouter() {
       return <RenderingProjectDetail />;
     case 'experiential_design':
       return <ExperientialProjectDetail />;
-    case 'scenic_models':
-      // TODO: Create ScenicModelsProjectDetail component
-      return <ProjectDetail />;
     case 'scenic_design':
     default:
       return <ProjectDetail />;

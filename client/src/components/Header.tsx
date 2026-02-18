@@ -32,15 +32,6 @@ const RenderingIcon = () => (
   </svg>
 );
 
-// Models - 3D layers/construction
-const ModelsIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="inline-block mr-2">
-    <path d="M12 3L4 7l8 4 8-4-8-4z" />
-    <path d="M4 12l8 4 8-4" strokeOpacity="0.7" />
-    <path d="M4 17l8 4 8-4" strokeOpacity="0.4" />
-  </svg>
-);
-
 // News Categories - Different theatrical elements
 
 // Production Debuts - Rising curtain
@@ -137,15 +128,6 @@ const AppStudioIcon = () => (
   </svg>
 );
 
-// Vault - Archive/safe
-const VaultIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="inline-block mr-2">
-    <rect x="3" y="4" width="18" height="16" rx="2" />
-    <circle cx="12" cy="12" r="3" />
-    <path d="M12 9v6M9 12h6" strokeWidth="1" />
-    <path d="M19 12h2M3 12h2" strokeOpacity="0.5" />
-  </svg>
-);
 
 // Scenic Directory - List/directory
 const DirectoryIcon = () => (
@@ -290,7 +272,6 @@ export default function Header() {
     { name: "Scenic Design", slug: "scenic-design", path: "/projects/scenic-design", icon: <ScenicDesignIcon /> },
     { name: "Experiential", slug: "experiential", path: "/projects/experiential", icon: <ExperientialIcon /> },
     { name: "Renderings", slug: "rendering", path: "/projects/rendering", icon: <RenderingIcon /> },
-    { name: "Models", slug: "scenic-models", path: "/projects/scenic-models", icon: <ModelsIcon /> },
   ];
 
   const newsCategories = [
@@ -449,7 +430,7 @@ export default function Header() {
                 <Link
                   href="/studio"
                   className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-[#9C27B0] relative group ${
-                    isActive("/studio") || isActive("/articles") || isActive("/vault") ? "text-[#9C27B0]" : ""
+                    isActive("/studio") || isActive("/articles") ? "text-[#9C27B0]" : ""
                   }`}
                 >
                   STUDIO
@@ -501,16 +482,6 @@ export default function Header() {
                       <span className="relative z-10 flex items-center">
                         <DirectoryIcon />
                         Scenic Directory
-                      </span>
-                      <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
-                    </Link>
-                    <Link
-                      href="/vault"
-                      className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border last:border-0 relative group"
-                    >
-                      <span className="relative z-10 flex items-center">
-                        <VaultIcon />
-                        Vault
                       </span>
                       <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
                     </Link>

@@ -1,5 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { SEO } from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
@@ -51,11 +53,26 @@ export default function FAQ() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Scenic Design FAQ | Process, Pricing & Collaboration"
+        description="Frequently asked questions about scenic design services, pricing, project timelines, and collaboration. Answers about working with Brandon PT Davis."
+        keywords="scenic design faq, theatrical design questions, scenic designer services, design project process, scenic design pricing, theatre design collaboration, hire scenic designer, scenic design services California"
+        url="https://www.brandonptdavis.com/faq"
+      />
+      <StructuredData
+        type="FAQPage"
+        faqPage={{
+          mainEntity: faqs.map(faq => ({
+            question: faq.question,
+            answer: faq.answer
+          }))
+        }}
+      />
       <Header />
       
       <div className="container py-24">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-6xl font-black tracking-tighter mb-4">Frequently Asked Questions</h1>
+          <h1 className="text-6xl font-black tracking-tighter mb-4">Scenic Design FAQ</h1>
           <p className="text-muted-foreground mb-12">Everything you need to know about working with Brandon PT Davis</p>
           
           <div className="space-y-4">

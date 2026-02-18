@@ -38,12 +38,11 @@ function getEmbedUrl(url: string): string {
 }
 
 // Color rotation for consistency with homepage
-const ACCENT_COLORS = ['#FF5722', '#00E5FF', '#FF1744'];
+const ACCENT_COLORS = ['#FF5722', '#00BCD4', '#E91E63', '#FFC107', '#9C27B0'];
 
 export default function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
   const [location] = useLocation();
-  const isScenicModelsRoute = location.startsWith("/projects/scenic-models");
   const { data: project, isLoading } = trpc.projects.getBySlug.useQuery({ slug: slug! });
   // Fetch projects in same discipline for navigation
   const { data: allProjects } = trpc.projects.list.useQuery(
@@ -58,10 +57,6 @@ export default function ProjectDetail() {
   );
   const relatedProjects = allRelatedProjects; // Show all projects
   const [showFullNotes, setShowFullNotes] = useState(false);
-  const [galleryOpen, setGalleryOpen] = useState(true);
-  const [renderingsOpen, setRenderingsOpen] = useState(true);
-  const [teamOpen, setTeamOpen] = useState(true);
-  const [videosOpen, setVideosOpen] = useState(true);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxImages, setLightboxImages] = useState<Array<{ imageUrl: string | null; caption: string | null; altText: string | null }>>([]);
@@ -143,35 +138,51 @@ export default function ProjectDetail() {
     roleName: member.role,
   }));
 
-  const projectBasePath = isScenicModelsRoute ? "/projects/scenic-models" : "/projects";
-  const projectUrl = `https://www.brandonptdavis.com${projectBasePath}/${project.slug}`;
+  const projectUrl = `https://www.brandonptdavis.com${location}`;
   const disciplineLabel = project.discipline === 'scenic_design'
     ? 'Scenic Design'
     : project.discipline === 'experiential_design'
       ? 'Experiential'
       : project.discipline === 'rendering'
         ? 'Rendering'
-        : 'Scenic Models';
-  const disciplineLink = project.discipline === 'scenic_models'
-    ? '/projects/scenic-models'
-    : project.discipline === 'rendering'
-      ? '/projects/rendering'
-      : project.discipline === 'experiential_design'
-        ? '/projects/experiential'
-        : project.discipline === 'scenic_design'
-          ? '/projects/scenic-design'
-          : `/projects?discipline=${project.discipline}`;
+        : 'Projects';
+  const disciplineLink = project.discipline === 'rendering'
+    ? '/projects/rendering'
+    : project.discipline === 'experiential_design'
+      ? '/projects/experiential'
+      : project.discipline === 'scenic_design'
+        ? '/projects/scenic-design'
+        : '/projects';
+  const moreProjectsLabel = project.discipline === 'scenic_design'
+    ? 'More Scenic Design'
+    : disciplineLabel === 'Projects'
+      ? 'More Projects'
+      : `More ${disciplineLabel}`;
 
   return (
-    <div className="min-h-screen bg-background">
-      <SEO
-        title={`${project.title} | Brandon PT Davis`}
-        description={project.excerpt || `${project.title} - Scenic design project by Brandon PT Davis`}
-        image={project.coverImageUrl || undefined}
-        type="website"
-        keywords={project.seoKeywords || undefined}
-        url={projectUrl}
-      />
+    <div 
+      className="relative min-h-screen bg-[#0b0b0d]" 
+      style={{ '--accent-rgb': accentColor } as React.CSSProperties}
+    >
+      {/* Gradient background blobs - subtle neutral tones for sophisticated look */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Primary blur - top left */}
+        <div className="absolute -top-40 left-1/4 h-[480px] w-[480px] rounded-full bg-[radial-gradient(circle,_rgba(100,200,255,0.12)_0%,_rgba(11,11,13,0)_60%)] blur-3xl" />
+        {/* Secondary blur - bottom right */}
+        <div className="absolute -bottom-20 right-1/4 h-[380px] w-[380px] rounded-full bg-[radial-gradient(circle,_rgba(100,200,255,0.08)_0%,_rgba(11,11,13,0)_65%)] blur-3xl" />
+        {/* Tertiary blur - left side */}
+        <div className="absolute top-1/2 -left-32 h-96 w-96 rounded-full bg-[radial-gradient(circle,_rgba(100,200,255,0.06)_0%,_rgba(11,11,13,0)_70%)] blur-3xl" />
+      </div>
+
+      <div className="relative z-10">
+        <SEO
+          title={`${project.title} | Brandon PT Davis`}
+          description={project.excerpt || `${project.title} - Scenic design project by Brandon PT Davis`}
+          image={project.coverImageUrl || undefined}
+          type="website"
+          keywords={project.seoKeywords || undefined}
+          url={projectUrl}
+        />
       <StructuredData
         type="BreadcrumbList"
         breadcrumbs={[
@@ -223,74 +234,49 @@ export default function ProjectDetail() {
         />
       </div>
 
-      {/* Navigation arrows removed per user request */}
-
-      {/* Full-Screen Hero Section */}
-      <section className="relative h-screen overflow-hidden">
-        {project.coverImageUrl ? (
-          <ProgressiveImage
-            src={project.coverImageUrl}
-            alt={`${project.title} - Scenic design by Brandon PT Davis`}
-            className=""
-            smartPosition={true}
-            loading="eager"
-          />
-        ) : (
-          <div className="w-full h-full bg-muted flex items-center justify-center">
-            <p className="text-muted-foreground text-2xl">No cover image</p>
-          </div>
-        )}
-
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-
-        {/* Color accent overlay */}
-        <div
-          className="absolute inset-0 mix-blend-multiply opacity-10"
-          style={{ backgroundColor: `var(--accent-color)` }}
-        />
-
-        {/* Project info overlay - centered */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="container max-w-4xl text-center px-8">
+      {/* Minimal Header Section */}
+      <section className="border-b border-border/30">
+        <div 
+          className="container py-12"
+          style={{ '--accent-color': accentColor } as React.CSSProperties}
+        >
+          <div className="space-y-6">
             {/* Subcategory badge */}
-            <div className="flex justify-center mb-6">
+            {project.subcategory && (
               <Badge
                 variant="outline"
-                className="text-xs tracking-widest font-bold bg-background/90 backdrop-blur-md px-6 py-2.5 border-2 rounded-full"
+                className="text-xs tracking-widest font-bold px-4 py-1.5 border-2 rounded-full"
                 style={{
-                  borderColor: `var(--accent-color)`,
-                  color: `var(--accent-color)`
+                  borderColor: accentColor,
+                  color: accentColor
                 }}
               >
-                {project.subcategory?.toUpperCase() || project.discipline?.replace('_', ' ').toUpperCase() || 'PROJECT'}
+                {project.subcategory.toUpperCase()}
               </Badge>
-            </div>
+            )}
 
             {/* Project title */}
-            <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-8 leading-[0.9]">
+            <h1 className="text-5xl md:text-6xl font-black tracking-tighter leading-tight" style={{ color: accentColor }}>
               {project.title}
             </h1>
 
-            {/* Metadata row with icons */}
-            <div className="flex items-center justify-center gap-8 text-foreground/90 flex-wrap text-lg mb-4">
+            {/* Metadata row */}
+            <div className="flex flex-wrap items-center gap-6 text-foreground/70 text-base">
               {project.client && (
-                <div className="flex items-center gap-2.5">
-                  <MapPin className="h-5 w-5" style={{ color: `var(--accent-color)` }} />
-                  <span className="font-medium">{project.client}</span>
+                <div>
+                  <span className="font-semibold">{project.client}</span>
                 </div>
               )}
               {project.location && (
-                <div className="flex items-center gap-2.5">
-                  <span className="text-muted-foreground">•</span>
-                  <span className="font-medium">{project.location}</span>
+                <div className="flex items-center gap-2">
+                  <span>•</span>
+                  <span>{project.location}</span>
                 </div>
               )}
               {project.year && (
-                <div className="flex items-center gap-2.5">
-                  <span className="text-muted-foreground">•</span>
-                  <Calendar className="h-5 w-5" style={{ color: `var(--accent-color)` }} />
-                  <span className="font-medium">{project.year}</span>
+                <div className="flex items-center gap-2">
+                  <span>•</span>
+                  <span>{project.year}</span>
                 </div>
               )}
             </div>
@@ -300,34 +286,32 @@ export default function ProjectDetail() {
 
       {/* Content Sections */}
       <div 
-        className="container max-w-5xl py-16 space-y-16"
+        className="container py-16 space-y-16"
         style={{ '--accent-color': accentColor } as React.CSSProperties}
       >
 
-        {/* Design Notes */}
-        {designNotes && (
+        {/* Creative Team */}
+        {creativeTeamArray.length > 0 && (
           <AnimatedSection>
-            <div className="prose prose-lg max-w-none">
+            <div className="md:max-w-[calc(50%-12px)]">
               <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: `var(--accent-color)` }}>
-                Design Notes
+                Creative Team
               </h2>
-              <div className="text-foreground/80 leading-relaxed whitespace-pre-wrap">
-                {showFullNotes ? designNotes : notesPreview}
+              <div className="space-y-3">
+                  {creativeTeamArray.map((member, idx) => {
+                    // Create slug from name for collaborator link
+                    const slug = member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+                    return (
+                      <Link key={idx} href={`/about/collaborators#${slug}`}>
+                        <div className="flex items-baseline gap-4 group cursor-pointer">
+                          <p className="font-semibold text-foreground transition-colors flex-1" style={{ borderColor: accentColor }} onMouseEnter={(e) => { e.currentTarget.style.color = accentColor; }} onMouseLeave={(e) => { e.currentTarget.style.color = ''; }}>{member.name}</p>
+                          <p className="text-sm text-muted-foreground">{member.role}</p>
+                        </div>
+                      </Link>
+                    );
+                  })}
               </div>
-              {shouldShowReadMore && (
-                <Button
-                  variant="ghost"
-                  onClick={() => setShowFullNotes(!showFullNotes)}
-                  className="mt-4 gap-2"
-                  style={{ color: accentColor }}
-                >
-                  {showFullNotes ? (
-                    <>Show Less <ChevronUp className="h-4 w-4" /></>
-                  ) : (
-                    <>Read More <ChevronDown className="h-4 w-4" /></>
-                  )}
-                </Button>
-              )}
             </div>
           </AnimatedSection>
         )}
@@ -336,24 +320,15 @@ export default function ProjectDetail() {
         {productionPhotos.length > 0 && (
           <AnimatedSection>
             <div>
-              <button
-                onClick={() => setGalleryOpen(!galleryOpen)}
-                className="flex items-center justify-between w-full mb-8 group"
-              >
-                <h2 className="text-4xl font-black tracking-tighter" style={{ color: `var(--accent-color)` }}>
-                  Production Photos
-                  <span className="ml-4 text-muted-foreground text-lg">({productionPhotos.length})</span>
-                </h2>
-                {galleryOpen ? (
-                  <ChevronUp className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
-                ) : (
-                  <ChevronDown className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
-                )}
-              </button>
-
-              {galleryOpen && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {productionPhotos.map((img, idx) => (
+              <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: `var(--accent-color)` }}>
+                Production Photos
+                <span className="ml-4 text-muted-foreground text-lg">({productionPhotos.length})</span>
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {productionPhotos.map((img, idx) => {
+                    const accentColors = ['#FF5722', '#00BCD4', '#E91E63', '#FFC107', '#9C27B0'];
+                    const accentColor = accentColors[idx % accentColors.length];
+                    return (
                     <AnimatedSection key={img.id} delay={idx * 50}>
                       <div
                         className="group relative overflow-hidden rounded-lg cursor-pointer aspect-[3/2]"
@@ -375,7 +350,7 @@ export default function ProjectDetail() {
 
                         {img.caption && (
                           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/95 via-background/70 to-transparent p-6">
-                            <p className="text-sm text-foreground/90">{img.caption}</p>
+                            <p className="text-sm font-semibold" style={{ color: accentColor }}>{img.caption}</p>
                           </div>
                         )}
 
@@ -386,9 +361,9 @@ export default function ProjectDetail() {
                         </div>
                       </div>
                     </AnimatedSection>
-                  ))}
-                </div>
-              )}
+                    );
+                  })}
+              </div>
             </div>
           </AnimatedSection>
         )}
@@ -397,24 +372,15 @@ export default function ProjectDetail() {
         {renderings.length > 0 && (
           <AnimatedSection>
             <div>
-              <button
-                onClick={() => setRenderingsOpen(!renderingsOpen)}
-                className="flex items-center justify-between w-full mb-8 group"
-              >
-                <h2 className="text-4xl font-black tracking-tighter" style={{ color: `var(--accent-color)` }}>
-                  Renderings
-                  <span className="ml-4 text-muted-foreground text-lg">({renderings.length})</span>
-                </h2>
-                {renderingsOpen ? (
-                  <ChevronUp className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
-                ) : (
-                  <ChevronDown className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
-                )}
-              </button>
-
-              {renderingsOpen && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {renderings.map((img, idx) => (
+              <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: `var(--accent-color)` }}>
+                Renderings
+                <span className="ml-4 text-muted-foreground text-lg">({renderings.length})</span>
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {renderings.map((img, idx) => {
+                    const accentColors = ['#FF5722', '#00BCD4', '#E91E63', '#FFC107', '#9C27B0'];
+                    const accentColor = accentColors[idx % accentColors.length];
+                    return (
                     <AnimatedSection key={img.id} delay={idx * 50}>
                       <div
                         className="group relative overflow-hidden rounded-lg cursor-pointer aspect-[3/2]"
@@ -436,7 +402,7 @@ export default function ProjectDetail() {
 
                         {img.caption && (
                           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/95 via-background/70 to-transparent p-6">
-                            <p className="text-sm text-foreground/90">{img.caption}</p>
+                            <p className="text-sm font-semibold" style={{ color: accentColor }}>{img.caption}</p>
                           </div>
                         )}
 
@@ -447,9 +413,69 @@ export default function ProjectDetail() {
                         </div>
                       </div>
                     </AnimatedSection>
-                  ))}
+                    );
+                  })}
+              </div>
+            </div>
+          </AnimatedSection>
+        )}
+
+        {/* Design Notes */}
+        {designNotes && (
+          <AnimatedSection>
+            <div>
+              <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: `var(--accent-color)` }}>
+                Design Notes
+              </h2>
+              <div 
+                className="relative py-6 md:max-w-[calc(50%-12px)]"
+                style={{ borderLeftColor: `var(--accent-color)` }}
+              >
+                <div className="text-foreground/85 leading-relaxed whitespace-pre-wrap text-lg text-justify px-8">
+                  {(() => {
+                    const text = showFullNotes ? designNotes : notesPreview;
+                    const firstLetterIdx = text.search(/[a-zA-Z]/);
+                    if (firstLetterIdx === -1) return text;
+                    
+                    const before = text.substring(0, firstLetterIdx);
+                    const firstLetter = text[firstLetterIdx];
+                    const after = text.substring(firstLetterIdx + 1);
+                    
+                    return (
+                      <>
+                        {before}
+                        <span 
+                          style={{
+                            float: 'left',
+                            fontSize: '3.5rem',
+                            lineHeight: '2.8rem',
+                            paddingRight: '0.5rem',
+                            color: `var(--accent-color)`,
+                            fontWeight: 'bold'
+                          }}
+                        >
+                          {firstLetter}
+                        </span>
+                        {after}
+                      </>
+                    );
+                  })()}
                 </div>
-              )}
+                {shouldShowReadMore && (
+                  <Button
+                    variant="ghost"
+                    onClick={() => setShowFullNotes(!showFullNotes)}
+                    className="mt-6 gap-2"
+                    style={{ color: accentColor }}
+                  >
+                    {showFullNotes ? (
+                      <>Show Less <ChevronUp className="h-4 w-4" /></>
+                    ) : (
+                      <>Read More <ChevronDown className="h-4 w-4" /></>
+                    )}
+                  </Button>
+                )}
+              </div>
             </div>
           </AnimatedSection>
         )}
@@ -458,23 +484,11 @@ export default function ProjectDetail() {
         {videos.length > 0 && (
           <AnimatedSection>
             <div>
-              <button
-                onClick={() => setVideosOpen(!videosOpen)}
-                className="flex items-center justify-between w-full mb-8 group"
-              >
-                <h2 className="text-4xl font-black tracking-tighter" style={{ color: `var(--accent-color)` }}>
-                  Videos
-                  <span className="ml-4 text-muted-foreground text-lg">({videos.length})</span>
-                </h2>
-                {videosOpen ? (
-                  <ChevronUp className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
-                ) : (
-                  <ChevronDown className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
-                )}
-              </button>
-
-              {videosOpen && (
-                <div className="grid grid-cols-1 gap-8">
+              <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: `var(--accent-color)` }}>
+                Videos
+                <span className="ml-4 text-muted-foreground text-lg">({videos.length})</span>
+              </h2>
+              <div className="grid grid-cols-1 gap-8">
                   {videos.map((video) => (
                     <div key={video.id} className="relative rounded-lg overflow-hidden border-2 border-border">
                       <div className="relative w-full pb-[56.25%]">
@@ -493,86 +507,6 @@ export default function ProjectDetail() {
                       )}
                     </div>
                   ))}
-                </div>
-              )}
-            </div>
-          </AnimatedSection>
-        )}
-
-        {/* Creative Team */}
-        {creativeTeamArray.length > 0 && (
-          <AnimatedSection>
-            <div>
-              <button
-                onClick={() => setTeamOpen(!teamOpen)}
-                className="flex items-center justify-between w-full mb-8 group"
-              >
-                <h2 className="text-4xl font-black tracking-tighter" style={{ color: `var(--accent-color)` }}>
-                  Creative Team
-                </h2>
-                {teamOpen ? (
-                  <ChevronUp className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
-                ) : (
-                  <ChevronDown className="h-8 w-8 text-muted-foreground group-hover:text-foreground transition-colors" />
-                )}
-              </button>
-
-              {teamOpen && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {creativeTeamArray.map((member, idx) => {
-                    // Create slug from name for collaborator link
-                    const slug = member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-
-                    return (
-                      <Link key={idx} href={`/about/collaborators#${slug}`}>
-                        <div
-                          className="flex items-start gap-4 p-4 rounded-lg bg-muted/50 border border-border hover:bg-muted transition-all duration-300 cursor-pointer group"
-                          style={{
-                            '--team-accent': accentColor
-                          } as React.CSSProperties}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.borderColor = `var(--accent-color)`;
-                            const nameEl = e.currentTarget.querySelector('p.font-semibold') as HTMLElement;
-                            if (nameEl) nameEl.style.color = `var(--accent-color)`;
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.borderColor = '';
-                            const nameEl = e.currentTarget.querySelector('p.font-semibold') as HTMLElement;
-                            if (nameEl) nameEl.style.color = '';
-                          }}
-                        >
-                          <div className="flex-1">
-                            <p className="font-semibold text-foreground transition-colors">{member.name}</p>
-                            <p className="text-sm text-muted-foreground">{member.role}</p>
-                          </div>
-                        </div>
-                      </Link>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          </AnimatedSection>
-        )}
-
-        {/* Tags */}
-        {project.tags && project.tags.length > 0 && (
-          <AnimatedSection>
-            <div className="mt-16">
-              <h2 className="text-3xl font-black tracking-tighter mb-6" style={{ color: `var(--accent-color)` }}>
-                Tags
-              </h2>
-              <div className="flex flex-wrap gap-3">
-                {project.tags.map((tag: any) => (
-                  <Link key={tag.id} href={`/tags/${tag.slug}`}>
-                    <span
-                      className="px-5 py-2.5 rounded-full text-sm font-semibold text-background transition-all duration-300 hover:scale-105 hover:shadow-lg cursor-pointer"
-                      style={{ backgroundColor: `var(--accent-color)` }}
-                    >
-                      {tag.name}
-                    </span>
-                  </Link>
-                ))}
               </div>
             </div>
           </AnimatedSection>
@@ -580,56 +514,43 @@ export default function ProjectDetail() {
 
         <Separator className="my-16" />
 
-        {/* Related Projects */}
+        {/* More Scenic Design */}
         {relatedProjectsFiltered.length > 0 && (
           <AnimatedSection>
             <div>
-              <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: `var(--accent-color)` }}>
-                More {project.discipline} Projects
+              <h2 className="text-4xl font-black tracking-tighter mb-12" style={{ color: `var(--accent-color)` }}>
+                {moreProjectsLabel}
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {relatedProjectsFiltered.map((relatedProject, idx) => {
-                  // Cycle through brand colors for variety
-                  const brandColors = [
-                    '#FF5722', // Orange
-                    '#00BCD4', // Cyan
-                    '#E91E63', // Pink
-                    '#FFC107', // Amber
-                  ];
-                  const hoverColor = brandColors[idx % brandColors.length];
+                  const accentColors = ['#FF5722', '#00BCD4', '#E91E63', '#FFC107', '#9C27B0'];
+                  const accentColor = accentColors[idx % accentColors.length];
 
                   return (
                     <Link key={relatedProject.id} href={getProjectPath(relatedProject)}>
-                      <Card className="group cursor-pointer overflow-hidden border-0 bg-transparent hover:scale-[1.02] transition-all duration-500">
-                        <div className="relative aspect-[3/2] overflow-hidden rounded-lg">
+                      <Card className="group border-0 bg-transparent shadow-none">
+                        <div className="relative aspect-[16/9] overflow-hidden rounded-md">
                           {relatedProject.coverImageUrl ? (
                             <ProgressiveImage
                               src={relatedProject.coverImageUrl}
-                              alt={`${relatedProject.title} - Scenic design by Brandon PT Davis`}
-                              className="group-hover:scale-110 transition-transform duration-700"
-                              aspectRatio="3/2"
+                              alt={relatedProject.title}
+                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                              aspectRatio="16/9"
                               smartPosition={true}
                               loading="lazy"
+                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                             />
                           ) : (
-                            <div className="w-full h-full bg-muted flex items-center justify-center">
-                              <p className="text-muted-foreground">No image</p>
-                            </div>
+                            <div className="h-full w-full bg-muted" />
                           )}
-                          {/* Gradient overlay - fades out on hover */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-500">
-                            <div className="absolute bottom-0 left-0 right-0 p-6">
-                              <p className="text-xs font-semibold text-white/70 uppercase tracking-wider mb-2">
-                                {relatedProject.client}
-                              </p>
-                              <h3 className="text-2xl font-bold text-white italic font-serif">
-                                {relatedProject.title}
-                              </h3>
-                              {relatedProject.year && (
-                                <p className="text-sm text-white/80 mt-2">{relatedProject.year}</p>
-                              )}
-                            </div>
-                          </div>
+                        </div>
+                        <div className="pt-2 text-center">
+                          <h3
+                            className="text-xs font-semibold tracking-[0.3em] uppercase"
+                            style={{ color: accentColor }}
+                          >
+                            {relatedProject.title}
+                          </h3>
                         </div>
                       </Card>
                     </Link>
@@ -639,6 +560,7 @@ export default function ProjectDetail() {
             </div>
           </AnimatedSection>
         )}
+      </div>
       </div>
 
       <Footer />

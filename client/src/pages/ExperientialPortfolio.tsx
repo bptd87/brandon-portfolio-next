@@ -101,6 +101,8 @@ function GalleryCardGrid({
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {items.map((item, index) => {
+        const accentColors = ['#FF5722', '#00BCD4', '#E91E63', '#FFC107', '#9C27B0'];
+        const accentColor = accentColors[index % accentColors.length];
         // Get display image - use imageUrl or YouTube thumbnail for videos
         const displayImage = item.imageUrl || (item.videoUrl ? getVideoThumbnail(item.videoUrl) : null);
         
@@ -134,7 +136,7 @@ function GalleryCardGrid({
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300">
                 <div className="absolute bottom-0 left-0 right-0 p-4">
                   {item.displayTitle && (
-                    <h3 className="text-white font-bold text-sm mb-1 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <h3 className="text-white font-bold text-sm mb-1 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300" style={{ color: accentColor }}>
                       {item.displayTitle}
                     </h3>
                   )}
@@ -150,7 +152,7 @@ function GalleryCardGrid({
             {/* Title below for mobile */}
             {item.displayTitle && (
               <div className="mt-3 lg:hidden">
-                <h3 className="font-medium text-sm truncate">{item.displayTitle}</h3>
+                <h3 className="font-medium text-sm truncate" style={{ color: accentColor }}>{item.displayTitle}</h3>
               </div>
             )}
           </div>

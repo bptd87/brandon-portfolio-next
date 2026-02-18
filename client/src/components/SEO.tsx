@@ -25,6 +25,7 @@ export function SEO({
 }: SEOProps) {
   const siteName = "Brandon PT Davis";
   const twitterHandle = "@brandonptdavis";
+  const twitterSite = "@brandonptdavis";
 
   // Use provided URL or fallback to current page URL
   const canonicalUrl = url || (typeof window !== 'undefined' ? window.location.href : 'https://www.brandonptdavis.com');
@@ -42,7 +43,10 @@ export function SEO({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:site_name" content={siteName} />
+      <meta property="og:locale" content="en_US" />
 
       {/* Twitter */}
       <meta property="twitter:card" content="summary_large_image" />
@@ -51,6 +55,7 @@ export function SEO({
       <meta property="twitter:description" content={description} />
       <meta property="twitter:image" content={image} />
       <meta property="twitter:creator" content={twitterHandle} />
+      <meta property="twitter:site" content={twitterSite} />
 
       {/* Article-specific tags */}
       {type === "article" && author && (

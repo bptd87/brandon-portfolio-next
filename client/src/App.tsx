@@ -47,7 +47,6 @@ const AdminScenicDirectoryEdit = lazy(() => import("./pages/admin/AdminScenicDir
 const AdminCollaborators = lazy(() => import("./pages/admin/AdminCollaborators"));
 const AdminCollaboratorEdit = lazy(() => import("./pages/admin/AdminCollaboratorEdit"));
 const AdminRenderingGallery = lazy(() => import("./pages/admin/AdminRenderingGallery"));
-const AdminModelGallery = lazy(() => import("./pages/admin/AdminModelGallery"));
 const AdminExperientialGallery = lazy(() => import("./pages/admin/AdminExperientialGallery"));
 const AdminProcessGallery = lazy(() => import("./pages/admin/AdminProcessGallery"));
 const AuthDebug = lazy(() => import("./pages/AuthDebug"));
@@ -62,14 +61,12 @@ const CreativeStatement = lazy(() => import("./pages/CreativeStatement"));
 const StudioTutorials = lazy(() => import("./pages/StudioTutorials"));
 const StudioApps = lazy(() => import("./pages/StudioApps"));
 const StudioDirectory = lazy(() => import("./pages/StudioDirectory"));
-const Vault = lazy(() => import("./pages/Vault"));
 const ScaleCalculator = lazy(() => import("./pages/ScaleCalculator"));
 const DimensionReference = lazy(() => import("./pages/DimensionReference"));
 const DesignHistoryTimeline = lazy(() => import("./pages/DesignHistoryTimeline"));
 const RoscoPaintCalculator = lazy(() => import("./pages/RoscoPaintCalculator"));
 const ExperientialPortfolio = lazy(() => import("./pages/ExperientialPortfolio"));
 const RenderingPortfolio = lazy(() => import("./pages/RenderingPortfolio"));
-const ScenicModelsPortfolio = lazy(() => import("./pages/ScenicModelsPortfolio"));
 const TutorialDetail = lazy(() => import("./pages/TutorialDetail"));
 const TagDetail = lazy(() => import('@/pages/TagDetail'));
 const Links = lazy(() => import('@/pages/Links'));
@@ -105,8 +102,6 @@ function Router() {
           <Route path={"/projects/experiential/rendering/:slug"} component={ProjectDetailRouter} />
           <Route path={"/projects/rendering"} component={RenderingPortfolio} />
           <Route path={"/projects/rendering/:slug"} component={ProjectDetailRouter} />
-          <Route path={"/projects/scenic-models"} component={ScenicModelsPortfolio} />
-          <Route path={"/projects/scenic-models/:slug"} component={ProjectDetailRouter} />
           <Route path={"/projects/:slug"} component={ProjectDetailRouter} />
           <Route path={"/news"} component={News} />
           <Route path={"/news/:slug"} component={NewsDetail} />
@@ -133,7 +128,6 @@ function Router() {
           <Route path={"/studio/apps"} component={StudioApps} />
           <Route path={"/studio/directory"} component={StudioDirectory} />
           <Route path={"/studio"} component={Studio} />
-          <Route path={"/vault"} component={Vault} />
           <Route path="/admin/projects/new" component={AdminProjectEdit} />
           <Route path="/admin/projects/:id/edit" component={AdminProjectEdit} />
           <Route path="/admin/news/new" component={AdminNewsEdit} />
@@ -158,7 +152,6 @@ function Router() {
           <Route path="/admin/collaborators/:id/edit" component={AdminCollaboratorEdit} />
           <Route path="/admin/collaborators" component={AdminCollaborators} />
           <Route path="/admin/rendering-gallery" component={AdminRenderingGallery} />
-          <Route path="/admin/model-gallery" component={AdminModelGallery} />
           <Route path="/admin/experiential-gallery" component={AdminProcessGallery} />
           <Route path={"/admin"} component={Admin} />
           <Route path={"/privacy"} component={Privacy} />

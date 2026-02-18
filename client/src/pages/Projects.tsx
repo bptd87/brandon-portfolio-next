@@ -1,6 +1,5 @@
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MapPin, Calendar, ArrowRight } from "lucide-react";
+import { Card } from "@/components/ui/card";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { trpc } from "@/lib/trpc";
 import { Link } from "wouter";
@@ -139,55 +138,46 @@ export default function Projects() {
             {filteredProjects && filteredProjects.length > 0 ? (
               <StaggerList
                 key={`${selectedSubcategory}-${filteredProjects.length}`}
-                className="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-visible"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 overflow-visible"
               >
                 {filteredProjects.map((project, index) => {
-                  const brandColors = [
+                  const accentColors = [
                     '#FF5722',
                     '#00BCD4',
                     '#E91E63',
                     '#FFC107',
+                    '#9C27B0',
                   ];
-                  const hoverColor = brandColors[index % brandColors.length];
+                  const accentColor = accentColors[index % accentColors.length];
 
                   return (
                     <StaggerItem key={project.id} dramatic={true}>
                       <Link href={getProjectPath(project)}>
-                        <div className="relative overflow-hidden rounded-lg cursor-pointer group aspect-[3/2]">
-                          {project.coverImageUrl ? (
-                            <>
+                        <Card className="group border-0 bg-transparent shadow-none">
+                          <div className="relative aspect-[16/9] overflow-hidden rounded-md">
+                            {project.coverImageUrl ? (
                               <ProgressiveImage
                                 src={project.coverImageUrl}
                                 alt={project.title}
-                                className="group-hover:scale-110 transition-transform duration-700"
-                                aspectRatio="3/2"
+                                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                aspectRatio="16/9"
                                 smartPosition={true}
                                 loading="lazy"
+                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                               />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent group-hover:opacity-0 transition-all duration-500" />
-
-                              <div className="absolute bottom-0 left-0 right-0 p-6 text-white group-hover:opacity-0 transition-all duration-500">
-                                {project.client && (
-                                  <p className="text-xs tracking-widest mb-2 opacity-80">
-                                    {project.client.toUpperCase()}
-                                  </p>
-                                )}
-                                <h3 className="text-2xl md:text-3xl font-playfair italic mb-2" style={{ color: hoverColor }}>
-                                  {project.title}
-                                </h3>
-                                {project.year && (
-                                  <p className="text-sm opacity-80">
-                                    {project.year}
-                                  </p>
-                                )}
-                              </div>
-                            </>
-                          ) : (
-                            <div className="w-full h-full bg-muted flex items-center justify-center">
-                              <p className="text-muted-foreground">No image</p>
-                            </div>
-                          )}
-                        </div>
+                            ) : (
+                              <div className="h-full w-full bg-muted" />
+                            )}
+                          </div>
+                          <div className="pt-2 text-center">
+                            <h3
+                              className="text-xs font-semibold tracking-[0.3em] uppercase"
+                              style={{ color: accentColor }}
+                            >
+                              {project.title}
+                            </h3>
+                          </div>
+                        </Card>
                       </Link>
                     </StaggerItem>
                   );

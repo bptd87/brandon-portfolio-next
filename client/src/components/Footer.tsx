@@ -54,11 +54,6 @@ export default function Footer() {
                     Rendering
                   </Link>
                 </li>
-                <li>
-                  <Link href="/projects/scenic-models" className="text-foreground/70 hover:text-[#00E5FF] transition-colors font-medium">
-                    Scenic Models
-                  </Link>
-                </li>
               </ul>
             </div>
 
@@ -74,11 +69,6 @@ export default function Footer() {
                 <li>
                   <Link href="/studio/apps" className="text-foreground/70 hover:text-[#9C27B0] transition-colors font-medium">
                     App Studio
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/vault" className="text-foreground/70 hover:text-[#9C27B0] transition-colors font-medium">
-                    Vault
                   </Link>
                 </li>
                 <li>
@@ -205,10 +195,10 @@ export default function Footer() {
             </a>
             <a
               href="mailto:info@brandonptdavis.com"
-              className="w-14 h-14 rounded-full bg-foreground/10 flex items-center justify-center hover:bg-foreground hover:scale-110 transition-all group"
+              className="w-14 h-14 rounded-full bg-[#9C27B0]/10 flex items-center justify-center hover:bg-[#9C27B0] hover:scale-110 transition-all group"
               title="Email Me"
             >
-              <Mail className="w-6 h-6 text-foreground group-hover:text-background transition-colors" />
+              <Mail className="w-6 h-6 text-[#9C27B0] group-hover:text-white transition-colors" />
             </a>
           </div>
 

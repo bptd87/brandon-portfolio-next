@@ -289,13 +289,13 @@ export function ProgressiveImage({
 
       {/* Skeleton loader - shown before intersection (not for eager loading) */}
       {!shouldLoad && loading !== 'eager' && (
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900">
           <div className="w-full h-full relative overflow-hidden">
-            {/* Shimmer effect - subtle */}
+            {/* Shimmer effect - more visible */}
             <div
               className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite]"
               style={{
-                background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%)',
+                background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%)',
               }}
             />
           </div>

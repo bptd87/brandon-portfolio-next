@@ -80,13 +80,6 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 >
                   Renderings
                 </Link>
-                <Link
-                  href="/projects/scenic-models"
-                  onClick={onClose}
-                  className="block py-2 px-4 rounded-lg hover:bg-[#FF5722]/10 hover:text-[#FF5722] transition-colors"
-                >
-                  Models
-                </Link>
               </div>
             )}
           </div>
@@ -196,13 +189,6 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   className="block py-2 px-4 rounded-lg hover:bg-[#9C27B0]/10 hover:text-[#9C27B0] transition-colors"
                 >
                   Scenic Directory
-                </Link>
-                <Link
-                  href="/vault"
-                  onClick={onClose}
-                  className="block py-2 px-4 rounded-lg hover:bg-[#9C27B0]/10 hover:text-[#9C27B0] transition-colors"
-                >
-                  Vault
                 </Link>
               </div>
             )}

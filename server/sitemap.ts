@@ -150,11 +150,6 @@ export async function generateMainSitemap(baseUrl?: string): Promise<string> {
       loc: `${SITE_URL}/projects?discipline=rendering`,
       changefreq: 'weekly',
       priority: 0.9,
-    },
-    {
-      loc: `${SITE_URL}/projects?discipline=scenic_models`,
-      changefreq: 'weekly',
-      priority: 0.9,
     }
   );
 

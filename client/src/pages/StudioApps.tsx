@@ -6,6 +6,7 @@ import { ArrowRight, ArrowLeft } from "lucide-react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
+import StructuredData from "@/components/StructuredData";
 
 export default function StudioApps() {
   // Individual app cards
@@ -71,10 +72,53 @@ export default function StudioApps() {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="App Studio | Brandon PT Davis"
-        description="Free web apps for scenic designers. Scale calculators, dimension references, paint mixers, and design tools."
-        keywords="scenic design calculator, architecture scale converter, paint mixing calculator, Rosco paint, design history timeline, theatrical design tools"
+        title="Scenic Design Tools | Professional Calculators & Resources"
+        description="Web-based tools for scenic designers: scale calculators, dimension references, paint mixers, and design resources. Professional apps for theatrical designers."
+        keywords="scenic design calculator, architecture scale converter, paint mixing calculator, Rosco paint, design history timeline, theatrical design tools, scenic design apps, web-based design tools"
         type="website"
+      />
+      {/* SoftwareApplication schemas for key apps */}
+      <StructuredData
+        type="SoftwareApplication"
+        softwareApplication={{
+          name: "Scale Calculator - Scenic Design Tool",
+          description: "Convert between architectural and model scales. Essential for drafting and model building in theatrical design.",
+          applicationCategory: "DesignApplication",
+          operatingSystem: "Web",
+          offers: {
+            price: "0",
+            priceCurrency: "USD",
+          },
+          url: "https://www.brandonptdavis.com/studio/apps/scale-calculator",
+        }}
+      />
+      <StructuredData
+        type="SoftwareApplication"
+        softwareApplication={{
+          name: "Rosco Paint Calculator - Scenic Paint Mixing",
+          description: "Professional scenic paint mixing calculator with advanced 5-step color matching engine for Rosco Off-Broadway paints. Web-based tool for theatrical designers.",
+          applicationCategory: "DesignApplication",
+          operatingSystem: "Web",
+          offers: {
+            price: "0",
+            priceCurrency: "USD",
+          },
+          url: "https://www.brandonptdavis.com/studio/apps/rosco-paint-calculator",
+        }}
+      />
+      <StructuredData
+        type="SoftwareApplication"
+        softwareApplication={{
+          name: "Design History Timeline - Architecture Reference",
+          description: "Explore 30 major design periods from Ancient Egypt to Contemporary architecture with detailed information, color palettes, and key figures. Interactive educational resource for designers.",
+          applicationCategory: "EducationalApplication",
+          operatingSystem: "Web",
+          offers: {
+            price: "0",
+            priceCurrency: "USD",
+          },
+          url: "https://www.brandonptdavis.com/studio/apps/design-history-timeline",
+        }}
       />
       <Header />
 
@@ -91,7 +135,7 @@ export default function StudioApps() {
           <div className="max-w-4xl">
             <p className="text-xs tracking-[0.3em] text-muted-foreground mb-6 font-semibold">STUDIO / APP STUDIO</p>
             <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 leading-[0.9]">
-              Tools built for<br />scenic designers
+              Professional Scenic Design<br />Tools & Resources
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl leading-relaxed">
               A collection of practical web apps for theatrical design professionals. Calculate scales,

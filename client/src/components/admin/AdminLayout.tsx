@@ -16,9 +16,7 @@ import {
     Users,
     Library,
     Image as ImageIcon,
-    Box,
-    Sparkles,
-    Layers
+    Sparkles
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -39,7 +37,6 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
         { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
         { href: "/admin/projects", icon: FolderKanban, label: "Projects" },
         { href: "/admin/rendering-gallery", icon: ImageIcon, label: "Render Gallery" },
-        { href: "/admin/model-gallery", icon: Box, label: "Model Gallery" },
         { href: "/admin/experiential-gallery", icon: Sparkles, label: "Exp. Gallery" },
         { href: "/admin/news", icon: Newspaper, label: "News" },
         { href: "/admin/articles", icon: FileText, label: "Articles" },

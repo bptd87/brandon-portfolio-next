@@ -77,9 +77,9 @@ export default function About() {
     <div className="min-h-screen bg-background">
       <SEO
         title="About Brandon PT Davis | Scenic Designer & Educator"
-        description="Learn about Brandon PT Davis, a scenic and experiential designer with over 15 years of experience in theatre, themed entertainment, and education."
+        description="Southern California scenic designer with 15+ years in regional theatre, themed entertainment, and education. USA 829 member based in Orange County."
         url="https://www.brandonptdavis.com/about"
-        keywords="Brandon Davis scenic designer, USA 829, theatrical designer California, experiential designer, scenic design educator, UC Irvine, regional theatre designer"
+        keywords="Brandon Davis scenic designer, USA 829, theatrical designer California, Orange County designer, experiential designer, scenic design educator, UC Irvine, regional theatre designer"
       />
       <StructuredData
         type="Person"
@@ -135,9 +135,9 @@ export default function About() {
       <AboutNav />
 
       {/* Hero Section - Credibility First */}
-      <section className="container py-20 md:py-32">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-[480px_1fr] gap-12 md:gap-16 items-center">
+      <section className="container py-20 md:py-28">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-[420px_1fr] gap-10 md:gap-14 items-center">
             {/* Profile Image - Left Side */}
             <div className="relative group animate-in fade-in slide-in-from-left-8 duration-700">
               <div
@@ -161,27 +161,23 @@ export default function About() {
             </div>
 
             {/* Text Content - Right Side */}
-            <div className="space-y-8 animate-in fade-in slide-in-from-right-8 duration-700 delay-200">
-              <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 border border-primary/30 mb-2">
-                <Sparkles className="w-4 h-4 text-primary animate-pulse" />
-                <span className="text-sm uppercase tracking-widest text-primary font-bold">Scenic Designer & Artist</span>
-              </div>
+            <div className="space-y-7 animate-in fade-in slide-in-from-right-8 duration-700 delay-200">
 
-              <h1 className="text-5xl md:text-8xl font-serif leading-[0.85] mb-8">
+              <h1 className="text-5xl md:text-7xl font-serif leading-[0.9] mb-6">
                 Brandon<br />PT Davis
               </h1>
 
-              <div className="space-y-6">
-                <p className="text-3xl md:text-4xl font-bold text-primary">
+              <div className="space-y-5">
+                <p className="text-2xl md:text-3xl font-bold text-primary">
                   Art × Technology × Design
                 </p>
-                <p className="text-lg text-foreground/80 leading-relaxed max-w-2xl">
+                <p className="text-lg text-foreground/80 leading-relaxed max-w-xl">
                   Scenic designer creating conceptual landscapes where design serves dramatic truth. Recent work includes co-design at South Coast Repertory and a body of work in contemporary and classical theatre across the US.
                 </p>
               </div>
 
               {/* CTA Buttons - Clarified Hierarchy */}
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <div className="flex flex-col sm:flex-row gap-4 pt-3">
                 <a
                   href="/resume"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5"
@@ -202,34 +198,10 @@ export default function About() {
         </div>
       </section>
 
-      {/* Stats Bar */}
-      <section className="bg-primary/5 border-y border-primary/10 py-16">
-        <div className="container">
-          <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center animate-in fade-in duration-700">
-              <div className="text-5xl md:text-6xl font-black text-primary mb-2">130+</div>
-              <div className="text-sm uppercase tracking-wider text-foreground/60">Productions Designed</div>
-            </div>
-            <div className="text-center animate-in fade-in duration-700 delay-100">
-              <div className="text-5xl md:text-6xl font-black text-primary mb-2">15</div>
-              <div className="text-sm uppercase tracking-wider text-foreground/60">Years Experience</div>
-            </div>
-            <div className="text-center animate-in fade-in duration-700 delay-200">
-              <div className="text-5xl md:text-6xl font-black text-primary mb-2">USA</div>
-              <div className="text-sm uppercase tracking-wider text-foreground/60">829 Member</div>
-            </div>
-            <div className="text-center animate-in fade-in duration-700 delay-300">
-              <div className="text-5xl md:text-6xl font-black text-primary mb-2">SCR</div>
-              <div className="text-sm uppercase tracking-wider text-foreground/60">Recent Debut</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Bio Section */}
-      <section className="container py-32">
+      <section className="container py-28">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-[1fr_400px] gap-16 items-start">
+          <div className="grid md:grid-cols-[1fr_360px] gap-12 items-start">
             {/* Left: Text Content */}
             <div className="animate-in fade-in slide-in-from-left duration-700">
               <h2 className="text-5xl md:text-6xl font-serif mb-8 leading-tight">Background & Training</h2>
@@ -249,19 +221,13 @@ export default function About() {
               </div>
             </div>
 
-            {/* Right: Milestone Callout */}
+            {/* Right: Milestone */}
             <div className="animate-in fade-in slide-in-from-right duration-700 delay-200">
-              <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl p-8 border border-primary/20 sticky top-24">
-                <div className="text-6xl font-black text-primary/20 mb-4">✦</div>
+              <div className="sticky top-24">
                 <h3 className="text-2xl font-serif mb-4 text-foreground">Recent Milestone</h3>
-                <p className="text-foreground/80 leading-relaxed mb-6 text-justify">
+                <p className="text-foreground/80 leading-relaxed text-justify">
                   South Coast Repertory debut as co-scenic designer on <span className="font-medium text-foreground">Million Dollar Quartet</span>—a milestone representing movement toward the kind of regional professional work I'm building toward.
                 </p>
-                <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full">LORT Theatre</span>
-                  <span className="px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full">Co-Design</span>
-                  <span className="px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full">2025</span>
-                </div>
               </div>
             </div>
           </div>
@@ -269,9 +235,9 @@ export default function About() {
       </section>
 
       {/* Design Philosophy - Visual Pull Quotes */}
-      <section className="bg-gradient-to-b from-muted/30 via-background to-background py-32">
+      <section className="py-24">
         <div className="container">
-          <div className="max-w-6xl mx-auto mb-20">
+          <div className="max-w-6xl mx-auto mb-16">
             <h2 className="text-5xl md:text-7xl font-serif mb-6">Design Philosophy</h2>
             <p className="text-xl text-foreground/70">
               What I've learned from designing 130+ productions: design is dramaturg, collaborator, and ghost.
@@ -279,7 +245,7 @@ export default function About() {
           </div>
 
          {/* Memory & Impression */}
-          <div className="max-w-6xl mx-auto mb-24 animate-in fade-in slide-in-from-bottom duration-700">
+          <div className="max-w-6xl mx-auto mb-20 animate-in fade-in slide-in-from-bottom duration-700">
             <div className="grid md:grid-cols-[300px_1fr] gap-12 items-start">
               <div className="md:sticky md:top-24">
                 <div className="text-sm uppercase tracking-widest text-primary font-bold mb-2">Project</div>
@@ -287,11 +253,9 @@ export default function About() {
                 <div className="text-sm text-foreground/60 mt-2">Maples Repertory, 2025</div>
               </div>
               <div className="space-y-6">
-                <div className="border-l-4 border-primary/30 pl-8">
-                  <blockquote className="text-2xl md:text-3xl font-serif text-foreground/90 leading-relaxed mb-4">
-                    "A fluid, impressionistic landscape shaped by recollection. Not a literal apartment, but memory made spatial."
-                  </blockquote>
-                </div>
+                <blockquote className="text-2xl md:text-3xl font-serif text-foreground/90 leading-relaxed mb-4">
+                  "A fluid, impressionistic landscape shaped by recollection. Not a literal apartment, but memory made spatial."
+                </blockquote>
                 <p className="text-lg text-foreground/70 leading-relaxed text-justify">
                   The design sought to feel unstable and permeable—allowing memory to drift, overlap, and distort. The end result was a <span className="font-medium text-foreground">theatrical memoryscape shaped by absence as much as presence</span>. This is how I approach memory plays: not reconstruction, but impression.
                 </p>
@@ -300,7 +264,7 @@ export default function About() {
           </div>
 
           {/* Holding Space */}
-          <div className="max-w-6xl mx-auto mb-24 animate-in fade-in slide-in-from-bottom duration-700 delay-100">
+          <div className="max-w-6xl mx-auto mb-20 animate-in fade-in slide-in-from-bottom duration-700 delay-100">
             <div className="grid md:grid-cols-[300px_1fr] gap-12 items-start">
               <div className="md:sticky md:top-24">
                 <div className="text-sm uppercase tracking-widest text-primary font-bold mb-2">Project</div>
@@ -308,11 +272,9 @@ export default function About() {
                 <div className="text-sm text-foreground/60 mt-2">University of Missouri, 2025</div>
               </div>
               <div className="space-y-6">
-                <div className="border-l-4 border-primary/30 pl-8">
-                  <blockquote className="text-2xl md:text-3xl font-serif text-foreground/90 leading-relaxed mb-4">
-                    "The design had to hold more than history—it had to hold ghosts."
-                  </blockquote>
-                </div>
+                <blockquote className="text-2xl md:text-3xl font-serif text-foreground/90 leading-relaxed mb-4">
+                  "The design had to hold more than history—it had to hold ghosts."
+                </blockquote>
                 <p className="text-lg text-foreground/70 leading-relaxed text-justify">
                   Set in the final hours of Archbishop Óscar Romero's life, the play bends time and invites the dead to speak. The scenic world emerged from tension between sacredness and rupture. Designing this work meant <span className="font-medium text-foreground">listening, holding space, and letting the silence speak</span>.
                 </p>
@@ -321,56 +283,46 @@ export default function About() {
           </div>
 
           {/* Core Philosophy */}
-          <div className="max-w-4xl mx-auto animate-in fade-in duration-700 delay-200">
-            <div className="bg-primary/5 border border-primary/10 rounded-2xl p-12 text-center">
-              <div className="text-7xl font-black text-primary/20 mb-6">✦</div>
-              <blockquote className="text-3xl md:text-4xl font-serif text-foreground mb-8 leading-tight">
-                "The strongest scenic work is invisible."
-              </blockquote>
-              <p className="text-lg text-foreground/70 max-w-2xl mx-auto text-justify">
-                Whether designing a memory play, a spiritual ritual, or grounded realism, every choice serves the same goal: <span className="font-medium text-foreground">clarity of intent</span>. I've worked across minimalism and conceptual design, using constraint as creative fuel. The play is always the boss.
-              </p>
-            </div>
+          <div className="max-w-4xl mx-auto py-14 animate-in fade-in duration-700 delay-200">
+            <blockquote className="text-3xl md:text-4xl font-serif text-foreground mb-8 leading-tight text-center">
+              "The strongest scenic work is invisible."
+            </blockquote>
+            <p className="text-lg text-foreground/70 max-w-2xl mx-auto text-justify">
+              Whether designing a memory play, a spiritual ritual, or grounded realism, every choice serves the same goal: <span className="font-medium text-foreground">clarity of intent</span>. I've worked across minimalism and conceptual design, using constraint as creative fuel. The play is always the boss.
+            </p>
           </div>
         </div>
       </section>
 
       {/* Navigation Cards Section */}
-      <section className="bg-gradient-to-b from-background to-muted/30 py-32">
+      <section className="py-24">
         <div className="container">
-          <div className="max-w-7xl mx-auto mb-16 animate-in fade-in slide-in-from-bottom duration-700">
+          <div className="max-w-4xl mr-auto mb-10 animate-in fade-in slide-in-from-bottom duration-700">
             <h2 className="text-5xl md:text-7xl font-serif mb-6">Learn More</h2>
-            <p className="text-xl text-foreground/70 max-w-3xl">
+            <p className="text-lg text-foreground/70 max-w-2xl">
               Dive into my process, teaching philosophy, full portfolio of work across theatre and experiential design, and the directors and designers I've had the privilege to collaborate with.
             </p>
           </div>
 
-          <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-6">
+          <div className="max-w-4xl mr-auto space-y-5">
             {navigationCards.map((card, index) => {
               const Icon = card.icon;
               return (
                 <Link key={card.href} href={card.href}>
                   <div
-                    className={`group relative overflow-hidden rounded-2xl border ${card.borderColor} bg-gradient-to-br ${card.color} p-8 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl cursor-pointer animate-in fade-in slide-in-from-bottom duration-700`}
-                    style={{ animationDelay: `${index * 150}ms` }}
+                    className="flex items-start gap-4 pb-5 border-b border-border/40 hover:border-primary/40 transition-colors cursor-pointer animate-in fade-in slide-in-from-bottom duration-700"
+                    style={{ animationDelay: `${index * 120}ms` }}
                   >
-                    <div className="flex items-start gap-6">
-                      <div className="p-4 rounded-xl bg-background/50 backdrop-blur-sm group-hover:bg-background/70 transition-colors">
-                        <Icon className="w-8 h-8 text-primary" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-2xl font-serif mb-3 group-hover:text-primary transition-colors">
-                          {card.title}
-                        </h3>
-                        <p className="text-foreground/70 leading-relaxed mb-4">
-                          {card.description}
-                        </p>
-                        <div className="flex items-center gap-2 text-primary font-medium">
-                          <span>Learn more</span>
-                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                        </div>
-                      </div>
+                    <Icon className="w-5 h-5 text-primary mt-1" />
+                    <div className="flex-1">
+                      <h3 className="text-2xl font-serif mb-2 hover:text-primary transition-colors">
+                        {card.title}
+                      </h3>
+                      <p className="text-foreground/70 leading-relaxed">
+                        {card.description}
+                      </p>
                     </div>
+                    <ArrowRight className="w-4 h-4 text-primary mt-1.5" />
                   </div>
                 </Link>
               );
@@ -380,9 +332,9 @@ export default function About() {
       </section>
 
       {/* Personal Gallery */}
-      <section className="bg-gradient-to-b from-muted/30 to-background py-32">
+      <section className="py-24">
         <div className="container">
-          <div className="max-w-7xl mx-auto mb-16 animate-in fade-in slide-in-from-bottom duration-700">
+          <div className="max-w-6xl mx-auto mb-12 animate-in fade-in slide-in-from-bottom duration-700">
             <h2 className="text-5xl md:text-7xl font-serif mb-6">Art Requires Community</h2>
             <p className="text-xl text-foreground/70 max-w-3xl">
               Design lives in collaboration. These moments capture the partnerships, mentorships, and creative communities that make the work possible. Also: the people who've influenced me most.
@@ -394,16 +346,15 @@ export default function About() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {/* Large featured image */}
               <div className="lg:col-span-2 lg:row-span-2 animate-in fade-in zoom-in-50 duration-700">
-                <div className="relative aspect-square overflow-hidden rounded-2xl group">
+                <div className="relative aspect-square overflow-hidden rounded-2xl">
                   {/* Skeleton placeholder */}
                   <div className="absolute inset-0 bg-gradient-to-r from-muted/50 via-muted/30 to-muted/50 animate-pulse" />
                   <img
                     src={galleryImages[0].url}
                     alt={galleryImages[0].alt}
-                    className="relative w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="relative w-full h-full object-cover"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
               </div>
 
@@ -411,7 +362,7 @@ export default function About() {
               {galleryImages.slice(1, 5).map((image, index) => (
                 <div
                   key={index}
-                  className="relative aspect-square overflow-hidden rounded-2xl group animate-in fade-in zoom-in-50 duration-700"
+                  className="relative aspect-square overflow-hidden rounded-2xl animate-in fade-in zoom-in-50 duration-700"
                   style={{ animationDelay: `${(index + 1) * 100}ms` }}
                 >
                   {/* Skeleton placeholder */}
@@ -419,10 +370,9 @@ export default function About() {
                   <img
                     src={image.url}
                     alt={image.alt}
-                    className="relative w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="relative w-full h-full object-cover"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
               ))}
 
@@ -430,7 +380,7 @@ export default function About() {
               {galleryImages.slice(5).map((image, index) => (
                 <div
                   key={index}
-                  className="relative aspect-square overflow-hidden rounded-2xl group animate-in fade-in zoom-in-50 duration-700"
+                  className="relative aspect-square overflow-hidden rounded-2xl animate-in fade-in zoom-in-50 duration-700"
                   style={{ animationDelay: `${(index + 5) * 100}ms` }}
                 >
                   {/* Skeleton placeholder */}
@@ -438,10 +388,9 @@ export default function About() {
                   <img
                     src={image.url}
                     alt={image.alt}
-                    className="relative w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="relative w-full h-full object-cover"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
               ))}
             </div>

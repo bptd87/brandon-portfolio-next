@@ -1,6 +1,8 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AboutNav from "@/components/AboutNav";
+import { SEO } from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 import { trpc } from "@/lib/trpc";
 import { useEffect, useRef } from "react";
 import { Link } from "wouter";
@@ -10,7 +12,7 @@ export default function CreativeStatement() {
     status: "published"
   });
 
-  // Filter to scenic design and rendering projects only (exclude experiential_design and scenic_models)
+  // Filter to scenic design and rendering projects only (exclude experiential_design)
   const scenicDesignProjects = (projects || []).filter(p => 
     p.discipline === 'scenic_design' || p.discipline === 'rendering'
   );
@@ -78,8 +80,36 @@ export default function CreativeStatement() {
     };
   }, []);
 
+  // Get hero project for Open Graph image
+  const heroProject = scenicDesignProjects.find(p => p.featured) || scenicDesignProjects[0];
+
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Creative Design Statement | Scenic & Experiential Design"
+        description="Exploring the intersection of architecture, history, and storytelling through scenic design. Creative philosophy centered on spatial narratives and immersive environments."
+        keywords="scenic design philosophy, creative statement, theatrical storytelling, architectural design, spatial narrative, immersive design, theatre design approach, experiential design philosophy"
+        image={heroProject?.coverImageUrl}
+        url="https://www.brandonptdavis.com/creative-statement"
+        type="article"
+      />
+      <StructuredData
+        type="Person"
+        person={{
+          name: "Brandon PT Davis",
+          jobTitle: "Scenic and Experiential Designer",
+          url: "https://www.brandonptdavis.com",
+          description: "Scenic designer exploring the intersection of architecture, history, and storytelling to create immersive spatial narratives for theatre and experiential design.",
+          knowsAbout: [
+            "Scenic Design",
+            "Spatial Storytelling",
+            "Architectural Design",
+            "Immersive Environments",
+            "Historical Research",
+            "Theatrical Collaboration"
+          ]
+        }}
+      />
       <Header />
       <AboutNav />
 

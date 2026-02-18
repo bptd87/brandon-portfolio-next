@@ -153,8 +153,50 @@ interface HowToSchema {
   }>;
 }
 
+interface EventSchema {
+  name: string;
+  description?: string;
+  startDate: string;
+  endDate?: string;
+  location?: {
+    name: string;
+    address?: {
+      addressLocality?: string;
+      addressRegion?: string;
+      addressCountry?: string;
+    };
+  };
+  performer?: {
+    name: string;
+    jobTitle?: string;
+    url?: string;
+  };
+  image?: string;
+  url?: string;
+  eventStatus?: 'EventScheduled' | 'EventCancelled' | 'EventPostponed' | 'EventRescheduled';
+  eventAttendanceMode?: 'OfflineEventAttendanceMode' | 'OnlineEventAttendanceMode' | 'MixedEventAttendanceMode';
+}
+
+interface SoftwareApplicationSchema {
+  name: string;
+  description?: string;
+  applicationCategory: string;
+  operatingSystem: string;
+  offers?: {
+    price: string;
+    priceCurrency: string;
+  };
+  image?: string;
+  url?: string;
+  softwareVersion?: string;
+  aggregateRating?: {
+    ratingValue: string;
+    ratingCount: number;
+  };
+}
+
 interface StructuredDataProps {
-  type: 'Person' | 'Organization' | 'Both' | 'CreativeWork' | 'BreadcrumbList' | 'Article' | 'VideoObject' | 'FAQPage' | 'HowTo';
+  type: 'Person' | 'Organization' | 'Both' | 'CreativeWork' | 'BreadcrumbList' | 'Article' | 'VideoObject' | 'FAQPage' | 'HowTo' | 'Event' | 'SoftwareApplication';
   person?: PersonSchema;
   organization?: OrganizationSchema;
   creativeWork?: CreativeWorkSchema;
@@ -163,9 +205,11 @@ interface StructuredDataProps {
   videoObject?: VideoObjectSchema;
   faqPage?: FAQPageSchema;
   howTo?: HowToSchema;
+  event?: EventSchema;
+  softwareApplication?: SoftwareApplicationSchema;
 }
 
-export default function StructuredData({ type, person, organization, creativeWork, breadcrumbs, article, videoObject, faqPage, howTo }: StructuredDataProps) {
+export default function StructuredData({ type, person, organization, creativeWork, breadcrumbs, article, videoObject, faqPage, howTo, event, softwareApplication }: StructuredDataProps) {
   const generatePersonSchema = (data: PersonSchema) => {
     const schema: any = {
       '@context': 'https://schema.org',
@@ -448,6 +492,79 @@ export default function StructuredData({ type, person, organization, creativeWor
         name: t.name,
         ...(t.url && { url: t.url })
       }));
+    }
+
+    schemas.push(schema);
+  }
+
+  if (type === 'Event' && event) {
+    const schema: any = {
+      '@context': 'https://schema.org',
+      '@type': 'Event',
+      name: event.name,
+      startDate: event.startDate,
+    };
+
+    if (event.description) schema.description = event.description;
+    if (event.endDate) schema.endDate = event.endDate;
+    if (event.image) schema.image = event.image;
+    if (event.url) schema.url = event.url;
+    if (event.eventStatus) schema.eventStatus = `https://schema.org/${event.eventStatus}`;
+    if (event.eventAttendanceMode) schema.eventAttendanceMode = `https://schema.org/${event.eventAttendanceMode}`;
+
+    if (event.location) {
+      schema.location = {
+        '@type': 'Place',
+        name: event.location.name,
+      };
+      if (event.location.address) {
+        schema.location.address = {
+          '@type': 'PostalAddress',
+          ...event.location.address,
+        };
+      }
+    }
+
+    if (event.performer) {
+      schema.performer = {
+        '@type': 'Person',
+        name: event.performer.name,
+        ...(event.performer.jobTitle && { jobTitle: event.performer.jobTitle }),
+        ...(event.performer.url && { url: event.performer.url }),
+      };
+    }
+
+    schemas.push(schema);
+  }
+
+  if (type === 'SoftwareApplication' && softwareApplication) {
+    const schema: any = {
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      name: softwareApplication.name,
+      applicationCategory: softwareApplication.applicationCategory,
+      operatingSystem: softwareApplication.operatingSystem,
+    };
+
+    if (softwareApplication.description) schema.description = softwareApplication.description;
+    if (softwareApplication.image) schema.image = softwareApplication.image;
+    if (softwareApplication.url) schema.url = softwareApplication.url;
+    if (softwareApplication.softwareVersion) schema.softwareVersion = softwareApplication.softwareVersion;
+
+    if (softwareApplication.offers) {
+      schema.offers = {
+        '@type': 'Offer',
+        price: softwareApplication.offers.price,
+        priceCurrency: softwareApplication.offers.priceCurrency,
+      };
+    }
+
+    if (softwareApplication.aggregateRating) {
+      schema.aggregateRating = {
+        '@type': 'AggregateRating',
+        ratingValue: softwareApplication.aggregateRating.ratingValue,
+        ratingCount: softwareApplication.aggregateRating.ratingCount,
+      };
     }
 
     schemas.push(schema);

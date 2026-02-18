@@ -1,5 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { SEO } from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 import { trpc } from "@/lib/trpc";
 import { useEffect, useRef } from "react";
 import { Link } from "wouter";
@@ -95,23 +97,37 @@ export default function TeachingPhilosophy() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Helmet>
-        <title>Teaching Philosophy | Brandon PT Davis</title>
-        <meta name="description" content="Brandon PT Davis's teaching philosophy: equipping students with skills, confidence, and adaptability for the evolving entertainment industry through comprehensive scenic design education." />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Teaching Philosophy | Brandon PT Davis" />
-        <meta property="og:description" content="Equipping students with skills, confidence, and adaptability for the evolving entertainment industry through comprehensive scenic design education." />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content="https://brandonptdavis.com/about/philosophy" />
-        {heroProject?.coverImageUrl && <meta property="og:image" content={heroProject.coverImageUrl} />}
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Teaching Philosophy | Brandon PT Davis" />
-        <meta name="twitter:description" content="Equipping students with skills, confidence, and adaptability for the evolving entertainment industry through comprehensive scenic design education." />
-        {heroProject?.coverImageUrl && <meta name="twitter:image" content={heroProject.coverImageUrl} />}
-      </Helmet>
+      <SEO
+        title="Scenic Design Teaching Philosophy | MFA Educator | UCI"
+        description="Comprehensive scenic design education philosophy from MFA educator. Equipping students with skills, confidence, and adaptability for the entertainment industry."
+        keywords="scenic design education, theatre design teaching, Vectorworks instruction, scenic design pedagogy, MFA scenic design, design technology education, theatrical design teaching philosophy, UC Irvine, UCI MFA"
+        image={heroProject?.coverImageUrl}
+        url="https://www.brandonptdavis.com/teaching-philosophy"
+        type="article"
+      />
+      <StructuredData
+        type="Person"
+        person={{
+          name: "Brandon PT Davis",
+          jobTitle: "Scenic Designer and Educator",
+          url: "https://www.brandonptdavis.com",
+          description: "MFA-trained scenic designer and educator specializing in comprehensive design education, Vectorworks training, and professional development for emerging designers.",
+          knowsAbout: [
+            "Scenic Design Education",
+            "Theatre Design Pedagogy",
+            "Vectorworks Training",
+            "Design Visualization",
+            "Professional Development",
+            "MFA Instruction"
+          ],
+          alumniOf: [
+            {
+              name: "University of California, Irvine",
+              url: "https://www.uci.edu"
+            }
+          ]
+        }}
+      />
       <Header />
 
       {/* Hero Section */}

@@ -21,7 +21,6 @@ export default function Sitemap() {
         { name: "Scenic Design", href: "/projects?discipline=scenic_design" },
         { name: "Experiential Design", href: "/projects?discipline=experiential_design" },
         { name: "Renderings", href: "/projects?discipline=rendering" },
-        { name: "Scenic Models", href: "/projects?discipline=scenic_models" },
       ]
     },
     {

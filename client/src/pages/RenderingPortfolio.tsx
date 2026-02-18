@@ -147,7 +147,10 @@ export default function RenderingPortfolio() {
             </AnimatedSection>
 
             <div className="space-y-24">
-              {featuredDisplayItems.map((item, index) => (
+              {featuredDisplayItems.map((item, index) => {
+                const accentColors = ['#FF5722', '#00BCD4', '#E91E63', '#FFC107', '#9C27B0'];
+                const accentColor = accentColors[index % accentColors.length];
+                return (
                 <AnimatedSection key={item.id}>
                   <div className="group block relative">
                     <Link href={`/projects/rendering/${item.slug}`}>
@@ -171,7 +174,7 @@ export default function RenderingPortfolio() {
                         </div>
 
                         <div className="text-center space-y-2">
-                          <h2 className="text-3xl md:text-4xl font-bold group-hover:text-foreground/70 transition-colors">
+                          <h2 className="text-3xl md:text-4xl font-bold transition-colors" style={{ color: accentColor }}>
                             {item.title}
                           </h2>
                           {item.year && (
@@ -184,7 +187,8 @@ export default function RenderingPortfolio() {
                     </Link>
                   </div>
                 </AnimatedSection>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>

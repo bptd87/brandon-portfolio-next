@@ -18,9 +18,9 @@ export default function Studio() {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Studio | Brandon PT Davis"
-        description="Free scenic design education portal featuring Vectorworks tutorials, interactive design tools, in-depth articles, and curated industry resources. Your complete learning hub for theatrical design students and professionals."
-        keywords="scenic design education, Vectorworks tutorials, theatrical design learning, scenic design tools, theatre design resources, stage design education"
+        title="Scenic Design Education Studio | Free Tools & Tutorials"
+        description="Scenic design education hub: Vectorworks tutorials, interactive tools, calculators, and industry resources. Complete learning portal for theatrical designers."
+        keywords="scenic design education, Vectorworks tutorials, theatrical design learning, scenic design tools, theatre design resources, stage design education, professional design tools"
         type="website"
         url="https://www.brandonptdavis.com/studio"
       />
@@ -235,7 +235,7 @@ export default function Studio() {
               Interactive Tools
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl">
-              Free web apps to solve everyday design challenges—scale calculations, dimension references,
+              Web-based tools to solve everyday design challenges—scale calculations, dimension references,
               paint mixing, and historical research tools
             </p>
           </div>
@@ -341,7 +341,7 @@ export default function Studio() {
         </AnimatedSection>
       </section>
 
-      {/* Resources Grid - Vault & Directory */}
+      {/* Resources */}
       <section className="container pb-24">
         <AnimatedSection>
           <div className="mb-8">
@@ -349,49 +349,13 @@ export default function Studio() {
               Design Resources
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl">
-              Downloadable assets and curated links to support your entire design process
+              Curated links to support your entire design process
             </p>
           </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Vault Card */}
+        <div className="max-w-3xl">
           <AnimatedSection delay={100}>
-            <Card className="border-2 border-border opacity-60 cursor-not-allowed transition-all duration-300 overflow-hidden rounded-2xl relative">
-              <div className="absolute top-4 right-4 z-10">
-                <Badge variant="secondary" className="text-xs">
-                  Coming Soon
-                </Badge>
-              </div>
-
-              <div className="relative aspect-[16/9] overflow-hidden">
-                <img
-                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/aklRRdcLtUXFvueu.webp"
-                  alt="Vectorworks Vault"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent"></div>
-                <div className="absolute inset-0 bg-[#9C27B0]/20 mix-blend-multiply"></div>
-              </div>
-
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <Archive className="w-6 h-6 text-[#9C27B0]" />
-                  <h3 className="text-2xl font-black tracking-tight text-[#9C27B0]">
-                    Vectorworks Vault
-                  </h3>
-                </div>
-
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Downloadable Vectorworks library featuring venue files, furniture symbols, prop collections,
-                  hardware components, and architectural elements ready to drop into your designs.
-                </p>
-              </CardContent>
-            </Card>
-          </AnimatedSection>
-
-          {/* Directory Card */}
-          <AnimatedSection delay={200}>
             <Link href="/studio/directory" className="block group">
               <Card className="border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden rounded-2xl">
                 <div className="relative aspect-[16/9] overflow-hidden">

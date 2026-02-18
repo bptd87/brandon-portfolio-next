@@ -94,19 +94,20 @@ function NewsContent() {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="News & Updates | Brandon PT Davis"
-        description="Latest news, project launches, and design updates from Brandon PT Davis."
+        title="Production News | Scenic Design Updates & Announcements"
+        description="Latest scenic design production news, project announcements, and theatre industry updates from Brandon PT Davis. Regional theatre design news and achievements."
+        keywords="scenic design news, production announcements, theatre design updates, Brandon PT Davis news, regional theatre productions, scenic designer announcements"
         image={featuredNews?.coverImageUrl || undefined}
         url="https://www.brandonptdavis.com/news"
       />
       <Header />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-gradient-to-br from-background to-muted/30">
+      <section className="pt-28 pb-24">
         <div className="container">
-          <div className="max-w-4xl mx-auto text-center mb-12">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-['Playfair_Display'] italic font-bold mb-6 bg-gradient-to-r from-[#FF5722] to-[#FF1744] bg-clip-text text-transparent">
-              News & Updates
+          <div className="max-w-5xl mr-auto mb-10">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-['Playfair_Display'] italic font-bold mb-6">
+              Scenic Design News & Updates
             </h1>
             <p className="text-xl text-muted-foreground">
               Project launches, collaborations, and industry milestones
@@ -114,7 +115,7 @@ function NewsContent() {
           </div>
 
           {/* Search and Filter */}
-          <div className="max-w-4xl mx-auto mb-12">
+          <div className="max-w-5xl mr-auto mb-12">
             <div className="flex flex-col md:flex-row gap-4">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
@@ -152,19 +153,19 @@ function NewsContent() {
           {featuredNews && (
             <div className="max-w-6xl mx-auto mb-16">
               <Link href={`/news/${featuredNews.slug}`}>
-                <Card className="overflow-hidden hover:shadow-2xl transition-all duration-500 group cursor-pointer border-2 border-primary/20 p-0">
+                <Card className="overflow-hidden transition-colors duration-300 group cursor-pointer border border-border/40 p-0 hover:border-border">
                   <div className="grid md:grid-cols-2 gap-0">
                     {featuredNews.coverImageUrl && (
                       <div className="aspect-[16/9] md:aspect-auto overflow-hidden">
                         <img
                           src={featuredNews.coverImageUrl}
                           alt={featuredNews.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                          className="w-full h-full object-cover"
                         />
                       </div>
                     )}
                     <CardContent className="p-8 md:p-12 flex flex-col justify-center">
-                      <Badge className="mb-4 bg-[#00E5FF] text-black font-black tracking-wider text-sm w-fit">
+                      <Badge className="mb-4 bg-muted text-foreground font-semibold tracking-wider text-xs w-fit">
                         LATEST NEWS
                       </Badge>
                       <h2 className="text-3xl md:text-4xl font-['Playfair_Display'] italic font-bold mb-4 group-hover:text-primary transition-colors">
@@ -193,7 +194,7 @@ function NewsContent() {
                           </div>
                         )}
                       </div>
-                      <div className="flex items-center gap-2 text-primary font-bold group-hover:gap-4 transition-all">
+                      <div className="flex items-center gap-2 text-primary font-bold">
                         Read More
                         <ArrowRight className="h-5 w-5" />
                       </div>
@@ -207,7 +208,7 @@ function NewsContent() {
       </section>
 
       {/* News by Year Section */}
-      <section className="py-16 bg-background">
+      <section className="py-24 bg-background">
         <div className="container">
           <div className="max-w-7xl mx-auto">
             {newsByYear.length === 0 ? (
@@ -220,15 +221,15 @@ function NewsContent() {
                   <div key={year}>
                     {/* Year Header */}
                     <div className="mb-10">
-                      <div className="flex items-center gap-4 mb-2">
-                        <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[#FF5722] to-[#FF1744] text-white font-black text-2xl shadow-lg">
+                      <div className="flex items-baseline gap-4 mb-2">
+                        <div className="text-3xl font-black tracking-tight">
                           {year}
                         </div>
-                        <div className="flex-1 h-1 bg-gradient-to-r from-[#FF5722]/20 to-transparent" />
+                        <p className="text-sm text-muted-foreground">
+                          {items.length} {items.length === 1 ? 'article' : 'articles'}
+                        </p>
                       </div>
-                      <p className="text-sm text-muted-foreground ml-20">
-                        {items.length} {items.length === 1 ? 'article' : 'articles'}
-                      </p>
+                      <div className="h-px bg-border/50" />
                     </div>
 
                     {/* News Grid for this year */}
@@ -238,19 +239,19 @@ function NewsContent() {
 
                         return (
                           <Link key={item.id} href={`/news/${item.slug}`}>
-                            <Card className="h-full hover:shadow-xl transition-all duration-300 group cursor-pointer overflow-hidden p-0">
+                            <Card className="h-full transition-colors duration-300 group cursor-pointer overflow-hidden p-0 border border-border/40 hover:border-border">
                               {item.coverImageUrl && (
                                 <div className="aspect-[16/9] overflow-hidden">
                                   <img
                                     src={item.coverImageUrl}
                                     alt={item.title}
-                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    className="w-full h-full object-cover"
                                   />
                                 </div>
                               )}
                               <CardContent className="p-6">
                                 {category && (
-                                  <Badge className="mb-3 bg-primary/10 text-primary font-bold text-xs">
+                                  <Badge className="mb-3 bg-muted text-foreground font-semibold text-xs">
                                     {category.name}
                                   </Badge>
                                 )}

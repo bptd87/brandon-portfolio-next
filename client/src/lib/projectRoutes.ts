@@ -8,10 +8,6 @@ export const getProjectPath = (project: ProjectLinkTarget) => {
     return `/projects/rendering/${project.slug}`;
   }
 
-  if (project.discipline === 'scenic_models') {
-    return `/projects/scenic-models/${project.slug}`;
-  }
-
   // Handle both experiential_design and legacy "experiential" value
   if (project.discipline === 'experiential_design' || project.discipline === 'experiential') {
     return `/projects/experiential`;

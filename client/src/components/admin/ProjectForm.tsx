@@ -54,7 +54,7 @@ interface ImageUpload {
   url?: string;
   key?: string;
   videoUrl?: string;
-  imageType: "production" | "rendering" | "technical_drawing" | "scenic_models" | "video";
+  imageType: "production" | "rendering" | "technical_drawing" | "video";
   caption?: string;
   altText?: string;
   sortOrder: number;
@@ -248,7 +248,6 @@ function SortableGalleryImage({
         <SelectContent>
           <SelectItem value="production">Production</SelectItem>
           <SelectItem value="rendering">Rendering</SelectItem>
-          <SelectItem value="scenic_models">Scenic Model</SelectItem>
           <SelectItem value="technical_drawing">Technical Drawing</SelectItem>
           <SelectItem value="video">Video</SelectItem>
         </SelectContent>
@@ -265,7 +264,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
     slug: "",
     excerpt: "",
     designNotes: "",
-    discipline: "scenic_design" as "scenic_design" | "experiential_design" | "rendering" | "scenic_models",
+    discipline: "scenic_design" as "scenic_design" | "experiential_design" | "rendering",
     subcategory: "",
     status: "draft" as "draft" | "published" | "archived",
     featured: false,
@@ -539,7 +538,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
     }
   };
 
-  const handleFiles = (files: File[], defaultType: "production" | "rendering" | "technical_drawing" | "scenic_models" = "production") => {
+  const handleFiles = (files: File[], defaultType: "production" | "rendering" | "technical_drawing" = "production") => {
     const newImages: ImageUpload[] = files.map((file, index) => ({
       file,
       url: URL.createObjectURL(file), // Create extensive preview
@@ -748,9 +747,9 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
       <div className="container mx-auto py-8">
         <form id="project-form" onSubmit={handleSubmit}>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className={`grid w-full ${formData.discipline === 'rendering' || formData.discipline === 'scenic_models' ? 'grid-cols-5' : 'grid-cols-6'} mb-8`}>
+            <TabsList className={`grid w-full ${formData.discipline === 'rendering' ? 'grid-cols-5' : 'grid-cols-6'} mb-8`}>
               <TabsTrigger value="basic">Basic Info</TabsTrigger>
-              {formData.discipline !== 'rendering' && formData.discipline !== 'scenic_models' && (
+              {formData.discipline !== 'rendering' && (
                 <TabsTrigger value="content">Content</TabsTrigger>
               )}
               <TabsTrigger value="team">
@@ -838,7 +837,6 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
                               <SelectItem value="scenic_design">Scenic Design</SelectItem>
                               <SelectItem value="experiential_design">Experiential Design</SelectItem>
                               <SelectItem value="rendering">Rendering</SelectItem>
-                              <SelectItem value="scenic_models">Scenic Models</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -1180,15 +1178,6 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
                           >
                             <Plus className="mr-2 h-4 w-4" />
                             Renderings
-                          </Button>
-                          <Button
-                            type="button"
-                            variant="secondary"
-                            size="sm"
-                            onClick={() => handleAddGalleryImage("scenic_models" as any)} // Cast since original param was stricter
-                          >
-                            <Plus className="mr-2 h-4 w-4" />
-                            Scenic Models
                           </Button>
                           <Button
                             type="button"

@@ -13,7 +13,6 @@ import { supabase } from "./db";
 import { Resend } from "resend";
 import { ENV } from "./_core/env";
 import { renderingGalleryRouter } from "./routers/renderingGallery";
-import { modelGalleryRouter } from "./routers/modelGallery";
 import { experientialGalleryRouter } from "./routers/experientialGallery";
 import { processGalleryRouter } from "./routers/processGallery";
 
@@ -42,7 +41,6 @@ export const appRouter = router({
 
   // ============ RENDERING GALLERY ============
   renderingGallery: renderingGalleryRouter,
-  modelGallery: modelGalleryRouter,
   experientialGallery: experientialGalleryRouter,
   processGallery: processGalleryRouter,
 
@@ -152,7 +150,7 @@ export const appRouter = router({
         status: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['draft', 'published', 'archived', 'gallery_only'])).optional(),
         featured: z.boolean().optional(),
         categoryId: z.number().optional(),
-        discipline: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['scenic_design', 'experiential_design', 'rendering', 'scenic_models'])).optional(),
+        discipline: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['scenic_design', 'experiential_design', 'rendering'])).optional(),
       }).optional())
       .query(async ({ input }) => {
         return await db.getAllProjects(input);
@@ -205,7 +203,7 @@ export const appRouter = router({
         excerpt: z.string().optional(),
         description: z.string().optional(),
         designNotes: z.string().optional(),
-        discipline: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['scenic_design', 'experiential_design', 'rendering', 'scenic_models'])).default('scenic_design'),
+        discipline: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['scenic_design', 'experiential_design', 'rendering'])).default('scenic_design'),
         subcategory: z.string().max(100).optional().nullable(),
         categoryId: z.number().optional(),
         coverImageUrl: z.string().optional(),
@@ -264,7 +262,7 @@ export const appRouter = router({
         excerpt: z.string().optional(),
         description: z.string().optional(),
         designNotes: z.string().optional(),
-        discipline: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['scenic_design', 'experiential_design', 'rendering', 'scenic_models'])).optional(),
+        discipline: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['scenic_design', 'experiential_design', 'rendering'])).optional(),
         subcategory: z.string().max(100).optional().nullable(),
         categoryId: z.number().optional(),
         coverImageUrl: z.string().optional(),

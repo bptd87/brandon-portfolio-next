@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { SEO } from '@/components/SEO';
+import StructuredData from '@/components/StructuredData';
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -53,7 +54,33 @@ export function Contact() {
     <div className="min-h-screen bg-[#0b0b0d] text-white">
       <SEO
         title="Contact Brandon PT Davis | Scenic Design Inquiries"
-        description="Get in touch with Brandon PT Davis for scenic design, experiential projects, or educational collaborations."
+        description="Contact Brandon PT Davis for scenic design, experiential projects, or educational collaborations. Orange County designer available for regional theatre."
+        keywords="contact scenic designer, hire scenic designer, theatrical design inquiries, experiential design contact, Brandon PT Davis contact, scenic design services california, Orange County scenic designer"
+        url="https://www.brandonptdavis.com/contact"
+      />
+      <StructuredData
+        type="Organization"
+        organization={{
+          name: "Brandon PT Davis Design",
+          url: "https://www.brandonptdavis.com",
+          description: "Professional scenic and experiential design studio specializing in regional theatre, summer stock, academic theatre, and immersive experiences.",
+          email: "info@brandonptdavis.com",
+          address: {
+            addressLocality: "Irvine",
+            addressRegion: "CA",
+            addressCountry: "US"
+          },
+          founder: {
+            name: "Brandon PT Davis",
+            url: "https://www.brandonptdavis.com/about"
+          },
+          sameAs: [
+            "https://www.instagram.com/brandonptdavis",
+            "https://www.linkedin.com/in/brandonptdavis",
+            "https://www.youtube.com/@BrandonPTDavisDesign",
+            "https://www.facebook.com/BrandonPTDavisA",
+          ]
+        }}
       />
       <Header />
       <div className="container relative z-10 pt-28 pb-24">
