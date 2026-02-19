@@ -281,6 +281,18 @@ export default function AdminRenderingGallery() {
         }
     });
 
+    const deleteProjectMutation = trpc.renderingProjects.delete.useMutation({
+        onSuccess: () => {
+            toast.success("Project deleted");
+            refetchGallery();
+            refetchProjects();
+        },
+        onError: (e) => {
+            console.error('Project delete error:', e);
+            toast.error(`Failed to delete project: ${e.message}`);
+        }
+    });
+
     // Sync local state when remote data loads
     useEffect(() => {
         if (galleryItems) {
@@ -618,40 +630,71 @@ export default function AdminRenderingGallery() {
                             </div>
                         </CardHeader>
                         <CardContent className="flex-1 overflow-y-auto p-4 max-h-[600px]">
-                            <div className="space-y-2">
+                            <div className="grid grid-cols-2 gap-4">
                                 {fullPageProjects.length === 0 ? (
-                                    <div className="text-center py-12 text-muted-foreground text-sm border-2 border-dashed rounded-lg">
+                                    <div className="col-span-2 text-center py-12 text-muted-foreground text-sm border-2 border-dashed rounded-lg">
                                         All projects are in gallery.<br />
                                         Click + to create a new one.
                                     </div>
                                 ) : (
                                     fullPageProjects.map(project => (
-                                        <div key={project.id} className="bg-card border border-blue-200/50 dark:border-blue-800/50 rounded-lg p-3 hover:bg-blue-50/50 dark:hover:bg-blue-950/30 transition-colors group">
-                                            <div className="flex items-center gap-3">
-                                                <div className="h-12 w-16 flex-shrink-0 bg-muted rounded overflow-hidden">
-                                                    {project.coverImageUrl && (
-                                                        <img src={project.coverImageUrl} alt="" className="w-full h-full object-cover" />
-                                                    )}
+                                        <div key={project.id} className="bg-card border border-blue-200/50 dark:border-blue-800/50 rounded-lg overflow-hidden hover:shadow-md transition-shadow group flex flex-col">
+                                            {/* Image */}
+                                            <div className="h-40 bg-muted overflow-hidden relative">
+                                                {project.coverImageUrl ? (
+                                                    <img src={project.coverImageUrl} alt={project.title} className="w-full h-full object-cover" />
+                                                ) : (
+                                                    <div className="w-full h-full flex items-center justify-center bg-muted-foreground/20">
+                                                        <ImageIcon className="h-8 w-8 text-muted-foreground" />
+                                                    </div>
+                                                )}
+                                            </div>
+                                            
+                                            {/* Content */}
+                                            <div className="flex-1 p-3 flex flex-col">
+                                                <h4 className="font-medium text-sm mb-1">{project.title}</h4>
+                                                <p className="text-xs text-muted-foreground mb-3">{project.year}</p>
+                                                
+                                                {/* Buttons */}
+                                                <div className="flex gap-2 mt-auto">
+                                                    <Button
+                                                        size="sm"
+                                                        variant="outline"
+                                                        className="flex-1"
+                                                        onClick={() => setManagingProject({ id: project.id, title: project.title })}
+                                                        title="Edit project"
+                                                    >
+                                                        Edit
+                                                    </Button>
+                                                    <Button
+                                                        size="sm"
+                                                        variant="ghost"
+                                                        className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/30"
+                                                        onClick={() => {
+                                                            if (confirm(`Delete "${project.title}"?`)) {
+                                                                deleteProjectMutation.mutate({ id: project.id });
+                                                            }
+                                                        }}
+                                                        title="Delete project"
+                                                    >
+                                                        <Trash2 className="h-4 w-4" />
+                                                    </Button>
+                                                    <Button
+                                                        size="sm"
+                                                        variant="ghost"
+                                                        className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:hover:bg-blue-950/30"
+                                                        onClick={() => {
+                                                            addMutation.mutate({
+                                                                projectId: project.id,
+                                                                displayTitle: project.title,
+                                                                altText: project.title
+                                                            });
+                                                        }}
+                                                        title="Add to Gallery"
+                                                    >
+                                                        →
+                                                    </Button>
                                                 </div>
-                                                <div className="flex-1 min-w-0">
-                                                    <h4 className="font-medium text-sm truncate">{project.title}</h4>
-                                                    <p className="text-xs text-muted-foreground">{project.year}</p>
-                                                </div>
-                                                <Button
-                                                    size="sm"
-                                                    variant="ghost"
-                                                    className="opacity-0 group-hover:opacity-100 transition-opacity"
-                                                    onClick={() => {
-                                                        addMutation.mutate({
-                                                            projectId: project.id,
-                                                            displayTitle: project.title,
-                                                            altText: project.title
-                                                        });
-                                                    }}
-                                                    title="Add to Gallery"
-                                                >
-                                                    → Gallery
-                                                </Button>
                                             </div>
                                         </div>
                                     ))
