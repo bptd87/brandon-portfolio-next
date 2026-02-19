@@ -225,14 +225,12 @@ export default function AdminRenderingGallery() {
     const [isDraggingFile, setIsDraggingFile] = useState(false);
 
     // Queries
-    const { data: projects, isLoading: projectsLoading, refetch: refetchProjects } = trpc.projects.list.useQuery({
-        discipline: 'rendering',
-    });
+    const { data: projects, isLoading: projectsLoading, refetch: refetchProjects } = trpc.renderingProjects.list.useQuery();
 
     const { data: galleryItems, isLoading: galleryLoading, refetch: refetchGallery } = trpc.renderingGallery.list.useQuery();
 
     // Mutations
-    const createProjectMutation = trpc.projects.create.useMutation();
+    const createProjectMutation = trpc.renderingProjects.create.useMutation();
 
     // Check if add mutation exists, if often used
     const addMutation = trpc.renderingGallery.add.useMutation({
@@ -261,7 +259,7 @@ export default function AdminRenderingGallery() {
 
     const updateMetaMutation = trpc.renderingGallery.updateMetadata.useMutation();
     const signedUrlMutation = trpc.projects.createSignedUploadUrl.useMutation();
-    const updateProjectMutation = trpc.projects.update.useMutation({
+    const updateProjectMutation = trpc.renderingProjects.update.useMutation({
         onSuccess: () => {
             toast.success("Project updated");
             refetchGallery();
@@ -385,10 +383,10 @@ export default function AdminRenderingGallery() {
                 title: quickTitle,
                 slug: slugify(quickTitle) + '-' + Math.random().toString(36).substring(2, 7),
                 year: parseInt(quickYear) || new Date().getFullYear(),
-                status: 'gallery_only',
-                discipline: 'rendering',
+                status: 'draft',
+                galleryOnly: true,
                 coverImageUrl: publicUrl,
-                designNotes: quickDesignNotes, // Now saving project details
+                designNotes: quickDesignNotes,
             });
 
             // 3. Add to Gallery with Alt Text
