@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { trpc } from "@/lib/trpc";
 import { proxyImageUrl } from "@/lib/imageProxy";
-import { Calendar, Clock, ArrowLeft, Share2, Twitter, Linkedin, Mail, Link as LinkIcon, Sparkles, Copy, Check } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, Share2, Twitter, Linkedin, Mail, Link as LinkIcon, Sparkles, Copy, Check, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link, useParams } from "wouter";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -27,6 +27,11 @@ const decodeHTMLEntities = (text: string): string => {
   const textarea = document.createElement('textarea');
   textarea.innerHTML = text;
   return textarea.value;
+};
+
+const normalizeQuoteText = (text: string): string => {
+  const decoded = decodeHTMLEntities(text || '').trim();
+  return decoded.replace(/^["“”']+|["“”']+$/g, '').trim();
 };
 
 // Process HTML content to proxy external images
@@ -84,12 +89,20 @@ function ArticleDetailContent() {
   const { data: relatedArticles } = trpc.articles.list.useQuery({});
 
   const contentRef = useRef<HTMLDivElement>(null);
+  const galleryRefs = useRef<Record<number, HTMLDivElement | null>>({});
   const [headings, setHeadings] = useState<Array<{ id: string; text: string; level: number }>>([]);
   const [activeHeading, setActiveHeading] = useState<string>("");
   const [readProgress, setReadProgress] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxImages, setLightboxImages] = useState<Array<{ src: string; alt?: string }>>([]);
+
+  const scrollGallery = (sectionIndex: number, direction: "prev" | "next") => {
+    const container = galleryRefs.current[sectionIndex];
+    if (!container) return;
+    const offset = Math.round(container.clientWidth * 0.75) * (direction === "next" ? 1 : -1);
+    container.scrollBy({ left: offset, behavior: "smooth" });
+  };
 
   const getHeadingId = (text: string, index: number) => {
     const base = text
@@ -334,6 +347,46 @@ function ArticleDetailContent() {
   const wordCount = JSON.stringify(contentSections).split(/\s+/).length;
   const readTime = Math.ceil(wordCount / 200);
 
+  const articleImageSlides: Array<{ key: string; src: string; alt?: string }> = [];
+  if (article.coverImageUrl) {
+    articleImageSlides.push({
+      key: "cover",
+      src: proxyImageUrl(article.coverImageUrl, 1920),
+      alt: article.title,
+    });
+  }
+  processedSections.forEach((section: any, sectionIndex: number) => {
+    if (section.type === "image" && section.url) {
+      articleImageSlides.push({
+        key: `image-${sectionIndex}`,
+        src: proxyImageUrl(section.url, 1920),
+        alt: section.alt || section.caption || "",
+      });
+    }
+    if (section.type === "gallery" && Array.isArray(section.images)) {
+      section.images.forEach((img: any, imgIndex: number) => {
+        if (!img?.url) return;
+        articleImageSlides.push({
+          key: `gallery-${sectionIndex}-${imgIndex}`,
+          src: proxyImageUrl(img.url, 1920),
+          alt: img.alt || img.caption || "",
+        });
+      });
+    }
+  });
+
+  const imageIndexByKey = new Map<string, number>();
+  articleImageSlides.forEach((slide, idx) => {
+    imageIndexByKey.set(slide.key, idx);
+  });
+
+  const openArticleLightboxAt = (key: string) => {
+    if (articleImageSlides.length === 0) return;
+    setLightboxImages(articleImageSlides.map(({ src, alt }) => ({ src, alt })));
+    setLightboxIndex(imageIndexByKey.get(key) ?? 0);
+    setLightboxOpen(true);
+  };
+
   // Get related articles
   const related = relatedArticles?.filter(a => a.id !== article.id && a.categoryId === article.categoryId).slice(0, 3) || [];
 
@@ -492,6 +545,8 @@ function ArticleDetailContent() {
                       loading="eager"
                       aspectRatio="16/9"
                       objectFit="cover"
+                      className="cursor-pointer"
+                      onClick={() => openArticleLightboxAt("cover")}
                     />
                   </div>
                 )}
@@ -646,11 +701,14 @@ function ArticleDetailContent() {
                         );
 
                       case 'quote':
+                        const quoteText = normalizeQuoteText(section.text || section.content || '');
                         return (
-                          <blockquote key={index} className="my-8">
-                            "{decodeHTMLEntities(section.text || section.content || '')}"
+                          <blockquote key={index} className="my-10 rounded-xl border-l-4 border-primary bg-primary/5 px-6 py-5 shadow-sm">
+                            <p className="text-xl md:text-2xl italic leading-relaxed text-foreground/95">
+                              {quoteText}
+                            </p>
                             {section.author && (
-                              <footer className="text-base text-muted-foreground mt-4 not-italic font-sans">
+                              <footer className="text-base text-muted-foreground mt-4 not-italic font-sans font-medium">
                                 — {decodeHTMLEntities(section.author)}
                               </footer>
                             )}
@@ -666,11 +724,7 @@ function ArticleDetailContent() {
                               loading="lazy"
                               objectFit="contain"
                               className="cursor-pointer hover:opacity-90 transition-opacity"
-                              onClick={() => {
-                                setLightboxImages([{ src: proxyImageUrl(section.url, 1920), alt: section.alt || section.caption }]);
-                                setLightboxIndex(0);
-                                setLightboxOpen(true);
-                              }}
+                              onClick={() => openArticleLightboxAt(`image-${index}`)}
                             />
                             {section.caption && (
                               <figcaption>
@@ -712,8 +766,13 @@ function ArticleDetailContent() {
 
                       case 'gallery':
                         return (
-                          <div key={index} className="my-12 -mx-4 md:mx-0">
-                            <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-primary scrollbar-track-muted">
+                          <div key={index} className="my-12 -mx-4 md:mx-0 relative">
+                            <div
+                              ref={(el) => {
+                                galleryRefs.current[index] = el;
+                              }}
+                              className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-primary scrollbar-track-muted"
+                            >
                               {section.images?.map((img: any, imgIndex: number) => (
                                 <figure key={imgIndex} className="flex-none w-[80%] md:w-[60%] snap-center rounded-2xl overflow-hidden shadow-xl">
                                   <ProgressiveImage
@@ -723,12 +782,7 @@ function ArticleDetailContent() {
                                     aspectRatio="16/9"
                                     objectFit="cover"
                                     className="cursor-pointer hover:opacity-90 transition-opacity h-[400px]"
-                                    onClick={() => {
-                                      const galleryImages = section.images.map((i: any) => ({ src: proxyImageUrl(i.url, 1920), alt: i.alt || i.caption }));
-                                      setLightboxImages(galleryImages);
-                                      setLightboxIndex(imgIndex);
-                                      setLightboxOpen(true);
-                                    }}
+                                    onClick={() => openArticleLightboxAt(`gallery-${index}-${imgIndex}`)}
                                   />
                                   {img.caption && (
                                     <figcaption className="text-sm text-muted-foreground mt-4 text-center">
@@ -738,6 +792,22 @@ function ArticleDetailContent() {
                                 </figure>
                               ))}
                             </div>
+                            <button
+                              type="button"
+                              aria-label="Previous gallery images"
+                              onClick={() => scrollGallery(index, "prev")}
+                              className="hidden md:flex items-center justify-center absolute left-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/85 border border-border shadow-lg hover:bg-background transition-colors"
+                            >
+                              <ChevronLeft className="h-5 w-5" />
+                            </button>
+                            <button
+                              type="button"
+                              aria-label="Next gallery images"
+                              onClick={() => scrollGallery(index, "next")}
+                              className="hidden md:flex items-center justify-center absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/85 border border-border shadow-lg hover:bg-background transition-colors"
+                            >
+                              <ChevronRight className="h-5 w-5" />
+                            </button>
                           </div>
                         );
 

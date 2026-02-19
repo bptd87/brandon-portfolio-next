@@ -157,7 +157,7 @@ export function ProgressiveImage({
 }: ProgressiveImageProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
-  const [shouldLoad, setShouldLoad] = useState(loading === 'eager');
+  const [shouldLoad, setShouldLoad] = useState(loading === 'eager' || !aspectRatio);
   const [showSharpImage, setShowSharpImage] = useState(false);
   const [isInView, setIsInView] = useState(!enableScrollAnimation); // Start visible if animation disabled
   const [objectPosition, setObjectPosition] = useState<string>('object-center');
@@ -192,7 +192,9 @@ export function ProgressiveImage({
 
   // Intersection Observer for preloading
   useEffect(() => {
-    if (loading === 'eager' || !imgRef.current) return;
+    // Without an explicit aspect ratio, the container can have zero height before load.
+    // In that case, skip custom intersection gating and let the browser handle lazy loading.
+    if (loading === 'eager' || !aspectRatio || !imgRef.current) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -261,6 +263,7 @@ export function ProgressiveImage({
   const srcSet = isSupabase
     ? generateSupabaseSrcSet(src)
     : generateSrcSet(src);
+  const imageHeightClass = aspectRatio ? 'h-full' : 'h-auto';
 
   return (
     <div
@@ -310,7 +313,7 @@ export function ProgressiveImage({
           sizes={sizes || '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
           alt={alt}
           className={`
-            w-full h-full 
+            w-full ${imageHeightClass}
             ${objectFit === 'cover' ? 'object-cover' : 'object-contain'}
             ${smartPosition ? objectPosition : ''}
             ${loading === 'eager' ? 'opacity-100' : `transition-opacity duration-500 ease-out ${showSharpImage ? 'opacity-100' : 'opacity-0'}`}

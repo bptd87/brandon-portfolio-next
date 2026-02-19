@@ -708,7 +708,7 @@ export async function getAllArticles(filters?: {
     seoKeywords: article.seo_keywords,
     createdAt: new Date(article.created_at),
     updatedAt: new Date(article.updated_at),
-    publishedAt: article.published_at ? new Date(article.published_at) : new Date(article.created_at),
+    publishedAt: article.published_at ? new Date(article.published_at) : null,
   }));
 }
 
@@ -735,6 +735,7 @@ export async function getArticleById(id: number): Promise<any> {
     seoTitle: data.seo_title,
     seoDescription: data.seo_description,
     seoKeywords: data.seo_keywords,
+    publishedAt: data.published_at ? new Date(data.published_at) : null,
     createdAt: new Date(data.created_at),
     updatedAt: new Date(data.updated_at),
   };
@@ -1496,6 +1497,7 @@ export async function createArticle(article: any) {
       content: article.content,
       cover_image: article.coverImageUrl,
       read_time: article.readTime,
+      published_at: article.publishedAt,
       status: article.status || 'draft',
       featured: article.featured || false,
       category_id: article.categoryId,
@@ -1519,6 +1521,7 @@ export async function updateArticle(id: number, article: any) {
   if (article.content !== undefined) updateData.content = article.content;
   if (article.coverImageUrl !== undefined) updateData.cover_image = article.coverImageUrl;
   if (article.readTime !== undefined) updateData.read_time = article.readTime;
+  if (article.publishedAt !== undefined) updateData.published_at = article.publishedAt;
   if (article.status !== undefined) updateData.status = article.status;
   if (article.featured !== undefined) updateData.featured = article.featured;
   if (article.categoryId !== undefined) updateData.category_id = article.categoryId;

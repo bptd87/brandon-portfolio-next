@@ -20,6 +20,18 @@ export function ArticlesManager() {
   const [, navigate] = useLocation();
   const { data: articles, isLoading, refetch } = trpc.articles.list.useQuery();
   const deleteMutation = trpc.articles.delete.useMutation();
+  const sortedArticles = [...(articles || [])].sort((a, b) => {
+    const aPublished = a.publishedAt ? new Date(a.publishedAt).getTime() : Number.NEGATIVE_INFINITY;
+    const bPublished = b.publishedAt ? new Date(b.publishedAt).getTime() : Number.NEGATIVE_INFINITY;
+
+    if (bPublished !== aPublished) {
+      return bPublished - aPublished;
+    }
+
+    const aCreated = new Date(a.createdAt).getTime();
+    const bCreated = new Date(b.createdAt).getTime();
+    return bCreated - aCreated;
+  });
 
   const handleEdit = (id: number) => {
     navigate(`/admin/articles/${id}/edit`);
@@ -82,12 +94,12 @@ export function ArticlesManager() {
                       <TableHead className="w-[60px]">Cover</TableHead>
                       <TableHead>Title & Info</TableHead>
                       <TableHead>Meta</TableHead>
-                      <TableHead>Created</TableHead>
+                      <TableHead>Published</TableHead>
                       <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {articles.map((article) => (
+                    {sortedArticles.map((article) => (
                       <TableRow
                         key={article.id}
                         className="cursor-pointer hover:bg-muted/50 transition-colors group"
@@ -146,7 +158,9 @@ export function ArticlesManager() {
                           </div>
                         </TableCell>
                         <TableCell className="py-2 text-[11px] text-muted-foreground">
-                          {new Date(article.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                          {article.publishedAt
+                            ? new Date(article.publishedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+                            : "Not published"}
                         </TableCell>
                         <TableCell className="py-2 text-right">
                           <div className="flex items-center justify-end gap-1" onClick={(e) => e.stopPropagation()}>
@@ -186,7 +200,7 @@ export function ArticlesManager() {
               {/* Mobile Card View */}
               <div className="md:hidden">
                 <MobileTableView
-                  data={articles}
+                  data={sortedArticles}
                   idKey="id"
                   columns={[
                     {
@@ -228,9 +242,12 @@ export function ArticlesManager() {
                       )
                     },
                     {
-                      key: 'createdAt',
-                      label: 'Created',
-                      render: (createdAt) => new Date(createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+                      key: 'publishedAt',
+                      label: 'Published',
+                      render: (_, article) =>
+                        article.publishedAt
+                          ? new Date(article.publishedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+                          : "Not published"
                     }
                   ]}
                   onEdit={(article) => handleEdit(article.id)}

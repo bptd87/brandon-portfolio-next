@@ -16,11 +16,13 @@ import {
   Maximize2,
   Minimize2,
   Loader2,
+  Sparkles,
 } from "lucide-react";
 import { toast } from "sonner";
 import { BlockBuilder } from "./BlockBuilder";
 import { processImageForUpload } from "@/utils/imageUtils";
 import { uploadImage as uploadToStorage } from "@/utils/storageUtils";
+import { convertLegacyArticleBlocks } from "@/lib/articleBlockConverter";
 
 type BlockType = 
   | "text" | "paragraph" 
@@ -192,6 +194,24 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
     }
   };
 
+  const handleConvertToBlocks = () => {
+    const result = convertLegacyArticleBlocks(blocks, { articleTitle: formData.title });
+    setBlocks(result.blocks);
+
+    const {
+      convertedHtmlBlocks,
+      createdHeadings,
+      createdImages,
+      createdGalleries,
+      createdFaqs,
+      updatedImageDescriptions,
+    } = result.stats;
+
+    toast.success(
+      `Converted ${convertedHtmlBlocks} block(s): ${createdHeadings} headings, ${createdImages} image(s), ${createdGalleries} gallery(ies), ${createdFaqs} FAQ block(s), ${updatedImageDescriptions} image description updates.`
+    );
+  };
+
   if (articleId && isLoadingArticle) {
     return (
       <div className="flex items-center justify-center py-12">
@@ -221,6 +241,14 @@ export function BlockArticleEditor({ articleId, onSave, onCancel }: BlockArticle
           </Button>
           <Button variant="outline" onClick={onCancel}>
             Cancel
+          </Button>
+          <Button
+            variant="outline"
+            onClick={handleConvertToBlocks}
+            disabled={blocks.length === 0}
+          >
+            <Sparkles className="w-4 h-4 mr-2" />
+            Convert to Blocks
           </Button>
           <Button onClick={handleSave} disabled={!formData.title || !formData.slug}>
             Save
