@@ -222,6 +222,8 @@ export default function AdminRenderingGallery() {
     const [localGallery, setLocalGallery] = useState<any[]>([]);
     const [hasChanges, setHasChanges] = useState(false);
     const [managingProject, setManagingProject] = useState<{ id: number, title: string } | null>(null);
+    const [showQuickAdd, setShowQuickAdd] = useState(false);
+    const [quickAddType, setQuickAddType] = useState<'gallery' | 'fullPage'>('gallery');
 
     // Quick Add State
     const [quickFile, setQuickFile] = useState<File | null>(null);
@@ -499,215 +501,124 @@ export default function AdminRenderingGallery() {
         );
     }
 
-    // Filter available projects (not in gallery)
-    const availableProjects = projects?.filter(p => !localGallery.some(g => g.projectId === p.id)) || [];
-    const availableFullPages = availableProjects.filter(p => !p.galleryOnly);
-    const availableGalleryOnly = availableProjects.filter(p => p.galleryOnly);
+    // Separate gallery items from full page projects
+    const galleryProjects = projects?.filter(p => p.galleryOnly) || [];
+    const fullPageProjects = projects?.filter(p => !p.galleryOnly) || [];
 
     return (
         <AdminLayout
-            title="Rendering Portfolio Gallery"
-            description="Curate the SEO landing page gallery for Renderings. Add new images directly or select existing projects."
+            title="Rendering Portfolio"
+            description="Manage gallery items and full project pages"
         >
             <div className="space-y-8 pb-20">
 
-                {/* 1. Quick Add Section */}
-                <Card className={`border-2 transition-colors ${isDraggingFile ? 'border-primary bg-primary/10 border-dashed' : 'border-dashed bg-muted/20'}`}>
-                    <CardHeader className="pb-3 border-b">
-                        <CardTitle className="text-lg flex items-center gap-2">
-                            <Plus className="h-5 w-5 text-primary" /> Quick Add Image
-                        </CardTitle>
-                        <CardDescription>
-                            Drag & drop an image here to start. We'll handle the project creation.
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent
-                        className="p-6"
-                        onDragOver={onDragOver}
-                        onDragLeave={onDragLeave}
-                        onDrop={onDrop}
-                    >
-                        <div className="flex flex-col md:flex-row gap-6 items-start">
-                            {/* Image Preview / Upload */}
-                            <div
-                                className={`w-40 h-40 flex-shrink-0 bg-muted rounded-lg border-2 border-dashed flex items-center justify-center cursor-pointer hover:bg-muted/50 transition-colors relative overflow-hidden group ${isDraggingFile ? 'scale-105 border-primary' : ''}`}
-                                onClick={() => document.getElementById('quick-file')?.click()}
-                            >
-                                {quickPreview ? (
-                                    <>
-                                        <img src={quickPreview} alt="Preview" className="w-full h-full object-cover" />
-                                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <p className="text-white text-xs font-medium">Change</p>
-                                        </div>
-                                    </>
-                                ) : (
-                                    <div className="text-center p-2">
-                                        {isDraggingFile ? (
-                                            <UploadCloud className="h-8 w-8 mx-auto text-primary mb-2 animate-bounce" />
-                                        ) : (
-                                            <ImageIcon className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
-                                        )}
-                                        <p className="text-xs text-muted-foreground font-medium">
-                                            {isDraggingFile ? "Drop it!" : "Upload / Drop Image"}
-                                        </p>
-                                    </div>
-                                )}
-                                <input
-                                    type="file"
-                                    id="quick-file"
-                                    className="hidden"
-                                    accept="image/*"
-                                    aria-label="Upload image file"
-                                    onChange={handleFileSelect}
-                                />
-                            </div>
-
-                            {/* Info Inputs */}
-                            <div className="flex-1 grid gap-4 w-full max-w-xl">
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="grid gap-2">
-                                        <label className="text-sm font-medium">Title</label>
-                                        <Input
-                                            placeholder="Project Title"
-                                            value={quickTitle}
-                                            onChange={(e) => setQuickTitle(e.target.value)}
-                                            className="bg-background"
-                                        />
-                                    </div>
-                                    <div className="grid gap-2">
-                                        <label className="text-sm font-medium">Year</label>
-                                        <Input
-                                            placeholder="YYYY"
-                                            value={quickYear}
-                                            onChange={(e) => setQuickYear(e.target.value)}
-                                            className="bg-background"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="grid gap-2">
-                                    <label className="text-sm font-medium">SEO Alt Text</label>
-                                    <Input
-                                        placeholder="Describe image for SEO..."
-                                        value={quickAltText}
-                                        onChange={(e) => setQuickAltText(e.target.value)}
-                                        className="bg-background"
-                                    />
-                                </div>
-
-                                <div className="grid gap-2">
-                                    <label className="text-sm font-medium">Project Details (Design Notes)</label>
-                                    <Textarea
-                                        placeholder="Add details about the rendering technique, software used, or context..."
-                                        value={quickDesignNotes}
-                                        onChange={(e) => setQuickDesignNotes(e.target.value)}
-                                        className="bg-background min-h-[80px]"
-                                    />
-                                </div>
-
-                                <Button
-                                    onClick={handleQuickAdd}
-                                    disabled={!quickFile || !quickTitle || isUploading}
-                                    className="w-full md:w-auto mt-2"
-                                >
-                                    {isUploading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
-                                    Add to Gallery
-                                </Button>
-                            </div>
-                        </div>
-                    </CardContent>
-                </Card>
-
+                {/* Two Column Layout */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-                    {/* Left Column: Active Gallery */}
-                    <Card className="flex flex-col overflow-hidden border-primary/20 bg-primary/5">
-                        <CardHeader className="pb-3 border-b bg-card">
-                            <CardTitle className="flex items-center justify-between">
-                                <span>Active Gallery</span>
-                                <Badge variant="secondary">{localGallery.length} Items</Badge>
-                            </CardTitle>
-                            <CardDescription>
-                                Drag to reorder.
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent className="overflow-y-auto p-4 bg-muted/20 max-h-[600px]">
-                            <DndContext
-                                sensors={sensors}
-                                collisionDetection={closestCenter}
-                                onDragStart={handleDragStart}
-                                onDragEnd={handleDragEnd}
-                            >
-                                <SortableContext
-                                    items={localGallery.map(item => item.id)}
-                                    strategy={verticalListSortingStrategy}
+                    {/* Left Column: Gallery Items */}
+                    <Card className="flex flex-col border-orange-200 dark:border-orange-800 bg-orange-50/20 dark:bg-orange-950/20">
+                        <CardHeader className="pb-3 border-b">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <CardTitle className="flex items-center gap-2">
+                                        <Badge variant="outline" className="bg-orange-500/20 text-orange-700 border-orange-400 dark:text-orange-400">🖼️</Badge>
+                                        Gallery Items
+                                    </CardTitle>
+                                    <CardDescription className="mt-1">Modal only, no detail page</CardDescription>
+                                </div>
+                                <Button
+                                    size="sm"
+                                    className="bg-orange-600 hover:bg-orange-700"
+                                    onClick={() => {
+                                        setQuickAddType('gallery');
+                                        setShowQuickAdd(true);
+                                    }}
                                 >
-                                    {localGallery.length === 0 ? (
-                                        <div className="text-center py-12 text-muted-foreground bg-card border border-dashed rounded-lg">
-                                            Your gallery is empty.<br />Add projects from the right.
-                                        </div>
-                                    ) : (
-                                        localGallery.map(item => (
-                                            <SortableGalleryItem
-                                                key={item.id}
-                                                id={item.id}
-                                                item={item}
-                                                onRemove={handleRemove}
-                                                onManageImages={(pid, title) => setManagingProject({ id: pid, title })}
-                                                onUpdateMetadata={handleUpdateMetadata}
-                                                onUpdateProject={handleUpdateProject}
-                                            />
-                                        ))
-                                    )}
-                                </SortableContext>
-
-                                <DragOverlay>
-                                    {activeId ? (
-                                        <div className="bg-card border rounded-lg p-3 shadow-xl opacity-90 rotate-2">
-                                            {/* Simplified representation while dragging */}
+                                    <Plus className="h-4 w-4 mr-1" /> Add
+                                </Button>
+                            </div>
+                        </CardHeader>
+                        <CardContent className="flex-1 overflow-y-auto p-4 max-h-[600px]">
+                            <div className="space-y-2">
+                                {galleryProjects.length === 0 ? (
+                                    <div className="text-center py-12 text-muted-foreground text-sm">
+                                        No gallery items yet.<br />
+                                        Click + to create one.
+                                    </div>
+                                ) : (
+                                    galleryProjects.map(project => (
+                                        <div key={project.id} className="bg-card border border-orange-200/50 dark:border-orange-800/50 rounded-lg p-3 hover:bg-orange-50/50 dark:hover:bg-orange-950/30 transition-colors">
                                             <div className="flex items-center gap-3">
-                                                <div className="h-12 w-16 bg-muted rounded"></div>
-                                                <div className="font-semibold">Dragging Item...</div>
+                                                <div className="h-12 w-16 flex-shrink-0 bg-muted rounded overflow-hidden">
+                                                    {project.coverImageUrl && (
+                                                        <img src={project.coverImageUrl} alt="" className="w-full h-full object-cover" />
+                                                    )}
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                    <h4 className="font-medium text-sm truncate">{project.title}</h4>
+                                                    <p className="text-xs text-muted-foreground">{project.year}</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    ) : null}
-                                </DragOverlay>
-                            </DndContext>
+                                    ))
+                                )}
+                            </div>
                         </CardContent>
                     </Card>
 
-                    {/* Right Column: Create New */}
-                    <div className="flex flex-col gap-4">
-                        
-                        {/* Create Full Page */}
-                        <Card 
-                            className="border-2 border-dashed border-blue-400 dark:border-blue-600 hover:bg-blue-50/50 dark:hover:bg-blue-950/30 transition-colors cursor-pointer group"
-                        >
-                            <CardContent className="p-8 flex flex-col items-center justify-center text-center">
-                                <div className="h-16 w-16 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                                    <Plus className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+                    {/* Right Column: Full Page Projects */}
+                    <Card className="flex flex-col border-blue-200 dark:border-blue-800 bg-blue-50/20 dark:bg-blue-950/20">
+                        <CardHeader className="pb-3 border-b">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <CardTitle className="flex items-center gap-2">
+                                        <Badge variant="outline" className="bg-blue-500/20 text-blue-700 border-blue-400 dark:text-blue-400">📄</Badge>
+                                        Full Page Projects
+                                    </CardTitle>
+                                    <CardDescription className="mt-1">With detail pages at /projects/rendering/&#123;slug&#125;</CardDescription>
                                 </div>
-                                <h3 className="font-semibold text-lg mb-1">Create Full Page</h3>
-                                <p className="text-sm text-muted-foreground">Project with detail page</p>
-                            </CardContent>
-                        </Card>
-
-                        {/* Create Gallery Item */}
-                        <Card 
-                            className="border-2 border-dashed border-orange-400 dark:border-orange-600 hover:bg-orange-50/50 dark:hover:bg-orange-950/30 transition-colors cursor-pointer group"
-                        >
-                            <CardContent className="p-8 flex flex-col items-center justify-center text-center">
-                                <div className="h-16 w-16 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                                    <Plus className="h-8 w-8 text-orange-600 dark:text-orange-400" />
-                                </div>
-                                <h3 className="font-semibold text-lg mb-1">Create Gallery Item</h3>
-                                <p className="text-sm text-muted-foreground">Modal only, no page</p>
-                            </CardContent>
-                        </Card>
-
-                    </div>
+                                <Button
+                                    size="sm"
+                                    className="bg-blue-600 hover:bg-blue-700"
+                                    onClick={() => {
+                                        setQuickAddType('fullPage');
+                                        setShowQuickAdd(true);
+                                    }}
+                                >
+                                    <Plus className="h-4 w-4 mr-1" /> Add
+                                </Button>
+                            </div>
+                        </CardHeader>
+                        <CardContent className="flex-1 overflow-y-auto p-4 max-h-[600px]">
+                            <div className="space-y-2">
+                                {fullPageProjects.length === 0 ? (
+                                    <div className="text-center py-12 text-muted-foreground text-sm">
+                                        No full page projects yet.<br />
+                                        Click + to create one.
+                                    </div>
+                                ) : (
+                                    fullPageProjects.map(project => (
+                                        <div key={project.id} className="bg-card border border-blue-200/50 dark:border-blue-800/50 rounded-lg p-3 hover:bg-blue-50/50 dark:hover:bg-blue-950/30 transition-colors">
+                                            <div className="flex items-center gap-3">
+                                                <div className="h-12 w-16 flex-shrink-0 bg-muted rounded overflow-hidden">
+                                                    {project.coverImageUrl && (
+                                                        <img src={project.coverImageUrl} alt="" className="w-full h-full object-cover" />
+                                                    )}
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                    <h4 className="font-medium text-sm truncate">{project.title}</h4>
+                                                    <p className="text-xs text-muted-foreground">{project.year}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))
+                                )}
+                            </div>
+                        </CardContent>
+                    </Card>
 
                 </div>
+
             </div>
 
             {
