@@ -2158,23 +2158,22 @@ export async function getRenderingGallery() {
     if (galleryError) throw galleryError;
     if (!galleryItems || galleryItems.length === 0) return [];
 
-    const projectIds = Array.from(new Set(galleryItems.map(item => item.project_id)));
+    const projectIds = Array.from(new Set(galleryItems.map(item => item.rendering_project_id)));
     const { data: projects, error } = await supabase
-      .from('projects')
+      .from('rendering_projects')
       .select('*')
       .in('id', projectIds);
 
     if (error) {
-      console.warn('Error fetching projects for rendering gallery:', error);
+      console.warn('Error fetching rendering projects for gallery:', error);
       return [];
     }
 
     // Fetch images for these projects
-    // Fetch images for these projects
     const { data: images, error: imagesError } = await supabase
-      .from('project_images')
+      .from('rendering_project_images')
       .select('*')
-      .in('project_id', projectIds)
+      .in('rendering_project_id', projectIds)
       .order('sort_order', { ascending: true });
 
     if (imagesError) {
@@ -2186,7 +2185,7 @@ export async function getRenderingGallery() {
     const imagesMap = new Map<number, any[]>();
     if (images) {
       images.forEach(img => {
-        const projectId = img.project_id;
+        const projectId = img.rendering_project_id;
         if (!imagesMap.has(projectId)) {
           imagesMap.set(projectId, []);
         }
@@ -2195,14 +2194,14 @@ export async function getRenderingGallery() {
     }
 
     return galleryItems.map(item => {
-      const project = projectMap.get(item.project_id);
-      const projectImages = imagesMap.get(item.project_id) || [];
-      // Fallback: use first project image if no cover_image is set
-      const coverImageUrl = project?.cover_image || (projectImages.length > 0 ? projectImages[0].image_url : null);
+      const project = projectMap.get(item.rendering_project_id);
+      const projectImages = imagesMap.get(item.rendering_project_id) || [];
+      // Use cover_image from project, fallback to first gallery image
+      const coverImageUrl = project?.cover_image_url || (projectImages.length > 0 ? projectImages[0].image_url : null);
 
       return {
         id: item.id,
-        projectId: item.project_id,
+        projectId: item.rendering_project_id,
         sortOrder: item.sort_order,
         altText: item.alt_text,
         displayTitle: item.display_title,
@@ -2218,15 +2217,12 @@ export async function getRenderingGallery() {
           coverImageKey: project.cover_image_key,
           client: project.client,
           location: project.location,
-          venue: project.venue,
           year: project.year,
           month: project.month,
-          discipline: project.discipline,
-          subcategory: project.subcategory,
           status: project.status,
           featured: project.featured,
-          categoryId: project.category_id,
-          creativeTeam: project.creative_team,
+          categoryId: null,
+          creativeTeam: null,
           metadata: project.metadata,
           publishedAt: project.published_at ? new Date(project.published_at) : null,
           seoTitle: project.seo_title,
@@ -2263,7 +2259,7 @@ export async function addProjectToRenderingGallery(projectId: number, altText?: 
     const { error } = await supabase
       .from('rendering_gallery')
       .insert({
-        project_id: projectId,
+        rendering_project_id: projectId,
         sort_order: nextOrder,
         alt_text: altText || null,
         display_title: displayTitle || null,
@@ -2324,22 +2320,22 @@ export async function getExperientialGallery(): Promise<RenderingGalleryItem[]> 
     if (galleryError) throw galleryError;
     if (!galleryItems || galleryItems.length === 0) return [];
 
-    const projectIds = Array.from(new Set(galleryItems.map(item => item.project_id)));
+    const projectIds = Array.from(new Set(galleryItems.map(item => item.experiential_project_id)));
     const { data: projects, error } = await supabase
-      .from('projects')
+      .from('experiential_projects')
       .select('*')
       .in('id', projectIds);
 
     if (error) {
-      console.warn('Error fetching projects for experiential gallery:', error);
+      console.warn('Error fetching experiential projects for gallery:', error);
       return [];
     }
 
     // Fetch images for these projects
     const { data: images, error: imagesError } = await supabase
-      .from('project_images')
+      .from('experiential_project_images')
       .select('*')
-      .in('project_id', projectIds)
+      .in('experiential_project_id', projectIds)
       .order('sort_order', { ascending: true });
 
     if (imagesError) {
@@ -2351,7 +2347,7 @@ export async function getExperientialGallery(): Promise<RenderingGalleryItem[]> 
     const imagesMap = new Map<number, any[]>();
     if (images) {
       images.forEach(img => {
-        const projectId = img.project_id;
+        const projectId = img.experiential_project_id;
         if (!imagesMap.has(projectId)) {
           imagesMap.set(projectId, []);
         }
@@ -2360,14 +2356,14 @@ export async function getExperientialGallery(): Promise<RenderingGalleryItem[]> 
     }
 
     return galleryItems.map(item => {
-      const project = projectMap.get(item.project_id);
-      const projectImages = imagesMap.get(item.project_id) || [];
-      // Fallback: use first project image if no cover_image is set
-      const coverImageUrl = project?.cover_image || (projectImages.length > 0 ? projectImages[0].image_url : null);
+      const project = projectMap.get(item.experiential_project_id);
+      const projectImages = imagesMap.get(item.experiential_project_id) || [];
+      // Use cover_image from project, fallback to first gallery image
+      const coverImageUrl = project?.cover_image_url || (projectImages.length > 0 ? projectImages[0].image_url : null);
 
       return {
         id: item.id,
-        projectId: item.project_id,
+        projectId: item.experiential_project_id,
         sortOrder: item.sort_order,
         altText: item.alt_text,
         displayTitle: item.display_title,
@@ -2383,15 +2379,12 @@ export async function getExperientialGallery(): Promise<RenderingGalleryItem[]> 
           coverImageKey: project.cover_image_key,
           client: project.client,
           location: project.location,
-          venue: project.venue,
           year: project.year,
           month: project.month,
-          discipline: project.discipline,
-          subcategory: project.subcategory,
           status: project.status,
           featured: project.featured,
-          categoryId: project.category_id,
-          creativeTeam: project.creative_team,
+          categoryId: null,
+          creativeTeam: null,
           metadata: project.metadata,
           publishedAt: project.published_at ? new Date(project.published_at) : null,
           seoTitle: project.seo_title,
@@ -2427,7 +2420,7 @@ export async function addProjectToExperientialGallery(projectId: number, altText
     const { error } = await supabase
       .from('experiential_gallery')
       .insert({
-        project_id: projectId,
+        experiential_project_id: projectId,
         sort_order: nextOrder,
         alt_text: altText || null,
         display_title: displayTitle || null,
