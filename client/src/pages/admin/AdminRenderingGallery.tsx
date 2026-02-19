@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Loader2, GripVertical, Plus, Trash2, Save, Image as ImageIcon, UploadCloud, ChevronDown, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -389,35 +390,32 @@ export default function AdminRenderingGallery() {
                 .from('portfolio')
                 .getPublicUrl(filePath);
 
-            // 2. Create Hidden Project
+            // 2. Create Project (gallery item or full page based on quickAddType)
+            const isGalleryOnly = quickAddType === 'gallery';
             const projectResult = await createProjectMutation.mutateAsync({
                 title: quickTitle,
                 slug: slugify(quickTitle) + '-' + Math.random().toString(36).substring(2, 7),
                 year: parseInt(quickYear) || new Date().getFullYear(),
                 status: 'draft',
-                galleryOnly: true,
+                galleryOnly: isGalleryOnly,
                 coverImageUrl: publicUrl,
                 designNotes: quickDesignNotes,
             });
 
-            // 3. Add to Gallery with Alt Text
-            await addMutation.mutateAsync({
-                projectId: projectResult.id,
-                altText: quickAltText,
-                displayTitle: quickTitle // Default display title to project title
-            });
-
-            // Reset
+            // Reset form
             setQuickFile(null);
             setQuickPreview(null);
             setQuickTitle("");
             setQuickAltText("");
             setQuickDesignNotes("");
-            toast.success("Image uploaded & added to gallery!");
+            setShowQuickAdd(false);
+            
+            toast.success(isGalleryOnly ? "Gallery item created!" : "Full page project created!");
+            refetchProjects();
 
         } catch (error: any) {
             console.error(error);
-            toast.error(error.message || "Failed to add image");
+            toast.error(error.message || "Failed to create project");
         } finally {
             setIsUploading(false);
         }
@@ -501,9 +499,15 @@ export default function AdminRenderingGallery() {
         );
     }
 
-    // Separate gallery items from full page projects
-    const galleryProjects = projects?.filter(p => p.galleryOnly) || [];
-    const fullPageProjects = projects?.filter(p => !p.galleryOnly) || [];
+    // Separate gallery items from full page projects and sort by year DESC
+    const galleryProjects = (projects?.filter(p => p.galleryOnly) || []).sort((a, b) => {
+        if (b.year !== a.year) return (b.year || 0) - (a.year || 0);
+        return (a.title || '').localeCompare(b.title || '');
+    });
+    const fullPageProjects = (projects?.filter(p => !p.galleryOnly) || []).sort((a, b) => {
+        if (b.year !== a.year) return (b.year || 0) - (a.year || 0);
+        return (a.title || '').localeCompare(b.title || '');
+    });
 
     return (
         <AdminLayout
@@ -620,6 +624,118 @@ export default function AdminRenderingGallery() {
                 </div>
 
             </div>
+
+            {/* Create Project Dialog */}
+            <Dialog open={showQuickAdd} onOpenChange={setShowQuickAdd}>
+                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                        <DialogTitle>
+                            {quickAddType === 'gallery' ? '🖼️ Create Gallery Item' : '📄 Create Full Page Project'}
+                        </DialogTitle>
+                        <DialogDescription>
+                            {quickAddType === 'gallery' 
+                                ? 'Quick gallery item that opens in modal only'
+                                : 'Full project with dedicated detail page at /projects/rendering/{slug}'
+                            }
+                        </DialogDescription>
+                    </DialogHeader>
+
+                    <div className="space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium">Title *</label>
+                                <Input
+                                    placeholder="Project Title"
+                                    value={quickTitle}
+                                    onChange={(e) => setQuickTitle(e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium">Year</label>
+                                <Input
+                                    type="number"
+                                    placeholder="YYYY"
+                                    value={quickYear}
+                                    onChange={(e) => setQuickYear(e.target.value)}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">Cover Image *</label>
+                            <div
+                                className="w-full h-40 bg-muted rounded-lg border-2 border-dashed flex items-center justify-center cursor-pointer hover:bg-muted/50 transition-colors relative overflow-hidden group"
+                                onClick={() => document.getElementById('dialog-file')?.click()}
+                            >
+                                {quickPreview ? (
+                                    <>
+                                        <img src={quickPreview} alt="Preview" className="w-full h-full object-cover" />
+                                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <p className="text-white text-xs font-medium">Change Image</p>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div className="text-center">
+                                        <ImageIcon className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
+                                        <p className="text-xs text-muted-foreground font-medium">Click to upload image</p>
+                                    </div>
+                                )}
+                                <input
+                                    type="file"
+                                    id="dialog-file"
+                                    className="hidden"
+                                    accept="image/*"
+                                    onChange={handleFileSelect}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">SEO Alt Text</label>
+                            <Input
+                                placeholder="Describe image for SEO..."
+                                value={quickAltText}
+                                onChange={(e) => setQuickAltText(e.target.value)}
+                            />
+                        </div>
+
+                        {quickAddType === 'fullPage' && (
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium">Design Notes</label>
+                                <Textarea
+                                    placeholder="Add details about the project, rendering technique, software used, etc..."
+                                    value={quickDesignNotes}
+                                    onChange={(e) => setQuickDesignNotes(e.target.value)}
+                                    className="min-h-[120px]"
+                                />
+                            </div>
+                        )}
+                    </div>
+
+                    <DialogFooter>
+                        <Button variant="outline" onClick={() => setShowQuickAdd(false)} disabled={isUploading}>
+                            Cancel
+                        </Button>
+                        <Button
+                            onClick={handleQuickAdd}
+                            disabled={!quickFile || !quickTitle || isUploading}
+                            className={quickAddType === 'gallery' ? 'bg-orange-600 hover:bg-orange-700' : 'bg-blue-600 hover:bg-blue-700'}
+                        >
+                            {isUploading ? (
+                                <>
+                                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                                    Creating...
+                                </>
+                            ) : (
+                                <>
+                                    <Plus className="h-4 w-4 mr-2" />
+                                    Create {quickAddType === 'gallery' ? 'Gallery Item' : 'Full Page'}
+                                </>
+                            )}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
 
             {
                 managingProject && (
