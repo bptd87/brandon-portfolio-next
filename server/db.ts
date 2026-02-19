@@ -2333,17 +2333,41 @@ export async function getExperientialGallery(): Promise<RenderingGalleryItem[]> 
       return [];
     }
 
+    // Fetch images for these projects
+    const { data: images, error: imagesError } = await supabase
+      .from('project_images')
+      .select('*')
+      .in('project_id', projectIds)
+      .order('sort_order', { ascending: true });
+
+    if (imagesError) {
+      console.warn('Error fetching images for experiential gallery:', imagesError);
+    }
+
     const projectMap = new Map(projects?.map(p => [p.id, p]));
+    // Group images by project ID
+    const imagesMap = new Map<number, any[]>();
+    if (images) {
+      images.forEach(img => {
+        const projectId = img.project_id;
+        if (!imagesMap.has(projectId)) {
+          imagesMap.set(projectId, []);
+        }
+        imagesMap.get(projectId)?.push(img);
+      });
+    }
 
     return galleryItems.map(item => {
       const project = projectMap.get(item.project_id);
+      const projectImages = imagesMap.get(item.project_id) || [];
+
       return {
         id: item.id,
         projectId: item.project_id,
         sortOrder: item.sort_order,
         altText: item.alt_text,
         displayTitle: item.display_title,
-        description: null,
+        description: item.description,
         createdAt: new Date(item.created_at),
         project: project ? {
           id: project.id,
@@ -2369,9 +2393,13 @@ export async function getExperientialGallery(): Promise<RenderingGalleryItem[]> 
           seoTitle: project.seo_title,
           seoDescription: project.seo_description,
           seoKeywords: project.seo_keywords,
-          images: [],
-          createdAt: new Date(project.created_at),
-          updatedAt: new Date(project.updated_at),
+          images: projectImages.map((img: any) => ({
+            id: img.id,
+            imageUrl: img.image_url,
+            caption: img.caption,
+            altText: img.alt_text,
+            sortOrder: img.sort_order
+          }))
         } : undefined,
       };
     });
