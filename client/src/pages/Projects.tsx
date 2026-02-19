@@ -8,12 +8,14 @@ import { StaggerList, StaggerItem } from "@/components/animations/Stagger";
 import { SEO } from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { PortfolioGridSkeleton } from "@/components/SkeletonLoaders";
 import { AnimatedSection } from "@/components/AnimatedSection";
 
 export default function Projects() {
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>('all');
+  
+
 
   const { data: projects, isLoading } = trpc.projects.list.useQuery({
     status: 'published',
@@ -192,6 +194,8 @@ export default function Projects() {
                 </p>
               </div>
             )}
+
+
           </div>
         </section>
       )}

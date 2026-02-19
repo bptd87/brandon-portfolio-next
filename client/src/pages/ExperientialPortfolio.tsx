@@ -163,66 +163,118 @@ function GalleryCardGrid({
   );
 }
 
-// Workflow Step Component
-function WorkflowStep({
-  image,
+// Workflow Tab Component
+function WorkflowTabs() {
+  const [activeStep, setActiveStep] = useState(0);
+  
+  const steps = [
+    {
+      stepNumber: "01",
+      title: "Technical Toolkit",
+      description: "Industry-standard software for integrated design workflows. Vectorworks for technical CAD, Twinmotion for real-time visualization, and Photoshop for layered compositing.",
+      icon: Layers
+    },
+    {
+      stepNumber: "02",
+      title: "Technical Drawing",
+      description: "Scaled plans, elevations, and sections establish buildable geometry and spatial relationships. Every line serves construction—no decorative drafting.",
+      icon: Ruler
+    },
+    {
+      stepNumber: "03",
+      title: "3D Modeling & Rendering",
+      description: "Twinmotion and Cinema 4D transform technical drawings into immersive environments with real-time lighting, materials, and atmospheric effects.",
+      icon: Box
+    },
+    {
+      stepNumber: "04",
+      title: "Buildability & Fabrication",
+      description: "Technical documentation supports production teams from concept through construction with scaled drawings, material specifications, and assembly details.",
+      icon: Hammer
+    }
+  ];
+
+  return (
+    <AnimatedSection>
+      <div className="space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {steps.map((step, index) => (
+            <WorkflowTabItem
+              key={index}
+              title={step.title}
+              description={step.description}
+              stepNumber={step.stepNumber}
+              icon={step.icon}
+              isActive={activeStep === index}
+              onClick={() => setActiveStep(index)}
+            />
+          ))}
+        </div>
+        
+        {/* Expanded Description for Active Step */}
+        <div className="mt-12 p-8 rounded-2xl bg-gradient-to-br from-pink-500/5 via-transparent to-transparent border border-pink-500/20">
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-4 mb-6">
+              {steps[activeStep].icon === Layers && <Layers className="w-10 h-10 text-pink-500" />}
+              {steps[activeStep].icon === Ruler && <Ruler className="w-10 h-10 text-pink-500" />}
+              {steps[activeStep].icon === Box && <Box className="w-10 h-10 text-pink-500" />}
+              {steps[activeStep].icon === Hammer && <Hammer className="w-10 h-10 text-pink-500" />}
+              <h3 className="text-3xl md:text-4xl font-black">{steps[activeStep].title}</h3>
+            </div>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              {steps[activeStep].description}
+            </p>
+          </div>
+        </div>
+      </div>
+    </AnimatedSection>
+  );
+}
+
+function WorkflowTabItem({
   title,
   description,
   stepNumber,
   icon: Icon,
-  reverse = false
+  isActive,
+  onClick
 }: {
-  image?: { imageUrl: string; altText: string | null };
   title: string;
   description: string;
   stepNumber: string;
   icon: React.ElementType;
-  reverse?: boolean;
+  isActive: boolean;
+  onClick: () => void;
 }) {
-  const imageContent = (
-    <div className="relative group">
-      <div className="aspect-[16/10] rounded-2xl overflow-hidden border border-border bg-muted/20 shadow-lg">
-        {image ? (
-          <ProgressiveImage
-            src={image.imageUrl}
-            alt={image.altText || title}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <div className="text-center">
-              <Icon className="w-12 h-12 mx-auto mb-3 text-muted-foreground/30" />
-              <p className="text-sm text-muted-foreground">Image coming soon</p>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-
-  const textContent = (
-    <div className="space-y-6">
-      <div className="flex items-center gap-4">
-        <span className="text-7xl md:text-8xl font-black text-pink-500/20">{stepNumber}</span>
-      </div>
-      <div className="flex items-center gap-3 mb-4">
-        <Icon className="w-8 h-8 text-pink-500" />
-        <h3 className="text-3xl md:text-4xl font-black">{title}</h3>
-      </div>
-      <p className="text-lg text-muted-foreground leading-relaxed">{description}</p>
-    </div>
-  );
-
   return (
-    <AnimatedSection>
-      <div className={cn(
-        "grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center",
-        reverse && "lg:grid-flow-dense"
-      )}>
-        <div className={reverse ? "lg:col-start-2" : ""}>{imageContent}</div>
-        <div className={reverse ? "lg:col-start-1" : ""}>{textContent}</div>
+    <button
+      onClick={onClick}
+      className={cn(
+        "relative group text-left p-6 rounded-xl transition-all duration-300 border-2",
+        isActive
+          ? "bg-pink-500/10 border-pink-500 shadow-lg"
+          : "bg-transparent border-border hover:border-pink-500/50 hover:bg-muted/30"
+      )}
+    >
+      <div className="flex items-start gap-4">
+        <Icon className={cn(
+          "w-8 h-8 flex-shrink-0 transition-colors duration-300",
+          isActive ? "text-pink-500" : "text-muted-foreground"
+        )} />
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-3 mb-2">
+            <span className={cn(
+              "text-4xl font-black transition-colors duration-300 flex-shrink-0",
+              isActive ? "text-pink-500" : "text-muted-foreground/30"
+            )}>{stepNumber}</span>
+          </div>
+          <h4 className={cn(
+            "text-xl font-bold transition-colors duration-300",
+            isActive ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"
+          )}>{title}</h4>
+        </div>
       </div>
-    </AnimatedSection>
+    </button>
   );
 }
 
@@ -433,9 +485,6 @@ export default function ExperientialPortfolio() {
         </div>
       </section>
 
-      {/* Brands Banner */}
-      <BrandsBanner />
-
       {/* Rendering Gallery Section */}
       <section className="py-24 md:py-32">
         <div className="container max-w-6xl">
@@ -460,7 +509,7 @@ export default function ExperientialPortfolio() {
         </div>
       </section>
 
-      {/* Integrated Workflow Section - 4 Steps */}
+      {/* Integrated Workflow Section - Interactive Tabs */}
       <section className="py-24 md:py-32 border-t border-border bg-muted/10">
         <div className="container max-w-6xl">
           <AnimatedSection>
@@ -475,41 +524,7 @@ export default function ExperientialPortfolio() {
             </div>
           </AnimatedSection>
 
-          <div className="space-y-24 md:space-y-32">
-            <WorkflowStep
-              image={processImagesByCategory['workflow-toolkit']?.[0]}
-              title="Technical Toolkit"
-              description="Industry-standard software for integrated design workflows. Vectorworks for technical CAD, Twinmotion for real-time visualization, and Photoshop for layered compositing."
-              stepNumber="01"
-              icon={Layers}
-            />
-
-            <WorkflowStep
-              image={processImagesByCategory['workflow-drawing']?.[0]}
-              title="Technical Drawing"
-              description="Scaled plans, elevations, and sections establish buildable geometry and spatial relationships. Every line serves construction—no decorative drafting."
-              stepNumber="02"
-              icon={Ruler}
-              reverse
-            />
-
-            <WorkflowStep
-              image={processImagesByCategory['workflow-modeling']?.[0]}
-              title="3D Modeling & Rendering"
-              description="Twinmotion and Cinema 4D transform technical drawings into immersive environments with real-time lighting, materials, and atmospheric effects."
-              stepNumber="03"
-              icon={Box}
-            />
-
-            <WorkflowStep
-              image={processImagesByCategory['workflow-buildability']?.[0]}
-              title="Buildability & Fabrication"
-              description="Technical documentation supports production teams from concept through construction with scaled drawings, material specifications, and assembly details."
-              stepNumber="04"
-              icon={Hammer}
-              reverse
-            />
-          </div>
+          <WorkflowTabs />
 
           <AnimatedSection>
             <div className="text-center max-w-3xl mx-auto mt-20 pt-16 border-t border-border">
@@ -641,6 +656,9 @@ export default function ExperientialPortfolio() {
           />
         </div>
       </section>
+
+      {/* Brands Banner */}
+      <BrandsBanner />
 
       {/* FAQ Section */}
       <section className="py-24 md:py-32 border-t border-border bg-muted/10">

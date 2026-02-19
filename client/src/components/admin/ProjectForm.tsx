@@ -194,7 +194,7 @@ function SortableGalleryImage({
       {/* Drag handle overlay */}
       <button
         type="button"
-        className="absolute top-2 left-2 z-10 cursor-grab active:cursor-grabbing touch-none p-1.5 rounded bg-black/60 hover:bg-black/80 text-white"
+        className="absolute top-2 right-2 z-10 cursor-grab active:cursor-grabbing touch-none p-1.5 rounded bg-black/60 hover:bg-black/80 text-white"
         {...attributes}
         {...listeners}
       >
@@ -316,7 +316,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
   const createProject = trpc.projects.create.useMutation({
     onSuccess: () => {
       toast.success("Project created successfully");
-      navigate("/admin");
+      navigate("/admin/projects");
     },
     onError: (error) => {
       toast.error(`Failed to create project: ${error.message}`);
@@ -326,7 +326,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
   const updateProject = trpc.projects.update.useMutation({
     onSuccess: () => {
       toast.success("Project updated successfully");
-      navigate("/admin");
+      navigate("/admin/projects");
     },
     onError: (error) => {
       toast.error(`Failed to update project: ${error.message}`);
@@ -717,9 +717,9 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
         <div className="container mx-auto py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="sm" onClick={() => navigate("/admin")}>
+              <Button variant="ghost" size="sm" onClick={() => navigate("/admin/projects")}>
                 <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Admin
+                Back to Projects
               </Button>
               <div className="h-6 w-px bg-border" />
               <h1 className="text-xl font-bold">

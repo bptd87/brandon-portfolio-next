@@ -89,18 +89,18 @@ function ArticlesContent() {
       <Header />
 
       {/* Page Header */}
-      <section className="pt-32 pb-20 border-b border-border">
+      <section className="pt-24 md:pt-32 pb-16 md:pb-20 border-b border-border">
         <div className="container">
           <p className="text-xs tracking-widest text-muted-foreground mb-4">ARTICLES</p>
-          <h1 className="mb-4">Scenic Insights</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl">
+          <h1 className="mb-4 text-4xl md:text-5xl">Scenic Insights</h1>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl">
             Articles on design philosophy, process, and the craft of scenic design.
           </p>
 
           {/* Search and Category Filter */}
           <div className="mt-8 space-y-6">
             {/* Search Input */}
-            <div className="relative max-w-md">
+            <div className="relative w-full max-w-md">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <input
                 type="text"
@@ -162,7 +162,7 @@ function ArticlesContent() {
               <p className="text-muted-foreground">Loading articles...</p>
             </div>
           ) : filteredArticles && filteredArticles.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
               {filteredArticles.map((article) => {
                 const categoryColor = article.category?.name
                   ? getCategoryColor(article.category.name).hex
@@ -170,7 +170,7 @@ function ArticlesContent() {
 
                 return (
                   <Link key={article.id} href={`/articles/${article.slug}`}>
-                    <div className="group bg-card rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl cursor-pointer border border-border">
+                    <div className="group bg-card rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer border border-border/60">
                       {/* Cover Image */}
                       {article.coverImageUrl && (
                         <div className="aspect-[16/9] overflow-hidden">
@@ -186,15 +186,22 @@ function ArticlesContent() {
                         </div>
                       )}
 
-                      <div className="p-6">
+                      <div className="p-5 md:p-6">
                         {/* Category Badge */}
                         {article.category && (
-                          <Badge className={getCategoryBadgeClasses(article.category.name)}>
+                          <Badge
+                            className="text-[11px] uppercase tracking-[0.3em] px-3 py-1 rounded-full border"
+                            style={{
+                              borderColor: `${categoryColor}55`,
+                              color: categoryColor,
+                              backgroundColor: `${categoryColor}10`
+                            }}
+                          >
                             {article.category.name}
                           </Badge>
                         )}
 
-                        <h3 className="text-xl font-bold mb-2 transition-colors line-clamp-2"
+                        <h3 className="text-2xl font-['Playfair_Display'] italic font-normal mb-3 transition-colors line-clamp-2"
                           style={{ color: 'inherit' }}
                           onMouseEnter={(e) => e.currentTarget.style.color = categoryColor}
                           onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>
@@ -202,7 +209,7 @@ function ArticlesContent() {
                         </h3>
 
                         {article.excerpt && (
-                          <p className="text-sm text-muted-foreground line-clamp-2 mb-3 leading-relaxed">
+                          <p className="text-base text-muted-foreground line-clamp-2 mb-3 leading-relaxed">
                             {article.excerpt}
                           </p>
                         )}
@@ -257,7 +264,7 @@ function ArticlesContent() {
                 const categoryColor = article.category ? getCategoryColor(article.category.name).hex : '#9CA3AF';
                 return (
                   <Link key={article.id} href={`/articles/${article.slug}`}>
-                    <div className="group bg-card rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl cursor-pointer border border-border">
+                    <div className="group bg-card rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer border border-border/60">
                       {/* Cover Image */}
                       {article.coverImageUrl && (
                         <div className="aspect-[16/9] overflow-hidden">
@@ -273,15 +280,22 @@ function ArticlesContent() {
                         </div>
                       )}
 
-                      <div className="p-6">
+                      <div className="p-5 md:p-6">
                         {/* Category Badge */}
                         {article.category && (
-                          <Badge className={getCategoryBadgeClasses(article.category.name)}>
+                          <Badge
+                            className="text-[11px] uppercase tracking-[0.3em] px-3 py-1 rounded-full border"
+                            style={{
+                              borderColor: `${categoryColor}55`,
+                              color: categoryColor,
+                              backgroundColor: `${categoryColor}10`
+                            }}
+                          >
                             {article.category.name}
                           </Badge>
                         )}
 
-                        <h3 className="text-xl font-bold mb-2 transition-colors line-clamp-2"
+                        <h3 className="text-2xl font-['Playfair_Display'] italic font-normal mb-3 transition-colors line-clamp-2"
                           style={{ color: 'inherit' }}
                           onMouseEnter={(e) => e.currentTarget.style.color = categoryColor}
                           onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>
@@ -289,7 +303,7 @@ function ArticlesContent() {
                         </h3>
 
                         {article.excerpt && (
-                          <p className="text-sm text-muted-foreground line-clamp-2 mb-3 leading-relaxed">
+                          <p className="text-base text-muted-foreground line-clamp-2 mb-3 leading-relaxed">
                             {article.excerpt}
                           </p>
                         )}

@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Card } from "@/components/ui/card";
@@ -12,10 +13,12 @@ import { ProjectGridSkeleton } from "@/components/SkeletonLoaders";
 
 export default function Home() {
   const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://www.brandonptdavis.com';
-  const { data: projects, isLoading: projectsLoading } = trpc.projects.list.useQuery({
+  const { data: allProjects, isLoading: projectsLoading } = trpc.projects.list.useQuery({
     status: 'published',
     discipline: 'scenic_design'
   });
+
+  const projects = allProjects;
 
   return (
     <>
@@ -148,6 +151,8 @@ export default function Home() {
                   );
                 })}
               </div>
+
+
             </div>
           </section>
         </FadeIn>

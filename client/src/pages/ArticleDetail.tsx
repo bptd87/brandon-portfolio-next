@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { trpc } from "@/lib/trpc";
 import { proxyImageUrl } from "@/lib/imageProxy";
-import { Calendar, Clock, ArrowLeft, Share2, Twitter, Linkedin, Mail, Link as LinkIcon, Heart, Eye, User, Sparkles, Copy, Check } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, Share2, Twitter, Linkedin, Mail, Link as LinkIcon, Sparkles, Copy, Check } from "lucide-react";
 import { Link, useParams } from "wouter";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -87,31 +87,17 @@ function ArticleDetailContent() {
   const [headings, setHeadings] = useState<Array<{ id: string; text: string; level: number }>>([]);
   const [activeHeading, setActiveHeading] = useState<string>("");
   const [readProgress, setReadProgress] = useState(0);
-  const [hasLiked, setHasLiked] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxImages, setLightboxImages] = useState<Array<{ src: string; alt?: string }>>([]);
 
-  const incrementViews = trpc.articles.incrementViews.useMutation();
-  const toggleLikeMutation = trpc.articles.toggleLike.useMutation();
-
-  // Track view on page load
-  useEffect(() => {
-    if (article?.id) {
-      incrementViews.mutate({ id: article.id });
-    }
-  }, [article?.id]);
-
-  const handleLikeToggle = async () => {
-    if (!article?.id) return;
-
-    const newLikedState = !hasLiked;
-    setHasLiked(newLikedState);
-
-    await toggleLikeMutation.mutateAsync({
-      id: article.id,
-      liked: newLikedState
-    });
+  const getHeadingId = (text: string, index: number) => {
+    const base = text
+      .toLowerCase()
+      .replace(/&/g, "and")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+    return base ? `${base}-${index}` : `heading-${index}`;
   };
 
   // Extract headings for TOC
@@ -120,15 +106,15 @@ function ArticleDetailContent() {
 
     const h2Elements = contentRef.current.querySelectorAll('h2');
     const extractedHeadings = Array.from(h2Elements).map((heading, index) => {
-      // Use existing ID if present, otherwise create one
       let id = heading.id;
       if (!id) {
-        id = `heading-${index}`;
+        const text = heading.textContent || "";
+        id = getHeadingId(text, index);
         heading.id = id;
       }
       return {
         id,
-        text: heading.textContent || '',
+        text: heading.textContent || "",
         level: 2
       };
     });
@@ -431,64 +417,70 @@ function ArticleDetailContent() {
             <div className="min-w-0">
               {/* Article Header */}
               <header className="mb-12">
-                <div className="flex items-center gap-3 mb-6 text-sm uppercase tracking-wider">
+                <div
+                  className="inline-flex flex-wrap items-center gap-3 gap-y-2 mb-6 text-[11px] md:text-xs uppercase tracking-[0.25em] px-4 py-2 rounded-2xl border"
+                  style={category ? {
+                    backgroundColor: `${getCategoryColor(category.name).hex}12`,
+                    borderColor: `${getCategoryColor(category.name).hex}40`
+                  } : undefined}
+                >
                   {category && (
-                    <Badge
-                      variant="secondary"
-                      className="font-bold"
-                      style={{
-                        backgroundColor: `${getCategoryColor(category.name).hex}20`,
-                        color: getCategoryColor(category.name).hex,
-                        borderColor: `${getCategoryColor(category.name).hex}40`
-                      }}
+                    <span
+                      className="font-bold flex-shrink-0"
+                      style={{ color: getCategoryColor(category.name).hex }}
                     >
                       {category.name}
-                    </Badge>
+                    </span>
                   )}
-                  <span className="text-muted-foreground">|</span>
-                  <div className="flex items-center gap-2 text-muted-foreground">
+                  <span className="text-muted-foreground/70 hidden md:inline">•</span>
+                  <div className="flex items-center gap-1 md:gap-2 text-muted-foreground/80 flex-shrink-0">
                     <Calendar className="h-3 w-3" />
                     <time dateTime={new Date(article.publishedAt || article.createdAt).toISOString()}>
                       {new Date(article.publishedAt || article.createdAt).toLocaleDateString('en-US', {
-                        month: 'long',
+                        month: 'short',
                         day: 'numeric',
                         year: 'numeric'
                       })}
                     </time>
                   </div>
-                  <span className="text-muted-foreground">|</span>
-                  <div className="flex items-center gap-2 text-muted-foreground">
+                  <span className="text-muted-foreground/70 hidden md:inline">•</span>
+                  <div className="flex items-center gap-1 md:gap-2 text-muted-foreground/80 flex-shrink-0">
                     <Clock className="h-3 w-3" />
                     <span>{readTime} min read</span>
                   </div>
-                  <span className="text-muted-foreground">|</span>
-                  <button
-                    onClick={handleLikeToggle}
-                    className="flex items-center gap-2 transition-colors hover:scale-110 transform"
-                    style={hasLiked && category ? {
-                      color: getCategoryColor(category.name).hex
-                    } : undefined}
-                  >
-                    <Heart className={`h-3 w-3 ${hasLiked ? 'fill-current' : ''}`} />
-                    <span>{article.likes || 0}</span>
-                  </button>
-                  <span className="text-muted-foreground">|</span>
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Eye className="h-3 w-3" />
-                    <span>{article.views || 0}</span>
-                  </div>
                 </div>
 
-                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-['Playfair_Display'] italic font-normal mb-8 leading-[1.15] tracking-tight">
+                <div
+                  className="inline-flex items-center gap-3 mb-4 px-4 py-2 rounded-full border text-[11px] uppercase tracking-[0.3em]"
+                  style={category ? {
+                    borderColor: `${getCategoryColor(category.name).hex}40`,
+                    color: getCategoryColor(category.name).hex,
+                    backgroundColor: `${getCategoryColor(category.name).hex}10`
+                  } : undefined}
+                >
+                  Feature
+                </div>
+
+                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-['Playfair_Display'] italic font-normal mb-6 leading-[1.1] tracking-tight">
                   {decodeHTMLEntities(article.title)}
                 </h1>
+
+                <div
+                  className="h-1 w-20 rounded-full mb-8"
+                  style={{ backgroundColor: category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))' }}
+                />
 
 
 
                 {article.excerpt && (
-                  <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl">
-                    {decodeHTMLEntities(article.excerpt)}
-                  </p>
+                  <div
+                    className="max-w-3xl border-l-4 pl-6"
+                    style={{ borderColor: category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))' }}
+                  >
+                    <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
+                      {decodeHTMLEntities(article.excerpt)}
+                    </p>
+                  </div>
                 )}
 
                 {/* Cover Image */}
@@ -543,7 +535,19 @@ function ArticleDetailContent() {
               </header>
 
               {/* Article Content */}
-              <div>
+              <div className="relative">
+                <div
+                  className="hidden lg:block absolute -left-10 top-0 bottom-0 w-[2px] rounded-full"
+                  style={{
+                    backgroundImage: `linear-gradient(to bottom, ${category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))'}55, ${category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))'}05)`
+                  }}
+                />
+                <div
+                  className="hidden lg:block absolute -left-[46px] top-0 w-3 h-3 rounded-full"
+                  style={{
+                    backgroundColor: category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))'
+                  }}
+                />
                 {/* Category-colored bullets and bold text */}
                 <style>{`
                   .article-content-${article.id} ul li::marker {
@@ -582,7 +586,9 @@ function ArticleDetailContent() {
                   [&_video]:w-full [&_video]:max-w-[65ch] [&_video]:mx-auto [&_video]:my-12 [&_video]:rounded-2xl [&_video]:shadow-xl [&_video]:aspect-[16/9]
                   [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased]"
                 >
-                  {Array.isArray(processedSections) && processedSections.map((section: any, index: number) => {
+                  {Array.isArray(processedSections) && (() => {
+                    let h2Index = 0;
+                    return processedSections.map((section: any, index: number) => {
                     // Track if this is the first paragraph (for drop cap)
                     const isFirstParagraph = section.type === 'paragraph' &&
                       !processedSections.slice(0, index).some((s: any) => s.type === 'paragraph');
@@ -608,14 +614,22 @@ function ArticleDetailContent() {
                         const headingStyle = categoryColorObj ? { color: `${categoryColorObj.hex} !important` } : undefined;
                         const headingText = decodeHTMLEntities(section.text || section.content || '');
 
+                        const headingId = level === 2
+                          ? getHeadingId(headingText, h2Index)
+                          : getHeadingId(headingText, index);
+
                         if (level === 2) {
-                          return <h2 key={index} className={headingClassName} style={headingStyle}>{headingText}</h2>;
+                          h2Index += 1;
+                        }
+
+                        if (level === 2) {
+                          return <h2 key={index} id={headingId} className={headingClassName} style={headingStyle}>{headingText}</h2>;
                         } else if (level === 3) {
-                          return <h3 key={index} className={headingClassName} style={headingStyle}>{headingText}</h3>;
+                          return <h3 key={index} id={headingId} className={headingClassName} style={headingStyle}>{headingText}</h3>;
                         } else if (level === 4) {
-                          return <h4 key={index} className={headingClassName} style={headingStyle}>{headingText}</h4>;
+                          return <h4 key={index} id={headingId} className={headingClassName} style={headingStyle}>{headingText}</h4>;
                         } else {
-                          return <h2 key={index} className={headingClassName} style={headingStyle}>{headingText}</h2>;
+                          return <h2 key={index} id={headingId} className={headingClassName} style={headingStyle}>{headingText}</h2>;
                         }
 
                       case 'paragraph':
@@ -816,7 +830,8 @@ function ArticleDetailContent() {
                       default:
                         return null;
                     }
-                  })}
+                  });
+                  })()}
                 </div>
               </div>
 
@@ -850,8 +865,13 @@ function ArticleDetailContent() {
               <div className="mt-16 pt-12 border-t max-w-[65ch] mx-auto">
                 <div className="flex items-start gap-6">
                   <div className="flex-shrink-0">
-                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                      <User className="w-10 h-10 text-primary" />
+                    <div className="w-20 h-20 rounded-full overflow-hidden border border-border/60 shadow-lg">
+                      <img
+                        src="/brandon%20pt%20davis.jpeg"
+                        alt="Brandon PT Davis"
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
                     </div>
                   </div>
                   <div className="flex-1">
@@ -862,23 +882,6 @@ function ArticleDetailContent() {
                       His work explores the intersection of physical space, digital technology, and narrative storytelling.
                     </p>
 
-                    {/* Engagement Metrics */}
-                    <div className="flex items-center gap-6 text-sm">
-                      <button
-                        onClick={handleLikeToggle}
-                        className="flex items-center gap-2 transition-colors hover:scale-110 transform"
-                        style={hasLiked && category ? {
-                          color: getCategoryColor(category.name).hex
-                        } : undefined}
-                      >
-                        <Heart className={`w-5 h-5 ${hasLiked ? 'fill-current' : ''}`} />
-                        <span className="font-medium">{article?.likes || 0}</span>
-                      </button>
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <Eye className="w-5 h-5" />
-                        <span>{article?.views || 0} views</span>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -886,7 +889,16 @@ function ArticleDetailContent() {
               {/* Related Articles */}
               {related.length > 0 && (
                 <div className="mt-20 pt-12 border-t">
-                  <h2 className="text-xl font-['Playfair_Display'] italic mb-8">Continue Reading</h2>
+                  <div className="flex items-end justify-between mb-8">
+                    <div>
+                      <div
+                        className="h-1 w-12 rounded-full mb-4"
+                        style={{ backgroundColor: category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))' }}
+                      />
+                      <h2 className="text-2xl md:text-3xl font-['Playfair_Display'] italic">Continue Reading</h2>
+                    </div>
+                    <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Related</span>
+                  </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {related.map((relatedArticle) => {
                       const categoryColor = relatedArticle.category?.name
@@ -895,6 +907,7 @@ function ArticleDetailContent() {
                       return (
                         <Link key={relatedArticle.id} href={`/articles/${relatedArticle.slug}`}>
                           <div className="group bg-card rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl cursor-pointer border border-border">
+                            <div className="h-1 w-full" style={{ backgroundColor: categoryColor }} />
                             {/* Cover Image */}
                             {relatedArticle.coverImageUrl && (
                               <div className="aspect-[16/9] overflow-hidden">
@@ -907,15 +920,22 @@ function ArticleDetailContent() {
                               </div>
                             )}
 
-                            <div className="p-6">
+                            <div className="p-5 md:p-6">
                               {/* Category Badge */}
                               {relatedArticle.category && (
-                                <Badge className={`${getCategoryColor(relatedArticle.category.name).badge} text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider border border-white/20`}>
+                                <Badge
+                                  className="text-[11px] uppercase tracking-[0.3em] px-3 py-1 rounded-full border"
+                                  style={{
+                                    borderColor: `${categoryColor}55`,
+                                    color: categoryColor,
+                                    backgroundColor: `${categoryColor}10`
+                                  }}
+                                >
                                   {relatedArticle.category.name}
                                 </Badge>
                               )}
 
-                              <h3 className="text-xl font-bold mb-2 transition-colors line-clamp-2"
+                              <h3 className="text-2xl font-['Playfair_Display'] italic font-normal mb-3 transition-colors line-clamp-2"
                                 style={{ color: 'inherit' }}
                                 onMouseEnter={(e) => e.currentTarget.style.color = categoryColor}
                                 onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>
@@ -923,7 +943,7 @@ function ArticleDetailContent() {
                               </h3>
 
                               {relatedArticle.excerpt && (
-                                <p className="text-sm text-muted-foreground line-clamp-2 mb-3 leading-relaxed">
+                                <p className="text-base text-muted-foreground line-clamp-2 mb-3 leading-relaxed">
                                   {decodeHTMLEntities(relatedArticle.excerpt)}
                                 </p>
                               )}
@@ -953,23 +973,28 @@ function ArticleDetailContent() {
               )}
             </div>
 
-            {/* Table of Contents - Desktop - Fixed Position */}
+            {/* Table of Contents - Desktop */}
             {headings.length > 0 && (
               <div className="hidden lg:block lg:w-64 flex-shrink-0 fixed top-28 right-8 xl:right-[calc((100vw-1280px)/2+2rem)]">
-                <div className="w-64 space-y-1 max-h-[calc(100vh-8rem)] overflow-y-auto">
+                <div className="w-64 max-h-[calc(100vh-8rem)] overflow-y-auto rounded-2xl border border-border/60 bg-background/70 backdrop-blur px-5 py-6 shadow-xl shadow-black/10">
+                  <div
+                    className="h-1 w-10 rounded-full mb-4"
+                    style={{ backgroundColor: category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))' }}
+                  />
                   <h3 className="text-sm uppercase tracking-wider text-muted-foreground mb-4 font-semibold">Table of Contents</h3>
                   <nav className="space-y-2">
                     {headings.map((heading) => (
                       <a
                         key={heading.id}
                         href={`#${heading.id}`}
-                        className={`block text-sm py-1 border-l-2 pl-4 transition-colors cursor-pointer ${activeHeading === heading.id
-                          ? 'font-medium'
+                        className={`block text-sm py-1.5 border-l-2 pl-4 rounded-r-md transition-colors cursor-pointer ${activeHeading === heading.id
+                          ? 'font-semibold'
                           : 'border-border text-muted-foreground hover:text-foreground hover:border-muted-foreground'
                           }`}
                         style={activeHeading === heading.id && category ? {
                           borderColor: getCategoryColor(category.name).hex,
-                          color: getCategoryColor(category.name).hex
+                          color: getCategoryColor(category.name).hex,
+                          backgroundColor: `${getCategoryColor(category.name).hex}12`
                         } : undefined}
                         onClick={(e) => {
                           e.preventDefault();
@@ -1069,6 +1094,7 @@ function ArticleDetailContent() {
           float: left;
           margin-right: 0.75rem;
           font-family: 'Playfair Display', serif;
+          color: ${category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))'};
         }
       `}</style>
 

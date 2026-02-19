@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,12 +18,11 @@ import { getProjectPath } from "@/lib/projectRoutes";
 
 export function ProjectsManager() {
   const [, navigate] = useLocation();
-  const [disciplineFilter, setDisciplineFilter] = useState<string>('all');
 
   const { data: allProjects, isLoading, refetch } = trpc.projects.list.useQuery({});
 
   const projects = allProjects
-    ?.filter(p => disciplineFilter === 'all' ? true : p.discipline === disciplineFilter)
+    ?.filter(p => p.discipline === 'scenic_design')
     .sort((a, b) => {
       // Sort by year descending, then by month descending
       if ((a.year || 0) !== (b.year || 0)) {
@@ -63,36 +61,13 @@ export function ProjectsManager() {
           <div className="space-y-4">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
-                <CardTitle className="text-xl md:text-2xl">Portfolio Projects ({allProjects?.length || 0})</CardTitle>
-                <CardDescription>Manage your portfolio projects and case studies</CardDescription>
+                <CardTitle className="text-xl md:text-2xl">Scenic Design Projects ({projects?.length || 0})</CardTitle>
+                <CardDescription>Manage your scenic design portfolio projects and case studies</CardDescription>
               </div>
               <Button onClick={() => navigate("/admin/projects/new")} className="hidden md:inline-flex" size="default">
                 <Plus className="h-4 w-4 mr-2" />
                 New Project
               </Button>
-            </div>
-            <div className="flex gap-2 flex-wrap">
-              {[
-                { value: 'all', label: 'All' },
-                { value: 'scenic_design', label: 'Scenic Design' },
-                { value: 'experiential_design', label: 'Experiential' },
-                { value: 'rendering', label: 'Rendering' },
-              ].map((d) => (
-                <Button
-                  key={d.value}
-                  variant={disciplineFilter === d.value ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setDisciplineFilter(d.value)}
-                  className="text-xs md:text-sm"
-                >
-                  {d.label}
-                  {d.value !== 'all' && allProjects && (
-                    <span className="ml-1 text-xs opacity-70">
-                      ({allProjects.filter(p => p.discipline === d.value).length})
-                    </span>
-                  )}
-                </Button>
-              ))}
             </div>
           </div>
         </CardHeader>

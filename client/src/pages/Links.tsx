@@ -33,7 +33,7 @@ export default function Links() {
   });
 
   // Pagination
-  const [displayLimit, setDisplayLimit] = useState(12);
+  const [displayLimit, setDisplayLimit] = useState(6);
   const [hasMore, setHasMore] = useState(true);
   const loaderRef = useRef<HTMLDivElement>(null);
 
@@ -100,23 +100,35 @@ export default function Links() {
 
     dashboardItems.push(...pinnedLinks);
 
-    // Projects
+    // Projects (only scenic_design and rendering)
     if (projects) {
-      projects.forEach((p: any) => {
-        const d = p.publishedAt ? new Date(p.publishedAt) : new Date();
+      projects
+        .filter((p: any) => p.discipline === 'scenic_design' || p.discipline === 'rendering')
+        .forEach((p: any) => {
+          // Use project year/month for accurate chronological sorting
+          let dateStr: string;
+          if (p.year && p.month) {
+            dateStr = new Date(p.year, p.month - 1, 15).toISOString();
+          } else if (p.year) {
+            dateStr = new Date(p.year, 6, 1).toISOString();
+          } else if (p.publishedAt) {
+            dateStr = new Date(p.publishedAt).toISOString();
+          } else {
+            dateStr = new Date().toISOString();
+          }
 
-        dashboardItems.push({
-          id: `proj-${p.id}`,
-          type: 'project',
-          title: p.title,
-          subtitle: p.venue || 'Portfolio',
-          url: getProjectPath(p),
-          image: p.coverImageUrl,
-          date: d.toISOString(),
-          icon: 'image',
-          isPinned: false
+          dashboardItems.push({
+            id: `proj-${p.id}`,
+            type: 'project',
+            title: p.title,
+            subtitle: p.venue || 'Portfolio',
+            url: getProjectPath(p),
+            image: p.coverImageUrl,
+            date: dateStr,
+            icon: 'image',
+            isPinned: false
+          });
         });
-      });
     }
 
     // Articles
@@ -183,9 +195,11 @@ export default function Links() {
 
   // --- Infinite Scroll ---
   useEffect(() => {
+    if (!hasMore) return;
+    
     const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && hasMore) {
-        setDisplayLimit(prev => prev + 12);
+      if (entries[0].isIntersecting) {
+        setDisplayLimit(prev => prev + 6);
       }
     }, { threshold: 0.1 });
     if (loaderRef.current) observer.observe(loaderRef.current);
@@ -235,47 +249,37 @@ export default function Links() {
       {/* Ambient Background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
         <div className="absolute inset-0 bg-background" />
-        <div className="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-b from-background to-transparent opacity-80" />
-        <div className="absolute -top-[20%] left-[20%] w-[60vw] h-[60vw] bg-accent/10 rounded-full blur-[128px]" />
-        <div className="absolute top-[10%] -right-[10%] w-[50vw] h-[50vw] bg-primary/5 rounded-full blur-[128px]" />
       </div>
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 pt-16 md:pt-24">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 pt-16 md:pt-24">
 
         {/* --- 1. Profile --- */}
-        <div className="flex flex-col items-center text-center mb-16">
+        <div className="flex flex-col items-center text-center mb-16 md:mb-20">
           {bioData.profileImage && (
-            <div className="relative mb-8 group">
-              <div className="absolute inset-0 bg-gradient-to-tr from-accent to-primary rounded-full blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-700" />
-              <div className="relative w-28 h-28 md:w-32 md:h-32 rounded-full p-1 border border-border bg-background/50 backdrop-blur-sm">
-                <div className="w-full h-full rounded-full overflow-hidden">
-                  <img
-                    src={bioData.profileImage}
-                    alt={bioData.name}
-                    className="object-cover w-full h-full"
-                  />
-                </div>
+            <div className="relative mb-6 group">
+              <div className="relative w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden ring-1 ring-border/60">
+                <img
+                  src={bioData.profileImage}
+                  alt={bioData.name}
+                  className="object-cover w-full h-full"
+                />
               </div>
             </div>
           )}
 
-          <h1 className="font-['Playfair_Display'] font-medium text-4xl md:text-5xl tracking-tight mb-3">
+          <h1 className="font-['Playfair_Display'] font-medium text-3xl md:text-4xl tracking-tight mb-2">
             {bioData.name}
           </h1>
-          <div className="flex items-center gap-3">
-            <span className="h-px w-8 bg-gradient-to-r from-transparent to-border" />
-            <p className="font-mono text-xs text-muted-foreground uppercase tracking-widest">
-              {bioData.tagline}
-            </p>
-            <span className="h-px w-8 bg-gradient-to-l from-transparent to-border" />
-          </div>
+          <p className="font-mono text-[10px] text-muted-foreground uppercase tracking-[0.3em] mb-6">
+            {bioData.tagline}
+          </p>
 
-          {/* Socials - Floating Pill */}
-          <div className="mt-8 flex items-center gap-1 p-1.5 rounded-full bg-muted/50 border border-border backdrop-blur-md shadow-lg">
-            <a href="https://instagram.com/brandonptdavis" target="_blank" rel="noopener" aria-label="Visit Instagram Profile" className="p-2.5 rounded-full hover:bg-accent/20 text-muted-foreground hover:text-foreground transition-all"><Instagram className="w-5 h-5" /></a>
-            <a href="https://linkedin.com/in/brandonptdavis" target="_blank" rel="noopener" aria-label="Visit LinkedIn Profile" className="p-2.5 rounded-full hover:bg-accent/20 text-muted-foreground hover:text-foreground transition-all"><Linkedin className="w-5 h-5" /></a>
+          {/* Socials - Clean Pills */}
+          <div className="flex items-center gap-2">
+            <a href="https://instagram.com/brandonptdavis" target="_blank" rel="noopener" aria-label="Instagram" className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"><Instagram className="w-4 h-4" /></a>
+            <a href="https://linkedin.com/in/brandonptdavis" target="_blank" rel="noopener" aria-label="LinkedIn" className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"><Linkedin className="w-4 h-4" /></a>
             <div className="w-px h-4 bg-border mx-1" />
-            <a href="mailto:info@brandonptdavis.com" className="px-4 py-1.5 rounded-full bg-accent text-accent-foreground font-medium text-xs hover:bg-accent/80 transition-colors flex items-center gap-2">
+            <a href="mailto:info@brandonptdavis.com" className="px-4 py-2 rounded-full bg-foreground text-background font-medium text-xs hover:bg-foreground/90 transition-colors flex items-center gap-2">
               <span>Contact</span>
               <Mail className="w-3.5 h-3.5" />
             </a>
@@ -284,10 +288,18 @@ export default function Links() {
 
         {/* --- 2. Pinned Links (Grid) --- */}
         {pinnedItems.length > 0 && (
-          <div className="grid grid-cols-2 gap-3 mb-16">
-            {pinnedItems.map(item => {
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
+            {pinnedItems.map((item, index) => {
               const Icon = getIcon(item.icon);
               const isExternal = item.url.startsWith('http');
+              
+              const accentColors = [
+                '#FF5722',
+                '#00BCD4',
+                '#E91E63',
+                '#FFC107',
+              ];
+              const accentColor = accentColors[index % accentColors.length];
 
               if (isExternal) {
                 return (
@@ -296,14 +308,37 @@ export default function Links() {
                     href={item.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group relative overflow-hidden rounded-xl border border-border bg-muted/50 hover:bg-muted transition-colors"
+                    className="group relative overflow-hidden rounded-lg border border-border/60 hover:border-opacity-0 transition-all duration-300"
+                    style={{ 
+                      borderColor: `${accentColor}40`,
+                    }}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="relative p-4 flex flex-col items-center text-center gap-3">
-                      <Icon className="w-6 h-6 text-muted-foreground group-hover:text-accent transition-colors" />
-                      <span className="font-medium text-sm group-hover:text-foreground">
+                    <div 
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      style={{ 
+                        background: `linear-gradient(135deg, ${accentColor}15 0%, transparent 100%)`
+                      }}
+                    />
+                    <div className="relative p-6 flex flex-col items-center text-center gap-3">
+                      <div 
+                        className="p-3 rounded-full transition-all duration-300"
+                        style={{ 
+                          backgroundColor: `${accentColor}20`,
+                        }}
+                      >
+                        <Icon 
+                          className="w-5 h-5 transition-colors" 
+                          style={{ color: accentColor }}
+                        />
+                      </div>
+                      <span className="font-medium text-sm">
                         {item.title}
                       </span>
+                      {item.subtitle && (
+                        <span className="text-xs text-muted-foreground">
+                          {item.subtitle}
+                        </span>
+                      )}
                     </div>
                   </a>
                 );
@@ -313,14 +348,37 @@ export default function Links() {
                 <Link
                   key={item.id}
                   href={item.url}
-                  className="group relative overflow-hidden rounded-xl border border-border bg-muted/50 hover:bg-muted transition-colors"
+                  className="group relative overflow-hidden rounded-lg border border-border/60 hover:border-opacity-0 transition-all duration-300"
+                  style={{ 
+                    borderColor: `${accentColor}40`,
+                  }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="relative p-4 flex flex-col items-center text-center gap-3">
-                    <Icon className="w-6 h-6 text-muted-foreground group-hover:text-accent transition-colors" />
-                    <span className="font-medium text-sm group-hover:text-foreground">
+                  <div 
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ 
+                      background: `linear-gradient(135deg, ${accentColor}15 0%, transparent 100%)`
+                    }}
+                  />
+                  <div className="relative p-6 flex flex-col items-center text-center gap-3">
+                    <div 
+                      className="p-3 rounded-full transition-all duration-300"
+                      style={{ 
+                        backgroundColor: `${accentColor}20`,
+                      }}
+                    >
+                      <Icon 
+                        className="w-5 h-5 transition-colors" 
+                        style={{ color: accentColor }}
+                      />
+                    </div>
+                    <span className="font-medium text-sm">
                       {item.title}
                     </span>
+                    {item.subtitle && (
+                      <span className="text-xs text-muted-foreground">
+                        {item.subtitle}
+                      </span>
+                    )}
                   </div>
                 </Link>
               );
@@ -328,17 +386,26 @@ export default function Links() {
           </div>
         )}
 
-        {/* --- 3. Latest Feed (3 Columns) --- */}
-        <div className="border-t border-border pt-10">
-          <div className="flex items-center justify-between mb-8 opacity-60">
-            <h2 className="font-mono text-[10px] uppercase tracking-widest">Latest Activity</h2>
-            <div className="h-px flex-1 bg-border ml-4" />
+        {/* --- 3. Timeline Feed (3 Columns) --- */}
+        <div className="border-t border-border/40 pt-12">
+          <div className="flex items-center gap-4 mb-10">
+            <h2 className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Timeline</h2>
+            <div className="h-px flex-1 bg-gradient-to-r from-border/60 to-transparent" />
           </div>
 
-          <div className="grid grid-cols-2 gap-3 md:gap-4">
-            {feedItems.map((item) => {
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {feedItems.map((item, index) => {
               const ItemIcon = getIcon(item.icon);
               const isExternal = item.url.startsWith('http');
+              
+              const accentColors = [
+                '#FF5722',
+                '#00BCD4',
+                '#E91E63',
+                '#FFC107',
+                '#9C27B0',
+              ];
+              const accentColor = accentColors[index % accentColors.length];
 
               if (isExternal) {
                 return (
@@ -347,35 +414,31 @@ export default function Links() {
                     href={item.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative group overflow-hidden rounded-lg bg-muted border border-border aspect-[4/5] hover:border-accent transition-colors"
+                    className="group block"
                   >
-                    {item.image ? (
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-muted flex items-center justify-center">
-                        <ItemIcon className="w-8 h-8 opacity-20" />
-                      </div>
-                    )}
-
-                    <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-background/90 via-background/50 to-transparent" />
-
-                    <div className="absolute inset-x-0 bottom-0 p-4 pb-5 text-center">
-                      <div>
-                        <p className="font-['Playfair_Display'] italic text-sm leading-tight mb-1 drop-shadow-md">
-                          {item.title}
-                        </p>
-                        <p className="font-mono text-[9px] text-muted-foreground uppercase tracking-wider">
-                          {item.type}
-                        </p>
-                      </div>
+                    <div className="relative aspect-[16/9] overflow-hidden rounded-lg bg-muted border border-border/60">
+                      {item.image ? (
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-muted flex items-center justify-center">
+                          <ItemIcon className="w-10 h-10 opacity-20" />
+                        </div>
+                      )}
                     </div>
-
-                    <div className="absolute top-2 right-2 p-1.5 rounded-full bg-background/40 backdrop-blur-sm border border-border z-10 pointer-events-none">
-                      <ItemIcon className="w-3 h-3" />
+                    <div className="pt-3 text-center">
+                      <h3
+                        className="text-xs font-semibold tracking-[0.3em] uppercase mb-1 transition-opacity group-hover:opacity-70"
+                        style={{ color: accentColor }}
+                      >
+                        {item.title}
+                      </h3>
+                      <p className="text-[10px] text-muted-foreground uppercase tracking-wider">
+                        {item.type}
+                      </p>
                     </div>
                   </a>
                 );
@@ -385,35 +448,31 @@ export default function Links() {
                 <Link
                   key={item.id}
                   href={item.url}
-                  className="relative group overflow-hidden rounded-lg bg-muted border border-border aspect-[4/5] hover:border-accent transition-colors"
+                  className="group block"
                 >
-                  {item.image ? (
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-muted flex items-center justify-center">
-                      <ItemIcon className="w-8 h-8 opacity-20" />
-                    </div>
-                  )}
-
-                  <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-background/90 via-background/50 to-transparent" />
-
-                  <div className="absolute inset-x-0 bottom-0 p-4 pb-5 text-center">
-                    <div>
-                      <p className="font-['Playfair_Display'] italic text-sm leading-tight mb-1 drop-shadow-md">
-                        {item.title}
-                      </p>
-                      <p className="font-mono text-[9px] text-muted-foreground uppercase tracking-wider">
-                        {item.type}
-                      </p>
-                    </div>
+                  <div className="relative aspect-[16/9] overflow-hidden rounded-lg bg-muted border border-border/60">
+                    {item.image ? (
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-muted flex items-center justify-center">
+                        <ItemIcon className="w-10 h-10 opacity-20" />
+                      </div>
+                    )}
                   </div>
-
-                  <div className="absolute top-2 right-2 p-1.5 rounded-full bg-background/40 backdrop-blur-sm border border-border z-10 pointer-events-none">
-                    <ItemIcon className="w-3 h-3" />
+                  <div className="pt-3 text-center">
+                    <h3
+                      className="text-xs font-semibold tracking-[0.3em] uppercase mb-1 transition-opacity group-hover:opacity-70"
+                      style={{ color: accentColor }}
+                    >
+                      {item.title}
+                    </h3>
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-wider">
+                      {item.type}
+                    </p>
                   </div>
                 </Link>
               );
@@ -427,11 +486,9 @@ export default function Links() {
           )}
         </div>
 
-        <div className="h-20" /> {/* Bottom spacer */}
-
         {/* Footer */}
-        <footer className="py-8 text-center">
-          <p className="text-xs text-muted-foreground">
+        <footer className="py-12 text-center border-t border-border/40 mt-20">
+          <p className="text-[10px] text-muted-foreground uppercase tracking-[0.3em]">
             © {new Date().getFullYear()} Brandon PT Davis
           </p>
         </footer>
