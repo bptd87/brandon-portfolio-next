@@ -221,7 +221,6 @@ function SortableGalleryItem({ id, item, onRemove, onManageImages, onUpdateMetad
 export default function AdminRenderingGallery() {
     const [activeId, setActiveId] = useState<number | null>(null);
     const [localGallery, setLocalGallery] = useState<any[]>([]);
-    const [hasChanges, setHasChanges] = useState(false);
     const [managingProject, setManagingProject] = useState<{ id: number, title: string } | null>(null);
     const [showQuickAdd, setShowQuickAdd] = useState(false);
     const [quickAddType, setQuickAddType] = useState<'gallery' | 'fullPage'>('gallery');
@@ -263,7 +262,6 @@ export default function AdminRenderingGallery() {
 
     const reorderMutation = trpc.renderingGallery.updateOrder.useMutation({
         onSuccess: () => {
-            setHasChanges(false);
             refetchGallery();
             toast.success("Order saved");
         }
@@ -438,7 +436,7 @@ export default function AdminRenderingGallery() {
                 // Trigger save immediately for order
                 const orderUpdates = newItems.map((item, index) => ({
                     id: item.id,
-                    sortOrder: index
+                    sortOrder: index + 1 // 1-based sort order
                 }));
                 reorderMutation.mutate(orderUpdates);
 
@@ -500,10 +498,6 @@ export default function AdminRenderingGallery() {
     }
 
     // Separate gallery items from full page projects and sort by year DESC
-    const galleryProjects = (projects?.filter(p => p.galleryOnly) || []).sort((a, b) => {
-        if (b.year !== a.year) return (b.year || 0) - (a.year || 0);
-        return (a.title || '').localeCompare(b.title || '');
-    });
     const fullPageProjects = (projects?.filter(p => !p.galleryOnly) || []).sort((a, b) => {
         if (b.year !== a.year) return (b.year || 0) - (a.year || 0);
         return (a.title || '').localeCompare(b.title || '');
@@ -519,16 +513,17 @@ export default function AdminRenderingGallery() {
                 {/* Two Column Layout */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-                    {/* Left Column: Gallery Items */}
+                    {/* Left Column: Gallery (Drag to Reorder) */}
                     <Card className="flex flex-col border-orange-200 dark:border-orange-800 bg-orange-50/20 dark:bg-orange-950/20">
                         <CardHeader className="pb-3 border-b">
                             <div className="flex items-center justify-between">
                                 <div>
                                     <CardTitle className="flex items-center gap-2">
                                         <Badge variant="outline" className="bg-orange-500/20 text-orange-700 border-orange-400 dark:text-orange-400">🖼️</Badge>
-                                        Gallery Items
+                                        Gallery
+                                        <Badge variant="secondary" className="ml-2">{localGallery.length}</Badge>
                                     </CardTitle>
-                                    <CardDescription className="mt-1">Modal only, no detail page</CardDescription>
+                                    <CardDescription className="mt-1">Drag to reorder gallery items</CardDescription>
                                 </div>
                                 <Button
                                     size="sm"
@@ -543,30 +538,47 @@ export default function AdminRenderingGallery() {
                             </div>
                         </CardHeader>
                         <CardContent className="flex-1 overflow-y-auto p-4 max-h-[600px]">
-                            <div className="space-y-2">
-                                {galleryProjects.length === 0 ? (
-                                    <div className="text-center py-12 text-muted-foreground text-sm">
-                                        No gallery items yet.<br />
-                                        Click + to create one.
-                                    </div>
-                                ) : (
-                                    galleryProjects.map(project => (
-                                        <div key={project.id} className="bg-card border border-orange-200/50 dark:border-orange-800/50 rounded-lg p-3 hover:bg-orange-50/50 dark:hover:bg-orange-950/30 transition-colors">
+                            <DndContext
+                                sensors={sensors}
+                                collisionDetection={closestCenter}
+                                onDragStart={handleDragStart}
+                                onDragEnd={handleDragEnd}
+                            >
+                                <SortableContext
+                                    items={localGallery.map(item => item.id)}
+                                    strategy={verticalListSortingStrategy}
+                                >
+                                    {localGallery.length === 0 ? (
+                                        <div className="text-center py-12 text-muted-foreground text-sm border-2 border-dashed rounded-lg">
+                                            No gallery items yet.<br />
+                                            Click + to create one.
+                                        </div>
+                                    ) : (
+                                        localGallery.map(item => (
+                                            <SortableGalleryItem
+                                                key={item.id}
+                                                id={item.id}
+                                                item={item}
+                                                onRemove={handleRemove}
+                                                onManageImages={(pid, title) => setManagingProject({ id: pid, title })}
+                                                onUpdateMetadata={handleUpdateMetadata}
+                                                onUpdateProject={handleUpdateProject}
+                                            />
+                                        ))
+                                    )}
+                                </SortableContext>
+
+                                <DragOverlay>
+                                    {activeId ? (
+                                        <div className="bg-card border rounded-lg p-3 shadow-xl opacity-90 rotate-2">
                                             <div className="flex items-center gap-3">
-                                                <div className="h-12 w-16 flex-shrink-0 bg-muted rounded overflow-hidden">
-                                                    {project.coverImageUrl && (
-                                                        <img src={project.coverImageUrl} alt="" className="w-full h-full object-cover" />
-                                                    )}
-                                                </div>
-                                                <div className="flex-1 min-w-0">
-                                                    <h4 className="font-medium text-sm truncate">{project.title}</h4>
-                                                    <p className="text-xs text-muted-foreground">{project.year}</p>
-                                                </div>
+                                                <div className="h-12 w-16 bg-muted rounded"></div>
+                                                <div className="font-semibold">Dragging...</div>
                                             </div>
                                         </div>
-                                    ))
-                                )}
-                            </div>
+                                    ) : null}
+                                </DragOverlay>
+                            </DndContext>
                         </CardContent>
                     </Card>
 
