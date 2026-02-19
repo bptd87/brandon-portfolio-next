@@ -394,6 +394,31 @@ export const appRouter = router({
 
   // ============ RENDERING PROJECTS MANAGEMENT ============
   renderingProjects: router({
+    list: publicProcedure
+      .input(z.object({
+        status: z.enum(['draft', 'published', 'archived']).optional(),
+        galleryOnly: z.boolean().optional(),
+      }).optional())
+      .query(async ({ input }) => {
+        return await db.getRenderingProjects(input);
+      }),
+
+    getById: publicProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        const project = await db.getRenderingProjectById(input.id);
+        if (!project) return null;
+
+        const images = await db.getRenderingProjectImages(input.id);
+        return { ...project, images };
+      }),
+
+    getBySlug: publicProcedure
+      .input(z.object({ slug: z.string() }))
+      .query(async ({ input }) => {
+        return await db.getRenderingProjectBySlug(input.slug);
+      }),
+
     create: adminProcedure
       .input(z.object({
         title: z.string().min(1).max(255),
@@ -408,6 +433,7 @@ export const appRouter = router({
         month: z.number().min(1).max(12).optional(),
         status: z.enum(['draft', 'published', 'archived']).default('draft'),
         featured: z.boolean().default(false),
+        galleryOnly: z.boolean().default(false),
         metadata: z.any().optional(),
         seoTitle: z.string().max(255).optional(),
         seoDescription: z.string().optional(),
@@ -451,6 +477,7 @@ export const appRouter = router({
         month: z.number().min(1).max(12).optional(),
         status: z.enum(['draft', 'published', 'archived']).optional(),
         featured: z.boolean().optional(),
+        galleryOnly: z.boolean().optional(),
         metadata: z.any().optional(),
         seoTitle: z.string().max(255).optional(),
         seoDescription: z.string().optional(),

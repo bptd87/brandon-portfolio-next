@@ -9,9 +9,9 @@ import { ProcessGalleryModal } from "@/components/ProcessGalleryModal";
 import { useEffect, useMemo, useState } from "react";
 
 export default function RenderingPortfolio() {
-  const { data: projects, isLoading: projectsLoading } = trpc.projects.list.useQuery({
-    status: 'published',
-    discipline: 'rendering'
+  // Full project pages - query rendering_projects where gallery_only = false
+  const { data: projects, isLoading: projectsLoading } = trpc.renderingProjects.list.useQuery({
+    galleryOnly: false
   });
 
   const { data: galleryItems, isLoading: galleryLoading } = trpc.renderingGallery.list.useQuery(undefined, {

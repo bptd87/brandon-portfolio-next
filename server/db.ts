@@ -2164,6 +2164,7 @@ export async function createRenderingProject(data: any) {
       month: data.month,
       status: data.status || 'draft',
       featured: data.featured || false,
+      gallery_only: data.galleryOnly !== undefined ? data.galleryOnly : false,
       metadata: data.metadata,
       seo_title: data.seoTitle,
       seo_description: data.seoDescription,
@@ -2191,6 +2192,7 @@ export async function updateRenderingProject(id: number, data: any) {
   if (data.month !== undefined) updateData.month = data.month;
   if (data.status !== undefined) updateData.status = data.status;
   if (data.featured !== undefined) updateData.featured = data.featured;
+  if (data.galleryOnly !== undefined) updateData.gallery_only = data.galleryOnly;
   if (data.metadata !== undefined) updateData.metadata = data.metadata;
   if (data.seoTitle !== undefined) updateData.seo_title = data.seoTitle;
   if (data.seoDescription !== undefined) updateData.seo_description = data.seoDescription;
@@ -2223,6 +2225,79 @@ export async function getRenderingProjectById(id: number) {
 
   if (error) throw error;
   return data;
+}
+
+export async function getRenderingProjects(filters?: { status?: string; galleryOnly?: boolean }) {
+  let query = supabase
+    .from('rendering_projects')
+    .select('*')
+    .order('year', { ascending: false });
+
+  if (filters?.status) {
+    query = query.eq('status', filters.status);
+  }
+
+  if (filters?.galleryOnly !== undefined) {
+    query = query.eq('gallery_only', filters.galleryOnly);
+  }
+
+  const { data, error } = await query;
+  if (error) throw error;
+
+  // Fetch images for each project
+  if (data && data.length > 0) {
+    const projectsWithImages = await Promise.all(
+      data.map(async (project) => {
+        const images = await getRenderingProjectImages(project.id);
+        return {
+          ...project,
+          images,
+          // Map snake_case to camelCase for frontend
+          coverImageUrl: project.cover_image_url,
+          coverImageKey: project.cover_image_key,
+          designNotes: project.design_notes,
+          seoTitle: project.seo_title,
+          seoDescription: project.seo_description,
+          seoKeywords: project.seo_keywords,
+          createdAt: new Date(project.created_at),
+          updatedAt: new Date(project.updated_at),
+          publishedAt: project.published_at ? new Date(project.published_at) : null,
+        };
+      })
+    );
+    return projectsWithImages;
+  }
+
+  return [];
+}
+
+export async function getRenderingProjectBySlug(slug: string) {
+  const { data, error } = await supabase
+    .from('rendering_projects')
+    .select('*')
+    .eq('slug', slug)
+    .single();
+
+  if (error) {
+    if (error.code === 'PGRST116') return null; // Not found
+    throw error;
+  }
+
+  const images = await getRenderingProjectImages(data.id);
+
+  return {
+    ...data,
+    images,
+    coverImageUrl: data.cover_image_url,
+    coverImageKey: data.cover_image_key,
+    designNotes: data.design_notes,
+    seoTitle: data.seo_title,
+    seoDescription: data.seo_description,
+    seoKeywords: data.seo_keywords,
+    createdAt: new Date(data.created_at),
+    updatedAt: new Date(data.updated_at),
+    publishedAt: data.published_at ? new Date(data.published_at) : null,
+  };
 }
 
 export async function getRenderingProjectImages(projectId: number) {
