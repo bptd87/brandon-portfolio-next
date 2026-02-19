@@ -2146,6 +2146,242 @@ export async function deleteCollaborator(id: number) {
   if (error) throw error;
 }
 
+// ============ RENDERING PROJECTS OPERATIONS ============
+
+export async function createRenderingProject(data: any) {
+  const { data: result, error } = await supabase
+    .from('rendering_projects')
+    .insert({
+      title: data.title,
+      slug: data.slug,
+      excerpt: data.excerpt,
+      design_notes: data.designNotes,
+      cover_image_url: data.coverImageUrl,
+      cover_image_key: data.coverImageKey,
+      location: data.location,
+      client: data.client,
+      year: data.year,
+      month: data.month,
+      status: data.status || 'draft',
+      featured: data.featured || false,
+      metadata: data.metadata,
+      seo_title: data.seoTitle,
+      seo_description: data.seoDescription,
+      seo_keywords: data.seoKeywords,
+      published_at: data.publishedAt
+    })
+    .select('id')
+    .single();
+
+  if (error) throw error;
+  return result.id;
+}
+
+export async function updateRenderingProject(id: number, data: any) {
+  const updateData: any = {};
+  if (data.title !== undefined) updateData.title = data.title;
+  if (data.slug !== undefined) updateData.slug = data.slug;
+  if (data.excerpt !== undefined) updateData.excerpt = data.excerpt;
+  if (data.designNotes !== undefined) updateData.design_notes = data.designNotes;
+  if (data.coverImageUrl !== undefined) updateData.cover_image_url = data.coverImageUrl;
+  if (data.coverImageKey !== undefined) updateData.cover_image_key = data.coverImageKey;
+  if (data.location !== undefined) updateData.location = data.location;
+  if (data.client !== undefined) updateData.client = data.client;
+  if (data.year !== undefined) updateData.year = data.year;
+  if (data.month !== undefined) updateData.month = data.month;
+  if (data.status !== undefined) updateData.status = data.status;
+  if (data.featured !== undefined) updateData.featured = data.featured;
+  if (data.metadata !== undefined) updateData.metadata = data.metadata;
+  if (data.seoTitle !== undefined) updateData.seo_title = data.seoTitle;
+  if (data.seoDescription !== undefined) updateData.seo_description = data.seoDescription;
+  if (data.seoKeywords !== undefined) updateData.seo_keywords = data.seoKeywords;
+  if (data.publishedAt !== undefined) updateData.published_at = data.publishedAt;
+
+  const { error } = await supabase
+    .from('rendering_projects')
+    .update(updateData)
+    .eq('id', id);
+
+  if (error) throw error;
+}
+
+export async function deleteRenderingProject(id: number) {
+  const { error } = await supabase
+    .from('rendering_projects')
+    .delete()
+    .eq('id', id);
+
+  if (error) throw error;
+}
+
+export async function getRenderingProjectById(id: number) {
+  const { data, error } = await supabase
+    .from('rendering_projects')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
+export async function getRenderingProjectImages(projectId: number) {
+  const { data, error } = await supabase
+    .from('rendering_project_images')
+    .select('*')
+    .eq('rendering_project_id', projectId)
+    .order('sort_order', { ascending: true });
+
+  if (error) throw error;
+  return data || [];
+}
+
+export async function addRenderingProjectImage(data: any) {
+  const { error } = await supabase
+    .from('rendering_project_images')
+    .insert({
+      rendering_project_id: data.renderingProjectId || data.projectId,
+      title: data.title,
+      image_url: data.imageUrl,
+      image_key: data.imageKey,
+      video_url: data.videoUrl,
+      image_type: data.imageType || 'production',
+      caption: data.caption,
+      alt_text: data.altText,
+      sort_order: data.sortOrder || 0
+    });
+
+  if (error) throw error;
+}
+
+export async function deleteRenderingProjectImages(projectId: number) {
+  const { error } = await supabase
+    .from('rendering_project_images')
+    .delete()
+    .eq('rendering_project_id', projectId);
+
+  if (error) throw error;
+}
+
+// ============ EXPERIENTIAL PROJECTS OPERATIONS ============
+
+export async function createExperientialProject(data: any) {
+  const { data: result, error } = await supabase
+    .from('experiential_projects')
+    .insert({
+      title: data.title,
+      slug: data.slug,
+      excerpt: data.excerpt,
+      design_notes: data.designNotes,
+      cover_image_url: data.coverImageUrl,
+      cover_image_key: data.coverImageKey,
+      location: data.location,
+      client: data.client,
+      year: data.year,
+      month: data.month,
+      gallery_type: data.galleryType || 'rendering',
+      status: data.status || 'draft',
+      featured: data.featured || false,
+      metadata: data.metadata,
+      seo_title: data.seoTitle,
+      seo_description: data.seoDescription,
+      seo_keywords: data.seoKeywords,
+      published_at: data.publishedAt
+    })
+    .select('id')
+    .single();
+
+  if (error) throw error;
+  return result.id;
+}
+
+export async function updateExperientialProject(id: number, data: any) {
+  const updateData: any = {};
+  if (data.title !== undefined) updateData.title = data.title;
+  if (data.slug !== undefined) updateData.slug = data.slug;
+  if (data.excerpt !== undefined) updateData.excerpt = data.excerpt;
+  if (data.designNotes !== undefined) updateData.design_notes = data.designNotes;
+  if (data.coverImageUrl !== undefined) updateData.cover_image_url = data.coverImageUrl;
+  if (data.coverImageKey !== undefined) updateData.cover_image_key = data.coverImageKey;
+  if (data.location !== undefined) updateData.location = data.location;
+  if (data.client !== undefined) updateData.client = data.client;
+  if (data.year !== undefined) updateData.year = data.year;
+  if (data.month !== undefined) updateData.month = data.month;
+  if (data.galleryType !== undefined) updateData.gallery_type = data.galleryType;
+  if (data.status !== undefined) updateData.status = data.status;
+  if (data.featured !== undefined) updateData.featured = data.featured;
+  if (data.metadata !== undefined) updateData.metadata = data.metadata;
+  if (data.seoTitle !== undefined) updateData.seo_title = data.seoTitle;
+  if (data.seoDescription !== undefined) updateData.seo_description = data.seoDescription;
+  if (data.seoKeywords !== undefined) updateData.seo_keywords = data.seoKeywords;
+  if (data.publishedAt !== undefined) updateData.published_at = data.publishedAt;
+
+  const { error } = await supabase
+    .from('experiential_projects')
+    .update(updateData)
+    .eq('id', id);
+
+  if (error) throw error;
+}
+
+export async function deleteExperientialProject(id: number) {
+  const { error } = await supabase
+    .from('experiential_projects')
+    .delete()
+    .eq('id', id);
+
+  if (error) throw error;
+}
+
+export async function getExperientialProjectById(id: number) {
+  const { data, error } = await supabase
+    .from('experiential_projects')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
+export async function getExperientialProjectImages(projectId: number) {
+  const { data, error } = await supabase
+    .from('experiential_project_images')
+    .select('*')
+    .eq('experiential_project_id', projectId)
+    .order('sort_order', { ascending: true });
+
+  if (error) throw error;
+  return data || [];
+}
+
+export async function addExperientialProjectImage(data: any) {
+  const { error } = await supabase
+    .from('experiential_project_images')
+    .insert({
+      experiential_project_id: data.experientialProjectId || data.projectId,
+      title: data.title,
+      image_url: data.imageUrl,
+      image_key: data.imageKey,
+      video_url: data.videoUrl,
+      image_type: data.imageType || 'production',
+      caption: data.caption,
+      alt_text: data.altText,
+      sort_order: data.sortOrder || 0
+    });
+
+  if (error) throw error;
+}
+
+export async function deleteExperientialProjectImages(projectId: number) {
+  const { error } = await supabase
+    .from('experiential_project_images')
+    .delete()
+    .eq('experiential_project_id', projectId);
+
+  if (error) throw error;
+}
+
 // ============ RENDERING GALLERY OPERATIONS ============
 
 export async function getRenderingGallery() {

@@ -392,6 +392,200 @@ export const appRouter = router({
       }),
   }),
 
+  // ============ RENDERING PROJECTS MANAGEMENT ============
+  renderingProjects: router({
+    create: adminProcedure
+      .input(z.object({
+        title: z.string().min(1).max(255),
+        slug: z.string().min(1).max(255),
+        excerpt: z.string().optional(),
+        designNotes: z.string().optional(),
+        coverImageUrl: z.string().optional(),
+        coverImageKey: z.string().optional(),
+        location: z.string().max(255).optional(),
+        client: z.string().max(255).optional(),
+        year: z.number().optional(),
+        month: z.number().min(1).max(12).optional(),
+        status: z.enum(['draft', 'published', 'archived']).default('draft'),
+        featured: z.boolean().default(false),
+        metadata: z.any().optional(),
+        seoTitle: z.string().max(255).optional(),
+        seoDescription: z.string().optional(),
+        seoKeywords: z.string().optional(),
+        images: z.array(z.object({
+          imageUrl: z.string().optional(),
+          imageKey: z.string().optional(),
+          videoUrl: z.string().optional(),
+          imageType: z.enum(['production', 'rendering', 'technical_drawing', 'video']).optional(),
+          title: z.string().optional(),
+          caption: z.string().optional(),
+          altText: z.string().optional(),
+          sortOrder: z.number(),
+        })).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { images, ...projectData } = input;
+        const id = await db.createRenderingProject(projectData);
+
+        if (images && images.length > 0) {
+          for (const image of images) {
+            await db.addRenderingProjectImage({ renderingProjectId: id, ...image });
+          }
+        }
+
+        return { id };
+      }),
+
+    update: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        title: z.string().min(1).max(255).optional(),
+        slug: z.string().min(1).max(255).optional(),
+        excerpt: z.string().optional(),
+        designNotes: z.string().optional(),
+        coverImageUrl: z.string().optional(),
+        coverImageKey: z.string().optional(),
+        location: z.string().max(255).optional(),
+        client: z.string().max(255).optional(),
+        year: z.number().optional(),
+        month: z.number().min(1).max(12).optional(),
+        status: z.enum(['draft', 'published', 'archived']).optional(),
+        featured: z.boolean().optional(),
+        metadata: z.any().optional(),
+        seoTitle: z.string().max(255).optional(),
+        seoDescription: z.string().optional(),
+        seoKeywords: z.string().optional(),
+        images: z.array(z.object({
+          imageUrl: z.string().optional(),
+          imageKey: z.string().optional(),
+          videoUrl: z.string().optional(),
+          imageType: z.enum(['production', 'rendering', 'technical_drawing', 'video']).optional(),
+          title: z.string().optional(),
+          caption: z.string().optional(),
+          altText: z.string().optional(),
+          sortOrder: z.number(),
+        })).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, images, ...projectData } = input;
+        await db.updateRenderingProject(id, projectData);
+
+        if (images !== undefined) {
+          await db.deleteRenderingProjectImages(id);
+          for (const image of images) {
+            await db.addRenderingProjectImage({ renderingProjectId: id, ...image });
+          }
+        }
+
+        return { success: true };
+      }),
+
+    delete: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await db.deleteRenderingProject(input.id);
+        return { success: true };
+      }),
+  }),
+
+  // ============ EXPERIENTIAL PROJECTS MANAGEMENT ============
+  experientialProjects: router({
+    create: adminProcedure
+      .input(z.object({
+        title: z.string().min(1).max(255),
+        slug: z.string().min(1).max(255),
+        excerpt: z.string().optional(),
+        designNotes: z.string().optional(),
+        coverImageUrl: z.string().optional(),
+        coverImageKey: z.string().optional(),
+        location: z.string().max(255).optional(),
+        client: z.string().max(255).optional(),
+        year: z.number().optional(),
+        month: z.number().min(1).max(12).optional(),
+        galleryType: z.enum(['rendering', 'technical-drawing', 'live-events']).default('rendering'),
+        status: z.enum(['draft', 'published', 'archived']).default('draft'),
+        featured: z.boolean().default(false),
+        metadata: z.any().optional(),
+        seoTitle: z.string().max(255).optional(),
+        seoDescription: z.string().optional(),
+        seoKeywords: z.string().optional(),
+        images: z.array(z.object({
+          imageUrl: z.string().optional(),
+          imageKey: z.string().optional(),
+          videoUrl: z.string().optional(),
+          imageType: z.enum(['production', 'rendering', 'technical_drawing', 'video']).optional(),
+          title: z.string().optional(),
+          caption: z.string().optional(),
+          altText: z.string().optional(),
+          sortOrder: z.number(),
+        })).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { images, ...projectData } = input;
+        const id = await db.createExperientialProject(projectData);
+
+        if (images && images.length > 0) {
+          for (const image of images) {
+            await db.addExperientialProjectImage({ experientialProjectId: id, ...image });
+          }
+        }
+
+        return { id };
+      }),
+
+    update: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        title: z.string().min(1).max(255).optional(),
+        slug: z.string().min(1).max(255).optional(),
+        excerpt: z.string().optional(),
+        designNotes: z.string().optional(),
+        coverImageUrl: z.string().optional(),
+        coverImageKey: z.string().optional(),
+        location: z.string().max(255).optional(),
+        client: z.string().max(255).optional(),
+        year: z.number().optional(),
+        month: z.number().min(1).max(12).optional(),
+        galleryType: z.enum(['rendering', 'technical-drawing', 'live-events']).optional(),
+        status: z.enum(['draft', 'published', 'archived']).optional(),
+        featured: z.boolean().optional(),
+        metadata: z.any().optional(),
+        seoTitle: z.string().max(255).optional(),
+        seoDescription: z.string().optional(),
+        seoKeywords: z.string().optional(),
+        images: z.array(z.object({
+          imageUrl: z.string().optional(),
+          imageKey: z.string().optional(),
+          videoUrl: z.string().optional(),
+          imageType: z.enum(['production', 'rendering', 'technical_drawing', 'video']).optional(),
+          title: z.string().optional(),
+          caption: z.string().optional(),
+          altText: z.string().optional(),
+          sortOrder: z.number(),
+        })).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, images, ...projectData } = input;
+        await db.updateExperientialProject(id, projectData);
+
+        if (images !== undefined) {
+          await db.deleteExperientialProjectImages(id);
+          for (const image of images) {
+            await db.addExperientialProjectImage({ experientialProjectId: id, ...image });
+          }
+        }
+
+        return { success: true };
+      }),
+
+    delete: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await db.deleteExperientialProject(input.id);
+        return { success: true };
+      }),
+  }),
+
   // ============ NEWS MANAGEMENT ============
   news: router({
     list: publicProcedure
