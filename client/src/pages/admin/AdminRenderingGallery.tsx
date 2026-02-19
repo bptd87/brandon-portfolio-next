@@ -618,10 +618,10 @@ export default function AdminRenderingGallery() {
                     </CardContent>
                 </Card>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-[calc(100vh-400px)]">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
                     {/* Left Column: Active Gallery */}
-                    <Card className="flex flex-col h-full overflow-hidden border-primary/20 bg-primary/5">
+                    <Card className="flex flex-col overflow-hidden border-primary/20 bg-primary/5">
                         <CardHeader className="pb-3 border-b bg-card">
                             <CardTitle className="flex items-center justify-between">
                                 <span>Active Gallery</span>
@@ -631,7 +631,7 @@ export default function AdminRenderingGallery() {
                                 Drag to reorder.
                             </CardDescription>
                         </CardHeader>
-                        <CardContent className="flex-1 overflow-y-auto p-4 bg-muted/20">
+                        <CardContent className="overflow-y-auto p-4 bg-muted/20 max-h-[600px]">
                             <DndContext
                                 sensors={sensors}
                                 collisionDetection={closestCenter}
@@ -676,91 +676,147 @@ export default function AdminRenderingGallery() {
                         </CardContent>
                     </Card>
 
-                    {/* Right Column: Available Projects */}
-                    <Card className="flex flex-col h-full overflow-hidden">
-                        <CardHeader className="pb-3 border-b">
-                            <CardTitle className="flex items-center justify-between">
-                                <span>Existing Projects</span>
-                                <Badge variant="outline">{availableProjects.length}</Badge>
-                            </CardTitle>
-                            <CardDescription>
-                                Add existing projects that aren't in the gallery.
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent className="flex-1 overflow-y-auto p-4 space-y-6">
-                            {availableProjects.length === 0 ? (
-                                <div className="text-center py-12 text-muted-foreground">
-                                    All available projects are in the gallery.
+                    {/* Right Column: Create New Projects */}
+                    <div className="flex flex-col gap-4 h-full overflow-y-auto">
+                        
+                        {/* Create Full Project Page */}
+                        <Card className="border-2 border-blue-300/50 dark:border-blue-700/50 bg-blue-50/30 dark:bg-blue-950/20">
+                            <CardHeader className="pb-3 border-b border-blue-200 dark:border-blue-800">
+                                <CardTitle className="text-lg flex items-center gap-2">
+                                    <Badge variant="outline" className="bg-blue-500/20 text-blue-700 border-blue-400 dark:text-blue-400">📄 Full Page</Badge>
+                                    <span className="text-base">Create Full Project Page</span>
+                                </CardTitle>
+                                <CardDescription>
+                                    Creates a complete project with detail page at /projects/rendering/&#123;slug&#125;
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent className="pt-4">
+                                <div className="space-y-3 text-sm text-muted-foreground">
+                                    <p>✓ Dedicated detail page with full content</p>
+                                    <p>✓ Shows in "Selected Works" section</p>
+                                    <p>✓ Also appears in gallery grid</p>
+                                    <p className="pt-2 text-xs border-t">
+                                        Best for: Projects with design notes, multiple images, or detailed write-ups
+                                    </p>
                                 </div>
-                            ) : (
-                                <>
-                                    {/* Full Project Pages Section */}
-                                    {availableFullPages.length > 0 && (
-                                        <div className="space-y-2">
-                                            <div className="flex items-center gap-2 mb-3">
-                                                <Badge variant="outline" className="bg-blue-500/10 text-blue-700 border-blue-300 dark:bg-blue-500/20 dark:text-blue-400 dark:border-blue-700">📄 Full Project Pages</Badge>
-                                                <span className="text-xs text-muted-foreground">({availableFullPages.length})</span>
-                                            </div>
-                                            <div className="grid gap-2">
-                                                {availableFullPages.map(project => (
-                                                    <div key={project.id} className="bg-card border border-blue-200/50 dark:border-blue-800/50 rounded-lg p-3 flex items-center gap-3 hover:bg-blue-50/50 dark:hover:bg-blue-950/20 transition-colors">
-                                                        <div className="h-12 w-16 flex-shrink-0 bg-muted rounded overflow-hidden">
-                                                            {project.coverImageUrl ? (
-                                                                <img src={project.coverImageUrl} alt="" className="w-full h-full object-cover" />
-                                                            ) : null}
-                                                        </div>
-                                                        <div className="flex-1 min-w-0">
-                                                            <h4 className="font-medium text-sm truncate">{project.title}</h4>
-                                                            <p className="text-xs text-muted-foreground truncate">{project.year} • {project.status}</p>
-                                                        </div>
-                                                        <Button
-                                                            size="sm"
-                                                            variant="secondary"
-                                                            onClick={() => handleAdd(project.id)}
-                                                        >
-                                                            <Plus className="h-4 w-4 mr-1" /> Add
-                                                        </Button>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
+                                <Button 
+                                    className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white"
+                                    size="lg"
+                                >
+                                    <Plus className="h-5 w-5 mr-2" />
+                                    Create Full Project Page
+                                </Button>
+                            </CardContent>
+                        </Card>
 
-                                    {/* Gallery-Only Items Section */}
-                                    {availableGalleryOnly.length > 0 && (
-                                        <div className="space-y-2">
-                                            <div className="flex items-center gap-2 mb-3">
-                                                <Badge variant="outline" className="bg-orange-500/10 text-orange-700 border-orange-300 dark:bg-orange-500/20 dark:text-orange-400 dark:border-orange-700">🖼️ Gallery-Only Items</Badge>
-                                                <span className="text-xs text-muted-foreground">({availableGalleryOnly.length})</span>
-                                            </div>
-                                            <div className="grid gap-2">
-                                                {availableGalleryOnly.map(project => (
-                                                    <div key={project.id} className="bg-card border border-orange-200/50 dark:border-orange-800/50 rounded-lg p-3 flex items-center gap-3 hover:bg-orange-50/50 dark:hover:bg-orange-950/20 transition-colors">
-                                                        <div className="h-12 w-16 flex-shrink-0 bg-muted rounded overflow-hidden">
-                                                            {project.coverImageUrl ? (
+                        {/* Create Gallery-Only Item */}
+                        <Card className="border-2 border-orange-300/50 dark:border-orange-700/50 bg-orange-50/30 dark:bg-orange-950/20">
+                            <CardHeader className="pb-3 border-b border-orange-200 dark:border-orange-800">
+                                <CardTitle className="text-lg flex items-center gap-2">
+                                    <Badge variant="outline" className="bg-orange-500/20 text-orange-700 border-orange-400 dark:text-orange-400">🖼️ Gallery</Badge>
+                                    <span className="text-base">Create Gallery-Only Item</span>
+                                </CardTitle>
+                                <CardDescription>
+                                    Creates a gallery item that opens in modal overlay (no dedicated page)
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent className="pt-4">
+                                <div className="space-y-3 text-sm text-muted-foreground">
+                                    <p>✓ Opens in lightbox modal</p>
+                                    <p>✓ Shows only in gallery grid</p>
+                                    <p>✓ No standalone URL route</p>
+                                    <p className="pt-2 text-xs border-t">
+                                        Best for: Quick concept renders, studies, or projects without extensive details
+                                    </p>
+                                </div>
+                                <Button 
+                                    className="w-full mt-4 bg-orange-600 hover:bg-orange-700 text-white"
+                                    size="lg"
+                                >
+                                    <Plus className="h-5 w-5 mr-2" />
+                                    Create Gallery Item
+                                </Button>
+                            </CardContent>
+                        </Card>
+
+                        {/* Existing Projects (if any) */}
+                        {availableProjects.length > 0 && (
+                            <Card className="border-muted">
+                                <CardHeader className="pb-3 border-b">
+                                    <CardTitle className="text-base flex items-center justify-between">
+                                        <span>Add Existing Projects</span>
+                                        <Badge variant="outline">{availableProjects.length}</Badge>
+                                    </CardTitle>
+                                    <CardDescription className="text-xs">
+                                        Projects not currently in the gallery
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent className="pt-4">
+                                    <div className="space-y-4 max-h-[400px] overflow-y-auto">
+                                        {availableFullPages.length > 0 && (
+                                            <div className="space-y-2">
+                                                <div className="text-xs font-medium text-muted-foreground flex items-center gap-2">
+                                                    <Badge variant="outline" className="bg-blue-500/10 text-blue-700 border-blue-300 dark:bg-blue-500/20 dark:text-blue-400 dark:border-blue-700 text-[10px]">📄</Badge>
+                                                    Full Pages ({availableFullPages.length})
+                                                </div>
+                                                {availableFullPages.map(project => (
+                                                    <div key={project.id} className="bg-card border border-blue-200/50 dark:border-blue-800/50 rounded p-2 flex items-center gap-2 hover:bg-blue-50/50 dark:hover:bg-blue-950/20 transition-colors">
+                                                        <div className="h-10 w-14 flex-shrink-0 bg-muted rounded overflow-hidden">
+                                                            {project.coverImageUrl && (
                                                                 <img src={project.coverImageUrl} alt="" className="w-full h-full object-cover" />
-                                                            ) : null}
+                                                            )}
                                                         </div>
                                                         <div className="flex-1 min-w-0">
-                                                            <h4 className="font-medium text-sm truncate">{project.title}</h4>
-                                                            <p className="text-xs text-muted-foreground truncate">{project.year} • {project.status}</p>
+                                                            <h4 className="font-medium text-xs truncate">{project.title}</h4>
+                                                            <p className="text-[10px] text-muted-foreground">{project.year}</p>
                                                         </div>
                                                         <Button
                                                             size="sm"
-                                                            variant="secondary"
+                                                            variant="ghost"
+                                                            className="h-7 px-2"
                                                             onClick={() => handleAdd(project.id)}
                                                         >
-                                                            <Plus className="h-4 w-4 mr-1" /> Add
+                                                            <Plus className="h-3 w-3" />
                                                         </Button>
                                                     </div>
                                                 ))}
                                             </div>
-                                        </div>
-                                    )}
-                                </>
-                            )}
-                        </CardContent>
-                    </Card>
+                                        )}
+
+                                        {availableGalleryOnly.length > 0 && (
+                                            <div className="space-y-2">
+                                                <div className="text-xs font-medium text-muted-foreground flex items-center gap-2">
+                                                    <Badge variant="outline" className="bg-orange-500/10 text-orange-700 border-orange-300 dark:bg-orange-500/20 dark:text-orange-400 dark:border-orange-700 text-[10px]">🖼️</Badge>
+                                                    Gallery-Only ({availableGalleryOnly.length})
+                                                </div>
+                                                {availableGalleryOnly.map(project => (
+                                                    <div key={project.id} className="bg-card border border-orange-200/50 dark:border-orange-800/50 rounded p-2 flex items-center gap-2 hover:bg-orange-50/50 dark:hover:bg-orange-950/20 transition-colors">
+                                                        <div className="h-10 w-14 flex-shrink-0 bg-muted rounded overflow-hidden">
+                                                            {project.coverImageUrl && (
+                                                                <img src={project.coverImageUrl} alt="" className="w-full h-full object-cover" />
+                                                            )}
+                                                        </div>
+                                                        <div className="flex-1 min-w-0">
+                                                            <h4 className="font-medium text-xs truncate">{project.title}</h4>
+                                                            <p className="text-[10px] text-muted-foreground">{project.year}</p>
+                                                        </div>
+                                                        <Button
+                                                            size="sm"
+                                                            variant="ghost"
+                                                            className="h-7 px-2"
+                                                            onClick={() => handleAdd(project.id)}
+                                                        >
+                                                            <Plus className="h-3 w-3" />
+                                                        </Button>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        )}
+                    </div>
 
                 </div>
             </div>

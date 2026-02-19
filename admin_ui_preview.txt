@@ -1,0 +1,80 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                        ADMIN RENDERING GALLERY - NEW UI                        ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+┌────────────────────────────────────┬────────────────────────────────────┐
+│     ACTIVE GALLERY (6 Items)       │     EXISTING PROJECTS (0)          │
+│  Drag to reorder                   │  Add projects not in gallery       │
+├────────────────────────────────────┼────────────────────────────────────┤
+│                                    │                                    │
+│ 🖼️ [img] Isolation                 │  All available projects are in     │
+│         📄 Full Page               │  the gallery.                      │
+│         [Manage] [Edit] [Remove]   │                                    │
+│                                    │  (If there were projects, they'd   │
+│ 🖼️ [img] Northwind Mare Tavern     │   be shown in two sections:)       │
+│         📄 Full Page               │                                    │
+│         [Manage] [Edit] [Remove]   │  📄 Full Project Pages (0)         │
+│                                    │  ┌─────────────────────────────┐  │
+│ 🖼️ [img] Ashes of Underworld       │  │ (Projects with detail pages)│  │
+│         📄 Full Page               │  └─────────────────────────────┘  │
+│         [Manage] [Edit] [Remove]   │                                    │
+│                                    │  🖼️ Gallery-Only Items (0)         │
+│ 🖼️ [img] Angel Food Cake           │  ┌─────────────────────────────┐  │
+│         📄 Full Page               │  │ (Modal only, no detail page)│  │
+│         [Manage] [Edit] [Remove]   │  └─────────────────────────────┘  │
+│                                    │                                    │
+│ 🖼️ [img] All My Sons               │                                    │
+│         🖼️ Gallery Only             │                                    │
+│         [Manage] [Edit] [Remove]   │                                    │
+│                                    │                                    │
+│ 🖼️ [img] Boeing, Boeing            │                                    │
+│         🖼️ Gallery Only             │                                    │
+│         [Manage] [Edit] [Remove]   │                                    │
+│                                    │                                    │
+└────────────────────────────────────┴────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+
+VISUAL MARKERS:
+
+📄 Full Page (BLUE badge)
+   • Has dedicated detail page at /projects/rendering/{slug}
+   • Appears in "Selected Works" section on portfolio page
+   • Also appears in gallery grid (can open modal OR navigate to page)
+   • Examples: Isolation, Northwind Mare Tavern, Ashes, Angel Food Cake
+
+🖼️ Gallery Only (ORANGE badge)
+   • No detail page route
+   • Only appears in "Archive & Exploration" gallery grid
+   • Clicking opens ProcessGalleryModal overlay
+   • Examples: All My Sons, Boeing Boeing
+
+═══════════════════════════════════════════════════════════════════════════════
+
+COLOR CODING:
+
+ACTIVE GALLERY (Left Column):
+  • Blue badge = Full project with detail page
+  • Orange badge = Gallery-only modal item
+
+EXISTING PROJECTS (Right Column):
+  • Blue section + blue borders = Full Project Pages
+  • Orange section + orange borders = Gallery-Only Items
+
+═══════════════════════════════════════════════════════════════════════════════
+
+CURRENT DATA (All 6 projects already in gallery):
+
+Active Gallery:
+  1. Isolation              📄 Full Page
+  2. Northwind Mare Tavern  📄 Full Page
+  3. Ashes of Underworld    📄 Full Page
+  4. Angel Food Cake        📄 Full Page
+  5. All My Sons            🖼️ Gallery Only
+  6. Boeing, Boeing         🖼️ Gallery Only
+
+Existing Projects:
+  📄 Full Project Pages: 0 (all 4 are in gallery)
+  🖼️ Gallery-Only Items: 0 (both are in gallery)
+
+═══════════════════════════════════════════════════════════════════════════════
