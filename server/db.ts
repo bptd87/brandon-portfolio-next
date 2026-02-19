@@ -2197,6 +2197,8 @@ export async function getRenderingGallery() {
     return galleryItems.map(item => {
       const project = projectMap.get(item.project_id);
       const projectImages = imagesMap.get(item.project_id) || [];
+      // Fallback: use first project image if no cover_image is set
+      const coverImageUrl = project?.cover_image || (projectImages.length > 0 ? projectImages[0].image_url : null);
 
       return {
         id: item.id,
@@ -2212,7 +2214,7 @@ export async function getRenderingGallery() {
           slug: project.slug,
           excerpt: project.excerpt,
           designNotes: project.design_notes,
-          coverImageUrl: project.cover_image,
+          coverImageUrl: coverImageUrl,
           coverImageKey: project.cover_image_key,
           client: project.client,
           location: project.location,
@@ -2360,6 +2362,8 @@ export async function getExperientialGallery(): Promise<RenderingGalleryItem[]> 
     return galleryItems.map(item => {
       const project = projectMap.get(item.project_id);
       const projectImages = imagesMap.get(item.project_id) || [];
+      // Fallback: use first project image if no cover_image is set
+      const coverImageUrl = project?.cover_image || (projectImages.length > 0 ? projectImages[0].image_url : null);
 
       return {
         id: item.id,
@@ -2375,7 +2379,7 @@ export async function getExperientialGallery(): Promise<RenderingGalleryItem[]> 
           slug: project.slug,
           excerpt: project.excerpt,
           designNotes: project.design_notes,
-          coverImageUrl: project.cover_image,
+          coverImageUrl: coverImageUrl,
           coverImageKey: project.cover_image_key,
           client: project.client,
           location: project.location,
