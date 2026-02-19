@@ -388,17 +388,25 @@ export default function AdminRenderingGallery() {
                 .from('portfolio')
                 .getPublicUrl(filePath);
 
-            // 2. Create Project (gallery item or full page based on quickAddType)
-            const isGalleryOnly = quickAddType === 'gallery';
+            // 2. Create Project
             const projectResult = await createProjectMutation.mutateAsync({
                 title: quickTitle,
                 slug: slugify(quickTitle) + '-' + Math.random().toString(36).substring(2, 7),
                 year: parseInt(quickYear) || new Date().getFullYear(),
                 status: 'draft',
-                galleryOnly: isGalleryOnly,
+                galleryOnly: false, // All projects can have detail pages for SEO
                 coverImageUrl: publicUrl,
                 designNotes: quickDesignNotes,
             });
+
+            // 3. If adding to gallery, add to rendering_gallery table
+            if (quickAddType === 'gallery') {
+                await addMutation.mutateAsync({
+                    projectId: projectResult.id,
+                    altText: quickAltText || quickTitle,
+                    displayTitle: quickTitle
+                });
+            }
 
             // Reset form
             setQuickFile(null);
@@ -408,8 +416,9 @@ export default function AdminRenderingGallery() {
             setQuickDesignNotes("");
             setShowQuickAdd(false);
             
-            toast.success(isGalleryOnly ? "Gallery item created!" : "Full page project created!");
+            toast.success(quickAddType === 'gallery' ? "Added to gallery!" : "Added to Selected Works!");
             refetchProjects();
+            refetchGallery();
 
         } catch (error: any) {
             console.error(error);
@@ -497,8 +506,10 @@ export default function AdminRenderingGallery() {
         );
     }
 
-    // Separate gallery items from full page projects and sort by year DESC
-    const fullPageProjects = (projects?.filter(p => !p.galleryOnly) || []).sort((a, b) => {
+    // Full Page Projects = projects NOT in the gallery (these appear in "Selected Works" section)
+    // Gallery items = projects IN rendering_gallery table (appear in "Archive & Exploration" grid)
+    const galleryProjectIds = new Set(localGallery.map(g => g.projectId));
+    const fullPageProjects = (projects?.filter(p => !galleryProjectIds.has(p.id)) || []).sort((a, b) => {
         if (b.year !== a.year) return (b.year || 0) - (a.year || 0);
         return (a.title || '').localeCompare(b.title || '');
     });
@@ -523,7 +534,7 @@ export default function AdminRenderingGallery() {
                                         Gallery
                                         <Badge variant="secondary" className="ml-2">{localGallery.length}</Badge>
                                     </CardTitle>
-                                    <CardDescription className="mt-1">Drag to reorder gallery items</CardDescription>
+                                    <CardDescription className="mt-1">Archive & Exploration grid section</CardDescription>
                                 </div>
                                 <Button
                                     size="sm"
@@ -589,9 +600,10 @@ export default function AdminRenderingGallery() {
                                 <div>
                                     <CardTitle className="flex items-center gap-2">
                                         <Badge variant="outline" className="bg-blue-500/20 text-blue-700 border-blue-400 dark:text-blue-400">📄</Badge>
-                                        Full Page Projects
+                                        Selected Works
+                                        <Badge variant="secondary" className="ml-2">{fullPageProjects.length}</Badge>
                                     </CardTitle>
-                                    <CardDescription className="mt-1">With detail pages at /projects/rendering/&#123;slug&#125;</CardDescription>
+                                    <CardDescription className="mt-1">Featured projects shown at top of page</CardDescription>
                                 </div>
                                 <Button
                                     size="sm"
@@ -608,13 +620,13 @@ export default function AdminRenderingGallery() {
                         <CardContent className="flex-1 overflow-y-auto p-4 max-h-[600px]">
                             <div className="space-y-2">
                                 {fullPageProjects.length === 0 ? (
-                                    <div className="text-center py-12 text-muted-foreground text-sm">
-                                        No full page projects yet.<br />
-                                        Click + to create one.
+                                    <div className="text-center py-12 text-muted-foreground text-sm border-2 border-dashed rounded-lg">
+                                        All projects are in gallery.<br />
+                                        Click + to create a new one.
                                     </div>
                                 ) : (
                                     fullPageProjects.map(project => (
-                                        <div key={project.id} className="bg-card border border-blue-200/50 dark:border-blue-800/50 rounded-lg p-3 hover:bg-blue-50/50 dark:hover:bg-blue-950/30 transition-colors">
+                                        <div key={project.id} className="bg-card border border-blue-200/50 dark:border-blue-800/50 rounded-lg p-3 hover:bg-blue-50/50 dark:hover:bg-blue-950/30 transition-colors group">
                                             <div className="flex items-center gap-3">
                                                 <div className="h-12 w-16 flex-shrink-0 bg-muted rounded overflow-hidden">
                                                     {project.coverImageUrl && (
@@ -625,6 +637,21 @@ export default function AdminRenderingGallery() {
                                                     <h4 className="font-medium text-sm truncate">{project.title}</h4>
                                                     <p className="text-xs text-muted-foreground">{project.year}</p>
                                                 </div>
+                                                <Button
+                                                    size="sm"
+                                                    variant="ghost"
+                                                    className="opacity-0 group-hover:opacity-100 transition-opacity"
+                                                    onClick={() => {
+                                                        addMutation.mutate({
+                                                            projectId: project.id,
+                                                            displayTitle: project.title,
+                                                            altText: project.title
+                                                        });
+                                                    }}
+                                                    title="Add to Gallery"
+                                                >
+                                                    → Gallery
+                                                </Button>
                                             </div>
                                         </div>
                                     ))
@@ -646,8 +673,8 @@ export default function AdminRenderingGallery() {
                         </DialogTitle>
                         <DialogDescription>
                             {quickAddType === 'gallery' 
-                                ? 'Quick gallery item that opens in modal only'
-                                : 'Full project with dedicated detail page at /projects/rendering/{slug}'
+                                ? 'Add to gallery grid (Archive & Exploration section)'
+                                : 'Create featured project for Selected Works section'
                             }
                         </DialogDescription>
                     </DialogHeader>
