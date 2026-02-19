@@ -14,6 +14,7 @@ import * as db from "../db";
 import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 import { getSessionCookieOptions } from "./cookies";
 import { fileURLToPath } from 'url';
+import { compressionMiddleware } from "./compression";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -36,9 +37,17 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 
 export async function createConfiguredApp(app?: Express, server?: Server): Promise<Express> {
   const expressApp = app || express();
+  const defaultJsonParser = express.json({ limit: "1mb" });
+  const defaultUrlEncodedParser = express.urlencoded({ limit: "1mb", extended: true });
+  const largeJsonParser = express.json({ limit: "50mb" });
+  const largeUrlEncodedParser = express.urlencoded({ limit: "50mb", extended: true });
 
   // Trust proxy headers so req.ip resolves correctly behind Cloudflare/Railway
   expressApp.set("trust proxy", true);
+
+  if (process.env.NODE_ENV === "production") {
+    expressApp.use(compressionMiddleware);
+  }
 
   // Health check endpoint for deployment debugging
   expressApp.get("/health", (req: express.Request, res: express.Response) => {
@@ -55,9 +64,35 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
     });
   });
 
-  // Configure body parser with larger size limit for file uploads
-  expressApp.use(express.json({ limit: "50mb" }));
-  expressApp.use(express.urlencoded({ limit: "50mb", extended: true }));
+  // Use larger body limits only where uploads/large payloads are expected.
+  expressApp.use((req, res, next) => {
+    const usesLargeBodyLimit = req.path.startsWith("/api/trpc");
+    const jsonParser = usesLargeBodyLimit ? largeJsonParser : defaultJsonParser;
+    const urlParser = usesLargeBodyLimit ? largeUrlEncodedParser : defaultUrlEncodedParser;
+
+    jsonParser(req, res, err => {
+      if (err) return next(err);
+      urlParser(req, res, next);
+    });
+  });
+
+  const seoAndFeedCachePaths = [
+    "/sitemap.xml",
+    "/image-sitemap.xml",
+    "/video-sitemap.xml",
+    "/sitemap-index.xml",
+    "/robots.txt",
+    "/api/news/rss",
+    "/articles/rss.xml",
+    "/news/rss.xml",
+    "/studio/tutorials/rss.xml",
+  ];
+
+  expressApp.use(seoAndFeedCachePaths, (_req, res, next) => {
+    // Short cache to keep feeds and crawlers responsive without serving stale content for long.
+    res.setHeader("Cache-Control", "public, max-age=900, s-maxage=3600, stale-while-revalidate=86400");
+    next();
+  });
 
   // Dev Login Bypass
   expressApp.get("/api/dev-login", async (req, res) => {

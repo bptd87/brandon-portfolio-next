@@ -101,7 +101,7 @@ export default function TeachingPhilosophy() {
         title="Scenic Design Teaching Philosophy | MFA Educator | UCI"
         description="Comprehensive scenic design education philosophy from MFA educator. Equipping students with skills, confidence, and adaptability for the entertainment industry."
         keywords="scenic design education, theatre design teaching, Vectorworks instruction, scenic design pedagogy, MFA scenic design, design technology education, theatrical design teaching philosophy, UC Irvine, UCI MFA"
-        image={heroProject?.coverImageUrl}
+        image={heroProject?.coverImageUrl ?? undefined}
         url="https://www.brandonptdavis.com/teaching-philosophy"
         type="article"
       />

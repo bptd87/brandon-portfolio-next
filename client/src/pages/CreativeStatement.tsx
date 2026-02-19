@@ -89,7 +89,7 @@ export default function CreativeStatement() {
         title="Creative Design Statement | Scenic & Experiential Design"
         description="Exploring the intersection of architecture, history, and storytelling through scenic design. Creative philosophy centered on spatial narratives and immersive environments."
         keywords="scenic design philosophy, creative statement, theatrical storytelling, architectural design, spatial narrative, immersive design, theatre design approach, experiential design philosophy"
-        image={heroProject?.coverImageUrl}
+        image={heroProject?.coverImageUrl ?? undefined}
         url="https://www.brandonptdavis.com/creative-statement"
         type="article"
       />

@@ -2,162 +2,8 @@ import { supabase } from './supabase';
 
 export { supabase };
 import { ENV } from './_core/env';
-
-// ============ TYPES ============
-
-export interface User {
-  id: number;
-  openId: string;
-  name: string | null;
-  email: string | null;
-  loginMethod: string | null;
-  role: 'admin' | 'user';
-  createdAt: Date;
-  updatedAt: Date;
-  lastSignedIn: Date | null;
-}
-
-export interface RenderingGalleryItem {
-  id: number;
-  projectId: number;
-  project?: Project; // Joined project data
-  sortOrder: number;
-  altText: string | null;
-  displayTitle: string | null;
-  description: string | null;
-  createdAt: Date;
-}
-
-export interface Category {
-  id: number;
-  name: string;
-  slug: string;
-  type: 'project' | 'news' | 'article';
-  description: string | null;
-  color: string | null;
-  createdAt: Date;
-}
-
-export interface Tag {
-  id: number;
-  name: string;
-  slug: string;
-  createdAt: Date;
-}
-
-export interface Project {
-  id: number;
-  title: string;
-  slug: string;
-  excerpt: string | null;
-  designNotes: string | null;
-  coverImageUrl: string | null;
-  coverImageKey: string | null;
-  client: string | null;
-  location: string | null;
-
-  year: number | null;
-  month: number | null;
-  venue?: string | null;
-  discipline: 'scenic_design' | 'experiential_design' | 'rendering' | null;
-  subcategory: string | null;
-  status: 'draft' | 'published' | 'archived' | 'gallery_only';
-  featured: boolean;
-  categoryId: number | null;
-  creativeTeam: any;
-  metadata: any;
-  publishedAt: Date | null;
-  seoTitle: string | null;
-  seoDescription: string | null;
-  seoKeywords: string | null;
-  images: ProjectImage[];
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface ProjectImage {
-  id: number;
-  projectId: number;
-  imageUrl: string | null;
-  videoUrl: string | null;
-  caption: string | null;
-  altText: string | null;
-  imageType?: string | null;
-  sortOrder: number;
-  createdAt: Date;
-}
-
-export interface News {
-  id: number;
-  title: string;
-  slug: string;
-  excerpt: string | null;
-  content: string | null;
-  categoryId: number | null;
-  coverImageUrl: string | null;
-  coverImageKey?: string | null;
-  location: string | null;
-  date: Date | null;
-  blocks: any;
-  status: 'draft' | 'published' | 'archived';
-  featured: boolean;
-  seoTitle: string | null;
-  seoDescription: string | null;
-  seoKeywords: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-  publishedAt: Date | null;
-  externalLink: string | null;
-  tags: string | null;
-}
-
-export interface Article {
-  id: number;
-  title: string;
-  slug: string;
-  excerpt: string | null;
-  content: string | null;
-  categoryId: number | null;
-  coverImageUrl: string | null;
-  authorId: number | null;
-  readTime: number | null;
-  status: 'draft' | 'published' | 'archived';
-  featured: boolean;
-  seoTitle: string | null;
-  seoDescription: string | null;
-  seoKeywords: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-  publishedAt: Date | null;
-  likes: number;
-  views: number;
-}
-
-export interface Todo {
-  id: number;
-  text: string;
-  completed: boolean;
-  user_id: string;
-  created_at: Date;
-}
-
-
-export interface Todo {
-  id: number;
-  text: string;
-  completed: boolean;
-  user_id: string;
-  created_at: Date;
-}
-
-
-export interface Todo {
-  id: number;
-  text: string;
-  completed: boolean;
-  user_id: string;
-  created_at: Date;
-}
+import type { Article, Category, News, Project, ProjectImage, RenderingGalleryItem, Tag, Todo, User } from './dbTypes';
+export type { Article, Category, News, Project, ProjectImage, RenderingGalleryItem, Tag, Todo, User } from './dbTypes';
 
 // ============ USER OPERATIONS ============
 
@@ -2692,6 +2538,8 @@ export async function getExperientialGallery(): Promise<RenderingGalleryItem[]> 
           location: project.location,
           year: project.year,
           month: project.month,
+          discipline: 'experiential_design',
+          subcategory: null,
           status: project.status,
           featured: project.featured,
           categoryId: null,
@@ -2701,12 +2549,17 @@ export async function getExperientialGallery(): Promise<RenderingGalleryItem[]> 
           seoTitle: project.seo_title,
           seoDescription: project.seo_description,
           seoKeywords: project.seo_keywords,
+          createdAt: project.created_at ? new Date(project.created_at) : new Date(),
+          updatedAt: project.updated_at ? new Date(project.updated_at) : new Date(),
           images: projectImages.map((img: any) => ({
             id: img.id,
+            projectId: item.experiential_project_id,
             imageUrl: img.image_url,
+            videoUrl: img.video_url ?? null,
             caption: img.caption,
             altText: img.alt_text,
-            sortOrder: img.sort_order
+            sortOrder: img.sort_order,
+            createdAt: img.created_at ? new Date(img.created_at) : new Date(),
           }))
         } : undefined,
       };

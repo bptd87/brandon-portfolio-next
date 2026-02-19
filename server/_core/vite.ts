@@ -72,7 +72,24 @@ export function serveStatic(app: Express) {
     );
   }
 
-  app.use(express.static(distPath));
+  app.use(
+    express.static(distPath, {
+      setHeaders: (res, filePath) => {
+        if (filePath.endsWith("index.html")) {
+          res.setHeader("Cache-Control", "no-cache");
+          return;
+        }
+
+        // Vite emits content-hashed assets; keep them immutable for max cache efficiency.
+        if (/[.-][A-Za-z0-9_-]{8,}\.(js|css|mjs|png|jpe?g|gif|svg|webp|woff2?)$/i.test(filePath)) {
+          res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+          return;
+        }
+
+        res.setHeader("Cache-Control", "public, max-age=86400");
+      },
+    })
+  );
 
   // Fall through to index.html if the file doesn't exist
   // BUT: don't serve index.html for API, static file, or sitemap requests

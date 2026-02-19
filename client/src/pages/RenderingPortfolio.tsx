@@ -32,7 +32,6 @@ export default function RenderingPortfolio() {
     altText: item.altText || item.project?.title || '',
     slug: item.project?.slug || '',
     year: item.project?.year || null,
-    venue: item.project?.venue,
     client: item.project?.client,
     designNotes: item.project?.designNotes,
     excerpt: item.project?.excerpt,

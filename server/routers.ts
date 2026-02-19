@@ -1,6 +1,4 @@
 import { z } from "zod";
-import { COOKIE_NAME } from "@shared/const";
-import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { TRPCError } from "@trpc/server";
@@ -15,26 +13,15 @@ import { ENV } from "./_core/env";
 import { renderingGalleryRouter } from "./routers/renderingGallery";
 import { experientialGalleryRouter } from "./routers/experientialGallery";
 import { processGalleryRouter } from "./routers/processGallery";
-
-// Admin-only procedure
-const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
-  if (ctx.user.role !== 'admin') {
-    throw new TRPCError({ code: 'FORBIDDEN', message: 'Admin access required' });
-  }
-  return next({ ctx });
-});
+import { adminProcedure } from "./routers/adminProcedure";
+import { authRouter } from "./routers/auth";
+import { categoriesRouter } from "./routers/categories";
+import { tagsRouter } from "./routers/tags";
 
 export const appRouter = router({
   system: systemRouter,
 
-  auth: router({
-    me: publicProcedure.query(opts => opts.ctx.user),
-    logout: publicProcedure.mutation(({ ctx }) => {
-      const cookieOptions = getSessionCookieOptions(ctx.req);
-      ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
-      return { success: true } as const;
-    }),
-  }),
+  auth: authRouter,
 
   // ============ ANALYTICS ============
   analytics: analyticsRouter,
@@ -45,103 +32,10 @@ export const appRouter = router({
   processGallery: processGalleryRouter,
 
   // ============ CATEGORY MANAGEMENT ============
-  categories: router({
-    list: publicProcedure
-      .input(z.object({ type: z.enum(['project', 'news', 'article']).optional() }).optional())
-      .query(async ({ input }) => {
-        return await db.getAllCategories(input?.type);
-      }),
-
-    getById: publicProcedure
-      .input(z.object({ id: z.number() }))
-      .query(async ({ input }) => {
-        return await db.getCategoryById(input.id);
-      }),
-
-    create: adminProcedure
-      .input(z.object({
-        name: z.string().min(1).max(100),
-        slug: z.string().min(1).max(100),
-        type: z.enum(['project', 'news', 'article']),
-        color: z.string().regex(/^#[0-9A-F]{6}$/i).optional(),
-        description: z.string().optional(),
-      }))
-      .mutation(async ({ input }) => {
-        const id = await db.createCategory(input);
-        return { id };
-      }),
-
-    update: adminProcedure
-      .input(z.object({
-        id: z.number(),
-        name: z.string().min(1).max(100).optional(),
-        slug: z.string().min(1).max(100).optional(),
-        color: z.string().regex(/^#[0-9A-F]{6}$/i).optional(),
-        description: z.string().optional(),
-      }))
-      .mutation(async ({ input }) => {
-        const { id, ...data } = input;
-        await db.updateCategory(id, data);
-        return { success: true };
-      }),
-
-    delete: adminProcedure
-      .input(z.object({ id: z.number() }))
-      .mutation(async ({ input }) => {
-        await db.deleteCategory(input.id);
-        return { success: true };
-      }),
-  }),
+  categories: categoriesRouter,
 
   // ============ TAG MANAGEMENT ============
-  tags: router({
-    list: publicProcedure.query(async () => {
-      return await db.getAllTags();
-    }),
-
-    getBySlug: publicProcedure
-      .input(z.object({ slug: z.string().min(1).max(100) }))
-      .query(async ({ input }) => {
-        const tag = await db.getTagBySlug(input.slug);
-        if (!tag) return null;
-
-        // Get all content associated with this tag
-        const projects = await db.getProjectsByTag(tag.id);
-        const articles = await db.getArticlesByTag(tag.id);
-        const news = await db.getNewsByTag(tag.id);
-
-        return { tag, projects, articles, news };
-      }),
-
-    create: adminProcedure
-      .input(z.object({
-        name: z.string().min(1).max(100),
-        slug: z.string().min(1).max(100),
-      }))
-      .mutation(async ({ input }) => {
-        const id = await db.createTag(input);
-        return { id, name: input.name, slug: input.slug, createdAt: new Date() };
-      }),
-
-    update: adminProcedure
-      .input(z.object({
-        id: z.number(),
-        name: z.string().min(1).max(100),
-        slug: z.string().min(1).max(100),
-      }))
-      .mutation(async ({ input }) => {
-        const { id, ...data } = input;
-        await db.updateTag(id, data);
-        return { success: true };
-      }),
-
-    delete: adminProcedure
-      .input(z.object({ id: z.number() }))
-      .mutation(async ({ input }) => {
-        await db.deleteTag(input.id);
-        return { success: true };
-      }),
-  }),
+  tags: tagsRouter,
 
   // ============ PROJECT MANAGEMENT ============
   projects: router({
