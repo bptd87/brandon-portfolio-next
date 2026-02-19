@@ -1,0 +1,100 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                    ADMIN RENDERING GALLERY - NEW DESIGN                        ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────┬──────────────────────────────────────────────┐
+│   ACTIVE GALLERY (6 Items)      │        CREATE NEW PROJECTS                   │
+│   Drag to reorder                │                                              │
+├─────────────────────────────────┼──────────────────────────────────────────────┤
+│                                 │                                              │
+│ 🖼️ [img] Isolation              │  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓  │
+│         📄 Full Page            │  ┃ 📄 Full Page                          ┃  │
+│         [icons...]              │  ┃ Create Full Project Page              ┃  │
+│                                 │  ┠────────────────────────────────────────┨  │
+│ 🖼️ [img] Northwind Mare         │  ┃ Creates complete project with detail  ┃  │
+│         📄 Full Page            │  ┃ page at /projects/rendering/{slug}    ┃  │
+│         [icons...]              │  ┃                                        ┃  │
+│                                 │  ┃ ✓ Dedicated detail page                ┃  │
+│ 🖼️ [img] Ashes of Underworld    │  ┃ ✓ Shows in "Selected Works"           ┃  │
+│         📄 Full Page            │  ┃ ✓ Also appears in gallery grid        ┃  │
+│         [icons...]              │  ┃                                        ┃  │
+│                                 │  ┃ Best for: Projects with design notes, ┃  │
+│ 🖼️ [img] Angel Food Cake        │  ┃ multiple images, detailed write-ups   ┃  │
+│         📄 Full Page            │  ┃                                        ┃  │
+│         [icons...]              │  ┃  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓  ┃  │
+│                                 │  ┃  ┃  + Create Full Project Page    ┃  ┃  │
+│ 🖼️ [img] All My Sons            │  ┃  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛  ┃  │
+│         🖼️ Gallery Only          │  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛  │
+│         [icons...]              │                                              │
+│                                 │  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓  │
+│ 🖼️ [img] Boeing, Boeing         │  ┃ 🖼️ Gallery                            ┃  │
+│         🖼️ Gallery Only          │  ┃ Create Gallery-Only Item              ┃  │
+│         [icons...]              │  ┠────────────────────────────────────────┨  │
+│                                 │  ┃ Creates gallery item that opens in    ┃  │
+│                                 │  ┃ modal overlay (no dedicated page)     ┃  │
+│                                 │  ┃                                        ┃  │
+│                                 │  ┃ ✓ Opens in lightbox modal             ┃  │
+│                                 │  ┃ ✓ Shows only in gallery grid          ┃  │
+│                                 │  ┃ ✓ No standalone URL route             ┃  │
+│                                 │  ┃                                        ┃  │
+│                                 │  ┃ Best for: Quick concept renders,      ┃  │
+│                                 │  ┃ studies, or projects without details  ┃  │
+│                                 │  ┃                                        ┃  │
+│                                 │  ┃  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓  ┃  │
+│                                 │  ┃  ┃  + Create Gallery Item         ┃  ┃  │
+│                                 │  ┃  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛  ┃  │
+│                                 │  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛  │
+│                                 │                                              │
+│                                 │  ┌──────────────────────────────────────┐  │
+│                                 │  │ Add Existing Projects            [0] │  │
+│                                 │  ├──────────────────────────────────────┤  │
+│                                 │  │ (Only shows if there are projects    │  │
+│                                 │  │  not currently in the gallery)       │  │
+│                                 │  │                                      │  │
+│                                 │  │ Currently all projects are in        │  │
+│                                 │  │ the active gallery (left)            │  │
+│                                 │  └──────────────────────────────────────┘  │
+│                                 │                                              │
+└─────────────────────────────────┴──────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+
+KEY FEATURES:
+
+LEFT COLUMN - Active Gallery:
+  ✓ Shows all 6 gallery items
+  ✓ Each item has badge: 📄 Full Page (blue) or 🖼️ Gallery Only (orange)
+  ✓ Drag to reorder
+  ✓ Manage images, edit metadata, remove from gallery
+
+RIGHT COLUMN - Creation Focused:
+  
+  1️⃣ CREATE FULL PROJECT PAGE (Blue Card)
+     • Large button to create projects with detail pages
+     • Explains it creates /projects/rendering/{slug} route
+     • Shows benefits: detail page, selected works section, gallery
+     • Best for: complex projects with design notes
+  
+  2️⃣ CREATE GALLERY-ONLY ITEM (Orange Card)
+     • Large button to create modal-only items
+     • Explains no dedicated page URL
+     • Shows benefits: lightbox modal, simple workflow
+     • Best for: quick renders, studies
+
+  3️⃣ ADD EXISTING PROJECTS (Compact List - Only if any exist)
+     • Shows projects that exist but aren't in gallery
+     • Separated by type (Full Pages / Gallery-Only)
+     • Currently: 0 (all projects already in gallery)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+WORKFLOW:
+
+To add new content:
+  1. Click "Create Full Project Page" → Fill in title, slug, design notes, upload images
+  2. Click "Create Gallery Item" → Quick form with minimal fields
+  3. Or use "Quick Add Image" at top → Creates gallery-only item automatically
+
+The right column is now action-oriented rather than list-oriented!
+
+═══════════════════════════════════════════════════════════════════════════════
