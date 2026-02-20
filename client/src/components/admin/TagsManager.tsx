@@ -167,9 +167,9 @@ export function TagsManager() {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle>Tags</CardTitle>
+              <CardTitle>Article & News Tags</CardTitle>
               <CardDescription>
-                Manage tags for organizing content. Total: {tags?.length || 0} tags
+                Manage taxonomy for news and articles only. Total: {tags?.length || 0} tags
               </CardDescription>
             </div>
             <div className="flex gap-2">

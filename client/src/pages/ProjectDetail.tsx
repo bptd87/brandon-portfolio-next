@@ -4,7 +4,6 @@ import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { trpc } from "@/lib/trpc";
-import { ArrowLeft, ArrowRight, MapPin, Calendar, ChevronDown, ChevronUp } from "lucide-react";
 import { Link, useParams, useLocation } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -56,10 +55,10 @@ export default function ProjectDetail() {
     { enabled: !!project?.discipline }
   );
   const relatedProjects = allRelatedProjects; // Show all projects
-  const [showFullNotes, setShowFullNotes] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxImages, setLightboxImages] = useState<Array<{ imageUrl: string | null; caption: string | null; altText: string | null }>>([]);
+  const [showFullNotes, setShowFullNotes] = useState(false);
 
   // Track project view
   useEffect(() => {
@@ -108,10 +107,60 @@ export default function ProjectDetail() {
     console.error('Failed to parse creative team:', e);
   }
 
-  // Design notes with "Read More" functionality
+  // Design notes
   const designNotes = project.designNotes || '';
-  const notesPreview = designNotes.length > 800 ? designNotes.substring(0, 800) + '...' : designNotes;
-  const shouldShowReadMore = designNotes.length > 800;
+  const normalizedDesignNotes = designNotes.trim();
+  const cleanedDesignNotes =
+    normalizedDesignNotes === "[]" ||
+    normalizedDesignNotes === "{}" ||
+    normalizedDesignNotes.toLowerCase() === "n/a"
+      ? ""
+      : normalizedDesignNotes;
+  const shortDesignNotes =
+    cleanedDesignNotes.length > 420
+      ? `${cleanedDesignNotes.slice(0, 417).trim()}...`
+      : cleanedDesignNotes;
+  const shouldTruncateNotes = cleanedDesignNotes.length > 420;
+
+  const normalizedTitle = project.title.trim().toLowerCase();
+  const normalizedClient = (project.client || "").trim().toLowerCase();
+  const showProductionName = !!normalizedClient && normalizedClient !== normalizedTitle;
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const projectDateLabel = project.year
+    ? project.month && project.month >= 1 && project.month <= 12
+      ? `${monthNames[project.month - 1]} ${project.year}`
+      : `${project.year}`
+    : null;
+  const locationDateLabel = [project.location, projectDateLabel].filter(Boolean).join(" • ");
+
+  const rawExternalArticles = (project as any).externalArticles;
+  const externalArticles = (() => {
+    const inferType = (item: any): "review" | "listing" => {
+      const explicitType = item?.type;
+      if (explicitType === "review" || explicitType === "listing") return explicitType;
+      const text = `${item?.title || ""} ${item?.source || ""}`.toLowerCase();
+      return /review|critic|interview|feature|press/.test(text) ? "review" : "listing";
+    };
+    const sortByType = (arr: any[]) =>
+      arr
+        .map((item) => ({ ...item, type: inferType(item) }))
+        .sort((a, b) => (a.type === b.type ? 0 : a.type === "review" ? -1 : 1));
+
+    if (Array.isArray(rawExternalArticles)) {
+      return sortByType(rawExternalArticles.filter((item: any) => item?.url));
+    }
+    if (typeof rawExternalArticles === "string") {
+      try {
+        const parsed = JSON.parse(rawExternalArticles);
+        return Array.isArray(parsed) ? sortByType(parsed.filter((item: any) => item?.url)) : [];
+      } catch {
+        return [];
+      }
+    }
+    return [];
+  })();
+  const reviewArticles = externalArticles.filter((article: any) => article.type === "review");
+  const listingArticles = externalArticles.filter((article: any) => article.type !== "review");
 
   // Get related projects excluding current one
   const relatedProjectsFiltered = relatedProjects?.filter(p => p.id !== project.id) || [];
@@ -121,8 +170,8 @@ export default function ProjectDetail() {
   const prevProject = currentIndex > 0 ? allProjects?.[currentIndex - 1] : null;
   const nextProject = currentIndex >= 0 && currentIndex < (allProjects?.length ?? 0) - 1 ? allProjects?.[currentIndex + 1] : null;
 
-  // Determine accent color based on project index
-  const accentColor = ACCENT_COLORS[currentIndex % 3] || ACCENT_COLORS[0];
+  // Determine accent color per project (stable, full 5-color rotation)
+  const accentColor = ACCENT_COLORS[Math.abs(project.id) % ACCENT_COLORS.length] || ACCENT_COLORS[0];
 
   // Prepare creative work schema data
   const projectImages = productionPhotos.slice(0, 5).map(img => ({
@@ -160,21 +209,8 @@ export default function ProjectDetail() {
       : `More ${disciplineLabel}`;
 
   return (
-    <div 
-      className="relative min-h-screen bg-[#0b0b0d]" 
-      style={{ '--accent-rgb': accentColor } as React.CSSProperties}
-    >
-      {/* Gradient background blobs - subtle neutral tones for sophisticated look */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Primary blur - top left */}
-        <div className="absolute -top-40 left-1/4 h-[480px] w-[480px] rounded-full bg-[radial-gradient(circle,_rgba(100,200,255,0.12)_0%,_rgba(11,11,13,0)_60%)] blur-3xl" />
-        {/* Secondary blur - bottom right */}
-        <div className="absolute -bottom-20 right-1/4 h-[380px] w-[380px] rounded-full bg-[radial-gradient(circle,_rgba(100,200,255,0.08)_0%,_rgba(11,11,13,0)_65%)] blur-3xl" />
-        {/* Tertiary blur - left side */}
-        <div className="absolute top-1/2 -left-32 h-96 w-96 rounded-full bg-[radial-gradient(circle,_rgba(100,200,255,0.06)_0%,_rgba(11,11,13,0)_70%)] blur-3xl" />
-      </div>
-
-      <div className="relative z-10">
+    <div className="min-h-screen bg-[#0b0b0d] text-foreground" style={{ '--accent-color': accentColor } as React.CSSProperties}>
+      <div className="relative">
         <SEO
           title={`${project.title} | Brandon PT Davis`}
           description={project.excerpt || `${project.title} - Scenic design project by Brandon PT Davis`}
@@ -234,328 +270,411 @@ export default function ProjectDetail() {
         />
       </div>
 
-      {/* Minimal Header Section */}
-      <section className="border-b border-border/30">
-        <div 
-          className="container py-12"
-          style={{ '--accent-color': accentColor } as React.CSSProperties}
-        >
-          <div className="space-y-6">
-            {/* Subcategory badge */}
-            {project.subcategory && (
-              <Badge
-                variant="outline"
-                className="text-xs tracking-widest font-bold px-4 py-1.5 border-2 rounded-full"
-                style={{
-                  borderColor: accentColor,
-                  color: accentColor
-                }}
+      <section className="border-y border-border/50 bg-[#101014]">
+        <div className="container py-10 lg:py-12">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] xl:grid-cols-[minmax(0,1fr)_360px]">
+            <AnimatedSection className="lg:hidden">
+              <aside
+                className="space-y-6 rounded-xl border bg-[#0f0f13] p-6"
+                style={{ borderColor: `${accentColor}55`, boxShadow: `inset 0 1px 0 ${accentColor}22` }}
               >
-                {project.subcategory.toUpperCase()}
-              </Badge>
-            )}
+                <div className="space-y-4">
+                  {project.subcategory && (
+                    <Badge
+                      variant="outline"
+                      className="rounded-md border px-3 py-1 text-[10px] tracking-[0.18em] uppercase"
+                      style={{ borderColor: accentColor, color: accentColor }}
+                    >
+                      {project.subcategory}
+                    </Badge>
+                  )}
+                  <h1 className="text-4xl leading-[1.08] tracking-[-0.02em] font-light uppercase text-foreground/90">
+                    {project.title}
+                  </h1>
+                  {showProductionName && project.client && (
+                    <p className="text-xl font-light text-foreground/65" style={{ color: `${accentColor}` }}>
+                      {project.client}
+                    </p>
+                  )}
+                </div>
 
-            {/* Project title */}
-            <h1 className="text-5xl md:text-6xl font-black tracking-tighter leading-tight" style={{ color: accentColor }}>
-              {project.title}
-            </h1>
+                <div className="space-y-3 border-t pt-5" style={{ borderColor: `${accentColor}55` }}>
+                  {locationDateLabel ? (
+                    <div className="grid grid-cols-[84px_1fr] gap-3 text-sm leading-relaxed">
+                      <span className="text-foreground/45 uppercase tracking-[0.14em]">Locale</span>
+                      <span className="text-foreground/75">{locationDateLabel}</span>
+                    </div>
+                  ) : null}
+                </div>
 
-            {/* Metadata row */}
-            <div className="flex flex-wrap items-center gap-6 text-foreground/70 text-base">
-              {project.client && (
-                <div>
-                  <span className="font-semibold">{project.client}</span>
-                </div>
+                {project.excerpt && (
+                  <div className="border-t pt-5" style={{ borderColor: `${accentColor}55` }}>
+                    <h2 className="mb-3 text-xs font-semibold tracking-[0.18em] uppercase text-foreground/55" style={{ color: accentColor }}>
+                      Project Context
+                    </h2>
+                    <p className="text-sm leading-relaxed text-foreground/70">
+                      {project.excerpt}
+                    </p>
+                  </div>
+                )}
+              </aside>
+            </AnimatedSection>
+
+            <div className="space-y-6">
+              {productionPhotos.length > 0 ? (
+                productionPhotos.map((img, idx) => (
+                  <AnimatedSection key={img.id} delay={idx * 30}>
+                    <figure
+                      className="group relative overflow-hidden rounded-xl bg-black/90 cursor-pointer shadow-lg"
+                      onClick={() => {
+                        setLightboxImages(productionPhotos);
+                        setLightboxIndex(idx);
+                        setLightboxOpen(true);
+                      }}
+                    >
+                      <ProgressiveImage
+                        src={img.imageUrl || ""}
+                        alt={img.altText || img.caption || project.title}
+                        className="transition-transform duration-500 group-hover:scale-[1.01]"
+                        objectFit="contain"
+                        smartPosition={true}
+                        loading="lazy"
+                      />
+                    </figure>
+                  </AnimatedSection>
+                ))
+              ) : project.coverImageUrl ? (
+                <figure className="overflow-hidden rounded-xl bg-black/90 shadow-lg">
+                  <ProgressiveImage
+                    src={project.coverImageUrl}
+                    alt={project.title}
+                    objectFit="contain"
+                    smartPosition={true}
+                    loading="eager"
+                  />
+                </figure>
+              ) : null}
+
+              {renderings.length > 0 && (
+                <AnimatedSection>
+                  <div className="pt-4">
+                    <h3 className="mb-4 text-xs font-semibold tracking-[0.22em] uppercase text-foreground/60">
+                      Renderings
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {renderings.map((img, idx) => (
+                        <figure
+                          key={img.id}
+                          className="group overflow-hidden rounded-xl bg-black/90 cursor-pointer shadow-lg"
+                          onClick={() => {
+                            setLightboxImages(renderings);
+                            setLightboxIndex(idx);
+                            setLightboxOpen(true);
+                          }}
+                        >
+                          <ProgressiveImage
+                            src={img.imageUrl || ""}
+                            alt={img.altText || img.caption || project.title}
+                            className="transition-transform duration-500 group-hover:scale-[1.03]"
+                            objectFit="contain"
+                            smartPosition={true}
+                            loading="lazy"
+                          />
+                        </figure>
+                      ))}
+                    </div>
+                  </div>
+                </AnimatedSection>
               )}
-              {project.location && (
-                <div className="flex items-center gap-2">
-                  <span>•</span>
-                  <span>{project.location}</span>
-                </div>
+
+              {videos.length > 0 && (
+                <AnimatedSection>
+                  <div className="pt-4">
+                    <h3 className="mb-4 text-xs font-semibold tracking-[0.22em] uppercase text-foreground/60">
+                      Video
+                    </h3>
+                    <div className="grid grid-cols-1 gap-6">
+                      {videos.map((video) => (
+                        <div key={video.id} className="overflow-hidden rounded-xl bg-black shadow-lg">
+                          <div className="relative w-full pb-[56.25%]">
+                            <iframe
+                              src={getEmbedUrl(video.videoUrl || "")}
+                              title={`Video: ${video.caption || "embedded video"}`}
+                              className="absolute inset-0 w-full h-full"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </AnimatedSection>
               )}
-              {project.year && (
-                <div className="flex items-center gap-2">
-                  <span>•</span>
-                  <span>{project.year}</span>
-                </div>
-              )}
+
+              <AnimatedSection className="lg:hidden">
+                <aside
+                  className="space-y-8 rounded-xl border bg-[#0f0f13] p-6"
+                  style={{ borderColor: `${accentColor}55`, boxShadow: `inset 0 1px 0 ${accentColor}22` }}
+                >
+                  {creativeTeamArray.length > 0 && (
+                    <div className="space-y-3">
+                      {creativeTeamArray.map((member, idx) => {
+                        const slug = member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                        return (
+                          <Link key={idx} href={`/about/collaborators#${slug}`}>
+                            <div className="group cursor-pointer">
+                              <p className="text-sm text-foreground/60 leading-relaxed">
+                                <span className="font-medium text-foreground/80" style={{ color: accentColor }}>{member.role}:</span>{" "}
+                                <span className="transition-colors" onMouseEnter={(e) => { e.currentTarget.style.color = accentColor; }} onMouseLeave={(e) => { e.currentTarget.style.color = ''; }}>{member.name}</span>
+                              </p>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {cleanedDesignNotes && (
+                    <div className={`${creativeTeamArray.length > 0 ? 'border-t pt-5' : ''}`} style={{ borderColor: `${accentColor}55` }}>
+                      <h2 className="mb-3 text-xs font-semibold tracking-[0.18em] uppercase text-foreground/55" style={{ color: accentColor }}>
+                        Design Notes
+                      </h2>
+                      <p className="text-sm leading-relaxed text-foreground/70 whitespace-pre-wrap">
+                        {showFullNotes || !shouldTruncateNotes ? cleanedDesignNotes : shortDesignNotes}
+                      </p>
+                      {shouldTruncateNotes && (
+                        <button
+                          type="button"
+                          onClick={() => setShowFullNotes((prev) => !prev)}
+                          className="mt-3 text-xs font-semibold uppercase tracking-[0.14em] text-foreground/60 hover:text-foreground"
+                          style={{ color: accentColor }}
+                        >
+                          {showFullNotes ? "Show Less" : "Read Full Notes"}
+                        </button>
+                      )}
+                    </div>
+                  )}
+
+                  {externalArticles.length > 0 && (
+                    <div className="border-t pt-5" style={{ borderColor: `${accentColor}55` }}>
+                      <h2 className="mb-3 text-xs font-semibold tracking-[0.18em] uppercase text-foreground/55" style={{ color: accentColor }}>
+                        Public Articles
+                      </h2>
+                      <div className="space-y-4">
+                        {reviewArticles.length > 0 && (
+                          <div className="space-y-2">
+                            <p className="text-[10px] uppercase tracking-[0.16em] text-foreground/50">Reviews</p>
+                            {reviewArticles.map((article: any, index: number) => (
+                              <a
+                                key={`review-${article.url}-${index}`}
+                                href={article.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block rounded-lg border border-border/50 bg-background/30 px-3 py-2 text-sm leading-relaxed text-foreground/80 transition-colors hover:border-foreground/40 hover:text-foreground"
+                              >
+                                <span className="font-medium">{article.title || article.url}</span>
+                                {article.source ? <span className="block text-xs text-foreground/50 mt-1">{article.source}</span> : null}
+                              </a>
+                            ))}
+                          </div>
+                        )}
+                        {listingArticles.length > 0 && (
+                          <div className="space-y-2">
+                            <p className="text-[10px] uppercase tracking-[0.16em] text-foreground/50">Project Listings</p>
+                            {listingArticles.map((article: any, index: number) => (
+                              <a
+                                key={`listing-${article.url}-${index}`}
+                                href={article.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block rounded-lg border border-border/40 bg-background/20 px-3 py-2 text-sm leading-relaxed text-foreground/70 transition-colors hover:border-foreground/30 hover:text-foreground"
+                              >
+                                {article.title || article.url}
+                                {article.source ? <span className="block text-xs text-foreground/45 mt-1">{article.source}</span> : null}
+                              </a>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </aside>
+              </AnimatedSection>
             </div>
+
+            <AnimatedSection>
+              <aside
+                className="hidden lg:block lg:sticky lg:top-24 space-y-8 rounded-xl border bg-[#0f0f13] p-6 md:p-7"
+                style={{ borderColor: `${accentColor}55`, boxShadow: `inset 0 1px 0 ${accentColor}22` }}
+              >
+                <div className="space-y-4">
+                  {project.subcategory && (
+                    <Badge
+                      variant="outline"
+                      className="rounded-md border px-3 py-1 text-[10px] tracking-[0.18em] uppercase"
+                      style={{ borderColor: accentColor, color: accentColor }}
+                    >
+                      {project.subcategory}
+                    </Badge>
+                  )}
+                  <h1 className="text-5xl leading-[1.06] tracking-[-0.02em] font-light uppercase text-foreground/90">
+                    {project.title}
+                  </h1>
+                  {showProductionName && project.client && (
+                    <p className="text-2xl font-light text-foreground/65" style={{ color: `${accentColor}` }}>
+                      {project.client}
+                    </p>
+                  )}
+                </div>
+
+                <div className="space-y-3 border-t pt-5" style={{ borderColor: `${accentColor}55` }}>
+                  {locationDateLabel ? (
+                    <div className="grid grid-cols-[84px_1fr] gap-3 text-sm leading-relaxed">
+                      <span className="text-foreground/45 uppercase tracking-[0.14em]">Locale</span>
+                      <span className="text-foreground/75">{locationDateLabel}</span>
+                    </div>
+                  ) : null}
+                </div>
+
+                {project.excerpt && (
+                  <div className="border-t pt-5" style={{ borderColor: `${accentColor}55` }}>
+                    <h2 className="mb-3 text-xs font-semibold tracking-[0.18em] uppercase text-foreground/55" style={{ color: accentColor }}>
+                      Project Context
+                    </h2>
+                    <p className="text-sm leading-relaxed text-foreground/70">
+                      {project.excerpt}
+                    </p>
+                  </div>
+                )}
+
+                {creativeTeamArray.length > 0 && (
+                  <div className="space-y-3 border-t pt-5" style={{ borderColor: `${accentColor}55` }}>
+                    {creativeTeamArray.map((member, idx) => {
+                      const slug = member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                      return (
+                        <Link key={idx} href={`/about/collaborators#${slug}`}>
+                          <div className="group cursor-pointer">
+                            <p className="text-sm text-foreground/60 leading-relaxed">
+                              <span className="font-medium text-foreground/80" style={{ color: accentColor }}>{member.role}:</span>{" "}
+                              <span className="transition-colors" onMouseEnter={(e) => { e.currentTarget.style.color = accentColor; }} onMouseLeave={(e) => { e.currentTarget.style.color = ''; }}>{member.name}</span>
+                            </p>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
+
+                {cleanedDesignNotes && (
+                  <div className="border-t pt-5" style={{ borderColor: `${accentColor}55` }}>
+                    <h2 className="mb-3 text-xs font-semibold tracking-[0.18em] uppercase text-foreground/55" style={{ color: accentColor }}>
+                      Design Notes
+                    </h2>
+                    <p className="text-sm leading-relaxed text-foreground/70 whitespace-pre-wrap">
+                      {showFullNotes || !shouldTruncateNotes ? cleanedDesignNotes : shortDesignNotes}
+                    </p>
+                    {shouldTruncateNotes && (
+                      <button
+                        type="button"
+                        onClick={() => setShowFullNotes((prev) => !prev)}
+                        className="mt-3 text-xs font-semibold uppercase tracking-[0.14em] text-foreground/60 hover:text-foreground"
+                        style={{ color: accentColor }}
+                      >
+                        {showFullNotes ? "Show Less" : "Read Full Notes"}
+                      </button>
+                    )}
+                  </div>
+                )}
+
+                {externalArticles.length > 0 && (
+                  <div className="border-t pt-5" style={{ borderColor: `${accentColor}55` }}>
+                    <h2 className="mb-3 text-xs font-semibold tracking-[0.18em] uppercase text-foreground/55" style={{ color: accentColor }}>
+                      Public Articles
+                    </h2>
+                    <div className="space-y-4">
+                      {reviewArticles.length > 0 && (
+                        <div className="space-y-2">
+                          <p className="text-[10px] uppercase tracking-[0.16em] text-foreground/50">Reviews</p>
+                          {reviewArticles.map((article: any, index: number) => (
+                            <a
+                              key={`review-d-${article.url}-${index}`}
+                              href={article.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block rounded-lg border border-border/50 bg-background/30 px-3 py-2 text-sm leading-relaxed text-foreground/80 transition-colors hover:border-foreground/40 hover:text-foreground"
+                            >
+                              <span className="font-medium">{article.title || article.url}</span>
+                              {article.source ? <span className="block text-xs text-foreground/50 mt-1">{article.source}</span> : null}
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                      {listingArticles.length > 0 && (
+                        <div className="space-y-2">
+                          <p className="text-[10px] uppercase tracking-[0.16em] text-foreground/50">Project Listings</p>
+                          {listingArticles.map((article: any, index: number) => (
+                            <a
+                              key={`listing-d-${article.url}-${index}`}
+                              href={article.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block rounded-lg border border-border/40 bg-background/20 px-3 py-2 text-sm leading-relaxed text-foreground/70 transition-colors hover:border-foreground/30 hover:text-foreground"
+                            >
+                              {article.title || article.url}
+                              {article.source ? <span className="block text-xs text-foreground/45 mt-1">{article.source}</span> : null}
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </aside>
+            </AnimatedSection>
           </div>
         </div>
       </section>
 
-      {/* Content Sections */}
-      <div 
-        className="container py-16 space-y-16"
-        style={{ '--accent-color': accentColor } as React.CSSProperties}
-      >
+      <div className="container py-16">
+        <Separator className="mb-12 bg-border/60" />
 
-        {/* Creative Team */}
-        {creativeTeamArray.length > 0 && (
-          <AnimatedSection>
-            <div className="md:max-w-[calc(50%-12px)]">
-              <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: `var(--accent-color)` }}>
-                Creative Team
-              </h2>
-              <div className="space-y-3">
-                  {creativeTeamArray.map((member, idx) => {
-                    // Create slug from name for collaborator link
-                    const slug = member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-
-                    return (
-                      <Link key={idx} href={`/about/collaborators#${slug}`}>
-                        <div className="flex items-baseline gap-4 group cursor-pointer">
-                          <p className="font-semibold text-foreground transition-colors flex-1" style={{ borderColor: accentColor }} onMouseEnter={(e) => { e.currentTarget.style.color = accentColor; }} onMouseLeave={(e) => { e.currentTarget.style.color = ''; }}>{member.name}</p>
-                          <p className="text-sm text-muted-foreground">{member.role}</p>
-                        </div>
-                      </Link>
-                    );
-                  })}
-              </div>
-            </div>
-          </AnimatedSection>
-        )}
-
-        {/* Production Photos Gallery */}
-        {productionPhotos.length > 0 && (
-          <AnimatedSection>
-            <div>
-              <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: `var(--accent-color)` }}>
-                Production Photos
-                <span className="ml-4 text-muted-foreground text-lg">({productionPhotos.length})</span>
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {productionPhotos.map((img, idx) => {
-                    const accentColors = ['#FF5722', '#00BCD4', '#E91E63', '#FFC107', '#9C27B0'];
-                    const accentColor = accentColors[idx % accentColors.length];
-                    return (
-                    <AnimatedSection key={img.id} delay={idx * 50}>
-                      <div
-                        className="group relative overflow-hidden rounded-lg cursor-pointer aspect-[3/2]"
-                        onClick={() => {
-                          setLightboxImages(productionPhotos);
-                          setLightboxIndex(idx);
-                          setLightboxOpen(true);
-                        }}
-                      >
-                        <ProgressiveImage
-                          src={img.imageUrl || ''}
-                          alt={img.altText || img.caption || project.title}
-                          className="group-hover:scale-105 group-hover:brightness-110 transition-all duration-500"
-                          aspectRatio="3/2"
-                          smartPosition={true}
-                          loading="lazy"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                        {img.caption && (
-                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/95 via-background/70 to-transparent p-6">
-                            <p className="text-sm font-semibold" style={{ color: accentColor }}>{img.caption}</p>
-                          </div>
-                        )}
-
-                        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <div className="px-3 py-1.5 rounded-full bg-background/90 backdrop-blur-sm border border-border">
-                            <p className="text-xs font-semibold">Click to expand</p>
-                          </div>
-                        </div>
-                      </div>
-                    </AnimatedSection>
-                    );
-                  })}
-              </div>
-            </div>
-          </AnimatedSection>
-        )}
-
-        {/* Renderings */}
-        {renderings.length > 0 && (
-          <AnimatedSection>
-            <div>
-              <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: `var(--accent-color)` }}>
-                Renderings
-                <span className="ml-4 text-muted-foreground text-lg">({renderings.length})</span>
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {renderings.map((img, idx) => {
-                    const accentColors = ['#FF5722', '#00BCD4', '#E91E63', '#FFC107', '#9C27B0'];
-                    const accentColor = accentColors[idx % accentColors.length];
-                    return (
-                    <AnimatedSection key={img.id} delay={idx * 50}>
-                      <div
-                        className="group relative overflow-hidden rounded-lg cursor-pointer aspect-[3/2]"
-                        onClick={() => {
-                          setLightboxImages(renderings);
-                          setLightboxIndex(idx);
-                          setLightboxOpen(true);
-                        }}
-                      >
-                        <ProgressiveImage
-                          src={img.imageUrl || ''}
-                          alt={img.altText || img.caption || project.title}
-                          className="group-hover:scale-105 group-hover:brightness-110 transition-all duration-500"
-                          aspectRatio="3/2"
-                          smartPosition={true}
-                          loading="lazy"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                        {img.caption && (
-                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background/95 via-background/70 to-transparent p-6">
-                            <p className="text-sm font-semibold" style={{ color: accentColor }}>{img.caption}</p>
-                          </div>
-                        )}
-
-                        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <div className="px-3 py-1.5 rounded-full bg-background/90 backdrop-blur-sm border border-border">
-                            <p className="text-xs font-semibold">Click to expand</p>
-                          </div>
-                        </div>
-                      </div>
-                    </AnimatedSection>
-                    );
-                  })}
-              </div>
-            </div>
-          </AnimatedSection>
-        )}
-
-        {/* Design Notes */}
-        {designNotes && (
-          <AnimatedSection>
-            <div>
-              <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: `var(--accent-color)` }}>
-                Design Notes
-              </h2>
-              <div 
-                className="relative py-6 md:max-w-[calc(50%-12px)]"
-                style={{ borderLeftColor: `var(--accent-color)` }}
-              >
-                <div className="text-foreground/85 leading-relaxed whitespace-pre-wrap text-lg text-justify px-8">
-                  {(() => {
-                    const text = showFullNotes ? designNotes : notesPreview;
-                    const firstLetterIdx = text.search(/[a-zA-Z]/);
-                    if (firstLetterIdx === -1) return text;
-                    
-                    const before = text.substring(0, firstLetterIdx);
-                    const firstLetter = text[firstLetterIdx];
-                    const after = text.substring(firstLetterIdx + 1);
-                    
-                    return (
-                      <>
-                        {before}
-                        <span 
-                          style={{
-                            float: 'left',
-                            fontSize: '3.5rem',
-                            lineHeight: '2.8rem',
-                            paddingRight: '0.5rem',
-                            color: `var(--accent-color)`,
-                            fontWeight: 'bold'
-                          }}
-                        >
-                          {firstLetter}
-                        </span>
-                        {after}
-                      </>
-                    );
-                  })()}
-                </div>
-                {shouldShowReadMore && (
-                  <Button
-                    variant="ghost"
-                    onClick={() => setShowFullNotes(!showFullNotes)}
-                    className="mt-6 gap-2"
-                    style={{ color: accentColor }}
-                  >
-                    {showFullNotes ? (
-                      <>Show Less <ChevronUp className="h-4 w-4" /></>
-                    ) : (
-                      <>Read More <ChevronDown className="h-4 w-4" /></>
-                    )}
-                  </Button>
-                )}
-              </div>
-            </div>
-          </AnimatedSection>
-        )}
-
-        {/* Videos */}
-        {videos.length > 0 && (
-          <AnimatedSection>
-            <div>
-              <h2 className="text-4xl font-black tracking-tighter mb-8" style={{ color: `var(--accent-color)` }}>
-                Videos
-                <span className="ml-4 text-muted-foreground text-lg">({videos.length})</span>
-              </h2>
-              <div className="grid grid-cols-1 gap-8">
-                  {videos.map((video) => (
-                    <div key={video.id} className="relative rounded-lg overflow-hidden border-2 border-border">
-                      <div className="relative w-full pb-[56.25%]">
-                        <iframe
-                          src={getEmbedUrl(video.videoUrl || '')}
-                          title={`Video: ${video.caption || 'embedded video'}`}
-                          className="absolute inset-0 w-full h-full"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        />
-                      </div>
-                      {video.caption && (
-                        <div className="p-4 bg-muted">
-                          <p className="text-sm text-foreground/90">{video.caption}</p>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-              </div>
-            </div>
-          </AnimatedSection>
-        )}
-
-        <Separator className="my-16" />
-
-        {/* More Scenic Design */}
         {relatedProjectsFiltered.length > 0 && (
           <AnimatedSection>
             <div>
-              <h2 className="text-4xl font-black tracking-tighter mb-12" style={{ color: `var(--accent-color)` }}>
+              <h2 className="mb-8 text-sm font-semibold tracking-[0.22em] uppercase text-foreground/65">
                 {moreProjectsLabel}
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {relatedProjectsFiltered.map((relatedProject, idx) => {
-                  const accentColors = ['#FF5722', '#00BCD4', '#E91E63', '#FFC107', '#9C27B0'];
-                  const accentColor = accentColors[idx % accentColors.length];
-
-                  return (
-                    <Link key={relatedProject.id} href={getProjectPath(relatedProject)}>
-                      <Card className="group border-0 bg-transparent shadow-none">
-                        <div className="relative aspect-[16/9] overflow-hidden rounded-md">
-                          {relatedProject.coverImageUrl ? (
-                            <ProgressiveImage
-                              src={relatedProject.coverImageUrl}
-                              alt={relatedProject.title}
-                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                              aspectRatio="16/9"
-                              smartPosition={true}
-                              loading="lazy"
-                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                            />
-                          ) : (
-                            <div className="h-full w-full bg-muted" />
-                          )}
-                        </div>
-                        <div className="pt-2 text-center">
-                          <h3
-                            className="text-xs font-semibold tracking-[0.3em] uppercase"
-                            style={{ color: accentColor }}
-                          >
-                            {relatedProject.title}
-                          </h3>
-                        </div>
-                      </Card>
-                    </Link>
-                  );
-                })}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                {relatedProjectsFiltered.map((relatedProject, idx) => (
+                  <Link key={relatedProject.id} href={getProjectPath(relatedProject)}>
+                    <Card className="group border-0 bg-transparent shadow-none">
+                      <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-black/85">
+                        {relatedProject.coverImageUrl ? (
+                          <ProgressiveImage
+                            src={relatedProject.coverImageUrl}
+                            alt={relatedProject.title}
+                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                            aspectRatio="4/3"
+                            smartPosition={true}
+                            loading="lazy"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                          />
+                        ) : (
+                          <div className="h-full w-full bg-muted" />
+                        )}
+                      </div>
+                      <CardContent className="pt-3 px-0 text-center">
+                        <h3
+                          className="text-[11px] font-semibold tracking-[0.2em] uppercase transition-colors group-hover:text-foreground"
+                          style={{ color: ACCENT_COLORS[idx % ACCENT_COLORS.length], transitionDuration: '180ms' }}
+                        >
+                          {relatedProject.title}
+                        </h3>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
               </div>
             </div>
           </AnimatedSection>

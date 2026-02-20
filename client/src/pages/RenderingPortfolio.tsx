@@ -9,6 +9,53 @@ import { ProcessGalleryModal } from "@/components/ProcessGalleryModal";
 import { useEffect, useMemo, useState } from "react";
 
 export default function RenderingPortfolio() {
+  const cleanText = (value?: string | null) =>
+    String(value || "")
+      .replace(/\s+/g, " ")
+      .trim();
+
+  const trimToSentence = (value: string, max = 260) => {
+    if (!value || value.length <= max) return value;
+    const cut = value.slice(0, max);
+    const stop = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("! "), cut.lastIndexOf("? "));
+    if (stop > 120) return cut.slice(0, stop + 1).trim();
+    const wordStop = cut.lastIndexOf(" ");
+    return `${cut.slice(0, wordStop > 80 ? wordStop : max).trim()}...`;
+  };
+
+  const hashSeed = (value: string) => {
+    let h = 0;
+    for (let i = 0; i < value.length; i++) h = (h * 31 + value.charCodeAt(i)) >>> 0;
+    return h;
+  };
+
+  const buildModalDescription = (project: {
+    id?: number | null;
+    designNotes?: string | null;
+    client?: string | null;
+    year?: string | number | null;
+    title?: string | null;
+  }) => {
+    const notes = cleanText(project.designNotes);
+    if (notes) return trimToSentence(notes, 260);
+
+    const title = cleanText(project.title) || "this production";
+    const client = cleanText(project.client);
+    const year = project.year ? String(project.year) : "";
+    const lead = [year, client].filter(Boolean).join(" • ");
+
+    const variants = [
+      `${lead ? `${lead} — ` : ""}Atmospheric rendering sequence for ${title}, built to communicate tone, spatial rhythm, and staging focus before production decisions are finalized.`,
+      `${lead ? `${lead} — ` : ""}Concept rendering exploration for ${title}, emphasizing visual hierarchy, material character, and narrative composition for team alignment.`,
+      `${lead ? `${lead} — ` : ""}Pre-production rendering study for ${title}, translating design intent into clear visual language for directors, collaborators, and build conversations.`,
+      `${lead ? `${lead} — ` : ""}Image set for ${title} focused on mood, proportion, and scenographic clarity—designed to test choices before they move to the stage floor.`,
+      `${lead ? `${lead} — ` : ""}Renderings for ${title} developed as story-first communication tools, balancing atmosphere with practical scenic readability.`,
+    ];
+
+    const seed = `${project.id || ""}|${title}|${client}|${year}`;
+    return variants[hashSeed(seed) % variants.length];
+  };
+
   // Full project pages - query rendering_projects where gallery_only = false
   const { data: projects, isLoading: projectsLoading } = trpc.renderingProjects.list.useQuery({
     galleryOnly: false
@@ -34,7 +81,6 @@ export default function RenderingPortfolio() {
     year: item.project?.year || null,
     client: item.project?.client,
     designNotes: item.project?.designNotes,
-    excerpt: item.project?.excerpt,
     images: (item.project?.images || []).map(img => ({
       id: img.id,
       url: img.imageUrl || '',
@@ -67,7 +113,7 @@ export default function RenderingPortfolio() {
           videoUrl: null,
           altText: currentProject.altText || currentProject.title,
           displayTitle: currentProject.title,
-          description: currentProject.excerpt || null,
+          description: null,
         }]
       : [];
 
@@ -80,7 +126,17 @@ export default function RenderingPortfolio() {
       description: null,
     }));
 
-    return [...coverImage, ...galleryImages].filter((img) => img.imageUrl);
+    // Admin data may include the same image as both cover and first gallery item.
+    // Deduplicate by normalized URL to prevent repeated slides in the modal.
+    const combined = [...coverImage, ...galleryImages].filter((img) => img.imageUrl);
+    const seen = new Set<string>();
+    return combined.filter((img) => {
+      const key = String(img.imageUrl || "").trim().replace(/\?.*$/, "");
+      if (!key) return false;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
   }, [currentProject]);
 
   const currentImage = currentProjectImages[currentImageIndex];
@@ -193,84 +249,34 @@ export default function RenderingPortfolio() {
         </section>
       )}
 
-      {/* Art-Led Principles */}
-      <section className="py-32 border-t border-border bg-muted/30">
-        <div className="container max-w-5xl">
+      <section className="py-20 border-t border-border bg-muted/15">
+        <div className="container max-w-6xl">
           <AnimatedSection>
-            <h2 className="text-sm uppercase tracking-[0.3em] text-muted-foreground font-medium text-center mb-20">
-              Art Before Tools
-            </h2>
+            <div className="grid gap-10 lg:grid-cols-2">
+              <div className="space-y-5">
+                <h2 className="text-4xl md:text-5xl font-black tracking-tighter leading-tight">
+                  Rendering Approach
+                </h2>
+                <p className="text-lg leading-relaxed text-muted-foreground">
+                  These renderings are developed as communication tools for directors, collaborators, and production teams. Each image is composed to clarify spatial intent, mood, and material hierarchy before fabrication.
+                </p>
+                <p className="text-lg leading-relaxed text-muted-foreground">
+                  The objective is clarity with atmosphere: images that can guide conversation, reduce ambiguity, and keep artistic decisions aligned from concept to implementation.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-border/60 bg-card/25 p-6 md:p-8">
+                <h3 className="mb-4 text-xs uppercase tracking-[0.22em] text-muted-foreground font-semibold">
+                  What This Section Shows
+                </h3>
+                <ul className="space-y-3 text-sm md:text-base text-muted-foreground">
+                  <li>Concept-focused hero renderings</li>
+                  <li>Archive studies and alternate directions</li>
+                  <li>Material, light, and atmosphere decisions</li>
+                  <li>Image sets used for team alignment</li>
+                </ul>
+              </div>
+            </div>
           </AnimatedSection>
-
-          <div className="space-y-24">
-            {/* Composition */}
-            <AnimatedSection>
-              <div className="grid md:grid-cols-[1fr,2fr] gap-12 items-start">
-                <div className="space-y-4">
-                  <h3 className="text-3xl font-bold">Composition</h3>
-                  <div className="w-16 h-0.5 bg-foreground" />
-                </div>
-                <div className="space-y-4">
-                  <p className="text-lg leading-relaxed text-muted-foreground">
-                    Every frame is a deliberate choice. Where the eye enters. Where it rests.
-                    What remains in shadow. Composition is not about filling space—it's about
-                    directing attention and building visual hierarchy that serves the narrative.
-                  </p>
-                </div>
-              </div>
-            </AnimatedSection>
-
-            {/* Light */}
-            <AnimatedSection>
-              <div className="grid md:grid-cols-[1fr,2fr] gap-12 items-start">
-                <div className="space-y-4">
-                  <h3 className="text-3xl font-bold">Light</h3>
-                  <div className="w-16 h-0.5 bg-foreground" />
-                </div>
-                <div className="space-y-4">
-                  <p className="text-lg leading-relaxed text-muted-foreground">
-                    Light is emotion. It defines time, temperature, and tension. A rendering
-                    without considered lighting is merely geometry. Light transforms space into
-                    place, data into atmosphere, and structure into story.
-                  </p>
-                </div>
-              </div>
-            </AnimatedSection>
-
-            {/* Material */}
-            <AnimatedSection>
-              <div className="grid md:grid-cols-[1fr,2fr] gap-12 items-start">
-                <div className="space-y-4">
-                  <h3 className="text-3xl font-bold">Material</h3>
-                  <div className="w-16 h-0.5 bg-foreground" />
-                </div>
-                <div className="space-y-4">
-                  <p className="text-lg leading-relaxed text-muted-foreground">
-                    Texture carries memory. Worn wood tells a different story than polished steel.
-                    Material choices communicate history, use, and intention. These details are not
-                    decoration—they are narrative devices that ground the viewer in a believable world.
-                  </p>
-                </div>
-              </div>
-            </AnimatedSection>
-
-            {/* Atmosphere */}
-            <AnimatedSection>
-              <div className="grid md:grid-cols-[1fr,2fr] gap-12 items-start">
-                <div className="space-y-4">
-                  <h3 className="text-3xl font-bold">Atmosphere</h3>
-                  <div className="w-16 h-0.5 bg-foreground" />
-                </div>
-                <div className="space-y-4">
-                  <p className="text-lg leading-relaxed text-muted-foreground">
-                    The space between objects matters as much as the objects themselves. Fog, haze,
-                    depth—these atmospheric elements create separation, mystery, and scale. They remind
-                    us that rendering is about capturing a moment in time, not just documenting form.
-                  </p>
-                </div>
-              </div>
-            </AnimatedSection>
-          </div>
         </div>
       </section>
 
@@ -329,7 +335,7 @@ export default function RenderingPortfolio() {
         <ProcessGalleryModal
           isOpen={modalOpen}
           currentImage={currentImage}
-          currentProject={currentProject ? { displayTitle: currentProject.title, description: currentProject.excerpt || currentProject.designNotes } : undefined}
+          currentProject={currentProject ? { displayTitle: currentProject.title, description: buildModalDescription(currentProject) } : undefined}
           images={currentProjectImages}
           imageIndex={currentImageIndex}
           projectIndex={currentProjectIndex}
@@ -346,77 +352,6 @@ export default function RenderingPortfolio() {
           categoryLabel="Rendering"
         />
       )}
-
-      {/* Process as Layers */}
-      <section className="py-32 border-t border-border">
-        <div className="container max-w-4xl">
-          <AnimatedSection>
-            <h2 className="text-sm uppercase tracking-[0.3em] text-muted-foreground font-medium text-center mb-20">
-              Process as Layers
-            </h2>
-          </AnimatedSection>
-
-          <div className="space-y-16">
-            {/* Layer 1 */}
-            <AnimatedSection>
-              <div className="space-y-4 pb-16 border-b border-border/50">
-                <div className="flex items-baseline gap-4">
-                  <span className="text-sm text-muted-foreground font-mono">01</span>
-                  <h3 className="text-2xl font-bold">Authored 3D Modeling</h3>
-                </div>
-                <p className="text-lg leading-relaxed text-muted-foreground ml-12">
-                  Every rendering begins with intentional geometry. Not generic assets—authored forms
-                  that serve the specific vision of the project. The foundation is built with purpose.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            {/* Layer 2 */}
-            <AnimatedSection>
-              <div className="space-y-4 pb-16 border-b border-border/50">
-                <div className="flex items-baseline gap-4">
-                  <span className="text-sm text-muted-foreground font-mono">02</span>
-                  <h3 className="text-2xl font-bold">Lighting & Material Development</h3>
-                </div>
-                <p className="text-lg leading-relaxed text-muted-foreground ml-12">
-                  Light and material are developed in tandem. This is where mood emerges—where technical
-                  accuracy meets artistic interpretation. The rendering engine becomes a canvas.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            {/* Layer 3 */}
-            <AnimatedSection>
-              <div className="space-y-4 pb-16 border-b border-border/50">
-                <div className="flex items-baseline gap-4">
-                  <span className="text-sm text-muted-foreground font-mono">03</span>
-                  <h3 className="text-2xl font-bold">Composite Post-Production</h3>
-                </div>
-                <p className="text-lg leading-relaxed text-muted-foreground ml-12">
-                  The final image is refined through layering—color grading, atmospheric effects, and
-                  compositional adjustments. This is where the rendering transcends technical output and
-                  becomes a finished work.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            {/* Layer 4 */}
-            <AnimatedSection>
-              <div className="space-y-4">
-                <div className="flex items-baseline gap-4">
-                  <span className="text-sm text-muted-foreground font-mono">04</span>
-                  <h3 className="text-2xl font-bold">AI-Assisted Visualization</h3>
-                </div>
-                <p className="text-lg leading-relaxed text-muted-foreground ml-12">
-                  When appropriate, AI tools support the post-production phase—texture generation,
-                  atmospheric enhancement, or rapid iteration. These are instruments in service of the
-                  vision, not replacements for craft.
-                </p>
-              </div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
 
       <RenderingFAQ />
 

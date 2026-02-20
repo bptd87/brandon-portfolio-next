@@ -270,8 +270,8 @@ export default function Header() {
 
   const disciplines = [
     { name: "Scenic Design", slug: "scenic-design", path: "/projects/scenic-design", icon: <ScenicDesignIcon /> },
-    { name: "Experiential", slug: "experiential", path: "/projects/experiential", icon: <ExperientialIcon /> },
-    { name: "Renderings", slug: "rendering", path: "/projects/rendering", icon: <RenderingIcon /> },
+    { name: "Rendering", slug: "rendering", path: "/projects/rendering", icon: <RenderingIcon /> },
+    { name: "Experiential Design", slug: "experiential", path: "/projects/experiential", icon: <ExperientialIcon /> },
   ];
 
   const newsCategories = [

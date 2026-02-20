@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { trpc } from "@/lib/trpc";
@@ -8,12 +7,13 @@ import { StaggerList, StaggerItem } from "@/components/animations/Stagger";
 import { SEO } from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { useEffect, useMemo, useState, useRef } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { PortfolioGridSkeleton } from "@/components/SkeletonLoaders";
 import { AnimatedSection } from "@/components/AnimatedSection";
 
 export default function Projects() {
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>('all');
+  const accentPalette = ['#FF5722', '#00BCD4', '#E91E63', '#FFC107', '#9C27B0'];
   
 
 
@@ -72,7 +72,7 @@ export default function Projects() {
   // Performance monitoring removed for production
 
   const pageTitle = "Scenic Design";
-  const pageSubtitle = "Spatial Storytelling & Environments";
+  const pageSubtitle = "Scenic environments built for story, performance, and collaboration.";
 
   return (
     <div className="min-h-screen">
@@ -84,18 +84,24 @@ export default function Projects() {
       />
       <Header />
 
-      {/* Hero Section - Minimalist & Dramatic */}
-      <section className="py-32 md:py-40 border-b border-border">
+      {/* Hero Section */}
+      <section className="py-24 md:py-32 border-b border-border">
         <div className="container max-w-6xl">
           <AnimatedSection>
-            <div className="space-y-8 text-center">
+            <div className="space-y-8 text-center max-w-4xl mx-auto">
+              <p className="text-xs font-semibold tracking-[0.24em] uppercase text-muted-foreground">
+                Portfolio
+              </p>
               <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9]">
                 {pageTitle}
               </h1>
 
-              <div className="max-w-2xl mx-auto">
-                <p className="text-xl md:text-2xl leading-relaxed font-extralight text-muted-foreground">
+              <div className="max-w-3xl mx-auto space-y-4">
+                <p className="text-xl md:text-2xl leading-relaxed font-light text-muted-foreground">
                   {pageSubtitle}
+                </p>
+                <p className="text-base md:text-lg leading-relaxed text-muted-foreground/90">
+                  A curated body of scenic design work across regional theatre, summer stock, and academic production.
                 </p>
               </div>
             </div>
@@ -105,28 +111,51 @@ export default function Projects() {
 
       {/* Subcategory Filters */}
       {subcategories.length > 0 && (
-        <section className="py-8 border-b border-border glass">
+        <section className="py-6 border-b border-border/40">
           <div className="container">
-            <div className="flex flex-wrap gap-2">
-              <Button
-                variant={selectedSubcategory === 'all' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setSelectedSubcategory('all')}
-                className="transition-smooth"
-              >
-                ALL
-              </Button>
-              {subcategories.map((cat) => (
-                <Button
-                  key={cat.key}
-                  variant={selectedSubcategory === cat.key ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setSelectedSubcategory(cat.key)}
-                  className="transition-smooth"
-                >
-                  {cat.label.toUpperCase()}
-                </Button>
-              ))}
+            <div className="max-w-5xl mx-auto">
+              <p className="text-center text-[10px] font-semibold uppercase tracking-[0.22em] text-foreground/50 mb-3">
+                Filter Productions
+              </p>
+              <div className="flex justify-center">
+                <div className="inline-flex max-w-full gap-2 rounded-2xl border border-border/50 bg-card/20 p-2 overflow-x-auto">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedSubcategory('all')}
+                    className="whitespace-nowrap rounded-xl px-4 py-2 text-xs font-semibold tracking-[0.08em] uppercase transition-all duration-200"
+                    style={selectedSubcategory === 'all'
+                      ? {
+                          color: accentPalette[0],
+                          backgroundColor: `${accentPalette[0]}22`,
+                          boxShadow: `inset 0 0 0 1px ${accentPalette[0]}66`,
+                        }
+                      : undefined}
+                  >
+                    All
+                  </button>
+                  {subcategories.map((cat, idx) => {
+                    const accent = accentPalette[(idx + 1) % accentPalette.length];
+                    const isActive = selectedSubcategory === cat.key;
+                    return (
+                      <button
+                        key={cat.key}
+                        type="button"
+                        onClick={() => setSelectedSubcategory(cat.key)}
+                        className="whitespace-nowrap rounded-xl px-4 py-2 text-xs font-semibold tracking-[0.08em] uppercase transition-all duration-200 text-foreground/70 hover:text-foreground hover:bg-white/5"
+                        style={isActive
+                          ? {
+                              color: accent,
+                              backgroundColor: `${accent}22`,
+                              boxShadow: `inset 0 0 0 1px ${accent}66`,
+                            }
+                          : undefined}
+                      >
+                        {cat.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -143,14 +172,7 @@ export default function Projects() {
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 overflow-visible"
               >
                 {filteredProjects.map((project, index) => {
-                  const accentColors = [
-                    '#FF5722',
-                    '#00BCD4',
-                    '#E91E63',
-                    '#FFC107',
-                    '#9C27B0',
-                  ];
-                  const accentColor = accentColors[index % accentColors.length];
+                  const accentColor = accentPalette[index % accentPalette.length];
 
                   return (
                     <StaggerItem key={project.id} dramatic={true}>
@@ -200,181 +222,38 @@ export default function Projects() {
         </section>
       )}
 
-      <section className="py-32 border-t border-border">
-        <div className="container max-w-3xl">
+      <section className="py-20 border-t border-border bg-muted/10">
+        <div className="container max-w-6xl">
           <AnimatedSection>
-            <div className="space-y-16">
-              <h2 className="text-5xl md:text-7xl font-black leading-tight">
-                Every space
-                <br />
-                tells a story.
-              </h2>
-              
-              <div className="space-y-12 text-xl md:text-2xl leading-relaxed text-muted-foreground font-light">
-                <p>
-                  I design for live performance—regional theatre, summer stock, academic productions, 
-                  immersive experiences. Each project starts the same way: with a script, a director's 
-                  vision, and the question <em className="font-playfair italic">"What does this story need?"</em>
+            <div className="grid gap-10 lg:grid-cols-2">
+              <div className="space-y-5">
+                <h2 className="text-3xl md:text-5xl font-black tracking-tighter leading-tight">
+                  Scenic Design Portfolio in Practice
+                </h2>
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                  This portfolio documents scenic design work across regional theatre, summer stock, and academic production. Projects include concept development, ground plans, white models, renderings, and realized stage photography.
                 </p>
-
-                <p>
-                  The best scenic design doesn't call attention to itself. It serves the narrative, 
-                  supports the performers, and creates spatial opportunities that wouldn't exist without it. 
-                  It solves problems. It builds worlds worth believing in.
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                  My process starts with script analysis and collaborative alignment, then moves through visual research, iterative design studies, drafting coordination, and production execution. The goal is always the same: design spaces that support story, actor movement, and audience focus.
                 </p>
-
-                <p>
-                  I work collaboratively, iterate constantly, and embrace constraints as creative fuel. 
-                  Whether it's a black box or a 1,200-seat proscenium, the goal remains the same: 
-                  <strong>make theatre that matters</strong>.
+              </div>
+              <div className="space-y-4 rounded-xl bg-card/30 p-6 md:p-8">
+                <h3 className="text-xs uppercase tracking-[0.22em] font-semibold text-muted-foreground">
+                  Core Focus Areas
+                </h3>
+                <ul className="space-y-3 text-sm md:text-base text-muted-foreground">
+                  <li>Scenic design for plays and musicals</li>
+                  <li>Drafting and build documentation for production teams</li>
+                  <li>Rendering studies for visual communication and alignment</li>
+                  <li>Collaboration with lighting, costume, and technical teams</li>
+                  <li>Story-driven environments for live performance</li>
+                </ul>
+                <p className="pt-2 text-xs uppercase tracking-[0.18em] text-muted-foreground/80">
+                  USA 829 • Southern California • Available Nationally
                 </p>
-
-                <div className="pt-8 text-sm uppercase tracking-[0.3em] text-center">
-                  Member of USA 829 • Based in Southern California • Working nationally
-                </div>
               </div>
             </div>
           </AnimatedSection>
-        </div>
-      </section>
-
-      <section className="py-20 border-t border-border">
-        <div className="container max-w-7xl">
-          <AnimatedSection>
-            <h2 className="text-sm uppercase tracking-widest text-muted-foreground font-medium text-center mb-16">
-              Featured Work
-            </h2>
-          </AnimatedSection>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {filteredProjects.slice(0, 6).map((project, index) => (
-              <AnimatedSection key={project.id}>
-                <Link href={getProjectPath(project)}>
-                  <div className="group relative aspect-[4/5] rounded-lg overflow-hidden cursor-pointer">
-                    {project.coverImageUrl ? (
-                      <>
-                        <ProgressiveImage
-                          src={project.coverImageUrl}
-                          alt={project.title}
-                          className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
-                          aspectRatio="4/5"
-                          smartPosition={true}
-                          loading="lazy"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-                        <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform transition-transform duration-500">
-                          <h3 className="text-xl md:text-2xl font-bold mb-2">
-                            {project.title}
-                          </h3>
-                          {project.venue && (
-                            <p className="text-sm opacity-80 mb-1">
-                              {project.venue}
-                            </p>
-                          )}
-                          {project.year && (
-                            <p className="text-xs opacity-60">
-                              {project.year}
-                            </p>
-                          )}
-                        </div>
-                      </>
-                    ) : (
-                      <div className="w-full h-full bg-muted flex items-center justify-center">
-                        <p className="text-muted-foreground">No image</p>
-                      </div>
-                    )}
-                  </div>
-                </Link>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-32 border-t border-border bg-muted/20">
-        <div className="container max-w-4xl">
-          <AnimatedSection>
-            <div className="text-center mb-20">
-              <h2 className="text-5xl md:text-6xl font-black mb-6">
-                Design Notes
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Thoughts on process, philosophy, and the work itself.
-              </p>
-            </div>
-          </AnimatedSection>
-
-          <div className="space-y-16">
-            <AnimatedSection>
-              <div className="space-y-4">
-                <h3 className="text-2xl md:text-3xl font-bold">
-                  On Collaboration
-                </h3>
-                <p className="text-lg leading-relaxed text-muted-foreground">
-                  Theatre is a team sport. The best work happens when designers, directors, and performers 
-                  trust each other enough to take risks. I listen first—understanding the vision, the needs, 
-                  the constraints. Then I contribute, iterate, adapt. Good collaboration isn't about defending 
-                  your ideas; it's about serving the story and lifting each other's work.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection>
-              <div className="space-y-4">
-                <h3 className="text-2xl md:text-3xl font-bold">
-                  On Constraints
-                </h3>
-                <p className="text-lg leading-relaxed text-muted-foreground">
-                  Every project has limits—budget, space, time, crew capacity. The best designs aren't made 
-                  in spite of constraints; they're made <em>because</em> of them. Constraints force clarity. 
-                  They eliminate the unnecessary. A great design doesn't require unlimited resources—it requires 
-                  intentional choices.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection>
-              <div className="space-y-4">
-                <h3 className="text-2xl md:text-3xl font-bold">
-                  On Research
-                </h3>
-                <p className="text-lg leading-relaxed text-muted-foreground">
-                  Research grounds imagination. Whether it's period architecture, cultural context, or material 
-                  history, research provides the vocabulary for design choices. It's not about literal replication—it's 
-                  about understanding the rules so you know when and how to break them. Research informs authenticity, 
-                  even when the design is stylized or abstract.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection>
-              <div className="space-y-4">
-                <h3 className="text-2xl md:text-3xl font-bold">
-                  On Tools
-                </h3>
-                <p className="text-lg leading-relaxed text-muted-foreground">
-                  Sketches, models, renderings, drawings—each tool has a purpose. Early in the process, I work 
-                  fast and loose, exploring multiple directions. As the design solidifies, I refine and detail. 
-                  White models show form and space. Renderings communicate atmosphere and mood. Construction drawings 
-                  translate vision into buildable reality. The art is knowing which tool to use when.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection>
-              <div className="space-y-4">
-                <h3 className="text-2xl md:text-3xl font-bold">
-                  On Story
-                </h3>
-                <p className="text-lg leading-relaxed text-muted-foreground">
-                  Everything I design is in service of the story. The set should feel inevitable—as if the play 
-                  couldn't happen anywhere else. It should guide the audience's focus, support the emotional arc, 
-                  and create opportunities for staging that wouldn't exist without it. Scenic design is spatial 
-                  storytelling. If it's not serving the narrative, it doesn't belong on stage.
-                </p>
-              </div>
-            </AnimatedSection>
-          </div>
         </div>
       </section>
 

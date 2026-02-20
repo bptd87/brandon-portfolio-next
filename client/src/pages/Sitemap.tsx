@@ -19,8 +19,8 @@ export default function Sitemap() {
       links: [
         { name: "All Projects", href: "/projects" },
         { name: "Scenic Design", href: "/projects?discipline=scenic_design" },
-        { name: "Experiential Design", href: "/projects?discipline=experiential_design" },
         { name: "Renderings", href: "/projects?discipline=rendering" },
+        { name: "Experiential Design", href: "/projects?discipline=experiential_design" },
       ]
     },
     {

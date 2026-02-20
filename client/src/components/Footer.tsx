@@ -45,13 +45,13 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/projects/experiential" className="text-foreground/70 hover:text-[#00E5FF] transition-colors font-medium">
-                    Experiential
+                  <Link href="/projects/rendering" className="text-foreground/70 hover:text-[#00E5FF] transition-colors font-medium">
+                    Rendering
                   </Link>
                 </li>
                 <li>
-                  <Link href="/projects/rendering" className="text-foreground/70 hover:text-[#00E5FF] transition-colors font-medium">
-                    Rendering
+                  <Link href="/projects/experiential" className="text-foreground/70 hover:text-[#00E5FF] transition-colors font-medium">
+                    Experiential Design
                   </Link>
                 </li>
               </ul>

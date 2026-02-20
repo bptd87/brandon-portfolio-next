@@ -58,6 +58,14 @@ export interface Project {
   categoryId: number | null;
   creativeTeam: any;
   metadata: any;
+  externalArticles?: Array<{
+    title: string;
+    url: string;
+    type?: "review" | "listing" | null;
+    source?: string | null;
+    publishedAt?: string | null;
+    excerpt?: string | null;
+  }> | null;
   publishedAt: Date | null;
   seoTitle: string | null;
   seoDescription: string | null;

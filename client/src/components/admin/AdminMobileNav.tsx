@@ -39,7 +39,7 @@ export function AdminMobileNav({ user, onSignOut }: AdminMobileNavProps) {
         { href: "/admin/news", icon: Newspaper, label: "News" },
         { href: "/admin/articles", icon: FileText, label: "Articles" },
         { href: "/admin/categories", icon: FolderTree, label: "Categories" },
-        { href: "/admin/tags", icon: TagIcon, label: "Tags" },
+        { href: "/admin/tags", icon: TagIcon, label: "Tags (News/Articles)" },
         { href: "/admin/tutorials", icon: GraduationCap, label: "Tutorials" },
         { href: "/admin/scenic-directory", icon: Library, label: "Scenic Directory" },
         { href: "/admin/collaborators", icon: Users, label: "Collaborators" },

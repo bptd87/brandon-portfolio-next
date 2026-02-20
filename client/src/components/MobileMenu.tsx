@@ -67,18 +67,18 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   Scenic Design
                 </Link>
                 <Link
-                  href="/projects/experiential"
-                  onClick={onClose}
-                  className="block py-2 px-4 rounded-lg hover:bg-[#00E5FF]/10 hover:text-[#00E5FF] transition-colors"
-                >
-                  Experiential
-                </Link>
-                <Link
                   href="/projects/rendering"
                   onClick={onClose}
                   className="block py-2 px-4 rounded-lg hover:bg-[#FF1744]/10 hover:text-[#FF1744] transition-colors"
                 >
-                  Renderings
+                  Rendering
+                </Link>
+                <Link
+                  href="/projects/experiential"
+                  onClick={onClose}
+                  className="block py-2 px-4 rounded-lg hover:bg-[#00E5FF]/10 hover:text-[#00E5FF] transition-colors"
+                >
+                  Experiential Design
                 </Link>
               </div>
             )}

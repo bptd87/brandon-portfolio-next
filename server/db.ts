@@ -361,6 +361,7 @@ export async function getAllProjects(filters?: {
     categoryId: proj.category_id,
     creativeTeam: proj.creative_team,
     metadata: proj.metadata,
+    externalArticles: proj.external_articles,
     publishedAt: proj.published_at ? new Date(proj.published_at) : null,
     subcategory: proj.subcategory,
     seoTitle: proj.seo_title,
@@ -420,6 +421,7 @@ export async function getProjectById(id: number): Promise<Project | undefined> {
     categoryId: data.category_id,
     creativeTeam: data.creative_team,
     metadata: data.metadata,
+    externalArticles: data.external_articles,
     publishedAt: data.published_at ? new Date(data.published_at) : null,
     seoTitle: data.seo_title,
     seoDescription: data.seo_description,
@@ -477,6 +479,7 @@ export async function getProjectBySlug(slug: string): Promise<Project | undefine
     categoryId: data.category_id,
     creativeTeam: data.creative_team,
     metadata: data.metadata,
+    externalArticles: data.external_articles,
     publishedAt: data.published_at ? new Date(data.published_at) : null,
     seoTitle: data.seo_title,
     seoDescription: data.seo_description,
@@ -1261,6 +1264,7 @@ export async function createProject(project: any) {
       cover_image: project.coverImageUrl,
       design_notes: project.designNotes,
       client: project.client,
+      external_articles: project.externalArticles,
       status: project.status || 'draft',
       featured: project.featured || false,
       category_id: project.categoryId,
@@ -1290,6 +1294,7 @@ export async function updateProject(id: number, project: any) {
   if (project.coverImageUrl !== undefined) updateData.cover_image = project.coverImageUrl;
   if (project.designNotes !== undefined) updateData.design_notes = project.designNotes;
   if (project.client !== undefined) updateData.client = project.client;
+  if (project.externalArticles !== undefined) updateData.external_articles = project.externalArticles;
   if (project.status !== undefined) updateData.status = project.status;
   if (project.featured !== undefined) updateData.featured = project.featured;
   if (project.categoryId !== undefined) updateData.category_id = project.categoryId;

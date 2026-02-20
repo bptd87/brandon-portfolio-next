@@ -17,7 +17,7 @@ import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, X, Plus, GripVertical, ArrowLeft, Save, Info, Search, Image as ImageIcon } from "lucide-react";
+import { Loader2, X, Plus, GripVertical, ArrowLeft, Save, Info, Image as ImageIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
 import {
@@ -46,6 +46,14 @@ interface ProjectFormProps {
 interface TeamMember {
   name: string;
   role: string;
+}
+
+interface ExternalArticle {
+  title: string;
+  url: string;
+  type?: "review" | "listing";
+  source?: string;
+  publishedAt?: string;
 }
 
 interface ImageUpload {
@@ -268,11 +276,11 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
     subcategory: "",
     status: "draft" as "draft" | "published" | "archived",
     featured: false,
-    gallery_only: false,
     year: new Date().getFullYear(),
     month: undefined as number | undefined, // 1-12 for chronological sorting
     location: "",
     client: "",
+    externalArticles: [] as ExternalArticle[],
     // SEO - for search engines only
     seoTitle: "",
     seoDescription: "",
@@ -285,32 +293,10 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
   const [newMemberName, setNewMemberName] = useState("");
   const [showRoleSuggestions, setShowRoleSuggestions] = useState(false);
 
-  // Tags (user-facing content labels)
-  const [selectedTagIds, setSelectedTagIds] = useState<number[]>([]);
-  const [newTagInput, setNewTagInput] = useState("");
-  const [isCreatingTag, setIsCreatingTag] = useState(false);
-
   const [coverImage, setCoverImage] = useState<{ file?: File; url?: string; key?: string }>();
   const [galleryImages, setGalleryImages] = useState<ImageUpload[]>([]);
   const [uploadingImages, setUploadingImages] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-
-  // Categories removed - projects use disciplines, not categories
-  const { data: allTags, refetch: refetchTags } = trpc.tags.list.useQuery();
-  
-  const createTag = trpc.tags.create.useMutation({
-    onSuccess: (newTag) => {
-      toast.success(`Tag "${newTag.name}" created`);
-      setNewTagInput("");
-      setIsCreatingTag(false);
-      refetchTags();
-      // Auto-select the newly created tag
-      setSelectedTagIds([...selectedTagIds, newTag.id]);
-    },
-    onError: (error) => {
-      toast.error(`Failed to create tag: ${error.message}`);
-    },
-  });
   // const uploadImage = trpc.projects.uploadImage.useMutation(); // Replaced by client-side upload
 
   const createProject = trpc.projects.create.useMutation({
@@ -352,10 +338,38 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
           ? fullProject.status.toLowerCase() as "draft" | "published" | "archived"
           : "draft",
         featured: fullProject.featured || false,
-        gallery_only: (fullProject as any).gallery_only || false,
         year: fullProject.year || new Date().getFullYear(),
         location: fullProject.location || "",
         client: fullProject.client || "",
+        externalArticles: (() => {
+          const raw = (fullProject as any).externalArticles;
+          if (Array.isArray(raw)) {
+            return raw.map((item: any) => ({
+              title: item?.title || "",
+              url: item?.url || "",
+              type: item?.type === "review" ? "review" : "listing",
+              source: item?.source || "",
+              publishedAt: item?.publishedAt || "",
+            }));
+          }
+          if (typeof raw === "string") {
+            try {
+              const parsed = JSON.parse(raw);
+              return Array.isArray(parsed)
+                ? parsed.map((item: any) => ({
+                    title: item?.title || "",
+                    url: item?.url || "",
+                    type: item?.type === "review" ? "review" : "listing",
+                    source: item?.source || "",
+                    publishedAt: item?.publishedAt || "",
+                  }))
+                : [];
+            } catch {
+              return [];
+            }
+          }
+          return [];
+        })(),
         month: fullProject.month ?? undefined,
         seoTitle: fullProject.seoTitle || "",
         seoDescription: fullProject.seoDescription || "",
@@ -391,11 +405,6 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
           }
           setTeamMembers(members);
         }
-      }
-
-      // Load tags
-      if (fullProject.tags && Array.isArray(fullProject.tags)) {
-        setSelectedTagIds(fullProject.tags.map((t: any) => t.id));
       }
 
       if (fullProject.coverImageUrl) {
@@ -462,14 +471,6 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
     }
   };
 
-  // Filtered tags for search
-  const filteredTags = useMemo(() => {
-    if (!allTags) return [];
-    if (!newTagInput.trim()) return [];
-    const q = newTagInput.toLowerCase();
-    return allTags.filter(t => t.name.toLowerCase().includes(q)).slice(0, 50);
-  }, [allTags, newTagInput]);
-
   // Role suggestions filtered by input
   const filteredRoles = useMemo(() => {
     if (!newMemberRole.trim()) return COMMON_ROLES;
@@ -498,12 +499,29 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
     setTeamMembers(updated);
   };
 
-  const handleToggleTag = (tagId: number) => {
-    setSelectedTagIds(prev =>
-      prev.includes(tagId)
-        ? prev.filter(id => id !== tagId)
-        : [...prev, tagId]
-    );
+  const handleAddExternalArticle = () => {
+    setFormData((prev) => ({
+      ...prev,
+      externalArticles: [
+        ...prev.externalArticles,
+        { title: "", url: "", type: "listing", source: "", publishedAt: "" },
+      ],
+    }));
+  };
+
+  const handleUpdateExternalArticle = (index: number, field: keyof ExternalArticle, value: string) => {
+    setFormData((prev) => {
+      const updated = [...prev.externalArticles];
+      updated[index] = { ...updated[index], [field]: value };
+      return { ...prev, externalArticles: updated };
+    });
+  };
+
+  const handleRemoveExternalArticle = (index: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      externalArticles: prev.externalArticles.filter((_, i) => i !== index),
+    }));
   };
 
   const handleCoverImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -652,6 +670,23 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
         ? formData.status.toLowerCase()
         : 'draft';
 
+      const preparedExternalArticles = formData.externalArticles
+        .filter((item) => item.url.trim())
+        .map((item) => ({
+          title: item.title.trim() || undefined,
+          url: item.url.trim(),
+          type: item.type === "review" ? "review" : "listing",
+          source: item.source?.trim() || undefined,
+          publishedAt: item.publishedAt?.trim() || undefined,
+        }));
+
+      const invalidExternalUrl = preparedExternalArticles.find((item) => !/^https?:\/\//i.test(item.url));
+      if (invalidExternalUrl) {
+        toast.error("External article URLs must start with http:// or https://");
+        setUploadingImages(false);
+        return;
+      }
+
       const projectPayload = {
         title: formData.title,
         slug: formData.slug,
@@ -664,15 +699,14 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
         coverImageKey: coverImageKey || undefined,
         location: formData.location || undefined,
         client: formData.client || undefined,
+        externalArticles: preparedExternalArticles,
         year: formData.year || undefined,
         status: safeStatus as any,
         featured: formData.featured,
-        gallery_only: formData.gallery_only,
         creativeTeam: teamMembers.length > 0 ? teamMembers : undefined,
         seoTitle: formData.seoTitle || undefined,
         seoDescription: formData.seoDescription || undefined,
         seoKeywords: formData.seoKeywords || undefined,
-        tagIds: selectedTagIds.length > 0 ? selectedTagIds : undefined,
         images: validGalleryImages.map(img => ({
           ...img,
           imageType: img.imageType.toLowerCase() as any
@@ -747,7 +781,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
       <div className="container mx-auto py-8">
         <form id="project-form" onSubmit={handleSubmit}>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className={`grid w-full ${formData.discipline === 'rendering' ? 'grid-cols-5' : 'grid-cols-6'} mb-8`}>
+            <TabsList className={`grid w-full ${formData.discipline === 'rendering' ? 'grid-cols-4' : 'grid-cols-5'} mb-8`}>
               <TabsTrigger value="basic">Basic Info</TabsTrigger>
               {formData.discipline !== 'rendering' && (
                 <TabsTrigger value="content">Content</TabsTrigger>
@@ -762,12 +796,6 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
                 Gallery
                 {galleryImages.length > 0 && (
                   <Badge variant="secondary" className="ml-2 text-xs">{galleryImages.length}</Badge>
-                )}
-              </TabsTrigger>
-              <TabsTrigger value="tags">
-                Tags
-                {selectedTagIds.length > 0 && (
-                  <Badge variant="secondary" className="ml-2 text-xs">{selectedTagIds.length}</Badge>
                 )}
               </TabsTrigger>
               <TabsTrigger value="seo">SEO</TabsTrigger>
@@ -987,14 +1015,6 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
                         />
                       </div>
 
-                      <div className="flex items-center justify-between">
-                        <Label htmlFor="gallery_only">Gallery Only (Hide from Projects)</Label>
-                        <Switch
-                          id="gallery_only"
-                          checked={formData.gallery_only}
-                          onCheckedChange={(checked) => setFormData({ ...formData, gallery_only: checked })}
-                        />
-                      </div>
                     </CardContent>
                   </Card>
                 </div>
@@ -1019,6 +1039,91 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
                       placeholder="Design philosophy, concept development, technical notes..."
                       className="font-mono text-sm"
                     />
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center justify-between">
+                      <span>Public Articles (External)</span>
+                      <Button type="button" size="sm" variant="outline" onClick={handleAddExternalArticle}>
+                        <Plus className="h-4 w-4 mr-1" />
+                        Add Article
+                      </Button>
+                    </CardTitle>
+                    <CardDescription>
+                      Add third-party press, reviews, or public writeups about this production. These appear on the project page.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {formData.externalArticles.length === 0 ? (
+                      <p className="text-sm text-muted-foreground">No external articles added yet.</p>
+                    ) : (
+                      formData.externalArticles.map((article, index) => (
+                        <div key={`external-article-${index}`} className="rounded-lg border p-4 space-y-3">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div className="space-y-1">
+                              <Label>Article Title</Label>
+                              <Input
+                                value={article.title || ""}
+                                onChange={(e) => handleUpdateExternalArticle(index, "title", e.target.value)}
+                                placeholder="Guys on Ice is Warm and Funny"
+                              />
+                            </div>
+                            <div className="space-y-1">
+                              <Label>Source</Label>
+                              <Input
+                                value={article.source || ""}
+                                onChange={(e) => handleUpdateExternalArticle(index, "source", e.target.value)}
+                                placeholder="SLO Review"
+                              />
+                            </div>
+                          </div>
+                          <div className="space-y-1">
+                            <Label>Article Type</Label>
+                            <Select
+                              value={article.type || "listing"}
+                              onValueChange={(value) => handleUpdateExternalArticle(index, "type", value as "review" | "listing")}
+                            >
+                              <SelectTrigger>
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="review">Review / Critic</SelectItem>
+                                <SelectItem value="listing">Project Listing / Reference</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="space-y-1">
+                            <Label>URL</Label>
+                            <Input
+                              value={article.url || ""}
+                              onChange={(e) => handleUpdateExternalArticle(index, "url", e.target.value)}
+                              placeholder="https://..."
+                            />
+                          </div>
+                          <div className="flex items-end justify-between gap-3">
+                            <div className="space-y-1 w-full md:w-72">
+                              <Label>Published Date (optional)</Label>
+                              <Input
+                                value={article.publishedAt || ""}
+                                onChange={(e) => handleUpdateExternalArticle(index, "publishedAt", e.target.value)}
+                                placeholder="2025-02-15"
+                              />
+                            </div>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              className="text-destructive hover:text-destructive"
+                              onClick={() => handleRemoveExternalArticle(index)}
+                            >
+                              <X className="h-4 w-4 mr-1" />
+                              Remove
+                            </Button>
+                          </div>
+                        </div>
+                      ))
+                    )}
                   </CardContent>
                 </Card>
               </div>
@@ -1234,125 +1339,6 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
               </div>
             </TabsContent>
 
-            {/* ===== TAGS TAB ===== */}
-            <TabsContent value="tags">
-              <div className="max-w-4xl space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      Tags
-                      <Badge variant="outline" className="font-normal">User-Facing</Badge>
-                    </CardTitle>
-                    <CardDescription>
-                      Tags are visible to visitors and used for browsing/filtering content on the site.
-                      They appear as clickable badges on the project page and link to tag pages.
-                      <br />
-                      <span className="text-xs italic mt-1 inline-block">
-                        Different from SEO Keywords, which are hidden meta tags only for search engines.
-                      </span>
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    {/* Selected tags */}
-                    {selectedTagIds.length > 0 && (
-                      <div className="space-y-2">
-                        <Label className="text-sm">Selected Tags ({selectedTagIds.length})</Label>
-                        <div className="flex flex-wrap gap-2">
-                          {selectedTagIds.map((tagId) => {
-                            const tag = allTags?.find(t => t.id === tagId);
-                            return tag ? (
-                              <Badge
-                                key={tagId}
-                                variant="default"
-                                className="cursor-pointer hover:bg-destructive hover:text-destructive-foreground transition-colors"
-                                onClick={() => handleToggleTag(tagId)}
-                              >
-                                {tag.name}
-                                <X className="h-3 w-3 ml-1" />
-                              </Badge>
-                            ) : null;
-                          })}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Tag input - type any tag name and press Enter */}
-                    <div className="space-y-3">
-                      <div className="space-y-1">
-                        <Label htmlFor="tag-input">Add Tags</Label>
-                        <p className="text-xs text-muted-foreground">Type a tag name and press Enter. Creates new tags automatically.</p>
-                      </div>
-                      <div className="relative">
-                        <Input
-                          id="tag-input"
-                          value={newTagInput}
-                          onChange={(e) => setNewTagInput(e.target.value)}
-                          placeholder="e.g., 'Lighting Design', 'Digital', 'Projection'..."
-                          onKeyDown={(e) => {
-                            // Always prevent form submission on Enter in this field
-                            if (e.key === "Enter") {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              
-                              if (newTagInput.trim()) {
-                                // Check if tag already exists
-                                const existingTag = allTags?.find(
-                                  t => t.name.toLowerCase() === newTagInput.trim().toLowerCase()
-                                );
-                                
-                                if (existingTag && !selectedTagIds.includes(existingTag.id)) {
-                                  // Tag exists, just select it
-                                  setSelectedTagIds([...selectedTagIds, existingTag.id]);
-                                  setNewTagInput("");
-                                } else if (!existingTag) {
-                                  // Tag doesn't exist, create it
-                                  const slug = newTagInput
-                                    .toLowerCase()
-                                    .replace(/[^a-z0-9]+/g, "-")
-                                    .replace(/(^-|-$)/g, "");
-                                  createTag.mutate({ name: newTagInput.trim(), slug });
-                                }
-                              }
-                            }
-                          }}
-                          disabled={createTag.isPending}
-                        />
-                      </div>
-
-                      {/* Matching tags dropdown */}
-                      {newTagInput.trim() && (
-                        <div className="border rounded-lg p-3 bg-muted/30 space-y-2 max-h-60 overflow-y-auto">
-                          <p className="text-xs font-medium text-muted-foreground">Matching tags (click to select):</p>
-                          <div className="flex flex-wrap gap-2">
-                            {filteredTags.length > 0 ? (
-                              filteredTags.map((tag) => {
-                                const isSelected = selectedTagIds.includes(tag.id);
-                                return !isSelected ? (
-                                  <Badge
-                                    key={tag.id}
-                                    variant="outline"
-                                    className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
-                                    onClick={() => {
-                                      setSelectedTagIds([...selectedTagIds, tag.id]);
-                                      setNewTagInput("");
-                                    }}
-                                  >
-                                    {tag.name}
-                                  </Badge>
-                                ) : null;
-                              })
-                            ) : (
-                              <p className="text-xs text-muted-foreground">No existing tags match. Press Enter to create "{newTagInput.trim()}".</p>
-                            )}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-
             {/* ===== SEO TAB ===== */}
             <TabsContent value="seo">
               <div className="max-w-4xl space-y-6">
@@ -1365,10 +1351,6 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
                     <CardDescription>
                       These fields control how the project appears in search engine results (Google, Bing, etc.).
                       They are <strong>not visible</strong> to visitors on the site itself.
-                      <br />
-                      <span className="text-xs italic mt-1 inline-block">
-                        For visitor-facing labels, use the Tags tab instead.
-                      </span>
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
