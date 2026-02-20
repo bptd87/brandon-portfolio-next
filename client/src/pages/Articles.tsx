@@ -6,7 +6,7 @@ import PageThemeWrapper from "@/components/PageThemeWrapper";
 import ThemeToggle from "@/components/ThemeToggle";
 import { Badge } from "@/components/ui/badge";
 import { trpc } from "@/lib/trpc";
-import { getCategoryBadgeClasses, getCategoryColor } from "@/lib/categoryColors";
+import { getCategoryColor } from "@/lib/categoryColors";
 import { Search } from "lucide-react";
 import { Link } from "wouter";
 import { SEO } from "@/components/SEO";
@@ -79,7 +79,7 @@ function ArticlesContent() {
 
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background [background-image:radial-gradient(circle_at_12%_9%,rgba(255,87,34,0.10),transparent_34%),radial-gradient(circle_at_85%_16%,rgba(33,150,243,0.08),transparent_34%)]">
       <SEO
         title="Scenic Insights | Articles by Brandon PT Davis"
         description="Articles on design philosophy, process, and the craft of scenic and experiential design."
@@ -89,66 +89,68 @@ function ArticlesContent() {
       <Header />
 
       {/* Page Header */}
-      <section className="pt-24 md:pt-32 pb-16 md:pb-20 border-b border-border">
+      <section className="pt-14 md:pt-20 pb-8">
         <div className="container">
-          <p className="text-xs tracking-widest text-muted-foreground mb-4">ARTICLES</p>
-          <h1 className="mb-4 text-4xl md:text-5xl">Scenic Insights</h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl">
-            Articles on design philosophy, process, and the craft of scenic design.
-          </p>
+          <div className="max-w-6xl mx-auto">
+            <p className="text-xs tracking-[0.24em] text-muted-foreground mb-4 font-semibold uppercase">Studio / Articles</p>
+            <h1 className="mb-5 text-5xl md:text-7xl font-serif tracking-tight leading-[0.92]">Scenic Insights</h1>
+            <p className="text-lg md:text-xl text-foreground/75 max-w-4xl leading-relaxed">
+              Articles on design philosophy, process, and the craft of scenic design.
+            </p>
 
-          {/* Search and Category Filter */}
-          <div className="mt-8 space-y-6">
-            {/* Search Input */}
-            <div className="relative w-full max-w-md">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <input
-                type="text"
-                placeholder="Search articles..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
-              />
-            </div>
+            {/* Search and Category Filter */}
+            <div className="mt-6 rounded-2xl border border-border/60 bg-card/20 p-5 md:p-6 space-y-6">
+              {/* Search Input */}
+              <div className="relative w-full max-w-md">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <input
+                  type="text"
+                  placeholder="Search articles..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                />
+              </div>
 
-            {/* Category Filter Badges */}
-            <div className="flex flex-wrap gap-2">
-              <button
-                onClick={() => setSelectedCategory(null)}
-                className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${selectedCategory === null
-                  ? 'bg-primary text-primary-foreground shadow-lg'
-                  : 'bg-background border border-border text-muted-foreground hover:border-primary hover:text-foreground'
-                  }`}
-              >
-                All Articles
-              </button>
-              {categories.map(category => (
+              {/* Category Filter Badges */}
+              <div className="flex flex-wrap gap-2">
                 <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${selectedCategory === category
-                    ? 'shadow-lg'
-                    : 'bg-background border border-border hover:shadow-md'
+                  onClick={() => setSelectedCategory(null)}
+                  className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.12em] transition-all duration-200 border ${selectedCategory === null
+                    ? 'bg-primary text-primary-foreground border-primary shadow-lg'
+                    : 'bg-background border border-border text-muted-foreground hover:border-primary hover:text-foreground'
                     }`}
-                  style={{
-                    backgroundColor: selectedCategory === category ? getCategoryColor(category).hex : undefined,
-                    color: selectedCategory === category ? '#000' : undefined,
-                    borderColor: selectedCategory !== category ? getCategoryColor(category).hex + '40' : undefined,
-                  }}
-                  onMouseEnter={(e) => {
-                    if (selectedCategory !== category) {
-                      e.currentTarget.style.borderColor = getCategoryColor(category).hex;
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (selectedCategory !== category) {
-                      e.currentTarget.style.borderColor = getCategoryColor(category).hex + '40';
-                    }
-                  }}
                 >
-                  {category}
+                  All Articles
                 </button>
-              ))}
+                {categories.map(category => (
+                  <button
+                    key={category}
+                    onClick={() => setSelectedCategory(category)}
+                    className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.12em] transition-all duration-200 ${selectedCategory === category
+                      ? 'shadow-lg'
+                      : 'bg-background border border-border hover:shadow-md'
+                      }`}
+                    style={{
+                      backgroundColor: selectedCategory === category ? getCategoryColor(category).hex : undefined,
+                      color: selectedCategory === category ? '#000' : undefined,
+                      borderColor: selectedCategory !== category ? getCategoryColor(category).hex + '40' : undefined,
+                    }}
+                    onMouseEnter={(e) => {
+                      if (selectedCategory !== category) {
+                        e.currentTarget.style.borderColor = getCategoryColor(category).hex;
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (selectedCategory !== category) {
+                        e.currentTarget.style.borderColor = getCategoryColor(category).hex + '40';
+                      }
+                    }}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -157,6 +159,7 @@ function ArticlesContent() {
       {/* Articles Grid */}
       <section className="py-16">
         <div className="container">
+          <div className="max-w-6xl mx-auto">
           {isLoading ? (
             <div className="text-center py-12">
               <p className="text-muted-foreground">Loading articles...</p>
@@ -170,7 +173,7 @@ function ArticlesContent() {
 
                 return (
                   <Link key={article.id} href={`/articles/${article.slug}`}>
-                    <div className="group bg-card rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer border border-border/60">
+                    <div className="group bg-card/30 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer border border-border/60">
                       {/* Cover Image */}
                       {article.coverImageUrl && (
                         <div className="aspect-[16/9] overflow-hidden">
@@ -186,7 +189,7 @@ function ArticlesContent() {
                         </div>
                       )}
 
-                      <div className="p-5 md:p-6">
+                      <div className="p-5 md:p-6 flex flex-col min-h-[14rem]">
                         {/* Category Badge */}
                         {article.category && (
                           <Badge
@@ -201,7 +204,7 @@ function ArticlesContent() {
                           </Badge>
                         )}
 
-                        <h3 className="text-2xl font-['Playfair_Display'] italic font-normal mb-3 transition-colors line-clamp-2"
+                        <h3 className="text-2xl font-['Playfair_Display'] italic font-normal mb-3 transition-colors line-clamp-2 min-h-[3.8rem]"
                           style={{ color: 'inherit' }}
                           onMouseEnter={(e) => e.currentTarget.style.color = categoryColor}
                           onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>
@@ -209,12 +212,12 @@ function ArticlesContent() {
                         </h3>
 
                         {article.excerpt && (
-                          <p className="text-base text-muted-foreground line-clamp-2 mb-3 leading-relaxed">
+                          <p className="text-base text-muted-foreground line-clamp-2 mb-3 leading-relaxed min-h-[3.1rem]">
                             {article.excerpt}
                           </p>
                         )}
 
-                        <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                        <div className="mt-auto pt-3 flex items-center gap-4 text-xs text-muted-foreground">
                           <span>
                             {article.publishedAt && new Date(article.publishedAt).toLocaleDateString('en-US', {
                               month: 'short',
@@ -244,6 +247,7 @@ function ArticlesContent() {
               <p className="text-muted-foreground">No articles yet. Check back soon!</p>
             </div>
           )}
+          </div>
         </div>
       </section>
 
@@ -251,20 +255,20 @@ function ArticlesContent() {
       {!selectedCategory && !searchQuery && musicalTheatreArticles.length > 0 && (
         <section className="py-16 border-t border-border/50">
           <div className="container">
-            <div className="mb-12">
-              <p className="text-xs tracking-widest text-muted-foreground mb-4">COURSE MATERIALS</p>
+            <div className="mb-12 max-w-6xl mx-auto">
+              <p className="text-xs tracking-[0.2em] text-muted-foreground mb-4 font-semibold uppercase">Course Materials</p>
               <h2 className="text-4xl font-['Playfair_Display'] italic mb-4">Musical Theatre & Cinema</h2>
               <p className="text-lg text-muted-foreground max-w-2xl">
                 Articles from a course I taught exploring the history and evolution of musical theatre and cinema.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {musicalTheatreArticles.map((article) => {
                 const categoryColor = article.category ? getCategoryColor(article.category.name).hex : '#9CA3AF';
                 return (
                   <Link key={article.id} href={`/articles/${article.slug}`}>
-                    <div className="group bg-card rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer border border-border/60">
+                    <div className="group bg-card/30 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer border border-border/60">
                       {/* Cover Image */}
                       {article.coverImageUrl && (
                         <div className="aspect-[16/9] overflow-hidden">
@@ -280,7 +284,7 @@ function ArticlesContent() {
                         </div>
                       )}
 
-                      <div className="p-5 md:p-6">
+                      <div className="p-5 md:p-6 flex flex-col min-h-[14rem]">
                         {/* Category Badge */}
                         {article.category && (
                           <Badge
@@ -295,7 +299,7 @@ function ArticlesContent() {
                           </Badge>
                         )}
 
-                        <h3 className="text-2xl font-['Playfair_Display'] italic font-normal mb-3 transition-colors line-clamp-2"
+                        <h3 className="text-2xl font-['Playfair_Display'] italic font-normal mb-3 transition-colors line-clamp-2 min-h-[3.8rem]"
                           style={{ color: 'inherit' }}
                           onMouseEnter={(e) => e.currentTarget.style.color = categoryColor}
                           onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>
@@ -303,12 +307,12 @@ function ArticlesContent() {
                         </h3>
 
                         {article.excerpt && (
-                          <p className="text-base text-muted-foreground line-clamp-2 mb-3 leading-relaxed">
+                          <p className="text-base text-muted-foreground line-clamp-2 mb-3 leading-relaxed min-h-[3.1rem]">
                             {article.excerpt}
                           </p>
                         )}
 
-                        <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                        <div className="mt-auto pt-3 flex items-center gap-4 text-xs text-muted-foreground">
                           <span>
                             {article.publishedAt && new Date(article.publishedAt).toLocaleDateString('en-US', {
                               month: 'short',

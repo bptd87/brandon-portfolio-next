@@ -1,95 +1,90 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Link } from "wouter";
+
+const infoPages = [
+  { name: "Privacy", href: "/privacy" },
+  { name: "Terms", href: "/terms" },
+  { name: "FAQ", href: "/faq" },
+  { name: "Accessibility", href: "/accessibility" },
+  { name: "Sitemap", href: "/sitemap" },
+];
 
 export default function Terms() {
+  const updated = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
-      <div className="container py-24">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-6xl font-black tracking-tighter mb-4">Terms of Service</h1>
-          <p className="text-muted-foreground mb-12">Last updated: {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
-          
-          <div className="prose prose-lg max-w-none">
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">Agreement to Terms</h2>
-              <p className="text-foreground/80 leading-relaxed">
-                By accessing and using this website, you accept and agree to be bound by the terms and provisions of this agreement. 
-                If you do not agree to these Terms of Service, please do not use this website.
+
+      <main className="container py-24">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-xs uppercase tracking-[0.22em] text-foreground/60 mb-4">Site Info</p>
+            <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-3">Terms of Service</h1>
+            <p className="text-sm text-muted-foreground">Last updated: {updated}</p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-2 mb-12">
+            {infoPages.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`px-4 py-2 rounded-md border text-xs font-semibold tracking-[0.08em] uppercase transition-colors ${
+                  item.href === "/terms"
+                    ? "border-[#FF5722] text-[#FF5722] bg-[#FF5722]/10"
+                    : "border-border text-foreground/70 hover:text-foreground hover:border-foreground/40"
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+
+          <div className="space-y-8 text-foreground/85 leading-relaxed">
+            <section className="rounded-2xl border border-border/60 bg-card/20 p-6">
+              <h2 className="text-2xl font-bold mb-3">Use of This Website</h2>
+              <p>
+                By using this website, you agree to these terms. If you do not agree, please discontinue use.
               </p>
             </section>
 
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">Intellectual Property Rights</h2>
-              <p className="text-foreground/80 leading-relaxed">
-                Unless otherwise indicated, all content on this website, including but not limited to text, graphics, logos, images, videos, 
-                and software, is the property of Brandon PT Davis and is protected by copyright, trademark, and other intellectual property laws. 
-                You may not reproduce, distribute, modify, or create derivative works from any content without express written permission.
+            <section className="rounded-2xl border border-border/60 bg-card/20 p-6">
+              <h2 className="text-2xl font-bold mb-3">Intellectual Property</h2>
+              <p>
+                Unless otherwise noted, text, images, renderings, videos, and design content on this site are the property of Brandon PT Davis and protected by applicable intellectual property laws.
               </p>
             </section>
 
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">Use License</h2>
-              <p className="text-foreground/80 leading-relaxed mb-4">
-                Permission is granted to temporarily view the materials on this website for personal, non-commercial use only. This is the grant of a license, not a transfer of title, and under this license you may not:
-              </p>
-              <ul className="list-disc pl-6 space-y-2 text-foreground/80">
-                <li>Modify or copy the materials</li>
-                <li>Use the materials for any commercial purpose or public display</li>
-                <li>Attempt to decompile or reverse engineer any software contained on the website</li>
-                <li>Remove any copyright or proprietary notations from the materials</li>
-                <li>Transfer the materials to another person or "mirror" the materials on any other server</li>
+            <section className="rounded-2xl border border-border/60 bg-card/20 p-6">
+              <h2 className="text-2xl font-bold mb-3">Permitted Use</h2>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>You may view and reference site content for personal, informational purposes.</li>
+                <li>You may not reproduce, republish, or distribute materials for commercial use without written permission.</li>
+                <li>You may not attempt to interfere with site operation or security.</li>
               </ul>
             </section>
 
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">Disclaimer</h2>
-              <p className="text-foreground/80 leading-relaxed">
-                The materials on this website are provided on an 'as is' basis. Brandon PT Davis makes no warranties, expressed or implied, 
-                and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, 
-                fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
+            <section className="rounded-2xl border border-border/60 bg-card/20 p-6">
+              <h2 className="text-2xl font-bold mb-3">Third-Party Links</h2>
+              <p>
+                This site may link to third-party sites. Those destinations are governed by their own terms and policies, and Brandon PT Davis is not responsible for third-party content or practices.
               </p>
             </section>
 
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">Limitations</h2>
-              <p className="text-foreground/80 leading-relaxed">
-                In no event shall Brandon PT Davis or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, 
-                or due to business interruption) arising out of the use or inability to use the materials on this website, even if Brandon PT Davis or an authorized 
-                representative has been notified orally or in writing of the possibility of such damage.
-              </p>
-            </section>
-
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">Links to Third-Party Websites</h2>
-              <p className="text-foreground/80 leading-relaxed">
-                This website may contain links to third-party websites that are not owned or controlled by Brandon PT Davis. We have no control over, 
-                and assume no responsibility for, the content, privacy policies, or practices of any third-party websites. You acknowledge and agree that 
-                Brandon PT Davis shall not be responsible or liable for any damage or loss caused by your use of any third-party website.
-              </p>
-            </section>
-
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">Modifications</h2>
-              <p className="text-foreground/80 leading-relaxed">
-                Brandon PT Davis may revise these Terms of Service at any time without notice. By using this website, you agree to be bound by the current version of these terms.
-              </p>
-            </section>
-
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">Contact Us</h2>
-              <p className="text-foreground/80 leading-relaxed">
-                If you have any questions about these Terms of Service, please contact us at:
-              </p>
-              <p className="text-foreground/80 mt-4">
-                <strong>Email:</strong> <a href="mailto:info@brandonptdavis.com" className="text-[#FF5722] hover:underline">info@brandonptdavis.com</a>
+            <section className="rounded-2xl border border-border/60 bg-card/20 p-6">
+              <h2 className="text-2xl font-bold mb-3">Contact</h2>
+              <p>
+                Questions about these terms can be sent to{" "}
+                <a href="mailto:info@brandonptdavis.com" className="text-[#FF5722] hover:underline">
+                  info@brandonptdavis.com
+                </a>.
               </p>
             </section>
           </div>
         </div>
-      </div>
-      
+      </main>
+
       <Footer />
     </div>
   );

@@ -54,8 +54,8 @@ export function Contact() {
     <div className="min-h-screen bg-[#0b0b0d] text-white">
       <SEO
         title="Contact Brandon PT Davis | Scenic Design Inquiries"
-        description="Contact Brandon PT Davis for scenic design, experiential projects, or educational collaborations. Orange County designer available for regional theatre."
-        keywords="contact scenic designer, hire scenic designer, theatrical design inquiries, experiential design contact, Brandon PT Davis contact, scenic design services california, Orange County scenic designer"
+        description="Contact Brandon PT Davis for professional scenic design inquiries. USA 829 scenic designer based in Southern California."
+        keywords="contact union scenic designer, USA 829 scenic designer, hire scenic designer, professional theatre scenic design inquiries, scenic designer california, Orange County scenic designer"
         url="https://www.brandonptdavis.com/contact"
       />
       <StructuredData
@@ -63,7 +63,7 @@ export function Contact() {
         organization={{
           name: "Brandon PT Davis Design",
           url: "https://www.brandonptdavis.com",
-          description: "Professional scenic and experiential design studio specializing in regional theatre, summer stock, academic theatre, and immersive experiences.",
+          description: "Professional scenic design studio led by USA 829 scenic designer Brandon PT Davis, specializing in regional theatre, summer stock, and academic theatre.",
           email: "info@brandonptdavis.com",
           address: {
             addressLocality: "Irvine",
@@ -100,7 +100,7 @@ export function Contact() {
             <span className="block text-white/80">start with a conversation.</span>
           </h1>
           <p className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto">
-            Share your project, timeline, and the feeling you want on stage. I design environments that tell the story.
+            Professional scenic design inquiries are welcome. Share your production, venue, timeline, and design goals.
           </p>
         </div>
 
@@ -164,11 +164,11 @@ export function Contact() {
                   id="message"
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Tell me about the production, venue, timeline, and any references..."
+                  placeholder="Tell me about the production, venue, timeline, and design goals..."
                   className="min-h-[200px] text-lg bg-white/5 text-white border border-white/10 focus:border-white/30 transition-colors resize-none"
                   required
                 />
-                <p className="text-xs text-white/50">If you have a budget range or schedule, include it for faster response.</p>
+                <p className="text-xs text-white/50">Include production schedule and budget parameters to help scope the work.</p>
               </div>
 
               <Button

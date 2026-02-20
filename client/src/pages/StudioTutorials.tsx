@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useState, useMemo } from "react";
-import { PlayCircle, Clock, TrendingUp, ArrowRight, Search, CheckCircle } from "lucide-react";
+import { PlayCircle, Clock, TrendingUp, ArrowRight, Search } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { Link } from "wouter";
 import { SEO } from "@/components/SEO";
@@ -13,13 +13,7 @@ export default function StudioTutorials() {
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const { data: user } = trpc.auth.me.useQuery();
   const { data: tutorials = [], isLoading } = trpc.tutorials.list.useQuery();
-  const { data: progressData = [] } = trpc.tutorialProgress.getProgress.useQuery(undefined, {
-    enabled: !!user,
-  });
-
-  const watchedMap = new Map(progressData.map((p: any) => [p.tutorialSlug, p.watched]));
 
   // Slug comes from the database
 
@@ -50,7 +44,7 @@ export default function StudioTutorials() {
   const formatDuration = (seconds: number) => `${Math.floor(seconds / 60)} min`;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background [background-image:radial-gradient(circle_at_12%_9%,rgba(255,87,34,0.10),transparent_34%),radial-gradient(circle_at_85%_16%,rgba(33,150,243,0.08),transparent_34%)]">
       <SEO
         title="Vectorworks Tutorials | Brandon PT Davis"
         description="Free Vectorworks tutorials for scenic designers. Step-by-step video lessons covering 2D drafting, 3D modeling, rendering, and advanced techniques for theatrical design."
@@ -59,36 +53,39 @@ export default function StudioTutorials() {
       />
       <Header />
 
-      <section className="pt-32 pb-20 border-b border-border bg-gradient-to-br from-[#2196F3]/5 to-transparent">
+      <section className="pt-14 md:pt-20 pb-8">
         <div className="container">
-          <p className="text-xs tracking-widest text-muted-foreground mb-4">STUDIO / TUTORIALS</p>
-          <h1 className="mb-4">Vectorworks Tutorials</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl">
-            Master scenic design software with step-by-step video tutorials covering everything from
-            basic workspace setup to advanced 3D modeling techniques.
-          </p>
-          {user && progressData.length > 0 && (
-            <div className="mt-6 flex items-center gap-3">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <CheckCircle className="w-4 h-4 text-green-500" />
-                <span>{progressData.filter((p: any) => p.watched).length} of {tutorials.length} tutorials completed</span>
+          <div className="max-w-6xl mx-auto">
+            <p className="text-xs tracking-[0.24em] text-muted-foreground mb-4 font-semibold uppercase">Studio / Tutorials</p>
+            <h1 className="text-5xl md:text-7xl font-serif tracking-tight leading-[0.92] mb-5">Vectorworks Tutorials</h1>
+            <p className="text-lg md:text-xl text-foreground/75 max-w-4xl leading-relaxed">
+              Structured tutorial paths for scenic designers, from drafting fundamentals to advanced modeling and rendering workflows.
+            </p>
+
+            <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="rounded-xl border border-border/60 bg-card/20 px-4 py-3">
+                <p className="text-[10px] uppercase tracking-[0.12em] text-muted-foreground">Total</p>
+                <p className="text-2xl font-semibold">{tutorials.length}</p>
               </div>
-              <div className="flex-1 max-w-xs h-2 bg-muted rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-green-500 transition-all duration-500"
-                  style={{ width: `${Math.round((progressData.filter((p: any) => p.watched).length / tutorials.length) * 100)}%` }}
-                />
+              <div className="rounded-xl border border-border/60 bg-card/20 px-4 py-3">
+                <p className="text-[10px] uppercase tracking-[0.12em] text-muted-foreground">Filtered</p>
+                <p className="text-2xl font-semibold">{filteredTutorials.length}</p>
               </div>
-              <span className="text-sm font-semibold text-muted-foreground">
-                {Math.round((progressData.filter((p: any) => p.watched).length / tutorials.length) * 100)}%
-              </span>
+              <div className="rounded-xl border border-border/60 bg-card/20 px-4 py-3">
+                <p className="text-[10px] uppercase tracking-[0.12em] text-muted-foreground">Path</p>
+                <p className="text-sm text-foreground/75 mt-1">Beginner to Advanced</p>
+              </div>
+              <div className="rounded-xl border border-border/60 bg-card/20 px-4 py-3">
+                <p className="text-[10px] uppercase tracking-[0.12em] text-muted-foreground">Format</p>
+                <p className="text-sm text-foreground/75 mt-1">Video + Steps</p>
+              </div>
             </div>
-          )}
+          </div>
         </div>
       </section>
 
-      <section className="container py-8 border-b border-border">
-        <div className="max-w-2xl mx-auto">
+      <section className="container py-6">
+        <div className="max-w-6xl mx-auto rounded-2xl border border-border/60 bg-card/20 p-5 md:p-6">
           <div className="relative">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
@@ -114,68 +111,66 @@ export default function StudioTutorials() {
               Found {filteredTutorials.length} tutorial{filteredTutorials.length !== 1 ? 's' : ''} matching "{searchQuery}"
             </p>
           )}
-        </div>
-      </section>
-
-      <section className="container py-8 border-b border-border">
-        <div className="space-y-6">
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">Category</h3>
-            <div className="flex flex-wrap gap-2">
-              <button
-                onClick={() => setSelectedCategory(null)}
-                className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${selectedCategory === null
-                  ? 'bg-primary text-primary-foreground border-primary shadow-lg'
-                  : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
-                  }`}
-              >
-                All Categories
-              </button>
-              {categories.map(category => (
+          <div className="grid md:grid-cols-2 gap-6 mt-6">
+            <div className="min-w-0">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">Category</h3>
+              <div className="flex flex-wrap gap-2">
                 <button
-                  key={category.slug}
-                  onClick={() => setSelectedCategory(category.slug)}
-                  className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${selectedCategory === category.slug
-                    ? category.color + ' shadow-lg'
-                    : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
-                    }`}
-                >
-                  {category.name}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">Difficulty</h3>
-            <div className="flex flex-wrap gap-2">
-              <button
-                onClick={() => setSelectedDifficulty(null)}
-                className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${selectedDifficulty === null
-                  ? 'bg-primary text-primary-foreground border-primary shadow-lg'
-                  : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
-                  }`}
-              >
-                All Levels
-              </button>
-              {difficulties.map(difficulty => (
-                <button
-                  key={difficulty.slug}
-                  onClick={() => setSelectedDifficulty(difficulty.slug)}
-                  className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${selectedDifficulty === difficulty.slug
+                  onClick={() => setSelectedCategory(null)}
+                  className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${selectedCategory === null
                     ? 'bg-primary text-primary-foreground border-primary shadow-lg'
                     : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
                     }`}
                 >
-                  {difficulty.name}
+                  All Categories
                 </button>
-              ))}
+                {categories.map(category => (
+                  <button
+                    key={category.slug}
+                    onClick={() => setSelectedCategory(category.slug)}
+                    className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${selectedCategory === category.slug
+                      ? category.color + ' shadow-lg'
+                      : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
+                      }`}
+                  >
+                    {category.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="min-w-0">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">Difficulty</h3>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => setSelectedDifficulty(null)}
+                  className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${selectedDifficulty === null
+                    ? 'bg-primary text-primary-foreground border-primary shadow-lg'
+                    : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
+                    }`}
+                >
+                  All Levels
+                </button>
+                {difficulties.map(difficulty => (
+                  <button
+                    key={difficulty.slug}
+                    onClick={() => setSelectedDifficulty(difficulty.slug)}
+                    className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${selectedDifficulty === difficulty.slug
+                      ? 'bg-primary text-primary-foreground border-primary shadow-lg'
+                      : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
+                      }`}
+                  >
+                    {difficulty.name}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       <section className="container py-16 overflow-visible">
+        <div className="max-w-6xl mx-auto">
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (
@@ -190,12 +185,12 @@ export default function StudioTutorials() {
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-visible">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-visible items-stretch">
             {filteredTutorials.map((tutorial: any) => {
               const slug = tutorial.slug || tutorial.id.toString();
               return (
                 <Link key={tutorial.id} href={`/studio/tutorials/${slug}`}>
-                  <Card className="group hover:shadow-xl transition-all duration-300 overflow-hidden border border-border hover:border-[#2196F3]/50 rounded-lg bg-card p-0">
+                  <Card className="group h-full hover:shadow-xl transition-all duration-300 overflow-hidden border border-border hover:border-[#2196F3]/50 rounded-lg bg-card py-0 gap-0 flex flex-col">
                     <div className="relative aspect-video bg-muted overflow-hidden">
                       <img
                         src={tutorial.cover_image}
@@ -213,20 +208,26 @@ export default function StudioTutorials() {
                         <Clock className="w-3 h-3" />
                         {formatDuration(tutorial.duration)}
                       </div>
-                      {user && watchedMap.get(tutorial.slug || '') && (
-                        <div className="absolute top-3 right-3 bg-green-500 text-white p-1.5 rounded-full shadow-lg">
-                          <CheckCircle className="w-4 h-4" />
-                        </div>
-                      )}
                     </div>
 
-                    <CardContent className="p-4 space-y-3 bg-card">
-                      <h3 className="font-bold text-base leading-tight group-hover:text-[#2196F3] transition-colors line-clamp-2">
+                    <CardContent className="p-5 flex flex-col flex-1 bg-card">
+                      <div className="flex items-center justify-between gap-3 mb-3">
+                        <Badge variant="outline" className="text-[10px] uppercase tracking-[0.12em]">
+                          {tutorial.category?.replace("-", " ") || "Tutorial"}
+                        </Badge>
+                        {tutorial.difficulty && (
+                          <span className="text-[10px] uppercase tracking-[0.12em] text-foreground/60">{tutorial.difficulty}</span>
+                        )}
+                      </div>
+                      <h3 className="font-semibold text-lg leading-snug group-hover:text-[#2196F3] transition-colors line-clamp-2 min-h-[3.4rem]">
                         {tutorial.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                      <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3 min-h-[4.2rem] mt-2">
                         {tutorial.description}
                       </p>
+                      <div className="mt-auto pt-4 inline-flex items-center gap-2 text-xs font-semibold text-[#2196F3] uppercase tracking-[0.12em]">
+                        Watch Tutorial <ArrowRight className="w-3.5 h-3.5" />
+                      </div>
                     </CardContent>
                   </Card>
                 </Link>
@@ -246,11 +247,12 @@ export default function StudioTutorials() {
             </button>
           </div>
         )}
+        </div>
       </section>
 
       <section className="container pb-24">
-        <div className="bg-gradient-to-br from-[#2196F3]/10 to-transparent border border-[#2196F3]/30 rounded-2xl p-12">
-          <h2 className="text-2xl font-bold mb-4">Looking for More?</h2>
+        <div className="max-w-6xl mx-auto bg-gradient-to-br from-[#2196F3]/10 to-transparent border border-[#2196F3]/30 rounded-2xl p-10 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-serif tracking-tight mb-4">Looking for More?</h2>
           <p className="text-muted-foreground mb-6 max-w-2xl">
             These tutorials are designed to complement your scenic design education. For official Vectorworks
             training and certification, visit Vectorworks University.

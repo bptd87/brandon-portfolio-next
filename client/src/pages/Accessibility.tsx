@@ -1,90 +1,85 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Link } from "wouter";
+
+const infoPages = [
+  { name: "Privacy", href: "/privacy" },
+  { name: "Terms", href: "/terms" },
+  { name: "FAQ", href: "/faq" },
+  { name: "Accessibility", href: "/accessibility" },
+  { name: "Sitemap", href: "/sitemap" },
+];
 
 export default function Accessibility() {
+  const reviewed = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
-      <div className="container py-24">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-6xl font-black tracking-tighter mb-4">Accessibility Statement</h1>
-          <p className="text-muted-foreground mb-12">Our commitment to making this website accessible to everyone</p>
-          
-          <div className="prose prose-lg max-w-none">
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">Our Commitment</h2>
-              <p className="text-foreground/80 leading-relaxed">
-                Brandon PT Davis is committed to ensuring digital accessibility for people with disabilities. We are continually improving the user experience 
-                for everyone and applying the relevant accessibility standards to ensure we provide equal access to all users.
+
+      <main className="container py-24">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-xs uppercase tracking-[0.22em] text-foreground/60 mb-4">Site Info</p>
+            <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-3">Accessibility</h1>
+            <p className="text-sm text-muted-foreground">Statement reviewed: {reviewed}</p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-2 mb-12">
+            {infoPages.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`px-4 py-2 rounded-md border text-xs font-semibold tracking-[0.08em] uppercase transition-colors ${
+                  item.href === "/accessibility"
+                    ? "border-[#FF5722] text-[#FF5722] bg-[#FF5722]/10"
+                    : "border-border text-foreground/70 hover:text-foreground hover:border-foreground/40"
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+
+          <div className="space-y-8 text-foreground/85 leading-relaxed">
+            <section className="rounded-2xl border border-border/60 bg-card/20 p-6">
+              <h2 className="text-2xl font-bold mb-3">Commitment</h2>
+              <p>
+                Brandon PT Davis is committed to making this website accessible and usable for as many visitors as possible, including people using assistive technologies.
               </p>
             </section>
 
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">Conformance Status</h2>
-              <p className="text-foreground/80 leading-relaxed">
-                We strive to conform to the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA standards. These guidelines explain how to make web content 
-                more accessible for people with disabilities and user-friendly for everyone.
+            <section className="rounded-2xl border border-border/60 bg-card/20 p-6">
+              <h2 className="text-2xl font-bold mb-3">Standards</h2>
+              <p>
+                The site is designed with WCAG 2.1 AA targets in mind, including keyboard access, readable contrast, clear focus states, and semantic structure.
               </p>
             </section>
 
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">Accessibility Features</h2>
-              <p className="text-foreground/80 leading-relaxed mb-4">
-                This website includes the following accessibility features:
-              </p>
-              <ul className="list-disc pl-6 space-y-2 text-foreground/80">
-                <li><strong>Keyboard Navigation:</strong> All interactive elements can be accessed using keyboard controls</li>
-                <li><strong>Screen Reader Compatibility:</strong> Content is structured to work with screen readers and assistive technologies</li>
-                <li><strong>Alt Text:</strong> Images include descriptive alternative text</li>
-                <li><strong>Color Contrast:</strong> Text and interactive elements meet WCAG AA contrast requirements</li>
-                <li><strong>Responsive Design:</strong> Content adapts to different screen sizes and zoom levels</li>
-                <li><strong>Clear Navigation:</strong> Consistent navigation structure throughout the site</li>
-                <li><strong>Focus Indicators:</strong> Visible focus states for keyboard navigation</li>
+            <section className="rounded-2xl border border-border/60 bg-card/20 p-6">
+              <h2 className="text-2xl font-bold mb-3">What We Prioritize</h2>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Keyboard navigable menus and controls.</li>
+                <li>Text alternatives for meaningful imagery.</li>
+                <li>Responsive layouts that remain usable on mobile and zoomed views.</li>
+                <li>Predictable navigation and interaction patterns.</li>
               </ul>
             </section>
 
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">Known Limitations</h2>
-              <p className="text-foreground/80 leading-relaxed">
-                Despite our best efforts, some content on this website may not yet be fully accessible. We are actively working to address these limitations 
-                and welcome feedback on how we can improve accessibility.
-              </p>
-            </section>
-
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">Third-Party Content</h2>
-              <p className="text-foreground/80 leading-relaxed">
-                Some content on this website may be provided by third parties (such as embedded videos or social media feeds). While we strive to ensure 
-                all content is accessible, we may have limited control over the accessibility of third-party content.
-              </p>
-            </section>
-
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">Feedback and Assistance</h2>
-              <p className="text-foreground/80 leading-relaxed mb-4">
-                We welcome your feedback on the accessibility of this website. If you encounter any accessibility barriers or have suggestions for improvement, 
-                please contact us:
-              </p>
-              <p className="text-foreground/80">
-                <strong>Email:</strong> <a href="mailto:info@brandonptdavis.com" className="text-[#FF5722] hover:underline">info@brandonptdavis.com</a>
-              </p>
-              <p className="text-foreground/80 mt-4">
-                We will make every effort to respond to accessibility feedback within 5 business days and to provide the requested information or assistance.
-              </p>
-            </section>
-
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">Ongoing Improvements</h2>
-              <p className="text-foreground/80 leading-relaxed">
-                Accessibility is an ongoing effort. We regularly review our website and make updates to improve accessibility. This statement was last reviewed 
-                on {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}.
+            <section className="rounded-2xl border border-border/60 bg-card/20 p-6">
+              <h2 className="text-2xl font-bold mb-3">Feedback</h2>
+              <p>
+                If you encounter an accessibility issue, contact{" "}
+                <a href="mailto:info@brandonptdavis.com" className="text-[#FF5722] hover:underline">
+                  info@brandonptdavis.com
+                </a>{" "}
+                with the page URL and a short description of the problem.
               </p>
             </section>
           </div>
         </div>
-      </div>
-      
+      </main>
+
       <Footer />
     </div>
   );

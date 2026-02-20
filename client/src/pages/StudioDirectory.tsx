@@ -1,8 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { ExternalLink, Heart, TrendingUp, ArrowUpDown, Search } from "lucide-react";
+import { ExternalLink, Search } from "lucide-react";
 import { useState, useMemo } from "react";
 import { trpc } from "@/lib/trpc";
 import { SEO } from "@/components/SEO";
@@ -20,24 +18,17 @@ function getFaviconUrl(url: string, size = 64) {
 
 export default function StudioDirectory() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [sortBy, setSortBy] = useState<'popular' | 'alphabetical'>('popular');
+  const [sortBy, setSortBy] = useState<'alphabetical' | 'category'>('alphabetical');
   const [searchQuery, setSearchQuery] = useState("");
 
   const { data: resources = [], isLoading } = trpc.scenicDirectory.list.useQuery();
-  const trackClick = trpc.analytics.trackScenicDirectoryClick?.useMutation();
-  const toggleLike = trpc.scenicDirectory.toggleLike?.useMutation({
-    onSuccess: () => {
-      // Refetch to update counts
-      trpc.useContext().scenicDirectory.list.invalidate();
-    }
-  });
 
   const categories = [
-    { slug: "industry", name: "Industry", color: "text-red-400 border-red-500/30 bg-red-500/5 group-hover:bg-red-500/10" },
-    { slug: "research", name: "Research", color: "text-blue-400 border-blue-500/30 bg-blue-500/5 group-hover:bg-blue-500/10" },
-    { slug: "software", name: "Software", color: "text-purple-400 border-purple-500/30 bg-purple-500/5 group-hover:bg-purple-500/10" },
-    { slug: "modeling", name: "3D Modeling", color: "text-green-400 border-green-500/30 bg-green-500/5 group-hover:bg-green-500/10" },
-    { slug: "supplies", name: "Supplies", color: "text-orange-400 border-orange-500/30 bg-orange-500/5 group-hover:bg-orange-500/10" },
+    { slug: "industry", name: "Industry" },
+    { slug: "research", name: "Research" },
+    { slug: "software", name: "Software" },
+    { slug: "modeling", name: "3D Modeling" },
+    { slug: "supplies", name: "Supplies" },
   ];
 
   const filteredResources = useMemo(() => {
@@ -48,52 +39,47 @@ export default function StudioDirectory() {
       return true;
     });
 
-    // Sort by popularity (likes + clicks) or alphabetically
-    if (sortBy === 'popular') {
+    if (sortBy === 'category') {
       filtered.sort((a: any, b: any) => {
-        const aScore = (a.like_count || 0) * 2 + (a.click_count || 0);
-        const bScore = (b.like_count || 0) * 2 + (b.click_count || 0);
-        if (bScore !== aScore) return bScore - aScore;
-        return a.name.localeCompare(b.name);
+        const byCategory = (a.category_slug || '').localeCompare(b.category_slug || '');
+        if (byCategory !== 0) return byCategory;
+        return (a.name || '').localeCompare(b.name || '');
       });
     } else {
       filtered.sort((a: any, b: any) => a.name.localeCompare(b.name));
     }
 
     return filtered;
-  }, [resources, selectedCategory, sortBy, searchQuery]);
+  }, [resources, selectedCategory, searchQuery, sortBy]);
 
-  // Helper to extract background color for the accent line
-  const getAccentBgClass = (slug: string) => {
-    const category = categories.find(c => c.slug === slug);
-    if (!category) return 'bg-muted';
-    // Mapping slug to specific Tailwind bg classes to be safe with dynamic classes
+  const getCategoryTextClass = (slug: string) => {
     switch (slug) {
-      case 'industry': return 'bg-red-500';
-      case 'research': return 'bg-blue-500';
-      case 'software': return 'bg-purple-500';
-      case 'modeling': return 'bg-green-500';
-      case 'supplies': return 'bg-orange-500';
-      default: return 'bg-white';
+      case 'industry': return 'text-red-400';
+      case 'research': return 'text-blue-400';
+      case 'software': return 'text-purple-400';
+      case 'modeling': return 'text-green-400';
+      case 'supplies': return 'text-orange-400';
+      default: return 'text-muted-foreground';
+    }
+  };
+
+  const getCategoryPillClass = (slug: string) => {
+    switch (slug) {
+      case 'industry': return 'bg-red-500/15 text-red-300 border-red-500/40';
+      case 'research': return 'bg-blue-500/15 text-blue-300 border-blue-500/40';
+      case 'software': return 'bg-purple-500/15 text-purple-300 border-purple-500/40';
+      case 'modeling': return 'bg-green-500/15 text-green-300 border-green-500/40';
+      case 'supplies': return 'bg-orange-500/15 text-orange-300 border-orange-500/40';
+      default: return 'bg-primary text-primary-foreground border-primary';
     }
   };
 
   const handleResourceClick = (resource: any) => {
-    if (trackClick) {
-      trackClick.mutate({ id: resource.id });
-    }
     window.open(resource.url, '_blank', 'noopener,noreferrer');
   };
 
-  const handleLike = (e: React.MouseEvent, resourceId: number) => {
-    e.stopPropagation();
-    if (toggleLike) {
-      toggleLike.mutate({ id: resourceId });
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-background selection:bg-[#F44336] selection:text-white">
+    <div className="min-h-screen bg-background [background-image:radial-gradient(circle_at_12%_9%,rgba(255,87,34,0.10),transparent_34%),radial-gradient(circle_at_85%_16%,rgba(33,150,243,0.08),transparent_34%)] selection:bg-[#F44336] selection:text-white">
       <SEO
         title="Scenic Directory | Brandon PT Davis"
         description="A curated collection of essential resources for scenic designers—industry organizations, software, suppliers, and research archives."
@@ -103,39 +89,30 @@ export default function StudioDirectory() {
 
       <Header />
 
-      {/* Hero Section with Ambient Background */}
-      <section className="relative pt-40 pb-20 overflow-hidden">
-        {/* Abstract Background Blobs */}
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] -z-10 animate-pulse" style={{ animationDuration: '8s' }} />
-        <div className="absolute top-20 right-1/4 w-[400px] h-[400px] bg-red-600/10 rounded-full blur-[100px] -z-10 animate-pulse" style={{ animationDuration: '10s', animationDelay: '1s' }} />
-
+      {/* Hero Section */}
+      <section className="pt-14 md:pt-20 pb-8">
         <div className="container">
-          <div className="max-w-3xl">
-            <p className="font-mono text-xs tracking-[0.2em] text-[#F44336] mb-6 uppercase">Studio / Resources</p>
-            <h1 className="font-serif text-5xl md:text-7xl font-bold mb-6 tracking-tight leading-[0.9]">
-              Scenic <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60">Directory</span>
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed">
-              A curated collection of essential tools for the modern scenic designer.
-              From industry standards to hidden gems.
+          <div className="max-w-6xl mx-auto">
+            <p className="text-xs tracking-[0.24em] text-muted-foreground mb-4 font-semibold uppercase">Studio / Resources</p>
+            <h1 className="text-5xl md:text-7xl font-serif tracking-tight leading-[0.92] mb-5">Scenic Directory</h1>
+            <p className="text-lg md:text-xl text-foreground/75 max-w-4xl leading-relaxed">
+              Curated links to industry organizations, research archives, software tools, and suppliers used in professional scenic design.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Controls Section (Sticky-ish) */}
-      <section className="sticky top-20 z-40 backdrop-blur-xl border-y border-white/5 bg-background/80 supports-[backdrop-filter]:bg-background/20">
-        <div className="container py-4">
+      {/* Controls Section */}
+      <section className="container py-6">
+        <div className="max-w-6xl mx-auto rounded-2xl border border-border/60 bg-card/20 p-5 md:p-6">
           <div className="flex flex-col lg:flex-row gap-6 justify-between items-start lg:items-center">
-
             {/* Categories */}
-            <div className="flex flex-wrap gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-hide mask-fade-right">
+            <div className="flex flex-wrap gap-2 overflow-x-auto pb-2 lg:pb-0">
               <button
                 onClick={() => setSelectedCategory(null)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 border ${selectedCategory === null
-                    ? 'bg-white text-black border-white shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)]'
-                    : 'bg-transparent text-muted-foreground border-transparent hover:text-foreground hover:bg-white/5'
+                className={`px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-[0.12em] transition-all duration-300 border ${selectedCategory === null
+                    ? 'bg-primary text-primary-foreground border-primary shadow-lg'
+                    : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
                   }`}
               >
                 All
@@ -144,9 +121,9 @@ export default function StudioDirectory() {
                 <button
                   key={category.slug}
                   onClick={() => setSelectedCategory(category.slug)}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 border ${selectedCategory === category.slug
-                      ? 'bg-white/10 text-white border-white/20 shadow-[0_0_20px_-5px_rgba(255,255,255,0.1)]'
-                      : 'bg-transparent text-muted-foreground border-transparent hover:text-foreground hover:bg-white/5'
+                  className={`px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-[0.12em] transition-all duration-300 border ${selectedCategory === category.slug
+                      ? `${getCategoryPillClass(category.slug)} shadow-lg`
+                      : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
                     }`}
                 >
                   {category.name}
@@ -154,31 +131,37 @@ export default function StudioDirectory() {
               ))}
             </div>
 
-            {/* Search & Sort */}
+            {/* Search */}
             <div className="flex items-center gap-3 w-full lg:w-auto">
-              <div className="relative flex-1 lg:w-64">
+              <div className="relative flex-1 lg:w-72">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input
                   placeholder="Search resources..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9 bg-white/5 border-white/10 focus:border-white/20 h-9 text-sm rounded-full"
+                  className="pl-9 bg-background border-border h-9 text-sm rounded-full"
                 />
               </div>
-              <div className="flex gap-1 bg-white/5 p-1 rounded-full border border-white/10">
-                <button
-                  onClick={() => setSortBy('popular')}
-                  className={`p-1.5 rounded-full transition-all ${sortBy === 'popular' ? 'bg-white/10 text-white' : 'text-muted-foreground hover:text-white'}`}
-                  title="Popular"
-                >
-                  <TrendingUp className="w-4 h-4" />
-                </button>
+              <div className="flex gap-2">
                 <button
                   onClick={() => setSortBy('alphabetical')}
-                  className={`p-1.5 rounded-full transition-all ${sortBy === 'alphabetical' ? 'bg-white/10 text-white' : 'text-muted-foreground hover:text-white'}`}
-                  title="Alphabetical"
+                  className={`px-3 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.12em] border transition-all ${
+                    sortBy === 'alphabetical'
+                      ? 'bg-[#00BCD4]/15 text-[#80deea] border-[#00BCD4]/40'
+                      : 'bg-background border-border text-muted-foreground hover:border-[#00BCD4]/40 hover:text-[#80deea]'
+                  }`}
                 >
-                  <ArrowUpDown className="w-4 h-4" />
+                  A-Z
+                </button>
+                <button
+                  onClick={() => setSortBy('category')}
+                  className={`px-3 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.12em] border transition-all ${
+                    sortBy === 'category'
+                      ? 'bg-[#FF5722]/15 text-[#ff9c7a] border-[#FF5722]/40'
+                      : 'bg-background border-border text-muted-foreground hover:border-[#FF5722]/40 hover:text-[#ff9c7a]'
+                  }`}
+                >
+                  Category
                 </button>
               </div>
             </div>
@@ -188,6 +171,7 @@ export default function StudioDirectory() {
 
       {/* Grid Layout */}
       <section className="container py-12 min-h-[50vh]">
+        <div className="max-w-6xl mx-auto">
         {isLoading ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (
@@ -195,29 +179,20 @@ export default function StudioDirectory() {
             ))}
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
             {filteredResources.map((resource: any) => {
               const category = categories.find(c => c.slug === resource.category_slug);
-              // Extract the base color from the tailwind class for the border/accent
-              const accentBgClass = getAccentBgClass(resource.category_slug);
+              const categoryTextClass = getCategoryTextClass(resource.category_slug);
 
               return (
                 <div
                   key={resource.id}
                   onClick={() => handleResourceClick(resource)}
-                  className="group relative flex flex-col rounded-2xl border border-white/5 bg-black/40 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] cursor-pointer overflow-hidden"
+                  className="group relative flex flex-col h-full rounded-2xl border border-border/60 bg-card/25 transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-xl cursor-pointer overflow-hidden"
                 >
-                  {/* Category Accent Line */}
-                  <div className={`absolute top-0 left-0 w-full h-1 ${accentBgClass} opacity-50 group-hover:opacity-100 transition-opacity`} />
-
-                  {/* Hover Glow Effect */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-white/5 to-transparent" />
-
                   <div className="p-6 flex flex-col h-full relative z-10">
-                    {/* Header: Favicon + Title */}
                     <div className="flex items-start gap-4 mb-4">
-                      {/* Favicon Container - White bg for dark mode logos */}
-                      <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-105 transition-transform duration-500">
+                      <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center flex-shrink-0 shadow-sm group-hover:scale-105 transition-transform">
                         <img
                           src={resource.cover_image || getFaviconUrl(resource.url, 64)}
                           onError={(e) => { e.currentTarget.src = '/default-favicon.png'; }}
@@ -228,44 +203,25 @@ export default function StudioDirectory() {
 
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-2">
-                          <span className={`text-[10px] font-bold uppercase tracking-wider mb-1 block ${category?.color.split(' ')[0]}`}>
+                          <span className={`text-[10px] font-semibold uppercase tracking-[0.12em] mb-1 block ${categoryTextClass}`}>
                             {category?.name}
                           </span>
-                          <div className="flex items-center gap-1.5 text-xs text-white/40">
-                            <ExternalLink className="w-3 h-3 group-hover:text-white transition-colors" />
-                          </div>
                         </div>
-                        <h3 className="font-serif text-xl font-bold text-white group-hover:text-primary transition-colors leading-tight truncate pr-2">
+                        <h3 className="font-serif text-xl font-semibold text-foreground group-hover:text-primary transition-colors leading-tight line-clamp-2 pr-2">
                           {resource.name}
                         </h3>
                       </div>
                     </div>
 
-                    {/* Description */}
                     <div className="flex-1 mb-6">
-                      <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2 group-hover:text-white/70 transition-colors">
+                      <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">
                         {resource.description}
                       </p>
                     </div>
 
-                    {/* Footer: Stats Grid */}
-                    <div className="grid grid-cols-2 gap-px bg-white/5 rounded-lg overflow-hidden border border-white/5">
-                      <button
-                        onClick={(e) => handleLike(e, resource.id)}
-                        className="flex items-center justify-center gap-2 py-2 px-3 bg-black/20 hover:bg-white/10 transition-colors group/like text-sm"
-                      >
-                        <Heart className={`w-4 h-4 transition-all ${resource.user_liked ? 'fill-[#F44336] text-[#F44336]' : 'text-white/40 group-hover/like:text-[#F44336]'}`} />
-                        <span className={`font-mono ${resource.user_liked ? 'text-[#F44336]' : 'text-white/60'}`}>
-                          {resource.like_count || 0}
-                        </span>
-                      </button>
-
-                      <div className="flex items-center justify-center gap-2 py-2 px-3 bg-black/20 text-sm border-l border-white/5">
-                        <TrendingUp className="w-4 h-4 text-white/40" />
-                        <span className="font-mono text-white/60">
-                          {resource.click_count || 0}
-                        </span>
-                      </div>
+                    <div className="mt-auto flex items-center justify-between border-t border-border/50 pt-4">
+                      <span className="text-[11px] uppercase tracking-[0.12em] text-muted-foreground">Open Resource</span>
+                      <ExternalLink className="w-4 h-4 text-primary" />
                     </div>
                   </div>
                 </div>
@@ -291,11 +247,12 @@ export default function StudioDirectory() {
             </button>
           </div>
         )}
+        </div>
       </section>
 
       {/* Submission CTA - Premium */}
       <section className="container py-24">
-        <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-black/40 backdrop-blur-xl p-12 lg:p-20 text-center">
+        <div className="max-w-6xl mx-auto relative rounded-3xl overflow-hidden border border-border/60 bg-card/20 p-12 lg:p-20 text-center">
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[80px] -z-10" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[80px] -z-10" />
 

@@ -102,11 +102,23 @@ export default function Home() {
       />
       <Header />
 
+      <section className="pt-14 md:pt-20 pb-8 md:pb-10">
+        <div className="container text-center">
+          <p className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground mb-4">Portfolio</p>
+          <h1 className="text-5xl md:text-7xl font-serif tracking-tight leading-[0.92] mb-4">
+            Scenic Design by Brandon PT Davis
+          </h1>
+          <p className="mx-auto max-w-3xl text-lg md:text-xl text-foreground/75 leading-relaxed">
+            Union scenic designer crafting narrative environments for regional theatre, classical work, and new productions.
+          </p>
+        </div>
+      </section>
+
       {projectsLoading ? (
         <ProjectGridSkeleton />
       ) : projects && projects.length > 0 ? (
         <FadeIn>
-          <section className="pt-16 md:pt-24 pb-20 md:pb-28">
+          <section className="pt-8 md:pt-10 pb-20 md:pb-28">
             <div className="container">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {projects.map((project, index) => {

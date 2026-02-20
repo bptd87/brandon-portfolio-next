@@ -59,7 +59,7 @@ export default function About() {
       title: "Teaching & Mentorship",
       description: "Perspectives on scenic design education, helping designers navigate craft, career, and artistic integrity.",
       icon: GraduationCap,
-      href: "/about/philosophy",
+      href: "/about/teaching",
       color: "from-cyan-500/10 to-blue-500/10",
       borderColor: "border-cyan-500/20"
     },
@@ -74,7 +74,7 @@ export default function About() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background [background-image:radial-gradient(circle_at_12%_8%,rgba(255,87,34,0.10),transparent_34%),radial-gradient(circle_at_88%_16%,rgba(0,188,212,0.09),transparent_34%)]">
       <SEO
         title="About Brandon PT Davis | Scenic Designer & Educator"
         description="Southern California scenic designer with 15+ years in regional theatre, themed entertainment, and education. USA 829 member based in Orange County."
@@ -135,7 +135,7 @@ export default function About() {
       <AboutNav />
 
       {/* Hero Section - Credibility First */}
-      <section className="container py-20 md:py-28">
+      <section className="container py-24 md:py-32">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-[420px_1fr] gap-10 md:gap-14 items-center">
             {/* Profile Image - Left Side */}
@@ -162,35 +162,53 @@ export default function About() {
 
             {/* Text Content - Right Side */}
             <div className="space-y-7 animate-in fade-in slide-in-from-right-8 duration-700 delay-200">
+              <p className="text-xs uppercase tracking-[0.22em] text-primary font-semibold">
+                Union Scenic Designer
+              </p>
 
-              <h1 className="text-5xl md:text-7xl font-serif leading-[0.9] mb-6">
+              <h1 className="text-6xl md:text-8xl font-serif leading-[0.88] mb-6 tracking-tight">
                 Brandon<br />PT Davis
               </h1>
 
               <div className="space-y-5">
-                <p className="text-2xl md:text-3xl font-bold text-primary">
+                <p className="text-2xl md:text-3xl font-bold text-primary tracking-tight">
                   Art × Technology × Design
                 </p>
                 <p className="text-lg text-foreground/80 leading-relaxed max-w-xl">
-                  Scenic designer creating conceptual landscapes where design serves dramatic truth. Recent work includes co-design at South Coast Repertory and a body of work in contemporary and classical theatre across the US.
+                  Union scenic designer creating conceptual landscapes where design serves dramatic truth. Recent work includes co-design at South Coast Repertory and a body of work in contemporary and classical theatre across the US.
                 </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl">
+                <div className="rounded-xl border border-border/60 bg-card/30 backdrop-blur-sm px-4 py-3 shadow-[0_12px_30px_rgba(0,0,0,0.16)]">
+                  <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground mb-1">Union</p>
+                  <p className="text-sm font-semibold">USA 829</p>
+                </div>
+                <div className="rounded-xl border border-border/60 bg-card/30 backdrop-blur-sm px-4 py-3 shadow-[0_12px_30px_rgba(0,0,0,0.16)]">
+                  <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground mb-1">Training</p>
+                  <p className="text-sm font-semibold">MFA Scenic Design</p>
+                </div>
+                <div className="rounded-xl border border-border/60 bg-card/30 backdrop-blur-sm px-4 py-3 shadow-[0_12px_30px_rgba(0,0,0,0.16)]">
+                  <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground mb-1">Credits</p>
+                  <p className="text-sm font-semibold">130+ Productions</p>
+                </div>
               </div>
 
               {/* CTA Buttons - Clarified Hierarchy */}
               <div className="flex flex-col sm:flex-row gap-4 pt-3">
                 <a
                   href="/resume"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5"
+                  className="inline-flex items-center justify-center gap-2 h-11 px-7 rounded-md border border-[#FF5722] bg-[#FF5722] text-[11px] font-bold tracking-[0.14em] uppercase text-white hover:bg-[#ff6a3a] hover:border-[#ff6a3a] transition-all duration-300"
                 >
-                  <FileText className="w-5 h-5" />
-                  View Full Resume
+                  <FileText className="w-4 h-4" />
+                  View Resume
                 </a>
                 <a
                   href="/contact"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-muted/50 text-foreground rounded-xl font-semibold hover:bg-muted transition-all duration-300 border border-border hover:border-primary/30"
+                  className="inline-flex items-center justify-center gap-2 h-11 px-7 rounded-md border border-border text-[11px] font-bold tracking-[0.14em] uppercase text-foreground hover:border-[#FF5722] hover:text-[#FF5722] transition-all duration-300"
                 >
-                  <Mail className="w-5 h-5" />
-                  Get in Touch
+                  <Mail className="w-4 h-4" />
+                  Professional Inquiries
                 </a>
               </div>
             </div>
@@ -204,7 +222,7 @@ export default function About() {
           <div className="grid md:grid-cols-[1fr_360px] gap-12 items-start">
             {/* Left: Text Content */}
             <div className="animate-in fade-in slide-in-from-left duration-700">
-              <h2 className="text-5xl md:text-6xl font-serif mb-8 leading-tight">Background & Training</h2>
+              <h2 className="text-5xl md:text-6xl font-serif mb-8 leading-tight tracking-tight">Background & Training</h2>
               
               <div className="space-y-6 text-lg text-foreground/80 leading-relaxed text-justify">
                 <p>
@@ -216,18 +234,35 @@ export default function About() {
                 </p>
 
                 <p>
-                  Beyond the theatre, I work as a Senior Scenic and Experiential Designer at Adaptive Design Services, translating theatrical storytelling techniques into branded experiences and immersive installations. I also teach scenic design at the university level, mentoring emerging designers through the technical mastery and creative courage required for sustainable artistic careers.
+                  Beyond the theatre, I work as a Senior Scenic and Experiential Designer at Adaptive Design Services, translating theatrical storytelling into branded experiences and immersive installations. I also teach scenic design at the university level, mentoring emerging designers in craft, process, and visual storytelling.
                 </p>
               </div>
             </div>
 
-            {/* Right: Milestone */}
+            {/* Right: Milestones */}
             <div className="animate-in fade-in slide-in-from-right duration-700 delay-200">
               <div className="sticky top-24">
-                <h3 className="text-2xl font-serif mb-4 text-foreground">Recent Milestone</h3>
-                <p className="text-foreground/80 leading-relaxed text-justify">
-                  South Coast Repertory debut as co-scenic designer on <span className="font-medium text-foreground">Million Dollar Quartet</span>—a milestone representing movement toward the kind of regional professional work I'm building toward.
-                </p>
+                <h3 className="text-2xl font-serif mb-4 text-foreground">Recent Milestones</h3>
+                <div className="space-y-4">
+                  <div className="rounded-xl border border-border/50 bg-card/30 px-4 py-3">
+                    <p className="text-[11px] uppercase tracking-[0.18em] text-primary font-semibold mb-1">2025</p>
+                    <p className="text-foreground/85 leading-relaxed">
+                      South Coast Repertory debut as co-scenic designer on <span className="font-medium text-foreground">Million Dollar Quartet</span>.
+                    </p>
+                  </div>
+                  <div className="rounded-xl border border-border/50 bg-card/30 px-4 py-3">
+                    <p className="text-[11px] uppercase tracking-[0.18em] text-primary font-semibold mb-1">2025</p>
+                    <p className="text-foreground/85 leading-relaxed">
+                      Designed <span className="font-medium text-foreground">Romero</span> at the University of Missouri, shaping a spiritual and political memory play through scenography.
+                    </p>
+                  </div>
+                  <div className="rounded-xl border border-border/50 bg-card/30 px-4 py-3">
+                    <p className="text-[11px] uppercase tracking-[0.18em] text-primary font-semibold mb-1">2025</p>
+                    <p className="text-foreground/85 leading-relaxed">
+                      Continued dual-track practice in regional theatre and experiential work while mentoring emerging designers in university classrooms.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -235,10 +270,10 @@ export default function About() {
       </section>
 
       {/* Design Philosophy - Visual Pull Quotes */}
-      <section className="py-24">
+      <section className="py-24 border-y border-border/40 bg-card/10">
         <div className="container">
           <div className="max-w-6xl mx-auto mb-16">
-            <h2 className="text-5xl md:text-7xl font-serif mb-6">Design Philosophy</h2>
+            <h2 className="text-5xl md:text-7xl font-serif mb-6 tracking-tight">Design Philosophy</h2>
             <p className="text-xl text-foreground/70">
               What I've learned from designing 130+ productions: design is dramaturg, collaborator, and ghost.
             </p>
@@ -282,35 +317,60 @@ export default function About() {
             </div>
           </div>
 
-          {/* Core Philosophy */}
-          <div className="max-w-4xl mx-auto py-14 animate-in fade-in duration-700 delay-200">
-            <blockquote className="text-3xl md:text-4xl font-serif text-foreground mb-8 leading-tight text-center">
-              "The strongest scenic work is invisible."
+          {/* Dramaturgy & Rhythm */}
+          <div className="max-w-6xl mx-auto mb-20 animate-in fade-in slide-in-from-bottom duration-700 delay-200">
+            <div className="grid md:grid-cols-[300px_1fr] gap-12 items-start">
+              <div className="md:sticky md:top-24">
+                <div className="text-sm uppercase tracking-widest text-primary font-bold mb-2">Project</div>
+                <h3 className="text-3xl font-serif text-foreground">Guys on Ice</h3>
+                <div className="text-sm text-foreground/60 mt-2">The Great American Melodrama, 2025</div>
+              </div>
+              <div className="space-y-6">
+                <blockquote className="text-2xl md:text-3xl font-serif text-foreground/90 leading-relaxed mb-4">
+                  "Comedy works when the environment is precise: architecture sets the rhythm before the actors land the joke."
+                </blockquote>
+                <p className="text-lg text-foreground/70 leading-relaxed text-justify">
+                  This design balanced regional texture with sharp theatrical timing. Material choices and spatial framing supported fast transitions and sightline clarity, proving that <span className="font-medium text-foreground">form and comedic pacing can reinforce each other</span> without sacrificing craft.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* Manifesto Quote */}
+      <section className="py-24 border-y border-border/40 bg-[linear-gradient(180deg,rgba(255,87,34,0.08)_0%,rgba(11,11,13,0.94)_45%,rgba(11,11,13,1)_100%)]">
+        <div className="container">
+          <div className="max-w-5xl mx-auto text-center">
+            <p className="text-[10px] uppercase tracking-[0.24em] text-white/60 mb-5">Manifesto</p>
+            <blockquote className="text-4xl md:text-6xl font-serif text-white mb-10 leading-[1.05] tracking-tight">
+              “The strongest scenic work is invisible.”
             </blockquote>
-            <p className="text-lg text-foreground/70 max-w-2xl mx-auto text-justify">
-              Whether designing a memory play, a spiritual ritual, or grounded realism, every choice serves the same goal: <span className="font-medium text-foreground">clarity of intent</span>. I've worked across minimalism and conceptual design, using constraint as creative fuel. The play is always the boss.
+            <p className="text-lg md:text-xl text-white/75 max-w-3xl mx-auto leading-relaxed">
+              Whether designing a memory play, a spiritual ritual, or grounded realism, every choice serves the same goal: <span className="text-white font-medium">clarity of intent</span>. I&apos;ve worked across minimalism and conceptual design, using constraint as creative fuel. The play is always the boss.
             </p>
           </div>
         </div>
       </section>
 
       {/* Navigation Cards Section */}
-      <section className="py-24">
+      <section className="py-24 border-b border-border/40">
         <div className="container">
-          <div className="max-w-4xl mr-auto mb-10 animate-in fade-in slide-in-from-bottom duration-700">
-            <h2 className="text-5xl md:text-7xl font-serif mb-6">Learn More</h2>
-            <p className="text-lg text-foreground/70 max-w-2xl">
+          <div className="max-w-6xl mx-auto mb-12 animate-in fade-in slide-in-from-bottom duration-700">
+            <h2 className="text-5xl md:text-7xl font-serif mb-6 tracking-tight">Learn More</h2>
+            <p className="text-xl text-foreground/70 max-w-3xl">
               Dive into my process, teaching philosophy, full portfolio of work across theatre and experiential design, and the directors and designers I've had the privilege to collaborate with.
             </p>
           </div>
 
-          <div className="max-w-4xl mr-auto space-y-5">
+          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-x-12 gap-y-6">
             {navigationCards.map((card, index) => {
               const Icon = card.icon;
               return (
                 <Link key={card.href} href={card.href}>
                   <div
-                    className="flex items-start gap-4 pb-5 border-b border-border/40 hover:border-primary/40 transition-colors cursor-pointer animate-in fade-in slide-in-from-bottom duration-700"
+                    className="flex items-start gap-4 pb-5 border-b border-border/40 hover:border-primary/50 transition-colors cursor-pointer animate-in fade-in slide-in-from-bottom duration-700"
                     style={{ animationDelay: `${index * 120}ms` }}
                   >
                     <Icon className="w-5 h-5 text-primary mt-1" />
@@ -331,64 +391,24 @@ export default function About() {
         </div>
       </section>
 
-      {/* Personal Gallery */}
-      <section className="py-24">
+      {/* Visual Rhythm */}
+      <section className="py-24 border-y border-border/40 bg-card/10">
         <div className="container">
           <div className="max-w-6xl mx-auto mb-12 animate-in fade-in slide-in-from-bottom duration-700">
-            <h2 className="text-5xl md:text-7xl font-serif mb-6">Art Requires Community</h2>
+            <h2 className="text-5xl md:text-7xl font-serif mb-6 tracking-tight">Art Requires Community</h2>
             <p className="text-xl text-foreground/70 max-w-3xl">
-              Design lives in collaboration. These moments capture the partnerships, mentorships, and creative communities that make the work possible. Also: the people who've influenced me most.
+              Design lives in collaboration. These moments mark mentorship, rehearsal rooms, and creative partnerships that shape the work.
             </p>
           </div>
 
-          {/* Masonry-style Gallery Grid */}
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {/* Large featured image */}
-              <div className="lg:col-span-2 lg:row-span-2 animate-in fade-in zoom-in-50 duration-700">
-                <div className="relative aspect-square overflow-hidden rounded-2xl">
-                  {/* Skeleton placeholder */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-muted/50 via-muted/30 to-muted/50 animate-pulse" />
-                  <img
-                    src={galleryImages[0].url}
-                    alt={galleryImages[0].alt}
-                    className="relative w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-
-              {/* Smaller images */}
-              {galleryImages.slice(1, 5).map((image, index) => (
-                <div
-                  key={index}
-                  className="relative aspect-square overflow-hidden rounded-2xl animate-in fade-in zoom-in-50 duration-700"
-                  style={{ animationDelay: `${(index + 1) * 100}ms` }}
-                >
-                  {/* Skeleton placeholder */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-muted/50 via-muted/30 to-muted/50 animate-pulse" />
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {galleryImages.slice(0, 4).map((image, index) => (
+                <div key={index} className="group relative overflow-hidden rounded-2xl aspect-[4/3] border border-border/50">
                   <img
                     src={image.url}
                     alt={image.alt}
-                    className="relative w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-              ))}
-
-              {/* Bottom row */}
-              {galleryImages.slice(5).map((image, index) => (
-                <div
-                  key={index}
-                  className="relative aspect-square overflow-hidden rounded-2xl animate-in fade-in zoom-in-50 duration-700"
-                  style={{ animationDelay: `${(index + 5) * 100}ms` }}
-                >
-                  {/* Skeleton placeholder */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-muted/50 via-muted/30 to-muted/50 animate-pulse" />
-                  <img
-                    src={image.url}
-                    alt={image.alt}
-                    className="relative w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                     loading="lazy"
                   />
                 </div>

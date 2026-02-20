@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AboutNav from "@/components/AboutNav";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { trpc } from "@/lib/trpc";
@@ -15,10 +16,13 @@ export default function TeachingPhilosophy() {
 
   const generatePDF = trpc.system.generateTeachingPhilosophyPDF.useMutation();
 
-  // Filter to scenic design and rendering projects only
-  const scenicDesignProjects = (projects || []).filter(p => 
-    p.discipline === 'scenic_design' || p.discipline === 'rendering'
-  );
+  // Filter to scenic design and rendering projects only, and exclude problematic covers.
+  const excludedCoverTitles = [/head over heels/i];
+  const scenicDesignProjects = (projects || []).filter((p) => {
+    const inDiscipline = p.discipline === "scenic_design" || p.discipline === "rendering";
+    const isExcluded = excludedCoverTitles.some((pattern) => pattern.test(String(p.title || "")));
+    return inDiscipline && !isExcluded;
+  });
 
   // Get a colorful hero background - prefer middle of portfolio for variety
   const heroImage = scenicDesignProjects[Math.floor(scenicDesignProjects.length * 0.35)]?.coverImageUrl || scenicDesignProjects.find(p => p.featured)?.coverImageUrl || scenicDesignProjects[0]?.coverImageUrl;
@@ -50,6 +54,9 @@ export default function TeachingPhilosophy() {
     scenicDesignProjects[selectedIndices[4]],
     scenicDesignProjects[selectedIndices[5]]
   ].filter(Boolean) : [];
+
+  const getProjectTypeLabel = (project?: { discipline?: string | null } | null) =>
+    project?.discipline === "rendering" ? "Rendering" : "Scenic Design";
 
   // Scroll animation refs
   const foundationRef = useRef<HTMLElement>(null);
@@ -96,7 +103,7 @@ export default function TeachingPhilosophy() {
   const heroProject = scenicDesignProjects[Math.floor(scenicDesignProjects.length * 0.35)] || scenicDesignProjects.find(p => p.featured) || scenicDesignProjects[0];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background [background-image:radial-gradient(circle_at_14%_10%,rgba(255,87,34,0.08),transparent_34%),radial-gradient(circle_at_84%_18%,rgba(0,188,212,0.08),transparent_32%)]">
       <SEO
         title="Scenic Design Teaching Philosophy | MFA Educator | UCI"
         description="Comprehensive scenic design education philosophy from MFA educator. Equipping students with skills, confidence, and adaptability for the entertainment industry."
@@ -129,9 +136,10 @@ export default function TeachingPhilosophy() {
         }}
       />
       <Header />
+      <AboutNav />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 py-32 overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center px-6 py-36 overflow-hidden">
         {/* Parallax Background */}
         {heroImage && (
           <div 
@@ -146,12 +154,13 @@ export default function TeachingPhilosophy() {
         )}
         
         {/* Overlay for readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-background pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/72 to-background pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(255,87,34,0.18),transparent_30%),radial-gradient(circle_at_82%_24%,rgba(0,188,212,0.16),transparent_30%)] pointer-events-none"></div>
         
         <div className="relative max-w-4xl mx-auto">
           <p className="text-xs uppercase tracking-widest text-white/60 mb-8 text-center">TEACHING PHILOSOPHY</p>
           
-          <h1 className="text-5xl md:text-7xl font-serif mb-16 leading-tight text-center text-white">
+          <h1 className="text-6xl md:text-8xl font-serif mb-16 leading-[0.9] tracking-tight text-center text-white">
             Education
             <br />
             & Mentorship
@@ -162,13 +171,28 @@ export default function TeachingPhilosophy() {
               As an educator in Scenic Design, my foremost goal is to equip students with the skills, confidence, and adaptability needed to thrive in today's rapidly evolving entertainment industry.
             </p>
           </div>
+
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl mx-auto">
+            <div className="rounded-xl border border-white/20 bg-black/35 backdrop-blur-sm px-4 py-3 text-center shadow-[0_12px_30px_rgba(0,0,0,0.3)]">
+              <p className="text-[10px] uppercase tracking-[0.18em] text-white/60 mb-1">Union</p>
+              <p className="text-sm font-semibold text-white">USA 829</p>
+            </div>
+            <div className="rounded-xl border border-white/20 bg-black/35 backdrop-blur-sm px-4 py-3 text-center shadow-[0_12px_30px_rgba(0,0,0,0.3)]">
+              <p className="text-[10px] uppercase tracking-[0.18em] text-white/60 mb-1">Training</p>
+              <p className="text-sm font-semibold text-white">MFA Scenic Design</p>
+            </div>
+            <div className="rounded-xl border border-white/20 bg-black/35 backdrop-blur-sm px-4 py-3 text-center shadow-[0_12px_30px_rgba(0,0,0,0.3)]">
+              <p className="text-[10px] uppercase tracking-[0.18em] text-white/60 mb-1">Focus</p>
+              <p className="text-sm font-semibold text-white">Professional Practice</p>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Foundation Section */}
       <section 
         ref={foundationRef}
-        className="relative py-32 px-6 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
+        className="relative py-32 px-6 border-y border-border/40 bg-card/10 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
       >
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-[200px_1fr] gap-12 items-start mb-16">
@@ -177,33 +201,29 @@ export default function TeachingPhilosophy() {
             </div>
             <div>
               <div className="prose prose-lg dark:prose-invert max-w-none mb-12">
-                <p className="text-xl text-foreground/90 leading-relaxed mb-8">
-                  While rooted in the traditions of theatre, my teaching extends across Film, Television, Events, and Themed Entertainment, encouraging students to envision careers that match the breadth of opportunities available to creative designers today.
+                <p className="text-xl text-foreground/90 leading-relaxed mb-8 first-letter:text-6xl first-letter:font-serif first-letter:float-left first-letter:mr-3 first-letter:leading-none first-letter:text-primary">
+                  While rooted in the traditions of theatre, my teaching extends across Film, Television, Events, and Themed Entertainment, encouraging students to envision careers that match the <span className="text-foreground font-medium">breadth of opportunities</span> available to creative designers today.
                 </p>
                 <p className="text-xl text-foreground/90 leading-relaxed">
                   I emphasize a comprehensive foundation in scenic design, beginning with spatial awareness, material comprehension, and design aesthetics, and extending into collaboration, an indispensable skill in this field. My courses balance traditional methods — such as hand-drafting, perspective sketching, and tactile rendering in gouache and watercolor — with advanced technologies including Vectorworks, Twinmotion, Adobe Creative Cloud, and AI-driven design tools. By layering old and new methods, I encourage students to respect process while embracing innovation.
                 </p>
               </div>
 
-              {/* Foundation Images */}
+              {/* Foundation Visual Break */}
               {foundationImages.length > 0 && (
-                <div className="grid md:grid-cols-2 gap-6">
-                  {foundationImages.map((project) => (
-                    <div key={project.id} className="group relative overflow-hidden rounded-lg aspect-[4/3]">
-                      <img 
-                        src={project.coverImageUrl || ''} 
-                        alt={project.title}
-                        loading="lazy"
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div className="absolute bottom-0 left-0 right-0 p-6">
-                          <p className="text-white font-serif text-lg">{project.title}</p>
-                          {project.year && <p className="text-white/70 text-sm">{project.year}</p>}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                <div className="group relative overflow-hidden rounded-2xl aspect-[16/9] border border-border/50">
+                  <img 
+                    src={foundationImages[0]?.coverImageUrl || ''} 
+                    alt={foundationImages[0]?.title || "Foundation project"}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <p className="text-white/80 text-[10px] uppercase tracking-[0.2em] mb-2">{getProjectTypeLabel(foundationImages[0])}</p>
+                    <p className="text-white font-serif text-xl">{foundationImages[0]?.title}</p>
+                    {foundationImages[0]?.year && <p className="text-white/70 text-sm">{foundationImages[0]?.year}</p>}
+                  </div>
                 </div>
               )}
             </div>
@@ -217,7 +237,7 @@ export default function TeachingPhilosophy() {
         className="relative py-24 px-6 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
       >
         <div className="max-w-4xl mx-auto">
-          <blockquote className="border-l-4 border-primary pl-8 md:pl-12">
+          <blockquote className="border-l-4 border-primary pl-8 md:pl-12 bg-card/20 rounded-r-xl py-6 pr-6">
             <p className="text-3xl md:text-4xl font-serif italic text-foreground/90 leading-relaxed">
               "Recognizing that each student learns differently, I employ versatile teaching strategies."
             </p>
@@ -228,7 +248,7 @@ export default function TeachingPhilosophy() {
       {/* Pedagogy Section */}
       <section 
         ref={pedagogyRef}
-        className="relative py-32 px-6 bg-accent/5 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
+        className="relative py-32 px-6 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
       >
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-[200px_1fr] gap-12 items-start mb-16">
@@ -237,33 +257,29 @@ export default function TeachingPhilosophy() {
             </div>
             <div>
               <div className="prose prose-lg dark:prose-invert max-w-none mb-12">
-                <p className="text-xl text-foreground/90 leading-relaxed mb-8">
-                  Recognizing that each student learns differently, I employ versatile teaching strategies. Some thrive in communal settings, while others find strength in individual exploration. To support this, I often begin with collaborative projects that build community and confidence, before shifting to individually tailored assignments.
+                <p className="text-xl text-foreground/90 leading-relaxed mb-8 first-letter:text-6xl first-letter:font-serif first-letter:float-left first-letter:mr-3 first-letter:leading-none first-letter:text-primary">
+                  Recognizing that each student learns differently, I employ versatile teaching strategies. Some thrive in communal settings, while others find strength in individual exploration. To support this, I often begin with collaborative projects that <span className="text-foreground font-medium">build community and confidence</span>, before shifting to individually tailored assignments.
                 </p>
                 <p className="text-xl text-foreground/90 leading-relaxed">
                   Accessibility is a cornerstone of my pedagogy: I integrate digital platforms like Canvas's immersive reader, supplemental videos, and hybrid tactile-digital assignments to meet students where they are.
                 </p>
               </div>
 
-              {/* Pedagogy Images */}
+              {/* Pedagogy Visual Break */}
               {pedagogyImages.length > 0 && (
-                <div className="grid md:grid-cols-2 gap-6">
-                  {pedagogyImages.map((project) => (
-                    <div key={project.id} className="group relative overflow-hidden rounded-lg aspect-[4/3]">
-                      <img 
-                        src={project.coverImageUrl || ''} 
-                        alt={project.title}
-                        loading="lazy"
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div className="absolute bottom-0 left-0 right-0 p-6">
-                          <p className="text-white font-serif text-lg">{project.title}</p>
-                          {project.year && <p className="text-white/70 text-sm">{project.year}</p>}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                <div className="group relative overflow-hidden rounded-2xl aspect-[16/9] border border-border/50">
+                  <img 
+                    src={pedagogyImages[0]?.coverImageUrl || ''} 
+                    alt={pedagogyImages[0]?.title || "Pedagogy project"}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <p className="text-white/80 text-[10px] uppercase tracking-[0.2em] mb-2">{getProjectTypeLabel(pedagogyImages[0])}</p>
+                    <p className="text-white font-serif text-xl">{pedagogyImages[0]?.title}</p>
+                    {pedagogyImages[0]?.year && <p className="text-white/70 text-sm">{pedagogyImages[0]?.year}</p>}
+                  </div>
                 </div>
               )}
             </div>
@@ -277,7 +293,7 @@ export default function TeachingPhilosophy() {
         className="relative py-24 px-6 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
       >
         <div className="max-w-4xl mx-auto">
-          <blockquote className="border-l-4 border-primary pl-8 md:pl-12">
+          <blockquote className="border-l-4 border-primary pl-8 md:pl-12 bg-card/20 rounded-r-xl py-6 pr-6">
             <p className="text-3xl md:text-4xl font-serif italic text-foreground/90 leading-relaxed">
               "I guide students not just toward strong portfolios, but toward resilience, self-advocacy, and confidence in their ideas."
             </p>
@@ -288,7 +304,7 @@ export default function TeachingPhilosophy() {
       {/* Mentorship Section */}
       <section 
         ref={mentorshipRef}
-        className="relative py-32 px-6 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
+        className="relative py-32 px-6 border-y border-border/40 bg-card/10 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
       >
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-[200px_1fr] gap-12 items-start">
@@ -297,33 +313,29 @@ export default function TeachingPhilosophy() {
             </div>
             <div>
               <div className="prose prose-lg dark:prose-invert max-w-none mb-12">
-                <p className="text-xl text-foreground/90 leading-relaxed mb-8">
-                  My own career trajectory informs my mentorship. Early on, I struggled to find my voice and learn the art of self-promotion. Today, I guide students not just toward strong portfolios, but toward resilience, self-advocacy, and confidence in their ideas.
+                <p className="text-xl text-foreground/90 leading-relaxed mb-8 first-letter:text-6xl first-letter:font-serif first-letter:float-left first-letter:mr-3 first-letter:leading-none first-letter:text-primary">
+                  My own career trajectory informs my mentorship. Early on, I struggled to find my voice and learn the art of self-promotion. Today, I guide students not just toward strong portfolios, but toward <span className="text-foreground font-medium">resilience, self-advocacy, and confidence</span> in their ideas.
                 </p>
                 <p className="text-xl text-foreground/90 leading-relaxed">
                   Beyond the classroom, I strive to create a positive design culture. At Stephens, I was adamant about developing a shared studio space where students could work beyond their dorm rooms, exchange supplies, and collaborate across disciplines — a communal environment that fostered both creativity and belonging.
                 </p>
               </div>
 
-              {/* Mentorship Images */}
+              {/* Mentorship Visual Break */}
               {mentorshipImages.length > 0 && (
-                <div className="grid md:grid-cols-2 gap-6">
-                  {mentorshipImages.map((project) => (
-                    <div key={project.id} className="group relative overflow-hidden rounded-lg aspect-[4/3]">
-                      <img 
-                        src={project.coverImageUrl || ''} 
-                        alt={project.title}
-                        loading="lazy"
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div className="absolute bottom-0 left-0 right-0 p-6">
-                          <p className="text-white font-serif text-lg">{project.title}</p>
-                          {project.year && <p className="text-white/70 text-sm">{project.year}</p>}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                <div className="group relative overflow-hidden rounded-2xl aspect-[16/9] border border-border/50">
+                  <img 
+                    src={mentorshipImages[0]?.coverImageUrl || ''} 
+                    alt={mentorshipImages[0]?.title || "Mentorship project"}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <p className="text-white/80 text-[10px] uppercase tracking-[0.2em] mb-2">{getProjectTypeLabel(mentorshipImages[0])}</p>
+                    <p className="text-white font-serif text-xl">{mentorshipImages[0]?.title}</p>
+                    {mentorshipImages[0]?.year && <p className="text-white/70 text-sm">{mentorshipImages[0]?.year}</p>}
+                  </div>
                 </div>
               )}
             </div>
@@ -334,7 +346,7 @@ export default function TeachingPhilosophy() {
       {/* Research Section */}
       <section 
         ref={researchRef}
-        className="relative py-32 px-6 bg-accent/5 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
+        className="relative py-32 px-6 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
       >
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-[200px_1fr] gap-12 items-start">
@@ -343,11 +355,11 @@ export default function TeachingPhilosophy() {
             </div>
             <div>
               <div className="prose prose-lg dark:prose-invert max-w-none mb-12">
-                <p className="text-xl text-foreground/90 leading-relaxed mb-8">
+                <p className="text-xl text-foreground/90 leading-relaxed mb-8 first-letter:text-6xl first-letter:font-serif first-letter:float-left first-letter:mr-3 first-letter:leading-none first-letter:text-primary">
                   I view teaching as a continuous act of research. Just as I bring current industry practices into my classroom, I also explore emerging technologies to expand students' toolkits. Recently, I incorporated AI tools like MidJourney and Adobe Firefly into my Digital Rendering course, inviting students to critically explore both the opportunities and limitations of these new mediums.
                 </p>
                 <p className="text-xl text-foreground/90 leading-relaxed">
-                  For me, the classroom is a laboratory for experimentation — a space where design education remains responsive to shifting industry landscapes.
+                  For me, the classroom is a <span className="text-foreground font-medium">laboratory for experimentation</span> — a space where design education remains responsive to shifting industry landscapes.
                 </p>
               </div>
 
@@ -418,7 +430,7 @@ export default function TeachingPhilosophy() {
       {/* CTA Section */}
       <section 
         ref={ctaRef}
-        className="relative py-32 px-6 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
+        className="relative py-32 px-6 border-y border-border/40 bg-card/10 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
       >
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-serif mb-6">
@@ -428,7 +440,7 @@ export default function TeachingPhilosophy() {
             See examples of scenic design projects that inform my teaching practice
           </p>
           <Link 
-            href="/work"
+            href="/projects/scenic-design"
             className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-full text-lg font-semibold hover:bg-primary/90 transition-colors"
           >
             View Portfolio

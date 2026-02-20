@@ -5,35 +5,46 @@ export default function AboutNav() {
 
   const navItems = [
     { path: "/about", label: "About" },
-    { path: "/resume", label: "Resume/CV" },
+    { path: "/resume", label: "Resume" },
     { path: "/creative-statement", label: "Creative Statement" },
-    { path: "/about/philosophy", label: "Teaching Philosophy" },
+    { path: "/about/teaching", label: "Teaching Philosophy", aliases: ["/teaching-philosophy", "/about/philosophy"] },
     { path: "/about/collaborators", label: "Collaborators" },
   ];
 
   return (
-    <nav className="border-b border-border mb-12">
-      <div className="container">
-        <div className="flex gap-8 overflow-x-auto">
-          {navItems.map((item) => {
-            const isActive = location === item.path;
-            return (
-              <Link
-                key={item.path}
-                href={item.path}
-                className={`
-                  py-4 px-2 border-b-2 transition-colors whitespace-nowrap font-pixel text-xs
-                  ${
+    <nav className="sticky top-[72px] z-30 border-b border-white/10 bg-background/40 backdrop-blur-xl supports-[backdrop-filter]:bg-background/25 mb-10">
+      <div className="container py-3">
+        <div className="mx-auto max-w-5xl rounded-2xl border border-border/40 bg-card/10 p-2">
+          <div className="flex flex-wrap justify-center gap-2">
+            {navItems.map((item, index) => {
+              const isActive = location === item.path || item.aliases?.includes(location);
+              const accent = ["#FF5722", "#00BCD4", "#E91E63", "#FFC107", "#7CFF6B"][index % 5];
+              return (
+                <Link
+                  key={item.path}
+                  href={item.path}
+                  className={`
+                    inline-flex items-center justify-center h-9 px-4 rounded-md border text-[11px] font-semibold tracking-[0.12em] uppercase transition-all whitespace-nowrap
+                    ${
+                      isActive
+                        ? "text-white border-transparent"
+                        : "border-border text-muted-foreground hover:text-foreground hover:border-foreground/40"
+                    }
+                  `}
+                  style={
                     isActive
-                      ? "border-primary text-primary"
-                      : "border-transparent text-muted-foreground hover:text-foreground"
+                      ? {
+                          backgroundColor: `${accent}33`,
+                          boxShadow: `inset 0 0 0 1px ${accent}80`,
+                        }
+                      : undefined
                   }
-                `}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </div>
     </nav>

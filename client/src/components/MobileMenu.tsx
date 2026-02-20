@@ -31,7 +31,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-border">
           <h2 className="text-2xl font-black tracking-tight">
-            <span className="text-[#FF5722]">BRANDON</span> PT DAVIS
+            BRANDON <span className="text-[#FF5722]">PT</span> DAVIS
           </h2>
           <button
             onClick={onClose}
@@ -198,7 +198,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           <Link
             href="/contact"
             onClick={onClose}
-            className="block mt-6 py-4 px-6 rounded-full bg-[#FF5722] text-white text-center font-black hover:bg-[#FF5722]/90 hover:scale-105 transition-all"
+            className="block mt-6 h-11 px-6 rounded-md border border-[#FF5722] bg-[#FF5722] text-white text-center text-[11px] leading-[44px] font-bold tracking-[0.14em] uppercase hover:bg-[#ff6a3a] hover:border-[#ff6a3a] transition-all duration-300"
           >
             CONTACT
           </Link>

@@ -1,6 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { useState, useRef, useEffect } from "react";
-import { ChevronDown, Menu } from "lucide-react";
+import { ChevronDown, Menu, UserRound, FileText, PenTool, GraduationCap, Users } from "lucide-react";
 import MobileMenu from "./MobileMenu";
 
 // Creative Theatrical Icons for Dropdown Items
@@ -143,7 +143,6 @@ export default function Header() {
   const [location] = useLocation();
   const isHomePage = location === "/";
   const [portfolioOpen, setPortfolioOpen] = useState(false);
-  const [newsOpen, setNewsOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
 
   const [studioOpen, setStudioOpen] = useState(false);
@@ -153,14 +152,12 @@ export default function Header() {
   
   // Refs for dropdown containers
   const portfolioDropdownRef = useRef<HTMLDivElement>(null);
-  const newsDropdownRef = useRef<HTMLDivElement>(null);
   const aboutDropdownRef = useRef<HTMLDivElement>(null);
 
   const studioDropdownRef = useRef<HTMLDivElement>(null);
   
   // Timeout refs for delayed closing
   const portfolioTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const newsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const aboutTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const studioTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -182,7 +179,6 @@ export default function Header() {
         setIsVisible(false);
         // Close dropdowns when hiding
         setPortfolioOpen(false);
-        setNewsOpen(false);
         setAboutOpen(false);
 
         setStudioOpen(false);
@@ -227,19 +223,6 @@ export default function Header() {
     setPortfolioOpen(true);
   };
 
-  const handleNewsMouseLeave = () => {
-    newsTimeoutRef.current = setTimeout(() => {
-      setNewsOpen(false);
-    }, 300);
-  };
-
-  const handleNewsMouseEnter = () => {
-    if (newsTimeoutRef.current) {
-      clearTimeout(newsTimeoutRef.current);
-    }
-    setNewsOpen(true);
-  };
-
   const handleAboutMouseLeave = () => {
     aboutTimeoutRef.current = setTimeout(() => {
       setAboutOpen(false);
@@ -274,31 +257,12 @@ export default function Header() {
     { name: "Experiential Design", slug: "experiential", path: "/projects/experiential", icon: <ExperientialIcon /> },
   ];
 
-  const newsCategories = [
-    { name: "All News", slug: "", icon: <AllCategoriesIcon /> },
-    { name: "Production Debuts", slug: "production-debuts", icon: <ProductionIcon /> },
-    { name: "Collaborations", slug: "collaborations", icon: <CollaborationIcon /> },
-    { name: "Milestones", slug: "milestones", icon: <MilestoneIcon /> },
-    { name: "Opening Nights", slug: "opening-nights", icon: <OpeningIcon /> },
-    { name: "Reviews & Press", slug: "reviews-press", icon: <ReviewIcon /> },
-    { name: "Season Announcements", slug: "season-announcements", icon: <SeasonIcon /> },
-  ];
-
-  const articleCategories = [
-    { name: "All Articles", slug: "", icon: <AllCategoriesIcon /> },
-    { name: "Design Philosophy", slug: "design-philosophy", icon: <ArticleIcon /> },
-    { name: "Musical Theatre & Cinema", slug: "musical-theatre-cinema", icon: <ArticleIcon /> },
-    { name: "Scenic Design Process", slug: "scenic-design-process", icon: <ArticleIcon /> },
-    { name: "Technology & Tutorials", slug: "technology-tutorials", icon: <ArticleIcon /> },
-    { name: "Themed Entertainment", slug: "themed-entertainment", icon: <ArticleIcon /> },
-  ];
-
   const aboutPages = [
-    { name: "About", slug: "/about" },
-    { name: "Resume / CV", slug: "/resume" },
-    { name: "Creative Statement", slug: "/creative-statement" },
-    { name: "Teaching Philosophy", slug: "/about/teaching" },
-    { name: "Collaborators", slug: "/about/collaborators" },
+    { name: "About", slug: "/about", icon: <UserRound className="w-[18px] h-[18px] mr-2" /> },
+    { name: "Resume / CV", slug: "/resume", icon: <FileText className="w-[18px] h-[18px] mr-2" /> },
+    { name: "Creative Statement", slug: "/creative-statement", icon: <PenTool className="w-[18px] h-[18px] mr-2" /> },
+    { name: "Teaching Philosophy", slug: "/about/teaching", icon: <GraduationCap className="w-[18px] h-[18px] mr-2" /> },
+    { name: "Collaborators", slug: "/about/collaborators", icon: <Users className="w-[18px] h-[18px] mr-2" /> },
   ];
 
   return (
@@ -306,11 +270,7 @@ export default function Header() {
       <header 
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isVisible ? "translate-y-0" : "-translate-y-full"
-        } ${
-          isHomePage 
-            ? "bg-transparent border-transparent" 
-            : "border-b border-border bg-background/95 backdrop-blur-xl"
-        }`}
+        } border-b border-white/10 bg-background/40 backdrop-blur-xl supports-[backdrop-filter]:bg-background/25`}
       >
         <div className="container py-4">
           <nav className="flex items-center justify-between">
@@ -389,7 +349,7 @@ export default function Header() {
                 <Link
                   href="/about"
                   className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-[#4CAF50] relative group ${
-                    isActive("/about") || isActive("/teaching-philosophy") || isActive("/resume") || isActive("/creative-statement") ? "text-[#4CAF50]" : ""
+                    isActive("/about") || isActive("/teaching-philosophy") || isActive("/about/teaching") || isActive("/resume") || isActive("/creative-statement") ? "text-[#4CAF50]" : ""
                   }`}
                 >
                   ABOUT
@@ -410,7 +370,10 @@ export default function Header() {
                         href={page.slug}
                         className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border last:border-0 relative group"
                       >
-                        <span className="relative z-10">{page.name}</span>
+                        <span className="relative z-10 flex items-center">
+                          {page.icon}
+                          {page.name}
+                        </span>
                         <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
                       </Link>
                     ))}
@@ -492,7 +455,7 @@ export default function Header() {
               {/* Contact Button - Minimal White Frame */}
               <Link 
                 href="/contact" 
-                className="text-sm font-bold tracking-wide text-white border-2 border-white px-5 py-2 rounded-md hover:bg-white/10 hover:border-white/80 transition-all duration-300"
+                className="inline-flex items-center justify-center h-10 px-5 rounded-md border border-white/70 text-[11px] font-bold tracking-[0.14em] text-white uppercase hover:border-[#FF5722] hover:text-[#FF5722] transition-all duration-300"
               >
                 CONTACT
               </Link>

@@ -101,7 +101,7 @@ export default function Projects() {
                   {pageSubtitle}
                 </p>
                 <p className="text-base md:text-lg leading-relaxed text-muted-foreground/90">
-                  A curated body of scenic design work across regional theatre, summer stock, and academic production.
+                  A professional body of scenic design work across regional theatre, summer stock, and academic production.
                 </p>
               </div>
             </div>
@@ -231,7 +231,7 @@ export default function Projects() {
                   Scenic Design Portfolio in Practice
                 </h2>
                 <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                  This portfolio documents scenic design work across regional theatre, summer stock, and academic production. Projects include concept development, ground plans, white models, renderings, and realized stage photography.
+                  As a USA 829 scenic designer, this portfolio documents professional work across regional theatre, summer stock, and academic production. Projects include concept development, ground plans, white models, renderings, and realized stage photography.
                 </p>
                 <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
                   My process starts with script analysis and collaborative alignment, then moves through visual research, iterative design studies, drafting coordination, and production execution. The goal is always the same: design spaces that support story, actor movement, and audience focus.

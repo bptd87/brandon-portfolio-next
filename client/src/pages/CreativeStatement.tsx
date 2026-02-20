@@ -40,6 +40,9 @@ export default function CreativeStatement() {
     allProjects[Math.floor(totalProjects * 0.9)] || allProjects[5]
   ].filter(Boolean) : [];
 
+  const getProjectTypeLabel = (project?: { discipline?: string | null } | null) =>
+    project?.discipline === "rendering" ? "Rendering" : "Scenic Design";
+
   // Scroll animation refs
   const collaborationRef = useRef<HTMLElement>(null);
   const processRef = useRef<HTMLElement>(null);
@@ -84,7 +87,7 @@ export default function CreativeStatement() {
   const heroProject = scenicDesignProjects.find(p => p.featured) || scenicDesignProjects[0];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background [background-image:radial-gradient(circle_at_14%_10%,rgba(255,87,34,0.08),transparent_34%),radial-gradient(circle_at_84%_14%,rgba(0,188,212,0.08),transparent_30%)]">
       <SEO
         title="Creative Design Statement | Scenic & Experiential Design"
         description="Exploring the intersection of architecture, history, and storytelling through scenic design. Creative philosophy centered on spatial narratives and immersive environments."
@@ -114,7 +117,7 @@ export default function CreativeStatement() {
       <AboutNav />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 py-32 overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center px-6 py-36 overflow-hidden">
         {/* Parallax Background */}
         {heroImage && (
           <div 
@@ -129,12 +132,13 @@ export default function CreativeStatement() {
         )}
         
         {/* Overlay for readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-background pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/72 to-background pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(255,87,34,0.18),transparent_30%),radial-gradient(circle_at_82%_24%,rgba(0,188,212,0.16),transparent_30%)] pointer-events-none"></div>
         
         <div className="relative max-w-4xl mx-auto">
           <p className="text-xs uppercase tracking-widest text-white/60 mb-8 text-center">CREATIVE STATEMENT</p>
           
-          <h1 className="text-5xl md:text-7xl font-serif mb-16 leading-tight text-center text-white">
+          <h1 className="text-6xl md:text-8xl font-serif mb-14 leading-[0.9] tracking-tight text-center text-white">
             Architecture, History
             <br />
             & Narrative Storytelling
@@ -145,13 +149,28 @@ export default function CreativeStatement() {
               My passion for scenic design falls somewhere between a love of architecture, history, and narrative storytelling. I'm drawn to projects that have meaning and impact for the communities they serve. I'm especially interested in productions where the design does more than illustrate a setting and becomes part of how the story resonates.
             </p>
           </div>
+
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl mx-auto">
+            <div className="rounded-xl border border-white/20 bg-black/35 backdrop-blur-sm px-4 py-3 text-center shadow-[0_12px_30px_rgba(0,0,0,0.3)]">
+              <p className="text-[10px] uppercase tracking-[0.18em] text-white/60 mb-1">Union</p>
+              <p className="text-sm font-semibold text-white">USA 829</p>
+            </div>
+            <div className="rounded-xl border border-white/20 bg-black/35 backdrop-blur-sm px-4 py-3 text-center shadow-[0_12px_30px_rgba(0,0,0,0.3)]">
+              <p className="text-[10px] uppercase tracking-[0.18em] text-white/60 mb-1">Practice</p>
+              <p className="text-sm font-semibold text-white">Scenic Design</p>
+            </div>
+            <div className="rounded-xl border border-white/20 bg-black/35 backdrop-blur-sm px-4 py-3 text-center shadow-[0_12px_30px_rgba(0,0,0,0.3)]">
+              <p className="text-[10px] uppercase tracking-[0.18em] text-white/60 mb-1">Focus</p>
+              <p className="text-sm font-semibold text-white">Story-Led Space</p>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Collaboration Section */}
       <section 
         ref={collaborationRef}
-        className="relative py-32 px-6 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
+        className="relative py-32 px-6 border-y border-border/40 bg-card/10 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
       >
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-[200px_1fr] gap-12 items-start mb-16">
@@ -160,28 +179,24 @@ export default function CreativeStatement() {
             </div>
             <div>
               <div className="prose prose-lg dark:prose-invert max-w-none mb-12">
-                <p className="text-xl text-foreground/90 leading-relaxed">
-                  I value every collaborator involved in bringing a production to life. That starts with the hidden collaborator, the playwright, and extends to the director, the creative team, and the production teams. I also enjoy working closely with company managers, carpenters, and artisans to realize the best version of the creative team's vision within each unique venue.
+                <p className="text-xl text-foreground/90 leading-relaxed first-letter:text-6xl first-letter:font-serif first-letter:float-left first-letter:mr-3 first-letter:leading-none first-letter:text-primary">
+                  I value every collaborator involved in <span className="text-foreground font-medium">bringing a production to life</span>. That starts with the hidden collaborator, the playwright, and extends to the director, the creative team, and the production teams. I also enjoy working closely with company managers, carpenters, and artisans to realize the best version of the creative team's vision within each unique venue.
                 </p>
               </div>
 
-              {/* Collaboration Images */}
+              {/* Collaboration Visual Break */}
               {collaborationImages.length > 0 && (
-                <div className="grid md:grid-cols-2 gap-6">
-                  {collaborationImages.map((project) => (
-                    <div key={project.id} className="group relative overflow-hidden rounded-lg aspect-[4/3]">
-                      <img 
-                        src={project.coverImageUrl || ''} 
-                        alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div className="absolute bottom-0 left-0 right-0 p-6">
-                          <p className="text-white font-serif text-lg">{project.title}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                <div className="group relative overflow-hidden rounded-2xl aspect-[16/9] border border-border/50">
+                  <img 
+                    src={collaborationImages[0]?.coverImageUrl || ''} 
+                    alt={collaborationImages[0]?.title || "Collaboration project"}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <p className="text-white/80 text-[10px] uppercase tracking-[0.2em] mb-2">{getProjectTypeLabel(collaborationImages[0])}</p>
+                    <p className="text-white font-serif text-xl">{collaborationImages[0]?.title}</p>
+                  </div>
                 </div>
               )}
             </div>
@@ -195,7 +210,7 @@ export default function CreativeStatement() {
         className="relative py-24 px-6 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
       >
         <div className="max-w-4xl mx-auto">
-          <blockquote className="border-l-4 border-primary pl-8 md:pl-12">
+          <blockquote className="border-l-4 border-primary pl-8 md:pl-12 bg-card/20 rounded-r-xl py-6 pr-6">
             <p className="text-3xl md:text-4xl font-serif italic text-foreground/90 leading-relaxed">
               "I'm never afraid to start over, no matter where we are in the process."
             </p>
@@ -206,7 +221,7 @@ export default function CreativeStatement() {
       {/* Process Section */}
       <section 
         ref={processRef}
-        className="relative py-32 px-6 bg-accent/5 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
+        className="relative py-32 px-6 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
       >
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-[200px_1fr] gap-12 items-start mb-16">
@@ -215,31 +230,27 @@ export default function CreativeStatement() {
             </div>
             <div>
               <div className="prose prose-lg dark:prose-invert max-w-none mb-12">
-                <p className="text-xl text-foreground/90 leading-relaxed mb-8">
-                  My process often begins with a lot of ideas that pull in different directions. Early conversations with the director focus on the text: What do they see, and how can we shape a shared vision? From that point forward, I build digital models to explore and sculpt the world. I'm never afraid to start over, no matter where we are in the process.
+                <p className="text-xl text-foreground/90 leading-relaxed mb-8 first-letter:text-6xl first-letter:font-serif first-letter:float-left first-letter:mr-3 first-letter:leading-none first-letter:text-primary">
+                  My process often begins with a lot of ideas that pull in different directions. Early conversations with the director focus on the text: What do they see, and how can we shape a shared vision? From that point forward, I build digital models to <span className="text-foreground font-medium">explore and sculpt the world</span>. I'm never afraid to start over, no matter where we are in the process.
                 </p>
                 <p className="text-xl text-foreground/90 leading-relaxed">
                   I love the energy of collaborative design conversations, when ideas start bouncing between departments and the production finds its rhythm. Technically, I thrive in the transition from rendering to drafting, translating concepts into fully buildable spaces. I'm drawn to designs where structure and detail work together, and where every choice supports both the narrative and the performers onstage.
                 </p>
               </div>
 
-              {/* Process Images */}
+              {/* Process Visual Break */}
               {processImages.length > 0 && (
-                <div className="grid md:grid-cols-2 gap-6">
-                  {processImages.map((project) => (
-                    <div key={project.id} className="group relative overflow-hidden rounded-lg aspect-[4/3]">
-                      <img 
-                        src={project.coverImageUrl || ''} 
-                        alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div className="absolute bottom-0 left-0 right-0 p-6">
-                          <p className="text-white font-serif text-lg">{project.title}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                <div className="group relative overflow-hidden rounded-2xl aspect-[16/9] border border-border/50">
+                  <img 
+                    src={processImages[0]?.coverImageUrl || ''} 
+                    alt={processImages[0]?.title || "Process project"}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <p className="text-white/80 text-[10px] uppercase tracking-[0.2em] mb-2">{getProjectTypeLabel(processImages[0])}</p>
+                    <p className="text-white font-serif text-xl">{processImages[0]?.title}</p>
+                  </div>
                 </div>
               )}
             </div>
@@ -253,7 +264,7 @@ export default function CreativeStatement() {
         className="relative py-24 px-6 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
       >
         <div className="max-w-4xl mx-auto">
-          <blockquote className="border-l-4 border-primary pl-8 md:pl-12">
+          <blockquote className="border-l-4 border-primary pl-8 md:pl-12 bg-card/20 rounded-r-xl py-6 pr-6">
             <p className="text-3xl md:text-4xl font-serif italic text-foreground/90 leading-relaxed">
               "Designs that feel inevitable once they're revealed."
             </p>
@@ -273,28 +284,24 @@ export default function CreativeStatement() {
             </div>
             <div>
               <div className="prose prose-lg dark:prose-invert max-w-none mb-12">
-                <p className="text-xl text-foreground/90 leading-relaxed mb-16">
-                  Whether I'm working on a classic or a new play, my goal is to create environments that feel inevitable once they're revealed. Ideally, the design feels like it couldn't have been any other way, even if it took many revisions and collaborative breakthroughs to get there.
+                <p className="text-xl text-foreground/90 leading-relaxed mb-16 first-letter:text-6xl first-letter:font-serif first-letter:float-left first-letter:mr-3 first-letter:leading-none first-letter:text-primary">
+                  Whether I'm working on a classic or a new play, my goal is to create environments that <span className="text-foreground font-medium">feel inevitable once they're revealed</span>. Ideally, the design feels like it couldn't have been any other way, even if it took many revisions and collaborative breakthroughs to get there.
                 </p>
               </div>
 
-              {/* Philosophy Images */}
+              {/* Philosophy Visual Break */}
               {philosophyImages.length > 0 && (
-                <div className="grid md:grid-cols-2 gap-6 mb-16">
-                  {philosophyImages.map((project) => (
-                    <div key={project.id} className="group relative overflow-hidden rounded-lg aspect-[4/3]">
-                      <img 
-                        src={project.coverImageUrl || ''} 
-                        alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div className="absolute bottom-0 left-0 right-0 p-6">
-                          <p className="text-white font-serif text-lg">{project.title}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                <div className="group relative overflow-hidden rounded-2xl aspect-[16/9] border border-border/50 mb-16">
+                  <img 
+                    src={philosophyImages[0]?.coverImageUrl || ''} 
+                    alt={philosophyImages[0]?.title || "Philosophy project"}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <p className="text-white/80 text-[10px] uppercase tracking-[0.2em] mb-2">{getProjectTypeLabel(philosophyImages[0])}</p>
+                    <p className="text-white font-serif text-xl">{philosophyImages[0]?.title}</p>
+                  </div>
                 </div>
               )}
               
@@ -311,7 +318,7 @@ export default function CreativeStatement() {
       {/* View Full Portfolio CTA */}
       <section 
         ref={ctaRef}
-        className="relative py-32 px-6 bg-accent/10 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
+        className="relative py-32 px-6 border-y border-border/40 bg-card/10 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
       >
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-serif mb-6">
@@ -320,7 +327,7 @@ export default function CreativeStatement() {
           <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
             Discover over 130 realized productions spanning scenic design, experiential design, and collaborative projects across regional theatres and beyond.
           </p>
-          <Link href="/work" className="inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-4 rounded-lg hover:bg-primary/90 transition-colors text-lg font-semibold">
+          <Link href="/projects/scenic-design" className="inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-4 rounded-lg hover:bg-primary/90 transition-colors text-lg font-semibold">
             <span>View Full Portfolio</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14"/>

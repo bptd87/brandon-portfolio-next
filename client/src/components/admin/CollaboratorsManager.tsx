@@ -65,9 +65,11 @@ export function CollaboratorsManager() {
                                 <TableCell className="font-medium p-2">
                                     <div className="flex flex-col">
                                         <span className="text-sm font-semibold">{collab.name}</span>
-                                        <span className="text-[10px] text-muted-foreground opacity-70">
-                                            /{collab.slug}
-                                        </span>
+                                        {collab.slug && (
+                                            <span className="text-[10px] text-muted-foreground opacity-70">
+                                                /{collab.slug}
+                                            </span>
+                                        )}
                                     </div>
                                 </TableCell>
                                 <TableCell className="p-2">

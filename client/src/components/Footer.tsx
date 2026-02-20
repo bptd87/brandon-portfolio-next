@@ -5,29 +5,35 @@ export default function Footer() {
   return (
     <footer className="border-t border-border/50 mt-32">
       {/* Main Footer - Bold Design */}
-      <div className="bg-gradient-to-b from-background to-background/50 py-20">
+      <div className="bg-gradient-to-b from-background to-background/50 py-16 md:py-20">
         <div className="container">
           {/* Top Section - Branding & CTA */}
-          <div className="mb-16 pb-16 border-b border-border/30">
+          <div className="mb-14 pb-14 border-b border-border/30">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Left: Bold Branding */}
               <div>
-                <h2 className="text-7xl md:text-8xl font-black tracking-tighter mb-6">
+                <h2 className="text-5xl md:text-6xl font-black tracking-tighter mb-5">
                   BRANDON<br />
                   <span className="text-[#FF5722]">PT</span> DAVIS
                 </h2>
-                <p className="text-xl text-foreground/70 mb-2">Scenic & Experiential Designer</p>
-                <p className="text-sm text-muted-foreground">California, USA</p>
+                <p className="text-lg text-foreground/70 mb-1">Scenic Designer</p>
+                <p className="text-sm text-muted-foreground">USA 829 • California, USA</p>
+                <a
+                  href="mailto:info@brandonptdavis.com"
+                  className="inline-block mt-3 text-xs tracking-[0.16em] uppercase text-muted-foreground hover:text-[#FF5722] transition-colors"
+                >
+                  info@brandonptdavis.com
+                </a>
               </div>
 
               {/* Right: CTA */}
               <div className="lg:text-right">
-                <p className="text-2xl font-bold mb-6">Let's create something amazing</p>
+                <p className="text-2xl font-bold mb-6">Scenic design inquiries for professional productions.</p>
                 <Link 
                   href="/contact"
-                  className="inline-block text-sm font-black tracking-wide bg-[#FF5722] text-white px-8 py-4 rounded-full hover:bg-[#FF5722]/90 hover:scale-105 transition-all"
+                  className="inline-flex items-center justify-center h-11 px-7 rounded-md border border-[#FF5722] bg-[#FF5722] text-[11px] font-bold tracking-[0.14em] uppercase text-white hover:bg-[#ff6a3a] hover:border-[#ff6a3a] transition-all duration-300"
                 >
-                  START A PROJECT
+                  CONTACT FOR SCENIC DESIGN
                 </Link>
               </div>
             </div>
@@ -111,7 +117,7 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/teaching-philosophy" className="text-foreground/70 hover:text-[#FF5722] transition-colors font-medium">
+                  <Link href="/about/teaching" className="text-foreground/70 hover:text-[#FF5722] transition-colors font-medium">
                     Teaching
                   </Link>
                 </li>

@@ -1,94 +1,92 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Link } from "wouter";
+
+const infoPages = [
+  { name: "Privacy", href: "/privacy" },
+  { name: "Terms", href: "/terms" },
+  { name: "FAQ", href: "/faq" },
+  { name: "Accessibility", href: "/accessibility" },
+  { name: "Sitemap", href: "/sitemap" },
+];
 
 export default function Privacy() {
+  const updated = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
-      <div className="container py-24">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-6xl font-black tracking-tighter mb-4">Privacy Policy</h1>
-          <p className="text-muted-foreground mb-12">Last updated: {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
-          
-          <div className="prose prose-lg max-w-none">
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">Introduction</h2>
-              <p className="text-foreground/80 leading-relaxed">
-                Brandon PT Davis ("we," "our," or "us") respects your privacy and is committed to protecting your personal information. 
-                This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website.
+
+      <main className="container py-24">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-xs uppercase tracking-[0.22em] text-foreground/60 mb-4">Site Info</p>
+            <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-3">Privacy Policy</h1>
+            <p className="text-sm text-muted-foreground">Last updated: {updated}</p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-2 mb-12">
+            {infoPages.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`px-4 py-2 rounded-md border text-xs font-semibold tracking-[0.08em] uppercase transition-colors ${
+                  item.href === "/privacy"
+                    ? "border-[#FF5722] text-[#FF5722] bg-[#FF5722]/10"
+                    : "border-border text-foreground/70 hover:text-foreground hover:border-foreground/40"
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+
+          <div className="space-y-8 text-foreground/85 leading-relaxed">
+            <section className="rounded-2xl border border-border/60 bg-card/20 p-6">
+              <h2 className="text-2xl font-bold mb-3">Introduction</h2>
+              <p>
+                Brandon PT Davis respects your privacy and is committed to protecting your personal information. This page explains what data may be collected, how it is used, and your options regarding that data.
               </p>
             </section>
 
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">Information We Collect</h2>
-              <p className="text-foreground/80 leading-relaxed mb-4">
-                We may collect information about you in a variety of ways, including:
-              </p>
-              <ul className="list-disc pl-6 space-y-2 text-foreground/80">
-                <li><strong>Personal Data:</strong> Name, email address, and contact information you voluntarily provide when contacting us or subscribing to updates.</li>
-                <li><strong>Usage Data:</strong> Information about how you access and use our website, including your IP address, browser type, pages visited, and time spent on pages.</li>
-                <li><strong>Cookies:</strong> We use cookies and similar tracking technologies to track activity on our website and hold certain information.</li>
+            <section className="rounded-2xl border border-border/60 bg-card/20 p-6">
+              <h2 className="text-2xl font-bold mb-3">Information We Collect</h2>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Contact details you provide voluntarily through forms or email.</li>
+                <li>Basic analytics and usage information such as browser, pages visited, and timing.</li>
+                <li>Technical data needed for security, spam prevention, and performance monitoring.</li>
               </ul>
             </section>
 
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">How We Use Your Information</h2>
-              <p className="text-foreground/80 leading-relaxed mb-4">
-                We use the information we collect to:
-              </p>
-              <ul className="list-disc pl-6 space-y-2 text-foreground/80">
-                <li>Respond to your inquiries and provide customer support</li>
-                <li>Send you updates, newsletters, and promotional materials (with your consent)</li>
-                <li>Improve our website and user experience</li>
-                <li>Analyze usage patterns and trends</li>
-                <li>Protect against fraudulent or illegal activity</li>
+            <section className="rounded-2xl border border-border/60 bg-card/20 p-6">
+              <h2 className="text-2xl font-bold mb-3">How Data Is Used</h2>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>To respond to inquiries and project requests.</li>
+                <li>To maintain and improve site performance and usability.</li>
+                <li>To protect the site against abuse, fraud, or unauthorized activity.</li>
               </ul>
             </section>
 
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">Disclosure of Your Information</h2>
-              <p className="text-foreground/80 leading-relaxed">
-                We do not sell, trade, or rent your personal information to third parties. We may share your information with trusted service providers 
-                who assist us in operating our website, conducting our business, or servicing you, as long as those parties agree to keep this information confidential.
+            <section className="rounded-2xl border border-border/60 bg-card/20 p-6">
+              <h2 className="text-2xl font-bold mb-3">Data Sharing</h2>
+              <p>
+                Personal information is not sold. Data may be processed by trusted infrastructure providers used to host, secure, and operate the website.
               </p>
             </section>
 
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">Data Security</h2>
-              <p className="text-foreground/80 leading-relaxed">
-                We implement appropriate technical and organizational security measures to protect your personal information. However, no method of transmission 
-                over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.
+            <section className="rounded-2xl border border-border/60 bg-card/20 p-6">
+              <h2 className="text-2xl font-bold mb-3">Your Rights</h2>
+              <p className="mb-2">
+                Depending on your jurisdiction, you may request access, correction, or deletion of personal data submitted through this site.
               </p>
-            </section>
-
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">Your Rights</h2>
-              <p className="text-foreground/80 leading-relaxed mb-4">
-                Depending on your location, you may have the following rights regarding your personal information:
-              </p>
-              <ul className="list-disc pl-6 space-y-2 text-foreground/80">
-                <li>The right to access and receive a copy of your personal data</li>
-                <li>The right to rectify inaccurate personal data</li>
-                <li>The right to request deletion of your personal data</li>
-                <li>The right to restrict or object to processing of your personal data</li>
-                <li>The right to data portability</li>
-              </ul>
-            </section>
-
-            <section className="mb-12">
-              <h2 className="text-3xl font-bold mb-4">Contact Us</h2>
-              <p className="text-foreground/80 leading-relaxed">
-                If you have questions or concerns about this Privacy Policy, please contact us at:
-              </p>
-              <p className="text-foreground/80 mt-4">
-                <strong>Email:</strong> <a href="mailto:info@brandonptdavis.com" className="text-[#FF5722] hover:underline">info@brandonptdavis.com</a>
+              <p>
+                Contact: <a href="mailto:info@brandonptdavis.com" className="text-[#FF5722] hover:underline">info@brandonptdavis.com</a>
               </p>
             </section>
           </div>
         </div>
-      </div>
-      
+      </main>
+
       <Footer />
     </div>
   );

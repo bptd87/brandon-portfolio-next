@@ -1,13 +1,10 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Calendar, TrendingUp, Lightbulb, AlertCircle, Keyboard, ArrowRight, ExternalLink, CheckCircle } from "lucide-react";
+import { Clock, Calendar, TrendingUp, Lightbulb, AlertCircle, Keyboard, ArrowRight, ExternalLink } from "lucide-react";
 import { useParams, Link } from "wouter";
-import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
 import { trpc } from "@/lib/trpc";
-import { toast } from "sonner";
 import StructuredData from "@/components/StructuredData";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { SEO } from "@/components/SEO";
@@ -16,32 +13,10 @@ export default function TutorialDetail() {
   const params = useParams();
   const slug = params.slug;
 
-  // Get current user
-  const { data: user } = trpc.auth.me.useQuery();
-
-  // Fetch tutorial progress
-  const { data: progressData = [] } = trpc.tutorialProgress.getProgress.useQuery(undefined, {
-    enabled: !!user,
-  });
-
-  // Toggle watched mutation
-  const utils = trpc.useUtils();
-  const toggleWatched = trpc.tutorialProgress.toggleWatched.useMutation({
-    onSuccess: () => {
-      utils.tutorialProgress.getProgress.invalidate();
-      toast.success("Progress updated");
-    },
-    onError: () => {
-      toast.error("Failed to update progress");
-    },
-  });
-
   const { data: tutorial, isLoading, error } = trpc.tutorials.getBySlug.useQuery(
     { slug: slug as string },
     { enabled: !!slug }
   );
-
-  const isWatched = progressData.some(p => p.tutorialSlug === slug && p.completed);
 
   if (isLoading) {
     return (
@@ -158,7 +133,7 @@ export default function TutorialDetail() {
       </div>
 
       {/* Tutorial Header */}
-      <section className="py-12 border-b border-[#2196F3]">
+      <section className="py-10 border-b border-border/50 bg-card/10">
         <div className="container max-w-6xl">
           <Link href="/studio/tutorials" className="text-sm text-muted-foreground hover:text-[#2196F3] mb-6 inline-flex items-center gap-2 transition-colors">
             ← Back to Tutorials
@@ -182,23 +157,8 @@ export default function TutorialDetail() {
             </Badge>
           </div>
 
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex-1">
-              <h1 className="mb-4 text-4xl md:text-5xl font-bold leading-tight text-foreground">{tutorial.title}</h1>
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl">{tutorial.description}</p>
-            </div>
-            {user && slug && (
-              <Button
-                onClick={() => toggleWatched.mutate({ tutorialSlug: slug })}
-                variant={isWatched ? "default" : "outline"}
-                className={isWatched ? "bg-green-500 hover:bg-green-600 text-white" : ""}
-                disabled={toggleWatched.isPending}
-              >
-                <CheckCircle className="w-4 h-4 mr-2" />
-                {isWatched ? "Watched" : "Mark as Watched"}
-              </Button>
-            )}
-          </div>
+          <h1 className="mb-4 text-4xl md:text-6xl font-serif tracking-tight leading-[1.02] text-foreground">{tutorial.title}</h1>
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-4xl">{tutorial.description}</p>
         </div>
       </section>
 
@@ -228,31 +188,31 @@ export default function TutorialDetail() {
             <TabsList className="grid w-full grid-cols-5 bg-muted/50 p-1 rounded-lg mb-8 h-auto gap-1">
               <TabsTrigger
                 value="overview"
-                className="data-[state=active]:bg-[#2196F3] data-[state=active]:text-white data-[state=active]:shadow-lg text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
+                className="data-[state=active]:bg-[#2196F3]/20 data-[state=active]:text-[#7ec8ff] data-[state=active]:border-[#2196F3]/40 data-[state=active]:shadow-lg border border-transparent text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
               >
                 Overview
               </TabsTrigger>
               <TabsTrigger
                 value="concepts"
-                className="data-[state=active]:bg-[#FF5722] data-[state=active]:text-white data-[state=active]:shadow-lg text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
+                className="data-[state=active]:bg-[#FF5722]/20 data-[state=active]:text-[#ff9c7a] data-[state=active]:border-[#FF5722]/40 data-[state=active]:shadow-lg border border-transparent text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
               >
                 Concepts
               </TabsTrigger>
               <TabsTrigger
                 value="reference"
-                className="data-[state=active]:bg-[#9C27B0] data-[state=active]:text-white data-[state=active]:shadow-lg text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
+                className="data-[state=active]:bg-[#9C27B0]/20 data-[state=active]:text-[#ce93d8] data-[state=active]:border-[#9C27B0]/40 data-[state=active]:shadow-lg border border-transparent text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
               >
                 Quick Ref
               </TabsTrigger>
               <TabsTrigger
                 value="transcript"
-                className="data-[state=active]:bg-[#F44336] data-[state=active]:text-white data-[state=active]:shadow-lg text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
+                className="data-[state=active]:bg-[#F44336]/20 data-[state=active]:text-[#ef9a9a] data-[state=active]:border-[#F44336]/40 data-[state=active]:shadow-lg border border-transparent text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
               >
                 Transcript
               </TabsTrigger>
               <TabsTrigger
                 value="resources"
-                className="data-[state=active]:bg-[#00BCD4] data-[state=active]:text-white data-[state=active]:shadow-lg text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
+                className="data-[state=active]:bg-[#00BCD4]/20 data-[state=active]:text-[#80deea] data-[state=active]:border-[#00BCD4]/40 data-[state=active]:shadow-lg border border-transparent text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
               >
                 Resources
               </TabsTrigger>
@@ -260,8 +220,8 @@ export default function TutorialDetail() {
 
             {/* Overview Tab */}
             <TabsContent value="overview" className="mt-0">
-              <div className="border border-border rounded-lg p-8 bg-card">
-                <h2 className="text-2xl font-bold mb-6 text-[#2196F3] uppercase tracking-wider">What You'll Learn</h2>
+              <div className="border border-border/60 rounded-xl p-8 bg-card/70">
+                <h2 className="text-2xl font-semibold mb-6 text-[#2196F3] tracking-tight">What You'll Learn</h2>
                 <div className="space-y-3 mb-12">
                   {(tutorial.learning_objectives || []).map((objective: string, index: number) => (
                     <div key={index} className="flex items-start gap-3 group">
@@ -271,8 +231,8 @@ export default function TutorialDetail() {
                   ))}
                 </div>
 
-                <div className="border-t border-[#2196F3] pt-8">
-                  <h3 className="text-xl font-bold mb-4 uppercase tracking-wider text-foreground">Tutorial Overview</h3>
+                <div className="border-t border-border/60 pt-8">
+                  <h3 className="text-xl font-semibold mb-4 tracking-tight text-foreground">Tutorial Overview</h3>
                   <div className="space-y-4">
                     {(tutorial.overview || "").split('\n\n').map((paragraph: string, index: number) => (
                       <p key={index} className="text-muted-foreground leading-relaxed">
@@ -286,14 +246,14 @@ export default function TutorialDetail() {
 
             {/* Key Concepts Tab */}
             <TabsContent value="concepts" className="mt-0">
-              <div className="border border-border rounded-lg p-8 bg-card">
-                <h2 className="text-2xl font-bold mb-8 text-[#FF5722] uppercase tracking-wider">Key Concepts</h2>
+              <div className="border border-border/60 rounded-xl p-8 bg-card/70">
+                <h2 className="text-2xl font-semibold mb-8 text-[#FF5722] tracking-tight">Key Concepts</h2>
                 <div className="space-y-8">
                   {(tutorial.key_concepts || []).map((concept: any, index: number) => (
-                    <div key={index} className="border-l-4 border-[#FF5722] pl-6 py-4 bg-[#FF5722]/10 rounded-r">
+                    <div key={index} className="border-l-2 border-[#FF5722] pl-6 py-4 bg-[#FF5722]/8 rounded-r-lg">
                       <div className="flex items-start gap-3 mb-3">
                         <Lightbulb className="w-6 h-6 text-[#FF5722] flex-shrink-0 mt-1" />
-                        <h3 className="font-bold text-lg uppercase tracking-wider text-foreground">{concept.title}</h3>
+                        <h3 className="font-semibold text-lg tracking-tight text-foreground">{concept.title}</h3>
                       </div>
                       <p className="text-muted-foreground leading-relaxed">
                         {concept.content}
@@ -302,13 +262,13 @@ export default function TutorialDetail() {
                   ))}
                 </div>
 
-                <div className="border-t border-[#FF5722] mt-12 pt-8">
-                  <h3 className="text-xl font-bold mb-6 text-[#FF5722] uppercase tracking-wider">Pro Tips</h3>
+                <div className="border-t border-border/60 mt-12 pt-8">
+                  <h3 className="text-xl font-semibold mb-6 text-foreground tracking-tight">Pro Tips</h3>
                   <div className="grid md:grid-cols-2 gap-6">
                     {(tutorial.pro_tips || []).map((tip: string, index: number) => (
-                      <div key={index} className="border border-[#FF5722] rounded-lg p-4 bg-[#FF5722]/10">
+                      <div key={index} className="border border-border/60 rounded-lg p-4 bg-[#FF5722]/8">
                         <p className="text-sm text-foreground leading-relaxed">
-                          <span className="font-bold text-[#FF5722] block mb-2 uppercase tracking-wider">PRO TIP</span>
+                          <span className="font-semibold text-[#FF5722] block mb-2 uppercase tracking-[0.12em]">Pro Tip</span>
                           {tip}
                         </p>
                       </div>
@@ -320,18 +280,18 @@ export default function TutorialDetail() {
 
             {/* Quick Reference Tab */}
             <TabsContent value="reference" className="mt-0">
-              <div className="border border-border rounded-lg p-8 bg-card">
+              <div className="border border-border/60 rounded-xl p-8 bg-card/70">
                 <div className="grid md:grid-cols-2 gap-12">
                   {/* Shortcuts */}
                   <div>
-                    <h3 className="font-bold text-xl mb-6 flex items-center gap-3 text-[#9C27B0] uppercase tracking-wider">
-                      <Keyboard className="w-6 h-6" />
+                    <h3 className="font-semibold text-xl mb-6 flex items-center gap-3 text-[#9C27B0] tracking-tight">
+                      <Keyboard className="w-6 h-6 text-[#9C27B0]" />
                       Essential Shortcuts
                     </h3>
                     <div className="space-y-4">
                       {(tutorial.shortcuts || []).map((shortcut: any, index: number) => (
-                        <div key={index} className="border border-[#9C27B0] rounded-lg p-4 bg-[#9C27B0]/10">
-                          <code className="text-sm font-mono text-[#9C27B0] font-bold block mb-2">
+                        <div key={index} className="border border-border/60 rounded-lg p-4 bg-card/50">
+                          <code className="text-sm font-mono text-[#9C27B0] font-semibold block mb-2">
                             {shortcut.keys}
                           </code>
                           <span className="text-sm text-muted-foreground">
@@ -344,14 +304,14 @@ export default function TutorialDetail() {
 
                   {/* Common Pitfalls */}
                   <div>
-                    <h3 className="font-bold text-xl mb-6 flex items-center gap-3 text-[#9C27B0] uppercase tracking-wider">
-                      <AlertCircle className="w-6 h-6" />
+                    <h3 className="font-semibold text-xl mb-6 flex items-center gap-3 text-[#9C27B0] tracking-tight">
+                      <AlertCircle className="w-6 h-6 text-[#9C27B0]" />
                       Common Pitfalls
                     </h3>
                     <div className="space-y-3">
                       {(tutorial.common_pitfalls || []).map((pitfall: string, index: number) => (
-                        <div key={index} className="flex items-start gap-3 border-l-4 border-[#9C27B0] pl-4 py-2 bg-[#9C27B0]/5 rounded-r">
-                          <span className="text-[#9C27B0] flex-shrink-0 font-bold">×</span>
+                        <div key={index} className="flex items-start gap-3 border-l-2 border-[#9C27B0] pl-4 py-2 bg-[#9C27B0]/8 rounded-r">
+                          <span className="text-[#9C27B0] flex-shrink-0 font-semibold">×</span>
                           <span className="text-sm text-foreground">{pitfall}</span>
                         </div>
                       ))}
@@ -363,12 +323,12 @@ export default function TutorialDetail() {
 
             {/* Transcript Tab */}
             <TabsContent value="transcript" className="mt-0">
-              <div className="border border-border rounded-lg p-8 bg-card">
-                <h2 className="text-2xl font-bold mb-8 text-[#F44336] uppercase tracking-wider">Full Transcript</h2>
+              <div className="border border-border/60 rounded-xl p-8 bg-card/70">
+                <h2 className="text-2xl font-semibold mb-8 text-[#F44336] tracking-tight">Full Transcript</h2>
                 <div className="space-y-4 font-mono text-sm">
                   {(tutorial.transcript || []).map((entry: any, index: number) => (
-                    <div key={index} className="flex gap-6 hover:bg-[#F44336]/10 p-3 rounded transition-colors border-l-2 border-transparent hover:border-[#F44336]">
-                      <span className="text-[#F44336] flex-shrink-0 w-16 font-bold">
+                    <div key={index} className="flex gap-6 hover:bg-[#F44336]/8 p-3 rounded transition-colors border-l-2 border-transparent hover:border-[#F44336]">
+                      <span className="text-[#F44336] flex-shrink-0 w-16 font-semibold">
                         {entry.time}
                       </span>
                       <p className="text-foreground leading-relaxed">
@@ -382,8 +342,8 @@ export default function TutorialDetail() {
 
             {/* Resources Tab */}
             <TabsContent value="resources" className="mt-0">
-              <div className="border border-border rounded-lg p-8 bg-card">
-                <h2 className="text-2xl font-bold mb-8 text-[#00BCD4] uppercase tracking-wider">Related Resources</h2>
+              <div className="border border-border/60 rounded-xl p-8 bg-card/70">
+                <h2 className="text-2xl font-semibold mb-8 text-[#00BCD4] tracking-tight">Related Resources</h2>
 
                 <div className="space-y-4 mb-12">
                   {(tutorial.related_resources || []).map((resource: any, index: number) => (
@@ -392,16 +352,16 @@ export default function TutorialDetail() {
                       href={resource.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block border border-border hover:border-[#00BCD4] rounded-lg p-6 transition-all group bg-card hover:bg-[#00BCD4]/10"
+                      className="block border border-border/60 hover:border-[#00BCD4] rounded-lg p-6 transition-all group bg-card/50 hover:bg-[#00BCD4]/8"
                     >
                       <div className="flex items-start justify-between gap-4">
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2">
-                            <Badge className="bg-[#00BCD4] text-white border-0 uppercase tracking-wider font-bold text-xs px-3 py-1">
+                            <Badge className="bg-[#00BCD4] text-black border-0 uppercase tracking-[0.12em] font-semibold text-xs px-3 py-1">
                               {resource.type}
                             </Badge>
                           </div>
-                          <h3 className="font-bold text-lg mb-2 group-hover:text-[#00BCD4] transition-colors text-foreground">
+                          <h3 className="font-semibold text-lg mb-2 group-hover:text-[#00BCD4] transition-colors text-foreground">
                             {resource.title}
                           </h3>
                         </div>
@@ -411,16 +371,16 @@ export default function TutorialDetail() {
                   ))}
                 </div>
 
-                <div className="border-t border-[#00BCD4] pt-8">
-                  <h3 className="text-xl font-bold mb-6 uppercase tracking-wider text-foreground">Continue Learning</h3>
+                <div className="border-t border-border/60 pt-8">
+                  <h3 className="text-xl font-semibold mb-6 tracking-tight text-foreground">Continue Learning</h3>
                   <div className="grid md:grid-cols-3 gap-6">
                     {(tutorial.related_tutorials || []).map((related: any, index: number) => (
                       <Link key={index} href={`/studio/tutorials/${related.slug}`}>
-                        <div className="border border-border hover:border-[#00BCD4] rounded-lg p-6 transition-all group bg-card hover:bg-[#00BCD4]/10 h-full">
+                        <div className="border border-border/60 hover:border-[#00BCD4] rounded-lg p-6 transition-all group bg-card/50 hover:bg-[#00BCD4]/8 h-full">
                           <h4 className="font-semibold mb-3 group-hover:text-[#00BCD4] transition-colors text-foreground">
                             {related.title}
                           </h4>
-                          <div className="flex items-center gap-2 text-sm text-[#00BCD4] group-hover:gap-3 transition-all uppercase tracking-wider font-bold">
+                          <div className="flex items-center gap-2 text-sm text-[#00BCD4] group-hover:gap-3 transition-all uppercase tracking-[0.12em] font-semibold">
                             Watch Tutorial <ArrowRight className="w-4 h-4" />
                           </div>
                         </div>

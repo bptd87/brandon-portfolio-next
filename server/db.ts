@@ -850,6 +850,69 @@ export interface Collaborator {
   updated_at?: Date;
 }
 
+function coerceInstagramUrl(handleOrUrl: string | null | undefined): string | null {
+  if (!handleOrUrl) return null;
+  const trimmed = handleOrUrl.trim();
+  if (!trimmed) return null;
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  const normalizedHandle = trimmed.replace(/^@+/, '').trim();
+  if (!normalizedHandle) return null;
+  return `https://www.instagram.com/${normalizedHandle}/`;
+}
+
+function coerceInstagramHandle(handleOrUrl: string | null | undefined): string | null {
+  if (!handleOrUrl) return null;
+  const trimmed = handleOrUrl.trim();
+  if (!trimmed) return null;
+  if (/^https?:\/\//i.test(trimmed)) {
+    try {
+      const url = new URL(trimmed);
+      const firstSegment = url.pathname.split('/').filter(Boolean)[0];
+      return firstSegment ? `@${firstSegment}` : null;
+    } catch {
+      return null;
+    }
+  }
+  const normalized = trimmed.replace(/^@+/, '').trim();
+  return normalized ? `@${normalized}` : null;
+}
+
+function mapCollaboratorRecord(collab: any): Collaborator {
+  const website = collab.website ?? collab.website_url ?? collab.websiteUrl ?? null;
+  const portfolioUrl = collab.portfolio_url ?? collab.portfolioUrl ?? null;
+  const rawInstagramUrl = collab.instagram_url ?? collab.instagramUrl ?? null;
+  const rawInstagramHandle = collab.instagram_handle ?? collab.instagramHandle ?? null;
+  const instagramUrl = rawInstagramUrl || coerceInstagramUrl(rawInstagramHandle);
+  const instagramHandle = coerceInstagramHandle(rawInstagramHandle) || coerceInstagramHandle(rawInstagramUrl);
+  const slug =
+    collab.slug ||
+    String(collab.name || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+
+  return {
+    id: collab.id,
+    name: collab.name,
+    slug,
+    role: collab.role,
+    bio: collab.bio,
+    website,
+    portfolioUrl,
+    instagramUrl,
+    instagramHandle,
+    coverImage: collab.cover_image ?? collab.coverImage ?? null,
+    status: collab.status || 'published',
+    featured: collab.featured || false,
+    seoTitle: collab.seo_title ?? collab.seoTitle ?? null,
+    seoDescription: collab.seo_description ?? collab.seoDescription ?? null,
+    seoKeywords: collab.seo_keywords ?? collab.seoKeywords ?? null,
+    gallery: collab.gallery,
+    created_at: new Date(collab.created_at),
+    updated_at: collab.updated_at ? new Date(collab.updated_at) : undefined,
+  };
+}
+
 export async function getAllCollaborators(filters?: {
   role?: string;
 }): Promise<Collaborator[]> {
@@ -865,57 +928,32 @@ export async function getAllCollaborators(filters?: {
   const { data } = await query;
   if (!data) return [];
 
-  return data.map(collab => ({
-    id: collab.id,
-    name: collab.name,
-    slug: collab.slug,
-    role: collab.role,
-    bio: collab.bio,
-    website: collab.website,
-    portfolioUrl: collab.portfolio_url,
-    instagramUrl: collab.instagram_url,
-    instagramHandle: collab.instagram_handle,
-    coverImage: collab.cover_image,
-    status: collab.status || 'published',
-    featured: collab.featured || false,
-    seoTitle: collab.seo_title,
-    seoDescription: collab.seo_description,
-    seoKeywords: collab.seo_keywords,
-    gallery: collab.gallery,
-    created_at: new Date(collab.created_at),
-    updated_at: collab.updated_at ? new Date(collab.updated_at) : undefined,
-  })) as Collaborator[];
+  return data.map(mapCollaboratorRecord) as Collaborator[];
 }
 
 export async function getCollaboratorBySlug(slug: string): Promise<Collaborator | undefined> {
-  const { data } = await supabase
+  const bySlug = await supabase
     .from('collaborators')
     .select('*')
     .eq('slug', slug)
     .single();
+  if (!bySlug.error && bySlug.data) return mapCollaboratorRecord(bySlug.data);
 
-  if (!data) return undefined;
+  if ((bySlug.error as any)?.code !== '42703') return undefined;
 
-  return {
-    id: data.id,
-    name: data.name,
-    slug: data.slug,
-    role: data.role,
-    bio: data.bio,
-    website: data.website,
-    portfolioUrl: data.portfolio_url,
-    instagramUrl: data.instagram_url,
-    instagramHandle: data.instagram_handle,
-    coverImage: data.cover_image,
-    status: data.status || 'published',
-    featured: data.featured || false,
-    seoTitle: data.seo_title,
-    seoDescription: data.seo_description,
-    seoKeywords: data.seo_keywords,
-    gallery: data.gallery,
-    created_at: new Date(data.created_at),
-    updated_at: data.updated_at ? new Date(data.updated_at) : undefined,
-  };
+  const { data } = await supabase
+    .from('collaborators')
+    .select('*');
+
+  const found = (data || []).find((item: any) => {
+    const fallbackSlug = String(item.name || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+    return fallbackSlug === slug;
+  });
+
+  return found ? mapCollaboratorRecord(found) : undefined;
 }
 
 export async function getCollaboratorProjects(collaboratorId: number) {
@@ -1924,71 +1962,134 @@ export async function getCollaboratorById(id: number): Promise<Collaborator | un
 
   if (!data) return undefined;
 
-  return {
-    id: data.id,
-    name: data.name,
-    slug: data.slug,
-    role: data.role,
-    bio: data.bio,
-    website: data.website,
-    portfolioUrl: data.portfolio_url,
-    instagramUrl: data.instagram_url,
-    instagramHandle: data.instagram_handle,
-    coverImage: data.cover_image,
-    status: data.status || 'published',
-    featured: data.featured || false,
-    seoTitle: data.seo_title,
-    seoDescription: data.seo_description,
-    seoKeywords: data.seo_keywords,
-    gallery: data.gallery,
-    created_at: new Date(data.created_at),
-    updated_at: data.updated_at ? new Date(data.updated_at) : undefined,
-  };
+  return mapCollaboratorRecord(data);
 }
 
 export async function createCollaborator(collaborator: any) {
-  const { data, error } = await supabase
+  const normalizedInstagramUrl = collaborator.instagramUrl || coerceInstagramUrl(collaborator.instagramHandle);
+  const normalizedInstagramHandle =
+    collaborator.instagramHandle || coerceInstagramHandle(collaborator.instagramUrl);
+  const normalizedSlug =
+    collaborator.slug ||
+    String(collaborator.name || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+
+  const snakePayload = {
+    name: collaborator.name,
+    slug: normalizedSlug,
+    role: collaborator.role,
+    bio: collaborator.bio,
+    portfolio_url: collaborator.portfolioUrl,
+    website: collaborator.website ?? collaborator.websiteUrl ?? collaborator.portfolioUrl ?? null,
+    instagram_url: normalizedInstagramUrl,
+    instagram_handle: normalizedInstagramHandle,
+    cover_image: collaborator.coverImage,
+    status: collaborator.status || 'published',
+    featured: collaborator.featured || false,
+    seo_title: collaborator.seoTitle,
+    seo_description: collaborator.seoDescription,
+    seo_keywords: collaborator.seoKeywords,
+    gallery: collaborator.gallery,
+  };
+
+  const snakeResult = await supabase
     .from('collaborators')
-    .insert({
-      name: collaborator.name,
-      slug: collaborator.slug,
-      role: collaborator.role,
-      bio: collaborator.bio,
-      portfolio_url: collaborator.portfolioUrl,
-      website: collaborator.website,
-      instagram_url: collaborator.instagramUrl,
-      instagram_handle: collaborator.instagramHandle,
-      cover_image: collaborator.coverImage,
-      status: collaborator.status || 'published',
-      featured: collaborator.featured || false,
-      seo_title: collaborator.seoTitle,
-      seo_description: collaborator.seoDescription,
-      seo_keywords: collaborator.seoKeywords,
-      gallery: collaborator.gallery,
-    })
+    .insert(snakePayload)
     .select()
     .single();
 
-  if (error) throw error;
-  return data.id;
+  if (!snakeResult.error) return snakeResult.data.id;
+  if ((snakeResult.error as any)?.code !== '42703') throw snakeResult.error;
+
+  const camelPayload = {
+    name: collaborator.name,
+    role: collaborator.role,
+    bio: collaborator.bio,
+    portfolioUrl: collaborator.portfolioUrl,
+    websiteUrl: collaborator.websiteUrl ?? collaborator.website ?? collaborator.portfolioUrl ?? null,
+    website: collaborator.website ?? collaborator.websiteUrl ?? collaborator.portfolioUrl ?? null,
+    instagramUrl: normalizedInstagramUrl,
+    instagramHandle: normalizedInstagramHandle,
+    cover_image: collaborator.coverImage,
+    status: collaborator.status || 'published',
+    featured: collaborator.featured || false,
+    seo_title: collaborator.seoTitle,
+    seo_description: collaborator.seoDescription,
+    seo_keywords: collaborator.seoKeywords,
+    gallery: collaborator.gallery,
+  } as any;
+
+  const camelResult = await supabase
+    .from('collaborators')
+    .insert(camelPayload)
+    .select()
+    .single();
+  if (camelResult.error) throw camelResult.error;
+  return camelResult.data.id;
 }
 
 export async function updateCollaborator(id: number, updates: any) {
-  const updateData: any = {};
-  if (updates.name !== undefined) updateData.name = updates.name;
-  if (updates.role !== undefined) updateData.role = updates.role;
-  if (updates.bio !== undefined) updateData.bio = updates.bio;
-  if (updates.portfolioUrl !== undefined) updateData.portfolioUrl = updates.portfolioUrl;
-  if (updates.websiteUrl !== undefined) updateData.websiteUrl = updates.websiteUrl;
-  if (updates.instagramUrl !== undefined) updateData.instagramUrl = updates.instagramUrl;
-  if (updates.instagramHandle !== undefined) updateData.instagramHandle = updates.instagramHandle;
+  const normalizedInstagramUrl =
+    updates.instagramUrl !== undefined ? updates.instagramUrl : coerceInstagramUrl(updates.instagramHandle);
+  const normalizedInstagramHandle =
+    updates.instagramHandle !== undefined ? updates.instagramHandle : coerceInstagramHandle(updates.instagramUrl);
 
-  const { error } = await supabase
+  const snakeUpdateData: any = {};
+  if (updates.name !== undefined) snakeUpdateData.name = updates.name;
+  if (updates.slug !== undefined) snakeUpdateData.slug = updates.slug;
+  if (updates.role !== undefined) snakeUpdateData.role = updates.role;
+  if (updates.bio !== undefined) snakeUpdateData.bio = updates.bio;
+  if (updates.portfolioUrl !== undefined) snakeUpdateData.portfolio_url = updates.portfolioUrl;
+  if (updates.website !== undefined || updates.websiteUrl !== undefined) {
+    snakeUpdateData.website = updates.website ?? updates.websiteUrl ?? null;
+  }
+  if (updates.instagramUrl !== undefined || updates.instagramHandle !== undefined) {
+    snakeUpdateData.instagram_url = normalizedInstagramUrl ?? null;
+    snakeUpdateData.instagram_handle = normalizedInstagramHandle ?? null;
+  }
+  if (updates.coverImage !== undefined) snakeUpdateData.cover_image = updates.coverImage;
+  if (updates.status !== undefined) snakeUpdateData.status = updates.status;
+  if (updates.featured !== undefined) snakeUpdateData.featured = updates.featured;
+  if (updates.seoTitle !== undefined) snakeUpdateData.seo_title = updates.seoTitle;
+  if (updates.seoDescription !== undefined) snakeUpdateData.seo_description = updates.seoDescription;
+  if (updates.seoKeywords !== undefined) snakeUpdateData.seo_keywords = updates.seoKeywords;
+  if (updates.gallery !== undefined) snakeUpdateData.gallery = updates.gallery;
+
+  const snakeResult = await supabase
     .from('collaborators')
-    .update(updateData)
+    .update(snakeUpdateData)
     .eq('id', id);
+  if (!snakeResult.error) return;
+  if ((snakeResult.error as any)?.code !== '42703') throw snakeResult.error;
 
-  if (error) throw error;
+  const camelUpdateData: any = {};
+  if (updates.name !== undefined) camelUpdateData.name = updates.name;
+  if (updates.role !== undefined) camelUpdateData.role = updates.role;
+  if (updates.bio !== undefined) camelUpdateData.bio = updates.bio;
+  if (updates.portfolioUrl !== undefined) camelUpdateData.portfolioUrl = updates.portfolioUrl;
+  if (updates.website !== undefined || updates.websiteUrl !== undefined) {
+    camelUpdateData.websiteUrl = updates.websiteUrl ?? updates.website ?? null;
+    camelUpdateData.website = updates.website ?? updates.websiteUrl ?? null;
+  }
+  if (updates.instagramUrl !== undefined || updates.instagramHandle !== undefined) {
+    camelUpdateData.instagramUrl = normalizedInstagramUrl ?? null;
+    camelUpdateData.instagramHandle = normalizedInstagramHandle ?? null;
+  }
+  if (updates.coverImage !== undefined) camelUpdateData.cover_image = updates.coverImage;
+  if (updates.status !== undefined) camelUpdateData.status = updates.status;
+  if (updates.featured !== undefined) camelUpdateData.featured = updates.featured;
+  if (updates.seoTitle !== undefined) camelUpdateData.seo_title = updates.seoTitle;
+  if (updates.seoDescription !== undefined) camelUpdateData.seo_description = updates.seoDescription;
+  if (updates.seoKeywords !== undefined) camelUpdateData.seo_keywords = updates.seoKeywords;
+  if (updates.gallery !== undefined) camelUpdateData.gallery = updates.gallery;
+
+  const camelResult = await supabase
+    .from('collaborators')
+    .update(camelUpdateData)
+    .eq('id', id);
+  if (camelResult.error) throw camelResult.error;
 }
 
 export async function deleteCollaborator(id: number) {

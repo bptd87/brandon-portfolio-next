@@ -2,92 +2,116 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
 
-export default function Sitemap() {
-  const sections = [
-    {
-      title: "Main Pages",
-      links: [
-        { name: "Home", href: "/" },
-        { name: "Contact", href: "/contact" },
-        { name: "News", href: "/news" },
-        { name: "Articles", href: "/articles" },
-        { name: "Studio", href: "/studio" },
-      ]
-    },
-    {
-      title: "Portfolio",
-      links: [
-        { name: "All Projects", href: "/projects" },
-        { name: "Scenic Design", href: "/projects?discipline=scenic_design" },
-        { name: "Renderings", href: "/projects?discipline=rendering" },
-        { name: "Experiential Design", href: "/projects?discipline=experiential_design" },
-      ]
-    },
-    {
-      title: "About",
-      links: [
-        { name: "About Brandon", href: "/about" },
-        { name: "Resume / CV", href: "/resume" },
-        { name: "Teaching Philosophy", href: "/teaching-philosophy" },
-        { name: "Creative Statement", href: "/creative-statement" },
-      ]
-    },
-    {
-      title: "Legal & Information",
-      links: [
-        { name: "Privacy Policy", href: "/privacy" },
-        { name: "Terms of Service", href: "/terms" },
-        { name: "FAQ", href: "/faq" },
-        { name: "Accessibility", href: "/accessibility" },
-        { name: "Sitemap", href: "/sitemap" },
-      ]
-    },
-  ];
+const infoPages = [
+  { name: "Privacy", href: "/privacy" },
+  { name: "Terms", href: "/terms" },
+  { name: "FAQ", href: "/faq" },
+  { name: "Accessibility", href: "/accessibility" },
+  { name: "Sitemap", href: "/sitemap" },
+];
 
+const sections = [
+  {
+    title: "Portfolio",
+    links: [
+      { name: "Scenic Design", href: "/projects/scenic-design" },
+      { name: "Rendering", href: "/projects/rendering" },
+      { name: "Experiential Design", href: "/projects/experiential" },
+    ],
+  },
+  {
+    title: "About",
+    links: [
+      { name: "About", href: "/about" },
+      { name: "Resume", href: "/resume" },
+      { name: "Creative Statement", href: "/creative-statement" },
+      { name: "Teaching Philosophy", href: "/about/teaching" },
+      { name: "Collaborators", href: "/about/collaborators" },
+    ],
+  },
+  {
+    title: "Publishing",
+    links: [
+      { name: "News", href: "/news" },
+      { name: "Articles", href: "/articles" },
+    ],
+  },
+  {
+    title: "Studio",
+    links: [
+      { name: "Studio Home", href: "/studio" },
+      { name: "Tutorials", href: "/studio/tutorials" },
+      { name: "Apps", href: "/studio/apps" },
+      { name: "Scenic Directory", href: "/studio/directory" },
+    ],
+  },
+  {
+    title: "General",
+    links: [
+      { name: "Home", href: "/" },
+      { name: "Contact", href: "/contact" },
+      { name: "FAQ", href: "/faq" },
+      { name: "Privacy Policy", href: "/privacy" },
+      { name: "Terms of Service", href: "/terms" },
+      { name: "Accessibility", href: "/accessibility" },
+    ],
+  },
+];
+
+export default function Sitemap() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
-      <div className="container py-24">
+
+      <main className="container py-24">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-6xl font-black tracking-tighter mb-4">Sitemap</h1>
-          <p className="text-muted-foreground mb-16">Navigate through all pages on brandonptdavis.com</p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-            {sections.map((section) => (
-              <div key={section.title}>
-                <h2 className="text-sm font-black tracking-wider text-[#FF5722] mb-6">{section.title.toUpperCase()}</h2>
-                <ul className="space-y-3">
+          <div className="text-center mb-12">
+            <p className="text-xs uppercase tracking-[0.22em] text-foreground/60 mb-4">Site Info</p>
+            <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-4">Sitemap</h1>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Updated navigation map for the current portfolio, studio, and information pages.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-2 mb-12">
+            {infoPages.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`px-4 py-2 rounded-md border text-xs font-semibold tracking-[0.08em] uppercase transition-colors ${
+                  item.href === "/sitemap"
+                    ? "border-[#FF5722] text-[#FF5722] bg-[#FF5722]/10"
+                    : "border-border text-foreground/70 hover:text-foreground hover:border-foreground/40"
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {sections.map((section, idx) => (
+              <section
+                key={section.title}
+                className="rounded-2xl border border-border/60 bg-card/20 p-6"
+                style={{ boxShadow: `inset 0 1px 0 ${["#FF5722", "#00BCD4", "#E91E63", "#FFC107", "#7CFF6B"][idx % 5]}33` }}
+              >
+                <h2 className="text-sm font-black tracking-[0.16em] uppercase text-foreground mb-4">{section.title}</h2>
+                <ul className="space-y-2">
                   {section.links.map((link) => (
                     <li key={link.href}>
-                      <Link 
-                        href={link.href}
-                        className="text-foreground/80 hover:text-[#FF5722] transition-colors text-sm"
-                      >
+                      <Link href={link.href} className="text-sm text-foreground/80 hover:text-[#FF5722] transition-colors">
                         {link.name}
                       </Link>
                     </li>
                   ))}
                 </ul>
-              </div>
+              </section>
             ))}
           </div>
-
-          <div className="mt-20 p-8 bg-accent/30 rounded-lg border border-border">
-            <h2 className="text-2xl font-bold mb-4">Can't find what you're looking for?</h2>
-            <p className="text-foreground/80 mb-6">
-              Use the search function or contact us directly for assistance navigating the site.
-            </p>
-            <a 
-              href="/contact" 
-              className="inline-block text-sm font-black tracking-wide bg-[#FF5722] text-white px-6 py-3 rounded-full hover:bg-[#FF5722]/90 hover:scale-105 transition-all"
-            >
-              CONTACT US
-            </a>
-          </div>
         </div>
-      </div>
-      
+      </main>
+
       <Footer />
     </div>
   );
