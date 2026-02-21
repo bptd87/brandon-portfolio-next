@@ -41,13 +41,28 @@ const processHTMLImages = (html: string): string => {
   const div = document.createElement('div');
   div.innerHTML = html;
 
-  // Find all img tags and proxy their src
+  // Find all img tags and proxy their source attrs
   const images = div.querySelectorAll('img');
   images.forEach(img => {
-    const src = img.getAttribute('src');
+    const src = img.getAttribute('src') || img.getAttribute('data-src') || img.getAttribute('data-lazy-src');
+    const srcset = img.getAttribute('srcset') || img.getAttribute('data-srcset');
+
     if (src) {
       img.setAttribute('src', proxyImageUrl(src, 1920));
+    } else if (srcset) {
+      // Safari-safe fallback: use first candidate URL as src if src is missing.
+      const firstCandidate = srcset
+        .split(',')
+        .map((entry) => entry.trim().split(/\s+/)[0])
+        .find(Boolean);
+      if (firstCandidate) {
+        img.setAttribute('src', proxyImageUrl(firstCandidate, 1920));
+      }
     }
+
+    // Prevent malformed legacy srcset strings from breaking image selection.
+    img.removeAttribute('srcset');
+    img.removeAttribute('sizes');
   });
 
   return div.innerHTML;
@@ -543,9 +558,7 @@ function ArticleDetailContent() {
                       src={proxyImageUrl(article.coverImageUrl, 1920)}
                       alt={article.title}
                       loading="eager"
-                      aspectRatio="16/9"
-                      objectFit="cover"
-                      className="cursor-pointer"
+                      className="w-full h-auto cursor-pointer"
                       onClick={() => openArticleLightboxAt("cover")}
                     />
                   </div>
@@ -779,9 +792,7 @@ function ArticleDetailContent() {
                                     src={proxyImageUrl(img.url, 1920)}
                                     alt={img.alt || img.caption || ''}
                                     loading="lazy"
-                                    aspectRatio="16/9"
-                                    objectFit="cover"
-                                    className="cursor-pointer hover:opacity-90 transition-opacity h-[400px]"
+                                    className="w-full h-auto cursor-pointer hover:opacity-90 transition-opacity"
                                     onClick={() => openArticleLightboxAt(`gallery-${index}-${imgIndex}`)}
                                   />
                                   {img.caption && (
@@ -833,7 +844,7 @@ function ArticleDetailContent() {
                           <div
                             key={index}
                             className="article-html-content [&_p]:mb-8 [&_p]:leading-[2] [&_p]:text-justify"
-                            dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(section.content) }}
+                            dangerouslySetInnerHTML={{ __html: processHTMLImages(decodeHTMLEntities(section.content)) }}
                           />
                         );
 
@@ -842,7 +853,7 @@ function ArticleDetailContent() {
                           <div
                             key={index}
                             className="[&_p]:mb-8 [&_p]:leading-[2] [&_p]:text-justify"
-                            dangerouslySetInnerHTML={{ __html: section.content }}
+                            dangerouslySetInnerHTML={{ __html: processHTMLImages(section.content) }}
                           />
                         );
 
@@ -1118,8 +1129,8 @@ function ArticleDetailContent() {
         .article-content .wp-block-gallery img,
         .article-content .blocks-gallery-grid img {
           width: 100% !important;
-          height: 400px !important;
-          object-fit: cover !important;
+          height: auto !important;
+          object-fit: contain !important;
           border-radius: 1rem !important;
           box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.3) !important;
           cursor: pointer !important;

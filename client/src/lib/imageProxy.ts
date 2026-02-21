@@ -13,7 +13,8 @@ export function proxyImageUrl(url: string, width?: number): string {
   // Check if this is an external image that needs proxying
   const needsProxy =
     url.includes('cloudfront.net') ||
-    url.includes('s3.amazonaws.com');
+    url.includes('s3.amazonaws.com') ||
+    url.includes('manuscdn.com');
 
   if (!needsProxy) {
     return url; // Return as-is for Cloudinary and other CDNs with CORS
