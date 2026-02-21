@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
+import StructuredData from "@/components/StructuredData";
 
 const infoPages = [
   { name: "Privacy", href: "/privacy" },
@@ -15,6 +16,13 @@ export default function Privacy() {
 
   return (
     <div className="min-h-screen bg-background">
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "Privacy", url: "https://www.brandonptdavis.com/privacy" },
+        ]}
+      />
       <Header />
 
       <main className="container py-24">

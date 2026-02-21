@@ -97,6 +97,14 @@ export default function CreativeStatement() {
         type="article"
       />
       <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "About", url: "https://www.brandonptdavis.com/about" },
+          { name: "Creative Statement", url: "https://www.brandonptdavis.com/creative-statement" },
+        ]}
+      />
+      <StructuredData
         type="Person"
         person={{
           name: "Brandon PT Davis",
@@ -111,6 +119,28 @@ export default function CreativeStatement() {
             "Historical Research",
             "Theatrical Collaboration"
           ]
+        }}
+      />
+      <StructuredData
+        type="CreativeWork"
+        creativeWork={{
+          name: "Creative Statement: Architecture, History & Narrative Storytelling",
+          description: "A scenic design creative statement by Brandon PT Davis, articulating process, collaboration, and story-led spatial design.",
+          url: "https://www.brandonptdavis.com/creative-statement",
+          creator: {
+            name: "Brandon PT Davis",
+            url: "https://www.brandonptdavis.com/about",
+          },
+          datePublished: "2026-01-01",
+          genre: "Scenic Design",
+          keywords: [
+            "creative statement",
+            "scenic design philosophy",
+            "theatre design process",
+            "story-led design",
+          ],
+          image: heroProject?.coverImageUrl || undefined,
+          about: "Scenic design philosophy and production collaboration",
         }}
       />
       <Header />

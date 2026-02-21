@@ -82,6 +82,13 @@ export function Contact() {
           ]
         }}
       />
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "Contact", url: "https://www.brandonptdavis.com/contact" },
+        ]}
+      />
       <Header />
       <div className="container relative z-10 pt-28 pb-24">
         <div className="absolute inset-0 pointer-events-none">

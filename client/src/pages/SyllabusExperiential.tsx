@@ -1,9 +1,50 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { SEO } from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 
 export default function SyllabusExperiential() {
   return (
     <>
+      <SEO
+        title="Experiential Design Syllabus"
+        description="Course syllabus for experiential design: themed entertainment, immersive environments, and commercial storytelling workflows."
+        url="https://www.brandonptdavis.com/syllabus/experiential-design"
+        type="article"
+      />
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "Syllabus", url: "https://www.brandonptdavis.com/syllabus/experiential-design" },
+          { name: "Experiential Design", url: "https://www.brandonptdavis.com/syllabus/experiential-design" },
+        ]}
+      />
+      <StructuredData
+        type="Course"
+        course={{
+          name: "Experiential Design",
+          description: "Course connecting theatrical design methods to themed entertainment, immersive environments, and brand storytelling spaces.",
+          url: "https://www.brandonptdavis.com/syllabus/experiential-design",
+          provider: {
+            name: "Brandon PT Davis",
+            url: "https://www.brandonptdavis.com/about",
+            type: "EducationalOrganization",
+          },
+          teaches: [
+            "Themed entertainment concept development",
+            "Guest flow and spatial storytelling",
+            "Client presentation workflow",
+            "Commercial design collaboration",
+          ],
+          inLanguage: "en-US",
+          keywords: [
+            "experiential design course",
+            "themed entertainment education",
+            "immersive design syllabus",
+          ],
+        }}
+      />
       <Header />
       
       <section className="min-h-screen bg-background pt-20 pb-20">

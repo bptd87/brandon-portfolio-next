@@ -195,8 +195,79 @@ interface SoftwareApplicationSchema {
   };
 }
 
+interface WebSiteSchema {
+  name: string;
+  url: string;
+  description?: string;
+  inLanguage?: string;
+  publisher?: {
+    name: string;
+    logo?: string;
+  };
+}
+
+interface ProfilePageSchema {
+  url: string;
+  name: string;
+  description?: string;
+  dateModified?: string;
+  primaryImageOfPage?: string;
+  mainEntity: PersonSchema;
+}
+
+interface EducationalOrganizationSchema {
+  name: string;
+  url?: string;
+  logo?: string;
+  description?: string;
+  sameAs?: string[];
+  address?: {
+    addressLocality?: string;
+    addressRegion?: string;
+    addressCountry?: string;
+  };
+}
+
+interface CourseSchema {
+  name: string;
+  description?: string;
+  url?: string;
+  provider: {
+    name: string;
+    url?: string;
+    type?: 'Organization' | 'EducationalOrganization';
+  };
+  courseCode?: string;
+  educationalCredentialAwarded?: string;
+  teaches?: string[];
+  inLanguage?: string;
+  keywords?: string[];
+}
+
+interface ItemListSchema {
+  name: string;
+  description?: string;
+  url?: string;
+  itemListElement: Array<{
+    name: string;
+    url: string;
+    position?: number;
+    datePublished?: string;
+    image?: string;
+  }>;
+}
+
+interface CollectionPageSchema {
+  name: string;
+  url: string;
+  description?: string;
+  about?: string;
+  primaryImageOfPage?: string;
+  mainEntity?: ItemListSchema;
+}
+
 interface StructuredDataProps {
-  type: 'Person' | 'Organization' | 'Both' | 'CreativeWork' | 'BreadcrumbList' | 'Article' | 'NewsArticle' | 'VideoObject' | 'FAQPage' | 'HowTo' | 'Event' | 'SoftwareApplication';
+  type: 'Person' | 'Organization' | 'Both' | 'CreativeWork' | 'BreadcrumbList' | 'Article' | 'NewsArticle' | 'VideoObject' | 'FAQPage' | 'HowTo' | 'Event' | 'SoftwareApplication' | 'WebSite' | 'ProfilePage' | 'ItemList' | 'CollectionPage' | 'EducationalOrganization' | 'Course';
   person?: PersonSchema;
   organization?: OrganizationSchema;
   creativeWork?: CreativeWorkSchema;
@@ -207,9 +278,15 @@ interface StructuredDataProps {
   howTo?: HowToSchema;
   event?: EventSchema;
   softwareApplication?: SoftwareApplicationSchema;
+  webSite?: WebSiteSchema;
+  profilePage?: ProfilePageSchema;
+  itemList?: ItemListSchema;
+  collectionPage?: CollectionPageSchema;
+  educationalOrganization?: EducationalOrganizationSchema;
+  course?: CourseSchema;
 }
 
-export default function StructuredData({ type, person, organization, creativeWork, breadcrumbs, article, videoObject, faqPage, howTo, event, softwareApplication }: StructuredDataProps) {
+export default function StructuredData({ type, person, organization, creativeWork, breadcrumbs, article, videoObject, faqPage, howTo, event, softwareApplication, webSite, profilePage, itemList, collectionPage, educationalOrganization, course }: StructuredDataProps) {
   const generatePersonSchema = (data: PersonSchema) => {
     const schema: any = {
       '@context': 'https://schema.org',
@@ -566,6 +643,142 @@ export default function StructuredData({ type, person, organization, creativeWor
         ratingCount: softwareApplication.aggregateRating.ratingCount,
       };
     }
+
+    schemas.push(schema);
+  }
+
+  if (type === 'WebSite' && webSite) {
+    const schema: any = {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: webSite.name,
+      url: webSite.url,
+    };
+
+    if (webSite.description) schema.description = webSite.description;
+    if (webSite.inLanguage) schema.inLanguage = webSite.inLanguage;
+    if (webSite.publisher) {
+      schema.publisher = {
+        '@type': 'Organization',
+        name: webSite.publisher.name,
+        ...(webSite.publisher.logo && {
+          logo: {
+            '@type': 'ImageObject',
+            url: webSite.publisher.logo,
+          },
+        }),
+      };
+    }
+
+    schemas.push(schema);
+  }
+
+  if (type === 'ProfilePage' && profilePage) {
+    const schema: any = {
+      '@context': 'https://schema.org',
+      '@type': 'ProfilePage',
+      url: profilePage.url,
+      name: profilePage.name,
+      mainEntity: generatePersonSchema(profilePage.mainEntity),
+    };
+
+    if (profilePage.description) schema.description = profilePage.description;
+    if (profilePage.dateModified) schema.dateModified = profilePage.dateModified;
+    if (profilePage.primaryImageOfPage) schema.primaryImageOfPage = profilePage.primaryImageOfPage;
+
+    schemas.push(schema);
+  }
+
+  if (type === 'ItemList' && itemList) {
+    const schema: any = {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: itemList.name,
+      itemListElement: itemList.itemListElement.map((item, index) => ({
+        '@type': 'ListItem',
+        position: item.position || index + 1,
+        url: item.url,
+        name: item.name,
+        ...(item.datePublished && { datePublished: item.datePublished }),
+        ...(item.image && { image: item.image }),
+      })),
+    };
+
+    if (itemList.description) schema.description = itemList.description;
+    if (itemList.url) schema.url = itemList.url;
+
+    schemas.push(schema);
+  }
+
+  if (type === 'CollectionPage' && collectionPage) {
+    const schema: any = {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: collectionPage.name,
+      url: collectionPage.url,
+    };
+
+    if (collectionPage.description) schema.description = collectionPage.description;
+    if (collectionPage.about) schema.about = collectionPage.about;
+    if (collectionPage.primaryImageOfPage) schema.primaryImageOfPage = collectionPage.primaryImageOfPage;
+    if (collectionPage.mainEntity) {
+      schema.mainEntity = {
+        '@type': 'ItemList',
+        name: collectionPage.mainEntity.name,
+        itemListElement: collectionPage.mainEntity.itemListElement.map((item, index) => ({
+          '@type': 'ListItem',
+          position: item.position || index + 1,
+          url: item.url,
+          name: item.name,
+          ...(item.datePublished && { datePublished: item.datePublished }),
+          ...(item.image && { image: item.image }),
+        })),
+      };
+    }
+
+    schemas.push(schema);
+  }
+
+  if (type === 'EducationalOrganization' && educationalOrganization) {
+    const schema: any = {
+      '@context': 'https://schema.org',
+      '@type': 'EducationalOrganization',
+      name: educationalOrganization.name,
+    };
+
+    if (educationalOrganization.url) schema.url = educationalOrganization.url;
+    if (educationalOrganization.logo) schema.logo = educationalOrganization.logo;
+    if (educationalOrganization.description) schema.description = educationalOrganization.description;
+    if (educationalOrganization.sameAs && educationalOrganization.sameAs.length > 0) schema.sameAs = educationalOrganization.sameAs;
+    if (educationalOrganization.address) {
+      schema.address = {
+        '@type': 'PostalAddress',
+        ...educationalOrganization.address,
+      };
+    }
+
+    schemas.push(schema);
+  }
+
+  if (type === 'Course' && course) {
+    const schema: any = {
+      '@context': 'https://schema.org',
+      '@type': 'Course',
+      name: course.name,
+      provider: {
+        '@type': course.provider.type || 'EducationalOrganization',
+        name: course.provider.name,
+        ...(course.provider.url && { url: course.provider.url }),
+      },
+    };
+
+    if (course.description) schema.description = course.description;
+    if (course.url) schema.url = course.url;
+    if (course.courseCode) schema.courseCode = course.courseCode;
+    if (course.educationalCredentialAwarded) schema.educationalCredentialAwarded = course.educationalCredentialAwarded;
+    if (course.teaches && course.teaches.length > 0) schema.teaches = course.teaches;
+    if (course.inLanguage) schema.inLanguage = course.inLanguage;
+    if (course.keywords && course.keywords.length > 0) schema.keywords = course.keywords.join(', ');
 
     schemas.push(schema);
   }

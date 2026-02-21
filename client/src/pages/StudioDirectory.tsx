@@ -5,6 +5,7 @@ import { useState, useMemo } from "react";
 import { trpc } from "@/lib/trpc";
 import { SEO } from "@/components/SEO";
 import { Input } from "@/components/ui/input";
+import StructuredData from "@/components/StructuredData";
 
 // Helper function to get favicon URL from domain
 function getFaviconUrl(url: string, size = 64) {
@@ -85,6 +86,50 @@ export default function StudioDirectory() {
         description="A curated collection of essential resources for scenic designers—industry organizations, software, suppliers, and research archives."
         keywords="scenic design resources, theatre suppliers, design software, theatrical organizations, scenic design community"
         type="website"
+        url="https://www.brandonptdavis.com/studio/directory"
+      />
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "Studio", url: "https://www.brandonptdavis.com/studio" },
+          { name: "Scenic Directory", url: "https://www.brandonptdavis.com/studio/directory" },
+        ]}
+      />
+      <StructuredData
+        type="CollectionPage"
+        collectionPage={{
+          name: "Scenic Directory",
+          url: "https://www.brandonptdavis.com/studio/directory",
+          description: "Curated scenic design resource directory for industry, software, modeling, and supplier links.",
+          about: "External resources for scenic designers and theatre production teams.",
+          mainEntity: {
+            name: "Directory Resources",
+            itemListElement: (resources || []).slice(0, 150).map((resource: any, index: number) => ({
+              position: index + 1,
+              name: resource.name,
+              url: resource.url,
+              image: resource.cover_image || undefined,
+            })),
+          },
+        }}
+      />
+      <StructuredData
+        type="ItemList"
+        itemList={{
+          name: "Scenic Directory Resource Links",
+          description: "Outbound links to scenic design resources, software, suppliers, and research references.",
+          url: "https://www.brandonptdavis.com/studio/directory",
+          itemListElement: (resources || [])
+            .filter((resource: any) => typeof resource.url === "string" && resource.url.startsWith("http"))
+            .slice(0, 200)
+            .map((resource: any, index: number) => ({
+              position: index + 1,
+              name: resource.name,
+              url: resource.url,
+              image: resource.cover_image || getFaviconUrl(resource.url, 64),
+            })),
+        }}
       />
 
       <Header />

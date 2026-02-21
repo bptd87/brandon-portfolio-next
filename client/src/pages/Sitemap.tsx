@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
+import StructuredData from "@/components/StructuredData";
 
 const infoPages = [
   { name: "Privacy", href: "/privacy" },
@@ -59,8 +60,33 @@ const sections = [
 ];
 
 export default function Sitemap() {
+  const allLinks = sections.flatMap((section) => section.links);
+
   return (
     <div className="min-h-screen bg-background">
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "Sitemap", url: "https://www.brandonptdavis.com/sitemap" },
+        ]}
+      />
+      <StructuredData
+        type="CollectionPage"
+        collectionPage={{
+          name: "Sitemap",
+          url: "https://www.brandonptdavis.com/sitemap",
+          description: "Complete navigation map of portfolio, about, news, articles, and studio pages.",
+          mainEntity: {
+            name: "Site Pages",
+            itemListElement: allLinks.map((link, index) => ({
+              position: index + 1,
+              name: link.name,
+              url: `https://www.brandonptdavis.com${link.href}`,
+            })),
+          },
+        }}
+      />
       <Header />
 
       <main className="container py-24">

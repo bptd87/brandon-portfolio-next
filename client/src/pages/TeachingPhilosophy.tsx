@@ -113,6 +113,14 @@ export default function TeachingPhilosophy() {
         type="article"
       />
       <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "About", url: "https://www.brandonptdavis.com/about" },
+          { name: "Teaching Philosophy", url: "https://www.brandonptdavis.com/teaching-philosophy" },
+        ]}
+      />
+      <StructuredData
         type="Person"
         person={{
           name: "Brandon PT Davis",
@@ -133,6 +141,44 @@ export default function TeachingPhilosophy() {
               url: "https://www.uci.edu"
             }
           ]
+        }}
+      />
+      <StructuredData
+        type="EducationalOrganization"
+        educationalOrganization={{
+          name: "University of California, Irvine",
+          url: "https://www.uci.edu",
+          description: "Institutional training context for Brandon PT Davis's scenic design education and mentorship approach.",
+          address: {
+            addressLocality: "Irvine",
+            addressRegion: "CA",
+            addressCountry: "US",
+          },
+        }}
+      />
+      <StructuredData
+        type="Course"
+        course={{
+          name: "Scenic Design Pedagogy and Professional Practice",
+          description: "A teaching framework for scenic design students combining visual storytelling, technical workflow, and professional collaboration.",
+          url: "https://www.brandonptdavis.com/teaching-philosophy",
+          provider: {
+            name: "Brandon PT Davis",
+            url: "https://www.brandonptdavis.com/about",
+            type: "EducationalOrganization",
+          },
+          teaches: [
+            "Scenic design process",
+            "Vectorworks workflow",
+            "Rendering and visualization",
+            "Professional collaboration",
+          ],
+          inLanguage: "en-US",
+          keywords: [
+            "scenic design education",
+            "theatre design pedagogy",
+            "vectorworks instruction",
+          ],
         }}
       />
       <Header />

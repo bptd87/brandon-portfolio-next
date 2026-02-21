@@ -492,7 +492,7 @@ export async function generateNewsRSS(baseUrl?: string): Promise<string> {
   <channel>
     <title>Brandon PT Davis - News</title>
     <link>${SITE_URL}/news</link>
-    <description>Latest news and updates from Brandon PT Davis, scenic and experiential designer</description>
+    <description>Latest news and updates from Brandon PT Davis, scenic designer</description>
     <language>en-us</language>
     <atom:link href="${SITE_URL}/news/rss.xml" rel="self" type="application/rss+xml" />`;
 

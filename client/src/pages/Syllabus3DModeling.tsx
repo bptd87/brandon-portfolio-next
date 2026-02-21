@@ -1,9 +1,52 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { SEO } from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 
 export default function Syllabus3DModeling() {
   return (
     <>
+      <SEO
+        title="THA 211 | 3D Modeling and Rendering Syllabus"
+        description="Course syllabus for THA 211: Vectorworks for theatrical design, covering 3D modeling, rendering, and drafting documentation."
+        url="https://www.brandonptdavis.com/syllabus/3d-modeling"
+        type="article"
+      />
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "Syllabus", url: "https://www.brandonptdavis.com/syllabus/3d-modeling" },
+          { name: "3D Modeling and Rendering", url: "https://www.brandonptdavis.com/syllabus/3d-modeling" },
+        ]}
+      />
+      <StructuredData
+        type="Course"
+        course={{
+          name: "THA 211: 3D Modeling and Rendering",
+          courseCode: "THA 211",
+          description: "Advanced CAD and 3D visualization course using Vectorworks and Twinmotion for theatrical design workflows.",
+          url: "https://www.brandonptdavis.com/syllabus/3d-modeling",
+          provider: {
+            name: "Brandon PT Davis",
+            url: "https://www.brandonptdavis.com/about",
+            type: "EducationalOrganization",
+          },
+          teaches: [
+            "3D scenic modeling in Vectorworks",
+            "Renderworks and Twinmotion visualization",
+            "Construction drawing generation",
+            "Layer and class management for collaboration",
+          ],
+          inLanguage: "en-US",
+          keywords: [
+            "Vectorworks course",
+            "scenic design training",
+            "theatrical drafting",
+            "rendering workflow",
+          ],
+        }}
+      />
       <Header />
       
       <section className="min-h-screen bg-background pt-20 pb-20">

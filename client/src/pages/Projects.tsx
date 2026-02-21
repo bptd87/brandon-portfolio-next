@@ -11,6 +11,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { CSSProperties, MouseEvent } from "react";
 import { PortfolioGridSkeleton } from "@/components/SkeletonLoaders";
 import { AnimatedSection } from "@/components/AnimatedSection";
+import StructuredData from "@/components/StructuredData";
 
 export default function Projects() {
   const [, setLocation] = useLocation();
@@ -120,6 +121,63 @@ export default function Projects() {
         description={`Explore ${pageTitle.toLowerCase()} projects by Brandon PT Davis. ${pageSubtitle}.`}
         image={projects?.[0]?.coverImageUrl || undefined}
         url="https://www.brandonptdavis.com/projects"
+      />
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "Scenic Design Portfolio", url: "https://www.brandonptdavis.com/projects" },
+        ]}
+      />
+      <StructuredData
+        type="CollectionPage"
+        collectionPage={{
+          name: "Scenic Design Portfolio",
+          url: "https://www.brandonptdavis.com/projects",
+          description: "Portfolio archive of scenic design productions by Brandon PT Davis.",
+          about: "Scenic design projects in regional theatre, summer stock, and academic production.",
+          primaryImageOfPage: projects?.[0]?.coverImageUrl || undefined,
+          mainEntity: {
+            name: "Scenic Design Projects",
+            itemListElement: (filteredProjects || []).slice(0, 40).map((project, index) => ({
+              position: index + 1,
+              name: project.title,
+              url: `https://www.brandonptdavis.com${getProjectPath(project)}`,
+              datePublished: project.year ? `${project.year}-01-01` : undefined,
+              image: project.coverImageUrl || undefined,
+            })),
+          },
+        }}
+      />
+      <StructuredData
+        type="CreativeWork"
+        creativeWork={{
+          name: "Scenic Design Portfolio",
+          description: "A curated body of scenic design productions by Brandon PT Davis across regional theatre, summer stock, and academic performance.",
+          url: "https://www.brandonptdavis.com/projects",
+          creator: {
+            name: "Brandon PT Davis",
+            url: "https://www.brandonptdavis.com/about",
+          },
+          genre: "Scenic Design",
+          about: "Professional scenic design portfolio",
+          keywords: [
+            "scenic design portfolio",
+            "theatre set design",
+            "USA 829 scenic designer",
+            "Brandon PT Davis",
+          ],
+          image: (filteredProjects || [])
+            .slice(0, 12)
+            .map((project) => project.coverImageUrl)
+            .filter((url): url is string => Boolean(url)),
+          workExample: (filteredProjects || []).slice(0, 20).map((project) => ({
+            type: "ImageObject" as const,
+            contentUrl: project.coverImageUrl || "",
+            name: project.title,
+            caption: `${project.title} scenic design by Brandon PT Davis`,
+          })).filter((item) => item.contentUrl),
+        }}
       />
       <Header />
 

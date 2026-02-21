@@ -97,6 +97,13 @@ export default function FAQ() {
           })),
         }}
       />
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "FAQ", url: "https://www.brandonptdavis.com/faq" },
+        ]}
+      />
       <Header />
 
       <main className="container py-24">

@@ -1,4 +1,5 @@
 import { SEO } from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AboutNav from "@/components/AboutNav";
@@ -62,6 +63,13 @@ export default function Collaborators() {
   );
 
   const visibleRoles = activeFilter === "all" ? roleOrder : [activeFilter];
+  const peopleCollaborators = useMemo(
+    () => (allCollaborators || []).filter((c) =>
+      c.role !== "theatre_company" && c.role !== "partner_company"
+    ),
+    [allCollaborators]
+  );
+
   const collaboratorStats = useMemo(() => {
     const list = allCollaborators || [];
     const companies = list.filter((c) => c.role === "theatre_company" || c.role === "partner_company").length;
@@ -74,8 +82,57 @@ export default function Collaborators() {
     <>
       <SEO
         title="Collaborators"
-        description="Directors, designers, theatre companies, and creative partners who have collaborated with Brandon PT Davis on scenic and experiential design projects."
+        description="Directors, designers, theatre companies, and creative partners who have collaborated with Brandon PT Davis on scenic design productions."
         url="https://www.brandonptdavis.com/about/collaborators"
+      />
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "About", url: "https://www.brandonptdavis.com/about" },
+          { name: "Collaborators", url: "https://www.brandonptdavis.com/about/collaborators" },
+        ]}
+      />
+      <StructuredData
+        type="CollectionPage"
+        collectionPage={{
+          name: "Collaborators",
+          url: "https://www.brandonptdavis.com/about/collaborators",
+          description: "Creative collaborators across scenic design productions.",
+          about: "Directors, designers, and theatre companies collaborating with Brandon PT Davis.",
+          mainEntity: {
+            name: "Collaborator Directory",
+            itemListElement: (allCollaborators || []).slice(0, 100).map((collab, index) => ({
+              position: index + 1,
+              name: collab.name,
+              url: collab.website || collab.portfolioUrl || collab.instagramUrl || "https://www.brandonptdavis.com/about/collaborators",
+            })),
+          },
+        }}
+      />
+      <StructuredData
+        type="CreativeWork"
+        creativeWork={{
+          name: "Scenic Design Collaborations",
+          description: "Ongoing creative collaborations with directors, designers, and production partners across scenic design productions.",
+          url: "https://www.brandonptdavis.com/about/collaborators",
+          creator: {
+            name: "Brandon PT Davis",
+            url: "https://www.brandonptdavis.com/about",
+          },
+          genre: "Scenic Design Collaboration",
+          about: "Collaborative theatre production network",
+          keywords: [
+            "scenic design collaborators",
+            "theatre directors",
+            "design team partnerships",
+          ],
+          contributor: peopleCollaborators.slice(0, 75).map((collab) => ({
+            type: "Person" as const,
+            name: collab.name,
+            roleName: collab.role ? roleLabels[collab.role as RoleFilter] || collab.role : undefined,
+          })),
+        }}
       />
       <div className="min-h-screen flex flex-col bg-background [background-image:radial-gradient(circle_at_14%_10%,rgba(255,87,34,0.08),transparent_34%),radial-gradient(circle_at_88%_18%,rgba(0,188,212,0.08),transparent_30%)]">
         <Header />

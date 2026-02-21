@@ -70,6 +70,34 @@ export default function StudioApps() {
         description="Web-based tools for scenic designers: scale calculators, dimension references, paint mixers, and design resources. Professional apps for theatrical designers."
         keywords="scenic design calculator, architecture scale converter, paint mixing calculator, Rosco paint, design history timeline, theatrical design tools, scenic design apps, web-based design tools"
         type="website"
+        url="https://www.brandonptdavis.com/studio/apps"
+      />
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "Studio", url: "https://www.brandonptdavis.com/studio" },
+          { name: "Apps", url: "https://www.brandonptdavis.com/studio/apps" },
+        ]}
+      />
+      <StructuredData
+        type="CollectionPage"
+        collectionPage={{
+          name: "Scenic Design Tools",
+          url: "https://www.brandonptdavis.com/studio/apps",
+          description: "Browser-based scenic design calculators, references, and utility apps.",
+          about: "Studio applications for scenic design workflow.",
+          primaryImageOfPage: "https://www.brandonptdavis.com/assets/studio/scale-calculator.webp",
+          mainEntity: {
+            name: "Studio Apps",
+            itemListElement: apps.map((app, index) => ({
+              position: index + 1,
+              name: app.title,
+              url: `https://www.brandonptdavis.com${app.href}`,
+              image: `https://www.brandonptdavis.com${app.image}`,
+            })),
+          },
+        }}
       />
       {/* SoftwareApplication schemas for key apps */}
       <StructuredData

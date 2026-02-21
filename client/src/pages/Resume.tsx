@@ -24,6 +24,13 @@ export default function Resume() {
         url="https://www.brandonptdavis.com/resume"
       />
       <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "Resume", url: "https://www.brandonptdavis.com/resume" },
+        ]}
+      />
+      <StructuredData
         type="Person"
         person={{
           name: "Brandon PT Davis",

@@ -7,6 +7,7 @@ import { PlayCircle, Clock, TrendingUp, ArrowRight, Search } from "lucide-react"
 import { trpc } from "@/lib/trpc";
 import { Link } from "wouter";
 import { SEO } from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 
 export default function StudioTutorials() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -50,6 +51,59 @@ export default function StudioTutorials() {
         description="Free Vectorworks tutorials for scenic designers. Step-by-step video lessons covering 2D drafting, 3D modeling, rendering, and advanced techniques for theatrical design."
         keywords="Vectorworks tutorials, scenic design software, 3D modeling theatre, rendering tutorials, CAD for theatre, Vectorworks training, theatrical design software"
         type="website"
+        url="https://www.brandonptdavis.com/studio/tutorials"
+      />
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "Studio", url: "https://www.brandonptdavis.com/studio" },
+          { name: "Tutorials", url: "https://www.brandonptdavis.com/studio/tutorials" },
+        ]}
+      />
+      <StructuredData
+        type="CollectionPage"
+        collectionPage={{
+          name: "Vectorworks Tutorials",
+          url: "https://www.brandonptdavis.com/studio/tutorials",
+          description: "Structured tutorial paths for scenic designers using Vectorworks and rendering workflows.",
+          about: "Tutorial videos and walkthroughs by Brandon PT Davis.",
+          primaryImageOfPage: tutorials?.[0]?.cover_image || undefined,
+          mainEntity: {
+            name: "Tutorials",
+            itemListElement: tutorials.slice(0, 60).map((tutorial: any, index: number) => ({
+              position: index + 1,
+              name: tutorial.title,
+              url: `https://www.brandonptdavis.com/studio/tutorials/${tutorial.slug || tutorial.id}`,
+              image: tutorial.cover_image || undefined,
+            })),
+          },
+        }}
+      />
+      <StructuredData
+        type="Course"
+        course={{
+          name: "Vectorworks Tutorials for Scenic Designers",
+          description: "A structured tutorial library covering drafting, modeling, rendering, and production-ready documentation workflows.",
+          url: "https://www.brandonptdavis.com/studio/tutorials",
+          provider: {
+            name: "Brandon PT Davis",
+            url: "https://www.brandonptdavis.com/about",
+            type: "EducationalOrganization",
+          },
+          teaches: [
+            "2D drafting workflows",
+            "3D scenic modeling",
+            "Rendering and visualization",
+            "Production documentation",
+          ],
+          inLanguage: "en-US",
+          keywords: [
+            "vectorworks tutorials",
+            "scenic design education",
+            "theatre drafting training",
+          ],
+        }}
       />
       <Header />
 

@@ -130,6 +130,25 @@ export default function Home() {
           ],
         }}
       />
+      <StructuredData
+        type="WebSite"
+        webSite={{
+          name: "Brandon PT Davis",
+          url: baseUrl,
+          description: "Professional scenic designer creating story-driven theatrical environments.",
+          inLanguage: "en-US",
+          publisher: {
+            name: "Brandon PT Davis Design",
+            logo: "https://www.brandonptdavis.com/android-chrome-512x512.png",
+          },
+        }}
+      />
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+        ]}
+      />
       <SEO
         title="Brandon PT Davis | Scenic Designer"
         description="Union scenic designer in Southern California creating story-driven environments for regional theatre, summer stock, and academic production."

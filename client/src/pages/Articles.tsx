@@ -10,6 +10,7 @@ import { getCategoryColor } from "@/lib/categoryColors";
 import { Search } from "lucide-react";
 import { Link } from "wouter";
 import { SEO } from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 
 // Decode HTML entities
 const decodeHTMLEntities = (text: string): string => {
@@ -82,9 +83,36 @@ function ArticlesContent() {
     <div className="min-h-screen bg-background [background-image:radial-gradient(circle_at_12%_9%,rgba(255,87,34,0.10),transparent_34%),radial-gradient(circle_at_85%_16%,rgba(33,150,243,0.08),transparent_34%)]">
       <SEO
         title="Scenic Insights | Articles by Brandon PT Davis"
-        description="Articles on design philosophy, process, and the craft of scenic and experiential design."
+        description="Articles on scenic design philosophy, process, and production craft by Brandon PT Davis."
         image={articles?.[0]?.coverImageUrl || undefined}
         url="https://www.brandonptdavis.com/articles"
+      />
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "Articles", url: "https://www.brandonptdavis.com/articles" },
+        ]}
+      />
+      <StructuredData
+        type="CollectionPage"
+        collectionPage={{
+          name: "Scenic Insights",
+          url: "https://www.brandonptdavis.com/articles",
+          description: "Article archive covering scenic design practice, production strategy, and theatre process.",
+          about: "Scenic design writing and production insights by Brandon PT Davis.",
+          primaryImageOfPage: articles?.[0]?.coverImageUrl || undefined,
+          mainEntity: {
+            name: "Articles",
+            itemListElement: (articles || []).slice(0, 24).map((article, index) => ({
+              position: index + 1,
+              name: decodeHTMLEntities(article.title),
+              url: `https://www.brandonptdavis.com/articles/${article.slug}`,
+              datePublished: article.publishedAt || article.createdAt || undefined,
+              image: article.coverImageUrl || undefined,
+            })),
+          },
+        }}
       />
       <Header />
 

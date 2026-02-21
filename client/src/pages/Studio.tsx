@@ -7,6 +7,7 @@ import { ArrowRight, BookOpen, Wrench, Compass, Play, Calendar } from "lucide-re
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { SEO } from "@/components/SEO";
 import { trpc } from "@/lib/trpc";
+import StructuredData from "@/components/StructuredData";
 
 const featuredTools = [
   {
@@ -44,6 +45,33 @@ export default function Studio() {
         keywords="scenic design education, Vectorworks tutorials, scenic design tools, theatre design resources, stage design learning"
         type="website"
         url="https://www.brandonptdavis.com/studio"
+      />
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "Studio", url: "https://www.brandonptdavis.com/studio" },
+        ]}
+      />
+      <StructuredData
+        type="CollectionPage"
+        collectionPage={{
+          name: "Scenic Design Studio",
+          url: "https://www.brandonptdavis.com/studio",
+          description: "Studio hub for scenic design tools, tutorials, and articles.",
+          about: "Scenic design education and workflow resources by Brandon PT Davis.",
+          primaryImageOfPage: articles?.[0]?.coverImageUrl || undefined,
+          mainEntity: {
+            name: "Studio Articles",
+            itemListElement: (articles || []).slice(0, 12).map((article, index) => ({
+              position: index + 1,
+              name: article.title,
+              url: `https://www.brandonptdavis.com/articles/${article.slug}`,
+              datePublished: article.publishedAt || article.createdAt || undefined,
+              image: article.coverImageUrl || undefined,
+            })),
+          },
+        }}
       />
       <Header />
 

@@ -13,6 +13,7 @@ import { Calendar, MapPin, ArrowRight, Search, Rss } from "lucide-react";
 import { Link } from "wouter";
 import { NewsListSkeleton } from "@/components/SkeletonLoaders";
 import { SEO } from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 
 export default function News() {
   return (
@@ -92,6 +93,38 @@ function NewsContent() {
         keywords="scenic design news, production announcements, theatre design updates, Brandon PT Davis news, regional theatre productions, scenic designer announcements"
         image={featuredNews?.coverImageUrl || undefined}
         url="https://www.brandonptdavis.com/news"
+      />
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "News", url: "https://www.brandonptdavis.com/news" },
+        ]}
+      />
+      <StructuredData
+        type="CollectionPage"
+        collectionPage={{
+          name: "Production News",
+          url: "https://www.brandonptdavis.com/news",
+          description: "Production updates, press coverage, and milestones from scenic design projects.",
+          about: "Scenic design news and press updates by Brandon PT Davis.",
+          primaryImageOfPage: featuredNews?.coverImageUrl || undefined,
+          mainEntity: {
+            name: "News Stories",
+            itemListElement: filteredNews.slice(0, 24).map((item, index) => ({
+              position: index + 1,
+              name: item.title,
+              url: `https://www.brandonptdavis.com/news/${item.slug}`,
+              datePublished: (() => {
+                const raw = item.date ?? item.publishedAt ?? item.createdAt;
+                if (!raw) return undefined;
+                const parsed = new Date(raw);
+                return Number.isNaN(parsed.getTime()) ? undefined : parsed.toISOString();
+              })(),
+              image: item.coverImageUrl || undefined,
+            })),
+          },
+        }}
       />
       <Header />
 

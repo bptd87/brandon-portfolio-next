@@ -49,7 +49,7 @@ export default function About() {
     },
     {
       title: "Full Portfolio & Credits",
-      description: "Resume, credits across 130+ productions, and work in theatre, experiential design, and immersive environments.",
+      description: "Resume, credits across 130+ productions, and work in theatre and immersive environments.",
       icon: FileText,
       href: "/resume",
       color: "from-orange-500/10 to-pink-500/10",
@@ -126,6 +126,36 @@ export default function About() {
             "Scenic Design Education",
           ],
         }}
+      />
+      <StructuredData
+        type="ProfilePage"
+        profilePage={{
+          url: "https://www.brandonptdavis.com/about",
+          name: "About Brandon PT Davis",
+          description: "Profile of Brandon PT Davis, scenic designer and USA 829 member based in Southern California.",
+          primaryImageOfPage: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/profile-headshot.webp",
+          mainEntity: {
+            name: "Brandon PT Davis",
+            jobTitle: "Scenic Designer",
+            url: "https://www.brandonptdavis.com/about",
+            image: "https://www.brandonptdavis.com/android-chrome-512x512.png",
+            description: "Scenic designer and conceptual artist with 130+ production credits across regional theatre and academic stages.",
+            sameAs: [
+              "https://www.instagram.com/brandonptdavis",
+              "https://www.linkedin.com/in/brandonptdavis",
+              "https://www.youtube.com/@BrandonPTDavisDesign",
+              "https://www.facebook.com/BrandonPTDavisA",
+              "https://www.usa829.org/Member-Profile/MemberID/15357",
+            ],
+          },
+        }}
+      />
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "About", url: "https://www.brandonptdavis.com/about" },
+        ]}
       />
       <Header />
       <AboutNav />
