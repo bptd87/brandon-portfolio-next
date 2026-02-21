@@ -957,9 +957,9 @@ function ArticleDetailContent() {
                   </div>
                   <div className="flex-1">
                     <h3 className="text-2xl font-['Playfair_Display'] italic mb-2">Brandon PT Davis</h3>
-                    <p className="text-sm text-muted-foreground mb-4 uppercase tracking-wider">Scenic & Experiential Designer</p>
+                    <p className="text-sm text-muted-foreground mb-4 uppercase tracking-wider">Scenic Designer</p>
                     <p className="text-foreground/80 leading-relaxed mb-6">
-                      Brandon PT Davis is a Scenic and Experiential Designer based in Los Angeles.
+                      Brandon PT Davis is a scenic designer based in Los Angeles.
                       His work explores the intersection of physical space, digital technology, and narrative storytelling.
                     </p>
 

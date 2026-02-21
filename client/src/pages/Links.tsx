@@ -28,7 +28,7 @@ interface BioData {
 export default function Links() {
   const [bioData] = useState<BioData>({
     name: 'BRANDON PT DAVIS',
-    tagline: 'Scenic & Experiential Designer',
+    tagline: 'Scenic Designer',
     profileImage: '/assets/studio/profile-image.jpeg',
   });
 
