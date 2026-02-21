@@ -172,7 +172,7 @@ export async function generateMainSitemap(baseUrl?: string): Promise<string> {
   });
 
   // Individual news items
-  const newsItems = await db.getAllNews();
+  const newsItems = await db.getAllNews({ status: 'published' });
   for (const news of newsItems) {
     urls.push({
       loc: `${SITE_URL}/news/${news.slug}`,
@@ -475,8 +475,12 @@ export async function generateArticlesRSS(baseUrl?: string): Promise<string> {
  */
 export async function generateNewsRSS(baseUrl?: string): Promise<string> {
   const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://brandon-portfolio-v2.manus.space';
-  const newsItems = await db.getAllNews();
+  const newsItems = await db.getAllNews({ status: 'published' });
   const publishedNews = newsItems.filter(n => n.status === 'published');
+  publishedNews.sort((a, b) =>
+    new Date(b.publishedAt || b.date || b.createdAt).getTime() -
+    new Date(a.publishedAt || a.date || a.createdAt).getTime()
+  );
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">

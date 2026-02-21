@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Loader2, Upload, X, Image } from "lucide-react";
+import { ArrowDown, ArrowUp, Loader2, Plus, X } from "lucide-react";
 import { toast } from "sonner";
 
 interface NewsFormProps {
@@ -37,11 +37,21 @@ import { uploadImage as uploadToStorage } from "@/utils/storageUtils";
 
 export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
   const [activeTab, setActiveTab] = useState("basic");
+  const defaultRelatedLinks: Array<{
+    label: string;
+    url: string;
+    linkType: "source" | "review" | "tickets" | "press" | "related";
+  }> = [];
+
   const [formData, setFormData] = useState({
     title: "",
     slug: "",
+    subtitle: "",
     excerpt: "",
     location: "",
+    externalLink: "",
+    layoutVariant: "feature" as "feature" | "journal" | "bulletin",
+    relatedLinks: defaultRelatedLinks,
     date: new Date().toISOString().split('T')[0],
     categoryId: undefined as number | undefined,
     status: "draft" as "draft" | "published" | "archived",
@@ -94,8 +104,18 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
       setFormData({
         title: newsData.title || "",
         slug: newsData.slug || "",
+        subtitle: newsData.subtitle || "",
         excerpt: newsData.excerpt || "",
         location: newsData.location || "",
+        externalLink: newsData.externalLink || "",
+        layoutVariant: newsData.layoutVariant || "feature",
+        relatedLinks: Array.isArray(newsData.relatedLinks)
+          ? newsData.relatedLinks.map((link: any) => ({
+              label: link.label || "",
+              url: link.url || "",
+              linkType: link.linkType || "related",
+            }))
+          : defaultRelatedLinks,
         date: newsData.date ? new Date(newsData.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
         categoryId: newsData.categoryId ?? undefined,
         status: newsData.status || "draft",
@@ -149,9 +169,25 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    const normalizedRelatedLinks = formData.relatedLinks
+      .map((link) => ({
+        label: link.label.trim(),
+        url: link.url.trim(),
+        linkType: link.linkType,
+      }))
+      .filter((link) => link.label || link.url);
+
+    const hasInvalidRelatedLink = normalizedRelatedLinks.some((link) => !link.label || !link.url);
+    if (hasInvalidRelatedLink) {
+      toast.error("Each related link needs both a label and a URL.");
+      return;
+    }
+
     const newsData = {
       ...formData,
       date: new Date(formData.date),
+      externalLink: formData.externalLink || undefined,
+      relatedLinks: normalizedRelatedLinks.map((link, index) => ({ ...link, sortOrder: index })),
       coverImageUrl: coverImage?.url,
       coverImageKey: coverImage?.key,
     };
@@ -166,6 +202,44 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
   // Block manipulation functions
   const handleBlocksChange = (blocks: any[]) => {
     setFormData(prev => ({ ...prev, blocks }));
+  };
+
+  const addRelatedLink = () => {
+    setFormData((prev) => ({
+      ...prev,
+      relatedLinks: [...prev.relatedLinks, { label: "", url: "", linkType: "related" }],
+    }));
+  };
+
+  const updateRelatedLink = (
+    index: number,
+    field: "label" | "url" | "linkType",
+    value: string
+  ) => {
+    setFormData((prev) => {
+      const next = [...prev.relatedLinks];
+      const item = next[index];
+      if (!item) return prev;
+      next[index] = { ...item, [field]: value };
+      return { ...prev, relatedLinks: next };
+    });
+  };
+
+  const removeRelatedLink = (index: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      relatedLinks: prev.relatedLinks.filter((_, idx) => idx !== index),
+    }));
+  };
+
+  const moveRelatedLink = (index: number, direction: "up" | "down") => {
+    setFormData((prev) => {
+      const next = [...prev.relatedLinks];
+      const swapWith = direction === "up" ? index - 1 : index + 1;
+      if (swapWith < 0 || swapWith >= next.length) return prev;
+      [next[index], next[swapWith]] = [next[swapWith], next[index]];
+      return { ...prev, relatedLinks: next };
+    });
   };
 
   const isSubmitting = createNews.isPending || updateNews.isPending;
@@ -258,6 +332,16 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
                   />
                 </div>
 
+                <div className="col-span-2">
+                  <Label htmlFor="subtitle">Subtitle</Label>
+                  <Input
+                    id="subtitle"
+                    value={formData.subtitle}
+                    onChange={(e) => setFormData(prev => ({ ...prev, subtitle: e.target.value }))}
+                    placeholder="Optional subheading shown on detail page"
+                  />
+                </div>
+
                 <div>
                   <Label htmlFor="location">Location</Label>
                   <Input
@@ -313,6 +397,125 @@ export function NewsForm({ news, onClose, onSuccess }: NewsFormProps) {
                       <SelectItem value="archived">Archived</SelectItem>
                     </SelectContent>
                   </Select>
+                </div>
+
+                <div className="col-span-2">
+                  <Label htmlFor="externalLink">Primary External Link</Label>
+                  <Input
+                    id="externalLink"
+                    type="url"
+                    value={formData.externalLink}
+                    onChange={(e) => setFormData(prev => ({ ...prev, externalLink: e.target.value }))}
+                    placeholder="https://..."
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="layoutVariant">Layout Variant</Label>
+                  <Select
+                    value={formData.layoutVariant}
+                    onValueChange={(value: any) => setFormData(prev => ({ ...prev, layoutVariant: value }))}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="feature">Feature</SelectItem>
+                      <SelectItem value="journal">Journal</SelectItem>
+                      <SelectItem value="bulletin">Bulletin</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="col-span-2 space-y-3 rounded-lg border p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <Label>Related Links</Label>
+                      <p className="text-xs text-muted-foreground">
+                        Add source or press links shown on the news detail page.
+                      </p>
+                    </div>
+                    <Button type="button" variant="outline" size="sm" onClick={addRelatedLink}>
+                      <Plus className="mr-1 h-4 w-4" />
+                      Add Link
+                    </Button>
+                  </div>
+
+                  {formData.relatedLinks.length === 0 ? (
+                    <p className="text-sm text-muted-foreground">No related links added.</p>
+                  ) : (
+                    <div className="space-y-2">
+                      {formData.relatedLinks.map((link, index) => (
+                        <div
+                          key={`related-link-${index}`}
+                          className="grid grid-cols-12 gap-2 rounded-md border p-2"
+                        >
+                          <div className="col-span-3">
+                            <Input
+                              value={link.label}
+                              onChange={(e) => updateRelatedLink(index, "label", e.target.value)}
+                              placeholder="Label"
+                            />
+                          </div>
+                          <div className="col-span-5">
+                            <Input
+                              value={link.url}
+                              onChange={(e) => updateRelatedLink(index, "url", e.target.value)}
+                              placeholder="https://example.com"
+                              type="url"
+                            />
+                          </div>
+                          <div className="col-span-2">
+                            <Select
+                              value={link.linkType}
+                              onValueChange={(value: "source" | "review" | "tickets" | "press" | "related") =>
+                                updateRelatedLink(index, "linkType", value)
+                              }
+                            >
+                              <SelectTrigger>
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="source">Source</SelectItem>
+                                <SelectItem value="review">Review</SelectItem>
+                                <SelectItem value="tickets">Tickets</SelectItem>
+                                <SelectItem value="press">Press</SelectItem>
+                                <SelectItem value="related">Related</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="col-span-2 flex items-center justify-end gap-1">
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => moveRelatedLink(index, "up")}
+                              disabled={index === 0}
+                            >
+                              <ArrowUp className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => moveRelatedLink(index, "down")}
+                              disabled={index === formData.relatedLinks.length - 1}
+                            >
+                              <ArrowDown className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => removeRelatedLink(index)}
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div className="col-span-2 flex items-center space-x-2">

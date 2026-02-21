@@ -91,11 +91,15 @@ export interface News {
   id: number;
   title: string;
   slug: string;
+  subtitle?: string | null;
   excerpt: string | null;
   content: string | null;
   categoryId: number | null;
   coverImageUrl: string | null;
   coverImageKey?: string | null;
+  coverImageAltText?: string | null;
+  coverImageFocalPoint?: { x: number; y: number } | null;
+  layoutVariant?: "feature" | "journal" | "bulletin" | null;
   location: string | null;
   date: Date | null;
   blocks: any;
@@ -108,6 +112,13 @@ export interface News {
   updatedAt: Date;
   publishedAt: Date | null;
   externalLink: string | null;
+  relatedLinks?: Array<{
+    id?: number;
+    label: string;
+    url: string;
+    linkType?: "source" | "review" | "tickets" | "press" | "related";
+    sortOrder?: number;
+  }> | null;
   tags: string | null;
 }
 

@@ -161,7 +161,7 @@ export function BlockBuilder({
     }
   };
 
-  const blockTypeButtons = [
+  const baseButtons = [
     { type: 'paragraph' as BlockType, label: type === 'news' ? 'Text' : 'Paragraph', icon: Type },
     { type: 'heading' as BlockType, label: type === 'news' ? 'Header' : 'Heading', icon: Type },
     { type: 'image' as BlockType, label: 'Image', icon: ImageIcon },
@@ -170,11 +170,15 @@ export function BlockBuilder({
     { type: 'list' as BlockType, label: 'List', icon: List },
     { type: 'quote' as BlockType, label: 'Quote', icon: MessageSquareQuote },
     { type: 'faq' as BlockType, label: 'FAQ', icon: HelpCircle },
+    { type: 'update_note' as BlockType, label: 'Update Note', icon: FileText },
     { type: 'creative_team' as BlockType, label: 'Creative Team', icon: FileText },
     { type: 'accordion' as BlockType, label: 'Accordion', icon: ChevronDown },
     { type: 'html' as BlockType, label: 'HTML', icon: Code },
-    { type: 'ai_prompt' as BlockType, label: 'AI Prompt', icon: Sparkles },
   ];
+
+  const blockTypeButtons = type === 'news'
+    ? baseButtons
+    : [...baseButtons, { type: 'ai_prompt' as BlockType, label: 'AI Prompt', icon: Sparkles }];
 
   return (
     <div className="space-y-2 w-full">

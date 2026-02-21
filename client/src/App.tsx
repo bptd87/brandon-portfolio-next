@@ -47,7 +47,6 @@ const AdminScenicDirectoryEdit = lazy(() => import("./pages/admin/AdminScenicDir
 const AdminCollaborators = lazy(() => import("./pages/admin/AdminCollaborators"));
 const AdminCollaboratorEdit = lazy(() => import("./pages/admin/AdminCollaboratorEdit"));
 const AdminRenderingGallery = lazy(() => import("./pages/admin/AdminRenderingGallery"));
-const AdminExperientialGallery = lazy(() => import("./pages/admin/AdminExperientialGallery"));
 const AdminProcessGallery = lazy(() => import("./pages/admin/AdminProcessGallery"));
 const AuthDebug = lazy(() => import("./pages/AuthDebug"));
 

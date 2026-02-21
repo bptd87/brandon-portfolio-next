@@ -517,8 +517,14 @@ export const appRouter = router({
         featured: z.boolean().optional(),
         categoryId: z.number().optional(),
       }).optional())
-      .query(async ({ input }) => {
-        return await db.getAllNews(input);
+      .query(async ({ input, ctx }) => {
+        // Public callers default to published-only.
+        // Admin callers can see all statuses unless explicitly filtered.
+        const filters = (!ctx.user || ctx.user.role !== 'admin')
+          ? { ...input, status: input?.status ?? 'published' as const }
+          : input;
+
+        return await db.getAllNews(filters);
       }),
 
     getById: publicProcedure
@@ -527,18 +533,27 @@ export const appRouter = router({
         const newsItem = await db.getNewsById(input.id);
         if (!newsItem) return null;
 
-        const tags = await db.getNewsTags(input.id);
-        return { ...newsItem, tags };
+        const [tags, relatedLinks] = await Promise.all([
+          db.getNewsTags(input.id),
+          db.getNewsRelatedLinks(input.id),
+        ]);
+        return { ...newsItem, tags, relatedLinks };
       }),
 
     getBySlug: publicProcedure
       .input(z.object({ slug: z.string().min(1).max(255).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/) }))
-      .query(async ({ input }) => {
+      .query(async ({ input, ctx }) => {
         const newsItem = await db.getNewsBySlug(input.slug);
         if (!newsItem) return null;
+        if ((!ctx.user || ctx.user.role !== 'admin') && newsItem.status !== 'published') {
+          return null;
+        }
 
-        const tags = await db.getNewsTags(newsItem.id);
-        return { ...newsItem, tags };
+        const [tags, relatedLinks] = await Promise.all([
+          db.getNewsTags(newsItem.id),
+          db.getNewsRelatedLinks(newsItem.id),
+        ]);
+        return { ...newsItem, tags, relatedLinks };
       }),
 
     getImages: publicProcedure
@@ -552,11 +567,22 @@ export const appRouter = router({
       .input(z.object({
         title: z.string().min(1).max(255),
         slug: z.string().min(1).max(255),
+        subtitle: z.string().max(255).optional(),
         excerpt: z.string().min(1),
         categoryId: z.number().optional(),
         coverImageUrl: z.string().optional(),
         coverImageKey: z.string().optional(),
+        coverImageAltText: z.string().max(255).optional(),
+        coverImageFocalPoint: z.object({ x: z.number(), y: z.number() }).optional(),
+        layoutVariant: z.enum(['feature', 'journal', 'bulletin']).optional(),
         location: z.string().max(255).optional(),
+        externalLink: z.string().url().optional(),
+        relatedLinks: z.array(z.object({
+          label: z.string().min(1).max(120),
+          url: z.string().url(),
+          linkType: z.enum(['source', 'review', 'tickets', 'press', 'related']).optional(),
+          sortOrder: z.number().optional(),
+        })).optional(),
         date: z.date(),
         blocks: z.any().optional(),
         status: z.enum(['draft', 'published', 'archived']).default('draft'),
@@ -567,7 +593,7 @@ export const appRouter = router({
         tagIds: z.array(z.number()).optional(),
       }))
       .mutation(async ({ input }) => {
-        const { tagIds, ...newsData } = input;
+        const { tagIds, relatedLinks, ...newsData } = input;
 
         const dataToInsert = {
           ...newsData,
@@ -579,6 +605,9 @@ export const appRouter = router({
         if (tagIds && tagIds.length > 0) {
           await db.setNewsTags(id, tagIds);
         }
+        if (relatedLinks !== undefined) {
+          await db.setNewsRelatedLinks(id, relatedLinks);
+        }
 
         return { id };
       }),
@@ -588,11 +617,22 @@ export const appRouter = router({
         id: z.number(),
         title: z.string().min(1).max(255).optional(),
         slug: z.string().min(1).max(255).optional(),
+        subtitle: z.string().max(255).optional(),
         excerpt: z.string().min(1).optional(),
         categoryId: z.number().optional(),
         coverImageUrl: z.string().optional(),
         coverImageKey: z.string().optional(),
+        coverImageAltText: z.string().max(255).optional(),
+        coverImageFocalPoint: z.object({ x: z.number(), y: z.number() }).optional(),
+        layoutVariant: z.enum(['feature', 'journal', 'bulletin']).optional(),
         location: z.string().max(255).optional(),
+        externalLink: z.string().url().optional(),
+        relatedLinks: z.array(z.object({
+          label: z.string().min(1).max(120),
+          url: z.string().url(),
+          linkType: z.enum(['source', 'review', 'tickets', 'press', 'related']).optional(),
+          sortOrder: z.number().optional(),
+        })).optional(),
         date: z.date().optional(),
         blocks: z.any().optional(),
         status: z.enum(['draft', 'published', 'archived']).optional(),
@@ -603,7 +643,7 @@ export const appRouter = router({
         tagIds: z.array(z.number()).optional(),
       }))
       .mutation(async ({ input }) => {
-        const { id, tagIds, ...newsData } = input;
+        const { id, tagIds, relatedLinks, ...newsData } = input;
 
         const currentNews = await db.getNewsById(id);
         const dataToUpdate = {
@@ -618,6 +658,9 @@ export const appRouter = router({
         if (tagIds !== undefined && tagIds.length > 0) {
           await db.setNewsTags(id, tagIds);
         }
+        if (relatedLinks !== undefined) {
+          await db.setNewsRelatedLinks(id, relatedLinks);
+        }
 
         return { success: true };
       }),
@@ -629,67 +672,6 @@ export const appRouter = router({
         return { success: true };
       }),
 
-    bulkImport: publicProcedure
-      .mutation(async () => {
-        const newsData = await import('./newsData.json');
-        const imageMap = await import('./newsImageMap.json');
-
-        const categoryMap: Record<string, number | null> = {
-          'Project Launch': null,
-          'Publication': null,
-          'Career Milestone': null,
-          'Collaboration': null,
-          'Project Update': null,
-          'Assistant Scenic Design': null,
-          'Life Updates': null,
-          'Publication/Feature': null,
-        };
-
-        function blocksToJson(content: any): any[] {
-          if (!content) return [];
-          if (typeof content === 'string') return [{ type: 'text', content }];
-
-          const blocks = [];
-          for (const block of content) {
-            if (block.type === 'paragraph' && block.content) {
-              const cleaned = block.content.replace(/\u00a0/g, ' ');
-              blocks.push({ type: 'text', content: cleaned });
-            }
-          }
-          return blocks;
-        }
-
-        let inserted = 0;
-        const articles = newsData.default || newsData;
-        const images: Record<string, string> = imageMap.default || imageMap;
-
-        for (let idx = 0; idx < articles.length; idx++) {
-          const article = articles[idx];
-
-          try {
-            const id = await db.createNews({
-              slug: article.slug,
-              title: article.title,
-              excerpt: article.excerpt,
-              blocks: blocksToJson(article.content),
-              coverImageUrl: images[article.slug] || undefined,
-              categoryId: categoryMap[article.category] || undefined,
-              date: article.date ? new Date(article.date) : new Date(),
-              externalLink: article.link || undefined,
-              location: article.location || undefined,
-              tags: article.tags ? article.tags.slice(0, 5).join(', ') : undefined,
-              featured: idx === 0,
-              status: 'published',
-              publishedAt: article.date ? new Date(article.date) : new Date(),
-            });
-            inserted++;
-          } catch (e: any) {
-            console.error(`Failed to insert ${article.title}:`, e.message);
-          }
-        }
-
-        return { inserted, total: articles.length };
-      }),
   }),
 
   // ============ ARTICLE MANAGEMENT ============

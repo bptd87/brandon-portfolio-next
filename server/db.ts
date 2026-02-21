@@ -559,9 +559,13 @@ export async function getAllNews(filters?: {
     id: item.id,
     title: item.title,
     slug: item.slug,
+    subtitle: item.subtitle,
     excerpt: item.excerpt,
     content: item.content,
     coverImageUrl: item.cover_image,
+    coverImageAltText: item.cover_image_alt_text,
+    coverImageFocalPoint: item.cover_image_focal_point,
+    layoutVariant: item.layout_variant,
     date: item.date ? new Date(item.date) : null,
     status: item.status,
     featured: item.featured,
@@ -592,11 +596,15 @@ export async function getNewsBySlug(slug: string): Promise<News | undefined> {
     id: data.id,
     title: data.title,
     slug: data.slug,
+    subtitle: data.subtitle,
     excerpt: data.excerpt,
     content: data.content,
     blocks: data.blocks || [],
     coverImageUrl: data.cover_image,
     coverImageKey: data.cover_image_key,
+    coverImageAltText: data.cover_image_alt_text,
+    coverImageFocalPoint: data.cover_image_focal_point,
+    layoutVariant: data.layout_variant,
     location: data.location,
     date: data.date ? new Date(data.date) : null,
     status: data.status,
@@ -626,11 +634,15 @@ export async function getNewsById(id: number): Promise<any> {
     id: data.id,
     title: data.title,
     slug: data.slug,
+    subtitle: data.subtitle,
     excerpt: data.excerpt,
     content: data.content,
     blocks: data.blocks || [],
     coverImageUrl: data.cover_image,
     coverImageKey: data.cover_image_key,
+    coverImageAltText: data.cover_image_alt_text,
+    coverImageFocalPoint: data.cover_image_focal_point,
+    layoutVariant: data.layout_variant,
     location: data.location,
     date: data.date ? new Date(data.date) : null,
     status: data.status,
@@ -642,7 +654,27 @@ export async function getNewsById(id: number): Promise<any> {
     createdAt: new Date(data.created_at),
     updatedAt: new Date(data.updated_at),
     publishedAt: data.published_at ? new Date(data.published_at) : null,
+    externalLink: data.external_link,
   };
+}
+
+export async function getNewsRelatedLinks(newsId: number) {
+  const { data, error } = await supabase
+    .from('news_related_links')
+    .select('id, label, url, link_type, sort_order')
+    .eq('news_id', newsId)
+    .order('sort_order', { ascending: true });
+
+  if (error) throw error;
+  if (!data) return [];
+
+  return data.map((row: any) => ({
+    id: row.id,
+    label: row.label,
+    url: row.url,
+    linkType: row.link_type,
+    sortOrder: row.sort_order,
+  }));
 }
 
 export async function getNewsTags(newsId: number): Promise<Tag[]> {
@@ -1452,12 +1484,17 @@ export async function createNews(news: any) {
     .insert({
       title: news.title,
       slug: news.slug,
+      subtitle: news.subtitle,
       excerpt: news.excerpt,
       blocks: news.blocks,
       cover_image: news.coverImageUrl,
       cover_image_key: news.coverImageKey,
+      cover_image_alt_text: news.coverImageAltText,
+      cover_image_focal_point: news.coverImageFocalPoint,
+      layout_variant: news.layoutVariant,
       location: news.location,
       date: news.date,
+      external_link: news.externalLink,
       status: news.status || 'draft',
       featured: news.featured || false,
       category_id: news.categoryId,
@@ -1477,12 +1514,17 @@ export async function updateNews(id: number, news: any) {
 
   if (news.title !== undefined) updateData.title = news.title;
   if (news.slug !== undefined) updateData.slug = news.slug;
+  if (news.subtitle !== undefined) updateData.subtitle = news.subtitle;
   if (news.excerpt !== undefined) updateData.excerpt = news.excerpt;
   if (news.blocks !== undefined) updateData.blocks = news.blocks;
   if (news.coverImageUrl !== undefined) updateData.cover_image = news.coverImageUrl;
   if (news.coverImageKey !== undefined) updateData.cover_image_key = news.coverImageKey;
+  if (news.coverImageAltText !== undefined) updateData.cover_image_alt_text = news.coverImageAltText;
+  if (news.coverImageFocalPoint !== undefined) updateData.cover_image_focal_point = news.coverImageFocalPoint;
+  if (news.layoutVariant !== undefined) updateData.layout_variant = news.layoutVariant;
   if (news.location !== undefined) updateData.location = news.location;
   if (news.date !== undefined) updateData.date = news.date;
+  if (news.externalLink !== undefined) updateData.external_link = news.externalLink;
   if (news.status !== undefined) updateData.status = news.status;
   if (news.featured !== undefined) updateData.featured = news.featured;
   if (news.categoryId !== undefined) updateData.category_id = news.categoryId;
@@ -1494,6 +1536,41 @@ export async function updateNews(id: number, news: any) {
     .from('news')
     .update(updateData)
     .eq('id', id);
+
+  if (error) throw error;
+}
+
+export async function setNewsRelatedLinks(
+  newsId: number,
+  links: Array<{
+    label: string;
+    url: string;
+    linkType?: 'source' | 'review' | 'tickets' | 'press' | 'related';
+    sortOrder?: number;
+  }>
+) {
+  await supabase
+    .from('news_related_links')
+    .delete()
+    .eq('news_id', newsId);
+
+  if (!links || links.length === 0) return;
+
+  const payload = links
+    .filter((link) => link?.label && link?.url)
+    .map((link, index) => ({
+      news_id: newsId,
+      label: link.label,
+      url: link.url,
+      link_type: link.linkType || 'source',
+      sort_order: link.sortOrder ?? index,
+    }));
+
+  if (payload.length === 0) return;
+
+  const { error } = await supabase
+    .from('news_related_links')
+    .insert(payload);
 
   if (error) throw error;
 }
