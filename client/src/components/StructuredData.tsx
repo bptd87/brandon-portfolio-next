@@ -196,7 +196,7 @@ interface SoftwareApplicationSchema {
 }
 
 interface StructuredDataProps {
-  type: 'Person' | 'Organization' | 'Both' | 'CreativeWork' | 'BreadcrumbList' | 'Article' | 'VideoObject' | 'FAQPage' | 'HowTo' | 'Event' | 'SoftwareApplication';
+  type: 'Person' | 'Organization' | 'Both' | 'CreativeWork' | 'BreadcrumbList' | 'Article' | 'NewsArticle' | 'VideoObject' | 'FAQPage' | 'HowTo' | 'Event' | 'SoftwareApplication';
   person?: PersonSchema;
   organization?: OrganizationSchema;
   creativeWork?: CreativeWorkSchema;
@@ -376,10 +376,10 @@ export default function StructuredData({ type, person, organization, creativeWor
     });
   }
 
-  if (type === 'Article' && article) {
+  if ((type === 'Article' || type === 'NewsArticle') && article) {
     const schema: any = {
       '@context': 'https://schema.org',
-      '@type': 'Article',
+      '@type': type,
       headline: article.headline,
       author: {
         '@type': 'Person',

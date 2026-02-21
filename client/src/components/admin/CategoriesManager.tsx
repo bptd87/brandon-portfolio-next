@@ -23,6 +23,9 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Plus, Pencil, Trash2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { ADMIN_PANEL_CLASS, getAdminAccentColor } from "./adminTheme";
+import { AdminStatStrip } from "./AdminStatStrip";
+import { AdminEmptyState } from "./AdminEmptyState";
 
 export function CategoriesManager() {
   const [open, setOpen] = useState(false);
@@ -144,12 +147,12 @@ export function CategoriesManager() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold">Categories ({allCategories?.length || 0})</h2>
+          <h2 className="text-2xl font-bold" style={{ color: getAdminAccentColor("articles") }}>Categories ({allCategories?.length || 0})</h2>
           <p className="text-muted-foreground">Manage categories for articles and news</p>
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button>
+            <Button className="text-white" style={{ backgroundColor: getAdminAccentColor("articles") }}>
               <Plus className="h-4 w-4 mr-2" />
               Add Category
             </Button>
@@ -250,33 +253,42 @@ export function CategoriesManager() {
         </Dialog>
       </div>
 
-      {/* Type filter tabs */}
-      <div className="flex gap-2 flex-wrap">
-        {[
-          { value: "all", label: "All" },
-          { value: "article", label: "Article" },
-          { value: "news", label: "News" },
-        ].map((t) => (
-          <Button
-            key={t.value}
-            variant={typeFilter === t.value ? "default" : "outline"}
-            size="sm"
-            onClick={() => setTypeFilter(t.value)}
-          >
-            {t.label}
-            <span className="ml-1 text-xs opacity-70">
-              ({typeCounts[t.value as keyof typeof typeCounts]})
-            </span>
-          </Button>
-        ))}
-      </div>
+      <div className={`rounded-md ${ADMIN_PANEL_CLASS} p-4 space-y-4`}>
+        <AdminStatStrip
+          items={[
+            { label: "All", value: typeCounts.all, accent: "articles" },
+            { label: "Articles", value: typeCounts.article, accent: "articles" },
+            { label: "News", value: typeCounts.news, accent: "news" },
+          ]}
+        />
+        <div className="flex gap-2 flex-wrap">
+          {[
+            { value: "all", label: "All" },
+            { value: "article", label: "Article" },
+            { value: "news", label: "News" },
+          ].map((t) => (
+            <Button
+              key={t.value}
+              variant={typeFilter === t.value ? "default" : "outline"}
+              size="sm"
+              onClick={() => setTypeFilter(t.value)}
+              className={typeFilter === t.value ? "text-white" : undefined}
+              style={typeFilter === t.value ? { backgroundColor: getAdminAccentColor(t.value === "news" ? "news" : "articles") } : undefined}
+            >
+              {t.label}
+              <span className="ml-1 text-xs opacity-70">
+                ({typeCounts[t.value as keyof typeof typeCounts]})
+              </span>
+            </Button>
+          ))}
+        </div>
 
-      <div className="grid gap-4">
-        {categories?.map((category) => (
-          <div
-            key={category.id}
-            className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-colors"
-          >
+        <div className="grid gap-4">
+          {categories?.map((category) => (
+            <div
+              key={category.id}
+              className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-colors"
+            >
             <div className="flex items-center gap-4">
               <div
                 className="w-12 h-12 rounded-lg flex items-center justify-center font-black text-white shrink-0"
@@ -312,12 +324,17 @@ export function CategoriesManager() {
                 <Trash2 className="h-4 w-4 text-destructive" />
               </Button>
             </div>
-          </div>
-        ))}
+            </div>
+          ))}
+        </div>
         {categories?.length === 0 && (
-          <div className="text-center py-12 text-muted-foreground">
-            <p>No categories found for this filter.</p>
-          </div>
+          <AdminEmptyState
+            title="No categories found"
+            description="Create categories to organize article and news taxonomy."
+            actionLabel="Add Category"
+            onAction={() => setOpen(true)}
+            accent="articles"
+          />
         )}
       </div>
     </div>

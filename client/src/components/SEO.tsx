@@ -10,6 +10,8 @@ interface SEOProps {
   publishedTime?: string;
   modifiedTime?: string;
   keywords?: string;
+  noindex?: boolean;
+  nofollow?: boolean;
 }
 
 export function SEO({
@@ -22,13 +24,31 @@ export function SEO({
   publishedTime,
   modifiedTime,
   keywords,
+  noindex = false,
+  nofollow = false,
 }: SEOProps) {
   const siteName = "Brandon PT Davis";
   const twitterHandle = "@brandonptdavis";
   const twitterSite = "@brandonptdavis";
 
-  // Use provided URL or fallback to current page URL
-  const canonicalUrl = url || (typeof window !== 'undefined' ? window.location.href : 'https://www.brandonptdavis.com');
+  const normalizeCanonicalUrl = (value: string) => {
+    try {
+      const parsed = new URL(value);
+      parsed.hash = "";
+      parsed.search = "";
+      if (parsed.pathname.length > 1 && parsed.pathname.endsWith("/")) {
+        parsed.pathname = parsed.pathname.slice(0, -1);
+      }
+      return parsed.toString();
+    } catch {
+      return value;
+    }
+  };
+
+  const rawCanonicalUrl =
+    url || (typeof window !== "undefined" ? window.location.href : "https://www.brandonptdavis.com");
+  const canonicalUrl = normalizeCanonicalUrl(rawCanonicalUrl);
+  const robotsValue = `${noindex ? "noindex" : "index"},${nofollow ? "nofollow" : "follow"}`;
 
   return (
     <Helmet>
@@ -36,6 +56,8 @@ export function SEO({
       <title>{title}</title>
       <meta name="description" content={description} />
       {keywords && <meta name="keywords" content={keywords} />}
+      <meta name="robots" content={robotsValue} />
+      <meta name="googlebot" content={robotsValue} />
 
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={type} />

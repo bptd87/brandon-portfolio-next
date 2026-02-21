@@ -12,7 +12,7 @@ describe("Sitemap Generation", () => {
     expect(xml).toContain('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
     
     // Check homepage is included with highest priority
-    expect(xml).toContain('<loc>https://brandon-portfolio-v2.manus.space</loc>');
+    expect(xml).toContain('<loc>https://www.brandonptdavis.com</loc>');
     expect(xml).toContain('<priority>1.0</priority>');
     
     // Check static pages are included
@@ -21,8 +21,8 @@ describe("Sitemap Generation", () => {
     expect(xml).toContain('/contact</loc>');
     
     // Check discipline pages are included
-    expect(xml).toContain('/projects?discipline=scenic_design</loc>');
-    expect(xml).toContain('/projects?discipline=experiential_design</loc>');
+    expect(xml).toContain('/projects</loc>');
+    expect(xml).toContain('/projects/experiential</loc>');
     
     // Check closing tag
     expect(xml).toContain('</urlset>');
@@ -96,10 +96,10 @@ describe("Sitemap Generation", () => {
     expect(txt).toContain('Allow: /');
     
     // Check sitemap references
-    expect(txt).toContain('Sitemap: https://brandon-portfolio-v2.manus.space/sitemap-index.xml');
-    expect(txt).toContain('Sitemap: https://brandon-portfolio-v2.manus.space/sitemap.xml');
-    expect(txt).toContain('Sitemap: https://brandon-portfolio-v2.manus.space/image-sitemap.xml');
-    expect(txt).toContain('Sitemap: https://brandon-portfolio-v2.manus.space/video-sitemap.xml');
+    expect(txt).toContain('Sitemap: https://www.brandonptdavis.com/sitemap-index.xml');
+    expect(txt).toContain('Sitemap: https://www.brandonptdavis.com/sitemap.xml');
+    expect(txt).toContain('Sitemap: https://www.brandonptdavis.com/image-sitemap.xml');
+    expect(txt).toContain('Sitemap: https://www.brandonptdavis.com/video-sitemap.xml');
     
     // Check disallow rules
     expect(txt).toContain('Disallow: /admin');
@@ -122,12 +122,12 @@ describe("RSS Feed Generation", () => {
     
     // Check channel metadata
     expect(xml).toContain('<title>Brandon PT Davis - Articles</title>');
-    expect(xml).toContain('<link>https://brandon-portfolio-v2.manus.space/articles</link>');
+    expect(xml).toContain('<link>https://www.brandonptdavis.com/articles</link>');
     expect(xml).toContain('<description>');
     expect(xml).toContain('<language>en-us</language>');
     
     // Check self-referencing link
-    expect(xml).toContain('href="https://brandon-portfolio-v2.manus.space/articles/rss.xml"');
+    expect(xml).toContain('href="https://www.brandonptdavis.com/articles/rss.xml"');
     
     // Check closing tags
     expect(xml).toContain('</channel>');
@@ -145,11 +145,11 @@ describe("RSS Feed Generation", () => {
     
     // Check channel metadata
     expect(xml).toContain('<title>Brandon PT Davis - News</title>');
-    expect(xml).toContain('<link>https://brandon-portfolio-v2.manus.space/news</link>');
+    expect(xml).toContain('<link>https://www.brandonptdavis.com/news</link>');
     expect(xml).toContain('<description>');
     
     // Check self-referencing link
-    expect(xml).toContain('href="https://brandon-portfolio-v2.manus.space/news/rss.xml"');
+    expect(xml).toContain('href="https://www.brandonptdavis.com/news/rss.xml"');
     
     // Check closing tags
     expect(xml).toContain('</channel>');

@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,9 +16,15 @@ import { toast } from "sonner";
 import { useLocation } from "wouter";
 import { MobileTableView } from "./MobileTableView";
 import { getProjectPath } from "@/lib/projectRoutes";
+import { ADMIN_PANEL_CLASS, getAdminAccentColor } from "./adminTheme";
+import { AdminStatStrip } from "./AdminStatStrip";
+import { AdminFilterBar } from "./AdminFilterBar";
+import { AdminEmptyState } from "./AdminEmptyState";
 
 export function ProjectsManager() {
   const [, navigate] = useLocation();
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
 
   const { data: allProjects, isLoading, refetch } = trpc.projects.list.useQuery({});
 
@@ -30,6 +37,25 @@ export function ProjectsManager() {
       }
       return (b.month || 0) - (a.month || 0);
     }) || [];
+
+  const filteredProjects = useMemo(() => {
+    return projects.filter((project) => {
+      const searchMatch = !search || [project.title, project.slug, project.venue, project.location]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase()
+        .includes(search.toLowerCase());
+      const statusMatch = statusFilter === "all" || project.status === statusFilter;
+      return searchMatch && statusMatch;
+    });
+  }, [projects, search, statusFilter]);
+
+  const stats = useMemo(() => {
+    const published = projects.filter((p) => p.status === "published").length;
+    const drafts = projects.filter((p) => p.status === "draft").length;
+    const featured = projects.filter((p) => p.featured).length;
+    return { published, drafts, featured };
+  }, [projects]);
   const deleteProject = trpc.projects.delete.useMutation({
     onSuccess: () => {
       toast.success("Project deleted successfully");
@@ -56,15 +82,15 @@ export function ProjectsManager() {
 
   return (
     <div className="space-y-6">
-      <Card>
+      <Card className={ADMIN_PANEL_CLASS}>
         <CardHeader>
           <div className="space-y-4">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
-                <CardTitle className="text-xl md:text-2xl">Scenic Design Projects ({projects?.length || 0})</CardTitle>
+                <CardTitle className="text-xl md:text-2xl" style={{ color: getAdminAccentColor("projects") }}>Scenic Design Projects ({projects?.length || 0})</CardTitle>
                 <CardDescription>Manage your scenic design portfolio projects and case studies</CardDescription>
               </div>
-              <Button onClick={() => navigate("/admin/projects/new")} className="hidden md:inline-flex" size="default">
+              <Button onClick={() => navigate("/admin/projects/new")} className="hidden md:inline-flex text-white" size="default" style={{ backgroundColor: getAdminAccentColor("projects") }}>
                 <Plus className="h-4 w-4 mr-2" />
                 New Project
               </Button>
@@ -72,10 +98,33 @@ export function ProjectsManager() {
           </div>
         </CardHeader>
         <CardContent>
+          <div className="space-y-4">
+            <AdminStatStrip
+              items={[
+                { label: "Total", value: projects.length, accent: "projects" },
+                { label: "Published", value: stats.published, accent: "projects" },
+                { label: "Drafts", value: stats.drafts, accent: "projects" },
+                { label: "Featured", value: stats.featured, accent: "projects" }
+              ]}
+            />
+            <AdminFilterBar
+              searchValue={search}
+              onSearchChange={setSearch}
+              searchPlaceholder="Search project title, slug, venue, city..."
+              statusValue={statusFilter}
+              onStatusChange={setStatusFilter}
+              statusOptions={[
+                { label: "All Statuses", value: "all" },
+                { label: "Published", value: "published" },
+                { label: "Draft", value: "draft" },
+                { label: "Archived", value: "archived" }
+              ]}
+            />
+          </div>
           {projects && projects.length > 0 ? (
             <>
               {/* Desktop Table */}
-              <div className="hidden md:block overflow-x-auto">
+              <div className="hidden md:block overflow-x-auto mt-4">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -87,10 +136,10 @@ export function ProjectsManager() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {projects.map((project) => (
+                    {filteredProjects.map((project) => (
                       <TableRow
                         key={project.id}
-                        className="cursor-pointer hover:bg-muted/50 transition-colors group"
+                        className="cursor-pointer hover:bg-muted/40 transition-colors group"
                         onClick={() => navigate(`/admin/projects/${project.id}/edit`)}
                       >
                         <TableCell className="py-2">
@@ -108,7 +157,7 @@ export function ProjectsManager() {
                         </TableCell>
                         <TableCell className="py-2">
                           <div className="flex flex-col">
-                            <span className="font-medium text-sm leading-tight group-hover:text-primary transition-colors">
+                            <span className="font-medium text-sm leading-tight transition-colors group-hover:opacity-90" style={{ color: getAdminAccentColor("projects") }}>
                               {project.title}
                             </span>
                             <div className="flex items-center gap-2 mt-0.5">
@@ -195,9 +244,9 @@ export function ProjectsManager() {
               </div>
 
               {/* Mobile Card View */}
-              <div className="md:hidden">
+              <div className="md:hidden mt-4">
                 <MobileTableView
-                  data={projects}
+                  data={filteredProjects}
                   idKey="id"
                   columns={[
                     {
@@ -259,11 +308,22 @@ export function ProjectsManager() {
                 />
               </div>
             </>
-          ) : (
-            <div className="text-center py-12 text-muted-foreground">
-              <p>No projects yet. Create your first project to get started.</p>
-            </div>
-          )}
+          ) : null}
+          {projects.length === 0 ? (
+            <AdminEmptyState
+              title="No projects yet"
+              description="Create your first scenic project to get this portfolio section live."
+              actionLabel="Create Project"
+              onAction={() => navigate("/admin/projects/new")}
+              accent="projects"
+            />
+          ) : filteredProjects.length === 0 ? (
+            <AdminEmptyState
+              title="No matching projects"
+              description="Try a different search term or status filter."
+              accent="projects"
+            />
+          ) : null}
         </CardContent>
       </Card>
     </div>

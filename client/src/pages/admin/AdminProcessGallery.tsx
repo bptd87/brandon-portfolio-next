@@ -128,6 +128,7 @@ function SortableGalleryItem({
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
   const [isOpen, setIsOpen] = useState(false);
+  const [previewSrc, setPreviewSrc] = useState<string | null>(null);
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -136,8 +137,9 @@ function SortableGalleryItem({
     opacity: isDragging ? 0.5 : 1,
   };
 
-  const displayImage = item.project?.coverImageUrl || item.imageUrl;
+  const displayImage = item.imageUrl || item.project?.coverImageUrl || null;
   const displayTitle = item.displayTitle || item.project?.title || (item.videoUrl ? 'Video' : 'Untitled');
+  const activeImageSrc = previewSrc === '' ? null : (previewSrc ?? displayImage);
 
   return (
     <div ref={setNodeRef} style={style} className="bg-card border rounded-lg p-3 mb-2 flex flex-col gap-3 shadow-sm">
@@ -147,8 +149,21 @@ function SortableGalleryItem({
         </div>
 
         <div className="h-16 w-24 flex-shrink-0 bg-muted rounded overflow-hidden">
-          {displayImage ? (
-            <img src={displayImage} alt={item.altText || ''} className="w-full h-full object-cover" />
+          {activeImageSrc ? (
+            <img
+              src={activeImageSrc}
+              alt={item.altText || ''}
+              className="w-full h-full object-cover"
+              onError={() => {
+                if (activeImageSrc !== item.project?.coverImageUrl && item.project?.coverImageUrl) {
+                  setPreviewSrc(item.project.coverImageUrl);
+                } else if (activeImageSrc !== item.imageUrl && item.imageUrl) {
+                  setPreviewSrc(item.imageUrl);
+                } else {
+                  setPreviewSrc('');
+                }
+              }}
+            />
           ) : item.videoUrl ? (
             <div className="w-full h-full flex items-center justify-center text-xs text-muted-foreground bg-purple-500/10">
               <ImageIcon className="h-6 w-6 text-purple-500" />
@@ -662,7 +677,6 @@ export default function AdminProcessGallery() {
   const [hasBrandChanges, setHasBrandChanges] = useState(false);
   const [uploadingCategory, setUploadingCategory] = useState<ProcessCategory | null>(null);
   const [uploadingBrand, setUploadingBrand] = useState(false);
-  const [activeWorkflowTab, setActiveWorkflowTab] = useState<ProcessCategory>('workflow-toolkit');
   const [activeGalleryTab, setActiveGalleryTab] = useState<ProcessCategory>('rendering');
   const [managingProject, setManagingProject] = useState<{ id: number; title: string } | null>(null);
   const updateTimersRef = useRef<{ [key: string]: NodeJS.Timeout }>({});
@@ -1036,6 +1050,15 @@ export default function AdminProcessGallery() {
     await brandOrderMutation.mutateAsync(orderUpdates);
   };
 
+  const handleSaveAllOrderChanges = async () => {
+    if (hasChanges) {
+      await handleSaveOrder();
+    }
+    if (hasBrandChanges) {
+      await handleSaveBrandOrder();
+    }
+  };
+
   // Handle manage images
   const handleManageImages = (projectId: number, title: string) => {
     setManagingProject({ id: projectId, title });
@@ -1057,83 +1080,37 @@ export default function AdminProcessGallery() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight">Experiential Portfolio</h1>
+            <h1 className="text-2xl font-bold tracking-tight">Experiential Gallery Editor</h1>
             <p className="text-muted-foreground">
-              Manage workflow showcase images, portfolio galleries, and brands
+              Manage portfolio galleries and brand logo banners.
             </p>
           </div>
           <div className="flex gap-2">
-            {hasChanges && (
-              <Button onClick={handleSaveOrder} disabled={orderMutation.isPending}>
-                {orderMutation.isPending ? (
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                ) : (
-                  <Save className="h-4 w-4 mr-2" />
-                )}
-                Save Gallery Order
-              </Button>
-            )}
-            {hasBrandChanges && (
-              <Button onClick={handleSaveBrandOrder} disabled={brandOrderMutation.isPending}>
-                {brandOrderMutation.isPending ? (
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                ) : (
-                  <Save className="h-4 w-4 mr-2" />
-                )}
-                Save Brand Order
-              </Button>
-            )}
+            <Button
+              onClick={handleSaveAllOrderChanges}
+              disabled={(!hasChanges && !hasBrandChanges) || orderMutation.isPending || brandOrderMutation.isPending}
+            >
+              {orderMutation.isPending || brandOrderMutation.isPending ? (
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              ) : (
+                <Save className="h-4 w-4 mr-2" />
+              )}
+              Save Order Changes
+            </Button>
           </div>
         </div>
-
-        {/* Workflow Showcase Section */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Workflow Showcase (4 Steps)</CardTitle>
-            <CardDescription>Single image per workflow step - displayed as process overview</CardDescription>
-          </CardHeader>
-          <Tabs value={activeWorkflowTab} onValueChange={(v) => setActiveWorkflowTab(v as ProcessCategory)}>
-            <CardHeader className="pb-0 pt-0">
-              <TabsList className="grid grid-cols-4 w-full">
-                {Object.keys(WORKFLOW_CATEGORIES).map((cat) => (
-                  <TabsTrigger key={cat} value={cat} className="text-xs">
-                    {WORKFLOW_CATEGORIES[cat].label.split(' ')[0]}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-            </CardHeader>
-            <CardContent className="pt-6">
-              {Object.keys(WORKFLOW_CATEGORIES).map((cat) => (
-                <TabsContent key={cat} value={cat} className="mt-0">
-                  <CategorySection
-                    category={cat as ProcessCategory}
-                    items={getItemsByCategory(cat as ProcessCategory)}
-                    onReorder={(items) => handleReorder(cat as ProcessCategory, items)}
-                    onRemove={handleRemove}
-                    onUpdate={handleUpdate}
-                    onAddImage={handleAddImage}
-                    onAddVideoUrl={handleAddVideoUrl}
-                    isUploading={uploadingCategory === cat}
-                    onManageImages={handleManageImages}
-                    onUpdateProject={handleUpdateProject}
-                  />
-                </TabsContent>
-              ))}
-            </CardContent>
-          </Tabs>
-        </Card>
 
         {/* Portfolio Galleries Section */}
         <Card>
           <CardHeader>
             <CardTitle>Portfolio Galleries</CardTitle>
-            <CardDescription>Multiple images per gallery - displayed as card grids with modal viewing</CardDescription>
+            <CardDescription>Manage rendering, drawings, and event example galleries.</CardDescription>
           </CardHeader>
           <Tabs value={activeGalleryTab} onValueChange={(v) => setActiveGalleryTab(v as ProcessCategory)}>
             <CardHeader className="pb-0 pt-0">
-              <TabsList className="grid grid-cols-3 w-full">
+              <TabsList className="flex h-auto w-full flex-wrap justify-start gap-2 bg-transparent p-0">
                 {Object.keys(GALLERY_CATEGORIES).map((cat) => (
-                  <TabsTrigger key={cat} value={cat} className="text-xs">
+                  <TabsTrigger key={cat} value={cat} className="text-xs border border-border/70 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                     {GALLERY_CATEGORIES[cat].label.replace(' Gallery', '')}
                   </TabsTrigger>
                 ))}

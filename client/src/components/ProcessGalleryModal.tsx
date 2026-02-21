@@ -57,8 +57,13 @@ export function ProcessGalleryModal({
 }: ProcessGalleryModalProps) {
   const [showVideo, setShowVideo] = useState(false);
 
+  const getMediaPreview = (image?: ProjectImage) => {
+    if (!image) return null;
+    return image.imageUrl || (image.videoUrl ? getVideoThumbnail(image.videoUrl) : null);
+  };
+
   // Get display image and embed URL
-  const displayImage = currentImage?.imageUrl || (currentImage?.videoUrl ? getVideoThumbnail(currentImage.videoUrl) : null);
+  const displayImage = getMediaPreview(currentImage);
   const embedUrl = currentImage?.videoUrl ? getVideoEmbedUrl(currentImage.videoUrl) : null;
 
   // Reset video state when item changes
@@ -237,30 +242,42 @@ export function ProcessGalleryModal({
 
                 {/* Thumbnails Scroll */}
                 <div className="flex gap-2 overflow-x-auto pb-1 flex-1 justify-center">
-                  {images.map((img, idx) => (
-                    <button
-                      key={img.id}
-                      onClick={() => {
-                        const diff = idx - imageIndex;
-                        if (diff > 0) {
-                          for (let i = 0; i < diff; i++) onNextImage();
-                        } else if (diff < 0) {
-                          for (let i = 0; i < Math.abs(diff); i++) onPrevImage();
-                        }
-                      }}
-                      className={`relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all ${
-                        idx === imageIndex 
-                          ? 'border-white scale-110' 
-                          : 'border-white/30 hover:border-white/60 opacity-60'
-                      }`}
-                    >
-                      <img
-                        src={img.imageUrl}
-                        alt={img.altText || ''}
-                        className="w-full h-full object-cover"
-                      />
-                    </button>
-                  ))}
+                  {images.map((img, idx) => {
+                    const thumbSrc = getMediaPreview(img);
+                    return (
+                      <button
+                        key={img.id}
+                        onClick={() => {
+                          const diff = idx - imageIndex;
+                          if (diff > 0) {
+                            for (let i = 0; i < diff; i++) onNextImage();
+                          } else if (diff < 0) {
+                            for (let i = 0; i < Math.abs(diff); i++) onPrevImage();
+                          }
+                        }}
+                        className={`relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all ${
+                          idx === imageIndex 
+                            ? 'border-white scale-110' 
+                            : 'border-white/30 hover:border-white/60 opacity-60'
+                        }`}
+                      >
+                        {thumbSrc ? (
+                          <img
+                            src={thumbSrc}
+                            alt={img.altText || img.displayTitle || ''}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).style.display = "none";
+                            }}
+                          />
+                        ) : (
+                          <div className="flex h-full w-full items-center justify-center bg-white/10 text-[10px] text-white/60">
+                            No media
+                          </div>
+                        )}
+                      </button>
+                    );
+                  })}
                 </div>
 
                 {/* Next Image Button */}

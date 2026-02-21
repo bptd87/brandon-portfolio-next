@@ -3,8 +3,15 @@ import { router, publicProcedure } from "../_core/trpc";
 import { TRPCError } from "@trpc/server";
 import { supabase } from "../db";
 
-// Simple in-memory cache for IP geodata - now just for optimization
-const geoCache = new Map<string, { city: string | null, region: string | null, country: string | null }>();
+const DAYS_30_MS = 30 * 24 * 60 * 60 * 1000;
+const DAYS_14_MS = 14 * 24 * 60 * 60 * 1000;
+const DAYS_60_MS = 60 * 24 * 60 * 60 * 1000;
+
+function isMobileUserAgent(userAgent?: string | null) {
+  if (!userAgent) return false;
+  const ua = userAgent.toLowerCase();
+  return ua.includes("mobile") || ua.includes("android") || ua.includes("iphone");
+}
 
 export const analyticsRouter = router({
   trackPageView: publicProcedure
@@ -177,6 +184,142 @@ export const analyticsRouter = router({
       return { success: true };
     }),
 
+  getOverview: publicProcedure
+    .query(async () => {
+      const now = Date.now();
+      const since30d = new Date(now - DAYS_30_MS).toISOString();
+      const since14d = new Date(now - DAYS_14_MS).toISOString();
+      const since60d = new Date(now - DAYS_60_MS).toISOString();
+
+      const [
+        pageViews30dRes,
+        pageViewsPrev30dRes,
+        sessions30dRes,
+        projectViews30dRes,
+        contactEvents30dRes,
+        sessionsContactExit30dRes,
+        visitsForBreakdownRes,
+        sessionsForGeoRes
+      ] = await Promise.all([
+        supabase.from("analytics_visits").select("*", { count: "exact", head: true }).gte("created_at", since30d),
+        supabase.from("analytics_visits").select("*", { count: "exact", head: true }).gte("created_at", since60d).lt("created_at", since30d),
+        supabase.from("analytics_sessions").select("*", { count: "exact", head: true }).gte("started_at", since30d),
+        supabase.from("analytics_project_views").select("*", { count: "exact", head: true }).gte("viewed_at", since30d),
+        supabase.from("analytics_events").select("*", { count: "exact", head: true }).gte("created_at", since30d).ilike("event_type", "%contact%"),
+        supabase.from("analytics_sessions").select("*", { count: "exact", head: true }).gte("started_at", since30d).ilike("exit_page", "%contact%"),
+        supabase
+          .from("analytics_visits")
+          .select("page_path, created_at, user_agent")
+          .gte("created_at", since30d)
+          .order("created_at", { ascending: false })
+          .limit(5000),
+        supabase
+          .from("analytics_sessions")
+          .select("city, region, country")
+          .gte("started_at", since30d)
+          .order("started_at", { ascending: false })
+          .limit(3000)
+      ]);
+
+      if (visitsForBreakdownRes.error) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: visitsForBreakdownRes.error.message });
+      }
+      if (sessionsForGeoRes.error) {
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: sessionsForGeoRes.error.message });
+      }
+
+      const pageViews30d = pageViews30dRes.count || 0;
+      const pageViewsPrev30d = pageViewsPrev30dRes.count || 0;
+      const sessions30d = sessions30dRes.count || 0;
+      const projectViews30d = projectViews30dRes.count || 0;
+      const contactIntent30d = (contactEvents30dRes.count || 0) + (sessionsContactExit30dRes.count || 0);
+
+      const pageViewsDeltaPct = pageViewsPrev30d > 0
+        ? Math.round(((pageViews30d - pageViewsPrev30d) / pageViewsPrev30d) * 100)
+        : pageViews30d > 0
+          ? 100
+          : 0;
+
+      const visits = visitsForBreakdownRes.data || [];
+      const sessionsGeo = sessionsForGeoRes.data || [];
+
+      const dayMap = new Map<string, number>();
+      for (let i = 13; i >= 0; i--) {
+        const key = new Date(now - i * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+        dayMap.set(key, 0);
+      }
+
+      const pageMap = new Map<string, number>();
+      const deviceMap = new Map<string, number>();
+      deviceMap.set("Desktop", 0);
+      deviceMap.set("Mobile", 0);
+
+      visits.forEach((visit: any) => {
+        if (visit.created_at && visit.created_at >= since14d) {
+          const dayKey = String(visit.created_at).slice(0, 10);
+          dayMap.set(dayKey, (dayMap.get(dayKey) || 0) + 1);
+        }
+
+        const path = visit.page_path || "/";
+        pageMap.set(path, (pageMap.get(path) || 0) + 1);
+
+        const device = isMobileUserAgent(visit.user_agent) ? "Mobile" : "Desktop";
+        deviceMap.set(device, (deviceMap.get(device) || 0) + 1);
+      });
+
+      const geoMap = new Map<string, number>();
+      const cityMap = new Map<string, number>();
+      const regionMap = new Map<string, number>();
+      const countryMap = new Map<string, number>();
+      sessionsGeo.forEach((session: any) => {
+        const label = session.city || session.country || "Unknown";
+        geoMap.set(label, (geoMap.get(label) || 0) + 1);
+        if (session.city) {
+          cityMap.set(session.city, (cityMap.get(session.city) || 0) + 1);
+        }
+        if (session.region) {
+          regionMap.set(session.region, (regionMap.get(session.region) || 0) + 1);
+        }
+        if (session.country) {
+          countryMap.set(session.country, (countryMap.get(session.country) || 0) + 1);
+        }
+      });
+
+      return {
+        periodDays: 30,
+        pageViews30d,
+        pageViewsDeltaPct,
+        sessions30d,
+        projectViews30d,
+        contactIntent30d,
+        contactRatePct: sessions30d > 0 ? Math.round((contactIntent30d / sessions30d) * 100) : 0,
+        topPages: Array.from(pageMap.entries())
+          .map(([path, views]) => ({ path, views }))
+          .sort((a, b) => b.views - a.views)
+          .slice(0, 8),
+        dailyViews14d: Array.from(dayMap.entries()).map(([date, views]) => ({ date, views })),
+        deviceBreakdown: Array.from(deviceMap.entries())
+          .map(([name, value]) => ({ name, value }))
+          .filter((item) => item.value > 0),
+        topLocations: Array.from(geoMap.entries())
+          .map(([name, value]) => ({ name, value }))
+          .sort((a, b) => b.value - a.value)
+          .slice(0, 8),
+        topCities: Array.from(cityMap.entries())
+          .map(([name, value]) => ({ name, value }))
+          .sort((a, b) => b.value - a.value)
+          .slice(0, 12),
+        topRegions: Array.from(regionMap.entries())
+          .map(([name, value]) => ({ name, value }))
+          .sort((a, b) => b.value - a.value)
+          .slice(0, 12),
+        topCountries: Array.from(countryMap.entries())
+          .map(([name, value]) => ({ name, value }))
+          .sort((a, b) => b.value - a.value)
+          .slice(0, 12)
+      };
+    }),
+
   getStats: publicProcedure
     .query(async ({ ctx }: { ctx: any }) => {
       const { data, error } = await supabase
@@ -225,62 +368,6 @@ export const analyticsRouter = router({
       return Array.from(projectStats.entries())
         .map(([slug, stat]) => ({ slug, ...stat }))
         .sort((a, b) => b.views - a.views);
-    }),
-
-  getConversionFunnel: publicProcedure
-    .query(async () => {
-      // Get all sessions
-      const { data: sessions, error } = await supabase
-        .from('analytics_sessions')
-        .select('session_id, entry_page, exit_page')
-        .order('started_at', { ascending: false });
-
-      if (error) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message });
-
-      // Count pages in funnel
-      const hasHome = sessions?.filter((s: any) => s.entry_page === '/' || s.entry_page?.includes('home')).length || 0;
-      const hasProjects = sessions?.filter((s: any) => s.exit_page?.includes('/projects')).length || 0;
-      const hasContact = sessions?.filter((s: any) => s.exit_page?.includes('contact')).length || 0;
-
-      const total = sessions?.length || 1;
-
-      return [
-        { name: 'Homepage', count: hasHome, percentage: Math.round((hasHome / total) * 100) },
-        { name: 'Projects View', count: hasProjects, percentage: Math.round((hasProjects / total) * 100) },
-        { name: 'Contact Page', count: hasContact, percentage: Math.round((hasContact / total) * 100) }
-      ];
-    }),
-
-  getGeographicBreakdown: publicProcedure
-    .query(async () => {
-      const { data } = await supabase
-        .from('analytics_sessions')
-        .select('city, region, country')
-        .order('started_at', { ascending: false });
-
-      if (!data) return [];
-
-      const geoStats = new Map<string, { city?: string, region?: string, country?: string, count: number }>();
-
-      (data as any[]).forEach((session) => {
-        const key = session.city || session.country || 'Unknown';
-        if (geoStats.has(key)) {
-          const stat = geoStats.get(key)!;
-          stat.count += 1;
-        } else {
-          geoStats.set(key, {
-            city: session.city,
-            region: session.region,
-            country: session.country,
-            count: 1
-          });
-        }
-      });
-
-      return Array.from(geoStats.entries())
-        .map(([label, stat]) => ({ label, ...stat }))
-        .sort((a, b) => b.count - a.count)
-        .slice(0, 10);
     }),
 
   trackScenicDirectoryClick: publicProcedure

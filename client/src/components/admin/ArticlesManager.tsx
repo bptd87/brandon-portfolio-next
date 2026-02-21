@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,12 +15,19 @@ import { toast } from "sonner";
 import { useLocation } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { MobileTableView } from "./MobileTableView";
+import { ADMIN_PANEL_CLASS, getAdminAccentColor } from "./adminTheme";
+import { AdminStatStrip } from "./AdminStatStrip";
+import { AdminFilterBar } from "./AdminFilterBar";
+import { AdminEmptyState } from "./AdminEmptyState";
 
 export function ArticlesManager() {
   const [, navigate] = useLocation();
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
   const { data: articles, isLoading, refetch } = trpc.articles.list.useQuery();
   const deleteMutation = trpc.articles.delete.useMutation();
-  const sortedArticles = [...(articles || [])].sort((a, b) => {
+
+  const sortedArticles = useMemo(() => [...(articles || [])].sort((a, b) => {
     const aPublished = a.publishedAt ? new Date(a.publishedAt).getTime() : Number.NEGATIVE_INFINITY;
     const bPublished = b.publishedAt ? new Date(b.publishedAt).getTime() : Number.NEGATIVE_INFINITY;
 
@@ -31,7 +38,26 @@ export function ArticlesManager() {
     const aCreated = new Date(a.createdAt).getTime();
     const bCreated = new Date(b.createdAt).getTime();
     return bCreated - aCreated;
-  });
+  }), [articles]);
+
+  const filteredArticles = useMemo(() => {
+    return sortedArticles.filter((article) => {
+      const searchMatch = !search || [article.title, article.slug, article.excerpt, article.category?.name]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase()
+        .includes(search.toLowerCase());
+      const statusMatch = statusFilter === "all" || article.status === statusFilter;
+      return searchMatch && statusMatch;
+    });
+  }, [search, sortedArticles, statusFilter]);
+
+  const stats = useMemo(() => {
+    const published = sortedArticles.filter((a) => a.status === "published").length;
+    const drafts = sortedArticles.filter((a) => a.status === "draft").length;
+    const featured = sortedArticles.filter((a) => a.featured).length;
+    return { published, drafts, featured };
+  }, [sortedArticles]);
 
   const handleEdit = (id: number) => {
     navigate(`/admin/articles/${id}/edit`);
@@ -62,32 +88,51 @@ export function ArticlesManager() {
 
   return (
     <div className="space-y-6">
-      <Card>
+      <Card className={ADMIN_PANEL_CLASS}>
         <CardHeader>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <CardTitle className="text-xl md:text-2xl">Articles & Stories ({articles?.length || 0})</CardTitle>
+              <CardTitle className="text-xl md:text-2xl" style={{ color: getAdminAccentColor("articles") }}>Articles & Stories ({articles?.length || 0})</CardTitle>
               <CardDescription>Manage your blog posts, design stories, and long-form content</CardDescription>
             </div>
-            <Button onClick={handleCreate} className="hidden md:inline-flex" size="default">
+            <Button onClick={handleCreate} className="hidden md:inline-flex text-white" size="default" style={{ backgroundColor: getAdminAccentColor("articles") }}>
               <Plus className="w-4 h-4 mr-2" />
               New Article
             </Button>
-            <Button onClick={handleCreate} className="md:hidden" size="sm">
+            <Button onClick={handleCreate} className="md:hidden text-white" size="sm" style={{ backgroundColor: getAdminAccentColor("articles") }}>
               <Plus className="w-4 h-4 mr-2" />
               New Article
             </Button>
           </div>
         </CardHeader>
         <CardContent>
-          {!articles || articles.length === 0 ? (
-            <div className="text-center py-12 text-muted-foreground">
-              <p>No articles yet. Create your first one!</p>
-            </div>
-          ) : (
+          <div className="space-y-4">
+            <AdminStatStrip
+              items={[
+                { label: "Total", value: sortedArticles.length, accent: "articles" },
+                { label: "Published", value: stats.published, accent: "articles" },
+                { label: "Drafts", value: stats.drafts, accent: "articles" },
+                { label: "Featured", value: stats.featured, accent: "articles" }
+              ]}
+            />
+            <AdminFilterBar
+              searchValue={search}
+              onSearchChange={setSearch}
+              searchPlaceholder="Search title, slug, excerpt, category..."
+              statusValue={statusFilter}
+              onStatusChange={setStatusFilter}
+              statusOptions={[
+                { label: "All Statuses", value: "all" },
+                { label: "Published", value: "published" },
+                { label: "Draft", value: "draft" },
+                { label: "Archived", value: "archived" }
+              ]}
+            />
+          </div>
+
+          {sortedArticles.length > 0 ? (
             <>
-              {/* Desktop Table */}
-              <div className="hidden md:block overflow-x-auto">
+              <div className="hidden md:block overflow-x-auto mt-4">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -99,10 +144,10 @@ export function ArticlesManager() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {sortedArticles.map((article) => (
+                    {filteredArticles.map((article) => (
                       <TableRow
                         key={article.id}
-                        className="cursor-pointer hover:bg-muted/50 transition-colors group"
+                        className="cursor-pointer hover:bg-muted/40 transition-colors group"
                         onClick={() => handleEdit(article.id)}
                       >
                         <TableCell className="py-2">
@@ -120,7 +165,7 @@ export function ArticlesManager() {
                         </TableCell>
                         <TableCell className="py-2">
                           <div className="flex flex-col">
-                            <span className="font-medium text-sm leading-tight group-hover:text-primary transition-colors line-clamp-1">
+                            <span className="font-medium text-sm leading-tight transition-colors group-hover:opacity-90 line-clamp-1" style={{ color: getAdminAccentColor("articles") }}>
                               {article.title}
                             </span>
                             <div className="flex items-center gap-2 mt-0.5">
@@ -197,10 +242,9 @@ export function ArticlesManager() {
                 </Table>
               </div>
 
-              {/* Mobile Card View */}
-              <div className="md:hidden">
+              <div className="md:hidden mt-4">
                 <MobileTableView
-                  data={sortedArticles}
+                  data={filteredArticles}
                   idKey="id"
                   columns={[
                     {
@@ -256,7 +300,23 @@ export function ArticlesManager() {
                 />
               </div>
             </>
-          )}
+          ) : null}
+
+          {sortedArticles.length === 0 ? (
+            <AdminEmptyState
+              title="No articles yet"
+              description="Write your first long-form article to expand search visibility."
+              actionLabel="Create Article"
+              onAction={handleCreate}
+              accent="articles"
+            />
+          ) : filteredArticles.length === 0 ? (
+            <AdminEmptyState
+              title="No matching articles"
+              description="Try another search phrase or status filter."
+              accent="articles"
+            />
+          ) : null}
         </CardContent>
       </Card>
     </div>

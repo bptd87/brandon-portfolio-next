@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { AdminMobileNav } from "./AdminMobileNav";
+import { getAdminAccentForPath, getAdminAccentStyles, getAdminItemAccent } from "./adminTheme";
 
 interface AdminLayoutProps {
     children: React.ReactNode;
@@ -32,6 +33,7 @@ interface AdminLayoutProps {
 export function AdminLayout({ children, title, description }: AdminLayoutProps) {
     const [location] = useLocation();
     const { user, logout } = useAuth();
+    const currentAccent = getAdminAccentStyles(getAdminAccentForPath(location));
 
     const navItems = [
         { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
@@ -67,7 +69,10 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
                 <div className="p-6 border-b">
                     <Link href="/admin">
                         <div className="flex items-center gap-2 font-serif text-xl font-bold cursor-pointer group">
-                            <div className="w-8 h-8 rounded bg-primary flex items-center justify-center text-primary-foreground transform group-hover:rotate-12 transition-transform shadow-lg shadow-primary/20">
+                            <div
+                                className="w-8 h-8 rounded flex items-center justify-center text-primary-foreground transform group-hover:rotate-12 transition-transform shadow-lg"
+                                style={{ backgroundColor: currentAccent.accent }}
+                            >
                                 B
                             </div>
                             <span className="tracking-tighter">ADMIN</span>
@@ -81,15 +86,17 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
                             ? location === "/admin"
                             : location.startsWith(item.href);
                         const Icon = item.icon;
+                        const itemAccent = getAdminAccentStyles(getAdminItemAccent(item.href));
 
                         return (
                             <Link key={item.href} href={item.href}>
                                 <div className={cn(
-                                    "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 cursor-pointer",
+                                    "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 cursor-pointer border border-transparent",
                                     isActive
-                                        ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 scale-[1.02]"
+                                        ? "text-primary-foreground shadow-lg scale-[1.02]"
                                         : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
-                                )}>
+                                )}
+                                style={isActive ? itemAccent.active : undefined}>
                                     <Icon className="h-4 w-4" />
                                     {item.label}
                                 </div>
@@ -100,8 +107,8 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
 
                 <div className="p-4 border-t space-y-4">
                     <div className="flex items-center gap-3 px-3 py-2 text-sm text-muted-foreground bg-muted/20 rounded-lg">
-                        <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30 overflow-hidden">
-                            {user?.name ? user.name[0].toUpperCase() : <User className="h-4 w-4 text-primary" />}
+                        <div className="w-8 h-8 rounded-full flex items-center justify-center border overflow-hidden" style={currentAccent.soft}>
+                            {user?.name ? user.name[0].toUpperCase() : <User className="h-4 w-4" style={{ color: currentAccent.accent }} />}
                         </div>
                         <div className="flex flex-col truncate">
                             <span className="text-foreground font-medium truncate">{user?.name || "Admin"}</span>
@@ -135,7 +142,7 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
                 <header className="hidden md:flex border-b bg-background/50 backdrop-blur-sm h-14 items-center px-8 border-l border-l-border/10">
                     <div className="flex-1 flex items-center gap-1 text-xs text-muted-foreground uppercase tracking-wider font-semibold">
                         <Link href="/admin">
-                            <span className="hover:text-primary cursor-pointer transition-colors">Admin</span>
+                            <span className="cursor-pointer transition-colors" style={{ color: currentAccent.accent }}>Admin</span>
                         </Link>
                         {location !== "/admin" && (
                             <>
@@ -145,8 +152,13 @@ export function AdminLayout({ children, title, description }: AdminLayoutProps) 
                         )}
                     </div>
                     <div className="flex items-center gap-4">
-                        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full hover:bg-primary/10 group">
-                            <Settings className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 rounded-full group"
+                            style={currentAccent.soft}
+                        >
+                            <Settings className="h-4 w-4 transition-colors" style={{ color: currentAccent.accent }} />
                         </Button>
                     </div>
                 </header>

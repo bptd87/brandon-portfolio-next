@@ -6,6 +6,7 @@ import { Loader2, FolderKanban, Newspaper, FileText, ArrowUpRight, TrendingUp, L
 import { Link } from "wouter";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { trpc } from "@/lib/trpc";
+import { ADMIN_PANEL_CLASS, getAdminAccentColor, type AdminAccentKey } from "@/components/admin/adminTheme";
 
 export default function Admin() {
   const { user, loading, isAuthenticated } = useAuth();
@@ -59,24 +60,21 @@ export default function Admin() {
       value: projects?.length || 0,
       icon: FolderKanban,
       href: "/admin/projects",
-      color: "text-blue-500",
-      bg: "bg-blue-500/10"
+      accent: "projects" as AdminAccentKey
     },
     {
       label: "News Posts",
       value: news?.length || 0,
       icon: Newspaper,
       href: "/admin/news",
-      color: "text-orange-500",
-      bg: "bg-orange-500/10"
+      accent: "news" as AdminAccentKey
     },
     {
       label: "Articles",
       value: articles?.length || 0,
       icon: FileText,
       href: "/admin/articles",
-      color: "text-purple-500",
-      bg: "bg-purple-500/10"
+      accent: "articles" as AdminAccentKey
     },
   ];
 
@@ -88,17 +86,24 @@ export default function Admin() {
       <div className="grid gap-6 md:grid-cols-3">
         {stats.map((stat) => (
           <Link key={stat.label} href={stat.href}>
-            <Card className="hover:border-primary/50 transition-all duration-300 cursor-pointer group">
+            <Card className={`${ADMIN_PANEL_CLASS} hover:border-border transition-all duration-300 cursor-pointer group`}>
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
-                  <div className={`p-3 rounded-xl ${stat.bg} ${stat.color}`}>
+                  <div
+                    className="p-3 rounded-xl border"
+                    style={{
+                      backgroundColor: `hsl(var(--background) / 0.45)`,
+                      borderColor: getAdminAccentColor(stat.accent),
+                      color: getAdminAccentColor(stat.accent)
+                    }}
+                  >
                     <stat.icon className="h-6 w-6" />
                   </div>
-                  <ArrowUpRight className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                  <ArrowUpRight className="h-5 w-5 text-muted-foreground group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" style={{ color: getAdminAccentColor(stat.accent) }} />
                 </div>
                 <div className="mt-4">
                   <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider">{stat.label}</p>
-                  <h3 className="text-3xl font-bold mt-1">{stat.value}</h3>
+                  <h3 className="text-3xl font-bold mt-1" style={{ color: getAdminAccentColor(stat.accent) }}>{stat.value}</h3>
                 </div>
               </CardContent>
             </Card>
@@ -107,10 +112,10 @@ export default function Admin() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <Card>
+        <Card className={ADMIN_PANEL_CLASS}>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-primary" />
+              <TrendingUp className="h-5 w-5" style={{ color: getAdminAccentColor("dashboard") }} />
               Quick Actions
             </CardTitle>
           </CardHeader>
@@ -142,7 +147,7 @@ export default function Admin() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className={ADMIN_PANEL_CLASS}>
           <CardHeader>
             <CardTitle>Recent Activity</CardTitle>
             <CardDescription>Your latest content updates</CardDescription>

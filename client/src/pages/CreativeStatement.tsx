@@ -89,9 +89,9 @@ export default function CreativeStatement() {
   return (
     <div className="min-h-screen bg-background [background-image:radial-gradient(circle_at_14%_10%,rgba(255,87,34,0.08),transparent_34%),radial-gradient(circle_at_84%_14%,rgba(0,188,212,0.08),transparent_30%)]">
       <SEO
-        title="Creative Design Statement | Scenic & Experiential Design"
-        description="Exploring the intersection of architecture, history, and storytelling through scenic design. Creative philosophy centered on spatial narratives and immersive environments."
-        keywords="scenic design philosophy, creative statement, theatrical storytelling, architectural design, spatial narrative, immersive design, theatre design approach, experiential design philosophy"
+        title="Creative Design Statement | Scenic Design Philosophy"
+        description="Exploring architecture, history, and storytelling through scenic design. A creative statement centered on narrative space, dramaturgy, and production collaboration."
+        keywords="scenic design philosophy, creative statement scenic designer, theatrical storytelling, architectural design for stage, spatial narrative, theatre design approach"
         image={heroProject?.coverImageUrl ?? undefined}
         url="https://www.brandonptdavis.com/creative-statement"
         type="article"
@@ -100,9 +100,9 @@ export default function CreativeStatement() {
         type="Person"
         person={{
           name: "Brandon PT Davis",
-          jobTitle: "Scenic and Experiential Designer",
+          jobTitle: "Scenic Designer",
           url: "https://www.brandonptdavis.com",
-          description: "Scenic designer exploring the intersection of architecture, history, and storytelling to create immersive spatial narratives for theatre and experiential design.",
+          description: "Scenic designer exploring architecture, history, and storytelling to create narrative stage environments for theatre production.",
           knowsAbout: [
             "Scenic Design",
             "Spatial Storytelling",

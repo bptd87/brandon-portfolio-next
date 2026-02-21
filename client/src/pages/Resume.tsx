@@ -19,7 +19,7 @@ export default function Resume() {
     <>
       <SEO
         title="Resume & CV | Scenic Designer | 130+ Productions | USA 829"
-        description="130+ scenic design productions since 2009. MFA UC Irvine, BFA Stephens College. USA 829 Member. Broadway World Award Winner. California-based designer."
+        description="130+ scenic design productions since 2009. MFA UC Irvine, BFA Stephens College, and USA 829 membership. Professional scenic designer based in Southern California."
         keywords="scenic designer resume, theatrical designer cv, USA 829 member, scenic design portfolio, Brandon PT Davis production history, regional theatre designer, summer stock designer, California scenic designer, MFA UC Irvine"
         url="https://www.brandonptdavis.com/resume"
       />
@@ -27,7 +27,7 @@ export default function Resume() {
         type="Person"
         person={{
           name: "Brandon PT Davis",
-          jobTitle: "Scenic and Experiential Designer",
+          jobTitle: "Scenic Designer",
           url: "https://www.brandonptdavis.com",
           description: "Professional scenic designer with over 130 realized productions across regional theatre, summer stock, and academic theatre. USA 829 member since 2023. BroadwayWorld Los Angeles Best Scenic Design Nominee (2026).",
           email: "info@brandonptdavis.com",
@@ -52,7 +52,6 @@ export default function Resume() {
           ],
           knowsAbout: [
             "Scenic Design",
-            "Experiential Design",
             "Regional Theatre Design",
             "Summer Stock Theatre",
             "Academic Theatre",

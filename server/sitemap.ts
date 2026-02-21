@@ -5,7 +5,7 @@ import * as db from './db';
  * Following Google's sitemap protocol: https://www.sitemaps.org/protocol.html
  */
 
-const SITE_URL = process.env.VITE_APP_URL || 'https://brandon-portfolio-v2.manus.space';
+const SITE_URL = process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
 
 interface SitemapUrl {
   loc: string;
@@ -90,7 +90,7 @@ function formatDate(date: Date | number): string {
  * Generate main sitemap with all pages
  */
 export async function generateMainSitemap(baseUrl?: string): Promise<string> {
-  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://brandon-portfolio-v2.manus.space';
+  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
   const urls: SitemapUrl[] = [];
 
   // Homepage - highest priority
@@ -108,17 +108,22 @@ export async function generateMainSitemap(baseUrl?: string): Promise<string> {
       priority: 0.8,
     },
     {
-      loc: `${SITE_URL}/about/teaching-philosophy`,
+      loc: `${SITE_URL}/about/teaching`,
       changefreq: 'monthly',
       priority: 0.7,
     },
     {
-      loc: `${SITE_URL}/about/resume`,
+      loc: `${SITE_URL}/resume`,
       changefreq: 'monthly',
       priority: 0.7,
     },
     {
-      loc: `${SITE_URL}/about/creative-statement`,
+      loc: `${SITE_URL}/creative-statement`,
+      changefreq: 'monthly',
+      priority: 0.7,
+    },
+    {
+      loc: `${SITE_URL}/about/collaborators`,
       changefreq: 'monthly',
       priority: 0.7,
     },
@@ -134,27 +139,27 @@ export async function generateMainSitemap(baseUrl?: string): Promise<string> {
     }
   );
 
-  // Portfolio discipline pages
+  // Portfolio pages
   urls.push(
     {
-      loc: `${SITE_URL}/projects?discipline=scenic_design`,
+      loc: `${SITE_URL}/projects`,
       changefreq: 'weekly',
       priority: 0.9,
     },
     {
-      loc: `${SITE_URL}/projects?discipline=experiential_design`,
+      loc: `${SITE_URL}/projects/rendering`,
       changefreq: 'weekly',
-      priority: 0.9,
+      priority: 0.8,
     },
     {
-      loc: `${SITE_URL}/projects?discipline=rendering`,
+      loc: `${SITE_URL}/projects/experiential`,
       changefreq: 'weekly',
-      priority: 0.9,
+      priority: 0.7,
     }
   );
 
   // Individual projects
-  const projects = await db.getAllProjects();
+  const projects = await db.getAllProjects({ status: 'published' });
   for (const project of projects) {
     urls.push({
       loc: `${SITE_URL}/projects/${project.slug}`,
@@ -230,7 +235,7 @@ export async function generateMainSitemap(baseUrl?: string): Promise<string> {
   }
 
   // Individual articles
-  const articles = await db.getAllArticles();
+  const articles = await db.getAllArticles({ status: 'published' });
   for (const article of articles) {
     urls.push({
       loc: `${SITE_URL}/articles/${article.slug}`,
@@ -284,7 +289,7 @@ export async function generateMainSitemap(baseUrl?: string): Promise<string> {
  * Generate image sitemap with all project images
  */
 export async function generateImageSitemap(baseUrl?: string): Promise<string> {
-  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://brandon-portfolio-v2.manus.space';
+  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
   const projects = await db.getAllProjects();
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -335,7 +340,7 @@ export async function generateImageSitemap(baseUrl?: string): Promise<string> {
  * Generate sitemap index
  */
 export function generateSitemapIndex(baseUrl?: string): string {
-  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://brandon-portfolio-v2.manus.space';
+  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
   const now = new Date().toISOString();
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -359,7 +364,7 @@ export function generateSitemapIndex(baseUrl?: string): string {
  * Generate video sitemap with all project videos
  */
 export async function generateVideoSitemap(baseUrl?: string): Promise<string> {
-  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://brandon-portfolio-v2.manus.space';
+  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
   const projects = await db.getAllProjects();
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -422,7 +427,7 @@ export async function generateVideoSitemap(baseUrl?: string): Promise<string> {
  * Generate RSS feed for articles
  */
 export async function generateArticlesRSS(baseUrl?: string): Promise<string> {
-  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://brandon-portfolio-v2.manus.space';
+  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
   const articles = await db.getAllArticles();
   const publishedArticles = articles.filter(a => a.status === 'published');
 
@@ -474,7 +479,7 @@ export async function generateArticlesRSS(baseUrl?: string): Promise<string> {
  * Generate RSS feed for news
  */
 export async function generateNewsRSS(baseUrl?: string): Promise<string> {
-  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://brandon-portfolio-v2.manus.space';
+  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
   const newsItems = await db.getAllNews({ status: 'published' });
   const publishedNews = newsItems.filter(n => n.status === 'published');
   publishedNews.sort((a, b) =>
@@ -525,7 +530,7 @@ export async function generateNewsRSS(baseUrl?: string): Promise<string> {
  * Generate RSS feed for tutorials
  */
 export function generateTutorialsRSS(baseUrl?: string): string {
-  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://brandon-portfolio-v2.manus.space';
+  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
   // Hardcoded tutorial data matching StudioTutorials.tsx
   const tutorials = [
     {
@@ -705,7 +710,7 @@ export function generateTutorialsRSS(baseUrl?: string): string {
  * Generate robots.txt
  */
 export function generateRobotsTxt(baseUrl?: string): string {
-  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://brandon-portfolio-v2.manus.space';
+  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
   return `# Brandon PT Davis Portfolio - Robots.txt
 User-agent: *
 Allow: /
@@ -718,6 +723,8 @@ Sitemap: ${SITE_URL}/video-sitemap.xml
 
 # Disallow admin and API routes
 Disallow: /admin
-Disallow: /api
+Disallow: /api/
+Disallow: /login
+Disallow: /auth-debug
 `;
 }

@@ -26,10 +26,10 @@ export default function Home() {
         type="Both"
         person={{
           name: "Brandon PT Davis",
-          jobTitle: "Scenic and Experiential Designer",
+          jobTitle: "Scenic Designer",
           url: baseUrl,
           image: "https://www.brandonptdavis.com/android-chrome-512x512.png",
-          description: "Scenic and experiential designer based in Southern California with over 120 design credits across regional theatre, summer stock, academic theatre, immersive experiences, and live entertainment. Member of USA 829.",
+          description: "Union scenic designer based in Southern California with 130+ production credits across regional theatre, summer stock, and academic stages. Member of USA 829.",
           email: "info@brandonptdavis.com",
           address: {
             addressLocality: "Irvine",
@@ -55,26 +55,23 @@ export default function Home() {
           ],
           knowsAbout: [
             "Scenic Design",
-            "Experiential Design",
             "Theatrical Design",
             "Regional Theatre",
             "Summer Stock Theatre",
             "Academic Theatre",
-            "Event Design",
             "Concept Rendering",
             "Vectorworks",
             "Twinmotion",
             "3D Modeling",
-            "Digital Fabrication",
-            "Immersive Design",
-            "Themed Entertainment",
+            "Digital Drafting",
+            "Production Collaboration",
           ],
         }}
         organization={{
           name: "Brandon PT Davis Design",
           url: baseUrl,
           image: "https://www.brandonptdavis.com/android-chrome-512x512.png",
-          description: "Professional scenic and experiential design studio specializing in regional theatre, summer stock, academic theatre, immersive experiences, event design, and themed entertainment.",
+          description: "Scenic design studio focused on story-driven environments for regional theatre, summer stock, and academic production.",
           founder: {
             name: "Brandon PT Davis",
             url: `${baseUrl}/about`,
@@ -95,9 +92,9 @@ export default function Home() {
         }}
       />
       <SEO
-        title="Brandon PT Davis | Scenic & Experiential Designer"
-        description="Award-winning Southern California scenic and experiential designer transforming theatrical spaces into immersive visual landscapes. Based in Orange County."
-        keywords="scenic design, experiential design, California scenic designer, Orange County, theatre design, immersive experiences, Brandon Davis, USA 829, regional theatre"
+        title="Brandon PT Davis | Scenic Designer"
+        description="Union scenic designer in Southern California creating story-driven environments for regional theatre, summer stock, and academic production."
+        keywords="scenic designer, scenic design portfolio, USA 829 scenic designer, Southern California scenic designer, regional theatre design, stage design, Brandon PT Davis"
         url="https://www.brandonptdavis.com"
       />
       <Header />

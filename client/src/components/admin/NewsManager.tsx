@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,13 +12,18 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Plus, Pencil, Trash2 } from "lucide-react";
-import { NewsForm } from "./NewsForm";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
 import { MobileTableView } from "./MobileTableView";
+import { ADMIN_PANEL_CLASS, getAdminAccentColor } from "./adminTheme";
+import { AdminStatStrip } from "./AdminStatStrip";
+import { AdminFilterBar } from "./AdminFilterBar";
+import { AdminEmptyState } from "./AdminEmptyState";
 
 export function NewsManager() {
   const [, navigate] = useLocation();
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
   const { data: news, isLoading, refetch } = trpc.news.list.useQuery({});
   const deleteNews = trpc.news.delete.useMutation({
     onSuccess: () => {
@@ -30,18 +35,34 @@ export function NewsManager() {
     },
   });
 
-  const handleEdit = (newsItem: any) => {
-    navigate(`/admin/news/${newsItem.id}/edit`);
-  };
+  const sortedNews = useMemo(
+    () => [...(news || [])].sort((a, b) => new Date(b.date ?? new Date()).getTime() - new Date(a.date ?? new Date()).getTime()),
+    [news]
+  );
+
+  const filteredNews = useMemo(() => {
+    return sortedNews.filter((item) => {
+      const searchMatch = !search || [item.title, item.slug, item.location, item.excerpt]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase()
+        .includes(search.toLowerCase());
+      const statusMatch = statusFilter === "all" || item.status === statusFilter;
+      return searchMatch && statusMatch;
+    });
+  }, [search, sortedNews, statusFilter]);
+
+  const stats = useMemo(() => {
+    const published = sortedNews.filter((n) => n.status === "published").length;
+    const drafts = sortedNews.filter((n) => n.status === "draft").length;
+    const featured = sortedNews.filter((n) => n.featured).length;
+    return { published, drafts, featured };
+  }, [sortedNews]);
 
   const handleDelete = async (id: number, title: string) => {
     if (confirm(`Are you sure you want to delete "${title}"?`)) {
       deleteNews.mutate({ id });
     }
-  };
-
-  const handleFormClose = () => {
-    refetch();
   };
 
   if (isLoading) {
@@ -54,32 +75,50 @@ export function NewsManager() {
 
   return (
     <>
-      <Card>
+      <Card className={ADMIN_PANEL_CLASS}>
         <CardHeader>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <CardTitle className="text-xl md:text-2xl">News & Updates</CardTitle>
+              <CardTitle className="text-xl md:text-2xl" style={{ color: getAdminAccentColor("news") }}>News & Updates</CardTitle>
               <CardDescription>Manage news items and career updates</CardDescription>
             </div>
-            <Button onClick={() => navigate("/admin/news/new")} className="hidden md:inline-flex" size="default">
+            <Button onClick={() => navigate("/admin/news/new")} className="hidden md:inline-flex text-white" size="default" style={{ backgroundColor: getAdminAccentColor("news") }}>
               <Plus className="h-4 w-4 mr-2" />
               New News Item
             </Button>
-            <Button onClick={() => navigate("/admin/news/new")} className="md:hidden" size="sm">
+            <Button onClick={() => navigate("/admin/news/new")} className="md:hidden text-white" size="sm" style={{ backgroundColor: getAdminAccentColor("news") }}>
               <Plus className="h-4 w-4 mr-2" />
               New News Item
             </Button>
           </div>
         </CardHeader>
         <CardContent>
-          {!news || news.length === 0 ? (
-            <div className="text-center py-12 text-muted-foreground">
-              <p>No news items yet. Create your first one!</p>
-            </div>
-          ) : (
+          <div className="space-y-4">
+            <AdminStatStrip
+              items={[
+                { label: "Total", value: sortedNews.length, accent: "news" },
+                { label: "Published", value: stats.published, accent: "news" },
+                { label: "Drafts", value: stats.drafts, accent: "news" },
+                { label: "Featured", value: stats.featured, accent: "news" }
+              ]}
+            />
+            <AdminFilterBar
+              searchValue={search}
+              onSearchChange={setSearch}
+              searchPlaceholder="Search headline, slug, location..."
+              statusValue={statusFilter}
+              onStatusChange={setStatusFilter}
+              statusOptions={[
+                { label: "All Statuses", value: "all" },
+                { label: "Published", value: "published" },
+                { label: "Draft", value: "draft" },
+                { label: "Archived", value: "archived" }
+              ]}
+            />
+          </div>
+          {sortedNews.length > 0 ? (
             <>
-              {/* Desktop Table */}
-              <div className="hidden md:block overflow-x-auto">
+              <div className="hidden md:block overflow-x-auto mt-4">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -91,12 +130,10 @@ export function NewsManager() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {news
-                      .sort((a, b) => new Date(b.date ?? new Date()).getTime() - new Date(a.date ?? new Date()).getTime())
-                      .map((item) => (
+                    {filteredNews.map((item) => (
                       <TableRow
                         key={item.id}
-                        className="cursor-pointer hover:bg-muted/50 transition-colors group"
+                        className="cursor-pointer hover:bg-muted/40 transition-colors group"
                         onClick={() => navigate(`/admin/news/${item.id}/edit`)}
                       >
                         <TableCell className="py-2">
@@ -114,7 +151,7 @@ export function NewsManager() {
                         </TableCell>
                         <TableCell className="py-2">
                           <div className="flex flex-col">
-                            <span className="font-medium text-sm leading-tight group-hover:text-primary transition-colors">
+                            <span className="font-medium text-sm leading-tight transition-colors group-hover:opacity-90" style={{ color: getAdminAccentColor("news") }}>
                               {item.title}
                             </span>
                             <span className="text-[10px] text-muted-foreground mt-0.5">
@@ -170,10 +207,9 @@ export function NewsManager() {
                 </Table>
               </div>
 
-              {/* Mobile Card View */}
-              <div className="md:hidden">
+              <div className="md:hidden mt-4">
                 <MobileTableView
-                  data={news.sort((a, b) => new Date(b.date ?? new Date()).getTime() - new Date(a.date ?? new Date()).getTime())}
+                  data={filteredNews}
                   idKey="id"
                   columns={[
                     {
@@ -217,10 +253,25 @@ export function NewsManager() {
                 />
               </div>
             </>
-          )}
+          ) : null}
+
+          {sortedNews.length === 0 ? (
+            <AdminEmptyState
+              title="No news items yet"
+              description="Publish your first update to start building your timeline."
+              actionLabel="Create News Item"
+              onAction={() => navigate("/admin/news/new")}
+              accent="news"
+            />
+          ) : filteredNews.length === 0 ? (
+            <AdminEmptyState
+              title="No matching news items"
+              description="Try a different search query or status filter."
+              accent="news"
+            />
+          ) : null}
         </CardContent>
       </Card>
-
     </>
   );
 }

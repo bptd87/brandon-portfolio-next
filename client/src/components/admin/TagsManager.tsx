@@ -24,6 +24,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Plus, Trash2, Pencil, Search } from "lucide-react";
 import { toast } from "sonner";
+import { ADMIN_PANEL_CLASS, getAdminAccentColor } from "./adminTheme";
+import { AdminStatStrip } from "./AdminStatStrip";
+import { AdminEmptyState } from "./AdminEmptyState";
 
 export function TagsManager() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -163,11 +166,11 @@ export function TagsManager() {
 
   return (
     <>
-      <Card>
+      <Card className={ADMIN_PANEL_CLASS}>
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle>Article & News Tags</CardTitle>
+              <CardTitle style={{ color: getAdminAccentColor("articles") }}>Article & News Tags</CardTitle>
               <CardDescription>
                 Manage taxonomy for news and articles only. Total: {tags?.length || 0} tags
               </CardDescription>
@@ -179,7 +182,7 @@ export function TagsManager() {
                   Delete {selectedTags.size} Selected
                 </Button>
               )}
-              <Button onClick={() => setIsCreateDialogOpen(true)}>
+              <Button onClick={() => setIsCreateDialogOpen(true)} className="text-white" style={{ backgroundColor: getAdminAccentColor("articles") }}>
                 <Plus className="h-4 w-4 mr-2" />
                 New Tag
               </Button>
@@ -187,6 +190,14 @@ export function TagsManager() {
           </div>
         </CardHeader>
         <CardContent>
+          <AdminStatStrip
+            items={[
+              { label: "Total", value: tags?.length || 0, accent: "articles" },
+              { label: "Visible", value: filteredTags.length, accent: "articles" },
+              { label: "Selected", value: selectedTags.size, accent: "articles" },
+            ]}
+            className="mb-4"
+          />
           <div className="mb-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -259,13 +270,13 @@ export function TagsManager() {
               </TableBody>
             </Table>
           ) : (
-            <div className="text-center py-12 text-muted-foreground">
-              {searchQuery ? (
-                <p>No tags found matching "{searchQuery}"</p>
-              ) : (
-                <p>No tags yet. Create your first tag to get started.</p>
-              )}
-            </div>
+            <AdminEmptyState
+              title={searchQuery ? "No matching tags" : "No tags yet"}
+              description={searchQuery ? `No tags found for "${searchQuery}".` : "Create your first tag to organize articles and news."}
+              actionLabel={searchQuery ? undefined : "Create Tag"}
+              onAction={searchQuery ? undefined : () => setIsCreateDialogOpen(true)}
+              accent="articles"
+            />
           )}
         </CardContent>
       </Card>

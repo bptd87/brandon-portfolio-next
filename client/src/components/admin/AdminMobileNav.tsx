@@ -21,6 +21,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { getAdminAccentForPath, getAdminAccentStyles, getAdminItemAccent } from "./adminTheme";
 
 interface AdminMobileNavProps {
     user?: { name: string; role: string };
@@ -30,6 +31,7 @@ interface AdminMobileNavProps {
 export function AdminMobileNav({ user, onSignOut }: AdminMobileNavProps) {
     const [location] = useLocation();
     const [open, setOpen] = useState(false);
+    const currentAccent = getAdminAccentStyles(getAdminAccentForPath(location));
 
     const navItems = [
         { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
@@ -55,7 +57,7 @@ export function AdminMobileNav({ user, onSignOut }: AdminMobileNavProps) {
             <div className="md:hidden flex items-center justify-between border-b bg-card p-4">
                 <Link href="/admin">
                     <div className="flex items-center gap-2 font-serif text-lg font-bold cursor-pointer">
-                        <div className="w-8 h-8 rounded bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+                        <div className="w-8 h-8 rounded flex items-center justify-center text-primary-foreground text-sm font-bold" style={{ backgroundColor: currentAccent.accent }}>
                             B
                         </div>
                         <span className="tracking-tighter">ADMIN</span>
@@ -90,7 +92,7 @@ export function AdminMobileNav({ user, onSignOut }: AdminMobileNavProps) {
                                 className="flex items-center gap-2 font-serif text-xl font-bold cursor-pointer"
                                 onClick={handleNavClick}
                             >
-                                <div className="w-8 h-8 rounded bg-primary flex items-center justify-center text-primary-foreground">
+                                <div className="w-8 h-8 rounded flex items-center justify-center text-primary-foreground" style={{ backgroundColor: currentAccent.accent }}>
                                     B
                                 </div>
                                 <span className="tracking-tighter">ADMIN</span>
@@ -105,17 +107,19 @@ export function AdminMobileNav({ user, onSignOut }: AdminMobileNavProps) {
                                 ? location === "/admin"
                                 : location.startsWith(item.href);
                             const Icon = item.icon;
+                            const itemAccent = getAdminAccentStyles(getAdminItemAccent(item.href));
 
                             return (
                                 <Link key={item.href} href={item.href}>
                                     <div
                                         onClick={handleNavClick}
                                         className={cn(
-                                            "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 cursor-pointer",
+                                            "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 cursor-pointer border border-transparent",
                                             isActive
-                                                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+                                                ? "text-primary-foreground shadow-lg"
                                                 : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
                                         )}
+                                        style={isActive ? itemAccent.active : undefined}
                                     >
                                         <Icon className="h-4 w-4" />
                                         {item.label}
@@ -128,7 +132,7 @@ export function AdminMobileNav({ user, onSignOut }: AdminMobileNavProps) {
                     {/* Footer */}
                     <div className="p-4 border-t space-y-3">
                         <div className="flex items-center gap-3 px-3 py-2 text-sm text-muted-foreground bg-muted/20 rounded-lg">
-                            <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30 text-xs font-bold">
+                            <div className="w-8 h-8 rounded-full flex items-center justify-center border text-xs font-bold" style={currentAccent.soft}>
                                 {user?.name ? user.name[0].toUpperCase() : "U"}
                             </div>
                             <div className="flex flex-col truncate min-w-0">

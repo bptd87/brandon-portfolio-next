@@ -164,7 +164,7 @@ function NewsDetailContent() {
         url={`https://www.brandonptdavis.com/news/${newsItem.slug}`}
       />
       <StructuredData
-        type="Article"
+        type="NewsArticle"
         article={{
           headline: newsItem.title,
           description: newsItem.excerpt || undefined,

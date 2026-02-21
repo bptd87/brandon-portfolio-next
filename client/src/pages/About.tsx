@@ -77,9 +77,9 @@ export default function About() {
     <div className="min-h-screen bg-background [background-image:radial-gradient(circle_at_12%_8%,rgba(255,87,34,0.10),transparent_34%),radial-gradient(circle_at_88%_16%,rgba(0,188,212,0.09),transparent_34%)]">
       <SEO
         title="About Brandon PT Davis | Scenic Designer & Educator"
-        description="Southern California scenic designer with 15+ years in regional theatre, themed entertainment, and education. USA 829 member based in Orange County."
+        description="Southern California scenic designer with 130+ production credits across regional theatre, summer stock, and education. USA 829 member based in Orange County."
         url="https://www.brandonptdavis.com/about"
-        keywords="Brandon Davis scenic designer, USA 829, theatrical designer California, Orange County designer, experiential designer, scenic design educator, UC Irvine, regional theatre designer"
+        keywords="Brandon PT Davis scenic designer, USA 829 scenic designer, scenic designer California, Orange County scenic designer, scenic design educator, UC Irvine, regional theatre scenic design"
       />
       <StructuredData
         type="Person"
@@ -88,7 +88,7 @@ export default function About() {
           jobTitle: "Scenic Designer",
           url: `${baseUrl}/about`,
           image: "https://www.brandonptdavis.com/android-chrome-512x512.png",
-          description: "Scenic designer and conceptual artist working at the intersection of Art × Technology × Design. Known for dramaturgical approach to scenic design with work at South Coast Repertory and 130+ productions across regional theatre, contemporary drama, and immersive experiences. Member of USA 829.",
+          description: "Scenic designer and conceptual artist known for a dramaturgical approach to stage space, with work at South Coast Repertory and 130+ productions across regional theatre, contemporary drama, and classical repertoire. Member of USA 829.",
           email: "info@brandonptdavis.com",
           address: {
             addressLocality: "Irvine",
@@ -101,7 +101,6 @@ export default function About() {
             "https://www.youtube.com/@BrandonPTDavisDesign",
             "https://www.facebook.com/BrandonPTDavisA",
             "https://www.usa829.org/Member-Profile/MemberID/15357",
-            "https://getadaptive.com/about-us/",
           ],
           alumniOf: [
             {
@@ -115,13 +114,10 @@ export default function About() {
           ],
           knowsAbout: [
             "Scenic Design",
-            "Experiential Design",
             "Conceptual Design",
             "Regional Theatre",
             "Contemporary Drama",
             "Dramaturgical Design",
-            "Immersive Design",
-            "Themed Entertainment",
             "Design Mentorship",
             "Vectorworks",
             "Twinmotion",
@@ -226,7 +222,7 @@ export default function About() {
               
               <div className="space-y-6 text-lg text-foreground/80 leading-relaxed text-justify">
                 <p>
-                  I'm a scenic designer and artist working at the intersection of craft, technology, and dramatic storytelling. With over 15 years in theatre and immersive design, I've designed more than 130 productions across regional theatre, summer stock, academic theatre, and themed entertainment.
+                  I'm a scenic designer and artist working at the intersection of craft, technology, and dramatic storytelling. With over 15 years in theatre, I've designed more than 130 productions across regional theatre, summer stock, academic theatre, and classical work.
                 </p>
 
                 <p>
@@ -234,7 +230,7 @@ export default function About() {
                 </p>
 
                 <p>
-                  Beyond the theatre, I work as a Senior Scenic and Experiential Designer at Adaptive Design Services, translating theatrical storytelling into branded experiences and immersive installations. I also teach scenic design at the university level, mentoring emerging designers in craft, process, and visual storytelling.
+                  Beyond traditional stage work, I collaborate on installation-based environments where theatrical storytelling informs audience experience. I also teach scenic design at the university level, mentoring emerging designers in craft, process, and visual storytelling.
                 </p>
               </div>
             </div>
