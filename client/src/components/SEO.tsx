@@ -17,7 +17,7 @@ interface SEOProps {
 export function SEO({
   title,
   description,
-  image = "https://www.brandonptdavis.com/android-chrome-512x512.png",
+  image = "https://www.brandonptdavis.com/og-default.jpeg",
   url,
   type = "website",
   author,

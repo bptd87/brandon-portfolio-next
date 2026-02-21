@@ -21,7 +21,7 @@ type SeoMeta = {
 };
 
 const DEFAULT_SITE_URL = "https://www.brandonptdavis.com";
-const DEFAULT_OG_IMAGE = `${DEFAULT_SITE_URL}/android-chrome-512x512.png`;
+const DEFAULT_OG_IMAGE = `${DEFAULT_SITE_URL}/og-default.jpeg`;
 const DEFAULT_META: Omit<SeoMeta, "canonical"> = {
   title: "Brandon PT Davis | Scenic Designer",
   description:
