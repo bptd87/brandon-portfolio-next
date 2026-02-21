@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { useState } from "react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Lightbox } from "@/components/Lightbox";
+import { AnimatePresence } from "framer-motion";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -116,7 +117,7 @@ export default function RenderingProjectDetail() {
                 { name: "Rendering", url: "https://www.brandonptdavis.com/projects/experiential/rendering" },
               ]
             : [{ name: "Rendering", url: "https://www.brandonptdavis.com/projects/rendering" }]),
-          { name: project.title, url: projectUrl || `https://www.brandonptdavis.com/projects/${project.slug}` },
+          { name: project.title, url: projectUrl || `https://www.brandonptdavis.com/project/${project.slug}` },
         ]}
       />
       <StructuredData
@@ -133,7 +134,7 @@ export default function RenderingProjectDetail() {
           datePublished: project.publishedAt ? new Date(project.publishedAt).toISOString().split('T')[0] : undefined,
           genre: "Architectural Rendering",
           keywords: tags,
-          url: projectUrl || `https://www.brandonptdavis.com/projects/${project.slug}`,
+          url: projectUrl || `https://www.brandonptdavis.com/project/${project.slug}`,
         }}
       />
       <Header />
@@ -256,15 +257,17 @@ export default function RenderingProjectDetail() {
       </div>
 
       {/* Lightbox */}
-      {lightboxIndex !== null && (
-        <Lightbox
-          images={lightboxImages}
-          currentIndex={lightboxIndex}
-          onClose={closeLightbox}
-          onNext={nextImage}
-          onPrev={prevImage}
-        />
-      )}
+      <AnimatePresence>
+        {lightboxIndex !== null && (
+          <Lightbox
+            images={lightboxImages}
+            currentIndex={lightboxIndex}
+            onClose={closeLightbox}
+            onNext={nextImage}
+            onPrev={prevImage}
+          />
+        )}
+      </AnimatePresence>
 
       <Footer />
     </div>

@@ -162,7 +162,7 @@ export async function generateMainSitemap(baseUrl?: string): Promise<string> {
   const projects = await db.getAllProjects({ status: 'published' });
   for (const project of projects) {
     urls.push({
-      loc: `${SITE_URL}/projects/${project.slug}`,
+      loc: `${SITE_URL}/project/${project.slug}`,
       lastmod: formatDate(project.updatedAt || project.createdAt),
       changefreq: 'monthly',
       priority: 0.8,
@@ -303,7 +303,7 @@ export async function generateImageSitemap(baseUrl?: string): Promise<string> {
 
     xml += `
   <url>
-    <loc>${escapeXml(`${SITE_URL}/projects/${project.slug}`)}</loc>`;
+    <loc>${escapeXml(`${SITE_URL}/project/${project.slug}`)}</loc>`;
 
     for (const image of images) {
       // Skip images without URL
@@ -379,7 +379,7 @@ export async function generateVideoSitemap(baseUrl?: string): Promise<string> {
 
     xml += `
   <url>
-    <loc>${escapeXml(`${SITE_URL}/projects/${project.slug}`)}</loc>`;
+    <loc>${escapeXml(`${SITE_URL}/project/${project.slug}`)}</loc>`;
 
     for (const video of videos) {
       if (!video.videoUrl) continue;
@@ -513,6 +513,69 @@ export async function generateNewsRSS(baseUrl?: string): Promise<string> {
     if (news.excerpt) {
       xml += `
       <description>${escapeXml(news.excerpt)}</description>`;
+    }
+
+    xml += `
+    </item>`;
+  }
+
+  xml += `
+  </channel>
+</rss>`;
+
+  return xml;
+}
+
+/**
+ * Generate RSS feed for projects
+ */
+export async function generateProjectsRSS(baseUrl?: string): Promise<string> {
+  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
+  const projects = await db.getAllProjects({ status: 'published' });
+  const publishedProjects = projects
+    .filter((p) => p.status === 'published')
+    .sort((a, b) =>
+      new Date(b.publishedAt || b.updatedAt || b.createdAt).getTime() -
+      new Date(a.publishedAt || a.updatedAt || a.createdAt).getTime()
+    );
+
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Brandon PT Davis - Projects</title>
+    <link>${SITE_URL}/projects</link>
+    <description>Scenic design project updates and production portfolio entries by Brandon PT Davis</description>
+    <language>en-us</language>
+    <atom:link href="${SITE_URL}/projects/rss.xml" rel="self" type="application/rss+xml" />`;
+
+  if (publishedProjects.length > 0) {
+    const latest = publishedProjects[0];
+    xml += `
+    <lastBuildDate>${new Date(latest.updatedAt || latest.createdAt).toUTCString()}</lastBuildDate>`;
+  }
+
+  for (const project of publishedProjects) {
+    xml += `
+    <item>
+      <title>${escapeXml(project.title)}</title>
+      <link>${SITE_URL}/project/${project.slug}</link>
+      <guid isPermaLink="true">${SITE_URL}/project/${project.slug}</guid>
+      <pubDate>${new Date(project.publishedAt || project.createdAt).toUTCString()}</pubDate>`;
+
+    const summary = project.excerpt || project.designNotes || null;
+    if (summary) {
+      xml += `
+      <description>${escapeXml(String(summary).slice(0, 1200))}</description>`;
+    }
+
+    if (project.discipline) {
+      xml += `
+      <category>${escapeXml(project.discipline)}</category>`;
+    }
+
+    if (project.coverImageUrl) {
+      xml += `
+      <enclosure url="${escapeXml(project.coverImageUrl)}" type="image/jpeg" length="150000" />`;
     }
 
     xml += `

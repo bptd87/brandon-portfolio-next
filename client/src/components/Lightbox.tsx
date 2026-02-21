@@ -1,5 +1,6 @@
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 
 interface LightboxProps {
   images: Array<{ imageUrl: string | null; caption: string | null; altText: string | null }>;
@@ -11,6 +12,17 @@ interface LightboxProps {
 
 export function Lightbox({ images, currentIndex, onClose, onNext, onPrev }: LightboxProps) {
   const currentImage = images[currentIndex];
+  if (!currentImage) return null;
+  const currentSrc = useMemo(() => {
+    if (currentImage.imageUrl) return currentImage.imageUrl;
+    const fallback = images.find((img) => !!img.imageUrl)?.imageUrl;
+    return fallback || "";
+  }, [currentImage.imageUrl, images]);
+  const [imageFailed, setImageFailed] = useState(false);
+
+  useEffect(() => {
+    setImageFailed(false);
+  }, [currentIndex, currentSrc]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -26,15 +38,21 @@ export function Lightbox({ images, currentIndex, onClose, onNext, onPrev }: Ligh
 
   // Prevent body scroll when lightbox is open
   useEffect(() => {
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
     };
   }, []);
 
-  return (
-    <div 
-      className="fixed inset-0 z-[100] bg-background/98 backdrop-blur-xl flex items-center justify-center"
+  if (typeof document === "undefined") return null;
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center overflow-hidden"
       onClick={onClose}
     >
       {/* Close button */}
@@ -81,15 +99,23 @@ export function Lightbox({ images, currentIndex, onClose, onNext, onPrev }: Ligh
       </div>
 
       {/* Main image */}
-      <div 
-        className="relative max-w-7xl max-h-[90vh] w-full mx-4"
+      <div
+        className="relative w-[94vw] h-[82vh] max-w-[1400px] max-h-[82vh] grid place-items-center overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        <img
-          src={currentImage.imageUrl || ''}
-          alt={currentImage.altText || currentImage.caption || 'Gallery image'}
-          className="w-full h-full object-contain rounded-lg"
-        />
+        {currentSrc && !imageFailed ? (
+          <img
+            key={`lightbox-image-${currentIndex}`}
+            src={currentSrc}
+            alt={currentImage.altText || currentImage.caption || 'Gallery image'}
+            className="block max-w-full max-h-full w-auto h-auto object-contain rounded-lg mx-auto"
+            onError={() => setImageFailed(true)}
+          />
+        ) : (
+          <div className="h-[60vh] w-full flex items-center justify-center rounded-lg bg-black/40 border border-white/15">
+            <p className="text-sm text-white/85">Image unavailable</p>
+          </div>
+        )}
         
         {/* Caption */}
         {currentImage.caption && (
@@ -129,6 +155,7 @@ export function Lightbox({ images, currentIndex, onClose, onNext, onPrev }: Ligh
           </button>
         ))}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

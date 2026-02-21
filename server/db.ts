@@ -1390,12 +1390,17 @@ export async function deleteProject(id: number) {
 }
 
 export async function addProjectImage(image: any) {
+  const resolvedImageUrl = image.imageUrl || image.videoUrl || null;
+  if (!resolvedImageUrl) {
+    throw new Error('Project image requires imageUrl or videoUrl');
+  }
+
   const { data, error } = await supabase
     .from('project_images')
     .insert({
       project_id: image.projectId,
       title: image.title,
-      image_url: image.imageUrl,
+      image_url: resolvedImageUrl,
       image_key: image.imageKey,
       video_url: image.videoUrl,
       caption: image.caption,
@@ -2344,12 +2349,17 @@ export async function getRenderingProjectImages(projectId: number) {
 }
 
 export async function addRenderingProjectImage(data: any) {
+  const resolvedImageUrl = data.imageUrl || data.videoUrl || null;
+  if (!resolvedImageUrl) {
+    throw new Error('Rendering project image requires imageUrl or videoUrl');
+  }
+
   const { error } = await supabase
     .from('rendering_project_images')
     .insert({
       rendering_project_id: data.renderingProjectId || data.projectId,
       title: data.title,
-      image_url: data.imageUrl,
+      image_url: resolvedImageUrl,
       image_key: data.imageKey,
       video_url: data.videoUrl,
       image_type: data.imageType || 'production',
@@ -2463,12 +2473,17 @@ export async function getExperientialProjectImages(projectId: number) {
 }
 
 export async function addExperientialProjectImage(data: any) {
+  const resolvedImageUrl = data.imageUrl || data.videoUrl || null;
+  if (!resolvedImageUrl) {
+    throw new Error('Experiential project image requires imageUrl or videoUrl');
+  }
+
   const { error } = await supabase
     .from('experiential_project_images')
     .insert({
       experiential_project_id: data.experientialProjectId || data.projectId,
       title: data.title,
-      image_url: data.imageUrl,
+      image_url: resolvedImageUrl,
       image_key: data.imageKey,
       video_url: data.videoUrl,
       image_type: data.imageType || 'production',

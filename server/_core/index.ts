@@ -173,7 +173,7 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
 
     try {
       const project = await db.getProjectBySlug(slug);
-      if (project?.status === "published") return redirect301(res, `/projects/${slug}`);
+      if (project?.status === "published") return redirect301(res, `/project/${slug}`);
 
       const newsItem = await db.getNewsBySlug(slug);
       if (newsItem?.status === "published") return redirect301(res, `/news/${slug}`);
@@ -187,18 +187,39 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
     }
   });
 
-  expressApp.get("/project/:slug", async (req, res) => {
+  expressApp.get("/projects/:slug", async (req, res) => {
     const originalSlug = slugifyLoose(req.params.slug || "");
     const slug = legacySlugAliases[originalSlug] || originalSlug;
     if (!slug) return redirect301(res, "/projects");
 
     try {
       const project = await db.getProjectBySlug(slug);
-      if (project?.status === "published") return redirect301(res, `/projects/${slug}`);
+      if (project?.status === "published") return redirect301(res, `/project/${slug}`);
       return redirect301(res, "/projects");
     } catch {
       return redirect301(res, "/projects");
     }
+  });
+
+  expressApp.get("/project/:slug", async (req, res, next) => {
+    const originalSlug = slugifyLoose(req.params.slug || "");
+    const slug = legacySlugAliases[originalSlug] || originalSlug;
+    if (!slug) return redirect301(res, "/projects");
+
+    try {
+      const project = await db.getProjectBySlug(slug);
+      if (project?.status === "published") {
+        if (slug !== originalSlug) return redirect301(res, `/project/${slug}`);
+        return next();
+      }
+      return redirect301(res, "/projects");
+    } catch {
+      return redirect301(res, "/projects");
+    }
+  });
+
+  expressApp.get("/project", (_req, res) => {
+    return redirect301(res, "/projects");
   });
 
   expressApp.get("/resources/scenic-design-studio/v/:slug", async (req, res) => {
@@ -246,6 +267,7 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
     "/sitemap-index.xml",
     "/robots.txt",
     "/api/news/rss",
+    "/projects/rss.xml",
     "/articles/rss.xml",
     "/news/rss.xml",
     "/studio/tutorials/rss.xml",
@@ -386,6 +408,18 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
 
   // RSS feeds
   expressApp.get("/api/news/rss", generateRSSFeed);
+
+  expressApp.get("/projects/rss.xml", async (req, res) => {
+    try {
+      const baseUrl = `${req.protocol}://${req.get('host')}`;
+      const xml = await sitemap.generateProjectsRSS(baseUrl);
+      res.header("Content-Type", "application/rss+xml");
+      res.send(xml);
+    } catch (error) {
+      console.error("Error generating projects RSS:", error);
+      res.status(500).send("Error generating projects RSS");
+    }
+  });
 
   expressApp.get("/articles/rss.xml", async (req, res) => {
     try {

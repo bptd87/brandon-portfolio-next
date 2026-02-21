@@ -251,14 +251,17 @@ export function ProgressiveImage({
   // Apply image transformations based on source (Supabase or Cloudinary)
   const isSupabase = src.includes('supabase.co/storage/v1/object/public/');
   const isCloudinary = src.includes('cloudinary.com');
+  const supportsBlurPlaceholder = isSupabase || isCloudinary;
   
   const optimizedSrc = isSupabase 
     ? applySupabaseTransformations(src, width)
     : applyCloudinaryTransformations(src, width);
     
-  const blurredSrc = isSupabase
-    ? applySupabaseTransformations(src, undefined, true)
-    : applyCloudinaryTransformations(src, undefined, true);
+  const blurredSrc = supportsBlurPlaceholder
+    ? (isSupabase
+      ? applySupabaseTransformations(src, undefined, true)
+      : applyCloudinaryTransformations(src, undefined, true))
+    : '';
     
   const srcSet = isSupabase
     ? generateSupabaseSrcSet(src)
@@ -276,33 +279,27 @@ export function ProgressiveImage({
       `}
       style={aspectRatio ? { aspectRatio } : undefined}
     >
-      {/* Blurred placeholder - tiny smooth color wash (skip for eager loading) */}
-      {!imageError && shouldLoad && loading !== 'eager' && (
+      {/* Blurred placeholder - always used when supported for graceful blur-up */}
+      {!imageError && supportsBlurPlaceholder && (
         <img
           src={blurredSrc}
           alt=""
           className={`
-            absolute inset-0 w-full h-full object-cover
+            absolute inset-0 w-full h-full
+            ${objectFit === 'cover' ? 'object-cover' : 'object-contain'}
+            ${smartPosition ? objectPosition : ''}
+            scale-105 blur-xl saturate-110
             transition-opacity duration-500 ease-out
             ${showSharpImage ? 'opacity-0' : 'opacity-100'}
+            ${!shouldLoad ? 'animate-pulse' : ''}
           `}
           aria-hidden="true"
         />
       )}
 
-      {/* Skeleton loader - shown before intersection (not for eager loading) */}
-      {!shouldLoad && loading !== 'eager' && (
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900">
-          <div className="w-full h-full relative overflow-hidden">
-            {/* Shimmer effect - more visible */}
-            <div
-              className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite]"
-              style={{
-                background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%)',
-              }}
-            />
-          </div>
-        </div>
+      {/* Minimal fallback for non-transformable sources before intersection */}
+      {!shouldLoad && !supportsBlurPlaceholder && (
+        <div className="absolute inset-0 bg-muted/20 animate-pulse" />
       )}
 
       {/* Sharp image - fades in over blurred version */}
@@ -316,7 +313,8 @@ export function ProgressiveImage({
             w-full ${imageHeightClass}
             ${objectFit === 'cover' ? 'object-cover' : 'object-contain'}
             ${smartPosition ? objectPosition : ''}
-            ${loading === 'eager' ? 'opacity-100' : `transition-opacity duration-500 ease-out ${showSharpImage ? 'opacity-100' : 'opacity-0'}`}
+            transition-opacity duration-500 ease-out
+            ${showSharpImage ? 'opacity-100' : 'opacity-0'}
             ${className}
           `}
           onClick={onClick}

@@ -156,6 +156,18 @@ describe("RSS Feed Generation", () => {
     expect(xml).toContain('</rss>');
   });
 
+  it("should generate projects RSS with valid XML", async () => {
+    const xml = await sitemap.generateProjectsRSS();
+
+    expect(xml).toContain('<?xml version="1.0" encoding="UTF-8"?>');
+    expect(xml).toContain('<rss version="2.0"');
+    expect(xml).toContain('<title>Brandon PT Davis - Projects</title>');
+    expect(xml).toContain('<link>https://www.brandonptdavis.com/projects</link>');
+    expect(xml).toContain('href="https://www.brandonptdavis.com/projects/rss.xml"');
+    expect(xml).toContain('</channel>');
+    expect(xml).toContain('</rss>');
+  });
+
   it("should include item elements in articles RSS", async () => {
     const xml = await sitemap.generateArticlesRSS();
     
@@ -173,6 +185,18 @@ describe("RSS Feed Generation", () => {
     const xml = await sitemap.generateNewsRSS();
     
     // If there are published news items, check item structure
+    if (xml.includes('<item>')) {
+      expect(xml).toContain('<title>');
+      expect(xml).toContain('<link>');
+      expect(xml).toContain('<guid isPermaLink="true">');
+      expect(xml).toContain('<pubDate>');
+      expect(xml).toContain('</item>');
+    }
+  });
+
+  it("should include item elements in projects RSS", async () => {
+    const xml = await sitemap.generateProjectsRSS();
+
     if (xml.includes('<item>')) {
       expect(xml).toContain('<title>');
       expect(xml).toContain('<link>');

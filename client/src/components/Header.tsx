@@ -1,6 +1,7 @@
 import { Link, useLocation } from "wouter";
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown, Menu, UserRound, FileText, PenTool, GraduationCap, Users } from "lucide-react";
+import { motion } from "framer-motion";
 import MobileMenu from "./MobileMenu";
 
 // Creative Theatrical Icons for Dropdown Items
@@ -167,6 +168,16 @@ export default function Header() {
     return location.startsWith(path);
   };
 
+  const ActiveUnderline = ({ active, color }: { active: boolean; color: string }) =>
+    active ? (
+      <motion.span
+        layoutId="header-active-underline"
+        className="absolute -bottom-1 left-0 h-[2px] w-full rounded-full"
+        style={{ backgroundColor: color }}
+        transition={{ type: "spring", stiffness: 500, damping: 38, mass: 0.45 }}
+      />
+    ) : null;
+
   // Auto-hide navigation on scroll
   useEffect(() => {
     const handleScroll = () => {
@@ -293,16 +304,21 @@ export default function Header() {
                 onMouseEnter={handlePortfolioMouseEnter}
                 onMouseLeave={handlePortfolioMouseLeave}
               >
+                {(() => {
+                  const isPortfolioActive = isActive("/projects") || isActive("/projects/scenic-design");
+                  return (
                 <Link
                   href="/projects/scenic-design"
                   className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-[#2196F3] relative group ${
-                    isActive("/projects") || isActive("/projects/scenic-design") ? "text-[#2196F3]" : ""
+                    isPortfolioActive ? "text-[#2196F3]" : ""
                   }`}
                 >
                   PORTFOLIO
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${portfolioOpen ? "rotate-180" : ""}`} />
-                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#2196F3] group-hover:w-full transition-all duration-300"></span>
+                  <ActiveUnderline active={isPortfolioActive} color="#2196F3" />
                 </Link>
+                  );
+                })()}
 
                 {/* Dropdown Menu */}
                 {portfolioOpen && (
@@ -336,7 +352,7 @@ export default function Header() {
                 }`}
               >
                 NEWS
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#FF5722] group-hover:w-full transition-all duration-300"></span>
+                <ActiveUnderline active={isActive("/news")} color="#FF5722" />
               </Link>
 
               {/* About Dropdown - Hover Based with Delay */}
@@ -346,16 +362,22 @@ export default function Header() {
                 onMouseEnter={handleAboutMouseEnter}
                 onMouseLeave={handleAboutMouseLeave}
               >
+                {(() => {
+                  const isAboutActive =
+                    isActive("/about") || isActive("/teaching-philosophy") || isActive("/about/teaching") || isActive("/resume") || isActive("/creative-statement");
+                  return (
                 <Link
                   href="/about"
                   className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-[#4CAF50] relative group ${
-                    isActive("/about") || isActive("/teaching-philosophy") || isActive("/about/teaching") || isActive("/resume") || isActive("/creative-statement") ? "text-[#4CAF50]" : ""
+                    isAboutActive ? "text-[#4CAF50]" : ""
                   }`}
                 >
                   ABOUT
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${aboutOpen ? "rotate-180" : ""}`} />
-                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#4CAF50] group-hover:w-full transition-all duration-300"></span>
+                  <ActiveUnderline active={isAboutActive} color="#4CAF50" />
                 </Link>
+                  );
+                })()}
 
                 {/* Dropdown Menu */}
                 {aboutOpen && (
@@ -390,16 +412,21 @@ export default function Header() {
                 onMouseEnter={handleStudioMouseEnter}
                 onMouseLeave={handleStudioMouseLeave}
               >
+                {(() => {
+                  const isStudioActive = isActive("/studio") || isActive("/articles");
+                  return (
                 <Link
                   href="/studio"
                   className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-[#9C27B0] relative group ${
-                    isActive("/studio") || isActive("/articles") ? "text-[#9C27B0]" : ""
+                    isStudioActive ? "text-[#9C27B0]" : ""
                   }`}
                 >
                   STUDIO
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${studioOpen ? "rotate-180" : ""}`} />
-                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#9C27B0] group-hover:w-full transition-all duration-300"></span>
+                  <ActiveUnderline active={isStudioActive} color="#9C27B0" />
                 </Link>
+                  );
+                })()}
 
                 {/* Dropdown Menu */}
                 {studioOpen && (

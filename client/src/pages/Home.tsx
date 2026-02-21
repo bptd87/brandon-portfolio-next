@@ -4,14 +4,16 @@ import Footer from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { trpc } from "@/lib/trpc";
-import { Link } from "wouter";
+import { useLocation } from "wouter";
 import { getProjectPath } from "@/lib/projectRoutes";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { ProjectGridSkeleton } from "@/components/SkeletonLoaders";
+import type { CSSProperties, MouseEvent } from "react";
 
 export default function Home() {
+  const [, setLocation] = useLocation();
   const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://www.brandonptdavis.com';
   const { data: allProjects, isLoading: projectsLoading } = trpc.projects.list.useQuery({
     status: 'published',
@@ -19,6 +21,43 @@ export default function Home() {
   });
 
   const projects = allProjects;
+  const scenicAlt = (title: string) => `${title} scenic design by Brandon PT Davis`;
+  const animateCardDeparture = async (target: HTMLElement) => {
+    const card = target.querySelector(".transition-card") as HTMLElement | null;
+    if (!card || typeof card.animate !== "function") return;
+    const animation = card.animate(
+      [
+        { transform: "scale(1)", filter: "brightness(1)" },
+        { transform: "scale(0.975)", filter: "brightness(1.08)" },
+      ],
+      { duration: 150, easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "forwards" }
+    );
+    try {
+      await animation.finished;
+    } catch {
+      // ignore interrupted animation
+    }
+  };
+  const navigateWithTransition = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+      return;
+    }
+    event.preventDefault();
+    const anchor = event.currentTarget;
+    const navigate = () => setLocation(href);
+    const performNavigation = async () => {
+      await animateCardDeparture(anchor);
+      navigate();
+    };
+    const doc = document as Document & { startViewTransition?: (cb: () => void) => void };
+    if (doc.startViewTransition) {
+      doc.startViewTransition(() => {
+        void performNavigation();
+      });
+    } else {
+      void performNavigation();
+    }
+  };
 
   return (
     <>
@@ -127,15 +166,19 @@ export default function Home() {
                     '#9C27B0',
                   ];
                   const accentColor = accentColors[index % accentColors.length];
+                  const href = getProjectPath(project);
 
                   return (
-                    <Link key={project.id} href={getProjectPath(project)}>
+                    <a key={project.id} href={href} onClick={(event) => navigateWithTransition(event, href)}>
                       <Card className="group border-0 bg-transparent shadow-none">
-                        <div className="relative aspect-[16/9] overflow-hidden rounded-md">
+                        <div
+                          className="transition-card relative aspect-[16/9] overflow-hidden rounded-md"
+                          style={{ viewTransitionName: `project-card-${project.slug}` } as CSSProperties}
+                        >
                           {project.coverImageUrl ? (
                             <ProgressiveImage
                               src={project.coverImageUrl}
-                              alt={project.title}
+                              alt={scenicAlt(project.title)}
                               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                               aspectRatio="16/9"
                               smartPosition={true}
@@ -156,7 +199,7 @@ export default function Home() {
                           </h3>
                         </div>
                       </Card>
-                    </Link>
+                    </a>
                   );
                 })}
               </div>

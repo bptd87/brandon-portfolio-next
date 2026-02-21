@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import { useState } from "react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Lightbox } from "@/components/Lightbox";
+import { AnimatePresence } from "framer-motion";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -159,7 +160,7 @@ export default function ProjectDetail() {
         breadcrumbs={[
           { name: "Home", url: "https://www.brandonptdavis.com" },
           { name: "Projects", url: "https://www.brandonptdavis.com/projects" },
-          { name: project.title, url: `https://www.brandonptdavis.com/projects/${project.slug}` },
+          { name: project.title, url: `https://www.brandonptdavis.com/project/${project.slug}` },
         ]}
       />
       <StructuredData
@@ -186,7 +187,7 @@ export default function ProjectDetail() {
               },
             }),
           } : undefined,
-          url: `https://www.brandonptdavis.com/projects/${project.slug}`,
+          url: `https://www.brandonptdavis.com/project/${project.slug}`,
           workExample: projectImages.length > 0 ? projectImages : undefined,
           about: project.designNotes || undefined,
           contributor: contributors.length > 0 ? contributors : undefined,
@@ -208,7 +209,7 @@ export default function ProjectDetail() {
       {/* Sticky Navigation Arrows */}
       {prevProject && (
         <button
-          onClick={() => setLocation(`/projects/${prevProject.slug}`)}
+          onClick={() => setLocation(`/project/${prevProject.slug}`)}
           className="fixed left-4 top-1/2 -translate-y-1/2 z-50 backdrop-blur-md bg-background/80 border-2 hover:bg-background p-4 rounded-full transition-all hover:scale-110"
           style={{ borderColor: accentColor }}
           aria-label="Previous project"
@@ -219,7 +220,7 @@ export default function ProjectDetail() {
 
       {nextProject && (
         <button
-          onClick={() => setLocation(`/projects/${nextProject.slug}`)}
+          onClick={() => setLocation(`/project/${nextProject.slug}`)}
           className="fixed right-4 top-1/2 -translate-y-1/2 z-50 backdrop-blur-md bg-background/80 border-2 hover:bg-background p-4 rounded-full transition-all hover:scale-110"
           style={{ borderColor: accentColor }}
           aria-label="Next project"
@@ -751,15 +752,17 @@ export default function ProjectDetail() {
       <Footer />
 
       {/* Lightbox */}
-      {lightboxOpen && (
-        <Lightbox
-          images={lightboxImages}
-          currentIndex={lightboxIndex}
-          onClose={() => setLightboxOpen(false)}
-          onNext={() => setLightboxIndex((prev) => Math.min(prev + 1, lightboxImages.length - 1))}
-          onPrev={() => setLightboxIndex((prev) => Math.max(prev - 1, 0))}
-        />
-      )}
+      <AnimatePresence>
+        {lightboxOpen && (
+          <Lightbox
+            images={lightboxImages}
+            currentIndex={lightboxIndex}
+            onClose={() => setLightboxOpen(false)}
+            onNext={() => setLightboxIndex((prev) => Math.min(prev + 1, lightboxImages.length - 1))}
+            onPrev={() => setLightboxIndex((prev) => Math.max(prev - 1, 0))}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -8,8 +8,10 @@ import { Link, useParams, useLocation } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useState, useEffect } from "react";
+import type { CSSProperties } from "react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Lightbox } from "@/components/Lightbox";
+import { AnimatePresence } from "framer-motion";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -91,9 +93,12 @@ export default function ProjectDetail() {
   }
 
   const images = project.images || [];
-  const productionPhotos = images.filter(img => img.imageType === 'production');
-  const renderings = images.filter(img => img.imageType === 'rendering');
-  const videos = images.filter(img => img.imageType === 'video');
+  const productionMedia = images.filter((img) => img.imageType === 'production');
+  const videoMedia = images.filter((img) => img.imageType === 'video');
+  const renderingMedia = images.filter((img) => img.imageType === 'rendering');
+  const mediaItems = [...productionMedia, ...videoMedia, ...renderingMedia];
+  const lightboxSourceImages = mediaItems.filter((img) => img.imageType !== 'video' && !!img.imageUrl);
+  const scenicAlt = (title: string) => `${title} scenic design by Brandon PT Davis`;
 
   // Parse creative team from JSON array
   let creativeTeamArray: Array<{ name: string, role: string }> = [];
@@ -174,7 +179,7 @@ export default function ProjectDetail() {
   const accentColor = ACCENT_COLORS[Math.abs(project.id) % ACCENT_COLORS.length] || ACCENT_COLORS[0];
 
   // Prepare creative work schema data
-  const projectImages = productionPhotos.slice(0, 5).map(img => ({
+  const projectImages = lightboxSourceImages.slice(0, 5).map((img) => ({
     type: 'ImageObject' as const,
     contentUrl: img.imageUrl || '',
     caption: img.caption || undefined,
@@ -188,6 +193,7 @@ export default function ProjectDetail() {
   }));
 
   const projectUrl = `https://www.brandonptdavis.com${location}`;
+  const heroTransitionName = `project-card-${project.slug}`;
   const disciplineLabel = project.discipline === 'scenic_design'
     ? 'Scenic Design'
     : project.discipline === 'experiential_design'
@@ -275,8 +281,7 @@ export default function ProjectDetail() {
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] xl:grid-cols-[minmax(0,1fr)_360px]">
             <AnimatedSection className="lg:hidden">
               <aside
-                className="space-y-6 rounded-xl border bg-[#0f0f13] p-6"
-                style={{ borderColor: `${accentColor}55`, boxShadow: `inset 0 1px 0 ${accentColor}22` }}
+                className="space-y-6 rounded-xl bg-[#0f0f13] p-6"
               >
                 <div className="space-y-4">
                   {project.subcategory && (
@@ -321,101 +326,63 @@ export default function ProjectDetail() {
             </AnimatedSection>
 
             <div className="space-y-6">
-              {productionPhotos.length > 0 ? (
-                productionPhotos.map((img, idx) => (
-                  <AnimatedSection key={img.id} delay={idx * 30}>
-                    <figure
-                      className="group relative overflow-hidden rounded-xl bg-black/90 cursor-pointer shadow-lg"
-                      onClick={() => {
-                        setLightboxImages(productionPhotos);
-                        setLightboxIndex(idx);
-                        setLightboxOpen(true);
-                      }}
-                    >
-                      <ProgressiveImage
-                        src={img.imageUrl || ""}
-                        alt={img.altText || img.caption || project.title}
-                        className="transition-transform duration-500 group-hover:scale-[1.01]"
-                        objectFit="contain"
-                        smartPosition={true}
-                        loading="lazy"
-                      />
-                    </figure>
+              {mediaItems.length > 0 ? (
+                mediaItems.map((item, idx) => (
+                  <AnimatedSection key={item.id} delay={idx * 30}>
+                    {item.imageType === 'video' ? (
+                      <div className="overflow-hidden rounded-xl bg-black shadow-lg">
+                        <div className="relative w-full pb-[56.25%]">
+                          <iframe
+                            src={getEmbedUrl(item.videoUrl || "")}
+                            title={`Video: ${item.caption || "embedded video"}`}
+                            className="absolute inset-0 w-full h-full"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <figure
+                        className="group relative overflow-hidden rounded-xl bg-black/90 cursor-pointer shadow-lg"
+                        style={idx === 0 ? ({ viewTransitionName: heroTransitionName } as CSSProperties) : undefined}
+                        onClick={() => {
+                          setLightboxImages(lightboxSourceImages);
+                          const lightboxIndexFromId = lightboxSourceImages.findIndex((img) => img.id === item.id);
+                          setLightboxIndex(lightboxIndexFromId >= 0 ? lightboxIndexFromId : 0);
+                          setLightboxOpen(true);
+                        }}
+                      >
+                        <ProgressiveImage
+                          src={item.imageUrl || ""}
+                          alt={item.altText || item.caption || scenicAlt(project.title)}
+                          className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.01]"
+                          objectFit="cover"
+                          smartPosition={true}
+                          loading="lazy"
+                          enableScrollAnimation={false}
+                        />
+                      </figure>
+                    )}
                   </AnimatedSection>
                 ))
               ) : project.coverImageUrl ? (
-                <figure className="overflow-hidden rounded-xl bg-black/90 shadow-lg">
+                <figure
+                  className="overflow-hidden rounded-xl bg-black/90 shadow-lg"
+                  style={{ viewTransitionName: heroTransitionName } as CSSProperties}
+                >
                   <ProgressiveImage
                     src={project.coverImageUrl}
-                    alt={project.title}
-                    objectFit="contain"
+                    alt={scenicAlt(project.title)}
+                    objectFit="cover"
                     smartPosition={true}
                     loading="eager"
                   />
                 </figure>
               ) : null}
 
-              {renderings.length > 0 && (
-                <AnimatedSection>
-                  <div className="pt-4">
-                    <h3 className="mb-4 text-xs font-semibold tracking-[0.22em] uppercase text-foreground/60">
-                      Renderings
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {renderings.map((img, idx) => (
-                        <figure
-                          key={img.id}
-                          className="group overflow-hidden rounded-xl bg-black/90 cursor-pointer shadow-lg"
-                          onClick={() => {
-                            setLightboxImages(renderings);
-                            setLightboxIndex(idx);
-                            setLightboxOpen(true);
-                          }}
-                        >
-                          <ProgressiveImage
-                            src={img.imageUrl || ""}
-                            alt={img.altText || img.caption || project.title}
-                            className="transition-transform duration-500 group-hover:scale-[1.03]"
-                            objectFit="contain"
-                            smartPosition={true}
-                            loading="lazy"
-                          />
-                        </figure>
-                      ))}
-                    </div>
-                  </div>
-                </AnimatedSection>
-              )}
-
-              {videos.length > 0 && (
-                <AnimatedSection>
-                  <div className="pt-4">
-                    <h3 className="mb-4 text-xs font-semibold tracking-[0.22em] uppercase text-foreground/60">
-                      Video
-                    </h3>
-                    <div className="grid grid-cols-1 gap-6">
-                      {videos.map((video) => (
-                        <div key={video.id} className="overflow-hidden rounded-xl bg-black shadow-lg">
-                          <div className="relative w-full pb-[56.25%]">
-                            <iframe
-                              src={getEmbedUrl(video.videoUrl || "")}
-                              title={`Video: ${video.caption || "embedded video"}`}
-                              className="absolute inset-0 w-full h-full"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                            />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </AnimatedSection>
-              )}
-
               <AnimatedSection className="lg:hidden">
                 <aside
-                  className="space-y-8 rounded-xl border bg-[#0f0f13] p-6"
-                  style={{ borderColor: `${accentColor}55`, boxShadow: `inset 0 1px 0 ${accentColor}22` }}
+                  className="space-y-8 rounded-xl bg-[#0f0f13] p-6"
                 >
                   {creativeTeamArray.length > 0 && (
                     <div className="space-y-3">
@@ -505,8 +472,7 @@ export default function ProjectDetail() {
 
             <AnimatedSection>
               <aside
-                className="hidden lg:block lg:sticky lg:top-24 space-y-8 rounded-xl border bg-[#0f0f13] p-6 md:p-7"
-                style={{ borderColor: `${accentColor}55`, boxShadow: `inset 0 1px 0 ${accentColor}22` }}
+                className="hidden lg:block space-y-8 rounded-xl bg-[#0f0f13] p-6 md:p-7"
               >
                 <div className="space-y-4">
                   {project.subcategory && (
@@ -685,15 +651,17 @@ export default function ProjectDetail() {
       <Footer />
 
       {/* Lightbox */}
-      {lightboxOpen && (
-        <Lightbox
-          images={lightboxImages}
-          currentIndex={lightboxIndex}
-          onClose={() => setLightboxOpen(false)}
-          onNext={() => setLightboxIndex((prev) => Math.min(prev + 1, lightboxImages.length - 1))}
-          onPrev={() => setLightboxIndex((prev) => Math.max(prev - 1, 0))}
-        />
-      )}
+      <AnimatePresence>
+        {lightboxOpen && (
+          <Lightbox
+            images={lightboxImages}
+            currentIndex={lightboxIndex}
+            onClose={() => setLightboxOpen(false)}
+            onNext={() => setLightboxIndex((prev) => Math.min(prev + 1, lightboxImages.length - 1))}
+            onPrev={() => setLightboxIndex((prev) => Math.max(prev - 1, 0))}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

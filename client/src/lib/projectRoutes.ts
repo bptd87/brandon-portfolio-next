@@ -14,7 +14,7 @@ export const getProjectPath = (project: ProjectLinkTarget) => {
   }
 
   if (project.discipline === 'scenic_design') {
-    return `/projects/${project.slug}`;
+    return `/project/${project.slug}`;
   }
 
   // Fallback for unknown disciplines - link to main projects page

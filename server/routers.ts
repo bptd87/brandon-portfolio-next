@@ -18,6 +18,19 @@ import { authRouter } from "./routers/auth";
 import { categoriesRouter } from "./routers/categories";
 import { tagsRouter } from "./routers/tags";
 
+const projectMediaInput = z.object({
+  imageUrl: z.string().optional(),
+  imageKey: z.string().optional(),
+  videoUrl: z.string().optional(),
+  imageType: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['production', 'rendering', 'technical_drawing', 'video'])),
+  title: z.string().optional(),
+  caption: z.string().optional(),
+  altText: z.string().optional(),
+  sortOrder: z.number(),
+}).refine((value) => Boolean(value.imageUrl || value.videoUrl), {
+  message: "Each media item must include an image URL or a video URL.",
+});
+
 export const appRouter = router({
   system: systemRouter,
 
@@ -115,16 +128,7 @@ export const appRouter = router({
         seoDescription: z.string().optional(),
         seoKeywords: z.string().optional(),
         tagIds: z.array(z.number()).optional(),
-        images: z.array(z.object({
-          imageUrl: z.string().optional(),
-          imageKey: z.string().optional(),
-          videoUrl: z.string().optional(),
-          imageType: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['production', 'rendering', 'technical_drawing', 'video'])),
-          title: z.string().optional(),
-          caption: z.string().optional(),
-          altText: z.string().optional(),
-          sortOrder: z.number(),
-        })).optional(),
+        images: z.array(projectMediaInput).optional(),
       }))
       .mutation(async ({ input }) => {
         const { tagIds, images, ...projectData } = input;
@@ -175,16 +179,7 @@ export const appRouter = router({
         seoDescription: z.string().optional(),
         seoKeywords: z.string().optional(),
         tagIds: z.array(z.number()).optional(),
-        images: z.array(z.object({
-          imageUrl: z.string().optional(),
-          imageKey: z.string().optional(),
-          videoUrl: z.string().optional(),
-          imageType: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['production', 'rendering', 'technical_drawing', 'video'])),
-          title: z.string().optional(),
-          caption: z.string().optional(),
-          altText: z.string().optional(),
-          sortOrder: z.number(),
-        })).optional(),
+        images: z.array(projectMediaInput).optional(),
       }))
       .mutation(async ({ input }) => {
         const { id, tagIds, images, ...projectData } = input;
@@ -242,13 +237,16 @@ export const appRouter = router({
     addImage: adminProcedure
       .input(z.object({
         projectId: z.number(),
-        imageUrl: z.string(),
+        imageUrl: z.string().optional(),
         imageKey: z.string().optional(), // Optional - legacy Cloudinary key no longer used
+        videoUrl: z.string().optional(),
         title: z.string().optional(),
         caption: z.string().optional(),
         altText: z.string().optional(),
         imageType: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['production', 'rendering', 'technical_drawing', 'video'])).optional(),
         sortOrder: z.number().default(0),
+      }).refine((value) => Boolean(value.imageUrl || value.videoUrl), {
+        message: "Project media must include an image URL or a video URL.",
       }))
       .mutation(async ({ input }) => {
         const id = await db.addProjectImage(input);

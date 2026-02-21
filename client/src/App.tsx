@@ -2,7 +2,7 @@ import React from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch, useLocation } from "wouter";
+import { Route, Switch, useLocation, useParams } from "wouter";
 import { lazy, Suspense } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import PageTransition from "./components/PageTransition";
@@ -75,6 +75,21 @@ const FAQ = lazy(() => import("./pages/FAQ"));
 const Accessibility = lazy(() => import("./pages/Accessibility"));
 const Sitemap = lazy(() => import("./pages/Sitemap"));
 
+function LegacyProjectRedirect() {
+  const params = useParams<{ slug?: string }>();
+  const [, setLocation] = useLocation();
+
+  React.useEffect(() => {
+    if (params?.slug) {
+      setLocation(`/project/${params.slug}`, { replace: true });
+      return;
+    }
+    setLocation("/projects", { replace: true });
+  }, [params, setLocation]);
+
+  return null;
+}
+
 function Router() {
   const [location] = useLocation();
 
@@ -95,13 +110,15 @@ function Router() {
           <Route path={"/login"} component={Login} />
           <Route path={"/auth-debug"} component={AuthDebug} />
           <Route path={"/"} component={Home} />
+          <Route path={"/project"} component={LegacyProjectRedirect} />
+          <Route path={"/project/:slug"} component={ProjectDetailRouter} />
           <Route path={"/projects"} component={Projects} />
           <Route path={"/projects/scenic-design"} component={Projects} />
           <Route path={"/projects/experiential"} component={ExperientialPortfolio} />
           <Route path={"/projects/experiential/rendering/:slug"} component={ProjectDetailRouter} />
           <Route path={"/projects/rendering"} component={RenderingPortfolio} />
           <Route path={"/projects/rendering/:slug"} component={ProjectDetailRouter} />
-          <Route path={"/projects/:slug"} component={ProjectDetailRouter} />
+          <Route path={"/projects/:slug"} component={LegacyProjectRedirect} />
           <Route path={"/news"} component={News} />
           <Route path={"/news/:slug"} component={NewsDetail} />
           <Route path={"/articles"} component={Articles} />

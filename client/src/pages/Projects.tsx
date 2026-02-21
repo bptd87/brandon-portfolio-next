@@ -1,17 +1,19 @@
 import { Card } from "@/components/ui/card";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { trpc } from "@/lib/trpc";
-import { Link } from "wouter";
+import { useLocation } from "wouter";
 import { getProjectPath } from "@/lib/projectRoutes";
 import { StaggerList, StaggerItem } from "@/components/animations/Stagger";
 import { SEO } from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useEffect, useMemo, useState } from "react";
+import type { CSSProperties, MouseEvent } from "react";
 import { PortfolioGridSkeleton } from "@/components/SkeletonLoaders";
 import { AnimatedSection } from "@/components/AnimatedSection";
 
 export default function Projects() {
+  const [, setLocation] = useLocation();
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>('all');
   const accentPalette = ['#FF5722', '#00BCD4', '#E91E63', '#FFC107', '#9C27B0'];
   
@@ -73,6 +75,43 @@ export default function Projects() {
 
   const pageTitle = "Scenic Design";
   const pageSubtitle = "Scenic environments built for story, performance, and collaboration.";
+  const scenicAlt = (title: string) => `${title} scenic design by Brandon PT Davis`;
+  const animateCardDeparture = async (target: HTMLElement) => {
+    const card = target.querySelector(".transition-card") as HTMLElement | null;
+    if (!card || typeof card.animate !== "function") return;
+    const animation = card.animate(
+      [
+        { transform: "scale(1)", filter: "brightness(1)" },
+        { transform: "scale(0.975)", filter: "brightness(1.08)" },
+      ],
+      { duration: 150, easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "forwards" }
+    );
+    try {
+      await animation.finished;
+    } catch {
+      // ignore interrupted animation
+    }
+  };
+  const navigateWithTransition = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+      return;
+    }
+    event.preventDefault();
+    const anchor = event.currentTarget;
+    const navigate = () => setLocation(href);
+    const performNavigation = async () => {
+      await animateCardDeparture(anchor);
+      navigate();
+    };
+    const doc = document as Document & { startViewTransition?: (cb: () => void) => void };
+    if (doc.startViewTransition) {
+      doc.startViewTransition(() => {
+        void performNavigation();
+      });
+    } else {
+      void performNavigation();
+    }
+  };
 
   return (
     <div className="min-h-screen">
@@ -173,16 +212,20 @@ export default function Projects() {
               >
                 {filteredProjects.map((project, index) => {
                   const accentColor = accentPalette[index % accentPalette.length];
+                  const href = getProjectPath(project);
 
                   return (
                     <StaggerItem key={project.id} dramatic={true}>
-                      <Link href={getProjectPath(project)}>
+                      <a href={href} onClick={(event) => navigateWithTransition(event, href)}>
                         <Card className="group border-0 bg-transparent shadow-none">
-                          <div className="relative aspect-[16/9] overflow-hidden rounded-md">
+                          <div
+                            className="transition-card relative aspect-[16/9] overflow-hidden rounded-md"
+                            style={{ viewTransitionName: `project-card-${project.slug}` } as CSSProperties}
+                          >
                             {project.coverImageUrl ? (
                               <ProgressiveImage
                                 src={project.coverImageUrl}
-                                alt={project.title}
+                                alt={scenicAlt(project.title)}
                                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                                 aspectRatio="16/9"
                                 smartPosition={true}
@@ -202,7 +245,7 @@ export default function Projects() {
                             </h3>
                           </div>
                         </Card>
-                      </Link>
+                      </a>
                     </StaggerItem>
                   );
                 })}

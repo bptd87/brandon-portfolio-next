@@ -837,7 +837,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
                             Generate
                           </Button>
                         </div>
-                        <p className="text-xs text-muted-foreground">/projects/{formData.slug || "..."}</p>
+                        <p className="text-xs text-muted-foreground">/project/{formData.slug || "..."}</p>
                       </div>
 
                       <div className="space-y-2">
@@ -1403,7 +1403,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
                           {formData.seoTitle || formData.title || "Project Title"}
                         </p>
                         <p className="text-green-700 text-sm">
-                          brandonptdavis.com/projects/{formData.slug || "..."}
+                          brandonptdavis.com/project/{formData.slug || "..."}
                         </p>
                         <p className="text-sm text-muted-foreground line-clamp-2">
                           {formData.seoDescription || formData.excerpt || "Project description will appear here..."}
