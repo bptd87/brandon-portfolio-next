@@ -146,7 +146,12 @@ function getDefaultShareImage(origin: string): string {
 
 async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
   const origin = getRequestSiteUrl(req);
-  const pathOnly = req.path;
+  const pathOnly = (() => {
+    const raw = String(req.originalUrl || req.url || req.path || "/");
+    const noHash = raw.split("#")[0];
+    const noQuery = noHash.split("?")[0];
+    return noQuery || "/";
+  })();
   const canonical = `${origin}${pathOnly === "/" ? "" : pathOnly}`;
   const decodedPath = decodeURIComponent(pathOnly);
   const cacheKey = `${origin}|${decodedPath}`;
