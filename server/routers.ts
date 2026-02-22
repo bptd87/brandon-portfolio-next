@@ -31,6 +31,35 @@ const projectMediaInput = z.object({
   message: "Each media item must include an image URL or a video URL.",
 });
 
+type ListCacheEntry<T> = {
+  expiresAt: number;
+  data: T;
+};
+
+const PUBLIC_LIST_CACHE_TTL_MS = 60 * 1000;
+type ProjectsListResult = Awaited<ReturnType<typeof db.getAllProjects>>;
+type NewsListResult = Awaited<ReturnType<typeof db.getAllNews>>;
+type ArticlesListResult = Awaited<ReturnType<typeof db.getAllArticles>>;
+
+const projectsListCache = new Map<string, ListCacheEntry<ProjectsListResult>>();
+const newsListCache = new Map<string, ListCacheEntry<NewsListResult>>();
+const articlesListCache = new Map<string, ListCacheEntry<ArticlesListResult>>();
+
+function getCachedList<T>(cache: Map<string, ListCacheEntry<T>>, key: string): T | null {
+  const hit = cache.get(key);
+  if (!hit) return null;
+  if (hit.expiresAt < Date.now()) {
+    cache.delete(key);
+    return null;
+  }
+  return hit.data;
+}
+
+function setCachedList<T>(cache: Map<string, ListCacheEntry<T>>, key: string, data: T): T {
+  cache.set(key, { data, expiresAt: Date.now() + PUBLIC_LIST_CACHE_TTL_MS });
+  return data;
+}
+
 export const appRouter = router({
   system: systemRouter,
 
@@ -59,8 +88,16 @@ export const appRouter = router({
         categoryId: z.number().optional(),
         discipline: z.preprocess((val) => (typeof val === 'string' ? val.toLowerCase() : val), z.enum(['scenic_design', 'experiential_design', 'rendering'])).optional(),
       }).optional())
-      .query(async ({ input }) => {
-        return await db.getAllProjects(input);
+      .query(async ({ input, ctx }) => {
+        const cacheable = !ctx.user && input?.status === "published";
+        if (!cacheable) {
+          return await db.getAllProjects(input);
+        }
+        const key = JSON.stringify(input || {});
+        const cached = getCachedList(projectsListCache, key);
+        if (cached) return cached;
+        const fresh = await db.getAllProjects(input);
+        return setCachedList(projectsListCache, key, fresh);
       }),
 
     getById: publicProcedure
@@ -68,12 +105,6 @@ export const appRouter = router({
       .query(async ({ input }) => {
         const project = await db.getProjectById(input.id);
         if (!project) return null;
-
-        console.log(`📦 Returning project ${input.id}:`, {
-          title: project.title,
-          hasCreativeTeam: !!project.creativeTeam,
-          creativeTeamLength: Array.isArray(project.creativeTeam) ? project.creativeTeam.length : 0
-        });
 
         const [images, tags] = await Promise.all([
           db.getProjectImages(input.id),
@@ -521,8 +552,15 @@ export const appRouter = router({
         const filters = (!ctx.user || ctx.user.role !== 'admin')
           ? { ...input, status: input?.status ?? 'published' as const }
           : input;
-
-        return await db.getAllNews(filters);
+        const cacheable = !ctx.user && filters?.status === "published";
+        if (!cacheable) {
+          return await db.getAllNews(filters);
+        }
+        const key = JSON.stringify(filters || {});
+        const cached = getCachedList(newsListCache, key);
+        if (cached) return cached;
+        const fresh = await db.getAllNews(filters);
+        return setCachedList(newsListCache, key, fresh);
       }),
 
     getById: publicProcedure
@@ -681,8 +719,19 @@ export const appRouter = router({
         categoryId: z.number().optional(),
         authorId: z.number().optional(),
       }).optional())
-      .query(async ({ input }) => {
-        return await db.getAllArticles(input);
+      .query(async ({ input, ctx }) => {
+        const filters = (!ctx.user || ctx.user.role !== 'admin')
+          ? { ...input, status: input?.status ?? 'published' as const }
+          : input;
+        const cacheable = !ctx.user && filters?.status === "published";
+        if (!cacheable) {
+          return await db.getAllArticles(filters);
+        }
+        const key = JSON.stringify(filters || {});
+        const cached = getCachedList(articlesListCache, key);
+        if (cached) return cached;
+        const fresh = await db.getAllArticles(filters);
+        return setCachedList(articlesListCache, key, fresh);
       }),
 
     getById: publicProcedure

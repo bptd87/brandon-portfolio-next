@@ -23,86 +23,54 @@ export const analyticsRouter = router({
     .mutation(async ({ input, ctx }: { input: { sessionId: string, pagePath: string, userAgent?: string }, ctx: any }) => {
       const ip = ctx.req.ip || ctx.req.headers['x-forwarded-for'] || ctx.req.headers['x-real-ip'] || 'unknown';
       const ipString = Array.isArray(ip) ? ip[0] : ip;
-
-      console.log('📡 Analytics IP debug:', {
-        ip: ipString,
-        hasIpinfoToken: !!process.env.IPINFO_TOKEN,
-        cfCity: ctx.req.headers['cf-ipcity'],
-        cfRegion: ctx.req.headers['cf-region'],
-        cfCountry: ctx.req.headers['cf-ipcountry'],
-      });
-
-      let geoData: { city: string | null, region: string | null, country: string | null } = { city: null, region: null, country: null };
-
-      // PRIORITY 1: Use CloudFlare headers if site is behind CloudFlare
       const cfCity = ctx.req.headers['cf-ipcity'];
       const cfCountry = ctx.req.headers['cf-ipcountry'];
       const cfRegion = ctx.req.headers['cf-region'];
-      
-      if (cfCity && cfCountry) {
-        // CloudFlare has full geo data
-        geoData = {
-          city: String(cfCity),
-          region: cfRegion ? String(cfRegion) : null,
-          country: cfCountry ? String(cfCountry) : null
-        };
-        console.log('✅ Using CloudFlare geo headers:', geoData);
-      } else {
-        // PRIORITY 2: Use ipinfo.io for accurate city-level geolocation
-        // Free tier has generous limits (50K requests/month = ~1,700/day, enough for most sites)
-        if (ipString && ipString !== 'unknown' && ipString !== '127.0.0.1' && ipString !== '::1') {
-          try {
-            const response = await fetch(`https://ipinfo.io/${ipString}/json?token=${process.env.IPINFO_TOKEN || ''}`, {
-              signal: AbortSignal.timeout(2000)
-            });
-            if (response.ok) {
-              const geo = await response.json();
-              geoData = {
-                city: geo.city || null,
-                region: geo.region || null,
-                country: geo.country || null
-              };
-              console.log('✅ Fetched geo data from ipinfo.io:', { ip: ipString, geo: geoData });
-            } else {
-              console.log('⚠️ ipinfo.io response not ok:', {
-                status: response.status,
-                statusText: response.statusText,
-              });
-            }
-          } catch (error) {
-            // If ipinfo.io fails, just use basic country data from CloudFlare header or fallback
-            console.log('⚠️ ipinfo.io lookup failed:', error instanceof Error ? error.message : String(error));
-          }
-        } else if (ipString === '127.0.0.1' || ipString === '::1') {
-          // Local development
-          geoData = {
-            city: 'Local Dev',
-            region: 'Development',
-            country: 'Local'
-          };
-        }
-      }
+
+      // Start with fast edge headers and enrich only when creating a brand new session.
+      let geoData: { city: string | null, region: string | null, country: string | null } = {
+        city: cfCity ? String(cfCity) : null,
+        region: cfRegion ? String(cfRegion) : null,
+        country: cfCountry ? String(cfCountry) : null,
+      };
 
       try {
-        // Upsert session
+        // Read once to avoid repeated writes to analytics_sessions on every page view.
         const { data: existingSession } = await supabase
           .from('analytics_sessions')
-          .select('id')
+          .select('id, city, region, country')
           .eq('session_id', input.sessionId)
-          .single();
+          .maybeSingle();
 
         if (existingSession) {
-          // Update session
-          await supabase
-            .from('analytics_sessions')
-            .update({
-              exit_page: input.pagePath,
-              page_count: 0, // Will be incremented by trigger or manual update
-              updated_at: new Date().toISOString()
-            })
-            .eq('session_id', input.sessionId);
+          // Keep visit geo consistent even when edge headers are absent.
+          geoData = {
+            city: geoData.city ?? existingSession.city ?? null,
+            region: geoData.region ?? existingSession.region ?? null,
+            country: geoData.country ?? existingSession.country ?? null,
+          };
         } else {
-          // Create new session
+          // Only do slower IP lookup on first session insert.
+          if (!geoData.city && !geoData.country && ipString && ipString !== 'unknown' && ipString !== '127.0.0.1' && ipString !== '::1') {
+            try {
+              const response = await fetch(`https://ipinfo.io/${ipString}/json?token=${process.env.IPINFO_TOKEN || ''}`, {
+                signal: AbortSignal.timeout(2000),
+              });
+              if (response.ok) {
+                const geo = await response.json();
+                geoData = {
+                  city: geo.city || null,
+                  region: geo.region || null,
+                  country: geo.country || null,
+                };
+              }
+            } catch {
+              // Swallow geolocation errors; analytics should never block page render.
+            }
+          } else if (ipString === '127.0.0.1' || ipString === '::1') {
+            geoData = { city: 'Local Dev', region: 'Development', country: 'Local' };
+          }
+
           await supabase
             .from('analytics_sessions')
             .insert({
@@ -112,11 +80,12 @@ export const analyticsRouter = router({
               region: geoData.region ?? '',
               country: geoData.country ?? '',
               user_agent: input.userAgent,
-              entry_page: input.pagePath
+              entry_page: input.pagePath,
+              exit_page: input.pagePath,
             });
         }
 
-        // Track old analytics_visits for backward compat
+        // Keep per-page analytics in analytics_visits (lightweight write path).
         await supabase
           .from('analytics_visits')
           .insert({

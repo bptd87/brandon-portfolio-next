@@ -539,7 +539,30 @@ export async function getAllNews(filters?: {
 }): Promise<News[]> {
   let query = supabase
     .from('news')
-    .select('*')
+    .select(`
+      id,
+      title,
+      slug,
+      subtitle,
+      excerpt,
+      cover_image,
+      cover_image_alt_text,
+      cover_image_focal_point,
+      layout_variant,
+      date,
+      status,
+      featured,
+      category_id,
+      seo_title,
+      seo_description,
+      seo_keywords,
+      created_at,
+      updated_at,
+      published_at,
+      location,
+      external_link,
+      tags
+    `)
     .order('published_at', { ascending: false });
 
   if (filters?.status) {
@@ -561,7 +584,7 @@ export async function getAllNews(filters?: {
     slug: item.slug,
     subtitle: item.subtitle,
     excerpt: item.excerpt,
-    content: item.content,
+    content: null,
     coverImageUrl: item.cover_image,
     coverImageAltText: item.cover_image_alt_text,
     coverImageFocalPoint: item.cover_image_focal_point,
@@ -577,7 +600,7 @@ export async function getAllNews(filters?: {
     updatedAt: new Date(item.updated_at),
     publishedAt: item.published_at ? new Date(item.published_at) : null,
     location: item.location,
-    blocks: item.blocks,
+    blocks: [],
     externalLink: item.external_link,
     tags: item.tags,
   }));
@@ -700,7 +723,22 @@ export async function getAllArticles(filters?: {
   let query = supabase
     .from('articles')
     .select(`
-      *,
+      id,
+      title,
+      slug,
+      excerpt,
+      cover_image,
+      read_time,
+      status,
+      featured,
+      category_id,
+      author_id,
+      seo_title,
+      seo_description,
+      seo_keywords,
+      created_at,
+      updated_at,
+      published_at,
       category:categories!category_id(id, name, slug)
     `)
     .order('published_at', { ascending: false });
@@ -726,18 +764,21 @@ export async function getAllArticles(filters?: {
     title: article.title,
     slug: article.slug,
     excerpt: article.excerpt,
-    content: article.content,
+    content: null,
     coverImageUrl: article.cover_image,
     readTime: article.read_time,
     status: article.status,
     featured: article.featured,
     categoryId: article.category_id,
     authorId: article.author_id,
-    category: article.category ? {
-      id: article.category.id,
-      name: article.category.name,
-      slug: article.category.slug,
-    } : null,
+    category: (() => {
+      const categoryRaw = Array.isArray(article.category) ? article.category[0] : article.category;
+      return categoryRaw ? {
+        id: categoryRaw.id,
+        name: categoryRaw.name,
+        slug: categoryRaw.slug,
+      } : null;
+    })(),
     seoTitle: article.seo_title,
     seoDescription: article.seo_description,
     seoKeywords: article.seo_keywords,

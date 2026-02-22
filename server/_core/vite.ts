@@ -20,6 +20,11 @@ type SeoMeta = {
   type: "website" | "article";
 };
 
+type CachedSeoMeta = {
+  expiresAt: number;
+  meta: SeoMeta;
+};
+
 const DEFAULT_SITE_URL = "https://www.brandonptdavis.com";
 const DEFAULT_OG_IMAGE = `${DEFAULT_SITE_URL}/og-default.jpeg`;
 const DEFAULT_META: Omit<SeoMeta, "canonical"> = {
@@ -29,6 +34,9 @@ const DEFAULT_META: Omit<SeoMeta, "canonical"> = {
   image: DEFAULT_OG_IMAGE,
   type: "website",
 };
+
+const SEO_CACHE_TTL_MS = 5 * 60 * 1000;
+const seoMetaCache = new Map<string, CachedSeoMeta>();
 
 const escapeHtml = (value: string): string =>
   String(value || "")
@@ -132,23 +140,8 @@ async function findProjectByLooseSlug(rawSlug: string) {
   });
 }
 
-async function getDefaultShareImage(origin: string): Promise<string> {
-  try {
-    const [projects, articles, news] = await Promise.all([
-      db.getAllProjects({ status: "published" }),
-      db.getAllArticles({ status: "published" }),
-      db.getAllNews({ status: "published" }),
-    ]);
-
-    const image =
-      projects.find((p) => Boolean(p.coverImageUrl))?.coverImageUrl ||
-      articles.find((a) => Boolean(a.coverImageUrl))?.coverImageUrl ||
-      news.find((n) => Boolean(n.coverImageUrl))?.coverImageUrl;
-
-    return absoluteUrl(origin, image || DEFAULT_OG_IMAGE);
-  } catch {
-    return absoluteUrl(origin, DEFAULT_OG_IMAGE);
-  }
+function getDefaultShareImage(origin: string): string {
+  return absoluteUrl(origin, DEFAULT_OG_IMAGE);
 }
 
 async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
@@ -156,19 +149,30 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
   const pathOnly = req.path;
   const canonical = `${origin}${pathOnly === "/" ? "" : pathOnly}`;
   const decodedPath = decodeURIComponent(pathOnly);
+  const cacheKey = `${origin}|${decodedPath}`;
+  const cached = seoMetaCache.get(cacheKey);
+  const now = Date.now();
+  if (cached && cached.expiresAt > now) {
+    return cached.meta;
+  }
+
+  const cacheMeta = (meta: SeoMeta) => {
+    seoMetaCache.set(cacheKey, { meta, expiresAt: now + SEO_CACHE_TTL_MS });
+    return meta;
+  };
 
   const articleMatch = decodedPath.match(/^\/articles\/([^/?#]+)\/?$/i);
   if (articleMatch) {
     const slug = cleanSlug(articleMatch[1]);
     const article = await db.getArticleBySlug(slug);
     if (article?.status === "published") {
-      return {
+      return cacheMeta({
         title: article.seoTitle || article.title || DEFAULT_META.title,
         description: article.seoDescription || article.excerpt || DEFAULT_META.description,
         image: absoluteUrl(origin, article.coverImageUrl),
         canonical: `${origin}/articles/${article.slug}`,
         type: "article",
-      };
+      });
     }
   }
 
@@ -177,13 +181,13 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
     const slug = cleanSlug(newsMatch[1]);
     const news = await db.getNewsBySlug(slug);
     if (news?.status === "published") {
-      return {
+      return cacheMeta({
         title: news.seoTitle || news.title || DEFAULT_META.title,
         description: news.seoDescription || news.excerpt || DEFAULT_META.description,
         image: absoluteUrl(origin, news.coverImageUrl),
         canonical: `${origin}/news/${news.slug}`,
         type: "article",
-      };
+      });
     }
   }
 
@@ -195,68 +199,68 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
       const preferredImage =
         project.coverImageUrl ||
         projectImages.find((img) => Boolean(img.imageUrl))?.imageUrl;
-      return {
+      return cacheMeta({
         title: project.seoTitle || project.title || DEFAULT_META.title,
         description: project.seoDescription || project.excerpt || DEFAULT_META.description,
         image: absoluteUrl(origin, preferredImage),
         canonical: `${origin}/project/${project.slug}`,
         type: "website",
-      };
+      });
     }
   }
 
   if (decodedPath === "/projects" || decodedPath === "/projects/scenic-design") {
     const projects = await db.getAllProjects({ status: "published", discipline: "scenic_design" });
     const hero = projects.find((p) => p.featured && p.coverImageUrl) || projects.find((p) => p.coverImageUrl);
-    return {
+    return cacheMeta({
       title: "Scenic Design | Brandon PT Davis",
       description: "Portfolio of scenic design productions by Brandon PT Davis.",
-      image: absoluteUrl(origin, hero?.coverImageUrl || (await getDefaultShareImage(origin))),
+      image: absoluteUrl(origin, hero?.coverImageUrl || getDefaultShareImage(origin)),
       canonical: `${origin}/projects`,
       type: "website",
-    };
+    });
   }
 
   if (decodedPath === "/news") {
     const newsItems = await db.getAllNews({ status: "published" });
     const hero = newsItems.find((n) => n.coverImageUrl);
-    return {
+    return cacheMeta({
       title: "Production News | Brandon PT Davis",
       description: "Production updates, press coverage, and milestones from scenic design work.",
-      image: absoluteUrl(origin, hero?.coverImageUrl || (await getDefaultShareImage(origin))),
+      image: absoluteUrl(origin, hero?.coverImageUrl || getDefaultShareImage(origin)),
       canonical: `${origin}/news`,
       type: "website",
-    };
+    });
   }
 
   if (decodedPath === "/articles") {
     const articles = await db.getAllArticles({ status: "published" });
     const hero = articles.find((a) => a.coverImageUrl);
-    return {
+    return cacheMeta({
       title: "Scenic Insights | Articles by Brandon PT Davis",
       description: "Articles on scenic design process, production craft, and storytelling.",
-      image: absoluteUrl(origin, hero?.coverImageUrl || (await getDefaultShareImage(origin))),
+      image: absoluteUrl(origin, hero?.coverImageUrl || getDefaultShareImage(origin)),
       canonical: `${origin}/articles`,
       type: "website",
-    };
+    });
   }
 
   if (decodedPath === "/studio" || decodedPath === "/studio/tutorials") {
     const articles = await db.getAllArticles({ status: "published" });
     const hero = articles.find((a) => a.coverImageUrl);
-    return {
+    return cacheMeta({
       title: decodedPath === "/studio" ? "Scenic Design Studio | Brandon PT Davis" : "Vectorworks Tutorials | Brandon PT Davis",
       description:
         decodedPath === "/studio"
           ? "Scenic design studio hub with tools, tutorials, and production resources."
           : "Vectorworks tutorials for scenic designers: drafting, modeling, and rendering workflows.",
-      image: absoluteUrl(origin, hero?.coverImageUrl || (await getDefaultShareImage(origin))),
+      image: absoluteUrl(origin, hero?.coverImageUrl || getDefaultShareImage(origin)),
       canonical,
       type: "website",
-    };
+    });
   }
 
-  return { ...DEFAULT_META, canonical, image: await getDefaultShareImage(origin) };
+  return cacheMeta({ ...DEFAULT_META, canonical, image: getDefaultShareImage(origin) });
 }
 
 export async function setupVite(app: Express, server: Server) {
