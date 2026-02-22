@@ -39,8 +39,8 @@ export default function Links() {
 
   // Fetch data with tRPC
   const { data: projects, isLoading: projectsLoading } = trpc.projects.list.useQuery({});
-  const { data: articles, isLoading: articlesLoading } = trpc.articles.list.useQuery({});
-  const { data: news, isLoading: newsLoading } = trpc.news.list.useQuery({});
+  const { data: articles, isLoading: articlesLoading } = trpc.articles.list.useQuery({ status: "published" });
+  const { data: news, isLoading: newsLoading } = trpc.news.list.useQuery({ status: "published" });
   // TODO: Add tutorials router
   const tutorials: any[] = [];
   const tutorialsLoading = false;

@@ -20,8 +20,8 @@ export default function PageTransition({ children }: PageTransitionProps) {
     <div
       className={`transition-all duration-500 ease-out ${
         transitionStage === "fadeOut"
-          ? "opacity-0 translate-y-1 blur-[1.5px]"
-          : "opacity-100 translate-y-0 blur-0"
+          ? "opacity-0"
+          : "opacity-100"
       }`}
       onTransitionEnd={() => {
         if (transitionStage === "fadeOut") {

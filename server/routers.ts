@@ -45,6 +45,12 @@ const projectsListCache = new Map<string, ListCacheEntry<ProjectsListResult>>();
 const newsListCache = new Map<string, ListCacheEntry<NewsListResult>>();
 const articlesListCache = new Map<string, ListCacheEntry<ArticlesListResult>>();
 
+function invalidatePublicLists(keys: Array<'projects' | 'news' | 'articles'>) {
+  if (keys.includes('projects')) projectsListCache.clear();
+  if (keys.includes('news')) newsListCache.clear();
+  if (keys.includes('articles')) articlesListCache.clear();
+}
+
 function getCachedList<T>(cache: Map<string, ListCacheEntry<T>>, key: string): T | null {
   const hit = cache.get(key);
   if (!hit) return null;
@@ -181,6 +187,8 @@ export const appRouter = router({
           }
         }
 
+        invalidatePublicLists(['projects']);
+
         return { id };
       }),
 
@@ -237,6 +245,8 @@ export const appRouter = router({
           }
         }
 
+        invalidatePublicLists(['projects']);
+
         return { success: true };
       }),
 
@@ -244,6 +254,7 @@ export const appRouter = router({
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         await db.deleteProject(input.id);
+        invalidatePublicLists(['projects']);
         return { success: true };
       }),
 
@@ -547,11 +558,7 @@ export const appRouter = router({
         categoryId: z.number().optional(),
       }).optional())
       .query(async ({ input, ctx }) => {
-        // Public callers default to published-only.
-        // Admin callers can see all statuses unless explicitly filtered.
-        const filters = (!ctx.user || ctx.user.role !== 'admin')
-          ? { ...input, status: input?.status ?? 'published' as const }
-          : input;
+        const filters = input;
         const cacheable = !ctx.user && filters?.status === "published";
         if (!cacheable) {
           return await db.getAllNews(filters);
@@ -645,6 +652,8 @@ export const appRouter = router({
           await db.setNewsRelatedLinks(id, relatedLinks);
         }
 
+        invalidatePublicLists(['news']);
+
         return { id };
       }),
 
@@ -698,6 +707,8 @@ export const appRouter = router({
           await db.setNewsRelatedLinks(id, relatedLinks);
         }
 
+        invalidatePublicLists(['news']);
+
         return { success: true };
       }),
 
@@ -705,6 +716,7 @@ export const appRouter = router({
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         await db.deleteNews(input.id);
+        invalidatePublicLists(['news']);
         return { success: true };
       }),
 
@@ -720,9 +732,7 @@ export const appRouter = router({
         authorId: z.number().optional(),
       }).optional())
       .query(async ({ input, ctx }) => {
-        const filters = (!ctx.user || ctx.user.role !== 'admin')
-          ? { ...input, status: input?.status ?? 'published' as const }
-          : input;
+        const filters = input;
         const cacheable = !ctx.user && filters?.status === "published";
         if (!cacheable) {
           return await db.getAllArticles(filters);
@@ -794,6 +804,8 @@ export const appRouter = router({
           await db.setArticleTags(id, tagIds);
         }
 
+        invalidatePublicLists(['articles']);
+
         return { id };
       }),
 
@@ -833,6 +845,8 @@ export const appRouter = router({
           await db.setArticleTags(id, tagIds);
         }
 
+        invalidatePublicLists(['articles']);
+
         return { success: true };
       }),
 
@@ -840,6 +854,7 @@ export const appRouter = router({
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         await db.deleteArticle(input.id);
+        invalidatePublicLists(['articles']);
         return { success: true };
       }),
 
@@ -1175,6 +1190,7 @@ export const appRouter = router({
       .input(z.object({
         category: z.string().optional(),
         difficultyLevel: z.string().optional(),
+        status: z.enum(['draft', 'published', 'archived']).optional(),
       }).optional())
       .query(async ({ input }) => {
         return await db.getAllTutorials(input);

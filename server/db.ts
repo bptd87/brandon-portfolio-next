@@ -575,7 +575,33 @@ export async function getAllNews(filters?: {
     query = query.eq('category_id', filters.categoryId);
   }
 
-  const { data } = await query;
+  let { data, error } = await query;
+  if (error) {
+    console.error('[getAllNews] primary query failed, retrying with fallback select:', error.message);
+    let fallbackQuery = supabase
+      .from('news')
+      .select('*')
+      .order('published_at', { ascending: false });
+
+    if (filters?.status) {
+      fallbackQuery = fallbackQuery.eq('status', filters.status);
+    }
+    if (filters?.featured !== undefined) {
+      fallbackQuery = fallbackQuery.eq('featured', filters.featured);
+    }
+    if (filters?.categoryId) {
+      fallbackQuery = fallbackQuery.eq('category_id', filters.categoryId);
+    }
+
+    const fallback = await fallbackQuery;
+    data = fallback.data as any[] | null;
+    error = fallback.error;
+  }
+
+  if (error) {
+    console.error('[getAllNews] fallback query failed:', error.message);
+    throw error;
+  }
   if (!data) return [];
 
   return data.map(item => ({
@@ -756,8 +782,61 @@ export async function getAllArticles(filters?: {
     query = query.eq('author_id', filters.authorId);
   }
 
-  const { data } = await query;
+  let { data, error } = await query;
+  if (error) {
+    console.error('[getAllArticles] primary query failed, retrying with fallback select:', error.message);
+    let fallbackQuery = supabase
+      .from('articles')
+      .select('*')
+      .order('published_at', { ascending: false });
+
+    if (filters?.status) {
+      fallbackQuery = fallbackQuery.eq('status', filters.status);
+    }
+    if (filters?.featured !== undefined) {
+      fallbackQuery = fallbackQuery.eq('featured', filters.featured);
+    }
+    if (filters?.categoryId) {
+      fallbackQuery = fallbackQuery.eq('category_id', filters.categoryId);
+    }
+    if (filters?.authorId) {
+      fallbackQuery = fallbackQuery.eq('author_id', filters.authorId);
+    }
+
+    const fallback = await fallbackQuery;
+    data = fallback.data as any[] | null;
+    error = fallback.error;
+  }
+
+  if (error) {
+    console.error('[getAllArticles] fallback query failed:', error.message);
+    throw error;
+  }
   if (!data) return [];
+
+  const categoryIds = Array.from(
+    new Set(
+      data
+        .map((article: any) => article.category_id)
+        .filter((id: unknown): id is number => typeof id === 'number')
+    )
+  );
+
+  let categoryLookup = new Map<number, { id: number; name: string; slug: string }>();
+  if (categoryIds.length > 0) {
+    const { data: categoryRows, error: categoryError } = await supabase
+      .from('categories')
+      .select('id,name,slug')
+      .in('id', categoryIds);
+
+    if (categoryError) {
+      console.error('[getAllArticles] category lookup failed:', categoryError.message);
+    } else if (categoryRows) {
+      categoryLookup = new Map(
+        categoryRows.map((c: any) => [c.id, { id: c.id, name: c.name, slug: c.slug }])
+      );
+    }
+  }
 
   return data.map(article => ({
     id: article.id,
@@ -772,12 +851,19 @@ export async function getAllArticles(filters?: {
     categoryId: article.category_id,
     authorId: article.author_id,
     category: (() => {
-      const categoryRaw = Array.isArray(article.category) ? article.category[0] : article.category;
-      return categoryRaw ? {
-        id: categoryRaw.id,
-        name: categoryRaw.name,
-        slug: categoryRaw.slug,
-      } : null;
+      const categoryRaw = Array.isArray((article as any).category) ? (article as any).category[0] : (article as any).category;
+      if (categoryRaw) {
+        return {
+          id: categoryRaw.id,
+          name: categoryRaw.name,
+          slug: categoryRaw.slug,
+        };
+      }
+      if (typeof article.category_id === 'number') {
+        const lookedUp = categoryLookup.get(article.category_id);
+        if (lookedUp) return lookedUp;
+      }
+      return null;
     })(),
     seoTitle: article.seo_title,
     seoDescription: article.seo_description,
@@ -1091,6 +1177,7 @@ export interface TutorialProgress {
 export async function getAllTutorials(filters?: {
   category?: string;
   difficultyLevel?: string;
+  status?: 'draft' | 'published' | 'archived';
 }): Promise<Tutorial[]> {
   let query = supabase
     .from('tutorials')
@@ -1103,8 +1190,15 @@ export async function getAllTutorials(filters?: {
   if (filters?.difficultyLevel) {
     query = query.eq('difficulty', filters.difficultyLevel);
   }
+  if (filters?.status) {
+    query = query.eq('status', filters.status);
+  }
 
-  const { data } = await query;
+  const { data, error } = await query;
+  if (error) {
+    console.error('[getAllTutorials] query failed:', error.message);
+    throw error;
+  }
   if (!data) return [];
 
   return data.map(tutorial => ({

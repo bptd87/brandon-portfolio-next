@@ -14,7 +14,7 @@ export default function StudioTutorials() {
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const { data: tutorials = [], isLoading } = trpc.tutorials.list.useQuery();
+  const { data: tutorials = [], isLoading } = trpc.tutorials.list.useQuery({ status: "published" });
 
   // Slug comes from the database
 

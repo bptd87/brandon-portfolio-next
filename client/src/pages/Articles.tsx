@@ -29,7 +29,7 @@ export default function Articles() {
 }
 
 function ArticlesContent() {
-  const { data: articles, isLoading } = trpc.articles.list.useQuery({});
+  const { data: articles, isLoading } = trpc.articles.list.useQuery({ status: "published" });
   const [searchQuery, setSearchQuery] = React.useState("");
   const [selectedCategory, setSelectedCategory] = React.useState<string | null>(null);
 

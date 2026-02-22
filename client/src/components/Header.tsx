@@ -149,7 +149,7 @@ export default function Header() {
   const [studioOpen, setStudioOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const lastScrollYRef = useRef(0);
   
   // Refs for dropdown containers
   const portfolioDropdownRef = useRef<HTMLDivElement>(null);
@@ -182,25 +182,27 @@ export default function Header() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
+
       // Show nav when scrolling up, hide when scrolling down
-      if (currentScrollY < lastScrollY || currentScrollY < 50) {
+      if (currentScrollY < 60) {
         setIsVisible(true);
-      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+      } else if (currentScrollY < lastScrollYRef.current - 2) {
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollYRef.current + 4) {
         setIsVisible(false);
         // Close dropdowns when hiding
         setPortfolioOpen(false);
         setAboutOpen(false);
-
         setStudioOpen(false);
       }
-      
-      setLastScrollY(currentScrollY);
+
+      lastScrollYRef.current = currentScrollY;
     };
 
+    lastScrollYRef.current = window.scrollY;
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  }, []);
 
   // Close dropdown when clicking outside
   useEffect(() => {

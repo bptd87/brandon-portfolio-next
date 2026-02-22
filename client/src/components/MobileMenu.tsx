@@ -12,21 +12,19 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const [aboutOpen, setAboutOpen] = useState(false);
   const [studioOpen, setStudioOpen] = useState(false);
 
+  if (!isOpen) return null;
+
   return (
     <>
       {/* Overlay */}
       <div
-        className={`fixed inset-0 bg-black/80 backdrop-blur-sm z-40 transition-opacity duration-300 ${
-          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+        className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 transition-opacity duration-300 opacity-100"
         onClick={onClose}
       />
 
       {/* Slide-out Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full w-[85vw] max-w-sm bg-background border-l border-border z-50 transform transition-transform duration-300 ease-out ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className="fixed top-0 right-0 h-full w-[85vw] max-w-sm bg-background border-l border-border z-50 transform transition-transform duration-300 ease-out translate-x-0"
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-border">

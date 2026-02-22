@@ -101,7 +101,7 @@ function ArticleDetailContent() {
     { id: article?.categoryId || 0 },
     { enabled: !!article?.categoryId }
   );
-  const { data: relatedArticles } = trpc.articles.list.useQuery({});
+  const { data: relatedArticles } = trpc.articles.list.useQuery({ status: "published" });
 
   const contentRef = useRef<HTMLDivElement>(null);
   const galleryRefs = useRef<Record<number, HTMLDivElement | null>>({});
