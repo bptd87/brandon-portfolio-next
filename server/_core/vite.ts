@@ -66,6 +66,10 @@ function injectSeoMeta(html: string, meta: SeoMeta): string {
   next = replaceOrAppendMeta(next, "property", "og:title", meta.title);
   next = replaceOrAppendMeta(next, "property", "og:description", meta.description);
   next = replaceOrAppendMeta(next, "property", "og:image", meta.image);
+  next = replaceOrAppendMeta(next, "property", "og:image:secure_url", meta.image);
+  next = replaceOrAppendMeta(next, "property", "og:image:width", "1200");
+  next = replaceOrAppendMeta(next, "property", "og:image:height", "630");
+  next = replaceOrAppendMeta(next, "property", "og:image:type", "image/jpeg");
   next = replaceOrAppendMeta(next, "property", "og:site_name", "Brandon PT Davis");
   next = replaceOrAppendMeta(next, "property", "og:locale", "en_US");
 
@@ -92,11 +96,39 @@ function absoluteUrl(origin: string, value?: string | null): string {
   return `${origin}${value.startsWith("/") ? value : `/${value}`}`;
 }
 
+function normalizeSlug(value: string): string {
+  return decodeURIComponent(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/['"`]/g, "")
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 function cleanSlug(value: string): string {
   return decodeURIComponent(value || "")
     .trim()
     .replace(/^[([{<"'`]+/, "")
     .replace(/[)\]}>"'`.,!?;:]+$/, "");
+}
+
+async function findProjectByLooseSlug(rawSlug: string) {
+  const cleaned = cleanSlug(rawSlug);
+  const exact = await db.getProjectBySlug(cleaned);
+  if (exact?.status === "published") return exact;
+
+  const normalizedInput = normalizeSlug(cleaned);
+  if (!normalizedInput) return undefined;
+
+  const all = await db.getAllProjects({ status: "published" });
+  const direct = all.find((p) => normalizeSlug(String(p.slug || "")) === normalizedInput);
+  if (direct) return direct;
+
+  return all.find((p) => {
+    const s = normalizeSlug(String(p.slug || ""));
+    return s.startsWith(normalizedInput) || normalizedInput.startsWith(s);
+  });
 }
 
 async function getDefaultShareImage(origin: string): Promise<string> {
@@ -156,13 +188,16 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
 
   const projectMatch = decodedPath.match(/^\/project\/([^/?#]+)$/i);
   if (projectMatch) {
-    const slug = cleanSlug(projectMatch[1]);
-    const project = await db.getProjectBySlug(slug);
+    const project = await findProjectByLooseSlug(projectMatch[1]);
     if (project?.status === "published") {
+      const projectImages = await db.getProjectImages(project.id);
+      const preferredImage =
+        project.coverImageUrl ||
+        projectImages.find((img) => Boolean(img.imageUrl))?.imageUrl;
       return {
         title: project.seoTitle || project.title || DEFAULT_META.title,
         description: project.seoDescription || project.excerpt || DEFAULT_META.description,
-        image: absoluteUrl(origin, project.coverImageUrl),
+        image: absoluteUrl(origin, preferredImage),
         canonical: `${origin}/project/${project.slug}`,
         type: "website",
       };
