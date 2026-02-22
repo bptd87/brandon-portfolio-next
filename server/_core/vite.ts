@@ -65,6 +65,20 @@ function replaceOrAppendCanonical(html: string, canonical: string): string {
 }
 
 function injectSeoMeta(html: string, meta: SeoMeta): string {
+  const imageType = (() => {
+    try {
+      const pathname = new URL(meta.image).pathname.toLowerCase();
+      if (pathname.endsWith(".png")) return "image/png";
+      if (pathname.endsWith(".webp")) return "image/webp";
+      if (pathname.endsWith(".gif")) return "image/gif";
+      if (pathname.endsWith(".svg")) return "image/svg+xml";
+      if (pathname.endsWith(".jpg") || pathname.endsWith(".jpeg")) return "image/jpeg";
+    } catch {
+      // Ignore URL parse failure and keep safe default.
+    }
+    return "image/jpeg";
+  })();
+
   let next = html;
   next = next.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(meta.title)}</title>`);
   next = replaceOrAppendMeta(next, "name", "description", meta.description);
@@ -77,7 +91,7 @@ function injectSeoMeta(html: string, meta: SeoMeta): string {
   next = replaceOrAppendMeta(next, "property", "og:image:secure_url", meta.image);
   next = replaceOrAppendMeta(next, "property", "og:image:width", "1200");
   next = replaceOrAppendMeta(next, "property", "og:image:height", "630");
-  next = replaceOrAppendMeta(next, "property", "og:image:type", "image/jpeg");
+  next = replaceOrAppendMeta(next, "property", "og:image:type", imageType);
   next = replaceOrAppendMeta(next, "property", "og:site_name", "Brandon PT Davis");
   next = replaceOrAppendMeta(next, "property", "og:locale", "en_US");
 
