@@ -75,6 +75,7 @@ function injectSeoMeta(html: string, meta: SeoMeta): string {
 
   next = replaceOrAppendMeta(next, "name", "twitter:card", "summary_large_image");
   next = replaceOrAppendMeta(next, "name", "twitter:url", meta.canonical);
+  next = replaceOrAppendMeta(next, "name", "twitter:domain", "brandonptdavis.com");
   next = replaceOrAppendMeta(next, "name", "twitter:title", meta.title);
   next = replaceOrAppendMeta(next, "name", "twitter:description", meta.description);
   next = replaceOrAppendMeta(next, "name", "twitter:image", meta.image);
@@ -156,7 +157,7 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
   const canonical = `${origin}${pathOnly === "/" ? "" : pathOnly}`;
   const decodedPath = decodeURIComponent(pathOnly);
 
-  const articleMatch = decodedPath.match(/^\/articles\/([^/?#]+)$/i);
+  const articleMatch = decodedPath.match(/^\/articles\/([^/?#]+)\/?$/i);
   if (articleMatch) {
     const slug = cleanSlug(articleMatch[1]);
     const article = await db.getArticleBySlug(slug);
@@ -171,7 +172,7 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
     }
   }
 
-  const newsMatch = decodedPath.match(/^\/news\/([^/?#]+)$/i);
+  const newsMatch = decodedPath.match(/^\/news\/([^/?#]+)\/?$/i);
   if (newsMatch) {
     const slug = cleanSlug(newsMatch[1]);
     const news = await db.getNewsBySlug(slug);
@@ -186,7 +187,7 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
     }
   }
 
-  const projectMatch = decodedPath.match(/^\/project\/([^/?#]+)$/i);
+  const projectMatch = decodedPath.match(/^\/project\/([^/?#]+)\/?$/i);
   if (projectMatch) {
     const project = await findProjectByLooseSlug(projectMatch[1]);
     if (project?.status === "published") {
