@@ -144,14 +144,27 @@ function getDefaultShareImage(origin: string): string {
   return absoluteUrl(origin, DEFAULT_OG_IMAGE);
 }
 
+function getPathFromRequest(req: express.Request): string {
+  const raw = String(req.originalUrl || req.url || req.path || "/");
+  const noHash = raw.split("#")[0];
+  const noQuery = noHash.split("?")[0];
+  return noQuery || "/";
+}
+
+function getFallbackMeta(req: express.Request): SeoMeta {
+  const origin = getRequestSiteUrl(req);
+  const pathOnly = getPathFromRequest(req);
+  const canonical = `${origin}${pathOnly === "/" ? "" : pathOnly}`;
+  return {
+    ...DEFAULT_META,
+    canonical,
+    image: getDefaultShareImage(origin),
+  };
+}
+
 async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
   const origin = getRequestSiteUrl(req);
-  const pathOnly = (() => {
-    const raw = String(req.originalUrl || req.url || req.path || "/");
-    const noHash = raw.split("#")[0];
-    const noQuery = noHash.split("?")[0];
-    return noQuery || "/";
-  })();
+  const pathOnly = getPathFromRequest(req);
   const canonical = `${origin}${pathOnly === "/" ? "" : pathOnly}`;
   const decodedPath = decodeURIComponent(pathOnly);
   const cacheKey = `${origin}|${decodedPath}`;
@@ -365,8 +378,16 @@ export function serveStatic(app: Express) {
       const meta = await resolveSeoMeta(req);
       const pageWithMeta = injectSeoMeta(template, meta);
       res.status(200).set({ "Content-Type": "text/html" }).end(pageWithMeta);
-    } catch {
-      res.sendFile(path.resolve(distPath, "index.html"));
+    } catch (error) {
+      console.error("SEO meta render fallback", error);
+      try {
+        const indexPath = path.resolve(distPath, "index.html");
+        const template = await fs.promises.readFile(indexPath, "utf-8");
+        const pageWithMeta = injectSeoMeta(template, getFallbackMeta(req));
+        res.status(200).set({ "Content-Type": "text/html" }).end(pageWithMeta);
+      } catch {
+        res.sendFile(path.resolve(distPath, "index.html"));
+      }
     }
   });
 }
