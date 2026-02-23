@@ -288,7 +288,7 @@ export default function Projects() {
                                 aspectRatio="16/9"
                                 smartPosition={true}
                                 loading="lazy"
-                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 25vw, 20vw"
                               />
                             ) : (
                               <div className="h-full w-full bg-muted" />

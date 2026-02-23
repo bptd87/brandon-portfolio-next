@@ -199,7 +199,7 @@ export default function ProjectDetail() {
       <div className="container py-6">
         <Breadcrumb
           items={[
-            { label: "Work", href: "/projects" },
+            { label: "Portfolio", href: "/projects" },
             { label: project.discipline === 'scenic_design' ? 'Scenic Design' : project.discipline === 'experiential_design' ? 'Experiential' : project.discipline === 'rendering' ? 'Rendering' : 'Scenic Models', href: `/projects?discipline=${project.discipline}` },
             { label: project.title }
           ]}

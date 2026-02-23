@@ -164,9 +164,9 @@ export default function Studio() {
                     </div>
                     <CardContent className="p-5 flex flex-col flex-1">
                       {article.category && (
-                        <Badge variant="secondary" className="mb-3 text-[10px] uppercase tracking-[0.12em]">
+                        <p className="mb-3 text-[10px] uppercase tracking-[0.22em] font-medium text-primary/90">
                           {article.category.name}
-                        </Badge>
+                        </p>
                       )}
                       <h3 className="text-lg font-semibold leading-snug mb-2 line-clamp-2 min-h-[3.4rem]">{article.title}</h3>
                       {article.excerpt && (

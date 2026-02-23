@@ -178,9 +178,9 @@ export default function StudioApps() {
           {apps.map((app, index) => (
             <AnimatedSection key={app.title} delay={index * 80}>
               <Link href={app.href} className="block group">
-                <Card className="h-[29rem] border border-border/60 hover:border-primary transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden rounded-2xl bg-card/20 py-0 gap-0">
+                <Card className="h-full border border-border/60 hover:border-primary transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden rounded-2xl bg-card/20 py-0 gap-0">
                   {/* App Image */}
-                  <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+                  <div className="relative aspect-[16/9] overflow-hidden bg-muted">
                     <img
                       src={app.image}
                       alt={app.title}
@@ -206,7 +206,7 @@ export default function StudioApps() {
                   </div>
 
                   {/* App Content */}
-                  <CardContent className="p-5 flex flex-col flex-1">
+                  <CardContent className="p-5 flex flex-col flex-1 min-h-[11.5rem]">
                     <h3 className="text-xl md:text-2xl font-semibold tracking-tight mb-3 line-clamp-2 min-h-[3.6rem]" style={{ color: app.accentColor }}>
                       {app.title}
                     </h3>

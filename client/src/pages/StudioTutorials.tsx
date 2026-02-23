@@ -138,16 +138,16 @@ export default function StudioTutorials() {
         </div>
       </section>
 
-      <section className="container py-6">
-        <div className="max-w-6xl mx-auto rounded-2xl border border-border/60 bg-card/20 p-5 md:p-6">
+      <section className="container py-4">
+        <div className="max-w-6xl mx-auto rounded-2xl border border-border/60 bg-card/20 p-4 md:p-5">
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <input
               type="text"
               placeholder="Search tutorials by keyword..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+              className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm"
             />
             {searchQuery && (
               <button
@@ -161,17 +161,17 @@ export default function StudioTutorials() {
             )}
           </div>
           {searchQuery && (
-            <p className="mt-2 text-sm text-muted-foreground">
+            <p className="mt-1.5 text-xs text-muted-foreground">
               Found {filteredTutorials.length} tutorial{filteredTutorials.length !== 1 ? 's' : ''} matching "{searchQuery}"
             </p>
           )}
-          <div className="grid md:grid-cols-2 gap-6 mt-6">
+          <div className="grid md:grid-cols-2 gap-4 mt-4">
             <div className="min-w-0">
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">Category</h3>
+              <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground mb-2">Category</h3>
               <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() => setSelectedCategory(null)}
-                  className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${selectedCategory === null
+                  className={`px-3 py-1.5 rounded-full text-[11px] font-semibold uppercase tracking-[0.08em] transition-all duration-200 border ${selectedCategory === null
                     ? 'bg-primary text-primary-foreground border-primary shadow-lg'
                     : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
                     }`}
@@ -182,7 +182,7 @@ export default function StudioTutorials() {
                   <button
                     key={category.slug}
                     onClick={() => setSelectedCategory(category.slug)}
-                    className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${selectedCategory === category.slug
+                    className={`px-3 py-1.5 rounded-full text-[11px] font-semibold uppercase tracking-[0.08em] transition-all duration-200 border ${selectedCategory === category.slug
                       ? category.color + ' shadow-lg'
                       : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
                       }`}
@@ -194,11 +194,11 @@ export default function StudioTutorials() {
             </div>
 
             <div className="min-w-0">
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">Difficulty</h3>
+              <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground mb-2">Difficulty</h3>
               <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() => setSelectedDifficulty(null)}
-                  className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${selectedDifficulty === null
+                  className={`px-3 py-1.5 rounded-full text-[11px] font-semibold uppercase tracking-[0.08em] transition-all duration-200 border ${selectedDifficulty === null
                     ? 'bg-primary text-primary-foreground border-primary shadow-lg'
                     : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
                     }`}
@@ -209,7 +209,7 @@ export default function StudioTutorials() {
                   <button
                     key={difficulty.slug}
                     onClick={() => setSelectedDifficulty(difficulty.slug)}
-                    className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-200 border ${selectedDifficulty === difficulty.slug
+                    className={`px-3 py-1.5 rounded-full text-[11px] font-semibold uppercase tracking-[0.08em] transition-all duration-200 border ${selectedDifficulty === difficulty.slug
                       ? 'bg-primary text-primary-foreground border-primary shadow-lg'
                       : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
                       }`}

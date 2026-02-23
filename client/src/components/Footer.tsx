@@ -28,7 +28,9 @@ export default function Footer() {
 
               {/* Right: CTA */}
               <div className="lg:text-right">
-                <p className="text-2xl font-bold mb-6">Scenic design inquiries for professional productions.</p>
+                <p className="text-2xl font-bold mb-6 leading-tight max-w-[30ch] lg:max-w-[24ch] lg:ml-auto">
+                  Scenic design inquiries for professional productions.
+                </p>
                 <Link 
                   href="/contact"
                   className="inline-flex items-center justify-center h-11 px-7 rounded-md border border-[#FF5722] bg-[#FF5722] text-[11px] font-bold tracking-[0.14em] uppercase text-white hover:bg-[#ff6a3a] hover:border-[#ff6a3a] transition-all duration-300"

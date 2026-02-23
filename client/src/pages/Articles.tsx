@@ -4,7 +4,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageThemeWrapper from "@/components/PageThemeWrapper";
 import ThemeToggle from "@/components/ThemeToggle";
-import { Badge } from "@/components/ui/badge";
 import { trpc } from "@/lib/trpc";
 import { getCategoryColor } from "@/lib/categoryColors";
 import { Search } from "lucide-react";
@@ -218,18 +217,14 @@ function ArticlesContent() {
                       )}
 
                       <div className="p-5 md:p-6 flex flex-col min-h-[14rem]">
-                        {/* Category Badge */}
+                        {/* Category Label */}
                         {article.category && (
-                          <Badge
-                            className="text-[11px] uppercase tracking-[0.3em] px-3 py-1 rounded-full border"
-                            style={{
-                              borderColor: `${categoryColor}55`,
-                              color: categoryColor,
-                              backgroundColor: `${categoryColor}10`
-                            }}
+                          <p
+                            className="text-[10px] uppercase tracking-[0.26em] mb-3 font-medium"
+                            style={{ color: categoryColor }}
                           >
                             {article.category.name}
-                          </Badge>
+                          </p>
                         )}
 
                         <h3 className="text-2xl font-['Playfair_Display'] italic font-normal mb-3 transition-colors line-clamp-2 min-h-[3.8rem]"
@@ -296,7 +291,7 @@ function ArticlesContent() {
                 const categoryColor = article.category ? getCategoryColor(article.category.name).hex : '#9CA3AF';
                 return (
                   <Link key={article.id} href={`/articles/${article.slug}`}>
-                    <div className="group bg-card/30 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer border border-border/60">
+                    <div className="group bg-card/30 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer">
                       {/* Cover Image */}
                       {article.coverImageUrl && (
                         <div className="aspect-[16/9] overflow-hidden">
@@ -313,18 +308,14 @@ function ArticlesContent() {
                       )}
 
                       <div className="p-5 md:p-6 flex flex-col min-h-[14rem]">
-                        {/* Category Badge */}
+                        {/* Category Label */}
                         {article.category && (
-                          <Badge
-                            className="text-[11px] uppercase tracking-[0.3em] px-3 py-1 rounded-full border"
-                            style={{
-                              borderColor: `${categoryColor}55`,
-                              color: categoryColor,
-                              backgroundColor: `${categoryColor}10`
-                            }}
+                          <p
+                            className="text-[10px] uppercase tracking-[0.26em] mb-3 font-medium"
+                            style={{ color: categoryColor }}
                           >
                             {article.category.name}
-                          </Badge>
+                          </p>
                         )}
 
                         <h3 className="text-2xl font-['Playfair_Display'] italic font-normal mb-3 transition-colors line-clamp-2 min-h-[3.8rem]"

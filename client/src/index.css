@@ -356,6 +356,7 @@
 @layer components {
   .container {
     width: 100%;
+    max-width: 100% !important;
     margin-left: auto;
     margin-right: auto;
     padding-left: 1rem;
@@ -420,16 +421,25 @@
 
   @media (min-width: 640px) {
     .container {
-      padding-left: 2rem;
-      padding-right: 2rem;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
     }
   }
 
   @media (min-width: 1024px) {
     .container {
-      padding-left: 3rem;
-      padding-right: 3rem;
-      max-width: 1400px;
+      padding-left: 2.5rem;
+      padding-right: 2.5rem;
+      max-width: 100% !important;
+    }
+  }
+
+  @media (min-width: 1536px) {
+    .container {
+      /* 4K-friendly: small edge gutter while letting content breathe wide */
+      padding-left: 5rem;
+      padding-right: 5rem;
+      max-width: calc(100vw - 10rem) !important;
     }
   }
 }

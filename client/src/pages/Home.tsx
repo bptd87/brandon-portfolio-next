@@ -203,7 +203,7 @@ export default function Home() {
                               smartPosition={true}
                               loading={index < 4 ? "eager" : "lazy"}
                               fetchPriority={index === 0 ? "high" : undefined}
-                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 25vw, 20vw"
                             />
                           ) : (
                             <div className="h-full w-full bg-muted" />

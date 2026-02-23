@@ -76,20 +76,20 @@ export default function Resume() {
       <AboutNav />
       
       <section className="min-h-screen bg-background [background-image:radial-gradient(circle_at_10%_10%,rgba(255,87,34,0.10),transparent_36%),radial-gradient(circle_at_88%_15%,rgba(0,188,212,0.08),transparent_35%)] pt-20 pb-20">
-        <div className="container max-w-6xl">
+        <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 lg:px-8">
 
 
           {/* Hero */}
           <div className="mb-16">
             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-4">Resume / CV</p>
-            <div className="flex items-end justify-between gap-8 flex-wrap border-b border-border/50 pb-8">
-              <div>
+            <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_auto] xl:items-end gap-6 border-b border-border/50 pb-8">
+              <div className="max-w-3xl">
                 <h1 className="text-5xl md:text-7xl font-serif mb-4 leading-tight tracking-tight">Resume</h1>
                 <p className="text-xl text-foreground/75 max-w-3xl leading-relaxed">
                   Scenic design production history across regional theatre, summer stock, academic theatre, and new work development.
                 </p>
               </div>
-              <div className="flex gap-4 flex-wrap">
+              <div className="flex gap-4 flex-wrap xl:justify-end">
                 <Button size="lg" className="gap-2 bg-[#FF5722] hover:bg-[#ff6a3a] text-white" asChild>
                   <a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/KZOFqPARnjQauvWm.pdf" target="_blank" rel="noopener noreferrer">
                     <Download className="w-5 h-5" />

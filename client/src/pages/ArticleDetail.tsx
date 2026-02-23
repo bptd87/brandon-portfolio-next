@@ -403,7 +403,7 @@ function ArticleDetailContent() {
   };
 
   // Get related articles
-  const related = relatedArticles?.filter(a => a.id !== article.id && a.categoryId === article.categoryId).slice(0, 3) || [];
+  const related = relatedArticles?.filter(a => a.id !== article.id && a.categoryId === article.categoryId).slice(0, 4) || [];
 
   return (
     <div className="min-h-screen bg-background">
@@ -470,8 +470,8 @@ function ArticleDetailContent() {
         />
       </div>
 
-      <article className="py-12 md:py-20 relative">
-        <div className="container max-w-7xl relative">
+      <article className="py-10 md:py-14 relative">
+        <div className="mx-auto w-full max-w-[1080px] px-4 sm:px-6 lg:px-8 relative">
           {/* Back Button */}
           <Link href="/articles">
             <Button variant="ghost" className="mb-8 -ml-4">
@@ -480,11 +480,11 @@ function ArticleDetailContent() {
             </Button>
           </Link>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_250px] gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_220px] gap-6 xl:gap-8">
             {/* Main Content */}
             <div className="min-w-0">
               {/* Article Header */}
-              <header className="mb-12">
+              <header className="mb-10 max-w-[700px]">
                 <div
                   className="inline-flex flex-wrap items-center gap-3 gap-y-2 mb-6 text-[11px] md:text-xs uppercase tracking-[0.25em] px-4 py-2 rounded-2xl border"
                   style={category ? {
@@ -529,12 +529,12 @@ function ArticleDetailContent() {
                   Feature
                 </div>
 
-                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-['Playfair_Display'] italic font-normal mb-6 leading-[1.1] tracking-tight">
+                <h1 className="max-w-[20ch] text-[2rem] md:text-[2.5rem] lg:text-[2.95rem] xl:text-[3.2rem] font-['Playfair_Display'] italic font-normal mb-4 leading-[1.08] tracking-tight">
                   {decodeHTMLEntities(article.title)}
                 </h1>
 
                 <div
-                  className="h-1 w-20 rounded-full mb-8"
+                  className="h-1 w-20 rounded-full mb-6"
                   style={{ backgroundColor: category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))' }}
                 />
 
@@ -542,10 +542,10 @@ function ArticleDetailContent() {
 
                 {article.excerpt && (
                   <div
-                    className="max-w-3xl border-l-4 pl-6"
+                    className="max-w-[62ch] border-l-4 pl-5"
                     style={{ borderColor: category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))' }}
                   >
-                    <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
+                    <p className="text-base md:text-[1.25rem] text-muted-foreground leading-relaxed">
                       {decodeHTMLEntities(article.excerpt)}
                     </p>
                   </div>
@@ -553,7 +553,7 @@ function ArticleDetailContent() {
 
                 {/* Cover Image */}
                 {article.coverImageUrl && (
-                  <div className="mt-12 -mx-4 md:mx-0 rounded-2xl overflow-hidden shadow-2xl">
+                  <div className="mt-6 max-w-[700px] rounded-2xl overflow-hidden shadow-2xl">
                     <ProgressiveImage
                       src={proxyImageUrl(article.coverImageUrl, 1920)}
                       alt={article.title}
@@ -633,7 +633,7 @@ function ArticleDetailContent() {
 
                 <div
                   ref={contentRef}
-                  className="article-content article-content-${article.id} article-html-content max-w-[65ch] mx-auto
+                  className="article-content article-content-${article.id} article-html-content max-w-[58ch] mr-auto
                   prose prose-lg prose-invert
                   prose-headings:font-['Playfair_Display'] prose-headings:font-bold prose-headings:font-normal prose-headings:leading-[1.2]
                   prose-h2:text-[1.5rem] prose-h2:mt-16 prose-h2:mb-4 prose-h2:scroll-mt-24 prose-h2:leading-[1.3]
@@ -650,8 +650,8 @@ function ArticleDetailContent() {
                   prose-img:rounded-2xl prose-img:my-12 prose-img:shadow-xl
                   prose-figure:my-12
                   prose-figcaption:text-sm prose-figcaption:text-muted-foreground prose-figcaption:text-center prose-figcaption:mt-4
-                  [&_iframe]:w-full [&_iframe]:max-w-[65ch] [&_iframe]:mx-auto [&_iframe]:my-12 [&_iframe]:rounded-2xl [&_iframe]:shadow-xl [&_iframe]:aspect-[16/9] [&_iframe]:h-auto
-                  [&_video]:w-full [&_video]:max-w-[65ch] [&_video]:mx-auto [&_video]:my-12 [&_video]:rounded-2xl [&_video]:shadow-xl [&_video]:aspect-[16/9]
+                  [&_iframe]:w-full [&_iframe]:max-w-[58ch] [&_iframe]:mr-auto [&_iframe]:my-12 [&_iframe]:rounded-2xl [&_iframe]:shadow-xl [&_iframe]:aspect-[16/9] [&_iframe]:h-auto
+                  [&_video]:w-full [&_video]:max-w-[58ch] [&_video]:mr-auto [&_video]:my-12 [&_video]:rounded-2xl [&_video]:shadow-xl [&_video]:aspect-[16/9]
                   [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased]"
                 >
                   {Array.isArray(processedSections) && (() => {
@@ -918,7 +918,7 @@ function ArticleDetailContent() {
 
               {/* Tags Section */}
               {article.tags && article.tags.length > 0 && (
-                <div className="mt-16 pt-12 border-t max-w-[65ch] mx-auto">
+                <div className="mt-16 pt-12 border-t max-w-[58ch] mr-auto">
                   <h3 className="text-sm uppercase tracking-wider text-muted-foreground mb-4 font-semibold">Tagged With</h3>
                   <div className="flex flex-wrap gap-2">
                     {article.tags.map((tag: any) => (
@@ -943,7 +943,7 @@ function ArticleDetailContent() {
 
 
               {/* Author Bio with Engagement */}
-              <div className="mt-16 pt-12 border-t max-w-[65ch] mx-auto">
+              <div className="mt-16 pt-12 border-t max-w-[58ch] mr-auto">
                 <div className="flex items-start gap-6">
                   <div className="flex-shrink-0">
                     <div className="w-20 h-20 rounded-full overflow-hidden border border-border/60 shadow-lg">
@@ -980,18 +980,17 @@ function ArticleDetailContent() {
                     </div>
                     <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Related</span>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     {related.map((relatedArticle) => {
                       const categoryColor = relatedArticle.category?.name
                         ? getCategoryColor(relatedArticle.category.name).hex
                         : '#FF6B35';
                       return (
                         <Link key={relatedArticle.id} href={`/articles/${relatedArticle.slug}`}>
-                          <div className="group bg-card rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl cursor-pointer border border-border">
-                            <div className="h-1 w-full" style={{ backgroundColor: categoryColor }} />
+                          <div className="group h-full bg-card/70 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5 cursor-pointer">
                             {/* Cover Image */}
                             {relatedArticle.coverImageUrl && (
-                              <div className="aspect-[16/9] overflow-hidden">
+                              <div className="aspect-[16/10] overflow-hidden">
                                 <img
                                   src={relatedArticle.coverImageUrl}
                                   alt={decodeHTMLEntities(relatedArticle.title)}
@@ -1001,22 +1000,18 @@ function ArticleDetailContent() {
                               </div>
                             )}
 
-                            <div className="p-5 md:p-6">
+                            <div className="p-4 md:p-5 h-full flex flex-col">
                               {/* Category Badge */}
                               {relatedArticle.category && (
-                                <Badge
-                                  className="text-[11px] uppercase tracking-[0.3em] px-3 py-1 rounded-full border"
-                                  style={{
-                                    borderColor: `${categoryColor}55`,
-                                    color: categoryColor,
-                                    backgroundColor: `${categoryColor}10`
-                                  }}
+                                <p
+                                  className="text-[10px] uppercase tracking-[0.26em] mb-3 font-medium"
+                                  style={{ color: categoryColor }}
                                 >
                                   {relatedArticle.category.name}
-                                </Badge>
+                                </p>
                               )}
 
-                              <h3 className="text-2xl font-['Playfair_Display'] italic font-normal mb-3 transition-colors line-clamp-2"
+                              <h3 className="text-xl md:text-[1.55rem] font-['Playfair_Display'] italic font-normal mb-2 leading-tight transition-colors line-clamp-2"
                                 style={{ color: 'inherit' }}
                                 onMouseEnter={(e) => e.currentTarget.style.color = categoryColor}
                                 onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>
@@ -1024,12 +1019,12 @@ function ArticleDetailContent() {
                               </h3>
 
                               {relatedArticle.excerpt && (
-                                <p className="text-base text-muted-foreground line-clamp-2 mb-3 leading-relaxed">
+                                <p className="text-sm text-muted-foreground line-clamp-3 mb-4 leading-relaxed">
                                   {decodeHTMLEntities(relatedArticle.excerpt)}
                                 </p>
                               )}
 
-                              <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                              <div className="mt-auto flex items-center gap-3 text-[11px] uppercase tracking-[0.08em] text-muted-foreground/90">
                                 <span>
                                   {relatedArticle.publishedAt && new Date(relatedArticle.publishedAt).toLocaleDateString('en-US', {
                                     month: 'short',
@@ -1056,8 +1051,11 @@ function ArticleDetailContent() {
 
             {/* Table of Contents - Desktop */}
             {headings.length > 0 && (
-              <div className="hidden lg:block lg:w-64 flex-shrink-0 fixed top-28 right-8 xl:right-[calc((100vw-1280px)/2+2rem)]">
-                <div className="w-64 max-h-[calc(100vh-8rem)] overflow-y-auto rounded-2xl border border-border/60 bg-background/70 backdrop-blur px-5 py-6 shadow-xl shadow-black/10">
+              <aside className="hidden lg:block lg:w-[220px] flex-shrink-0">
+                <div
+                  className="w-[220px] max-h-[calc(100vh-7rem)] overflow-y-auto rounded-2xl border border-border/60 bg-background/85 backdrop-blur px-5 py-6 shadow-xl shadow-black/10 z-10 lg:fixed lg:top-24"
+                  style={{ right: "max(1rem, calc((100vw - 1080px) / 2 + 2rem))" }}
+                >
                   <div
                     className="h-1 w-10 rounded-full mb-4"
                     style={{ backgroundColor: category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))' }}
@@ -1092,13 +1090,15 @@ function ArticleDetailContent() {
                     ))}
                   </nav>
                 </div>
-              </div>
+              </aside>
             )}
           </div>
         </div>
       </article>
 
-      <Footer />
+      <div className="relative z-20 bg-background">
+        <Footer />
+      </div>
 
       <style>{`
         /* Category-specific H2 colors */

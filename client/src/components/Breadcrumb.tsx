@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { ChevronRight, Home } from "lucide-react";
+import { ChevronRight, Sparkles } from "lucide-react";
 
 interface BreadcrumbItem {
   label: string;
@@ -20,7 +20,7 @@ export function Breadcrumb({ items, className = "" }: BreadcrumbProps) {
     <nav aria-label="Breadcrumb" className={`flex items-center gap-2 text-sm ${className}`}>
       {/* Home link */}
       <Link href="/" className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
-        <Home className="h-4 w-4" />
+        <Sparkles className="h-4 w-4" />
         <span className="sr-only">Home</span>
       </Link>
 

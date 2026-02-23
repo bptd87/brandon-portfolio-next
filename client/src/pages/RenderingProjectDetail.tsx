@@ -144,13 +144,13 @@ export default function RenderingProjectDetail() {
         <Breadcrumb
           items={isExperientialRendering
             ? [
-                { label: "Work", href: "/projects" },
+                { label: "Portfolio", href: "/projects" },
                 { label: "Experiential", href: "/projects/experiential" },
                 { label: "Rendering", href: "/projects/experiential/rendering" },
                 { label: project.title }
               ]
             : [
-                { label: "Work", href: "/projects" },
+                { label: "Portfolio", href: "/projects" },
                 { label: "Rendering", href: "/projects/rendering" },
                 { label: project.title }
               ]}

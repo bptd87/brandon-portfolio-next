@@ -280,6 +280,8 @@ export default function Header() {
 
   return (
     <>
+      {/* Flow spacer so page headers don't collide with fixed nav */}
+      <div className="h-[74px]" aria-hidden="true" />
       <header 
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isVisible ? "translate-y-0" : "-translate-y-full"

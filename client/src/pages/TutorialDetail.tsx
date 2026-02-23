@@ -124,22 +124,25 @@ export default function TutorialDetail() {
 
       {/* Breadcrumb Navigation */}
       <div className="container py-6">
-        <Breadcrumb
-          items={[
-            { label: "Studio", href: "/studio" },
-            { label: tutorial.title }
-          ]}
-        />
+        <div className="max-w-6xl mx-auto">
+          <Breadcrumb
+            items={[
+              { label: "Studio", href: "/studio" },
+              { label: tutorial.title }
+            ]}
+          />
+        </div>
       </div>
 
       {/* Tutorial Header */}
-      <section className="py-10 border-b border-border/50 bg-card/10">
-        <div className="container max-w-6xl">
+      <section className="py-8 border-b border-border/50 bg-card/10">
+        <div className="container">
+          <div className="max-w-6xl mx-auto">
           <Link href="/studio/tutorials" className="text-sm text-muted-foreground hover:text-[#2196F3] mb-6 inline-flex items-center gap-2 transition-colors">
             ← Back to Tutorials
           </Link>
 
-          <div className="flex flex-wrap gap-3 mb-6">
+          <div className="flex flex-wrap gap-2.5 mb-5">
             <Badge className="bg-[#2196F3] text-white border border-[#2196F3] uppercase tracking-wider font-bold px-4 py-1.5 text-xs">
               {tutorial.category || "General"}
             </Badge>
@@ -157,14 +160,16 @@ export default function TutorialDetail() {
             </Badge>
           </div>
 
-          <h1 className="mb-4 text-4xl md:text-6xl font-serif tracking-tight leading-[1.02] text-foreground">{tutorial.title}</h1>
+          <h1 className="mb-3 text-4xl md:text-6xl font-serif tracking-tight leading-[1.02] text-foreground">{tutorial.title}</h1>
           <p className="text-lg text-muted-foreground leading-relaxed max-w-4xl">{tutorial.description}</p>
+          </div>
         </div>
       </section>
 
       {/* Video Embed */}
-      <section className="py-12 bg-muted/30 border-b border-border">
-        <div className="container max-w-6xl">
+      <section className="py-10 bg-muted/30 border-b border-border">
+        <div className="container">
+          <div className="max-w-6xl mx-auto">
           <div className="aspect-video overflow-hidden rounded-lg shadow-2xl">
             <iframe
               width="100%"
@@ -178,41 +183,43 @@ export default function TutorialDetail() {
               className="w-full h-full"
             ></iframe>
           </div>
+          </div>
         </div>
       </section>
 
       {/* Tabbed Content */}
-      <section className="py-16">
-        <div className="container max-w-6xl">
+      <section className="py-12">
+        <div className="container">
+          <div className="max-w-6xl mx-auto">
           <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full grid-cols-5 bg-muted/50 p-1 rounded-lg mb-8 h-auto gap-1">
+            <TabsList className="grid w-full max-w-5xl mx-auto grid-cols-5 bg-muted/50 p-1 rounded-lg mb-6 h-auto gap-1">
               <TabsTrigger
                 value="overview"
-                className="data-[state=active]:bg-[#2196F3]/20 data-[state=active]:text-[#7ec8ff] data-[state=active]:border-[#2196F3]/40 data-[state=active]:shadow-lg border border-transparent text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
+                className="data-[state=active]:bg-[#2196F3]/20 data-[state=active]:text-[#7ec8ff] data-[state=active]:border-[#2196F3]/40 data-[state=active]:shadow-lg border border-transparent text-foreground uppercase tracking-[0.08em] font-bold py-2.5 px-3 rounded-md transition-all text-[11px] md:text-xs"
               >
                 Overview
               </TabsTrigger>
               <TabsTrigger
                 value="concepts"
-                className="data-[state=active]:bg-[#FF5722]/20 data-[state=active]:text-[#ff9c7a] data-[state=active]:border-[#FF5722]/40 data-[state=active]:shadow-lg border border-transparent text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
+                className="data-[state=active]:bg-[#FF5722]/20 data-[state=active]:text-[#ff9c7a] data-[state=active]:border-[#FF5722]/40 data-[state=active]:shadow-lg border border-transparent text-foreground uppercase tracking-[0.08em] font-bold py-2.5 px-3 rounded-md transition-all text-[11px] md:text-xs"
               >
                 Concepts
               </TabsTrigger>
               <TabsTrigger
                 value="reference"
-                className="data-[state=active]:bg-[#9C27B0]/20 data-[state=active]:text-[#ce93d8] data-[state=active]:border-[#9C27B0]/40 data-[state=active]:shadow-lg border border-transparent text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
+                className="data-[state=active]:bg-[#9C27B0]/20 data-[state=active]:text-[#ce93d8] data-[state=active]:border-[#9C27B0]/40 data-[state=active]:shadow-lg border border-transparent text-foreground uppercase tracking-[0.08em] font-bold py-2.5 px-3 rounded-md transition-all text-[11px] md:text-xs"
               >
                 Quick Ref
               </TabsTrigger>
               <TabsTrigger
                 value="transcript"
-                className="data-[state=active]:bg-[#F44336]/20 data-[state=active]:text-[#ef9a9a] data-[state=active]:border-[#F44336]/40 data-[state=active]:shadow-lg border border-transparent text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
+                className="data-[state=active]:bg-[#F44336]/20 data-[state=active]:text-[#ef9a9a] data-[state=active]:border-[#F44336]/40 data-[state=active]:shadow-lg border border-transparent text-foreground uppercase tracking-[0.08em] font-bold py-2.5 px-3 rounded-md transition-all text-[11px] md:text-xs"
               >
                 Transcript
               </TabsTrigger>
               <TabsTrigger
                 value="resources"
-                className="data-[state=active]:bg-[#00BCD4]/20 data-[state=active]:text-[#80deea] data-[state=active]:border-[#00BCD4]/40 data-[state=active]:shadow-lg border border-transparent text-foreground uppercase tracking-wider font-bold py-3 px-4 rounded-md transition-all text-xs md:text-sm"
+                className="data-[state=active]:bg-[#00BCD4]/20 data-[state=active]:text-[#80deea] data-[state=active]:border-[#00BCD4]/40 data-[state=active]:shadow-lg border border-transparent text-foreground uppercase tracking-[0.08em] font-bold py-2.5 px-3 rounded-md transition-all text-[11px] md:text-xs"
               >
                 Resources
               </TabsTrigger>
@@ -220,7 +227,7 @@ export default function TutorialDetail() {
 
             {/* Overview Tab */}
             <TabsContent value="overview" className="mt-0">
-              <div className="border border-border/60 rounded-xl p-8 bg-card/70">
+              <div className="border border-border/60 rounded-xl p-6 md:p-7 bg-card/70">
                 <h2 className="text-2xl font-semibold mb-6 text-[#2196F3] tracking-tight">What You'll Learn</h2>
                 <div className="space-y-3 mb-12">
                   {(tutorial.learning_objectives || []).map((objective: string, index: number) => (
@@ -246,7 +253,7 @@ export default function TutorialDetail() {
 
             {/* Key Concepts Tab */}
             <TabsContent value="concepts" className="mt-0">
-              <div className="border border-border/60 rounded-xl p-8 bg-card/70">
+              <div className="border border-border/60 rounded-xl p-6 md:p-7 bg-card/70">
                 <h2 className="text-2xl font-semibold mb-8 text-[#FF5722] tracking-tight">Key Concepts</h2>
                 <div className="space-y-8">
                   {(tutorial.key_concepts || []).map((concept: any, index: number) => (
@@ -280,7 +287,7 @@ export default function TutorialDetail() {
 
             {/* Quick Reference Tab */}
             <TabsContent value="reference" className="mt-0">
-              <div className="border border-border/60 rounded-xl p-8 bg-card/70">
+              <div className="border border-border/60 rounded-xl p-6 md:p-7 bg-card/70">
                 <div className="grid md:grid-cols-2 gap-12">
                   {/* Shortcuts */}
                   <div>
@@ -323,7 +330,7 @@ export default function TutorialDetail() {
 
             {/* Transcript Tab */}
             <TabsContent value="transcript" className="mt-0">
-              <div className="border border-border/60 rounded-xl p-8 bg-card/70">
+              <div className="border border-border/60 rounded-xl p-6 md:p-7 bg-card/70">
                 <h2 className="text-2xl font-semibold mb-8 text-[#F44336] tracking-tight">Full Transcript</h2>
                 <div className="space-y-4 font-mono text-sm">
                   {(tutorial.transcript || []).map((entry: any, index: number) => (
@@ -342,7 +349,7 @@ export default function TutorialDetail() {
 
             {/* Resources Tab */}
             <TabsContent value="resources" className="mt-0">
-              <div className="border border-border/60 rounded-xl p-8 bg-card/70">
+              <div className="border border-border/60 rounded-xl p-6 md:p-7 bg-card/70">
                 <h2 className="text-2xl font-semibold mb-8 text-[#00BCD4] tracking-tight">Related Resources</h2>
 
                 <div className="space-y-4 mb-12">
@@ -391,6 +398,7 @@ export default function TutorialDetail() {
               </div>
             </TabsContent>
           </Tabs>
+          </div>
         </div>
       </section>
 
