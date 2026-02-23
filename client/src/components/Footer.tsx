@@ -48,7 +48,7 @@ export default function Footer() {
               <h3 className="text-sm font-black tracking-wider text-[#FF5722] mb-6">WORK</h3>
               <ul className="space-y-3">
                 <li>
-                  <Link href="/projects/scenic-design" className="text-foreground/70 hover:text-[#00E5FF] transition-colors font-medium">
+                  <Link href="/projects" className="text-foreground/70 hover:text-[#00E5FF] transition-colors font-medium">
                     Scenic Design
                   </Link>
                 </li>

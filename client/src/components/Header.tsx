@@ -265,7 +265,7 @@ export default function Header() {
   };
 
   const disciplines = [
-    { name: "Scenic Design", slug: "scenic-design", path: "/projects/scenic-design", icon: <ScenicDesignIcon /> },
+    { name: "Scenic Design", slug: "scenic-design", path: "/projects", icon: <ScenicDesignIcon /> },
     { name: "Rendering", slug: "rendering", path: "/projects/rendering", icon: <RenderingIcon /> },
     { name: "Experiential Design", slug: "experiential", path: "/projects/experiential", icon: <ExperientialIcon /> },
   ];
@@ -312,7 +312,7 @@ export default function Header() {
                   const isPortfolioActive = isActive("/projects") || isActive("/projects/scenic-design");
                   return (
                 <Link
-                  href="/projects/scenic-design"
+                  href="/projects"
                   className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-[#2196F3] relative group ${
                     isPortfolioActive ? "text-[#2196F3]" : ""
                   }`}

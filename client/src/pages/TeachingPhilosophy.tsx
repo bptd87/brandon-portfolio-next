@@ -486,7 +486,7 @@ export default function TeachingPhilosophy() {
             See examples of scenic design projects that inform my teaching practice
           </p>
           <Link 
-            href="/projects/scenic-design"
+            href="/projects"
             className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-full text-lg font-semibold hover:bg-primary/90 transition-colors"
           >
             View Portfolio

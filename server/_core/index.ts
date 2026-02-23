@@ -120,10 +120,38 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
   };
 
   // Legacy SEO URL redirects to consolidate ranking signals.
+  expressApp.get("/home", (_req, res) => redirect301(res, "/"));
+  expressApp.get("/index.html", (_req, res) => redirect301(res, "/"));
+  expressApp.get("/&", (_req, res) => redirect301(res, "/"));
   expressApp.get("/scale-converter", (_req, res) => redirect301(res, "/studio/apps/scale-calculator"));
+  expressApp.get("/architecture-scale-converter", (_req, res) => redirect301(res, "/studio/apps/scale-calculator"));
   expressApp.get("/portfolio", (_req, res) => redirect301(res, "/projects"));
   expressApp.get("/directory", (_req, res) => redirect301(res, "/studio/directory"));
   expressApp.get("/scenic-studio", (_req, res) => redirect301(res, "/studio"));
+  expressApp.get("/scenic-toolkit", (_req, res) => redirect301(res, "/studio/apps"));
+  expressApp.get("/theatre-renderings", (_req, res) => redirect301(res, "/projects/rendering"));
+  expressApp.get("/software", (_req, res) => redirect301(res, "/studio/apps"));
+  expressApp.get("/store", (_req, res) => redirect301(res, "/contact"));
+  expressApp.get("/press", (_req, res) => redirect301(res, "/news"));
+  expressApp.get("/terms-of-use", (_req, res) => redirect301(res, "/privacy-policy"));
+  expressApp.get("/upcoming-productions", (_req, res) => redirect301(res, "/news"));
+  expressApp.get("/upcoming-productions/:slug", (_req, res) => redirect301(res, "/news"));
+  expressApp.get("/aditional-design", (_req, res) => redirect301(res, "/projects"));
+  expressApp.get("/design-portfolio/:slug", (_req, res) => redirect301(res, "/projects"));
+  expressApp.get("/design-portfolio/:collection/:slug", async (req, res) => {
+    const raw = req.params.slug || "";
+    const slug = legacySlugAliases[slugifyLoose(raw)] || slugifyLoose(raw);
+    if (!slug) return redirect301(res, "/projects");
+
+    try {
+      const project = await db.getProjectBySlug(slug);
+      if (project?.status === "published") return redirect301(res, `/project/${slug}`);
+      return redirect301(res, "/projects");
+    } catch {
+      return redirect301(res, "/projects");
+    }
+  });
+  expressApp.get("/design-process/:slug", (_req, res) => redirect301(res, "/projects"));
   expressApp.get("/projects/scenic-design", (_req, res) => redirect301(res, "/projects"));
   expressApp.get("/projects", (req, res, next) => {
     const discipline = String(req.query.discipline || "").toLowerCase();
@@ -135,18 +163,68 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
   });
   expressApp.get("/scenic-insights", (_req, res) => redirect301(res, "/articles"));
   expressApp.get("/scenic-insights-all", (_req, res) => redirect301(res, "/articles"));
+  expressApp.get("/scenic-insights-1", (_req, res) => redirect301(res, "/articles"));
+  expressApp.get("/scneic-insights/:slug", (_req, res) => redirect301(res, "/articles"));
+  expressApp.get("/scenic-insights-design-process", (_req, res) => redirect301(res, "/articles"));
+  expressApp.get("/scenic-insights-design-philosophy", (_req, res) => redirect301(res, "/articles"));
   expressApp.get("/scenic-insights/category/:slug", (_req, res) => redirect301(res, "/articles"));
   expressApp.get("/scenic-insights/tag/:slug", (_req, res) => redirect301(res, "/articles"));
+  expressApp.get("/articles/tag/:slug", (req, res) => {
+    const tagSlug = slugifyLoose(req.params.slug || "");
+    if (!tagSlug) return redirect301(res, "/articles");
+    return redirect301(res, `/tags/${tagSlug}`);
+  });
   expressApp.get("/news/category/:slug", (_req, res) => redirect301(res, "/news"));
   expressApp.get("/news/tag/:slug", (req, res) => {
     const tagSlug = slugifyLoose(req.params.slug || "");
     if (!tagSlug) return redirect301(res, "/news");
     return redirect301(res, `/tags/${tagSlug}`);
   });
+  expressApp.get("/news", (req, res, next) => {
+    const rawTag = String(req.query.tag || "").trim();
+    if (!rawTag) return next();
+
+    const decodeTwice = (value: string): string => {
+      try {
+        const once = decodeURIComponent(value);
+        try {
+          return decodeURIComponent(once);
+        } catch {
+          return once;
+        }
+      } catch {
+        return value;
+      }
+    };
+
+    const normalizedTag = decodeTwice(rawTag).replace(/\+/g, " ");
+    const tagSlug = slugifyLoose(normalizedTag);
+    if (!tagSlug) return redirect301(res, "/news");
+    return redirect301(res, `/tags/${tagSlug}`);
+  });
   expressApp.get("/feed", (_req, res) => redirect301(res, "/projects"));
+  expressApp.get("/feed/category/:slug", (_req, res) => redirect301(res, "/projects"));
   expressApp.get("/feed/tag/:slug", (_req, res) => redirect301(res, "/projects"));
+  expressApp.get("/feed-collection", (_req, res) => redirect301(res, "/projects"));
+  expressApp.get("/feed-collection/category/:slug", (_req, res) => redirect301(res, "/projects"));
+  expressApp.get("/feed-collection/:slug", (_req, res) => redirect301(res, "/projects"));
   expressApp.get("/resources/all", (_req, res) => redirect301(res, "/studio"));
   expressApp.get("/resources/designers-toolkit", (_req, res) => redirect301(res, "/studio/apps"));
+  expressApp.get("/resources/vectorworks-vault", (_req, res) => redirect301(res, "/studio/tutorials"));
+  expressApp.get("/resources/scenic-design-studio", (_req, res) => redirect301(res, "/studio/tutorials"));
+  expressApp.get("/resources/scenic-design-studio/v", (_req, res) => redirect301(res, "/studio/tutorials"));
+  expressApp.get("/resources/scenic-design-studio/vectorworks-tutorials", (_req, res) =>
+    redirect301(res, "/studio/tutorials")
+  );
+  expressApp.get("/tutorial/:slug", (req, res) =>
+    redirect301(res, `/resources/scenic-design-studio/v/${slugifyLoose(req.params.slug || "")}`)
+  );
+  expressApp.get("/scenic-design-studio/:slug", (req, res) =>
+    redirect301(res, `/resources/scenic-design-studio/v/${slugifyLoose(req.params.slug || "")}`)
+  );
+  expressApp.get("/vectorworks-vault", (_req, res) => redirect301(res, "/studio/tutorials"));
+  expressApp.get("/vectorworks-vault/tag/:slug", (_req, res) => redirect301(res, "/studio/tutorials"));
+  expressApp.get("/vectorworks-vault/:slug", (_req, res) => redirect301(res, "/studio/tutorials"));
 
   expressApp.get("/scenic-insights/:slug", async (req, res) => {
     const originalSlug = slugifyLoose(req.params.slug || "");
@@ -159,6 +237,27 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
 
       const newsItem = await db.getNewsBySlug(slug);
       if (newsItem?.status === "published") return redirect301(res, `/news/${slug}`);
+
+      return redirect301(res, "/articles");
+    } catch {
+      return redirect301(res, "/articles");
+    }
+  });
+
+  expressApp.get("/post/:slug", async (req, res) => {
+    const originalSlug = slugifyLoose(req.params.slug || "");
+    const slug = legacySlugAliases[originalSlug] || originalSlug;
+    if (!slug) return redirect301(res, "/articles");
+
+    try {
+      const article = await db.getArticleBySlug(slug);
+      if (article?.status === "published") return redirect301(res, `/articles/${slug}`);
+
+      const newsItem = await db.getNewsBySlug(slug);
+      if (newsItem?.status === "published") return redirect301(res, `/news/${slug}`);
+
+      const project = await db.getProjectBySlug(slug);
+      if (project?.status === "published") return redirect301(res, `/project/${slug}`);
 
       return redirect301(res, "/articles");
     } catch {
@@ -198,6 +297,68 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
       return redirect301(res, "/projects");
     } catch {
       return redirect301(res, "/projects");
+    }
+  });
+
+  expressApp.get("/scenic-design/:slug", async (req, res) => {
+    const originalSlug = slugifyLoose(req.params.slug || "");
+    const slug = legacySlugAliases[originalSlug] || originalSlug;
+    if (!slug) return redirect301(res, "/projects");
+
+    try {
+      const project = await db.getProjectBySlug(slug);
+      if (project?.status === "published") return redirect301(res, `/project/${slug}`);
+      return redirect301(res, "/projects");
+    } catch {
+      return redirect301(res, "/projects");
+    }
+  });
+
+  expressApp.get("/news/:slug", async (req, res, next) => {
+    const originalSlug = slugifyLoose(req.params.slug || "");
+    const slug = legacySlugAliases[originalSlug] || originalSlug;
+    if (!slug) return redirect301(res, "/news");
+
+    try {
+      const newsItem = await db.getNewsBySlug(slug);
+      if (newsItem?.status === "published") {
+        if (slug !== originalSlug) return redirect301(res, `/news/${slug}`);
+        return next();
+      }
+
+      const project = await db.getProjectBySlug(slug);
+      if (project?.status === "published") return redirect301(res, `/project/${slug}`);
+
+      const article = await db.getArticleBySlug(slug);
+      if (article?.status === "published") return redirect301(res, `/articles/${slug}`);
+
+      return redirect301(res, "/news");
+    } catch {
+      return redirect301(res, "/news");
+    }
+  });
+
+  expressApp.get("/articles/:slug", async (req, res, next) => {
+    const originalSlug = slugifyLoose(req.params.slug || "");
+    const slug = legacySlugAliases[originalSlug] || originalSlug;
+    if (!slug) return redirect301(res, "/articles");
+
+    try {
+      const article = await db.getArticleBySlug(slug);
+      if (article?.status === "published") {
+        if (slug !== originalSlug) return redirect301(res, `/articles/${slug}`);
+        return next();
+      }
+
+      const newsItem = await db.getNewsBySlug(slug);
+      if (newsItem?.status === "published") return redirect301(res, `/news/${slug}`);
+
+      const project = await db.getProjectBySlug(slug);
+      if (project?.status === "published") return redirect301(res, `/project/${slug}`);
+
+      return redirect301(res, "/articles");
+    } catch {
+      return redirect301(res, "/articles");
     }
   });
 

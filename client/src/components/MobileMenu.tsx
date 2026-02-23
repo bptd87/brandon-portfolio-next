@@ -58,7 +58,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             {workOpen && (
               <div className="ml-4 mt-2 space-y-1">
                 <Link
-                  href="/projects/scenic-design"
+                  href="/projects"
                   onClick={onClose}
                   className="block py-2 px-4 rounded-lg hover:bg-[#FF5722]/10 hover:text-[#FF5722] transition-colors"
                 >

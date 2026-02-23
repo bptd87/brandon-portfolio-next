@@ -15,7 +15,7 @@ const sections = [
   {
     title: "Portfolio",
     links: [
-      { name: "Scenic Design", href: "/projects/scenic-design" },
+      { name: "Scenic Design", href: "/projects" },
       { name: "Rendering", href: "/projects/rendering" },
       { name: "Experiential Design", href: "/projects/experiential" },
     ],

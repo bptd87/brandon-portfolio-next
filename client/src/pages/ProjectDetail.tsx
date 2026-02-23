@@ -206,7 +206,7 @@ export default function ProjectDetail() {
     : project.discipline === 'experiential_design'
       ? '/projects/experiential'
       : project.discipline === 'scenic_design'
-        ? '/projects/scenic-design'
+        ? '/projects'
         : '/projects';
   const moreProjectsLabel = project.discipline === 'scenic_design'
     ? 'More Scenic Design'
