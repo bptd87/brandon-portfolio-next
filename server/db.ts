@@ -1471,6 +1471,7 @@ export async function createProject(project: any) {
       client: project.client,
       external_articles: project.externalArticles,
       status: project.status || 'draft',
+      published_at: project.publishedAt,
       featured: project.featured || false,
       category_id: project.categoryId,
       creative_team: project.creativeTeam,
@@ -1502,6 +1503,7 @@ export async function updateProject(id: number, project: any) {
   if (project.client !== undefined) updateData.client = project.client;
   if (project.externalArticles !== undefined) updateData.external_articles = project.externalArticles;
   if (project.status !== undefined) updateData.status = project.status;
+  if (project.publishedAt !== undefined) updateData.published_at = project.publishedAt;
   if (project.featured !== undefined) updateData.featured = project.featured;
   if (project.categoryId !== undefined) updateData.category_id = project.categoryId;
   if (project.creativeTeam !== undefined) updateData.creative_team = project.creativeTeam;

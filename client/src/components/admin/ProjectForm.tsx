@@ -694,7 +694,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
         designNotes: formData.designNotes || undefined,
         discipline: formData.discipline.toLowerCase() as any,
         subcategory: formData.subcategory || undefined,
-        month: formData.month || undefined,
+        month: formData.month ?? null,
         coverImageUrl: coverImageUrl || undefined,
         coverImageKey: coverImageKey || undefined,
         location: formData.location || undefined,
