@@ -1473,6 +1473,7 @@ export async function createProject(project: any) {
       status: project.status || 'draft',
       featured: project.featured || false,
       category_id: project.categoryId,
+      creative_team: project.creativeTeam,
       seo_title: project.seoTitle,
       seo_description: project.seoDescription,
       seo_keywords: project.seoKeywords,
@@ -1503,6 +1504,7 @@ export async function updateProject(id: number, project: any) {
   if (project.status !== undefined) updateData.status = project.status;
   if (project.featured !== undefined) updateData.featured = project.featured;
   if (project.categoryId !== undefined) updateData.category_id = project.categoryId;
+  if (project.creativeTeam !== undefined) updateData.creative_team = project.creativeTeam;
   if (project.seoTitle !== undefined) updateData.seo_title = project.seoTitle;
   if (project.seoDescription !== undefined) updateData.seo_description = project.seoDescription;
   if (project.seoKeywords !== undefined) updateData.seo_keywords = project.seoKeywords;
