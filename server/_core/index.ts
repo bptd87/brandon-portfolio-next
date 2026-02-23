@@ -545,6 +545,12 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
     }
   });
 
+  // Allow API crawling for rendering, but prevent API endpoints from being indexed as pages.
+  expressApp.use("/api", (_req, res, next) => {
+    res.setHeader("X-Robots-Tag", "noindex, nofollow, noarchive");
+    next();
+  });
+
   // tRPC API - Mount before image proxy so TRPC routes have priority
   expressApp.use(
     "/api/trpc",

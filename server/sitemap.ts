@@ -777,6 +777,7 @@ export function generateRobotsTxt(baseUrl?: string): string {
   return `# Brandon PT Davis Portfolio - Robots.txt
 User-agent: *
 Allow: /
+Allow: /api/trpc
 
 # Sitemaps
 Sitemap: ${SITE_URL}/sitemap-index.xml
@@ -786,7 +787,6 @@ Sitemap: ${SITE_URL}/video-sitemap.xml
 
 # Disallow admin and API routes
 Disallow: /admin
-Disallow: /api/
 Disallow: /login
 Disallow: /auth-debug
 `;
