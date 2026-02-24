@@ -43,6 +43,7 @@ const sections = [
       { name: "Studio Home", href: "/studio" },
       { name: "Tutorials", href: "/studio/tutorials" },
       { name: "Apps", href: "/studio/apps" },
+      { name: "Scenic 3D Converter (Mac)", href: "/studio/apps/scenic-3d-converter" },
       { name: "Scenic Directory", href: "/studio/directory" },
     ],
   },

@@ -64,6 +64,7 @@ const ScaleCalculator = lazy(() => import("./pages/ScaleCalculator"));
 const DimensionReference = lazy(() => import("./pages/DimensionReference"));
 const DesignHistoryTimeline = lazy(() => import("./pages/DesignHistoryTimeline"));
 const RoscoPaintCalculator = lazy(() => import("./pages/RoscoPaintCalculator"));
+const Scenic3DConverter = lazy(() => import("./pages/Scenic3DConverter"));
 const ExperientialPortfolio = lazy(() => import("./pages/ExperientialPortfolio"));
 const RenderingPortfolio = lazy(() => import("./pages/RenderingPortfolio"));
 const TutorialDetail = lazy(() => import("./pages/TutorialDetail"));
@@ -141,6 +142,7 @@ function Router() {
           <Route path={"/studio/apps/dimension-reference"} component={DimensionReference} />
           <Route path={"/studio/apps/design-history-timeline"} component={DesignHistoryTimeline} />
           <Route path={"/studio/apps/rosco-paint-calculator"} component={RoscoPaintCalculator} />
+          <Route path={"/studio/apps/scenic-3d-converter"} component={Scenic3DConverter} />
           <Route path={"/studio/apps"} component={StudioApps} />
           <Route path={"/studio/directory"} component={StudioDirectory} />
           <Route path={"/studio"} component={Studio} />

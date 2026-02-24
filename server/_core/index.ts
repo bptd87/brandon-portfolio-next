@@ -11,6 +11,7 @@ import * as sitemap from "../sitemap";
 // import imageProxyRouter from "../imageProxy"; // Import inside function to prevent crash on startup if sharp fails
 import { sdk } from "./sdk";
 import * as db from "../db";
+import { supabase } from "../supabase";
 import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
 import { getSessionCookieOptions } from "./cookies";
 import { fileURLToPath } from 'url';
@@ -575,6 +576,33 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
 
   // RSS feeds
   expressApp.get("/api/news/rss", generateRSSFeed);
+
+  expressApp.get("/api/downloads/scenic-3d-converter", async (_req, res) => {
+    const bucket = "Downloads";
+    const objectPath = "dist/Scenic-3D-Converter-Stable.zip";
+    const downloadName = "Scenic-3D-Converter-Stable.zip";
+
+    try {
+      const { data, error } = await supabase.storage
+        .from(bucket)
+        .createSignedUrl(objectPath, 60 * 5, { download: downloadName });
+
+      if (error || !data?.signedUrl) {
+        console.error("Failed to generate signed download URL:", error);
+        return res.status(404).json({
+          error: "Download not available",
+          path: objectPath,
+        });
+      }
+
+      return res.redirect(302, data.signedUrl);
+    } catch (error) {
+      console.error("Download redirect failed:", error);
+      return res.status(500).json({
+        error: "Unable to prepare download",
+      });
+    }
+  });
 
   expressApp.get("/projects/rss.xml", async (req, res) => {
     try {

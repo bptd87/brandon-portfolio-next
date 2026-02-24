@@ -11,6 +11,12 @@ import StructuredData from "@/components/StructuredData";
 
 const featuredTools = [
   {
+    title: "Scenic 3D Converter (Mac)",
+    description: "Finder quick action utility for converting 3D files to USD, USDZ, and 3DM formats for Vectorworks workflows.",
+    href: "/studio/apps/scenic-3d-converter",
+    accentColor: "#00BCD4",
+  },
+  {
     title: "Dimension Reference",
     description: "Quick reference for standard dimensions used in scenic and experiential planning.",
     href: "/studio/apps/dimension-reference",
@@ -211,7 +217,7 @@ export default function Studio() {
           </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 items-stretch">
           {featuredTools.map((tool, index) => (
             <AnimatedSection key={tool.title} delay={index * 80}>
               <Link href={tool.href}>

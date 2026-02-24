@@ -12,6 +12,15 @@ export default function StudioApps() {
   // Individual app cards
   const apps = [
     {
+      title: "Scenic 3D Converter (Mac)",
+      description: "Finder quick action workflow to convert 3D files locally into Vectorworks-friendly USD, USDZ, and 3DM outputs.",
+      image: "/assets/studio/scenic-3d-converter-card.webp",
+      href: "/studio/apps/scenic-3d-converter",
+      accentColor: "#00BCD4",
+      category: "Utility",
+      cta: "View Download Tool",
+    },
+    {
       title: "Scale Calculator",
       description: "Convert between architectural and model scales. Essential for drafting and model building.",
       image: "/assets/studio/scale-calculator.webp",
@@ -87,7 +96,7 @@ export default function StudioApps() {
           url: "https://www.brandonptdavis.com/studio/apps",
           description: "Browser-based scenic design calculators, references, and utility apps.",
           about: "Studio applications for scenic design workflow.",
-          primaryImageOfPage: "https://www.brandonptdavis.com/assets/studio/scale-calculator.webp",
+          primaryImageOfPage: "https://www.brandonptdavis.com/assets/studio/scenic-3d-converter-card.webp",
           mainEntity: {
             name: "Studio Apps",
             itemListElement: apps.map((app, index) => ({
@@ -100,6 +109,20 @@ export default function StudioApps() {
         }}
       />
       {/* SoftwareApplication schemas for key apps */}
+      <StructuredData
+        type="SoftwareApplication"
+        softwareApplication={{
+          name: "Scenic 3D Converter for Vectorworks (Mac)",
+          description: "Finder quick-action utility for converting 3D files into Vectorworks-friendly USD, USDZ, and 3DM outputs.",
+          applicationCategory: "GraphicsApplication",
+          operatingSystem: "macOS",
+          offers: {
+            price: "0",
+            priceCurrency: "USD",
+          },
+          url: "https://www.brandonptdavis.com/studio/apps/scenic-3d-converter",
+        }}
+      />
       <StructuredData
         type="SoftwareApplication"
         softwareApplication={{
@@ -215,7 +238,7 @@ export default function StudioApps() {
                     </p>
 
                     <div className="mt-auto inline-flex items-center gap-2 font-semibold text-sm group-hover:gap-3 transition-all duration-300" style={{ color: app.accentColor }}>
-                      Launch App <ArrowRight className="w-4 h-4" />
+                      {app.cta || "Launch App"} <ArrowRight className="w-4 h-4" />
                     </div>
                   </CardContent>
                 </Card>
