@@ -56,6 +56,7 @@ export function ProcessGalleryModal({
   categoryLabel,
 }: ProcessGalleryModalProps) {
   const [showVideo, setShowVideo] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false);
 
   const getMediaPreview = (image?: ProjectImage) => {
     if (!image) return null;
@@ -65,11 +66,20 @@ export function ProcessGalleryModal({
   // Get display image and embed URL
   const displayImage = getMediaPreview(currentImage);
   const embedUrl = currentImage?.videoUrl ? getVideoEmbedUrl(currentImage.videoUrl) : null;
+  const primaryDescription = currentImage?.description || currentProject?.description || null;
 
   // Reset video state when item changes
   useEffect(() => {
     setShowVideo(false);
+    setIsZoomed(false);
   }, [currentImage?.id]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setIsZoomed(false);
+      setShowVideo(false);
+    }
+  }, [isOpen]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -152,11 +162,15 @@ export function ProcessGalleryModal({
                       />
                     </div>
                   ) : displayImage ? (
-                    <div className="relative w-full max-w-6xl">
+                    <div className="relative w-full max-w-6xl overflow-hidden rounded-lg">
                       <img
                         src={displayImage}
                         alt={currentImage.altText || currentImage.displayTitle || ''}
-                        className="w-full h-auto max-h-[75vh] object-contain rounded-lg shadow-2xl"
+                        className={`w-full h-auto max-h-[68vh] object-contain shadow-2xl transition-transform duration-300 ${
+                          isZoomed ? "scale-[1.9] cursor-zoom-out" : "scale-100 cursor-zoom-in"
+                        }`}
+                        onClick={() => setIsZoomed((prev) => !prev)}
+                        title={isZoomed ? "Click to zoom out" : "Click to zoom in"}
                       />
                       {embedUrl && !showVideo && (
                         <button
@@ -176,22 +190,29 @@ export function ProcessGalleryModal({
                   )}
 
                   {/* Project Title and Description */}
-                  <div className="text-center text-white mt-6 max-w-3xl px-4">
+                  <div className="mt-6 min-h-[8.5rem] w-full max-w-4xl px-4 text-center text-white">
                     {currentProject?.displayTitle && (
-                      <h2 className="text-3xl md:text-4xl font-black mb-2">{currentProject.displayTitle}</h2>
+                      <h2 className="mb-2 text-3xl font-black md:text-4xl">{currentProject.displayTitle}</h2>
                     )}
-                    {currentProject?.description && (
-                      <p className="text-white/70 text-lg">{currentProject.description}</p>
+                    {primaryDescription && (
+                      <p
+                        className="mx-auto max-w-3xl text-base leading-relaxed text-white/75 md:text-lg"
+                        style={{
+                          display: "-webkit-box",
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: "vertical",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {primaryDescription}
+                      </p>
                     )}
                   </div>
 
                   {/* Image Title and Description (if different from project) */}
                   {currentImage.displayTitle && currentImage.displayTitle !== currentProject?.displayTitle && (
-                    <div className="text-center text-white/60 mt-4 max-w-3xl px-4">
+                    <div className="mt-4 max-w-3xl px-4 text-center text-white/60">
                       <p className="text-lg font-semibold">{currentImage.displayTitle}</p>
-                      {currentImage.description && (
-                        <p className="text-white/50 text-sm mt-2">{currentImage.description}</p>
-                      )}
                     </div>
                   )}
 

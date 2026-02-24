@@ -19,6 +19,7 @@ type GalleryItem = {
   videoUrl?: string | null;
   altText: string | null;
   displayTitle: string | null;
+  description?: string | null;
   projectId?: number | null;
 };
 
@@ -26,10 +27,18 @@ function GalleryCardGrid({
   items,
   onItemClick,
   categoryLabel,
+  cardAspectClass = "aspect-video",
+  imageFit = "contain",
+  cardBackgroundClass = "bg-black",
+  cardRoundedClass = "rounded-xl",
 }: {
   items: GalleryItem[];
   onItemClick: (index: number) => void;
   categoryLabel: string;
+  cardAspectClass?: string;
+  imageFit?: "cover" | "contain";
+  cardBackgroundClass?: string;
+  cardRoundedClass?: string;
 }) {
   if (items.length === 0) {
     return (
@@ -49,12 +58,13 @@ function GalleryCardGrid({
         return (
           <AnimatedSection key={item.id} delay={index * 0.06}>
             <button className="group block w-full text-left" onClick={() => onItemClick(index)}>
-              <div className="relative aspect-video overflow-hidden rounded-xl border border-border/60 bg-muted shadow-lg shadow-black/10 transition-colors group-hover:border-white/40">
+              <div className={`relative overflow-hidden border border-border/60 shadow-lg shadow-black/10 transition-colors group-hover:border-white/40 ${cardAspectClass} ${cardBackgroundClass} ${cardRoundedClass}`}>
                 {displayImage ? (
                   <ProgressiveImage
                     src={displayImage}
                     alt={item.altText || item.displayTitle || categoryLabel}
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="h-full w-full"
+                    objectFit={imageFit}
                   />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-cyan-500/10 to-pink-500/10">
@@ -83,13 +93,26 @@ function GalleryCardGrid({
                   </div>
                 </div>
               </div>
-              {item.displayTitle && (
-                <div className="mt-3 lg:hidden">
-                  <h3 className="truncate text-sm font-medium" style={{ color: accentColor }}>
+              <div className="mt-3 min-h-[4.75rem] space-y-1">
+                {item.displayTitle && (
+                  <h3 className="text-sm font-semibold leading-snug" style={{ color: accentColor }}>
                     {item.displayTitle}
                   </h3>
-                </div>
-              )}
+                )}
+                {item.description ? (
+                  <p
+                    className="text-xs leading-relaxed text-white/70"
+                    style={{
+                      display: "-webkit-box",
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {item.description}
+                  </p>
+                ) : null}
+              </div>
             </button>
           </AnimatedSection>
         );
@@ -106,6 +129,10 @@ function PortfolioSection({
   accent,
   items,
   onItemClick,
+  cardAspectClass,
+  imageFit,
+  cardBackgroundClass,
+  cardRoundedClass,
 }: {
   id: string;
   eyebrow: string;
@@ -114,6 +141,10 @@ function PortfolioSection({
   accent: string;
   items: GalleryItem[];
   onItemClick: (index: number) => void;
+  cardAspectClass?: string;
+  imageFit?: "cover" | "contain";
+  cardBackgroundClass?: string;
+  cardRoundedClass?: string;
 }) {
   return (
     <section id={id} className="border-t border-border py-20 md:py-28">
@@ -128,7 +159,15 @@ function PortfolioSection({
           </div>
         </AnimatedSection>
 
-        <GalleryCardGrid items={items} onItemClick={onItemClick} categoryLabel={title} />
+        <GalleryCardGrid
+          items={items}
+          onItemClick={onItemClick}
+          categoryLabel={title}
+          cardAspectClass={cardAspectClass}
+          imageFit={imageFit}
+          cardBackgroundClass={cardBackgroundClass}
+          cardRoundedClass={cardRoundedClass}
+        />
       </div>
     </section>
   );
@@ -249,12 +288,27 @@ export default function ExperientialPortfolio() {
     { enabled: currentProject?.projectId !== null && currentProject?.projectId !== undefined },
   );
 
-  const currentImages =
-    projectImages && projectImages.length > 0
-      ? projectImages
-      : currentProject?.mainItem
-        ? [currentProject.mainItem]
-        : currentProject?.images || [];
+  const currentImages = useMemo(() => {
+    if (!currentProject?.mainItem) {
+      return projectImages && projectImages.length > 0 ? projectImages : currentProject?.images || [];
+    }
+
+    // Always keep the clicked/card image as the first slide, then append project gallery images.
+    if (projectImages && projectImages.length > 0) {
+      const seen = new Set<number>([currentProject.mainItem.id]);
+      const merged = [currentProject.mainItem];
+
+      for (const img of projectImages) {
+        if (seen.has(img.id)) continue;
+        seen.add(img.id);
+        merged.push(img);
+      }
+
+      return merged;
+    }
+
+    return [currentProject.mainItem];
+  }, [currentProject, projectImages]);
 
   const currentImage = currentImages[imageIndex];
 
@@ -393,6 +447,10 @@ export default function ExperientialPortfolio() {
         copy="Drafting sets and build documents that convert creative direction into dimensions, clear scopes, and install-ready details. This is the layer where software precision serves production confidence."
         accent="#FFC107"
         items={processImagesByCategory["technical-drawing"] || []}
+        cardAspectClass="aspect-[3/2]"
+        imageFit="contain"
+        cardBackgroundClass="bg-white/90"
+        cardRoundedClass="rounded-md"
         onItemClick={(index) => {
           setProcessModalCategory("technical-drawing");
           handleGalleryItemClick(index);

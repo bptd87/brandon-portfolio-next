@@ -581,11 +581,19 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
     const bucket = "Downloads";
     const objectPath = "dist/Scenic-3D-Converter-Stable.zip";
     const downloadName = "Scenic-3D-Converter-Stable.zip";
+    const timeoutMs = 8000;
 
     try {
-      const { data, error } = await supabase.storage
-        .from(bucket)
-        .createSignedUrl(objectPath, 60 * 5, { download: downloadName });
+      const signedUrlResult = await Promise.race([
+        supabase.storage
+          .from(bucket)
+          .createSignedUrl(objectPath, 60 * 5, { download: downloadName }),
+        new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error("Signed URL request timed out")), timeoutMs)
+        ),
+      ]);
+
+      const { data, error } = signedUrlResult;
 
       if (error || !data?.signedUrl) {
         console.error("Failed to generate signed download URL:", error);
