@@ -118,6 +118,9 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
     "the-lights-were-already-on-maude-adams-legacy-at-stephens-college":
       "the-lights-were-already-on-maude-adams-legacy-at-stephens-college",
     "red-line-caf": "red-line-cafe",
+    // Legacy tutorial slug aliases
+    "creating-pdfs-without-plotter": "creating-24x36-pdfs",
+    "creating-2d-from-3d-models": "creating-2d-drafting-from-3d",
   };
 
   // Legacy SEO URL redirects to consolidate ranking signals.
@@ -127,6 +130,9 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
   expressApp.get("/scale-converter", (_req, res) => redirect301(res, "/studio/apps/scale-calculator"));
   expressApp.get("/architecture-scale-converter", (_req, res) => redirect301(res, "/studio/apps/scale-calculator"));
   expressApp.get("/portfolio", (_req, res) => redirect301(res, "/projects"));
+  expressApp.get("/about/resume", (_req, res) => redirect301(res, "/resume"));
+  expressApp.get("/about/creative-statement", (_req, res) => redirect301(res, "/creative-statement"));
+  expressApp.get("/about/teaching-philosophy", (_req, res) => redirect301(res, "/teaching-philosophy"));
   expressApp.get("/directory", (_req, res) => redirect301(res, "/studio/directory"));
   expressApp.get("/scenic-studio", (_req, res) => redirect301(res, "/studio"));
   expressApp.get("/scenic-toolkit", (_req, res) => redirect301(res, "/studio/apps"));
@@ -316,6 +322,8 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
   });
 
   expressApp.get("/news/:slug", async (req, res, next) => {
+    if (req.params.slug === "rss.xml") return next();
+
     const originalSlug = slugifyLoose(req.params.slug || "");
     const slug = legacySlugAliases[originalSlug] || originalSlug;
     if (!slug) return redirect301(res, "/news");
@@ -340,6 +348,8 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
   });
 
   expressApp.get("/articles/:slug", async (req, res, next) => {
+    if (req.params.slug === "rss.xml") return next();
+
     const originalSlug = slugifyLoose(req.params.slug || "");
     const slug = legacySlugAliases[originalSlug] || originalSlug;
     if (!slug) return redirect301(res, "/articles");
@@ -389,33 +399,13 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
     const slug = legacySlugAliases[originalSlug] || originalSlug;
     if (!slug) return redirect301(res, "/studio/tutorials");
 
-    const tutorialSlugs = new Set([
-      "navigating-user-interface",
-      "understanding-classes",
-      "understanding-design-layers",
-      "installing-workspace-template",
-      "basics-tool-palette",
-      "sheet-layers",
-      "2d-edit-modify-tricks",
-      "resource-manager-basics",
-      "understanding-symbols",
-      "2d-annotations-dimensioning",
-      "3d-modeling-basics",
-      "hybrid-symbols",
-      "basics-of-textures",
-      "3d-modeling-tools",
-      "creating-pdfs-without-plotter",
-      "modeling-a-table",
-      "creating-camera-rendering",
-      "creating-2d-from-3d-models",
-    ]);
-
     try {
       const article = await db.getArticleBySlug(slug);
       if (article?.status === "published") return redirect301(res, `/articles/${slug}`);
       const newsItem = await db.getNewsBySlug(slug);
       if (newsItem?.status === "published") return redirect301(res, `/news/${slug}`);
-      if (tutorialSlugs.has(slug)) return redirect301(res, `/studio/tutorials/${slug}`);
+      const tutorial = await db.getTutorialBySlug(slug);
+      if (tutorial?.status === "published") return redirect301(res, `/studio/tutorials/${slug}`);
       return redirect301(res, "/studio/tutorials");
     } catch {
       return redirect301(res, "/studio/tutorials");
@@ -648,10 +638,10 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
     }
   });
 
-  expressApp.get("/studio/tutorials/rss.xml", (req, res) => {
+  expressApp.get("/studio/tutorials/rss.xml", async (req, res) => {
     try {
       const baseUrl = `${req.protocol}://${req.get('host')}`;
-      const xml = sitemap.generateTutorialsRSS(baseUrl);
+      const xml = await sitemap.generateTutorialsRSS(baseUrl);
       res.header("Content-Type", "application/rss+xml");
       res.send(xml);
     } catch (error) {

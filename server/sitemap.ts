@@ -245,31 +245,13 @@ export async function generateMainSitemap(baseUrl?: string): Promise<string> {
     });
   }
 
-  // Individual tutorials (hardcoded slugs since tutorials are static)
-  const tutorialSlugs = [
-    'navigating-user-interface',
-    'understanding-classes',
-    'understanding-design-layers',
-    'installing-workspace-template',
-    'basics-tool-palette',
-    'sheet-layers',
-    '2d-edit-modify-tricks',
-    'resource-manager-basics',
-    'understanding-symbols',
-    '2d-annotations-dimensioning',
-    '3d-modeling-basics',
-    'hybrid-symbols',
-    'basics-of-textures',
-    '3d-modeling-tools',
-    'creating-pdfs-without-plotter',
-    'modeling-a-table',
-    'creating-camera-rendering',
-    'creating-2d-from-3d-models',
-  ];
-
-  for (const slug of tutorialSlugs) {
+  // Individual tutorials (dynamic from published tutorial records)
+  const tutorials = await db.getAllTutorials({ status: 'published' });
+  for (const tutorial of tutorials) {
+    if (!tutorial.slug) continue;
     urls.push({
-      loc: `${SITE_URL}/studio/tutorials/${slug}`,
+      loc: `${SITE_URL}/studio/tutorials/${tutorial.slug}`,
+      lastmod: formatDate(tutorial.updated_at || tutorial.created_at),
       changefreq: 'monthly',
       priority: 0.6,
     });
@@ -592,137 +574,9 @@ export async function generateProjectsRSS(baseUrl?: string): Promise<string> {
 /**
  * Generate RSS feed for tutorials
  */
-export function generateTutorialsRSS(baseUrl?: string): string {
+export async function generateTutorialsRSS(baseUrl?: string): Promise<string> {
   const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
-  // Hardcoded tutorial data matching StudioTutorials.tsx
-  const tutorials = [
-    {
-      title: "Vectorworks Tutorial: Navigating the User Interface",
-      slug: "navigating-user-interface",
-      description: "Learn the fundamentals of Vectorworks interface, workspace setup, and essential navigation tools for scenic design.",
-      youtubeUrl: "https://www.youtube.com/watch?v=jRI33g1oSt0",
-      publishDate: new Date('2021-01-24'),
-    },
-    {
-      title: "Vectorworks Tutorial: Understanding Classes",
-      slug: "understanding-classes",
-      description: "Master the organization system that controls graphic attributes, textures, and visibility in Vectorworks using classes and hierarchies.",
-      youtubeUrl: "https://www.youtube.com/watch?v=tXQcTdGiwT4",
-      publishDate: new Date('2021-01-24'),
-    },
-    {
-      title: "Vectorworks Tutorial: Understanding Design Layers",
-      slug: "understanding-design-layers",
-      description: "Master the layer organization system that allows you to separate and manage different elements of your scenic design across multiple drawing planes.",
-      youtubeUrl: "https://www.youtube.com/watch?v=CwCxmhQAFwI",
-      publishDate: new Date('2021-01-25'),
-    },
-    {
-      title: "Vectorworks Tutorial: Installing a Workspace and Template",
-      slug: "installing-workspace-template",
-      description: "Learn how to properly install and configure a Vectorworks workspace and template provided by your organization to ensure standardized communication and workflow.",
-      youtubeUrl: "https://www.youtube.com/watch?v=CXBfG2L3ZmI",
-      publishDate: new Date('2021-01-25'),
-    },
-    {
-      title: "Vectorworks Tutorial: Basics Tool Palette",
-      slug: "basics-tool-palette",
-      description: "Master the essential 2D drawing tools including selection, drawing, and modification tools that form the foundation of scenic design drafting in Vectorworks.",
-      youtubeUrl: "https://www.youtube.com/watch?v=orjqcNYveOg",
-      publishDate: new Date('2021-01-27'),
-    },
-    {
-      title: "Vectorworks Tutorial: Sheet Layers",
-      slug: "sheet-layers",
-      description: "Learn how to use sheet layers for laying out pages for printing, including creating viewports, adding title blocks, and managing drawing scales.",
-      youtubeUrl: "https://www.youtube.com/watch?v=D4AXwNQgdBI",
-      publishDate: new Date('2021-01-28'),
-    },
-    {
-      title: "Vectorworks Tutorial: 2D Edit and Modify Tricks",
-      slug: "2d-edit-modify-tricks",
-      description: "Learn advanced 2D editing techniques and keyboard shortcuts to dramatically speed up your drafting workflow in Vectorworks.",
-      youtubeUrl: "https://www.youtube.com/watch?v=L1MdPcfNVpI",
-      publishDate: new Date('2021-01-29'),
-    },
-    {
-      title: "Vectorworks Tutorial: Resource Manager Basics",
-      slug: "resource-manager-basics",
-      description: "Master the Resource Manager to organize, import, and manage symbols, textures, and other design resources across your Vectorworks files.",
-      youtubeUrl: "https://www.youtube.com/watch?v=Vb9RLcQXFHE",
-      publishDate: new Date('2021-02-01'),
-    },
-    {
-      title: "Vectorworks Tutorial: Understanding Symbols",
-      slug: "understanding-symbols",
-      description: "Learn how to create, edit, and manage symbols to build reusable design elements and maintain consistency across your scenic design projects.",
-      youtubeUrl: "https://www.youtube.com/watch?v=wy_zWBXgGzg",
-      publishDate: new Date('2021-02-02'),
-    },
-    {
-      title: "Vectorworks Tutorial: 2D Annotations and Dimensioning",
-      slug: "2d-annotations-dimensioning",
-      description: "Master the tools for adding dimensions, text annotations, and callouts to your scenic design drawings for clear communication.",
-      youtubeUrl: "https://www.youtube.com/watch?v=0Kzr8lPKuIo",
-      publishDate: new Date('2021-02-03'),
-    },
-    {
-      title: "Vectorworks Tutorial: 3D Modeling Basics",
-      slug: "3d-modeling-basics",
-      description: "Begin your journey into 3D modeling with fundamental techniques for creating three-dimensional scenic elements in Vectorworks.",
-      youtubeUrl: "https://www.youtube.com/watch?v=HXpXnBL6Rqk",
-      publishDate: new Date('2021-02-04'),
-    },
-    {
-      title: "Vectorworks Tutorial: Hybrid Symbols",
-      slug: "hybrid-symbols",
-      description: "Learn to create hybrid symbols that display different representations in 2D plan view and 3D model view for maximum flexibility.",
-      youtubeUrl: "https://www.youtube.com/watch?v=wy_zWBXgGzg",
-      publishDate: new Date('2021-02-05'),
-    },
-    {
-      title: "Vectorworks Tutorial: Basics of Textures",
-      slug: "basics-of-textures",
-      description: "Master texture application and editing to add realistic surface materials to your 3D scenic design models.",
-      youtubeUrl: "https://www.youtube.com/watch?v=BdOPzjEDpDg",
-      publishDate: new Date('2021-02-08'),
-    },
-    {
-      title: "Vectorworks Tutorial: 3D Modeling Tools",
-      slug: "3d-modeling-tools",
-      description: "Explore advanced 3D modeling tools including extrudes, sweeps, and Boolean operations for complex scenic design elements.",
-      youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      publishDate: new Date('2021-02-09'),
-    },
-    {
-      title: "Vectorworks Tutorial: Creating 24x36 PDFs Without a Plotter",
-      slug: "creating-pdfs-without-plotter",
-      description: "Learn how to export large-format PDFs from Vectorworks without requiring a physical plotter, essential for remote collaboration.",
-      youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      publishDate: new Date('2021-02-10'),
-    },
-    {
-      title: "Vectorworks Tutorial: Modeling a Table",
-      slug: "modeling-a-table",
-      description: "Follow a complete workflow for modeling a detailed furniture piece from concept to finished 3D model.",
-      youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      publishDate: new Date('2021-02-11'),
-    },
-    {
-      title: "Vectorworks Tutorial: Creating a Camera and Rendering",
-      slug: "creating-camera-rendering",
-      description: "Learn to set up cameras, adjust lighting, and create photorealistic renderings of your scenic designs.",
-      youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      publishDate: new Date('2021-02-12'),
-    },
-    {
-      title: "Vectorworks Tutorial: Creating 2D Drafting from 3D Models",
-      slug: "creating-2d-from-3d-models",
-      description: "Master the workflow for generating accurate 2D construction drawings from your 3D scenic design models.",
-      youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      publishDate: new Date('2021-02-15'),
-    },
-  ];
+  const tutorials = await db.getAllTutorials({ status: 'published' });
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
@@ -736,26 +590,27 @@ export function generateTutorialsRSS(baseUrl?: string): string {
   if (tutorials.length > 0) {
     const latest = tutorials[0];
     xml += `
-    <lastBuildDate>${latest.publishDate.toUTCString()}</lastBuildDate>`;
+    <lastBuildDate>${new Date(latest.updated_at || latest.created_at).toUTCString()}</lastBuildDate>`;
   }
 
   for (const tutorial of tutorials) {
+    if (!tutorial.slug) continue;
+
     xml += `
     <item>
-      <title>${escapeXml(tutorial.title)}</title>
+      <title>${escapeXml(tutorial.title || 'Tutorial')}</title>
       <link>${SITE_URL}/studio/tutorials/${tutorial.slug}</link>
       <guid isPermaLink="true">${SITE_URL}/studio/tutorials/${tutorial.slug}</guid>
-      <pubDate>${tutorial.publishDate.toUTCString()}</pubDate>`;
+      <pubDate>${new Date(tutorial.updated_at || tutorial.created_at).toUTCString()}</pubDate>`;
 
     if (tutorial.description) {
       xml += `
       <description>${escapeXml(tutorial.description)}</description>`;
     }
 
-    // Add YouTube video URL as enclosure
-    if (tutorial.youtubeUrl) {
+    if (tutorial.cover_image) {
       xml += `
-      <enclosure url="${escapeXml(tutorial.youtubeUrl)}" type="video/mp4" length="5000000" />`;
+      <enclosure url="${escapeXml(tutorial.cover_image)}" type="image/jpeg" length="150000" />`;
     }
 
     xml += `
