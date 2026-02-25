@@ -293,7 +293,9 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
     }
   });
 
-  expressApp.get("/projects/:slug", async (req, res) => {
+  expressApp.get("/projects/:slug", async (req, res, next) => {
+    if (req.params.slug === "rss.xml") return next();
+
     const originalSlug = slugifyLoose(req.params.slug || "");
     const slug = legacySlugAliases[originalSlug] || originalSlug;
     if (!slug) return redirect301(res, "/projects");
