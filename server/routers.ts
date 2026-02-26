@@ -168,28 +168,35 @@ export const appRouter = router({
         images: z.array(projectMediaInput).optional(),
       }))
       .mutation(async ({ input }) => {
-        const { tagIds, images, ...projectData } = input;
+        try {
+          const { tagIds, images, ...projectData } = input;
 
-        const dataToInsert = {
-          ...projectData,
-          publishedAt: projectData.status === 'published' ? new Date() : undefined,
-        };
+          const dataToInsert = {
+            ...projectData,
+            publishedAt: projectData.status === 'published' ? new Date() : undefined,
+          };
 
-        const id = await db.createProject(dataToInsert);
+          const id = await db.createProject(dataToInsert);
 
-        if (tagIds && tagIds.length > 0) {
-          await db.setProjectTags(id, tagIds);
-        }
-
-        if (images && images.length > 0) {
-          for (const image of images) {
-            await db.addProjectImage({ projectId: id, ...image });
+          if (tagIds && tagIds.length > 0) {
+            await db.setProjectTags(id, tagIds);
           }
+
+          if (images && images.length > 0) {
+            for (const image of images) {
+              await db.addProjectImage({ projectId: id, ...image });
+            }
+          }
+
+          invalidatePublicLists(['projects']);
+
+          return { id };
+        } catch (error: any) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: error?.message || 'Failed to create project',
+          });
         }
-
-        invalidatePublicLists(['projects']);
-
-        return { id };
       }),
 
     update: adminProcedure
@@ -221,33 +228,40 @@ export const appRouter = router({
         images: z.array(projectMediaInput).optional(),
       }))
       .mutation(async ({ input }) => {
-        const { id, tagIds, images, ...projectData } = input;
+        try {
+          const { id, tagIds, images, ...projectData } = input;
 
-        const currentProject = await db.getProjectById(id);
-        const dataToUpdate = {
-          ...projectData,
-          publishedAt: (projectData.status === 'published' && currentProject?.status !== 'published')
-            ? new Date()
-            : undefined,
-        };
+          const currentProject = await db.getProjectById(id);
+          const dataToUpdate = {
+            ...projectData,
+            publishedAt: (projectData.status === 'published' && currentProject?.status !== 'published')
+              ? new Date()
+              : undefined,
+          };
 
-        await db.updateProject(id, dataToUpdate);
+          await db.updateProject(id, dataToUpdate);
 
-        if (tagIds !== undefined && tagIds.length > 0) {
-          await db.setProjectTags(id, tagIds);
-        }
-
-        if (images !== undefined) {
-          // Delete existing images and add new ones
-          await db.deleteProjectImages(id);
-          for (const image of images) {
-            await db.addProjectImage({ projectId: id, ...image });
+          if (tagIds !== undefined && tagIds.length > 0) {
+            await db.setProjectTags(id, tagIds);
           }
+
+          if (images !== undefined) {
+            // Delete existing images and add new ones
+            await db.deleteProjectImages(id);
+            for (const image of images) {
+              await db.addProjectImage({ projectId: id, ...image });
+            }
+          }
+
+          invalidatePublicLists(['projects']);
+
+          return { success: true };
+        } catch (error: any) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: error?.message || 'Failed to update project',
+          });
         }
-
-        invalidatePublicLists(['projects']);
-
-        return { success: true };
       }),
 
     delete: adminProcedure

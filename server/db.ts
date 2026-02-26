@@ -1453,37 +1453,91 @@ export async function incrementProjectViews(id: number) {
 
 // ============ PROJECT CRUD OPERATIONS ============
 
-export async function createProject(project: any) {
-  const { data, error } = await supabase
-    .from('projects')
-    .insert({
-      title: project.title,
-      slug: project.slug,
-      discipline: project.discipline,
-      subcategory: project.subcategory,
-      year: project.year,
-      month: project.month,
-      venue: project.venue,
-      location: project.location,
-      excerpt: project.excerpt,
-      cover_image: project.coverImageUrl,
-      design_notes: project.designNotes,
-      client: project.client,
-      external_articles: project.externalArticles,
-      status: project.status || 'draft',
-      published_at: project.publishedAt,
-      featured: project.featured || false,
-      category_id: project.categoryId,
-      creative_team: project.creativeTeam,
-      seo_title: project.seoTitle,
-      seo_description: project.seoDescription,
-      seo_keywords: project.seoKeywords,
-    })
-    .select()
-    .single();
+function extractMissingColumn(error: any): string | null {
+  const text = `${error?.message || ''} ${error?.details || ''} ${error?.hint || ''}`;
+  const patterns = [
+    /Could not find the '([^']+)' column/i,
+    /column ["']?([a-zA-Z0-9_]+)["']? does not exist/i,
+    /schema cache.*column ["']?([a-zA-Z0-9_]+)["']?/i,
+  ];
 
-  if (error) throw error;
-  return data.id;
+  for (const pattern of patterns) {
+    const match = text.match(pattern);
+    if (match?.[1]) return match[1];
+  }
+
+  return null;
+}
+
+function remapProjectColumn(payload: Record<string, any>, missingColumn: string): boolean {
+  const remap: Record<string, string> = {
+    cover_image: 'cover_image_url',
+    cover_image_key: 'cover_image_key',
+    cover_image_url: 'cover_image',
+  };
+
+  if (!(missingColumn in payload)) return false;
+
+  const target = remap[missingColumn];
+  if (target && !(target in payload)) {
+    payload[target] = payload[missingColumn];
+  }
+
+  delete payload[missingColumn];
+  return true;
+}
+
+export async function createProject(project: any) {
+  const insertData: Record<string, any> = {
+    title: project.title,
+    slug: project.slug,
+    discipline: project.discipline,
+    subcategory: project.subcategory,
+    year: project.year,
+    month: project.month,
+    location: project.location,
+    excerpt: project.excerpt,
+    cover_image: project.coverImageUrl,
+    design_notes: project.designNotes,
+    client: project.client,
+    external_articles: project.externalArticles,
+    status: project.status || 'draft',
+    published_at: project.publishedAt,
+    featured: project.featured || false,
+    category_id: project.categoryId,
+    creative_team: project.creativeTeam,
+    seo_title: project.seoTitle,
+    seo_description: project.seoDescription,
+    seo_keywords: project.seoKeywords,
+  };
+
+  if (project.venue !== undefined) {
+    insertData.venue = project.venue;
+  }
+  if (project.coverImageKey !== undefined) {
+    insertData.cover_image_key = project.coverImageKey;
+  }
+
+  let attempts = 0;
+  while (attempts < 5) {
+    attempts += 1;
+    const { data, error } = await supabase
+      .from('projects')
+      .insert(insertData)
+      .select()
+      .single();
+
+    if (!error) return data.id;
+
+    const missingColumn = extractMissingColumn(error);
+    if (missingColumn && remapProjectColumn(insertData, missingColumn)) {
+      continue;
+    }
+
+    throw error;
+  }
+
+  throw new Error('Failed to create project after adaptive retries');
 }
 
 export async function updateProject(id: number, project: any) {
@@ -1511,12 +1565,26 @@ export async function updateProject(id: number, project: any) {
   if (project.seoDescription !== undefined) updateData.seo_description = project.seoDescription;
   if (project.seoKeywords !== undefined) updateData.seo_keywords = project.seoKeywords;
 
-  const { error } = await supabase
-    .from('projects')
-    .update(updateData)
-    .eq('id', id);
+  let attempts = 0;
+  while (attempts < 5) {
+    attempts += 1;
 
-  if (error) throw error;
+    const { error } = await supabase
+      .from('projects')
+      .update(updateData)
+      .eq('id', id);
+
+    if (!error) return;
+
+    const missingColumn = extractMissingColumn(error);
+    if (missingColumn && remapProjectColumn(updateData, missingColumn)) {
+      continue;
+    }
+
+    throw error;
+  }
+
+  throw new Error('Failed to update project after adaptive retries');
 }
 
 export async function deleteProject(id: number) {
