@@ -758,7 +758,6 @@ export async function getAllArticles(filters?: {
       status,
       featured,
       category_id,
-      author_id,
       seo_title,
       seo_description,
       seo_keywords,
@@ -785,6 +784,7 @@ export async function getAllArticles(filters?: {
   let { data, error } = await query;
   if (error) {
     console.error('[getAllArticles] primary query failed, retrying with fallback select:', error.message);
+    const missingAuthorColumn = /author_id/i.test(error.message || '');
     let fallbackQuery = supabase
       .from('articles')
       .select('*')
@@ -799,7 +799,7 @@ export async function getAllArticles(filters?: {
     if (filters?.categoryId) {
       fallbackQuery = fallbackQuery.eq('category_id', filters.categoryId);
     }
-    if (filters?.authorId) {
+    if (filters?.authorId && !missingAuthorColumn) {
       fallbackQuery = fallbackQuery.eq('author_id', filters.authorId);
     }
 
@@ -849,7 +849,7 @@ export async function getAllArticles(filters?: {
     status: article.status,
     featured: article.featured,
     categoryId: article.category_id,
-    authorId: article.author_id,
+    authorId: (article as any).author_id ?? null,
     category: (() => {
       const categoryRaw = Array.isArray((article as any).category) ? (article as any).category[0] : (article as any).category;
       if (categoryRaw) {
