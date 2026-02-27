@@ -23,6 +23,15 @@ window.console.error = (...args: any[]) => {
   resizeObserverErr(...args);
 };
 
+// Safari can emit noisy unhandled AbortError rejections when in-flight requests are canceled on route changes.
+window.addEventListener('unhandledrejection', (event) => {
+  const reason = event.reason as any;
+  const message = String(reason?.message || reason || '');
+  if (reason?.name === 'AbortError' || message.includes('operation was aborted')) {
+    event.preventDefault();
+  }
+});
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

@@ -366,6 +366,12 @@ export function serveStatic(app: Express) {
           return;
         }
 
+        // Service worker files must never be cached long-term or clients can stay on old app versions.
+        if (/(^|\/)(sw\.js|registerSW\.js)$/i.test(filePath)) {
+          res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+          return;
+        }
+
         // Vite emits content-hashed assets; keep them immutable for max cache efficiency.
         if (/[.-][A-Za-z0-9_-]{8,}\.(js|css|mjs|png|jpe?g|gif|svg|webp|woff2?)$/i.test(filePath)) {
           res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
