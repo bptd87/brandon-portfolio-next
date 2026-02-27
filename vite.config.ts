@@ -1,14 +1,13 @@
 import { jsxLocPlugin } from "@builder.io/vite-plugin-jsx-loc";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
-// @ts-ignore - critters has type issues with package.json exports
-import Critters from "critters";
+import Beasties from "beasties";
 import fs from "node:fs";
 import path from "node:path";
 import { defineConfig, type Plugin } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
-// Critical CSS inlining plugin using Critters
+// Critical CSS inlining plugin using Beasties (maintained Critters fork)
 function vitePluginCriticalCSS(): Plugin {
   return {
     name: 'vite-plugin-critical-css',
@@ -24,7 +23,7 @@ function vitePluginCriticalCSS(): Plugin {
 
       const html = fs.readFileSync(indexPath, 'utf-8');
 
-      const critters = new Critters({
+      const beasties = new Beasties({
         path: path.resolve(import.meta.dirname, 'dist/public'),
         publicPath: '/',
         preload: 'swap',
@@ -34,7 +33,7 @@ function vitePluginCriticalCSS(): Plugin {
       });
 
       try {
-        const processed = await critters.process(html);
+        const processed = await beasties.process(html);
         fs.writeFileSync(indexPath, processed, 'utf-8');
         console.log('✓ Critical CSS inlined successfully');
       } catch (error) {
