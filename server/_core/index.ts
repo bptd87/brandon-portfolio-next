@@ -178,6 +178,12 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
   expressApp.get("/scenic-insights-design-philosophy", (_req, res) => redirect301(res, "/articles"));
   expressApp.get("/scenic-insights/category/:slug", (_req, res) => redirect301(res, "/articles"));
   expressApp.get("/scenic-insights/tag/:slug", (_req, res) => redirect301(res, "/articles"));
+  expressApp.get("/tags/:slug", (req, res, next) => {
+    const tagSlug = slugifyLoose(req.params.slug || "");
+    if (!tagSlug) return redirect301(res, "/articles");
+    if (req.params.slug !== tagSlug) return redirect301(res, `/tags/${tagSlug}`);
+    return next();
+  });
   expressApp.get("/articles/tag/:slug", (req, res) => {
     const tagSlug = slugifyLoose(req.params.slug || "");
     if (!tagSlug) return redirect301(res, "/articles");

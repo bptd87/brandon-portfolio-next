@@ -1,10 +1,12 @@
 import { useParams, Link } from "wouter";
 import { trpc } from "@/lib/trpc";
-import { Helmet } from "react-helmet-async";
 import { ArrowLeft, Briefcase, FileText, Newspaper } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { getProjectPath } from "@/lib/projectRoutes";
+import { SEO } from "@/components/SEO";
+
+const INDEXABLE_TAG_MIN_ITEMS = 3;
 
 export default function TagDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -33,13 +35,18 @@ export default function TagDetail() {
 
   const { tag, projects, articles, news } = data;
   const totalItems = projects.length + articles.length + news.length;
+  const shouldNoindex = totalItems < INDEXABLE_TAG_MIN_ITEMS;
+  const canonicalTagSlug = (tag.slug || slug || "").toLowerCase();
+  const canonicalTagUrl = `https://www.brandonptdavis.com/tags/${canonicalTagSlug}`;
 
   return (
     <>
-      <Helmet>
-        <title>{tag.name} | Brandon PT Davis</title>
-        <meta name="description" content={`Browse all content tagged with ${tag.name} - ${totalItems} items including projects, articles, and news.`} />
-      </Helmet>
+      <SEO
+        title={`${tag.name} | Brandon PT Davis`}
+        description={`Browse all content tagged with ${tag.name} - ${totalItems} items including projects, articles, and news.`}
+        url={canonicalTagUrl}
+        noindex={shouldNoindex}
+      />
 
       <div className="min-h-screen bg-background">
         {/* Header */}
