@@ -276,7 +276,7 @@ export default function Links() {
 
           {/* Socials - Clean Pills */}
           <div className="flex items-center gap-2">
-            <a href="https://instagram.com/brandonptdavis" target="_blank" rel="noopener" aria-label="Instagram" className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"><Instagram className="w-4 h-4" /></a>
+            <a href="https://instagram.com/brandonptdavisdesign" target="_blank" rel="noopener" aria-label="Instagram" className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"><Instagram className="w-4 h-4" /></a>
             <a href="https://linkedin.com/in/brandonptdavis" target="_blank" rel="noopener" aria-label="LinkedIn" className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"><Linkedin className="w-4 h-4" /></a>
             <div className="w-px h-4 bg-border mx-1" />
             <a href="mailto:info@brandonptdavis.com" className="px-4 py-2 rounded-full bg-foreground text-background font-medium text-xs hover:bg-foreground/90 transition-colors flex items-center gap-2">

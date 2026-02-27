@@ -76,7 +76,7 @@ export default function Home() {
             addressCountry: "US",
           },
           sameAs: [
-            "https://www.instagram.com/brandonptdavis",
+            "https://www.instagram.com/brandonptdavisdesign",
             "https://www.linkedin.com/in/brandonptdavis",
             "https://www.youtube.com/@BrandonPTDavisDesign",
             "https://www.facebook.com/BrandonPTDavisA",
@@ -123,7 +123,7 @@ export default function Home() {
             addressCountry: "US",
           },
           sameAs: [
-            "https://www.instagram.com/brandonptdavis",
+            "https://www.instagram.com/brandonptdavisdesign",
             "https://www.linkedin.com/in/brandonptdavis",
             "https://www.youtube.com/@BrandonPTDavisDesign",
             "https://www.facebook.com/BrandonPTDavisA",

@@ -96,7 +96,7 @@ export default function About() {
             addressCountry: "US",
           },
           sameAs: [
-            "https://www.instagram.com/brandonptdavis",
+            "https://www.instagram.com/brandonptdavisdesign",
             "https://www.linkedin.com/in/brandonptdavis",
             "https://www.youtube.com/@BrandonPTDavisDesign",
             "https://www.facebook.com/BrandonPTDavisA",
@@ -141,7 +141,7 @@ export default function About() {
             image: "https://www.brandonptdavis.com/android-chrome-512x512.png",
             description: "Scenic designer and conceptual artist with 130+ production credits across regional theatre and academic stages.",
             sameAs: [
-              "https://www.instagram.com/brandonptdavis",
+              "https://www.instagram.com/brandonptdavisdesign",
               "https://www.linkedin.com/in/brandonptdavis",
               "https://www.youtube.com/@BrandonPTDavisDesign",
               "https://www.facebook.com/BrandonPTDavisA",

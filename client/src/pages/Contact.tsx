@@ -75,7 +75,7 @@ export function Contact() {
             url: "https://www.brandonptdavis.com/about"
           },
           sameAs: [
-            "https://www.instagram.com/brandonptdavis",
+            "https://www.instagram.com/brandonptdavisdesign",
             "https://www.linkedin.com/in/brandonptdavis",
             "https://www.youtube.com/@BrandonPTDavisDesign",
             "https://www.facebook.com/BrandonPTDavisA",
@@ -222,7 +222,7 @@ export function Contact() {
               </div>
             </a>
             <a
-              href="https://instagram.com/brandonptdavis"
+              href="https://instagram.com/brandonptdavisdesign"
               target="_blank"
               rel="noopener noreferrer"
               className="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-sm text-white/80 transition hover:border-white/30 hover:bg-white/10"
@@ -232,7 +232,7 @@ export function Contact() {
               </div>
               <div>
                 <div className="text-xs text-white/50 mb-1">Instagram</div>
-                <div className="font-medium text-white">@brandonptdavis</div>
+                <div className="font-medium text-white">@brandonptdavisdesign</div>
               </div>
             </a>
           </div>

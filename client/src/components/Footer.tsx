@@ -160,7 +160,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <a
-                    href="https://www.instagram.com/brandonptdavis"
+                    href="https://www.instagram.com/brandonptdavisdesign"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-foreground/70 hover:text-[#FF1744] transition-colors font-medium"
@@ -184,7 +184,7 @@ export default function Footer() {
               <Linkedin className="w-6 h-6 text-[#FF5722] group-hover:text-white transition-colors" />
             </a>
             <a
-              href="https://www.instagram.com/brandonptdavis"
+              href="https://www.instagram.com/brandonptdavisdesign"
               target="_blank"
               rel="noopener noreferrer"
               className="w-14 h-14 rounded-full bg-[#00E5FF]/10 flex items-center justify-center hover:bg-[#00E5FF] hover:scale-110 transition-all group"
