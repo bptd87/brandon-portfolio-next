@@ -65,8 +65,8 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
     return next();
   });
 
-  // Health check endpoint for deployment debugging
-  expressApp.get("/health", (req: express.Request, res: express.Response) => {
+  // Health check endpoints for deployment/debugging (Railway expects /api/health)
+  const healthHandler = (_req: express.Request, res: express.Response) => {
     res.json({
       status: "ok",
       uptime: process.uptime(),
@@ -78,7 +78,9 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
         HAS_DATABASE_URL: !!process.env.DATABASE_URL
       }
     });
-  });
+  };
+  expressApp.get("/health", healthHandler);
+  expressApp.get("/api/health", healthHandler);
 
   // Use larger body limits only where uploads/large payloads are expected.
   expressApp.use((req, res, next) => {
