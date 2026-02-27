@@ -5,6 +5,17 @@ import * as db from "../db";
 import { supabase } from "../supabase";
 import { ENV } from "./env";
 
+const authLogCooldownMs = 30 * 60 * 1000; // 30 minutes
+const authLogLastSeen = new Map<string, number>();
+
+function shouldLogAuthEvent(key: string): boolean {
+  const now = Date.now();
+  const last = authLogLastSeen.get(key) ?? 0;
+  if (now - last < authLogCooldownMs) return false;
+  authLogLastSeen.set(key, now);
+  return true;
+}
+
 // Simplified SDK replacing Manus functionality
 export class SDKServer {
   async createSessionToken(
@@ -55,9 +66,11 @@ export class SDKServer {
         });
 
         if (user.id !== ENV.ownerOpenId) {
-          console.log(`[Auth] User logged in with ID: ${user.id}. Expected OWNER_OPEN_ID: '${ENV.ownerOpenId}'`);
-          console.log(`[Auth] WARNING: OWNER_OPEN_ID mismatch. Please restart the server if you recently updated .env`);
-        } else {
+          if (shouldLogAuthEvent(`owner-mismatch:${user.id}`)) {
+            console.log(`[Auth] User logged in with ID: ${user.id}. Expected OWNER_OPEN_ID: '${ENV.ownerOpenId}'`);
+            console.log(`[Auth] WARNING: OWNER_OPEN_ID mismatch. Please restart the server if you recently updated .env`);
+          }
+        } else if (shouldLogAuthEvent(`admin-success:${user.id}`)) {
           console.log(`[Auth] Admin login successful for user: ${user.id}`);
         }
       } else {

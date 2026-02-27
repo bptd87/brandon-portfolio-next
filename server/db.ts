@@ -560,8 +560,7 @@ export async function getAllNews(filters?: {
       updated_at,
       published_at,
       location,
-      external_link,
-      tags
+      external_link
     `)
     .order('published_at', { ascending: false });
 
@@ -628,7 +627,7 @@ export async function getAllNews(filters?: {
     location: item.location,
     blocks: [],
     externalLink: item.external_link,
-    tags: item.tags,
+    tags: item.tags ?? null,
   }));
 }
 
