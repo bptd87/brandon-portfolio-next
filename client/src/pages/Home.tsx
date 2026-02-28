@@ -80,6 +80,7 @@ export default function Home() {
             "https://www.linkedin.com/in/brandonptdavis",
             "https://www.youtube.com/@BrandonPTDavisDesign",
             "https://www.facebook.com/BrandonPTDavisA",
+            "https://www.pinterest.com/BrandonPTDavis/",
             "https://www.usa829.org/Member-Profile/MemberID/15357",
           ],
           alumniOf: [
@@ -127,6 +128,7 @@ export default function Home() {
             "https://www.linkedin.com/in/brandonptdavis",
             "https://www.youtube.com/@BrandonPTDavisDesign",
             "https://www.facebook.com/BrandonPTDavisA",
+            "https://www.pinterest.com/BrandonPTDavis/",
           ],
         }}
       />

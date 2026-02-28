@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { trpc } from '@/lib/trpc';
-import { Mail, Linkedin, Instagram, Send, Clock, CheckCircle2 } from 'lucide-react';
+import { Mail, Linkedin, Instagram, Pinterest, Send, Clock, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -79,6 +79,7 @@ export function Contact() {
             "https://www.linkedin.com/in/brandonptdavis",
             "https://www.youtube.com/@BrandonPTDavisDesign",
             "https://www.facebook.com/BrandonPTDavisA",
+            "https://www.pinterest.com/BrandonPTDavis/",
           ]
         }}
       />
@@ -194,7 +195,7 @@ export function Contact() {
 
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-sm uppercase tracking-[0.2em] text-white/50 mb-6">Social</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <a
               href="mailto:info@brandonptdavis.com"
               className="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-sm text-white/80 transition hover:border-white/30 hover:bg-white/10"
@@ -233,6 +234,20 @@ export function Contact() {
               <div>
                 <div className="text-xs text-white/50 mb-1">Instagram</div>
                 <div className="font-medium text-white">@brandonptdavisdesign</div>
+              </div>
+            </a>
+            <a
+              href="https://www.pinterest.com/BrandonPTDavis/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-sm text-white/80 transition hover:border-white/30 hover:bg-white/10"
+            >
+              <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center">
+                <Pinterest className="h-5 w-5" />
+              </div>
+              <div>
+                <div className="text-xs text-white/50 mb-1">Pinterest</div>
+                <div className="font-medium text-white">@BrandonPTDavis</div>
               </div>
             </a>
           </div>

@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { Linkedin, Instagram, Youtube, Mail } from "lucide-react";
+import { Linkedin, Instagram, Youtube, Mail, Pinterest } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -168,6 +168,16 @@ export default function Footer() {
                     Instagram
                   </a>
                 </li>
+                <li>
+                  <a
+                    href="https://www.pinterest.com/BrandonPTDavis/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-foreground/70 hover:text-[#FF1744] transition-colors font-medium"
+                  >
+                    Pinterest
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
@@ -200,6 +210,15 @@ export default function Footer() {
               title="Subscribe on YouTube"
             >
               <Youtube className="w-6 h-6 text-[#FF1744] group-hover:text-white transition-colors" />
+            </a>
+            <a
+              href="https://www.pinterest.com/BrandonPTDavis/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-14 h-14 rounded-full bg-[#E60023]/10 flex items-center justify-center hover:bg-[#E60023] hover:scale-110 transition-all group"
+              title="Follow on Pinterest"
+            >
+              <Pinterest className="w-6 h-6 text-[#E60023] group-hover:text-white transition-colors" />
             </a>
             <a
               href="mailto:info@brandonptdavis.com"
