@@ -16,6 +16,7 @@ type SeoMeta = {
   title: string;
   description: string;
   image: string;
+  images?: string[];
   canonical: string;
   type: "website" | "article";
 };
@@ -64,6 +65,27 @@ function replaceOrAppendCanonical(html: string, canonical: string): string {
   return html.replace("</head>", `  ${linkTag}\n</head>`);
 }
 
+function removeMetaByKey(html: string, attr: "name" | "property", key: string): string {
+  const regex = new RegExp(`<meta\\s+[^>]*${attr}=["']${escapeRegExp(key)}["'][^>]*>\\s*`, "gi");
+  return html.replace(regex, "");
+}
+
+function appendToHead(html: string, tag: string): string {
+  return html.replace("</head>", `  ${tag}\n</head>`);
+}
+
+function injectCrawlerImages(html: string, images: string[]): string {
+  if (!images.length) return html;
+  const tags = images
+    .map((src, i) => `<img src="${escapeHtml(src)}" alt="Project image ${i + 1}" width="1200" height="630" loading="eager" decoding="async" />`)
+    .join("");
+  const block = `<div id="crawler-project-images" aria-hidden="true" style="position:absolute;left:-99999px;width:1px;height:1px;overflow:hidden;opacity:0;">${tags}</div>`;
+  if (html.includes("</body>")) {
+    return html.replace("</body>", `  ${block}\n</body>`);
+  }
+  return html;
+}
+
 function injectSeoMeta(html: string, meta: SeoMeta): string {
   const imageType = (() => {
     try {
@@ -80,6 +102,8 @@ function injectSeoMeta(html: string, meta: SeoMeta): string {
   })();
 
   let next = html;
+  const allImages = Array.from(new Set([meta.image, ...(meta.images || [])].filter(Boolean)));
+  const primaryImage = allImages[0] || meta.image;
   next = next.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(meta.title)}</title>`);
   next = replaceOrAppendMeta(next, "name", "description", meta.description);
 
@@ -87,8 +111,8 @@ function injectSeoMeta(html: string, meta: SeoMeta): string {
   next = replaceOrAppendMeta(next, "property", "og:url", meta.canonical);
   next = replaceOrAppendMeta(next, "property", "og:title", meta.title);
   next = replaceOrAppendMeta(next, "property", "og:description", meta.description);
-  next = replaceOrAppendMeta(next, "property", "og:image", meta.image);
-  next = replaceOrAppendMeta(next, "property", "og:image:secure_url", meta.image);
+  next = replaceOrAppendMeta(next, "property", "og:image", primaryImage);
+  next = replaceOrAppendMeta(next, "property", "og:image:secure_url", primaryImage);
   next = replaceOrAppendMeta(next, "property", "og:image:width", "1200");
   next = replaceOrAppendMeta(next, "property", "og:image:height", "630");
   next = replaceOrAppendMeta(next, "property", "og:image:type", imageType);
@@ -100,11 +124,22 @@ function injectSeoMeta(html: string, meta: SeoMeta): string {
   next = replaceOrAppendMeta(next, "name", "twitter:domain", "brandonptdavis.com");
   next = replaceOrAppendMeta(next, "name", "twitter:title", meta.title);
   next = replaceOrAppendMeta(next, "name", "twitter:description", meta.description);
-  next = replaceOrAppendMeta(next, "name", "twitter:image", meta.image);
+  next = replaceOrAppendMeta(next, "name", "twitter:image", primaryImage);
   next = replaceOrAppendMeta(next, "name", "twitter:creator", "@brandonptdavis");
   next = replaceOrAppendMeta(next, "name", "twitter:site", "@brandonptdavis");
 
-  return replaceOrAppendCanonical(next, meta.canonical);
+  // Add extra og:image tags for crawlers (Pinterest/Facebook can pick from multiple).
+  if (allImages.length > 1) {
+    next = removeMetaByKey(next, "property", "og:image");
+    next = removeMetaByKey(next, "property", "og:image:secure_url");
+    const imageMetaTags = allImages
+      .map((img) => `<meta property="og:image" content="${escapeHtml(img)}" />\n  <meta property="og:image:secure_url" content="${escapeHtml(img)}" />`)
+      .join("\n  ");
+    next = appendToHead(next, imageMetaTags);
+  }
+
+  next = replaceOrAppendCanonical(next, meta.canonical);
+  return injectCrawlerImages(next, allImages.slice(0, 10));
 }
 
 function getRequestSiteUrl(req: express.Request): string {
@@ -228,13 +263,28 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
     const project = await findProjectByLooseSlug(projectMatch[1]);
     if (project?.status === "published") {
       const projectImages = await db.getProjectImages(project.id);
-      const preferredImage =
-        project.coverImageUrl ||
-        projectImages.find((img) => Boolean(img.imageUrl))?.imageUrl;
+      const galleryImageUrls = projectImages
+        .map((img) => img.imageUrl)
+        .filter((value): value is string => Boolean(value))
+        .map((value) => absoluteUrl(origin, value));
+
+      const preferredImage = absoluteUrl(
+        origin,
+        project.coverImageUrl || galleryImageUrls[0] || getDefaultShareImage(origin)
+      );
+
+      const socialImages = Array.from(
+        new Set([
+          preferredImage,
+          ...galleryImageUrls,
+        ])
+      ).slice(0, 10);
+
       return cacheMeta({
         title: project.seoTitle || project.title || DEFAULT_META.title,
         description: project.seoDescription || project.excerpt || DEFAULT_META.description,
-        image: absoluteUrl(origin, preferredImage),
+        image: preferredImage,
+        images: socialImages,
         canonical: `${origin}/project/${project.slug}`,
         type: "website",
       });
