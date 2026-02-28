@@ -1,5 +1,13 @@
 import { Link } from "wouter";
-import { Linkedin, Instagram, Youtube, Mail, Pinterest } from "lucide-react";
+import { Linkedin, Instagram, Youtube, Mail } from "lucide-react";
+
+function PinterestIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
+      <path d="M12.01 2C6.49 2 2 6.49 2 12.01c0 4.24 2.64 7.86 6.36 9.32-.09-.79-.16-2.01.03-2.88l1.17-4.96s-.3-.61-.3-1.52c0-1.43.83-2.49 1.87-2.49.88 0 1.3.66 1.3 1.45 0 .88-.56 2.2-.85 3.42-.24 1.03.52 1.87 1.53 1.87 1.83 0 3.24-1.93 3.24-4.72 0-2.47-1.78-4.2-4.31-4.2-2.94 0-4.67 2.2-4.67 4.48 0 .89.34 1.84.77 2.36.08.1.09.19.06.29l-.29 1.2c-.05.19-.16.23-.36.14-1.35-.63-2.2-2.62-2.2-4.22 0-3.43 2.49-6.58 7.19-6.58 3.77 0 6.7 2.69 6.7 6.29 0 3.75-2.36 6.77-5.64 6.77-1.1 0-2.13-.57-2.48-1.26l-.68 2.57c-.24.88-.91 1.98-1.35 2.65 1.02.31 2.11.48 3.23.48 5.52 0 10.01-4.49 10.01-10.01S17.53 2 12.01 2z" />
+    </svg>
+  );
+}
 
 export default function Footer() {
   return (
@@ -218,7 +226,7 @@ export default function Footer() {
               className="w-14 h-14 rounded-full bg-[#E60023]/10 flex items-center justify-center hover:bg-[#E60023] hover:scale-110 transition-all group"
               title="Follow on Pinterest"
             >
-              <Pinterest className="w-6 h-6 text-[#E60023] group-hover:text-white transition-colors" />
+              <PinterestIcon className="w-6 h-6 text-[#E60023] group-hover:text-white transition-colors" />
             </a>
             <a
               href="mailto:info@brandonptdavis.com"
