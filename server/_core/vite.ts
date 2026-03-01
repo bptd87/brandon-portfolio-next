@@ -186,6 +186,19 @@ function cleanSlug(value: string): string {
     .replace(/[)\]}>"'`.,!?;:]+$/, "");
 }
 
+function isLikelyImageUrl(value: string): boolean {
+  if (!value) return false;
+  const lower = value.toLowerCase();
+  if (lower.includes("youtu.be") || lower.includes("youtube.com") || lower.includes("vimeo.com")) {
+    return false;
+  }
+  return (
+    lower.includes("/storage/v1/object/public/") ||
+    lower.includes("/storage/v1/render/image/public/") ||
+    /\.(png|jpe?g|webp|gif|avif|svg)(\?|$)/i.test(lower)
+  );
+}
+
 async function findProjectByLooseSlug(rawSlug: string) {
   const cleaned = cleanSlug(rawSlug);
   const exact = await db.getProjectBySlug(cleaned);
@@ -309,13 +322,12 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
       const projectImages = await db.getProjectImages(project.id);
       const galleryImageUrls = projectImages
         .map((img) => img.imageUrl)
-        .filter((value): value is string => Boolean(value))
+        .filter((value): value is string => Boolean(value) && isLikelyImageUrl(value))
         .map((value) => toPinterestReadyImageUrl(absoluteUrl(origin, value)));
 
-      const preferredImage = absoluteUrl(
-        origin,
-        project.coverImageUrl || galleryImageUrls[0] || getDefaultShareImage(origin)
-      );
+      const preferredImage = isLikelyImageUrl(project.coverImageUrl || "")
+        ? absoluteUrl(origin, project.coverImageUrl)
+        : galleryImageUrls[0] || getDefaultShareImage(origin);
       const pinterestPreferredImage = toPinterestReadyImageUrl(preferredImage);
 
       const socialImages = Array.from(

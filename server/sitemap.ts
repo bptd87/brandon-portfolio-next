@@ -115,6 +115,19 @@ function toPinterestReadyImageUrl(rawUrl: string): string {
   return rawUrl;
 }
 
+function isLikelyImageUrl(value: string): boolean {
+  if (!value) return false;
+  const lower = value.toLowerCase();
+  if (lower.includes('youtu.be') || lower.includes('youtube.com') || lower.includes('vimeo.com')) {
+    return false;
+  }
+  return (
+    lower.includes('/storage/v1/object/public/') ||
+    lower.includes('/storage/v1/render/image/public/') ||
+    /\.(png|jpe?g|webp|gif|avif|svg)(\?|$)/i.test(lower)
+  );
+}
+
 /**
  * Generate main sitemap with all pages
  */
@@ -588,11 +601,15 @@ export async function generateProjectsRSS(baseUrl?: string): Promise<string> {
     const images = await db.getProjectImages(project.id);
     const galleryImageUrls = images
       .map((img) => img.imageUrl)
-      .filter((value): value is string => Boolean(value));
+      .filter((value): value is string => Boolean(value) && isLikelyImageUrl(value));
+
+    const coverCandidate = project.coverImageUrl && isLikelyImageUrl(project.coverImageUrl)
+      ? project.coverImageUrl
+      : null;
 
     const orderedImageUrls = Array.from(
       new Set(
-        [project.coverImageUrl, ...galleryImageUrls].filter(
+        [coverCandidate, ...galleryImageUrls].filter(
           (value): value is string => Boolean(value)
         )
       )
