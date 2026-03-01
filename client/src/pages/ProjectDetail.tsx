@@ -103,10 +103,10 @@ export default function ProjectDetail() {
   }
 
   const images = project.images || [];
-  const productionMedia = images.filter((img) => img.imageType === 'production');
-  const videoMedia = images.filter((img) => img.imageType === 'video');
-  const renderingMedia = images.filter((img) => img.imageType === 'rendering');
-  const mediaItems = [...productionMedia, ...videoMedia, ...renderingMedia];
+  // Keep DB sort_order and include all non-video image types, not just production/rendering.
+  const mediaItems = images.filter((img) =>
+    img.imageType === 'video' ? Boolean(img.videoUrl) : Boolean(img.imageUrl)
+  );
   const lightboxSourceImages = mediaItems.filter((img) => img.imageType !== 'video' && !!img.imageUrl);
   const scenicAlt = (title: string) => `${title} scenic design by Brandon PT Davis`;
 
@@ -372,6 +372,9 @@ export default function ProjectDetail() {
                           objectFit="cover"
                           smartPosition={true}
                           loading="lazy"
+                          sizes="100vw"
+                          width={1600}
+                          forceTransformWebp={true}
                           enableScrollAnimation={false}
                         />
                       </figure>
@@ -389,6 +392,9 @@ export default function ProjectDetail() {
                     objectFit="cover"
                     smartPosition={true}
                     loading="eager"
+                    sizes="100vw"
+                    width={1600}
+                    forceTransformWebp={true}
                   />
                 </figure>
               ) : null}

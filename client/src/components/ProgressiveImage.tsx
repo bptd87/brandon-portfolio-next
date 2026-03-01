@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 
 // Apply Supabase image transformations for optimization
-function applySupabaseTransformations(src: string, width?: number, blurred?: boolean): string {
+function applySupabaseTransformations(src: string, width?: number, blurred?: boolean, forceTransformWebp?: boolean): string {
   // Only transform Supabase storage URLs
   if (!src.includes('supabase.co/storage/v1/object/public/')) {
     return src;
@@ -10,7 +10,7 @@ function applySupabaseTransformations(src: string, width?: number, blurred?: boo
   // Skip transformation for WebP images unless we need a blurred placeholder
   // (Supabase converts WebP to JPEG which is larger)
   const isWebP = src.toLowerCase().endsWith('.webp');
-  if (isWebP && !blurred) {
+  if (isWebP && !blurred && !forceTransformWebp) {
     return src; // Keep original WebP, it's already optimized
   }
 
@@ -135,6 +135,7 @@ interface ProgressiveImageProps {
   blurFadeDuration?: number;
   enableScrollAnimation?: boolean; // Enable fade-in on scroll (default: true)
   animationDelay?: number; // Delay in ms before animation starts (for stagger effect)
+  forceTransformWebp?: boolean;
 }
 
 export function ProgressiveImage({
@@ -154,6 +155,7 @@ export function ProgressiveImage({
   blurFadeDuration = 300,
   enableScrollAnimation = true,
   animationDelay = 0,
+  forceTransformWebp = false,
 }: ProgressiveImageProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -254,7 +256,7 @@ export function ProgressiveImage({
   const supportsBlurPlaceholder = isSupabase || isCloudinary;
   
   const optimizedSrc = isSupabase 
-    ? applySupabaseTransformations(src, width)
+    ? applySupabaseTransformations(src, width, false, forceTransformWebp)
     : applyCloudinaryTransformations(src, width);
     
   const blurredSrc = supportsBlurPlaceholder

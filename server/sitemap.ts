@@ -609,7 +609,8 @@ export async function generateProjectsRSS(baseUrl?: string): Promise<string> {
 
     const orderedImageUrls = Array.from(
       new Set(
-        [coverCandidate, ...galleryImageUrls].filter(
+        // Prefer gallery images first for richer feeds; keep cover as fallback.
+        [...galleryImageUrls, coverCandidate].filter(
           (value): value is string => Boolean(value)
         )
       )

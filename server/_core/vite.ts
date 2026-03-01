@@ -325,14 +325,17 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
         .filter((value): value is string => Boolean(value) && isLikelyImageUrl(value))
         .map((value) => toPinterestReadyImageUrl(absoluteUrl(origin, value)));
 
-      const preferredImage = isLikelyImageUrl(project.coverImageUrl || "")
+      const coverImage = isLikelyImageUrl(project.coverImageUrl || "")
         ? absoluteUrl(origin, project.coverImageUrl)
-        : galleryImageUrls[0] || getDefaultShareImage(origin);
+        : null;
+      // Prefer first gallery image for social previews; cover is often a smaller card-sized asset.
+      const preferredImage = galleryImageUrls[0] || coverImage || getDefaultShareImage(origin);
       const pinterestPreferredImage = toPinterestReadyImageUrl(preferredImage);
 
       const socialImages = Array.from(
         new Set([
           pinterestPreferredImage,
+          ...(coverImage ? [toPinterestReadyImageUrl(coverImage)] : []),
           ...galleryImageUrls,
         ])
       ).slice(0, 10);
