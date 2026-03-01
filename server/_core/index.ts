@@ -429,6 +429,9 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
     "/sitemap-index.xml",
     "/robots.txt",
     "/api/news/rss",
+    "/project/rss",
+    "/project/rss.xml",
+    "/projects/rss",
     "/projects/rss.xml",
     "/articles/rss.xml",
     "/news/rss.xml",
@@ -610,6 +613,18 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
         error: "Unable to prepare download",
       });
     }
+  });
+
+  expressApp.get("/project/rss", (_req, res) => {
+    res.redirect(301, "/projects/rss.xml");
+  });
+
+  expressApp.get("/project/rss.xml", (_req, res) => {
+    res.redirect(301, "/projects/rss.xml");
+  });
+
+  expressApp.get("/projects/rss", (_req, res) => {
+    res.redirect(301, "/projects/rss.xml");
   });
 
   expressApp.get("/projects/rss.xml", async (req, res) => {

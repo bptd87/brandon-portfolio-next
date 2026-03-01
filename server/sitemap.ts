@@ -522,7 +522,7 @@ export async function generateProjectsRSS(baseUrl?: string): Promise<string> {
     );
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>Brandon PT Davis - Projects</title>
     <link>${SITE_URL}/projects</link>
@@ -558,6 +558,17 @@ export async function generateProjectsRSS(baseUrl?: string): Promise<string> {
     if (project.coverImageUrl) {
       xml += `
       <enclosure url="${escapeXml(project.coverImageUrl)}" type="image/jpeg" length="150000" />`;
+
+      // Add Media RSS image metadata for aggregators (e.g. Pinterest/feed readers).
+      const images = await db.getProjectImages(project.id);
+      const matchedImage = images.find((img) => img.imageUrl === project.coverImageUrl);
+      const fallbackImage = matchedImage || images.find((img) => Boolean(img.imageUrl));
+      const mediaText = fallbackImage?.altText || fallbackImage?.caption || project.title;
+      xml += `
+      <media:content url="${escapeXml(project.coverImageUrl)}" medium="image">
+        <media:title>${escapeXml(project.title)}</media:title>
+        <media:description type="plain">${escapeXml(String(mediaText || project.title).slice(0, 1000))}</media:description>
+      </media:content>`;
     }
 
     xml += `
