@@ -86,6 +86,35 @@ function formatDate(date: Date | number): string {
   return d.toISOString().split('T')[0];
 }
 
+function toPinterestReadyImageUrl(rawUrl: string): string {
+  try {
+    const parsed = new URL(rawUrl);
+    const parts = parsed.pathname.split('/').filter(Boolean);
+    const objectIdx = parts.findIndex((segment) => segment === 'object');
+
+    if (
+      parsed.hostname.endsWith('.supabase.co') &&
+      objectIdx >= 0 &&
+      parts[objectIdx + 1] === 'public'
+    ) {
+      const bucket = parts[objectIdx + 2];
+      const objectPath = parts.slice(objectIdx + 3).join('/');
+      if (bucket && objectPath) {
+        const next = new URL(
+          `${parsed.origin}/storage/v1/render/image/public/${bucket}/${objectPath}`
+        );
+        next.searchParams.set('width', '1200');
+        next.searchParams.set('quality', '85');
+        return next.toString();
+      }
+    }
+  } catch {
+    // Ignore malformed URLs and keep original URL.
+  }
+
+  return rawUrl;
+}
+
 /**
  * Generate main sitemap with all pages
  */
@@ -568,14 +597,19 @@ export async function generateProjectsRSS(baseUrl?: string): Promise<string> {
         )
       )
     );
+    const pinterestReadyImageUrls = orderedImageUrls.map((imageUrl) =>
+      toPinterestReadyImageUrl(imageUrl)
+    );
 
-    if (orderedImageUrls.length > 0) {
+    if (pinterestReadyImageUrls.length > 0) {
       // Keep enclosure for broad RSS compatibility; use first image as primary.
       xml += `
-      <enclosure url="${escapeXml(orderedImageUrls[0])}" type="image/jpeg" length="150000" />`;
+      <enclosure url="${escapeXml(pinterestReadyImageUrls[0])}" type="image/jpeg" length="150000" />`;
 
-      for (const imageUrl of orderedImageUrls) {
-        const imageMeta = images.find((img) => img.imageUrl === imageUrl);
+      for (let i = 0; i < orderedImageUrls.length; i += 1) {
+        const sourceUrl = orderedImageUrls[i];
+        const imageUrl = pinterestReadyImageUrls[i];
+        const imageMeta = images.find((img) => img.imageUrl === sourceUrl);
         const mediaText =
           imageMeta?.altText ||
           imageMeta?.caption ||

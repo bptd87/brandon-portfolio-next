@@ -208,6 +208,35 @@ function getDefaultShareImage(origin: string): string {
   return absoluteUrl(origin, DEFAULT_OG_IMAGE);
 }
 
+function toPinterestReadyImageUrl(rawUrl: string): string {
+  try {
+    const parsed = new URL(rawUrl);
+    const parts = parsed.pathname.split("/").filter(Boolean);
+    const objectIdx = parts.findIndex((segment) => segment === "object");
+
+    if (
+      parsed.hostname.endsWith(".supabase.co") &&
+      objectIdx >= 0 &&
+      parts[objectIdx + 1] === "public"
+    ) {
+      const bucket = parts[objectIdx + 2];
+      const objectPath = parts.slice(objectIdx + 3).join("/");
+      if (bucket && objectPath) {
+        const next = new URL(
+          `${parsed.origin}/storage/v1/render/image/public/${bucket}/${objectPath}`
+        );
+        next.searchParams.set("width", "1200");
+        next.searchParams.set("quality", "85");
+        return next.toString();
+      }
+    }
+  } catch {
+    // Ignore malformed URLs and return original.
+  }
+
+  return rawUrl;
+}
+
 function getPathFromRequest(req: express.Request): string {
   const raw = String(req.originalUrl || req.url || req.path || "/");
   const noHash = raw.split("#")[0];
@@ -281,16 +310,17 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
       const galleryImageUrls = projectImages
         .map((img) => img.imageUrl)
         .filter((value): value is string => Boolean(value))
-        .map((value) => absoluteUrl(origin, value));
+        .map((value) => toPinterestReadyImageUrl(absoluteUrl(origin, value)));
 
       const preferredImage = absoluteUrl(
         origin,
         project.coverImageUrl || galleryImageUrls[0] || getDefaultShareImage(origin)
       );
+      const pinterestPreferredImage = toPinterestReadyImageUrl(preferredImage);
 
       const socialImages = Array.from(
         new Set([
-          preferredImage,
+          pinterestPreferredImage,
           ...galleryImageUrls,
         ])
       ).slice(0, 10);
@@ -298,7 +328,7 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
       return cacheMeta({
         title: project.seoTitle || project.title || DEFAULT_META.title,
         description: project.seoDescription || project.excerpt || DEFAULT_META.description,
-        image: preferredImage,
+        image: pinterestPreferredImage,
         images: socialImages,
         canonical: `${origin}/project/${project.slug}`,
         type: "website",
