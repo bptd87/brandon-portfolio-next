@@ -206,6 +206,28 @@ export default function ProjectDetail() {
   }));
 
   const projectUrl = `https://www.brandonptdavis.com${location}`;
+  const buildTrackedUrl = (source: string) => {
+    const url = new URL(projectUrl);
+    url.searchParams.set("utm_source", source);
+    url.searchParams.set("utm_medium", "social");
+    url.searchParams.set("utm_campaign", "project_share");
+    url.searchParams.set("utm_content", project.slug);
+    return url.toString();
+  };
+  const trackedLinks = {
+    facebook: buildTrackedUrl("facebook"),
+    linkedin: buildTrackedUrl("linkedin"),
+    x: buildTrackedUrl("x"),
+    pinterest: buildTrackedUrl("pinterest"),
+  };
+  const shareText = `${project.title} | Scenic Design by Brandon PT Davis`;
+  const pinterestMedia = lightboxSourceImages[0]?.imageUrl || project.coverImageUrl || "";
+  const shareDestinations = {
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(trackedLinks.facebook)}`,
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(trackedLinks.linkedin)}`,
+    x: `https://twitter.com/intent/tweet?url=${encodeURIComponent(trackedLinks.x)}&text=${encodeURIComponent(shareText)}`,
+    pinterest: `https://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(trackedLinks.pinterest)}&media=${encodeURIComponent(pinterestMedia)}&description=${encodeURIComponent(project.excerpt || shareText)}`,
+  };
   const heroTransitionName = `project-card-${project.slug}`;
   const disciplineLabel = project.discipline === 'scenic_design'
     ? 'Scenic Design'
@@ -335,6 +357,18 @@ export default function ProjectDetail() {
                     </p>
                   </div>
                 )}
+
+                <div className="border-t pt-5" style={{ borderColor: `${accentColor}55` }}>
+                  <h2 className="mb-3 text-xs font-semibold tracking-[0.18em] uppercase text-foreground/55" style={{ color: accentColor }}>
+                    Share Project
+                  </h2>
+                  <div className="grid grid-cols-2 gap-2">
+                    <a href={shareDestinations.facebook} target="_blank" rel="noopener noreferrer" className="rounded-md border border-border/60 px-3 py-2 text-xs uppercase tracking-[0.14em] text-center text-foreground/75 hover:text-foreground hover:border-foreground/40">Facebook</a>
+                    <a href={shareDestinations.linkedin} target="_blank" rel="noopener noreferrer" className="rounded-md border border-border/60 px-3 py-2 text-xs uppercase tracking-[0.14em] text-center text-foreground/75 hover:text-foreground hover:border-foreground/40">LinkedIn</a>
+                    <a href={shareDestinations.x} target="_blank" rel="noopener noreferrer" className="rounded-md border border-border/60 px-3 py-2 text-xs uppercase tracking-[0.14em] text-center text-foreground/75 hover:text-foreground hover:border-foreground/40">X</a>
+                    <a href={shareDestinations.pinterest} target="_blank" rel="noopener noreferrer" className="rounded-md border border-border/60 px-3 py-2 text-xs uppercase tracking-[0.14em] text-center text-foreground/75 hover:text-foreground hover:border-foreground/40">Pinterest</a>
+                  </div>
+                </div>
               </aside>
             </AnimatedSection>
 
@@ -532,6 +566,18 @@ export default function ProjectDetail() {
                     </p>
                   </div>
                 )}
+
+                <div className="border-t pt-5" style={{ borderColor: `${accentColor}55` }}>
+                  <h2 className="mb-3 text-xs font-semibold tracking-[0.18em] uppercase text-foreground/55" style={{ color: accentColor }}>
+                    Share Project
+                  </h2>
+                  <div className="grid grid-cols-2 gap-2">
+                    <a href={shareDestinations.facebook} target="_blank" rel="noopener noreferrer" className="rounded-md border border-border/60 px-3 py-2 text-xs uppercase tracking-[0.14em] text-center text-foreground/75 hover:text-foreground hover:border-foreground/40">Facebook</a>
+                    <a href={shareDestinations.linkedin} target="_blank" rel="noopener noreferrer" className="rounded-md border border-border/60 px-3 py-2 text-xs uppercase tracking-[0.14em] text-center text-foreground/75 hover:text-foreground hover:border-foreground/40">LinkedIn</a>
+                    <a href={shareDestinations.x} target="_blank" rel="noopener noreferrer" className="rounded-md border border-border/60 px-3 py-2 text-xs uppercase tracking-[0.14em] text-center text-foreground/75 hover:text-foreground hover:border-foreground/40">X</a>
+                    <a href={shareDestinations.pinterest} target="_blank" rel="noopener noreferrer" className="rounded-md border border-border/60 px-3 py-2 text-xs uppercase tracking-[0.14em] text-center text-foreground/75 hover:text-foreground hover:border-foreground/40">Pinterest</a>
+                  </div>
+                </div>
 
                 {creativeTeamArray.length > 0 && (
                   <div className="space-y-3 border-t pt-5" style={{ borderColor: `${accentColor}55` }}>

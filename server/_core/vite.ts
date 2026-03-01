@@ -19,6 +19,8 @@ type SeoMeta = {
   images?: string[];
   canonical: string;
   type: "website" | "article";
+  publishedTime?: string;
+  modifiedTime?: string;
 };
 
 type CachedSeoMeta = {
@@ -129,6 +131,20 @@ function injectSeoMeta(html: string, meta: SeoMeta): string {
   next = replaceOrAppendMeta(next, "name", "twitter:image:alt", meta.title);
   next = replaceOrAppendMeta(next, "name", "twitter:creator", "@brandonptdavis");
   next = replaceOrAppendMeta(next, "name", "twitter:site", "@brandonptdavis");
+  next = replaceOrAppendMeta(next, "name", "pin:media", primaryImage);
+  next = replaceOrAppendMeta(next, "name", "pin:description", meta.description);
+
+  const pinterestDomainVerify = process.env.PINTEREST_DOMAIN_VERIFY_TOKEN?.trim();
+  if (pinterestDomainVerify) {
+    next = replaceOrAppendMeta(next, "name", "p:domain_verify", pinterestDomainVerify);
+  }
+
+  if (meta.publishedTime) {
+    next = replaceOrAppendMeta(next, "property", "article:published_time", meta.publishedTime);
+  }
+  if (meta.modifiedTime) {
+    next = replaceOrAppendMeta(next, "property", "article:modified_time", meta.modifiedTime);
+  }
 
   // Re-emit full OG image metadata block for each image in order.
   next = removeMetaByKey(next, "property", "og:image");
@@ -296,6 +312,12 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
         image: absoluteUrl(origin, article.coverImageUrl),
         canonical: `${origin}/articles/${article.slug}`,
         type: "article",
+        publishedTime: article.publishedAt
+          ? new Date(article.publishedAt).toISOString()
+          : undefined,
+        modifiedTime: article.updatedAt
+          ? new Date(article.updatedAt).toISOString()
+          : undefined,
       });
     }
   }
@@ -311,6 +333,12 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
         image: absoluteUrl(origin, news.coverImageUrl),
         canonical: `${origin}/news/${news.slug}`,
         type: "article",
+        publishedTime: news.date
+          ? new Date(news.date).toISOString()
+          : undefined,
+        modifiedTime: news.updatedAt
+          ? new Date(news.updatedAt).toISOString()
+          : undefined,
       });
     }
   }
@@ -347,6 +375,12 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
         images: socialImages,
         canonical: `${origin}/project/${project.slug}`,
         type: "website",
+        publishedTime: project.publishedAt
+          ? new Date(project.publishedAt).toISOString()
+          : undefined,
+        modifiedTime: project.updatedAt
+          ? new Date(project.updatedAt).toISOString()
+          : undefined,
       });
     }
   }
