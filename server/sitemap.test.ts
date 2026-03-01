@@ -1,5 +1,96 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import * as sitemap from "./sitemap";
+
+const mockProjects = [
+  {
+    id: 1,
+    slug: "million-dollar-quartet",
+    title: "Million Dollar Quartet",
+    status: "published",
+    discipline: "scenic_design",
+    excerpt: "A high-energy jukebox scenic design production.",
+    designNotes: "Production notes for set build and transitions.",
+    coverImageUrl: "https://cdn.example.com/projects/mdq-cover.jpg",
+    createdAt: new Date("2026-01-01T12:00:00.000Z"),
+    updatedAt: new Date("2026-01-12T12:00:00.000Z"),
+    publishedAt: new Date("2026-01-15T12:00:00.000Z"),
+  },
+];
+
+const mockProjectImages = {
+  1: [
+    {
+      imageUrl: "https://cdn.example.com/projects/mdq-cover.jpg",
+      caption: "Main stage composition",
+      altText: "Million Dollar Quartet scenic design cover image",
+      imageType: "production",
+      videoUrl: null,
+    },
+    {
+      imageUrl: "https://cdn.example.com/projects/mdq-gallery-01.jpg",
+      caption: "Bandstand close-up",
+      altText: "Bandstand close-up",
+      imageType: "production",
+      videoUrl: null,
+    },
+    {
+      imageUrl: "https://cdn.example.com/projects/mdq-video-thumb.jpg",
+      caption: "Video thumb",
+      altText: "Video thumbnail",
+      imageType: "video",
+      videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    },
+  ],
+};
+
+const mockNews = [
+  {
+    id: 10,
+    slug: "regional-feature",
+    title: "Regional Feature",
+    status: "published",
+    excerpt: "News excerpt",
+    createdAt: new Date("2026-01-10T12:00:00.000Z"),
+    updatedAt: new Date("2026-01-11T12:00:00.000Z"),
+    publishedAt: new Date("2026-01-11T12:00:00.000Z"),
+    date: new Date("2026-01-11T12:00:00.000Z"),
+  },
+];
+
+const mockArticles = [
+  {
+    id: 20,
+    slug: "modern-theatrical-design-portfolio",
+    title: "The Modern Theatrical Design Portfolio",
+    status: "published",
+    excerpt: "Article excerpt",
+    coverImageUrl: "https://cdn.example.com/articles/modern-cover.jpg",
+    createdAt: new Date("2026-01-05T12:00:00.000Z"),
+    updatedAt: new Date("2026-01-06T12:00:00.000Z"),
+    publishedAt: new Date("2026-01-06T12:00:00.000Z"),
+  },
+];
+
+const mockTutorials = [
+  {
+    id: 30,
+    slug: "vectorworks-lighting-basics",
+    title: "Vectorworks Lighting Basics",
+    status: "published",
+    description: "Tutorial description",
+    cover_image: "https://cdn.example.com/tutorials/lighting-cover.jpg",
+    created_at: new Date("2026-01-08T12:00:00.000Z"),
+    updated_at: new Date("2026-01-09T12:00:00.000Z"),
+  },
+];
+
+vi.mock("./db", () => ({
+  getAllProjects: vi.fn(async () => mockProjects),
+  getProjectImages: vi.fn(async (projectId: number) => mockProjectImages[projectId as keyof typeof mockProjectImages] || []),
+  getAllNews: vi.fn(async () => mockNews),
+  getAllArticles: vi.fn(async () => mockArticles),
+  getAllTutorials: vi.fn(async () => mockTutorials),
+}));
 
 describe("Sitemap Generation", () => {
   it("should generate main sitemap with valid XML", async () => {
@@ -103,7 +194,7 @@ describe("Sitemap Generation", () => {
     
     // Check disallow rules
     expect(txt).toContain('Disallow: /admin');
-    expect(txt).toContain('Disallow: /api/');
+    expect(txt).toContain('Allow: /api/trpc');
   });
 });
 
