@@ -38,6 +38,16 @@ function getEmbedUrl(url: string): string {
   return url;
 }
 
+function inferEncodingFormat(url: string): string | undefined {
+  const cleanUrl = url.split('?')[0].toLowerCase();
+  if (cleanUrl.endsWith('.webp')) return 'image/webp';
+  if (cleanUrl.endsWith('.png')) return 'image/png';
+  if (cleanUrl.endsWith('.avif')) return 'image/avif';
+  if (cleanUrl.endsWith('.gif')) return 'image/gif';
+  if (cleanUrl.endsWith('.jpg') || cleanUrl.endsWith('.jpeg')) return 'image/jpeg';
+  return undefined;
+}
+
 // Color rotation for consistency with homepage
 const ACCENT_COLORS = ['#FF5722', '#00BCD4', '#E91E63', '#FFC107', '#9C27B0'];
 
@@ -179,11 +189,14 @@ export default function ProjectDetail() {
   const accentColor = ACCENT_COLORS[Math.abs(project.id) % ACCENT_COLORS.length] || ACCENT_COLORS[0];
 
   // Prepare creative work schema data
-  const projectImages = lightboxSourceImages.slice(0, 5).map((img) => ({
+  const projectImages = lightboxSourceImages.slice(0, 20).map((img, index) => ({
     type: 'ImageObject' as const,
     contentUrl: img.imageUrl || '',
     caption: img.caption || undefined,
-    name: img.altText || undefined,
+    name: img.altText || img.caption || `${project.title} image ${index + 1}`,
+    description: img.caption || project.excerpt || undefined,
+    thumbnailUrl: img.imageUrl || undefined,
+    encodingFormat: img.imageUrl ? inferEncodingFormat(img.imageUrl) : undefined,
   })).filter(img => img.contentUrl);
 
   const contributors = creativeTeamArray.map(member => ({

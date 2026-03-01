@@ -73,6 +73,11 @@ interface CreativeWorkSchema {
     contentUrl: string;
     caption?: string;
     name?: string;
+    description?: string;
+    thumbnailUrl?: string;
+    encodingFormat?: string;
+    width?: number;
+    height?: number;
   }>;
   about?: string;
   contributor?: Array<{
@@ -412,6 +417,11 @@ export default function StructuredData({ type, person, organization, creativeWor
         contentUrl: work.contentUrl,
         ...(work.caption && { caption: work.caption }),
         ...(work.name && { name: work.name }),
+        ...(work.description && { description: work.description }),
+        ...(work.thumbnailUrl && { thumbnailUrl: work.thumbnailUrl }),
+        ...(work.encodingFormat && { encodingFormat: work.encodingFormat }),
+        ...(work.width && { width: work.width }),
+        ...(work.height && { height: work.height }),
       }));
     }
 

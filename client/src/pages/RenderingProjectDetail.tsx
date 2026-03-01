@@ -12,6 +12,16 @@ import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Breadcrumb } from "@/components/Breadcrumb";
 
+function inferEncodingFormat(url: string): string | undefined {
+  const cleanUrl = url.split('?')[0].toLowerCase();
+  if (cleanUrl.endsWith('.webp')) return 'image/webp';
+  if (cleanUrl.endsWith('.png')) return 'image/png';
+  if (cleanUrl.endsWith('.avif')) return 'image/avif';
+  if (cleanUrl.endsWith('.gif')) return 'image/gif';
+  if (cleanUrl.endsWith('.jpg') || cleanUrl.endsWith('.jpeg')) return 'image/jpeg';
+  return undefined;
+}
+
 export default function RenderingProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
   const [location, setLocation] = useLocation();
@@ -73,6 +83,23 @@ export default function RenderingProjectDetail() {
     altText: img.altText
   }));
 
+  // Generate SEO-optimized description from excerpt or designNotes
+  const seoDescription = project.excerpt || project.designNotes?.substring(0, 160) ||
+    `${project.title} - Architectural rendering by Brandon PT Davis`;
+
+  const projectImages = renderings
+    .filter((img) => !!img.imageUrl)
+    .slice(0, 20)
+    .map((img, index) => ({
+      type: 'ImageObject' as const,
+      contentUrl: img.imageUrl || '',
+      caption: img.caption || undefined,
+      name: img.altText || img.caption || `${project.title} rendering ${index + 1}`,
+      description: img.caption || seoDescription,
+      thumbnailUrl: img.imageUrl || undefined,
+      encodingFormat: img.imageUrl ? inferEncodingFormat(img.imageUrl) : undefined,
+    }));
+
   const openLightbox = (index: number) => {
     setLightboxIndex(index);
   };
@@ -92,10 +119,6 @@ export default function RenderingProjectDetail() {
       setLightboxIndex(lightboxIndex - 1);
     }
   };
-
-  // Generate SEO-optimized description from excerpt or designNotes
-  const seoDescription = project.excerpt || project.designNotes?.substring(0, 160) ||
-    `${project.title} - Architectural rendering by Brandon PT Davis`;
 
   return (
     <div className="min-h-screen bg-background">
@@ -135,6 +158,7 @@ export default function RenderingProjectDetail() {
           genre: "Architectural Rendering",
           keywords: tags,
           url: projectUrl || `https://www.brandonptdavis.com/project/${project.slug}`,
+          workExample: projectImages.length > 0 ? projectImages : undefined,
         }}
       />
       <Header />
