@@ -87,9 +87,9 @@ function injectCrawlerImages(html: string, images: string[]): string {
 }
 
 function injectSeoMeta(html: string, meta: SeoMeta): string {
-  const imageType = (() => {
+  const inferImageType = (imageUrl: string): string => {
     try {
-      const pathname = new URL(meta.image).pathname.toLowerCase();
+      const pathname = new URL(imageUrl).pathname.toLowerCase();
       if (pathname.endsWith(".png")) return "image/png";
       if (pathname.endsWith(".webp")) return "image/webp";
       if (pathname.endsWith(".gif")) return "image/gif";
@@ -99,11 +99,12 @@ function injectSeoMeta(html: string, meta: SeoMeta): string {
       // Ignore URL parse failure and keep safe default.
     }
     return "image/jpeg";
-  })();
+  };
 
   let next = html;
   const allImages = Array.from(new Set([meta.image, ...(meta.images || [])].filter(Boolean)));
   const primaryImage = allImages[0] || meta.image;
+  const primaryImageType = inferImageType(primaryImage);
   next = next.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(meta.title)}</title>`);
   next = replaceOrAppendMeta(next, "name", "description", meta.description);
 
@@ -115,7 +116,7 @@ function injectSeoMeta(html: string, meta: SeoMeta): string {
   next = replaceOrAppendMeta(next, "property", "og:image:secure_url", primaryImage);
   next = replaceOrAppendMeta(next, "property", "og:image:width", "1200");
   next = replaceOrAppendMeta(next, "property", "og:image:height", "630");
-  next = replaceOrAppendMeta(next, "property", "og:image:type", imageType);
+  next = replaceOrAppendMeta(next, "property", "og:image:type", primaryImageType);
   next = replaceOrAppendMeta(next, "property", "og:site_name", "Brandon PT Davis");
   next = replaceOrAppendMeta(next, "property", "og:locale", "en_US");
 
@@ -125,18 +126,23 @@ function injectSeoMeta(html: string, meta: SeoMeta): string {
   next = replaceOrAppendMeta(next, "name", "twitter:title", meta.title);
   next = replaceOrAppendMeta(next, "name", "twitter:description", meta.description);
   next = replaceOrAppendMeta(next, "name", "twitter:image", primaryImage);
+  next = replaceOrAppendMeta(next, "name", "twitter:image:alt", meta.title);
   next = replaceOrAppendMeta(next, "name", "twitter:creator", "@brandonptdavis");
   next = replaceOrAppendMeta(next, "name", "twitter:site", "@brandonptdavis");
 
-  // Add extra og:image tags for crawlers (Pinterest/Facebook can pick from multiple).
-  if (allImages.length > 1) {
-    next = removeMetaByKey(next, "property", "og:image");
-    next = removeMetaByKey(next, "property", "og:image:secure_url");
-    const imageMetaTags = allImages
-      .map((img) => `<meta property="og:image" content="${escapeHtml(img)}" />\n  <meta property="og:image:secure_url" content="${escapeHtml(img)}" />`)
-      .join("\n  ");
-    next = appendToHead(next, imageMetaTags);
-  }
+  // Re-emit full OG image metadata block for each image in order.
+  next = removeMetaByKey(next, "property", "og:image");
+  next = removeMetaByKey(next, "property", "og:image:secure_url");
+  next = removeMetaByKey(next, "property", "og:image:width");
+  next = removeMetaByKey(next, "property", "og:image:height");
+  next = removeMetaByKey(next, "property", "og:image:type");
+  const imageMetaTags = allImages
+    .map((img) => {
+      const imageType = inferImageType(img);
+      return `<meta property="og:image" content="${escapeHtml(img)}" />\n  <meta property="og:image:secure_url" content="${escapeHtml(img)}" />\n  <meta property="og:image:width" content="1200" />\n  <meta property="og:image:height" content="630" />\n  <meta property="og:image:type" content="${escapeHtml(imageType)}" />`;
+    })
+    .join("\n  ");
+  next = appendToHead(next, imageMetaTags);
 
   next = replaceOrAppendCanonical(next, meta.canonical);
   return injectCrawlerImages(next, allImages.slice(0, 10));
