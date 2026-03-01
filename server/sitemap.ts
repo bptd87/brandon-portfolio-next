@@ -555,20 +555,39 @@ export async function generateProjectsRSS(baseUrl?: string): Promise<string> {
       <category>${escapeXml(project.discipline)}</category>`;
     }
 
-    if (project.coverImageUrl) {
-      xml += `
-      <enclosure url="${escapeXml(project.coverImageUrl)}" type="image/jpeg" length="150000" />`;
+    // Add Media RSS image metadata for aggregators (e.g. Pinterest/feed readers).
+    const images = await db.getProjectImages(project.id);
+    const galleryImageUrls = images
+      .map((img) => img.imageUrl)
+      .filter((value): value is string => Boolean(value));
 
-      // Add Media RSS image metadata for aggregators (e.g. Pinterest/feed readers).
-      const images = await db.getProjectImages(project.id);
-      const matchedImage = images.find((img) => img.imageUrl === project.coverImageUrl);
-      const fallbackImage = matchedImage || images.find((img) => Boolean(img.imageUrl));
-      const mediaText = fallbackImage?.altText || fallbackImage?.caption || project.title;
+    const orderedImageUrls = Array.from(
+      new Set(
+        [project.coverImageUrl, ...galleryImageUrls].filter(
+          (value): value is string => Boolean(value)
+        )
+      )
+    );
+
+    if (orderedImageUrls.length > 0) {
+      // Keep enclosure for broad RSS compatibility; use first image as primary.
       xml += `
-      <media:content url="${escapeXml(project.coverImageUrl)}" medium="image">
+      <enclosure url="${escapeXml(orderedImageUrls[0])}" type="image/jpeg" length="150000" />`;
+
+      for (const imageUrl of orderedImageUrls) {
+        const imageMeta = images.find((img) => img.imageUrl === imageUrl);
+        const mediaText =
+          imageMeta?.altText ||
+          imageMeta?.caption ||
+          summary ||
+          project.title;
+
+        xml += `
+      <media:content url="${escapeXml(imageUrl)}" medium="image">
         <media:title>${escapeXml(project.title)}</media:title>
-        <media:description type="plain">${escapeXml(String(mediaText || project.title).slice(0, 1000))}</media:description>
+        <media:description type="plain">${escapeXml(String(mediaText).slice(0, 1000))}</media:description>
       </media:content>`;
+      }
     }
 
     xml += `
