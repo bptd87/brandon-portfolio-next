@@ -154,8 +154,17 @@ function absoluteUrl(origin: string, value?: string | null): string {
   return `${origin}${value.startsWith("/") ? value : `/${value}`}`;
 }
 
+function safeDecodeURIComponent(value: string): string {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    // Keep raw path/slug when malformed percent-encoding is sent by bots or bad links.
+    return value;
+  }
+}
+
 function normalizeSlug(value: string): string {
-  return decodeURIComponent(value || "")
+  return safeDecodeURIComponent(value || "")
     .trim()
     .toLowerCase()
     .replace(/['"`]/g, "")
@@ -165,7 +174,7 @@ function normalizeSlug(value: string): string {
 }
 
 function cleanSlug(value: string): string {
-  return decodeURIComponent(value || "")
+  return safeDecodeURIComponent(value || "")
     .trim()
     .replace(/^[([{<"'`]+/, "")
     .replace(/[)\]}>"'`.,!?;:]+$/, "");
@@ -215,7 +224,7 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
   const origin = getRequestSiteUrl(req);
   const pathOnly = getPathFromRequest(req);
   const canonical = `${origin}${pathOnly === "/" ? "" : pathOnly}`;
-  const decodedPath = decodeURIComponent(pathOnly);
+  const decodedPath = safeDecodeURIComponent(pathOnly);
   const cacheKey = `${origin}|${decodedPath}`;
   const cached = seoMetaCache.get(cacheKey);
   const now = Date.now();
