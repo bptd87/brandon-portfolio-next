@@ -35,6 +35,9 @@ export default function RenderingProjectDetail() {
   const { data: project, isLoading } = trpc.projects.getBySlug.useQuery({ slug: slug! });
 
   const projectUrl = project ? `https://www.brandonptdavis.com${projectBasePath}/${project.slug}` : undefined;
+  const projectUpdatedDate = (project as any)?.updatedAt
+    ? new Date((project as any).updatedAt).toISOString().split('T')[0]
+    : undefined;
 
   // Fetch projects in same discipline for navigation
   const { data: allProjects } = trpc.projects.list.useQuery(
@@ -155,8 +158,10 @@ export default function RenderingProjectDetail() {
           },
           dateCreated: project.year ? `${project.year}-01-01` : undefined,
           datePublished: project.publishedAt ? new Date(project.publishedAt).toISOString().split('T')[0] : undefined,
+          dateModified: projectUpdatedDate,
           genre: "Architectural Rendering",
           keywords: tags,
+          mainEntityOfPage: projectUrl || `https://www.brandonptdavis.com/project/${project.slug}`,
           url: projectUrl || `https://www.brandonptdavis.com/project/${project.slug}`,
           workExample: projectImages.length > 0 ? projectImages : undefined,
         }}

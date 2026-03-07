@@ -158,6 +158,10 @@ export default function ProjectDetail() {
     name: member.name,
     roleName: member.role,
   }));
+  const projectUrl = `https://www.brandonptdavis.com/project/${project.slug}`;
+  const projectUpdatedDate = (project as any)?.updatedAt
+    ? new Date((project as any).updatedAt).toISOString().split('T')[0]
+    : undefined;
 
   return (
     <div className="min-h-screen bg-background">
@@ -188,8 +192,10 @@ export default function ProjectDetail() {
           },
           dateCreated: project.year ? `${project.year}-01-01` : undefined,
           datePublished: project.publishedAt ? new Date(project.publishedAt).toISOString().split('T')[0] : undefined,
+          dateModified: projectUpdatedDate,
           genre: project.discipline?.replace('_', ' ') || 'Scenic Design',
           keywords: project.seoKeywords?.split(',').map(k => k.trim()) || [],
+          mainEntityOfPage: projectUrl,
           locationCreated: project.client ? {
             name: project.client,
             ...(project.location && {
@@ -200,7 +206,7 @@ export default function ProjectDetail() {
               },
             }),
           } : undefined,
-          url: `https://www.brandonptdavis.com/project/${project.slug}`,
+          url: projectUrl,
           workExample: projectImages.length > 0 ? projectImages : undefined,
           about: project.designNotes || undefined,
           contributor: contributors.length > 0 ? contributors : undefined,

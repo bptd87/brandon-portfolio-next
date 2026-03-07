@@ -44,10 +44,19 @@ export function SEO({
       return value;
     }
   };
+  const inferImageType = (value: string) => {
+    const lower = value.toLowerCase().split("?")[0];
+    if (lower.endsWith(".png")) return "image/png";
+    if (lower.endsWith(".webp")) return "image/webp";
+    if (lower.endsWith(".gif")) return "image/gif";
+    if (lower.endsWith(".svg")) return "image/svg+xml";
+    return "image/jpeg";
+  };
 
   const rawCanonicalUrl =
     url || (typeof window !== "undefined" ? window.location.href : "https://www.brandonptdavis.com");
   const canonicalUrl = normalizeCanonicalUrl(rawCanonicalUrl);
+  const imageType = inferImageType(image);
   const robotsValue = `${noindex ? "noindex" : "index"},${nofollow ? "nofollow" : "follow"}`;
 
   return (
@@ -68,7 +77,8 @@ export function SEO({
       <meta property="og:image:secure_url" content={image} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:image:type" content="image/jpeg" />
+      <meta property="og:image:type" content={imageType} />
+      <meta property="og:image:alt" content={title} />
       <meta property="og:site_name" content={siteName} />
       <meta property="og:locale" content="en_US" />
 
@@ -79,6 +89,7 @@ export function SEO({
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
+      <meta name="twitter:image:alt" content={description || title} />
       <meta name="twitter:creator" content={twitterHandle} />
       <meta name="twitter:site" content={twitterSite} />
 

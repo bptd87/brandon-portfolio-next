@@ -206,6 +206,9 @@ export default function ProjectDetail() {
   }));
 
   const projectUrl = `https://www.brandonptdavis.com${location}`;
+  const projectUpdatedDate = (project as any).updatedAt
+    ? new Date((project as any).updatedAt).toISOString().split('T')[0]
+    : undefined;
   const buildTrackedUrl = (source: string) => {
     const url = new URL(projectUrl);
     url.searchParams.set("utm_source", source);
@@ -280,8 +283,10 @@ export default function ProjectDetail() {
           },
           dateCreated: project.year ? `${project.year}-01-01` : undefined,
           datePublished: project.publishedAt ? new Date(project.publishedAt).toISOString().split('T')[0] : undefined,
+          dateModified: projectUpdatedDate,
           genre: project.discipline?.replace('_', ' ') || 'Scenic Design',
           keywords: project.seoKeywords?.split(',').map(k => k.trim()) || [],
+          mainEntityOfPage: projectUrl,
           locationCreated: project.client ? {
             name: project.client,
             ...(project.location && {

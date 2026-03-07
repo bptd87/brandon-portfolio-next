@@ -67,6 +67,20 @@ function replaceOrAppendCanonical(html: string, canonical: string): string {
   return html.replace("</head>", `  ${linkTag}\n</head>`);
 }
 
+function replaceOrAppendAlternateRssLink(html: string, title: string, href: string): string {
+  const safeTitle = escapeHtml(title);
+  const safeHref = escapeHtml(href);
+  const linkTag = `<link rel="alternate" type="application/rss+xml" title="${safeTitle}" href="${safeHref}" />`;
+  const regex = new RegExp(
+    `<link\\s+[^>]*rel=["']alternate["'][^>]*type=["']application/rss\\+xml["'][^>]*title=["']${escapeRegExp(
+      title
+    )}["'][^>]*>`,
+    "i"
+  );
+  if (regex.test(html)) return html.replace(regex, linkTag);
+  return html.replace("</head>", `  ${linkTag}\n</head>`);
+}
+
 function removeMetaByKey(html: string, attr: "name" | "property", key: string): string {
   const regex = new RegExp(`<meta\\s+[^>]*${attr}=["']${escapeRegExp(key)}["'][^>]*>\\s*`, "gi");
   return html.replace(regex, "");
@@ -119,6 +133,7 @@ function injectSeoMeta(html: string, meta: SeoMeta): string {
   next = replaceOrAppendMeta(next, "property", "og:image:width", "1200");
   next = replaceOrAppendMeta(next, "property", "og:image:height", "630");
   next = replaceOrAppendMeta(next, "property", "og:image:type", primaryImageType);
+  next = replaceOrAppendMeta(next, "property", "og:image:alt", meta.title);
   next = replaceOrAppendMeta(next, "property", "og:site_name", "Brandon PT Davis");
   next = replaceOrAppendMeta(next, "property", "og:locale", "en_US");
 
@@ -128,7 +143,7 @@ function injectSeoMeta(html: string, meta: SeoMeta): string {
   next = replaceOrAppendMeta(next, "name", "twitter:title", meta.title);
   next = replaceOrAppendMeta(next, "name", "twitter:description", meta.description);
   next = replaceOrAppendMeta(next, "name", "twitter:image", primaryImage);
-  next = replaceOrAppendMeta(next, "name", "twitter:image:alt", meta.title);
+  next = replaceOrAppendMeta(next, "name", "twitter:image:alt", meta.description || meta.title);
   next = replaceOrAppendMeta(next, "name", "twitter:creator", "@brandonptdavis");
   next = replaceOrAppendMeta(next, "name", "twitter:site", "@brandonptdavis");
   next = replaceOrAppendMeta(next, "name", "pin:media", primaryImage);
@@ -152,13 +167,31 @@ function injectSeoMeta(html: string, meta: SeoMeta): string {
   next = removeMetaByKey(next, "property", "og:image:width");
   next = removeMetaByKey(next, "property", "og:image:height");
   next = removeMetaByKey(next, "property", "og:image:type");
+  next = removeMetaByKey(next, "property", "og:image:alt");
   const imageMetaTags = allImages
-    .map((img) => {
+    .map((img, index) => {
       const imageType = inferImageType(img);
-      return `<meta property="og:image" content="${escapeHtml(img)}" />\n  <meta property="og:image:secure_url" content="${escapeHtml(img)}" />\n  <meta property="og:image:width" content="1200" />\n  <meta property="og:image:height" content="630" />\n  <meta property="og:image:type" content="${escapeHtml(imageType)}" />`;
+      const alt = index === 0 ? meta.title : `${meta.title} image ${index + 1}`;
+      return `<meta property="og:image" content="${escapeHtml(img)}" />\n  <meta property="og:image:secure_url" content="${escapeHtml(img)}" />\n  <meta property="og:image:width" content="1200" />\n  <meta property="og:image:height" content="630" />\n  <meta property="og:image:type" content="${escapeHtml(imageType)}" />\n  <meta property="og:image:alt" content="${escapeHtml(alt)}" />`;
     })
     .join("\n  ");
   next = appendToHead(next, imageMetaTags);
+
+  const canonicalInfo = (() => {
+    try {
+      const url = new URL(meta.canonical);
+      return { origin: url.origin, path: url.pathname.toLowerCase() };
+    } catch {
+      return { origin: DEFAULT_SITE_URL, path: "" };
+    }
+  })();
+  next = replaceOrAppendAlternateRssLink(next, "News RSS", `${canonicalInfo.origin}/news/rss.xml`);
+  next = replaceOrAppendAlternateRssLink(next, "Articles RSS", `${canonicalInfo.origin}/articles/rss.xml`);
+  next = replaceOrAppendAlternateRssLink(next, "Projects RSS", `${canonicalInfo.origin}/projects/rss.xml`);
+  next = replaceOrAppendAlternateRssLink(next, "Tutorials RSS", `${canonicalInfo.origin}/studio/tutorials/rss.xml`);
+  if (canonicalInfo.path.startsWith("/project/")) {
+    next = replaceOrAppendAlternateRssLink(next, "Project Portfolio RSS", `${canonicalInfo.origin}/projects/rss.xml`);
+  }
 
   next = replaceOrAppendCanonical(next, meta.canonical);
   return injectCrawlerImages(next, allImages.slice(0, 10));

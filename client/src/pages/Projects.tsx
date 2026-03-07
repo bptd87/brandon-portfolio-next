@@ -71,6 +71,13 @@ export default function Projects() {
       (p) => normalizeText(p.subcategory) === selectedSubcategory
     );
   }, [projects, selectedSubcategory]);
+  const latestProjectUpdate = (filteredProjects || [])
+    .map((project) => (project as any).updatedAt || (project as any).publishedAt || (project as any).createdAt)
+    .filter(Boolean)
+    .sort((a, b) => new Date(b as any).getTime() - new Date(a as any).getTime())[0];
+  const latestProjectUpdateDate = latestProjectUpdate
+    ? new Date(latestProjectUpdate as any).toISOString().split('T')[0]
+    : undefined;
 
   // Performance monitoring removed for production
 
@@ -161,6 +168,8 @@ export default function Projects() {
           },
           genre: "Scenic Design",
           about: "Professional scenic design portfolio",
+          mainEntityOfPage: "https://www.brandonptdavis.com/projects",
+          dateModified: latestProjectUpdateDate,
           keywords: [
             "scenic design portfolio",
             "theatre set design",

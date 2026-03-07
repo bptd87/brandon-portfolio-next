@@ -57,8 +57,10 @@ interface CreativeWorkSchema {
   };
   dateCreated?: string;
   datePublished?: string;
+  dateModified?: string;
   genre?: string;
   keywords?: string[];
+  mainEntityOfPage?: string;
   locationCreated?: {
     name: string;
     address?: {
@@ -336,6 +338,46 @@ export default function StructuredData({ type, person, organization, creativeWor
     return schema;
   };
 
+  const generatePersonEntity = (data: PersonSchema) => {
+    const schema: any = {
+      '@type': 'Person',
+      name: data.name,
+    };
+
+    if (data.jobTitle) schema.jobTitle = data.jobTitle;
+    if (data.url) schema.url = data.url;
+    if (data.image) schema.image = data.image;
+    if (data.description) schema.description = data.description;
+    if (data.email) schema.email = `mailto:${data.email}`;
+    if (data.telephone) schema.telephone = data.telephone;
+    if (data.knowsAbout && data.knowsAbout.length > 0) {
+      schema.knowsAbout = data.knowsAbout;
+    }
+    if (data.awards && data.awards.length > 0) {
+      schema.award = data.awards;
+    }
+    if (data.sameAs && data.sameAs.length > 0) {
+      schema.sameAs = data.sameAs;
+    }
+
+    if (data.address) {
+      schema.address = {
+        '@type': 'PostalAddress',
+        ...data.address,
+      };
+    }
+
+    if (data.alumniOf && data.alumniOf.length > 0) {
+      schema.alumniOf = data.alumniOf.map((school) => ({
+        '@type': 'EducationalOrganization',
+        name: school.name,
+        ...(school.url && { url: school.url }),
+      }));
+    }
+
+    return schema;
+  };
+
   const generateOrganizationSchema = (data: OrganizationSchema) => {
     const schema: any = {
       '@context': 'https://schema.org',
@@ -383,8 +425,10 @@ export default function StructuredData({ type, person, organization, creativeWor
     if (data.url) schema.url = data.url;
     if (data.dateCreated) schema.dateCreated = data.dateCreated;
     if (data.datePublished) schema.datePublished = data.datePublished;
+    if (data.dateModified) schema.dateModified = data.dateModified;
     if (data.genre) schema.genre = data.genre;
     if (data.about) schema.about = data.about;
+    if (data.mainEntityOfPage) schema.mainEntityOfPage = data.mainEntityOfPage;
 
     if (data.creator) {
       schema.creator = {
@@ -689,7 +733,7 @@ export default function StructuredData({ type, person, organization, creativeWor
       '@type': 'ProfilePage',
       url: profilePage.url,
       name: profilePage.name,
-      mainEntity: generatePersonSchema(profilePage.mainEntity),
+      mainEntity: generatePersonEntity(profilePage.mainEntity),
     };
 
     if (profilePage.description) schema.description = profilePage.description;
