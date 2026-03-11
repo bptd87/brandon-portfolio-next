@@ -829,7 +829,12 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
                           <Input
                             id="slug"
                             value={formData.slug}
-                            onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "-"),
+                              })
+                            }
                             required
                             placeholder="million-dollar-quartet"
                           />

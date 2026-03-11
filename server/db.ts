@@ -433,12 +433,23 @@ export async function getProjectById(id: number): Promise<Project | undefined> {
 }
 
 export async function getProjectBySlug(slug: string): Promise<Project | undefined> {
-  const { data } = await supabase
+  const normalizedSlug = slug.trim().toLowerCase();
+
+  const { data: exactData } = await supabase
     .from('projects')
     .select('*')
-    .eq('slug', slug)
+    .eq('slug', normalizedSlug)
     .eq('gallery_only', false) // Exclude gallery-only items from detail pages
     .single();
+
+  const { data } = exactData
+    ? { data: exactData }
+    : await supabase
+        .from('projects')
+        .select('*')
+        .ilike('slug', normalizedSlug)
+        .eq('gallery_only', false)
+        .single();
 
   if (!data) return undefined;
 
@@ -1489,7 +1500,7 @@ function remapProjectColumn(payload: Record<string, any>, missingColumn: string)
 export async function createProject(project: any) {
   const insertData: Record<string, any> = {
     title: project.title,
-    slug: project.slug,
+    slug: typeof project.slug === 'string' ? project.slug.trim().toLowerCase() : project.slug,
     discipline: project.discipline,
     subcategory: project.subcategory,
     year: project.year,
@@ -1543,7 +1554,7 @@ export async function updateProject(id: number, project: any) {
   const updateData: any = {};
 
   if (project.title !== undefined) updateData.title = project.title;
-  if (project.slug !== undefined) updateData.slug = project.slug;
+  if (project.slug !== undefined) updateData.slug = typeof project.slug === 'string' ? project.slug.trim().toLowerCase() : project.slug;
   if (project.discipline !== undefined) updateData.discipline = project.discipline;
   if (project.subcategory !== undefined) updateData.subcategory = project.subcategory;
   if (project.year !== undefined) updateData.year = project.year;
