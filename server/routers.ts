@@ -45,6 +45,11 @@ const projectsListCache = new Map<string, ListCacheEntry<ProjectsListResult>>();
 const newsListCache = new Map<string, ListCacheEntry<NewsListResult>>();
 const articlesListCache = new Map<string, ListCacheEntry<ArticlesListResult>>();
 
+const canonicalSlugInput = z.preprocess(
+  (val) => (typeof val === "string" ? val.trim().toLowerCase() : val),
+  z.string().min(1).max(255).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
+);
+
 function invalidatePublicLists(keys: Array<'projects' | 'news' | 'articles'>) {
   if (keys.includes('projects')) projectsListCache.clear();
   if (keys.includes('news')) newsListCache.clear();
@@ -121,7 +126,7 @@ export const appRouter = router({
       }),
 
     getBySlug: publicProcedure
-      .input(z.object({ slug: z.string().min(1).max(255).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/) }))
+      .input(z.object({ slug: canonicalSlugInput }))
       .query(async ({ input }) => {
         const project = await db.getProjectBySlug(input.slug);
         if (!project) return null;

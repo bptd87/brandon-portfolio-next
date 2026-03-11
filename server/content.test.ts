@@ -139,6 +139,27 @@ describe("Content Management API", () => {
       expect(result).toHaveProperty("id");
       expect(typeof result.id).toBe("number");
     });
+
+    it("normalizes mixed-case project slugs on getBySlug", async () => {
+      const ctx = createAdminContext();
+      const caller = appRouter.createCaller(ctx);
+      const ts = Date.now();
+      const slug = `test-project-${ts}`;
+
+      await caller.projects.create({
+        title: `Test Project ${ts}`,
+        slug,
+        excerpt: "A test project",
+        status: "draft",
+      });
+
+      const result = await caller.projects.getBySlug({
+        slug: slug.replace("test", "Test"),
+      });
+
+      expect(result).toBeTruthy();
+      expect(result?.slug).toBe(slug);
+    });
   });
 
   describe("News", () => {

@@ -1,4 +1,5 @@
-import { useParams } from "wouter";
+import { useEffect } from "react";
+import { useLocation, useParams } from "wouter";
 import { trpc } from "@/lib/trpc";
 import ProjectDetail from "./ProjectDetail";
 import RenderingProjectDetail from "./RenderingProjectDetail";
@@ -10,7 +11,24 @@ import ExperientialProjectDetail from "./ExperientialProjectDetail";
  */
 export default function ProjectDetailRouter() {
   const { slug } = useParams<{ slug: string }>();
-  const { data: project, isLoading } = trpc.projects.getBySlug.useQuery({ slug: slug! });
+  const [location, setLocation] = useLocation();
+  const normalizedSlug = (slug || "").trim().toLowerCase();
+
+  useEffect(() => {
+    if (!slug || !normalizedSlug || slug === normalizedSlug) return;
+
+    const currentSuffix = `/${slug}`;
+    const nextLocation = location.endsWith(currentSuffix)
+      ? `${location.slice(0, -slug.length)}${normalizedSlug}`
+      : location.replace(slug, normalizedSlug);
+
+    setLocation(nextLocation, { replace: true });
+  }, [location, normalizedSlug, setLocation, slug]);
+
+  const { data: project, isLoading } = trpc.projects.getBySlug.useQuery(
+    { slug: normalizedSlug },
+    { enabled: !!normalizedSlug }
+  );
 
   if (isLoading) {
     return (

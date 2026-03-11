@@ -120,6 +120,7 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
     "the-lights-were-already-on-maude-adams-legacy-at-stephens-college":
       "the-lights-were-already-on-maude-adams-legacy-at-stephens-college",
     "red-line-caf": "red-line-cafe",
+    "the-last-train-to-nibroc": "last-train-to-nibroc",
     // Legacy tutorial slug aliases
     "creating-pdfs-without-plotter": "creating-24x36-pdfs",
     "creating-2d-from-3d-models": "creating-2d-drafting-from-3d",
