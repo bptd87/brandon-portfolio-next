@@ -160,6 +160,7 @@ describe("Content Management API", () => {
       expect(result).toBeTruthy();
       expect(result?.slug).toBe(slug);
     });
+
   });
 
   describe("News", () => {

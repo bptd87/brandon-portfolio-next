@@ -45,6 +45,10 @@ const projectsListCache = new Map<string, ListCacheEntry<ProjectsListResult>>();
 const newsListCache = new Map<string, ListCacheEntry<NewsListResult>>();
 const articlesListCache = new Map<string, ListCacheEntry<ArticlesListResult>>();
 
+const legacyProjectSlugAliases: Record<string, string> = {
+  "the-last-train-to-nibroc": "last-train-to-nibroc",
+};
+
 const canonicalSlugInput = z.preprocess(
   (val) => (typeof val === "string" ? val.trim().toLowerCase() : val),
   z.string().min(1).max(255).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
@@ -128,7 +132,8 @@ export const appRouter = router({
     getBySlug: publicProcedure
       .input(z.object({ slug: canonicalSlugInput }))
       .query(async ({ input }) => {
-        const project = await db.getProjectBySlug(input.slug);
+        const resolvedSlug = legacyProjectSlugAliases[input.slug] || input.slug;
+        const project = await db.getProjectBySlug(resolvedSlug);
         if (!project) return null;
 
         const [images, tags] = await Promise.all([

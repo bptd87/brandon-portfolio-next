@@ -30,6 +30,20 @@ export default function ProjectDetailRouter() {
     { enabled: !!normalizedSlug }
   );
 
+  useEffect(() => {
+    if (!project?.slug || project.slug === normalizedSlug) return;
+
+    const canonicalPath = location.startsWith("/projects/experiential/rendering/")
+      ? `/projects/experiential/rendering/${project.slug}`
+      : location.startsWith("/projects/rendering/")
+        ? `/projects/rendering/${project.slug}`
+        : `/project/${project.slug}`;
+
+    if (location !== canonicalPath) {
+      setLocation(canonicalPath, { replace: true });
+    }
+  }, [location, normalizedSlug, project?.slug, setLocation]);
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
