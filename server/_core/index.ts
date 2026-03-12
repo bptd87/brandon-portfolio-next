@@ -13,6 +13,7 @@ import { sdk } from "./sdk";
 import * as db from "../db";
 import { supabase } from "../supabase";
 import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
+import { isStaticArticleSlug } from "@shared/publicContent";
 import { getSessionCookieOptions } from "./cookies";
 import { fileURLToPath } from 'url';
 import { compressionMiddleware } from "./compression";
@@ -304,6 +305,7 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
 
   expressApp.get("/projects/:slug", async (req, res, next) => {
     if (req.params.slug === "rss.xml" || req.params.slug === "rss") return next();
+    if (req.params.slug === "rendering" || req.params.slug === "experiential") return next();
 
     const originalSlug = slugifyLoose(req.params.slug || "");
     const slug = legacySlugAliases[originalSlug] || originalSlug;
@@ -364,6 +366,7 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
     const originalSlug = slugifyLoose(req.params.slug || "");
     const slug = legacySlugAliases[originalSlug] || originalSlug;
     if (!slug) return redirect301(res, "/articles");
+    if (isStaticArticleSlug(slug)) return next();
 
     try {
       const article = await db.getArticleBySlug(slug);

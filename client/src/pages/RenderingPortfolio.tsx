@@ -7,6 +7,21 @@ import { AnimatedSection } from "@/components/AnimatedSection";
 import { RenderingFAQ } from "@/components/RenderingFAQ";
 import { ProcessGalleryModal } from "@/components/ProcessGalleryModal";
 import { useEffect, useMemo, useState } from "react";
+import { SEO } from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
+
+const RENDERING_PORTFOLIO_URL = "https://www.brandonptdavis.com/projects/rendering";
+const RENDERING_PORTFOLIO_TITLE = "Theatre Renderings | Brandon PT Davis";
+const RENDERING_PORTFOLIO_DESCRIPTION =
+  "Atmospheric theatre renderings by Brandon PT Davis, developed as pre-production communication tools for directors, collaborators, and scenic teams.";
+const RENDERING_PORTFOLIO_KEYWORDS = [
+  "theatre renderings",
+  "scenic design renderings",
+  "stage design renderings",
+  "production renderings",
+  "pre-production visualization",
+  "Brandon PT Davis",
+].join(", ");
 
 export default function RenderingPortfolio() {
   const cleanText = (value?: string | null) =>
@@ -141,6 +156,21 @@ export default function RenderingPortfolio() {
 
   const currentImage = currentProjectImages[currentImageIndex];
   const totalProjects = galleryDisplayItems.length;
+  const renderingPortfolioImage =
+    featuredDisplayItems[0]?.imageUrl || galleryDisplayItems[0]?.imageUrl || undefined;
+  const renderingPortfolioUpdatedDate = (projects || []).reduce((latest, project) => {
+    const candidate = project.updatedAt || project.publishedAt || project.createdAt;
+    if (!candidate) return latest;
+    const isoDate = new Date(candidate).toISOString().split("T")[0];
+    return isoDate > latest ? isoDate : latest;
+  }, "");
+  const renderingPortfolioImages = Array.from(
+    new Set(
+      [...featuredDisplayItems, ...galleryDisplayItems]
+        .map((item) => item.imageUrl)
+        .filter((value): value is string => Boolean(value))
+    )
+  ).slice(0, 12);
 
   useEffect(() => {
     setCurrentImageIndex(0);
@@ -164,6 +194,71 @@ export default function RenderingPortfolio() {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title={RENDERING_PORTFOLIO_TITLE}
+        description={RENDERING_PORTFOLIO_DESCRIPTION}
+        image={renderingPortfolioImage}
+        keywords={RENDERING_PORTFOLIO_KEYWORDS}
+        url={RENDERING_PORTFOLIO_URL}
+      />
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "Rendering", url: RENDERING_PORTFOLIO_URL },
+        ]}
+      />
+      <StructuredData
+        type="CollectionPage"
+        collectionPage={{
+          name: "Rendering Portfolio",
+          url: RENDERING_PORTFOLIO_URL,
+          description: RENDERING_PORTFOLIO_DESCRIPTION,
+          about:
+            "A portfolio of theatre renderings used to communicate light, material, atmosphere, and spatial intent before production.",
+          primaryImageOfPage: renderingPortfolioImage,
+          mainEntity: {
+            name: "Rendering Projects",
+            itemListElement: [...featuredDisplayItems, ...galleryDisplayItems]
+              .filter((item) => item.slug)
+              .map((item, index) => ({
+                position: index + 1,
+                name: item.title,
+                url: `${RENDERING_PORTFOLIO_URL}/${item.slug}`,
+                datePublished: item.year ? `${item.year}-01-01` : undefined,
+                image: item.imageUrl || undefined,
+              })),
+          },
+        }}
+      />
+      <StructuredData
+        type="CreativeWork"
+        creativeWork={{
+          name: "Theatre Renderings",
+          description: RENDERING_PORTFOLIO_DESCRIPTION,
+          url: RENDERING_PORTFOLIO_URL,
+          creator: {
+            name: "Brandon PT Davis",
+            url: "https://www.brandonptdavis.com/about",
+          },
+          genre: "Theatre Rendering",
+          about:
+            "Pre-production renderings built to support scenic collaboration, production alignment, and visual storytelling.",
+          mainEntityOfPage: RENDERING_PORTFOLIO_URL,
+          dateModified: renderingPortfolioUpdatedDate || undefined,
+          keywords: RENDERING_PORTFOLIO_KEYWORDS.split(", "),
+          image: renderingPortfolioImages,
+          workExample: [...featuredDisplayItems, ...galleryDisplayItems]
+            .filter((item) => item.imageUrl)
+            .slice(0, 12)
+            .map((item) => ({
+              type: "ImageObject" as const,
+              contentUrl: item.imageUrl || "",
+              name: item.title,
+              caption: `${item.title} rendering by Brandon PT Davis`,
+            })),
+        }}
+      />
       <Header />
 
       {/* Hero Section */}

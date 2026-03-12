@@ -4,6 +4,7 @@ import { Link } from 'wouter';
 import { trpc } from '@/lib/trpc';
 import { getProjectPath } from '@/lib/projectRoutes';
 import { SEO } from '@/components/SEO';
+import { ASSISTANT_SCENIC_DESIGN_PATH, voyageLaArticle } from '@shared/publicContent';
 
 function PinterestIcon({ className }: { className?: string }) {
   return (
@@ -48,12 +49,11 @@ export default function Links() {
   // Fetch data with tRPC
   const { data: projects, isLoading: projectsLoading } = trpc.projects.list.useQuery({});
   const { data: articles, isLoading: articlesLoading } = trpc.articles.list.useQuery({ status: "published" });
-  const { data: news, isLoading: newsLoading } = trpc.news.list.useQuery({ status: "published" });
   // TODO: Add tutorials router
   const tutorials: any[] = [];
   const tutorialsLoading = false;
 
-  const loading = projectsLoading || articlesLoading || newsLoading;
+  const loading = projectsLoading || articlesLoading;
 
   // --- Data Processing ---
 
@@ -102,6 +102,16 @@ export default function Links() {
         url: '/studio',
         date: new Date().toISOString(),
         icon: 'video',
+        isPinned: true
+      },
+      {
+        id: 'bio-assistant-scenic',
+        type: 'custom' as const,
+        title: 'Assistant Scenic Design',
+        subtitle: 'Selected credits',
+        url: ASSISTANT_SCENIC_DESIGN_PATH,
+        date: new Date().toISOString(),
+        icon: 'image',
         isPinned: true
       }
     ];
@@ -157,23 +167,17 @@ export default function Links() {
       });
     }
 
-    // News
-    if (news) {
-      news.forEach((n: any) => {
-        const d = n.date ? new Date(n.date) : new Date(n.createdAt);
-        dashboardItems.push({
-          id: `news-${n.id}`,
-          type: 'news',
-          title: n.title,
-          subtitle: 'News',
-          url: `/news/${n.slug}`,
-          image: n.coverImageUrl,
-          date: d.toISOString(),
-          icon: 'newspaper',
-          isPinned: false
-        });
-      });
-    }
+    dashboardItems.push({
+      id: `art-${voyageLaArticle.slug}`,
+      type: 'article',
+      title: voyageLaArticle.title,
+      subtitle: voyageLaArticle.categoryName,
+      url: `/articles/${voyageLaArticle.slug}`,
+      image: voyageLaArticle.coverImageUrl,
+      date: new Date(voyageLaArticle.publishedAt).toISOString(),
+      icon: 'pen-tool',
+      isPinned: false
+    });
 
     // Tutorials
     if (tutorials) {
@@ -199,7 +203,7 @@ export default function Links() {
       if (!a.isPinned && b.isPinned) return 1;
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     });
-  }, [projects, articles, news, tutorials, loading]);
+  }, [projects, articles, tutorials, loading]);
 
   // --- Infinite Scroll ---
   useEffect(() => {

@@ -10,6 +10,7 @@ import { Search } from "lucide-react";
 import { Link } from "wouter";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { voyageLaArticle } from "@shared/publicContent";
 
 // Decode HTML entities
 const decodeHTMLEntities = (text: string): string => {
@@ -27,35 +28,79 @@ export default function Articles() {
   );
 }
 
+type ArticleCardItem = {
+  id: number | string;
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  coverImageUrl?: string | null;
+  publishedAt?: string | Date | null;
+  createdAt?: string | Date | null;
+  readTime?: number | null;
+  categoryName?: string | null;
+};
+
 function ArticlesContent() {
   const { data: articles, isLoading } = trpc.articles.list.useQuery({ status: "published" });
   const [searchQuery, setSearchQuery] = React.useState("");
   const [selectedCategory, setSelectedCategory] = React.useState<string | null>(null);
 
+  const allArticles = React.useMemo<ArticleCardItem[]>(() => {
+    const fromDatabase =
+      articles?.map((article) => ({
+        id: article.id,
+        slug: article.slug,
+        title: article.title,
+        excerpt: article.excerpt,
+        coverImageUrl: article.coverImageUrl,
+        publishedAt: article.publishedAt,
+        createdAt: article.createdAt,
+        readTime: article.readTime,
+        categoryName: article.category?.name || null,
+      })) || [];
+
+    if (!fromDatabase.some((article) => article.slug === voyageLaArticle.slug)) {
+      fromDatabase.unshift({
+        id: `static-${voyageLaArticle.slug}`,
+        slug: voyageLaArticle.slug,
+        title: voyageLaArticle.title,
+        excerpt: voyageLaArticle.excerpt,
+        coverImageUrl: voyageLaArticle.coverImageUrl,
+        publishedAt: voyageLaArticle.publishedAt,
+        createdAt: voyageLaArticle.publishedAt,
+        readTime: 4,
+        categoryName: voyageLaArticle.categoryName,
+      });
+    }
+
+    return fromDatabase.sort((a, b) => {
+      const aTime = new Date(a.publishedAt || a.createdAt || 0).getTime();
+      const bTime = new Date(b.publishedAt || b.createdAt || 0).getTime();
+      return bTime - aTime;
+    });
+  }, [articles]);
+
   // Get unique categories
   const categories = React.useMemo(() => {
-    if (!articles) return [];
     const uniqueCategories = new Set<string>();
-    articles.forEach(article => {
-      if (article.category?.name) {
-        uniqueCategories.add(article.category.name);
+    allArticles.forEach((article) => {
+      if (article.categoryName) {
+        uniqueCategories.add(article.categoryName);
       }
     });
     return Array.from(uniqueCategories).sort();
-  }, [articles]);
+  }, [allArticles]);
 
   // Filter articles by search and category
   const filteredArticles = React.useMemo(() => {
-    if (!articles) return [];
-
-    let filtered = articles;
+    let filtered = allArticles;
 
     // Filter by category
     if (selectedCategory) {
-      filtered = filtered.filter(article => article.category?.name === selectedCategory);
+      filtered = filtered.filter((article) => article.categoryName === selectedCategory);
     } else {
       // If no category selected, exclude Musical Theatre & Cinema from main grid
-      filtered = filtered.filter(article => article.category?.name !== 'Musical Theatre & Cinema');
+      filtered = filtered.filter((article) => article.categoryName !== "Musical Theatre & Cinema");
     }
 
     // Filter by search query
@@ -68,13 +113,12 @@ function ArticlesContent() {
     }
 
     return filtered;
-  }, [articles, searchQuery, selectedCategory]);
+  }, [allArticles, searchQuery, selectedCategory]);
 
   // Get Musical Theatre & Cinema articles for separate section
   const musicalTheatreArticles = React.useMemo(() => {
-    if (!articles) return [];
-    return articles.filter(article => article.category?.name === 'Musical Theatre & Cinema');
-  }, [articles]);
+    return allArticles.filter((article) => article.categoryName === "Musical Theatre & Cinema");
+  }, [allArticles]);
 
 
 
@@ -83,7 +127,7 @@ function ArticlesContent() {
       <SEO
         title="Scenic Insights | Articles by Brandon PT Davis"
         description="Articles on scenic design philosophy, process, and production craft by Brandon PT Davis."
-        image={articles?.[0]?.coverImageUrl || undefined}
+        image={allArticles[0]?.coverImageUrl || undefined}
         url="https://www.brandonptdavis.com/articles"
       />
       <StructuredData
@@ -100,14 +144,19 @@ function ArticlesContent() {
           url: "https://www.brandonptdavis.com/articles",
           description: "Article archive covering scenic design practice, production strategy, and theatre process.",
           about: "Scenic design writing and production insights by Brandon PT Davis.",
-          primaryImageOfPage: articles?.[0]?.coverImageUrl || undefined,
+          primaryImageOfPage: allArticles[0]?.coverImageUrl || undefined,
           mainEntity: {
             name: "Articles",
-            itemListElement: (articles || []).slice(0, 24).map((article, index) => ({
+            itemListElement: allArticles.slice(0, 24).map((article, index) => ({
               position: index + 1,
               name: decodeHTMLEntities(article.title),
               url: `https://www.brandonptdavis.com/articles/${article.slug}`,
-              datePublished: article.publishedAt || article.createdAt || undefined,
+              datePublished:
+                article.publishedAt instanceof Date
+                  ? article.publishedAt.toISOString()
+                  : article.createdAt instanceof Date
+                    ? article.createdAt.toISOString()
+                    : article.publishedAt || article.createdAt || undefined,
               image: article.coverImageUrl || undefined,
             })),
           },
@@ -194,8 +243,8 @@ function ArticlesContent() {
           ) : filteredArticles && filteredArticles.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
               {filteredArticles.map((article) => {
-                const categoryColor = article.category?.name
-                  ? getCategoryColor(article.category.name).hex
+                const categoryColor = article.categoryName
+                  ? getCategoryColor(article.categoryName).hex
                   : '#FF6B35';
 
                 return (
@@ -218,12 +267,12 @@ function ArticlesContent() {
 
                       <div className="p-5 md:p-6 flex flex-col min-h-[14rem]">
                         {/* Category Label */}
-                        {article.category && (
+                        {article.categoryName && (
                           <p
                             className="text-[10px] uppercase tracking-[0.26em] mb-3 font-medium"
                             style={{ color: categoryColor }}
                           >
-                            {article.category.name}
+                            {article.categoryName}
                           </p>
                         )}
 
@@ -288,7 +337,7 @@ function ArticlesContent() {
 
             <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {musicalTheatreArticles.map((article) => {
-                const categoryColor = article.category ? getCategoryColor(article.category.name).hex : '#9CA3AF';
+                const categoryColor = article.categoryName ? getCategoryColor(article.categoryName).hex : '#9CA3AF';
                 return (
                   <Link key={article.id} href={`/articles/${article.slug}`}>
                     <div className="group bg-card/30 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer">
@@ -309,12 +358,12 @@ function ArticlesContent() {
 
                       <div className="p-5 md:p-6 flex flex-col min-h-[14rem]">
                         {/* Category Label */}
-                        {article.category && (
+                        {article.categoryName && (
                           <p
                             className="text-[10px] uppercase tracking-[0.26em] mb-3 font-medium"
                             style={{ color: categoryColor }}
                           >
-                            {article.category.name}
+                            {article.categoryName}
                           </p>
                         )}
 

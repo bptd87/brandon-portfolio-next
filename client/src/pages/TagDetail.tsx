@@ -43,7 +43,7 @@ export default function TagDetail() {
     <>
       <SEO
         title={`${tag.name} | Brandon PT Davis`}
-        description={`Browse all content tagged with ${tag.name} - ${totalItems} items including projects, articles, and news.`}
+        description={`Browse all content tagged with ${tag.name} - ${totalItems} items including projects, articles, and archived news.`}
         url={canonicalTagUrl}
         noindex={shouldNoindex}
       />
@@ -75,7 +75,7 @@ export default function TagDetail() {
               Content Tagged: {tag.name}
             </h1>
             <p className="text-lg text-muted-foreground">
-              {totalItems} {totalItems === 1 ? 'item' : 'items'} • {projects.length} {projects.length === 1 ? 'project' : 'projects'}, {articles.length} {articles.length === 1 ? 'article' : 'articles'}, {news.length} {news.length === 1 ? 'news item' : 'news items'}
+              {totalItems} {totalItems === 1 ? 'item' : 'items'} • {projects.length} {projects.length === 1 ? 'project' : 'projects'}, {articles.length} {articles.length === 1 ? 'article' : 'articles'}, {news.length} {news.length === 1 ? 'archived news item' : 'archived news items'}
             </p>
           </div>
         </section>
@@ -162,12 +162,12 @@ export default function TagDetail() {
             </section>
           )}
 
-          {/* News Section */}
+          {/* News Archive Section */}
           {news.length > 0 && (
             <section>
               <div className="flex items-center gap-3 mb-8">
                 <Newspaper className="w-6 h-6 text-accent" />
-                <h2 className="text-2xl md:text-3xl font-bold">News ({news.length})</h2>
+                <h2 className="text-2xl md:text-3xl font-bold">News Archive ({news.length})</h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {news.map((item) => (

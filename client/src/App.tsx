@@ -20,6 +20,7 @@ const TodoDialog = lazy(() => import("@/components/TodoDialog").then(m => ({ def
 // All other routes lazy load on demand for better initial performance
 const News = lazy(() => import("./pages/News"));
 const Articles = lazy(() => import("./pages/Articles"));
+const AssistantScenicDesign = lazy(() => import("./pages/AssistantScenicDesign"));
 const Projects = lazy(() => import("./pages/Projects"));
 const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
 const About = lazy(() => import("./pages/About"));
@@ -29,6 +30,7 @@ const Collaborators = lazy(() => import("./pages/Collaborators"));
 const ProjectDetailRouter = lazy(() => import("./pages/ProjectDetailRouter"));
 const NewsDetail = lazy(() => import("./pages/NewsDetail"));
 const ArticleDetail = lazy(() => import("./pages/ArticleDetail"));
+const VoyageLAArticle = lazy(() => import("./pages/VoyageLAArticle"));
 const Admin = lazy(() => import("./pages/Admin"));
 const Login = lazy(() => import("./pages/Login"));
 const AdminProjectEdit = lazy(() => import("./pages/AdminProjectEdit"));
@@ -120,9 +122,11 @@ function Router() {
           <Route path={"/projects/rendering"} component={RenderingPortfolio} />
           <Route path={"/projects/rendering/:slug"} component={ProjectDetailRouter} />
           <Route path={"/projects/:slug"} component={LegacyProjectRedirect} />
+          <Route path={"/assistant-scenic-design"} component={AssistantScenicDesign} />
           <Route path={"/news"} component={News} />
           <Route path={"/news/:slug"} component={NewsDetail} />
           <Route path={"/articles"} component={Articles} />
+          <Route path={"/articles/voyagela-rising-stars-interview"} component={VoyageLAArticle} />
           <Route path={"/articles/:slug"} component={ArticleDetail} />
           <Route path={"/tags/:slug"} component={TagDetail} />
           <Route path={"/about"} component={About} />

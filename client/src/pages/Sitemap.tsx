@@ -18,6 +18,7 @@ const sections = [
       { name: "Scenic Design", href: "/projects" },
       { name: "Rendering", href: "/projects/rendering" },
       { name: "Experiential Design", href: "/projects/experiential" },
+      { name: "Assistant Scenic Design", href: "/assistant-scenic-design" },
     ],
   },
   {
@@ -31,16 +32,16 @@ const sections = [
     ],
   },
   {
-    title: "Publishing",
+    title: "Archive",
     links: [
-      { name: "News", href: "/news" },
-      { name: "Articles", href: "/articles" },
+      { name: "News Archive", href: "/news" },
     ],
   },
   {
     title: "Studio",
     links: [
       { name: "Studio Home", href: "/studio" },
+      { name: "Articles", href: "/articles" },
       { name: "Tutorials", href: "/studio/tutorials" },
       { name: "Apps", href: "/studio/apps" },
       { name: "Scenic 3D Converter (Mac)", href: "/studio/apps/scenic-3d-converter" },
@@ -77,7 +78,7 @@ export default function Sitemap() {
         collectionPage={{
           name: "Sitemap",
           url: "https://www.brandonptdavis.com/sitemap",
-          description: "Complete navigation map of portfolio, about, news, articles, and studio pages.",
+          description: "Complete navigation map of portfolio, assistant scenic design, articles, about, and studio pages.",
           mainEntity: {
             name: "Site Pages",
             itemListElement: allLinks.map((link, index) => ({

@@ -78,18 +78,16 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 >
                   Experiential Design
                 </Link>
+                <Link
+                  href="/assistant-scenic-design"
+                  onClick={onClose}
+                  className="block py-2 px-4 rounded-lg hover:bg-[#FFB000]/10 hover:text-[#FFB000] transition-colors"
+                >
+                  Assistant Scenic Design
+                </Link>
               </div>
             )}
           </div>
-
-          {/* News */}
-          <Link
-            href="/news"
-            onClick={onClose}
-            className="block py-3 px-4 rounded-lg hover:bg-foreground/5 transition-colors font-bold"
-          >
-            NEWS
-          </Link>
 
           {/* About Dropdown */}
           <div>

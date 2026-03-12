@@ -70,6 +70,11 @@ export default function Footer() {
                     Experiential Design
                   </Link>
                 </li>
+                <li>
+                  <Link href="/assistant-scenic-design" className="text-foreground/70 hover:text-[#00E5FF] transition-colors font-medium">
+                    Assistant Scenic Design
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -77,6 +82,11 @@ export default function Footer() {
             <div>
               <h3 className="text-sm font-black tracking-wider text-[#9C27B0] mb-6">STUDIO</h3>
               <ul className="space-y-3">
+                <li>
+                  <Link href="/articles" className="text-foreground/70 hover:text-[#9C27B0] transition-colors font-medium">
+                    Articles
+                  </Link>
+                </li>
                 <li>
                   <Link href="/studio/tutorials" className="text-foreground/70 hover:text-[#9C27B0] transition-colors font-medium">
                     Tutorials
@@ -95,18 +105,13 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Content */}
+            {/* Archive */}
             <div>
-              <h3 className="text-sm font-black tracking-wider text-[#FF9800] mb-6">CONTENT</h3>
+              <h3 className="text-sm font-black tracking-wider text-[#FF9800] mb-6">ARCHIVE</h3>
               <ul className="space-y-3">
                 <li>
-                  <Link href="/articles" className="text-foreground/70 hover:text-[#FF9800] transition-colors font-medium">
-                    Articles
-                  </Link>
-                </li>
-                <li>
                   <Link href="/news" className="text-foreground/70 hover:text-[#FF9800] transition-colors font-medium">
-                    News
+                    News Archive
                   </Link>
                 </li>
               </ul>

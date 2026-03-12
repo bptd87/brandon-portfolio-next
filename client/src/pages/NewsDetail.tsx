@@ -14,6 +14,7 @@ import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { NewsDetailSkeleton } from "@/components/SkeletonLoaders";
+import { getLegacyCanonicalDestination } from "@shared/publicContent";
 
 
 export default function NewsDetail() {
@@ -71,7 +72,7 @@ function NewsDetailContent() {
           <Link href="/news">
             <Button>
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to News
+              Back to News Archive
             </Button>
           </Link>
         </div>
@@ -121,6 +122,10 @@ function NewsDetailContent() {
     ? parseBlocks(newsItem.blocks)
     : parseBlocks(newsItem.content);
   const layoutVariant = newsItem.layoutVariant || "feature";
+  const canonicalDestination = getLegacyCanonicalDestination(newsItem.slug);
+  const canonicalUrl = canonicalDestination
+    ? `https://www.brandonptdavis.com${canonicalDestination.canonicalPath}`
+    : `https://www.brandonptdavis.com/news/${newsItem.slug}`;
 
   // Get related news - chronologically nearby articles (within 6 months)
   const related = relatedNews
@@ -161,7 +166,8 @@ function NewsDetailContent() {
         type="article"
         publishedTime={getNewsDate(newsItem).toISOString()}
         modifiedTime={new Date(newsItem.updatedAt ?? newsItem.createdAt).toISOString()}
-        url={`https://www.brandonptdavis.com/news/${newsItem.slug}`}
+        url={canonicalUrl}
+        noindex={Boolean(canonicalDestination)}
       />
       <StructuredData
         type="NewsArticle"
@@ -179,7 +185,7 @@ function NewsDetailContent() {
             name: "Brandon PT Davis Design",
             logo: "https://www.brandonptdavis.com/android-chrome-512x512.png",
           },
-          url: `https://www.brandonptdavis.com/news/${newsItem.slug}`,
+          url: canonicalUrl,
           wordCount: wordCount > 0 ? wordCount : undefined,
           keywords: newsItem.tags ? newsItem.tags.map((tag: any) => tag.name) : [],
         }}
@@ -209,7 +215,7 @@ function NewsDetailContent() {
               url: "https://www.brandonptdavis.com/about",
             },
             image: newsItem.coverImageUrl || undefined,
-            url: `https://www.brandonptdavis.com/news/${newsItem.slug}`,
+            url: canonicalUrl,
             eventStatus: "EventScheduled",
             eventAttendanceMode: "OfflineEventAttendanceMode",
           }}
@@ -221,11 +227,25 @@ function NewsDetailContent() {
       <div className="container py-6">
         <Breadcrumb
           items={[
-            { label: "News", href: "/news" },
+            { label: "News Archive", href: "/news" },
             { label: newsItem.title }
           ]}
         />
       </div>
+
+      {canonicalDestination && (
+        <div className="container pb-2">
+          <div className="mx-auto max-w-5xl rounded-2xl border border-[#FFB000]/30 bg-[#FFB000]/10 px-5 py-4">
+            <p className="text-sm leading-relaxed text-foreground/80">
+              This legacy news entry now lives in{" "}
+              <a href={canonicalDestination.displayPath} className="font-semibold text-[#FFB000] hover:underline">
+                {canonicalDestination.destinationLabel}
+              </a>
+              .
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Hero Section */}
       <section className="pt-24 pb-12">
@@ -235,7 +255,7 @@ function NewsDetailContent() {
               <Link href="/news">
                 <Button variant="ghost" className="px-0">
                   <ArrowLeft className="mr-2 h-4 w-4" />
-                  Back to News
+                  Back to News Archive
                 </Button>
               </Link>
             </div>

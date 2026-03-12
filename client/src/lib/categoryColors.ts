@@ -12,6 +12,13 @@ export interface CategoryColor {
 }
 
 export const categoryColors: Record<string, CategoryColor> = {
+  'Editorial Profiles': {
+    badge: 'bg-orange-500/90 backdrop-blur-sm',
+    text: 'text-orange-500',
+    hover: 'hover:bg-orange-500/20 hover:border-orange-500',
+    rgb: '249, 115, 22',
+    hex: '#F97316',
+  },
   'Design Philosophy': {
     badge: 'bg-purple-500/90 backdrop-blur-sm',
     text: 'text-purple-500',

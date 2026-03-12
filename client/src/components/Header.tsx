@@ -99,14 +99,6 @@ const AllCategoriesIcon = () => (
   </svg>
 );
 
-// Articles - Pencil/writing
-const ArticleIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="inline-block mr-2">
-    <path d="M17 3l4 4L7 21H3v-4L17 3z" />
-    <path d="M14 6l4 4" strokeOpacity="0.5" />
-  </svg>
-);
-
 // Studio Icons
 
 // Tutorials - Play button/video
@@ -268,6 +260,7 @@ export default function Header() {
     { name: "Scenic Design", slug: "scenic-design", path: "/projects", icon: <ScenicDesignIcon /> },
     { name: "Rendering", slug: "rendering", path: "/projects/rendering", icon: <RenderingIcon /> },
     { name: "Experiential Design", slug: "experiential", path: "/projects/experiential", icon: <ExperientialIcon /> },
+    { name: "Assistant Scenic Design", slug: "assistant-scenic-design", path: "/assistant-scenic-design", icon: <ScenicDesignIcon /> },
   ];
 
   const aboutPages = [
@@ -300,7 +293,7 @@ export default function Header() {
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-8">
+            <div className="hidden lg:flex items-center gap-6">
               {/* Work Dropdown - Hover Based with Delay */}
               <div 
                 className="relative" 
@@ -309,7 +302,10 @@ export default function Header() {
                 onMouseLeave={handlePortfolioMouseLeave}
               >
                 {(() => {
-                  const isPortfolioActive = isActive("/projects") || isActive("/projects/scenic-design");
+                  const isPortfolioActive =
+                    isActive("/projects") ||
+                    isActive("/projects/scenic-design") ||
+                    isActive("/assistant-scenic-design");
                   return (
                 <Link
                   href="/projects"
@@ -347,17 +343,6 @@ export default function Header() {
                   </div>
                 )}
               </div>
-
-              {/* News - Direct Link (No Dropdown) */}
-              <Link
-                href="/news"
-                className={`text-sm font-bold tracking-wide transition-all hover:text-[#FF5722] relative group ${
-                  isActive("/news") ? "text-[#FF5722]" : ""
-                }`}
-              >
-                NEWS
-                <ActiveUnderline active={isActive("/news")} color="#FF5722" />
-              </Link>
 
               {/* About Dropdown - Hover Based with Delay */}
               <div 
@@ -444,7 +429,7 @@ export default function Header() {
                       className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border relative group"
                     >
                       <span className="relative z-10 flex items-center">
-                        <ArticleIcon />
+                        <FileText className="w-[18px] h-[18px] mr-2" />
                         Articles
                       </span>
                       <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>

@@ -1,4 +1,9 @@
 import * as db from './db';
+import {
+  ASSISTANT_SCENIC_DESIGN_PATH,
+  VOYAGELA_ARTICLE_PATH,
+  voyageLaArticle,
+} from '@shared/publicContent';
 
 /**
  * Sitemap utilities for generating XML sitemaps
@@ -170,6 +175,11 @@ export async function generateMainSitemap(baseUrl?: string): Promise<string> {
       priority: 0.7,
     },
     {
+      loc: `${SITE_URL}${ASSISTANT_SCENIC_DESIGN_PATH}`,
+      changefreq: 'monthly',
+      priority: 0.8,
+    },
+    {
       loc: `${SITE_URL}/studio`,
       changefreq: 'monthly',
       priority: 0.6,
@@ -233,6 +243,13 @@ export async function generateMainSitemap(baseUrl?: string): Promise<string> {
   urls.push({
     loc: `${SITE_URL}/articles`,
     changefreq: 'weekly',
+    priority: 0.7,
+  });
+
+  urls.push({
+    loc: `${SITE_URL}${VOYAGELA_ARTICLE_PATH}`,
+    lastmod: formatDate(new Date(voyageLaArticle.updatedAt)),
+    changefreq: 'monthly',
     priority: 0.7,
   });
 

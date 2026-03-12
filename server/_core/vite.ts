@@ -6,6 +6,15 @@ import { fileURLToPath } from "url";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import * as db from "../db";
+import {
+  ASSISTANT_SCENIC_DESIGN_PATH,
+  ASSISTANT_SCENIC_DESIGN_SEO_DESCRIPTION,
+  ASSISTANT_SCENIC_DESIGN_SEO_TITLE,
+  VOYAGELA_ARTICLE_PATH,
+  assistantScenicDesignEntries,
+  getLegacyCanonicalDestination,
+  voyageLaArticle,
+} from "@shared/publicContent";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -185,7 +194,6 @@ function injectSeoMeta(html: string, meta: SeoMeta): string {
       return { origin: DEFAULT_SITE_URL, path: "" };
     }
   })();
-  next = replaceOrAppendAlternateRssLink(next, "News RSS", `${canonicalInfo.origin}/news/rss.xml`);
   next = replaceOrAppendAlternateRssLink(next, "Articles RSS", `${canonicalInfo.origin}/articles/rss.xml`);
   next = replaceOrAppendAlternateRssLink(next, "Projects RSS", `${canonicalInfo.origin}/projects/rss.xml`);
   next = replaceOrAppendAlternateRssLink(next, "Tutorials RSS", `${canonicalInfo.origin}/studio/tutorials/rss.xml`);
@@ -334,6 +342,18 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
     return meta;
   };
 
+  if (decodedPath === VOYAGELA_ARTICLE_PATH) {
+    return cacheMeta({
+      title: voyageLaArticle.seoTitle,
+      description: voyageLaArticle.seoDescription,
+      image: absoluteUrl(origin, voyageLaArticle.coverImageUrl),
+      canonical: `${origin}${VOYAGELA_ARTICLE_PATH}`,
+      type: "article",
+      publishedTime: new Date(voyageLaArticle.publishedAt).toISOString(),
+      modifiedTime: new Date(voyageLaArticle.updatedAt).toISOString(),
+    });
+  }
+
   const articleMatch = decodedPath.match(/^\/articles\/([^/?#]+)\/?$/i);
   if (articleMatch) {
     const slug = cleanSlug(articleMatch[1]);
@@ -360,11 +380,12 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
     const slug = cleanSlug(newsMatch[1]);
     const news = await db.getNewsBySlug(slug);
     if (news?.status === "published") {
+      const canonicalDestination = getLegacyCanonicalDestination(slug);
       return cacheMeta({
         title: news.seoTitle || news.title || DEFAULT_META.title,
         description: news.seoDescription || news.excerpt || DEFAULT_META.description,
         image: absoluteUrl(origin, news.coverImageUrl),
-        canonical: `${origin}/news/${news.slug}`,
+        canonical: canonicalDestination ? `${origin}${canonicalDestination.canonicalPath}` : `${origin}/news/${news.slug}`,
         type: "article",
         publishedTime: news.date
           ? new Date(news.date).toISOString()
@@ -418,6 +439,26 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
     }
   }
 
+  if (decodedPath === ASSISTANT_SCENIC_DESIGN_PATH) {
+    const socialImages = Array.from(
+      new Set(
+        assistantScenicDesignEntries
+          .map((entry) => entry.coverImageUrl)
+          .filter((value): value is string => Boolean(value))
+          .map((value) => absoluteUrl(origin, value))
+      )
+    ).slice(0, 8);
+
+    return cacheMeta({
+      title: ASSISTANT_SCENIC_DESIGN_SEO_TITLE,
+      description: ASSISTANT_SCENIC_DESIGN_SEO_DESCRIPTION,
+      image: socialImages[0] || getDefaultShareImage(origin),
+      images: socialImages,
+      canonical: `${origin}${ASSISTANT_SCENIC_DESIGN_PATH}`,
+      type: "website",
+    });
+  }
+
   if (decodedPath === "/projects" || decodedPath === "/projects/scenic-design") {
     const projects = await db.getAllProjects({ status: "published", discipline: "scenic_design" });
     const hero = projects.find((p) => p.featured && p.coverImageUrl) || projects.find((p) => p.coverImageUrl);
@@ -430,12 +471,57 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
     });
   }
 
+  if (decodedPath === "/projects/rendering") {
+    const renderingProjects = await db.getRenderingProjects({ status: "published", galleryOnly: false });
+    const socialImages = Array.from(
+      new Set(
+        renderingProjects
+          .map((project) => project.coverImageUrl)
+          .filter((value): value is string => Boolean(value))
+          .map((value) => absoluteUrl(origin, value))
+      )
+    ).slice(0, 8);
+
+    return cacheMeta({
+      title: "Theatre Renderings | Brandon PT Davis",
+      description:
+        "Atmospheric theatre renderings by Brandon PT Davis, developed as pre-production communication tools for directors, collaborators, and scenic teams.",
+      image: socialImages[0] || getDefaultShareImage(origin),
+      images: socialImages,
+      canonical: `${origin}/projects/rendering`,
+      type: "website",
+    });
+  }
+
+  if (decodedPath === "/projects/experiential") {
+    const experientialItems = await db.getProcessGalleryByCategory();
+    const socialImages = Array.from(
+      new Set(
+        experientialItems
+          .map((item) => item.imageUrl)
+          .filter((value): value is string => Boolean(value))
+          .map((value) => absoluteUrl(origin, value))
+      )
+    ).slice(0, 8);
+
+    return cacheMeta({
+      title:
+        "Experiential Projects by a Scenic Designer | Renderings, Technical Drawing, Live Events | Brandon PT Davis",
+      description:
+        "Experiential projects by scenic designer Brandon PT Davis: renderings, technical drawings, and live event build support for agencies that need clear visual direction and production-aware execution.",
+      image: socialImages[0] || getDefaultShareImage(origin),
+      images: socialImages,
+      canonical: `${origin}/projects/experiential`,
+      type: "website",
+    });
+  }
+
   if (decodedPath === "/news") {
     const newsItems = await db.getAllNews({ status: "published" });
     const hero = newsItems.find((n) => n.coverImageUrl);
     return cacheMeta({
-      title: "Production News | Brandon PT Davis",
-      description: "Production updates, press coverage, and milestones from scenic design work.",
+      title: "News Archive | Brandon PT Davis",
+      description: "Legacy news archive for production updates, press links, and earlier site content.",
       image: absoluteUrl(origin, hero?.coverImageUrl || getDefaultShareImage(origin)),
       canonical: `${origin}/news`,
       type: "website",

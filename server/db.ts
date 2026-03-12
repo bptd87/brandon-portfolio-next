@@ -638,7 +638,7 @@ export async function getAllNews(filters?: {
     location: item.location,
     blocks: [],
     externalLink: item.external_link,
-    tags: item.tags ?? null,
+    tags: null,
   }));
 }
 

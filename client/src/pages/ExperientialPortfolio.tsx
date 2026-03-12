@@ -8,10 +8,24 @@ import Header from "@/components/Header";
 import { ProcessGalleryModal } from "@/components/ProcessGalleryModal";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { SEO } from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 import { trpc } from "@/lib/trpc";
 import { getVideoThumbnail } from "@/lib/videoUtils";
 
 const SECTION_ACCENTS = ["#00BCD4", "#FFC107", "#E91E63", "#4CAF50", "#FF5722"];
+const EXPERIENTIAL_PORTFOLIO_URL = "https://www.brandonptdavis.com/projects/experiential";
+const EXPERIENTIAL_PORTFOLIO_TITLE =
+  "Experiential Projects by a Scenic Designer | Renderings, Technical Drawing, Live Events | Brandon PT Davis";
+const EXPERIENTIAL_PORTFOLIO_DESCRIPTION =
+  "Experiential projects by scenic designer Brandon PT Davis: renderings, technical drawings, and live event build support for agencies that need clear visual direction and production-aware execution.";
+const EXPERIENTIAL_PORTFOLIO_KEYWORDS = [
+  "scenic designer experiential work",
+  "experiential design portfolio",
+  "event renderings",
+  "technical drawing services",
+  "live event design portfolio",
+  "branded environment designer",
+].join(", ");
 
 type GalleryItem = {
   id: number;
@@ -311,6 +325,32 @@ export default function ExperientialPortfolio() {
   }, [currentProject, projectImages]);
 
   const currentImage = currentImages[imageIndex];
+  const experientialImages = Array.from(
+    new Set(
+      (processGalleryItems || [])
+        .map((item) => item.imageUrl || (item.videoUrl ? getVideoThumbnail(item.videoUrl) : null))
+        .filter((value): value is string => Boolean(value))
+    )
+  ).slice(0, 12);
+  const experientialPrimaryImage = experientialImages[0];
+  const experientialUpdatedDate = (processGalleryItems || []).reduce((latest, item) => {
+    const isoDate = new Date(item.createdAt).toISOString().split("T")[0];
+    return isoDate > latest ? isoDate : latest;
+  }, "");
+  const sectionList = [
+    {
+      name: "Rendering and Visualization for Pitch and Approval",
+      url: `${EXPERIENTIAL_PORTFOLIO_URL}#rendering`,
+    },
+    {
+      name: "Technical Drawings That Bridge Creative and Fabrication",
+      url: `${EXPERIENTIAL_PORTFOLIO_URL}#technical-drawing`,
+    },
+    {
+      name: "Live Event and Installation Work in Real Conditions",
+      url: `${EXPERIENTIAL_PORTFOLIO_URL}#live-events`,
+    },
+  ];
 
   const canGoNextProject = projectIndex < groupedProjects.length - 1;
   const canGoPrevProject = projectIndex > 0;
@@ -336,10 +376,71 @@ export default function ExperientialPortfolio() {
   return (
     <div className="min-h-screen bg-black text-white">
       <SEO
-        title="Experiential Projects by a Scenic Designer | Renderings, Technical Drawing, Live Events | Brandon PT Davis"
-        description="Experiential projects by scenic designer Brandon PT Davis: renderings, technical drawings, and live event build support for agencies that need clear visual direction and production-aware execution."
-        keywords="scenic designer experiential work, experiential design portfolio, event renderings, technical drawing services, live event design portfolio, branded environment designer"
-        url="https://www.brandonptdavis.com/projects/experiential"
+        title={EXPERIENTIAL_PORTFOLIO_TITLE}
+        description={EXPERIENTIAL_PORTFOLIO_DESCRIPTION}
+        image={experientialPrimaryImage}
+        keywords={EXPERIENTIAL_PORTFOLIO_KEYWORDS}
+        url={EXPERIENTIAL_PORTFOLIO_URL}
+      />
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: "Home", url: "https://www.brandonptdavis.com" },
+          { name: "Experiential", url: EXPERIENTIAL_PORTFOLIO_URL },
+        ]}
+      />
+      <StructuredData
+        type="CollectionPage"
+        collectionPage={{
+          name: "Experiential Portfolio",
+          url: EXPERIENTIAL_PORTFOLIO_URL,
+          description: EXPERIENTIAL_PORTFOLIO_DESCRIPTION,
+          about:
+            "A portfolio of experiential renderings, technical drawings, and live event project support shaped by scenic design thinking.",
+          primaryImageOfPage: experientialPrimaryImage,
+          mainEntity: {
+            name: "Experiential Portfolio Sections",
+            itemListElement: sectionList.map((item, index) => ({
+              position: index + 1,
+              name: item.name,
+              url: item.url,
+            })),
+          },
+        }}
+      />
+      <StructuredData
+        type="CreativeWork"
+        creativeWork={{
+          name: "Experiential Projects",
+          description: EXPERIENTIAL_PORTFOLIO_DESCRIPTION,
+          url: EXPERIENTIAL_PORTFOLIO_URL,
+          creator: {
+            name: "Brandon PT Davis",
+            url: "https://www.brandonptdavis.com/about",
+          },
+          genre: "Experiential Design",
+          about:
+            "Renderings, technical drawings, and live event support for experiential and branded environment projects.",
+          mainEntityOfPage: EXPERIENTIAL_PORTFOLIO_URL,
+          dateModified: experientialUpdatedDate || undefined,
+          keywords: EXPERIENTIAL_PORTFOLIO_KEYWORDS.split(", "),
+          image: experientialImages,
+          workExample: (processGalleryItems || [])
+            .map((item) => ({
+              type: "ImageObject" as const,
+              contentUrl: item.imageUrl || (item.videoUrl ? getVideoThumbnail(item.videoUrl) : ""),
+              name:
+                item.displayTitle ||
+                item.project?.title ||
+                item.category.replace(/-/g, " "),
+              caption:
+                item.description ||
+                item.displayTitle ||
+                `Experiential ${item.category.replace(/-/g, " ")} by Brandon PT Davis`,
+            }))
+            .filter((item) => item.contentUrl)
+            .slice(0, 12),
+        }}
       />
       <Header />
 
