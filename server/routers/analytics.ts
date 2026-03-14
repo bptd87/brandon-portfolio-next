@@ -148,7 +148,7 @@ async function fetchPostHogOverviewData() {
       `),
       runPostHogQuery(`
         select
-          toString(timestamp) as timestamp,
+          toString(timestamp) as event_timestamp,
           coalesce(nullIf(properties.$geoip_city_name, ''), 'Unknown city') as city,
           coalesce(nullIf(properties.$geoip_subdivision_1_name, ''), 'Unknown region') as region,
           coalesce(nullIf(properties.$geoip_country_name, ''), 'Unknown country') as country,
@@ -175,7 +175,7 @@ async function fetchPostHogOverviewData() {
       `),
       runPostHogQuery(`
         select
-          toString(timestamp) as timestamp,
+          toString(timestamp) as event_timestamp,
           event,
           properties.pathname as path,
           properties.project_title as project_title
@@ -248,7 +248,7 @@ async function fetchPostHogOverviewData() {
       views: toNumber(row.views),
     })),
     recentCities: mapPostHogRows<Record<string, string | number | null>>(recentCitiesRes).map((row) => ({
-      timestamp: String(row.timestamp || ""),
+      timestamp: String(row.event_timestamp || ""),
       city: String(row.city || "Unknown city"),
       region: String(row.region || "Unknown region"),
       country: String(row.country || "Unknown country"),
@@ -259,7 +259,7 @@ async function fetchPostHogOverviewData() {
       count: toNumber(row.count),
     })),
     recentEvents: mapPostHogRows<Record<string, string | number | null>>(recentEventsRes).map((row) => ({
-      timestamp: String(row.timestamp || ""),
+      timestamp: String(row.event_timestamp || ""),
       event: String(row.event || ""),
       path: row.path ? String(row.path) : null,
       projectTitle: row.project_title ? String(row.project_title) : null,
