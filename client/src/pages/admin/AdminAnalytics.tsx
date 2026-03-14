@@ -137,20 +137,27 @@ function EmbeddedPanel({
       </CardHeader>
       <CardContent>
         {hasUrl ? (
-          <div className="overflow-hidden rounded-xl border border-border/70 bg-background">
-            <iframe
-              title={title}
-              src={url}
-              className="h-[720px] w-full"
-              loading="lazy"
-              referrerPolicy="strict-origin-when-cross-origin"
-            />
+          <div className="rounded-xl border border-border/70 bg-background/70 p-6">
+            <p className="text-sm text-muted-foreground">
+              PostHog blocks iframe embedding with its content security policy, so this panel opens in a new tab instead.
+            </p>
+            <div className="mt-4">
+              <Button variant="outline" asChild>
+                <a href={url} target="_blank" rel="noopener noreferrer">
+                  <span className="inline-flex items-center gap-2">
+                    <Icon className="h-4 w-4" />
+                    Open {title}
+                  </span>
+                  <ExternalLink className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+            </div>
           </div>
         ) : (
           <div className="rounded-xl border border-dashed border-border/70 bg-background/60 p-6">
-            <p className="text-sm font-medium">Embed not configured</p>
+            <p className="text-sm font-medium">Panel link not configured</p>
             <p className="mt-2 text-sm text-muted-foreground">
-              Add a shared PostHog URL in the matching Vite env var to display this panel here.
+              Add a shared PostHog URL in the matching Vite env var to launch this view from admin.
             </p>
           </div>
         )}
@@ -364,7 +371,7 @@ export default function AdminAnalytics() {
               <div>
                 <CardTitle className="text-base">PostHog Control Center</CardTitle>
                 <CardDescription>
-                  Launch the full analytics workspace from here or embed shared dashboards below.
+                  Launch the full analytics workspace from here. PostHog views open in new tabs because embeds are blocked by CSP.
                 </CardDescription>
               </div>
               <Button type="button" variant="outline" size="sm" onClick={() => refetch()} disabled={isFetching}>
