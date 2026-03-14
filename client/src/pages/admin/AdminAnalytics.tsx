@@ -9,6 +9,7 @@ import {
   Funnel,
   Globe,
   KeyRound,
+  MapPin,
   MousePointerClick,
   Radar,
   RefreshCw,
@@ -236,6 +237,7 @@ export default function AdminAnalytics() {
   const deviceBreakdown = overview?.deviceBreakdown || [];
   const browserBreakdown = overview?.browserBreakdown || [];
   const countryBreakdown = overview?.countryBreakdown || [];
+  const recentCities = overview?.recentCities || [];
 
   const deviceItems = useMemo(
     () =>
@@ -571,6 +573,49 @@ export default function AdminAnalytics() {
           emptyLabel="No geographic data yet."
         />
       </div>
+
+      <Card className="border-border/70 bg-muted/25 shadow-sm">
+        <CardHeader>
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border/70 bg-background/80">
+              <MapPin className="h-4 w-4 text-[var(--accent-brand)]" />
+            </div>
+            <div>
+              <CardTitle className="text-base">Recent Cities</CardTitle>
+              <CardDescription>Recent geo-enriched pageviews with location and page context.</CardDescription>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-3">
+            {recentCities.length > 0 ? (
+              recentCities.map((item, index) => (
+                <div
+                  key={`${item.timestamp}-${item.city}-${item.path}-${index}`}
+                  className="rounded-xl border border-border/70 bg-background/70 px-4 py-3"
+                >
+                  <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+                    <div className="min-w-0">
+                      <div className="text-sm font-semibold">
+                        {item.city}, {item.region}
+                      </div>
+                      <div className="mt-1 text-xs text-muted-foreground">{item.country}</div>
+                      <div className="mt-2 truncate text-sm text-muted-foreground" title={item.path}>
+                        {item.path}
+                      </div>
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      {item.timestamp ? format(new Date(item.timestamp), "MMM d, yyyy h:mm a") : "Unknown time"}
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="text-sm text-muted-foreground">No recent city data yet.</div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
 
       <Card className="border-border/70 bg-muted/25 shadow-sm">
         <CardHeader>

@@ -35,6 +35,13 @@ async function fetchPostHogOverviewData() {
       deviceBreakdown: [] as Array<{ device: string; views: number }>,
       browserBreakdown: [] as Array<{ browser: string; views: number }>,
       countryBreakdown: [] as Array<{ country: string; views: number }>,
+      recentCities: [] as Array<{
+        timestamp: string;
+        city: string;
+        region: string;
+        country: string;
+        path: string;
+      }>,
       contactEvents: [] as Array<{ event: string; count: number }>,
       recentEvents: [] as Array<{
         timestamp: string;
@@ -54,6 +61,7 @@ async function fetchPostHogOverviewData() {
     deviceBreakdownRes,
     browserBreakdownRes,
     countryBreakdownRes,
+    recentCitiesRes,
     contactEventsRes,
     recentEventsRes,
   ] =
@@ -137,6 +145,18 @@ async function fetchPostHogOverviewData() {
         group by country
         order by views desc
         limit 10
+      `),
+      runPostHogQuery(`
+        select
+          toString(timestamp) as timestamp,
+          coalesce(nullIf(properties.$geoip_city_name, ''), 'Unknown city') as city,
+          coalesce(nullIf(properties.$geoip_subdivision_1_name, ''), 'Unknown region') as region,
+          coalesce(nullIf(properties.$geoip_country_name, ''), 'Unknown country') as country,
+          coalesce(nullIf(properties.pathname, ''), '/') as path
+        from events
+        where event = '$pageview' and timestamp > now() - interval 14 day
+        order by timestamp desc
+        limit 20
       `),
       runPostHogQuery(`
         select
@@ -226,6 +246,13 @@ async function fetchPostHogOverviewData() {
     countryBreakdown: mapPostHogRows<Record<string, string | number | null>>(countryBreakdownRes).map((row) => ({
       country: String(row.country || "Unknown country"),
       views: toNumber(row.views),
+    })),
+    recentCities: mapPostHogRows<Record<string, string | number | null>>(recentCitiesRes).map((row) => ({
+      timestamp: String(row.timestamp || ""),
+      city: String(row.city || "Unknown city"),
+      region: String(row.region || "Unknown region"),
+      country: String(row.country || "Unknown country"),
+      path: String(row.path || "/"),
     })),
     contactEvents: mapPostHogRows<Record<string, string | number | null>>(contactEventsRes).map((row) => ({
       event: String(row.event || ""),
