@@ -1,349 +1,628 @@
-import { AdminLayout } from "@/components/admin/AdminLayout";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { BarChart3, Eye, Globe, Laptop, MousePointerClick, Smartphone, TrendingUp, Users } from "lucide-react";
-import { trpc } from "@/lib/trpc";
+import { useMemo } from "react";
 import { format } from "date-fns";
-import { useMemo, useState } from "react";
-import { Bar, BarChart, Cell, Line, LineChart, ResponsiveContainer, Tooltip as RechartsTooltip, XAxis, YAxis } from "recharts";
+import {
+  Activity,
+  BarChart3,
+  CheckCircle2,
+  ExternalLink,
+  Film,
+  Funnel,
+  Globe,
+  KeyRound,
+  MousePointerClick,
+  Radar,
+  RefreshCw,
+  Settings2,
+  ShieldAlert,
+  TrendingUp,
+  Users,
+} from "lucide-react";
+import {
+  Bar,
+  BarChart,
+  Cell,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip as RechartsTooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
-const ACCENT = {
-  scenic: "var(--accent-scenic)",
-  news: "var(--accent-news)",
-  articles: "var(--accent-articles)",
-  brand: "var(--accent-brand)"
-} as const;
+import { AdminLayout } from "@/components/admin/AdminLayout";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { getPostHogDebugInfo } from "@/lib/posthog";
+import { trpc } from "@/lib/trpc";
 
-function formatDelta(value: number) {
-  if (value > 0) return `+${value}% vs previous 30 days`;
-  if (value < 0) return `${value}% vs previous 30 days`;
-  return "No change vs previous 30 days";
+const DASHBOARD_URL = import.meta.env.VITE_PUBLIC_POSTHOG_DASHBOARD_URL?.trim() || "";
+const PROJECT_URL = import.meta.env.VITE_PUBLIC_POSTHOG_PROJECT_URL?.trim() || "";
+const RECORDINGS_URL = import.meta.env.VITE_PUBLIC_POSTHOG_RECORDINGS_URL?.trim() || "";
+const FUNNELS_URL = import.meta.env.VITE_PUBLIC_POSTHOG_FUNNELS_URL?.trim() || "";
+
+const TRACKED_EVENTS = [
+  {
+    name: "$pageview",
+    detail: "SPA page views captured on route change.",
+  },
+  {
+    name: "project_viewed",
+    detail: "Project detail views with discipline, slug, and title.",
+  },
+  {
+    name: "contact_form_submitted",
+    detail: "Contact form submit attempts.",
+  },
+  {
+    name: "contact_form_submit_succeeded",
+    detail: "Successful contact submissions.",
+  },
+  {
+    name: "contact_form_submit_failed",
+    detail: "Failed contact submissions for troubleshooting.",
+  },
+] as const;
+
+function shareOfTotal(value: number, items: Array<{ views: number }>) {
+  const total = items.reduce((sum, item) => sum + item.views, 0);
+  if (!total) return 0;
+  return Math.round((value / total) * 100);
+}
+
+function AnalyticsStatusCard({
+  title,
+  value,
+  note,
+  icon: Icon,
+  tone = "brand",
+}: {
+  title: string;
+  value: string;
+  note: string;
+  icon: typeof Activity;
+  tone?: "brand" | "success" | "warn";
+}) {
+  const toneStyles =
+    tone === "success"
+      ? { color: "#22c55e", borderColor: "rgba(34,197,94,0.22)" }
+      : tone === "warn"
+        ? { color: "#f59e0b", borderColor: "rgba(245,158,11,0.22)" }
+        : { color: "var(--accent-brand)", borderColor: "color-mix(in srgb, var(--accent-brand) 22%, transparent)" };
+
+  return (
+    <Card className="border-border/70 bg-muted/25 shadow-sm">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardTitle className="text-sm font-medium">{title}</CardTitle>
+        <div
+          className="flex h-9 w-9 items-center justify-center rounded-full border bg-background/80"
+          style={toneStyles}
+        >
+          <Icon className="h-4 w-4" />
+        </div>
+      </CardHeader>
+      <CardContent>
+        <div className="text-lg font-semibold">{value}</div>
+        <p className="text-xs text-muted-foreground">{note}</p>
+      </CardContent>
+    </Card>
+  );
+}
+
+function EmbeddedPanel({
+  title,
+  description,
+  url,
+  icon: Icon,
+}: {
+  title: string;
+  description: string;
+  url?: string;
+  icon: typeof Activity;
+}) {
+  const hasUrl = Boolean(url);
+
+  return (
+    <Card className="border-border/70 bg-muted/25 shadow-sm">
+      <CardHeader>
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border/70 bg-background/80">
+            <Icon className="h-4 w-4 text-[var(--accent-brand)]" />
+          </div>
+          <div>
+            <CardTitle className="text-base">{title}</CardTitle>
+            <CardDescription>{description}</CardDescription>
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent>
+        {hasUrl ? (
+          <div className="overflow-hidden rounded-xl border border-border/70 bg-background">
+            <iframe
+              title={title}
+              src={url}
+              className="h-[720px] w-full"
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+            />
+          </div>
+        ) : (
+          <div className="rounded-xl border border-dashed border-border/70 bg-background/60 p-6">
+            <p className="text-sm font-medium">Embed not configured</p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Add a shared PostHog URL in the matching Vite env var to display this panel here.
+            </p>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+function BreakdownList({
+  title,
+  description,
+  items,
+  emptyLabel,
+}: {
+  title: string;
+  description: string;
+  items: Array<{ label: string; views: number; detail?: string }>;
+  emptyLabel: string;
+}) {
+  return (
+    <Card className="border-border/70 bg-muted/25 shadow-sm">
+      <CardHeader>
+        <CardTitle className="text-base">{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        {items.length > 0 ? (
+          items.map((item) => (
+            <div key={item.label} className="rounded-xl border border-border/70 bg-background/70 px-4 py-3">
+              <div className="flex items-center justify-between gap-4">
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-sm font-medium" title={item.label}>
+                    {item.label}
+                  </div>
+                  {item.detail ? <div className="mt-1 text-xs text-muted-foreground">{item.detail}</div> : null}
+                </div>
+                <div className="text-sm font-semibold">{item.views}</div>
+              </div>
+              <div className="mt-3 h-2 rounded-full bg-muted">
+                <div
+                  className="h-full rounded-full bg-[var(--accent-brand)]"
+                  style={{ width: `${Math.max(8, shareOfTotal(item.views, items))}%` }}
+                />
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="text-sm text-muted-foreground">{emptyLabel}</div>
+        )}
+      </CardContent>
+    </Card>
+  );
 }
 
 export default function AdminAnalytics() {
-  const { data: overview, isLoading: isOverviewLoading } = trpc.analytics.getOverview.useQuery();
-  const { data: projectViews } = trpc.analytics.getProjectViews.useQuery();
-  const { data: visits, isLoading: isVisitsLoading } = trpc.analytics.getStats.useQuery();
-  const [locationLevel, setLocationLevel] = useState<"city" | "region" | "country">("city");
+  const debug = getPostHogDebugInfo();
+  const { data: overview, isLoading, error, refetch, isFetching } = trpc.analytics.getOverview.useQuery();
 
-  const topProject = projectViews && projectViews.length > 0 ? projectViews[0] : null;
-  const locationDenominator = overview?.sessions30d && overview.sessions30d > 0 ? overview.sessions30d : 1;
-  const panelClass = "bg-muted/25 border-border/70 shadow-sm";
-  const selectedLocations = useMemo(() => {
-    if (!overview) return [];
-    if (locationLevel === "city") return overview.topCities || [];
-    if (locationLevel === "region") return overview.topRegions || [];
-    return overview.topCountries || [];
-  }, [locationLevel, overview]);
+  const quickLinks = useMemo(
+    () =>
+      [
+        { label: "Open Project", href: PROJECT_URL || (overview?.projectId ? `https://us.posthog.com/project/${overview.projectId}/web` : ""), icon: ExternalLink },
+        { label: "Dashboard", href: DASHBOARD_URL, icon: BarChart3 },
+        { label: "Recordings", href: RECORDINGS_URL, icon: Film },
+        { label: "Funnels", href: FUNNELS_URL, icon: Funnel },
+      ].filter((item) => item.href),
+    [overview?.projectId]
+  );
+
+  const contactChart = useMemo(
+    () =>
+      (overview?.contactEvents || []).map((item, index) => ({
+        ...item,
+        fill: ["#00BCD4", "#4CAF50", "#FF5722"][index % 3],
+      })),
+    [overview?.contactEvents]
+  );
+
+  const recentEvents = overview?.recentEvents || [];
+  const topPages = overview?.topPages || [];
+  const topProjects = overview?.topProjects || [];
+  const dailyViews = overview?.dailyViews14d || [];
+  const topReferrers = overview?.topReferrers || [];
+  const deviceBreakdown = overview?.deviceBreakdown || [];
+  const browserBreakdown = overview?.browserBreakdown || [];
+  const countryBreakdown = overview?.countryBreakdown || [];
+
+  const deviceItems = useMemo(
+    () =>
+      deviceBreakdown.map((item) => ({
+        label: item.device,
+        views: item.views,
+        detail: `${shareOfTotal(item.views, deviceBreakdown)}% of pageviews`,
+      })),
+    [deviceBreakdown]
+  );
+
+  const browserItems = useMemo(
+    () =>
+      browserBreakdown.map((item) => ({
+        label: item.browser,
+        views: item.views,
+        detail: `${shareOfTotal(item.views, browserBreakdown)}% of pageviews`,
+      })),
+    [browserBreakdown]
+  );
+
+  const countryItems = useMemo(
+    () =>
+      countryBreakdown.map((item) => ({
+        label: item.country,
+        views: item.views,
+        detail: `${shareOfTotal(item.views, countryBreakdown)}% of pageviews`,
+      })),
+    [countryBreakdown]
+  );
 
   return (
     <AdminLayout
-      title="Analytics & Tracking"
-      description="Actionable performance view for the last 30 days."
+      title="PostHog Analytics"
+      description="PostHog is now the primary analytics system for site traffic, project interest, and contact conversion signals."
     >
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <Card className={panelClass}>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Page Views (30d)</CardTitle>
-            <BarChart3 className="h-4 w-4" style={{ color: ACCENT.articles }} />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold" style={{ color: ACCENT.articles }}>{overview?.pageViews30d ?? 0}</div>
-            <p className="text-xs text-muted-foreground">{formatDelta(overview?.pageViewsDeltaPct ?? 0)}</p>
-          </CardContent>
-        </Card>
-
-        <Card className={panelClass}>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Sessions (30d)</CardTitle>
-            <Users className="h-4 w-4" style={{ color: ACCENT.scenic }} />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold" style={{ color: ACCENT.scenic }}>{overview?.sessions30d ?? 0}</div>
-            <p className="text-xs text-muted-foreground">Unique tracked sessions</p>
-          </CardContent>
-        </Card>
-
-        <Card className={panelClass}>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Contact Intent</CardTitle>
-            <MousePointerClick className="h-4 w-4" style={{ color: ACCENT.news }} />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold" style={{ color: ACCENT.news }}>{overview?.contactRatePct ?? 0}%</div>
-            <p className="text-xs text-muted-foreground">{overview?.contactIntent30d ?? 0} contact signals in 30d</p>
-          </CardContent>
-        </Card>
-
-        <Card className={panelClass}>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Top Project</CardTitle>
-            <Eye className="h-4 w-4" style={{ color: ACCENT.brand }} />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold" style={{ color: ACCENT.brand }}>{topProject?.views ?? 0}</div>
-            <p className="text-xs text-muted-foreground truncate">{topProject?.title ?? "No project views yet"}</p>
-          </CardContent>
-        </Card>
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <AnalyticsStatusCard
+          title="Tracking Status"
+          value={debug.enabled && overview?.configured ? "Connected" : "Missing Config"}
+          note={
+            debug.enabled && overview?.configured
+              ? "Client tracking and server-side analytics queries are both available."
+              : "Set VITE_PUBLIC_POSTHOG_KEY and VITE_PUBLIC_POSTHOG_HOST."
+          }
+          icon={debug.enabled && overview?.configured ? CheckCircle2 : ShieldAlert}
+          tone={debug.enabled && overview?.configured ? "success" : "warn"}
+        />
+        <AnalyticsStatusCard
+          title="Page Views (30d)"
+          value={String(overview?.pageViews30d ?? 0)}
+          note={`${overview?.pageViewsDeltaPct ?? 0}% vs previous 30 days`}
+          icon={TrendingUp}
+        />
+        <AnalyticsStatusCard
+          title="Visitors (30d)"
+          value={String(overview?.visitors30d ?? 0)}
+          note="Distinct visitors based on PostHog identities."
+          icon={Users}
+        />
+        <AnalyticsStatusCard
+          title="Project Views (30d)"
+          value={String(overview?.projectViews30d ?? 0)}
+          note="All project detail interest events in the last 30 days."
+          icon={Radar}
+        />
       </div>
 
-      <div className="grid items-start gap-6 lg:grid-cols-3 mt-6">
-        <Card className={`${panelClass} lg:col-span-2`}>
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <AnalyticsStatusCard
+          title="Contact Success (30d)"
+          value={String(overview?.contactSubmits30d ?? 0)}
+          note={`${overview?.contactConversionPct ?? 0}% visitor-to-contact conversion`}
+          icon={MousePointerClick}
+          tone="success"
+        />
+        <AnalyticsStatusCard
+          title="Project ID"
+          value={overview?.projectId || "Not set"}
+          note="PostHog project queried by the server."
+          icon={KeyRound}
+        />
+        <AnalyticsStatusCard
+          title="PostHog Host"
+          value={debug.host || "Not set"}
+          note="US cloud endpoint in current configuration."
+          icon={Globe}
+        />
+        <AnalyticsStatusCard
+          title="Current Distinct ID"
+          value={debug.distinctId || "Unavailable"}
+          note="Useful for validating local tracking and recordings."
+          icon={Activity}
+        />
+      </div>
+
+      <div className="grid gap-6 xl:grid-cols-[1.3fr_0.9fr]">
+        <Card className="border-border/70 bg-muted/25 shadow-sm">
+          <CardHeader>
+            <CardTitle className="text-base">Tracked Event Coverage</CardTitle>
+            <CardDescription>
+              The current PostHog integration focuses on pageviews, portfolio engagement, and contact conversion.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {TRACKED_EVENTS.map((event) => (
+              <div
+                key={event.name}
+                className="flex items-start justify-between gap-4 rounded-xl border border-border/70 bg-background/70 px-4 py-3"
+              >
+                <div>
+                  <p className="font-mono text-sm font-semibold text-[var(--accent-brand)]">{event.name}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{event.detail}</p>
+                </div>
+                <MousePointerClick className="mt-0.5 h-4 w-4 text-muted-foreground" />
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+
+        <Card className="border-border/70 bg-muted/25 shadow-sm">
           <CardHeader>
             <div className="flex items-center justify-between gap-3">
-              <CardTitle className="text-sm font-medium">Location Breakdown (30d)</CardTitle>
-              <div className="flex items-center gap-1">
-                <Button
-                  type="button"
-                  size="sm"
-                  variant={locationLevel === "country" ? "default" : "outline"}
-                  className="h-7 px-2 text-[11px]"
-                  style={locationLevel === "country" ? { backgroundColor: ACCENT.brand, color: "white", borderColor: ACCENT.brand } : { borderColor: ACCENT.brand, color: ACCENT.brand }}
-                  onClick={() => setLocationLevel("country")}
-                >
-                  Country
-                </Button>
-                <Button
-                  type="button"
-                  size="sm"
-                  variant={locationLevel === "region" ? "default" : "outline"}
-                  className="h-7 px-2 text-[11px]"
-                  style={locationLevel === "region" ? { backgroundColor: ACCENT.news, color: "black", borderColor: ACCENT.news } : { borderColor: ACCENT.news, color: ACCENT.news }}
-                  onClick={() => setLocationLevel("region")}
-                >
-                  Region
-                </Button>
-                <Button
-                  type="button"
-                  size="sm"
-                  variant={locationLevel === "city" ? "default" : "outline"}
-                  className="h-7 px-2 text-[11px]"
-                  style={locationLevel === "city" ? { backgroundColor: ACCENT.scenic, color: "white", borderColor: ACCENT.scenic } : { borderColor: ACCENT.scenic, color: ACCENT.scenic }}
-                  onClick={() => setLocationLevel("city")}
-                >
-                  City
-                </Button>
+              <div>
+                <CardTitle className="text-base">PostHog Control Center</CardTitle>
+                <CardDescription>
+                  Launch the full analytics workspace from here or embed shared dashboards below.
+                </CardDescription>
               </div>
+              <Button type="button" variant="outline" size="sm" onClick={() => refetch()} disabled={isFetching}>
+                <RefreshCw className={`mr-2 h-4 w-4 ${isFetching ? "animate-spin" : ""}`} />
+                Refresh
+              </Button>
             </div>
-            <CardDescription>Geo reach by tracked sessions. This is your primary audience signal.</CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className="max-h-[460px] space-y-3 overflow-y-auto pr-2">
-              {selectedLocations.length > 0 ? (
-                selectedLocations.map((location) => {
-                  const pct = Math.round((location.value / locationDenominator) * 100);
+          <CardContent className="space-y-4">
+            <div className="grid gap-3">
+              {quickLinks.length > 0 ? (
+                quickLinks.map((item) => {
+                  const Icon = item.icon;
                   return (
-                    <div key={location.name} className="space-y-1.5">
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="truncate text-sm font-medium" title={location.name}>{location.name}</div>
-                        <div className="text-xs text-muted-foreground">{location.value} sessions ({pct}%)</div>
-                      </div>
-                      <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
-                        <div
-                          className="h-full rounded-full"
-                          style={{
-                            width: `${Math.max(pct, 4)}%`,
-                            backgroundColor: locationLevel === "country"
-                              ? ACCENT.brand
-                              : locationLevel === "region"
-                                ? ACCENT.news
-                                : ACCENT.scenic
-                          }}
-                        />
-                      </div>
-                    </div>
+                    <Button key={item.href} variant="outline" className="justify-between" asChild>
+                      <a href={item.href} target="_blank" rel="noopener noreferrer">
+                        <span className="inline-flex items-center gap-2">
+                          <Icon className="h-4 w-4" />
+                          {item.label}
+                        </span>
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
+                    </Button>
                   );
                 })
               ) : (
-                <div className="text-sm text-muted-foreground">No location data yet</div>
-              )}
-            </div>
-            <div className="mt-4 flex items-center gap-1 text-xs text-muted-foreground">
-              <Globe className="h-3.5 w-3.5" /> Based on {overview?.sessions30d ?? 0} tracked sessions in the current window
-            </div>
-          </CardContent>
-        </Card>
-
-        <div className="space-y-6 lg:col-span-1">
-          <Card className={panelClass}>
-            <CardHeader>
-              <CardTitle className="text-sm font-medium">Traffic Trend (14d)</CardTitle>
-              <CardDescription>Daily page views to catch momentum changes quickly.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="h-[260px] w-full">
-                {overview?.dailyViews14d && overview.dailyViews14d.length > 0 ? (
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={overview.dailyViews14d}>
-                      <XAxis
-                        dataKey="date"
-                        tick={{ fontSize: 11 }}
-                        tickFormatter={(value) => format(new Date(value), "MMM d")}
-                      />
-                      <YAxis allowDecimals={false} tick={{ fontSize: 11 }} />
-                      <RechartsTooltip
-                        labelFormatter={(value) => format(new Date(value), "MMM d, yyyy")}
-                        contentStyle={{
-                          backgroundColor: "hsl(var(--popover))",
-                          borderColor: "hsl(var(--border))",
-                          color: "hsl(var(--popover-foreground))"
-                        }}
-                      />
-                      <Line type="monotone" dataKey="views" stroke={ACCENT.articles} strokeWidth={2} dot={false} />
-                    </LineChart>
-                  </ResponsiveContainer>
-                ) : (
-                  <div className="flex h-full items-center justify-center text-sm text-muted-foreground">No trend data yet</div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className={panelClass}>
-            <CardHeader>
-              <CardTitle className="text-sm font-medium">Device Breakdown (30d)</CardTitle>
-              <CardDescription>Where to focus testing and layout optimization.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="h-[260px] w-full">
-                {overview?.deviceBreakdown && overview.deviceBreakdown.length > 0 ? (
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={overview.deviceBreakdown}>
-                      <XAxis dataKey="name" tick={{ fontSize: 12 }} />
-                      <YAxis allowDecimals={false} tick={{ fontSize: 11 }} />
-                      <RechartsTooltip
-                        contentStyle={{
-                          backgroundColor: "hsl(var(--popover))",
-                          borderColor: "hsl(var(--border))",
-                          color: "hsl(var(--popover-foreground))"
-                        }}
-                      />
-                      <Bar dataKey="value" radius={[6, 6, 0, 0]}>
-                        {overview.deviceBreakdown.map((item, index) => (
-                          <Cell
-                            key={`device-${index}`}
-                            fill={item.name === "Mobile" ? ACCENT.scenic : ACCENT.brand}
-                          />
-                        ))}
-                      </Bar>
-                    </BarChart>
-                  </ResponsiveContainer>
-                ) : (
-                  <div className="flex h-full items-center justify-center text-sm text-muted-foreground">No device data yet</div>
-                )}
-              </div>
-              <div className="mt-3 flex items-center gap-4 text-xs text-muted-foreground">
-                <div className="flex items-center gap-1"><Laptop className="h-3.5 w-3.5" /> Desktop</div>
-                <div className="flex items-center gap-1"><Smartphone className="h-3.5 w-3.5" /> Mobile</div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-
-      <div className="grid gap-6 md:grid-cols-2 mt-6">
-        <Card className={panelClass}>
-          <CardHeader>
-            <CardTitle className="text-sm font-medium">Top Pages (30d)</CardTitle>
-            <CardDescription>Most visited URLs for content prioritization.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {overview?.topPages && overview.topPages.length > 0 ? (
-                overview.topPages.map((page) => (
-                  <div key={page.path} className="flex items-center justify-between gap-3">
-                    <div className="truncate text-sm" title={page.path}>{page.path}</div>
-                    <div className="text-sm font-semibold">{page.views}</div>
+                <div className="rounded-xl border border-dashed border-border/70 bg-background/60 p-4 text-sm text-muted-foreground">
+                  Add one or more of these env vars to make this panel more useful:
+                  <div className="mt-3 space-y-1 font-mono text-xs">
+                    <div>VITE_PUBLIC_POSTHOG_PROJECT_URL</div>
+                    <div>VITE_PUBLIC_POSTHOG_DASHBOARD_URL</div>
+                    <div>VITE_PUBLIC_POSTHOG_RECORDINGS_URL</div>
+                    <div>VITE_PUBLIC_POSTHOG_FUNNELS_URL</div>
                   </div>
-                ))
+                </div>
+              )}
+            </div>
+
+            <div className="rounded-xl border border-border/70 bg-background/60 p-4">
+              <div className="mb-2 inline-flex items-center gap-2 text-sm font-semibold">
+                <Settings2 className="h-4 w-4 text-[var(--accent-brand)]" />
+                Query Layer
+              </div>
+              <p className="text-sm text-muted-foreground">
+                {overview?.configured
+                  ? "Server-side PostHog queries are active. This page is now reading live analytics data from your PostHog project."
+                  : "Add POSTHOG_PERSONAL_API_KEY, POSTHOG_PROJECT_ID, and POSTHOG_API_HOST on the server to enable custom analytics queries here."}
+              </p>
+            </div>
+            {error ? (
+              <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-100">
+                {error.message}
+              </div>
+            ) : null}
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid gap-6 xl:grid-cols-[1.35fr_0.65fr]">
+        <Card className="border-border/70 bg-muted/25 shadow-sm">
+          <CardHeader>
+            <CardTitle className="text-base">Traffic Trend (14d)</CardTitle>
+            <CardDescription>Daily PostHog pageviews across the last two weeks.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[320px] w-full">
+              {isLoading ? (
+                <div className="flex h-full items-center justify-center text-sm text-muted-foreground">Loading trend data...</div>
+              ) : dailyViews.length > 0 ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={dailyViews}>
+                    <XAxis dataKey="date" tick={{ fontSize: 11 }} tickFormatter={(value) => format(new Date(value), "MMM d")} />
+                    <YAxis allowDecimals={false} tick={{ fontSize: 11 }} />
+                    <RechartsTooltip
+                      labelFormatter={(value) => format(new Date(value), "MMM d, yyyy")}
+                      contentStyle={{
+                        backgroundColor: "hsl(var(--popover))",
+                        borderColor: "hsl(var(--border))",
+                        color: "hsl(var(--popover-foreground))",
+                      }}
+                    />
+                    <Line type="monotone" dataKey="views" stroke="var(--accent-brand)" strokeWidth={2} dot={false} />
+                  </LineChart>
+                </ResponsiveContainer>
               ) : (
-                <div className="text-sm text-muted-foreground">No page view data yet</div>
+                <div className="flex h-full items-center justify-center text-sm text-muted-foreground">No pageview data yet.</div>
               )}
             </div>
           </CardContent>
         </Card>
 
-        <Card className={panelClass}>
+        <Card className="border-border/70 bg-muted/25 shadow-sm">
           <CardHeader>
-            <CardTitle className="text-sm font-medium">Location Summary</CardTitle>
-            <CardDescription>Quick totals for geo spread.</CardDescription>
+            <CardTitle className="text-base">Contact Funnel Events (30d)</CardTitle>
+            <CardDescription>Submit attempts, successes, and failures.</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="rounded-md border border-border/70 bg-background/60 px-3 py-2">
-                <div className="text-xs text-muted-foreground">Tracked Sessions</div>
-                <div className="text-lg font-semibold">{overview?.sessions30d ?? 0}</div>
-              </div>
-              <div className="rounded-md border border-border/70 bg-background/60 px-3 py-2">
-                <div className="text-xs text-muted-foreground">Known Locations</div>
-                <div className="text-lg font-semibold">{selectedLocations.length}</div>
-              </div>
-            </div>
-            <div className="mt-4 text-xs text-muted-foreground">
-              Unknown locations generally indicate bot traffic, local dev, or missing geodata headers.
+            <div className="h-[320px] w-full">
+              {isLoading ? (
+                <div className="flex h-full items-center justify-center text-sm text-muted-foreground">Loading contact events...</div>
+              ) : contactChart.length > 0 ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={contactChart}>
+                    <XAxis dataKey="event" tick={{ fontSize: 11 }} />
+                    <YAxis allowDecimals={false} tick={{ fontSize: 11 }} />
+                    <RechartsTooltip
+                      contentStyle={{
+                        backgroundColor: "hsl(var(--popover))",
+                        borderColor: "hsl(var(--border))",
+                        color: "hsl(var(--popover-foreground))",
+                      }}
+                    />
+                    <Bar dataKey="count" radius={[6, 6, 0, 0]}>
+                      {contactChart.map((item) => (
+                        <Cell key={item.event} fill={item.fill} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="flex h-full items-center justify-center text-sm text-muted-foreground">No contact events yet.</div>
+              )}
             </div>
           </CardContent>
         </Card>
       </div>
 
-      <Card className={`mt-6 ${panelClass}`}>
+      <div className="grid gap-6 xl:grid-cols-2">
+        <BreakdownList
+          title="Traffic Sources (30d)"
+          description="Referring domains and direct traffic based on PostHog pageview events."
+          items={topReferrers.map((item) => ({
+            label: item.source,
+            views: item.views,
+            detail: `${item.visitors} visitors`,
+          }))}
+          emptyLabel="No referrer data yet."
+        />
+        <BreakdownList
+          title="Device Mix (30d)"
+          description="Which device types are driving portfolio traffic right now."
+          items={deviceItems}
+          emptyLabel="No device data yet."
+        />
+      </div>
+
+      <div className="grid gap-6 xl:grid-cols-2">
+        <Card className="border-border/70 bg-muted/25 shadow-sm">
+          <CardHeader>
+            <CardTitle className="text-base">Top Pages (30d)</CardTitle>
+            <CardDescription>Best-performing pages based on pageviews and unique visitors.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {topPages.length > 0 ? (
+              topPages.map((page) => (
+                <div key={page.path} className="rounded-xl border border-border/70 bg-background/70 px-4 py-3">
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="truncate text-sm font-medium" title={page.path}>{page.path}</div>
+                    <div className="text-sm font-semibold">{page.views} views</div>
+                  </div>
+                  <div className="mt-1 text-xs text-muted-foreground">{page.visitors} visitors</div>
+                </div>
+              ))
+            ) : (
+              <div className="text-sm text-muted-foreground">No top-page data yet.</div>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card className="border-border/70 bg-muted/25 shadow-sm">
+          <CardHeader>
+            <CardTitle className="text-base">Top Projects (30d)</CardTitle>
+            <CardDescription>Which portfolio pieces are attracting the most interest.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {topProjects.length > 0 ? (
+              topProjects.map((project) => (
+                <div key={`${project.slug}-${project.title}`} className="rounded-xl border border-border/70 bg-background/70 px-4 py-3">
+                  <div className="flex items-center justify-between gap-4">
+                    <div>
+                      <div className="text-sm font-medium">{project.title}</div>
+                      <div className="mt-1 text-xs text-muted-foreground">{project.slug}</div>
+                    </div>
+                    <div className="text-sm font-semibold">{project.views} views</div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="text-sm text-muted-foreground">No project-view data yet.</div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid gap-6 xl:grid-cols-2">
+        <BreakdownList
+          title="Browser Mix (30d)"
+          description="A quick view of browser coverage across current visitors."
+          items={browserItems}
+          emptyLabel="No browser data yet."
+        />
+        <BreakdownList
+          title="Geographic Reach (30d)"
+          description="Top countries derived from PostHog geo-enriched pageviews."
+          items={countryItems}
+          emptyLabel="No geographic data yet."
+        />
+      </div>
+
+      <Card className="border-border/70 bg-muted/25 shadow-sm">
         <CardHeader>
-          <CardTitle>Recent Activity</CardTitle>
-          <CardDescription>Latest 100 page views recorded (scroll to inspect full IP/location activity).</CardDescription>
+          <CardTitle className="text-base">Recent Tracked Events</CardTitle>
+          <CardDescription>The latest pageviews, project views, and contact events from PostHog.</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="max-h-[420px] overflow-auto rounded-md border">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Time</TableHead>
-                  <TableHead>Path</TableHead>
-                  <TableHead>Location</TableHead>
-                  <TableHead>Device</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {isVisitsLoading || isOverviewLoading ? (
-                  <TableRow>
-                    <TableCell colSpan={4} className="text-center h-24">Loading data...</TableCell>
-                  </TableRow>
-                ) : visits?.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={4} className="text-center h-24">No visits recorded yet.</TableCell>
-                  </TableRow>
-                ) : (
-                  visits?.map((visit: any) => (
-                    <TableRow key={visit.id}>
-                      <TableCell className="whitespace-nowrap">
-                        {visit.created_at ? format(new Date(visit.created_at), "MMM d, h:mm a") : "-"}
-                      </TableCell>
-                      <TableCell>{visit.page_path}</TableCell>
-                      <TableCell>
-                        {visit.city && visit.region
-                          ? `${visit.city}, ${visit.region}`
-                          : (visit.country || "Unknown")}
-                      </TableCell>
-                      <TableCell className="text-muted-foreground">
-                        {String(visit.user_agent || "").toLowerCase().includes("mobile") ? "Mobile" : "Desktop"}
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
+          <div className="space-y-3">
+            {recentEvents.length > 0 ? (
+              recentEvents.map((item, index) => (
+                <div key={`${item.timestamp}-${item.event}-${index}`} className="rounded-xl border border-border/70 bg-background/70 px-4 py-3">
+                  <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+                    <div>
+                      <div className="font-mono text-sm font-semibold text-[var(--accent-brand)]">{item.event}</div>
+                      <div className="mt-1 text-sm text-muted-foreground">
+                        {item.projectTitle || item.path || "No path or project context"}
+                      </div>
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      {item.timestamp ? format(new Date(item.timestamp), "MMM d, yyyy h:mm a") : "Unknown time"}
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="text-sm text-muted-foreground">No recent tracked events yet.</div>
+            )}
           </div>
         </CardContent>
       </Card>
 
-      {isOverviewLoading ? (
-        <div className="mt-4 text-xs text-muted-foreground">Refreshing analytics metrics...</div>
-      ) : (
-        <div className="mt-4 text-xs text-muted-foreground flex items-center gap-1">
-          <TrendingUp className="h-3.5 w-3.5" />
-          Analytics summary window: last {overview?.periodDays ?? 30} days.
-        </div>
-      )}
+      <EmbeddedPanel
+        title="Overview Dashboard"
+        description="Best connected to a shared PostHog dashboard URL."
+        url={DASHBOARD_URL}
+        icon={BarChart3}
+      />
+
+      <div className="grid gap-6 xl:grid-cols-2">
+        <EmbeddedPanel
+          title="Session Recordings"
+          description="Useful for understanding navigation friction and drop-off."
+          url={RECORDINGS_URL}
+          icon={Film}
+        />
+        <EmbeddedPanel
+          title="Funnels and Conversions"
+          description="Track contact form completion and other key journeys."
+          url={FUNNELS_URL}
+          icon={Funnel}
+        />
+      </div>
     </AdminLayout>
   );
 }

@@ -8,11 +8,13 @@ import superjson from "superjson";
 import { HelmetProvider } from "react-helmet-async";
 import App from "./App";
 import { getLoginUrl } from "./const";
+import { initPostHog } from "./lib/posthog";
 import { handleSessionToken, getStoredSessionToken } from "./lib/sessionHandler";
 import "./index.css";
 
 // Handle session token from URL (for browsers that block third-party cookies)
 handleSessionToken();
+initPostHog();
 
 // Suppress ResizeObserver loop errors (known Safari bug)
 const resizeObserverErr = window.console.error;

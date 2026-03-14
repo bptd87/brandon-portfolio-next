@@ -2,15 +2,242 @@ import { z } from "zod";
 import { router, publicProcedure } from "../_core/trpc";
 import { TRPCError } from "@trpc/server";
 import { supabase } from "../db";
+import { adminProcedure } from "./adminProcedure";
+import {
+  getPostHogProjectId,
+  isPostHogServerConfigured,
+  mapPostHogRows,
+  runPostHogQuery,
+} from "../posthog";
 
-const DAYS_30_MS = 30 * 24 * 60 * 60 * 1000;
-const DAYS_14_MS = 14 * 24 * 60 * 60 * 1000;
-const DAYS_60_MS = 60 * 24 * 60 * 60 * 1000;
+function toNumber(value: string | number | null | undefined) {
+  if (typeof value === "number") return value;
+  if (typeof value === "string" && value.trim() !== "") return Number(value);
+  return 0;
+}
 
-function isMobileUserAgent(userAgent?: string | null) {
-  if (!userAgent) return false;
-  const ua = userAgent.toLowerCase();
-  return ua.includes("mobile") || ua.includes("android") || ua.includes("iphone");
+async function fetchPostHogOverviewData() {
+  if (!isPostHogServerConfigured()) {
+    return {
+      configured: false,
+      periodDays: 30,
+      projectId: getPostHogProjectId() || null,
+      pageViews30d: 0,
+      pageViewsDeltaPct: 0,
+      visitors30d: 0,
+      projectViews30d: 0,
+      contactSubmits30d: 0,
+      contactConversionPct: 0,
+      dailyViews14d: [] as Array<{ date: string; views: number }>,
+      topPages: [] as Array<{ path: string; views: number; visitors: number }>,
+      topProjects: [] as Array<{ slug: string; title: string; views: number }>,
+      topReferrers: [] as Array<{ source: string; views: number; visitors: number }>,
+      deviceBreakdown: [] as Array<{ device: string; views: number }>,
+      browserBreakdown: [] as Array<{ browser: string; views: number }>,
+      countryBreakdown: [] as Array<{ country: string; views: number }>,
+      contactEvents: [] as Array<{ event: string; count: number }>,
+      recentEvents: [] as Array<{
+        timestamp: string;
+        event: string;
+        path: string | null;
+        projectTitle: string | null;
+      }>,
+    };
+  }
+
+  const [
+    summaryRes,
+    dailyViewsRes,
+    topPagesRes,
+    topProjectsRes,
+    topReferrersRes,
+    deviceBreakdownRes,
+    browserBreakdownRes,
+    countryBreakdownRes,
+    contactEventsRes,
+    recentEventsRes,
+  ] =
+    await Promise.all([
+      runPostHogQuery(`
+        select
+          (select count() from events where event = '$pageview' and timestamp > now() - interval 30 day) as pageviews_30d,
+          (select uniq(distinct_id) from events where event = '$pageview' and timestamp > now() - interval 30 day) as visitors_30d,
+          (select count() from events where event = 'project_viewed' and timestamp > now() - interval 30 day) as project_views_30d,
+          (select count() from events where event = 'contact_form_submit_succeeded' and timestamp > now() - interval 30 day) as contact_submits_30d,
+          (select count() from events where event = '$pageview' and timestamp <= now() - interval 30 day and timestamp > now() - interval 60 day) as pageviews_prev_30d
+      `),
+      runPostHogQuery(`
+        select
+          toString(toDate(timestamp)) as date,
+          count() as views
+        from events
+        where event = '$pageview' and timestamp > now() - interval 14 day
+        group by date
+        order by date asc
+      `),
+      runPostHogQuery(`
+        select
+          coalesce(nullIf(properties.pathname, ''), '/') as path,
+          count() as views,
+          uniq(distinct_id) as visitors
+        from events
+        where event = '$pageview' and timestamp > now() - interval 30 day
+        group by path
+        order by views desc
+        limit 12
+      `),
+      runPostHogQuery(`
+        select
+          coalesce(nullIf(properties.project_slug, ''), 'unknown') as slug,
+          coalesce(nullIf(properties.project_title, ''), 'Untitled project') as title,
+          count() as views
+        from events
+        where event = 'project_viewed' and timestamp > now() - interval 30 day
+        group by slug, title
+        order by views desc
+        limit 10
+      `),
+      runPostHogQuery(`
+        select
+          coalesce(nullIf(properties.$referring_domain, ''), 'Direct / Unknown') as source,
+          count() as views,
+          uniq(distinct_id) as visitors
+        from events
+        where event = '$pageview' and timestamp > now() - interval 30 day
+        group by source
+        order by views desc
+        limit 10
+      `),
+      runPostHogQuery(`
+        select
+          coalesce(nullIf(properties.$device_type, ''), 'Unknown device') as device,
+          count() as views
+        from events
+        where event = '$pageview' and timestamp > now() - interval 30 day
+        group by device
+        order by views desc
+        limit 10
+      `),
+      runPostHogQuery(`
+        select
+          coalesce(nullIf(properties.$browser, ''), 'Unknown browser') as browser,
+          count() as views
+        from events
+        where event = '$pageview' and timestamp > now() - interval 30 day
+        group by browser
+        order by views desc
+        limit 10
+      `),
+      runPostHogQuery(`
+        select
+          coalesce(nullIf(properties.$geoip_country_name, ''), 'Unknown country') as country,
+          count() as views
+        from events
+        where event = '$pageview' and timestamp > now() - interval 30 day
+        group by country
+        order by views desc
+        limit 10
+      `),
+      runPostHogQuery(`
+        select
+          event,
+          count() as count
+        from events
+        where
+          event in (
+            'contact_form_submitted',
+            'contact_form_submit_succeeded',
+            'contact_form_submit_failed'
+          )
+          and timestamp > now() - interval 30 day
+        group by event
+        order by count desc
+      `),
+      runPostHogQuery(`
+        select
+          toString(timestamp) as timestamp,
+          event,
+          properties.pathname as path,
+          properties.project_title as project_title
+        from events
+        where
+          event in (
+            '$pageview',
+            'project_viewed',
+            'contact_form_submitted',
+            'contact_form_submit_succeeded',
+            'contact_form_submit_failed'
+          )
+        order by timestamp desc
+        limit 50
+      `),
+    ]);
+
+  const summaryRow = mapPostHogRows<Record<string, string | number | null>>(summaryRes)[0] || {};
+  const pageViews30d = toNumber(summaryRow.pageviews_30d);
+  const pageViewsPrev30d = toNumber(summaryRow.pageviews_prev_30d);
+  const visitors30d = toNumber(summaryRow.visitors_30d);
+  const projectViews30d = toNumber(summaryRow.project_views_30d);
+  const contactSubmits30d = toNumber(summaryRow.contact_submits_30d);
+  const pageViewsDeltaPct =
+    pageViewsPrev30d > 0
+      ? Math.round(((pageViews30d - pageViewsPrev30d) / pageViewsPrev30d) * 100)
+      : pageViews30d > 0
+        ? 100
+        : 0;
+
+  return {
+    configured: true,
+    periodDays: 30,
+    projectId: getPostHogProjectId(),
+    pageViews30d,
+    pageViewsDeltaPct,
+    visitors30d,
+    projectViews30d,
+    contactSubmits30d,
+    contactConversionPct: visitors30d > 0 ? Math.round((contactSubmits30d / visitors30d) * 100) : 0,
+    dailyViews14d: mapPostHogRows<Record<string, string | number | null>>(dailyViewsRes).map((row) => ({
+      date: String(row.date || ""),
+      views: toNumber(row.views),
+    })),
+    topPages: mapPostHogRows<Record<string, string | number | null>>(topPagesRes).map((row) => ({
+      path: String(row.path || "/"),
+      views: toNumber(row.views),
+      visitors: toNumber(row.visitors),
+    })),
+    topProjects: mapPostHogRows<Record<string, string | number | null>>(topProjectsRes).map((row) => ({
+      slug: String(row.slug || ""),
+      title: String(row.title || "Untitled project"),
+      views: toNumber(row.views),
+    })),
+    topReferrers: mapPostHogRows<Record<string, string | number | null>>(topReferrersRes).map((row) => ({
+      source: String(row.source || "Direct / Unknown"),
+      views: toNumber(row.views),
+      visitors: toNumber(row.visitors),
+    })),
+    deviceBreakdown: mapPostHogRows<Record<string, string | number | null>>(deviceBreakdownRes).map((row) => ({
+      device: String(row.device || "Unknown device"),
+      views: toNumber(row.views),
+    })),
+    browserBreakdown: mapPostHogRows<Record<string, string | number | null>>(browserBreakdownRes).map((row) => ({
+      browser: String(row.browser || "Unknown browser"),
+      views: toNumber(row.views),
+    })),
+    countryBreakdown: mapPostHogRows<Record<string, string | number | null>>(countryBreakdownRes).map((row) => ({
+      country: String(row.country || "Unknown country"),
+      views: toNumber(row.views),
+    })),
+    contactEvents: mapPostHogRows<Record<string, string | number | null>>(contactEventsRes).map((row) => ({
+      event: String(row.event || ""),
+      count: toNumber(row.count),
+    })),
+    recentEvents: mapPostHogRows<Record<string, string | number | null>>(recentEventsRes).map((row) => ({
+      timestamp: String(row.timestamp || ""),
+      event: String(row.event || ""),
+      path: row.path ? String(row.path) : null,
+      projectTitle: row.project_title ? String(row.project_title) : null,
+    })),
+  };
 }
 
 export const analyticsRouter = router({
@@ -153,190 +380,26 @@ export const analyticsRouter = router({
       return { success: true };
     }),
 
-  getOverview: publicProcedure
+  getOverview: adminProcedure
     .query(async () => {
-      const now = Date.now();
-      const since30d = new Date(now - DAYS_30_MS).toISOString();
-      const since14d = new Date(now - DAYS_14_MS).toISOString();
-      const since60d = new Date(now - DAYS_60_MS).toISOString();
-
-      const [
-        pageViews30dRes,
-        pageViewsPrev30dRes,
-        sessions30dRes,
-        projectViews30dRes,
-        contactEvents30dRes,
-        sessionsContactExit30dRes,
-        visitsForBreakdownRes,
-        sessionsForGeoRes
-      ] = await Promise.all([
-        supabase.from("analytics_visits").select("*", { count: "exact", head: true }).gte("created_at", since30d),
-        supabase.from("analytics_visits").select("*", { count: "exact", head: true }).gte("created_at", since60d).lt("created_at", since30d),
-        supabase.from("analytics_sessions").select("*", { count: "exact", head: true }).gte("started_at", since30d),
-        supabase.from("analytics_project_views").select("*", { count: "exact", head: true }).gte("viewed_at", since30d),
-        supabase.from("analytics_events").select("*", { count: "exact", head: true }).gte("created_at", since30d).ilike("event_type", "%contact%"),
-        supabase.from("analytics_sessions").select("*", { count: "exact", head: true }).gte("started_at", since30d).ilike("exit_page", "%contact%"),
-        supabase
-          .from("analytics_visits")
-          .select("page_path, created_at, user_agent")
-          .gte("created_at", since30d)
-          .order("created_at", { ascending: false })
-          .limit(5000),
-        supabase
-          .from("analytics_sessions")
-          .select("city, region, country")
-          .gte("started_at", since30d)
-          .order("started_at", { ascending: false })
-          .limit(3000)
-      ]);
-
-      if (visitsForBreakdownRes.error) {
-        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: visitsForBreakdownRes.error.message });
+      try {
+        return await fetchPostHogOverviewData();
+      } catch (error) {
+        const message = error instanceof Error ? error.message : "Failed to query PostHog analytics.";
+        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message });
       }
-      if (sessionsForGeoRes.error) {
-        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: sessionsForGeoRes.error.message });
-      }
-
-      const pageViews30d = pageViews30dRes.count || 0;
-      const pageViewsPrev30d = pageViewsPrev30dRes.count || 0;
-      const sessions30d = sessions30dRes.count || 0;
-      const projectViews30d = projectViews30dRes.count || 0;
-      const contactIntent30d = (contactEvents30dRes.count || 0) + (sessionsContactExit30dRes.count || 0);
-
-      const pageViewsDeltaPct = pageViewsPrev30d > 0
-        ? Math.round(((pageViews30d - pageViewsPrev30d) / pageViewsPrev30d) * 100)
-        : pageViews30d > 0
-          ? 100
-          : 0;
-
-      const visits = visitsForBreakdownRes.data || [];
-      const sessionsGeo = sessionsForGeoRes.data || [];
-
-      const dayMap = new Map<string, number>();
-      for (let i = 13; i >= 0; i--) {
-        const key = new Date(now - i * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
-        dayMap.set(key, 0);
-      }
-
-      const pageMap = new Map<string, number>();
-      const deviceMap = new Map<string, number>();
-      deviceMap.set("Desktop", 0);
-      deviceMap.set("Mobile", 0);
-
-      visits.forEach((visit: any) => {
-        if (visit.created_at && visit.created_at >= since14d) {
-          const dayKey = String(visit.created_at).slice(0, 10);
-          dayMap.set(dayKey, (dayMap.get(dayKey) || 0) + 1);
-        }
-
-        const path = visit.page_path || "/";
-        pageMap.set(path, (pageMap.get(path) || 0) + 1);
-
-        const device = isMobileUserAgent(visit.user_agent) ? "Mobile" : "Desktop";
-        deviceMap.set(device, (deviceMap.get(device) || 0) + 1);
-      });
-
-      const geoMap = new Map<string, number>();
-      const cityMap = new Map<string, number>();
-      const regionMap = new Map<string, number>();
-      const countryMap = new Map<string, number>();
-      sessionsGeo.forEach((session: any) => {
-        const label = session.city || session.country || "Unknown";
-        geoMap.set(label, (geoMap.get(label) || 0) + 1);
-        if (session.city) {
-          cityMap.set(session.city, (cityMap.get(session.city) || 0) + 1);
-        }
-        if (session.region) {
-          regionMap.set(session.region, (regionMap.get(session.region) || 0) + 1);
-        }
-        if (session.country) {
-          countryMap.set(session.country, (countryMap.get(session.country) || 0) + 1);
-        }
-      });
-
-      return {
-        periodDays: 30,
-        pageViews30d,
-        pageViewsDeltaPct,
-        sessions30d,
-        projectViews30d,
-        contactIntent30d,
-        contactRatePct: sessions30d > 0 ? Math.round((contactIntent30d / sessions30d) * 100) : 0,
-        topPages: Array.from(pageMap.entries())
-          .map(([path, views]) => ({ path, views }))
-          .sort((a, b) => b.views - a.views)
-          .slice(0, 8),
-        dailyViews14d: Array.from(dayMap.entries()).map(([date, views]) => ({ date, views })),
-        deviceBreakdown: Array.from(deviceMap.entries())
-          .map(([name, value]) => ({ name, value }))
-          .filter((item) => item.value > 0),
-        topLocations: Array.from(geoMap.entries())
-          .map(([name, value]) => ({ name, value }))
-          .sort((a, b) => b.value - a.value)
-          .slice(0, 8),
-        topCities: Array.from(cityMap.entries())
-          .map(([name, value]) => ({ name, value }))
-          .sort((a, b) => b.value - a.value)
-          .slice(0, 12),
-        topRegions: Array.from(regionMap.entries())
-          .map(([name, value]) => ({ name, value }))
-          .sort((a, b) => b.value - a.value)
-          .slice(0, 12),
-        topCountries: Array.from(countryMap.entries())
-          .map(([name, value]) => ({ name, value }))
-          .sort((a, b) => b.value - a.value)
-          .slice(0, 12)
-      };
     }),
 
-  getStats: publicProcedure
-    .query(async ({ ctx }: { ctx: any }) => {
-      const { data, error } = await supabase
-        .from('analytics_visits')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(100);
-
-      if (error) {
-        console.error('Error fetching stats:', error);
-        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message });
-      }
-
-      return data || [];
+  getStats: adminProcedure
+    .query(async () => {
+      const overview = await fetchPostHogOverviewData();
+      return overview.recentEvents || [];
     }),
 
-  getProjectViews: publicProcedure
+  getProjectViews: adminProcedure
     .query(async () => {
-      const { data, error } = await supabase
-        .from('analytics_project_views')
-        .select('project_slug, project_title, discipline, subcategory')
-        .order('viewed_at', { ascending: false });
-
-      if (error) {
-        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: error.message });
-      }
-
-      // Group by project and count
-      const projectStats = new Map<string, { title: string, discipline?: string, subcategory?: string, views: number }>();
-      
-      (data || []).forEach((view: any) => {
-        const key = view.project_slug;
-        if (projectStats.has(key)) {
-          const stat = projectStats.get(key)!;
-          stat.views += 1;
-        } else {
-          projectStats.set(key, {
-            title: view.project_title,
-            discipline: view.discipline,
-            subcategory: view.subcategory,
-            views: 1
-          });
-        }
-      });
-
-      return Array.from(projectStats.entries())
-        .map(([slug, stat]) => ({ slug, ...stat }))
-        .sort((a, b) => b.views - a.views);
+      const overview = await fetchPostHogOverviewData();
+      return overview.topProjects || [];
     }),
 
   trackScenicDirectoryClick: publicProcedure

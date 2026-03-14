@@ -428,7 +428,7 @@ export default function ExperientialPortfolio() {
           workExample: (processGalleryItems || [])
             .map((item) => ({
               type: "ImageObject" as const,
-              contentUrl: item.imageUrl || (item.videoUrl ? getVideoThumbnail(item.videoUrl) : ""),
+              contentUrl: item.imageUrl || (item.videoUrl ? getVideoThumbnail(item.videoUrl) : "") || "",
               name:
                 item.displayTitle ||
                 item.project?.title ||
@@ -438,7 +438,7 @@ export default function ExperientialPortfolio() {
                 item.displayTitle ||
                 `Experiential ${item.category.replace(/-/g, " ")} by Brandon PT Davis`,
             }))
-            .filter((item) => item.contentUrl)
+            .filter((item) => Boolean(item.contentUrl))
             .slice(0, 12),
         }}
       />

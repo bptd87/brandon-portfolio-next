@@ -9,6 +9,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { SEO } from '@/components/SEO';
 import StructuredData from '@/components/StructuredData';
+import { captureAnalyticsEvent } from '@/lib/posthog';
 
 function PinterestIcon({ className }: { className?: string }) {
   return (
@@ -31,6 +32,9 @@ export function Contact() {
 
   const submitContact = trpc.contact.submit.useMutation({
     onSuccess: () => {
+      captureAnalyticsEvent('contact_form_submit_succeeded', {
+        subject: formData.subject,
+      });
       setSubmitStatus('success');
       // Reset form
       setFormData({ name: '', email: '', subject: '', message: '' });
@@ -41,6 +45,10 @@ export function Contact() {
       setTimeout(() => setSubmitStatus('idle'), 8000);
     },
     onError: (error) => {
+      captureAnalyticsEvent('contact_form_submit_failed', {
+        subject: formData.subject,
+        message: error.message,
+      });
       setSubmitStatus('error');
       setIsSubmitting(false);
       // Clear error message after 5 seconds
@@ -52,6 +60,9 @@ export function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus('idle');
+    captureAnalyticsEvent('contact_form_submitted', {
+      subject: formData.subject,
+    });
     submitContact.mutate({
       ...formData,
       userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : undefined,

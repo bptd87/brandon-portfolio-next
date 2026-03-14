@@ -61,7 +61,7 @@ export default function Privacy() {
               <h2 className="text-2xl font-bold mb-3">Information We Collect</h2>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Contact details you provide voluntarily through forms or email.</li>
-                <li>Basic analytics and usage information such as browser, pages visited, and timing.</li>
+                <li>Basic analytics and usage information such as browser, pages visited, timing, and session-level interaction data collected through PostHog.</li>
                 <li>Technical data needed for security, spam prevention, and performance monitoring.</li>
               </ul>
             </section>
@@ -71,6 +71,7 @@ export default function Privacy() {
               <ul className="list-disc pl-6 space-y-2">
                 <li>To respond to inquiries and project requests.</li>
                 <li>To maintain and improve site performance and usability.</li>
+                <li>To understand which portfolio pages, articles, and contact flows are most useful to visitors.</li>
                 <li>To protect the site against abuse, fraud, or unauthorized activity.</li>
               </ul>
             </section>

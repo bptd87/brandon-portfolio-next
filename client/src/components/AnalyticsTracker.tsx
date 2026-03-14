@@ -1,60 +1,39 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect } from "react";
 import { useLocation } from "wouter";
-import { trpc } from "@/lib/trpc";
-
-// Generate or retrieve session ID
-const getSessionId = (): string => {
-  const key = 'analytics_session_id';
-  let sessionId = typeof window !== 'undefined' ? localStorage.getItem(key) : null;
-  if (!sessionId) {
-    sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(key, sessionId);
-    }
-  }
-  return sessionId;
-};
+import {
+  captureAnalyticsEvent,
+  capturePageView,
+  captureProjectView,
+  getPostHogDebugInfo,
+} from "@/lib/posthog";
 
 export function AnalyticsTracker() {
   const [location] = useLocation();
-  const sessionIdRef = useRef<string>(getSessionId());
-  const trackPageMutation = trpc.analytics.trackPageView.useMutation();
-  const trackProjectMutation = trpc.analytics.trackProjectView.useMutation();
-  const trackEventMutation = trpc.analytics.trackEvent.useMutation();
 
-  // Track page views
   useEffect(() => {
-    trackPageMutation.mutate({
-      sessionId: sessionIdRef.current,
-      pagePath: location,
-      userAgent: navigator.userAgent
-    });
+    capturePageView(location);
   }, [location]);
 
-  // Export functions for use in other components
   useEffect(() => {
     (window as any).analyticsTracker = {
       trackProjectView: (projectId: number | undefined, projectSlug: string, projectTitle: string, discipline?: string, subcategory?: string) => {
-        trackProjectMutation.mutate({
-          sessionId: sessionIdRef.current,
+        captureProjectView({
           projectId,
           projectSlug,
           projectTitle,
           discipline,
-          subcategory
+          subcategory,
         });
       },
       trackEvent: (eventType: string, eventData?: any) => {
-        trackEventMutation.mutate({
-          sessionId: sessionIdRef.current,
-          eventType,
-          eventData,
-          pagePath: location
+        captureAnalyticsEvent(eventType, {
+          ...eventData,
+          pathname: location,
         });
       },
-      getSessionId: () => sessionIdRef.current
+      getSessionId: () => getPostHogDebugInfo().sessionId,
     };
-  }, [location, trackProjectMutation, trackEventMutation]);
+  }, [location]);
 
-  return null; // Renderless component
+  return null;
 }
