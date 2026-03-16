@@ -1,5 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -12,9 +10,9 @@ import type { CSSProperties } from "react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Lightbox } from "@/components/Lightbox";
 import { AnimatePresence } from "framer-motion";
+import { Check, Link2 } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
-import { Breadcrumb } from "@/components/Breadcrumb";
 import { ProjectDetailSkeleton } from "@/components/SkeletonLoaders";
 import { getProjectPath } from "@/lib/projectRoutes";
 
@@ -55,11 +53,6 @@ export default function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
   const [location] = useLocation();
   const { data: project, isLoading } = trpc.projects.getBySlug.useQuery({ slug: slug! });
-  // Fetch projects in same discipline for navigation
-  const { data: allProjects } = trpc.projects.list.useQuery(
-    { discipline: project?.discipline || undefined },
-    { enabled: !!project?.discipline }
-  );
 
   // Fetch related projects (same discipline) for "More Projects" section
   const { data: allRelatedProjects } = trpc.projects.list.useQuery(
@@ -71,6 +64,7 @@ export default function ProjectDetail() {
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxImages, setLightboxImages] = useState<Array<{ imageUrl: string | null; caption: string | null; altText: string | null }>>([]);
   const [showFullNotes, setShowFullNotes] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
 
   // Track project view
   useEffect(() => {
@@ -103,10 +97,14 @@ export default function ProjectDetail() {
   }
 
   const images = project.images || [];
-  // Keep DB sort_order and include all non-video image types, not just production/rendering.
-  const mediaItems = images.filter((img) =>
-    img.imageType === 'video' ? Boolean(img.videoUrl) : Boolean(img.imageUrl)
-  );
+  // Keep DB sort_order, but force renderings to the end of the sequence.
+  const mediaItems = [...images]
+    .filter((img) => (img.imageType === 'video' ? Boolean(img.videoUrl) : Boolean(img.imageUrl)))
+    .sort((a, b) => {
+      const aWeight = a.imageType === "rendering" ? 1 : 0;
+      const bWeight = b.imageType === "rendering" ? 1 : 0;
+      return aWeight - bWeight;
+    });
   const lightboxSourceImages = mediaItems.filter((img) => img.imageType !== 'video' && !!img.imageUrl);
   const scenicAlt = (title: string) => `${title} scenic design by Brandon PT Davis`;
 
@@ -180,11 +178,6 @@ export default function ProjectDetail() {
   // Get related projects excluding current one
   const relatedProjectsFiltered = relatedProjects?.filter(p => p.id !== project.id) || [];
 
-  // Find prev/next projects from same discipline only
-  const currentIndex = allProjects?.findIndex(p => p.id === project.id) ?? -1;
-  const prevProject = currentIndex > 0 ? allProjects?.[currentIndex - 1] : null;
-  const nextProject = currentIndex >= 0 && currentIndex < (allProjects?.length ?? 0) - 1 ? allProjects?.[currentIndex + 1] : null;
-
   // Determine accent color per project (stable, full 5-color rotation)
   const accentColor = ACCENT_COLORS[Math.abs(project.id) % ACCENT_COLORS.length] || ACCENT_COLORS[0];
 
@@ -209,28 +202,6 @@ export default function ProjectDetail() {
   const projectUpdatedDate = (project as any).updatedAt
     ? new Date((project as any).updatedAt).toISOString().split('T')[0]
     : undefined;
-  const buildTrackedUrl = (source: string) => {
-    const url = new URL(projectUrl);
-    url.searchParams.set("utm_source", source);
-    url.searchParams.set("utm_medium", "social");
-    url.searchParams.set("utm_campaign", "project_share");
-    url.searchParams.set("utm_content", project.slug);
-    return url.toString();
-  };
-  const trackedLinks = {
-    facebook: buildTrackedUrl("facebook"),
-    linkedin: buildTrackedUrl("linkedin"),
-    x: buildTrackedUrl("x"),
-    pinterest: buildTrackedUrl("pinterest"),
-  };
-  const shareText = `${project.title} | Scenic Design by Brandon PT Davis`;
-  const pinterestMedia = lightboxSourceImages[0]?.imageUrl || project.coverImageUrl || "";
-  const shareDestinations = {
-    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(trackedLinks.facebook)}`,
-    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(trackedLinks.linkedin)}`,
-    x: `https://twitter.com/intent/tweet?url=${encodeURIComponent(trackedLinks.x)}&text=${encodeURIComponent(shareText)}`,
-    pinterest: `https://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(trackedLinks.pinterest)}&media=${encodeURIComponent(pinterestMedia)}&description=${encodeURIComponent(project.excerpt || shareText)}`,
-  };
   const heroTransitionName = `project-card-${project.slug}`;
   const disciplineLabel = project.discipline === 'scenic_design'
     ? 'Scenic Design'
@@ -251,9 +222,28 @@ export default function ProjectDetail() {
     : disciplineLabel === 'Projects'
       ? 'More Projects'
       : `More ${disciplineLabel}`;
+  const featuredMedia = mediaItems[0] || null;
+  const secondaryMedia = mediaItems.slice(1);
+  const venueDateLabel = [project.client, projectDateLabel].filter(Boolean).join(" • ");
+  const openLightboxFor = (imageId: number) => {
+    setLightboxImages(lightboxSourceImages);
+    const lightboxIndexFromId = lightboxSourceImages.findIndex((img) => img.id === imageId);
+    setLightboxIndex(lightboxIndexFromId >= 0 ? lightboxIndexFromId : 0);
+    setLightboxOpen(true);
+  };
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(projectUrl);
+      setLinkCopied(true);
+      window.setTimeout(() => setLinkCopied(false), 1800);
+    } catch {
+      setLinkCopied(false);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-[#0b0b0d] text-foreground" style={{ '--accent-color': accentColor } as React.CSSProperties}>
+    <div className="min-h-screen bg-black text-foreground" style={{ '--accent-color': accentColor } as React.CSSProperties}>
       <div className="relative">
         <SEO
           title={`${project.title} | Brandon PT Davis`}
@@ -305,417 +295,316 @@ export default function ProjectDetail() {
       />
       <Header />
 
-      {/* Breadcrumb Navigation */}
-      <div className="container py-6">
-        <Breadcrumb
-          items={[
-            { label: "Portfolio", href: "/projects" },
-            { label: disciplineLabel, href: disciplineLink },
-            { label: project.title }
-          ]}
-        />
-      </div>
+      <main className="pb-20">
+        <section className="container max-w-6xl pt-8 md:pt-10">
+          <AnimatedSection>
+            <div className="pt-10">
+              <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-14">
+                <div className="space-y-6 text-center">
+                  <div className="flex flex-wrap items-center justify-center gap-4 text-[0.96rem] tracking-[-0.02em] text-foreground/58">
+                    {projectDateLabel ? <span>{projectDateLabel}</span> : null}
+                    {project.client ? <span>{project.client}</span> : null}
+                    {!project.client && project.subcategory ? <span>{project.subcategory}</span> : null}
+                  </div>
 
-      <section className="border-y border-border/50 bg-[#101014]">
-        <div className="container py-10 lg:py-12">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] xl:grid-cols-[minmax(0,1fr)_360px]">
-            <AnimatedSection className="lg:hidden">
-              <aside
-                className="space-y-6 rounded-xl bg-[#0f0f13] p-6"
-              >
-                <div className="space-y-4">
-                  {project.subcategory && (
-                    <Badge
-                      variant="outline"
-                      className="rounded-md border px-3 py-1 text-[10px] tracking-[0.18em] uppercase"
-                      style={{ borderColor: accentColor, color: accentColor }}
-                    >
-                      {project.subcategory}
-                    </Badge>
-                  )}
-                  <h1 className="text-4xl leading-[1.08] tracking-[-0.02em] font-light uppercase text-foreground/90">
-                    {project.title}
-                  </h1>
-                  {showProductionName && project.client && (
-                    <p className="text-xl font-light text-foreground/65" style={{ color: `${accentColor}` }}>
-                      {project.client}
-                    </p>
-                  )}
-                </div>
+                  <div className="space-y-4">
+                    <h1 className="mx-auto max-w-[16ch] font-sans text-[clamp(2rem,4.2vw,3.95rem)] font-normal leading-[0.95] tracking-[-0.05em] text-foreground">
+                      {project.title}
+                    </h1>
+                    {project.subcategory && project.client ? (
+                      <p className="text-[0.96rem] tracking-[-0.01em] text-foreground/46">
+                        {disciplineLabel} {project.subcategory ? `• ${project.subcategory}` : ""}
+                      </p>
+                    ) : null}
+                  </div>
 
-                <div className="space-y-3 border-t pt-5" style={{ borderColor: `${accentColor}55` }}>
-                  {locationDateLabel ? (
-                    <div className="grid grid-cols-[84px_1fr] gap-3 text-sm leading-relaxed">
-                      <span className="text-foreground/45 uppercase tracking-[0.14em]">Locale</span>
-                      <span className="text-foreground/75">{locationDateLabel}</span>
-                    </div>
-                  ) : null}
-                </div>
-
-                {project.excerpt && (
-                  <div className="border-t pt-5" style={{ borderColor: `${accentColor}55` }}>
-                    <h2 className="mb-3 text-xs font-semibold tracking-[0.18em] uppercase text-foreground/55" style={{ color: accentColor }}>
-                      Project Context
-                    </h2>
-                    <p className="text-sm leading-relaxed text-foreground/70">
+                  {project.excerpt ? (
+                    <p className="mx-auto max-w-[42rem] text-[clamp(1rem,1.3vw,1.28rem)] leading-[1.52] tracking-[-0.018em] text-foreground/78">
                       {project.excerpt}
                     </p>
-                  </div>
-                )}
+                  ) : null}
 
-                <div className="border-t pt-5" style={{ borderColor: `${accentColor}55` }}>
-                  <h2 className="mb-3 text-xs font-semibold tracking-[0.18em] uppercase text-foreground/55" style={{ color: accentColor }}>
-                    Share Project
-                  </h2>
-                  <div className="grid grid-cols-2 gap-2">
-                    <a href={shareDestinations.facebook} target="_blank" rel="noopener noreferrer" className="rounded-md border border-border/60 px-3 py-2 text-xs uppercase tracking-[0.14em] text-center text-foreground/75 hover:text-foreground hover:border-foreground/40">Facebook</a>
-                    <a href={shareDestinations.linkedin} target="_blank" rel="noopener noreferrer" className="rounded-md border border-border/60 px-3 py-2 text-xs uppercase tracking-[0.14em] text-center text-foreground/75 hover:text-foreground hover:border-foreground/40">LinkedIn</a>
-                    <a href={shareDestinations.x} target="_blank" rel="noopener noreferrer" className="rounded-md border border-border/60 px-3 py-2 text-xs uppercase tracking-[0.14em] text-center text-foreground/75 hover:text-foreground hover:border-foreground/40">X</a>
-                    <a href={shareDestinations.pinterest} target="_blank" rel="noopener noreferrer" className="rounded-md border border-border/60 px-3 py-2 text-xs uppercase tracking-[0.14em] text-center text-foreground/75 hover:text-foreground hover:border-foreground/40">Pinterest</a>
+                  <div className="mx-auto flex w-full max-w-[18rem] justify-center border-t border-border/35 pt-5">
+                    <button
+                      type="button"
+                      onClick={handleCopyLink}
+                      className="inline-flex items-center gap-3 rounded-full px-4 py-2 text-[0.98rem] tracking-[-0.02em] text-foreground/70 transition-colors hover:bg-white/[0.03] hover:text-foreground"
+                    >
+                      {linkCopied ? <Check className="h-4.5 w-4.5" /> : <Link2 className="h-4.5 w-4.5" />}
+                      <span>{linkCopied ? "Link copied" : "Share"}</span>
+                    </button>
                   </div>
                 </div>
-              </aside>
-            </AnimatedSection>
+                <div aria-hidden="true" className="hidden lg:block" />
+              </div>
+            </div>
+          </AnimatedSection>
+        </section>
 
-            <div className="space-y-6">
-              {mediaItems.length > 0 ? (
-                mediaItems.map((item, idx) => (
-                  <AnimatedSection key={item.id} delay={idx * 30}>
-                    {item.imageType === 'video' ? (
-                      <div className="overflow-hidden rounded-xl bg-black shadow-lg">
-                        <div className="relative w-full pb-[56.25%]">
-                          <iframe
-                            src={getEmbedUrl(item.videoUrl || "")}
-                            title={`Video: ${item.caption || "embedded video"}`}
-                            className="absolute inset-0 w-full h-full"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                          />
-                        </div>
-                      </div>
-                    ) : (
-                      <figure
-                        className="group relative overflow-hidden rounded-xl bg-black/90 cursor-pointer shadow-lg"
-                        style={idx === 0 ? ({ viewTransitionName: heroTransitionName } as CSSProperties) : undefined}
-                        onClick={() => {
-                          setLightboxImages(lightboxSourceImages);
-                          const lightboxIndexFromId = lightboxSourceImages.findIndex((img) => img.id === item.id);
-                          setLightboxIndex(lightboxIndexFromId >= 0 ? lightboxIndexFromId : 0);
-                          setLightboxOpen(true);
-                        }}
-                      >
-                        <ProgressiveImage
-                          src={item.imageUrl || ""}
-                          alt={item.altText || item.caption || scenicAlt(project.title)}
-                          className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.01]"
-                          objectFit="cover"
-                          smartPosition={true}
-                          loading="lazy"
-                          sizes="100vw"
-                          width={1600}
-                          forceTransformWebp={true}
-                          enableScrollAnimation={false}
+        <section className="container max-w-6xl pt-10 md:pt-12">
+          <AnimatedSection>
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-14">
+              <div className="space-y-6">
+                {featuredMedia ? (
+                  featuredMedia.imageType === "video" ? (
+                    <div className="overflow-hidden rounded-2xl bg-black shadow-lg">
+                      <div className="relative h-[min(74vh,48rem)] w-full">
+                        <iframe
+                          src={getEmbedUrl(featuredMedia.videoUrl || "")}
+                          title={`Video: ${featuredMedia.caption || "embedded video"}`}
+                          className="absolute inset-0 h-full w-full"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
                         />
-                      </figure>
-                    )}
-                  </AnimatedSection>
-                ))
-              ) : project.coverImageUrl ? (
-                <figure
-                  className="overflow-hidden rounded-xl bg-black/90 shadow-lg"
-                  style={{ viewTransitionName: heroTransitionName } as CSSProperties}
-                >
-                  <ProgressiveImage
-                    src={project.coverImageUrl}
-                    alt={scenicAlt(project.title)}
-                    objectFit="cover"
-                    smartPosition={true}
-                    loading="eager"
-                    sizes="100vw"
-                    width={1600}
-                    forceTransformWebp={true}
-                  />
-                </figure>
-              ) : null}
+                      </div>
+                    </div>
+                  ) : (
+                    <figure
+                      className="group cursor-pointer"
+                      style={{ viewTransitionName: heroTransitionName } as CSSProperties}
+                      onClick={() => openLightboxFor(featuredMedia.id)}
+                    >
+                      <img
+                        src={featuredMedia.imageUrl || ""}
+                        alt={featuredMedia.altText || featuredMedia.caption || scenicAlt(project.title)}
+                        className="block w-full rounded-xl object-contain object-top transition-transform duration-500 group-hover:scale-[1.01]"
+                        style={{ maxHeight: "min(74vh, 48rem)" }}
+                        loading="eager"
+                        decoding="async"
+                      />
+                    </figure>
+                  )
+                ) : project.coverImageUrl ? (
+                  <figure
+                    className=""
+                    style={{ viewTransitionName: heroTransitionName } as CSSProperties}
+                  >
+                    <img
+                      src={project.coverImageUrl}
+                      alt={scenicAlt(project.title)}
+                      className="block w-full rounded-xl object-contain object-top"
+                      style={{ maxHeight: "min(74vh, 48rem)" }}
+                      loading="eager"
+                      decoding="async"
+                    />
+                  </figure>
+                ) : null}
 
-              <AnimatedSection className="lg:hidden">
-                <aside
-                  className="space-y-8 rounded-xl bg-[#0f0f13] p-6"
-                >
-                  {creativeTeamArray.length > 0 && (
-                    <div className="space-y-3">
+                {featuredMedia?.caption ? (
+                  <p className="text-sm text-foreground/46">{featuredMedia.caption}</p>
+                ) : null}
+
+                {secondaryMedia.length > 0 ? (
+                  <div className="space-y-6">
+                    {secondaryMedia.map((item) =>
+                      item.imageType === "video" ? (
+                        <div key={item.id} className="overflow-hidden rounded-2xl bg-black shadow-lg">
+                          <div className="relative h-[min(64vh,38rem)] w-full">
+                            <iframe
+                              src={getEmbedUrl(item.videoUrl || "")}
+                              title={`Video: ${item.caption || "embedded video"}`}
+                              className="absolute inset-0 h-full w-full"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                            />
+                          </div>
+                        </div>
+                      ) : (
+                        <figure
+                          key={item.id}
+                          className="group cursor-pointer"
+                          onClick={() => openLightboxFor(item.id)}
+                        >
+                          <img
+                            src={item.imageUrl || ""}
+                            alt={item.altText || item.caption || scenicAlt(project.title)}
+                            className="block w-full rounded-xl object-contain object-top transition-transform duration-500 group-hover:scale-[1.01]"
+                            style={{ maxHeight: "min(64vh, 38rem)" }}
+                            loading="lazy"
+                            decoding="async"
+                          />
+                          {item.caption ? (
+                            <figcaption className="px-1 pt-3 text-sm text-foreground/44">
+                              {item.caption}
+                            </figcaption>
+                          ) : null}
+                        </figure>
+                      )
+                    )}
+                  </div>
+                ) : null}
+              </div>
+
+              <aside className="space-y-10 lg:sticky lg:top-28 lg:self-start">
+                {creativeTeamArray.length > 0 ? (
+                  <section className="border-t border-border/35 pt-6">
+                    <p
+                      className="text-[11px] uppercase tracking-[0.18em]"
+                      style={{ color: accentColor }}
+                    >
+                      Creative Team
+                    </p>
+                    <div className="mt-6 divide-y divide-border/30 border-y border-border/30">
                       {creativeTeamArray.map((member, idx) => {
-                        const slug = member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                        const memberSlug = member.name
+                          .toLowerCase()
+                          .replace(/[^a-z0-9]+/g, "-")
+                          .replace(/^-|-$/g, "");
+
                         return (
-                          <Link key={idx} href={`/about/collaborators#${slug}`}>
-                            <div className="group cursor-pointer">
-                              <p className="text-sm text-foreground/60 leading-relaxed">
-                                <span className="font-medium text-foreground/80" style={{ color: accentColor }}>{member.role}:</span>{" "}
-                                <span className="transition-colors" onMouseEnter={(e) => { e.currentTarget.style.color = accentColor; }} onMouseLeave={(e) => { e.currentTarget.style.color = ''; }}>{member.name}</span>
-                              </p>
-                            </div>
+                          <Link key={idx} href={`/about/collaborators#${memberSlug}`}>
+                            <a className="block py-4 transition-colors hover:text-foreground">
+                              <span className="block text-[11px] uppercase tracking-[0.16em] text-foreground/42">
+                                {member.role}
+                              </span>
+                              <span className="mt-2 block text-[1.02rem] leading-7 text-foreground/72">
+                                {member.name}
+                              </span>
+                            </a>
                           </Link>
                         );
                       })}
                     </div>
-                  )}
+                  </section>
+                ) : null}
 
-                  {cleanedDesignNotes && (
-                    <div className={`${creativeTeamArray.length > 0 ? 'border-t pt-5' : ''}`} style={{ borderColor: `${accentColor}55` }}>
-                      <h2 className="mb-3 text-xs font-semibold tracking-[0.18em] uppercase text-foreground/55" style={{ color: accentColor }}>
-                        Design Notes
-                      </h2>
-                      <p className="text-sm leading-relaxed text-foreground/70 whitespace-pre-wrap">
+                {cleanedDesignNotes ? (
+                  <section className="border-t border-border/35 pt-6">
+                    <p
+                      className="text-[11px] uppercase tracking-[0.18em]"
+                      style={{ color: accentColor }}
+                    >
+                      Design Notes
+                    </p>
+                    <div className="mt-5">
+                      <p className="whitespace-pre-wrap text-[0.98rem] leading-8 text-foreground/68">
                         {showFullNotes || !shouldTruncateNotes ? cleanedDesignNotes : shortDesignNotes}
                       </p>
-                      {shouldTruncateNotes && (
+                      {shouldTruncateNotes ? (
                         <button
                           type="button"
                           onClick={() => setShowFullNotes((prev) => !prev)}
-                          className="mt-3 text-xs font-semibold uppercase tracking-[0.14em] text-foreground/60 hover:text-foreground"
+                          className="mt-4 text-xs font-semibold uppercase tracking-[0.14em] text-foreground/58 hover:text-foreground"
                           style={{ color: accentColor }}
                         >
                           {showFullNotes ? "Show Less" : "Read Full Notes"}
                         </button>
-                      )}
+                      ) : null}
                     </div>
-                  )}
+                  </section>
+                ) : null}
 
-                  {externalArticles.length > 0 && (
-                    <div className="border-t pt-5" style={{ borderColor: `${accentColor}55` }}>
-                      <h2 className="mb-3 text-xs font-semibold tracking-[0.18em] uppercase text-foreground/55" style={{ color: accentColor }}>
-                        Public Articles
-                      </h2>
-                      <div className="space-y-4">
-                        {reviewArticles.length > 0 && (
-                          <div className="space-y-2">
-                            <p className="text-[10px] uppercase tracking-[0.16em] text-foreground/50">Reviews</p>
+                {externalArticles.length > 0 ? (
+                  <section className="border-t border-border/35 pt-6">
+                    <p
+                      className="text-[11px] uppercase tracking-[0.18em]"
+                      style={{ color: accentColor }}
+                    >
+                      Public Articles
+                    </p>
+
+                    <div className="mt-6 space-y-8">
+                      {reviewArticles.length > 0 ? (
+                        <div>
+                          <p className="text-sm text-foreground/45">Reviews and features</p>
+                          <div className="mt-4 divide-y divide-border/30 border-y border-border/30">
                             {reviewArticles.map((article: any, index: number) => (
                               <a
                                 key={`review-${article.url}-${index}`}
                                 href={article.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="block rounded-lg border border-border/50 bg-background/30 px-3 py-2 text-sm leading-relaxed text-foreground/80 transition-colors hover:border-foreground/40 hover:text-foreground"
+                                className="grid gap-2 py-4 transition-colors hover:text-foreground"
                               >
-                                <span className="font-medium">{article.title || article.url}</span>
-                                {article.source ? <span className="block text-xs text-foreground/50 mt-1">{article.source}</span> : null}
+                                <span className="text-[1rem] tracking-[-0.02em] text-foreground/82">
+                                  {article.title || article.url}
+                                </span>
+                                {article.source ? (
+                                  <span className="text-sm text-foreground/46">{article.source}</span>
+                                ) : null}
                               </a>
                             ))}
                           </div>
-                        )}
-                        {listingArticles.length > 0 && (
-                          <div className="space-y-2">
-                            <p className="text-[10px] uppercase tracking-[0.16em] text-foreground/50">Project Listings</p>
+                        </div>
+                      ) : null}
+
+                      {listingArticles.length > 0 ? (
+                        <div>
+                          <p className="text-sm text-foreground/45">Listings and press links</p>
+                          <div className="mt-4 divide-y divide-border/30 border-y border-border/30">
                             {listingArticles.map((article: any, index: number) => (
                               <a
                                 key={`listing-${article.url}-${index}`}
                                 href={article.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="block rounded-lg border border-border/40 bg-background/20 px-3 py-2 text-sm leading-relaxed text-foreground/70 transition-colors hover:border-foreground/30 hover:text-foreground"
+                                className="grid gap-2 py-4 transition-colors hover:text-foreground"
                               >
-                                {article.title || article.url}
-                                {article.source ? <span className="block text-xs text-foreground/45 mt-1">{article.source}</span> : null}
+                                <span className="text-[0.96rem] tracking-[-0.02em] text-foreground/74">
+                                  {article.title || article.url}
+                                </span>
+                                {article.source ? (
+                                  <span className="text-sm text-foreground/44">{article.source}</span>
+                                ) : null}
                               </a>
                             ))}
                           </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </aside>
-              </AnimatedSection>
-            </div>
-
-            <AnimatedSection>
-              <aside
-                className="hidden lg:block space-y-8 rounded-xl bg-[#0f0f13] p-6 md:p-7"
-              >
-                <div className="space-y-4">
-                  {project.subcategory && (
-                    <Badge
-                      variant="outline"
-                      className="rounded-md border px-3 py-1 text-[10px] tracking-[0.18em] uppercase"
-                      style={{ borderColor: accentColor, color: accentColor }}
-                    >
-                      {project.subcategory}
-                    </Badge>
-                  )}
-                  <h1 className="text-5xl leading-[1.06] tracking-[-0.02em] font-light uppercase text-foreground/90">
-                    {project.title}
-                  </h1>
-                  {showProductionName && project.client && (
-                    <p className="text-2xl font-light text-foreground/65" style={{ color: `${accentColor}` }}>
-                      {project.client}
-                    </p>
-                  )}
-                </div>
-
-                <div className="space-y-3 border-t pt-5" style={{ borderColor: `${accentColor}55` }}>
-                  {locationDateLabel ? (
-                    <div className="grid grid-cols-[84px_1fr] gap-3 text-sm leading-relaxed">
-                      <span className="text-foreground/45 uppercase tracking-[0.14em]">Locale</span>
-                      <span className="text-foreground/75">{locationDateLabel}</span>
-                    </div>
-                  ) : null}
-                </div>
-
-                {project.excerpt && (
-                  <div className="border-t pt-5" style={{ borderColor: `${accentColor}55` }}>
-                    <h2 className="mb-3 text-xs font-semibold tracking-[0.18em] uppercase text-foreground/55" style={{ color: accentColor }}>
-                      Project Context
-                    </h2>
-                    <p className="text-sm leading-relaxed text-foreground/70">
-                      {project.excerpt}
-                    </p>
-                  </div>
-                )}
-
-                <div className="border-t pt-5" style={{ borderColor: `${accentColor}55` }}>
-                  <h2 className="mb-3 text-xs font-semibold tracking-[0.18em] uppercase text-foreground/55" style={{ color: accentColor }}>
-                    Share Project
-                  </h2>
-                  <div className="grid grid-cols-2 gap-2">
-                    <a href={shareDestinations.facebook} target="_blank" rel="noopener noreferrer" className="rounded-md border border-border/60 px-3 py-2 text-xs uppercase tracking-[0.14em] text-center text-foreground/75 hover:text-foreground hover:border-foreground/40">Facebook</a>
-                    <a href={shareDestinations.linkedin} target="_blank" rel="noopener noreferrer" className="rounded-md border border-border/60 px-3 py-2 text-xs uppercase tracking-[0.14em] text-center text-foreground/75 hover:text-foreground hover:border-foreground/40">LinkedIn</a>
-                    <a href={shareDestinations.x} target="_blank" rel="noopener noreferrer" className="rounded-md border border-border/60 px-3 py-2 text-xs uppercase tracking-[0.14em] text-center text-foreground/75 hover:text-foreground hover:border-foreground/40">X</a>
-                    <a href={shareDestinations.pinterest} target="_blank" rel="noopener noreferrer" className="rounded-md border border-border/60 px-3 py-2 text-xs uppercase tracking-[0.14em] text-center text-foreground/75 hover:text-foreground hover:border-foreground/40">Pinterest</a>
-                  </div>
-                </div>
-
-                {creativeTeamArray.length > 0 && (
-                  <div className="space-y-3 border-t pt-5" style={{ borderColor: `${accentColor}55` }}>
-                    {creativeTeamArray.map((member, idx) => {
-                      const slug = member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-                      return (
-                        <Link key={idx} href={`/about/collaborators#${slug}`}>
-                          <div className="group cursor-pointer">
-                            <p className="text-sm text-foreground/60 leading-relaxed">
-                              <span className="font-medium text-foreground/80" style={{ color: accentColor }}>{member.role}:</span>{" "}
-                              <span className="transition-colors" onMouseEnter={(e) => { e.currentTarget.style.color = accentColor; }} onMouseLeave={(e) => { e.currentTarget.style.color = ''; }}>{member.name}</span>
-                            </p>
-                          </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                )}
-
-                {cleanedDesignNotes && (
-                  <div className="border-t pt-5" style={{ borderColor: `${accentColor}55` }}>
-                    <h2 className="mb-3 text-xs font-semibold tracking-[0.18em] uppercase text-foreground/55" style={{ color: accentColor }}>
-                      Design Notes
-                    </h2>
-                    <p className="text-sm leading-relaxed text-foreground/70 whitespace-pre-wrap">
-                      {showFullNotes || !shouldTruncateNotes ? cleanedDesignNotes : shortDesignNotes}
-                    </p>
-                    {shouldTruncateNotes && (
-                      <button
-                        type="button"
-                        onClick={() => setShowFullNotes((prev) => !prev)}
-                        className="mt-3 text-xs font-semibold uppercase tracking-[0.14em] text-foreground/60 hover:text-foreground"
-                        style={{ color: accentColor }}
-                      >
-                        {showFullNotes ? "Show Less" : "Read Full Notes"}
-                      </button>
-                    )}
-                  </div>
-                )}
-
-                {externalArticles.length > 0 && (
-                  <div className="border-t pt-5" style={{ borderColor: `${accentColor}55` }}>
-                    <h2 className="mb-3 text-xs font-semibold tracking-[0.18em] uppercase text-foreground/55" style={{ color: accentColor }}>
-                      Public Articles
-                    </h2>
-                    <div className="space-y-4">
-                      {reviewArticles.length > 0 && (
-                        <div className="space-y-2">
-                          <p className="text-[10px] uppercase tracking-[0.16em] text-foreground/50">Reviews</p>
-                          {reviewArticles.map((article: any, index: number) => (
-                            <a
-                              key={`review-d-${article.url}-${index}`}
-                              href={article.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="block rounded-lg border border-border/50 bg-background/30 px-3 py-2 text-sm leading-relaxed text-foreground/80 transition-colors hover:border-foreground/40 hover:text-foreground"
-                            >
-                              <span className="font-medium">{article.title || article.url}</span>
-                              {article.source ? <span className="block text-xs text-foreground/50 mt-1">{article.source}</span> : null}
-                            </a>
-                          ))}
                         </div>
-                      )}
-                      {listingArticles.length > 0 && (
-                        <div className="space-y-2">
-                          <p className="text-[10px] uppercase tracking-[0.16em] text-foreground/50">Project Listings</p>
-                          {listingArticles.map((article: any, index: number) => (
-                            <a
-                              key={`listing-d-${article.url}-${index}`}
-                              href={article.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="block rounded-lg border border-border/40 bg-background/20 px-3 py-2 text-sm leading-relaxed text-foreground/70 transition-colors hover:border-foreground/30 hover:text-foreground"
-                            >
-                              {article.title || article.url}
-                              {article.source ? <span className="block text-xs text-foreground/45 mt-1">{article.source}</span> : null}
-                            </a>
-                          ))}
-                        </div>
-                      )}
+                      ) : null}
                     </div>
-                  </div>
-                )}
+                  </section>
+                ) : null}
+
               </aside>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
-
-      <div className="container py-16">
-        <Separator className="mb-12 bg-border/60" />
-
-        {relatedProjectsFiltered.length > 0 && (
-          <AnimatedSection>
-            <div>
-              <h2 className="mb-8 text-sm font-semibold tracking-[0.22em] uppercase text-foreground/65">
-                {moreProjectsLabel}
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                {relatedProjectsFiltered.map((relatedProject, idx) => (
-                  <Link key={relatedProject.id} href={getProjectPath(relatedProject)}>
-                    <Card className="group border-0 bg-transparent shadow-none">
-                      <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-black/85">
-                        {relatedProject.coverImageUrl ? (
-                          <ProgressiveImage
-                            src={relatedProject.coverImageUrl}
-                            alt={relatedProject.title}
-                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                            aspectRatio="4/3"
-                            smartPosition={true}
-                            loading="lazy"
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                          />
-                        ) : (
-                          <div className="h-full w-full bg-muted" />
-                        )}
-                      </div>
-                      <CardContent className="pt-3 px-0 text-center">
-                        <h3
-                          className="text-[11px] font-semibold tracking-[0.2em] uppercase transition-colors group-hover:text-foreground"
-                          style={{ color: ACCENT_COLORS[idx % ACCENT_COLORS.length], transitionDuration: '180ms' }}
-                        >
-                          {relatedProject.title}
-                        </h3>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                ))}
-              </div>
             </div>
           </AnimatedSection>
-        )}
-      </div>
+        </section>
+
+        <div className="container max-w-6xl py-16">
+          <Separator className="mb-12 bg-border/60" />
+
+          {relatedProjectsFiltered.length > 0 ? (
+            <AnimatedSection>
+              <div>
+                <h2 className="mb-8 text-sm font-semibold tracking-[0.22em] uppercase text-foreground/65">
+                  {moreProjectsLabel}
+                </h2>
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                  {relatedProjectsFiltered.map((relatedProject, idx) => (
+                    <Link key={relatedProject.id} href={getProjectPath(relatedProject)}>
+                      <a className="group block">
+                        <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-black/85">
+                          {relatedProject.coverImageUrl ? (
+                            <ProgressiveImage
+                              src={relatedProject.coverImageUrl}
+                              alt={relatedProject.title}
+                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                              aspectRatio="1/1"
+                              smartPosition={true}
+                              loading="lazy"
+                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                            />
+                          ) : (
+                            <div className="h-full w-full bg-muted" />
+                          )}
+                        </div>
+                        <div className="pt-3">
+                          <h3
+                            className="text-[1.02rem] font-normal tracking-[-0.02em] transition-colors group-hover:text-foreground"
+                            style={{ color: ACCENT_COLORS[idx % ACCENT_COLORS.length], transitionDuration: "180ms" }}
+                          >
+                            {relatedProject.title}
+                          </h3>
+                        </div>
+                      </a>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </AnimatedSection>
+          ) : null}
+        </div>
+      </main>
       </div>
 
       <Footer />

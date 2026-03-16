@@ -1,32 +1,33 @@
+import React, { useMemo, useState, type CSSProperties, type MouseEvent } from "react";
+import { useLocation } from "wouter";
+import {
+  ArrowUpDown,
+  Check,
+  ChevronDown,
+  LayoutGrid,
+  List,
+  SlidersHorizontal,
+} from "lucide-react";
 
-import React from "react";
-import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 import PageThemeWrapper from "@/components/PageThemeWrapper";
 import ThemeToggle from "@/components/ThemeToggle";
+import { ProgressiveImage } from "@/components/ProgressiveImage";
+import { SEO } from "@/components/SEO";
+import { PortfolioGridSkeleton } from "@/components/SkeletonLoaders";
+import { StickyShowcase } from "@/components/StickyShowcase";
+import StructuredData from "@/components/StructuredData";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { trpc } from "@/lib/trpc";
 import { getCategoryColor } from "@/lib/categoryColors";
-import { Search } from "lucide-react";
-import { Link } from "wouter";
-import { SEO } from "@/components/SEO";
-import StructuredData from "@/components/StructuredData";
 import { voyageLaArticle } from "@shared/publicContent";
-
-// Decode HTML entities
-const decodeHTMLEntities = (text: string): string => {
-  const textarea = document.createElement('textarea');
-  textarea.innerHTML = text;
-  return textarea.value;
-};
-
-export default function Articles() {
-  return (
-    <PageThemeWrapper forceTheme={null}>
-      <ArticlesContent />
-      <ThemeToggle />
-    </PageThemeWrapper>
-  );
-}
 
 type ArticleCardItem = {
   id: number | string;
@@ -40,17 +41,120 @@ type ArticleCardItem = {
   categoryName?: string | null;
 };
 
-function ArticlesContent() {
-  const { data: articles, isLoading } = trpc.articles.list.useQuery({ status: "published" });
-  const [searchQuery, setSearchQuery] = React.useState("");
-  const [selectedCategory, setSelectedCategory] = React.useState<string | null>(null);
+type SortKey = "newest" | "oldest" | "title" | "category";
+type ViewMode = "grid" | "list";
 
-  const allArticles = React.useMemo<ArticleCardItem[]>(() => {
+const SORT_OPTIONS: Array<{ key: SortKey; label: string }> = [
+  { key: "newest", label: "Newest first" },
+  { key: "oldest", label: "Oldest first" },
+  { key: "title", label: "Article title" },
+  { key: "category", label: "Category" },
+];
+
+const ACCENT_COLORS = ["#FF5722", "#00BCD4", "#E91E63", "#FFC107", "#9C27B0"] as const;
+
+const decodeHTMLEntities = (text: string): string => {
+  if (typeof document === "undefined") return text;
+  const textarea = document.createElement("textarea");
+  textarea.innerHTML = text;
+  return textarea.value;
+};
+
+const getArticleTimestamp = (article: ArticleCardItem) => {
+  return new Date(article.publishedAt || article.createdAt || 0).getTime();
+};
+
+const formatArticleDate = (article: ArticleCardItem) => {
+  const source = article.publishedAt || article.createdAt;
+  if (!source) return null;
+  return new Date(source).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+};
+
+const getArticleYear = (article: ArticleCardItem) => {
+  const source = article.publishedAt || article.createdAt;
+  if (!source) return null;
+  return String(new Date(source).getFullYear());
+};
+
+function ArticleGridCard({
+  accentColor,
+  article,
+  eager,
+  href,
+  onNavigate,
+}: {
+  accentColor: string;
+  article: ArticleCardItem;
+  eager?: boolean;
+  href: string;
+  onNavigate: (event: MouseEvent<HTMLAnchorElement>, href: string) => void;
+}) {
+  return (
+    <a href={href} onClick={(event) => onNavigate(event, href)}>
+      <div className="group">
+        <div
+          className="transition-card relative aspect-[1/1] overflow-hidden rounded-xl bg-background/50"
+          style={{ viewTransitionName: `article-card-${article.slug}` } as CSSProperties}
+        >
+          {article.coverImageUrl ? (
+            <ProgressiveImage
+              src={article.coverImageUrl}
+              alt={`Cover image for article: ${decodeHTMLEntities(article.title)}`}
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+              aspectRatio="1/1"
+              smartPosition={true}
+              loading={eager ? "eager" : "lazy"}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 25vw, 20vw"
+            />
+          ) : (
+            <div className="h-full w-full bg-muted" />
+          )}
+        </div>
+
+        <div className="pt-4">
+          <p
+            className="text-[1.02rem] font-normal tracking-[-0.02em]"
+            style={{ color: accentColor }}
+          >
+            {decodeHTMLEntities(article.title)}
+          </p>
+        </div>
+      </div>
+    </a>
+  );
+}
+
+function ArticlesContent() {
+  const [, setLocation] = useLocation();
+  const { data: articles, isLoading } = trpc.articles.list.useQuery({ status: "published" });
+  const [selectedCategory, setSelectedCategory] = useState<string>(() => {
+    if (typeof window === "undefined") return "all";
+    return new URLSearchParams(window.location.search).get("category") || "all";
+  });
+  const [selectedYear, setSelectedYear] = useState<string>(() => {
+    if (typeof window === "undefined") return "all";
+    return new URLSearchParams(window.location.search).get("year") || "all";
+  });
+  const [sortKey, setSortKey] = useState<SortKey>(() => {
+    if (typeof window === "undefined") return "newest";
+    const value = new URLSearchParams(window.location.search).get("sort");
+    return value === "oldest" || value === "title" || value === "category" ? value : "newest";
+  });
+  const [viewMode, setViewMode] = useState<ViewMode>(() => {
+    if (typeof window === "undefined") return "grid";
+    return new URLSearchParams(window.location.search).get("view") === "list" ? "list" : "grid";
+  });
+
+  const allArticles = useMemo<ArticleCardItem[]>(() => {
     const fromDatabase =
       articles?.map((article) => ({
         id: article.id,
         slug: article.slug,
-        title: article.title,
+        title: decodeHTMLEntities(article.title),
         excerpt: article.excerpt,
         coverImageUrl: article.coverImageUrl,
         publishedAt: article.publishedAt,
@@ -63,7 +167,7 @@ function ArticlesContent() {
       fromDatabase.unshift({
         id: `static-${voyageLaArticle.slug}`,
         slug: voyageLaArticle.slug,
-        title: voyageLaArticle.title,
+        title: decodeHTMLEntities(voyageLaArticle.title),
         excerpt: voyageLaArticle.excerpt,
         coverImageUrl: voyageLaArticle.coverImageUrl,
         publishedAt: voyageLaArticle.publishedAt,
@@ -73,60 +177,123 @@ function ArticlesContent() {
       });
     }
 
-    return fromDatabase.sort((a, b) => {
-      const aTime = new Date(a.publishedAt || a.createdAt || 0).getTime();
-      const bTime = new Date(b.publishedAt || b.createdAt || 0).getTime();
-      return bTime - aTime;
-    });
+    return fromDatabase.sort((a, b) => getArticleTimestamp(b) - getArticleTimestamp(a));
   }, [articles]);
 
-  // Get unique categories
-  const categories = React.useMemo(() => {
-    const uniqueCategories = new Set<string>();
-    allArticles.forEach((article) => {
-      if (article.categoryName) {
-        uniqueCategories.add(article.categoryName);
+  const categories = useMemo(() => {
+    return Array.from(
+      new Set(allArticles.map((article) => article.categoryName).filter((value): value is string => Boolean(value)))
+    ).sort((a, b) => a.localeCompare(b));
+  }, [allArticles]);
+
+  const yearOptions = useMemo(() => {
+    return Array.from(
+      new Set(allArticles.map((article) => getArticleYear(article)).filter((value): value is string => Boolean(value)))
+    ).sort((a, b) => Number(b) - Number(a));
+  }, [allArticles]);
+
+  const filteredArticles = useMemo(() => {
+    return allArticles.filter((article) => {
+      if (selectedCategory !== "all" && article.categoryName !== selectedCategory) {
+        return false;
       }
+
+      if (selectedYear !== "all" && getArticleYear(article) !== selectedYear) {
+        return false;
+      }
+
+      return true;
     });
-    return Array.from(uniqueCategories).sort();
-  }, [allArticles]);
+  }, [allArticles, selectedCategory, selectedYear]);
 
-  // Filter articles by search and category
-  const filteredArticles = React.useMemo(() => {
-    let filtered = allArticles;
+  const sortedArticles = useMemo(() => {
+    const list = [...filteredArticles];
 
-    // Filter by category
-    if (selectedCategory) {
-      filtered = filtered.filter((article) => article.categoryName === selectedCategory);
+    list.sort((a, b) => {
+      if (sortKey === "title") {
+        return a.title.localeCompare(b.title);
+      }
+
+      if (sortKey === "category") {
+        const categoryCompare = (a.categoryName || "").localeCompare(b.categoryName || "");
+        if (categoryCompare !== 0) return categoryCompare;
+        return getArticleTimestamp(b) - getArticleTimestamp(a);
+      }
+
+      const timeCompare = getArticleTimestamp(b) - getArticleTimestamp(a);
+      if (timeCompare !== 0) {
+        return sortKey === "oldest" ? -timeCompare : timeCompare;
+      }
+
+      return a.title.localeCompare(b.title);
+    });
+
+    return list;
+  }, [filteredArticles, sortKey]);
+
+  const activeFilterCount = (selectedYear !== "all" ? 1 : 0);
+  const isDefaultAllView =
+    selectedCategory === "all" && selectedYear === "all" && sortKey === "newest";
+  const showShowcase = viewMode === "grid" && isDefaultAllView && sortedArticles.length >= 4;
+  const [featuredArticle, ...remainingArticles] = sortedArticles;
+  const showcaseRailArticles = remainingArticles.slice(0, 3);
+  const showcaseGridArticles = remainingArticles.slice(3);
+  const currentHeading =
+    selectedCategory !== "all" ? selectedCategory : selectedYear !== "all" ? selectedYear : "Articles";
+
+  const animateCardDeparture = async (target: HTMLElement) => {
+    const card = target.querySelector(".transition-card") as HTMLElement | null;
+    if (!card || typeof card.animate !== "function") return;
+    const animation = card.animate(
+      [
+        { transform: "scale(1)", filter: "brightness(1)" },
+        { transform: "scale(0.975)", filter: "brightness(1.08)" },
+      ],
+      { duration: 150, easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "forwards" }
+    );
+    try {
+      await animation.finished;
+    } catch {
+      // Ignore interrupted animation.
+    }
+  };
+
+  const navigateWithTransition = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+    const anchor = event.currentTarget;
+    const navigate = () => setLocation(href);
+    const performNavigation = async () => {
+      await animateCardDeparture(anchor);
+      navigate();
+    };
+    const doc = document as Document & { startViewTransition?: (cb: () => void) => void };
+    if (doc.startViewTransition) {
+      doc.startViewTransition(() => {
+        void performNavigation();
+      });
     } else {
-      // If no category selected, exclude Musical Theatre & Cinema from main grid
-      filtered = filtered.filter((article) => article.categoryName !== "Musical Theatre & Cinema");
+      void performNavigation();
     }
+  };
 
-    // Filter by search query
-    if (searchQuery) {
-      const searchLower = searchQuery.toLowerCase();
-      filtered = filtered.filter(article => (
-        article.title.toLowerCase().includes(searchLower) ||
-        (article.excerpt && article.excerpt.toLowerCase().includes(searchLower))
-      ));
-    }
-
-    return filtered;
-  }, [allArticles, searchQuery, selectedCategory]);
-
-  // Get Musical Theatre & Cinema articles for separate section
-  const musicalTheatreArticles = React.useMemo(() => {
-    return allArticles.filter((article) => article.categoryName === "Musical Theatre & Cinema");
-  }, [allArticles]);
-
-
+  const itemHref = (article: ArticleCardItem) => `/articles/${article.slug}`;
 
   return (
-    <div className="min-h-screen bg-background [background-image:radial-gradient(circle_at_12%_9%,rgba(255,87,34,0.10),transparent_34%),radial-gradient(circle_at_85%_16%,rgba(33,150,243,0.08),transparent_34%)]">
+    <div className="min-h-screen bg-background">
       <SEO
-        title="Scenic Insights | Articles by Brandon PT Davis"
-        description="Articles on scenic design philosophy, process, and production craft by Brandon PT Davis."
+        title="Articles | Brandon PT Davis"
+        description="Articles on scenic design practice, process, criticism, and production craft by Brandon PT Davis."
         image={allArticles[0]?.coverImageUrl || undefined}
         url="https://www.brandonptdavis.com/articles"
       />
@@ -140,16 +307,16 @@ function ArticlesContent() {
       <StructuredData
         type="CollectionPage"
         collectionPage={{
-          name: "Scenic Insights",
+          name: "Articles",
           url: "https://www.brandonptdavis.com/articles",
           description: "Article archive covering scenic design practice, production strategy, and theatre process.",
           about: "Scenic design writing and production insights by Brandon PT Davis.",
           primaryImageOfPage: allArticles[0]?.coverImageUrl || undefined,
           mainEntity: {
             name: "Articles",
-            itemListElement: allArticles.slice(0, 24).map((article, index) => ({
+            itemListElement: sortedArticles.slice(0, 24).map((article, index) => ({
               position: index + 1,
-              name: decodeHTMLEntities(article.title),
+              name: article.title,
               url: `https://www.brandonptdavis.com/articles/${article.slug}`,
               datePublished:
                 article.publishedAt instanceof Date
@@ -162,250 +329,382 @@ function ArticlesContent() {
           },
         }}
       />
+
       <Header />
 
-      {/* Page Header */}
-      <section className="pt-14 md:pt-20 pb-8">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <p className="text-xs tracking-[0.24em] text-muted-foreground mb-4 font-semibold uppercase">Studio / Articles</p>
-            <h1 className="mb-5 text-5xl md:text-7xl font-serif tracking-tight leading-[0.92]">Scenic Insights</h1>
-            <p className="text-lg md:text-xl text-foreground/75 max-w-4xl leading-relaxed">
-              Articles on design philosophy, process, and the craft of scenic design.
-            </p>
+      <main>
+        <section className="border-b border-border/40 pb-8 pt-24 md:pb-10 md:pt-28">
+          <div className="container max-w-6xl">
+            <div className="max-w-3xl">
+              <h1 className="font-sans text-[clamp(2.3rem,4.6vw,3.8rem)] font-medium leading-[0.96] tracking-[-0.05em] text-foreground">
+                {currentHeading}
+              </h1>
+            </div>
 
-            {/* Search and Category Filter */}
-            <div className="mt-6 rounded-2xl border border-border/60 bg-card/20 p-5 md:p-6 space-y-6">
-              {/* Search Input */}
-              <div className="relative w-full max-w-md">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <input
-                  type="text"
-                  placeholder="Search articles..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
-                />
-              </div>
-
-              {/* Category Filter Badges */}
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={() => setSelectedCategory(null)}
-                  className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.12em] transition-all duration-200 border ${selectedCategory === null
-                    ? 'bg-primary text-primary-foreground border-primary shadow-lg'
-                    : 'bg-background border border-border text-muted-foreground hover:border-primary hover:text-foreground'
-                    }`}
-                >
-                  All Articles
-                </button>
-                {categories.map(category => (
+            <div className="mt-10 flex flex-col gap-5 border-t border-border/35 pt-5 lg:flex-row lg:items-center lg:justify-between">
+              <div className="overflow-x-auto">
+                <div className="flex min-w-max items-center gap-6">
                   <button
-                    key={category}
-                    onClick={() => setSelectedCategory(category)}
-                    className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.12em] transition-all duration-200 ${selectedCategory === category
-                      ? 'shadow-lg'
-                      : 'bg-background border border-border hover:shadow-md'
-                      }`}
-                    style={{
-                      backgroundColor: selectedCategory === category ? getCategoryColor(category).hex : undefined,
-                      color: selectedCategory === category ? '#000' : undefined,
-                      borderColor: selectedCategory !== category ? getCategoryColor(category).hex + '40' : undefined,
-                    }}
-                    onMouseEnter={(e) => {
-                      if (selectedCategory !== category) {
-                        e.currentTarget.style.borderColor = getCategoryColor(category).hex;
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (selectedCategory !== category) {
-                        e.currentTarget.style.borderColor = getCategoryColor(category).hex + '40';
-                      }
-                    }}
+                    type="button"
+                    onClick={() => setSelectedCategory("all")}
+                    className={`text-[1.05rem] transition-colors ${
+                      selectedCategory === "all"
+                        ? "text-foreground"
+                        : "text-foreground/52 hover:text-foreground/80"
+                    }`}
                   >
-                    {category}
+                    All
                   </button>
-                ))}
+                  {categories.map((category) => (
+                    <button
+                      key={category}
+                      type="button"
+                      onClick={() => setSelectedCategory(category)}
+                      className={`text-[1.05rem] transition-colors ${
+                        selectedCategory === category
+                          ? "text-foreground"
+                          : "text-foreground/52 hover:text-foreground/80"
+                      }`}
+                    >
+                      {category}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Articles Grid */}
-      <section className="py-16">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-          {isLoading ? (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">Loading articles...</p>
-            </div>
-          ) : filteredArticles && filteredArticles.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-              {filteredArticles.map((article) => {
-                const categoryColor = article.categoryName
-                  ? getCategoryColor(article.categoryName).hex
-                  : '#FF6B35';
-
-                return (
-                  <Link key={article.id} href={`/articles/${article.slug}`}>
-                    <div className="group bg-card/30 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer border border-border/60">
-                      {/* Cover Image */}
-                      {article.coverImageUrl && (
-                        <div className="aspect-[16/9] overflow-hidden">
-                          <img
-                            src={article.coverImageUrl}
-                            alt={`Cover image for article: ${decodeHTMLEntities(article.title)}`}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            loading="lazy"
-                            onError={(e) => {
-                              e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400"%3E%3Crect fill="%23374151" width="400" height="400"/%3E%3Ctext fill="%239CA3AF" font-family="sans-serif" font-size="18" x="50%25" y="50%25" text-anchor="middle" dominant-baseline="middle"%3EImage not available%3C/text%3E%3C/svg%3E';
-                            }}
-                          />
+              <div className="flex items-center gap-3">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <button
+                      type="button"
+                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-foreground/82 transition-colors hover:border-border hover:text-foreground"
+                    >
+                      <SlidersHorizontal className="h-4 w-4" />
+                      Filter
+                      {activeFilterCount > 0 ? (
+                        <span className="rounded-full bg-foreground px-2 py-0.5 text-[11px] font-medium leading-none text-background">
+                          {activeFilterCount}
+                        </span>
+                      ) : null}
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    align="end"
+                    className="w-[min(24rem,calc(100vw-2rem))] rounded-3xl border-border/60 bg-background/95 p-5"
+                  >
+                    <div className="space-y-5">
+                      <div className="flex items-center justify-between gap-3">
+                        <div>
+                          <p className="text-sm font-medium text-foreground">Filter articles</p>
+                          <p className="text-xs text-foreground/52">Refine by publication year.</p>
                         </div>
-                      )}
-
-                      <div className="p-5 md:p-6 flex flex-col min-h-[14rem]">
-                        {/* Category Label */}
-                        {article.categoryName && (
-                          <p
-                            className="text-[10px] uppercase tracking-[0.26em] mb-3 font-medium"
-                            style={{ color: categoryColor }}
+                        {selectedYear !== "all" && (
+                          <button
+                            type="button"
+                            onClick={() => setSelectedYear("all")}
+                            className="text-xs text-foreground/55 transition-colors hover:text-foreground"
                           >
-                            {article.categoryName}
-                          </p>
+                            Clear
+                          </button>
                         )}
+                      </div>
 
-                        <h3 className="text-2xl font-['Playfair_Display'] italic font-normal mb-3 transition-colors line-clamp-2 min-h-[3.8rem]"
-                          style={{ color: 'inherit' }}
-                          onMouseEnter={(e) => e.currentTarget.style.color = categoryColor}
-                          onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>
-                          {decodeHTMLEntities(article.title)}
-                        </h3>
-
-                        {article.excerpt && (
-                          <p className="text-base text-muted-foreground line-clamp-2 mb-3 leading-relaxed min-h-[3.1rem]">
-                            {article.excerpt}
-                          </p>
-                        )}
-
-                        <div className="mt-auto pt-3 flex items-center gap-4 text-xs text-muted-foreground">
-                          <span>
-                            {article.publishedAt && new Date(article.publishedAt).toLocaleDateString('en-US', {
-                              month: 'short',
-                              day: 'numeric',
-                              year: 'numeric'
-                            })}
-                          </span>
-                          {article.readTime && (
-                            <>
-                              <span>•</span>
-                              <span>{article.readTime} min read</span>
-                            </>
-                          )}
+                      <div className="space-y-2">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-foreground/45">
+                          Date
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          <button
+                            type="button"
+                            onClick={() => setSelectedYear("all")}
+                            className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
+                              selectedYear === "all"
+                                ? "border-foreground/30 bg-foreground/10 text-foreground"
+                                : "border-border/50 text-foreground/62 hover:border-border hover:text-foreground"
+                            }`}
+                          >
+                            All dates
+                          </button>
+                          {yearOptions.map((year) => (
+                            <button
+                              key={year}
+                              type="button"
+                              onClick={() => setSelectedYear(year)}
+                              className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
+                                selectedYear === year
+                                  ? "border-foreground/30 bg-foreground/10 text-foreground"
+                                  : "border-border/50 text-foreground/62 hover:border-border hover:text-foreground"
+                              }`}
+                            >
+                              {year}
+                            </button>
+                          ))}
                         </div>
                       </div>
                     </div>
-                  </Link>
-                )
-              })}
-            </div>
-          ) : searchQuery ? (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">No articles found matching "{searchQuery}". Try a different search term.</p>
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">No articles yet. Check back soon!</p>
-            </div>
-          )}
-          </div>
-        </div>
-      </section>
+                  </PopoverContent>
+                </Popover>
 
-      {/* Musical Theatre & Cinema Section */}
-      {!selectedCategory && !searchQuery && musicalTheatreArticles.length > 0 && (
-        <section className="py-16 border-t border-border/50">
-          <div className="container">
-            <div className="mb-12 max-w-6xl mx-auto">
-              <p className="text-xs tracking-[0.2em] text-muted-foreground mb-4 font-semibold uppercase">Course Materials</p>
-              <h2 className="text-4xl font-['Playfair_Display'] italic mb-4">Musical Theatre & Cinema</h2>
-              <p className="text-lg text-muted-foreground max-w-2xl">
-                Articles from a course I taught exploring the history and evolution of musical theatre and cinema.
-              </p>
-            </div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button
+                      type="button"
+                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-foreground/82 transition-colors hover:border-border hover:text-foreground"
+                    >
+                      <ArrowUpDown className="h-4 w-4" />
+                      Sort
+                      <ChevronDown className="h-4 w-4" />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    align="end"
+                    className="w-56 rounded-2xl border-border/60 bg-background/95 p-2"
+                  >
+                    {SORT_OPTIONS.map((option) => (
+                      <DropdownMenuItem
+                        key={option.key}
+                        onClick={() => setSortKey(option.key)}
+                        className="flex items-center justify-between rounded-xl px-3 py-2 text-sm"
+                      >
+                        <span>{option.label}</span>
+                        {sortKey === option.key ? <Check className="h-4 w-4" /> : null}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
 
-            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {musicalTheatreArticles.map((article) => {
-                const categoryColor = article.categoryName ? getCategoryColor(article.categoryName).hex : '#9CA3AF';
-                return (
-                  <Link key={article.id} href={`/articles/${article.slug}`}>
-                    <div className="group bg-card/30 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer">
-                      {/* Cover Image */}
-                      {article.coverImageUrl && (
-                        <div className="aspect-[16/9] overflow-hidden">
-                          <img
-                            src={article.coverImageUrl}
-                            alt={`Cover image for article: ${decodeHTMLEntities(article.title)}`}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            loading="lazy"
-                            onError={(e) => {
-                              e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400"%3E%3Crect fill="%23374151" width="400" height="400"/%3E%3Ctext fill="%239CA3AF" font-family="sans-serif" font-size="18" x="50%25" y="50%25" text-anchor="middle" dominant-baseline="middle"%3EImage not available%3C/text%3E%3C/svg%3E';
-                            }}
-                          />
-                        </div>
-                      )}
-
-                      <div className="p-5 md:p-6 flex flex-col min-h-[14rem]">
-                        {/* Category Label */}
-                        {article.categoryName && (
-                          <p
-                            className="text-[10px] uppercase tracking-[0.26em] mb-3 font-medium"
-                            style={{ color: categoryColor }}
-                          >
-                            {article.categoryName}
-                          </p>
-                        )}
-
-                        <h3 className="text-2xl font-['Playfair_Display'] italic font-normal mb-3 transition-colors line-clamp-2 min-h-[3.8rem]"
-                          style={{ color: 'inherit' }}
-                          onMouseEnter={(e) => e.currentTarget.style.color = categoryColor}
-                          onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>
-                          {decodeHTMLEntities(article.title)}
-                        </h3>
-
-                        {article.excerpt && (
-                          <p className="text-base text-muted-foreground line-clamp-2 mb-3 leading-relaxed min-h-[3.1rem]">
-                            {article.excerpt}
-                          </p>
-                        )}
-
-                        <div className="mt-auto pt-3 flex items-center gap-4 text-xs text-muted-foreground">
-                          <span>
-                            {article.publishedAt && new Date(article.publishedAt).toLocaleDateString('en-US', {
-                              month: 'short',
-                              day: 'numeric',
-                              year: 'numeric'
-                            })}
-                          </span>
-                          {article.readTime && (
-                            <>
-                              <span>•</span>
-                              <span>{article.readTime} min read</span>
-                            </>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })}
+                <div className="inline-flex h-10 items-center rounded-full border border-border/50 p-1">
+                  <button
+                    type="button"
+                    onClick={() => setViewMode("grid")}
+                    className={`inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
+                      viewMode === "grid"
+                        ? "bg-foreground text-background"
+                        : "text-foreground/55 hover:text-foreground"
+                    }`}
+                    aria-label="Grid view"
+                  >
+                    <LayoutGrid className="h-4 w-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setViewMode("list")}
+                    className={`inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
+                      viewMode === "list"
+                        ? "bg-foreground text-background"
+                        : "text-foreground/55 hover:text-foreground"
+                    }`}
+                    aria-label="List view"
+                  >
+                    <List className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </section>
-      )}
+
+        {isLoading ? (
+          <PortfolioGridSkeleton />
+        ) : sortedArticles.length > 0 ? (
+          <>
+            {showShowcase && featuredArticle ? (
+              <>
+                <StickyShowcase
+                  accentColors={ACCENT_COLORS}
+                  featuredItem={{
+                    id: featuredArticle.id,
+                    slug: featuredArticle.slug,
+                    title: featuredArticle.title,
+                    client: null,
+                    year: null,
+                    coverImageUrl: featuredArticle.coverImageUrl,
+                  }}
+                  itemAlt={(title) => `Cover image for article: ${title}`}
+                  itemHref={(item) => itemHref(item as ArticleCardItem)}
+                  onNavigate={navigateWithTransition}
+                  railItems={showcaseRailArticles.map((article) => ({
+                    id: article.id,
+                    slug: article.slug,
+                    title: article.title,
+                    client: null,
+                    year: null,
+                    coverImageUrl: article.coverImageUrl,
+                  }))}
+                  title={undefined}
+                  intro={undefined}
+                />
+
+                <section className="pb-20 pt-16 md:pb-28 md:pt-20">
+                  <div className="container max-w-6xl">
+                    <div className="mt-16 border-t border-border/35 pt-8 md:mt-20 md:pt-10">
+                      <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                        More Articles
+                      </p>
+                      <h2 className="max-w-[14ch] font-sans text-[clamp(1.65rem,2.8vw,2.35rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-foreground">
+                        Writing on scenic design and production.
+                      </h2>
+                    </div>
+
+                    <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 md:mt-10">
+                      {showcaseGridArticles.map((article, index) => {
+                        const href = itemHref(article);
+                        const accentColor = article.categoryName
+                          ? getCategoryColor(article.categoryName).hex
+                          : ACCENT_COLORS[index % ACCENT_COLORS.length];
+
+                        return (
+                          <div key={article.id}>
+                            <ArticleGridCard
+                              accentColor={accentColor}
+                              article={article}
+                              eager={index < 8}
+                              href={href}
+                              onNavigate={navigateWithTransition}
+                            />
+                            <div className="mt-2 text-sm text-foreground/45">
+                              {[article.categoryName, formatArticleDate(article)]
+                                .filter(Boolean)
+                                .join(" · ")}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </section>
+              </>
+            ) : (
+              <section className="pb-20 pt-12 md:pb-28 md:pt-14">
+                <div className="container max-w-6xl">
+                  {viewMode === "grid" ? (
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                      {sortedArticles.map((article, index) => {
+                        const href = itemHref(article);
+                        const accentColor = article.categoryName
+                          ? getCategoryColor(article.categoryName).hex
+                          : ACCENT_COLORS[index % ACCENT_COLORS.length];
+
+                        return (
+                          <div key={article.id}>
+                            <ArticleGridCard
+                              accentColor={accentColor}
+                              article={article}
+                              eager={index < 8}
+                              href={href}
+                              onNavigate={navigateWithTransition}
+                            />
+                            <div className="mt-2 text-sm text-foreground/45">
+                              {[article.categoryName, formatArticleDate(article)]
+                                .filter(Boolean)
+                                .join(" · ")}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div className="border-t border-border/35">
+                      {sortedArticles.map((article, index) => {
+                        const href = itemHref(article);
+                        const accentColor = article.categoryName
+                          ? getCategoryColor(article.categoryName).hex
+                          : ACCENT_COLORS[index % ACCENT_COLORS.length];
+
+                        return (
+                          <a
+                            key={article.id}
+                            href={href}
+                            onClick={(event) => navigateWithTransition(event, href)}
+                            className="group grid gap-4 border-b border-border/35 py-5 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8"
+                          >
+                            <div className="space-y-2 text-sm text-foreground/48">
+                              <p className="text-foreground/82">{article.categoryName || "Article"}</p>
+                              <p>
+                                {[formatArticleDate(article), article.readTime ? `${article.readTime} min read` : null]
+                                  .filter(Boolean)
+                                  .join(" · ")}
+                              </p>
+                            </div>
+
+                            <div className="min-w-0">
+                              <p
+                                className="text-[1.12rem] font-normal tracking-[-0.025em]"
+                                style={{ color: accentColor }}
+                              >
+                                {article.title}
+                              </p>
+                              {article.excerpt ? (
+                                <p className="mt-2 max-w-3xl text-sm leading-6 text-foreground/52">
+                                  {article.excerpt}
+                                </p>
+                              ) : null}
+                            </div>
+                          </a>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </section>
+            )}
+          </>
+        ) : (
+          <section className="pb-24 pt-16">
+            <div className="container max-w-6xl text-center">
+              <p className="text-foreground/55">No articles match the current filters.</p>
+            </div>
+          </section>
+        )}
+
+        <section className="border-t border-border/35 py-16 md:py-20">
+          <div className="container max-w-6xl">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+              About These Articles
+            </p>
+            <div className="mt-4 grid gap-10 lg:grid-cols-2">
+              <div className="space-y-5">
+                <h2 className="font-sans text-[clamp(1.6rem,3vw,2.4rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-foreground">
+                  Writing on process, criticism, and production.
+                </h2>
+                <p className="max-w-3xl text-[1rem] leading-7 text-foreground/62 md:text-[1.05rem]">
+                  This section gathers writing on scenic design practice, theatre process, and
+                  production analysis. Some pieces are essays; others are profiles, interviews, or
+                  published reflections tied to specific projects.
+                </p>
+                <p className="max-w-3xl text-[1rem] leading-7 text-foreground/55 md:text-[1.05rem]">
+                  Together they document how design ideas are researched, communicated, and carried
+                  into production, while also tracing the broader artistic questions behind the work.
+                </p>
+              </div>
+
+              <div className="space-y-4 rounded-xl bg-card/20 p-6 md:p-8">
+                <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-foreground/45">
+                  Focus Areas
+                </h3>
+                <ul className="space-y-3 text-sm md:text-base text-foreground/62">
+                  <li>Scenic design process and production method</li>
+                  <li>Design communication, drafting, and rendering workflow</li>
+                  <li>Critical writing on theatre and performance</li>
+                  <li>Editorial features, interviews, and profiles</li>
+                  <li>Context for the portfolio and the work behind it</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
 
       <Footer />
     </div>
+  );
+}
+
+export default function Articles() {
+  return (
+    <PageThemeWrapper forceTheme={null}>
+      <ArticlesContent />
+      <ThemeToggle />
+    </PageThemeWrapper>
   );
 }

@@ -1,27 +1,35 @@
-import { useState, useEffect, useRef } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { Card } from "@/components/ui/card";
-import { ProgressiveImage } from "@/components/ProgressiveImage";
-import { trpc } from "@/lib/trpc";
+import { type CSSProperties, type MouseEvent } from "react";
 import { useLocation } from "wouter";
-import { getProjectPath } from "@/lib/projectRoutes";
-import { FadeIn } from "@/components/animations/FadeIn";
+
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { SEO } from "@/components/SEO";
-import StructuredData from "@/components/StructuredData";
 import { ProjectGridSkeleton } from "@/components/SkeletonLoaders";
-import type { CSSProperties, MouseEvent } from "react";
+import { StickyShowcase } from "@/components/StickyShowcase";
+import StructuredData from "@/components/StructuredData";
+import { trpc } from "@/lib/trpc";
+import { getProjectPath } from "@/lib/projectRoutes";
+
+const ACCENT_COLORS = ["#FF5722", "#00BCD4", "#E91E63", "#FFC107", "#9C27B0"] as const;
 
 export default function Home() {
   const [, setLocation] = useLocation();
-  const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://www.brandonptdavis.com';
+  const baseUrl =
+    typeof window !== "undefined" ? window.location.origin : "https://www.brandonptdavis.com";
   const { data: allProjects, isLoading: projectsLoading } = trpc.projects.list.useQuery({
-    status: 'published',
-    discipline: 'scenic_design'
+    status: "published",
+    discipline: "scenic_design",
   });
 
-  const projects = allProjects;
+  const projects = allProjects || [];
+  const [featuredProject, ...remainingProjects] = projects;
+  const sideProjects = remainingProjects.slice(0, 3);
+  const gridProjects = remainingProjects.slice(3);
   const scenicAlt = (title: string) => `${title} scenic design by Brandon PT Davis`;
+  const homepageIntro =
+    "Brandon PT Davis is a scenic designer creating story-driven environments for regional theatre, summer stock, and academic production.";
+
   const animateCardDeparture = async (target: HTMLElement) => {
     const card = target.querySelector(".transition-card") as HTMLElement | null;
     if (!card || typeof card.animate !== "function") return;
@@ -35,11 +43,19 @@ export default function Home() {
     try {
       await animation.finished;
     } catch {
-      // ignore interrupted animation
+      // Ignore interrupted animation.
     }
   };
+
   const navigateWithTransition = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
       return;
     }
     event.preventDefault();
@@ -68,7 +84,8 @@ export default function Home() {
           jobTitle: "Scenic Designer",
           url: baseUrl,
           image: "https://www.brandonptdavis.com/android-chrome-512x512.png",
-          description: "Union scenic designer based in Southern California with 130+ production credits across regional theatre, summer stock, and academic stages. Member of USA 829.",
+          description:
+            "Union scenic designer based in Southern California with 130+ production credits across regional theatre, summer stock, and academic stages. Member of USA 829.",
           email: "info@brandonptdavis.com",
           address: {
             addressLocality: "Irvine",
@@ -111,7 +128,8 @@ export default function Home() {
           name: "Brandon PT Davis Design",
           url: baseUrl,
           image: "https://www.brandonptdavis.com/android-chrome-512x512.png",
-          description: "Scenic design studio focused on story-driven environments for regional theatre, summer stock, and academic production.",
+          description:
+            "Scenic design studio focused on story-driven environments for regional theatre, summer stock, and academic production.",
           founder: {
             name: "Brandon PT Davis",
             url: `${baseUrl}/about`,
@@ -147,9 +165,7 @@ export default function Home() {
       />
       <StructuredData
         type="BreadcrumbList"
-        breadcrumbs={[
-          { name: "Home", url: "https://www.brandonptdavis.com" },
-        ]}
+        breadcrumbs={[{ name: "Home", url: "https://www.brandonptdavis.com" }]}
       />
       <SEO
         title="Brandon PT Davis | Scenic Designer"
@@ -157,79 +173,85 @@ export default function Home() {
         keywords="scenic designer, scenic design portfolio, USA 829 scenic designer, Southern California scenic designer, regional theatre design, stage design, Brandon PT Davis"
         url="https://www.brandonptdavis.com"
       />
+
       <Header />
 
-      <section className="pt-14 md:pt-20 pb-8 md:pb-10">
-        <div className="container text-center">
-          <p className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground mb-4">Portfolio</p>
-          <h1 className="text-5xl md:text-7xl font-serif tracking-tight leading-[0.92] mb-4">
-            Scenic Design by Brandon PT Davis
-          </h1>
-          <p className="mx-auto max-w-3xl text-lg md:text-xl text-foreground/75 leading-relaxed">
-            Union scenic designer crafting narrative environments for regional theatre, classical work, and new productions.
-          </p>
-        </div>
-      </section>
+      <main>
+        {projectsLoading ? (
+          <ProjectGridSkeleton />
+        ) : featuredProject ? (
+          <>
+            <StickyShowcase
+              accentColors={ACCENT_COLORS}
+              featuredItem={featuredProject}
+              intro={homepageIntro}
+              itemAlt={scenicAlt}
+              itemHref={getProjectPath}
+              onNavigate={navigateWithTransition}
+              railItems={sideProjects}
+              title="Scenic Design by Brandon PT Davis"
+            />
 
-      {projectsLoading ? (
-        <ProjectGridSkeleton />
-      ) : projects && projects.length > 0 ? (
-        <FadeIn>
-          <section className="pt-8 md:pt-10 pb-20 md:pb-28">
-            <div className="container">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {projects.map((project, index) => {
-                  const accentColors = [
-                    '#FF5722',
-                    '#00BCD4',
-                    '#E91E63',
-                    '#FFC107',
-                    '#9C27B0',
-                  ];
-                  const accentColor = accentColors[index % accentColors.length];
-                  const href = getProjectPath(project);
+            <section className="pb-20 pt-16 md:pb-28 md:pt-20">
+              <div className="container max-w-6xl">
+                <div className="mt-16 border-t border-border/35 pt-8 md:mt-20 md:pt-10">
+                  <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                    Selected Productions
+                  </p>
+                  <h2 className="max-w-[14ch] font-sans text-[clamp(1.65rem,2.8vw,2.35rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-foreground">
+                    More scenic design work.
+                  </h2>
+                </div>
 
-                  return (
-                    <a key={project.id} href={href} onClick={(event) => navigateWithTransition(event, href)}>
-                      <Card className="group border-0 bg-transparent shadow-none">
-                        <div
-                          className="transition-card relative aspect-[16/9] overflow-hidden rounded-md"
-                          style={{ viewTransitionName: `project-card-${project.slug}` } as CSSProperties}
-                        >
-                          {project.coverImageUrl ? (
-                            <ProgressiveImage
-                              src={project.coverImageUrl}
-                              alt={scenicAlt(project.title)}
-                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                              aspectRatio="16/9"
-                              smartPosition={true}
-                              loading={index < 4 ? "eager" : "lazy"}
-                              fetchPriority={index === 0 ? "high" : undefined}
-                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 25vw, 20vw"
-                            />
-                          ) : (
-                            <div className="h-full w-full bg-muted" />
-                          )}
-                        </div>
-                        <div className="pt-2 text-center">
-                          <h3
-                            className="text-xs font-semibold tracking-[0.3em] uppercase"
-                            style={{ color: accentColor }}
+                <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 md:mt-10">
+                  {gridProjects.map((project, index) => {
+                    const href = getProjectPath(project);
+
+                    return (
+                      <a
+                        key={project.id}
+                        href={href}
+                        onClick={(event) => navigateWithTransition(event, href)}
+                      >
+                        <div className="group">
+                          <div
+                            className="transition-card relative aspect-[1/1] overflow-hidden rounded-md bg-background/50"
+                            style={
+                              { viewTransitionName: `project-card-${project.slug}` } as CSSProperties
+                            }
                           >
-                            {project.title}
-                          </h3>
+                            {project.coverImageUrl ? (
+                              <ProgressiveImage
+                                src={project.coverImageUrl}
+                                alt={scenicAlt(project.title)}
+                                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                                aspectRatio="1/1"
+                                smartPosition={true}
+                                loading={index < 8 ? "eager" : "lazy"}
+                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 25vw, 20vw"
+                              />
+                            ) : (
+                              <div className="h-full w-full bg-muted" />
+                            )}
+                          </div>
+                          <div className="pt-4">
+                            <p
+                              className="text-[1.02rem] font-normal tracking-[-0.02em]"
+                              style={{ color: ACCENT_COLORS[index % ACCENT_COLORS.length] }}
+                            >
+                              {project.title}
+                            </p>
+                          </div>
                         </div>
-                      </Card>
-                    </a>
-                  );
-                })}
+                      </a>
+                    );
+                  })}
+                </div>
               </div>
-
-
-            </div>
-          </section>
-        </FadeIn>
-      ) : null}
+            </section>
+          </>
+        ) : null}
+      </main>
 
       <Footer />
     </>

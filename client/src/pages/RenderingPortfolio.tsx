@@ -3,7 +3,6 @@ import { Link } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
-import { AnimatedSection } from "@/components/AnimatedSection";
 import { RenderingFAQ } from "@/components/RenderingFAQ";
 import { ProcessGalleryModal } from "@/components/ProcessGalleryModal";
 import { useEffect, useMemo, useState } from "react";
@@ -115,6 +114,7 @@ export default function RenderingPortfolio() {
     altText: p.title,
     slug: p.slug,
     year: p.year,
+    client: p.client,
     excerpt: p.excerpt
   })) || [];
 
@@ -156,6 +156,14 @@ export default function RenderingPortfolio() {
 
   const currentImage = currentProjectImages[currentImageIndex];
   const totalProjects = galleryDisplayItems.length;
+  const showcaseItems = [...featuredDisplayItems, ...galleryDisplayItems]
+    .filter((item) => item.slug && item.imageUrl)
+    .slice(0, 4);
+  const showcaseFeatured = showcaseItems[0];
+  const showcaseSupporting = showcaseItems.slice(1, 4);
+  const remainingFeaturedItems = featuredDisplayItems.filter(
+    (item) => !showcaseItems.some((showcaseItem) => showcaseItem.id === item.id)
+  );
   const renderingPortfolioImage =
     featuredDisplayItems[0]?.imageUrl || galleryDisplayItems[0]?.imageUrl || undefined;
   const renderingPortfolioUpdatedDate = (projects || []).reduce((latest, project) => {
@@ -193,7 +201,7 @@ export default function RenderingPortfolio() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background">
       <SEO
         title={RENDERING_PORTFOLIO_TITLE}
         description={RENDERING_PORTFOLIO_DESCRIPTION}
@@ -261,165 +269,146 @@ export default function RenderingPortfolio() {
       />
       <Header />
 
-      {/* Hero Section */}
-      <section className="py-32 border-b border-border">
-        <div className="container max-w-4xl">
-          <AnimatedSection>
-            <div className="space-y-12 text-center">
-              <h1 className="text-6xl md:text-8xl font-black tracking-tight">
-                Renderings
-              </h1>
-
-              <div className="space-y-8 max-w-3xl mx-auto">
-                <p className="text-2xl md:text-3xl leading-relaxed font-extralight">
-                  Rendering is not documentation.
-                  <br />
-                  It is <em className="font-['Playfair_Display'] not-italic">authored visual storytelling</em>—
-                  <br />
-                  a deliberate act of framing light, material, and atmosphere
-                  <br />
-                  to communicate emotion before function.
-                </p>
-              </div>
-            </div>
-          </AnimatedSection>
+      <section className="pt-12 md:pt-16">
+        <div className="container max-w-6xl">
+          <div className="mx-auto max-w-5xl text-center">
+            <h1 className="font-sans text-[clamp(2.5rem,6vw,5.3rem)] font-normal leading-[0.94] tracking-[-0.06em] text-foreground">
+              Renderings
+            </h1>
+            <p className="mx-auto mt-6 max-w-[44rem] text-[clamp(1.04rem,1.7vw,1.5rem)] leading-[1.5] tracking-[-0.02em] text-foreground/76">
+              Pre-production renderings developed to clarify atmosphere, spatial rhythm, and visual intent
+              before teams move into drafting, budgeting, and fabrication.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* SECTION 1: Featured Projects (Full Pages) */}
-      {featuredDisplayItems.length > 0 && (
-        <section className="py-20">
+      {showcaseItems.length > 0 && (
+        <section className="pb-10 pt-14 md:pb-14 md:pt-16">
           <div className="container max-w-6xl">
-            <AnimatedSection>
-              <h2 className="text-sm uppercase tracking-[0.3em] text-muted-foreground font-medium text-center mb-16">
-                Selected Works
+            <div className="border-t border-white/12 pt-5">
+              <p className="text-[0.78rem] uppercase tracking-[0.24em] text-foreground/46">Concept Renderings</p>
+              <h2 className="mt-3 max-w-[18ch] font-sans text-[clamp(1.9rem,3vw,3.1rem)] font-normal leading-[0.98] tracking-[-0.05em] text-foreground">
+                Image-first concept work built to establish scenic tone and visual argument.
               </h2>
-            </AnimatedSection>
+              <p className="mt-4 max-w-[42rem] text-[1rem] leading-8 text-foreground/72">
+                These featured renderings are closer to concept framing than documentation: atmosphere, material
+                language, and narrative tone established early enough to guide scenic design conversations.
+              </p>
+            </div>
 
-            <div className="space-y-24">
-              {featuredDisplayItems.map((item, index) => {
-                const accentColors = ['#FF5722', '#00BCD4', '#E91E63', '#FFC107', '#9C27B0'];
-                const accentColor = accentColors[index % accentColors.length];
-                return (
-                <AnimatedSection key={item.id}>
-                  <div className="group block relative">
-                    <Link href={`/projects/rendering/${item.slug}`}>
-                      <article className="space-y-6 cursor-pointer">
-                        <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-muted">
-                          {item.imageUrl ? (
-                            <ProgressiveImage
-                              src={item.imageUrl}
-                              alt={item.altText}
-                              className="w-full h-full object-cover transition-all duration-700 group-hover:opacity-95 group-hover:scale-[1.005]"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                              Image failed to load
-                            </div>
-                          )}
-
-                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                            <span className="bg-background/80 backdrop-blur px-4 py-2 rounded-full text-xs uppercase tracking-widest font-medium">View Project</span>
-                          </div>
-                        </div>
-
-                        <div className="text-center space-y-2">
-                          <h2 className="text-3xl md:text-4xl font-bold transition-colors" style={{ color: accentColor }}>
-                            {item.title}
-                          </h2>
-                          {item.year && (
-                            <p className="text-sm text-muted-foreground tracking-wider">
-                              {item.year}
-                            </p>
-                          )}
-                        </div>
-                      </article>
-                    </Link>
-                  </div>
-                </AnimatedSection>
-                );
-              })}
+            <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
+              {showcaseItems.map((item) => (
+                <Link key={item.id} href={`/projects/rendering/${item.slug}`}>
+                  <a className="group block">
+                    <div className="overflow-hidden rounded-xl bg-white/[0.02] p-3">
+                      <div className="flex h-[20rem] items-center justify-center md:h-[22rem]">
+                        <ProgressiveImage
+                          src={item.imageUrl!}
+                          alt={item.altText}
+                          className="max-h-full w-auto max-w-full rounded-lg object-contain transition-transform duration-500 group-hover:scale-[1.015]"
+                        />
+                      </div>
+                    </div>
+                    <div className="pt-3">
+                      <h3 className="text-[1.12rem] font-sans font-normal leading-[1.14] tracking-[-0.03em] text-foreground">
+                        {item.title}
+                      </h3>
+                      <p className="mt-1 text-[0.94rem] tracking-[-0.02em] text-foreground/52">
+                        {[item.client, item.year].filter(Boolean).join(" · ")}
+                      </p>
+                    </div>
+                  </a>
+                </Link>
+              ))}
             </div>
           </div>
         </section>
       )}
 
-      <section className="py-20 border-t border-border bg-muted/15">
-        <div className="container max-w-6xl">
-          <AnimatedSection>
-            <div className="grid gap-10 lg:grid-cols-2">
-              <div className="space-y-5">
-                <h2 className="text-4xl md:text-5xl font-black tracking-tighter leading-tight">
-                  Rendering Approach
-                </h2>
-                <p className="text-lg leading-relaxed text-muted-foreground">
-                  These renderings are developed as communication tools for directors, collaborators, and production teams. Each image is composed to clarify spatial intent, mood, and material hierarchy before fabrication.
-                </p>
-                <p className="text-lg leading-relaxed text-muted-foreground">
-                  The objective is clarity with atmosphere: images that can guide conversation, reduce ambiguity, and keep artistic decisions aligned from concept to implementation.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-border/60 bg-card/25 p-6 md:p-8">
-                <h3 className="mb-4 text-xs uppercase tracking-[0.22em] text-muted-foreground font-semibold">
-                  What This Section Shows
-                </h3>
-                <ul className="space-y-3 text-sm md:text-base text-muted-foreground">
-                  <li>Concept-focused hero renderings</li>
-                  <li>Archive studies and alternate directions</li>
-                  <li>Material, light, and atmosphere decisions</li>
-                  <li>Image sets used for team alignment</li>
-                </ul>
-              </div>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* SECTION 2: Rendering Gallery (Modals) */}
-      {galleryDisplayItems.length > 0 && (
-        <section className="py-20 border-t border-border">
-          <div className="container max-w-7xl">
-            <AnimatedSection>
-              <h2 className="text-sm uppercase tracking-[0.3em] text-muted-foreground font-medium text-center mb-16">
-                Archive & Exploration
+      {remainingFeaturedItems.length > 0 && (
+        <section className="pb-8 pt-16 md:pb-12">
+          <div className="container max-w-6xl">
+            <div className="mb-8 flex items-end justify-between">
+              <h2 className="text-2xl md:text-3xl font-sans font-normal tracking-[-0.05em] text-foreground">
+                Scenic Design Renderings
               </h2>
-            </AnimatedSection>
+            </div>
 
-            {/* 3-Column Grid for Gallery */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {galleryDisplayItems.map((item, index) => (
-                <AnimatedSection key={item.id} delay={index * 0.05}>
-                  <div
-                    className="group cursor-pointer"
-                    onClick={() => {
-                      setCurrentProjectIndex(index);
-                      setCurrentImageIndex(0);
-                      setModalOpen(true);
-                    }}
-                  >
-                    <div className="space-y-4">
-                      <div className="relative aspect-[16/9] rounded-lg overflow-hidden bg-muted">
-                        {item.imageUrl && (
-                          <ProgressiveImage
-                            src={item.imageUrl}
-                            alt={item.altText}
-                            className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
-                          />
-                        )}
-                        {/* Overlay Icon */}
-                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                          <div className="bg-white/10 backdrop-blur-md p-3 rounded-full text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" /></svg>
-                          </div>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {remainingFeaturedItems.map((item) => (
+                <Link key={item.id} href={`/projects/rendering/${item.slug}`}>
+                  <a className="group block">
+                    <div className="aspect-[16/10] overflow-hidden rounded-xl bg-white/[0.02]">
+                      {item.imageUrl ? (
+                        <ProgressiveImage
+                          src={item.imageUrl}
+                          alt={item.altText}
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                        />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center text-foreground/42">
+                          Image unavailable
                         </div>
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-lg leading-tight group-hover:text-primary transition-colors">{item.title}</h3>
-                        <p className="text-sm text-muted-foreground">{item.year}</p>
-                      </div>
+                      )}
+                    </div>
+                    <div className="pt-4">
+                      <h3 className="text-[1.35rem] font-sans font-normal leading-[1.08] tracking-[-0.04em] text-foreground">
+                        {item.title}
+                      </h3>
+                      <p className="mt-2 text-[0.98rem] tracking-[-0.02em] text-foreground/54">
+                        {[item.client, item.year].filter(Boolean).join(" · ")}
+                      </p>
+                    </div>
+                  </a>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {galleryDisplayItems.length > 0 && (
+        <section className="border-t border-white/12 py-16 md:py-20">
+          <div className="container max-w-6xl">
+            <div className="mb-8 flex items-end justify-between">
+              <h2 className="text-2xl md:text-3xl font-sans font-normal tracking-[-0.05em] text-foreground">
+                Process and Alternate Views
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {galleryDisplayItems.map((item, index) => (
+                <div
+                  key={item.id}
+                  className="group cursor-pointer"
+                  onClick={() => {
+                    setCurrentProjectIndex(index);
+                    setCurrentImageIndex(0);
+                    setModalOpen(true);
+                  }}
+                >
+                  <div className="space-y-4">
+                    <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-white/[0.02]">
+                      {item.imageUrl && (
+                        <ProgressiveImage
+                          src={item.imageUrl}
+                          alt={item.altText}
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                        />
+                      )}
+                      <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/12" />
+                    </div>
+                    <div>
+                      <h3 className="text-[1.25rem] font-sans font-normal leading-[1.12] tracking-[-0.04em] text-foreground">
+                        {item.title}
+                      </h3>
+                      <p className="mt-2 text-[0.98rem] tracking-[-0.02em] text-foreground/54">
+                        {[item.client, item.year].filter(Boolean).join(" · ")}
+                      </p>
                     </div>
                   </div>
-                </AnimatedSection>
+                </div>
               ))}
             </div>
           </div>
@@ -447,6 +436,31 @@ export default function RenderingPortfolio() {
           categoryLabel="Rendering"
         />
       )}
+
+      <section className="border-t border-white/12 py-16 md:py-20">
+        <div className="container max-w-6xl">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-sans font-normal tracking-[-0.05em] text-foreground">
+                Rendering in Practice
+              </h2>
+              <p className="mt-5 max-w-[40rem] text-[1.04rem] leading-8 text-foreground/72">
+                These renderings are built to align collaborators before scenic decisions harden into drafting,
+                budgets, and construction. The focus is always readability: atmosphere, composition, material
+                hierarchy, and staging intent made clear early enough to shape the conversation.
+              </p>
+            </div>
+            <div className="max-w-[34rem]">
+              <ul className="space-y-3 text-[1rem] leading-7 text-foreground/68">
+                <li>Atmosphere and light studies for design alignment</li>
+                <li>Visual communication for directors and collaborators</li>
+                <li>Renderings that clarify scenic rhythm and staging focus</li>
+                <li>Alternate views and exploratory image sets for process review</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <RenderingFAQ />
 

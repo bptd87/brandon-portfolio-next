@@ -12,9 +12,47 @@ import { initPostHog } from "./lib/posthog";
 import { handleSessionToken, getStoredSessionToken } from "./lib/sessionHandler";
 import "./index.css";
 
+const LOCALHOST_HOSTNAMES = new Set(["localhost", "127.0.0.1"]);
+const LOCALHOST_CACHE_RESET_KEY = "__localhost-cache-reset__";
+
+const resetLocalhostServiceWorker = async () => {
+  if (typeof window === "undefined") return;
+  if (!LOCALHOST_HOSTNAMES.has(window.location.hostname)) return;
+
+  const hadResetFlag = window.sessionStorage.getItem(LOCALHOST_CACHE_RESET_KEY) === "done";
+  let shouldReload = false;
+
+  if ("serviceWorker" in navigator) {
+    const registrations = await navigator.serviceWorker.getRegistrations();
+    if (registrations.length > 0) {
+      shouldReload = true;
+      await Promise.all(registrations.map((registration) => registration.unregister()));
+    }
+  }
+
+  if ("caches" in window) {
+    const cacheKeys = await caches.keys();
+    if (cacheKeys.length > 0) {
+      shouldReload = true;
+      await Promise.all(cacheKeys.map((cacheKey) => caches.delete(cacheKey)));
+    }
+  }
+
+  if (shouldReload && !hadResetFlag) {
+    window.sessionStorage.setItem(LOCALHOST_CACHE_RESET_KEY, "done");
+    window.location.reload();
+    return;
+  }
+
+  if (!shouldReload && hadResetFlag) {
+    window.sessionStorage.removeItem(LOCALHOST_CACHE_RESET_KEY);
+  }
+};
+
 // Handle session token from URL (for browsers that block third-party cookies)
 handleSessionToken();
 initPostHog();
+void resetLocalhostServiceWorker();
 
 // Suppress ResizeObserver loop errors (known Safari bug)
 const resizeObserverErr = window.console.error;

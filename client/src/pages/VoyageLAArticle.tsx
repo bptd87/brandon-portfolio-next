@@ -1,14 +1,48 @@
-import { ArrowLeft, ArrowUpRight, CalendarDays } from "lucide-react";
+import { ArrowUpRight, Check, Clock, Link as LinkIcon } from "lucide-react";
+import { useState } from "react";
 import { Link } from "wouter";
 
-import { Breadcrumb } from "@/components/Breadcrumb";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import { voyageLaArticle } from "@shared/publicContent";
 
+const estimateReadTime = () => {
+  const words = voyageLaArticle.sections.reduce((count, section) => {
+    const paragraphWords = section.paragraphs.reduce(
+      (sum, paragraph) => sum + paragraph.split(/\s+/).filter(Boolean).length,
+      0,
+    );
+    const bulletWords = (section.bullets || []).reduce(
+      (sum, bullet) => sum + bullet.split(/\s+/).filter(Boolean).length,
+      0,
+    );
+    return count + paragraphWords + bulletWords + section.title.split(/\s+/).filter(Boolean).length;
+  }, 0);
+
+  return Math.max(1, Math.ceil(words / 200));
+};
+
 export default function VoyageLAArticle() {
+  const [linkCopied, setLinkCopied] = useState(false);
+  const readTime = estimateReadTime();
+
+  const handleShare = async () => {
+    const url = window.location.href;
+    try {
+      await navigator.clipboard.writeText(url);
+      setLinkCopied(true);
+      toast.success("Link copied to clipboard");
+      window.setTimeout(() => setLinkCopied(false), 1800);
+    } catch {
+      setLinkCopied(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <SEO
@@ -50,100 +84,132 @@ export default function VoyageLAArticle() {
       />
       <Header />
 
-      <div className="container py-6">
-        <Breadcrumb items={[{ label: "Articles", href: "/articles" }, { label: voyageLaArticle.title }]} />
-      </div>
+      <article className="py-12 md:py-16">
+        <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
+          <header className="mx-auto max-w-5xl text-center">
+            <div className="flex flex-wrap items-center justify-center gap-4 text-[0.96rem] tracking-[-0.02em] text-foreground/58">
+              <time dateTime={new Date(voyageLaArticle.publishedAt).toISOString()}>
+                {new Date(voyageLaArticle.publishedAt).toLocaleDateString("en-US", {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+              </time>
+              <Link href={`/articles?category=${encodeURIComponent(voyageLaArticle.categoryName)}`}>
+                <a className="transition-colors hover:text-foreground">{voyageLaArticle.categoryName}</a>
+              </Link>
+            </div>
 
-      <section className="pt-10 pb-16">
-        <div className="container max-w-5xl">
-          <Link href="/articles" className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
-            <ArrowLeft className="h-4 w-4" />
-            Back to Articles
-          </Link>
+            <h1 className="mx-auto mt-6 max-w-[15ch] font-sans text-[clamp(2.4rem,5vw,5.2rem)] font-normal leading-[0.94] tracking-[-0.06em] text-foreground">
+              {voyageLaArticle.title}
+            </h1>
 
-          <div className="mt-8 overflow-hidden rounded-3xl border border-border/60 bg-card/20">
-            <div className="aspect-[16/9] overflow-hidden">
-              <img
+            <p className="mx-auto mt-6 max-w-[44rem] text-[clamp(1.04rem,1.6vw,1.55rem)] leading-[1.5] tracking-[-0.02em] text-foreground/78">
+              {voyageLaArticle.excerpt}
+            </p>
+
+            <div className="mx-auto mt-10 max-w-[82rem] overflow-hidden rounded-xl">
+              <ProgressiveImage
                 src={voyageLaArticle.coverImageUrl}
                 alt={voyageLaArticle.coverImageAlt}
-                className="h-full w-full object-cover"
+                loading="eager"
+                className="h-auto w-full"
               />
             </div>
-            <div className="space-y-6 p-7 md:p-10">
-              <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#FF9800]">
-                {voyageLaArticle.categoryName}
-              </p>
-              <div className="space-y-4">
-                <h1 className="text-4xl font-black tracking-tight md:text-6xl">{voyageLaArticle.title}</h1>
-                <p className="max-w-3xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-                  {voyageLaArticle.excerpt}
-                </p>
-              </div>
-              <div className="flex flex-wrap items-center gap-4 text-sm text-foreground/70">
-                <span className="inline-flex items-center gap-2">
-                  <CalendarDays className="h-4 w-4" />
-                  {new Date(voyageLaArticle.publishedAt).toLocaleDateString("en-US", {
-                    month: "long",
-                    day: "numeric",
-                    year: "numeric",
-                  })}
-                </span>
-                {voyageLaArticle.sourcePublication && (
-                  <span className="rounded-full border border-border px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em]">
-                    {voyageLaArticle.sourcePublication}
-                  </span>
-                )}
+
+            <div className="mx-auto mt-8 flex w-full max-w-[58rem] items-center justify-between gap-6 border-y border-white/14 py-4 text-foreground/72">
+              <span className="inline-flex items-center gap-2 text-[0.98rem] tracking-[-0.02em]">
+                <Clock className="h-4 w-4" />
+                {readTime} min read
+              </span>
+
+              <button
+                type="button"
+                onClick={handleShare}
+                className="inline-flex items-center gap-2 text-[0.98rem] tracking-[-0.02em] transition-colors hover:text-foreground"
+              >
+                {linkCopied ? <Check className="h-4 w-4" /> : <LinkIcon className="h-4 w-4" />}
+                <span>{linkCopied ? "Link copied" : "Share"}</span>
+              </button>
+            </div>
+          </header>
+
+          <div className="mx-auto mt-14 max-w-[58rem]">
+            <div className="mx-auto max-w-[58ch]">
+              {voyageLaArticle.sections.map((section) => (
+                <section key={section.title} className="border-t border-white/12 py-12 first:border-t-0 first:pt-0">
+                  <h2 className="mb-5 font-sans text-[1.9rem] font-normal leading-[1.08] tracking-[-0.04em] text-foreground">
+                    {section.title}
+                  </h2>
+
+                  <div className="space-y-7">
+                    {section.paragraphs.map((paragraph) => (
+                      <p
+                        key={paragraph}
+                        className="text-[1.08rem] leading-[1.82] tracking-normal text-foreground/88"
+                      >
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+
+                  {section.bullets && section.bullets.length > 0 && (
+                    <ul className="mt-8 space-y-4 pl-6 text-[1.0625rem] leading-[1.75] text-foreground/84 marker:text-white/55 list-disc">
+                      {section.bullets.map((bullet) => (
+                        <li key={bullet}>{bullet}</li>
+                      ))}
+                    </ul>
+                  )}
+                </section>
+              ))}
+
+              {voyageLaArticle.sourceUrl && (
+                <div className="mt-4 border-t border-white/12 pt-12">
+                  <p className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-foreground/48">
+                    Original publication
+                  </p>
+                  <a
+                    href={voyageLaArticle.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-lg font-normal tracking-[-0.03em] text-foreground transition-colors hover:text-foreground/75"
+                  >
+                    Read the VoyageLA interview
+                    <ArrowUpRight className="h-4 w-4" />
+                  </a>
+                </div>
+              )}
+
+              <div className="mt-16 border-t border-white/12 pt-12">
+                <div className="flex items-start gap-6">
+                  <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-full border border-white/12">
+                    <img
+                      src="/brandon%20pt%20davis.jpeg"
+                      alt="Brandon PT Davis"
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="mb-2 font-sans text-2xl font-normal tracking-[-0.04em] text-foreground">
+                      Brandon PT Davis
+                    </h3>
+                    <p className="mb-4 text-sm uppercase tracking-[0.16em] text-foreground/48">Scenic Designer</p>
+                    <p className="leading-relaxed text-foreground/78">
+                      Brandon PT Davis is a scenic designer based in Los Angeles. His work explores physical space,
+                      digital technology, and story-driven environments for live performance.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </article>
 
-      <section className="pb-24">
-        <div className="container max-w-4xl">
-          <div className="space-y-12 rounded-3xl border border-border/60 bg-card/10 p-8 md:p-10">
-            {voyageLaArticle.sections.map((section) => (
-              <section key={section.title} className="space-y-4">
-                <h2 className="text-2xl font-bold md:text-3xl">{section.title}</h2>
-                {section.paragraphs.map((paragraph) => (
-                  <p key={paragraph} className="text-base leading-relaxed text-muted-foreground md:text-lg">
-                    {paragraph}
-                  </p>
-                ))}
-                {section.bullets && section.bullets.length > 0 && (
-                  <ul className="space-y-2 text-base leading-relaxed text-muted-foreground md:text-lg">
-                    {section.bullets.map((bullet) => (
-                      <li key={bullet} className="flex gap-3">
-                        <span className="mt-2 h-2 w-2 rounded-full bg-[#FF9800]" />
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </section>
-            ))}
-
-            {voyageLaArticle.sourceUrl && (
-              <div className="rounded-2xl border border-border bg-background/60 p-5">
-                <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-foreground/60">
-                  Original publication
-                </p>
-                <a
-                  href={voyageLaArticle.sourceUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-base font-semibold text-[#FF9800] transition-opacity hover:opacity-80"
-                >
-                  Read the VoyageLA interview
-                  <ArrowUpRight className="h-4 w-4" />
-                </a>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      <Footer />
+      <div className="relative z-20 bg-background">
+        <Footer />
+      </div>
     </div>
   );
 }

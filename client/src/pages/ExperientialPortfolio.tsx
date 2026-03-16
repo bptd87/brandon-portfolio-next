@@ -12,7 +12,6 @@ import StructuredData from "@/components/StructuredData";
 import { trpc } from "@/lib/trpc";
 import { getVideoThumbnail } from "@/lib/videoUtils";
 
-const SECTION_ACCENTS = ["#00BCD4", "#FFC107", "#E91E63", "#4CAF50", "#FF5722"];
 const EXPERIENTIAL_PORTFOLIO_URL = "https://www.brandonptdavis.com/projects/experiential";
 const EXPERIENTIAL_PORTFOLIO_TITLE =
   "Experiential Projects by a Scenic Designer | Renderings, Technical Drawing, Live Events | Brandon PT Davis";
@@ -66,7 +65,6 @@ function GalleryCardGrid({
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((item, index) => {
-        const accentColor = SECTION_ACCENTS[index % SECTION_ACCENTS.length];
         const displayImage = item.imageUrl || (item.videoUrl ? getVideoThumbnail(item.videoUrl) : null);
 
         return (
@@ -92,14 +90,7 @@ function GalleryCardGrid({
                   </div>
                 )}
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <div className="absolute bottom-4 left-4 right-4">
-                    {item.displayTitle && (
-                      <h3 className="text-sm font-bold" style={{ color: accentColor }}>
-                        {item.displayTitle}
-                      </h3>
-                    )}
-                  </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                     <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 backdrop-blur">
                       <Search className="h-5 w-5 text-white" />
@@ -109,13 +100,13 @@ function GalleryCardGrid({
               </div>
               <div className="mt-3 min-h-[4.75rem] space-y-1">
                 {item.displayTitle && (
-                  <h3 className="text-sm font-semibold leading-snug" style={{ color: accentColor }}>
+                  <h3 className="text-[1rem] font-medium leading-snug tracking-[-0.02em] text-foreground">
                     {item.displayTitle}
                   </h3>
                 )}
                 {item.description ? (
                   <p
-                    className="text-xs leading-relaxed text-white/70"
+                    className="text-sm leading-6 text-white/62"
                     style={{
                       display: "-webkit-box",
                       WebkitLineClamp: 2,
@@ -140,7 +131,6 @@ function PortfolioSection({
   eyebrow,
   title,
   copy,
-  accent,
   items,
   onItemClick,
   cardAspectClass,
@@ -152,7 +142,6 @@ function PortfolioSection({
   eyebrow: string;
   title: string;
   copy: string;
-  accent: string;
   items: GalleryItem[];
   onItemClick: (index: number) => void;
   cardAspectClass?: string;
@@ -161,15 +150,17 @@ function PortfolioSection({
   cardRoundedClass?: string;
 }) {
   return (
-    <section id={id} className="border-t border-border py-20 md:py-28">
+    <section id={id} className="border-t border-white/12 py-20 md:py-24">
       <div className="container max-w-6xl">
         <AnimatedSection>
-          <div className="mb-12 text-center md:mb-14">
-            <p className="mb-4 text-xs font-bold uppercase tracking-[0.28em]" style={{ color: accent }}>
+          <div className="mb-10 md:mb-12">
+            <p className="mb-4 text-xs font-bold uppercase tracking-[0.28em] text-white/48">
               {eyebrow}
             </p>
-            <h2 className="mx-auto mb-5 max-w-4xl text-4xl font-black tracking-tight md:text-6xl">{title}</h2>
-            <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground md:text-xl">{copy}</p>
+            <h2 className="mb-5 max-w-4xl font-sans text-3xl font-normal leading-[0.96] tracking-[-0.05em] text-foreground md:text-5xl">
+              {title}
+            </h2>
+            <p className="max-w-3xl text-[1.02rem] leading-8 text-white/68 md:text-[1.08rem]">{copy}</p>
           </div>
         </AnimatedSection>
 
@@ -193,11 +184,11 @@ function BrandsGrid() {
   if (!brands || brands.length === 0) return null;
 
   return (
-    <section className="border-b border-border/70 py-14">
+    <section className="border-b border-white/12 py-14">
       <div className="container max-w-6xl">
         <AnimatedSection>
           <div className="mb-8 text-center">
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-cyan-300">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-white/48">
               Selected Project Brands
             </p>
             <p className="mx-auto max-w-3xl text-sm leading-relaxed text-white/65">
@@ -206,11 +197,10 @@ function BrandsGrid() {
           </div>
         </AnimatedSection>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-          {brands.map((brand, index) => (
+          {brands.map((brand) => (
             <AnimatedSection key={brand.id}>
               <div
-                className="group flex aspect-square items-center justify-center rounded-xl border border-border/60 bg-card/20 p-4 transition-colors hover:border-white/50"
-                style={{ boxShadow: `inset 0 0 0 1px ${SECTION_ACCENTS[index % SECTION_ACCENTS.length]}20` }}
+                className="group flex aspect-square items-center justify-center rounded-xl border border-white/12 bg-white/[0.02] p-4 transition-colors hover:border-white/28"
               >
                 {brand.logoUrl ? (
                   brand.websiteUrl ? (
@@ -444,83 +434,85 @@ export default function ExperientialPortfolio() {
       />
       <Header />
 
-      <section className="relative overflow-hidden border-b border-border">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(0,188,212,0.18),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(233,30,99,0.12),transparent_38%),linear-gradient(180deg,#020304_0%,#05070a_100%)]" />
-        <div className="container relative z-10 max-w-6xl py-24 text-center md:py-32">
+      <section className="border-b border-white/12">
+        <div className="container relative z-10 max-w-6xl py-20 md:py-24">
           <AnimatedSection>
-            <p className="mb-5 text-xs font-bold uppercase tracking-[0.34em] text-cyan-300">Experiential Design Portfolio</p>
-            <h1 className="mx-auto mb-6 max-w-5xl text-5xl font-black tracking-tight md:text-7xl">
-              Scenic Thinking for Experiential Work
-            </h1>
-            <p className="mx-auto mb-10 max-w-3xl text-lg leading-relaxed text-white/75 md:text-2xl">
-              I am a scenic designer who also takes on experiential projects when teams need strong concept visuals, technical precision, and production-aware support.
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <a
-                href="#rendering"
-                className="rounded-full border border-cyan-400/60 px-5 py-2 text-sm font-semibold text-cyan-300 transition-colors hover:bg-cyan-500/10"
-              >
-                Rendering
-              </a>
-              <a
-                href="#technical-drawing"
-                className="rounded-full border border-amber-400/60 px-5 py-2 text-sm font-semibold text-amber-300 transition-colors hover:bg-amber-500/10"
-              >
-                Technical Drawing
-              </a>
-              <a
-                href="#live-events"
-                className="rounded-full border border-pink-400/60 px-5 py-2 text-sm font-semibold text-pink-300 transition-colors hover:bg-pink-500/10"
-              >
-                Live Events
-              </a>
+            <div className="mx-auto max-w-[62rem] text-center">
+              <p className="mb-5 text-xs font-bold uppercase tracking-[0.34em] text-white/48">Experiential Design</p>
+              <h1 className="mx-auto mb-6 max-w-[15ch] font-sans text-[clamp(2.5rem,6vw,5.2rem)] font-normal leading-[0.94] tracking-[-0.06em]">
+              Experiential work shaped by scenic thinking.
+              </h1>
+              <p className="mx-auto mb-12 max-w-[44rem] text-[1.05rem] leading-8 text-white/72 md:text-[1.18rem]">
+                Concept renderings, technical drawings, and live event support for teams that need visual clarity,
+                production logic, and a designer who understands how ideas behave once they enter real space.
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                <a
+                  href="#rendering"
+                  className="rounded-full border border-white/16 px-5 py-2 text-sm font-semibold text-white/78 transition-colors hover:border-white/30 hover:bg-white/[0.03] hover:text-white"
+                >
+                  Rendering
+                </a>
+                <a
+                  href="#technical-drawing"
+                  className="rounded-full border border-white/16 px-5 py-2 text-sm font-semibold text-white/78 transition-colors hover:border-white/30 hover:bg-white/[0.03] hover:text-white"
+                >
+                  Technical Drawing
+                </a>
+                <a
+                  href="#live-events"
+                  className="rounded-full border border-white/16 px-5 py-2 text-sm font-semibold text-white/78 transition-colors hover:border-white/30 hover:bg-white/[0.03] hover:text-white"
+                >
+                  Live Events
+                </a>
+              </div>
             </div>
           </AnimatedSection>
         </div>
       </section>
 
-      <section className="border-b border-border/70 py-16">
+      <section className="border-b border-white/12 py-18 md:py-24">
         <div className="container max-w-6xl">
           <AnimatedSection>
-            <div className="mb-10 text-center">
-              <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-cyan-300">My Process</p>
-              <h2 className="mx-auto max-w-4xl text-3xl font-black tracking-tight md:text-5xl">
-                How I Approach Experiential Projects Differently
+            <div className="mb-12 text-center md:mb-14">
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-white/48">Approach</p>
+              <h2 className="mx-auto max-w-4xl font-sans text-3xl font-normal leading-[0.98] tracking-[-0.05em] md:text-5xl">
+                A production-aware workflow for experiential projects.
               </h2>
             </div>
           </AnimatedSection>
 
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-3 md:gap-6">
             {[
               {
                 step: "01",
                 title: "Story First",
                 detail:
-                  "I start with audience sightlines, emotional beats, and brand intent so ideas are designed to communicate clearly in real space.",
-                color: "#00BCD4",
+                  "I begin with audience flow, key moments, and brand intent so the concept communicates clearly before it is engineered.",
+                color: "#FFFFFF",
               },
               {
                 step: "02",
                 title: "Design to Build",
                 detail:
-                  "Renderings and drawings are developed together so creative choices stay aligned with fabrication logic, venue constraints, and install flow.",
-                color: "#FFC107",
+                  "Renderings and drawings are developed together so visual decisions stay aligned with fabrication logic, venue constraints, and install flow.",
+                color: "#FFFFFF",
               },
               {
                 step: "03",
                 title: "Production Clarity",
                 detail:
-                  "I package assets for agency teams, producers, and builders so approvals are faster and handoff risk is lower.",
-                color: "#E91E63",
+                  "Assets are packaged for agency teams, producers, and builders so approvals move faster and handoff risk stays lower.",
+                color: "#FFFFFF",
               },
             ].map((item) => (
               <AnimatedSection key={item.step}>
-                <article className="h-full rounded-2xl border border-border/60 bg-card/20 p-6 text-center">
-                  <p className="mb-2 text-xs font-semibold tracking-[0.22em]" style={{ color: item.color }}>
+                <article className="h-full rounded-2xl border border-white/12 bg-white/[0.02] p-5 md:p-6">
+                  <p className="mb-2 text-xs font-semibold tracking-[0.22em] text-white/44">
                     STEP {item.step}
                   </p>
-                  <h3 className="mb-3 text-2xl font-bold tracking-tight">{item.title}</h3>
-                  <p className="text-sm leading-relaxed text-white/75">{item.detail}</p>
+                  <h3 className="mb-3 font-sans text-2xl font-normal tracking-[-0.04em]">{item.title}</h3>
+                  <p className="text-sm leading-7 text-white/72">{item.detail}</p>
                 </article>
               </AnimatedSection>
             ))}
@@ -532,8 +524,7 @@ export default function ExperientialPortfolio() {
         id="rendering"
         eyebrow="01 / Rendering"
         title="Rendering and Visualization for Pitch and Approval"
-        copy="High-speed concept rendering and visual storytelling that helps agency teams secure stakeholder buy-in. These images are structured for presentation decks, creative reviews, and production kickoff alignment."
-        accent="#00BCD4"
+        copy="Concept renderings developed for presentation decks, internal reviews, and early alignment. These images are built to communicate tone, hierarchy, and install intent before the project shifts into production detail."
         items={processImagesByCategory.rendering || []}
         onItemClick={(index) => {
           setProcessModalCategory("rendering");
@@ -545,8 +536,7 @@ export default function ExperientialPortfolio() {
         id="technical-drawing"
         eyebrow="02 / Technical Drawing"
         title="Technical Drawings That Bridge Creative and Fabrication"
-        copy="Drafting sets and build documents that convert creative direction into dimensions, clear scopes, and install-ready details. This is the layer where software precision serves production confidence."
-        accent="#FFC107"
+        copy="Drafting sets and build documents that turn creative direction into dimensions, scope, and install-ready information. This is where design intent becomes clear enough for fabrication teams to move with confidence."
         items={processImagesByCategory["technical-drawing"] || []}
         cardAspectClass="aspect-[3/2]"
         imageFit="contain"
@@ -562,8 +552,7 @@ export default function ExperientialPortfolio() {
         id="live-events"
         eyebrow="03 / Live Events"
         title="Live Event and Installation Work in Real Conditions"
-        copy="Executed environments showing how concept direction performs under deadlines, venue constraints, and audience flow. This is where strategy becomes physical experience."
-        accent="#E91E63"
+        copy="Installed work showing how concept direction performs under deadlines, venue constraints, and audience flow. This is where the design is tested against real schedules, real budgets, and real public use."
         items={processImagesByCategory["live-events"] || []}
         onItemClick={(index) => {
           setProcessModalCategory("live-events");
@@ -573,18 +562,20 @@ export default function ExperientialPortfolio() {
 
       <BrandsGrid />
 
-      <section className="border-t border-border py-20">
-        <div className="container max-w-4xl text-center">
+      <section className="border-t border-white/12 py-20 md:py-24">
+        <div className="container max-w-6xl">
           <AnimatedSection>
-            <p className="mb-6 text-3xl font-light leading-relaxed md:text-4xl">
-              Need an experiential designer who can support concept, documentation, and execution in one workflow?
-            </p>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 rounded-full border border-cyan-400/60 px-6 py-3 text-sm font-semibold text-cyan-300 transition-colors hover:bg-cyan-500/10"
-            >
-              Start a Project <ArrowRight className="h-4 w-4" />
-            </Link>
+            <div className="rounded-2xl bg-white/[0.08] px-8 py-20 text-center md:px-12 md:py-24">
+              <p className="mx-auto mb-8 max-w-[20ch] font-sans text-3xl font-normal leading-[1.12] tracking-[-0.05em] md:text-5xl">
+                Start a project with a designer who can think concept through execution.
+              </p>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 rounded-full bg-white/[0.08] px-6 py-3 text-sm font-semibold text-white/84 transition-colors hover:bg-white/[0.14] hover:text-white"
+              >
+                Start a Project <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
           </AnimatedSection>
         </div>
       </section>

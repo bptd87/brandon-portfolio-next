@@ -1,26 +1,22 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import PageThemeWrapper from "@/components/PageThemeWrapper";
 import ThemeToggle from "@/components/ThemeToggle";
-import { Card } from '@/components/ui/card';
 import { ProgressiveImage } from '@/components/ProgressiveImage';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { trpc } from "@/lib/trpc";
 import { proxyImageUrl } from "@/lib/imageProxy";
-import { Calendar, Clock, ArrowLeft, Share2, Twitter, Linkedin, Mail, Link as LinkIcon, Sparkles, Copy, Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { Calendar, Clock, Sparkles, Copy, Check, ChevronLeft, ChevronRight, Link as LinkIcon } from "lucide-react";
 import { Link, useParams } from "wouter";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { toast } from "sonner";
-import { getCategoryColor } from "@/lib/categoryColors";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
-import { Breadcrumb } from "@/components/Breadcrumb";
 
 // Decode HTML entities
 const decodeHTMLEntities = (text: string): string => {
@@ -103,14 +99,11 @@ function ArticleDetailContent() {
   );
   const { data: relatedArticles } = trpc.articles.list.useQuery({ status: "published" });
 
-  const contentRef = useRef<HTMLDivElement>(null);
   const galleryRefs = useRef<Record<number, HTMLDivElement | null>>({});
-  const [headings, setHeadings] = useState<Array<{ id: string; text: string; level: number }>>([]);
-  const [activeHeading, setActiveHeading] = useState<string>("");
-  const [readProgress, setReadProgress] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxImages, setLightboxImages] = useState<Array<{ src: string; alt?: string }>>([]);
+  const [linkCopied, setLinkCopied] = useState(false);
 
   const scrollGallery = (sectionIndex: number, direction: "prev" | "next") => {
     const container = galleryRefs.current[sectionIndex];
@@ -128,93 +121,15 @@ function ArticleDetailContent() {
     return base ? `${base}-${index}` : `heading-${index}`;
   };
 
-  // Extract headings for TOC
-  useEffect(() => {
-    if (!contentRef.current) return;
-
-    const h2Elements = contentRef.current.querySelectorAll('h2');
-    const extractedHeadings = Array.from(h2Elements).map((heading, index) => {
-      let id = heading.id;
-      if (!id) {
-        const text = heading.textContent || "";
-        id = getHeadingId(text, index);
-        heading.id = id;
-      }
-      return {
-        id,
-        text: heading.textContent || "",
-        level: 2
-      };
-    });
-
-    setHeadings(extractedHeadings);
-  }, [article]);
-
-  // Track scroll progress and active heading
-  useEffect(() => {
-    // Detect Safari
-    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-
-    // Skip scroll tracking on Safari to prevent ResizeObserver errors
-    if (isSafari) {
-      return;
-    }
-
-    let ticking = false;
-
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          // Calculate read progress
-          const windowHeight = window.innerHeight;
-          const documentHeight = document.documentElement.scrollHeight - windowHeight;
-          const scrolled = window.scrollY;
-          const progress = (scrolled / documentHeight) * 100;
-          setReadProgress(Math.min(progress, 100));
-
-          // Find active heading
-          const headingElements = headings.map(h => document.getElementById(h.id)).filter(Boolean);
-          const current = headingElements.find((el, index) => {
-            const next = headingElements[index + 1];
-            const rect = el!.getBoundingClientRect();
-            if (!next) return rect.top <= 200;
-            const nextRect = next.getBoundingClientRect();
-            return rect.top <= 200 && nextRect.top > 200;
-          });
-
-          if (current) {
-            setActiveHeading(current.id);
-          }
-
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [headings]);
-
-  const handleShare = (platform: 'twitter' | 'linkedin' | 'email' | 'copy') => {
+  const handleShare = async () => {
     const url = window.location.href;
-    const title = article?.title || '';
-    const text = article?.excerpt || '';
-
-    switch (platform) {
-      case 'twitter':
-        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank');
-        break;
-      case 'linkedin':
-        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
-        break;
-      case 'email':
-        window.location.href = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(text + '\n\n' + url)}`;
-        break;
-      case 'copy':
-        navigator.clipboard.writeText(url);
-        toast.success("Link copied to clipboard!");
-        break;
+    try {
+      await navigator.clipboard.writeText(url);
+      setLinkCopied(true);
+      toast.success("Link copied to clipboard");
+      window.setTimeout(() => setLinkCopied(false), 1800);
+    } catch {
+      setLinkCopied(false);
     }
   };
 
@@ -447,211 +362,98 @@ function ArticleDetailContent() {
 
       />
       <Header />
+      <article className="py-12 md:py-16">
+        <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
+          <header className="mx-auto max-w-5xl text-center">
+            <div className="flex flex-wrap items-center justify-center gap-4 text-[0.96rem] tracking-[-0.02em] text-foreground/58">
+              <time dateTime={new Date(article.publishedAt || article.createdAt).toISOString()}>
+                {new Date(article.publishedAt || article.createdAt).toLocaleDateString('en-US', {
+                  month: 'long',
+                  day: 'numeric',
+                  year: 'numeric'
+                })}
+              </time>
+              {category?.name ? (
+                <Link href={`/articles?category=${encodeURIComponent(category.name)}`}>
+                  <a className="transition-colors hover:text-foreground">{category.name}</a>
+                </Link>
+              ) : null}
+            </div>
 
-      {/* Breadcrumb Navigation */}
-      <div className="container py-6">
-        <Breadcrumb
-          items={[
-            { label: "Articles", href: "/articles" },
-            { label: category?.name || "Uncategorized", href: `/articles?category=${category?.slug || ''}` },
-            { label: article.title }
-          ]}
-        />
-      </div>
+            <h1 className="mx-auto mt-6 max-w-[16ch] font-sans text-[clamp(2.25rem,5vw,5.1rem)] font-normal leading-[0.94] tracking-[-0.06em] text-foreground">
+              {decodeHTMLEntities(article.title)}
+            </h1>
 
-      {/* Reading Progress Bar */}
-      <div className="fixed top-0 left-0 right-0 h-1 bg-muted/30 z-50">
-        <div
-          className="h-full transition-all duration-150"
-          style={{
-            width: `${readProgress}%`,
-            backgroundColor: category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))'
-          }}
-        />
-      </div>
+            {article.excerpt && (
+              <p className="mx-auto mt-6 max-w-[44rem] text-[clamp(1.04rem,1.6vw,1.55rem)] leading-[1.5] tracking-[-0.02em] text-foreground/78">
+                {decodeHTMLEntities(article.excerpt)}
+              </p>
+            )}
 
-      <article className="py-10 md:py-14 relative">
-        <div className="mx-auto w-full max-w-[1080px] px-4 sm:px-6 lg:px-8 relative">
-          {/* Back Button */}
-          <Link href="/articles">
-            <Button variant="ghost" className="mb-8 -ml-4">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Articles
-            </Button>
-          </Link>
+            {article.coverImageUrl && (
+              <div className="mx-auto mt-10 max-w-[82rem] overflow-hidden rounded-xl">
+                <ProgressiveImage
+                  src={proxyImageUrl(article.coverImageUrl, 1920)}
+                  alt={article.title}
+                  loading="eager"
+                  className="w-full h-auto cursor-pointer"
+                  onClick={() => openArticleLightboxAt("cover")}
+                />
+              </div>
+            )}
 
-          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_220px] gap-6 xl:gap-8">
-            {/* Main Content */}
+            <div className="mx-auto mt-8 flex w-full max-w-[58rem] items-center justify-between gap-6 border-y border-white/14 py-4 text-foreground/72">
+              <span className="inline-flex items-center gap-2 text-[0.98rem] tracking-[-0.02em]">
+                <Clock className="h-4 w-4" />
+                <span>{readTime} min read</span>
+              </span>
+              <button
+                type="button"
+                onClick={handleShare}
+                className="inline-flex items-center gap-2 text-[0.98rem] tracking-[-0.02em] transition-colors hover:text-foreground"
+              >
+                {linkCopied ? <Check className="h-4 w-4" /> : <LinkIcon className="h-4 w-4" />}
+                <span>{linkCopied ? "Link copied" : "Share"}</span>
+              </button>
+            </div>
+          </header>
+
+          <div className="mx-auto mt-14 max-w-[58rem]">
             <div className="min-w-0">
-              {/* Article Header */}
-              <header className="mb-10 max-w-[700px]">
-                <div
-                  className="inline-flex flex-wrap items-center gap-3 gap-y-2 mb-6 text-[11px] md:text-xs uppercase tracking-[0.25em] px-4 py-2 rounded-2xl border"
-                  style={category ? {
-                    backgroundColor: `${getCategoryColor(category.name).hex}12`,
-                    borderColor: `${getCategoryColor(category.name).hex}40`
-                  } : undefined}
-                >
-                  {category && (
-                    <span
-                      className="font-bold flex-shrink-0"
-                      style={{ color: getCategoryColor(category.name).hex }}
-                    >
-                      {category.name}
-                    </span>
-                  )}
-                  <span className="text-muted-foreground/70 hidden md:inline">•</span>
-                  <div className="flex items-center gap-1 md:gap-2 text-muted-foreground/80 flex-shrink-0">
-                    <Calendar className="h-3 w-3" />
-                    <time dateTime={new Date(article.publishedAt || article.createdAt).toISOString()}>
-                      {new Date(article.publishedAt || article.createdAt).toLocaleDateString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric'
-                      })}
-                    </time>
-                  </div>
-                  <span className="text-muted-foreground/70 hidden md:inline">•</span>
-                  <div className="flex items-center gap-1 md:gap-2 text-muted-foreground/80 flex-shrink-0">
-                    <Clock className="h-3 w-3" />
-                    <span>{readTime} min read</span>
-                  </div>
-                </div>
-
-                <div
-                  className="inline-flex items-center gap-3 mb-4 px-4 py-2 rounded-full border text-[11px] uppercase tracking-[0.3em]"
-                  style={category ? {
-                    borderColor: `${getCategoryColor(category.name).hex}40`,
-                    color: getCategoryColor(category.name).hex,
-                    backgroundColor: `${getCategoryColor(category.name).hex}10`
-                  } : undefined}
-                >
-                  Feature
-                </div>
-
-                <h1 className="max-w-[20ch] text-[2rem] md:text-[2.5rem] lg:text-[2.95rem] xl:text-[3.2rem] font-['Playfair_Display'] italic font-normal mb-4 leading-[1.08] tracking-tight">
-                  {decodeHTMLEntities(article.title)}
-                </h1>
-
-                <div
-                  className="h-1 w-20 rounded-full mb-6"
-                  style={{ backgroundColor: category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))' }}
-                />
-
-
-
-                {article.excerpt && (
-                  <div
-                    className="max-w-[62ch] border-l-4 pl-5"
-                    style={{ borderColor: category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))' }}
-                  >
-                    <p className="text-base md:text-[1.25rem] text-muted-foreground leading-relaxed">
-                      {decodeHTMLEntities(article.excerpt)}
-                    </p>
-                  </div>
-                )}
-
-                {/* Cover Image */}
-                {article.coverImageUrl && (
-                  <div className="mt-6 max-w-[700px] rounded-2xl overflow-hidden shadow-2xl">
-                    <ProgressiveImage
-                      src={proxyImageUrl(article.coverImageUrl, 1920)}
-                      alt={article.title}
-                      loading="eager"
-                      className="w-full h-auto cursor-pointer"
-                      onClick={() => openArticleLightboxAt("cover")}
-                    />
-                  </div>
-                )}
-
-                {/* Share Buttons */}
-                <div className="flex items-center gap-3 mt-8">
-                  <span className="text-sm text-muted-foreground uppercase tracking-wider">Share:</span>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleShare('twitter')}
-                    className="gap-2"
-                  >
-                    <Twitter className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleShare('linkedin')}
-                    className="gap-2"
-                  >
-                    <Linkedin className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleShare('email')}
-                    className="gap-2"
-                  >
-                    <Mail className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleShare('copy')}
-                    className="gap-2"
-                  >
-                    <LinkIcon className="h-4 w-4" />
-                  </Button>
-                </div>
-              </header>
-
-              {/* Article Content */}
               <div className="relative">
-                <div
-                  className="hidden lg:block absolute -left-10 top-0 bottom-0 w-[2px] rounded-full"
-                  style={{
-                    backgroundImage: `linear-gradient(to bottom, ${category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))'}55, ${category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))'}05)`
-                  }}
-                />
-                <div
-                  className="hidden lg:block absolute -left-[46px] top-0 w-3 h-3 rounded-full"
-                  style={{
-                    backgroundColor: category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))'
-                  }}
-                />
-                {/* Category-colored bullets and bold text */}
                 <style>{`
                   .article-content-${article.id} ul li::marker {
-                    color: ${category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))'};
+                    color: rgba(255,255,255,0.55);
                   }
                   .article-content-${article.id} ol li::marker {
-                    color: ${category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))'};
+                    color: rgba(255,255,255,0.55);
                   }
                   .article-content-${article.id} strong {
-                    color: ${category ? getCategoryColor(category.name).hex : 'hsl(var(--foreground))'};
+                    color: hsl(var(--foreground));
                     font-weight: 700;
-                    font-size: 1.125rem;
                   }
                 `}</style>
 
                 <div
-                  ref={contentRef}
-                  className="article-content article-content-${article.id} article-html-content max-w-[58ch] mr-auto
+                  className="article-content article-content-${article.id} article-html-content mx-auto max-w-[58ch]
                   prose prose-lg prose-invert
-                  prose-headings:font-['Playfair_Display'] prose-headings:font-bold prose-headings:font-normal prose-headings:leading-[1.2]
-                  prose-h2:text-[1.5rem] prose-h2:mt-16 prose-h2:mb-4 prose-h2:scroll-mt-24 prose-h2:leading-[1.3]
-                  prose-h3:text-[1.125rem] prose-h3:mt-10 prose-h3:mb-3 prose-h3:leading-[1.4]
+                  prose-headings:font-sans prose-headings:font-normal prose-headings:leading-[1.08] prose-headings:tracking-[-0.04em]
+                  prose-h2:text-[1.9rem] prose-h2:mt-18 prose-h2:mb-5 prose-h2:scroll-mt-24 prose-h2:text-foreground
+                  prose-h3:text-[1.35rem] prose-h3:mt-12 prose-h3:mb-3 prose-h3:leading-[1.25] prose-h3:text-foreground
                   prose-h4:text-[1rem] prose-h4:mt-8 prose-h4:mb-2 prose-h4:leading-[1.4]
-                  prose-p:text-foreground/90 prose-p:leading-[1.75] prose-p:mb-6 prose-p:text-[1.0625rem] prose-p:font-normal prose-p:tracking-normal
-                  prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-a:font-medium
-                  prose-strong:font-bold prose-strong:text-[1.125rem]
-                  prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-8 
-                  prose-blockquote:italic prose-blockquote:text-xl prose-blockquote:my-10 prose-blockquote:font-['Playfair_Display'] prose-blockquote:leading-[1.6]
+                  prose-p:text-foreground/88 prose-p:leading-[1.82] prose-p:mb-7 prose-p:text-[1.08rem] prose-p:font-normal prose-p:tracking-normal
+                  prose-a:text-foreground prose-a:underline prose-a:decoration-white/35 prose-a:underline-offset-4 hover:prose-a:decoration-white/70 prose-a:font-medium
+                  prose-strong:font-bold
+                  prose-blockquote:border-l-2 prose-blockquote:border-white/18 prose-blockquote:pl-6 
+                  prose-blockquote:text-[1.2rem] prose-blockquote:my-12 prose-blockquote:font-sans prose-blockquote:leading-[1.6] prose-blockquote:text-foreground/84
                   prose-ul:my-8 prose-ol:my-8 prose-ul:leading-[2] prose-ol:leading-[2] prose-ul:list-disc prose-ol:list-decimal prose-ul:pl-8 prose-ol:pl-8
                   prose-li:my-1.5 prose-li:text-[1.0625rem] prose-li:leading-[1.75] prose-li:ml-0
                   [&_ul]:list-disc [&_ol]:list-decimal [&_li]:list-item [&_li]:ml-0
-                  prose-img:rounded-2xl prose-img:my-12 prose-img:shadow-xl
+                  prose-img:rounded-xl prose-img:my-12
                   prose-figure:my-12
-                  prose-figcaption:text-sm prose-figcaption:text-muted-foreground prose-figcaption:text-center prose-figcaption:mt-4
-                  [&_iframe]:w-full [&_iframe]:max-w-[58ch] [&_iframe]:mr-auto [&_iframe]:my-12 [&_iframe]:rounded-2xl [&_iframe]:shadow-xl [&_iframe]:aspect-[16/9] [&_iframe]:h-auto
-                  [&_video]:w-full [&_video]:max-w-[58ch] [&_video]:mr-auto [&_video]:my-12 [&_video]:rounded-2xl [&_video]:shadow-xl [&_video]:aspect-[16/9]
+                  prose-figcaption:text-sm prose-figcaption:text-foreground/48 prose-figcaption:text-center prose-figcaption:mt-4
+                  [&_iframe]:mx-auto [&_iframe]:w-full [&_iframe]:max-w-[58ch] [&_iframe]:my-12 [&_iframe]:rounded-xl [&_iframe]:aspect-[16/9] [&_iframe]:h-auto
+                  [&_video]:mx-auto [&_video]:w-full [&_video]:max-w-[58ch] [&_video]:my-12 [&_video]:rounded-xl [&_video]:aspect-[16/9]
                   [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased]"
                 >
                   {Array.isArray(processedSections) && (() => {
@@ -676,10 +478,8 @@ function ArticleDetailContent() {
                         );
 
                       case 'heading':
-                        const categoryColorObj = category ? getCategoryColor(category.name) : undefined;
                         const level = section.level || 2;
                         const headingClassName = level === 2 ? "mt-12 mb-8" : level === 3 ? "mt-10 mb-6" : "mt-8 mb-4";
-                        const headingStyle = categoryColorObj ? { color: `${categoryColorObj.hex} !important` } : undefined;
                         const headingText = decodeHTMLEntities(section.text || section.content || '');
 
                         const headingId = level === 2
@@ -691,24 +491,20 @@ function ArticleDetailContent() {
                         }
 
                         if (level === 2) {
-                          return <h2 key={index} id={headingId} className={headingClassName} style={headingStyle}>{headingText}</h2>;
+                          return <h2 key={index} id={headingId} className={headingClassName}>{headingText}</h2>;
                         } else if (level === 3) {
-                          return <h3 key={index} id={headingId} className={headingClassName} style={headingStyle}>{headingText}</h3>;
+                          return <h3 key={index} id={headingId} className={headingClassName}>{headingText}</h3>;
                         } else if (level === 4) {
-                          return <h4 key={index} id={headingId} className={headingClassName} style={headingStyle}>{headingText}</h4>;
+                          return <h4 key={index} id={headingId} className={headingClassName}>{headingText}</h4>;
                         } else {
-                          return <h2 key={index} id={headingId} className={headingClassName} style={headingStyle}>{headingText}</h2>;
+                          return <h2 key={index} id={headingId} className={headingClassName}>{headingText}</h2>;
                         }
 
                       case 'paragraph':
-                        const categoryColor = category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))';
                         return (
                           <p
                             key={index}
-                            className={`mb-6 leading-relaxed [&_strong]:font-bold [&_strong]:text-[1.125rem] ${isFirstParagraph ? 'first-paragraph-drop-cap' : ''}`}
-                            style={{
-                              ['--strong-color' as any]: categoryColor
-                            }}
+                            className={`mb-6 leading-relaxed [&_strong]:font-bold ${isFirstParagraph ? 'first-paragraph-drop-cap' : ''}`}
                             dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(section.text || section.content || '') }}
                           />
                         );
@@ -716,12 +512,12 @@ function ArticleDetailContent() {
                       case 'quote':
                         const quoteText = normalizeQuoteText(section.text || section.content || '');
                         return (
-                          <blockquote key={index} className="my-10 rounded-xl border-l-4 border-primary bg-primary/5 px-6 py-5 shadow-sm">
-                            <p className="text-xl md:text-2xl italic leading-relaxed text-foreground/95">
+                          <blockquote key={index} className="my-12 border-l-2 border-white/18 px-6 py-1">
+                            <p className="text-[1.2rem] md:text-[1.35rem] leading-relaxed text-foreground/88">
                               {quoteText}
                             </p>
                             {section.author && (
-                              <footer className="text-base text-muted-foreground mt-4 not-italic font-sans font-medium">
+                              <footer className="mt-4 text-base not-italic font-sans text-foreground/52">
                                 — {decodeHTMLEntities(section.author)}
                               </footer>
                             )}
@@ -779,15 +575,15 @@ function ArticleDetailContent() {
 
                       case 'gallery':
                         return (
-                          <div key={index} className="my-12 -mx-4 md:mx-0 relative">
+                          <div key={index} className="my-14 -mx-4 md:mx-0 relative">
                             <div
                               ref={(el) => {
                                 galleryRefs.current[index] = el;
                               }}
-                              className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-primary scrollbar-track-muted"
+                              className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory"
                             >
                               {section.images?.map((img: any, imgIndex: number) => (
-                                <figure key={imgIndex} className="flex-none w-[80%] md:w-[60%] snap-center rounded-2xl overflow-hidden shadow-xl">
+                                <figure key={imgIndex} className="flex-none w-[80%] md:w-[60%] snap-center rounded-xl overflow-hidden">
                                   <ProgressiveImage
                                     src={proxyImageUrl(img.url, 1920)}
                                     alt={img.alt || img.caption || ''}
@@ -807,7 +603,7 @@ function ArticleDetailContent() {
                               type="button"
                               aria-label="Previous gallery images"
                               onClick={() => scrollGallery(index, "prev")}
-                              className="hidden md:flex items-center justify-center absolute left-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/85 border border-border shadow-lg hover:bg-background transition-colors"
+                              className="hidden md:flex items-center justify-center absolute left-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/85 border border-border hover:bg-background transition-colors"
                             >
                               <ChevronLeft className="h-5 w-5" />
                             </button>
@@ -815,7 +611,7 @@ function ArticleDetailContent() {
                               type="button"
                               aria-label="Next gallery images"
                               onClick={() => scrollGallery(index, "next")}
-                              className="hidden md:flex items-center justify-center absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/85 border border-border shadow-lg hover:bg-background transition-colors"
+                              className="hidden md:flex items-center justify-center absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/85 border border-border hover:bg-background transition-colors"
                             >
                               <ChevronRight className="h-5 w-5" />
                             </button>
@@ -824,14 +620,10 @@ function ArticleDetailContent() {
 
                       case 'list':
                         const ListTag = section.listType === 'numbered' ? 'ol' : 'ul';
-                        const listCategoryColor = category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))';
                         return (
                           <ListTag
                             key={index}
-                            className={`my-6 space-y-3 ml-6 ${section.listType === 'numbered' ? 'list-decimal' : 'list-disc'} [&_strong]:font-bold [&_strong]:text-[1.125rem]`}
-                            style={{
-                              ['--strong-color' as any]: listCategoryColor
-                            }}
+                            className={`my-6 space-y-3 ml-6 ${section.listType === 'numbered' ? 'list-decimal' : 'list-disc'} [&_strong]:font-bold`}
                           >
                             {section.items?.map((item: string, itemIndex: number) => (
                               <li key={itemIndex} className="leading-relaxed" dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(item) }} />
@@ -860,14 +652,14 @@ function ArticleDetailContent() {
                       case 'faq':
                         return (
                           <div key={index} className="my-16">
-                            <h2 className="text-xl font-['Playfair_Display'] italic mb-8">Frequently Asked Questions</h2>
+                            <h2 className="mb-8 text-[1.65rem] font-sans font-normal tracking-[-0.04em]">Frequently Asked Questions</h2>
                             <Accordion type="single" collapsible className="space-y-4">
                               {section.items?.map((item: any, faqIndex: number) => (
-                                <AccordionItem key={faqIndex} value={`faq-${faqIndex}`} className="border border-border rounded-lg px-6">
-                                  <AccordionTrigger className="text-lg font-semibold hover:no-underline py-6">
+                                <AccordionItem key={faqIndex} value={`faq-${faqIndex}`} className="rounded-lg border border-border/60 px-6">
+                                  <AccordionTrigger className="py-6 text-lg font-medium hover:no-underline">
                                     {decodeHTMLEntities(item.question)}
                                   </AccordionTrigger>
-                                  <AccordionContent className="text-muted-foreground pb-6">
+                                  <AccordionContent className="pb-6 text-foreground/72">
                                     <div dangerouslySetInnerHTML={{ __html: item.answer }} />
                                   </AccordionContent>
                                 </AccordionItem>
@@ -878,12 +670,12 @@ function ArticleDetailContent() {
 
                       case 'ai_prompt':
                         return (
-                          <div key={index} className="my-10 p-6 rounded-xl border border-purple-500/20 bg-purple-500/5 relative group">
+                          <div key={index} className="group relative my-10 rounded-xl border border-border/60 bg-white/[0.02] p-6">
                             <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
                               <Button
                                 variant="ghost"
                                 size="icon"
-                                className="h-8 w-8 text-purple-400 hover:text-purple-300 hover:bg-purple-500/10"
+                                className="h-8 w-8 text-foreground/56 hover:bg-white/[0.04] hover:text-foreground"
                                 onClick={() => {
                                   // Handle both flat (prompt) and nested (content) structures
                                   const text = section.prompt || section.content?.prompt || section.content || '';
@@ -895,12 +687,12 @@ function ArticleDetailContent() {
                               </Button>
                             </div>
                             <div className="flex items-start gap-3">
-                              <div className="mt-1 p-1.5 rounded-md bg-purple-500/10 text-purple-400">
+                              <div className="mt-1 rounded-md bg-white/[0.04] p-1.5 text-foreground/62">
                                 <Sparkles className="w-4 h-4" />
                               </div>
                               <div className="flex-1">
-                                <p className="text-xs font-bold text-purple-400 uppercase tracking-wider mb-2">AI Prompt</p>
-                                <p className="font-mono text-sm leading-relaxed text-foreground/90 whitespace-pre-wrap">
+                                <p className="mb-2 text-xs font-bold uppercase tracking-wider text-foreground/56">AI Prompt</p>
+                                <p className="font-mono text-sm leading-relaxed text-foreground/86 whitespace-pre-wrap">
                                   {section.prompt || section.content?.prompt || section.content || ''}
                                 </p>
                               </div>
@@ -918,19 +710,14 @@ function ArticleDetailContent() {
 
               {/* Tags Section */}
               {article.tags && article.tags.length > 0 && (
-                <div className="mt-16 pt-12 border-t max-w-[58ch] mr-auto">
-                  <h3 className="text-sm uppercase tracking-wider text-muted-foreground mb-4 font-semibold">Tagged With</h3>
+                <div className="mx-auto mt-16 max-w-[58ch] border-t border-white/12 pt-12">
+                  <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground/48">Tagged With</h3>
                   <div className="flex flex-wrap gap-2">
                     {article.tags.map((tag: any) => (
                       <Link key={tag.id} href={`/tags/${tag.slug}`}>
                         <Badge
                           variant="outline"
                           className="text-sm font-normal px-4 py-2 rounded-full transition-all hover:scale-105 cursor-pointer"
-                          style={category ? {
-                            borderColor: `${getCategoryColor(category.name).hex}40`,
-                            color: getCategoryColor(category.name).hex,
-                            backgroundColor: `${getCategoryColor(category.name).hex}10`
-                          } : undefined}
                         >
                           {tag.name}
                         </Badge>
@@ -943,7 +730,7 @@ function ArticleDetailContent() {
 
 
               {/* Author Bio with Engagement */}
-              <div className="mt-16 pt-12 border-t max-w-[58ch] mr-auto">
+              <div className="mx-auto mt-16 max-w-[58ch] border-t border-white/12 pt-12">
                 <div className="flex items-start gap-6">
                   <div className="flex-shrink-0">
                     <div className="w-20 h-20 rounded-full overflow-hidden border border-border/60 shadow-lg">
@@ -956,9 +743,9 @@ function ArticleDetailContent() {
                     </div>
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-2xl font-['Playfair_Display'] italic mb-2">Brandon PT Davis</h3>
-                    <p className="text-sm text-muted-foreground mb-4 uppercase tracking-wider">Scenic Designer</p>
-                    <p className="text-foreground/80 leading-relaxed mb-6">
+                    <h3 className="mb-2 text-2xl font-sans font-normal tracking-[-0.04em]">Brandon PT Davis</h3>
+                    <p className="mb-4 text-sm uppercase tracking-wider text-foreground/48">Scenic Designer</p>
+                    <p className="mb-6 leading-relaxed text-foreground/80">
                       Brandon PT Davis is a scenic designer based in Los Angeles.
                       His work explores the intersection of physical space, digital technology, and narrative storytelling.
                     </p>
@@ -968,144 +755,74 @@ function ArticleDetailContent() {
               </div>
 
               {/* Related Articles */}
-              {related.length > 0 && (
-                <div className="mt-20 pt-12 border-t">
-                  <div className="flex items-end justify-between mb-8">
-                    <div>
-                      <div
-                        className="h-1 w-12 rounded-full mb-4"
-                        style={{ backgroundColor: category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))' }}
-                      />
-                      <h2 className="text-2xl md:text-3xl font-['Playfair_Display'] italic">Continue Reading</h2>
-                    </div>
-                    <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Related</span>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    {related.map((relatedArticle) => {
-                      const categoryColor = relatedArticle.category?.name
-                        ? getCategoryColor(relatedArticle.category.name).hex
-                        : '#FF6B35';
-                      return (
-                        <Link key={relatedArticle.id} href={`/articles/${relatedArticle.slug}`}>
-                          <div className="group h-full bg-card/70 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5 cursor-pointer">
-                            {/* Cover Image */}
-                            {relatedArticle.coverImageUrl && (
-                              <div className="aspect-[16/10] overflow-hidden">
-                                <img
-                                  src={relatedArticle.coverImageUrl}
-                                  alt={decodeHTMLEntities(relatedArticle.title)}
-                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                  loading="lazy"
-                                />
-                              </div>
-                            )}
-
-                            <div className="p-4 md:p-5 h-full flex flex-col">
-                              {/* Category Badge */}
-                              {relatedArticle.category && (
-                                <p
-                                  className="text-[10px] uppercase tracking-[0.26em] mb-3 font-medium"
-                                  style={{ color: categoryColor }}
-                                >
-                                  {relatedArticle.category.name}
-                                </p>
-                              )}
-
-                              <h3 className="text-xl md:text-[1.55rem] font-['Playfair_Display'] italic font-normal mb-2 leading-tight transition-colors line-clamp-2"
-                                style={{ color: 'inherit' }}
-                                onMouseEnter={(e) => e.currentTarget.style.color = categoryColor}
-                                onMouseLeave={(e) => e.currentTarget.style.color = 'inherit'}>
-                                {decodeHTMLEntities(relatedArticle.title)}
-                              </h3>
-
-                              {relatedArticle.excerpt && (
-                                <p className="text-sm text-muted-foreground line-clamp-3 mb-4 leading-relaxed">
-                                  {decodeHTMLEntities(relatedArticle.excerpt)}
-                                </p>
-                              )}
-
-                              <div className="mt-auto flex items-center gap-3 text-[11px] uppercase tracking-[0.08em] text-muted-foreground/90">
-                                <span>
-                                  {relatedArticle.publishedAt && new Date(relatedArticle.publishedAt).toLocaleDateString('en-US', {
-                                    month: 'short',
-                                    day: 'numeric',
-                                    year: 'numeric'
-                                  })}
-                                </span>
-                                {relatedArticle.readTime && (
-                                  <>
-                                    <span>•</span>
-                                    <span>{relatedArticle.readTime} min read</span>
-                                  </>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
             </div>
 
-            {/* Table of Contents - Desktop */}
-            {headings.length > 0 && (
-              <aside className="hidden lg:block lg:w-[220px] flex-shrink-0">
-                <div
-                  className="w-[220px] max-h-[calc(100vh-7rem)] overflow-y-auto rounded-2xl border border-border/60 bg-background/85 backdrop-blur px-5 py-6 shadow-xl shadow-black/10 z-10 lg:fixed lg:top-24"
-                  style={{ right: "max(1rem, calc((100vw - 1080px) / 2 + 2rem))" }}
-                >
-                  <div
-                    className="h-1 w-10 rounded-full mb-4"
-                    style={{ backgroundColor: category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))' }}
-                  />
-                  <h3 className="text-sm uppercase tracking-wider text-muted-foreground mb-4 font-semibold">Table of Contents</h3>
-                  <nav className="space-y-2">
-                    {headings.map((heading) => (
-                      <a
-                        key={heading.id}
-                        href={`#${heading.id}`}
-                        className={`block text-sm py-1.5 border-l-2 pl-4 rounded-r-md transition-colors cursor-pointer ${activeHeading === heading.id
-                          ? 'font-semibold'
-                          : 'border-border text-muted-foreground hover:text-foreground hover:border-muted-foreground'
-                          }`}
-                        style={activeHeading === heading.id && category ? {
-                          borderColor: getCategoryColor(category.name).hex,
-                          color: getCategoryColor(category.name).hex,
-                          backgroundColor: `${getCategoryColor(category.name).hex}12`
-                        } : undefined}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          const element = document.getElementById(heading.id);
-                          if (element) {
-                            const yOffset = -100; // Offset for fixed header
-                            const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                            window.scrollTo({ top: y, behavior: 'smooth' });
-                          }
-                        }}
-                      >
-                        {heading.text}
-                      </a>
-                    ))}
-                  </nav>
-                </div>
-              </aside>
-            )}
           </div>
         </div>
       </article>
+
+      {related.length > 0 && (
+        <section className="pb-20">
+          <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
+            <div className="border-t border-white/12 pt-12">
+              <div className="mb-8 flex items-end justify-between">
+                <h2 className="text-2xl md:text-3xl font-sans font-normal tracking-[-0.05em]">Keep reading</h2>
+                <Link href="/articles">
+                  <a className="text-base text-foreground/72 transition-colors hover:text-foreground">View all</a>
+                </Link>
+              </div>
+
+              <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+                {related.slice(0, 3).map((relatedArticle) => (
+                  <Link key={relatedArticle.id} href={`/articles/${relatedArticle.slug}`}>
+                    <div className="group h-full cursor-pointer transition-all duration-300 hover:-translate-y-0.5">
+                      {relatedArticle.coverImageUrl && (
+                        <div className="aspect-square overflow-hidden rounded-xl bg-white/[0.02]">
+                          <img
+                            src={relatedArticle.coverImageUrl}
+                            alt={decodeHTMLEntities(relatedArticle.title)}
+                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            loading="lazy"
+                          />
+                        </div>
+                      )}
+
+                      <div className="pt-4">
+                        <h3 className="mb-3 text-[1.45rem] font-sans font-normal leading-[1.12] tracking-[-0.04em] text-foreground transition-colors line-clamp-3 group-hover:text-foreground/82">
+                          {decodeHTMLEntities(relatedArticle.title)}
+                        </h3>
+
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.95rem] tracking-[-0.015em] text-foreground/52">
+                          {relatedArticle.category?.name && <span>{relatedArticle.category.name}</span>}
+                          <span>
+                            {relatedArticle.publishedAt && new Date(relatedArticle.publishedAt).toLocaleDateString('en-US', {
+                              month: 'short',
+                              day: 'numeric',
+                              year: 'numeric'
+                            })}
+                          </span>
+                          {relatedArticle.readTime && (
+                            <>
+                              <span>•</span>
+                              <span>{relatedArticle.readTime} min read</span>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       <div className="relative z-20 bg-background">
         <Footer />
       </div>
 
       <style>{`
-        /* Category-specific H2 colors */
-        .article-content h2 {
-          color: ${category ? getCategoryColor(category.name).hex : 'inherit'} !important;
-        }
-        
         /* WordPress Gallery Styles - Horizontal Scroll */
         .article-content .wp-block-gallery,
         .article-content .blocks-gallery-grid {
@@ -1132,7 +849,6 @@ function ArticleDetailContent() {
           height: auto !important;
           object-fit: contain !important;
           border-radius: 1rem !important;
-          box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.3) !important;
           cursor: pointer !important;
           transition: transform 0.3s ease !important;
         }
@@ -1144,8 +860,7 @@ function ArticleDetailContent() {
 
         /* WordPress Image Styles - Beveled */
         .article-content img {
-          border-radius: 1rem !important;
-          box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.3) !important;
+          border-radius: 0.75rem !important;
         }
 
         /* Scrollbar Styling */
@@ -1159,12 +874,12 @@ function ArticleDetailContent() {
         }
 
         .article-content ::-webkit-scrollbar-thumb {
-          background: hsl(var(--primary));
+          background: rgba(255,255,255,0.22);
           border-radius: 4px;
         }
 
         .article-content ::-webkit-scrollbar-thumb:hover {
-          background: hsl(var(--primary) / 0.8);
+          background: rgba(255,255,255,0.32);
         }
 
         /* Drop Cap First Letter - only on first paragraph, not update notes */
@@ -1175,7 +890,7 @@ function ArticleDetailContent() {
           float: left;
           margin-right: 0.75rem;
           font-family: 'Playfair Display', serif;
-          color: ${category ? getCategoryColor(category.name).hex : 'hsl(var(--primary))'};
+          color: rgba(255,255,255,0.9);
         }
       `}</style>
 

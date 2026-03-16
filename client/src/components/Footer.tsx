@@ -1,5 +1,65 @@
+import { ExternalLink, Instagram, Linkedin, Mail, Youtube } from "lucide-react";
 import { Link } from "wouter";
-import { Linkedin, Instagram, Youtube, Mail } from "lucide-react";
+
+const FOOTER_SECTIONS = [
+  {
+    title: "Portfolio",
+    accent: "#FF6A3D",
+    links: [
+      { label: "Scenic Design", href: "/projects", internal: true },
+      { label: "Experiential", href: "/projects/experiential", internal: true },
+      { label: "Rendering", href: "/projects/rendering", internal: true },
+      { label: "Assistant Scenic Design", href: "/assistant-scenic-design", internal: true },
+    ],
+  },
+  {
+    title: "Studio",
+    accent: "#00B8D9",
+    links: [
+      { label: "Articles", href: "/articles", internal: true },
+      { label: "Tutorials", href: "/studio/tutorials", internal: true },
+      { label: "App Studio", href: "/studio/apps", internal: true },
+      { label: "Scenic Directory", href: "/studio/directory", internal: true },
+    ],
+  },
+  {
+    title: "Information",
+    accent: "#E5484D",
+    links: [
+      { label: "About", href: "/about", internal: true },
+      { label: "Resume", href: "/resume", internal: true },
+      { label: "Contact", href: "/contact", internal: true },
+      { label: "News Archive", href: "/news", internal: true },
+    ],
+  },
+] as const;
+
+const SOCIAL_LINKS = [
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/brandonptdavis",
+    icon: Linkedin,
+    accent: "#FF6A3D",
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/brandonptdavisdesign",
+    icon: Instagram,
+    accent: "#00B8D9",
+  },
+  {
+    label: "YouTube",
+    href: "https://www.youtube.com/@brandonptdavis",
+    icon: Youtube,
+    accent: "#E5484D",
+  },
+  {
+    label: "Email",
+    href: "mailto:info@brandonptdavis.com",
+    icon: Mail,
+    accent: "#D9A404",
+  },
+] as const;
 
 function PinterestIcon({ className }: { className?: string }) {
   return (
@@ -11,263 +71,133 @@ function PinterestIcon({ className }: { className?: string }) {
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border/50 mt-32">
-      {/* Main Footer - Bold Design */}
-      <div className="bg-gradient-to-b from-background to-background/50 py-16 md:py-20">
-        <div className="container">
-          {/* Top Section - Branding & CTA */}
-          <div className="mb-14 pb-14 border-b border-border/30">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              {/* Left: Bold Branding */}
-              <div>
-                <h2 className="text-5xl md:text-6xl font-black tracking-tighter mb-5">
-                  BRANDON<br />
-                  <span className="text-[#FF5722]">PT</span> DAVIS
-                </h2>
-                <p className="text-lg text-foreground/70 mb-1">Scenic Designer</p>
-                <p className="text-sm text-muted-foreground">USA 829 • California, USA</p>
-                <a
-                  href="mailto:info@brandonptdavis.com"
-                  className="inline-block mt-3 text-xs tracking-[0.16em] uppercase text-muted-foreground hover:text-[#FF5722] transition-colors"
-                >
-                  info@brandonptdavis.com
-                </a>
-              </div>
-
-              {/* Right: CTA */}
-              <div className="lg:text-right">
-                <p className="text-2xl font-bold mb-6 leading-tight max-w-[30ch] lg:max-w-[24ch] lg:ml-auto">
-                  Scenic design inquiries for professional productions.
-                </p>
-                <Link 
-                  href="/contact"
-                  className="inline-flex items-center justify-center h-11 px-7 rounded-md border border-[#FF5722] bg-[#FF5722] text-[11px] font-bold tracking-[0.14em] uppercase text-white hover:bg-[#ff6a3a] hover:border-[#ff6a3a] transition-all duration-300"
-                >
-                  CONTACT FOR SCENIC DESIGN
-                </Link>
-              </div>
-            </div>
+    <footer className="mt-24 border-t border-border/50">
+      <div className="container py-14 md:py-18">
+        <div className="grid gap-12 border-b border-border/40 pb-12 md:grid-cols-[minmax(0,1.1fr)_minmax(20rem,0.9fr)] md:items-end">
+          <div className="max-w-3xl">
+            <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/50">
+              Brandon PT Davis
+            </p>
+            <h2 className="max-w-[13ch] text-3xl font-semibold leading-[0.96] tracking-[-0.05em] text-foreground md:text-5xl">
+              Scenic design practice for live performance.
+            </h2>
+            <p className="mt-5 max-w-2xl text-sm leading-7 text-muted-foreground md:text-base">
+              Southern California based. USA 829. Portfolio, studio resources, articles, and
+              supporting design documentation in one place.
+            </p>
           </div>
 
-          {/* Middle Section - Navigation Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-12 mb-16">
-            {/* Work */}
-            <div>
-              <h3 className="text-sm font-black tracking-wider text-[#FF5722] mb-6">WORK</h3>
-              <ul className="space-y-3">
-                <li>
-                  <Link href="/projects" className="text-foreground/70 hover:text-[#00E5FF] transition-colors font-medium">
-                    Scenic Design
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/projects/rendering" className="text-foreground/70 hover:text-[#00E5FF] transition-colors font-medium">
-                    Rendering
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/projects/experiential" className="text-foreground/70 hover:text-[#00E5FF] transition-colors font-medium">
-                    Experiential Design
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/assistant-scenic-design" className="text-foreground/70 hover:text-[#00E5FF] transition-colors font-medium">
-                    Assistant Scenic Design
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Studio */}
-            <div>
-              <h3 className="text-sm font-black tracking-wider text-[#9C27B0] mb-6">STUDIO</h3>
-              <ul className="space-y-3">
-                <li>
-                  <Link href="/articles" className="text-foreground/70 hover:text-[#9C27B0] transition-colors font-medium">
-                    Articles
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/studio/tutorials" className="text-foreground/70 hover:text-[#9C27B0] transition-colors font-medium">
-                    Tutorials
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/studio/apps" className="text-foreground/70 hover:text-[#9C27B0] transition-colors font-medium">
-                    App Studio
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/studio/directory" className="text-foreground/70 hover:text-[#9C27B0] transition-colors font-medium">
-                    Scenic Directory
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Archive */}
-            <div>
-              <h3 className="text-sm font-black tracking-wider text-[#FF9800] mb-6">ARCHIVE</h3>
-              <ul className="space-y-3">
-                <li>
-                  <Link href="/news" className="text-foreground/70 hover:text-[#FF9800] transition-colors font-medium">
-                    News Archive
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* About */}
-            <div>
-              <h3 className="text-sm font-black tracking-wider text-[#FF1744] mb-6">ABOUT</h3>
-              <ul className="space-y-3">
-                <li>
-                  <Link href="/about" className="text-foreground/70 hover:text-[#FF5722] transition-colors font-medium">
-                    About Brandon
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/resume" className="text-foreground/70 hover:text-[#FF5722] transition-colors font-medium">
-                    Resume
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/about/teaching" className="text-foreground/70 hover:text-[#FF5722] transition-colors font-medium">
-                    Teaching
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/creative-statement" className="text-foreground/70 hover:text-[#FF5722] transition-colors font-medium">
-                    Creative Statement
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Connect */}
-            <div>
-              <h3 className="text-sm font-black tracking-wider text-[#00E5FF] mb-6">CONNECT</h3>
-              <ul className="space-y-3">
-                <li>
-                  <Link href="/contact" className="text-foreground/70 hover:text-[#FF1744] transition-colors font-medium">
-                    Contact
-                  </Link>
-                </li>
-                <li>
-                  <a 
-                    href="mailto:info@brandonptdavis.com"
-                    className="text-foreground/70 hover:text-[#FF1744] transition-colors font-medium"
-                  >
-                    Email
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://www.linkedin.com/in/brandonptdavis"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-foreground/70 hover:text-[#FF1744] transition-colors font-medium"
-                  >
-                    LinkedIn
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://www.instagram.com/brandonptdavisdesign"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-foreground/70 hover:text-[#FF1744] transition-colors font-medium"
-                  >
-                    Instagram
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://www.pinterest.com/BrandonPTDavis/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-foreground/70 hover:text-[#FF1744] transition-colors font-medium"
-                  >
-                    Pinterest
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Social Icons - Larger & More Prominent */}
-          <div className="flex items-center justify-center gap-6 mb-16 pb-16 border-b border-border/30">
-            <a
-              href="https://www.linkedin.com/in/brandonptdavis"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-14 h-14 rounded-full bg-[#FF5722]/10 flex items-center justify-center hover:bg-[#FF5722] hover:scale-110 transition-all group"
-              title="Connect on LinkedIn"
+          <div className="flex flex-wrap gap-3 md:justify-end">
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 rounded-full border border-foreground/12 bg-foreground px-5 py-3 text-sm font-semibold text-background transition-transform duration-300 hover:-translate-y-0.5"
             >
-              <Linkedin className="w-6 h-6 text-[#FF5722] group-hover:text-white transition-colors" />
-            </a>
-            <a
-              href="https://www.instagram.com/brandonptdavisdesign"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-14 h-14 rounded-full bg-[#00E5FF]/10 flex items-center justify-center hover:bg-[#00E5FF] hover:scale-110 transition-all group"
-              title="Follow on Instagram"
-            >
-              <Instagram className="w-6 h-6 text-[#00E5FF] group-hover:text-white transition-colors" />
-            </a>
-            <a
-              href="https://www.youtube.com/@brandonptdavis"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-14 h-14 rounded-full bg-[#FF1744]/10 flex items-center justify-center hover:bg-[#FF1744] hover:scale-110 transition-all group"
-              title="Subscribe on YouTube"
-            >
-              <Youtube className="w-6 h-6 text-[#FF1744] group-hover:text-white transition-colors" />
-            </a>
-            <a
-              href="https://www.pinterest.com/BrandonPTDavis/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-14 h-14 rounded-full bg-[#E60023]/10 flex items-center justify-center hover:bg-[#E60023] hover:scale-110 transition-all group"
-              title="Follow on Pinterest"
-            >
-              <PinterestIcon className="w-6 h-6 text-[#E60023] group-hover:text-white transition-colors" />
-            </a>
+              Contact
+            </Link>
             <a
               href="mailto:info@brandonptdavis.com"
-              className="w-14 h-14 rounded-full bg-[#9C27B0]/10 flex items-center justify-center hover:bg-[#9C27B0] hover:scale-110 transition-all group"
-              title="Email Me"
+              className="inline-flex items-center gap-2 rounded-full border border-foreground/12 bg-background/55 px-5 py-3 text-sm font-semibold text-foreground/78 transition-colors hover:border-foreground/20 hover:text-foreground"
             >
-              <Mail className="w-6 h-6 text-[#9C27B0] group-hover:text-white transition-colors" />
+              Email
+              <ExternalLink className="h-4 w-4" />
             </a>
           </div>
+        </div>
 
-          {/* Bottom Section - Legal & Copyright */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-sm">
-            <p className="text-muted-foreground">
-              © {new Date().getFullYear()} <span className="font-bold text-foreground">BRANDON PT DAVIS</span>. All rights reserved.
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-6">
-              <Link href="/privacy" className="text-muted-foreground hover:text-[#FF5722] transition-colors font-medium">
-                Privacy
-              </Link>
-              <span className="text-border">•</span>
-              <Link href="/terms" className="text-muted-foreground hover:text-[#00E5FF] transition-colors font-medium">
-                Terms
-              </Link>
-              <span className="text-border">•</span>
-              <Link href="/faq" className="text-muted-foreground hover:text-[#FF1744] transition-colors font-medium">
-                FAQ
-              </Link>
-              <span className="text-border">•</span>
-              <Link href="/accessibility" className="text-muted-foreground hover:text-[#FF5722] transition-colors font-medium">
-                Accessibility
-              </Link>
-              <span className="text-border">•</span>
-              <Link href="/sitemap" className="text-muted-foreground hover:text-[#00E5FF] transition-colors font-medium">
-                Sitemap
-              </Link>
+        <div className="grid gap-10 py-10 md:grid-cols-[minmax(0,1fr)_auto] md:gap-16">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {FOOTER_SECTIONS.map((section) => (
+              <div key={section.title}>
+                <div className="mb-4 flex items-center gap-3">
+                  <span
+                    className="h-1.5 w-8 rounded-full"
+                    style={{ backgroundColor: section.accent }}
+                  />
+                  <h3 className="text-sm font-semibold tracking-[-0.02em] text-foreground">
+                    {section.title}
+                  </h3>
+                </div>
+                <ul className="space-y-3">
+                  {section.links.map((item) => (
+                    <li key={item.href}>
+                      {item.internal ? (
+                        <Link
+                          href={item.href}
+                          className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                        >
+                          {item.label}
+                        </Link>
+                      ) : (
+                        <a
+                          href={item.href}
+                          className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                        >
+                          {item.label}
+                        </a>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <div className="space-y-5 md:min-w-[16rem]">
+            <div>
+              <p className="text-sm font-semibold tracking-[-0.02em] text-foreground">Connect</p>
+              <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                Follow current work, studio updates, and professional contact points.
+              </p>
             </div>
+            <div className="flex flex-wrap gap-3">
+              {SOCIAL_LINKS.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target={item.href.startsWith("mailto:") ? undefined : "_blank"}
+                    rel={item.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/60 bg-background/50 transition-transform duration-300 hover:-translate-y-0.5"
+                    style={{ color: item.accent }}
+                    title={item.label}
+                  >
+                    <Icon className="h-4 w-4" />
+                  </a>
+                );
+              })}
+              <a
+                href="https://www.pinterest.com/BrandonPTDavis/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/60 bg-background/50 transition-transform duration-300 hover:-translate-y-0.5"
+                style={{ color: "#2C9B62" }}
+                title="Pinterest"
+              >
+                <PinterestIcon className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-4 border-t border-border/40 pt-6 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
+          <p>© {new Date().getFullYear()} Brandon PT Davis. All rights reserved.</p>
+          <div className="flex flex-wrap gap-5">
+            <Link href="/privacy" className="transition-colors hover:text-foreground">
+              Privacy
+            </Link>
+            <Link href="/terms" className="transition-colors hover:text-foreground">
+              Terms
+            </Link>
+            <Link href="/faq" className="transition-colors hover:text-foreground">
+              FAQ
+            </Link>
+            <Link href="/accessibility" className="transition-colors hover:text-foreground">
+              Accessibility
+            </Link>
+            <Link href="/sitemap" className="transition-colors hover:text-foreground">
+              Sitemap
+            </Link>
           </div>
         </div>
       </div>

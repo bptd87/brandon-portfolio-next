@@ -1,7 +1,6 @@
 import express, { type Express } from "express";
 import fs from "fs";
 import { type Server } from "http";
-import { nanoid } from "nanoid";
 import { fileURLToPath } from "url";
 import path from "path";
 import { createServer as createViteServer } from "vite";
@@ -19,7 +18,6 @@ import {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-import viteConfig from "../../vite.config";
 
 type SeoMeta = {
   title: string;
@@ -566,10 +564,24 @@ export async function setupVite(app: Express, server: Server) {
   };
 
   const vite = await createViteServer({
-    ...viteConfig,
-    configFile: false,
+    configFile: path.resolve(__dirname, "../../vite.config.ts"),
     server: serverOptions,
     appType: "custom",
+  });
+
+  app.use((req, res, next) => {
+    if (
+      req.path.startsWith("/src/") ||
+      req.path.startsWith("/@vite/") ||
+      req.path.startsWith("/node_modules/.vite/") ||
+      req.path === "/" ||
+      req.path.endsWith(".html")
+    ) {
+      res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+      res.setHeader("Pragma", "no-cache");
+      res.setHeader("Expires", "0");
+    }
+    next();
   });
 
   app.use(vite.middlewares);
@@ -577,9 +589,16 @@ export async function setupVite(app: Express, server: Server) {
   // Skip SPA rendering for API and static file routes
   app.use(async (req, res, next) => {
     // Don't render SPA for these routes - let them fall through
-    if (req.path.match(/\.(xml|txt|rss|json)$/) || 
+    if (
+        req.path.startsWith("/src/") ||
+        req.path.startsWith("/@vite/") ||
+        req.path.startsWith("/node_modules/") ||
+        req.path.startsWith("/@fs/") ||
+        req.path.match(/\.[a-z0-9]+$/i) ||
+        req.path.match(/\.(xml|txt|rss|json)$/) || 
         req.path.startsWith("/api/") ||
-        req.path.startsWith("/sitemap")) {
+        req.path.startsWith("/sitemap")
+    ) {
       return next();
     }
 
@@ -594,11 +613,7 @@ export async function setupVite(app: Express, server: Server) {
       );
 
       // always reload the index.html file from disk incase it changes
-      let template = await fs.promises.readFile(clientTemplate, "utf-8");
-      template = template.replace(
-        `src="/src/main.tsx"`,
-        `src="/src/main.tsx?v=${nanoid()}"`
-      );
+      const template = await fs.promises.readFile(clientTemplate, "utf-8");
       const page = await vite.transformIndexHtml(url, template);
       const meta = await resolveSeoMeta(req);
       const pageWithMeta = injectSeoMeta(page, meta);
