@@ -1,4 +1,4 @@
-import { ArrowRight, ChevronLeft, ChevronRight, FileText, Mail, MapPin } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Mail } from "lucide-react";
 import { Link } from "wouter";
 import { useRef } from "react";
 
@@ -12,34 +12,42 @@ const galleryImages = [
   {
     url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-uci.webp",
     alt: "UC Irvine graduate school days",
+    caption: "Brandon and Gretchen at Apple Park in 2022.",
   },
   {
     url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-teaching.webp",
     alt: "Teaching scenic design to students",
+    caption: "Brandon with Stephens College students during the strike.",
   },
   {
     url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-teams.webp",
     alt: "Working with creative teams",
+    caption: "Brandon, Gretchen, and Lonnie Alcaraz [Lighting Designer] in Costa Mesa in 2023.",
   },
   {
     url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-mentors.webp",
     alt: "Collaborating with mentors",
+    caption: "Brandon, Gretchen, and Alan Muraoka [Scenic and Production Designer] at South Coast Rep in 2024.",
   },
   {
     url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-collaborations.webp",
     alt: "Creative collaborations",
+    caption: "Brandon, Gretchen, Michael and Ruth Anne Burek, and Katie Cohen at the Association Party in Okoboji, Iowa, in 2023.",
   },
   {
     url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-family.webp",
     alt: "Family and community",
+    caption: "Brandon with the Ugalde Burks family at Thanksgiving in 2023.",
   },
   {
     url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-partnerships.webp",
     alt: "Design partnerships",
+    caption: "Brandon, Gretchen, and Tom Buderwitz [Scenic Designer] in Santa Monica, California.",
   },
   {
     url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-behind-scenes.webp",
     alt: "Behind the scenes",
+    caption: "Brandon in the scene shop at The Great American Melodrama.",
   },
 ];
 
@@ -50,24 +58,23 @@ const navigationCards = [
       "Process, design philosophy, and the principles that shape the work.",
     href: "/creative-statement",
     label: "Process",
-    image:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-mentors.webp",
+    image: "/assets/about/about-process-art.png",
+    imageTitle: "Creative Statement",
   },
   {
     title: "Resume & Credits",
     description: "Production history, union background, and the broader body of work.",
     href: "/resume",
     label: "Resume",
-    image:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-uci.webp",
+    image: "/assets/about/about-resume-art.png",
   },
   {
     title: "Teaching Philosophy",
     description: "Thoughts on scenic design education, mentorship, and professional growth.",
     href: "/about/teaching",
     label: "Teaching",
-    image:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-teaching.webp",
+    image: "/assets/about/about-teaching-art.png",
+    imageTitle: "Teaching Philosophy",
   },
   {
     title: "Collaborators & Directors",
@@ -75,8 +82,7 @@ const navigationCards = [
       "Creative partners, theatre companies, and long-running director relationships.",
     href: "/about/collaborators",
     label: "Collaboration",
-    image:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-teams.webp",
+    image: "/assets/about/about-collaborators-art.png",
   },
 ];
 
@@ -231,33 +237,14 @@ export default function About() {
                   collaboration.
                 </p>
 
-                <div className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-foreground/58">
-                  <span className="inline-flex items-center gap-2">
-                    <MapPin className="h-4 w-4" />
-                    Southern California
-                  </span>
-                  <span>USA 829</span>
-                  <span>MFA Scenic Design</span>
-                  <span>130+ Productions</span>
-                </div>
-
-                <div className="mt-7 flex justify-center">
-                  <a
-                    href="/resume"
-                    className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-foreground px-6 text-sm font-medium text-background transition-colors hover:bg-foreground/90"
-                  >
-                    <FileText className="h-4 w-4" />
-                    View Resume
-                  </a>
-                </div>
               </div>
 
-              <div className="mx-auto mt-10 max-w-[23rem] md:mt-12">
+              <div className="mx-auto mt-10 max-w-3xl md:mt-12">
                 <div className="overflow-hidden rounded-[1.75rem] border border-border/40 bg-card/20">
                   <img
                     src="https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/profile-headshot.webp"
                     alt="Brandon PT Davis - Scenic Designer"
-                    className="aspect-[4/5] w-full object-cover object-center"
+                    className="aspect-square w-full object-cover object-top"
                   />
                 </div>
               </div>
@@ -395,13 +382,21 @@ export default function About() {
               {navigationCards.map((card) => (
                 <Link key={card.href} href={card.href}>
                   <a className="group block">
-                    <div className="overflow-hidden rounded-[1.35rem] border border-border/40 bg-card/20">
+                    <div className="relative overflow-hidden rounded-[1.35rem] border border-border/40 bg-card/20">
                       <img
                         src={card.image}
                         alt={card.title}
                         className="aspect-square w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
                         loading="lazy"
                       />
+                      {card.imageTitle ? (
+                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-6 text-center">
+                          <div className="absolute inset-0 bg-black/12" />
+                          <p className="relative max-w-[10ch] font-sans text-[1.45rem] font-medium leading-[0.98] tracking-[-0.05em] text-white md:text-[1.65rem]">
+                            {card.imageTitle}
+                          </p>
+                        </div>
+                      ) : null}
                     </div>
                     <div className="pt-4">
                       <p className="text-sm text-foreground/50">{card.label}</p>
@@ -449,7 +444,7 @@ export default function About() {
 
             <div
               ref={galleryRailRef}
-              className="mt-10 flex snap-x snap-mandatory items-end gap-6 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="mt-10 flex snap-x snap-mandatory items-start gap-6 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
               {galleryImages.map((image) => (
                 <div
@@ -462,6 +457,9 @@ export default function About() {
                     className="block w-full rounded-[1.5rem]"
                     loading="lazy"
                   />
+                  <p className="mt-3 max-w-[36rem] text-[0.98rem] leading-7 text-foreground/62">
+                    {image.caption}
+                  </p>
                 </div>
               ))}
             </div>

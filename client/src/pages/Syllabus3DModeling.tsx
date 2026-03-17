@@ -1,11 +1,74 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AboutNav from "@/components/AboutNav";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { ArrowRight } from "lucide-react";
+import { Link } from "wouter";
+
+const objectives = [
+  "Build complex scenic environments through a 3D-first workflow in Vectorworks.",
+  "Visualize design concepts with rendering and real-time presentation tools.",
+  "Generate plans, sections, elevations, and documentation from modeled geometry.",
+  "Organize files, layers, classes, and viewports for collaborative production use.",
+];
+
+const requirements = [
+  "Vectorworks 2024 educational license",
+  "Twinmotion for real-time rendering",
+  "3-button mouse for efficient modeling workflow",
+];
+
+const evaluation = [
+  ["Weekly Skill Quizzes", "120", "Ten technical quizzes covering tools, palettes, and standards."],
+  ["Assignments 1-3", "150", "Initial setup, 3D primitives, and rendering basics."],
+  ["Project 1: 3D Object", "100", "Prop and object modeling through solids workflow."],
+  ["Project 2: Sitcom Set", "200", "Midterm interior set using architectural and hybrid objects."],
+  ["Project 3: Conceptual Research", "100", "Research and concept development for Wait Until Dark."],
+  ["Project 4: Scenic Model", "100", "Full digital model of the set."],
+  ["Project 5: Visualization", "100", "Rendered images with lighting, texturing, and atmosphere."],
+  ["Project 6: Drafting Package", "350", "Final ground plan, section, and elevations pulled from the 3D model."],
+];
+
+const modules = [
+  {
+    title: "The Vectorworks Environment",
+    weeks: [
+      "Week 1: Interface, workspaces, and drafting standards",
+      "Week 2: 3D tools including extrude, sweep, and loft",
+      "Week 3: Complex modeling and solids workflow",
+    ],
+  },
+  {
+    title: "Architectural Modeling",
+    weeks: [
+      "Week 4: Hybrid objects including walls, doors, and windows",
+      "Week 5: Resource Manager and symbol creation",
+      'Week 6: "My Life" sitcom set with emphasis on clean geometry and file organization',
+    ],
+  },
+  {
+    title: "Theatrical Application",
+    weeks: [
+      "Week 7: Script analysis and research for Wait Until Dark",
+      "Week 8: Twinmotion integration and export workflow",
+      "Week 9: Building the digital model with stairs, masking, and scenic elements",
+    ],
+  },
+  {
+    title: "Rendering and Documentation",
+    weeks: [
+      "Week 12: Advanced texturing and lighting in Renderworks",
+      "Week 13: Generating viewports and cutting sections from the model",
+      "Week 14: Dimensioning and annotation standards",
+      "Week 15: Compiling the final drafting package for print and PDF delivery",
+    ],
+  },
+];
 
 export default function Syllabus3DModeling() {
   return (
-    <>
+    <div className="min-h-screen bg-background">
       <SEO
         title="THA 211 | 3D Modeling and Rendering Syllabus"
         description="Course syllabus for THA 211: Vectorworks for theatrical design, covering 3D modeling, rendering, and drafting documentation."
@@ -25,7 +88,8 @@ export default function Syllabus3DModeling() {
         course={{
           name: "THA 211: 3D Modeling and Rendering",
           courseCode: "THA 211",
-          description: "Advanced CAD and 3D visualization course using Vectorworks and Twinmotion for theatrical design workflows.",
+          description:
+            "Advanced CAD and 3D visualization course using Vectorworks and Twinmotion for theatrical design workflows.",
           url: "https://www.brandonptdavis.com/syllabus/3d-modeling",
           provider: {
             name: "Brandon PT Davis",
@@ -48,186 +112,207 @@ export default function Syllabus3DModeling() {
         }}
       />
       <Header />
-      
-      <section className="min-h-screen bg-background pt-20 pb-20">
-        <div className="container max-w-4xl">
-          
-          {/* Hero */}
-          <div className="mb-12">
-            <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">COURSE SYLLABUS</p>
-            <h1 className="text-5xl md:text-7xl font-serif mb-6 leading-tight">3D Modeling and Rendering</h1>
-            <p className="text-xl text-foreground/70 leading-relaxed mb-4">
-              THA 211: Vectorworks for Theatrical Design
+      <AboutNav />
+
+      <section className="px-6 pb-12 pt-24 md:pb-16 md:pt-28">
+        <div className="mx-auto max-w-5xl border-b border-border/25 pb-12">
+          <p className="text-center font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+            Course Syllabus
+          </p>
+          <h1 className="mx-auto mt-6 max-w-5xl text-center font-sans text-[clamp(3rem,6vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
+            3D Modeling and Rendering
+          </h1>
+          <p className="mx-auto mt-8 max-w-3xl text-center text-[1.08rem] leading-8 text-foreground/60 md:text-[1.16rem]">
+            THA 211: Vectorworks for theatrical design, centered on modeling, visualization, and
+            production-ready drafting workflow.
+          </p>
+        </div>
+      </section>
+
+      <section className="px-6 py-8 md:py-12">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 xl:grid-cols-[minmax(0,1.05fr)_minmax(18rem,0.95fr)]">
+          <div className="max-w-2xl">
+            <h2 className="font-sans text-[clamp(2rem,4vw,3.2rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
+              Teaching students how to model, render, and document with clarity.
+            </h2>
+            <div className="mt-8 space-y-5">
+              <p className="text-[1.04rem] leading-8 text-foreground/64 md:text-[1.1rem]">
+                This course moves beyond introductory drafting into a full 3D scenic design
+                workflow. Students build digital environments, learn how to visualize them, and
+                understand how those models become real production documents.
+              </p>
+              <p className="text-[1.04rem] leading-8 text-foreground/64 md:text-[1.1rem]">
+                The emphasis is not just software knowledge, but professional organization:
+                geometry, layers, classes, rendering logic, and the transition from design model to
+                clear drafting output.
+              </p>
+            </div>
+            <div className="mt-8">
+              <a
+                href="/studio/tutorials"
+                className="inline-flex h-11 items-center gap-2 rounded-full bg-white px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-black transition-colors hover:bg-white/92"
+              >
+                <span>View Vectorworks Tutorials</span>
+                <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+
+          <div className="overflow-hidden rounded-[1.5rem] border border-border/30 bg-card/20">
+            <img
+              src="/assets/teaching/syllabus-3d-modeling-art.png"
+              alt="3D modeling syllabus artwork"
+              className="aspect-square w-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="px-6 py-18 md:py-22">
+        <div className="mx-auto max-w-6xl">
+          <div className="grid items-start gap-12 md:grid-cols-[180px_1fr]">
+            <div className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40 md:sticky md:top-32">
+              Overview
+            </div>
+            <div className="max-w-4xl space-y-8">
+              <p className="text-[1.14rem] leading-9 text-foreground/72 md:text-[1.22rem]">
+                This course serves as an advanced introduction to CAD and 3D visualization for
+                theatrical design. Students learn to work in Vectorworks through modeling,
+                rendering, hybrid object construction, and drafting generated directly from 3D
+                geometry.
+              </p>
+              <p className="text-[1.06rem] leading-8 text-foreground/60 md:text-[1.12rem]">
+                The course is organized around workflow rather than isolated software tricks.
+                Students move from interface fluency to architectural tools, theatrical modeling,
+                lighting and texturing, and finally into a clear set of professional drawing
+                deliverables.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-border/25 px-6 py-18 md:py-22">
+        <div className="mx-auto max-w-6xl grid gap-10 lg:grid-cols-2">
+          <div className="rounded-[1.5rem] border border-border/25 bg-card/10 p-6 md:p-8">
+            <h2 className="font-sans text-[0.9rem] font-semibold uppercase tracking-[0.24em] text-foreground/40">
+              Course Objectives
+            </h2>
+            <div className="mt-6 space-y-4">
+              {objectives.map((item) => (
+                <p key={item} className="text-[1rem] leading-7 text-foreground/68">
+                  {item}
+                </p>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-[1.5rem] border border-border/25 bg-card/10 p-6 md:p-8">
+            <h2 className="font-sans text-[0.9rem] font-semibold uppercase tracking-[0.24em] text-foreground/40">
+              Required Tools
+            </h2>
+            <div className="mt-6 space-y-4">
+              {requirements.map((item) => (
+                <p key={item} className="text-[1rem] leading-7 text-foreground/68">
+                  {item}
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-6 py-18 md:py-22">
+        <div className="mx-auto max-w-6xl">
+          <div className="max-w-3xl">
+            <h2 className="font-sans text-[clamp(2rem,4vw,3.1rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">
+              Evaluation and project structure.
+            </h2>
+            <p className="mt-6 text-[1.04rem] leading-8 text-foreground/60 md:text-[1.1rem]">
+              Students move from skill drills and small assignments into a larger scenic design
+              sequence that culminates in a modeled project, rendered imagery, and a drafting
+              package derived from that work.
             </p>
-            <div className="text-foreground/60">
-              <p><strong>Instructor:</strong> Brandon PT Davis</p>
-              <p><strong>Office Hours:</strong> By Appointment</p>
+          </div>
+
+          <div className="mt-10 border-t border-border/25">
+            {evaluation.map(([title, points, description]) => (
+              <div
+                key={title}
+                className="grid gap-3 border-b border-border/20 py-5 md:grid-cols-[minmax(0,1.25fr)_90px_minmax(0,1.45fr)] md:gap-8"
+              >
+                <p className="font-sans text-[1rem] font-medium tracking-[-0.03em] text-foreground">
+                  {title}
+                </p>
+                <p className="text-[0.98rem] leading-7 text-foreground/54">{points}</p>
+                <p className="text-[0.98rem] leading-7 text-foreground/60">{description}</p>
+              </div>
+            ))}
+            <div className="grid gap-3 py-5 md:grid-cols-[minmax(0,1.25fr)_90px_minmax(0,1.45fr)] md:gap-8">
+              <p className="font-sans text-[1rem] font-medium tracking-[-0.03em] text-foreground">
+                Total
+              </p>
+              <p className="text-[0.98rem] leading-7 text-foreground/54">1120</p>
+              <p className="text-[0.98rem] leading-7 text-foreground/60">Semester total</p>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Course Materials Link */}
-          <div className="mb-8">
-            <a href="/studio/tutorials" className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors font-semibold">
-              <span>View Vectorworks Video Tutorials</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </a>
+      <section className="border-t border-border/25 px-6 py-18 md:py-22">
+        <div className="mx-auto max-w-6xl">
+          <div className="max-w-3xl">
+            <h2 className="font-sans text-[clamp(2rem,4vw,3.1rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">
+              Weekly modules.
+            </h2>
           </div>
 
-          {/* Course Description */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-serif mb-4">Course Description</h2>
-            <p className="text-foreground/80 leading-relaxed">
-              This course serves as an advanced introduction to Computer-Aided Drafting (CAD) and 3D visualization for theatrical design. Moving beyond basic drafting, students will master the workflow of Vectorworks 2024, focusing on 3D modeling, hybrid symbol creation, texturing, lighting, and the generation of industry-standard construction documents (Ground Plans, Sections, and Elevations) directly from the 3D model.
-            </p>
-          </div>
-
-          {/* Course Objectives */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-serif mb-4">Course Objectives</h2>
-            <p className="text-foreground/80 mb-4">By the end of this course, students will be able to:</p>
-            <ol className="list-decimal list-inside space-y-2 text-foreground/80">
-              <li><strong>Master the 3D Workflow:</strong> Create complex scenic environments using solid modeling and hybrid objects in Vectorworks.</li>
-              <li><strong>Visualize Concepts:</strong> Utilize Twinmotion to create real-time renders and visualizations for client presentations.</li>
-              <li><strong>Generate Documentation:</strong> Produce 2D construction drawings (Plans, Sections, Elevations) derived from 3D geometry.</li>
-              <li><strong>Manage Data:</strong> Understand proper file organization, classes, layers, and viewport management for professional collaboration.</li>
-            </ol>
-          </div>
-
-          {/* Required Software */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-serif mb-4">Required Software & Hardware</h2>
-            <ul className="list-disc list-inside space-y-2 text-foreground/80">
-              <li>Vectorworks 2024 (Educational License)</li>
-              <li>Twinmotion (Real-Time Rendering)</li>
-              <li>3-Button Mouse (Required for efficient modeling)</li>
-            </ul>
-          </div>
-
-          {/* Evaluation Table */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-serif mb-6">Evaluation & Projects</h2>
-            <div className="backdrop-blur-md bg-card/30 border border-border/50 rounded-2xl overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-border/50">
-                      <th className="text-left p-4 text-sm font-semibold text-muted-foreground">Assignment</th>
-                      <th className="text-left p-4 text-sm font-semibold text-muted-foreground">Points</th>
-                      <th className="text-left p-4 text-sm font-semibold text-muted-foreground">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b border-border/50 hover:bg-accent/5 transition-colors">
-                      <td className="p-4">Weekly Skill Quizzes</td>
-                      <td className="p-4 text-muted-foreground">120</td>
-                      <td className="p-4 text-foreground/70">10 Technical quizzes covering tools, palettes, and standards</td>
-                    </tr>
-                    <tr className="border-b border-border/50 hover:bg-accent/5 transition-colors">
-                      <td className="p-4">Assignment 1-3</td>
-                      <td className="p-4 text-muted-foreground">150</td>
-                      <td className="p-4 text-foreground/70">Initial setup, 3D primitive worksheets, and Rendering basics</td>
-                    </tr>
-                    <tr className="border-b border-border/50 hover:bg-accent/5 transition-colors">
-                      <td className="p-4">Project 1: 3D Object</td>
-                      <td className="p-4 text-muted-foreground">100</td>
-                      <td className="p-4 text-foreground/70">Modeling a complex prop/object to learn solid addition/subtraction</td>
-                    </tr>
-                    <tr className="border-b border-border/50 hover:bg-accent/5 transition-colors">
-                      <td className="p-4">Project 2: Sitcom Set</td>
-                      <td className="p-4 text-muted-foreground">200</td>
-                      <td className="p-4 text-foreground/70">(Midterm) Modeling a multi-camera realistic interior (walls, doors, windows, furniture) to understand architectural tools</td>
-                    </tr>
-                    <tr className="border-b border-border/50 hover:bg-accent/5 transition-colors">
-                      <td className="p-4">Project 3: Conceptual Research</td>
-                      <td className="p-4 text-muted-foreground">100</td>
-                      <td className="p-4 text-foreground/70">Research and concept development for Wait Until Dark</td>
-                    </tr>
-                    <tr className="border-b border-border/50 hover:bg-accent/5 transition-colors">
-                      <td className="p-4">Project 4: Scenic Model</td>
-                      <td className="p-4 text-muted-foreground">100</td>
-                      <td className="p-4 text-foreground/70">Full 3D Digital Model of the set for Wait Until Dark</td>
-                    </tr>
-                    <tr className="border-b border-border/50 hover:bg-accent/5 transition-colors">
-                      <td className="p-4">Project 5: Visualization</td>
-                      <td className="p-4 text-muted-foreground">100</td>
-                      <td className="p-4 text-foreground/70">Final lit renderings and textures using Renderworks/Twinmotion</td>
-                    </tr>
-                    <tr className="border-b border-border/50 hover:bg-accent/5 transition-colors">
-                      <td className="p-4">Project 6: Drafting Package</td>
-                      <td className="p-4 text-muted-foreground">350</td>
-                      <td className="p-4 text-foreground/70">(Final) Industry-standard drafting plate including Ground Plan, Front Elevations, and Centerline Section derived from the Project 4 model</td>
-                    </tr>
-                    <tr className="hover:bg-accent/5 transition-colors">
-                      <td className="p-4 font-semibold">Total</td>
-                      <td className="p-4 font-semibold">1120</td>
-                      <td className="p-4"></td>
-                    </tr>
-                  </tbody>
-                </table>
+          <div className="mt-10 space-y-10">
+            {modules.map((module) => (
+              <div key={module.title} className="border-t border-border/20 pt-6">
+                <h3 className="font-sans text-[1.35rem] font-medium leading-[1.1] tracking-[-0.04em] text-foreground">
+                  {module.title}
+                </h3>
+                <div className="mt-5 space-y-3">
+                  {module.weeks.map((week) => (
+                    <p key={week} className="text-[1rem] leading-7 text-foreground/62">
+                      {week}
+                    </p>
+                  ))}
+                </div>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-border/25 px-6 py-20 md:py-24">
+        <div className="mx-auto max-w-[108rem]">
+          <div className="rounded-[2rem] border border-white/8 bg-white/[0.06] px-6 py-16 text-center md:px-12 md:py-20">
+            <h2 className="mx-auto max-w-4xl font-sans text-[clamp(2.4rem,4.5vw,4.2rem)] font-medium leading-[1.02] tracking-[-0.06em] text-foreground">
+              Return to teaching philosophy and course context.
+            </h2>
+            <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Link
+                href="/about/teaching"
+                className="inline-flex h-11 items-center gap-2 rounded-full bg-white px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-black transition-colors hover:bg-white/92"
+              >
+                <span>Back to Teaching Philosophy</span>
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/syllabus/experiential-design"
+                className="inline-flex h-11 items-center gap-2 rounded-full bg-white/10 px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-foreground transition-colors hover:bg-white/14"
+              >
+                <span>See Experiential Syllabus</span>
+              </Link>
             </div>
           </div>
-
-          {/* Weekly Schedule */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-serif mb-6">Weekly Schedule</h2>
-            
-            <div className="space-y-8">
-              {/* Module 1 */}
-              <div>
-                <h3 className="text-xl font-semibold mb-3">Module 1: The Vectorworks Environment</h3>
-                <ul className="space-y-2 text-foreground/80">
-                  <li><strong>Week 1:</strong> UI Setup, Workspaces, and Drafting Standards</li>
-                  <li><strong>Week 2:</strong> Introduction to 3D Tools (Extrude, Sweep, Loft)</li>
-                  <li><strong>Week 3:</strong> Lab: Complex Modeling Techniques & Solids Modeling</li>
-                </ul>
-              </div>
-
-              {/* Module 2 */}
-              <div>
-                <h3 className="text-xl font-semibold mb-3">Module 2: Architectural Modeling (The Sitcom Project)</h3>
-                <ul className="space-y-2 text-foreground/80">
-                  <li><strong>Week 4:</strong> Hybrid Objects (Walls, Doors, Windows)</li>
-                  <li><strong>Week 5:</strong> Resource Manager & Symbol Creation</li>
-                  <li><strong>Week 6:</strong> Project 2 Due: "My Life" Sitcom Set
-                    <br /><span className="text-sm text-muted-foreground ml-4">Focus: Clean geometry and proper layer/class organization</span>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Module 3 */}
-              <div>
-                <h3 className="text-xl font-semibold mb-3">Module 3: Theatrical Application (Wait Until Dark)</h3>
-                <ul className="space-y-2 text-foreground/80">
-                  <li><strong>Week 7:</strong> Script Analysis & Research for Wait Until Dark</li>
-                  <li><strong>Week 8 (Midterm):</strong> Twinmotion Integration
-                    <br /><span className="text-sm text-muted-foreground ml-4">Lab: Exporting models to Twinmotion for rapid texture and lighting iteration</span>
-                  </li>
-                  <li><strong>Week 9:</strong> Project 4: The Digital Model
-                    <br /><span className="text-sm text-muted-foreground ml-4">Focus: Modeling specific theatrical elements (stairs, platforms, masking)</span>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Module 4 */}
-              <div>
-                <h3 className="text-xl font-semibold mb-3">Module 4: Rendering & Documentation</h3>
-                <ul className="space-y-2 text-foreground/80">
-                  <li><strong>Week 12:</strong> Advanced Texturing & Lighting in Renderworks</li>
-                  <li><strong>Week 13:</strong> From 3D to 2D: Generating Viewports and Cutting Sections</li>
-                  <li><strong>Week 14:</strong> Dimensioning & Annotation Standards (USITT)</li>
-                  <li><strong>Week 15:</strong> Project 6: The Drafting Package
-                    <br /><span className="text-sm text-muted-foreground ml-4">Lab: Compiling the Ground Plan, Section, and Elevations into a printable PDF</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
         </div>
       </section>
 
       <Footer />
-    </>
+    </div>
   );
 }

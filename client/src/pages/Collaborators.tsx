@@ -4,22 +4,19 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AboutNav from "@/components/AboutNav";
 import { trpc } from "@/lib/trpc";
-import { ExternalLink, Instagram, Users, Building2, Briefcase } from "lucide-react";
-import { useMemo, useState } from "react";
+import { ExternalLink, Instagram, Users } from "lucide-react";
+import { useMemo } from "react";
 
-type RoleFilter = "all" | "director" | "scenic_designer" | "costume_designer" | "lighting_designer" | "sound_designer" | "projection_designer" | "partner_company" | "theatre_company";
-
-// Define the display order for roles
-const roleOrder: RoleFilter[] = [
-  "director",
-  "scenic_designer",
-  "costume_designer",
-  "lighting_designer",
-  "sound_designer",
-  "projection_designer",
-  "partner_company",
-  "theatre_company",
-];
+type RoleFilter =
+  | "all"
+  | "director"
+  | "scenic_designer"
+  | "costume_designer"
+  | "lighting_designer"
+  | "sound_designer"
+  | "projection_designer"
+  | "partner_company"
+  | "theatre_company";
 
 const roleLabels: Record<RoleFilter, string> = {
   all: "All Collaborators",
@@ -33,22 +30,13 @@ const roleLabels: Record<RoleFilter, string> = {
   partner_company: "Partner Companies",
 };
 
-const roleIcons: Record<RoleFilter, any> = {
-  all: Users,
-  director: Users,
-  scenic_designer: Users,
-  costume_designer: Users,
-  lighting_designer: Users,
-  sound_designer: Users,
-  projection_designer: Users,
-  theatre_company: Building2,
-  partner_company: Briefcase,
-};
+const slugifyName = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 
 export default function Collaborators() {
-  const [activeFilter, setActiveFilter] = useState<RoleFilter>("all");
-  const accentPalette = ["#FF5722", "#00BCD4", "#E91E63", "#FFC107", "#7CFF6B"];
-
   const { data: allCollaborators, isLoading } = trpc.collaborators.list.useQuery();
 
   const groupedCollaborators = useMemo(
@@ -62,21 +50,55 @@ export default function Collaborators() {
     [allCollaborators]
   );
 
-  const visibleRoles = activeFilter === "all" ? roleOrder : [activeFilter];
   const peopleCollaborators = useMemo(
-    () => (allCollaborators || []).filter((c) =>
-      c.role !== "theatre_company" && c.role !== "partner_company"
-    ),
+    () =>
+      (allCollaborators || []).filter(
+        (collaborator) =>
+          collaborator.role !== "theatre_company" && collaborator.role !== "partner_company"
+      ),
     [allCollaborators]
   );
 
   const collaboratorStats = useMemo(() => {
     const list = allCollaborators || [];
-    const companies = list.filter((c) => c.role === "theatre_company" || c.role === "partner_company").length;
-    const designers = list.filter((c) => c.role && c.role.includes("designer")).length;
-    const directors = list.filter((c) => c.role === "director").length;
+    const companies = list.filter(
+      (collaborator) =>
+        collaborator.role === "theatre_company" || collaborator.role === "partner_company"
+    ).length;
+    const designers = list.filter((collaborator) => collaborator.role?.includes("designer")).length;
+    const directors = list.filter((collaborator) => collaborator.role === "director").length;
     return { total: list.length, companies, designers, directors };
   }, [allCollaborators]);
+
+  const editorialSections = useMemo(
+    () => [
+      {
+        id: "directors",
+        title: "Directors",
+        items: groupedCollaborators?.director || [],
+      },
+      {
+        id: "designers",
+        title: "Designers",
+        items: [
+          ...(groupedCollaborators?.scenic_designer || []),
+          ...(groupedCollaborators?.costume_designer || []),
+          ...(groupedCollaborators?.lighting_designer || []),
+          ...(groupedCollaborators?.sound_designer || []),
+          ...(groupedCollaborators?.projection_designer || []),
+        ],
+      },
+      {
+        id: "companies",
+        title: "Companies",
+        items: [
+          ...(groupedCollaborators?.partner_company || []),
+          ...(groupedCollaborators?.theatre_company || []),
+        ],
+      },
+    ],
+    [groupedCollaborators]
+  );
 
   return (
     <>
@@ -105,7 +127,11 @@ export default function Collaborators() {
             itemListElement: (allCollaborators || []).slice(0, 100).map((collab, index) => ({
               position: index + 1,
               name: collab.name,
-              url: collab.website || collab.portfolioUrl || collab.instagramUrl || "https://www.brandonptdavis.com/about/collaborators",
+              url:
+                collab.website ||
+                collab.portfolioUrl ||
+                collab.instagramUrl ||
+                "https://www.brandonptdavis.com/about/collaborators",
             })),
           },
         }}
@@ -114,7 +140,8 @@ export default function Collaborators() {
         type="CreativeWork"
         creativeWork={{
           name: "Scenic Design Collaborations",
-          description: "Ongoing creative collaborations with directors, designers, and production partners across scenic design productions.",
+          description:
+            "Ongoing creative collaborations with directors, designers, and production partners across scenic design productions.",
           url: "https://www.brandonptdavis.com/about/collaborators",
           creator: {
             name: "Brandon PT Davis",
@@ -134,194 +161,218 @@ export default function Collaborators() {
           })),
         }}
       />
-      <div className="min-h-screen flex flex-col bg-background [background-image:radial-gradient(circle_at_14%_10%,rgba(255,87,34,0.08),transparent_34%),radial-gradient(circle_at_88%_18%,rgba(0,188,212,0.08),transparent_30%)]">
+
+      <div className="min-h-screen bg-background">
         <Header />
         <AboutNav />
 
-        <main className="flex-1 pt-24 pb-20">
-          <div className="container">
-            <div className="max-w-4xl mx-auto text-center mb-14">
-              <p className="text-xs uppercase tracking-[0.24em] font-semibold text-foreground/60 mb-4">
-                About
-              </p>
-              <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-5 leading-[0.9]">
-                Collaborators
-              </h1>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Directors, designers, theatres, and creative teams behind the work.
-              </p>
-            </div>
+        <main className="px-6 pb-20 pt-24 md:pt-28">
+          <section className="mx-auto max-w-5xl border-b border-border/25 pb-12">
+            <p className="text-center font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+              Collaborators
+            </p>
+            <h1 className="mx-auto mt-6 max-w-5xl text-center font-sans text-[clamp(3rem,6vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
+              Directors, designers, companies, and long-running creative partners.
+            </h1>
+            <p className="mx-auto mt-8 max-w-3xl text-center text-[1.08rem] leading-8 text-foreground/60 md:text-[1.16rem]">
+              Scenic design is built through relationships. This page gathers the people and
+              organizations whose work has shaped productions through conversation, trust, and
+              repeat collaboration over time.
+            </p>
 
             {!isLoading && (
-              <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
-                <div className="rounded-xl border border-border/60 bg-card/30 backdrop-blur-sm p-4 text-center shadow-[0_10px_28px_rgba(0,0,0,0.14)]">
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground mb-1">Total</p>
-                  <p className="text-xl font-bold">{collaboratorStats.total}</p>
+              <div className="mx-auto mt-10 flex max-w-3xl flex-wrap items-center justify-center gap-x-8 gap-y-3 text-center">
+                <div>
+                  <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/36">
+                    Total
+                  </p>
+                  <p className="mt-2 text-[1.05rem] text-foreground/72">{collaboratorStats.total}</p>
                 </div>
-                <div className="rounded-xl border border-border/60 bg-card/30 backdrop-blur-sm p-4 text-center shadow-[0_10px_28px_rgba(0,0,0,0.14)]">
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground mb-1">Designers</p>
-                  <p className="text-xl font-bold">{collaboratorStats.designers}</p>
+                <div>
+                  <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/36">
+                    Designers
+                  </p>
+                  <p className="mt-2 text-[1.05rem] text-foreground/72">{collaboratorStats.designers}</p>
                 </div>
-                <div className="rounded-xl border border-border/60 bg-card/30 backdrop-blur-sm p-4 text-center shadow-[0_10px_28px_rgba(0,0,0,0.14)]">
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground mb-1">Directors</p>
-                  <p className="text-xl font-bold">{collaboratorStats.directors}</p>
+                <div>
+                  <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/36">
+                    Directors
+                  </p>
+                  <p className="mt-2 text-[1.05rem] text-foreground/72">{collaboratorStats.directors}</p>
                 </div>
-                <div className="rounded-xl border border-border/60 bg-card/30 backdrop-blur-sm p-4 text-center shadow-[0_10px_28px_rgba(0,0,0,0.14)]">
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground mb-1">Companies</p>
-                  <p className="text-xl font-bold">{collaboratorStats.companies}</p>
+                <div>
+                  <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/36">
+                    Companies
+                  </p>
+                  <p className="mt-2 text-[1.05rem] text-foreground/72">{collaboratorStats.companies}</p>
                 </div>
               </div>
             )}
+          </section>
 
-            <div className="max-w-6xl mx-auto mb-14">
-              <div className="flex justify-center">
-                <div className="flex max-w-5xl flex-wrap justify-center gap-2 rounded-2xl border border-border/50 bg-card/30 backdrop-blur-sm p-2">
-                  <button
-                    type="button"
-                    onClick={() => setActiveFilter("all")}
-                    className="whitespace-nowrap rounded-xl px-4 py-2 text-xs font-semibold tracking-[0.08em] uppercase transition-all duration-200"
-                    style={
-                      activeFilter === "all"
-                        ? {
-                            color: accentPalette[0],
-                            backgroundColor: `${accentPalette[0]}22`,
-                            boxShadow: `inset 0 0 0 1px ${accentPalette[0]}66`,
-                          }
-                        : undefined
-                    }
-                  >
-                    All ({allCollaborators?.length || 0})
-                  </button>
-                  {roleOrder.map((role, idx) => {
-                    const count = groupedCollaborators?.[role]?.length || 0;
-                    if (!count) return null;
-
-                    const accent = accentPalette[(idx + 1) % accentPalette.length];
-                    const isActive = activeFilter === role;
-                    return (
-                      <button
-                        key={role}
-                        type="button"
-                        onClick={() => setActiveFilter(role)}
-                        className="whitespace-nowrap rounded-xl px-4 py-2 text-xs font-semibold tracking-[0.08em] uppercase transition-all duration-200 text-foreground/70 hover:text-foreground hover:bg-white/5"
-                        style={
-                          isActive
-                            ? {
-                                color: accent,
-                                backgroundColor: `${accent}22`,
-                                boxShadow: `inset 0 0 0 1px ${accent}66`,
-                              }
-                            : undefined
-                        }
-                      >
-                        {roleLabels[role]} ({count})
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-
-            {isLoading && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[...Array(6)].map((_, i) => (
-                  <div key={i} className="bg-card border border-border rounded-lg p-6 animate-pulse">
-                    <div className="h-6 bg-muted rounded w-3/4 mb-3"></div>
-                    <div className="h-4 bg-muted rounded w-1/2 mb-4"></div>
-                    <div className="h-4 bg-muted rounded w-full mb-2"></div>
-                    <div className="h-4 bg-muted rounded w-5/6"></div>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {!isLoading && (
-              <div className="space-y-16 max-w-6xl mx-auto">
-                {visibleRoles.map((role, sectionIndex) => {
-                  const collaborators = groupedCollaborators?.[role];
-                  if (!collaborators || collaborators.length === 0) return null;
-
-                  const Icon = roleIcons[role as RoleFilter];
-                  const accent = accentPalette[sectionIndex % accentPalette.length];
-
+          <section className="mx-auto mt-10 max-w-6xl">
+            <div className="flex justify-center">
+              <div className="flex max-w-5xl flex-wrap justify-center gap-x-8 gap-y-3">
+                {editorialSections.map((section) => {
+                  if (!section.items.length) return null;
                   return (
-                    <div key={role}>
-                      <h2 className="text-2xl md:text-3xl font-black tracking-tight mb-8 flex items-center gap-3">
-                        <Icon className="w-7 h-7" style={{ color: accent }} />
-                        {roleLabels[role as RoleFilter]}
-                      </h2>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {collaborators.map((collaborator, index) => {
-                          const cardAccent = accentPalette[(index + sectionIndex) % accentPalette.length];
-                          const website = collaborator.website || collaborator.portfolioUrl;
-                          const instagramLabel = (collaborator.instagramHandle || "Instagram").replace(/^@+/, "");
-
-                          return (
-                            <div
-                              key={collaborator.id}
-                              className="rounded-2xl border border-border/60 bg-card/30 p-6 transition-all duration-300 hover:-translate-y-1 hover:bg-card/60 hover:border-border hover:shadow-[0_22px_55px_rgba(0,0,0,0.24)] scroll-mt-32"
-                              style={{ boxShadow: `inset 0 1px 0 ${cardAccent}26` }}
-                            >
-                              <p
-                                className="text-[10px] uppercase tracking-[0.2em] font-semibold mb-3"
-                                style={{ color: cardAccent }}
-                              >
-                                {roleLabels[role as RoleFilter].replace(/s$/, "")}
-                              </p>
-
-                              <h3 className="text-xl font-bold mb-2">
-                                {collaborator.name}
-                              </h3>
-
-                              {collaborator.bio && (
-                                <p className="text-sm text-muted-foreground mb-4 leading-relaxed line-clamp-4">
-                                  {collaborator.bio}
-                                </p>
-                              )}
-
-                              <div className="flex flex-wrap gap-3 mt-5 pt-4 border-t border-border/40">
-                                {website && (
-                                  <a
-                                    href={website}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors"
-                                  >
-                                    <ExternalLink className="w-3.5 h-3.5" />
-                                    {collaborator.role === "theatre_company" || collaborator.role === "partner_company" ? "Website" : "Portfolio"}
-                                  </a>
-                                )}
-
-                                {collaborator.instagramUrl && (
-                                  <a
-                                    href={collaborator.instagramUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors"
-                                  >
-                                    <Instagram className="w-3.5 h-3.5" />
-                                    @{instagramLabel}
-                                  </a>
-                                )}
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
+                    <a
+                      key={section.id}
+                      href={`#${section.id}`}
+                      className="border-b border-transparent pb-1 text-[0.9rem] font-medium tracking-[-0.02em] text-foreground/48 transition-colors hover:border-foreground/35 hover:text-foreground"
+                    >
+                      {section.title} ({section.items.length})
+                    </a>
                   );
                 })}
               </div>
-            )}
+            </div>
+          </section>
 
-            {!isLoading && (!allCollaborators || allCollaborators.length === 0) && (
-              <div className="text-center py-20">
-                <Users className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                <p className="text-xl text-muted-foreground">No collaborators found.</p>
+          <section className="mx-auto mt-14 max-w-6xl border-t border-border/25 pt-14">
+            <div className="grid items-center gap-10 xl:grid-cols-[minmax(18rem,0.95fr)_minmax(0,1.05fr)]">
+              <div className="overflow-hidden rounded-[1.5rem] border border-border/30 bg-card/20">
+                <img
+                  src="/assets/about/about-collaborators-art.png"
+                  alt="Abstract collaboration artwork"
+                  className="aspect-square w-full object-cover"
+                  loading="lazy"
+                />
               </div>
-            )}
-          </div>
+
+              <div className="max-w-2xl">
+                <h2 className="font-sans text-[clamp(2rem,4vw,3.2rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
+                  Collaboration is built through repeat trust, shared language, and process.
+                </h2>
+                <div className="mt-8 space-y-5">
+                  <p className="text-[1.04rem] leading-8 text-foreground/64 md:text-[1.1rem]">
+                    These relationships span directors, designers, partner organizations, and
+                    theatre companies. Some are long-running creative partnerships. Others mark
+                    important moments of exchange across individual productions.
+                  </p>
+                  <p className="text-[1.04rem] leading-8 text-foreground/64 md:text-[1.1rem]">
+                    The page is meant to function as a clean index rather than a profile archive,
+                    making it easier to scan the broader network behind the work.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {isLoading && (
+            <section className="mx-auto mt-14 max-w-6xl">
+              <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                {[...Array(6)].map((_, index) => (
+                  <div
+                    key={index}
+                    className="animate-pulse rounded-[1.1rem] border border-border/20 bg-card/10 p-5"
+                  >
+                    <div className="h-4 w-24 rounded bg-muted" />
+                    <div className="mt-4 h-7 w-44 rounded bg-muted" />
+                    <div className="mt-8 h-4 w-20 rounded bg-muted" />
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {!isLoading && (
+            <section className="mx-auto mt-14 max-w-6xl space-y-16">
+              {editorialSections.map((section, index) => {
+                const collaborators = section.items;
+                if (!collaborators || collaborators.length === 0) return null;
+
+                return (
+                  <div key={section.id} id={section.id} className="scroll-mt-32">
+                    <div className="border-b border-border/20 pb-4">
+                      <h2 className="font-sans text-[clamp(1.7rem,3vw,2.5rem)] font-medium leading-[1.02] tracking-[-0.045em] text-foreground">
+                        {section.title}
+                      </h2>
+                    </div>
+
+                    {section.id === "companies" && (
+                      <div className="my-10 overflow-hidden rounded-[1.5rem] border border-border/30 bg-card/20">
+                        <img
+                          src="/assets/about/about-collaborators-art.png"
+                          alt="Abstract collaboration artwork"
+                          className="aspect-[16/6] w-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+
+                    <div className="mt-8 grid gap-x-8 gap-y-8 sm:grid-cols-2 xl:grid-cols-4">
+                      {collaborators.map((collaborator) => {
+                        const website = collaborator.website || collaborator.portfolioUrl;
+                        const instagramLabel = (collaborator.instagramHandle || "Instagram").replace(
+                          /^@+/,
+                          ""
+                        );
+                        const collaboratorId = slugifyName(collaborator.name);
+                        const itemRole =
+                          collaborator.role && roleLabels[collaborator.role as RoleFilter]
+                            ? roleLabels[collaborator.role as RoleFilter].replace(/s$/, "")
+                            : null;
+
+                        return (
+                          <article
+                            key={collaborator.id}
+                            id={collaboratorId}
+                            className="scroll-mt-32 border-t border-border/20 pt-3"
+                          >
+                            <h3 className="font-sans text-[1.08rem] font-medium leading-[1.15] tracking-[-0.035em] text-foreground">
+                              {collaborator.name}
+                            </h3>
+                            {section.id === "designers" && itemRole && (
+                              <p className="mt-1 text-[0.82rem] leading-5 text-foreground/38">
+                                {itemRole}
+                              </p>
+                            )}
+
+                            <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1">
+                              {collaborator.instagramUrl && (
+                                <a
+                                  href={collaborator.instagramUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1.5 text-[0.82rem] font-medium text-foreground/46 transition-colors hover:text-foreground"
+                                >
+                                  <Instagram className="h-3.5 w-3.5" />
+                                  @{instagramLabel}
+                                </a>
+                              )}
+
+                              {website && (
+                                <a
+                                  href={website}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1.5 text-[0.82rem] font-medium text-foreground/46 transition-colors hover:text-foreground"
+                                >
+                                  <ExternalLink className="h-3.5 w-3.5" />
+                                  {collaborator.role === "theatre_company" ||
+                                  collaborator.role === "partner_company"
+                                    ? "Website"
+                                    : "Portfolio"}
+                                </a>
+                              )}
+                            </div>
+                          </article>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </section>
+          )}
+
+          {!isLoading && (!allCollaborators || allCollaborators.length === 0) && (
+            <div className="py-20 text-center">
+              <Users className="mx-auto mb-4 h-16 w-16 text-muted-foreground" />
+              <p className="text-xl text-muted-foreground">No collaborators found.</p>
+            </div>
+          )}
         </main>
 
         <Footer />
