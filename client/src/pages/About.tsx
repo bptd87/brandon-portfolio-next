@@ -1,80 +1,127 @@
-import AboutNav from "@/components/AboutNav";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { Mail, MapPin, Sparkles, FileText, Lightbulb, GraduationCap, Users, ArrowRight, Briefcase, Award, Linkedin } from "lucide-react";
-import StructuredData from "@/components/StructuredData";
+import { ArrowRight, ChevronLeft, ChevronRight, FileText, Mail, MapPin } from "lucide-react";
 import { Link } from "wouter";
+import { useRef } from "react";
+
+import AboutNav from "@/components/AboutNav";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
-import { useState, useEffect } from "react";
+import StructuredData from "@/components/StructuredData";
+
+const galleryImages = [
+  {
+    url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-uci.webp",
+    alt: "UC Irvine graduate school days",
+  },
+  {
+    url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-teaching.webp",
+    alt: "Teaching scenic design to students",
+  },
+  {
+    url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-teams.webp",
+    alt: "Working with creative teams",
+  },
+  {
+    url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-mentors.webp",
+    alt: "Collaborating with mentors",
+  },
+  {
+    url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-collaborations.webp",
+    alt: "Creative collaborations",
+  },
+  {
+    url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-family.webp",
+    alt: "Family and community",
+  },
+  {
+    url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-partnerships.webp",
+    alt: "Design partnerships",
+  },
+  {
+    url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-behind-scenes.webp",
+    alt: "Behind the scenes",
+  },
+];
+
+const navigationCards = [
+  {
+    title: "Creative Statement",
+    description:
+      "Process, design philosophy, and the principles that shape the work.",
+    href: "/creative-statement",
+    label: "Process",
+    image:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-mentors.webp",
+  },
+  {
+    title: "Resume & Credits",
+    description: "Production history, union background, and the broader body of work.",
+    href: "/resume",
+    label: "Resume",
+    image:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-uci.webp",
+  },
+  {
+    title: "Teaching Philosophy",
+    description: "Thoughts on scenic design education, mentorship, and professional growth.",
+    href: "/about/teaching",
+    label: "Teaching",
+    image:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-teaching.webp",
+  },
+  {
+    title: "Collaborators & Directors",
+    description:
+      "Creative partners, theatre companies, and long-running director relationships.",
+    href: "/about/collaborators",
+    label: "Collaboration",
+    image:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-teams.webp",
+  },
+];
+
+const recentMilestones = [
+  "South Coast Repertory debut as co-scenic designer on Million Dollar Quartet.",
+  "Designed Romero at the University of Missouri, shaping a spiritual and political memory play through scenography.",
+  "Continued dual-track practice in regional theatre and experiential work while mentoring emerging designers in university classrooms.",
+];
+
+const workingPrinciples = [
+  {
+    title: "Story before image",
+    description:
+      "Every visual decision starts with the script, the director’s framework, and the emotional logic of the production.",
+  },
+  {
+    title: "Space as collaboration",
+    description:
+      "The strongest scenic work comes from listening well and building environments that support performers, directors, and production teams together.",
+  },
+  {
+    title: "Clarity in execution",
+    description:
+      "From research through drafting and fabrication conversations, the goal is always a design language that holds up in rehearsal and onstage.",
+  },
+];
 
 export default function About() {
-  const [scrollY, setScrollY] = useState(0);
-  const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://www.brandonptdavis.com';
+  const galleryRailRef = useRef<HTMLDivElement | null>(null);
+  const baseUrl =
+    typeof window !== "undefined" ? window.location.origin : "https://www.brandonptdavis.com";
 
-  useEffect(() => {
-    let ticking = false;
+  const scrollGalleryBy = (direction: "prev" | "next") => {
+    const rail = galleryRailRef.current;
+    if (!rail) return;
 
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          setScrollY(window.scrollY);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-  const galleryImages = [
-    { url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-teaching.webp", alt: "Teaching scenic design to students" },
-    { url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-uci.webp", alt: "UC Irvine graduate school days" },
-    { url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-mentors.webp", alt: "Collaborating with mentors" },
-    { url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-teams.webp", alt: "Working with creative teams" },
-    { url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-collaborations.webp", alt: "Creative collaborations" },
-    { url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-family.webp", alt: "Family and community" },
-    { url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-partnerships.webp", alt: "Design partnerships" },
-    { url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-behind-scenes.webp", alt: "Behind the scenes" },
-  ];
-
-  const navigationCards = [
-    {
-      title: "Process & Philosophy",
-      description: "How I approach design: from dramaturgical research to final realization. Why clarity and intention matter.",
-      icon: Lightbulb,
-      href: "/creative-statement",
-      color: "from-purple-500/10 to-pink-500/10",
-      borderColor: "border-purple-500/20"
-    },
-    {
-      title: "Full Portfolio & Credits",
-      description: "Resume, credits across 130+ productions, and work in theatre and immersive environments.",
-      icon: FileText,
-      href: "/resume",
-      color: "from-orange-500/10 to-pink-500/10",
-      borderColor: "border-orange-500/20"
-    },
-    {
-      title: "Teaching & Mentorship",
-      description: "Perspectives on scenic design education, helping designers navigate craft, career, and artistic integrity.",
-      icon: GraduationCap,
-      href: "/about/teaching",
-      color: "from-cyan-500/10 to-blue-500/10",
-      borderColor: "border-cyan-500/20"
-    },
-    {
-      title: "Collaborators & Directors",
-      description: "Directors, designers, theatre companies, and creative partners across 130+ productions. Some relationships span decades.",
-      icon: Users,
-      href: "/about/collaborators",
-      color: "from-green-500/10 to-emerald-500/10",
-      borderColor: "border-green-500/20"
-    }
-  ];
+    const amount = Math.max(rail.clientWidth * 0.72, 320);
+    rail.scrollBy({
+      left: direction === "next" ? amount : -amount,
+      behavior: "smooth",
+    });
+  };
 
   return (
-    <div className="min-h-screen bg-background [background-image:radial-gradient(circle_at_12%_8%,rgba(255,87,34,0.10),transparent_34%),radial-gradient(circle_at_88%_16%,rgba(0,188,212,0.09),transparent_34%)]">
+    <div className="min-h-screen bg-background">
       <SEO
         title="About Brandon PT Davis | Scenic Designer & Educator"
         description="Southern California scenic designer with 130+ production credits across regional theatre, summer stock, and education. USA 829 member based in Orange County."
@@ -88,7 +135,8 @@ export default function About() {
           jobTitle: "Scenic Designer",
           url: `${baseUrl}/about`,
           image: "https://www.brandonptdavis.com/android-chrome-512x512.png",
-          description: "Scenic designer and conceptual artist known for a dramaturgical approach to stage space, with work at South Coast Repertory and 130+ productions across regional theatre, contemporary drama, and classical repertoire. Member of USA 829.",
+          description:
+            "Scenic designer and conceptual artist known for a dramaturgical approach to stage space, with work at South Coast Repertory and 130+ productions across regional theatre, contemporary drama, and classical repertoire. Member of USA 829.",
           email: "info@brandonptdavis.com",
           address: {
             addressLocality: "Irvine",
@@ -133,14 +181,17 @@ export default function About() {
         profilePage={{
           url: "https://www.brandonptdavis.com/about",
           name: "About Brandon PT Davis",
-          description: "Profile of Brandon PT Davis, scenic designer and USA 829 member based in Southern California.",
-          primaryImageOfPage: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/profile-headshot.webp",
+          description:
+            "Profile of Brandon PT Davis, scenic designer and USA 829 member based in Southern California.",
+          primaryImageOfPage:
+            "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/profile-headshot.webp",
           mainEntity: {
             name: "Brandon PT Davis",
             jobTitle: "Scenic Designer",
             url: "https://www.brandonptdavis.com/about",
             image: "https://www.brandonptdavis.com/android-chrome-512x512.png",
-            description: "Scenic designer and conceptual artist with 130+ production credits across regional theatre and academic stages.",
+            description:
+              "Scenic designer and conceptual artist with 130+ production credits across regional theatre and academic stages.",
             sameAs: [
               "https://www.instagram.com/brandonptdavisdesign",
               "https://www.linkedin.com/in/brandonptdavis",
@@ -159,292 +210,264 @@ export default function About() {
           { name: "About", url: "https://www.brandonptdavis.com/about" },
         ]}
       />
+
       <Header />
       <AboutNav />
 
-      {/* Hero Section - Credibility First */}
-      <section className="container py-24 md:py-32">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-[420px_1fr] gap-10 md:gap-14 items-center">
-            {/* Profile Image - Left Side */}
-            <div className="relative group animate-in fade-in slide-in-from-left-8 duration-700">
-              <div
-                className="aspect-[4/5] rounded-3xl overflow-hidden border-4 border-primary/30 shadow-2xl shadow-primary/10 transition-all duration-300 group-hover:border-primary/50 group-hover:shadow-primary/20"
-              >
-                <img
-                  src="https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/profile-headshot.webp"
-                  alt="Brandon PT Davis - Scenic Designer"
-                  className="w-full h-full object-cover object-center"
-                />
-              </div>
-              {/* Enhanced decorative elements with parallax */}
-              <div
-                className="absolute -bottom-8 -right-8 w-40 h-40 bg-primary/10 rounded-full blur-3xl -z-10"
-                style={{ transform: `translateY(${scrollY * 0.1}px)` }}
-              ></div>
-              <div
-                className="absolute -top-8 -left-8 w-32 h-32 bg-accent/10 rounded-full blur-3xl -z-10"
-                style={{ transform: `translateY(${scrollY * 0.2}px)` }}
-              ></div>
-            </div>
-
-            {/* Text Content - Right Side */}
-            <div className="space-y-7 animate-in fade-in slide-in-from-right-8 duration-700 delay-200">
-              <p className="text-xs uppercase tracking-[0.22em] text-primary font-semibold">
-                Union Scenic Designer
-              </p>
-
-              <h1 className="text-6xl md:text-8xl font-serif leading-[0.88] mb-6 tracking-tight">
-                Brandon<br />PT Davis
-              </h1>
-
-              <div className="space-y-5">
-                <p className="text-2xl md:text-3xl font-bold text-primary tracking-tight">
-                  Art × Technology × Design
+      <main>
+        <section className="pb-14 pt-24 md:pb-16 md:pt-28">
+          <div className="container max-w-6xl">
+            <div className="mx-auto max-w-4xl text-center">
+              <div className="mx-auto max-w-3xl">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                  About
                 </p>
-                <p className="text-lg text-foreground/80 leading-relaxed max-w-xl">
-                  Union scenic designer creating conceptual landscapes where design serves dramatic truth. Recent work includes co-design at South Coast Repertory and a body of work in contemporary and classical theatre across the US.
+                <h1 className="mt-5 font-sans text-[clamp(2.8rem,5.8vw,5.15rem)] font-medium leading-[0.95] tracking-[-0.06em] text-foreground">
+                  Brandon PT Davis
+                </h1>
+                <p className="mx-auto mt-6 max-w-2xl text-[1.08rem] leading-8 text-foreground/72 md:text-[1.18rem]">
+                  Brandon PT Davis is a scenic designer whose work centers on creating expressive
+                  theatrical environments that support storytelling through space, composition, and
+                  collaboration.
                 </p>
-              </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl">
-                <div className="rounded-xl border border-border/60 bg-card/30 backdrop-blur-sm px-4 py-3 shadow-[0_12px_30px_rgba(0,0,0,0.16)]">
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground mb-1">Union</p>
-                  <p className="text-sm font-semibold">USA 829</p>
+                <div className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-foreground/58">
+                  <span className="inline-flex items-center gap-2">
+                    <MapPin className="h-4 w-4" />
+                    Southern California
+                  </span>
+                  <span>USA 829</span>
+                  <span>MFA Scenic Design</span>
+                  <span>130+ Productions</span>
                 </div>
-                <div className="rounded-xl border border-border/60 bg-card/30 backdrop-blur-sm px-4 py-3 shadow-[0_12px_30px_rgba(0,0,0,0.16)]">
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground mb-1">Training</p>
-                  <p className="text-sm font-semibold">MFA Scenic Design</p>
-                </div>
-                <div className="rounded-xl border border-border/60 bg-card/30 backdrop-blur-sm px-4 py-3 shadow-[0_12px_30px_rgba(0,0,0,0.16)]">
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground mb-1">Credits</p>
-                  <p className="text-sm font-semibold">130+ Productions</p>
-                </div>
-              </div>
 
-              {/* CTA Buttons - Clarified Hierarchy */}
-              <div className="flex flex-col sm:flex-row gap-4 pt-3">
-                <a
-                  href="/resume"
-                  className="inline-flex items-center justify-center gap-2 h-11 px-7 rounded-md border border-[#FF5722] bg-[#FF5722] text-[11px] font-bold tracking-[0.14em] uppercase text-white hover:bg-[#ff6a3a] hover:border-[#ff6a3a] transition-all duration-300"
-                >
-                  <FileText className="w-4 h-4" />
-                  View Resume
-                </a>
-                <a
-                  href="/contact"
-                  className="inline-flex items-center justify-center gap-2 h-11 px-7 rounded-md border border-border text-[11px] font-bold tracking-[0.14em] uppercase text-foreground hover:border-[#FF5722] hover:text-[#FF5722] transition-all duration-300"
-                >
-                  <Mail className="w-4 h-4" />
-                  Professional Inquiries
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Bio Section */}
-      <section className="container py-28">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-[1fr_360px] gap-12 items-start">
-            {/* Left: Text Content */}
-            <div className="animate-in fade-in slide-in-from-left duration-700">
-              <h2 className="text-5xl md:text-6xl font-serif mb-8 leading-tight tracking-tight">Background & Training</h2>
-              
-              <div className="space-y-6 text-lg text-foreground/80 leading-relaxed text-justify">
-                <p>
-                  I'm a scenic designer and artist working at the intersection of craft, technology, and dramatic storytelling. With over 15 years in theatre, I've designed more than 130 productions across regional theatre, summer stock, academic theatre, and classical work.
-                </p>
-
-                <p>
-                  My training includes an <span className="font-medium text-foreground">MFA in Scenic Design from UC Irvine</span> and a <span className="font-medium text-foreground">BFA in Theatre Arts from Stephens College</span>. I'm a proud member of <span className="font-medium text-foreground">United Scenic Artists Local 829</span>, the union representing professional designers across live theatre, film, and television.
-                </p>
-
-                <p>
-                  Beyond traditional stage work, I collaborate on installation-based environments where theatrical storytelling informs audience experience. I also teach scenic design at the university level, mentoring emerging designers in craft, process, and visual storytelling.
-                </p>
-              </div>
-            </div>
-
-            {/* Right: Milestones */}
-            <div className="animate-in fade-in slide-in-from-right duration-700 delay-200">
-              <div className="sticky top-24">
-                <h3 className="text-2xl font-serif mb-4 text-foreground">Recent Milestones</h3>
-                <div className="space-y-4">
-                  <div className="rounded-xl border border-border/50 bg-card/30 px-4 py-3">
-                    <p className="text-[11px] uppercase tracking-[0.18em] text-primary font-semibold mb-1">2025</p>
-                    <p className="text-foreground/85 leading-relaxed">
-                      South Coast Repertory debut as co-scenic designer on <span className="font-medium text-foreground">Million Dollar Quartet</span>.
-                    </p>
-                  </div>
-                  <div className="rounded-xl border border-border/50 bg-card/30 px-4 py-3">
-                    <p className="text-[11px] uppercase tracking-[0.18em] text-primary font-semibold mb-1">2025</p>
-                    <p className="text-foreground/85 leading-relaxed">
-                      Designed <span className="font-medium text-foreground">Romero</span> at the University of Missouri, shaping a spiritual and political memory play through scenography.
-                    </p>
-                  </div>
-                  <div className="rounded-xl border border-border/50 bg-card/30 px-4 py-3">
-                    <p className="text-[11px] uppercase tracking-[0.18em] text-primary font-semibold mb-1">2025</p>
-                    <p className="text-foreground/85 leading-relaxed">
-                      Continued dual-track practice in regional theatre and experiential work while mentoring emerging designers in university classrooms.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Design Philosophy - Visual Pull Quotes */}
-      <section className="py-24 border-y border-border/40 bg-card/10">
-        <div className="container">
-          <div className="max-w-6xl mx-auto mb-16">
-            <h2 className="text-5xl md:text-7xl font-serif mb-6 tracking-tight">Design Philosophy</h2>
-            <p className="text-xl text-foreground/70">
-              What I've learned from designing 130+ productions: design is dramaturg, collaborator, and ghost.
-            </p>
-          </div>
-
-         {/* Memory & Impression */}
-          <div className="max-w-6xl mx-auto mb-20 animate-in fade-in slide-in-from-bottom duration-700">
-            <div className="grid md:grid-cols-[300px_1fr] gap-12 items-start">
-              <div className="md:sticky md:top-24">
-                <div className="text-sm uppercase tracking-widest text-primary font-bold mb-2">Project</div>
-                <h3 className="text-3xl font-serif text-foreground">The Glass Menagerie</h3>
-                <div className="text-sm text-foreground/60 mt-2">Maples Repertory, 2025</div>
-              </div>
-              <div className="space-y-6">
-                <blockquote className="text-2xl md:text-3xl font-serif text-foreground/90 leading-relaxed mb-4">
-                  "A fluid, impressionistic landscape shaped by recollection. Not a literal apartment, but memory made spatial."
-                </blockquote>
-                <p className="text-lg text-foreground/70 leading-relaxed text-justify">
-                  The design sought to feel unstable and permeable—allowing memory to drift, overlap, and distort. The end result was a <span className="font-medium text-foreground">theatrical memoryscape shaped by absence as much as presence</span>. This is how I approach memory plays: not reconstruction, but impression.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Holding Space */}
-          <div className="max-w-6xl mx-auto mb-20 animate-in fade-in slide-in-from-bottom duration-700 delay-100">
-            <div className="grid md:grid-cols-[300px_1fr] gap-12 items-start">
-              <div className="md:sticky md:top-24">
-                <div className="text-sm uppercase tracking-widest text-primary font-bold mb-2">Project</div>
-                <h3 className="text-3xl font-serif text-foreground">Romero</h3>
-                <div className="text-sm text-foreground/60 mt-2">University of Missouri, 2025</div>
-              </div>
-              <div className="space-y-6">
-                <blockquote className="text-2xl md:text-3xl font-serif text-foreground/90 leading-relaxed mb-4">
-                  "The design had to hold more than history—it had to hold ghosts."
-                </blockquote>
-                <p className="text-lg text-foreground/70 leading-relaxed text-justify">
-                  Set in the final hours of Archbishop Óscar Romero's life, the play bends time and invites the dead to speak. The scenic world emerged from tension between sacredness and rupture. Designing this work meant <span className="font-medium text-foreground">listening, holding space, and letting the silence speak</span>.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Dramaturgy & Rhythm */}
-          <div className="max-w-6xl mx-auto mb-20 animate-in fade-in slide-in-from-bottom duration-700 delay-200">
-            <div className="grid md:grid-cols-[300px_1fr] gap-12 items-start">
-              <div className="md:sticky md:top-24">
-                <div className="text-sm uppercase tracking-widest text-primary font-bold mb-2">Project</div>
-                <h3 className="text-3xl font-serif text-foreground">Guys on Ice</h3>
-                <div className="text-sm text-foreground/60 mt-2">The Great American Melodrama, 2025</div>
-              </div>
-              <div className="space-y-6">
-                <blockquote className="text-2xl md:text-3xl font-serif text-foreground/90 leading-relaxed mb-4">
-                  "Comedy works when the environment is precise: architecture sets the rhythm before the actors land the joke."
-                </blockquote>
-                <p className="text-lg text-foreground/70 leading-relaxed text-justify">
-                  This design balanced regional texture with sharp theatrical timing. Material choices and spatial framing supported fast transitions and sightline clarity, proving that <span className="font-medium text-foreground">form and comedic pacing can reinforce each other</span> without sacrificing craft.
-                </p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* Manifesto Quote */}
-      <section className="py-24 border-y border-border/40 bg-[linear-gradient(180deg,rgba(255,87,34,0.08)_0%,rgba(11,11,13,0.94)_45%,rgba(11,11,13,1)_100%)]">
-        <div className="container">
-          <div className="max-w-5xl mx-auto text-center">
-            <p className="text-[10px] uppercase tracking-[0.24em] text-white/60 mb-5">Manifesto</p>
-            <blockquote className="text-4xl md:text-6xl font-serif text-white mb-10 leading-[1.05] tracking-tight">
-              “The strongest scenic work is invisible.”
-            </blockquote>
-            <p className="text-lg md:text-xl text-white/75 max-w-3xl mx-auto leading-relaxed">
-              Whether designing a memory play, a spiritual ritual, or grounded realism, every choice serves the same goal: <span className="text-white font-medium">clarity of intent</span>. I&apos;ve worked across minimalism and conceptual design, using constraint as creative fuel. The play is always the boss.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Navigation Cards Section */}
-      <section className="py-24 border-b border-border/40">
-        <div className="container">
-          <div className="max-w-6xl mx-auto mb-12 animate-in fade-in slide-in-from-bottom duration-700">
-            <h2 className="text-5xl md:text-7xl font-serif mb-6 tracking-tight">Learn More</h2>
-            <p className="text-xl text-foreground/70 max-w-3xl">
-              Dive into my process, teaching philosophy, full portfolio of work across theatre and experiential design, and the directors and designers I've had the privilege to collaborate with.
-            </p>
-          </div>
-
-          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-x-12 gap-y-6">
-            {navigationCards.map((card, index) => {
-              const Icon = card.icon;
-              return (
-                <Link key={card.href} href={card.href}>
-                  <div
-                    className="flex items-start gap-4 pb-5 border-b border-border/40 hover:border-primary/50 transition-colors cursor-pointer animate-in fade-in slide-in-from-bottom duration-700"
-                    style={{ animationDelay: `${index * 120}ms` }}
+                <div className="mt-7 flex justify-center">
+                  <a
+                    href="/resume"
+                    className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-foreground px-6 text-sm font-medium text-background transition-colors hover:bg-foreground/90"
                   >
-                    <Icon className="w-5 h-5 text-primary mt-1" />
-                    <div className="flex-1">
-                      <h3 className="text-2xl font-serif mb-2 hover:text-primary transition-colors">
-                        {card.title}
-                      </h3>
-                      <p className="text-foreground/70 leading-relaxed">
-                        {card.description}
+                    <FileText className="h-4 w-4" />
+                    View Resume
+                  </a>
+                </div>
+              </div>
+
+              <div className="mx-auto mt-10 max-w-[23rem] md:mt-12">
+                <div className="overflow-hidden rounded-[1.75rem] border border-border/40 bg-card/20">
+                  <img
+                    src="https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/profile-headshot.webp"
+                    alt="Brandon PT Davis - Scenic Designer"
+                    className="aspect-[4/5] w-full object-cover object-center"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="pb-16 pt-8 md:pb-20 md:pt-10">
+          <div className="container max-w-6xl">
+            <div className="border-t border-border/20 pt-10">
+              <div className="mx-auto max-w-3xl space-y-6">
+                <p className="text-[1rem] leading-8 text-foreground/78 md:text-[1.08rem]">
+                  Brandon&apos;s approach combines traditional scenic craft with contemporary digital
+                  visualization methods, allowing him to develop designs that are both conceptually
+                  clear and practically buildable. He is particularly interested in how scenic
+                  design can shape rhythm, movement, and emotional tone within a production.
+                </p>
+                <p className="text-[1rem] leading-8 text-foreground/72 md:text-[1.08rem]">
+                  Based in Southern California, Brandon designs for regional theatres and academic
+                  institutions across the United States. Recent projects include <em>The Glass
+                  Menagerie</em>, productions with the New Swan Shakespeare Festival, and work with
+                  South Coast Repertory. He also completed his 40th scenic design at Okoboji Summer
+                  Theatre, marking a significant milestone in a career that has developed steadily
+                  through long-term collaborations and diverse repertory experiences.
+                </p>
+
+                <div className="py-10 text-center md:py-14">
+                  <blockquote className="mx-auto max-w-4xl font-sans text-[clamp(1.9rem,4vw,3.5rem)] font-medium leading-[1.14] tracking-[-0.045em] text-foreground">
+                    “Expressive theatrical environments that support storytelling through space,
+                    composition, and collaboration.”
+                  </blockquote>
+                </div>
+
+                <p className="text-[1rem] leading-8 text-foreground/72 md:text-[1.08rem]">
+                  His work spans musicals, classical plays, and new works, often incorporating
+                  flexible staging, projection surfaces, and symbolic architectural forms.
+                </p>
+                <p className="text-[1rem] leading-8 text-foreground/72 md:text-[1.08rem]">
+                  In addition to his professional design practice, Brandon has taught scenic design
+                  and rendering at the university level. His teaching emphasizes process, visual
+                  communication, and the importance of adaptability within the evolving landscape of
+                  theatre production. He continues to explore new workflows that integrate digital
+                  tools while maintaining a strong connection to the collaborative traditions of
+                  live performance.
+                </p>
+              </div>
+
+              <div className="mx-auto mt-14 grid max-w-4xl gap-5 md:grid-cols-2">
+                <div className="rounded-[1.5rem] border border-border/40 bg-card/20 p-6">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                    Education
+                  </p>
+                  <div className="mt-5 space-y-5 text-[0.98rem] leading-7 text-foreground/62">
+                    <div>
+                      <p className="text-foreground/82">Master of Fine Arts</p>
+                      <p>Scenic Design, University of California, Irvine</p>
+                    </div>
+                    <div className="border-t border-border/30 pt-5">
+                      <p className="text-foreground/82">Bachelor of Fine Arts</p>
+                      <p>Theatre, Stephens College</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="rounded-[1.5rem] border border-border/40 bg-card/20 p-6">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                    Practice
+                  </p>
+                  <div className="mt-5 space-y-5 text-[0.98rem] leading-7 text-foreground/62">
+                    <div>
+                      <p className="text-foreground/82">Areas of Specialization</p>
+                      <p>Scenic Design for Theatre</p>
+                      <p>Digital Rendering and Visualization</p>
+                      <p>Model Building and Drafting</p>
+                    </div>
+                    <div className="border-t border-border/30 pt-5">
+                      <p className="text-foreground/82">Interests</p>
+                      <p>
+                        Theatre history, visual storytelling, rendering technologies,
+                        architecture, travel, and collaborative creative practice
                       </p>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-primary mt-1.5" />
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-y border-border/35 py-16 md:py-20">
+          <div className="container max-w-6xl">
+            <div className="max-w-3xl">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                Working Approach
+              </p>
+              <h2 className="mt-4 font-sans text-[clamp(2rem,4vw,3.3rem)] font-medium leading-[0.98] tracking-[-0.05em] text-foreground">
+                A dramaturgical approach to scenic design.
+              </h2>
+              <p className="mt-5 text-[1rem] leading-7 text-foreground/60 md:text-[1.08rem]">
+                The strongest scenic work doesn&apos;t call attention to itself first. It builds the
+                conditions for story, movement, rhythm, and emotional focus.
+              </p>
+            </div>
+
+            <div className="mt-10 grid gap-5 lg:grid-cols-3">
+              {workingPrinciples.map((principle) => (
+                <div
+                  key={principle.title}
+                  className="rounded-[1.5rem] border border-border/40 bg-card/15 p-6 md:p-7"
+                >
+                  <h3 className="font-sans text-[1.35rem] font-medium tracking-[-0.03em] text-foreground">
+                    {principle.title}
+                  </h3>
+                  <p className="mt-4 text-[0.98rem] leading-7 text-foreground/58">
+                    {principle.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16 md:py-20">
+          <div className="container max-w-6xl">
+            <div className="max-w-3xl">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                Learn More
+              </p>
+              <h2 className="mt-4 font-sans text-[clamp(2rem,4vw,3.3rem)] font-medium leading-[0.98] tracking-[-0.05em] text-foreground">
+                Process, teaching, and long-form context.
+              </h2>
+            </div>
+
+            <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+              {navigationCards.map((card) => (
+                <Link key={card.href} href={card.href}>
+                  <a className="group block">
+                    <div className="overflow-hidden rounded-[1.35rem] border border-border/40 bg-card/20">
+                      <img
+                        src={card.image}
+                        alt={card.title}
+                        className="aspect-square w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="pt-4">
+                      <p className="text-sm text-foreground/50">{card.label}</p>
+                      <div className="mt-2 flex items-start justify-between gap-3">
+                        <div className="space-y-2">
+                          <h3 className="font-sans text-[1.25rem] font-medium leading-[1.05] tracking-[-0.03em] text-foreground">
+                            {card.title}
+                          </h3>
+                          <p className="text-[0.96rem] leading-7 text-foreground/58">
+                            {card.description}
+                          </p>
+                        </div>
+                        <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-foreground/45 transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
+                      </div>
+                    </div>
+                  </a>
                 </Link>
-              );
-            })}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Visual Rhythm */}
-      <section className="py-24 border-y border-border/40 bg-card/10">
-        <div className="container">
-          <div className="max-w-6xl mx-auto mb-12 animate-in fade-in slide-in-from-bottom duration-700">
-            <h2 className="text-5xl md:text-7xl font-serif mb-6 tracking-tight">Art Requires Community</h2>
-            <p className="text-xl text-foreground/70 max-w-3xl">
-              Design lives in collaboration. These moments mark mentorship, rehearsal rooms, and creative partnerships that shape the work.
-            </p>
-          </div>
+        <section className="border-t border-border/35 py-16 md:py-20">
+          <div className="container max-w-[92rem]">
+            <div className="flex w-full items-center justify-center gap-2">
+              <div className="hidden items-center gap-2 md:flex">
+                <button
+                  type="button"
+                  onClick={() => scrollGalleryBy("prev")}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/45 text-foreground/65 transition-colors hover:border-border hover:text-foreground"
+                  aria-label="Scroll gallery left"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollGalleryBy("next")}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/45 text-foreground/65 transition-colors hover:border-border hover:text-foreground"
+                  aria-label="Scroll gallery right"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
 
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {galleryImages.slice(0, 4).map((image, index) => (
-                <div key={index} className="group relative overflow-hidden rounded-2xl aspect-[4/3] border border-border/50">
+            <div
+              ref={galleryRailRef}
+              className="mt-10 flex snap-x snap-mandatory items-end gap-6 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              {galleryImages.map((image) => (
+                <div
+                  key={image.url}
+                  className="w-[min(78vw,40rem)] shrink-0 snap-start md:w-[calc((100%_-_3rem)_/_3)]"
+                >
                   <img
                     src={image.url}
                     alt={image.alt}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                    className="block w-full rounded-[1.5rem]"
                     loading="lazy"
                   />
                 </div>
               ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>

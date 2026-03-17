@@ -135,13 +135,13 @@ function ProjectCard({
             <ProgressiveImage
               src={project.coverImageUrl}
               alt={scenicAlt(project.title)}
-              className="h-auto w-full object-contain object-top transition-transform duration-500 group-hover:scale-[1.02]"
+              className="aspect-square w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
               smartPosition={true}
               loading={eager ? "eager" : "lazy"}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 25vw, 20vw"
             />
           ) : (
-            <div className="aspect-[4/3] w-full bg-muted" />
+            <div className="aspect-square w-full bg-muted" />
           )}
         </div>
 
