@@ -134,14 +134,16 @@ export default function Resume() {
                 </div>
               </div>
 
-              <div className="xl:justify-self-end">
-                <div className="overflow-hidden rounded-[2rem] border border-border/35 bg-card/20">
-                  <img
-                    src="/assets/about/about-resume-art.png"
-                    alt="Abstract cyan resume artwork"
-                    className="aspect-[9/16] w-full object-cover object-center"
-                    loading="lazy"
-                  />
+              <div className="w-full xl:justify-self-end">
+                <div className="mx-auto w-full max-w-[26rem] overflow-hidden rounded-[2rem] border border-border/35 bg-card/20 xl:mx-0">
+                  <div className="relative aspect-[9/16] w-full">
+                    <img
+                      src="/assets/about/about-resume-art.png"
+                      alt="Abstract cyan resume artwork"
+                      className="absolute left-1/2 top-1/2 h-[185%] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 rotate-90 object-cover object-center"
+                      loading="lazy"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

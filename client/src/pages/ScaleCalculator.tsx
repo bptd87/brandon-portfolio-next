@@ -1,13 +1,21 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowRightLeft, Info, Copy, Check, ChevronLeft, ChevronRight, Ruler, Printer } from "lucide-react";
+import {
+  ArrowLeft,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  Copy,
+  Printer,
+  Ruler,
+} from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Link } from "wouter";
 
 interface ScaleOption {
   label: string;
@@ -16,9 +24,9 @@ interface ScaleOption {
 
 interface PrinterBed {
   name: string;
-  width: number; // mm
-  depth: number; // mm
-  height: number; // mm
+  width: number;
+  depth: number;
+  height: number;
 }
 
 const ARCHITECTURAL_SCALES: ScaleOption[] = [
@@ -44,344 +52,339 @@ const PRINTER_BEDS: PrinterBed[] = [
 ];
 
 export default function ScaleCalculator() {
-  const [activeTab, setActiveTab] = useState<'real-to-scale' | 'scale-to-real'>('real-to-scale');
-
-  // Real → Scale Inputs
-  const [realFeet, setRealFeet] = useState<string>('10');
-  const [realInches, setRealInches] = useState<string>('0');
-
-  // Scale → Real Inputs
-  const [modelMM, setModelMM] = useState<string>('50');
-
-  const [selectedScale, setSelectedScale] = useState<number>(48); // Default 1/4"
-  const [selectedPrinter, setSelectedPrinter] = useState<string>("Prusa MK4");
+  const [activeTab, setActiveTab] = useState<"real-to-scale" | "scale-to-real">("real-to-scale");
+  const [realFeet, setRealFeet] = useState("10");
+  const [realInches, setRealInches] = useState("0");
+  const [modelMM, setModelMM] = useState("50");
+  const [selectedScale, setSelectedScale] = useState<number>(48);
+  const [selectedPrinter, setSelectedPrinter] = useState("Prusa MK4");
   const [resultMM, setResultMM] = useState<number | null>(null);
   const [resultReal, setResultReal] = useState<{ feet: number; inches: number } | null>(null);
   const [copied, setCopied] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // Calculation Logic
   useEffect(() => {
-    if (activeTab === 'real-to-scale') {
+    if (activeTab === "real-to-scale") {
       const feet = parseFloat(realFeet) || 0;
       const inches = parseFloat(realInches) || 0;
       if (feet === 0 && inches === 0) {
         setResultMM(null);
         return;
       }
-      const totalInches = (feet * 12) + inches;
+
+      const totalInches = feet * 12 + inches;
       const modelInches = totalInches / selectedScale;
       setResultMM(modelInches * 25.4);
-    } else {
-      const mm = parseFloat(modelMM) || 0;
-      if (mm === 0) {
-        setResultReal(null);
-        return;
-      }
-      const modelInches = mm / 25.4;
-      const realTotalInches = modelInches * selectedScale;
-      setResultReal({
-        feet: Math.floor(realTotalInches / 12),
-        inches: realTotalInches % 12
-      });
+      return;
     }
-  }, [realFeet, realInches, modelMM, selectedScale, activeTab]);
+
+    const mm = parseFloat(modelMM) || 0;
+    if (mm === 0) {
+      setResultReal(null);
+      return;
+    }
+
+    const modelInches = mm / 25.4;
+    const realTotalInches = modelInches * selectedScale;
+    setResultReal({
+      feet: Math.floor(realTotalInches / 12),
+      inches: realTotalInches % 12,
+    });
+  }, [activeTab, modelMM, realFeet, realInches, selectedScale]);
+
+  const selectedScaleLabel = useMemo(() => {
+    return ARCHITECTURAL_SCALES.find((scale) => scale.ratio === selectedScale)?.label || `1:${selectedScale}`;
+  }, [selectedScale]);
+
+  const printerFitInfo = useMemo(() => {
+    if (!resultMM) return null;
+    const printer = PRINTER_BEDS.find((item) => item.name === selectedPrinter);
+    if (!printer) return null;
+
+    const fits = resultMM <= printer.width && resultMM <= printer.depth;
+    return { fits, printer };
+  }, [resultMM, selectedPrinter]);
 
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
-      toast.success('Copied to clipboard!');
+      toast.success("Copied to clipboard");
       setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy', err);
-      toast.error('Failed to copy');
+    } catch (error) {
+      console.error("Failed to copy", error);
+      toast.error("Failed to copy");
     }
   };
 
-  const scrollScales = (direction: 'left' | 'right') => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = direction === 'left' ? -200 : 200;
-      scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
+  const scrollScales = (direction: "left" | "right") => {
+    if (!scrollContainerRef.current) return;
+    scrollContainerRef.current.scrollBy({
+      left: direction === "left" ? -220 : 220,
+      behavior: "smooth",
+    });
   };
 
-  const getSelectedScaleLabel = () => {
-    const scale = ARCHITECTURAL_SCALES.find(s => s.ratio === selectedScale);
-    return scale?.label || `1:${selectedScale}`;
-  };
-
-  const checkPrinterFit = () => {
-    if (!resultMM) return null;
-    const printer = PRINTER_BEDS.find(p => p.name === selectedPrinter);
-    if (!printer) return null;
-
-    const fits = resultMM <= printer.width && resultMM <= printer.depth;
-    return { fits, printer };
-  };
-
-  const printerFitInfo = checkPrinterFit();
+  const resultText =
+    activeTab === "real-to-scale"
+      ? resultMM !== null
+        ? `${resultMM.toFixed(2)} mm`
+        : "---"
+      : resultReal
+        ? `${resultReal.feet}'-${resultReal.inches.toFixed(2)}"`
+        : "---";
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen bg-background text-foreground">
       <SEO
         title="Scale Calculator - 3D Printing & Model Making"
         description="Convert between architectural and model scales for 3D printing scenic design models. Calculate dimensions for 1/4 scale, 1:50, and custom ratios."
       />
+
       <Header />
 
-      {/* Compact Hero with Header Image */}
-      <section className="relative h-[30vh] md:h-[35vh] overflow-hidden border-b border-border">
-        <img
-          src="/assets/studio/scale-calculator.webp"
-          alt="Scale Calculator - Precision conversion for theatrical drafting"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/20" />
+      <main className="px-4 pb-24 pt-22 sm:px-6 md:pt-28">
+        <section className="mx-auto max-w-5xl border-b border-border/18 pb-8 md:pb-12">
+          <Link
+            href="/studio/apps"
+            className="inline-flex items-center gap-2 text-[0.92rem] font-medium text-foreground/56 transition-colors hover:text-foreground"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Studio Apps
+          </Link>
 
-        <div className="absolute bottom-0 left-0 right-0 container max-w-5xl pb-4 md:pb-6">
-          <div className="flex items-center gap-2 mb-2">
-            <Ruler className="w-4 h-4 text-[#2196F3]" />
-            <p className="text-[10px] md:text-xs tracking-widest text-muted-foreground font-semibold uppercase">Scale Calculator</p>
+          <div className="mx-auto mt-6 max-w-4xl text-center md:mt-8">
+            <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+              Scale Calculator
+            </p>
+            <h1 className="mt-4 font-sans text-[clamp(2.45rem,8vw,5.1rem)] font-medium leading-[0.95] tracking-[-0.065em] text-foreground sm:text-[clamp(2.8rem,7vw,5.1rem)]">
+              Convert real dimensions to model scale and back.
+            </h1>
+            <p className="mx-auto mt-5 max-w-2xl text-[0.98rem] leading-7 text-foreground/60 md:mt-7 md:max-w-3xl md:text-[1.12rem] md:leading-8">
+              A mobile-friendly scale converter for scenic drafting, model building, and 3D
+              printing workflow.
+            </p>
           </div>
-          <h1 className="text-3xl md:text-4xl font-black tracking-tighter mb-1 text-white drop-shadow-lg">
-            3D Printing Scale Converter
-          </h1>
-          <p className="text-xs md:text-sm text-white/90 max-w-2xl drop-shadow">
-            Convert real-world dimensions to model measurements for theatrical 3D printing
-          </p>
-        </div>
-      </section>
+        </section>
 
-      {/* Main Calculator - Single Screen */}
-      <section className="flex-1 py-6 md:py-8">
-        <div className="container max-w-5xl">
-          <Card className="border-2">
-            {/* Tab Switcher */}
-            <div className="flex border-b border-border">
-              <button
-                onClick={() => setActiveTab('real-to-scale')}
-                className={`flex-1 py-4 text-xs md:text-sm font-bold uppercase tracking-widest transition-all ${activeTab === 'real-to-scale'
-                  ? 'bg-[#2196F3] text-white'
-                  : 'text-muted-foreground hover:bg-muted/50'
+        <section className="mx-auto mt-8 max-w-4xl md:mt-12">
+          <div className="rounded-[1.2rem] border border-border/16 bg-card/10 p-3 sm:p-4 md:rounded-[1.4rem] md:p-6">
+            <div className="border-b border-border/14 pb-4 md:pb-5">
+              <div className="mx-auto flex max-w-[44rem] rounded-full bg-white/6 p-1">
+                <button
+                  onClick={() => setActiveTab("real-to-scale")}
+                  className={`flex-1 rounded-full px-3 py-2.5 text-[0.72rem] font-medium uppercase tracking-[0.16em] transition-colors sm:px-4 sm:text-[0.78rem] md:px-4 md:py-3 md:text-[0.82rem] md:tracking-[0.18em] ${
+                    activeTab === "real-to-scale"
+                      ? "bg-white text-black"
+                      : "text-foreground/54 hover:text-foreground"
                   }`}
-              >
-                Real → Scale
-              </button>
-              <button
-                onClick={() => setActiveTab('scale-to-real')}
-                className={`flex-1 py-4 text-xs md:text-sm font-bold uppercase tracking-widest transition-all ${activeTab === 'scale-to-real'
-                  ? 'bg-[#2196F3] text-white'
-                  : 'text-muted-foreground hover:bg-muted/50'
+                >
+                  Real to Scale
+                </button>
+                <button
+                  onClick={() => setActiveTab("scale-to-real")}
+                  className={`flex-1 rounded-full px-3 py-2.5 text-[0.72rem] font-medium uppercase tracking-[0.16em] transition-colors sm:px-4 sm:text-[0.78rem] md:px-4 md:py-3 md:text-[0.82rem] md:tracking-[0.18em] ${
+                    activeTab === "scale-to-real"
+                      ? "bg-white text-black"
+                      : "text-foreground/54 hover:text-foreground"
                   }`}
-              >
-                Scale → Real
-              </button>
+                >
+                  Scale to Real
+                </button>
+              </div>
             </div>
 
-            <CardContent className="p-4 md:p-6">
-              {/* Compact Conversion Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-[1fr,auto,1fr] gap-4 items-center mb-6">
-                {/* INPUT */}
-                <div className="space-y-3">
-                  <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                    Input
-                  </Label>
+            <div className="mt-5 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(17rem,0.72fr)] md:mt-6">
+              <div className="space-y-5 md:space-y-6">
+                <div className="rounded-[0.95rem] border border-border/16 bg-black/10 p-4 md:rounded-[1rem] md:p-5">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                        Result
+                      </p>
+                      <p className="mt-3 font-mono text-[1.8rem] font-semibold tracking-[-0.04em] text-foreground sm:text-[2rem] md:text-[2.4rem]">
+                        {resultText}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => {
+                        if (activeTab === "real-to-scale" && resultMM !== null) {
+                          copyToClipboard(resultMM.toFixed(2));
+                        }
+                        if (activeTab === "scale-to-real" && resultReal) {
+                          copyToClipboard(`${resultReal.feet}'-${resultReal.inches.toFixed(2)}"`);
+                        }
+                      }}
+                      className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/8 text-foreground/70 transition-colors hover:bg-white/12 hover:text-foreground"
+                      aria-label="Copy result"
+                    >
+                      {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                    </button>
+                  </div>
+                </div>
 
-                  {activeTab === 'real-to-scale' ? (
-                    <div className="flex gap-2">
-                      <div className="relative flex-1">
+                <div className="border-t border-border/16 pt-5">
+                  <div className="mb-4 flex items-center gap-2 text-foreground/56">
+                    <span className="text-[0.8rem] font-medium uppercase tracking-[0.16em]">
+                      Input
+                    </span>
+                  </div>
+                  <div className="grid gap-3 md:grid-cols-2 md:gap-4">
+                  {activeTab === "real-to-scale" ? (
+                    <>
+                      <div>
+                        <Label className="mb-2 block text-[0.8rem] font-medium uppercase tracking-[0.16em] text-foreground/42">
+                          Feet
+                        </Label>
                         <Input
                           type="number"
                           value={realFeet}
                           onChange={(e) => setRealFeet(e.target.value)}
-                          className="w-full text-2xl font-mono text-center h-16 border-2"
+                          className="h-13 rounded-[0.85rem] border-border/20 bg-background/60 px-4 text-right font-mono text-[1.3rem] sm:h-14 sm:rounded-[0.9rem] sm:text-center sm:text-[1.45rem]"
                           placeholder="0"
                         />
-                        <span className="absolute -bottom-5 left-0 right-0 text-center text-xs font-bold uppercase text-muted-foreground">
-                          Feet
-                        </span>
                       </div>
-                      <div className="relative flex-1">
+                      <div>
+                        <Label className="mb-2 block text-[0.8rem] font-medium uppercase tracking-[0.16em] text-foreground/42">
+                          Inches
+                        </Label>
                         <Input
                           type="number"
                           value={realInches}
                           onChange={(e) => setRealInches(e.target.value)}
-                          className="w-full text-2xl font-mono text-center h-16 border-2"
+                          className="h-13 rounded-[0.85rem] border-border/20 bg-background/60 px-4 text-right font-mono text-[1.3rem] sm:h-14 sm:rounded-[0.9rem] sm:text-center sm:text-[1.45rem]"
                           placeholder="0"
                         />
-                        <span className="absolute -bottom-5 left-0 right-0 text-center text-xs font-bold uppercase text-muted-foreground">
-                          Inches
-                        </span>
                       </div>
-                    </div>
+                    </>
                   ) : (
-                    <div className="relative">
-                      <Input
-                        type="number"
-                        value={modelMM}
-                        onChange={(e) => setModelMM(e.target.value)}
-                        className="w-full text-2xl font-mono text-center h-16 border-2"
-                        placeholder="0"
-                      />
-                      <span className="absolute -bottom-5 left-0 right-0 text-center text-xs font-bold uppercase text-muted-foreground">
-                        Millimeters
-                      </span>
-                    </div>
+                    <div className="md:max-w-xs">
+                      <Label className="mb-2 block text-[0.8rem] font-medium uppercase tracking-[0.16em] text-foreground/42">
+                        Model millimeters
+                      </Label>
+                        <Input
+                          type="number"
+                          value={modelMM}
+                          onChange={(e) => setModelMM(e.target.value)}
+                          className="h-13 rounded-[0.85rem] border-border/20 bg-background/60 px-4 text-right font-mono text-[1.3rem] sm:h-14 sm:rounded-[0.9rem] sm:text-center sm:text-[1.45rem]"
+                          placeholder="0"
+                        />
+                      </div>
                   )}
                 </div>
-
-                {/* Divider */}
-                <div className="hidden md:flex flex-col items-center justify-center gap-2 pt-3">
-                  <div className="w-px h-8 bg-gradient-to-b from-transparent via-border to-transparent" />
-                  <div className="p-2 rounded-full border-2 border-[#2196F3] bg-[#2196F3]/10">
-                    <ArrowRightLeft size={16} className="text-[#2196F3]" />
-                  </div>
-                  <div className="w-px h-8 bg-gradient-to-b from-transparent via-border to-transparent" />
                 </div>
 
-                {/* OUTPUT */}
-                <div className="space-y-3">
-                  <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground text-right">
-                    Result
-                  </Label>
+                <div className="border-t border-border/16 pt-5 md:pt-6">
+                  <div className="mb-3 flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 text-foreground/56">
+                      <Ruler className="h-4 w-4" />
+                      <span className="text-[0.8rem] font-medium uppercase tracking-[0.16em]">
+                        Scale
+                      </span>
+                    </div>
+                    <span className="rounded-full bg-white/8 px-3 py-1 text-[0.82rem] font-medium text-foreground/74">
+                      {selectedScaleLabel}
+                    </span>
+                  </div>
 
-                  <div className="rounded-xl p-4 relative h-16 flex items-center justify-center border-2 border-[#2196F3]/20 bg-[#2196F3]/5">
+                  <div className="relative rounded-[0.95rem] border border-border/18 bg-background/40 md:rounded-[1rem]">
                     <button
-                      onClick={() => {
-                        if (activeTab === 'real-to-scale' && resultMM) {
-                          copyToClipboard(resultMM.toFixed(2));
-                        }
-                        if (activeTab === 'scale-to-real' && resultReal) {
-                          copyToClipboard(`${resultReal.feet}'-${resultReal.inches.toFixed(2)}"`);
-                        }
-                      }}
-                      className="absolute top-2 right-2 p-1 rounded hover:bg-black/5 text-[#2196F3] transition-colors"
-                      title="Copy Result"
+                      onClick={() => scrollScales("left")}
+                      className="absolute left-0 top-0 bottom-0 z-10 flex w-10 items-center justify-center bg-gradient-to-r from-background via-background/85 to-transparent text-foreground/46"
+                      aria-label="Scroll scales left"
                     >
-                      {copied ? <Check size={14} /> : <Copy size={14} />}
+                      <ChevronLeft className="h-4 w-4" />
                     </button>
 
-                    <div className="text-center">
-                      {activeTab === 'real-to-scale' ? (
-                        resultMM !== null ? (
-                          <span className="text-3xl font-mono font-bold text-[#2196F3]">
-                            {resultMM.toFixed(2)}<span className="text-sm ml-1 opacity-60">mm</span>
-                          </span>
-                        ) : (
-                          <span className="text-3xl font-mono opacity-20 text-muted-foreground">---</span>
-                        )
-                      ) : (
-                        resultReal ? (
-                          <span className="text-2xl font-mono font-bold text-[#2196F3]">
-                            {resultReal.feet}'<span className="opacity-60 mx-1">-</span>{resultReal.inches.toFixed(2)}"
-                          </span>
-                        ) : (
-                          <span className="text-3xl font-mono opacity-20 text-muted-foreground">---</span>
-                        )
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Scale Ruler - Compact */}
-              <div className="mb-6">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Ruler size={16} className="text-[#2196F3]" />
-                    <span className="text-xs font-bold uppercase tracking-widest">Scale</span>
-                  </div>
-                  <span className="text-xs font-mono px-2 py-1 rounded border-2 border-[#2196F3]/20 bg-[#2196F3]/5 text-[#2196F3] font-bold">
-                    {getSelectedScaleLabel()}
-                  </span>
-                </div>
-
-                <div className="relative border-2 rounded-xl flex items-center overflow-hidden bg-muted/30">
-                  <button
-                    onClick={() => scrollScales('left')}
-                    className="absolute left-0 top-0 bottom-0 z-20 px-2 flex items-center justify-center transition-colors hover:bg-black/5 bg-gradient-to-r from-background to-transparent"
-                    aria-label="Scroll left"
-                  >
-                    <ChevronLeft size={20} className="text-muted-foreground" />
-                  </button>
-
-                  <div
-                    ref={scrollContainerRef}
-                    className="flex gap-2 overflow-x-auto w-full scrollbar-hide px-10 snap-x snap-mandatory items-center py-3 scroll-smooth"
-                  >
-                    {ARCHITECTURAL_SCALES.map((scale) => (
-                      <button
-                        key={scale.ratio}
-                        onClick={() => setSelectedScale(scale.ratio)}
-                        className={`flex-shrink-0 snap-center px-4 py-2 rounded-lg border-2 transition-all duration-300 font-mono text-xs font-bold whitespace-nowrap ${selectedScale === scale.ratio
-                          ? 'bg-[#2196F3]/20 border-[#2196F3] text-[#2196F3] shadow-lg'
-                          : 'bg-card border-border text-muted-foreground hover:border-[#2196F3]/50'
+                    <div
+                      ref={scrollContainerRef}
+                      className="flex gap-2 overflow-x-auto px-10 py-3 scrollbar-hide"
+                    >
+                      {ARCHITECTURAL_SCALES.map((scale) => (
+                        <button
+                          key={scale.ratio}
+                          onClick={() => setSelectedScale(scale.ratio)}
+                          className={`shrink-0 rounded-full border px-3 py-2 text-[0.78rem] font-medium transition-colors sm:px-4 sm:text-[0.83rem] ${
+                            selectedScale === scale.ratio
+                              ? "border-white bg-white text-black"
+                              : "border-border/18 bg-white/5 text-foreground/58 hover:text-foreground"
                           }`}
-                      >
-                        {scale.label}
-                      </button>
-                    ))}
-                  </div>
+                        >
+                          {scale.label}
+                        </button>
+                      ))}
+                    </div>
 
-                  <button
-                    onClick={() => scrollScales('right')}
-                    className="absolute right-0 top-0 bottom-0 z-20 px-2 flex items-center justify-center transition-colors hover:bg-black/5 bg-gradient-to-l from-background to-transparent"
-                    aria-label="Scroll right"
-                  >
-                    <ChevronRight size={20} className="text-muted-foreground" />
-                  </button>
+                    <button
+                      onClick={() => scrollScales("right")}
+                      className="absolute right-0 top-0 bottom-0 z-10 flex w-10 items-center justify-center bg-gradient-to-l from-background via-background/85 to-transparent text-foreground/46"
+                      aria-label="Scroll scales right"
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              {/* 3D Printer Bed Size Checker */}
-              <div className="border-2 border-dashed border-border rounded-xl p-4 bg-muted/20">
-                <div className="flex items-center gap-2 mb-3">
-                  <Printer size={16} className="text-[#FF5722]" />
-                  <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                    Printer Bed Check
+              <aside className="border-t border-border/16 pt-5 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-1">
+                <div className="flex items-center gap-2 text-foreground/56">
+                  <Printer className="h-4 w-4" />
+                  <span className="text-[0.8rem] font-medium uppercase tracking-[0.16em]">
+                    Printer Fit
                   </span>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <Label className="text-xs mb-2 block">Select Printer</Label>
-                    <Select value={selectedPrinter} onValueChange={setSelectedPrinter}>
-                      <SelectTrigger className="border-2">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {PRINTER_BEDS.map((printer) => (
-                          <SelectItem key={printer.name} value={printer.name}>
-                            {printer.name} ({printer.width}×{printer.depth}mm)
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    {printerFitInfo && resultMM && (
-                      <div className={`p-3 rounded-lg border-2 ${printerFitInfo.fits
-                        ? 'bg-green-500/10 border-green-500/50 text-green-700 dark:text-green-400'
-                        : 'bg-red-500/10 border-red-500/50 text-red-700 dark:text-red-400'
-                        }`}>
-                        <div className="font-bold text-sm mb-1">
-                          {printerFitInfo.fits ? '✓ Will Fit' : '✗ Too Large'}
-                        </div>
-                        <div className="text-xs opacity-80">
-                          Model: {resultMM.toFixed(1)}mm<br />
-                          Bed: {printerFitInfo.printer.width}×{printerFitInfo.printer.depth}mm
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                <div className="mt-4">
+                  <Label className="mb-2 block text-[0.8rem] font-medium uppercase tracking-[0.16em] text-foreground/42">
+                    Printer bed
+                  </Label>
+                  <Select value={selectedPrinter} onValueChange={setSelectedPrinter}>
+                  <SelectTrigger className="h-12 rounded-[0.85rem] border-border/20 bg-background/60 md:rounded-[0.9rem]">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {PRINTER_BEDS.map((printer) => (
+                        <SelectItem key={printer.name} value={printer.name}>
+                          {printer.name} ({printer.width}x{printer.depth}mm)
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
+
+                {printerFitInfo && resultMM ? (
+                  <div
+                    className={`mt-5 rounded-[1rem] border p-4 ${
+                      printerFitInfo.fits
+                        ? "border-emerald-500/18 bg-emerald-500/6"
+                        : "border-rose-500/18 bg-rose-500/6"
+                    }`}
+                  >
+                    <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/42">
+                      {printerFitInfo.fits ? "Fit check" : "Size check"}
+                    </p>
+                    <p className="mt-3 text-[1.05rem] font-medium text-foreground">
+                      {printerFitInfo.fits ? "This model should fit." : "This model is too large."}
+                    </p>
+                    <p className="mt-3 text-[0.92rem] leading-6 text-foreground/62">
+                      Model size: {resultMM.toFixed(1)}mm
+                      <br />
+                      Bed size: {printerFitInfo.printer.width} x {printerFitInfo.printer.depth}mm
+                    </p>
+                  </div>
+                ) : (
+                  <div className="mt-5 rounded-[1rem] border border-border/16 bg-white/5 p-4">
+                    <p className="text-[0.92rem] leading-6 text-foreground/56">
+                      Enter a dimension and choose a scale to check whether the model fits your
+                      printer bed.
+                    </p>
+                  </div>
+                )}
+              </aside>
+            </div>
+          </div>
+        </section>
+      </main>
 
       <Footer />
     </div>

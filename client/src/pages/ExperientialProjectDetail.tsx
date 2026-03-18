@@ -13,7 +13,6 @@ import { AnimatePresence } from "framer-motion";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Breadcrumb } from "@/components/Breadcrumb";
-import { useTheme } from "@/contexts/ThemeContext";
 import { getProjectPath } from "@/lib/projectRoutes";
 
 // Convert YouTube/Vimeo URLs to embed format
@@ -52,7 +51,6 @@ const ACCENT_COLORS = ['#FF5722', '#00E5FF', '#FF1744'];
 export default function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
   const [, setLocation] = useLocation();
-  const { theme } = useTheme();
   const { data: project, isLoading } = trpc.projects.getBySlug.useQuery({ slug: slug! });
   // Fetch projects in same discipline for navigation
   const { data: allProjects } = trpc.projects.list.useQuery(
@@ -286,7 +284,7 @@ export default function ProjectDetail() {
                   )}
                   {(metadata.lumenatiLogoDark && metadata.lumenatiLogoLight) && (
                     <img
-                      src={theme === 'dark' ? metadata.lumenatiLogoDark : metadata.lumenatiLogoLight}
+                      src={metadata.lumenatiLogoDark}
                       alt="Lumenati"
                       className="h-10 md:h-12 w-auto"
                     />

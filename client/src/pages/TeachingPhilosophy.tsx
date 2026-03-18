@@ -203,12 +203,14 @@ export default function TeachingPhilosophy() {
           </div>
 
           <div className="overflow-hidden rounded-[1.5rem] border border-border/30 bg-card/20">
-            <img
-              src="/assets/about/about-teaching-art.png"
-              alt="Abstract teaching philosophy artwork"
-              className="aspect-[4/5] w-full object-cover object-center"
-              loading="lazy"
-            />
+            <div className="relative aspect-[4/5] w-full">
+              <img
+                src="/assets/about/about-teaching-art.png"
+                alt="Abstract teaching philosophy artwork"
+                className="absolute left-1/2 top-1/2 h-full w-full max-w-none -translate-x-1/2 -translate-y-1/2 scale-[1.25] rotate-90 object-cover object-center"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </section>

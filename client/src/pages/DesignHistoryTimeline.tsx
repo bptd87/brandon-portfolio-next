@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, MapPin, Search, Palette, Users, Landmark, X, ChevronDown } from 'lucide-react';
+import { Calendar, MapPin, Search, Palette, Users, Landmark, ChevronDown, Shuffle } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { RelatedTools } from '@/components/studio/RelatedTools';
 
 interface DesignPeriod {
   id: string;
@@ -19,6 +18,8 @@ interface DesignPeriod {
   gallery?: string[]; // Array of interior/exterior images
   colors: string[];
 }
+
+type EraFilter = 'all' | 'ancient-medieval' | 'renaissance-19th' | 'modernism' | 'contemporary';
 
 const DESIGN_PERIODS: DesignPeriod[] = [
   // ANCIENT
@@ -428,19 +429,55 @@ const DESIGN_PERIODS: DesignPeriod[] = [
   },
 ];
 
+const ERA_OPTIONS: Array<{ id: EraFilter; label: string; matches: (period: DesignPeriod) => boolean }> = [
+  {
+    id: 'all',
+    label: 'All periods',
+    matches: () => true,
+  },
+  {
+    id: 'ancient-medieval',
+    label: 'Ancient to Medieval',
+    matches: (period) => period.startYear < 1400,
+  },
+  {
+    id: 'renaissance-19th',
+    label: 'Renaissance to 19th C.',
+    matches: (period) => period.startYear >= 1400 && period.startYear < 1900,
+  },
+  {
+    id: 'modernism',
+    label: 'Modernism',
+    matches: (period) => period.startYear >= 1900 && period.startYear < 1970,
+  },
+  {
+    id: 'contemporary',
+    label: 'Late 20th to now',
+    matches: (period) => period.startYear >= 1970,
+  },
+];
+
 
 
 export default function DesignHistoryTimeline() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedEra, setSelectedEra] = useState<EraFilter>('all');
 
-  const filteredPeriods = DESIGN_PERIODS.filter(period =>
-    searchQuery === '' ||
-    period.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    period.region.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    period.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    period.characteristics.some(c => c.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+  const activeEra = ERA_OPTIONS.find((option) => option.id === selectedEra) || ERA_OPTIONS[0];
+
+  const filteredPeriods = useMemo(() => {
+    return DESIGN_PERIODS.filter((period) => {
+      const matchesSearch =
+        searchQuery === '' ||
+        period.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        period.region.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        period.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        period.characteristics.some((c) => c.toLowerCase().includes(searchQuery.toLowerCase()));
+
+      return matchesSearch && activeEra.matches(period);
+    });
+  }, [activeEra, searchQuery]);
 
   const formatYear = (year: number | null) => {
     if (year === null) return 'Present';
@@ -452,286 +489,314 @@ export default function DesignHistoryTimeline() {
     setExpandedId(expandedId === id ? null : id);
   };
 
+  const openRandomPeriod = () => {
+    if (filteredPeriods.length === 0) return;
+    const randomPeriod = filteredPeriods[Math.floor(Math.random() * filteredPeriods.length)];
+    setExpandedId(randomPeriod.id);
+    if (typeof window !== 'undefined') {
+      requestAnimationFrame(() => {
+        document.getElementById(`design-period-${randomPeriod.id}`)?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <main>
+        <section className="border-b border-border/35 pb-10 pt-24 md:pb-12 md:pt-28">
+          <div className="container max-w-5xl">
+            <div className="max-w-3xl">
+              <div className="mb-5 flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.24em] text-foreground/45">
+                <Calendar className="h-3.5 w-3.5" />
+                Design History Timeline
+              </div>
+              <h1 className="font-sans text-[clamp(2.5rem,6vw,5rem)] font-medium leading-[0.94] tracking-[-0.06em] text-foreground">
+                Design periods, references, and historical context.
+              </h1>
+              <p className="mt-6 max-w-2xl text-[1rem] leading-7 text-foreground/60 md:text-[1.05rem]">
+                A working reference library for architectural and interior design history. Search by
+                movement, region, or characteristic, then open any period for palette, figures, and
+                notable works.
+              </p>
+            </div>
 
-      {/* Compact Hero with Header Image */}
-      <section className="relative h-[30vh] md:h-[35vh] overflow-hidden border-b border-border">
-        <img
-          src="/assets/studio/design-history.webp"
-          alt="Design History Timeline - Architectural design through history"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/20" />
+            <div className="mt-10 border-t border-border/35 pt-5">
+              <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
+                <label className="relative block">
+                <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground/40" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search periods, regions, or characteristics"
+                  className="h-12 w-full rounded-full border border-border/45 bg-[#111111] pl-11 pr-4 text-sm text-foreground placeholder:text-foreground/35 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/25"
+                />
+                </label>
 
-        <div className="absolute bottom-0 left-0 right-0 container max-w-5xl pb-4 md:pb-6">
-          <div className="flex items-center gap-2 mb-2">
-            <Calendar className="w-4 h-4 text-[#9C27B0]" />
-            <span className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
-              DESIGN HISTORY TIMELINE
-            </span>
-            <span className="ml-2 px-2 py-0.5 text-[10px] font-semibold tracking-wider bg-amber-500/20 text-amber-700 dark:text-amber-400 border border-amber-500/30 rounded-full">
-              BETA
-            </span>
-          </div>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-2">
-            Architectural Design Through History
-          </h1>
-          <p className="text-sm md:text-base text-muted-foreground max-w-2xl">
-            Explore 28 design periods from Ancient Egypt to Contemporary. Click any period to view reference images, characteristics, and key figures.
-          </p>
-        </div>
-      </section>
+                <div className="flex items-center justify-between gap-4 md:justify-end">
+                  <p className="text-sm text-foreground/45">{filteredPeriods.length} periods</p>
+                  <div className="flex items-center gap-4">
+                    {searchQuery || selectedEra !== 'all' ? (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSearchQuery('');
+                          setSelectedEra('all');
+                        }}
+                        className="text-sm text-foreground/55 transition-colors hover:text-foreground"
+                      >
+                        Reset
+                      </button>
+                    ) : null}
+                    <button
+                      type="button"
+                      onClick={openRandomPeriod}
+                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/45 bg-[#111111] px-4 text-sm text-foreground/78 transition-colors hover:border-foreground/18 hover:text-foreground"
+                    >
+                      <Shuffle className="h-4 w-4" />
+                      Surprise me
+                    </button>
+                  </div>
+                </div>
+              </div>
 
-      {/* Main Content */}
-      <section className="container max-w-5xl py-6 md:py-8">
-        {/* Search Bar */}
-        <div className="mb-6">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search periods, regions, or characteristics..."
-              className="w-full h-10 pl-10 pr-4 bg-background border border-input rounded-md text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            />
-          </div>
-        </div>
-
-        {/* Results Count */}
-        <div className="mb-6">
-          <p className="text-sm text-muted-foreground">
-            {filteredPeriods.length} periods found
-          </p>
-        </div>
-
-        {/* Timeline */}
-        <div className="relative max-w-5xl mx-auto">
-          {/* Timeline Line */}
-          <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-black/10 dark:bg-white/10 hidden md:block" />
-
-          {/* Timeline Items */}
-          <div className="space-y-6">
-            {filteredPeriods.map((period, index) => {
-              const isExpanded = expandedId === period.id;
-
-              return (
-                <motion.div
-                  key={period.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.02 }}
-                  className="relative"
-                >
-                  {/* Timeline Dot */}
-                  <div
-                    className={`absolute left-6 top-8 w-5 h-5 rounded-full border-2 transition-all z-10 hidden md:block ${isExpanded
-                      ? 'border-black dark:border-white bg-black dark:bg-white scale-125'
-                      : 'border-black/20 dark:border-white/20 bg-white dark:bg-black'
-                      }`}
-                  />
-
-                  {/* Compact Card */}
+              <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
+                {ERA_OPTIONS.map((option) => (
                   <button
-                    onClick={() => toggleExpand(period.id)}
-                    className={`w-full text-left md:ml-16 bg-neutral-200/60 dark:bg-neutral-900/60 backdrop-blur-xl border rounded-3xl overflow-hidden transition-all ${isExpanded
-                      ? 'border-black dark:border-white shadow-lg'
-                      : 'border-black/10 dark:border-white/10 hover:border-black/30 dark:hover:border-white/30'
-                      }`}
+                    key={option.id}
+                    type="button"
+                    onClick={() => setSelectedEra(option.id)}
+                    className={`whitespace-nowrap rounded-full border px-4 py-2 text-[0.86rem] transition-colors ${
+                      selectedEra === option.id
+                        ? 'border-foreground/20 bg-foreground text-background'
+                        : 'border-border/45 bg-[#111111] text-foreground/58 hover:border-foreground/18 hover:text-foreground'
+                    }`}
                   >
-                    <div className="flex flex-col md:flex-row gap-6 p-6">
-                      {/* Thumbnail */}
-                      <div className="w-full md:w-[200px] flex-shrink-0 aspect-video md:aspect-square overflow-hidden rounded-2xl">
-                        <img
-                          src={period.imageUrl}
-                          alt={period.name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
 
-                      {/* Summary Info */}
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <div className="font-pixel text-[10px] tracking-[0.2em] text-black/40 dark:text-white/40 mb-2">
+        <section className="pb-20 pt-8 md:pb-28 md:pt-10">
+          <div className="container max-w-5xl">
+            <div className="space-y-4">
+              {filteredPeriods.map((period, index) => {
+                const isExpanded = expandedId === period.id;
+
+                return (
+                  <motion.div
+                    key={period.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.015 }}
+                    className="relative"
+                    id={`design-period-${period.id}`}
+                  >
+                    <button
+                      onClick={() => toggleExpand(period.id)}
+                      className={`w-full overflow-hidden rounded-[1.6rem] border bg-[#1f1f1f] text-left transition-colors ${
+                        isExpanded
+                          ? 'border-foreground/22'
+                          : 'border-border/45 hover:border-foreground/18'
+                      }`}
+                    >
+                      <div className="grid gap-5 p-4 sm:p-5 md:grid-cols-[8.5rem_minmax(0,1fr)_auto] md:items-center md:gap-6">
+                        <div className="aspect-square w-full overflow-hidden rounded-2xl bg-black/20 md:w-[8.5rem]">
+                          <img
+                            src={period.imageUrl}
+                            alt={period.name}
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+
+                        <div className="min-w-0">
+                          <div className="mb-2 text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/42">
                             {formatYear(period.startYear)} - {formatYear(period.endYear)}
                           </div>
-                          <h3 className="text-2xl md:text-3xl font-display italic mb-2">{period.name}</h3>
-                          <div className="text-sm text-black/60 dark:text-white/60 mb-4 flex items-center gap-2">
-                            <MapPin className="w-3.5 h-3.5" />
-                            {period.region}
+                          <h2 className="font-sans text-[1.4rem] font-medium tracking-[-0.04em] text-foreground md:text-[1.7rem]">
+                            {period.name}
+                          </h2>
+                          <div className="mt-2 flex items-center gap-2 text-sm text-foreground/54">
+                            <MapPin className="h-3.5 w-3.5" />
+                            <span className="truncate">{period.region}</span>
                           </div>
+                          <p className="mt-4 max-w-2xl text-sm leading-6 text-foreground/58 md:text-[0.98rem]">
+                            {period.description}
+                          </p>
 
-                          {/* Mini Color Palette */}
-                          <div className="flex gap-1.5">
-                            {period.colors.map((color, i) => (
+                          <div className="mt-4 flex flex-wrap gap-2">
+                            {period.colors.slice(0, 5).map((color, i) => (
                               <div
                                 key={i}
-                                className="w-8 h-8 rounded-lg border border-black/10 dark:border-white/10"
+                                className="h-7 w-7 rounded-full border border-white/10"
                                 style={{ backgroundColor: color }}
+                                aria-hidden="true"
                               />
                             ))}
                           </div>
                         </div>
 
-                        {/* Expand Icon */}
-                        <motion.div
-                          animate={{ rotate: isExpanded ? 180 : 0 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          <ChevronDown className="w-6 h-6 text-black/40 dark:text-white/40" />
-                        </motion.div>
-                      </div>
-                    </div>
-                  </button>
-
-                  {/* Expanded Content */}
-                  <AnimatePresence>
-                    {isExpanded && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.4, ease: 'easeInOut' }}
-                        className="overflow-hidden md:ml-16"
-                      >
-                        <div className="bg-neutral-200/60 dark:bg-neutral-900/60 backdrop-blur-xl border-x border-b border-black/10 dark:border-white/10 rounded-b-3xl p-8 md:p-12 space-y-8">
-
-                          {/* Image Gallery */}
-                          {period.gallery && period.gallery.length > 0 ? (
-                            <div>
-                              <div className="font-pixel text-[10px] tracking-[0.3em] text-black/40 dark:text-white/40 mb-4">REFERENCE IMAGES</div>
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {period.gallery.map((imageUrl, idx) => (
-                                  <div key={idx} className="aspect-[16/9] overflow-hidden rounded-2xl border border-black/10 dark:border-white/10">
-                                    <img
-                                      src={imageUrl}
-                                      alt={`${period.name} - Image ${idx + 1}`}
-                                      className="w-full h-full object-cover"
-                                    />
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="aspect-[21/9] overflow-hidden rounded-2xl border border-black/10 dark:border-white/10">
-                              <img
-                                src={period.imageUrl}
-                                alt={period.name}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                          )}
-
-                          {/* Color Palette */}
-                          <div>
-                            <div className="font-pixel text-[10px] tracking-[0.3em] text-black/40 dark:text-white/40 mb-4 flex items-center gap-2">
-                              <Palette className="w-3.5 h-3.5" />
-                              COLOR PALETTE
-                            </div>
-                            <div className="grid grid-cols-5 gap-3">
-                              {period.colors.map((color, index) => (
-                                <div key={index} className="space-y-2">
-                                  <div
-                                    className="h-20 rounded-2xl border border-black/10 dark:border-white/10"
-                                    style={{ backgroundColor: color }}
-                                  />
-                                  <div className="text-[10px] font-mono text-center text-black/60 dark:text-white/60">
-                                    {color}
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
+                        <div className="flex items-center justify-between gap-4 md:block">
+                          <div className="flex flex-wrap gap-2 md:justify-end">
+                            {period.characteristics.slice(0, 2).map((characteristic) => (
+                              <span
+                                key={characteristic}
+                                className="rounded-full border border-white/8 bg-black/20 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-foreground/52"
+                              >
+                                {characteristic}
+                              </span>
+                            ))}
                           </div>
 
-                          {/* Description */}
-                          <div>
-                            <div className="font-pixel text-[10px] tracking-[0.3em] text-black/40 dark:text-white/40 mb-3">OVERVIEW</div>
-                            <p className="text-lg leading-relaxed">{period.description}</p>
-                          </div>
-
-                          {/* Two Column Layout for Details */}
-                          <div className="grid md:grid-cols-2 gap-8">
-                            {/* Left Column */}
-                            <div className="space-y-8">
-                              {/* Characteristics */}
-                              <div>
-                                <div className="font-pixel text-[10px] tracking-[0.3em] text-black/40 dark:text-white/40 mb-4">KEY CHARACTERISTICS</div>
-                                <div className="flex flex-wrap gap-2">
-                                  {period.characteristics.map(char => (
-                                    <span
-                                      key={char}
-                                      className="px-4 py-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full text-sm"
-                                    >
-                                      {char}
-                                    </span>
-                                  ))}
-                                </div>
-                              </div>
-
-                              {/* Key Figures */}
-                              {period.keyFigures && period.keyFigures.length > 0 && (
-                                <div>
-                                  <div className="font-pixel text-[10px] tracking-[0.3em] text-black/40 dark:text-white/40 mb-4 flex items-center gap-2">
-                                    <Users className="w-3.5 h-3.5" />
-                                    KEY FIGURES
-                                  </div>
-                                  <div className="space-y-2">
-                                    {period.keyFigures.map(figure => (
-                                      <div key={figure} className="text-black/70 dark:text-white/70">• {figure}</div>
-                                    ))}
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-
-                            {/* Right Column */}
-                            <div>
-                              {/* Notable Works */}
-                              {period.notableWorks && period.notableWorks.length > 0 && (
-                                <div>
-                                  <div className="font-pixel text-[10px] tracking-[0.3em] text-black/40 dark:text-white/40 mb-4 flex items-center gap-2">
-                                    <Landmark className="w-3.5 h-3.5" />
-                                    NOTABLE WORKS
-                                  </div>
-                                  <div className="space-y-2">
-                                    {period.notableWorks.map(work => (
-                                      <div key={work} className="text-black/70 dark:text-white/70">• {work}</div>
-                                    ))}
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-
-                          {/* Close Button */}
-                          <button
-                            onClick={() => setExpandedId(null)}
-                            className="w-full py-4 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 border border-black/10 dark:border-white/10 rounded-2xl transition-all flex items-center justify-center gap-2"
+                          <motion.div
+                            animate={{ rotate: isExpanded ? 180 : 0 }}
+                            transition={{ duration: 0.25 }}
+                            className="md:mt-8"
                           >
-                            <X className="w-4 h-4" />
-                            <span className="font-pixel text-[10px] tracking-[0.2em]">CLOSE</span>
-                          </button>
+                            <ChevronDown className="h-5 w-5 text-foreground/40" />
+                          </motion.div>
                         </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              );
-            })}
+                      </div>
+                    </button>
 
-            {filteredPeriods.length === 0 && (
-              <div className="text-center py-12 text-black/60 dark:text-white/60">
-                No periods found matching your search
-              </div>
-            )}
+                    <AnimatePresence initial={false}>
+                      {isExpanded && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.28, ease: 'easeInOut' }}
+                          className="overflow-hidden"
+                        >
+                          <div className="mt-3 rounded-[1.6rem] border border-border/45 bg-[#1f1f1f] p-4 sm:p-5 md:p-6">
+                            <div className="grid gap-6 md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
+                              <div className="space-y-6">
+                                <div>
+                                  <div className="mb-3 flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/42">
+                                    <Palette className="h-3.5 w-3.5" />
+                                    Palette
+                                  </div>
+                                  <div className="grid grid-cols-5 gap-2">
+                                    {period.colors.map((color, colorIndex) => (
+                                      <div key={colorIndex} className="space-y-2">
+                                        <div
+                                          className="aspect-square rounded-xl border border-white/10"
+                                          style={{ backgroundColor: color }}
+                                        />
+                                        <p className="text-center text-[10px] uppercase tracking-[0.12em] text-foreground/42">
+                                          {color}
+                                        </p>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+
+                                <div>
+                                  <div className="mb-3 text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/42">
+                                    Characteristics
+                                  </div>
+                                  <div className="flex flex-wrap gap-2">
+                                    {period.characteristics.map((char) => (
+                                      <span
+                                        key={char}
+                                        className="rounded-full border border-white/8 bg-black/20 px-3 py-1.5 text-sm text-foreground/70"
+                                      >
+                                        {char}
+                                      </span>
+                                    ))}
+                                  </div>
+                                </div>
+
+                                {period.gallery && period.gallery.length > 0 ? (
+                                  <div>
+                                    <div className="mb-3 text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/42">
+                                      Reference images
+                                    </div>
+                                    <div className="grid gap-3 sm:grid-cols-2">
+                                      {period.gallery.slice(0, 2).map((imageUrl, idx) => (
+                                        <div
+                                          key={idx}
+                                          className="aspect-square overflow-hidden rounded-2xl border border-white/10 bg-black/20"
+                                        >
+                                          <img
+                                            src={imageUrl}
+                                            alt={`${period.name} reference ${idx + 1}`}
+                                            className="h-full w-full object-cover"
+                                          />
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                ) : null}
+                              </div>
+
+                              <div className="space-y-6">
+                                {period.keyFigures && period.keyFigures.length > 0 ? (
+                                  <div>
+                                    <div className="mb-3 flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/42">
+                                      <Users className="h-3.5 w-3.5" />
+                                      Key figures
+                                    </div>
+                                    <div className="space-y-2 border-t border-border/35 pt-3">
+                                      {period.keyFigures.map((figure) => (
+                                        <p key={figure} className="text-sm leading-6 text-foreground/68">
+                                          {figure}
+                                        </p>
+                                      ))}
+                                    </div>
+                                  </div>
+                                ) : null}
+
+                                {period.notableWorks && period.notableWorks.length > 0 ? (
+                                  <div>
+                                    <div className="mb-3 flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/42">
+                                      <Landmark className="h-3.5 w-3.5" />
+                                      Notable works
+                                    </div>
+                                    <div className="space-y-2 border-t border-border/35 pt-3">
+                                      {period.notableWorks.map((work) => (
+                                        <p key={work} className="text-sm leading-6 text-foreground/68">
+                                          {work}
+                                        </p>
+                                      ))}
+                                    </div>
+                                  </div>
+                                ) : null}
+
+                                <div>
+                                  <div className="mb-3 text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/42">
+                                    Overview
+                                  </div>
+                                  <p className="text-sm leading-7 text-foreground/62 md:text-[0.98rem]">
+                                    {period.description}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                );
+              })}
+
+              {filteredPeriods.length === 0 && (
+                <div className="py-16 text-center text-foreground/55">
+                  No periods found matching your search
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-
-        {/* More Apps Section */}
-        <RelatedTools currentToolId="design-history-timeline" />
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>

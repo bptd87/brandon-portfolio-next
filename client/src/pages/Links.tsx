@@ -1,10 +1,27 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { ExternalLink, Instagram, Linkedin, Mail, FileText, Video, Github, Twitter, Facebook, Youtube, Newspaper, Image as ImageIcon, Link as LinkIcon, PenTool, Globe, Home } from 'lucide-react';
-import { Link } from 'wouter';
-import { trpc } from '@/lib/trpc';
-import { getProjectPath } from '@/lib/projectRoutes';
-import { SEO } from '@/components/SEO';
-import { ASSISTANT_SCENIC_DESIGN_PATH, voyageLaArticle } from '@shared/publicContent';
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  ExternalLink,
+  Instagram,
+  Linkedin,
+  Mail,
+  FileText,
+  Video,
+  Github,
+  Twitter,
+  Facebook,
+  Youtube,
+  Newspaper,
+  Image as ImageIcon,
+  Link as LinkIcon,
+  PenTool,
+  Globe,
+} from "lucide-react";
+import { Link } from "wouter";
+
+import { SEO } from "@/components/SEO";
+import { trpc } from "@/lib/trpc";
+import { getProjectPath } from "@/lib/projectRoutes";
+import { voyageLaArticle } from "@shared/publicContent";
 
 function PinterestIcon({ className }: { className?: string }) {
   return (
@@ -14,11 +31,9 @@ function PinterestIcon({ className }: { className?: string }) {
   );
 }
 
-// --- Interfaces ---
-
 interface DashboardItem {
   id: string;
-  type: 'custom' | 'article' | 'project' | 'news' | 'tutorial';
+  type: "custom" | "article" | "project" | "news" | "tutorial";
   title: string;
   subtitle?: string;
   url: string;
@@ -34,96 +49,123 @@ interface BioData {
   profileImage: string;
 }
 
+function FeedCard({
+  href,
+  image,
+  isExternal,
+  label,
+  title,
+}: {
+  href: string;
+  image?: string | null;
+  isExternal: boolean;
+  label: string;
+  title: string;
+}) {
+  const content = (
+    <article className="group block">
+      <div className="relative overflow-hidden rounded-[0.72rem] border border-border/18 bg-card/10">
+        {image ? (
+          <img
+            src={image}
+            alt={title}
+            className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-[1.035]"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div className="aspect-[4/5] w-full bg-card/10" />
+        )}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/52 via-black/10 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 p-3 sm:p-4">
+          <p className="text-[0.58rem] font-semibold uppercase tracking-[0.24em] text-white/62">
+            {label}
+          </p>
+          <h3
+            className="mt-2 text-[0.9rem] font-medium leading-[1.02] tracking-[-0.035em] text-white sm:text-[1rem]"
+            style={{ textShadow: "0 1px 12px rgba(0,0,0,0.35)" }}
+          >
+            {title}
+          </h3>
+        </div>
+      </div>
+    </article>
+  );
+
+  if (isExternal) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer">
+        {content}
+      </a>
+    );
+  }
+
+  return <Link href={href}>{content}</Link>;
+}
+
 export default function Links() {
   const [bioData] = useState<BioData>({
-    name: 'BRANDON PT DAVIS',
-    tagline: 'Scenic Designer',
-    profileImage: '/assets/studio/profile-image.jpeg',
+    name: "BRANDON PT DAVIS",
+    tagline: "Scenic Designer",
+    profileImage: "/assets/studio/profile-image.jpeg",
   });
-
-  // Pagination
-  const [displayLimit, setDisplayLimit] = useState(6);
+  const [displayLimit, setDisplayLimit] = useState(12);
   const [hasMore, setHasMore] = useState(true);
   const loaderRef = useRef<HTMLDivElement>(null);
 
-  // Fetch data with tRPC
   const { data: projects, isLoading: projectsLoading } = trpc.projects.list.useQuery({});
-  const { data: articles, isLoading: articlesLoading } = trpc.articles.list.useQuery({ status: "published" });
-  // TODO: Add tutorials router
+  const { data: articles, isLoading: articlesLoading } = trpc.articles.list.useQuery({
+    status: "published",
+  });
   const tutorials: any[] = [];
   const tutorialsLoading = false;
 
-  const loading = projectsLoading || articlesLoading;
-
-  // --- Data Processing ---
+  const loading = projectsLoading || articlesLoading || tutorialsLoading;
 
   const items = useMemo(() => {
     if (loading) return [];
 
     const dashboardItems: DashboardItem[] = [];
 
-    // Pinned Bio Links (Top Buttons)
     const pinnedLinks = [
       {
-        id: 'bio-portfolio',
-        type: 'custom' as const,
-        title: 'Full Portfolio',
-        subtitle: 'View all work',
-        url: '/projects',
+        id: "bio-portfolio",
+        type: "custom" as const,
+        title: "Portfolio",
+        subtitle: "Selected work",
+        url: "/projects",
         date: new Date().toISOString(),
-        icon: 'image',
-        isPinned: true
+        icon: "image",
+        isPinned: true,
       },
       {
-        id: 'bio-resume',
-        type: 'custom' as const,
-        title: 'Resume',
-        subtitle: 'Download CV',
-        url: '/resume',
+        id: "bio-resume",
+        type: "custom" as const,
+        title: "Resume",
+        subtitle: "CV and credits",
+        url: "/resume",
         date: new Date().toISOString(),
-        icon: 'file-text',
-        isPinned: true
+        icon: "file-text",
+        isPinned: true,
       },
       {
-        id: 'bio-contact',
-        type: 'custom' as const,
-        title: 'Get in Touch',
-        subtitle: 'Start a project',
-        url: '/contact',
+        id: "bio-studio",
+        type: "custom" as const,
+        title: "Studio",
+        subtitle: "Tools and tutorials",
+        url: "/studio",
         date: new Date().toISOString(),
-        icon: 'mail',
-        isPinned: true
+        icon: "video",
+        isPinned: true,
       },
-      {
-        id: 'bio-studio',
-        type: 'custom' as const,
-        title: 'Studio',
-        subtitle: 'Tutorials & Tools',
-        url: '/studio',
-        date: new Date().toISOString(),
-        icon: 'video',
-        isPinned: true
-      },
-      {
-        id: 'bio-assistant-scenic',
-        type: 'custom' as const,
-        title: 'Assistant Scenic Design',
-        subtitle: 'Selected credits',
-        url: ASSISTANT_SCENIC_DESIGN_PATH,
-        date: new Date().toISOString(),
-        icon: 'image',
-        isPinned: true
-      }
     ];
 
     dashboardItems.push(...pinnedLinks);
 
-    // Projects (only scenic_design and rendering)
     if (projects) {
       projects
-        .filter((p: any) => p.discipline === 'scenic_design' || p.discipline === 'rendering')
+        .filter((p: any) => p.discipline === "scenic_design" || p.discipline === "rendering")
         .forEach((p: any) => {
-          // Use project year/month for accurate chronological sorting
           let dateStr: string;
           if (p.year && p.month) {
             dateStr = new Date(p.year, p.month - 1, 15).toISOString();
@@ -137,67 +179,64 @@ export default function Links() {
 
           dashboardItems.push({
             id: `proj-${p.id}`,
-            type: 'project',
+            type: "project",
             title: p.title,
-            subtitle: p.venue || 'Portfolio',
+            subtitle: p.venue || "Portfolio",
             url: getProjectPath(p),
             image: p.coverImageUrl,
             date: dateStr,
-            icon: 'image',
-            isPinned: false
+            icon: "image",
+            isPinned: false,
           });
         });
     }
 
-    // Articles
     if (articles) {
       articles.forEach((a: any) => {
         const d = a.publishedAt ? new Date(a.publishedAt) : new Date(a.createdAt);
         dashboardItems.push({
           id: `art-${a.id}`,
-          type: 'article',
+          type: "article",
           title: a.title,
-          subtitle: 'Article',
+          subtitle: "Article",
           url: `/articles/${a.slug}`,
           image: a.coverImageUrl,
           date: d.toISOString(),
-          icon: 'pen-tool',
-          isPinned: false
+          icon: "pen-tool",
+          isPinned: false,
         });
       });
     }
 
     dashboardItems.push({
       id: `art-${voyageLaArticle.slug}`,
-      type: 'article',
+      type: "article",
       title: voyageLaArticle.title,
       subtitle: voyageLaArticle.categoryName,
       url: `/articles/${voyageLaArticle.slug}`,
       image: voyageLaArticle.coverImageUrl,
       date: new Date(voyageLaArticle.publishedAt).toISOString(),
-      icon: 'pen-tool',
-      isPinned: false
+      icon: "pen-tool",
+      isPinned: false,
     });
 
-    // Tutorials
     if (tutorials) {
       tutorials.forEach((t: any) => {
         const d = t.publishDate ? new Date(t.publishDate) : new Date(t.createdAt);
         dashboardItems.push({
           id: `tut-${t.id}`,
-          type: 'tutorial',
+          type: "tutorial",
           title: t.title,
-          subtitle: 'Tutorial',
+          subtitle: "Tutorial",
           url: `/studio/tutorials/${t.slug}`,
           image: t.thumbnailUrl,
           date: d.toISOString(),
-          icon: 'video',
-          isPinned: false
+          icon: "video",
+          isPinned: false,
         });
       });
     }
 
-    // Sort: Pinned first, then by date
     return dashboardItems.sort((a, b) => {
       if (a.isPinned && !b.isPinned) return -1;
       if (!a.isPinned && b.isPinned) return 1;
@@ -205,307 +244,204 @@ export default function Links() {
     });
   }, [projects, articles, tutorials, loading]);
 
-  // --- Infinite Scroll ---
   useEffect(() => {
     if (!hasMore) return;
-    
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        setDisplayLimit(prev => prev + 6);
-      }
-    }, { threshold: 0.1 });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setDisplayLimit((prev) => prev + 9);
+        }
+      },
+      { threshold: 0.1 }
+    );
     if (loaderRef.current) observer.observe(loaderRef.current);
     return () => observer.disconnect();
   }, [hasMore]);
 
   useEffect(() => {
-    setHasMore(displayLimit < items.length);
+    setHasMore(displayLimit < items.filter((i) => !i.isPinned).length);
   }, [displayLimit, items]);
-
-  // --- Render Helpers ---
 
   const getIcon = (name: string) => {
     const map: Record<string, any> = {
-      instagram: Instagram, linkedin: Linkedin, twitter: Twitter,
-      facebook: Facebook, youtube: Youtube, github: Github,
-      mail: Mail, email: Mail, link: LinkIcon, website: Globe,
-      article: FileText, 'pen-tool': PenTool, 'file-text': FileText,
-      project: ImageIcon, image: ImageIcon, news: Newspaper, video: Video
+      instagram: Instagram,
+      linkedin: Linkedin,
+      twitter: Twitter,
+      facebook: Facebook,
+      youtube: Youtube,
+      github: Github,
+      mail: Mail,
+      email: Mail,
+      link: LinkIcon,
+      website: Globe,
+      article: FileText,
+      "pen-tool": PenTool,
+      "file-text": FileText,
+      project: ImageIcon,
+      image: ImageIcon,
+      news: Newspaper,
+      video: Video,
     };
     return map[name.toLowerCase()] || ExternalLink;
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-6 h-6 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin" />
-          <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Loading Feed</p>
+      <div className="min-h-screen bg-background text-foreground">
+        <div className="mx-auto flex min-h-screen max-w-5xl items-center justify-center px-6">
+          <div className="flex flex-col items-center gap-4">
+            <div className="h-6 w-6 animate-spin rounded-full border-2 border-foreground/28 border-t-transparent" />
+            <p className="text-[10px] uppercase tracking-[0.28em] text-foreground/45">Loading links</p>
+          </div>
         </div>
       </div>
     );
   }
 
-  const pinnedItems = items.filter(i => i.isPinned);
-  const feedItems = items.filter(i => !i.isPinned).slice(0, displayLimit);
+  const pinnedItems = items.filter((i) => i.isPinned);
+  const feedItems = items.filter((i) => !i.isPinned).slice(0, displayLimit);
 
   return (
-    <div className="min-h-screen bg-background text-foreground pb-32">
+    <div className="min-h-screen bg-background text-foreground">
       <SEO
         title="Links | Brandon PT Davis"
         description={`Latest work and updates from ${bioData.name}`}
       />
 
-
-
-      {/* Ambient Background */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
-        <div className="absolute inset-0 bg-background" />
-      </div>
-
-      <div className="relative z-10 max-w-6xl mx-auto px-4 pt-16 md:pt-24">
-
-        {/* --- 1. Profile --- */}
-        <div className="flex flex-col items-center text-center mb-16 md:mb-20">
-          {bioData.profileImage && (
-            <div className="relative mb-6 group">
-              <div className="relative w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden ring-1 ring-border/60">
-                <img
-                  src={bioData.profileImage}
-                  alt={bioData.name}
-                  className="object-cover w-full h-full"
-                />
-              </div>
+      <main className="mx-auto max-w-6xl px-4 pb-20 pt-10 sm:px-6 sm:pt-16 md:pt-20">
+        <section className="border-b border-border/18 pb-10 md:pb-14">
+          <div className="mx-auto max-w-3xl text-center">
+            <div className="mx-auto mb-5 h-20 w-20 overflow-hidden rounded-full border border-border/30 bg-card/20 md:h-24 md:w-24">
+              <img
+                src={bioData.profileImage}
+                alt={bioData.name}
+                className="h-full w-full object-cover"
+              />
             </div>
-          )}
+            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
+              Scenic Design
+            </p>
+            <h1 className="mt-4 font-sans text-[clamp(2.3rem,6vw,4.7rem)] font-medium leading-[0.95] tracking-[-0.06em] text-foreground">
+              {bioData.name}
+            </h1>
+            <p className="mx-auto mt-5 max-w-[22ch] text-[0.98rem] leading-7 text-foreground/62 md:max-w-[22ch] md:text-[1.06rem] md:leading-8">
+              Portfolio, studio resources, articles, and current work collected in one place.
+            </p>
 
-          <h1 className="font-['Playfair_Display'] font-medium text-3xl md:text-4xl tracking-tight mb-2">
-            {bioData.name}
-          </h1>
-          <p className="font-mono text-[10px] text-muted-foreground uppercase tracking-[0.3em] mb-6">
-            {bioData.tagline}
-          </p>
-
-          {/* Socials - Clean Pills */}
-          <div className="flex items-center gap-2">
-            <a href="https://instagram.com/brandonptdavisdesign" target="_blank" rel="noopener" aria-label="Instagram" className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"><Instagram className="w-4 h-4" /></a>
-            <a href="https://linkedin.com/in/brandonptdavis" target="_blank" rel="noopener" aria-label="LinkedIn" className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"><Linkedin className="w-4 h-4" /></a>
-            <a href="https://www.pinterest.com/BrandonPTDavis/" target="_blank" rel="noopener" aria-label="Pinterest" className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"><PinterestIcon className="w-4 h-4" /></a>
-            <div className="w-px h-4 bg-border mx-1" />
-            <a href="mailto:info@brandonptdavis.com" className="px-4 py-2 rounded-full bg-foreground text-background font-medium text-xs hover:bg-foreground/90 transition-colors flex items-center gap-2">
-              <span>Contact</span>
-              <Mail className="w-3.5 h-3.5" />
-            </a>
+            <div className="mt-7 flex items-center justify-center gap-2">
+              <a
+                href="https://instagram.com/brandonptdavisdesign"
+                target="_blank"
+                rel="noopener"
+                aria-label="Instagram"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/24 text-foreground/62 transition-colors hover:border-border/40 hover:text-foreground"
+              >
+                <Instagram className="h-4 w-4" />
+              </a>
+              <a
+                href="https://linkedin.com/in/brandonptdavis"
+                target="_blank"
+                rel="noopener"
+                aria-label="LinkedIn"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/24 text-foreground/62 transition-colors hover:border-border/40 hover:text-foreground"
+              >
+                <Linkedin className="h-4 w-4" />
+              </a>
+              <a
+                href="https://www.pinterest.com/BrandonPTDavis/"
+                target="_blank"
+                rel="noopener"
+                aria-label="Pinterest"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/24 text-foreground/62 transition-colors hover:border-border/40 hover:text-foreground"
+              >
+                <PinterestIcon className="h-4 w-4" />
+              </a>
+              <a
+                href="mailto:info@brandonptdavis.com"
+                className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition-colors hover:bg-foreground/90"
+              >
+                Contact
+                <Mail className="h-4 w-4" />
+              </a>
+            </div>
           </div>
-        </div>
+        </section>
 
-        {/* --- 2. Pinned Links (Grid) --- */}
-        {pinnedItems.length > 0 && (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
-            {pinnedItems.map((item, index) => {
-              const Icon = getIcon(item.icon);
-              const isExternal = item.url.startsWith('http');
-              
-              const accentColors = [
-                '#FF5722',
-                '#00BCD4',
-                '#E91E63',
-                '#FFC107',
-              ];
-              const accentColor = accentColors[index % accentColors.length];
-
-              if (isExternal) {
-                return (
-                  <a
-                    key={item.id}
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative overflow-hidden rounded-lg border border-border/60 hover:border-opacity-0 transition-all duration-300"
-                    style={{ 
-                      borderColor: `${accentColor}40`,
-                    }}
-                  >
-                    <div 
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      style={{ 
-                        background: `linear-gradient(135deg, ${accentColor}15 0%, transparent 100%)`
-                      }}
-                    />
-                    <div className="relative p-6 flex flex-col items-center text-center gap-3">
-                      <div 
-                        className="p-3 rounded-full transition-all duration-300"
-                        style={{ 
-                          backgroundColor: `${accentColor}20`,
-                        }}
-                      >
-                        <Icon 
-                          className="w-5 h-5 transition-colors" 
-                          style={{ color: accentColor }}
-                        />
-                      </div>
-                      <span className="font-medium text-sm">
-                        {item.title}
-                      </span>
-                      {item.subtitle && (
-                        <span className="text-xs text-muted-foreground">
-                          {item.subtitle}
-                        </span>
-                      )}
-                    </div>
-                  </a>
-                );
-              }
-
-              return (
-                <Link
-                  key={item.id}
-                  href={item.url}
-                  className="group relative overflow-hidden rounded-lg border border-border/60 hover:border-opacity-0 transition-all duration-300"
-                  style={{ 
-                    borderColor: `${accentColor}40`,
-                  }}
-                >
-                  <div 
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{ 
-                      background: `linear-gradient(135deg, ${accentColor}15 0%, transparent 100%)`
-                    }}
-                  />
-                  <div className="relative p-6 flex flex-col items-center text-center gap-3">
-                    <div 
-                      className="p-3 rounded-full transition-all duration-300"
-                      style={{ 
-                        backgroundColor: `${accentColor}20`,
-                      }}
-                    >
-                      <Icon 
-                        className="w-5 h-5 transition-colors" 
-                        style={{ color: accentColor }}
-                      />
-                    </div>
-                    <span className="font-medium text-sm">
-                      {item.title}
-                    </span>
-                    {item.subtitle && (
-                      <span className="text-xs text-muted-foreground">
-                        {item.subtitle}
-                      </span>
-                    )}
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        )}
-
-        {/* --- 3. Timeline Feed (3 Columns) --- */}
-        <div className="border-t border-border/40 pt-12">
-          <div className="flex items-center gap-4 mb-10">
-            <h2 className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Timeline</h2>
-            <div className="h-px flex-1 bg-gradient-to-r from-border/60 to-transparent" />
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {feedItems.map((item, index) => {
-              const ItemIcon = getIcon(item.icon);
-              const isExternal = item.url.startsWith('http');
-              
-              const accentColors = [
-                '#FF5722',
-                '#00BCD4',
-                '#E91E63',
-                '#FFC107',
-                '#9C27B0',
-              ];
-              const accentColor = accentColors[index % accentColors.length];
-
-              if (isExternal) {
-                return (
-                  <a
-                    key={item.id}
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group block"
-                  >
-                    <div className="relative aspect-[16/9] overflow-hidden rounded-lg bg-muted border border-border/60">
-                      {item.image ? (
-                        <img
-                          src={item.image}
-                          alt={item.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-muted flex items-center justify-center">
-                          <ItemIcon className="w-10 h-10 opacity-20" />
+        {pinnedItems.length > 0 ? (
+          <section className="border-b border-border/18 py-8 md:py-10">
+            <div className="mx-auto grid max-w-3xl gap-3">
+              {pinnedItems.map((item) => {
+                const Icon = getIcon(item.icon);
+                const isExternal = item.url.startsWith("http");
+                const content = (
+                  <div className="group rounded-full border border-border/24 bg-transparent px-5 py-4 transition-colors hover:border-border/42 hover:bg-card/[0.03]">
+                    <div className="flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border/24 bg-transparent text-foreground/62">
+                          <Icon className="h-4 w-4" />
                         </div>
-                      )}
-                    </div>
-                    <div className="pt-3 text-center">
-                      <h3
-                        className="text-xs font-semibold tracking-[0.3em] uppercase mb-1 transition-opacity group-hover:opacity-70"
-                        style={{ color: accentColor }}
-                      >
-                        {item.title}
-                      </h3>
-                      <p className="text-[10px] text-muted-foreground uppercase tracking-wider">
-                        {item.type}
-                      </p>
-                    </div>
-                  </a>
-                );
-              }
-
-              return (
-                <Link
-                  key={item.id}
-                  href={item.url}
-                  className="group block"
-                >
-                  <div className="relative aspect-[16/9] overflow-hidden rounded-lg bg-muted border border-border/60">
-                    {item.image ? (
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-muted flex items-center justify-center">
-                        <ItemIcon className="w-10 h-10 opacity-20" />
+                        <div className="min-w-0 text-left">
+                          <p className="truncate text-[1rem] font-medium tracking-[-0.02em] text-foreground">
+                            {item.title}
+                          </p>
+                          {item.subtitle ? (
+                            <p className="truncate text-[0.72rem] uppercase tracking-[0.16em] text-foreground/42">
+                              {item.subtitle}
+                            </p>
+                          ) : null}
+                        </div>
                       </div>
-                    )}
+                      <div
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border/24 text-foreground/34 transition-colors group-hover:text-foreground/68"
+                      >
+                        <ExternalLink className="h-3.5 w-3.5" />
+                      </div>
+                    </div>
                   </div>
-                  <div className="pt-3 text-center">
-                    <h3
-                      className="text-xs font-semibold tracking-[0.3em] uppercase mb-1 transition-opacity group-hover:opacity-70"
-                      style={{ color: accentColor }}
-                    >
-                      {item.title}
-                    </h3>
-                    <p className="text-[10px] text-muted-foreground uppercase tracking-wider">
-                      {item.type}
-                    </p>
-                  </div>
-                </Link>
-              );
-            })}
+                );
+
+                return isExternal ? (
+                  <a key={item.id} href={item.url} target="_blank" rel="noopener noreferrer">
+                    {content}
+                  </a>
+                ) : (
+                  <Link key={item.id} href={item.url}>
+                    {content}
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        ) : null}
+
+        <section className="pt-8 md:pt-10">
+          <div className="mb-6 flex items-center gap-4">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+              Selected Links
+            </p>
+            <div className="h-px flex-1 bg-gradient-to-r from-border/35 to-transparent" />
           </div>
 
-          {hasMore && (
-            <div ref={loaderRef} className="py-12 flex justify-center">
-              <div className="w-5 h-5 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin" />
-            </div>
-          )}
-        </div>
+          <div className="grid grid-cols-3 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {feedItems.map((item, index) => (
+              <FeedCard
+                key={item.id}
+                href={item.url}
+                image={item.image}
+                isExternal={item.url.startsWith("http")}
+                label={item.type === "project" ? "Project" : item.type === "article" ? "Article" : item.type}
+                title={item.title}
+              />
+            ))}
+          </div>
 
-        {/* Footer */}
-        <footer className="py-12 text-center border-t border-border/40 mt-20">
-          <p className="text-[10px] text-muted-foreground uppercase tracking-[0.3em]">
-            © {new Date().getFullYear()} Brandon PT Davis
-          </p>
-        </footer>
-      </div>
+          {hasMore ? (
+            <div ref={loaderRef} className="flex justify-center py-10">
+              <div className="h-5 w-5 animate-spin rounded-full border-2 border-foreground/24 border-t-transparent" />
+            </div>
+          ) : null}
+        </section>
+      </main>
     </div>
   );
 }

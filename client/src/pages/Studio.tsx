@@ -1,50 +1,100 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { ArrowRight, BookOpen, Calendar, Play, Wrench } from "lucide-react";
 import { Link } from "wouter";
-import { ArrowRight, BookOpen, Wrench, Compass, Play, Calendar } from "lucide-react";
-import { AnimatedSection } from "@/components/AnimatedSection";
-import { SEO } from "@/components/SEO";
-import { trpc } from "@/lib/trpc";
-import StructuredData from "@/components/StructuredData";
 
-const featuredTools = [
+import { AnimatedSection } from "@/components/AnimatedSection";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import { SEO } from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
+import { trpc } from "@/lib/trpc";
+
+const apps = [
   {
     title: "Scenic 3D Converter (Mac)",
-    description: "Finder quick action utility for converting 3D files to USD, USDZ, and 3DM formats for Vectorworks workflows.",
+    description:
+      "Finder quick action workflow to convert 3D files locally into Vectorworks-friendly USD, USDZ, and 3DM outputs.",
+    image: "/assets/studio/studio-app-scenic-3d-converter.png",
     href: "/studio/apps/scenic-3d-converter",
-    accentColor: "#00BCD4",
+    category: "Utility",
+    cta: "Open tool",
+  },
+  {
+    title: "Scale Calculator",
+    description:
+      "Convert between architectural and model scales for drafting, model building, and production workflow.",
+    image: "/assets/studio/studio-app-scale-calculator.png",
+    href: "/studio/apps/scale-calculator",
+    category: "Calculator",
+    cta: "Launch app",
   },
   {
     title: "Dimension Reference",
-    description: "Quick reference for standard dimensions used in scenic and experiential planning.",
+    description:
+      "Quick reference for standard dimensions and unit conversions in scenic and production design.",
+    image: "/assets/studio/studio-app-dimension-reference.png",
     href: "/studio/apps/dimension-reference",
-    accentColor: "#FF1744",
+    category: "Reference",
+    cta: "Open reference",
   },
   {
     title: "Rosco Paint Calculator",
-    description: "Mix Rosco Off-Broadway paints to match target color values.",
+    description:
+      "Professional scenic paint mixing calculator for Rosco Off-Broadway paints and color matching workflows.",
+    image: "/assets/studio/studio-app-rosco-paint-calculator.png",
     href: "/studio/apps/rosco-paint-calculator",
-    accentColor: "#00E676",
+    category: "Calculator",
+    cta: "Launch app",
+  },
+] as const;
+
+const studioLinks = [
+  {
+    title: "Articles",
+    href: "/articles",
+    category: "Writing",
+    imageTitle: "Articles",
+    description: "Process notes, scenic design practice, drafting decisions, and production-facing writing.",
+    cta: "Read articles",
+    image: "/assets/studio/studio-articles-cover.png",
   },
   {
-    title: "Design History Timeline",
-    description: "Interactive timeline for major movements in theatrical design history.",
-    href: "/studio/apps/design-history-timeline",
-    accentColor: "#FFEA00",
+    title: "Tutorials",
+    href: "/studio/tutorials",
+    category: "Video",
+    imageTitle: "Tutorials",
+    description: "Walkthroughs for drafting, rendering, and workflow built for scenic designers.",
+    cta: "Watch tutorials",
+    image: "/assets/studio/studio-tutorials-cover.png",
   },
-];
+  {
+    title: "Scenic Directory",
+    href: "/studio/directory",
+    category: "Reference",
+    imageTitle: "Scenic Directory",
+    description: "A curated shelf of resources, archives, organizations, and research references.",
+    cta: "Browse directory",
+    image: "/assets/studio/studio-directory-cover.png",
+  },
+] as const;
 
-const comingSoonTools = ["Classical Orders", "Paint Finder"];
+function formatArticleDate(value?: string | null) {
+  if (!value) return null;
+  return new Date(value).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
 
 export default function Studio() {
-  const { data: articles } = trpc.articles.list.useQuery({
+  const { data: articles = [] } = trpc.articles.list.useQuery({
     status: "published",
   });
 
+  const latestArticles = articles.slice(0, 3);
+
   return (
-    <div className="min-h-screen bg-background [background-image:radial-gradient(circle_at_12%_9%,rgba(255,87,34,0.10),transparent_34%),radial-gradient(circle_at_85%_16%,rgba(33,150,243,0.08),transparent_34%)]">
+    <div className="min-h-screen bg-background text-foreground">
       <SEO
         title="Scenic Design Education Studio | Free Tools & Tutorials"
         description="Scenic design education hub with articles, Vectorworks tutorials, interactive tools, and curated references for theatre designers."
@@ -68,246 +118,240 @@ export default function Studio() {
           about: "Scenic design education and workflow resources by Brandon PT Davis.",
           primaryImageOfPage: articles?.[0]?.coverImageUrl || undefined,
           mainEntity: {
-            name: "Studio Articles",
-            itemListElement: (articles || []).slice(0, 12).map((article, index) => ({
-              position: index + 1,
-              name: article.title,
-              url: `https://www.brandonptdavis.com/articles/${article.slug}`,
-              datePublished: article.publishedAt || article.createdAt || undefined,
-              image: article.coverImageUrl || undefined,
-            })),
+            name: "Studio Resources",
+            itemListElement: [
+              ...studioLinks.map((item, index) => ({
+                position: index + 1,
+                name: item.title,
+                url: `https://www.brandonptdavis.com${item.href}`,
+              })),
+              ...apps.map((app, index) => ({
+                position: studioLinks.length + index + 1,
+                name: app.title,
+                url: `https://www.brandonptdavis.com${app.href}`,
+                image: `https://www.brandonptdavis.com${app.image}`,
+              })),
+            ],
           },
         }}
       />
+
       <Header />
 
-      <section className="container pt-16 md:pt-24 pb-12">
-        <AnimatedSection>
-          <div className="max-w-5xl mx-auto text-center">
-            <p className="text-xs tracking-[0.24em] text-muted-foreground mb-4 font-semibold uppercase">Studio</p>
-            <h1 className="text-5xl md:text-7xl font-serif tracking-tight leading-[0.92] mb-5">
-              Scenic Design Studio Resources
-            </h1>
-            <p className="text-lg md:text-xl text-foreground/75 max-w-3xl mx-auto leading-relaxed">
-              A focused hub for scenic designers: practical articles, video tutorials, and production-ready tools.
-            </p>
-          </div>
-        </AnimatedSection>
-      </section>
-
-      <section className="container pb-16">
-        <AnimatedSection>
-          <div className="grid md:grid-cols-3 gap-4 max-w-6xl mx-auto items-stretch">
-            <Link href="/articles">
-              <Card className="h-full border border-border/60 bg-card/30 hover:border-[#FF5722]/60 transition-colors flex">
-                <CardContent className="p-5 flex flex-col w-full">
-                  <BookOpen className="w-5 h-5 text-[#FF5722] mb-3" />
-                  <h2 className="text-xl font-semibold mb-2">Articles</h2>
-                  <p className="text-sm text-foreground/70">Process, workflow, and scenic design practice.</p>
-                  <div className="mt-auto pt-4 text-xs uppercase tracking-[0.12em] text-[#FF5722]">Explore</div>
-                </CardContent>
-              </Card>
-            </Link>
-            <Link href="/studio/tutorials">
-              <Card className="h-full border border-border/60 bg-card/30 hover:border-[#2196F3]/60 transition-colors flex">
-                <CardContent className="p-5 flex flex-col w-full">
-                  <Play className="w-5 h-5 text-[#2196F3] mb-3" />
-                  <h2 className="text-xl font-semibold mb-2">Tutorials</h2>
-                  <p className="text-sm text-foreground/70">Video walkthroughs for Vectorworks and rendering pipelines.</p>
-                  <div className="mt-auto pt-4 text-xs uppercase tracking-[0.12em] text-[#2196F3]">Watch</div>
-                </CardContent>
-              </Card>
-            </Link>
-            <Link href="/studio/apps">
-              <Card className="h-full border border-border/60 bg-card/30 hover:border-[#4CAF50]/60 transition-colors flex">
-                <CardContent className="p-5 flex flex-col w-full">
-                  <Wrench className="w-5 h-5 text-[#4CAF50] mb-3" />
-                  <h2 className="text-xl font-semibold mb-2">Tools</h2>
-                  <p className="text-sm text-foreground/70">Calculators and references for fast production decisions.</p>
-                  <div className="mt-auto pt-4 text-xs uppercase tracking-[0.12em] text-[#4CAF50]">Open</div>
-                </CardContent>
-              </Card>
-            </Link>
-          </div>
-        </AnimatedSection>
-      </section>
-
-      <section className="container pb-16 md:pb-20">
-        <AnimatedSection>
-          <div className="flex items-end justify-between mb-7">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-serif tracking-tight mb-2">Latest Articles</h2>
-              <p className="text-foreground/70">Recent writing on scenic storytelling, process, and production craft.</p>
+      <main className="px-6 pb-24 pt-24 md:pt-28">
+        <section className="mx-auto max-w-6xl border-b border-border/18 pb-14">
+          <AnimatedSection>
+            <div className="mx-auto max-w-4xl text-center">
+              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+                Studio
+              </p>
+              <h1 className="mt-5 font-sans text-[clamp(3rem,6vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
+                Scenic design resources for working practice.
+              </h1>
+              <p className="mx-auto mt-7 max-w-3xl text-[1.02rem] leading-8 text-foreground/62 md:text-[1.12rem]">
+                A studio index for articles, tutorials, and tools that support scenic drafting,
+                research, rendering, and production workflow.
+              </p>
             </div>
-            <Link href="/articles">
-              <div className="hidden md:flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all">
-                View All <ArrowRight className="w-4 h-4" />
-              </div>
-            </Link>
-          </div>
-        </AnimatedSection>
+          </AnimatedSection>
+        </section>
 
-        {articles && articles.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-            {articles.slice(0, 3).map((article, index) => (
-              <AnimatedSection key={article.id} delay={index * 80}>
-                <Link href={`/articles/${article.slug}`}>
-                  <Card className="group h-full border border-border/50 bg-card/20 hover:border-primary/50 transition-colors overflow-hidden flex flex-col py-0 gap-0">
-                    <div className="relative aspect-[16/10] overflow-hidden bg-muted">
-                      {article.coverImageUrl ? (
-                        <img
-                          src={article.coverImageUrl}
-                          alt={article.title}
-                          loading="lazy"
-                          decoding="async"
-                          className="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-500"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-muted flex items-center justify-center">
-                          <BookOpen className="w-10 h-10 text-muted-foreground" />
+        <section className="mx-auto mt-14 max-w-[92rem]">
+          <AnimatedSection>
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                Studio Index
+              </p>
+              <h2 className="mt-4 font-sans text-[clamp(2.1rem,4vw,3.2rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
+                Articles, tutorials, and references in one place.
+              </h2>
+            </div>
+          </AnimatedSection>
+
+          <div className="mt-10 grid gap-x-6 gap-y-10 sm:grid-cols-2 xl:grid-cols-3">
+            {studioLinks.map((item, index) => (
+              <AnimatedSection key={item.title} delay={index * 70}>
+                <Link href={item.href} className="group block">
+                  <article className="border-t border-border/14 pt-4">
+                    <div className="relative overflow-hidden rounded-[1rem] border border-border/16 bg-card/10">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="aspect-square w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      {item.imageTitle ? (
+                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-6 text-center">
+                          <div className="absolute inset-0 bg-black/10" />
+                          <p className="relative max-w-[11ch] font-sans text-[1.55rem] font-medium leading-[0.94] tracking-[-0.055em] text-white md:text-[1.75rem]">
+                            {item.imageTitle}
+                          </p>
                         </div>
-                      )}
+                      ) : null}
+                      <div className="pointer-events-none absolute inset-0 rounded-[1rem] ring-1 ring-inset ring-white/5" />
                     </div>
-                    <CardContent className="p-5 flex flex-col flex-1">
-                      {article.category && (
-                        <p className="mb-3 text-[10px] uppercase tracking-[0.22em] font-medium text-primary/90">
-                          {article.category.name}
-                        </p>
-                      )}
-                      <h3 className="text-lg font-semibold leading-snug mb-2 line-clamp-2 min-h-[3.4rem]">{article.title}</h3>
-                      {article.excerpt && (
-                        <p className="text-sm text-foreground/70 leading-relaxed line-clamp-2 min-h-[2.75rem]">{article.excerpt}</p>
-                      )}
-                      {article.publishedAt && (
-                        <div className="mt-auto pt-4 flex items-center gap-1.5 text-xs text-foreground/60">
-                          <Calendar className="w-3.5 h-3.5" />
-                          {new Date(article.publishedAt).toLocaleDateString("en-US", {
-                            month: "short",
-                            day: "numeric",
-                            year: "numeric",
-                          })}
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
+
+                    <div className="mt-4 flex items-center justify-between gap-3">
+                      <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                        {item.category}
+                      </p>
+                    </div>
+
+                    <h3 className="mt-3 font-sans text-[1.28rem] font-medium leading-[1.08] tracking-[-0.04em] text-foreground">
+                      {item.title}
+                    </h3>
+                    <p className="mt-3 max-w-[34rem] text-[0.93rem] leading-6 text-foreground/60">
+                      {item.description}
+                    </p>
+
+                    <div className="mt-4 inline-flex items-center gap-2 text-[0.9rem] font-medium text-foreground/68 transition-colors group-hover:text-foreground">
+                      {item.cta}
+                      <ArrowRight className="h-4 w-4" />
+                    </div>
+                  </article>
                 </Link>
               </AnimatedSection>
             ))}
           </div>
-        ) : (
-          <div className="text-center py-10 text-muted-foreground">
-            <BookOpen className="w-10 h-10 mx-auto mb-3 opacity-60" />
-            <p>Articles coming soon.</p>
-          </div>
-        )}
-      </section>
+        </section>
 
-      <section className="container pb-16 md:pb-20">
-        <AnimatedSection>
-          <div className="flex items-end justify-between mb-7">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-serif tracking-tight mb-2">Studio Tools</h2>
-              <p className="text-foreground/70">Fast references and calculators built for design workflow.</p>
+        <section className="mx-auto mt-20 max-w-[92rem] border-t border-border/18 pt-16">
+          <AnimatedSection>
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                App Studio
+              </p>
+              <h2 className="mt-4 font-sans text-[clamp(2.1rem,4vw,3.2rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
+                Practical tools for scenic design workflow.
+              </h2>
             </div>
-            <Link href="/studio/apps">
-              <div className="hidden md:flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all">
-                View All Tools <ArrowRight className="w-4 h-4" />
-              </div>
-            </Link>
-          </div>
-        </AnimatedSection>
+          </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 items-stretch">
-          {featuredTools.map((tool, index) => (
-            <AnimatedSection key={tool.title} delay={index * 80}>
-              <Link href={tool.href}>
-                <Card className="h-full border border-border/60 bg-card/20 hover:border-primary/50 transition-colors flex">
-                  <CardContent className="p-5 flex flex-col w-full">
-                    <Wrench className="w-5 h-5 mb-3" style={{ color: tool.accentColor }} />
-                    <h3 className="text-xl font-semibold mb-2" style={{ color: tool.accentColor }}>
-                      {tool.title}
-                    </h3>
-                    <p className="text-sm text-foreground/70">{tool.description}</p>
-                    <div className="mt-auto pt-4 text-xs uppercase tracking-[0.12em]" style={{ color: tool.accentColor }}>
-                      Open Tool
+          <div className="mt-10 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {apps.map((app, index) => (
+              <AnimatedSection key={app.title} delay={index * 70}>
+                <Link href={app.href} className="group block">
+                  <article className="border-t border-border/14 pt-4">
+                    <div className="relative overflow-hidden rounded-[1rem] border border-border/16 bg-card/10">
+                      <img
+                        src={app.image}
+                        alt={app.title}
+                        className="aspect-square w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <div className="pointer-events-none absolute inset-0 rounded-[1rem] ring-1 ring-inset ring-white/5" />
                     </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            </AnimatedSection>
-          ))}
-        </div>
 
-        <AnimatedSection delay={220}>
-          <div className="mt-6 flex flex-wrap gap-2">
-            {comingSoonTools.map((tool) => (
-              <Badge key={tool} variant="outline" className="text-[10px] uppercase tracking-[0.12em]">
-                {tool} / Coming Soon
-              </Badge>
+                    <div className="mt-4 flex items-center justify-between gap-3">
+                      <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                        {app.category}
+                      </p>
+                    </div>
+
+                    <h3 className="mt-3 font-sans text-[1.28rem] font-medium leading-[1.08] tracking-[-0.04em] text-foreground">
+                      {app.title}
+                    </h3>
+                    <p className="mt-3 max-w-[34rem] text-[0.93rem] leading-6 text-foreground/60">
+                      {app.description}
+                    </p>
+
+                    <div className="mt-4 inline-flex items-center gap-2 text-[0.9rem] font-medium text-foreground/68 transition-colors group-hover:text-foreground">
+                      {app.cta}
+                      <ArrowRight className="h-4 w-4" />
+                    </div>
+                  </article>
+                </Link>
+              </AnimatedSection>
             ))}
           </div>
-        </AnimatedSection>
-      </section>
 
-      <section className="container pb-24">
-        <AnimatedSection>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-            <Link href="/studio/tutorials" className="block group">
-              <Card className="h-full border border-border/60 bg-card/25 hover:border-[#2196F3]/55 transition-colors overflow-hidden py-0 gap-0">
-                <div className="grid md:grid-cols-[1.15fr_1fr] gap-0 h-full">
-                  <div className="relative aspect-[16/10] md:aspect-auto overflow-hidden bg-muted">
-                    <img
-                      src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/ajNdCYyYHHxMHYpa.webp"
-                      alt="Studio Tutorials"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                  </div>
-                  <CardContent className="p-6 md:p-8 flex flex-col justify-center">
-                    <div className="inline-flex items-center gap-2 text-[#2196F3] mb-3">
-                      <Play className="w-5 h-5" />
-                      <span className="text-xs font-semibold uppercase tracking-[0.14em]">Tutorials</span>
-                    </div>
-                    <h3 className="text-2xl md:text-3xl font-serif mb-3">Vectorworks Video Tutorials</h3>
-                    <p className="text-sm text-foreground/70 leading-relaxed mb-4">
-                      Step-by-step lessons covering drafting, modeling, and rendering workflows for scenic designers.
-                    </p>
-                    <div className="inline-flex items-center gap-2 text-[#2196F3] font-semibold group-hover:gap-3 transition-all">
-                      Watch Tutorials <ArrowRight className="w-4 h-4" />
-                    </div>
-                  </CardContent>
-                </div>
-              </Card>
-            </Link>
-
-            <Link href="/studio/directory" className="block group">
-              <Card className="h-full border border-border/60 bg-card/25 hover:border-[#F44336]/55 transition-colors overflow-hidden py-0 gap-0">
-                <div className="grid md:grid-cols-[1.15fr_1fr] gap-0 h-full">
-                  <div className="relative aspect-[16/10] md:aspect-auto overflow-hidden bg-muted">
-                    <img
-                      src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/TcrVOnNvNKeMFytS.webp"
-                      alt="Scenic Directory"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                  </div>
-                  <CardContent className="p-6 md:p-8 flex flex-col justify-center">
-                    <div className="inline-flex items-center gap-2 text-[#F44336] mb-3">
-                      <Compass className="w-5 h-5" />
-                      <span className="text-xs font-semibold uppercase tracking-[0.14em]">Directory</span>
-                    </div>
-                    <h3 className="text-2xl md:text-3xl font-serif mb-3">Scenic Resource Directory</h3>
-                    <p className="text-sm text-foreground/70 leading-relaxed mb-4">
-                      Curated links to organizations, references, vendors, and archives used by working scenic designers.
-                    </p>
-                    <div className="inline-flex items-center gap-2 text-[#F44336] font-semibold group-hover:gap-3 transition-all">
-                      Browse Directory <ArrowRight className="w-4 h-4" />
-                    </div>
-                  </CardContent>
-                </div>
-              </Card>
+          <div className="mt-8 flex justify-center">
+            <Link
+              href="/studio/apps"
+              className="inline-flex items-center gap-2 text-[0.95rem] font-medium text-foreground/62 transition-colors hover:text-foreground"
+            >
+              View all studio tools
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-        </AnimatedSection>
-      </section>
+        </section>
+
+        <section className="mx-auto mt-20 max-w-[92rem] border-t border-border/18 pt-16">
+          <AnimatedSection>
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                Latest Articles
+              </p>
+              <h2 className="mt-4 font-sans text-[clamp(2.1rem,4vw,3.2rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
+                Recent writing from the studio.
+              </h2>
+            </div>
+          </AnimatedSection>
+
+          {latestArticles.length > 0 ? (
+            <div className="mt-10 grid gap-x-6 gap-y-10 sm:grid-cols-2 xl:grid-cols-3">
+              {latestArticles.map((article, index) => (
+                <AnimatedSection key={article.id} delay={index * 70}>
+                  <Link href={`/articles/${article.slug}`} className="group block">
+                    <article className="border-t border-border/14 pt-4">
+                      <div className="relative overflow-hidden rounded-[1rem] border border-border/16 bg-card/10">
+                        {article.coverImageUrl ? (
+                          <img
+                            src={article.coverImageUrl}
+                            alt={article.title}
+                            className="aspect-square w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        ) : (
+                          <div className="flex aspect-square w-full items-center justify-center bg-card/10">
+                            <BookOpen className="h-10 w-10 text-foreground/28" />
+                          </div>
+                        )}
+                        <div className="pointer-events-none absolute inset-0 rounded-[1rem] ring-1 ring-inset ring-white/5" />
+                      </div>
+
+                      <div className="mt-4 flex items-center justify-between gap-3">
+                        <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                          {article.category?.name || "Article"}
+                        </p>
+                        {article.publishedAt ? (
+                          <div className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.18em] text-foreground/34">
+                            <Calendar className="h-3.5 w-3.5" />
+                            {formatArticleDate(article.publishedAt)}
+                          </div>
+                        ) : null}
+                      </div>
+
+                      <h3 className="mt-3 font-sans text-[1.28rem] font-medium leading-[1.08] tracking-[-0.04em] text-foreground">
+                        {article.title}
+                      </h3>
+                      {article.excerpt ? (
+                        <p className="mt-3 max-w-[34rem] text-[0.93rem] leading-6 text-foreground/60">
+                          {article.excerpt}
+                        </p>
+                      ) : null}
+
+                      <div className="mt-4 inline-flex items-center gap-2 text-[0.9rem] font-medium text-foreground/68 transition-colors group-hover:text-foreground">
+                        Read article
+                        <ArrowRight className="h-4 w-4" />
+                      </div>
+                    </article>
+                  </Link>
+                </AnimatedSection>
+              ))}
+            </div>
+          ) : (
+            <AnimatedSection>
+              <div className="mt-10 border-t border-border/14 pt-8 text-center text-foreground/52">
+                Articles coming soon.
+              </div>
+            </AnimatedSection>
+          )}
+        </section>
+      </main>
 
       <Footer />
     </div>

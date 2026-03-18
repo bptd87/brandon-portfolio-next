@@ -1,13 +1,76 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Badge } from "@/components/ui/badge";
-import { Clock, Calendar, TrendingUp, Lightbulb, AlertCircle, Keyboard, ArrowRight, ExternalLink } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Calendar,
+  Clock,
+  ExternalLink,
+  Keyboard,
+  Lightbulb,
+  PlayCircle,
+  TrendingUp,
+} from "lucide-react";
+import { useMemo } from "react";
 import { useParams, Link } from "wouter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { trpc } from "@/lib/trpc";
 import StructuredData from "@/components/StructuredData";
-import { Breadcrumb } from "@/components/Breadcrumb";
 import { SEO } from "@/components/SEO";
+
+const categories = [
+  { slug: "getting-started", name: "Getting Started" },
+  { slug: "2d-drafting", name: "2D Drafting" },
+  { slug: "3d-modeling", name: "3D Modeling" },
+  { slug: "rendering", name: "Rendering" },
+];
+
+const difficulties = [
+  { slug: "beginner", name: "Beginner" },
+  { slug: "intermediate", name: "Intermediate" },
+  { slug: "advanced", name: "Advanced" },
+];
+
+const normalizeToken = (value: string | null | undefined) =>
+  String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+const getCategoryLabel = (value: string | null | undefined) => {
+  const normalized = normalizeToken(value);
+  return categories.find((category) => category.slug === normalized)?.name || value || "Tutorial";
+};
+
+const getDifficultyLabel = (value: string | null | undefined) => {
+  const normalized = normalizeToken(value);
+  return (
+    difficulties.find((difficulty) => difficulty.slug === normalized)?.name ||
+    value ||
+    "General"
+  );
+};
+
+const getTutorialSummary = (tutorial: any) => {
+  if (tutorial.description && String(tutorial.description).trim()) {
+    return tutorial.description;
+  }
+
+  const category = getCategoryLabel(tutorial.category);
+  const difficulty = getDifficultyLabel(tutorial.difficulty);
+  return `${category} tutorial covering ${tutorial.title
+    .replace(/^Vectorworks Tutorial:\s*/i, "")
+    .replace(/^Vectorworks Quick Tip:\s*/i, "")
+    .trim()} with a ${difficulty.toLowerCase()} workflow focus.`;
+};
+
+const getOverviewParagraphs = (value: string | null | undefined) =>
+  String(value || "")
+    .split("\n\n")
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
 
 export default function TutorialDetail() {
   const params = useParams();
@@ -18,16 +81,85 @@ export default function TutorialDetail() {
     { enabled: !!slug }
   );
 
+  const getYouTubeId = (url: string | undefined | null) => {
+    if (!url) return null;
+    const match = url.match(
+      /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
+    );
+    return match ? match[1] : url;
+  };
+
+  const formatDuration = (duration: string | number | null | undefined) => {
+    if (!duration) return "10 min";
+    if (typeof duration === "string") {
+      if (duration.includes(":")) {
+        const [mins] = duration.split(":");
+        return `${mins || duration} min`;
+      }
+      return duration;
+    }
+    return `${Math.max(1, Math.floor(duration / 60))} min`;
+  };
+
+  const formatDate = (dateString: string | Date | undefined) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
+  const overviewParagraphs = getOverviewParagraphs(tutorial?.overview);
+
+  const tabs = useMemo(() => {
+    if (!tutorial) return [];
+
+    const available = [];
+
+    if ((tutorial.learning_objectives || []).length || overviewParagraphs.length) {
+      available.push({ value: "overview", label: "Overview" });
+    }
+    if ((tutorial.key_concepts || []).length || (tutorial.pro_tips || []).length) {
+      available.push({ value: "concepts", label: "Concepts" });
+    }
+    if ((tutorial.shortcuts || []).length || (tutorial.common_pitfalls || []).length) {
+      available.push({ value: "reference", label: "Reference" });
+    }
+    if ((tutorial.transcript || []).length) {
+      available.push({ value: "transcript", label: "Transcript" });
+    }
+    if ((tutorial.related_resources || []).length || (tutorial.related_tutorials || []).length) {
+      available.push({ value: "resources", label: "Resources" });
+    }
+
+    return available;
+  }, [overviewParagraphs.length, tutorial]);
+
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <div className="animate-spin text-[#2196F3]">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-            </svg>
+      <div className="min-h-screen bg-background text-foreground">
+        <Header />
+        <div className="flex min-h-[70vh] items-center justify-center px-6">
+          <div className="text-center">
+            <div className="mx-auto h-10 w-10 animate-spin text-foreground/56">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="40"
+                height="40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+              </svg>
+            </div>
+            <p className="mt-4 text-[0.98rem] text-foreground/52">Loading tutorial...</p>
           </div>
-          <p className="text-muted-foreground animate-pulse">Loading tutorial...</p>
         </div>
       </div>
     );
@@ -35,47 +167,36 @@ export default function TutorialDetail() {
 
   if (error || !tutorial) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Tutorial Not Found</h1>
-          <Link href="/studio/tutorials" className="text-[#2196F3] hover:underline">
-            ← Back to Tutorials
-          </Link>
+      <div className="min-h-screen bg-background text-foreground">
+        <Header />
+        <div className="flex min-h-[70vh] items-center justify-center px-6">
+          <div className="text-center">
+            <h1 className="font-sans text-[2.5rem] font-medium tracking-[-0.05em] text-foreground">
+              Tutorial not found
+            </h1>
+            <Link
+              href="/studio/tutorials"
+              className="mt-6 inline-flex items-center gap-2 text-[0.98rem] font-medium text-foreground/68 transition-colors hover:text-foreground"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Tutorials
+            </Link>
+          </div>
         </div>
       </div>
     );
   }
 
-  // Helper to extract YouTube ID
-  const getYouTubeId = (url: string | undefined | null) => {
-    if (!url) return null;
-    const match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-    return match ? match[1] : url; // Fallback to returning the input if it looks like an ID (no simple way to distinguish 11 chars ID vs random text, but this covers legacy IDs)
-  };
-
-  const formatDuration = (duration: string | number | null | undefined) => {
-    if (!duration) return '10:00'; // Default
-    // If already a string like "21:14", return as-is
-    if (typeof duration === 'string') return duration;
-    // Otherwise convert seconds to MM:SS format
-    const mins = Math.floor(duration / 60);
-    const secs = duration % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  const formatDate = (dateString: string | Date | undefined) => {
-    if (!dateString) return '';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-  };
-
   const videoId = getYouTubeId(tutorial.video_url);
+  const tutorialSummary = getTutorialSummary(tutorial);
+
+  const defaultTab = tabs[0]?.value || "overview";
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
         title={`${tutorial.title} | Brandon PT Davis`}
-        description={tutorial.description || ""}
+        description={tutorialSummary}
         image={`https://img.youtube.com/vi/${videoId || ""}/maxresdefault.jpg`}
         type="website"
       />
@@ -83,7 +204,7 @@ export default function TutorialDetail() {
         type="VideoObject"
         videoObject={{
           name: tutorial.title,
-          description: tutorial.description || undefined,
+          description: tutorialSummary || undefined,
           thumbnailUrl: `https://img.youtube.com/vi/${videoId || ""}/maxresdefault.jpg`,
           uploadDate: new Date(tutorial.created_at).toISOString(),
           embedUrl: `https://www.youtube.com/embed/${videoId || ""}`,
@@ -98,17 +219,21 @@ export default function TutorialDetail() {
         type="HowTo"
         howTo={{
           name: tutorial.title,
-          description: tutorial.description || undefined,
+          description: tutorialSummary || undefined,
           image: `https://img.youtube.com/vi/${videoId || ""}/maxresdefault.jpg`,
-          totalTime: tutorial.duration ? `PT${Math.floor(Number(tutorial.duration) / 60)}M` : undefined,
-          step: (tutorial.learning_objectives || []).map((objective: string, i: number) => ({
+          totalTime: tutorial.duration
+            ? `PT${Math.floor(Number(tutorial.duration) / 60)}M`
+            : undefined,
+          step: (tutorial.learning_objectives || []).map((objective: string, index: number) => ({
             name: objective,
-            url: `https://www.brandonptdavis.com/studio/tutorials/${tutorial.slug}#step-${i + 1}`
+            url: `https://www.brandonptdavis.com/studio/tutorials/${tutorial.slug}#step-${index + 1}`,
           })),
-          tool: (tutorial.related_resources || []).filter((r: any) => r.type === 'Software' || r.type === 'Tool').map((r: any) => ({
-            name: r.title,
-            url: r.url
-          }))
+          tool: (tutorial.related_resources || [])
+            .filter((resource: any) => resource.type === "Software" || resource.type === "Tool")
+            .map((resource: any) => ({
+              name: resource.title,
+              url: resource.url,
+            })),
         }}
       />
       <StructuredData
@@ -117,290 +242,398 @@ export default function TutorialDetail() {
           { name: "Home", url: "https://www.brandonptdavis.com" },
           { name: "Studio", url: "https://www.brandonptdavis.com/studio" },
           { name: "Tutorials", url: "https://www.brandonptdavis.com/studio/tutorials" },
-          { name: tutorial.title, url: `https://www.brandonptdavis.com/studio/tutorials/${tutorial.slug}` },
+          {
+            name: tutorial.title,
+            url: `https://www.brandonptdavis.com/studio/tutorials/${tutorial.slug}`,
+          },
         ]}
       />
+
       <Header />
 
-      {/* Breadcrumb Navigation */}
-      <div className="container py-6">
-        <div className="max-w-6xl mx-auto">
-          <Breadcrumb
-            items={[
-              { label: "Studio", href: "/studio" },
-              { label: tutorial.title }
-            ]}
-          />
-        </div>
-      </div>
+      <main className="px-6 pb-20 pt-24 md:pt-28">
+        <div className="mx-auto max-w-6xl">
+          <section className="border-b border-border/25 pb-12">
+            <Link
+              href="/studio/tutorials"
+              className="inline-flex items-center gap-2 text-[0.92rem] font-medium text-foreground/56 transition-colors hover:text-foreground"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Tutorials
+            </Link>
 
-      {/* Tutorial Header */}
-      <section className="py-8 border-b border-border/50 bg-card/10">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-          <Link href="/studio/tutorials" className="text-sm text-muted-foreground hover:text-[#2196F3] mb-6 inline-flex items-center gap-2 transition-colors">
-            ← Back to Tutorials
-          </Link>
+            <div className="mt-8 max-w-4xl">
+              <h1 className="font-sans text-[clamp(2.9rem,5.6vw,5.3rem)] font-medium leading-[0.95] tracking-[-0.065em] text-foreground">
+                {tutorial.title}
+              </h1>
+              <p className="mt-6 max-w-3xl text-[1.05rem] leading-8 text-foreground/62 md:text-[1.12rem]">
+                {tutorialSummary}
+              </p>
+            </div>
 
-          <div className="flex flex-wrap gap-2.5 mb-5">
-            <Badge className="bg-[#2196F3] text-white border border-[#2196F3] uppercase tracking-wider font-bold px-4 py-1.5 text-xs">
-              {tutorial.category || "General"}
-            </Badge>
-            <Badge className="bg-transparent text-foreground border border-border flex items-center gap-1.5 uppercase tracking-wider font-bold px-4 py-1.5 text-xs">
-              <TrendingUp className="w-3.5 h-3.5" />
-              {tutorial.difficulty || "Beginner"}
-            </Badge>
-            <Badge className="bg-transparent text-foreground border border-border flex items-center gap-1.5 uppercase tracking-wider font-bold px-4 py-1.5 text-xs">
-              <Clock className="w-3.5 h-3.5" />
-              {formatDuration(tutorial.duration)}
-            </Badge>
-            <Badge className="bg-transparent text-foreground border border-border flex items-center gap-1.5 uppercase tracking-wider font-bold px-4 py-1.5 text-xs">
-              <Calendar className="w-3.5 h-3.5" />
-              {formatDate(tutorial.created_at)}
-            </Badge>
-          </div>
-
-          <h1 className="mb-3 text-4xl md:text-6xl font-serif tracking-tight leading-[1.02] text-foreground">{tutorial.title}</h1>
-          <p className="text-lg text-muted-foreground leading-relaxed max-w-4xl">{tutorial.description}</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Video Embed */}
-      <section className="py-10 bg-muted/30 border-b border-border">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-          <div className="aspect-video overflow-hidden rounded-lg shadow-2xl">
-            <iframe
-              width="100%"
-              height="100%"
-              src={`https://www.youtube.com/embed/${videoId || ""}`}
-              title={tutorial.title}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-              className="w-full h-full"
-            ></iframe>
-          </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Tabbed Content */}
-      <section className="py-12">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-          <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full max-w-5xl mx-auto grid-cols-5 bg-muted/50 p-1 rounded-lg mb-6 h-auto gap-1">
-              <TabsTrigger
-                value="overview"
-                className="data-[state=active]:bg-[#2196F3]/20 data-[state=active]:text-[#7ec8ff] data-[state=active]:border-[#2196F3]/40 data-[state=active]:shadow-lg border border-transparent text-foreground uppercase tracking-[0.08em] font-bold py-2.5 px-3 rounded-md transition-all text-[11px] md:text-xs"
-              >
-                Overview
-              </TabsTrigger>
-              <TabsTrigger
-                value="concepts"
-                className="data-[state=active]:bg-[#FF5722]/20 data-[state=active]:text-[#ff9c7a] data-[state=active]:border-[#FF5722]/40 data-[state=active]:shadow-lg border border-transparent text-foreground uppercase tracking-[0.08em] font-bold py-2.5 px-3 rounded-md transition-all text-[11px] md:text-xs"
-              >
-                Concepts
-              </TabsTrigger>
-              <TabsTrigger
-                value="reference"
-                className="data-[state=active]:bg-[#9C27B0]/20 data-[state=active]:text-[#ce93d8] data-[state=active]:border-[#9C27B0]/40 data-[state=active]:shadow-lg border border-transparent text-foreground uppercase tracking-[0.08em] font-bold py-2.5 px-3 rounded-md transition-all text-[11px] md:text-xs"
-              >
-                Quick Ref
-              </TabsTrigger>
-              <TabsTrigger
-                value="transcript"
-                className="data-[state=active]:bg-[#F44336]/20 data-[state=active]:text-[#ef9a9a] data-[state=active]:border-[#F44336]/40 data-[state=active]:shadow-lg border border-transparent text-foreground uppercase tracking-[0.08em] font-bold py-2.5 px-3 rounded-md transition-all text-[11px] md:text-xs"
-              >
-                Transcript
-              </TabsTrigger>
-              <TabsTrigger
-                value="resources"
-                className="data-[state=active]:bg-[#00BCD4]/20 data-[state=active]:text-[#80deea] data-[state=active]:border-[#00BCD4]/40 data-[state=active]:shadow-lg border border-transparent text-foreground uppercase tracking-[0.08em] font-bold py-2.5 px-3 rounded-md transition-all text-[11px] md:text-xs"
-              >
-                Resources
-              </TabsTrigger>
-            </TabsList>
-
-            {/* Overview Tab */}
-            <TabsContent value="overview" className="mt-0">
-              <div className="border border-border/60 rounded-xl p-6 md:p-7 bg-card/70">
-                <h2 className="text-2xl font-semibold mb-6 text-[#2196F3] tracking-tight">What You'll Learn</h2>
-                <div className="space-y-3 mb-12">
-                  {(tutorial.learning_objectives || []).map((objective: string, index: number) => (
-                    <div key={index} className="flex items-start gap-3 group">
-                      <div className="w-1.5 h-1.5 bg-[#2196F3] mt-2 flex-shrink-0 group-hover:w-3 transition-all"></div>
-                      <span className="text-foreground leading-relaxed">{objective}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="border-t border-border/60 pt-8">
-                  <h3 className="text-xl font-semibold mb-4 tracking-tight text-foreground">Tutorial Overview</h3>
-                  <div className="space-y-4">
-                    {(tutorial.overview || "").split('\n\n').map((paragraph: string, index: number) => (
-                      <p key={index} className="text-muted-foreground leading-relaxed">
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
-                </div>
+            <div className="mt-9 flex flex-wrap items-center gap-x-8 gap-y-3 text-[0.95rem] text-foreground/56">
+              <div className="flex items-center gap-2.5">
+                <PlayCircle className="h-4 w-4" />
+                <span>{getCategoryLabel(tutorial.category)}</span>
               </div>
-            </TabsContent>
-
-            {/* Key Concepts Tab */}
-            <TabsContent value="concepts" className="mt-0">
-              <div className="border border-border/60 rounded-xl p-6 md:p-7 bg-card/70">
-                <h2 className="text-2xl font-semibold mb-8 text-[#FF5722] tracking-tight">Key Concepts</h2>
-                <div className="space-y-8">
-                  {(tutorial.key_concepts || []).map((concept: any, index: number) => (
-                    <div key={index} className="border-l-2 border-[#FF5722] pl-6 py-4 bg-[#FF5722]/8 rounded-r-lg">
-                      <div className="flex items-start gap-3 mb-3">
-                        <Lightbulb className="w-6 h-6 text-[#FF5722] flex-shrink-0 mt-1" />
-                        <h3 className="font-semibold text-lg tracking-tight text-foreground">{concept.title}</h3>
-                      </div>
-                      <p className="text-muted-foreground leading-relaxed">
-                        {concept.content}
-                      </p>
-                    </div>
-                  ))}
+              <div className="flex items-center gap-2.5">
+                <TrendingUp className="h-4 w-4" />
+                <span>{getDifficultyLabel(tutorial.difficulty)}</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <Clock className="h-4 w-4" />
+                <span>{formatDuration(tutorial.duration)}</span>
+              </div>
+              {tutorial.created_at ? (
+                <div className="flex items-center gap-2.5">
+                  <Calendar className="h-4 w-4" />
+                  <span>{formatDate(tutorial.created_at)}</span>
                 </div>
+              ) : null}
+            </div>
+          </section>
 
-                <div className="border-t border-border/60 mt-12 pt-8">
-                  <h3 className="text-xl font-semibold mb-6 text-foreground tracking-tight">Pro Tips</h3>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    {(tutorial.pro_tips || []).map((tip: string, index: number) => (
-                      <div key={index} className="border border-border/60 rounded-lg p-4 bg-[#FF5722]/8">
-                        <p className="text-sm text-foreground leading-relaxed">
-                          <span className="font-semibold text-[#FF5722] block mb-2 uppercase tracking-[0.12em]">Pro Tip</span>
-                          {tip}
+          <section className="mt-10">
+            <div className="overflow-hidden rounded-[1.1rem] border border-border/28 bg-card/10">
+              <div className="aspect-[16/9]">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={`https://www.youtube.com/embed/${videoId || ""}`}
+                  title={tutorial.title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                  className="h-full w-full"
+                />
+              </div>
+            </div>
+
+            <div className="mt-5 flex flex-col gap-5 border-b border-border/20 pb-8 md:flex-row md:items-start md:justify-between">
+              <div className="max-w-2xl">
+                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                  In this lesson
+                </p>
+                {(tutorial.learning_objectives || []).length > 0 ? (
+                  <div className="mt-4 space-y-3">
+                    {(tutorial.learning_objectives || []).slice(0, 3).map(
+                      (objective: string, index: number) => (
+                        <div key={index} className="flex items-start gap-3">
+                          <div className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground/62" />
+                          <p className="text-[0.98rem] leading-7 text-foreground/66">
+                            {objective}
+                          </p>
+                        </div>
+                      )
+                    )}
+                  </div>
+                ) : (
+                  <p className="mt-4 text-[0.98rem] leading-7 text-foreground/56">
+                    Watch the walkthrough, then use the reference and resource sections below to
+                    keep building the workflow.
+                  </p>
+                )}
+              </div>
+
+              <div className="flex flex-wrap gap-3 md:justify-end">
+                <a
+                  href={tutorial.video_url || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-[0.95rem] font-medium text-black transition-colors hover:bg-white/90"
+                >
+                  Watch on YouTube
+                  <ExternalLink className="h-4 w-4" />
+                </a>
+                <Link
+                  href="/studio/tutorials"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-white/10 px-5 py-3 text-[0.95rem] font-medium text-foreground transition-colors hover:bg-white/14"
+                >
+                  Browse tutorial library
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+          </section>
+
+          {tabs.length > 0 ? (
+            <section className="mt-12 pt-2">
+              <Tabs defaultValue={defaultTab} className="w-full">
+                <TabsList className="mb-10 flex h-auto w-full flex-wrap justify-start gap-x-7 gap-y-3 rounded-none bg-transparent p-0">
+                  {tabs.map((tab) => (
+                    <TabsTrigger
+                      key={tab.value}
+                      value={tab.value}
+                      className="h-auto rounded-none border-b border-transparent px-0 py-0 text-[0.96rem] font-medium tracking-[-0.02em] text-foreground/46 shadow-none transition-colors data-[state=active]:border-foreground/42 data-[state=active]:text-foreground"
+                    >
+                      {tab.label}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+
+                <TabsContent value="overview" className="mt-0">
+                  <div className="grid gap-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)]">
+                    <div className="border-t border-border/20 pt-6">
+                      <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                        What you&apos;ll learn
+                      </p>
+                      <div className="mt-5 space-y-4">
+                        {(tutorial.learning_objectives || []).map(
+                          (objective: string, index: number) => (
+                            <div key={index} className="flex items-start gap-3">
+                              <div className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground/62" />
+                              <p
+                                id={`step-${index + 1}`}
+                                className="text-[1rem] leading-7 text-foreground/72"
+                              >
+                                {objective}
+                              </p>
+                            </div>
+                          )
+                        )}
+                        {(tutorial.learning_objectives || []).length === 0 ? (
+                          <p className="text-[0.98rem] leading-7 text-foreground/48">
+                            No learning objectives were added for this tutorial yet.
+                          </p>
+                        ) : null}
+                      </div>
+                    </div>
+
+                    <div className="border-t border-border/20 pt-6">
+                      <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                        Overview
+                      </p>
+                      <div className="mt-5 space-y-5">
+                        {overviewParagraphs.length > 0 ? (
+                          overviewParagraphs.map((paragraph, index) => (
+                            <p key={index} className="text-[1.03rem] leading-8 text-foreground/68">
+                              {paragraph}
+                            </p>
+                          ))
+                        ) : (
+                          <p className="text-[0.98rem] leading-8 text-foreground/48">
+                            No extended overview was added for this tutorial yet.
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="concepts" className="mt-0">
+                  <div className="grid gap-10 lg:grid-cols-2">
+                    <div className="border-t border-border/20 pt-6">
+                      <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                        Key concepts
+                      </p>
+                      <div className="mt-5 space-y-6">
+                        {(tutorial.key_concepts || []).map((concept: any, index: number) => (
+                          <div key={index} className="grid gap-3 border-t border-border/14 pt-5 first:border-t-0 first:pt-0">
+                            <div className="flex items-start gap-3">
+                              <Lightbulb className="mt-1 h-4 w-4 shrink-0 text-foreground/54" />
+                              <div>
+                                <h2 className="font-sans text-[1.06rem] font-medium tracking-[-0.02em] text-foreground">
+                                  {concept.title}
+                                </h2>
+                                <p className="mt-2 text-[0.98rem] leading-7 text-foreground/62">
+                                  {concept.content}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                        {(tutorial.key_concepts || []).length === 0 ? (
+                          <p className="text-[0.98rem] leading-7 text-foreground/48">
+                            No key concepts were added for this tutorial yet.
+                          </p>
+                        ) : null}
+                      </div>
+                    </div>
+
+                    <div className="border-t border-border/20 pt-6">
+                      <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                        Pro tips
+                      </p>
+                      <div className="mt-5 space-y-4">
+                        {(tutorial.pro_tips || []).map((tip: string, index: number) => (
+                          <div key={index} className="border-t border-border/14 pt-4 first:border-t-0 first:pt-0">
+                            <p className="text-[0.98rem] leading-7 text-foreground/62">{tip}</p>
+                          </div>
+                        ))}
+                        {(tutorial.pro_tips || []).length === 0 ? (
+                          <p className="text-[0.98rem] leading-7 text-foreground/48">
+                            No pro tips were added for this tutorial yet.
+                          </p>
+                        ) : null}
+                      </div>
+                    </div>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="reference" className="mt-0">
+                  <div className="grid gap-10 lg:grid-cols-2">
+                    <div className="border-t border-border/20 pt-6">
+                      <div className="flex items-center gap-3">
+                        <Keyboard className="h-4 w-4 text-foreground/54" />
+                        <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                          Shortcuts
                         </p>
                       </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </TabsContent>
-
-            {/* Quick Reference Tab */}
-            <TabsContent value="reference" className="mt-0">
-              <div className="border border-border/60 rounded-xl p-6 md:p-7 bg-card/70">
-                <div className="grid md:grid-cols-2 gap-12">
-                  {/* Shortcuts */}
-                  <div>
-                    <h3 className="font-semibold text-xl mb-6 flex items-center gap-3 text-[#9C27B0] tracking-tight">
-                      <Keyboard className="w-6 h-6 text-[#9C27B0]" />
-                      Essential Shortcuts
-                    </h3>
-                    <div className="space-y-4">
-                      {(tutorial.shortcuts || []).map((shortcut: any, index: number) => (
-                        <div key={index} className="border border-border/60 rounded-lg p-4 bg-card/50">
-                          <code className="text-sm font-mono text-[#9C27B0] font-semibold block mb-2">
-                            {shortcut.keys}
-                          </code>
-                          <span className="text-sm text-muted-foreground">
-                            {shortcut.action}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Common Pitfalls */}
-                  <div>
-                    <h3 className="font-semibold text-xl mb-6 flex items-center gap-3 text-[#9C27B0] tracking-tight">
-                      <AlertCircle className="w-6 h-6 text-[#9C27B0]" />
-                      Common Pitfalls
-                    </h3>
-                    <div className="space-y-3">
-                      {(tutorial.common_pitfalls || []).map((pitfall: string, index: number) => (
-                        <div key={index} className="flex items-start gap-3 border-l-2 border-[#9C27B0] pl-4 py-2 bg-[#9C27B0]/8 rounded-r">
-                          <span className="text-[#9C27B0] flex-shrink-0 font-semibold">×</span>
-                          <span className="text-sm text-foreground">{pitfall}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </TabsContent>
-
-            {/* Transcript Tab */}
-            <TabsContent value="transcript" className="mt-0">
-              <div className="border border-border/60 rounded-xl p-6 md:p-7 bg-card/70">
-                <h2 className="text-2xl font-semibold mb-8 text-[#F44336] tracking-tight">Full Transcript</h2>
-                <div className="space-y-4 font-mono text-sm">
-                  {(tutorial.transcript || []).map((entry: any, index: number) => (
-                    <div key={index} className="flex gap-6 hover:bg-[#F44336]/8 p-3 rounded transition-colors border-l-2 border-transparent hover:border-[#F44336]">
-                      <span className="text-[#F44336] flex-shrink-0 w-16 font-semibold">
-                        {entry.time}
-                      </span>
-                      <p className="text-foreground leading-relaxed">
-                        {entry.text}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </TabsContent>
-
-            {/* Resources Tab */}
-            <TabsContent value="resources" className="mt-0">
-              <div className="border border-border/60 rounded-xl p-6 md:p-7 bg-card/70">
-                <h2 className="text-2xl font-semibold mb-8 text-[#00BCD4] tracking-tight">Related Resources</h2>
-
-                <div className="space-y-4 mb-12">
-                  {(tutorial.related_resources || []).map((resource: any, index: number) => (
-                    <a
-                      key={index}
-                      href={resource.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block border border-border/60 hover:border-[#00BCD4] rounded-lg p-6 transition-all group bg-card/50 hover:bg-[#00BCD4]/8"
-                    >
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-2">
-                            <Badge className="bg-[#00BCD4] text-black border-0 uppercase tracking-[0.12em] font-semibold text-xs px-3 py-1">
-                              {resource.type}
-                            </Badge>
+                      <div className="mt-5 space-y-4">
+                        {(tutorial.shortcuts || []).map((shortcut: any, index: number) => (
+                          <div
+                            key={index}
+                            className="grid gap-2 border-t border-border/14 pt-4 first:border-t-0 first:pt-0"
+                          >
+                            <code className="text-[0.9rem] font-semibold text-foreground">
+                              {shortcut.keys}
+                            </code>
+                            <p className="text-[0.96rem] leading-7 text-foreground/62">
+                              {shortcut.action}
+                            </p>
                           </div>
-                          <h3 className="font-semibold text-lg mb-2 group-hover:text-[#00BCD4] transition-colors text-foreground">
-                            {resource.title}
-                          </h3>
-                        </div>
-                        <ExternalLink className="w-5 h-5 text-[#00BCD4] flex-shrink-0 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                        ))}
+                        {(tutorial.shortcuts || []).length === 0 ? (
+                          <p className="text-[0.98rem] leading-7 text-foreground/48">
+                            No shortcut list was added for this tutorial yet.
+                          </p>
+                        ) : null}
                       </div>
-                    </a>
-                  ))}
-                </div>
+                    </div>
 
-                <div className="border-t border-border/60 pt-8">
-                  <h3 className="text-xl font-semibold mb-6 tracking-tight text-foreground">Continue Learning</h3>
-                  <div className="grid md:grid-cols-3 gap-6">
-                    {(tutorial.related_tutorials || []).map((related: any, index: number) => (
-                      <Link key={index} href={`/studio/tutorials/${related.slug}`}>
-                        <div className="border border-border/60 hover:border-[#00BCD4] rounded-lg p-6 transition-all group bg-card/50 hover:bg-[#00BCD4]/8 h-full">
-                          <h4 className="font-semibold mb-3 group-hover:text-[#00BCD4] transition-colors text-foreground">
-                            {related.title}
-                          </h4>
-                          <div className="flex items-center gap-2 text-sm text-[#00BCD4] group-hover:gap-3 transition-all uppercase tracking-[0.12em] font-semibold">
-                            Watch Tutorial <ArrowRight className="w-4 h-4" />
+                    <div className="border-t border-border/20 pt-6">
+                      <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                        Common pitfalls
+                      </p>
+                      <div className="mt-5 space-y-4">
+                        {(tutorial.common_pitfalls || []).map((pitfall: string, index: number) => (
+                          <div key={index} className="border-t border-border/14 pt-4 first:border-t-0 first:pt-0">
+                            <p className="text-[0.98rem] leading-7 text-foreground/62">{pitfall}</p>
                           </div>
-                        </div>
-                      </Link>
-                    ))}
+                        ))}
+                        {(tutorial.common_pitfalls || []).length === 0 ? (
+                          <p className="text-[0.98rem] leading-7 text-foreground/48">
+                            No common pitfalls were added for this tutorial yet.
+                          </p>
+                        ) : null}
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </TabsContent>
+
+                <TabsContent value="transcript" className="mt-0">
+                  <div className="border-t border-border/20 pt-6">
+                    <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                      Transcript
+                    </p>
+                    <div className="mt-5">
+                      {(tutorial.transcript || []).map((entry: any, index: number) => (
+                        <div
+                          key={index}
+                          className="grid gap-4 border-t border-border/14 py-4 first:border-t-0 first:pt-0 md:grid-cols-[88px_minmax(0,1fr)]"
+                        >
+                          <p className="text-[0.82rem] font-medium tracking-[0.04em] text-foreground/42">
+                            {entry.time}
+                          </p>
+                          <p className="text-[0.98rem] leading-7 text-foreground/64">{entry.text}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="resources" className="mt-0">
+                  <div className="grid gap-10 lg:grid-cols-2">
+                    <div className="border-t border-border/20 pt-6">
+                      <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                        Related resources
+                      </p>
+                      <div className="mt-5">
+                        {(tutorial.related_resources || []).map((resource: any, index: number) => (
+                          <a
+                            key={index}
+                            href={resource.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-start justify-between gap-4 border-t border-border/14 py-4 first:border-t-0 first:pt-0 transition-colors hover:text-foreground"
+                          >
+                            <div>
+                              <p className="text-[0.78rem] uppercase tracking-[0.18em] text-foreground/38">
+                                {resource.type}
+                              </p>
+                              <h2 className="mt-2 font-sans text-[1rem] font-medium tracking-[-0.02em] text-foreground">
+                                {resource.title}
+                              </h2>
+                            </div>
+                            <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-foreground/44" />
+                          </a>
+                        ))}
+                        {(tutorial.related_resources || []).length === 0 ? (
+                          <p className="text-[0.98rem] leading-7 text-foreground/48">
+                            No related resources were added for this tutorial yet.
+                          </p>
+                        ) : null}
+                      </div>
+                    </div>
+
+                    <div className="border-t border-border/20 pt-6">
+                      <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                        Continue learning
+                      </p>
+                      <div className="mt-5">
+                        {(tutorial.related_tutorials || []).map((related: any, index: number) => (
+                          <Link
+                            key={index}
+                            href={`/studio/tutorials/${related.slug}`}
+                            className="flex items-center justify-between gap-4 border-t border-border/14 py-4 first:border-t-0 first:pt-0 transition-colors hover:text-foreground"
+                          >
+                            <div>
+                              <h2 className="font-sans text-[1rem] font-medium tracking-[-0.02em] text-foreground">
+                                {related.title}
+                              </h2>
+                            </div>
+                            <ArrowRight className="h-4 w-4 shrink-0 text-foreground/44" />
+                          </Link>
+                        ))}
+                        {(tutorial.related_tutorials || []).length === 0 ? (
+                          <p className="text-[0.98rem] leading-7 text-foreground/48">
+                            No related tutorials were added for this tutorial yet.
+                          </p>
+                        ) : null}
+                      </div>
+                    </div>
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </section>
+          ) : null}
+
+          <section className="mt-16 border-t border-border/20 pt-16">
+            <div className="rounded-[2rem] bg-white/8 px-6 py-14 text-center md:px-12 md:py-16">
+              <h2 className="mx-auto max-w-3xl font-sans text-[clamp(2.2rem,4.5vw,3.9rem)] font-medium leading-[1.02] tracking-[-0.055em] text-foreground">
+                Keep building your Vectorworks workflow with the full tutorial library.
+              </h2>
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+                <Link
+                  href="/studio/tutorials"
+                  className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-[0.95rem] font-medium text-black transition-colors hover:bg-white/90"
+                >
+                  Browse tutorials
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  href="/studio/directory"
+                  className="inline-flex items-center gap-2 rounded-full bg-white/10 px-5 py-3 text-[0.95rem] font-medium text-foreground transition-colors hover:bg-white/14"
+                >
+                  Open scenic toolkit
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
               </div>
-            </TabsContent>
-          </Tabs>
-          </div>
+            </div>
+          </section>
         </div>
-      </section>
+      </main>
 
       <Footer />
     </div>

@@ -1,89 +1,72 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ExternalLink, Search } from "lucide-react";
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { SEO } from "@/components/SEO";
 import { Input } from "@/components/ui/input";
 import StructuredData from "@/components/StructuredData";
 
-// Helper function to get favicon URL from domain
 function getFaviconUrl(url: string, size = 64) {
   try {
     const domain = new URL(url).hostname;
     return `https://www.google.com/s2/favicons?domain=${domain}&sz=${size}`;
   } catch {
-    return '/default-favicon.png';
+    return "/default-favicon.png";
   }
 }
 
+const categories = [
+  { slug: "industry", name: "Industry" },
+  { slug: "research", name: "Research" },
+  { slug: "software", name: "Software" },
+  { slug: "modeling", name: "3D Modeling" },
+  { slug: "supplies", name: "Supplies" },
+];
+
 export default function StudioDirectory() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [sortBy, setSortBy] = useState<'alphabetical' | 'category'>('alphabetical');
+  const [sortBy, setSortBy] = useState<"alphabetical" | "category">("alphabetical");
   const [searchQuery, setSearchQuery] = useState("");
 
   const { data: resources = [], isLoading } = trpc.scenicDirectory.list.useQuery();
 
-  const categories = [
-    { slug: "industry", name: "Industry" },
-    { slug: "research", name: "Research" },
-    { slug: "software", name: "Software" },
-    { slug: "modeling", name: "3D Modeling" },
-    { slug: "supplies", name: "Supplies" },
-  ];
-
   const filteredResources = useMemo(() => {
-    let filtered = resources.filter((resource: any) => {
+    const filtered = resources.filter((resource: any) => {
       if (selectedCategory && resource.category_slug !== selectedCategory) return false;
-      if (searchQuery && !resource.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
-        !resource.description?.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+      if (
+        searchQuery &&
+        !resource.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+        !resource.description?.toLowerCase().includes(searchQuery.toLowerCase())
+      ) {
+        return false;
+      }
       return true;
     });
 
-    if (sortBy === 'category') {
-      filtered.sort((a: any, b: any) => {
-        const byCategory = (a.category_slug || '').localeCompare(b.category_slug || '');
+    return [...filtered].sort((a: any, b: any) => {
+      if (sortBy === "category") {
+        const byCategory = (a.category_slug || "").localeCompare(b.category_slug || "");
         if (byCategory !== 0) return byCategory;
-        return (a.name || '').localeCompare(b.name || '');
-      });
-    } else {
-      filtered.sort((a: any, b: any) => a.name.localeCompare(b.name));
-    }
-
-    return filtered;
+      }
+      return (a.name || "").localeCompare(b.name || "");
+    });
   }, [resources, selectedCategory, searchQuery, sortBy]);
 
-  const getCategoryTextClass = (slug: string) => {
-    switch (slug) {
-      case 'industry': return 'text-red-400';
-      case 'research': return 'text-blue-400';
-      case 'software': return 'text-purple-400';
-      case 'modeling': return 'text-green-400';
-      case 'supplies': return 'text-orange-400';
-      default: return 'text-muted-foreground';
-    }
-  };
-
-  const getCategoryPillClass = (slug: string) => {
-    switch (slug) {
-      case 'industry': return 'bg-red-500/15 text-red-300 border-red-500/40';
-      case 'research': return 'bg-blue-500/15 text-blue-300 border-blue-500/40';
-      case 'software': return 'bg-purple-500/15 text-purple-300 border-purple-500/40';
-      case 'modeling': return 'bg-green-500/15 text-green-300 border-green-500/40';
-      case 'supplies': return 'bg-orange-500/15 text-orange-300 border-orange-500/40';
-      default: return 'bg-primary text-primary-foreground border-primary';
-    }
-  };
-
-  const handleResourceClick = (resource: any) => {
-    window.open(resource.url, '_blank', 'noopener,noreferrer');
-  };
+  const groupedResources = useMemo(() => {
+    return categories
+      .map((category) => ({
+        ...category,
+        items: filteredResources.filter((resource: any) => resource.category_slug === category.slug),
+      }))
+      .filter((group) => group.items.length > 0);
+  }, [filteredResources]);
 
   return (
-    <div className="min-h-screen bg-background [background-image:radial-gradient(circle_at_12%_9%,rgba(255,87,34,0.10),transparent_34%),radial-gradient(circle_at_85%_16%,rgba(33,150,243,0.08),transparent_34%)] selection:bg-[#F44336] selection:text-white">
+    <div className="min-h-screen bg-background">
       <SEO
         title="Scenic Directory | Brandon PT Davis"
-        description="A curated collection of essential resources for scenic designers—industry organizations, software, suppliers, and research archives."
+        description="A curated collection of essential resources for scenic designers, including industry organizations, software, suppliers, and research archives."
         keywords="scenic design resources, theatre suppliers, design software, theatrical organizations, scenic design community"
         type="website"
         url="https://www.brandonptdavis.com/studio/directory"
@@ -101,7 +84,8 @@ export default function StudioDirectory() {
         collectionPage={{
           name: "Scenic Directory",
           url: "https://www.brandonptdavis.com/studio/directory",
-          description: "Curated scenic design resource directory for industry, software, modeling, and supplier links.",
+          description:
+            "Curated scenic design resource directory for industry, software, modeling, and supplier links.",
           about: "External resources for scenic designers and theatre production teams.",
           mainEntity: {
             name: "Directory Resources",
@@ -118,7 +102,8 @@ export default function StudioDirectory() {
         type="ItemList"
         itemList={{
           name: "Scenic Directory Resource Links",
-          description: "Outbound links to scenic design resources, software, suppliers, and research references.",
+          description:
+            "Outbound links to scenic design resources, software, suppliers, and research references.",
           url: "https://www.brandonptdavis.com/studio/directory",
           itemListElement: (resources || [])
             .filter((resource: any) => typeof resource.url === "string" && resource.url.startsWith("http"))
@@ -134,185 +119,239 @@ export default function StudioDirectory() {
 
       <Header />
 
-      {/* Hero Section */}
-      <section className="pt-14 md:pt-20 pb-8">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <p className="text-xs tracking-[0.24em] text-muted-foreground mb-4 font-semibold uppercase">Studio / Resources</p>
-            <h1 className="text-5xl md:text-7xl font-serif tracking-tight leading-[0.92] mb-5">Scenic Directory</h1>
-            <p className="text-lg md:text-xl text-foreground/75 max-w-4xl leading-relaxed">
-              Curated links to industry organizations, research archives, software tools, and suppliers used in professional scenic design.
-            </p>
-          </div>
-        </div>
-      </section>
+      <main className="px-6 pb-20 pt-24 md:pt-28">
+        <section className="mx-auto max-w-5xl border-b border-border/25 pb-12">
+          <p className="text-center font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+            Studio Directory
+          </p>
+          <h1 className="mx-auto mt-6 max-w-5xl text-center font-sans text-[clamp(3rem,6vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
+            Scenic Directory
+          </h1>
+          <p className="mx-auto mt-8 max-w-3xl text-center text-[1.08rem] leading-8 text-foreground/60 md:text-[1.16rem]">
+            A curated index of organizations, archives, software, references, and suppliers that
+            support scenic design research and professional practice.
+          </p>
+        </section>
 
-      {/* Controls Section */}
-      <section className="container py-6">
-        <div className="max-w-6xl mx-auto rounded-2xl border border-border/60 bg-card/20 p-5 md:p-6">
-          <div className="flex flex-col lg:flex-row gap-6 justify-between items-start lg:items-center">
-            {/* Categories */}
-            <div className="flex flex-wrap gap-2 overflow-x-auto pb-2 lg:pb-0">
+        <section className="mx-auto mt-10 max-w-6xl border-b border-border/35 pb-8">
+          <div className="flex flex-col gap-6">
+            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
               <button
                 onClick={() => setSelectedCategory(null)}
-                className={`px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-[0.12em] transition-all duration-300 border ${selectedCategory === null
-                    ? 'bg-primary text-primary-foreground border-primary shadow-lg'
-                    : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
-                  }`}
+                className={`border-b pb-1 text-[0.88rem] font-medium tracking-[-0.02em] transition-colors ${
+                  selectedCategory === null
+                    ? "border-foreground/45 text-foreground"
+                    : "border-transparent text-foreground/44 hover:text-foreground/74"
+                }`}
               >
                 All
               </button>
-              {categories.map(category => (
+              {categories.map((category) => (
                 <button
                   key={category.slug}
                   onClick={() => setSelectedCategory(category.slug)}
-                  className={`px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-[0.12em] transition-all duration-300 border ${selectedCategory === category.slug
-                      ? `${getCategoryPillClass(category.slug)} shadow-lg`
-                      : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
-                    }`}
+                  className={`border-b pb-1 text-[0.88rem] font-medium tracking-[-0.02em] transition-colors ${
+                    selectedCategory === category.slug
+                      ? "border-foreground/45 text-foreground"
+                      : "border-transparent text-foreground/44 hover:text-foreground/74"
+                  }`}
                 >
                   {category.name}
                 </button>
               ))}
             </div>
 
-            {/* Search */}
-            <div className="flex items-center gap-3 w-full lg:w-auto">
-              <div className="relative flex-1 lg:w-72">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+              <div className="relative w-full md:max-w-sm">
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
-                  placeholder="Search resources..."
+                  placeholder="Search the directory..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9 bg-background border-border h-9 text-sm rounded-full"
+                  className="h-10 rounded-full border-border/60 bg-background pl-9 text-sm"
                 />
               </div>
-              <div className="flex gap-2">
+
+              <div className="flex items-center gap-2">
                 <button
-                  onClick={() => setSortBy('alphabetical')}
-                  className={`px-3 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.12em] border transition-all ${
-                    sortBy === 'alphabetical'
-                      ? 'bg-[#00BCD4]/15 text-[#80deea] border-[#00BCD4]/40'
-                      : 'bg-background border-border text-muted-foreground hover:border-[#00BCD4]/40 hover:text-[#80deea]'
+                  onClick={() => setSortBy("alphabetical")}
+                  className={`rounded-full px-4 py-1.5 text-[0.78rem] font-medium tracking-[-0.01em] transition-colors ${
+                    sortBy === "alphabetical"
+                      ? "bg-white text-black"
+                      : "bg-white/6 text-foreground/56 hover:bg-white/10 hover:text-foreground"
                   }`}
                 >
-                  A-Z
+                  Alphabetical
                 </button>
                 <button
-                  onClick={() => setSortBy('category')}
-                  className={`px-3 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.12em] border transition-all ${
-                    sortBy === 'category'
-                      ? 'bg-[#FF5722]/15 text-[#ff9c7a] border-[#FF5722]/40'
-                      : 'bg-background border-border text-muted-foreground hover:border-[#FF5722]/40 hover:text-[#ff9c7a]'
+                  onClick={() => setSortBy("category")}
+                  className={`rounded-full px-4 py-1.5 text-[0.78rem] font-medium tracking-[-0.01em] transition-colors ${
+                    sortBy === "category"
+                      ? "bg-white text-black"
+                      : "bg-white/6 text-foreground/56 hover:bg-white/10 hover:text-foreground"
                   }`}
                 >
-                  Category
+                  By category
                 </button>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Grid Layout */}
-      <section className="container py-12 min-h-[50vh]">
-        <div className="max-w-6xl mx-auto">
-        {isLoading ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="h-64 rounded-2xl bg-white/5 animate-pulse border border-white/5" />
-            ))}
-          </div>
-        ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-            {filteredResources.map((resource: any) => {
-              const category = categories.find(c => c.slug === resource.category_slug);
-              const categoryTextClass = getCategoryTextClass(resource.category_slug);
-
-              return (
+        <section className="mx-auto max-w-6xl py-14">
+          {isLoading ? (
+            <div className="space-y-4">
+              {[...Array(8)].map((_, index) => (
                 <div
-                  key={resource.id}
-                  onClick={() => handleResourceClick(resource)}
-                  className="group relative flex flex-col h-full rounded-2xl border border-border/60 bg-card/25 transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-xl cursor-pointer overflow-hidden"
+                  key={index}
+                  className="grid animate-pulse gap-4 border-t border-border/35 py-5 md:grid-cols-[64px_minmax(0,1.3fr)_minmax(0,1.5fr)_auto]"
                 >
-                  <div className="p-6 flex flex-col h-full relative z-10">
-                    <div className="flex items-start gap-4 mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center flex-shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-                        <img
-                          src={resource.cover_image || getFaviconUrl(resource.url, 64)}
-                          onError={(e) => { e.currentTarget.src = '/default-favicon.png'; }}
-                          className="w-8 h-8 object-contain"
-                          alt=""
-                        />
-                      </div>
+                  <div className="h-12 w-12 rounded-xl bg-muted" />
+                  <div className="h-7 w-48 rounded bg-muted" />
+                  <div className="h-5 w-full rounded bg-muted" />
+                  <div className="h-5 w-20 rounded bg-muted" />
+                </div>
+              ))}
+            </div>
+          ) : sortBy === "category" ? (
+            <div className="space-y-14">
+              {groupedResources.map((group) => (
+                <section key={group.slug}>
+                  <div className="border-b border-border/35 pb-4">
+                    <h2 className="font-sans text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.02] tracking-[-0.045em] text-foreground">
+                      {group.name}
+                    </h2>
+                  </div>
 
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between gap-2">
-                          <span className={`text-[10px] font-semibold uppercase tracking-[0.12em] mb-1 block ${categoryTextClass}`}>
-                            {category?.name}
-                          </span>
+                  <div className="divide-y divide-border/30">
+                    {group.items.map((resource: any) => (
+                      <button
+                        key={resource.id}
+                        onClick={() => window.open(resource.url, "_blank", "noopener,noreferrer")}
+                        className="grid w-full items-start gap-4 border-t border-transparent py-5 text-left transition-colors hover:bg-white/[0.02] md:grid-cols-[64px_minmax(0,1.15fr)_minmax(0,1.5fr)_auto]"
+                      >
+                        <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-border/30 bg-white">
+                          <img
+                            src={resource.cover_image || getFaviconUrl(resource.url, 64)}
+                            onError={(e) => {
+                              e.currentTarget.src = "/default-favicon.png";
+                            }}
+                            className="h-8 w-8 object-contain"
+                            alt=""
+                          />
                         </div>
-                        <h3 className="font-serif text-xl font-semibold text-foreground group-hover:text-primary transition-colors leading-tight line-clamp-2 pr-2">
-                          {resource.name}
-                        </h3>
-                      </div>
+
+                        <div>
+                          <p className="font-sans text-[1.05rem] font-medium leading-[1.15] tracking-[-0.03em] text-foreground">
+                            {resource.name}
+                          </p>
+                          <p className="mt-2 text-[0.82rem] leading-5 text-foreground/38">
+                            {group.name}
+                          </p>
+                        </div>
+
+                        <p className="max-w-2xl text-[0.96rem] leading-7 text-foreground/58">
+                          {resource.description}
+                        </p>
+
+                        <div className="inline-flex items-center gap-2 text-[0.84rem] font-medium text-foreground/48">
+                          <span>Open</span>
+                          <ExternalLink className="h-3.5 w-3.5" />
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+          ) : (
+            <div className="divide-y divide-border/30 border-t border-border/35">
+              {filteredResources.map((resource: any) => {
+                const category = categories.find((entry) => entry.slug === resource.category_slug);
+
+                return (
+                  <button
+                    key={resource.id}
+                    onClick={() => window.open(resource.url, "_blank", "noopener,noreferrer")}
+                    className="grid w-full items-start gap-4 py-5 text-left transition-colors hover:bg-white/[0.02] md:grid-cols-[64px_minmax(0,1.15fr)_minmax(0,1.5fr)_auto]"
+                  >
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-border/30 bg-white">
+                      <img
+                        src={resource.cover_image || getFaviconUrl(resource.url, 64)}
+                        onError={(e) => {
+                          e.currentTarget.src = "/default-favicon.png";
+                        }}
+                        className="h-8 w-8 object-contain"
+                        alt=""
+                      />
                     </div>
 
-                    <div className="flex-1 mb-6">
-                      <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">
-                        {resource.description}
+                    <div>
+                      <p className="font-sans text-[1.05rem] font-medium leading-[1.15] tracking-[-0.03em] text-foreground">
+                        {resource.name}
+                      </p>
+                      <p className="mt-2 text-[0.82rem] leading-5 text-foreground/38">
+                        {category?.name || "Resource"}
                       </p>
                     </div>
 
-                    <div className="mt-auto flex items-center justify-between border-t border-border/50 pt-4">
-                      <span className="text-[11px] uppercase tracking-[0.12em] text-muted-foreground">Open Resource</span>
-                      <ExternalLink className="w-4 h-4 text-primary" />
+                    <p className="max-w-2xl text-[0.96rem] leading-7 text-foreground/58">
+                      {resource.description}
+                    </p>
+
+                    <div className="inline-flex items-center gap-2 text-[0.84rem] font-medium text-foreground/48">
+                      <span>Open</span>
+                      <ExternalLink className="h-3.5 w-3.5" />
                     </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        {!isLoading && filteredResources.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-32 text-center">
-            <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-6">
-              <Search className="w-6 h-6 text-muted-foreground" />
+                  </button>
+                );
+              })}
             </div>
-            <h3 className="text-xl font-serif font-bold mb-2">No resources found</h3>
-            <p className="text-muted-foreground max-w-md">
-              Try adjusting your search or category filter. We couldn't find anything matching your criteria.
+          )}
+
+          {!isLoading && filteredResources.length === 0 && (
+            <div className="py-24 text-center">
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/6">
+                <Search className="h-6 w-6 text-muted-foreground" />
+              </div>
+              <h3 className="mt-6 font-sans text-[1.5rem] font-medium tracking-[-0.04em] text-foreground">
+                No resources found
+              </h3>
+              <p className="mx-auto mt-3 max-w-md text-[0.98rem] leading-7 text-foreground/56">
+                Try a different category or search term. Nothing in the directory matched the
+                current filters.
+              </p>
+              <button
+                onClick={() => {
+                  setSelectedCategory(null);
+                  setSearchQuery("");
+                }}
+                className="mt-6 text-[0.92rem] font-medium text-foreground/72 transition-colors hover:text-foreground"
+              >
+                Clear filters
+              </button>
+            </div>
+          )}
+        </section>
+
+        <section className="mx-auto max-w-[108rem] border-t border-border/25 pt-20">
+          <div className="rounded-[2rem] border border-white/8 bg-white/[0.06] px-6 py-16 text-center md:px-12 md:py-20">
+            <h2 className="mx-auto max-w-4xl font-sans text-[clamp(2.4rem,4.5vw,4.2rem)] font-medium leading-[1.02] tracking-[-0.06em] text-foreground">
+              Know a scenic design resource that belongs in the directory?
+            </h2>
+            <p className="mx-auto mt-6 max-w-2xl text-[1rem] leading-8 text-foreground/58">
+              Suggest an organization, archive, supplier, or tool that should be part of this
+              working list.
             </p>
-            <button
-              onClick={() => { setSelectedCategory(null); setSearchQuery(""); }}
-              className="mt-6 text-primary hover:underline"
+            <a
+              href="/contact"
+              className="mt-10 inline-flex h-11 items-center justify-center rounded-full bg-white px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-black transition-colors hover:bg-white/92"
             >
-              Clear all filters
-            </button>
+              Submit Suggestion
+            </a>
           </div>
-        )}
-        </div>
-      </section>
-
-      {/* Submission CTA - Premium */}
-      <section className="container py-24">
-        <div className="max-w-6xl mx-auto relative rounded-3xl overflow-hidden border border-border/60 bg-card/20 p-12 lg:p-20 text-center">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[80px] -z-10" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[80px] -z-10" />
-
-          <h2 className="font-serif text-3xl md:text-5xl font-bold mb-6">Missing a Resource?</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
-            Help cultivate this collection. If you know of an invaluable tool for scenic design that isn't listed, please submit it for review.
-          </p>
-          <a
-            href="/contact"
-            className="inline-flex h-12 items-center justify-center rounded-full bg-white text-black px-8 text-sm font-medium transition-transform hover:scale-105 hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-black"
-          >
-            Submit Suggestion
-          </a>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>

@@ -1,13 +1,23 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
-import { ArrowLeft, Boxes, CheckCircle2, Download, ExternalLink, FileCode2, FolderOpen, MousePointerClick, Sparkles, TriangleAlert, Wrench } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Boxes,
+  CheckCircle2,
+  Download,
+  ExternalLink,
+  FileCode2,
+  FolderOpen,
+  MousePointerClick,
+  Sparkles,
+  TriangleAlert,
+  Wrench,
+} from "lucide-react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 
 const PAGE_URL = "https://www.brandonptdavis.com/studio/apps/scenic-3d-converter";
 const PAGE_IMAGE = "https://www.brandonptdavis.com/assets/studio/scenic-3d-converter-card.webp";
@@ -22,26 +32,22 @@ const conversionModes = [
   {
     name: "USD (Smallest)",
     use: "Best for compact files and fast import.",
-    icon: <Boxes className="h-4 w-4" />,
-    accent: "#00E5FF",
+    icon: Boxes,
   },
   {
     name: "USDZ (Textures)",
-    use: "Best when you want packaged texture/material support.",
-    icon: <Sparkles className="h-4 w-4" />,
-    accent: "#FFB300",
+    use: "Best when you want packaged texture and material support.",
+    icon: Sparkles,
   },
   {
     name: "3DM Mesh",
     use: "Best compatibility path for clean geometry handoff.",
-    icon: <FileCode2 className="h-4 w-4" />,
-    accent: "#7CFF6B",
+    icon: FileCode2,
   },
   {
     name: "3DM NURBS (Experimental)",
     use: "Attempts NURBS-style output when possible.",
-    icon: <Wrench className="h-4 w-4" />,
-    accent: "#FF6E40",
+    icon: Wrench,
   },
 ];
 
@@ -53,28 +59,36 @@ const supportedInputs = {
 
 const workflowSteps = [
   "Right-click one or more files in Finder.",
-  "Choose Quick Actions → Scenic 3D Convert…",
-  "Pick output type: USD, USDZ, 3DM Mesh, or 3DM NURBS.",
-  "Converted files are written next to originals.",
+  "Choose Quick Actions and select Scenic 3D Convert.",
+  "Pick USD, USDZ, 3DM Mesh, or 3DM NURBS.",
+  "Converted files are written next to the originals.",
 ];
 
 const installSteps = [
   "Download Scenic-3D-Converter-Stable.zip.",
-  "Unzip it.",
+  "Unzip the package.",
   "Open the folder and double-click Install 3D Finder Tools.command.",
-  "Approve prompts for rhino3dm and Blender LTS (recommended).",
-  "In Finder, right-click files → Quick Actions → Scenic 3D Convert…",
+  "Approve prompts for rhino3dm and Blender LTS when needed.",
+  "Right-click files in Finder and run Scenic 3D Convert from Quick Actions.",
 ];
 
 const troubleshooting = [
-  "If only two Quick Actions show inline, open the full Quick Actions submenu to see all actions.",
-  "If GLB/FBX/SKP conversion fails, install Blender LTS and retry.",
+  "If only two Quick Actions show inline, open the full Quick Actions submenu.",
+  "If GLB, FBX, or SKP conversion fails, install Blender LTS and retry.",
   "Conversion logs are saved to quick-actions.log.",
+];
+
+const reasons = [
+  "Runs locally on your Mac with no cloud upload.",
+  "Right-click workflow directly in Finder.",
+  "Built for Vectorworks import workflows.",
+  "Converts in place next to source files.",
+  "Can overwrite previous exports when you rerun conversions.",
 ];
 
 export default function Scenic3DConverter() {
   return (
-    <div className="min-h-screen bg-background [background-image:radial-gradient(circle_at_10%_8%,rgba(0,229,255,0.11),transparent_34%),radial-gradient(circle_at_82%_18%,rgba(255,183,0,0.10),transparent_36%)]">
+    <div className="min-h-screen bg-background text-foreground">
       <SEO
         title={PAGE_TITLE}
         description={PAGE_DESCRIPTION}
@@ -98,7 +112,8 @@ export default function Scenic3DConverter() {
           name: "Scenic 3D Converter for Vectorworks (Mac)",
           url: PAGE_URL,
           description: PAGE_DESCRIPTION,
-          about: "Mac Finder Quick Action utility for local 3D file conversion in scenic design workflows.",
+          about:
+            "Mac Finder Quick Action utility for local 3D file conversion in scenic design workflows.",
           primaryImageOfPage: PAGE_HERO_IMAGE,
           mainEntity: {
             name: "Conversion Modes",
@@ -115,7 +130,8 @@ export default function Scenic3DConverter() {
         type="ItemList"
         itemList={{
           name: "Supported Scenic 3D Converter Input Formats",
-          description: "Input formats accepted by Scenic 3D Converter using direct conversion and Blender pipeline workflows.",
+          description:
+            "Input formats accepted by Scenic 3D Converter using direct conversion and Blender pipeline workflows.",
           url: PAGE_URL,
           itemListElement: [
             ...supportedInputs.direct.map((format, index) => ({
@@ -150,21 +166,16 @@ export default function Scenic3DConverter() {
         type="HowTo"
         howTo={{
           name: "Install Scenic 3D Converter on Mac",
-          description: "Download and install Scenic 3D Converter Finder Quick Actions for local USD, USDZ, and 3DM export workflows.",
+          description:
+            "Download and install Scenic 3D Converter Finder Quick Actions for local USD, USDZ, and 3DM export workflows.",
           image: PAGE_HERO_IMAGE,
           totalTime: "PT5M",
           estimatedCost: {
             currency: "USD",
             value: "0",
           },
-          supply: [
-            { name: "Scenic-3D-Converter-Stable.zip", url: DOWNLOAD_URL_ABS },
-          ],
-          tool: [
-            { name: "Finder Quick Actions" },
-            { name: "Blender LTS" },
-            { name: "rhino3dm" },
-          ],
+          supply: [{ name: "Scenic-3D-Converter-Stable.zip", url: DOWNLOAD_URL_ABS }],
+          tool: [{ name: "Finder Quick Actions" }, { name: "Blender LTS" }, { name: "rhino3dm" }],
           step: [
             { name: "Download the ZIP", text: "Download Scenic-3D-Converter-Stable.zip.", url: DOWNLOAD_URL_ABS },
             { name: "Unzip package", text: "Unzip the downloaded archive." },
@@ -180,7 +191,8 @@ export default function Scenic3DConverter() {
           mainEntity: [
             {
               question: "Does Scenic 3D Converter upload files to the cloud?",
-              answer: "No. The workflow runs locally on your Mac and writes converted files next to your source files.",
+              answer:
+                "No. The workflow runs locally on your Mac and writes converted files next to your source files.",
             },
             {
               question: "Which output types are available?",
@@ -196,259 +208,310 @@ export default function Scenic3DConverter() {
 
       <Header />
 
-      <section className="container pt-12 md:pt-16 pb-10">
-        <div className="mx-auto w-full max-w-[1780px]">
+      <main className="px-6 pb-24 pt-24 md:pt-28">
+        <section className="mx-auto max-w-6xl border-b border-border/18 pb-16">
           <AnimatedSection>
-            <Link href="/studio/apps">
-              <Button variant="ghost" className="-ml-4 mb-7 gap-2">
-                <ArrowLeft className="h-4 w-4" />
-                Back to Studio Apps
-              </Button>
+            <Link
+              href="/studio/apps"
+              className="inline-flex items-center gap-2 text-[0.92rem] font-medium text-foreground/56 transition-colors hover:text-foreground"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Studio Apps
             </Link>
 
-            <div className="grid xl:grid-cols-12 gap-8 xl:gap-10 items-start">
-              <div className="xl:col-span-5 min-[1920px]:pr-4">
-                <p className="text-xs tracking-[0.24em] text-muted-foreground mb-4 font-semibold uppercase">Studio / Apps / Mac Utility</p>
-                <h1 className="text-4xl md:text-6xl min-[1920px]:text-[4.8rem] font-serif tracking-tight leading-[0.94] mb-4 min-[1920px]:max-w-[14ch]">
-                  Scenic 3D Converter for Vectorworks (Mac)
+            <div className="mt-8 grid gap-10 xl:grid-cols-[minmax(0,1.02fr)_minmax(25rem,0.98fr)] xl:items-center">
+              <div className="max-w-[40rem]">
+                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+                  Studio App
+                </p>
+                <h1 className="mt-5 font-sans text-[clamp(3rem,6vw,5.25rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
+                  Scenic 3D Converter for Vectorworks on Mac.
                 </h1>
-                <p className="text-lg md:text-xl text-foreground/75 leading-relaxed max-w-[56ch] mb-6">
-                  Convert 3D files locally on your Mac into Vectorworks-friendly formats in one click with a Finder right-click workflow.
+                <p className="mt-6 max-w-3xl text-[1.06rem] leading-8 text-foreground/62 md:text-[1.14rem]">
+                  Convert 3D files locally into Vectorworks-friendly formats with a Finder
+                  right-click workflow built for scenic design handoff.
                 </p>
 
-                <div className="flex flex-wrap gap-2 mb-7">
-                  {conversionModes.map((mode) => (
-                    <Badge key={mode.name} variant="outline" className="px-3 py-1 text-[10px] uppercase tracking-[0.14em]">
-                      {mode.name}
-                    </Badge>
-                  ))}
+                <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 text-[0.95rem] text-foreground/56">
+                  <div>Free download</div>
+                  <div>macOS utility</div>
+                  <div>Finder Quick Actions</div>
+                  <div>Local conversion only</div>
                 </div>
 
-                <div className="flex flex-wrap gap-3">
-                  <Button asChild size="lg" className="bg-[#FF6D3A] hover:bg-[#ff8559] text-black font-semibold">
-                    <a href={DOWNLOAD_URL} target="_blank" rel="noreferrer">
-                      <Download className="mr-2 h-4 w-4" />
-                      Download Stable ZIP
-                    </a>
-                  </Button>
-                  <Button asChild variant="outline" size="lg">
-                    <a href="#install">
-                      Install Steps
-                      <ExternalLink className="ml-2 h-4 w-4" />
-                    </a>
-                  </Button>
+                <div className="mt-9 flex flex-wrap gap-3">
+                  <a
+                    href={DOWNLOAD_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-[0.95rem] font-medium text-black transition-colors hover:bg-white/90"
+                  >
+                    <Download className="h-4 w-4" />
+                    Download stable ZIP
+                  </a>
+                  <a
+                    href="#install"
+                    className="inline-flex items-center gap-2 rounded-full bg-white/10 px-5 py-3 text-[0.95rem] font-medium text-foreground transition-colors hover:bg-white/14"
+                  >
+                    Install steps
+                    <ArrowRight className="h-4 w-4" />
+                  </a>
                 </div>
               </div>
 
-              <Card className="xl:col-span-7 border border-border/60 overflow-hidden rounded-3xl bg-card/25 py-0 gap-0 min-[1920px]:max-h-[700px]">
+              <div className="overflow-hidden rounded-[1.2rem] border border-border/18 bg-card/10">
                 <img
-                  src="/assets/studio/scenic-3d-converter-hero.webp"
-                  alt="Scenic 3D converter Finder quick action concept"
-                  className="w-full h-full object-cover"
+                  src="/assets/studio/scenic-3d-converter-hero-art.png"
+                  alt="Abstract scenic converter artwork"
+                  className="aspect-[4/3] w-full object-cover"
                   loading="eager"
                   decoding="async"
                 />
-              </Card>
+              </div>
             </div>
           </AnimatedSection>
-        </div>
-      </section>
+        </section>
 
-      <section className="container pb-12 md:pb-16">
-        <div className="mx-auto w-full max-w-[1780px]">
+        <section className="mx-auto mt-16 max-w-6xl">
           <AnimatedSection>
-            <div className="mb-6">
-              <h2 className="text-3xl md:text-4xl font-serif tracking-tight mb-2">What It Does</h2>
-              <p className="text-foreground/75 max-w-[72ch]">Choose an output mode based on speed, package type, and handoff needs.</p>
+            <div className="max-w-3xl">
+              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                Conversion Modes
+              </p>
+              <h2 className="mt-4 font-sans text-[clamp(2.1rem,4vw,3.2rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
+                Four export paths for different handoff needs.
+              </h2>
             </div>
           </AnimatedSection>
 
-          <div className="grid md:grid-cols-2 min-[1920px]:grid-cols-4 gap-4 min-[1920px]:gap-5">
-            {conversionModes.map((mode, index) => (
-              <AnimatedSection key={mode.name} delay={index * 70}>
-                <Card className="h-full border border-border/60 bg-card/25 py-0 gap-0">
-                  <CardContent className="p-5 min-[1920px]:p-6">
-                    <div className="inline-flex items-center gap-2 mb-3 text-xs uppercase tracking-[0.14em]" style={{ color: mode.accent }}>
-                      {mode.icon}
-                      Mode
+          <div className="mt-10 grid gap-x-12 gap-y-10 md:grid-cols-2">
+            {conversionModes.map((mode, index) => {
+              const Icon = mode.icon;
+              return (
+                <AnimatedSection key={mode.name} delay={index * 70}>
+                  <div className="border-t border-border/16 pt-6">
+                    <div className="flex items-center gap-3 text-foreground/66">
+                      <Icon className="h-4 w-4" />
+                      <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.22em] text-foreground/36">
+                        Mode
+                      </p>
                     </div>
-                    <h3 className="text-xl min-[1920px]:text-[1.75rem] font-semibold leading-tight mb-2">{mode.name}</h3>
-                    <p className="text-sm min-[1920px]:text-base text-foreground/75 leading-relaxed">{mode.use}</p>
-                  </CardContent>
-                </Card>
-              </AnimatedSection>
-            ))}
+                    <h3 className="mt-4 font-sans text-[1.4rem] font-medium tracking-[-0.04em] text-foreground">
+                      {mode.name}
+                    </h3>
+                    <p className="mt-3 max-w-[32rem] text-[0.98rem] leading-7 text-foreground/62">
+                      {mode.use}
+                    </p>
+                  </div>
+                </AnimatedSection>
+              );
+            })}
           </div>
+        </section>
 
-          <AnimatedSection delay={280}>
-            <Card className="mt-6 border border-border/60 overflow-hidden rounded-2xl bg-card/20 py-0 gap-0">
-              <img
-                src="/assets/studio/scenic-3d-converter-modes.webp"
-                alt="Conversion mode diagram for USD, USDZ, mesh, and NURBS outputs"
-                className="w-full h-auto object-cover"
-                loading="lazy"
-                decoding="async"
-              />
-            </Card>
-          </AnimatedSection>
-        </div>
-      </section>
+        <section className="mx-auto mt-20 max-w-6xl border-t border-border/18 pt-16">
+          <div className="grid gap-12 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1fr)] xl:items-center">
+            <AnimatedSection>
+              <div className="overflow-hidden rounded-[1.1rem] border border-border/18 bg-card/10">
+                <img
+                  src="/assets/studio/scenic-3d-converter-modes-art.png"
+                  alt="Abstract artwork suggesting multiple conversion paths"
+                  className="aspect-[4/3] w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </AnimatedSection>
 
-      <section className="container pb-12 md:pb-16">
-        <div className="mx-auto w-full max-w-[1720px] grid xl:grid-cols-[1fr_1fr] gap-6 min-[1920px]:gap-8">
-          <AnimatedSection>
-            <Card className="h-full border border-border/60 bg-card/25">
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-serif mb-4 tracking-tight">Why Designers Like It</h2>
-                <ul className="space-y-3 text-sm text-foreground/80">
-                  <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 mt-0.5 text-[#00E5FF]" />Runs locally on your Mac with no cloud upload.</li>
-                  <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 mt-0.5 text-[#00E5FF]" />Right-click workflow directly in Finder.</li>
-                  <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 mt-0.5 text-[#00E5FF]" />Built for Vectorworks import workflows.</li>
-                  <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 mt-0.5 text-[#00E5FF]" />Converts in place next to your source files.</li>
-                  <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 mt-0.5 text-[#00E5FF]" />Re-running can overwrite old exports automatically.</li>
-                </ul>
-              </CardContent>
-            </Card>
-          </AnimatedSection>
-
-          <AnimatedSection delay={100}>
-            <Card id="supported-inputs" className="h-full border border-border/60 bg-card/25">
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-serif mb-4 tracking-tight">Supported Inputs</h2>
-                <div className="space-y-5 text-sm">
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.14em] text-[#00E5FF] mb-2 font-semibold">Direct USD-family</p>
-                    <p className="text-foreground/80">{supportedInputs.direct.join(" · ")}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.14em] text-[#FF6E40] mb-2 font-semibold">Via Blender pipeline</p>
-                    <p className="text-foreground/80">{supportedInputs.blender.join(" · ")}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.14em] text-[#7CFF6B] mb-2 font-semibold">3DM output modes</p>
-                    <p className="text-foreground/80">{supportedInputs.output.join(" · ")}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      <section className="container pb-12 md:pb-16">
-        <div className="mx-auto w-full max-w-[1720px] grid xl:grid-cols-[1.1fr_1fr] gap-6 min-[1920px]:gap-8">
-          <AnimatedSection>
-            <Card className="border border-border/60 bg-card/25 h-full">
-              <CardContent className="p-6">
-                <h2 className="text-2xl md:text-3xl font-serif tracking-tight mb-4">How It Works</h2>
-                <div className="space-y-4">
-                  {workflowSteps.map((step, idx) => (
-                    <div key={step} className="flex gap-3">
-                      <div className="h-7 w-7 rounded-full border border-border/70 bg-background/60 flex items-center justify-center text-xs font-semibold text-[#00E5FF]">
-                        {idx + 1}
+            <AnimatedSection delay={80}>
+              <div>
+                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                  Workflow
+                </p>
+                <h2 className="mt-4 font-sans text-[clamp(2rem,3.8vw,3rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">
+                  Use it from Finder, not from another complicated app interface.
+                </h2>
+                <div className="mt-7 space-y-5">
+                  {workflowSteps.map((step, index) => (
+                    <div key={step} className="grid grid-cols-[28px_minmax(0,1fr)] gap-4 border-t border-border/16 pt-5 first:border-t-0 first:pt-0">
+                      <div className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-[0.82rem] font-medium text-foreground/72">
+                        {index + 1}
                       </div>
-                      <p className="text-foreground/80 leading-relaxed pt-0.5">{step}</p>
+                      <p className="text-[1rem] leading-7 text-foreground/64">{step}</p>
                     </div>
                   ))}
                 </div>
 
-                <div className="mt-6 border-t border-border/70 pt-5">
-                  <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground mb-2">Advanced Quick Actions</p>
-                  <p className="text-sm text-foreground/80">
-                    Direct actions are also installed for power users: Convert to USD, Convert to USDZ, and Convert to 3DM.
+                <div className="mt-8 border-t border-border/16 pt-5">
+                  <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.22em] text-foreground/38">
+                    Advanced Quick Actions
+                  </p>
+                  <p className="mt-3 text-[0.98rem] leading-7 text-foreground/62">
+                    Power users also get direct actions for Convert to USD, Convert to USDZ, and
+                    Convert to 3DM.
                   </p>
                 </div>
-              </CardContent>
-            </Card>
-          </AnimatedSection>
+              </div>
+            </AnimatedSection>
+          </div>
+        </section>
 
-          <AnimatedSection delay={100}>
-            <Card className="border border-border/60 overflow-hidden rounded-2xl bg-card/20 h-full py-0 gap-0">
-              <img
-                src="/assets/studio/scenic-3d-converter-install.webp"
-                alt="Scenic 3D converter installation and setup concept"
-                className="w-full h-full object-cover"
-                loading="lazy"
-                decoding="async"
-              />
-            </Card>
-          </AnimatedSection>
-        </div>
-      </section>
+        <section className="mx-auto mt-20 max-w-6xl border-t border-border/18 pt-16">
+          <div className="grid gap-10 lg:grid-cols-2">
+            <AnimatedSection>
+              <div id="supported-inputs" className="border-t border-border/20 pt-6">
+                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                  Supported Inputs
+                </p>
+                <div className="mt-6 space-y-6">
+                  <div>
+                    <p className="text-[0.82rem] uppercase tracking-[0.18em] text-foreground/42">
+                      Direct USD family
+                    </p>
+                    <p className="mt-3 text-[1rem] leading-7 text-foreground/66">
+                      {supportedInputs.direct.join(" · ")}
+                    </p>
+                  </div>
+                  <div className="border-t border-border/14 pt-5">
+                    <p className="text-[0.82rem] uppercase tracking-[0.18em] text-foreground/42">
+                      Via Blender pipeline
+                    </p>
+                    <p className="mt-3 text-[1rem] leading-7 text-foreground/66">
+                      {supportedInputs.blender.join(" · ")}
+                    </p>
+                  </div>
+                  <div className="border-t border-border/14 pt-5">
+                    <p className="text-[0.82rem] uppercase tracking-[0.18em] text-foreground/42">
+                      Recommended output
+                    </p>
+                    <p className="mt-3 text-[1rem] leading-7 text-foreground/66">
+                      {supportedInputs.output.join(" · ")}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
 
-      <section id="install" className="container pb-20 md:pb-24">
-        <div className="mx-auto w-full max-w-[1720px] grid xl:grid-cols-2 gap-6 min-[1920px]:gap-8">
-          <AnimatedSection>
-            <Card className="h-full border border-border/60 bg-card/25">
-              <CardContent className="p-6">
-                <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.14em] text-[#FF6E40] mb-3">
+            <AnimatedSection delay={80}>
+              <div className="border-t border-border/20 pt-6">
+                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                  Why Designers Like It
+                </p>
+                <div className="mt-6 space-y-4">
+                  {reasons.map((reason) => (
+                    <div
+                      key={reason}
+                      className="grid grid-cols-[20px_minmax(0,1fr)] gap-3 border-t border-border/14 pt-4 first:border-t-0 first:pt-0"
+                    >
+                      <CheckCircle2 className="mt-1 h-4 w-4 text-foreground/56" />
+                      <p className="text-[0.98rem] leading-7 text-foreground/64">{reason}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </AnimatedSection>
+          </div>
+        </section>
+
+        <section id="install" className="mx-auto mt-20 max-w-6xl border-t border-border/18 pt-16">
+          <div className="grid gap-x-12 gap-y-10 xl:grid-cols-[minmax(0,1fr)_minmax(0,0.88fr)] xl:grid-rows-[auto_auto] xl:items-start">
+            <AnimatedSection>
+              <div className="max-w-[42rem]">
+                <div className="flex items-center gap-3 text-foreground/60">
                   <FolderOpen className="h-4 w-4" />
-                  Install (Mac)
-                </div>
-                <h2 className="text-2xl md:text-3xl font-serif tracking-tight mb-4">Quick Setup</h2>
-                <ol className="space-y-3 text-sm text-foreground/80 list-decimal pl-5">
-                  {installSteps.map((step) => (
-                    <li key={step} className="leading-relaxed">{step}</li>
-                  ))}
-                </ol>
-              </CardContent>
-            </Card>
-          </AnimatedSection>
-
-          <AnimatedSection delay={100}>
-            <Card className="h-full border border-border/60 bg-card/25">
-              <CardContent className="p-6">
-                <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.14em] text-[#FFB300] mb-3">
-                  <TriangleAlert className="h-4 w-4" />
-                  Troubleshooting
-                </div>
-                <h2 className="text-2xl md:text-3xl font-serif tracking-tight mb-4">If Anything Fails</h2>
-                <ul className="space-y-3 text-sm text-foreground/80">
-                  {troubleshooting.map((item) => (
-                    <li key={item} className="flex gap-2">
-                      <span className="text-[#FFB300] mt-0.5">•</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-5 rounded-xl border border-border/70 bg-background/40 p-3">
-                  <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground mb-1">Log File</p>
-                  <code className="text-xs text-foreground/90">quick-actions.log</code>
-                </div>
-              </CardContent>
-            </Card>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      <section className="container pb-24">
-        <div className="mx-auto w-full max-w-[1720px]">
-          <AnimatedSection>
-            <Card className="border border-border/60 bg-gradient-to-br from-[#00E5FF]/10 via-card/20 to-[#FF6E40]/10">
-              <CardContent className="p-7 md:p-10 min-[1920px]:p-12 flex flex-col lg:flex-row gap-5 lg:items-center lg:justify-between">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground mb-2">Share The Tool</p>
-                  <h2 className="text-2xl md:text-3xl font-serif tracking-tight mb-2">Built for Scenic Production Workflow</h2>
-                  <p className="text-sm md:text-base text-foreground/75 max-w-[72ch]">
-                    If you are moving assets between modeling packages and Vectorworks, this keeps conversion practical, local, and fast.
+                  <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                    Install
                   </p>
                 </div>
-                <div className="flex flex-wrap gap-3">
-                  <Button asChild className="bg-[#00BCD4] hover:bg-[#26c6da] text-black">
-                    <a href={DOWNLOAD_URL} target="_blank" rel="noreferrer">
-                      <MousePointerClick className="mr-2 h-4 w-4" />
-                      Get Scenic 3D Converter
-                    </a>
-                  </Button>
-                  <Button asChild variant="outline">
-                    <Link href="/studio/apps">All Studio Apps</Link>
-                  </Button>
+                <h2 className="mt-4 font-sans text-[clamp(2rem,3.8vw,3rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">
+                  Set it up in a few minutes and keep the conversion local.
+                </h2>
+
+                <div className="mt-10 space-y-5">
+                  {installSteps.map((step, index) => (
+                    <div key={step} className="grid grid-cols-[32px_minmax(0,1fr)] gap-4 border-t border-border/16 pt-5 first:border-t-0 first:pt-0">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-[0.85rem] font-medium text-foreground/72">
+                        {index + 1}
+                      </div>
+                      <p className="pt-1 text-[1rem] leading-7 text-foreground/64">{step}</p>
+                    </div>
+                  ))}
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection delay={80}>
+              <div className="overflow-hidden rounded-[1.1rem] border border-border/18 bg-card/10 xl:self-start">
+                <img
+                  src="/assets/studio/scenic-3d-converter-install-art.png"
+                  alt="Abstract artwork suggesting setup flow and local tooling"
+                  className="aspect-[4/3] w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection className="xl:col-start-2 xl:row-start-2" delay={120}>
+              <div className="border-t border-border/20 pt-6">
+                <div className="flex items-center gap-3 text-foreground/60">
+                  <TriangleAlert className="h-4 w-4" />
+                  <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                    Troubleshooting
+                  </p>
+                </div>
+                <div className="mt-5 space-y-4">
+                  {troubleshooting.map((item) => (
+                    <div
+                      key={item}
+                      className="grid grid-cols-[20px_minmax(0,1fr)] gap-3 border-t border-border/14 pt-4 first:border-t-0 first:pt-0"
+                    >
+                      <span className="mt-1 text-foreground/52">•</span>
+                      <p className="text-[0.98rem] leading-7 text-foreground/64">{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </AnimatedSection>
+          </div>
+        </section>
+
+        <section className="mx-auto mt-18 max-w-6xl border-t border-border/18 pt-16">
+          <AnimatedSection>
+            <div className="rounded-[2rem] bg-white/8 px-6 py-14 text-center md:px-12 md:py-16">
+              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                Studio App
+              </p>
+              <h2 className="mx-auto mt-5 max-w-3xl font-sans text-[clamp(2.3rem,4.5vw,4rem)] font-medium leading-[1.02] tracking-[-0.055em] text-foreground">
+                Keep your 3D conversion workflow fast, local, and practical.
+              </h2>
+              <p className="mx-auto mt-5 max-w-2xl text-[1rem] leading-8 text-foreground/62">
+                Built for scenic production handoff between modeling packages and Vectorworks,
+                without adding another complicated pipeline.
+              </p>
+
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+                <a
+                  href={DOWNLOAD_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-[0.95rem] font-medium text-black transition-colors hover:bg-white/90"
+                >
+                  <MousePointerClick className="h-4 w-4" />
+                  Get Scenic 3D Converter
+                </a>
+                <Link
+                  href="/studio/apps"
+                  className="inline-flex items-center gap-2 rounded-full bg-white/10 px-5 py-3 text-[0.95rem] font-medium text-foreground transition-colors hover:bg-white/14"
+                >
+                  All studio apps
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
           </AnimatedSection>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>

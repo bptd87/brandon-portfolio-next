@@ -283,11 +283,11 @@ export default function Header() {
         <div className="container py-4">
           <nav className="flex items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="text-xl font-black tracking-tighter transition-all group relative">
-              <span className="relative group-hover:drop-shadow-[0_0_12px_rgba(33,150,243,0.6)] transition-all duration-300">
+            <Link href="/" className="group relative inline-flex flex-col items-start leading-none transition-all">
+              <span className="relative text-[1.18rem] font-black tracking-[-0.055em] transition-all duration-300 md:text-[1.22rem]">
                 BRANDON PT DAVIS
               </span>
-              <span className="block text-[10px] font-normal tracking-[0.2em] text-muted-foreground mt-0.5">
+              <span className="mt-1 pl-[0.08rem] text-[9px] font-medium uppercase tracking-[0.24em] text-muted-foreground md:text-[9.5px]">
                 SCENIC DESIGNER
               </span>
             </Link>
@@ -309,13 +309,13 @@ export default function Header() {
                   return (
                 <Link
                   href="/projects"
-                  className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-[#2196F3] relative group ${
-                    isPortfolioActive ? "text-[#2196F3]" : ""
+                  className={`relative flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.18em] transition-colors hover:text-foreground ${
+                    isPortfolioActive ? "text-foreground" : "text-foreground/66"
                   }`}
                 >
                   PORTFOLIO
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${portfolioOpen ? "rotate-180" : ""}`} />
-                  <ActiveUnderline active={isPortfolioActive} color="#2196F3" />
+                  <ActiveUnderline active={isPortfolioActive} color="rgba(255,255,255,0.92)" />
                 </Link>
                   );
                 })()}
@@ -323,7 +323,7 @@ export default function Header() {
                 {/* Dropdown Menu */}
                 {portfolioOpen && (
                   <div 
-                    className="absolute top-full left-0 mt-3 w-56 bg-popover backdrop-blur-xl border border-border rounded-lg overflow-hidden shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200"
+                    className="absolute top-full left-0 mt-3 w-60 overflow-hidden rounded-2xl border border-white/10 bg-background/85 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-200"
                     onMouseEnter={handlePortfolioMouseEnter}
                     onMouseLeave={handlePortfolioMouseLeave}
                   >
@@ -331,13 +331,12 @@ export default function Header() {
                       <Link
                         key={discipline.slug}
                         href={discipline.path}
-                        className="block px-5 py-3 text-sm font-semibold hover:bg-[#2196F3]/10 hover:text-[#2196F3] transition-all border-b border-border last:border-0 relative group"
+                        className="block border-b border-white/6 px-5 py-3 text-sm font-medium text-foreground/72 transition-colors hover:bg-white/5 hover:text-foreground last:border-0"
                       >
                         <span className="relative z-10 flex items-center">
                           {discipline.icon}
                           {discipline.name}
                         </span>
-                        <span className="absolute left-0 top-0 w-1 h-0 bg-[#2196F3] group-hover:h-full transition-all duration-300"></span>
                       </Link>
                     ))}
                   </div>
@@ -357,13 +356,13 @@ export default function Header() {
                   return (
                 <Link
                   href="/about"
-                  className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-[#4CAF50] relative group ${
-                    isAboutActive ? "text-[#4CAF50]" : ""
+                  className={`relative flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.18em] transition-colors hover:text-foreground ${
+                    isAboutActive ? "text-foreground" : "text-foreground/66"
                   }`}
                 >
                   ABOUT
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${aboutOpen ? "rotate-180" : ""}`} />
-                  <ActiveUnderline active={isAboutActive} color="#4CAF50" />
+                  <ActiveUnderline active={isAboutActive} color="rgba(255,255,255,0.92)" />
                 </Link>
                   );
                 })()}
@@ -371,7 +370,7 @@ export default function Header() {
                 {/* Dropdown Menu */}
                 {aboutOpen && (
                   <div 
-                    className="absolute top-full left-0 mt-3 w-56 bg-popover backdrop-blur-xl border border-border rounded-lg overflow-hidden shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200"
+                    className="absolute top-full left-0 mt-3 w-60 overflow-hidden rounded-2xl border border-white/10 bg-background/85 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-200"
                     onMouseEnter={handleAboutMouseEnter}
                     onMouseLeave={handleAboutMouseLeave}
                   >
@@ -379,13 +378,12 @@ export default function Header() {
                       <Link
                         key={page.slug}
                         href={page.slug}
-                        className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border last:border-0 relative group"
+                        className="block border-b border-white/6 px-5 py-3 text-sm font-medium text-foreground/72 transition-colors hover:bg-white/5 hover:text-foreground last:border-0"
                       >
                         <span className="relative z-10 flex items-center">
                           {page.icon}
                           {page.name}
                         </span>
-                        <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
                       </Link>
                     ))}
                   </div>
@@ -406,13 +404,13 @@ export default function Header() {
                   return (
                 <Link
                   href="/studio"
-                  className={`text-sm font-bold tracking-wide transition-all flex items-center gap-1.5 hover:text-[#9C27B0] relative group ${
-                    isStudioActive ? "text-[#9C27B0]" : ""
+                  className={`relative flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.18em] transition-colors hover:text-foreground ${
+                    isStudioActive ? "text-foreground" : "text-foreground/66"
                   }`}
                 >
                   STUDIO
                   <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${studioOpen ? "rotate-180" : ""}`} />
-                  <ActiveUnderline active={isStudioActive} color="#9C27B0" />
+                  <ActiveUnderline active={isStudioActive} color="rgba(255,255,255,0.92)" />
                 </Link>
                   );
                 })()}
@@ -420,49 +418,45 @@ export default function Header() {
                 {/* Dropdown Menu */}
                 {studioOpen && (
                   <div 
-                    className="absolute top-full left-0 mt-3 w-56 bg-popover backdrop-blur-xl border border-border rounded-lg overflow-hidden shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200"
+                    className="absolute top-full left-0 mt-3 w-60 overflow-hidden rounded-2xl border border-white/10 bg-background/85 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-200"
                     onMouseEnter={handleStudioMouseEnter}
                     onMouseLeave={handleStudioMouseLeave}
                   >
                     <Link
                       href="/articles"
-                      className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border relative group"
+                      className="block border-b border-white/6 px-5 py-3 text-sm font-medium text-foreground/72 transition-colors hover:bg-white/5 hover:text-foreground"
                     >
                       <span className="relative z-10 flex items-center">
                         <FileText className="w-[18px] h-[18px] mr-2" />
                         Articles
                       </span>
-                      <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
                     </Link>
                     <Link
                       href="/studio/tutorials"
-                      className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border relative group"
+                      className="block border-b border-white/6 px-5 py-3 text-sm font-medium text-foreground/72 transition-colors hover:bg-white/5 hover:text-foreground"
                     >
                       <span className="relative z-10 flex items-center">
                         <TutorialsIcon />
                         Tutorials
                       </span>
-                      <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
                     </Link>
                     <Link
                       href="/studio/apps"
-                      className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border relative group"
+                      className="block border-b border-white/6 px-5 py-3 text-sm font-medium text-foreground/72 transition-colors hover:bg-white/5 hover:text-foreground"
                     >
                       <span className="relative z-10 flex items-center">
                         <AppStudioIcon />
                         App Studio
                       </span>
-                      <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
                     </Link>
                     <Link
                       href="/studio/directory"
-                      className="block px-5 py-3 text-sm font-semibold hover:bg-foreground/10 hover:text-foreground transition-all border-b border-border relative group"
+                      className="block border-b border-white/6 px-5 py-3 text-sm font-medium text-foreground/72 transition-colors hover:bg-white/5 hover:text-foreground"
                     >
                       <span className="relative z-10 flex items-center">
                         <DirectoryIcon />
                         Scenic Directory
                       </span>
-                      <span className="absolute left-0 top-0 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300"></span>
                     </Link>
                   </div>
                 )}
@@ -471,7 +465,7 @@ export default function Header() {
               {/* Contact Button - Minimal White Frame */}
               <Link 
                 href="/contact" 
-                className="inline-flex items-center justify-center h-10 px-5 rounded-md border border-white/70 text-[11px] font-bold tracking-[0.14em] text-white uppercase hover:border-[#FF5722] hover:text-[#FF5722] transition-all duration-300"
+                className="inline-flex h-10 items-center justify-center rounded-full border border-white/24 px-5 text-[11px] font-medium uppercase tracking-[0.16em] text-white transition-colors duration-300 hover:border-white/40 hover:bg-white/5"
               >
                 CONTACT
               </Link>

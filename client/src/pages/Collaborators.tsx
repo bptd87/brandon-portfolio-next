@@ -180,34 +180,6 @@ export default function Collaborators() {
               repeat collaboration over time.
             </p>
 
-            {!isLoading && (
-              <div className="mx-auto mt-10 flex max-w-3xl flex-wrap items-center justify-center gap-x-8 gap-y-3 text-center">
-                <div>
-                  <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/36">
-                    Total
-                  </p>
-                  <p className="mt-2 text-[1.05rem] text-foreground/72">{collaboratorStats.total}</p>
-                </div>
-                <div>
-                  <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/36">
-                    Designers
-                  </p>
-                  <p className="mt-2 text-[1.05rem] text-foreground/72">{collaboratorStats.designers}</p>
-                </div>
-                <div>
-                  <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/36">
-                    Directors
-                  </p>
-                  <p className="mt-2 text-[1.05rem] text-foreground/72">{collaboratorStats.directors}</p>
-                </div>
-                <div>
-                  <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/36">
-                    Companies
-                  </p>
-                  <p className="mt-2 text-[1.05rem] text-foreground/72">{collaboratorStats.companies}</p>
-                </div>
-              </div>
-            )}
           </section>
 
           <section className="mx-auto mt-10 max-w-6xl">

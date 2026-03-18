@@ -1,13 +1,14 @@
 import { useState, useMemo } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { 
-  Database, Search, Copy, Check, ChevronLeft, ChevronRight,
+  Database, Search, Copy, Check, ChevronLeft, ChevronRight, ArrowLeft,
   Armchair, Table, Bed, Package, Layers,
   Monitor, Store, Users, Home, Ruler
 } from "lucide-react";
+import { SEO } from "@/components/SEO";
+import { Link } from "wouter";
 
 interface DimensionItem {
   name: string;
@@ -272,38 +273,40 @@ export default function DimensionReference() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background text-foreground">
+      <SEO
+        title="Dimension Reference | Scenic Design Standards"
+        description="Reference dimensions for furniture, theatre, experiential design, events, and architecture in a cleaner mobile-friendly lookup tool."
+      />
       <Header />
 
-      {/* Compact Hero with Header Image */}
-      <section className="relative h-[30vh] md:h-[35vh] overflow-hidden border-b border-border">
-        <img 
-          src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/BpqvvdMEYcpzDwGz.webp"
-          alt="Dimension Reference - Comprehensive database of dimensions" 
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/20" />
-        
-        <div className="absolute bottom-0 left-0 right-0 container max-w-5xl pb-4 md:pb-6">
-          <div className="flex items-center gap-2 mb-2">
-            <Database className="w-4 h-4 text-[#9C27B0]" />
-            <span className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
-              DIMENSION REFERENCE
-            </span>
-          </div>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-2">
-            Comprehensive Dimension Database
+      <main className="px-4 pb-24 pt-22 sm:px-6 md:pt-28">
+      <section className="mx-auto max-w-6xl border-b border-border/18 pb-10 md:pb-12">
+        <Link
+          href="/studio/apps"
+          className="inline-flex items-center gap-2 text-[0.92rem] font-medium text-foreground/56 transition-colors hover:text-foreground"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to Studio Apps
+        </Link>
+
+        <div className="mx-auto mt-6 max-w-4xl text-center md:mt-8">
+          <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+            Dimension Reference
+          </p>
+          <h1 className="mt-4 font-sans text-[clamp(2.4rem,7vw,5rem)] font-medium leading-[0.95] tracking-[-0.065em] text-foreground">
+            Standard dimensions for scenic, event, and architectural work.
           </h1>
-          <p className="text-sm md:text-base text-muted-foreground max-w-2xl">
-            Quick reference for architecture, theatre, experiential design, furniture, and event dimensions
+          <p className="mx-auto mt-5 max-w-3xl text-[0.98rem] leading-7 text-foreground/60 md:text-[1.08rem] md:leading-8">
+            A quick mobile-friendly lookup tool for common furniture, theatre, experiential, and
+            architecture dimensions.
           </p>
         </div>
       </section>
 
-      {/* Main Content */}
-      <section className="container max-w-5xl py-6 md:py-8">
-        {/* Search Bar */}
-        <div className="mb-6">
+      <section className="mx-auto mt-8 max-w-6xl md:mt-10">
+        <div className="px-1 py-1 sm:px-0 md:py-0">
+        <div className="mb-5 md:mb-6">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
@@ -311,21 +314,19 @@ export default function DimensionReference() {
               placeholder="Search dimensions..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
+              className="h-12 rounded-full border-transparent bg-black/18 pl-10 shadow-none"
             />
           </div>
         </div>
 
-        {/* Category Selector with Arrows */}
-        <div className="mb-8 relative">
-          <Button
-            size="icon"
-            variant="ghost"
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur-sm"
+        <div className="mb-6 relative md:mb-8">
+          <button
+            className="absolute left-0 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-background/80 text-foreground/54 backdrop-blur-sm transition-colors hover:text-foreground"
             onClick={() => scrollCategories('left')}
+            aria-label="Scroll categories left"
           >
             <ChevronLeft className="w-4 h-4" />
-          </Button>
+          </button>
           
           <div 
             id="category-scroll"
@@ -343,10 +344,10 @@ export default function DimensionReference() {
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-colors shrink-0 ${
+                  className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-[0.8rem] font-medium whitespace-nowrap transition-colors shrink-0 ${
                     isActive
-                      ? 'bg-[#9C27B0] text-white'
-                      : 'bg-card border border-border text-muted-foreground hover:bg-accent'
+                      ? 'bg-white text-black'
+                      : 'border border-white/8 bg-black/14 text-foreground/54 hover:text-foreground'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -356,50 +357,33 @@ export default function DimensionReference() {
             })}
           </div>
 
-          <Button
-            size="icon"
-            variant="ghost"
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur-sm"
+          <button
+            className="absolute right-0 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-background/80 text-foreground/54 backdrop-blur-sm transition-colors hover:text-foreground"
             onClick={() => scrollCategories('right')}
+            aria-label="Scroll categories right"
           >
             <ChevronRight className="w-4 h-4" />
-          </Button>
+          </button>
         </div>
 
-        {/* Results Count */}
-        <div className="mb-4 text-sm text-muted-foreground">
+        <div className="mb-5 text-sm text-foreground/44">
           {filteredDimensions.length} {filteredDimensions.length === 1 ? 'item' : 'items'} found
         </div>
 
-        {/* Dimension Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
           {filteredDimensions.map((item, index) => (
             <div
               key={index}
-              className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+              className="rounded-[1.15rem] bg-[#242424] p-4 transition-colors md:p-5"
             >
-              {/* Wireframe Image */}
-              {item.wireframe && (
-                <div className="aspect-[16/9] overflow-hidden">
-                  <img 
-                    src={item.wireframe} 
-                    alt={`Wireframe diagram of ${item.name}`}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              )}
-              
-              <div className="p-4">
                 <div className="flex items-start justify-between mb-3">
                 <div>
-                  <h3 className="font-semibold text-base mb-1">{item.name}</h3>
-                  <p className="text-xs text-muted-foreground">{item.category}</p>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-foreground/36">{item.category}</p>
+                  <h3 className="mt-2 font-sans text-[1.15rem] font-medium leading-[1.15] tracking-[-0.03em] text-foreground">{item.name}</h3>
                 </div>
-                <Button
-                  size="icon"
-                  variant="ghost"
+                <button
                   onClick={() => copyDimensions(item)}
-                  className="shrink-0"
+                  className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/6 text-foreground/60 transition-colors hover:bg-white/12 hover:text-foreground"
                   title="Copy Dimensions"
                 >
                   {copiedItem === item.name ? (
@@ -407,53 +391,52 @@ export default function DimensionReference() {
                   ) : (
                     <Copy className="w-4 h-4" />
                   )}
-                </Button>
+                </button>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 mb-3 pt-3 border-t border-border">
+              <div className="grid grid-cols-2 gap-3 mb-3 pt-4 border-t border-white/8">
                 {item.width && (
                   <div>
-                    <span className="text-[10px] text-muted-foreground block mb-0.5">WIDTH</span>
-                    <span className="font-medium text-sm">{item.width}</span>
+                    <span className="text-[10px] text-foreground/38 block mb-1 uppercase tracking-[0.16em]">Width</span>
+                    <span className="font-medium text-sm text-foreground/78">{item.width}</span>
                   </div>
                 )}
                 {item.depth && (
                   <div>
-                    <span className="text-[10px] text-muted-foreground block mb-0.5">DEPTH</span>
-                    <span className="font-medium text-sm">{item.depth}</span>
+                    <span className="text-[10px] text-foreground/38 block mb-1 uppercase tracking-[0.16em]">Depth</span>
+                    <span className="font-medium text-sm text-foreground/78">{item.depth}</span>
                   </div>
                 )}
                 {item.height && (
                   <div>
-                    <span className="text-[10px] text-muted-foreground block mb-0.5">HEIGHT</span>
-                    <span className="font-medium text-sm">{item.height}</span>
+                    <span className="text-[10px] text-foreground/38 block mb-1 uppercase tracking-[0.16em]">Height</span>
+                    <span className="font-medium text-sm text-foreground/78">{item.height}</span>
                   </div>
                 )}
                 {item.diameter && (
                   <div>
-                    <span className="text-[10px] text-muted-foreground block mb-0.5">DIAMETER</span>
-                    <span className="font-medium text-sm">{item.diameter}</span>
+                    <span className="text-[10px] text-foreground/38 block mb-1 uppercase tracking-[0.16em]">Diameter</span>
+                    <span className="font-medium text-sm text-foreground/78">{item.diameter}</span>
                   </div>
                 )}
               </div>
 
                 {(item.notes || item.jargon) && (
-                  <div className="bg-accent/50 rounded-lg p-3 text-xs space-y-2">
+                  <div className="border-t border-white/8 pt-3 text-xs space-y-2">
                     {item.notes && (
-                      <p className="text-muted-foreground">
-                        <span className="font-bold text-[#2196F3] mr-1">NOTE:</span>
+                      <p className="text-foreground/54 leading-6">
+                        <span className="font-semibold text-foreground/72 mr-1 uppercase tracking-[0.14em]">Note</span>
                         {item.notes}
                       </p>
                     )}
                     {item.jargon && (
-                      <p className="text-muted-foreground italic">
-                        <span className="font-bold text-[#9C27B0] mr-1">AKA:</span>
+                      <p className="text-foreground/50 italic leading-6">
+                        <span className="font-semibold text-foreground/68 mr-1 uppercase tracking-[0.14em]">AKA</span>
                         {item.jargon}
                       </p>
                     )}
                   </div>
                 )}
-              </div>
             </div>
           ))}
         </div>
@@ -461,10 +444,12 @@ export default function DimensionReference() {
         {filteredDimensions.length === 0 && (
           <div className="text-center py-20">
             <Database className="w-12 h-12 mx-auto mb-4 opacity-20" />
-            <p className="text-muted-foreground">No dimensions found matching "{searchQuery}"</p>
+            <p className="text-foreground/52">No dimensions found matching "{searchQuery}"</p>
           </div>
         )}
+        </div>
       </section>
+      </main>
 
       <Footer />
     </div>

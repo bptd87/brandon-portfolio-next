@@ -1,51 +1,104 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { useState, useMemo } from "react";
-import { PlayCircle, Clock, TrendingUp, ArrowRight, Search } from "lucide-react";
+import { useMemo, useState } from "react";
+import { ArrowRight, Clock, PlayCircle, Search, TrendingUp } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { Link } from "wouter";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { Input } from "@/components/ui/input";
+
+const categories = [
+  { slug: "getting-started", name: "Getting Started" },
+  { slug: "2d-drafting", name: "2D Drafting" },
+  { slug: "3d-modeling", name: "3D Modeling" },
+  { slug: "rendering", name: "Rendering" },
+];
+
+const difficulties = [
+  { slug: "beginner", name: "Beginner" },
+  { slug: "intermediate", name: "Intermediate" },
+  { slug: "advanced", name: "Advanced" },
+];
+
+const normalizeToken = (value: string | null | undefined) =>
+  String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+const getCategoryLabel = (value: string | null | undefined) => {
+  const normalized = normalizeToken(value);
+  return categories.find((category) => category.slug === normalized)?.name || value || "Tutorial";
+};
+
+const getDifficultyLabel = (value: string | null | undefined) => {
+  const normalized = normalizeToken(value);
+  return difficulties.find((difficulty) => difficulty.slug === normalized)?.name || value || "General";
+};
+
+const getTutorialSummary = (tutorial: any) => {
+  if (tutorial.description && String(tutorial.description).trim()) {
+    return tutorial.description;
+  }
+
+  const category = getCategoryLabel(tutorial.category);
+  const difficulty = getDifficultyLabel(tutorial.difficulty);
+  return `${category} tutorial covering ${tutorial.title.replace(/^Vectorworks Tutorial:\s*/i, "").replace(/^Vectorworks Quick Tip:\s*/i, "").trim()} with a ${difficulty.toLowerCase()} workflow focus.`;
+};
 
 export default function StudioTutorials() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortBy, setSortBy] = useState<"newest" | "alphabetical" | "duration">("newest");
 
   const { data: tutorials = [], isLoading } = trpc.tutorials.list.useQuery({ status: "published" });
 
-  // Slug comes from the database
+  const sortedTutorials = useMemo(() => {
+    const filtered = tutorials.filter((tutorial: any) => {
+      if (selectedCategory && normalizeToken(tutorial.category) !== selectedCategory) return false;
+      if (selectedDifficulty && normalizeToken(tutorial.difficulty) !== selectedDifficulty) return false;
+      if (searchQuery.trim()) {
+        const query = searchQuery.toLowerCase();
+        if (
+          !tutorial.title.toLowerCase().includes(query) &&
+          !tutorial.description?.toLowerCase().includes(query)
+        ) {
+          return false;
+        }
+      }
+      return true;
+    });
 
-  const categories = [
-    { slug: "getting-started", name: "Getting Started", color: "bg-blue-500/10 text-blue-500 border-blue-500/30" },
-    { slug: "2d-drafting", name: "2D Drafting", color: "bg-green-500/10 text-green-500 border-green-500/30" },
-    { slug: "3d-modeling", name: "3D Modeling", color: "bg-purple-500/10 text-purple-500 border-purple-500/30" },
-    { slug: "rendering", name: "Rendering", color: "bg-orange-500/10 text-orange-500 border-orange-500/30" },
-    { slug: "advanced", name: "Advanced", color: "bg-red-500/10 text-red-500 border-red-500/30" },
-  ];
+    return [...filtered].sort((a: any, b: any) => {
+      if (sortBy === "alphabetical") {
+        return String(a.title || "").localeCompare(String(b.title || ""));
+      }
+      if (sortBy === "duration") {
+        return Number(b.duration || 0) - Number(a.duration || 0);
+      }
+      return new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime();
+    });
+  }, [tutorials, selectedCategory, selectedDifficulty, searchQuery, sortBy]);
 
-  const difficulties = [
-    { slug: "beginner", name: "Beginner" },
-    { slug: "intermediate", name: "Intermediate" },
-    { slug: "advanced", name: "Advanced" },
-  ];
+  const hasActiveFilters = Boolean(selectedCategory || selectedDifficulty || searchQuery.trim());
+  const featuredTutorials = hasActiveFilters ? [] : sortedTutorials.slice(0, 3);
+  const tutorialIndex = hasActiveFilters ? sortedTutorials : sortedTutorials.slice(3);
 
-  const filteredTutorials = useMemo(() => tutorials.filter((tutorial: any) => {
-    if (selectedCategory && tutorial.category !== selectedCategory) return false;
-    if (selectedDifficulty && tutorial.difficulty !== selectedDifficulty) return false;
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
-      if (!tutorial.title.toLowerCase().includes(query) && !tutorial.description?.toLowerCase().includes(query)) return false;
+  const formatDuration = (duration: string | number | null | undefined) => {
+    if (!duration) return "10 min";
+    if (typeof duration === "string") {
+      const [mins] = duration.split(":");
+      return `${mins || duration} min`;
     }
-    return true;
-  }), [tutorials, selectedCategory, selectedDifficulty, searchQuery]);
-
-  const formatDuration = (seconds: number) => `${Math.floor(seconds / 60)} min`;
+    return `${Math.floor(duration / 60)} min`;
+  };
 
   return (
-    <div className="min-h-screen bg-background [background-image:radial-gradient(circle_at_12%_9%,rgba(255,87,34,0.10),transparent_34%),radial-gradient(circle_at_85%_16%,rgba(33,150,243,0.08),transparent_34%)]">
+    <div className="min-h-screen bg-background">
       <SEO
         title="Vectorworks Tutorials | Brandon PT Davis"
         description="Free Vectorworks tutorials for scenic designers. Step-by-step video lessons covering 2D drafting, 3D modeling, rendering, and advanced techniques for theatrical design."
@@ -66,7 +119,8 @@ export default function StudioTutorials() {
         collectionPage={{
           name: "Vectorworks Tutorials",
           url: "https://www.brandonptdavis.com/studio/tutorials",
-          description: "Structured tutorial paths for scenic designers using Vectorworks and rendering workflows.",
+          description:
+            "Structured tutorial paths for scenic designers using Vectorworks and rendering workflows.",
           about: "Tutorial videos and walkthroughs by Brandon PT Davis.",
           primaryImageOfPage: tutorials?.[0]?.cover_image || undefined,
           mainEntity: {
@@ -84,7 +138,8 @@ export default function StudioTutorials() {
         type="Course"
         course={{
           name: "Vectorworks Tutorials for Scenic Designers",
-          description: "A structured tutorial library covering drafting, modeling, rendering, and production-ready documentation workflows.",
+          description:
+            "A structured tutorial library covering drafting, modeling, rendering, and production-ready documentation workflows.",
           url: "https://www.brandonptdavis.com/studio/tutorials",
           provider: {
             name: "Brandon PT Davis",
@@ -105,231 +160,358 @@ export default function StudioTutorials() {
           ],
         }}
       />
+
       <Header />
 
-      <section className="pt-14 md:pt-20 pb-8">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <p className="text-xs tracking-[0.24em] text-muted-foreground mb-4 font-semibold uppercase">Studio / Tutorials</p>
-            <h1 className="text-5xl md:text-7xl font-serif tracking-tight leading-[0.92] mb-5">Vectorworks Tutorials</h1>
-            <p className="text-lg md:text-xl text-foreground/75 max-w-4xl leading-relaxed">
-              Structured tutorial paths for scenic designers, from drafting fundamentals to advanced modeling and rendering workflows.
-            </p>
+      <main className="px-6 pb-20 pt-24 md:pt-28">
+        <section className="mx-auto max-w-5xl border-b border-border/25 pb-12">
+          <p className="text-center font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+            Studio Tutorials
+          </p>
+          <h1 className="mx-auto mt-6 max-w-5xl text-center font-sans text-[clamp(3rem,6vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
+            Vectorworks tutorials for scenic designers.
+          </h1>
+          <p className="mx-auto mt-8 max-w-3xl text-center text-[1.08rem] leading-8 text-foreground/60 md:text-[1.16rem]">
+            A structured library of walkthroughs covering drafting, modeling, rendering, and
+            production-ready workflow for theatrical design.
+          </p>
 
-            <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
-              <div className="rounded-xl border border-border/60 bg-card/20 px-4 py-3">
-                <p className="text-[10px] uppercase tracking-[0.12em] text-muted-foreground">Total</p>
-                <p className="text-2xl font-semibold">{tutorials.length}</p>
-              </div>
-              <div className="rounded-xl border border-border/60 bg-card/20 px-4 py-3">
-                <p className="text-[10px] uppercase tracking-[0.12em] text-muted-foreground">Filtered</p>
-                <p className="text-2xl font-semibold">{filteredTutorials.length}</p>
-              </div>
-              <div className="rounded-xl border border-border/60 bg-card/20 px-4 py-3">
-                <p className="text-[10px] uppercase tracking-[0.12em] text-muted-foreground">Path</p>
-                <p className="text-sm text-foreground/75 mt-1">Beginner to Advanced</p>
-              </div>
-              <div className="rounded-xl border border-border/60 bg-card/20 px-4 py-3">
-                <p className="text-[10px] uppercase tracking-[0.12em] text-muted-foreground">Format</p>
-                <p className="text-sm text-foreground/75 mt-1">Video + Steps</p>
-              </div>
+          <div className="mx-auto mt-10 flex max-w-3xl flex-wrap items-center justify-center gap-x-8 gap-y-3 text-center">
+            <div>
+              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/36">
+                Tutorials
+              </p>
+              <p className="mt-2 text-[1.05rem] text-foreground/72">{tutorials.length}</p>
+            </div>
+            <div>
+              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/36">
+                Filtered
+              </p>
+              <p className="mt-2 text-[1.05rem] text-foreground/72">{sortedTutorials.length}</p>
+            </div>
+            <div>
+              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/36">
+                Difficulty
+              </p>
+              <p className="mt-2 text-[1.05rem] text-foreground/72">Beginner to Advanced</p>
+            </div>
+            <div>
+              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/36">
+                Format
+              </p>
+              <p className="mt-2 text-[1.05rem] text-foreground/72">Video + steps</p>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="container py-4">
-        <div className="max-w-6xl mx-auto rounded-2xl border border-border/60 bg-card/20 p-4 md:p-5">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Search tutorials by keyword..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery("")}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            )}
-          </div>
-          {searchQuery && (
-            <p className="mt-1.5 text-xs text-muted-foreground">
-              Found {filteredTutorials.length} tutorial{filteredTutorials.length !== 1 ? 's' : ''} matching "{searchQuery}"
-            </p>
-          )}
-          <div className="grid md:grid-cols-2 gap-4 mt-4">
-            <div className="min-w-0">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground mb-2">Category</h3>
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={() => setSelectedCategory(null)}
-                  className={`px-3 py-1.5 rounded-full text-[11px] font-semibold uppercase tracking-[0.08em] transition-all duration-200 border ${selectedCategory === null
-                    ? 'bg-primary text-primary-foreground border-primary shadow-lg'
-                    : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
-                    }`}
-                >
-                  All Categories
-                </button>
-                {categories.map(category => (
+        <section className="mx-auto mt-10 max-w-6xl border-b border-border/20 pb-8">
+          <div className="flex flex-col gap-6">
+            <div className="relative w-full md:max-w-sm">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                placeholder="Search tutorials..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="h-10 rounded-full border-border/60 bg-background pl-9 text-sm"
+              />
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-3">
+              <div>
+                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/36">
+                  Category
+                </p>
+                <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
                   <button
-                    key={category.slug}
-                    onClick={() => setSelectedCategory(category.slug)}
-                    className={`px-3 py-1.5 rounded-full text-[11px] font-semibold uppercase tracking-[0.08em] transition-all duration-200 border ${selectedCategory === category.slug
-                      ? category.color + ' shadow-lg'
-                      : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
-                      }`}
-                  >
-                    {category.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="min-w-0">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground mb-2">Difficulty</h3>
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={() => setSelectedDifficulty(null)}
-                  className={`px-3 py-1.5 rounded-full text-[11px] font-semibold uppercase tracking-[0.08em] transition-all duration-200 border ${selectedDifficulty === null
-                    ? 'bg-primary text-primary-foreground border-primary shadow-lg'
-                    : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
+                    onClick={() => setSelectedCategory(null)}
+                    className={`border-b pb-1 text-[0.86rem] font-medium tracking-[-0.02em] transition-colors ${
+                      selectedCategory === null
+                        ? "border-foreground/45 text-foreground"
+                        : "border-transparent text-foreground/44 hover:text-foreground/74"
                     }`}
-                >
-                  All Levels
-                </button>
-                {difficulties.map(difficulty => (
-                  <button
-                    key={difficulty.slug}
-                    onClick={() => setSelectedDifficulty(difficulty.slug)}
-                    className={`px-3 py-1.5 rounded-full text-[11px] font-semibold uppercase tracking-[0.08em] transition-all duration-200 border ${selectedDifficulty === difficulty.slug
-                      ? 'bg-primary text-primary-foreground border-primary shadow-lg'
-                      : 'bg-background border-border text-muted-foreground hover:border-primary hover:text-foreground'
-                      }`}
                   >
-                    {difficulty.name}
+                    All
                   </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="container py-16 overflow-visible">
-        <div className="max-w-6xl mx-auto">
-        {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="animate-pulse">
-                <div className="aspect-video bg-muted rounded-t-lg" />
-                <div className="p-4 space-y-3 bg-card rounded-b-lg border border-t-0 border-border">
-                  <div className="h-5 bg-muted rounded w-3/4" />
-                  <div className="h-4 bg-muted rounded w-full" />
-                  <div className="h-4 bg-muted rounded w-1/2" />
+                  {categories.map((category) => (
+                    <button
+                      key={category.slug}
+                      onClick={() => setSelectedCategory(category.slug)}
+                      className={`border-b pb-1 text-[0.86rem] font-medium tracking-[-0.02em] transition-colors ${
+                        selectedCategory === category.slug
+                          ? "border-foreground/45 text-foreground"
+                          : "border-transparent text-foreground/44 hover:text-foreground/74"
+                      }`}
+                    >
+                      {category.name}
+                    </button>
+                  ))}
                 </div>
               </div>
-            ))}
+
+              <div>
+                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/36">
+                  Difficulty
+                </p>
+                <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
+                  <button
+                    onClick={() => setSelectedDifficulty(null)}
+                    className={`border-b pb-1 text-[0.86rem] font-medium tracking-[-0.02em] transition-colors ${
+                      selectedDifficulty === null
+                        ? "border-foreground/45 text-foreground"
+                        : "border-transparent text-foreground/44 hover:text-foreground/74"
+                    }`}
+                  >
+                    All levels
+                  </button>
+                  {difficulties.map((difficulty) => (
+                    <button
+                      key={difficulty.slug}
+                      onClick={() => setSelectedDifficulty(difficulty.slug)}
+                      className={`border-b pb-1 text-[0.86rem] font-medium tracking-[-0.02em] transition-colors ${
+                        selectedDifficulty === difficulty.slug
+                          ? "border-foreground/45 text-foreground"
+                          : "border-transparent text-foreground/44 hover:text-foreground/74"
+                      }`}
+                    >
+                      {difficulty.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/36">
+                  Sort
+                </p>
+                <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
+                  <button
+                    onClick={() => setSortBy("newest")}
+                    className={`border-b pb-1 text-[0.86rem] font-medium tracking-[-0.02em] transition-colors ${
+                      sortBy === "newest"
+                        ? "border-foreground/45 text-foreground"
+                        : "border-transparent text-foreground/44 hover:text-foreground/74"
+                    }`}
+                  >
+                    Newest
+                  </button>
+                  <button
+                    onClick={() => setSortBy("alphabetical")}
+                    className={`border-b pb-1 text-[0.86rem] font-medium tracking-[-0.02em] transition-colors ${
+                      sortBy === "alphabetical"
+                        ? "border-foreground/45 text-foreground"
+                        : "border-transparent text-foreground/44 hover:text-foreground/74"
+                    }`}
+                  >
+                    A-Z
+                  </button>
+                  <button
+                    onClick={() => setSortBy("duration")}
+                    className={`border-b pb-1 text-[0.86rem] font-medium tracking-[-0.02em] transition-colors ${
+                      sortBy === "duration"
+                        ? "border-foreground/45 text-foreground"
+                        : "border-transparent text-foreground/44 hover:text-foreground/74"
+                    }`}
+                  >
+                    Duration
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
+        </section>
+
+        {isLoading ? (
+          <section className="mx-auto max-w-6xl py-14">
+            <div className="grid gap-6 lg:grid-cols-3">
+              {[...Array(3)].map((_, index) => (
+                <div
+                  key={index}
+                  className="overflow-hidden rounded-[1.25rem] border border-border/20 bg-card/10"
+                >
+                  <div className="aspect-[16/10] animate-pulse bg-muted" />
+                  <div className="p-5">
+                    <div className="h-5 w-24 rounded bg-muted" />
+                    <div className="mt-4 h-7 w-48 rounded bg-muted" />
+                    <div className="mt-4 h-4 w-full rounded bg-muted" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-visible items-stretch">
-            {filteredTutorials.map((tutorial: any) => {
-              const slug = tutorial.slug || tutorial.id.toString();
-              return (
-                <Link key={tutorial.id} href={`/studio/tutorials/${slug}`}>
-                  <Card className="group h-full hover:shadow-xl transition-all duration-300 overflow-hidden border border-border hover:border-[#2196F3]/50 rounded-lg bg-card py-0 gap-0 flex flex-col">
-                    <div className="relative aspect-video bg-muted overflow-hidden">
-                      <img
-                        src={tutorial.cover_image}
-                        alt={tutorial.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center">
-                          <PlayCircle className="w-8 h-8 text-black fill-white" />
+          <>
+            {featuredTutorials.length > 0 && (
+              <section className="mx-auto max-w-6xl py-14">
+                <div className="max-w-3xl">
+                  <h2 className="font-sans text-[clamp(2rem,4vw,3.2rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">
+                    Start here.
+                  </h2>
+                  <p className="mt-6 text-[1.04rem] leading-8 text-foreground/60 md:text-[1.1rem]">
+                    A few recommended tutorials to anchor the library. These are good entry points
+                    into drafting, modeling, and scenic workflow.
+                  </p>
+                </div>
+
+                <div className="mt-10 grid gap-6 lg:grid-cols-3">
+                  {featuredTutorials.map((tutorial: any) => {
+                    const slug = tutorial.slug || tutorial.id.toString();
+                    return (
+                      <Link key={tutorial.id} href={`/studio/tutorials/${slug}`} className="group block">
+                        <div className="overflow-hidden rounded-[1.25rem] border border-border/20 bg-card/10 transition-colors hover:border-border/40">
+                          <div className="relative aspect-[16/10] overflow-hidden">
+                            <img
+                              src={tutorial.cover_image}
+                              alt={tutorial.title}
+                              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).style.display = "none";
+                              }}
+                            />
+                            <div className="absolute bottom-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-black/72 px-3 py-1.5 text-[0.74rem] font-medium text-white backdrop-blur-sm">
+                              <Clock className="h-3.5 w-3.5" />
+                              {formatDuration(tutorial.duration)}
+                            </div>
+                          </div>
+
+                          <div className="p-5">
+                            <div className="flex items-center justify-between gap-3">
+                              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.22em] text-foreground/38">
+                                {getCategoryLabel(tutorial.category)}
+                              </p>
+                              {tutorial.difficulty && (
+                                <p className="text-[0.76rem] uppercase tracking-[0.14em] text-foreground/44">
+                                  {getDifficultyLabel(tutorial.difficulty)}
+                                </p>
+                              )}
+                            </div>
+                            <h3 className="mt-3 font-sans text-[1.34rem] font-medium leading-[1.08] tracking-[-0.04em] text-foreground">
+                              {tutorial.title}
+                            </h3>
+                            <p className="mt-4 text-[0.96rem] leading-7 text-foreground/58">
+                              {getTutorialSummary(tutorial)}
+                            </p>
+                            <div className="mt-6 inline-flex items-center gap-2 text-[0.9rem] font-medium text-foreground/72 transition-colors group-hover:text-foreground">
+                              <PlayCircle className="h-4 w-4" />
+                              <span>Watch tutorial</span>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                      <div className="absolute bottom-3 right-3 bg-black/90 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded flex items-center gap-1.5">
-                        <Clock className="w-3 h-3" />
-                        {formatDuration(tutorial.duration)}
-                      </div>
-                    </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </section>
+            )}
 
-                    <CardContent className="p-5 flex flex-col flex-1 bg-card">
-                      <div className="flex items-center justify-between gap-3 mb-3">
-                        <Badge variant="outline" className="text-[10px] uppercase tracking-[0.12em]">
-                          {tutorial.category?.replace("-", " ") || "Tutorial"}
-                        </Badge>
-                        {tutorial.difficulty && (
-                          <span className="text-[10px] uppercase tracking-[0.12em] text-foreground/60">{tutorial.difficulty}</span>
-                        )}
+            <section className="mx-auto max-w-6xl border-t border-border/20 py-14">
+              <div className="max-w-3xl">
+                <h2 className="font-sans text-[clamp(2rem,4vw,3.2rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">
+                  Tutorial index.
+                </h2>
+                <p className="mt-6 text-[1.04rem] leading-8 text-foreground/60 md:text-[1.1rem]">
+                  Browse the full library as a cleaner index. Use the filters above to narrow by
+                    category or difficulty.
+                  </p>
+                </div>
+
+              <div className="mt-10 divide-y divide-border/18 border-t border-border/18">
+                {tutorialIndex.map((tutorial: any) => {
+                  const slug = tutorial.slug || tutorial.id.toString();
+                  return (
+                    <Link
+                      key={tutorial.id}
+                      href={`/studio/tutorials/${slug}`}
+                      className="grid items-start gap-4 py-5 transition-colors hover:bg-white/[0.02] md:grid-cols-[minmax(0,1.2fr)_120px_minmax(0,1.6fr)_auto]"
+                    >
+                      <div>
+                        <p className="font-sans text-[1.05rem] font-medium leading-[1.15] tracking-[-0.03em] text-foreground">
+                          {tutorial.title}
+                        </p>
+                        <p className="mt-2 text-[0.82rem] leading-5 text-foreground/38">
+                          {getCategoryLabel(tutorial.category)}
+                        </p>
                       </div>
-                      <h3 className="font-semibold text-lg leading-snug group-hover:text-[#2196F3] transition-colors line-clamp-2 min-h-[3.4rem]">
-                        {tutorial.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3 min-h-[4.2rem] mt-2">
-                        {tutorial.description}
+
+                      <div className="text-[0.84rem] leading-6 text-foreground/46">
+                        {getDifficultyLabel(tutorial.difficulty)}
+                      </div>
+
+                      <p className="max-w-2xl text-[0.96rem] leading-7 text-foreground/58">
+                        {getTutorialSummary(tutorial)}
                       </p>
-                      <div className="mt-auto pt-4 inline-flex items-center gap-2 text-xs font-semibold text-[#2196F3] uppercase tracking-[0.12em]">
-                        Watch Tutorial <ArrowRight className="w-3.5 h-3.5" />
+
+                      <div className="inline-flex items-center gap-2 text-[0.84rem] font-medium text-foreground/48">
+                        <span>{formatDuration(tutorial.duration)}</span>
+                        <ArrowRight className="h-3.5 w-3.5" />
                       </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              );
-            })}
-          </div>
+                    </Link>
+                  );
+                })}
+              </div>
+
+              {tutorialIndex.length === 0 && sortedTutorials.length > 0 && (
+                <div className="mt-8 text-[0.92rem] text-foreground/42">
+                  The current filter set is showing everything in the library.
+                </div>
+              )}
+            </section>
+          </>
         )}
 
-        {!isLoading && filteredTutorials.length === 0 && (
-          <div className="text-center py-16">
-            <p className="text-muted-foreground text-lg">No tutorials found matching your filters.</p>
+        {!isLoading && sortedTutorials.length === 0 && (
+          <section className="mx-auto max-w-6xl py-20 text-center">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/6">
+              <Search className="h-6 w-6 text-muted-foreground" />
+            </div>
+            <h3 className="mt-6 font-sans text-[1.5rem] font-medium tracking-[-0.04em] text-foreground">
+              No tutorials found
+            </h3>
+            <p className="mx-auto mt-3 max-w-md text-[0.98rem] leading-7 text-foreground/56">
+              Try another category, difficulty level, or search term.
+            </p>
             <button
-              onClick={() => { setSelectedCategory(null); setSelectedDifficulty(null); }}
-              className="mt-4 text-primary hover:underline font-semibold"
+              onClick={() => {
+                setSelectedCategory(null);
+                setSelectedDifficulty(null);
+                setSearchQuery("");
+                setSortBy("newest");
+              }}
+              className="mt-6 text-[0.92rem] font-medium text-foreground/72 transition-colors hover:text-foreground"
             >
-              Clear all filters
+              Clear filters
             </button>
-          </div>
+          </section>
         )}
-        </div>
-      </section>
 
-      <section className="container pb-24">
-        <div className="max-w-6xl mx-auto bg-gradient-to-br from-[#2196F3]/10 to-transparent border border-[#2196F3]/30 rounded-2xl p-10 md:p-12">
-            <h2 className="text-2xl md:text-3xl font-serif tracking-tight mb-4">Looking for More?</h2>
-          <p className="text-muted-foreground mb-6 max-w-2xl">
-            These tutorials are designed to complement your scenic design education. For official Vectorworks
-            training and certification, visit Vectorworks University.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <a
-              href="https://university.vectorworks.net/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#2196F3] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#1976D2] transition-colors"
-            >
-              Visit Vectorworks University
-              <TrendingUp className="w-4 h-4" />
-            </a>
-            <a
-              href="/articles?category=technology-tutorials"
-              className="inline-flex items-center gap-2 bg-background border-2 border-border px-6 py-3 rounded-lg font-semibold hover:border-[#2196F3] transition-colors"
-            >
-              Read Related Articles
-            </a>
+        <section className="mx-auto max-w-[108rem] border-t border-border/25 pt-20">
+          <div className="rounded-[2rem] border border-white/8 bg-white/[0.06] px-6 py-16 text-center md:px-12 md:py-20">
+            <h2 className="mx-auto max-w-4xl font-sans text-[clamp(2.4rem,4.5vw,4.2rem)] font-medium leading-[1.02] tracking-[-0.06em] text-foreground">
+              Keep learning beyond the tutorial library.
+            </h2>
+            <p className="mx-auto mt-6 max-w-2xl text-[1rem] leading-8 text-foreground/58">
+              For official software training and deeper certification pathways, continue into the
+              wider Vectorworks ecosystem or related scenic design articles.
+            </p>
+            <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <a
+                href="https://university.vectorworks.net/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-11 items-center gap-2 rounded-full bg-white px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-black transition-colors hover:bg-white/92"
+              >
+                <span>Visit Vectorworks University</span>
+                <TrendingUp className="h-4 w-4" />
+              </a>
+              <a
+                href="/articles?category=technology-tutorials"
+                className="inline-flex h-11 items-center gap-2 rounded-full bg-white/10 px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-foreground transition-colors hover:bg-white/14"
+              >
+                <span>Read Related Articles</span>
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>

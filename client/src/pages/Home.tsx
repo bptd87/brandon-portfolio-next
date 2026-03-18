@@ -1,17 +1,14 @@
-import { type CSSProperties, type MouseEvent } from "react";
+import { type MouseEvent } from "react";
 import { useLocation } from "wouter";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { SEO } from "@/components/SEO";
 import { ProjectGridSkeleton } from "@/components/SkeletonLoaders";
 import { StickyShowcase } from "@/components/StickyShowcase";
 import StructuredData from "@/components/StructuredData";
 import { trpc } from "@/lib/trpc";
 import { getProjectPath } from "@/lib/projectRoutes";
-
-const ACCENT_COLORS = ["#FF5722", "#00BCD4", "#E91E63", "#FFC107", "#9C27B0"] as const;
 
 export default function Home() {
   const [, setLocation] = useLocation();
@@ -27,8 +24,8 @@ export default function Home() {
   const sideProjects = remainingProjects.slice(0, 3);
   const gridProjects = remainingProjects.slice(3);
   const scenicAlt = (title: string) => `${title} scenic design by Brandon PT Davis`;
-  const homepageIntro =
-    "Brandon PT Davis is a scenic designer creating story-driven environments for regional theatre, summer stock, and academic production.";
+  const heroTitle = "Scenic Design by Brandon PT Davis";
+  const heroIntro = "Selected scenic design work for stage.";
 
   const animateCardDeparture = async (target: HTMLElement) => {
     const card = target.querySelector(".transition-card") as HTMLElement | null;
@@ -181,74 +178,38 @@ export default function Home() {
           <ProjectGridSkeleton />
         ) : featuredProject ? (
           <>
-            <StickyShowcase
-              accentColors={ACCENT_COLORS}
-              featuredItem={featuredProject}
-              intro={homepageIntro}
-              itemAlt={scenicAlt}
-              itemHref={getProjectPath}
-              onNavigate={navigateWithTransition}
-              railItems={sideProjects}
-              title="Scenic Design by Brandon PT Davis"
-            />
-
-            <section className="pb-20 pt-16 md:pb-28 md:pt-20">
+            <section className="relative overflow-hidden border-b border-border/40 pb-10 pt-24 md:pb-14 md:pt-32">
+              <div className="pointer-events-none absolute inset-0">
+                <div className="hero-stage-panel absolute inset-x-0 inset-y-0" />
+                <div className="hero-stage-sweep absolute left-[8%] top-[14%] h-48 w-[72%] rounded-full blur-3xl md:left-[14%] md:top-[18%] md:h-56 md:w-[58%]" />
+                <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-background" />
+              </div>
               <div className="container max-w-6xl">
-                <div className="mt-16 border-t border-border/35 pt-8 md:mt-20 md:pt-10">
-                  <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
-                    Selected Productions
+                <div className="relative max-w-4xl py-2">
+                  <h1 className="max-w-[13ch] font-sans text-[clamp(2.7rem,6vw,5.6rem)] font-medium leading-[0.92] tracking-[-0.065em] text-foreground">
+                    {heroTitle}
+                  </h1>
+                  <p className="mt-6 max-w-2xl text-[1rem] leading-7 text-foreground/62 md:text-[1.08rem] md:leading-8">
+                    {heroIntro}
                   </p>
-                  <h2 className="max-w-[14ch] font-sans text-[clamp(1.65rem,2.8vw,2.35rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-foreground">
-                    More scenic design work.
-                  </h2>
-                </div>
-
-                <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 md:mt-10">
-                  {gridProjects.map((project, index) => {
-                    const href = getProjectPath(project);
-
-                    return (
-                      <a
-                        key={project.id}
-                        href={href}
-                        onClick={(event) => navigateWithTransition(event, href)}
-                      >
-                        <div className="group">
-                          <div
-                            className="transition-card relative aspect-[1/1] overflow-hidden rounded-md bg-background/50"
-                            style={
-                              { viewTransitionName: `project-card-${project.slug}` } as CSSProperties
-                            }
-                          >
-                            {project.coverImageUrl ? (
-                              <ProgressiveImage
-                                src={project.coverImageUrl}
-                                alt={scenicAlt(project.title)}
-                                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                                aspectRatio="1/1"
-                                smartPosition={true}
-                                loading={index < 8 ? "eager" : "lazy"}
-                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 25vw, 20vw"
-                              />
-                            ) : (
-                              <div className="h-full w-full bg-muted" />
-                            )}
-                          </div>
-                          <div className="pt-4">
-                            <p
-                              className="text-[1.02rem] font-normal tracking-[-0.02em]"
-                              style={{ color: ACCENT_COLORS[index % ACCENT_COLORS.length] }}
-                            >
-                              {project.title}
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                    );
-                  })}
                 </div>
               </div>
             </section>
+
+            <StickyShowcase
+              continuationItems={gridProjects}
+              desktopColumns={4}
+              featuredItem={featuredProject}
+              hideFeaturedCredit={true}
+              itemAlt={scenicAlt}
+              itemHref={getProjectPath}
+              leadAspectClassName="lg:aspect-[3/2]"
+              leadImageAspectRatio="3/2"
+              leadTitleClassName="max-w-[14ch] text-[clamp(2rem,3.8vw,3.45rem)] font-medium leading-[0.94] tracking-[-0.06em]"
+              onNavigate={navigateWithTransition}
+              railItems={sideProjects}
+              title={featuredProject.title}
+            />
           </>
         ) : null}
       </main>

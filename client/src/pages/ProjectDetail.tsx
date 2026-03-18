@@ -46,9 +46,6 @@ function inferEncodingFormat(url: string): string | undefined {
   return undefined;
 }
 
-// Color rotation for consistency with homepage
-const ACCENT_COLORS = ['#FF5722', '#00BCD4', '#E91E63', '#FFC107', '#9C27B0'];
-
 export default function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
   const [location] = useLocation();
@@ -138,13 +135,13 @@ export default function ProjectDetail() {
   const normalizedTitle = project.title.trim().toLowerCase();
   const normalizedClient = (project.client || "").trim().toLowerCase();
   const showProductionName = !!normalizedClient && normalizedClient !== normalizedTitle;
+  const projectYearLabel = project.year ? String(project.year) : null;
   const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const projectDateLabel = project.year
     ? project.month && project.month >= 1 && project.month <= 12
       ? `${monthNames[project.month - 1]} ${project.year}`
       : `${project.year}`
     : null;
-  const locationDateLabel = [project.location, projectDateLabel].filter(Boolean).join(" • ");
 
   const rawExternalArticles = (project as any).externalArticles;
   const externalArticles = (() => {
@@ -177,9 +174,6 @@ export default function ProjectDetail() {
 
   // Get related projects excluding current one
   const relatedProjectsFiltered = relatedProjects?.filter(p => p.id !== project.id) || [];
-
-  // Determine accent color per project (stable, full 5-color rotation)
-  const accentColor = ACCENT_COLORS[Math.abs(project.id) % ACCENT_COLORS.length] || ACCENT_COLORS[0];
 
   // Prepare creative work schema data
   const projectImages = lightboxSourceImages.slice(0, 20).map((img, index) => ({
@@ -224,7 +218,6 @@ export default function ProjectDetail() {
       : `More ${disciplineLabel}`;
   const featuredMedia = mediaItems[0] || null;
   const secondaryMedia = mediaItems.slice(1);
-  const venueDateLabel = [project.client, projectDateLabel].filter(Boolean).join(" • ");
   const openLightboxFor = (imageId: number) => {
     setLightboxImages(lightboxSourceImages);
     const lightboxIndexFromId = lightboxSourceImages.findIndex((img) => img.id === imageId);
@@ -243,7 +236,7 @@ export default function ProjectDetail() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-foreground" style={{ '--accent-color': accentColor } as React.CSSProperties}>
+    <div className="min-h-screen bg-black text-foreground">
       <div className="relative">
         <SEO
           title={`${project.title} | Brandon PT Davis`}
@@ -296,52 +289,23 @@ export default function ProjectDetail() {
       <Header />
 
       <main className="pb-20">
-        <section className="container max-w-6xl pt-8 md:pt-10">
+        <section className="container max-w-6xl pt-6 md:pt-8">
           <AnimatedSection>
-            <div className="pt-10">
-              <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-14">
-                <div className="space-y-6 text-center">
-                  <div className="flex flex-wrap items-center justify-center gap-4 text-[0.96rem] tracking-[-0.02em] text-foreground/58">
-                    {projectDateLabel ? <span>{projectDateLabel}</span> : null}
-                    {project.client ? <span>{project.client}</span> : null}
-                    {!project.client && project.subcategory ? <span>{project.subcategory}</span> : null}
-                  </div>
-
+            <div className="pt-6 md:pt-8">
+              <div className="grid gap-10">
+                <div className="space-y-6 text-left">
                   <div className="space-y-4">
-                    <h1 className="mx-auto max-w-[16ch] font-sans text-[clamp(2rem,4.2vw,3.95rem)] font-normal leading-[0.95] tracking-[-0.05em] text-foreground">
+                    <h1 className="max-w-[12ch] font-sans text-[clamp(2.65rem,5.6vw,5.35rem)] font-normal leading-[0.92] tracking-[-0.065em] text-foreground">
                       {project.title}
                     </h1>
-                    {project.subcategory && project.client ? (
-                      <p className="text-[0.96rem] tracking-[-0.01em] text-foreground/46">
-                        {disciplineLabel} {project.subcategory ? `• ${project.subcategory}` : ""}
-                      </p>
-                    ) : null}
-                  </div>
-
-                  {project.excerpt ? (
-                    <p className="mx-auto max-w-[42rem] text-[clamp(1rem,1.3vw,1.28rem)] leading-[1.52] tracking-[-0.018em] text-foreground/78">
-                      {project.excerpt}
-                    </p>
-                  ) : null}
-
-                  <div className="mx-auto flex w-full max-w-[18rem] justify-center border-t border-border/35 pt-5">
-                    <button
-                      type="button"
-                      onClick={handleCopyLink}
-                      className="inline-flex items-center gap-3 rounded-full px-4 py-2 text-[0.98rem] tracking-[-0.02em] text-foreground/70 transition-colors hover:bg-white/[0.03] hover:text-foreground"
-                    >
-                      {linkCopied ? <Check className="h-4.5 w-4.5" /> : <Link2 className="h-4.5 w-4.5" />}
-                      <span>{linkCopied ? "Link copied" : "Share"}</span>
-                    </button>
                   </div>
                 </div>
-                <div aria-hidden="true" className="hidden lg:block" />
               </div>
             </div>
           </AnimatedSection>
         </section>
 
-        <section className="container max-w-6xl pt-10 md:pt-12">
+        <section className="container max-w-6xl pt-4 md:pt-6">
           <AnimatedSection>
             <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-14">
               <div className="space-y-6">
@@ -436,11 +400,47 @@ export default function ProjectDetail() {
               </div>
 
               <aside className="space-y-10 lg:sticky lg:top-28 lg:self-start">
+                <section className="border-t border-border/35 pt-6">
+                  <div className="space-y-5">
+                    {project.client || project.subcategory ? (
+                      <div className="space-y-1.5">
+                        <div className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+                          Venue
+                        </div>
+                        <p className="text-[0.98rem] tracking-[-0.02em] text-foreground/72">
+                          {project.client || project.subcategory}
+                        </p>
+                      </div>
+                    ) : null}
+
+                    {project.location ? (
+                      <div className="space-y-1.5">
+                        <div className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+                          Locale
+                        </div>
+                        <p className="text-[0.98rem] tracking-[-0.02em] text-foreground/72">
+                          {project.location}
+                        </p>
+                      </div>
+                    ) : null}
+
+                    {projectYearLabel ? (
+                      <div className="space-y-1.5">
+                        <div className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+                          Year
+                        </div>
+                        <p className="text-[0.98rem] tracking-[-0.02em] text-foreground/72">
+                          {projectYearLabel}
+                        </p>
+                      </div>
+                    ) : null}
+                  </div>
+                </section>
+
                 {creativeTeamArray.length > 0 ? (
                   <section className="border-t border-border/35 pt-6">
                     <p
-                      className="text-[11px] uppercase tracking-[0.18em]"
-                      style={{ color: accentColor }}
+                      className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40"
                     >
                       Creative Team
                     </p>
@@ -471,8 +471,7 @@ export default function ProjectDetail() {
                 {cleanedDesignNotes ? (
                   <section className="border-t border-border/35 pt-6">
                     <p
-                      className="text-[11px] uppercase tracking-[0.18em]"
-                      style={{ color: accentColor }}
+                      className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40"
                     >
                       Design Notes
                     </p>
@@ -485,7 +484,6 @@ export default function ProjectDetail() {
                           type="button"
                           onClick={() => setShowFullNotes((prev) => !prev)}
                           className="mt-4 text-xs font-semibold uppercase tracking-[0.14em] text-foreground/58 hover:text-foreground"
-                          style={{ color: accentColor }}
                         >
                           {showFullNotes ? "Show Less" : "Read Full Notes"}
                         </button>
@@ -497,10 +495,9 @@ export default function ProjectDetail() {
                 {externalArticles.length > 0 ? (
                   <section className="border-t border-border/35 pt-6">
                     <p
-                      className="text-[11px] uppercase tracking-[0.18em]"
-                      style={{ color: accentColor }}
+                      className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40"
                     >
-                      Public Articles
+                      Links
                     </p>
 
                     <div className="mt-6 space-y-8">
@@ -555,6 +552,22 @@ export default function ProjectDetail() {
                   </section>
                 ) : null}
 
+                <section className="border-t border-border/35 pt-6">
+                  <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+                    Share
+                  </p>
+                  <div className="pt-5">
+                    <button
+                      type="button"
+                      onClick={handleCopyLink}
+                      className="inline-flex items-center gap-3 rounded-full px-4 py-2 text-[0.98rem] tracking-[-0.02em] text-foreground/70 transition-colors hover:bg-white/[0.03] hover:text-foreground"
+                    >
+                      {linkCopied ? <Check className="h-4.5 w-4.5" /> : <Link2 className="h-4.5 w-4.5" />}
+                      <span>{linkCopied ? "Link copied" : "Share project"}</span>
+                    </button>
+                  </div>
+                </section>
+
               </aside>
             </div>
           </AnimatedSection>
@@ -566,11 +579,11 @@ export default function ProjectDetail() {
           {relatedProjectsFiltered.length > 0 ? (
             <AnimatedSection>
               <div>
-                <h2 className="mb-8 text-sm font-semibold tracking-[0.22em] uppercase text-foreground/65">
+                <h2 className="mb-8 font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
                   {moreProjectsLabel}
                 </h2>
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-                  {relatedProjectsFiltered.map((relatedProject, idx) => (
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
+                  {relatedProjectsFiltered.map((relatedProject) => (
                     <Link key={relatedProject.id} href={getProjectPath(relatedProject)}>
                       <a className="group block">
                         <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-black/85">
@@ -582,19 +595,21 @@ export default function ProjectDetail() {
                               aspectRatio="1/1"
                               smartPosition={true}
                               loading="lazy"
-                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
                             />
                           ) : (
                             <div className="h-full w-full bg-muted" />
                           )}
                         </div>
                         <div className="pt-3">
-                          <h3
-                            className="text-[1.02rem] font-normal tracking-[-0.02em] transition-colors group-hover:text-foreground"
-                            style={{ color: ACCENT_COLORS[idx % ACCENT_COLORS.length], transitionDuration: "180ms" }}
-                          >
+                          <h3 className="text-[1.02rem] font-normal tracking-[-0.02em] text-foreground/88 transition-colors group-hover:text-foreground">
                             {relatedProject.title}
                           </h3>
+                          <p className="mt-1.5 text-[0.92rem] tracking-[-0.01em] text-foreground/52">
+                            {[relatedProject.client || relatedProject.venue || relatedProject.subcategory, relatedProject.year]
+                              .filter(Boolean)
+                              .join("  ")}
+                          </p>
                         </div>
                       </a>
                     </Link>

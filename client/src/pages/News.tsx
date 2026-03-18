@@ -4,8 +4,6 @@ import { Link } from "wouter";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import PageThemeWrapper from "@/components/PageThemeWrapper";
-import ThemeToggle from "@/components/ThemeToggle";
 import { Input } from "@/components/ui/input";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
@@ -17,12 +15,7 @@ import {
 } from "@shared/publicContent";
 
 export default function News() {
-  return (
-    <PageThemeWrapper forceTheme={null}>
-      <NewsArchiveContent />
-      <ThemeToggle />
-    </PageThemeWrapper>
-  );
+  return <NewsArchiveContent />;
 }
 
 function NewsArchiveContent() {

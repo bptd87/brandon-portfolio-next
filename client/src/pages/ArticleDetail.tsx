@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ThemeToggle from "@/components/ThemeToggle";
 import { ProgressiveImage } from '@/components/ProgressiveImage';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -9,8 +8,7 @@ import { trpc } from "@/lib/trpc";
 import { proxyImageUrl } from "@/lib/imageProxy";
 import { Calendar, Clock, Sparkles, Copy, Check, ChevronLeft, ChevronRight, Link as LinkIcon } from "lucide-react";
 import { Link, useParams } from "wouter";
-import { useEffect, useRef, useState } from "react";
-import { useTheme } from "@/contexts/ThemeContext";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
@@ -65,29 +63,7 @@ const processHTMLImages = (html: string): string => {
 };
 
 export default function ArticleDetail() {
-  return (
-    <ArticleThemeWrapper>
-      <ArticleDetailContent />
-      <ThemeToggle />
-    </ArticleThemeWrapper>
-  );
-}
-
-// Special wrapper for articles that enables theme switching
-function ArticleThemeWrapper({ children }: { children: React.ReactNode }) {
-  const { setForceTheme } = useTheme();
-
-  useEffect(() => {
-    // Allow theme switching on articles (remove force)
-    setForceTheme(null);
-
-    // When leaving article page, force back to dark mode
-    return () => {
-      setForceTheme('dark');
-    };
-  }, [setForceTheme]);
-
-  return <>{children}</>;
+  return <ArticleDetailContent />;
 }
 
 function ArticleDetailContent() {

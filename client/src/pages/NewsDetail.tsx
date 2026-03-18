@@ -1,8 +1,6 @@
 import { createElement } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import PageThemeWrapper from "@/components/PageThemeWrapper";
-import ThemeToggle from "@/components/ThemeToggle";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -18,12 +16,7 @@ import { getLegacyCanonicalDestination } from "@shared/publicContent";
 
 
 export default function NewsDetail() {
-  return (
-    <PageThemeWrapper forceTheme={null}>
-      <NewsDetailContent />
-      <ThemeToggle />
-    </PageThemeWrapper>
-  );
+  return <NewsDetailContent />;
 }
 
 function NewsDetailContent() {

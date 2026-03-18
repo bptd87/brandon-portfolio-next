@@ -1,204 +1,206 @@
-import { useState } from "react";
-import { Link } from "wouter";
-import { X, ChevronDown } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "wouter";
+import { ChevronDown, X } from "lucide-react";
 
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+const PORTFOLIO_LINKS = [
+  { label: "Scenic Design", href: "/projects" },
+  { label: "Rendering", href: "/projects/rendering" },
+  { label: "Experiential Design", href: "/projects/experiential" },
+  { label: "Assistant Scenic Design", href: "/assistant-scenic-design" },
+] as const;
+
+const ABOUT_LINKS = [
+  { label: "About", href: "/about" },
+  { label: "Resume / CV", href: "/resume" },
+  { label: "Creative Statement", href: "/creative-statement" },
+  { label: "Teaching Philosophy", href: "/about/teaching" },
+  { label: "Collaborators", href: "/about/collaborators" },
+] as const;
+
+const STUDIO_LINKS = [
+  { label: "Articles", href: "/articles" },
+  { label: "Tutorials", href: "/studio/tutorials" },
+  { label: "App Studio", href: "/studio/apps" },
+  { label: "Scenic Directory", href: "/studio/directory" },
+] as const;
+
+function MenuSection({
+  isOpen,
+  label,
+  links,
+  onToggle,
+  onClose,
+  pathname,
+}: {
+  isOpen: boolean;
+  label: string;
+  links: readonly { label: string; href: string }[];
+  onToggle: () => void;
+  onClose: () => void;
+  pathname: string;
+}) {
+  return (
+    <div className="border-b border-border/35 pb-2">
+      <button
+        type="button"
+        onClick={onToggle}
+        className="flex w-full items-center justify-between gap-4 py-4 text-left"
+      >
+        <span className="text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/55">
+          {label}
+        </span>
+        <ChevronDown
+          className={`h-4 w-4 text-foreground/55 transition-transform duration-200 ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+
+      {isOpen ? (
+        <div className="space-y-1 pb-3">
+          {links.map((item) => {
+            const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={onClose}
+                className={`block rounded-2xl px-3 py-3 text-[1.02rem] tracking-[-0.02em] transition-colors ${
+                  active
+                    ? "bg-foreground/[0.06] text-foreground"
+                    : "text-foreground/72 hover:bg-foreground/[0.04] hover:text-foreground"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
-  const [workOpen, setWorkOpen] = useState(false);
+  const [pathname] = useLocation();
+  const [workOpen, setWorkOpen] = useState(true);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [studioOpen, setStudioOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    setWorkOpen(pathname.startsWith("/projects") || pathname.startsWith("/assistant-scenic-design"));
+    setAboutOpen(
+      pathname.startsWith("/about") ||
+        pathname.startsWith("/resume") ||
+        pathname.startsWith("/creative-statement")
+    );
+    setStudioOpen(pathname.startsWith("/articles") || pathname.startsWith("/studio"));
+  }, [isOpen, pathname]);
 
   if (!isOpen) return null;
 
   return (
     <>
-      {/* Overlay */}
-      <div
-        className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 transition-opacity duration-300 opacity-100"
+      <button
+        type="button"
+        className="fixed inset-0 z-40 bg-black/72 backdrop-blur-md"
         onClick={onClose}
+        aria-label="Close mobile navigation"
       />
 
-      {/* Slide-out Drawer */}
-      <div
-        className="fixed top-0 right-0 h-full w-[85vw] max-w-sm bg-background border-l border-border z-50 transform transition-transform duration-300 ease-out translate-x-0"
-      >
-        {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-border">
-          <h2 className="text-2xl font-black tracking-tight">
-            BRANDON <span className="text-[#FF5722]">PT</span> DAVIS
-          </h2>
-          <button
-            onClick={onClose}
-            className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-foreground/10 transition-colors"
-            aria-label="Close menu"
-          >
-            <X className="w-6 h-6" />
-          </button>
+      <div className="fixed inset-x-0 top-0 z-50 h-[100dvh] overflow-y-auto border-b border-border/35 bg-background/96 backdrop-blur-2xl">
+        <div className="container flex min-h-full flex-col py-5">
+          <div className="flex items-start justify-between gap-6 border-b border-border/35 pb-5">
+            <Link href="/" onClick={onClose} className="inline-flex flex-col leading-none">
+              <span className="text-[1.18rem] font-black tracking-[-0.055em] text-foreground">
+                BRANDON PT DAVIS
+              </span>
+              <span className="mt-1 pl-[0.08rem] text-[9px] font-medium uppercase tracking-[0.24em] text-foreground/48">
+                SCENIC DESIGNER
+              </span>
+            </Link>
+
+            <button
+              type="button"
+              onClick={onClose}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/45 text-foreground/72 transition-colors hover:border-border hover:text-foreground"
+              aria-label="Close menu"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+
+          <div className="flex-1 pt-6">
+            <div className="mb-8 max-w-xs">
+              <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-foreground/42">
+                Scenic Design by Brandon PT Davis
+              </p>
+              <p className="mt-3 text-sm leading-7 text-foreground/58">
+                Portfolio, studio resources, and professional information in one place.
+              </p>
+            </div>
+
+            <nav className="space-y-2">
+              <MenuSection
+                isOpen={workOpen}
+                label="Portfolio"
+                links={PORTFOLIO_LINKS}
+                onToggle={() => setWorkOpen((value) => !value)}
+                onClose={onClose}
+                pathname={pathname}
+              />
+              <MenuSection
+                isOpen={aboutOpen}
+                label="About"
+                links={ABOUT_LINKS}
+                onToggle={() => setAboutOpen((value) => !value)}
+                onClose={onClose}
+                pathname={pathname}
+              />
+              <MenuSection
+                isOpen={studioOpen}
+                label="Studio"
+                links={STUDIO_LINKS}
+                onToggle={() => setStudioOpen((value) => !value)}
+                onClose={onClose}
+                pathname={pathname}
+              />
+            </nav>
+          </div>
+
+          <div className="mt-8 flex flex-col gap-3 border-t border-border/35 pt-5">
+            <Link
+              href="/contact"
+              onClick={onClose}
+              className="inline-flex h-11 items-center justify-center rounded-full bg-foreground px-5 text-sm font-medium tracking-[-0.01em] text-background transition-opacity hover:opacity-90"
+            >
+              Contact
+            </Link>
+            <a
+              href="mailto:info@brandonptdavis.com"
+              className="inline-flex h-11 items-center justify-center rounded-full border border-border/45 px-5 text-sm font-medium tracking-[-0.01em] text-foreground/72 transition-colors hover:border-border hover:text-foreground"
+            >
+              Email
+            </a>
+          </div>
         </div>
-
-        {/* Navigation */}
-        <nav className="p-6 space-y-2 overflow-y-auto h-[calc(100%-80px)]">
-          {/* Portfolio Dropdown */}
-          <div>
-            <button
-              onClick={() => setWorkOpen(!workOpen)}
-              className="w-full flex items-center justify-between py-3 px-4 rounded-lg hover:bg-foreground/5 transition-colors text-left font-bold"
-            >
-              <span>PORTFOLIO</span>
-              <ChevronDown
-                className={`w-5 h-5 transition-transform ${
-                  workOpen ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-            {workOpen && (
-              <div className="ml-4 mt-2 space-y-1">
-                <Link
-                  href="/projects"
-                  onClick={onClose}
-                  className="block py-2 px-4 rounded-lg hover:bg-[#FF5722]/10 hover:text-[#FF5722] transition-colors"
-                >
-                  Scenic Design
-                </Link>
-                <Link
-                  href="/projects/rendering"
-                  onClick={onClose}
-                  className="block py-2 px-4 rounded-lg hover:bg-[#FF1744]/10 hover:text-[#FF1744] transition-colors"
-                >
-                  Rendering
-                </Link>
-                <Link
-                  href="/projects/experiential"
-                  onClick={onClose}
-                  className="block py-2 px-4 rounded-lg hover:bg-[#00E5FF]/10 hover:text-[#00E5FF] transition-colors"
-                >
-                  Experiential Design
-                </Link>
-                <Link
-                  href="/assistant-scenic-design"
-                  onClick={onClose}
-                  className="block py-2 px-4 rounded-lg hover:bg-[#FFB000]/10 hover:text-[#FFB000] transition-colors"
-                >
-                  Assistant Scenic Design
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* About Dropdown */}
-          <div>
-            <button
-              onClick={() => setAboutOpen(!aboutOpen)}
-              className="w-full flex items-center justify-between py-3 px-4 rounded-lg hover:bg-foreground/5 transition-colors text-left font-bold"
-            >
-              <span>ABOUT</span>
-              <ChevronDown
-                className={`w-5 h-5 transition-transform ${
-                  aboutOpen ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-            {aboutOpen && (
-              <div className="ml-4 mt-2 space-y-1">
-                <Link
-                  href="/about"
-                  onClick={onClose}
-                  className="block py-2 px-4 rounded-lg hover:bg-[#00E5FF]/10 hover:text-[#00E5FF] transition-colors"
-                >
-                  About
-                </Link>
-                <Link
-                  href="/resume"
-                  onClick={onClose}
-                  className="block py-2 px-4 rounded-lg hover:bg-[#FF1744]/10 hover:text-[#FF1744] transition-colors"
-                >
-                  Resume / CV
-                </Link>
-                <Link
-                  href="/creative-statement"
-                  onClick={onClose}
-                  className="block py-2 px-4 rounded-lg hover:bg-[#FF5722]/10 hover:text-[#FF5722] transition-colors"
-                >
-                  Creative Statement
-                </Link>
-                <Link
-                  href="/about/teaching"
-                  onClick={onClose}
-                  className="block py-2 px-4 rounded-lg hover:bg-[#00E5FF]/10 hover:text-[#00E5FF] transition-colors"
-                >
-                  Teaching Philosophy
-                </Link>
-                <Link
-                  href="/about/collaborators"
-                  onClick={onClose}
-                  className="block py-2 px-4 rounded-lg hover:bg-[#FF1744]/10 hover:text-[#FF1744] transition-colors"
-                >
-                  Collaborators
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Studio Dropdown */}
-          <div>
-            <button
-              onClick={() => setStudioOpen(!studioOpen)}
-              className="w-full flex items-center justify-between py-3 px-4 rounded-lg hover:bg-foreground/5 transition-colors text-left font-bold"
-            >
-              <span>STUDIO</span>
-              <ChevronDown
-                className={`w-5 h-5 transition-transform ${
-                  studioOpen ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-            {studioOpen && (
-              <div className="ml-4 mt-2 space-y-1">
-                <Link
-                  href="/articles"
-                  onClick={onClose}
-                  className="block py-2 px-4 rounded-lg hover:bg-[#9C27B0]/10 hover:text-[#9C27B0] transition-colors"
-                >
-                  Articles
-                </Link>
-                <Link
-                  href="/studio/tutorials"
-                  onClick={onClose}
-                  className="block py-2 px-4 rounded-lg hover:bg-[#9C27B0]/10 hover:text-[#9C27B0] transition-colors"
-                >
-                  Tutorials
-                </Link>
-                <Link
-                  href="/studio/apps"
-                  onClick={onClose}
-                  className="block py-2 px-4 rounded-lg hover:bg-[#9C27B0]/10 hover:text-[#9C27B0] transition-colors"
-                >
-                  App Studio
-                </Link>
-                <Link
-                  href="/studio/directory"
-                  onClick={onClose}
-                  className="block py-2 px-4 rounded-lg hover:bg-[#9C27B0]/10 hover:text-[#9C27B0] transition-colors"
-                >
-                  Scenic Directory
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Contact CTA */}
-          <Link
-            href="/contact"
-            onClick={onClose}
-            className="block mt-6 h-11 px-6 rounded-md border border-[#FF5722] bg-[#FF5722] text-white text-center text-[11px] leading-[44px] font-bold tracking-[0.14em] uppercase hover:bg-[#ff6a3a] hover:border-[#ff6a3a] transition-all duration-300"
-          >
-            CONTACT
-          </Link>
-        </nav>
       </div>
     </>
   );

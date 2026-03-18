@@ -27,8 +27,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { trpc } from "@/lib/trpc";
 import { getProjectPath } from "@/lib/projectRoutes";
 
-const ACCENT_COLORS = ["#FF5722", "#00BCD4", "#E91E63", "#FFC107", "#9C27B0"] as const;
-
 type SortKey = "newest" | "oldest" | "title" | "venue";
 type ViewMode = "grid" | "list";
 
@@ -66,14 +64,6 @@ const getProjectTimestamp = (project: any) => {
 
 const formatProjectDate = (project: any) => {
   if (!project.year) return null;
-
-  if (project.month) {
-    return new Date(project.year, project.month - 1, 1).toLocaleDateString("en-US", {
-      month: "long",
-      year: "numeric",
-    });
-  }
-
   return String(project.year);
 };
 
@@ -110,14 +100,12 @@ const getDirectorLabel = (project: any) => {
 };
 
 function ProjectCard({
-  accentColor,
   href,
   onNavigate,
   project,
   scenicAlt,
   eager,
 }: {
-  accentColor: string;
   href: string;
   onNavigate: (event: MouseEvent<HTMLAnchorElement>, href: string) => void;
   project: any;
@@ -146,12 +134,19 @@ function ProjectCard({
         </div>
 
         <div className="pt-4">
-          <p
-            className="text-[1.02rem] font-normal tracking-[-0.02em]"
-            style={{ color: accentColor }}
-          >
+          <p className="text-[1.02rem] font-normal tracking-[-0.02em] text-foreground/88">
             {project.title}
           </p>
+          {(getVenueLabel(project) || formatProjectDate(project)) ? (
+            <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm tracking-[-0.01em]">
+              {getVenueLabel(project) ? (
+                <span className="text-foreground/82">{getVenueLabel(project)}</span>
+              ) : null}
+              {formatProjectDate(project) ? (
+                <span className="text-foreground/42">{formatProjectDate(project)}</span>
+              ) : null}
+            </div>
+          ) : null}
         </div>
       </div>
     </a>
@@ -260,6 +255,8 @@ export default function Projects() {
   const pageSubtitle = "Story-driven environments for live performance.";
   const pageDescription =
     "Use category, venue, and date filters to move through scenic design productions and compare venues, timelines, and production contexts.";
+  const pageIntro =
+    "A selected body of scenic design work across regional theatre, summer stock, academic production, and new play development. Each project is built around story, rhythm, architecture, and what the audience needs to feel in the room.";
   const scenicAlt = (title: string) => `${title} scenic design by Brandon PT Davis`;
   const selectedCategoryLabel =
     subcategories.find((item) => item.key === selectedSubcategory)?.label || null;
@@ -416,13 +413,55 @@ export default function Projects() {
         <section className="border-b border-border/40 pb-8 pt-24 md:pb-10 md:pt-28">
           <div className="container max-w-6xl">
             <div className="max-w-3xl">
+              {currentHeading === pageTitle ? (
+                <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.24em] text-foreground/42">
+                  {pageSubtitle}
+                </p>
+              ) : null}
               <h1 className="font-sans text-[clamp(2.3rem,4.6vw,3.8rem)] font-medium leading-[0.96] tracking-[-0.05em] text-foreground">
                 {currentHeading}
               </h1>
+              {currentHeading === pageTitle ? (
+                <p className="mt-6 max-w-3xl text-[1rem] leading-7 text-foreground/58 md:text-[1.05rem]">
+                  {pageIntro}
+                </p>
+              ) : null}
             </div>
 
             <div className="mt-10 flex flex-col gap-5 border-t border-border/35 pt-5 lg:flex-row lg:items-center lg:justify-between">
-              <div className="overflow-x-auto">
+              <div className="md:hidden">
+                <div className="-mx-1 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                  <div className="flex min-w-max items-center gap-2 px-1">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedSubcategory("all")}
+                      className={`inline-flex h-10 items-center rounded-full border px-4 text-sm tracking-[-0.01em] transition-colors ${
+                        selectedSubcategory === "all"
+                          ? "border-foreground/20 bg-foreground text-background"
+                          : "border-border/50 bg-background/70 text-foreground/70 hover:border-border hover:text-foreground"
+                      }`}
+                    >
+                      All
+                    </button>
+                    {subcategories.map((category) => (
+                      <button
+                        key={category.key}
+                        type="button"
+                        onClick={() => setSelectedSubcategory(category.key)}
+                        className={`inline-flex h-10 items-center whitespace-nowrap rounded-full border px-4 text-sm tracking-[-0.01em] transition-colors ${
+                          selectedSubcategory === category.key
+                            ? "border-foreground/20 bg-foreground text-background"
+                            : "border-border/50 bg-background/70 text-foreground/70 hover:border-border hover:text-foreground"
+                        }`}
+                      >
+                        {category.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="hidden overflow-x-auto md:block">
                 <div className="flex min-w-max items-center gap-6">
                   <button
                     type="button"
@@ -452,7 +491,7 @@ export default function Projects() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3 md:flex-nowrap">
                 <Popover>
                   <PopoverTrigger asChild>
                     <button
@@ -638,35 +677,31 @@ export default function Projects() {
             {showShowcase && featuredProject ? (
               <>
                 <StickyShowcase
-                  accentColors={ACCENT_COLORS}
+                  continuationItems={showcaseGridProjects}
+                  desktopColumns={4}
                   featuredItem={featuredProject}
+                  hideFeaturedCredit={true}
                   itemAlt={scenicAlt}
                   itemHref={getProjectPath}
+                  leadAspectClassName="lg:aspect-[3/2]"
+                  leadImageAspectRatio="3/2"
+                  leadTitleClassName="max-w-[14ch] text-[clamp(2rem,3.8vw,3.45rem)] font-medium leading-[0.94] tracking-[-0.06em]"
                   onNavigate={navigateWithTransition}
                   railItems={showcaseRailProjects}
-                  title={undefined}
-                  intro={undefined}
+                  title={featuredProject.title}
                 />
-
-                <section className="pb-20 pt-16 md:pb-28 md:pt-20">
-                  <div className="container max-w-6xl">
-                    <div className="mt-16 border-t border-border/35 pt-8 md:mt-20 md:pt-10">
-                      <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
-                        Selected Productions
-                      </p>
-                      <h2 className="max-w-[14ch] font-sans text-[clamp(1.65rem,2.8vw,2.35rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-foreground">
-                        More scenic design work.
-                      </h2>
-                    </div>
-
-                    <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 md:mt-10">
-                      {showcaseGridProjects.map((project, index) => {
+              </>
+            ) : (
+              <section className="pb-20 pt-12 md:pb-28 md:pt-14">
+                <div className="container max-w-6xl">
+                  {viewMode === "grid" ? (
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+                      {sortedProjects.map((project, index) => {
                         const href = getProjectPath(project);
 
                         return (
                           <ProjectCard
                             key={project.id}
-                            accentColor={ACCENT_COLORS[index % ACCENT_COLORS.length]}
                             eager={index < 8}
                             href={href}
                             onNavigate={navigateWithTransition}
@@ -676,41 +711,10 @@ export default function Projects() {
                         );
                       })}
                     </div>
-                  </div>
-                </section>
-              </>
-            ) : (
-              <section className="pb-20 pt-12 md:pb-28 md:pt-14">
-                <div className="container max-w-6xl">
-                  {viewMode === "grid" ? (
-                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                      {sortedProjects.map((project, index) => {
-                        const href = getProjectPath(project);
-
-                        return (
-                          <div key={project.id}>
-                            <ProjectCard
-                              accentColor={ACCENT_COLORS[index % ACCENT_COLORS.length]}
-                              eager={index < 8}
-                              href={href}
-                              onNavigate={navigateWithTransition}
-                              project={project}
-                              scenicAlt={scenicAlt}
-                            />
-                            <div className="mt-2 text-sm text-foreground/45">
-                              {[getVenueLabel(project), formatProjectDate(project)]
-                                .filter(Boolean)
-                                .join(" · ")}
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
                   ) : (
                     <div className="border-t border-border/35">
-                      {sortedProjects.map((project, index) => {
+                      {sortedProjects.map((project) => {
                         const href = getProjectPath(project);
-                        const accentColor = ACCENT_COLORS[index % ACCENT_COLORS.length];
                         const directorLabel = getDirectorLabel(project);
 
                         return (
@@ -726,10 +730,7 @@ export default function Projects() {
                             </div>
 
                             <div className="min-w-0">
-                              <p
-                                className="text-[1.12rem] font-normal tracking-[-0.025em]"
-                                style={{ color: accentColor }}
-                              >
+                              <p className="text-[1.12rem] font-normal tracking-[-0.025em] text-foreground/88">
                                 {project.title}
                               </p>
                               {directorLabel ? (

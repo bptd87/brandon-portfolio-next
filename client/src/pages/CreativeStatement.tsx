@@ -185,12 +185,14 @@ export default function CreativeStatement() {
         <div className="mx-auto max-w-6xl">
           <div className="grid items-center gap-10 xl:grid-cols-[minmax(18rem,0.95fr)_minmax(0,1.05fr)]">
             <div className="overflow-hidden rounded-[1.75rem] border border-border/30 bg-card/20">
+              <div className="relative aspect-[4/5] w-full">
               <img
                 src="/assets/about/about-process-art.png"
                 alt="Abstract creative statement artwork"
-                className="aspect-[4/5] w-full object-cover object-center"
+                className="absolute left-1/2 top-1/2 h-full w-full max-w-none -translate-x-1/2 -translate-y-1/2 scale-[1.25] rotate-90 object-cover object-center"
                 loading="lazy"
               />
+              </div>
             </div>
 
             <div className="max-w-2xl">

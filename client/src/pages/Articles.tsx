@@ -11,12 +11,9 @@ import {
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import PageThemeWrapper from "@/components/PageThemeWrapper";
-import ThemeToggle from "@/components/ThemeToggle";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { SEO } from "@/components/SEO";
 import { PortfolioGridSkeleton } from "@/components/SkeletonLoaders";
-import { StickyShowcase } from "@/components/StickyShowcase";
 import StructuredData from "@/components/StructuredData";
 import {
   DropdownMenu,
@@ -26,7 +23,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { trpc } from "@/lib/trpc";
-import { getCategoryColor } from "@/lib/categoryColors";
 import { voyageLaArticle } from "@shared/publicContent";
 
 type ArticleCardItem = {
@@ -50,8 +46,6 @@ const SORT_OPTIONS: Array<{ key: SortKey; label: string }> = [
   { key: "title", label: "Article title" },
   { key: "category", label: "Category" },
 ];
-
-const ACCENT_COLORS = ["#FF5722", "#00BCD4", "#E91E63", "#FFC107", "#9C27B0"] as const;
 
 const decodeHTMLEntities = (text: string): string => {
   if (typeof document === "undefined") return text;
@@ -81,13 +75,11 @@ const getArticleYear = (article: ArticleCardItem) => {
 };
 
 function ArticleGridCard({
-  accentColor,
   article,
   eager,
   href,
   onNavigate,
 }: {
-  accentColor: string;
   article: ArticleCardItem;
   eager?: boolean;
   href: string;
@@ -116,10 +108,7 @@ function ArticleGridCard({
         </div>
 
         <div className="pt-4">
-          <p
-            className="text-[1.02rem] font-normal tracking-[-0.02em]"
-            style={{ color: accentColor }}
-          >
+          <p className="text-[1.02rem] font-normal tracking-[-0.02em] text-foreground/88">
             {decodeHTMLEntities(article.title)}
           </p>
         </div>
@@ -128,7 +117,7 @@ function ArticleGridCard({
   );
 }
 
-function ArticlesContent() {
+export default function Articles() {
   const [, setLocation] = useLocation();
   const { data: articles, isLoading } = trpc.articles.list.useQuery({ status: "published" });
   const [selectedCategory, setSelectedCategory] = useState<string>(() => {
@@ -234,10 +223,6 @@ function ArticlesContent() {
   const activeFilterCount = (selectedYear !== "all" ? 1 : 0);
   const isDefaultAllView =
     selectedCategory === "all" && selectedYear === "all" && sortKey === "newest";
-  const showShowcase = viewMode === "grid" && isDefaultAllView && sortedArticles.length >= 4;
-  const [featuredArticle, ...remainingArticles] = sortedArticles;
-  const showcaseRailArticles = remainingArticles.slice(0, 3);
-  const showcaseGridArticles = remainingArticles.slice(3);
   const currentHeading =
     selectedCategory !== "all" ? selectedCategory : selectedYear !== "all" ? selectedYear : "Articles";
 
@@ -341,16 +326,16 @@ function ArticlesContent() {
               </h1>
             </div>
 
-            <div className="mt-10 flex flex-col gap-5 border-t border-border/35 pt-5 lg:flex-row lg:items-center lg:justify-between">
-              <div className="overflow-x-auto">
-                <div className="flex min-w-max items-center gap-6">
+            <div className="mt-10 flex flex-col gap-5 border-t border-border/35 pt-5">
+              <div className="overflow-x-auto md:overflow-visible">
+                <div className="flex min-w-max items-center gap-3 md:min-w-0 md:flex-wrap">
                   <button
                     type="button"
                     onClick={() => setSelectedCategory("all")}
-                    className={`text-[1.05rem] transition-colors ${
+                    className={`rounded-full border px-4 py-2 text-[0.92rem] transition-colors ${
                       selectedCategory === "all"
-                        ? "text-foreground"
-                        : "text-foreground/52 hover:text-foreground/80"
+                        ? "border-foreground/30 bg-foreground/10 text-foreground"
+                        : "border-border/40 text-foreground/52 hover:border-border hover:text-foreground/80"
                     }`}
                   >
                     All
@@ -360,10 +345,10 @@ function ArticlesContent() {
                       key={category}
                       type="button"
                       onClick={() => setSelectedCategory(category)}
-                      className={`text-[1.05rem] transition-colors ${
+                      className={`rounded-full border px-4 py-2 text-[0.92rem] transition-colors ${
                         selectedCategory === category
-                          ? "text-foreground"
-                          : "text-foreground/52 hover:text-foreground/80"
+                          ? "border-foreground/30 bg-foreground/10 text-foreground"
+                          : "border-border/40 text-foreground/52 hover:border-border hover:text-foreground/80"
                       }`}
                     >
                       {category}
@@ -372,7 +357,7 @@ function ArticlesContent() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3">
                 <Popover>
                   <PopoverTrigger asChild>
                     <button
@@ -508,116 +493,42 @@ function ArticlesContent() {
           <PortfolioGridSkeleton />
         ) : sortedArticles.length > 0 ? (
           <>
-            {showShowcase && featuredArticle ? (
-              <>
-                <StickyShowcase
-                  accentColors={ACCENT_COLORS}
-                  featuredItem={{
-                    id: featuredArticle.id,
-                    slug: featuredArticle.slug,
-                    title: featuredArticle.title,
-                    client: null,
-                    year: null,
-                    coverImageUrl: featuredArticle.coverImageUrl,
-                  }}
-                  itemAlt={(title) => `Cover image for article: ${title}`}
-                  itemHref={(item) => itemHref(item as ArticleCardItem)}
-                  onNavigate={navigateWithTransition}
-                  railItems={showcaseRailArticles.map((article) => ({
-                    id: article.id,
-                    slug: article.slug,
-                    title: article.title,
-                    client: null,
-                    year: null,
-                    coverImageUrl: article.coverImageUrl,
-                  }))}
-                  title={undefined}
-                  intro={undefined}
-                />
+            <section className="pb-20 pt-12 md:pb-28 md:pt-14">
+              <div className="container max-w-6xl">
+                {viewMode === "grid" ? (
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                    {sortedArticles.map((article, index) => {
+                      const href = itemHref(article);
 
-                <section className="pb-20 pt-16 md:pb-28 md:pt-20">
-                  <div className="container max-w-6xl">
-                    <div className="mt-16 border-t border-border/35 pt-8 md:mt-20 md:pt-10">
-                      <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
-                        More Articles
-                      </p>
-                      <h2 className="max-w-[14ch] font-sans text-[clamp(1.65rem,2.8vw,2.35rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-foreground">
-                        Writing on scenic design and production.
-                      </h2>
-                    </div>
-
-                    <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 md:mt-10">
-                      {showcaseGridArticles.map((article, index) => {
-                        const href = itemHref(article);
-                        const accentColor = article.categoryName
-                          ? getCategoryColor(article.categoryName).hex
-                          : ACCENT_COLORS[index % ACCENT_COLORS.length];
-
-                        return (
-                          <div key={article.id}>
-                            <ArticleGridCard
-                              accentColor={accentColor}
-                              article={article}
-                              eager={index < 8}
-                              href={href}
-                              onNavigate={navigateWithTransition}
-                            />
-                            <div className="mt-2 text-sm text-foreground/45">
-                              {[article.categoryName, formatArticleDate(article)]
-                                .filter(Boolean)
-                                .join(" · ")}
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </section>
-              </>
-            ) : (
-              <section className="pb-20 pt-12 md:pb-28 md:pt-14">
-                <div className="container max-w-6xl">
-                  {viewMode === "grid" ? (
-                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                      {sortedArticles.map((article, index) => {
-                        const href = itemHref(article);
-                        const accentColor = article.categoryName
-                          ? getCategoryColor(article.categoryName).hex
-                          : ACCENT_COLORS[index % ACCENT_COLORS.length];
-
-                        return (
-                          <div key={article.id}>
-                            <ArticleGridCard
-                              accentColor={accentColor}
-                              article={article}
-                              eager={index < 8}
-                              href={href}
-                              onNavigate={navigateWithTransition}
-                            />
-                            <div className="mt-2 text-sm text-foreground/45">
-                              {[article.categoryName, formatArticleDate(article)]
-                                .filter(Boolean)
-                                .join(" · ")}
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  ) : (
-                    <div className="border-t border-border/35">
-                      {sortedArticles.map((article, index) => {
-                        const href = itemHref(article);
-                        const accentColor = article.categoryName
-                          ? getCategoryColor(article.categoryName).hex
-                          : ACCENT_COLORS[index % ACCENT_COLORS.length];
-
-                        return (
-                          <a
-                            key={article.id}
+                      return (
+                        <div key={article.id}>
+                          <ArticleGridCard
+                            article={article}
+                            eager={index < 8}
                             href={href}
-                            onClick={(event) => navigateWithTransition(event, href)}
-                            className="group grid gap-4 border-b border-border/35 py-5 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8"
-                          >
+                            onNavigate={navigateWithTransition}
+                          />
+                          <div className="mt-2 text-sm text-foreground/45">
+                            {[article.categoryName, formatArticleDate(article)]
+                              .filter(Boolean)
+                              .join(" · ")}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="border-t border-border/35">
+                    {sortedArticles.map((article, index) => {
+                      const href = itemHref(article);
+
+                      return (
+                        <a
+                          key={article.id}
+                          href={href}
+                          onClick={(event) => navigateWithTransition(event, href)}
+                          className="group grid gap-4 border-b border-border/35 py-5 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8"
+                        >
                             <div className="space-y-2 text-sm text-foreground/48">
                               <p className="text-foreground/82">{article.categoryName || "Article"}</p>
                               <p>
@@ -628,10 +539,7 @@ function ArticlesContent() {
                             </div>
 
                             <div className="min-w-0">
-                              <p
-                                className="text-[1.12rem] font-normal tracking-[-0.025em]"
-                                style={{ color: accentColor }}
-                              >
+                              <p className="text-[1.12rem] font-normal tracking-[-0.025em] text-foreground/88">
                                 {article.title}
                               </p>
                               {article.excerpt ? (
@@ -641,13 +549,12 @@ function ArticlesContent() {
                               ) : null}
                             </div>
                           </a>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              </section>
-            )}
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </section>
           </>
         ) : (
           <section className="pb-24 pt-16">
@@ -697,14 +604,5 @@ function ArticlesContent() {
 
       <Footer />
     </div>
-  );
-}
-
-export default function Articles() {
-  return (
-    <PageThemeWrapper forceTheme={null}>
-      <ArticlesContent />
-      <ThemeToggle />
-    </PageThemeWrapper>
   );
 }

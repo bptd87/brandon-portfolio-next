@@ -1,10 +1,9 @@
-import { ExternalLink, Instagram, Linkedin, Mail, Youtube } from "lucide-react";
+import { Instagram, Linkedin, Mail, Youtube } from "lucide-react";
 import { Link } from "wouter";
 
 const FOOTER_SECTIONS = [
   {
     title: "Portfolio",
-    accent: "#FF6A3D",
     links: [
       { label: "Scenic Design", href: "/projects", internal: true },
       { label: "Experiential", href: "/projects/experiential", internal: true },
@@ -14,7 +13,6 @@ const FOOTER_SECTIONS = [
   },
   {
     title: "Studio",
-    accent: "#00B8D9",
     links: [
       { label: "Articles", href: "/articles", internal: true },
       { label: "Tutorials", href: "/studio/tutorials", internal: true },
@@ -24,12 +22,10 @@ const FOOTER_SECTIONS = [
   },
   {
     title: "Information",
-    accent: "#E5484D",
     links: [
       { label: "About", href: "/about", internal: true },
       { label: "Resume", href: "/resume", internal: true },
       { label: "Contact", href: "/contact", internal: true },
-      { label: "News Archive", href: "/news", internal: true },
     ],
   },
 ] as const;
@@ -39,25 +35,21 @@ const SOCIAL_LINKS = [
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/brandonptdavis",
     icon: Linkedin,
-    accent: "#FF6A3D",
   },
   {
     label: "Instagram",
     href: "https://www.instagram.com/brandonptdavisdesign",
     icon: Instagram,
-    accent: "#00B8D9",
   },
   {
     label: "YouTube",
     href: "https://www.youtube.com/@brandonptdavis",
     icon: Youtube,
-    accent: "#E5484D",
   },
   {
     label: "Email",
     href: "mailto:info@brandonptdavis.com",
     icon: Mail,
-    accent: "#D9A404",
   },
 ] as const;
 
@@ -72,51 +64,14 @@ function PinterestIcon({ className }: { className?: string }) {
 export default function Footer() {
   return (
     <footer className="mt-24 border-t border-border/50">
-      <div className="container py-14 md:py-18">
-        <div className="grid gap-12 border-b border-border/40 pb-12 md:grid-cols-[minmax(0,1.1fr)_minmax(20rem,0.9fr)] md:items-end">
-          <div className="max-w-3xl">
-            <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/50">
-              Brandon PT Davis
-            </p>
-            <h2 className="max-w-[13ch] text-3xl font-semibold leading-[0.96] tracking-[-0.05em] text-foreground md:text-5xl">
-              Scenic design practice for live performance.
-            </h2>
-            <p className="mt-5 max-w-2xl text-sm leading-7 text-muted-foreground md:text-base">
-              Southern California based. USA 829. Portfolio, studio resources, articles, and
-              supporting design documentation in one place.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap gap-3 md:justify-end">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 rounded-full border border-foreground/12 bg-foreground px-5 py-3 text-sm font-semibold text-background transition-transform duration-300 hover:-translate-y-0.5"
-            >
-              Contact
-            </Link>
-            <a
-              href="mailto:info@brandonptdavis.com"
-              className="inline-flex items-center gap-2 rounded-full border border-foreground/12 bg-background/55 px-5 py-3 text-sm font-semibold text-foreground/78 transition-colors hover:border-foreground/20 hover:text-foreground"
-            >
-              Email
-              <ExternalLink className="h-4 w-4" />
-            </a>
-          </div>
-        </div>
-
-        <div className="grid gap-10 py-10 md:grid-cols-[minmax(0,1fr)_auto] md:gap-16">
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="container py-14 md:py-16">
+        <div className="grid gap-12 py-2 md:grid-cols-[minmax(0,1fr)_auto] md:gap-16">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
             {FOOTER_SECTIONS.map((section) => (
               <div key={section.title}>
-                <div className="mb-4 flex items-center gap-3">
-                  <span
-                    className="h-1.5 w-8 rounded-full"
-                    style={{ backgroundColor: section.accent }}
-                  />
-                  <h3 className="text-sm font-semibold tracking-[-0.02em] text-foreground">
-                    {section.title}
-                  </h3>
-                </div>
+                <h3 className="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/42">
+                  {section.title}
+                </h3>
                 <ul className="space-y-3">
                   {section.links.map((item) => (
                     <li key={item.href}>
@@ -144,7 +99,7 @@ export default function Footer() {
 
           <div className="space-y-5 md:min-w-[16rem]">
             <div>
-              <p className="text-sm font-semibold tracking-[-0.02em] text-foreground">Connect</p>
+              <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/42">Connect</p>
               <p className="mt-2 text-sm leading-7 text-muted-foreground">
                 Follow current work, studio updates, and professional contact points.
               </p>
@@ -158,8 +113,7 @@ export default function Footer() {
                     href={item.href}
                     target={item.href.startsWith("mailto:") ? undefined : "_blank"}
                     rel={item.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/60 bg-background/50 transition-transform duration-300 hover:-translate-y-0.5"
-                    style={{ color: item.accent }}
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/60 bg-background/50 text-foreground/68 transition-colors hover:border-foreground/18 hover:text-foreground"
                     title={item.label}
                   >
                     <Icon className="h-4 w-4" />
@@ -170,8 +124,7 @@ export default function Footer() {
                 href="https://www.pinterest.com/BrandonPTDavis/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/60 bg-background/50 transition-transform duration-300 hover:-translate-y-0.5"
-                style={{ color: "#2C9B62" }}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/60 bg-background/50 text-foreground/68 transition-colors hover:border-foreground/18 hover:text-foreground"
                 title="Pinterest"
               >
                 <PinterestIcon className="h-4 w-4" />
