@@ -1,21 +1,45 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { Link } from "wouter";
+import InfoPageShell from "@/components/InfoPageShell";
 import StructuredData from "@/components/StructuredData";
 
-const infoPages = [
-  { name: "Privacy", href: "/privacy" },
-  { name: "Terms", href: "/terms" },
-  { name: "FAQ", href: "/faq" },
-  { name: "Accessibility", href: "/accessibility" },
-  { name: "Sitemap", href: "/sitemap" },
+const sections = [
+  {
+    title: "Commitment",
+    body: [
+      "Brandon PT Davis is committed to making this website accessible and usable for as many visitors as possible, including people using assistive technologies.",
+    ],
+  },
+  {
+    title: "Standards",
+    body: [
+      "The site is designed with WCAG 2.1 AA targets in mind, including keyboard access, readable contrast, clear focus states, and semantic structure.",
+    ],
+  },
+  {
+    title: "What We Prioritize",
+    items: [
+      "Keyboard navigable menus and controls.",
+      "Text alternatives for meaningful imagery.",
+      "Responsive layouts that remain usable on mobile and zoomed views.",
+      "Predictable navigation and interaction patterns.",
+    ],
+  },
+  {
+    title: "Feedback",
+    body: [
+      "If you encounter an accessibility issue, contact info@brandonptdavis.com with the page URL and a short description of the problem.",
+    ],
+  },
 ];
 
 export default function Accessibility() {
-  const reviewed = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+  const reviewed = new Date().toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
 
   return (
-    <div className="min-h-screen bg-background">
+    <>
       <StructuredData
         type="BreadcrumbList"
         breadcrumbs={[
@@ -23,72 +47,56 @@ export default function Accessibility() {
           { name: "Accessibility", url: "https://www.brandonptdavis.com/accessibility" },
         ]}
       />
-      <Header />
 
-      <main className="container py-24">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-xs uppercase tracking-[0.22em] text-foreground/60 mb-4">Site Info</p>
-            <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-3">Accessibility</h1>
-            <p className="text-sm text-muted-foreground">Statement reviewed: {reviewed}</p>
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-2 mb-12">
-            {infoPages.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`px-4 py-2 rounded-md border text-xs font-semibold tracking-[0.08em] uppercase transition-colors ${
-                  item.href === "/accessibility"
-                    ? "border-[#FF5722] text-[#FF5722] bg-[#FF5722]/10"
-                    : "border-border text-foreground/70 hover:text-foreground hover:border-foreground/40"
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
-
-          <div className="space-y-8 text-foreground/85 leading-relaxed">
-            <section className="rounded-2xl border border-border/60 bg-card/20 p-6">
-              <h2 className="text-2xl font-bold mb-3">Commitment</h2>
-              <p>
-                Brandon PT Davis is committed to making this website accessible and usable for as many visitors as possible, including people using assistive technologies.
-              </p>
+      <InfoPageShell
+        title="Accessibility"
+        intro="An overview of the accessibility priorities guiding this site, including navigation, readable contrast, structure, and feedback pathways."
+        currentPath="/accessibility"
+        metaLabel={`Statement reviewed: ${reviewed}`}
+      >
+        <div className="max-w-4xl">
+          {sections.map((section) => (
+            <section key={section.title} className="border-t border-white/10 py-8 first:pt-0">
+              <h2 className="mb-4 font-sans text-[clamp(1.55rem,2.3vw,2.2rem)] font-medium leading-[1] tracking-[-0.045em] text-foreground">
+                {section.title}
+              </h2>
+              {section.body?.map((paragraph) => (
+                  <p
+                    key={paragraph}
+                    className="mt-3 max-w-[46rem] text-[1rem] leading-[1.8] tracking-[-0.01em] text-foreground/68"
+                  >
+                    {paragraph.includes("info@brandonptdavis.com") ? (
+                      <>
+                        If you encounter an accessibility issue, contact{" "}
+                        <a
+                          href="mailto:info@brandonptdavis.com"
+                          className="text-foreground underline decoration-white/20 underline-offset-4 hover:decoration-white/50"
+                        >
+                          info@brandonptdavis.com
+                        </a>{" "}
+                        with the page URL and a short description of the problem.
+                      </>
+                    ) : (
+                      paragraph
+                    )}
+                  </p>
+                ))}
+              {section.items ? (
+                <ul className="mt-4 space-y-3">
+                  {section.items.map((item) => (
+                    <li
+                      key={item}
+                      className="max-w-[46rem] text-[1rem] leading-[1.8] tracking-[-0.01em] text-foreground/68"
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
             </section>
-
-            <section className="rounded-2xl border border-border/60 bg-card/20 p-6">
-              <h2 className="text-2xl font-bold mb-3">Standards</h2>
-              <p>
-                The site is designed with WCAG 2.1 AA targets in mind, including keyboard access, readable contrast, clear focus states, and semantic structure.
-              </p>
-            </section>
-
-            <section className="rounded-2xl border border-border/60 bg-card/20 p-6">
-              <h2 className="text-2xl font-bold mb-3">What We Prioritize</h2>
-              <ul className="list-disc pl-6 space-y-2">
-                <li>Keyboard navigable menus and controls.</li>
-                <li>Text alternatives for meaningful imagery.</li>
-                <li>Responsive layouts that remain usable on mobile and zoomed views.</li>
-                <li>Predictable navigation and interaction patterns.</li>
-              </ul>
-            </section>
-
-            <section className="rounded-2xl border border-border/60 bg-card/20 p-6">
-              <h2 className="text-2xl font-bold mb-3">Feedback</h2>
-              <p>
-                If you encounter an accessibility issue, contact{" "}
-                <a href="mailto:info@brandonptdavis.com" className="text-[#FF5722] hover:underline">
-                  info@brandonptdavis.com
-                </a>{" "}
-                with the page URL and a short description of the problem.
-              </p>
-            </section>
-          </div>
+          ))}
         </div>
-      </main>
-
-      <Footer />
-    </div>
+      </InfoPageShell>
+    </>
   );
 }

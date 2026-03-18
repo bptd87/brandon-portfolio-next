@@ -220,6 +220,8 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
     return redirect301(res, `/tags/${tagSlug}`);
   });
   expressApp.get("/feed", (_req, res) => redirect301(res, "/projects"));
+  expressApp.get("/feed.xml", (_req, res) => redirect301(res, "/projects/rss.xml"));
+  expressApp.get("/rss.xml", (_req, res) => redirect301(res, "/projects/rss.xml"));
   expressApp.get("/feed/category/:slug", (_req, res) => redirect301(res, "/projects"));
   expressApp.get("/feed/tag/:slug", (_req, res) => redirect301(res, "/projects"));
   expressApp.get("/feed-collection", (_req, res) => redirect301(res, "/projects"));

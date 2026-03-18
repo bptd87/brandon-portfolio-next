@@ -299,26 +299,28 @@ export default function RenderingPortfolio() {
 
             <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
               {showcaseItems.map((item) => (
-                <Link key={item.id} href={`/projects/rendering/${item.slug}`}>
-                  <a className="group block">
-                    <div className="overflow-hidden rounded-xl bg-white/[0.02] p-3">
-                      <div className="flex h-[20rem] items-center justify-center md:h-[22rem]">
-                        <ProgressiveImage
-                          src={item.imageUrl!}
-                          alt={item.altText}
-                          className="max-h-full w-auto max-w-full rounded-lg object-contain transition-transform duration-500 group-hover:scale-[1.015]"
-                        />
-                      </div>
+                <Link
+                  key={item.id}
+                  href={`/projects/rendering/${item.slug}`}
+                  className="group block"
+                >
+                  <div className="overflow-hidden rounded-xl bg-white/[0.02] p-3">
+                    <div className="flex h-[20rem] items-center justify-center md:h-[22rem]">
+                      <ProgressiveImage
+                        src={item.imageUrl!}
+                        alt={item.altText}
+                        className="max-h-full w-auto max-w-full rounded-lg object-contain transition-transform duration-500 group-hover:scale-[1.015]"
+                      />
                     </div>
-                    <div className="pt-3">
-                      <h3 className="text-[1.12rem] font-sans font-normal leading-[1.14] tracking-[-0.03em] text-foreground">
-                        {item.title}
-                      </h3>
-                      <p className="mt-1 text-[0.94rem] tracking-[-0.02em] text-foreground/52">
-                        {[item.client, item.year].filter(Boolean).join(" · ")}
-                      </p>
-                    </div>
-                  </a>
+                  </div>
+                  <div className="pt-3">
+                    <h3 className="text-[1.12rem] font-sans font-normal leading-[1.14] tracking-[-0.03em] text-foreground">
+                      {item.title}
+                    </h3>
+                    <p className="mt-1 text-[0.94rem] tracking-[-0.02em] text-foreground/52">
+                      {[item.client, item.year].filter(Boolean).join(" · ")}
+                    </p>
+                  </div>
                 </Link>
               ))}
             </div>
@@ -337,30 +339,32 @@ export default function RenderingPortfolio() {
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
               {remainingFeaturedItems.map((item) => (
-                <Link key={item.id} href={`/projects/rendering/${item.slug}`}>
-                  <a className="group block">
-                    <div className="aspect-[16/10] overflow-hidden rounded-xl bg-white/[0.02]">
-                      {item.imageUrl ? (
-                        <ProgressiveImage
-                          src={item.imageUrl}
-                          alt={item.altText}
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                        />
-                      ) : (
-                        <div className="flex h-full w-full items-center justify-center text-foreground/42">
-                          Image unavailable
-                        </div>
-                      )}
-                    </div>
-                    <div className="pt-4">
-                      <h3 className="text-[1.35rem] font-sans font-normal leading-[1.08] tracking-[-0.04em] text-foreground">
-                        {item.title}
-                      </h3>
-                      <p className="mt-2 text-[0.98rem] tracking-[-0.02em] text-foreground/54">
-                        {[item.client, item.year].filter(Boolean).join(" · ")}
-                      </p>
-                    </div>
-                  </a>
+                <Link
+                  key={item.id}
+                  href={`/projects/rendering/${item.slug}`}
+                  className="group block"
+                >
+                  <div className="aspect-[16/10] overflow-hidden rounded-xl bg-white/[0.02]">
+                    {item.imageUrl ? (
+                      <ProgressiveImage
+                        src={item.imageUrl}
+                        alt={item.altText}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center text-foreground/42">
+                        Image unavailable
+                      </div>
+                    )}
+                  </div>
+                  <div className="pt-4">
+                    <h3 className="text-[1.35rem] font-sans font-normal leading-[1.08] tracking-[-0.04em] text-foreground">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-[0.98rem] tracking-[-0.02em] text-foreground/54">
+                      {[item.client, item.year].filter(Boolean).join(" · ")}
+                    </p>
+                  </div>
                 </Link>
               ))}
             </div>

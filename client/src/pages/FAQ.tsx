@@ -1,18 +1,10 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { SEO } from "@/components/SEO";
-import StructuredData from "@/components/StructuredData";
-import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { useState } from "react";
 import { Link } from "wouter";
 
-const infoPages = [
-  { name: "Privacy", href: "/privacy" },
-  { name: "Terms", href: "/terms" },
-  { name: "FAQ", href: "/faq" },
-  { name: "Accessibility", href: "/accessibility" },
-  { name: "Sitemap", href: "/sitemap" },
-];
+import InfoPageShell from "@/components/InfoPageShell";
+import { SEO } from "@/components/SEO";
+import StructuredData from "@/components/StructuredData";
 
 const faqs = [
   {
@@ -32,8 +24,7 @@ const faqs = [
   },
   {
     question: "Are you a union scenic designer?",
-    answer:
-      "Yes. I am a member of United Scenic Artists, Local USA 829.",
+    answer: "Yes. I am a member of United Scenic Artists, Local USA 829.",
   },
   {
     question: "Do you work only in California?",
@@ -72,8 +63,7 @@ const faqs = [
   },
   {
     question: "What does the PT stand for?",
-    answer:
-      "Phillip Thomas.",
+    answer: "Phillip Thomas.",
   },
 ];
 
@@ -81,7 +71,7 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <div className="min-h-screen bg-background">
+    <>
       <SEO
         title="Scenic Design FAQ | Process, Pricing & Collaboration"
         description="Frequently asked questions about scenic design services, timelines, collaboration, and pricing."
@@ -104,66 +94,57 @@ export default function FAQ() {
           { name: "FAQ", url: "https://www.brandonptdavis.com/faq" },
         ]}
       />
-      <Header />
 
-      <main className="container py-24">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-xs uppercase tracking-[0.22em] text-foreground/60 mb-4">Site Info</p>
-            <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-3">FAQ</h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Common questions about process, scope, timelines, and working together.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-2 mb-12">
-            {infoPages.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`px-4 py-2 rounded-md border text-xs font-semibold tracking-[0.08em] uppercase transition-colors ${
-                  item.href === "/faq"
-                    ? "border-[#FF5722] text-[#FF5722] bg-[#FF5722]/10"
-                    : "border-border text-foreground/70 hover:text-foreground hover:border-foreground/40"
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
-
-          <div className="space-y-3">
+      <InfoPageShell
+        title="FAQ"
+        intro="Common questions about scenic design process, collaboration, timeline, and project scope."
+        currentPath="/faq"
+      >
+        <div className="max-w-4xl">
+          <div className="border-t border-white/10">
             {faqs.map((faq, index) => {
               const isOpen = openIndex === index;
+
               return (
-                <div key={faq.question} className="rounded-xl border border-border/60 bg-card/20 overflow-hidden">
+                <div key={faq.question} className="border-b border-white/10">
                   <button
+                    type="button"
                     onClick={() => setOpenIndex(isOpen ? null : index)}
-                    className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-white/5 transition-colors"
+                    className="flex w-full items-start justify-between gap-6 py-5 text-left"
                   >
-                    <span className="text-base md:text-lg font-semibold pr-6">{faq.question}</span>
-                    <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform ${isOpen ? "rotate-180" : ""}`} />
+                    <span className="max-w-[44rem] font-sans text-[1.18rem] font-medium leading-[1.14] tracking-[-0.03em] text-foreground">
+                      {faq.question}
+                    </span>
+                    <ChevronDown
+                      className={`mt-1 h-5 w-5 shrink-0 text-foreground/44 transition-transform ${
+                        isOpen ? "rotate-180" : ""
+                      }`}
+                    />
                   </button>
-                  {isOpen && <div className="px-5 pb-5 text-foreground/80 leading-relaxed">{faq.answer}</div>}
+                  {isOpen ? (
+                    <div className="pb-5 pr-10 text-[1rem] leading-[1.8] tracking-[-0.01em] text-foreground/68">
+                      {faq.answer}
+                    </div>
+                  ) : null}
                 </div>
               );
             })}
           </div>
 
-          <div className="mt-12 rounded-2xl border border-border/60 bg-card/20 p-6 text-center">
-            <h2 className="text-2xl font-bold mb-3">Ready to discuss a production?</h2>
-            <p className="text-foreground/80 mb-6">Share title, venue, and timeline to start a scenic design conversation.</p>
+          <div className="mt-12 border-t border-white/10 pt-8">
+            <p className="max-w-[38rem] text-[1rem] leading-[1.78] tracking-[-0.01em] text-foreground/62">
+              Ready to discuss a production? Share the title, venue, and timeline to start a scenic
+              design conversation.
+            </p>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center h-11 px-7 rounded-md border border-[#FF5722] bg-[#FF5722] text-[11px] font-bold tracking-[0.14em] uppercase text-white hover:bg-[#ff6a3a] hover:border-[#ff6a3a] transition-all duration-300"
+              className="mt-5 inline-flex items-center justify-center rounded-full border border-white/18 px-5 py-3 text-[0.88rem] font-medium tracking-[-0.01em] text-foreground transition-colors hover:border-white/28 hover:bg-white/6"
             >
-              Contact For Scenic Design
+              Contact
             </Link>
           </div>
         </div>
-      </main>
-
-      <Footer />
-    </div>
+      </InfoPageShell>
+    </>
   );
 }

@@ -1,15 +1,7 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { Link } from "wouter";
-import StructuredData from "@/components/StructuredData";
 
-const infoPages = [
-  { name: "Privacy", href: "/privacy" },
-  { name: "Terms", href: "/terms" },
-  { name: "FAQ", href: "/faq" },
-  { name: "Accessibility", href: "/accessibility" },
-  { name: "Sitemap", href: "/sitemap" },
-];
+import InfoPageShell from "@/components/InfoPageShell";
+import StructuredData from "@/components/StructuredData";
 
 const sections = [
   {
@@ -33,9 +25,7 @@ const sections = [
   },
   {
     title: "Archive",
-    links: [
-      { name: "News Archive", href: "/news" },
-    ],
+    links: [{ name: "News Archive", href: "/news" }],
   },
   {
     title: "Studio",
@@ -59,13 +49,22 @@ const sections = [
       { name: "Accessibility", href: "/accessibility" },
     ],
   },
+  {
+    title: "RSS Feeds",
+    links: [
+      { name: "Projects RSS", href: "/projects/rss.xml" },
+      { name: "Articles RSS", href: "/articles/rss.xml" },
+      { name: "News RSS", href: "/news/rss.xml" },
+      { name: "Tutorials RSS", href: "/studio/tutorials/rss.xml" },
+    ],
+  },
 ];
 
 export default function Sitemap() {
   const allLinks = sections.flatMap((section) => section.links);
 
   return (
-    <div className="min-h-screen bg-background">
+    <>
       <StructuredData
         type="BreadcrumbList"
         breadcrumbs={[
@@ -78,7 +77,8 @@ export default function Sitemap() {
         collectionPage={{
           name: "Sitemap",
           url: "https://www.brandonptdavis.com/sitemap",
-          description: "Complete navigation map of portfolio, assistant scenic design, articles, about, and studio pages.",
+          description:
+            "Complete navigation map of portfolio, assistant scenic design, articles, about, and studio pages.",
           mainEntity: {
             name: "Site Pages",
             itemListElement: allLinks.map((link, index) => ({
@@ -89,58 +89,43 @@ export default function Sitemap() {
           },
         }}
       />
-      <Header />
 
-      <main className="container py-24">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-xs uppercase tracking-[0.22em] text-foreground/60 mb-4">Site Info</p>
-            <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-4">Sitemap</h1>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Updated navigation map for the current portfolio, studio, and information pages.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-2 mb-12">
-            {infoPages.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`px-4 py-2 rounded-md border text-xs font-semibold tracking-[0.08em] uppercase transition-colors ${
-                  item.href === "/sitemap"
-                    ? "border-[#FF5722] text-[#FF5722] bg-[#FF5722]/10"
-                    : "border-border text-foreground/70 hover:text-foreground hover:border-foreground/40"
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sections.map((section, idx) => (
-              <section
-                key={section.title}
-                className="rounded-2xl border border-border/60 bg-card/20 p-6"
-                style={{ boxShadow: `inset 0 1px 0 ${["#FF5722", "#00BCD4", "#E91E63", "#FFC107", "#7CFF6B"][idx % 5]}33` }}
-              >
-                <h2 className="text-sm font-black tracking-[0.16em] uppercase text-foreground mb-4">{section.title}</h2>
-                <ul className="space-y-2">
-                  {section.links.map((link) => (
-                    <li key={link.href}>
-                      <Link href={link.href} className="text-sm text-foreground/80 hover:text-[#FF5722] transition-colors">
+      <InfoPageShell
+        title="Sitemap"
+        intro="A complete navigation map of the current portfolio, studio, archive, and information pages."
+        currentPath="/sitemap"
+      >
+        <div className="grid gap-x-12 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
+          {sections.map((section) => (
+            <section key={section.title} className="border-t border-white/10 pt-5">
+              <h2 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
+                {section.title}
+              </h2>
+              <ul className="space-y-3">
+                {section.links.map((link) => (
+                  <li key={link.href}>
+                    {section.title === "RSS Feeds" ? (
+                      <a
+                        href={link.href}
+                        className="text-[1rem] leading-[1.65] tracking-[-0.01em] text-foreground/72 transition-colors hover:text-foreground"
+                      >
+                        {link.name}
+                      </a>
+                    ) : (
+                      <Link
+                        href={link.href}
+                        className="text-[1rem] leading-[1.65] tracking-[-0.01em] text-foreground/72 transition-colors hover:text-foreground"
+                      >
                         {link.name}
                       </Link>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            ))}
-          </div>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
         </div>
-      </main>
-
-      <Footer />
-    </div>
+      </InfoPageShell>
+    </>
   );
 }
