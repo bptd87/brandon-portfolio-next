@@ -4,9 +4,8 @@ import { ProgressiveImage } from '@/components/ProgressiveImage';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { trpc } from "@/lib/trpc";
 import { proxyImageUrl } from "@/lib/imageProxy";
-import { Calendar, Clock, Sparkles, Copy, Check, ChevronLeft, ChevronRight, Link as LinkIcon } from "lucide-react";
+import { Sparkles, Copy, Check, ChevronLeft, ChevronRight, Link as LinkIcon, Play, Pause } from "lucide-react";
 import { Link, useParams } from "wouter";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
@@ -15,6 +14,7 @@ import "yet-another-react-lightbox/styles.css";
 
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { getLocalArticleRecordBySlug, getLocalArticles } from "@shared/localArticles";
 
 // Decode HTML entities
 const decodeHTMLEntities = (text: string): string => {
@@ -68,23 +68,25 @@ export default function ArticleDetail() {
 
 function ArticleDetailContent() {
   const { slug } = useParams<{ slug: string }>();
-  const { data: article, isLoading } = trpc.articles.getBySlug.useQuery({ slug: slug! });
-  const { data: category } = trpc.categories.getById.useQuery(
-    { id: article?.categoryId || 0 },
-    { enabled: !!article?.categoryId }
-  );
-  const { data: relatedArticles } = trpc.articles.list.useQuery({ status: "published" });
+  const article = getLocalArticleRecordBySlug(slug);
 
   const galleryRefs = useRef<Record<number, HTMLDivElement | null>>({});
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxImages, setLightboxImages] = useState<Array<{ src: string; alt?: string }>>([]);
   const [linkCopied, setLinkCopied] = useState(false);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [audioDurationSeconds, setAudioDurationSeconds] = useState<number | null>(null);
+  const [audioCurrentTimeSeconds, setAudioCurrentTimeSeconds] = useState(0);
 
   const scrollGallery = (sectionIndex: number, direction: "prev" | "next") => {
     const container = galleryRefs.current[sectionIndex];
     if (!container) return;
-    const offset = Math.round(container.clientWidth * 0.75) * (direction === "next" ? 1 : -1);
+    const firstFigure = container.querySelector("figure");
+    const figureWidth = firstFigure instanceof HTMLElement ? firstFigure.offsetWidth : Math.round(container.clientWidth * 0.5);
+    const gap = 24;
+    const offset = (figureWidth + gap) * (direction === "next" ? 1 : -1);
     container.scrollBy({ left: offset, behavior: "smooth" });
   };
 
@@ -109,13 +111,50 @@ function ArticleDetailContent() {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div>
-      </div>
-    );
-  }
+  const articleAudio = article?.audio;
+
+  const handleAudioToggle = async () => {
+    if (!audioRef.current || !articleAudio) return;
+
+    if (audioRef.current.paused) {
+      try {
+        await audioRef.current.play();
+        setIsAudioPlaying(true);
+      } catch {
+        setIsAudioPlaying(false);
+        toast.error("Unable to play audio");
+      }
+      return;
+    }
+
+    audioRef.current.pause();
+    setIsAudioPlaying(false);
+  };
+
+  const formatAudioDuration = (seconds: number | null) => {
+    if (!seconds || Number.isNaN(seconds)) return null;
+    const rounded = Math.max(0, Math.round(seconds));
+    const minutes = Math.floor(rounded / 60);
+    const remainingSeconds = rounded % 60;
+    return `${minutes}:${String(remainingSeconds).padStart(2, "0")}`;
+  };
+
+  const displayedAudioTime = (() => {
+    if (articleAudio?.durationLabel && !isAudioPlaying && !audioDurationSeconds) {
+      return articleAudio.durationLabel;
+    }
+
+    if (!audioDurationSeconds || Number.isNaN(audioDurationSeconds)) {
+      return articleAudio?.durationLabel || null;
+    }
+
+    if (!isAudioPlaying) {
+      return articleAudio?.durationLabel || formatAudioDuration(audioDurationSeconds);
+    }
+
+    const remaining = Math.max(0, audioDurationSeconds - audioCurrentTimeSeconds);
+    return formatAudioDuration(remaining);
+  })();
 
   if (!article) {
     return (
@@ -251,13 +290,12 @@ function ArticleDetailContent() {
 
   // Calculate read time
   const wordCount = JSON.stringify(contentSections).split(/\s+/).length;
-  const readTime = Math.ceil(wordCount / 200);
 
   const articleImageSlides: Array<{ key: string; src: string; alt?: string }> = [];
   if (article.coverImageUrl) {
     articleImageSlides.push({
       key: "cover",
-      src: proxyImageUrl(article.coverImageUrl, 1920),
+      src: article.coverImageUrl,
       alt: article.title,
     });
   }
@@ -294,7 +332,11 @@ function ArticleDetailContent() {
   };
 
   // Get related articles
-  const related = relatedArticles?.filter(a => a.id !== article.id && a.categoryId === article.categoryId).slice(0, 4) || [];
+  const related = getLocalArticles()
+    .map((candidate) => getLocalArticleRecordBySlug(candidate.slug))
+    .filter((candidate): candidate is NonNullable<typeof article> => Boolean(candidate))
+    .filter((candidate) => candidate.id !== article.id && candidate.categoryName === article.categoryName)
+    .slice(0, 4);
 
   return (
     <div className="min-h-screen bg-background">
@@ -304,8 +346,8 @@ function ArticleDetailContent() {
         image={article.coverImageUrl || undefined}
         type="article"
         author="Brandon PT Davis"
-        publishedTime={article.publishedAt?.toISOString()}
-        modifiedTime={article.updatedAt?.toISOString()}
+        publishedTime={article.publishedAt ? new Date(article.publishedAt).toISOString() : undefined}
+        modifiedTime={article.updatedAt ? new Date(article.updatedAt).toISOString() : undefined}
       />
       <StructuredData
         type="Article"
@@ -341,7 +383,7 @@ function ArticleDetailContent() {
       <article className="py-12 md:py-16">
         <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
           <header className="mx-auto max-w-5xl text-center">
-            <div className="flex flex-wrap items-center justify-center gap-4 text-[0.96rem] tracking-[-0.02em] text-foreground/58">
+            <div className="flex flex-wrap items-center justify-center gap-4 text-[0.92rem] tracking-[-0.015em] text-foreground/54">
               <time dateTime={new Date(article.publishedAt || article.createdAt).toISOString()}>
                 {new Date(article.publishedAt || article.createdAt).toLocaleDateString('en-US', {
                   month: 'long',
@@ -349,44 +391,75 @@ function ArticleDetailContent() {
                   year: 'numeric'
                 })}
               </time>
-              {category?.name ? (
-                <Link href={`/articles?category=${encodeURIComponent(category.name)}`}>
-                  <a className="transition-colors hover:text-foreground">{category.name}</a>
+              {article.categoryName ? (
+                <Link href={`/articles?category=${encodeURIComponent(article.categoryName)}`}>
+                  <a className="transition-colors hover:text-foreground">{article.categoryName}</a>
                 </Link>
               ) : null}
             </div>
 
-            <h1 className="mx-auto mt-6 max-w-[16ch] font-sans text-[clamp(2.25rem,5vw,5.1rem)] font-normal leading-[0.94] tracking-[-0.06em] text-foreground">
+            <h1 className="mx-auto mt-5 max-w-[14ch] font-sans text-[clamp(2.7rem,5.8vw,5.9rem)] font-medium leading-[0.92] tracking-[-0.072em] text-foreground">
               {decodeHTMLEntities(article.title)}
             </h1>
 
             {article.excerpt && (
-              <p className="mx-auto mt-6 max-w-[44rem] text-[clamp(1.04rem,1.6vw,1.55rem)] leading-[1.5] tracking-[-0.02em] text-foreground/78">
+              <p className="mx-auto mt-5 max-w-[38rem] text-[clamp(1rem,1.45vw,1.34rem)] leading-[1.62] tracking-[-0.018em] text-foreground/68">
                 {decodeHTMLEntities(article.excerpt)}
               </p>
             )}
 
             {article.coverImageUrl && (
               <div className="mx-auto mt-10 max-w-[82rem] overflow-hidden rounded-xl">
-                <ProgressiveImage
-                  src={proxyImageUrl(article.coverImageUrl, 1920)}
-                  alt={article.title}
+                <img
+                  src={article.coverImageUrl}
+                  alt={article.coverImageAlt || article.title}
                   loading="eager"
-                  className="w-full h-auto cursor-pointer"
+                  decoding="async"
+                  className="h-auto w-full cursor-pointer object-cover"
                   onClick={() => openArticleLightboxAt("cover")}
                 />
               </div>
             )}
 
-            <div className="mx-auto mt-8 flex w-full max-w-[58rem] items-center justify-between gap-6 border-y border-white/14 py-4 text-foreground/72">
-              <span className="inline-flex items-center gap-2 text-[0.98rem] tracking-[-0.02em]">
-                <Clock className="h-4 w-4" />
-                <span>{readTime} min read</span>
-              </span>
+            <div className="mx-auto mt-8 flex w-full max-w-[58rem] items-center justify-between gap-6 border-t border-white/14 pt-4 text-foreground/72">
+              <div className="flex items-center gap-4 sm:gap-5">
+                {articleAudio ? (
+                  <>
+                    <audio
+                      ref={audioRef}
+                      preload="metadata"
+                      src={articleAudio.url}
+                      onLoadedMetadata={(event) => setAudioDurationSeconds(event.currentTarget.duration || null)}
+                      onTimeUpdate={(event) => setAudioCurrentTimeSeconds(event.currentTarget.currentTime || 0)}
+                      onEnded={() => {
+                        setIsAudioPlaying(false);
+                        setAudioCurrentTimeSeconds(0);
+                      }}
+                      onPause={() => setIsAudioPlaying(false)}
+                      onPlay={() => setIsAudioPlaying(true)}
+                    />
+                    <button
+                      type="button"
+                      onClick={handleAudioToggle}
+                      className="inline-flex items-center gap-3 text-[0.96rem] tracking-[-0.018em] transition-colors hover:text-foreground"
+                    >
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/18 bg-white/6">
+                        {isAudioPlaying ? <Pause className="h-3.5 w-3.5" /> : <Play className="ml-0.5 h-3.5 w-3.5" />}
+                      </span>
+                      <span>{articleAudio.label || "Listen to article"}</span>
+                    </button>
+                    {displayedAudioTime ? (
+                      <span className="text-[0.96rem] tracking-[-0.018em] text-foreground/62">
+                        {displayedAudioTime}
+                      </span>
+                    ) : null}
+                  </>
+                ) : null}
+              </div>
               <button
                 type="button"
                 onClick={handleShare}
-                className="inline-flex items-center gap-2 text-[0.98rem] tracking-[-0.02em] transition-colors hover:text-foreground"
+                className="inline-flex items-center gap-2 text-[0.96rem] tracking-[-0.018em] transition-colors hover:text-foreground"
               >
                 {linkCopied ? <Check className="h-4 w-4" /> : <LinkIcon className="h-4 w-4" />}
                 <span>{linkCopied ? "Link copied" : "Share"}</span>
@@ -411,17 +484,16 @@ function ArticleDetailContent() {
                 `}</style>
 
                 <div
-                  className="article-content article-content-${article.id} article-html-content mx-auto max-w-[58ch]
+                  className="article-content article-content-${article.id} article-html-content mx-auto max-w-[56ch]
                   prose prose-lg prose-invert
-                  prose-headings:font-sans prose-headings:font-normal prose-headings:leading-[1.08] prose-headings:tracking-[-0.04em]
-                  prose-h2:text-[1.9rem] prose-h2:mt-18 prose-h2:mb-5 prose-h2:scroll-mt-24 prose-h2:text-foreground
-                  prose-h3:text-[1.35rem] prose-h3:mt-12 prose-h3:mb-3 prose-h3:leading-[1.25] prose-h3:text-foreground
-                  prose-h4:text-[1rem] prose-h4:mt-8 prose-h4:mb-2 prose-h4:leading-[1.4]
-                  prose-p:text-foreground/88 prose-p:leading-[1.82] prose-p:mb-7 prose-p:text-[1.08rem] prose-p:font-normal prose-p:tracking-normal
+                  prose-headings:font-sans prose-headings:font-medium prose-headings:leading-[0.98] prose-headings:tracking-[-0.05em]
+                  prose-h2:text-[clamp(2rem,2.75vw,2.8rem)] prose-h2:mt-20 prose-h2:mb-6 prose-h2:scroll-mt-24 prose-h2:text-foreground
+                  prose-h3:text-[clamp(1.5rem,2vw,1.95rem)] prose-h3:mt-14 prose-h3:mb-4 prose-h3:leading-[1.02] prose-h3:text-foreground/98
+                  prose-h4:text-[0.95rem] prose-h4:mt-10 prose-h4:mb-3 prose-h4:font-semibold prose-h4:uppercase prose-h4:tracking-[0.18em] prose-h4:text-foreground/48
+                  prose-p:text-foreground/80 prose-p:leading-[1.9] prose-p:mb-8 prose-p:text-[1.02rem] md:prose-p:text-[1.06rem] prose-p:font-normal prose-p:tracking-[-0.01em]
                   prose-a:text-foreground prose-a:underline prose-a:decoration-white/35 prose-a:underline-offset-4 hover:prose-a:decoration-white/70 prose-a:font-medium
                   prose-strong:font-bold
-                  prose-blockquote:border-l-2 prose-blockquote:border-white/18 prose-blockquote:pl-6 
-                  prose-blockquote:text-[1.2rem] prose-blockquote:my-12 prose-blockquote:font-sans prose-blockquote:leading-[1.6] prose-blockquote:text-foreground/84
+                  prose-blockquote:border-0 prose-blockquote:pl-0 prose-blockquote:my-14 prose-blockquote:font-sans prose-blockquote:text-foreground
                   prose-ul:my-8 prose-ol:my-8 prose-ul:leading-[2] prose-ol:leading-[2] prose-ul:list-disc prose-ol:list-decimal prose-ul:pl-8 prose-ol:pl-8
                   prose-li:my-1.5 prose-li:text-[1.0625rem] prose-li:leading-[1.75] prose-li:ml-0
                   [&_ul]:list-disc [&_ol]:list-decimal [&_li]:list-item [&_li]:ml-0
@@ -435,10 +507,6 @@ function ArticleDetailContent() {
                   {Array.isArray(processedSections) && (() => {
                     let h2Index = 0;
                     return processedSections.map((section: any, index: number) => {
-                    // Track if this is the first paragraph (for drop cap)
-                    const isFirstParagraph = section.type === 'paragraph' &&
-                      !processedSections.slice(0, index).some((s: any) => s.type === 'paragraph');
-
                     switch (section.type) {
                       case 'update_note':
                         return (
@@ -455,7 +523,12 @@ function ArticleDetailContent() {
 
                       case 'heading':
                         const level = section.level || 2;
-                        const headingClassName = level === 2 ? "mt-12 mb-8" : level === 3 ? "mt-10 mb-6" : "mt-8 mb-4";
+                        const headingClassName =
+                          level === 2
+                            ? "mt-20 mb-6 font-sans text-[clamp(2rem,2.75vw,2.8rem)] font-medium leading-[0.96] tracking-[-0.055em] text-foreground"
+                            : level === 3
+                              ? "mt-14 mb-4 font-sans text-[clamp(1.5rem,2vw,1.95rem)] font-medium leading-[1.02] tracking-[-0.045em] text-foreground/98"
+                              : "mt-10 mb-3 font-sans text-[0.95rem] font-semibold uppercase tracking-[0.18em] text-foreground/48";
                         const headingText = decodeHTMLEntities(section.text || section.content || '');
 
                         const headingId = level === 2
@@ -480,7 +553,7 @@ function ArticleDetailContent() {
                         return (
                           <p
                             key={index}
-                            className={`mb-6 leading-relaxed [&_strong]:font-bold ${isFirstParagraph ? 'first-paragraph-drop-cap' : ''}`}
+                            className="mb-8 text-[1.02rem] leading-[1.9] tracking-[-0.01em] text-foreground/80 [&_strong]:font-bold [&_strong]:text-foreground"
                             dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(section.text || section.content || '') }}
                           />
                         );
@@ -488,13 +561,15 @@ function ArticleDetailContent() {
                       case 'quote':
                         const quoteText = normalizeQuoteText(section.text || section.content || '');
                         return (
-                          <blockquote key={index} className="my-12 border-l-2 border-white/18 px-6 py-1">
-                            <p className="text-[1.2rem] md:text-[1.35rem] leading-relaxed text-foreground/88">
+                          <blockquote key={index} className="my-16 py-2 text-center">
+                            <p className="mx-auto max-w-[34rem] font-sans text-[clamp(1.35rem,2.1vw,1.9rem)] font-medium leading-[1.28] tracking-[-0.04em] text-foreground/92">
+                              <span aria-hidden="true" className="mr-[0.08em] text-foreground/54">“</span>
                               {quoteText}
+                              <span aria-hidden="true" className="ml-[0.04em] text-foreground/54">”</span>
                             </p>
                             {section.author && (
-                              <footer className="mt-4 text-base not-italic font-sans text-foreground/52">
-                                — {decodeHTMLEntities(section.author)}
+                              <footer className="mt-5 text-[0.82rem] not-italic font-semibold uppercase tracking-[0.22em] text-foreground/42">
+                                {decodeHTMLEntities(section.author)}
                               </footer>
                             )}
                           </blockquote>
@@ -550,36 +625,43 @@ function ArticleDetailContent() {
                         );
 
                       case 'gallery':
+                        const galleryImages = section.images || [];
+                        const hasGalleryOverflow = galleryImages.length > 2;
                         return (
-                          <div key={index} className="my-14 -mx-4 md:mx-0 relative">
-                            <div
-                              ref={(el) => {
-                                galleryRefs.current[index] = el;
-                              }}
-                              className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory"
-                            >
-                              {section.images?.map((img: any, imgIndex: number) => (
-                                <figure key={imgIndex} className="flex-none w-[80%] md:w-[60%] snap-center rounded-xl overflow-hidden">
-                                  <ProgressiveImage
-                                    src={proxyImageUrl(img.url, 1920)}
-                                    alt={img.alt || img.caption || ''}
-                                    loading="lazy"
-                                    className="w-full h-auto cursor-pointer hover:opacity-90 transition-opacity"
-                                    onClick={() => openArticleLightboxAt(`gallery-${index}-${imgIndex}`)}
-                                  />
-                                  {img.caption && (
-                                    <figcaption className="text-sm text-muted-foreground mt-4 text-center">
-                                      {decodeHTMLEntities(img.caption)}
-                                    </figcaption>
-                                  )}
-                                </figure>
-                              ))}
+                          <section key={index} className="my-16 relative left-1/2 w-screen max-w-[84rem] -translate-x-1/2 px-14 sm:px-18 lg:px-24">
+                            <div className="overflow-hidden">
+                              <div
+                                ref={(el) => {
+                                  galleryRefs.current[index] = el;
+                                }}
+                                className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory md:gap-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                              >
+                                {galleryImages.map((img: any, imgIndex: number) => (
+                                  <figure
+                                    key={imgIndex}
+                                    className="flex-none snap-start w-[58vw] sm:w-[46vw] md:w-[calc((100%-2rem)/2)]"
+                                  >
+                                    <ProgressiveImage
+                                      src={proxyImageUrl(img.url, 1920)}
+                                      alt={img.alt || img.caption || ''}
+                                      loading="lazy"
+                                      className="h-auto w-full cursor-pointer rounded-xl hover:opacity-90 transition-opacity"
+                                      onClick={() => openArticleLightboxAt(`gallery-${index}-${imgIndex}`)}
+                                    />
+                                    {img.caption && (
+                                      <figcaption className="mt-4 max-w-[34rem] text-sm leading-6 text-foreground/58">
+                                        {decodeHTMLEntities(img.caption)}
+                                      </figcaption>
+                                    )}
+                                  </figure>
+                                ))}
+                              </div>
                             </div>
                             <button
                               type="button"
                               aria-label="Previous gallery images"
                               onClick={() => scrollGallery(index, "prev")}
-                              className="hidden md:flex items-center justify-center absolute left-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/85 border border-border hover:bg-background transition-colors"
+                              className="hidden md:flex items-center justify-center absolute left-5 top-[40%] -translate-y-1/2 h-10 w-10 text-white/78 transition-colors hover:text-white"
                             >
                               <ChevronLeft className="h-5 w-5" />
                             </button>
@@ -587,11 +669,11 @@ function ArticleDetailContent() {
                               type="button"
                               aria-label="Next gallery images"
                               onClick={() => scrollGallery(index, "next")}
-                              className="hidden md:flex items-center justify-center absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/85 border border-border hover:bg-background transition-colors"
+                              className="hidden md:flex items-center justify-center absolute right-5 top-[40%] -translate-y-1/2 h-10 w-10 text-white/78 transition-colors hover:text-white"
                             >
                               <ChevronRight className="h-5 w-5" />
                             </button>
-                          </div>
+                          </section>
                         );
 
                       case 'list':
@@ -611,7 +693,7 @@ function ArticleDetailContent() {
                         return (
                           <div
                             key={index}
-                            className="article-html-content [&_p]:mb-8 [&_p]:leading-[2] [&_p]:text-justify"
+                            className="article-html-content [&_p]:mb-8 [&_p]:text-[1.02rem] [&_p]:leading-[1.9] [&_p]:tracking-[-0.01em] [&_p]:text-foreground/80"
                             dangerouslySetInnerHTML={{ __html: processHTMLImages(decodeHTMLEntities(section.content)) }}
                           />
                         );
@@ -620,28 +702,44 @@ function ArticleDetailContent() {
                         return (
                           <div
                             key={index}
-                            className="[&_p]:mb-8 [&_p]:leading-[2] [&_p]:text-justify"
+                            className="[&_p]:mb-8 [&_p]:text-[1.02rem] [&_p]:leading-[1.9] [&_p]:tracking-[-0.01em] [&_p]:text-foreground/80"
                             dangerouslySetInnerHTML={{ __html: processHTMLImages(section.content) }}
                           />
                         );
 
                       case 'faq':
                         return (
-                          <div key={index} className="my-16">
-                            <h2 className="mb-8 text-[1.65rem] font-sans font-normal tracking-[-0.04em]">Frequently Asked Questions</h2>
-                            <Accordion type="single" collapsible className="space-y-4">
+                          <section key={index} className="my-20 border-t border-white/12 pt-10">
+                            <div className="mb-8 flex items-end justify-between gap-6">
+                              <div>
+                                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                                  FAQ
+                                </p>
+                                <h2 className="mt-3 text-[1.65rem] font-sans font-normal tracking-[-0.04em] text-foreground">
+                                  Frequently Asked Questions
+                                </h2>
+                              </div>
+                            </div>
+                            <Accordion type="single" collapsible className="space-y-3">
                               {section.items?.map((item: any, faqIndex: number) => (
-                                <AccordionItem key={faqIndex} value={`faq-${faqIndex}`} className="rounded-lg border border-border/60 px-6">
-                                  <AccordionTrigger className="py-6 text-lg font-medium hover:no-underline">
+                                <AccordionItem
+                                  key={faqIndex}
+                                  value={`faq-${faqIndex}`}
+                                  className="rounded-[1rem] border border-white/10 bg-white/[0.02] px-6 transition-colors data-[state=open]:border-white/16 data-[state=open]:bg-white/[0.035]"
+                                >
+                                  <AccordionTrigger className="py-5 text-left text-[1.04rem] font-medium leading-[1.35] tracking-[-0.02em] text-foreground hover:no-underline">
                                     {decodeHTMLEntities(item.question)}
                                   </AccordionTrigger>
-                                  <AccordionContent className="pb-6 text-foreground/72">
-                                    <div dangerouslySetInnerHTML={{ __html: item.answer }} />
+                                  <AccordionContent className="pb-6 pr-8 text-[0.98rem] leading-7 text-foreground/66">
+                                    <div
+                                      className="[&_p]:mb-4 [&_a]:text-foreground [&_a]:underline [&_a]:decoration-white/30 [&_a]:underline-offset-4"
+                                      dangerouslySetInnerHTML={{ __html: item.answer }}
+                                    />
                                   </AccordionContent>
                                 </AccordionItem>
                               ))}
                             </Accordion>
-                          </div>
+                          </section>
                         );
 
                       case 'ai_prompt':
@@ -769,7 +867,7 @@ function ArticleDetailContent() {
                         </h3>
 
                         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.95rem] tracking-[-0.015em] text-foreground/52">
-                          {relatedArticle.category?.name && <span>{relatedArticle.category.name}</span>}
+                          {relatedArticle.categoryName && <span>{relatedArticle.categoryName}</span>}
                           <span>
                             {relatedArticle.publishedAt && new Date(relatedArticle.publishedAt).toLocaleDateString('en-US', {
                               month: 'short',
@@ -856,17 +954,6 @@ function ArticleDetailContent() {
 
         .article-content ::-webkit-scrollbar-thumb:hover {
           background: rgba(255,255,255,0.32);
-        }
-
-        /* Drop Cap First Letter - only on first paragraph, not update notes */
-        .article-content .first-paragraph-drop-cap::first-letter {
-          font-size: 4.5rem;
-          font-weight: bold;
-          line-height: 0.8;
-          float: left;
-          margin-right: 0.75rem;
-          font-family: 'Playfair Display', serif;
-          color: rgba(255,255,255,0.9);
         }
       `}</style>
 

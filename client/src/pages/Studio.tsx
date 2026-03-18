@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
-import { trpc } from "@/lib/trpc";
+import { getLocalArticles } from "@shared/localArticles";
 
 const apps = [
   {
@@ -87,10 +87,7 @@ function formatArticleDate(value?: string | null) {
 }
 
 export default function Studio() {
-  const { data: articles = [] } = trpc.articles.list.useQuery({
-    status: "published",
-  });
-
+  const articles = getLocalArticles();
   const latestArticles = articles.slice(0, 3);
 
   return (
@@ -315,7 +312,7 @@ export default function Studio() {
 
                       <div className="mt-4 flex items-center justify-between gap-3">
                         <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
-                          {article.category?.name || "Article"}
+                          {article.categoryName || "Article"}
                         </p>
                         {article.publishedAt ? (
                           <div className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.18em] text-foreground/34">

@@ -1,4 +1,5 @@
-import { ArrowUpRight, CalendarDays, MapPin } from "lucide-react";
+import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { useRef } from "react";
 import { Link } from "wouter";
 
 import { AnimatedSection } from "@/components/AnimatedSection";
@@ -32,7 +33,6 @@ const UTAH_SEASON_SLUGS = [
 ] as const;
 
 const UTAH_MILESTONE_SLUG = "fifth-season-utah-shakespeare-festival";
-const SECTION_ACCENTS = ["#FFB000", "#00BCD4", "#FF5722", "#4CAF50", "#E91E63", "#9C27B0"];
 const JO_WINIARSKI_THEATER_URL = "https://www.jowiniarski.com/theater";
 const ASSISTANT_SCENIC_URL = `https://www.brandonptdavis.com${ASSISTANT_SCENIC_DESIGN_PATH}`;
 const ASSISTANT_SCENIC_KEYWORDS = [
@@ -47,7 +47,6 @@ const ASSISTANT_SCENIC_KEYWORDS = [
 
 function formatDate(value: string) {
   return new Date(value).toLocaleDateString("en-US", {
-    month: "short",
     year: "numeric",
   });
 }
@@ -80,6 +79,7 @@ function getEntryExternalLabel(entry: (typeof assistantScenicDesignEntries)[numb
 }
 
 export default function AssistantScenicDesign() {
+  const utahGalleryRef = useRef<HTMLDivElement | null>(null);
   const entryBySlug = buildEntryMap();
 
   const highlightEntries = HIGHLIGHT_SLUGS.map((slug) => entryBySlug.get(slug)).filter(
@@ -109,6 +109,21 @@ export default function AssistantScenicDesign() {
     new Set(assistantScenicDesignEntries.map((entry) => entry.collaborator).filter(Boolean))
   );
 
+  const scrollUtahGallery = (direction: "prev" | "next") => {
+    const container = utahGalleryRef.current;
+    if (!container) return;
+    const firstFigure = container.querySelector("figure");
+    const figureWidth =
+      firstFigure instanceof HTMLElement
+        ? firstFigure.offsetWidth
+        : Math.round(container.clientWidth * 0.3);
+    const gap = 24;
+    container.scrollBy({
+      left: (figureWidth + gap) * (direction === "next" ? 1 : -1),
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <SEO
@@ -122,10 +137,7 @@ export default function AssistantScenicDesign() {
         type="BreadcrumbList"
         breadcrumbs={[
           { name: "Home", url: "https://www.brandonptdavis.com" },
-          {
-            name: "Assistant Scenic Design",
-            url: ASSISTANT_SCENIC_URL,
-          },
+          { name: "Assistant Scenic Design", url: ASSISTANT_SCENIC_URL },
         ]}
       />
       <StructuredData
@@ -182,36 +194,25 @@ export default function AssistantScenicDesign() {
       />
       <Header />
 
-      <section className="border-b border-border py-18 md:py-24">
-        <div className="container max-w-5xl">
+      <section className="border-b border-border py-16 md:py-20">
+        <div className="container max-w-6xl">
           <AnimatedSection>
-            <div className="space-y-5 text-center">
-              <p className="text-xs font-bold uppercase tracking-[0.32em] text-muted-foreground">
+            <div className="space-y-6 text-center">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
                 Portfolio
               </p>
-              <h1 className="text-4xl font-black tracking-tight md:text-5xl">
+              <h1 className="mx-auto max-w-[12ch] font-sans text-[clamp(3rem,6vw,5.8rem)] font-medium leading-[0.92] tracking-[-0.07em] text-foreground">
                 Assistant Scenic Design
               </h1>
-              <p className="mx-auto max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
-                Selected assistant scenic credits supporting scenic designers Tom Buderwitz and
-                Jo Winiarski across regional theatre, premieres, and repertory production.
+              <p className="mx-auto max-w-[42rem] text-[clamp(1rem,1.35vw,1.22rem)] leading-[1.68] tracking-[-0.015em] text-foreground/66">
+                A companion portfolio of assistant scenic credits centered on drafting,
+                coordination, repertory support, and production communication across regional
+                theatre and long-term collaborations.
               </p>
-              <p className="mx-auto max-w-2xl text-sm leading-relaxed text-foreground/65 md:text-base">
-                A focused companion page to the primary scenic design portfolio, centered on support
-                roles, drafting, coordination, and production communication.
-              </p>
-              <div className="flex flex-wrap items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-foreground/70">
-                <span className="rounded-full border border-border px-4 py-2">
-                  {assistantScenicYearRange.start}-{assistantScenicYearRange.end}
-                </span>
-                <span className="rounded-full border border-border px-4 py-2">
-                  Selected assistant scenic credits
-                </span>
-              </div>
-              <div className="pt-2">
+              <div className="pt-1">
                 <Link
                   href="/projects"
-                  className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#FFB000] transition-colors hover:opacity-80"
+                  className="inline-flex items-center gap-2 text-[0.92rem] tracking-[-0.015em] text-foreground/76 transition-colors hover:text-foreground"
                 >
                   View Scenic Design Portfolio
                   <ArrowUpRight className="h-4 w-4" />
@@ -226,239 +227,45 @@ export default function AssistantScenicDesign() {
         <div className="container max-w-6xl">
           <AnimatedSection>
             <div className="mb-10 max-w-3xl">
-              <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-muted-foreground">
-                Highlights
-              </p>
-              <h2 className="mb-4 text-3xl font-black tracking-tight md:text-4xl">
+              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
                 Selected Credits
+              </p>
+              <h2 className="mb-4 font-sans text-[clamp(2.2rem,4vw,4rem)] font-medium leading-[0.94] tracking-[-0.06em] text-foreground">
+                Production support shaped by drafting, clarity, and follow-through.
               </h2>
-              <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
-                Productions where assistant scenic work was central to drafting, coordination, and
-                production communication.
+              <p className="text-[1.02rem] leading-[1.75] tracking-[-0.01em] text-foreground/62">
+                A tighter selection of assistant scenic work across premieres, regional theatre,
+                and repertory seasons where scenic support was central to the process.
               </p>
             </div>
           </AnimatedSection>
 
-          <div className="grid gap-6 lg:grid-cols-2">
-            {highlightEntries.map((entry, index) => {
-              const accent = SECTION_ACCENTS[index % SECTION_ACCENTS.length];
+          <div className="grid gap-x-8 gap-y-12 lg:grid-cols-3 xl:gap-x-10">
+            {highlightEntries.map((entry) => {
               const externalUrl = getEntryExternalUrl(entry);
 
               return (
                 <AnimatedSection key={entry.anchorId}>
-                  <article
-                    id={entry.anchorId}
-                    className="flex h-full flex-col overflow-hidden rounded-2xl border border-border/60 bg-card/20"
-                  >
-                    <div className="aspect-[3/2] bg-black/70 p-4">
-                      <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-xl bg-black/60">
-                        <img
-                          src={entry.coverImageUrl}
-                          alt={entry.coverImageAlt}
-                          className="h-full w-full object-contain"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </div>
+                  <article id={entry.anchorId} className="group flex h-full flex-col">
+                    <div className="flex h-[18rem] items-end overflow-hidden rounded-[0.85rem] bg-black/70 md:h-[20rem] xl:h-[18.5rem]">
+                      <img
+                        src={entry.coverImageUrl}
+                        alt={entry.coverImageAlt}
+                        className="max-h-full w-full rounded-[0.85rem] object-contain object-bottom transition-transform duration-500 group-hover:scale-[1.015]"
+                        loading="lazy"
+                        decoding="async"
+                      />
                     </div>
-                    <div className="flex flex-1 flex-col p-6 md:p-7">
-                      <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.26em] text-foreground/45">
-                        Selected supporting work
-                      </p>
-                      <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.24em]" style={{ color: accent }}>
+                    <div className="pt-4">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-foreground/40">
                         {entry.organization}
                       </p>
-                      <h3 className="mb-3 min-h-[4.5rem] text-2xl font-bold leading-tight md:text-3xl">
+                      <h3 className="mt-2 text-[1.5rem] font-sans font-medium leading-[1.02] tracking-[-0.045em] text-foreground">
                         {entry.title}
                       </h3>
-                      <div className="mb-4 space-y-1 text-sm">
-                        <p className="font-semibold uppercase tracking-[0.16em] text-foreground/65">
-                          {entry.role}
-                        </p>
-                        <p className="text-foreground/80">
-                          Scenic Designer: <span className="font-semibold">{entry.collaborator}</span>
-                        </p>
-                      </div>
-                      <p className="mb-5 min-h-[4.75rem] text-sm leading-relaxed text-muted-foreground md:text-base">
-                        {trimCopy(entry.excerpt, 150)}
-                      </p>
-                      <div className="mt-auto space-y-4">
-                        <div className="flex flex-wrap items-center gap-4 text-sm text-foreground/70">
-                          <span className="inline-flex items-center gap-2">
-                            <CalendarDays className="h-4 w-4" />
-                            {formatDate(entry.date)}
-                          </span>
-                          {entry.location && (
-                            <span className="inline-flex items-center gap-2">
-                              <MapPin className="h-4 w-4" />
-                              {entry.location}
-                            </span>
-                          )}
-                        </div>
-                        {externalUrl && (
-                          <div>
-                            <a
-                              href={externalUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 text-sm font-semibold"
-                              style={{ color: accent }}
-                            >
-                              {getEntryExternalLabel(entry)}
-                              <ArrowUpRight className="h-4 w-4" />
-                            </a>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </article>
-                </AnimatedSection>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-t border-border bg-muted/10 py-16 md:py-20">
-        <div className="container max-w-6xl">
-          <AnimatedSection>
-            <div className="mb-10 grid gap-6 lg:grid-cols-[1.5fr_0.8fr] lg:items-end">
-              <div>
-                <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-[#FFB000]">
-                  Utah Shakespeare Festival
-                </p>
-                <h2 className="mb-4 text-3xl font-black tracking-tight md:text-4xl">
-                  Five Consecutive Seasons
-                </h2>
-                <p className="max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
-                  A sustained assistant scenic collaboration with scenic designer Jo Winiarski across
-                  five summer seasons in Cedar City.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-border/60 bg-background/70 p-5">
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-foreground/55">
-                  Collaboration Snapshot
-                </p>
-                <div className="mt-3 space-y-2 text-sm text-foreground/80">
-                  <p>
-                    Scenic Designer: <span className="font-semibold">Jo Winiarski</span>
-                  </p>
-                  <p>Seasons: 2021-2025</p>
-                  {utahMilestone && <p>{trimCopy(utahMilestone.excerpt, 130)}</p>}
-                </div>
-              </div>
-            </div>
-          </AnimatedSection>
-
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {utahEntries.map((entry, index) => {
-              const accent = SECTION_ACCENTS[index % SECTION_ACCENTS.length];
-              const externalUrl = getEntryExternalUrl(entry);
-
-              return (
-                <AnimatedSection key={entry.anchorId}>
-                  <article
-                    id={entry.anchorId}
-                    className="flex h-full flex-col overflow-hidden rounded-2xl border border-border/60 bg-background/70"
-                  >
-                    <div className="aspect-[3/2] bg-black/70 p-4">
-                      <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-xl bg-black/60">
-                        <img
-                          src={entry.coverImageUrl}
-                          alt={entry.coverImageAlt}
-                          className="h-full w-full object-contain"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex flex-1 flex-col p-6">
-                      <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.26em] text-foreground/45">
-                        Repertory collaboration
-                      </p>
-                      <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.24em]" style={{ color: accent }}>
-                        Season {new Date(entry.date).getFullYear()}
-                      </p>
-                      <h3 className="mb-3 min-h-[3.75rem] text-2xl font-bold leading-tight">{entry.title}</h3>
-                      <div className="mb-4 space-y-1 text-sm">
-                        <p className="font-semibold uppercase tracking-[0.16em] text-foreground/65">
-                          {entry.role}
-                        </p>
-                        <p className="text-foreground/80">
-                          Scenic Designer: <span className="font-semibold">{entry.collaborator}</span>
-                        </p>
-                      </div>
-                      <p className="mb-5 min-h-[4.5rem] text-sm leading-relaxed text-muted-foreground">
-                        {trimCopy(entry.excerpt, 132)}
-                      </p>
-                      <div className="mt-auto flex items-center gap-4 text-sm text-foreground/70">
-                        <span className="inline-flex items-center gap-2">
-                          <CalendarDays className="h-4 w-4" />
-                          {formatDate(entry.date)}
-                        </span>
-                        {externalUrl && (
-                          <a
-                            href={externalUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 font-semibold"
-                            style={{ color: accent }}
-                          >
-                            {getEntryExternalLabel(entry)}
-                            <ArrowUpRight className="h-4 w-4" />
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  </article>
-                </AnimatedSection>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {additionalEntries.length > 0 && (
-        <section className="border-t border-border py-16 md:py-20">
-          <div className="container max-w-6xl">
-            <AnimatedSection>
-              <div className="mb-8 max-w-3xl">
-                <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-muted-foreground">
-                  Additional Credits
-                </p>
-                <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
-                  Additional production credits kept visible here without giving them equal weight to
-                  the core highlight section.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              {additionalEntries.map((entry, index) => {
-                const accent = SECTION_ACCENTS[(index + 1) % SECTION_ACCENTS.length];
-                const externalUrl = getEntryExternalUrl(entry);
-
-                return (
-                  <AnimatedSection key={entry.anchorId}>
-                    <article
-                      id={entry.anchorId}
-                      className="rounded-2xl border border-border/60 bg-card/10 p-5"
-                    >
-                      <div className="flex flex-wrap items-start justify-between gap-3">
-                        <div className="space-y-2">
-                          <p className="text-[11px] font-bold uppercase tracking-[0.24em]" style={{ color: accent }}>
-                            {entry.organization}
-                          </p>
-                          <h3 className="text-xl font-bold leading-tight">{entry.title}</h3>
-                          <p className="text-sm text-foreground/75">
-                            Scenic Designer: <span className="font-semibold">{entry.collaborator}</span>
-                          </p>
-                        </div>
-                        <span className="text-sm text-foreground/60">{formatDate(entry.date)}</span>
-                      </div>
-                      <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                        {trimCopy(entry.excerpt, 140)}
+                      <p className="mt-3 max-w-[42rem] text-[0.98rem] leading-[1.72] tracking-[-0.01em] text-foreground/58">
+                        Assistant scenic design with {entry.collaborator}, {formatDate(entry.date)}
+                        {entry.location ? ` · ${entry.location}` : ""}.
                       </p>
                       {externalUrl && (
                         <div className="mt-4">
@@ -466,8 +273,163 @@ export default function AssistantScenicDesign() {
                             href={externalUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 text-sm font-semibold"
-                            style={{ color: accent }}
+                            className="inline-flex items-center gap-2 text-[0.94rem] tracking-[-0.015em] text-foreground/76 transition-colors hover:text-foreground"
+                          >
+                            {getEntryExternalLabel(entry)}
+                            <ArrowUpRight className="h-4 w-4" />
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  </article>
+                </AnimatedSection>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-border py-16 md:py-20">
+        <div className="container max-w-6xl">
+          <AnimatedSection>
+            <div className="mb-10 max-w-4xl">
+              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
+                Utah Shakespeare Festival
+              </p>
+              <h2 className="mb-4 font-sans text-[clamp(2.1rem,3.8vw,3.6rem)] font-medium leading-[0.95] tracking-[-0.055em] text-foreground">
+                Five seasons of repertory collaboration.
+              </h2>
+              <p className="text-[1.02rem] leading-[1.75] tracking-[-0.01em] text-foreground/62">
+                A sustained assistant scenic collaboration with Jo Winiarski across five summer
+                seasons in Cedar City, supporting continuity, scale, and the pace of repertory
+                production.
+                {utahMilestone ? ` ${trimCopy(utahMilestone.excerpt, 136)}` : ""}
+              </p>
+            </div>
+          </AnimatedSection>
+
+          <AnimatedSection>
+            <div className="relative">
+              <div className="overflow-hidden">
+                <div
+                  ref={utahGalleryRef}
+                  className="flex gap-8 overflow-x-auto px-[10vw] pb-4 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] md:px-[14vw]"
+                >
+                  {utahEntries.map((entry) => {
+                    const externalUrl = getEntryExternalUrl(entry);
+
+                    return (
+                      <figure
+                        key={entry.anchorId}
+                        id={entry.anchorId}
+                        className="w-[72vw] max-w-[52rem] flex-none snap-center md:w-[calc((100%-2rem)/3)] md:max-w-none"
+                      >
+                        <div className="overflow-hidden rounded-[0.9rem] bg-black/70">
+                          <img
+                            src={entry.coverImageUrl}
+                            alt={entry.coverImageAlt}
+                            className="h-auto w-full rounded-[0.9rem]"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </div>
+                        <figcaption className="pt-4">
+                          <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-foreground/40">
+                            {new Date(entry.date).getFullYear()} Season
+                          </p>
+                          <h3 className="mt-2 text-[1.42rem] font-sans font-medium leading-[1.02] tracking-[-0.045em] text-foreground">
+                            {entry.title}
+                          </h3>
+                          <p className="mt-3 text-[0.98rem] leading-[1.7] tracking-[-0.01em] text-foreground/60">
+                            Assistant scenic design with {entry.collaborator}.
+                          </p>
+                          <p className="mt-3 text-[0.98rem] leading-[1.72] tracking-[-0.01em] text-foreground/54">
+                            {trimCopy(entry.excerpt, 140)}
+                          </p>
+                          {externalUrl && (
+                            <div className="mt-4">
+                              <a
+                                href={externalUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 text-[0.94rem] tracking-[-0.015em] text-foreground/76 transition-colors hover:text-foreground"
+                              >
+                                {getEntryExternalLabel(entry)}
+                                <ArrowUpRight className="h-4 w-4" />
+                              </a>
+                            </div>
+                          )}
+                        </figcaption>
+                      </figure>
+                    );
+                  })}
+                </div>
+              </div>
+              <button
+                type="button"
+                aria-label="Previous Utah Shakespeare images"
+                onClick={() => scrollUtahGallery("prev")}
+                className="hidden md:flex absolute left-[4.5rem] top-[42%] -translate-y-1/2 items-center justify-center text-white/76 transition-colors hover:text-white"
+              >
+                <ChevronLeft className="h-6 w-6" />
+              </button>
+              <button
+                type="button"
+                aria-label="Next Utah Shakespeare images"
+                onClick={() => scrollUtahGallery("next")}
+                className="hidden md:flex absolute right-[4.5rem] top-[42%] -translate-y-1/2 items-center justify-center text-white/76 transition-colors hover:text-white"
+              >
+                <ChevronRight className="h-6 w-6" />
+              </button>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {additionalEntries.length > 0 && (
+        <section className="border-t border-border py-16 md:py-18">
+          <div className="container max-w-6xl">
+            <AnimatedSection>
+              <div className="mb-8 max-w-3xl">
+                <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
+                  Additional Credits
+                </p>
+                <p className="text-[1rem] leading-[1.72] tracking-[-0.01em] text-foreground/58">
+                  A broader list of assistant scenic credits kept visible here without competing
+                  with the main selection above.
+                </p>
+              </div>
+            </AnimatedSection>
+
+            <div className="grid gap-x-10 gap-y-0 md:grid-cols-2">
+              {additionalEntries.map((entry) => {
+                const externalUrl = getEntryExternalUrl(entry);
+
+                return (
+                  <AnimatedSection key={entry.anchorId}>
+                    <article id={entry.anchorId} className="border-t border-white/10 py-5">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-foreground/40">
+                        {entry.organization}
+                      </p>
+                      <div className="mt-2 flex items-end justify-between gap-4">
+                        <h3 className="max-w-[34rem] text-[1.22rem] font-sans font-medium leading-[1.08] tracking-[-0.035em] text-foreground">
+                          {entry.title}
+                        </h3>
+                        <p className="shrink-0 text-[0.92rem] tracking-[-0.015em] text-foreground/46">
+                          {formatDate(entry.date)}
+                        </p>
+                      </div>
+                      <p className="mt-2 max-w-[38rem] text-[0.96rem] leading-[1.68] tracking-[-0.01em] text-foreground/58">
+                        Assistant scenic design with {entry.collaborator}
+                        {entry.location ? ` · ${entry.location}` : ""}.
+                      </p>
+                      {externalUrl && (
+                        <div className="mt-4">
+                          <a
+                            href={externalUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-[0.92rem] tracking-[-0.015em] text-foreground/72 transition-colors hover:text-foreground"
                           >
                             {getEntryExternalLabel(entry)}
                             <ArrowUpRight className="h-4 w-4" />

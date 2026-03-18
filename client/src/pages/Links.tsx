@@ -21,7 +21,7 @@ import { Link } from "wouter";
 import { SEO } from "@/components/SEO";
 import { trpc } from "@/lib/trpc";
 import { getProjectPath } from "@/lib/projectRoutes";
-import { voyageLaArticle } from "@shared/publicContent";
+import { getLocalArticles } from "@shared/localArticles";
 
 function PinterestIcon({ className }: { className?: string }) {
   return (
@@ -114,9 +114,8 @@ export default function Links() {
   const loaderRef = useRef<HTMLDivElement>(null);
 
   const { data: projects, isLoading: projectsLoading } = trpc.projects.list.useQuery({});
-  const { data: articles, isLoading: articlesLoading } = trpc.articles.list.useQuery({
-    status: "published",
-  });
+  const articles = getLocalArticles();
+  const articlesLoading = false;
   const tutorials: any[] = [];
   const tutorialsLoading = false;
 
@@ -191,33 +190,19 @@ export default function Links() {
         });
     }
 
-    if (articles) {
-      articles.forEach((a: any) => {
-        const d = a.publishedAt ? new Date(a.publishedAt) : new Date(a.createdAt);
-        dashboardItems.push({
-          id: `art-${a.id}`,
-          type: "article",
-          title: a.title,
-          subtitle: "Article",
-          url: `/articles/${a.slug}`,
-          image: a.coverImageUrl,
-          date: d.toISOString(),
-          icon: "pen-tool",
-          isPinned: false,
-        });
+    articles.forEach((a: any) => {
+      const d = a.publishedAt ? new Date(a.publishedAt) : new Date(a.createdAt);
+      dashboardItems.push({
+        id: `art-${a.id}`,
+        type: "article",
+        title: a.title,
+        subtitle: a.categoryName || "Article",
+        url: `/articles/${a.slug}`,
+        image: a.coverImageUrl,
+        date: d.toISOString(),
+        icon: "pen-tool",
+        isPinned: false,
       });
-    }
-
-    dashboardItems.push({
-      id: `art-${voyageLaArticle.slug}`,
-      type: "article",
-      title: voyageLaArticle.title,
-      subtitle: voyageLaArticle.categoryName,
-      url: `/articles/${voyageLaArticle.slug}`,
-      image: voyageLaArticle.coverImageUrl,
-      date: new Date(voyageLaArticle.publishedAt).toISOString(),
-      icon: "pen-tool",
-      isPinned: false,
     });
 
     if (tutorials) {

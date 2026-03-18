@@ -9,11 +9,10 @@ import {
   ASSISTANT_SCENIC_DESIGN_PATH,
   ASSISTANT_SCENIC_DESIGN_SEO_DESCRIPTION,
   ASSISTANT_SCENIC_DESIGN_SEO_TITLE,
-  VOYAGELA_ARTICLE_PATH,
   assistantScenicDesignEntries,
   getLegacyCanonicalDestination,
-  voyageLaArticle,
 } from "@shared/publicContent";
+import { getLocalArticleBySlug, getLocalArticles } from "@shared/localArticles";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -340,23 +339,11 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
     return meta;
   };
 
-  if (decodedPath === VOYAGELA_ARTICLE_PATH) {
-    return cacheMeta({
-      title: voyageLaArticle.seoTitle,
-      description: voyageLaArticle.seoDescription,
-      image: absoluteUrl(origin, voyageLaArticle.coverImageUrl),
-      canonical: `${origin}${VOYAGELA_ARTICLE_PATH}`,
-      type: "article",
-      publishedTime: new Date(voyageLaArticle.publishedAt).toISOString(),
-      modifiedTime: new Date(voyageLaArticle.updatedAt).toISOString(),
-    });
-  }
-
   const articleMatch = decodedPath.match(/^\/articles\/([^/?#]+)\/?$/i);
   if (articleMatch) {
     const slug = cleanSlug(articleMatch[1]);
-    const article = await db.getArticleBySlug(slug);
-    if (article?.status === "published") {
+    const article = getLocalArticleBySlug(slug);
+    if (article) {
       return cacheMeta({
         title: article.seoTitle || article.title || DEFAULT_META.title,
         description: article.seoDescription || article.excerpt || DEFAULT_META.description,
@@ -527,7 +514,7 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
   }
 
   if (decodedPath === "/articles") {
-    const articles = await db.getAllArticles({ status: "published" });
+    const articles = getLocalArticles();
     const hero = articles.find((a) => a.coverImageUrl);
     return cacheMeta({
       title: "Scenic Insights | Articles by Brandon PT Davis",
@@ -539,7 +526,7 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
   }
 
   if (decodedPath === "/studio" || decodedPath === "/studio/tutorials") {
-    const articles = await db.getAllArticles({ status: "published" });
+    const articles = getLocalArticles();
     const hero = articles.find((a) => a.coverImageUrl);
     return cacheMeta({
       title: decodedPath === "/studio" ? "Scenic Design Studio | Brandon PT Davis" : "Vectorworks Tutorials | Brandon PT Davis",

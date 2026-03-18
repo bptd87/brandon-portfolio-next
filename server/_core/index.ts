@@ -13,7 +13,7 @@ import { sdk } from "./sdk";
 import * as db from "../db";
 import { supabase } from "../supabase";
 import { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
-import { isStaticArticleSlug } from "@shared/publicContent";
+import { getLocalArticleBySlug, isLocalArticleSlug } from "@shared/localArticles";
 import { getSessionCookieOptions } from "./cookies";
 import { fileURLToPath } from 'url';
 import { compressionMiddleware } from "./compression";
@@ -249,8 +249,8 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
     if (!slug) return redirect301(res, "/articles");
 
     try {
-      const article = await db.getArticleBySlug(slug);
-      if (article?.status === "published") return redirect301(res, `/articles/${slug}`);
+      const article = getLocalArticleBySlug(slug);
+      if (article) return redirect301(res, `/articles/${slug}`);
 
       const newsItem = await db.getNewsBySlug(slug);
       if (newsItem?.status === "published") return redirect301(res, `/news/${slug}`);
@@ -267,8 +267,8 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
     if (!slug) return redirect301(res, "/articles");
 
     try {
-      const article = await db.getArticleBySlug(slug);
-      if (article?.status === "published") return redirect301(res, `/articles/${slug}`);
+      const article = getLocalArticleBySlug(slug);
+      if (article) return redirect301(res, `/articles/${slug}`);
 
       const newsItem = await db.getNewsBySlug(slug);
       if (newsItem?.status === "published") return redirect301(res, `/news/${slug}`);
@@ -294,8 +294,8 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
       const newsItem = await db.getNewsBySlug(slug);
       if (newsItem?.status === "published") return redirect301(res, `/news/${slug}`);
 
-      const article = await db.getArticleBySlug(slug);
-      if (article?.status === "published") return redirect301(res, `/articles/${slug}`);
+      const article = getLocalArticleBySlug(slug);
+      if (article) return redirect301(res, `/articles/${slug}`);
 
       return redirect301(res, "/projects");
     } catch {
@@ -351,8 +351,8 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
       const project = await db.getProjectBySlug(slug);
       if (project?.status === "published") return redirect301(res, `/project/${slug}`);
 
-      const article = await db.getArticleBySlug(slug);
-      if (article?.status === "published") return redirect301(res, `/articles/${slug}`);
+      const article = getLocalArticleBySlug(slug);
+      if (article) return redirect301(res, `/articles/${slug}`);
 
       return redirect301(res, "/news");
     } catch {
@@ -366,15 +366,12 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
     const originalSlug = slugifyLoose(req.params.slug || "");
     const slug = legacySlugAliases[originalSlug] || originalSlug;
     if (!slug) return redirect301(res, "/articles");
-    if (isStaticArticleSlug(slug)) return next();
+    if (isLocalArticleSlug(slug)) {
+      if (slug !== originalSlug) return redirect301(res, `/articles/${slug}`);
+      return next();
+    }
 
     try {
-      const article = await db.getArticleBySlug(slug);
-      if (article?.status === "published") {
-        if (slug !== originalSlug) return redirect301(res, `/articles/${slug}`);
-        return next();
-      }
-
       const newsItem = await db.getNewsBySlug(slug);
       if (newsItem?.status === "published") return redirect301(res, `/news/${slug}`);
 
@@ -418,8 +415,8 @@ export async function createConfiguredApp(app?: Express, server?: Server): Promi
     if (!slug) return redirect301(res, "/studio/tutorials");
 
     try {
-      const article = await db.getArticleBySlug(slug);
-      if (article?.status === "published") return redirect301(res, `/articles/${slug}`);
+      const article = getLocalArticleBySlug(slug);
+      if (article) return redirect301(res, `/articles/${slug}`);
       const newsItem = await db.getNewsBySlug(slug);
       if (newsItem?.status === "published") return redirect301(res, `/news/${slug}`);
       const tutorial = await db.getTutorialBySlug(slug);

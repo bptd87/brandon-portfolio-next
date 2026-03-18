@@ -13,7 +13,6 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { SEO } from "@/components/SEO";
-import { PortfolioGridSkeleton } from "@/components/SkeletonLoaders";
 import StructuredData from "@/components/StructuredData";
 import {
   DropdownMenu,
@@ -22,8 +21,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { trpc } from "@/lib/trpc";
-import { voyageLaArticle } from "@shared/publicContent";
+import { getLocalArticles } from "@shared/localArticles";
 
 type ArticleCardItem = {
   id: number | string;
@@ -119,7 +117,6 @@ function ArticleGridCard({
 
 export default function Articles() {
   const [, setLocation] = useLocation();
-  const { data: articles, isLoading } = trpc.articles.list.useQuery({ status: "published" });
   const [selectedCategory, setSelectedCategory] = useState<string>(() => {
     if (typeof window === "undefined") return "all";
     return new URLSearchParams(window.location.search).get("category") || "all";
@@ -138,9 +135,9 @@ export default function Articles() {
     return new URLSearchParams(window.location.search).get("view") === "list" ? "list" : "grid";
   });
 
-  const allArticles = useMemo<ArticleCardItem[]>(() => {
-    const fromDatabase =
-      articles?.map((article) => ({
+  const allArticles = useMemo<ArticleCardItem[]>(
+    () =>
+      getLocalArticles().map((article) => ({
         id: article.id,
         slug: article.slug,
         title: decodeHTMLEntities(article.title),
@@ -149,25 +146,10 @@ export default function Articles() {
         publishedAt: article.publishedAt,
         createdAt: article.createdAt,
         readTime: article.readTime,
-        categoryName: article.category?.name || null,
-      })) || [];
-
-    if (!fromDatabase.some((article) => article.slug === voyageLaArticle.slug)) {
-      fromDatabase.unshift({
-        id: `static-${voyageLaArticle.slug}`,
-        slug: voyageLaArticle.slug,
-        title: decodeHTMLEntities(voyageLaArticle.title),
-        excerpt: voyageLaArticle.excerpt,
-        coverImageUrl: voyageLaArticle.coverImageUrl,
-        publishedAt: voyageLaArticle.publishedAt,
-        createdAt: voyageLaArticle.publishedAt,
-        readTime: 4,
-        categoryName: voyageLaArticle.categoryName,
-      });
-    }
-
-    return fromDatabase.sort((a, b) => getArticleTimestamp(b) - getArticleTimestamp(a));
-  }, [articles]);
+        categoryName: article.categoryName || null,
+      })),
+    []
+  );
 
   const categories = useMemo(() => {
     return Array.from(
@@ -489,9 +471,7 @@ export default function Articles() {
           </div>
         </section>
 
-        {isLoading ? (
-          <PortfolioGridSkeleton />
-        ) : sortedArticles.length > 0 ? (
+        {sortedArticles.length > 0 ? (
           <>
             <section className="pb-20 pt-12 md:pb-28 md:pt-14">
               <div className="container max-w-6xl">

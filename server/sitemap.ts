@@ -1,9 +1,8 @@
 import * as db from './db';
 import {
   ASSISTANT_SCENIC_DESIGN_PATH,
-  VOYAGELA_ARTICLE_PATH,
-  voyageLaArticle,
 } from '@shared/publicContent';
+import { getLocalArticles } from '@shared/localArticles';
 
 /**
  * Sitemap utilities for generating XML sitemaps
@@ -246,12 +245,14 @@ export async function generateMainSitemap(baseUrl?: string): Promise<string> {
     priority: 0.7,
   });
 
-  urls.push({
-    loc: `${SITE_URL}${VOYAGELA_ARTICLE_PATH}`,
-    lastmod: formatDate(new Date(voyageLaArticle.updatedAt)),
-    changefreq: 'monthly',
-    priority: 0.7,
-  });
+  for (const article of getLocalArticles()) {
+    urls.push({
+      loc: `${SITE_URL}/articles/${article.slug}`,
+      lastmod: formatDate(new Date(article.updatedAt || article.publishedAt)),
+      changefreq: 'monthly',
+      priority: 0.7,
+    });
+  }
 
   // Tutorials listing page
   urls.push({
@@ -290,17 +291,6 @@ export async function generateMainSitemap(baseUrl?: string): Promise<string> {
       loc: `${SITE_URL}/studio/apps/${slug}`,
       changefreq: 'monthly',
       priority: 0.6,
-    });
-  }
-
-  // Individual articles
-  const articles = await db.getAllArticles({ status: 'published' });
-  for (const article of articles) {
-    urls.push({
-      loc: `${SITE_URL}/articles/${article.slug}`,
-      lastmod: formatDate(article.updatedAt || article.createdAt),
-      changefreq: 'monthly',
-      priority: 0.7,
     });
   }
 
@@ -469,8 +459,7 @@ export async function generateVideoSitemap(baseUrl?: string): Promise<string> {
  */
 export async function generateArticlesRSS(baseUrl?: string): Promise<string> {
   const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
-  const articles = await db.getAllArticles();
-  const publishedArticles = articles.filter(a => a.status === 'published');
+  const publishedArticles = getLocalArticles();
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
