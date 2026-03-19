@@ -211,7 +211,7 @@ export default function TutorialDetail() {
           contentUrl: `https://www.youtube.com/watch?v=${videoId || ""}`,
           publisher: {
             name: "Brandon PT Davis Design",
-            logo: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YiqCsZPgtoSSsQyE.png",
+            logo: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/site-assets/publisher-logo-favicon-32.png",
           },
         }}
       />

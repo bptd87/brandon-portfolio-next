@@ -640,7 +640,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/WwwyAPBUmvyTXcBL.jpg?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/WwwyAPBUmvyTXcBL-f80ad741ef.jpg",
         "alt": "Elegant garden with statues, a central fountain, lush greenery, and a classical building. Soft light creates a serene atmosphere.",
         "caption": "Elegant garden with statues, a central fountain, lush greenery, and a classical building. Soft light creates a serene atmosphere."
       },
@@ -669,7 +669,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/GIBNkVQcxxPaTqbW.jpg?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/GIBNkVQcxxPaTqbW-3f5b34e530.jpg",
         "alt": "Medieval market scene with people in period clothing, stalls with striped canopies, and intricate half-timbered buildings under a blue sky.",
         "caption": "Medieval market scene with people in period clothing, stalls with striped canopies, and intricate half-timbered buildings under a blue sky."
       },
@@ -698,7 +698,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/vodnMaDhCnyCynIf.jpg?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/vodnMaDhCnyCynIf-f504da09e8.jpg",
         "alt": "Elegant garden with a waterfall, ornate architecture, and people strolling. Lush greenery, bright flowers, and mountains under a blue sky.",
         "caption": "Elegant garden with a waterfall, ornate architecture, and people strolling. Lush greenery, bright flowers, and mountains under a blue sky."
       },
@@ -722,7 +722,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/IbrmPFPYihMCeemY.jpg?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/IbrmPFPYihMCeemY-15d6091cc4.jpg",
         "alt": "A grand château with blue roofs, surrounded by formal gardens and a reflective moat, set against a river and forest under a clear blue sky.",
         "caption": "A grand château with blue roofs, surrounded by formal gardens and a reflective moat, set against a river and forest under a clear blue sky."
       },
@@ -742,7 +742,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/MBAZaZwZgdFotmNq.jpg?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/MBAZaZwZgdFotmNq-75c5812853.jpg",
         "alt": "Industrial scene with smokestacks and factories by a river. People in 19th-century attire gather, creating a bustling, smoky atmosphere.",
         "caption": "Industrial scene with smokestacks and factories by a river. People in 19th-century attire gather, creating a bustling, smoky atmosphere."
       },
@@ -762,7 +762,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/BkHylUaLTFEpNueH.jpg?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/BkHylUaLTFEpNueH-1f8138ec78.jpg",
         "alt": "Vintage photo of Luna Park, Coney Island, shows large crowds and elaborate architecture with towers.",
         "caption": "Vintage photo of Luna Park, Coney Island, shows large crowds and elaborate architecture with towers."
       },
@@ -781,7 +781,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/OJNiQkkrUhFhBiUv.jpg?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/OJNiQkkrUhFhBiUv-5706170806.jpg",
         "alt": "Colorful, empty swing ride with vibrant patterns and lights, set against a bright background, evoking a festive and playful atmosphere.",
         "caption": "Colorful, empty swing ride with vibrant patterns and lights, set against a bright background, evoking a festive and playful atmosphere."
       },
@@ -804,7 +804,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/eQKWKJpvmdysouIn.jpg?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/eQKWKJpvmdysouIn-7a4697ded0.jpg",
         "alt": "Illustrated Disneyland map with labeled attractions, railroad tracks, and scenic landscape. Vintage style with muted colors. Text reads",
         "caption": "Illustrated Disneyland map with labeled attractions, railroad tracks, and scenic landscape. Vintage style with muted colors. Text reads"
       },
@@ -823,7 +823,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YrOyOBYkLcGPOSwo.jpeg?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/YrOyOBYkLcGPOSwo-0a38ab1fea.jpeg",
         "alt": "Production image from The Evolution of Themed Entertainment: From Ancient Gardens to Modern Immersive Experienceses Everything",
         "caption": "Production image from The Evolution of Themed Entertainment: From Ancient Gardens to Modern Immersive Experienceses Everything"
       },
@@ -846,7 +846,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/UPymHYKVVWMvScqX.jpg?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/UPymHYKVVWMvScqX-374f69756e.jpg",
         "alt": "Roller coaster with riders on a loop at Cedar Point. Blue track, clear sky.",
         "caption": "Roller coaster with riders on a loop at Cedar Point. Blue track, clear sky."
       },
@@ -878,7 +878,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/GuCMjRfRhtlbuOIJ.jpg?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/GuCMjRfRhtlbuOIJ-c4abe64da8.jpg",
         "alt": "Colorful urban alley with neon lights; an orange car with glowing green lights; signs read",
         "caption": "Colorful urban alley with neon lights; an orange car with glowing green lights; signs read"
       },
@@ -888,7 +888,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/BnEsFWHrOPZjkAQG.jpg?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/BnEsFWHrOPZjkAQG-e8279b0e2c.jpg",
         "alt": "Couple holding hands walks towards an enchanted cottage at night. Lanterns glow in trees, flowers bloom, and",
         "caption": "Couple holding hands walks towards an enchanted cottage at night. Lanterns glow in trees, flowers bloom, and"
       },
@@ -907,7 +907,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/wELjpocLtJzBvvie.jpg?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/wELjpocLtJzBvvie-7b7821db15.jpg",
         "alt": "Woman in red dress and hat holds a tablet surrounded by blue butterflies, with a mystical, ethereal atmosphere against a teal background.",
         "caption": "Woman in red dress and hat holds a tablet surrounded by blue butterflies, with a mystical, ethereal atmosphere against a teal background."
       },
@@ -962,7 +962,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/JSgqAZYVtOclpvta.jpg?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/JSgqAZYVtOclpvta-220300588f.jpg",
         "alt": "People on a ship's deck watch a vibrant night sky featuring flying characters and constellations. Some are taking photos with phones.",
         "caption": "People on a ship's deck watch a vibrant night sky featuring flying characters and constellations. Some are taking photos with phones."
       },
@@ -1909,22 +1909,22 @@ export const generatedLocalArticles = [
         "type": "gallery",
         "images": [
           {
-            "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/zhQtGmUSFKLnhayG.png?_i=AA",
+            "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/zhQtGmUSFKLnhayG-49b343f2f6.png",
             "alt": "Production image from Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar",
             "caption": "Production image from Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar"
           },
           {
-            "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/rspbtnRZSUlEIpnv.png?_i=AA",
+            "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/rspbtnRZSUlEIpnv-649911d7fb.png",
             "alt": "Production image from Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar",
             "caption": "Production image from Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar"
           },
           {
-            "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/njRcGPaopppgzXxy.png?_i=AA",
+            "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/njRcGPaopppgzXxy-b12f061a15.png",
             "alt": "Production image from Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar",
             "caption": "Production image from Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar"
           },
           {
-            "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/HmTLAtiLNFTuhXFU.png?_i=AA",
+            "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/HmTLAtiLNFTuhXFU-1cb2b7d590.png",
             "alt": "Production image from Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar",
             "caption": "Production image from Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar"
           }
@@ -1967,7 +1967,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/GAraNkGLCmexrwUV.png?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/GAraNkGLCmexrwUV-602b020967.png",
         "alt": "Image",
         "caption": "Image"
       },
@@ -1986,7 +1986,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YwxgcyixKEQDfuSe.png?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/YwxgcyixKEQDfuSe-a09743d3f2.png",
         "alt": "Image",
         "caption": "Image"
       },
@@ -2005,7 +2005,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/mHzdJpigmMnwGtAe.png?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/mHzdJpigmMnwGtAe-726f2ce0fe.png",
         "alt": "Production image from Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar",
         "caption": "Production image from Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar"
       },
@@ -2184,7 +2184,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/kSoLxECTXAzObemD.webp?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/kSoLxECTXAzObemD-6bd2085ca8.webp",
         "alt": "Stephens College, Columbia Hall in Columbia, MO.",
         "caption": "Stephens College, Columbia Hall in Columbia, MO."
       },
@@ -2211,7 +2211,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/EIhDZlwIwwmUggiI.webp?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/EIhDZlwIwwmUggiI-03ea34e7f6.webp",
         "alt": "Image",
         "caption": "Maude Adams as Peter Pan on Broadway"
       },
@@ -2246,7 +2246,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/GuexjIKQkWXQaUZN.webp?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/GuexjIKQkWXQaUZN-18d0e1a272.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -2277,7 +2277,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/rlqTPqDcPTKEPDQX.webp?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/rlqTPqDcPTKEPDQX-78650c3889.webp",
         "alt": "William Inge, Stephens College",
         "caption": "William Inge later in life."
       },
@@ -2296,7 +2296,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/rovVcuqylwKaKrIa.webp?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/rovVcuqylwKaKrIa-ad4c841b2b.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -2369,7 +2369,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/RsnMyQCvxGIynOjI.webp?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/RsnMyQCvxGIynOjI-9cf26a4d37.webp",
         "alt": "Image",
         "caption": "Stephens Students working on a production at the Okoboji Summer Theatre."
       },
@@ -4029,7 +4029,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/ywavDPWgyGNzueom.webp?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/ywavDPWgyGNzueom-d94e42d890.webp",
         "alt": "All My Sons scenic model rendering",
         "caption": "Early scenic model rendering for All My Sons, establishing the Keller home architecture and spatial relationships."
       },
@@ -4061,7 +4061,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/MnUexVnykBtRmWmG.webp?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/MnUexVnykBtRmWmG-ad229661ab.webp",
         "alt": "Keller home elevation and plan study",
         "caption": "Drafting studies mapping sightlines, circulation, and domestic scale for the Keller property."
       },
@@ -4088,7 +4088,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/xosXuGnDVMzNloht.webp?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/xosXuGnDVMzNloht-b6de8100f8.webp",
         "alt": "All My Sons production photo at Stephens College",
         "caption": "Production image from Stephens College highlighting the lived-in realism and tension of the Keller yard."
       },
@@ -4111,7 +4111,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/BtHqIrAhmWkcnQKL.webp?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/BtHqIrAhmWkcnQKL-5a9a77bddb.webp",
         "alt": "All My Sons final design composition",
         "caption": "Final scenic composition balancing post-war suburban aspiration with the play’s underlying moral rupture."
       },
@@ -4847,7 +4847,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/NqsyGOhDkQmlSkIa.png?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/NqsyGOhDkQmlSkIa-35ec4f4d79.png",
         "alt": "The 28th Annual Academy Awards, arrivals at the Pantages Theatre in 1956.",
         "caption": "The 28th Annual Academy Awards, arrivals at the Pantages Theatre in 1956."
       },
@@ -4893,17 +4893,17 @@ export const generatedLocalArticles = [
         "type": "gallery",
         "images": [
           {
-            "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/dNBzhJNMcjrrmEgq.webp?_i=AA",
+            "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/dNBzhJNMcjrrmEgq-2f27b79fa4.webp",
             "alt": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion",
             "caption": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion"
           },
           {
-            "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/CnHHsNdlGPcLhvdN.png?_i=AA",
+            "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/CnHHsNdlGPcLhvdN-cddff06885.png",
             "alt": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion",
             "caption": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion"
           },
           {
-            "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/gPpMNorAzCeewWZD.png?_i=AA",
+            "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/gPpMNorAzCeewWZD-f641549dc7.png",
             "alt": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion",
             "caption": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion"
           }
@@ -4934,17 +4934,17 @@ export const generatedLocalArticles = [
         "type": "gallery",
         "images": [
           {
-            "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/vQAcZVqcFPQVeJzQ.png?_i=AA",
+            "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/vQAcZVqcFPQVeJzQ-c4ceab4c11.png",
             "alt": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion",
             "caption": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion"
           },
           {
-            "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/MawyxsYvlQXojlhz.png?_i=AA",
+            "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/MawyxsYvlQXojlhz-788416ec10.png",
             "alt": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion",
             "caption": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion"
           },
           {
-            "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/fmmSlDQPFJVqOKPd.png?_i=AA",
+            "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/fmmSlDQPFJVqOKPd-c289254ee8.png",
             "alt": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion",
             "caption": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion"
           }
@@ -4986,7 +4986,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/NkSgGRWbgFcVcaxl.png?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/NkSgGRWbgFcVcaxl-d6d613b15b.png",
         "alt": "Image",
         "caption": "Image"
       },
@@ -5000,7 +5000,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/OYsZvKkoXDzWAaLO.png?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/OYsZvKkoXDzWAaLO-b65ce14c5a.png",
         "alt": "Image",
         "caption": "Image"
       },
@@ -5014,7 +5014,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/AlKOeDfAgfGNCLlr.png?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/AlKOeDfAgfGNCLlr-704c4a3777.png",
         "alt": "Image",
         "caption": "Image"
       },
@@ -5544,7 +5544,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/QnYCHyGYOIQweyMm.png?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/QnYCHyGYOIQweyMm-b24a0b7b8c.png",
         "alt": "Production design workflow diagram",
         "caption": "Production design workflow from concept development through set build and final screen execution."
       },
@@ -5704,7 +5704,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/EoNwdccLcWYjeZfJ.png?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/EoNwdccLcWYjeZfJ-f4b00b8221.png",
         "alt": "Film art department collaborating on set",
         "caption": "Art department team collaborating on practical set details during active film production."
       },
@@ -5814,7 +5814,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/shffyYMghiDOIblw.png?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/shffyYMghiDOIblw-840a94563f.png",
         "alt": "Art Directors Guild identity mark",
         "caption": "Art Directors Guild emblem representing professional practice in film and television art direction."
       },
@@ -6508,7 +6508,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/UJMxzVzNFqOQnRdJ.png?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/UJMxzVzNFqOQnRdJ-89492c7dde.png",
         "alt": "Masked Ball at the Opera, 1873, Édouard Manet",
         "caption": "Masked Ball at the Opera, 1873 — Édouard ManetElegant masquerade ball with guests in black suits and masks, ornate lighting overhead, and a vibrant jester figure anchoring the scene."
       },
@@ -6698,7 +6698,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/zbaouFTTuNkZBufW.png?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/zbaouFTTuNkZBufW-83e1886c7f.png",
         "alt": "Image",
         "caption": "The Pirates of Penzance, Utah Shakespeare Festival (2021)"
       },
@@ -6809,7 +6809,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/NyKwQQgAFVYVKNhK.png?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/NyKwQQgAFVYVKNhK-cc1f0a7c18.png",
         "alt": "The Dance Foyer at the Opera, 1872 — Edgar DegasBallet dancers rehearse in an ornate interior, emphasizing discipline, ritual, and performance culture.",
         "caption": "The Dance Foyer at the Opera, 1872 — Edgar DegasBallet dancers rehearse in an ornate interior, emphasizing discipline, ritual, and performance culture."
       },
@@ -7660,7 +7660,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/mFhzIRXAtPZxcvrV.webp?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/mFhzIRXAtPZxcvrV-3d123d03d4.webp",
         "caption": "",
         "alt": "Image"
       },
@@ -7707,7 +7707,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/bclDzTDaRKOLWtZg.webp?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/bclDzTDaRKOLWtZg-c5f7404271.webp",
         "caption": "",
         "alt": "Image"
       },
@@ -7774,7 +7774,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/KAwkIYrzXVdUxJEY.webp?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/KAwkIYrzXVdUxJEY-622a32a383.webp",
         "caption": "",
         "alt": "Image"
       },
@@ -7801,7 +7801,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YJeSksjzwnmmiXNV.webp?_i=AA",
+        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/migrated/external/YJeSksjzwnmmiXNV-e7a879ecad.webp",
         "caption": "",
         "alt": "Image"
       },

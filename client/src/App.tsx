@@ -67,6 +67,7 @@ const DesignHistoryTimeline = lazy(() => import("./pages/DesignHistoryTimeline")
 const RoscoPaintCalculator = lazy(() => import("./pages/RoscoPaintCalculator"));
 const Scenic3DConverter = lazy(() => import("./pages/Scenic3DConverter"));
 const ExperientialPortfolio = lazy(() => import("./pages/ExperientialPortfolio"));
+const ExperientialSampleDetail = lazy(() => import("./pages/ExperientialSampleDetail"));
 const RenderingPortfolio = lazy(() => import("./pages/RenderingPortfolio"));
 const TutorialDetail = lazy(() => import("./pages/TutorialDetail"));
 const TagDetail = lazy(() => import('@/pages/TagDetail'));
@@ -117,7 +118,9 @@ function Router() {
           <Route path={"/projects"} component={Projects} />
           <Route path={"/projects/scenic-design"} component={Projects} />
           <Route path={"/projects/experiential"} component={ExperientialPortfolio} />
-          <Route path={"/projects/experiential/rendering/:slug"} component={ProjectDetailRouter} />
+          <Route path={"/projects/experiential/rendering/:slug"} component={ExperientialSampleDetail} />
+          <Route path={"/projects/experiential/technical-drawing/:slug"} component={ExperientialSampleDetail} />
+          <Route path={"/projects/experiential/live-events/:slug"} component={ExperientialSampleDetail} />
           <Route path={"/projects/rendering"} component={RenderingPortfolio} />
           <Route path={"/projects/rendering/:slug"} component={ProjectDetailRouter} />
           <Route path={"/projects/:slug"} component={LegacyProjectRedirect} />

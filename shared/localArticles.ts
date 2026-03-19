@@ -94,6 +94,10 @@ const audioBySlug: Record<string, LocalArticleAudio> = {
     url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/sign/article_audio/Your%20Wasting%20My%20Time.mp3?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80OTA3YTJmOS04YzBmLTRlODQtOWIwNC04Njc2OTJkMzA5OGEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJhcnRpY2xlX2F1ZGlvL1lvdXIgV2FzdGluZyBNeSBUaW1lLm1wMyIsImlhdCI6MTc3MzgxNjQ5OCwiZXhwIjoxODY4NDI0NDk4fQ.mwUiLn-Rgqvp1rjZ93dOIqCAMJSmj4OvnG9mjCzzxc4",
     label: "Listen to article",
   },
+  "online-portfolio-theatrical-design-2026": {
+    url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/sign/article_audio/Modern%20Portfolio.mp3?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80OTA3YTJmOS04YzBmLTRlODQtOWIwNC04Njc2OTJkMzA5OGEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJhcnRpY2xlX2F1ZGlvL01vZGVybiBQb3J0Zm9saW8ubXAzIiwiaWF0IjoxNzczOTA2OTIxLCJleHAiOjE4Njg1MTQ5MjF9.GYRBOPNy7nrDfGE9LxjDMkFTEa6R1zNMIMdAwhUlGzg",
+    label: "Listen to article",
+  },
 };
 
 const articleFieldOverridesBySlug: Record<string, Partial<LocalArticle>> = {

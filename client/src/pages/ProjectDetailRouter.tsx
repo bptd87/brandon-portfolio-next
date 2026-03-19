@@ -3,7 +3,7 @@ import { useLocation, useParams } from "wouter";
 import { trpc } from "@/lib/trpc";
 import ProjectDetail from "./ProjectDetail";
 import RenderingProjectDetail from "./RenderingProjectDetail";
-import ExperientialProjectDetail from "./ExperientialProjectDetail";
+import { getLocalRenderingProjectBySlug } from "@shared/localPortfolios";
 
 /**
  * Router component that determines which project detail page to render
@@ -13,6 +13,12 @@ export default function ProjectDetailRouter() {
   const { slug } = useParams<{ slug: string }>();
   const [location, setLocation] = useLocation();
   const normalizedSlug = (slug || "").trim().toLowerCase();
+  const isRenderingRoute =
+    location.startsWith("/projects/rendering/") ||
+    location.startsWith("/projects/experiential/rendering/");
+  const localRenderingProject = isRenderingRoute
+    ? getLocalRenderingProjectBySlug(normalizedSlug)
+    : null;
 
   useEffect(() => {
     if (!slug || !normalizedSlug || slug === normalizedSlug) return;
@@ -27,10 +33,11 @@ export default function ProjectDetailRouter() {
 
   const { data: project, isLoading } = trpc.projects.getBySlug.useQuery(
     { slug: normalizedSlug },
-    { enabled: !!normalizedSlug }
+    { enabled: !!normalizedSlug && !localRenderingProject }
   );
 
   useEffect(() => {
+    if (localRenderingProject && isRenderingRoute) return;
     if (!project?.slug || project.slug === normalizedSlug) return;
 
     const canonicalPath = location.startsWith("/projects/experiential/rendering/")
@@ -42,7 +49,11 @@ export default function ProjectDetailRouter() {
     if (location !== canonicalPath) {
       setLocation(canonicalPath, { replace: true });
     }
-  }, [location, normalizedSlug, project?.slug, setLocation]);
+  }, [isRenderingRoute, localRenderingProject, location, normalizedSlug, project?.slug, setLocation]);
+
+  if (localRenderingProject && isRenderingRoute) {
+    return <RenderingProjectDetail />;
+  }
 
   if (isLoading) {
     return (
@@ -66,8 +77,6 @@ export default function ProjectDetailRouter() {
   switch (project.discipline) {
     case 'rendering':
       return <RenderingProjectDetail />;
-    case 'experiential_design':
-      return <ExperientialProjectDetail />;
     case 'scenic_design':
     default:
       return <ProjectDetail />;

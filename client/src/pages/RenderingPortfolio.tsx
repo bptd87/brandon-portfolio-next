@@ -1,13 +1,12 @@
-import { trpc } from "@/lib/trpc";
 import { Link } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { RenderingFAQ } from "@/components/RenderingFAQ";
-import { ProcessGalleryModal } from "@/components/ProcessGalleryModal";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { getLocalRenderingGallery, getLocalRenderingProjects } from "@shared/localPortfolios";
 
 const RENDERING_PORTFOLIO_URL = "https://www.brandonptdavis.com/projects/rendering";
 const RENDERING_PORTFOLIO_TITLE = "Theatre Renderings | Brandon PT Davis";
@@ -23,67 +22,10 @@ const RENDERING_PORTFOLIO_KEYWORDS = [
 ].join(", ");
 
 export default function RenderingPortfolio() {
-  const cleanText = (value?: string | null) =>
-    String(value || "")
-      .replace(/\s+/g, " ")
-      .trim();
+  const projects = getLocalRenderingProjects().filter((project) => !project.galleryOnly);
+  const galleryItems = getLocalRenderingGallery();
 
-  const trimToSentence = (value: string, max = 260) => {
-    if (!value || value.length <= max) return value;
-    const cut = value.slice(0, max);
-    const stop = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("! "), cut.lastIndexOf("? "));
-    if (stop > 120) return cut.slice(0, stop + 1).trim();
-    const wordStop = cut.lastIndexOf(" ");
-    return `${cut.slice(0, wordStop > 80 ? wordStop : max).trim()}...`;
-  };
-
-  const hashSeed = (value: string) => {
-    let h = 0;
-    for (let i = 0; i < value.length; i++) h = (h * 31 + value.charCodeAt(i)) >>> 0;
-    return h;
-  };
-
-  const buildModalDescription = (project: {
-    id?: number | null;
-    designNotes?: string | null;
-    client?: string | null;
-    year?: string | number | null;
-    title?: string | null;
-  }) => {
-    const notes = cleanText(project.designNotes);
-    if (notes) return trimToSentence(notes, 260);
-
-    const title = cleanText(project.title) || "this production";
-    const client = cleanText(project.client);
-    const year = project.year ? String(project.year) : "";
-    const lead = [year, client].filter(Boolean).join(" • ");
-
-    const variants = [
-      `${lead ? `${lead} — ` : ""}Atmospheric rendering sequence for ${title}, built to communicate tone, spatial rhythm, and staging focus before production decisions are finalized.`,
-      `${lead ? `${lead} — ` : ""}Concept rendering exploration for ${title}, emphasizing visual hierarchy, material character, and narrative composition for team alignment.`,
-      `${lead ? `${lead} — ` : ""}Pre-production rendering study for ${title}, translating design intent into clear visual language for directors, collaborators, and build conversations.`,
-      `${lead ? `${lead} — ` : ""}Image set for ${title} focused on mood, proportion, and scenographic clarity—designed to test choices before they move to the stage floor.`,
-      `${lead ? `${lead} — ` : ""}Renderings for ${title} developed as story-first communication tools, balancing atmosphere with practical scenic readability.`,
-    ];
-
-    const seed = `${project.id || ""}|${title}|${client}|${year}`;
-    return variants[hashSeed(seed) % variants.length];
-  };
-
-  // Full project pages - query rendering_projects where gallery_only = false
-  const { data: projects, isLoading: projectsLoading } = trpc.renderingProjects.list.useQuery({
-    galleryOnly: false
-  });
-
-  const { data: galleryItems, isLoading: galleryLoading } = trpc.renderingGallery.list.useQuery(undefined, {
-    retry: false
-  });
-
-  const [modalOpen, setModalOpen] = useState(false);
-  const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const isLoading = projectsLoading || galleryLoading;
+  const isLoading = false;
 
   // 1. Process Gallery Items (for the middle section)
   const galleryDisplayItems = galleryItems?.map(item => ({
@@ -118,44 +60,6 @@ export default function RenderingPortfolio() {
     excerpt: p.excerpt
   })) || [];
 
-  const currentProject = galleryDisplayItems[currentProjectIndex] || null;
-  const currentProjectImages = useMemo(() => {
-    if (!currentProject) return [];
-    const coverImage = currentProject.imageUrl
-      ? [{
-          id: -1,
-          imageUrl: currentProject.imageUrl,
-          videoUrl: null,
-          altText: currentProject.altText || currentProject.title,
-          displayTitle: currentProject.title,
-          description: null,
-        }]
-      : [];
-
-    const galleryImages = (currentProject.images || []).map((img) => ({
-      id: img.id,
-      imageUrl: img.url,
-      videoUrl: null,
-      altText: img.altText || currentProject.title,
-      displayTitle: img.caption || null,
-      description: null,
-    }));
-
-    // Admin data may include the same image as both cover and first gallery item.
-    // Deduplicate by normalized URL to prevent repeated slides in the modal.
-    const combined = [...coverImage, ...galleryImages].filter((img) => img.imageUrl);
-    const seen = new Set<string>();
-    return combined.filter((img) => {
-      const key = String(img.imageUrl || "").trim().replace(/\?.*$/, "");
-      if (!key) return false;
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    });
-  }, [currentProject]);
-
-  const currentImage = currentProjectImages[currentImageIndex];
-  const totalProjects = galleryDisplayItems.length;
   const showcaseItems = [...featuredDisplayItems, ...galleryDisplayItems]
     .filter((item) => item.slug && item.imageUrl)
     .slice(0, 4);
@@ -179,27 +83,6 @@ export default function RenderingPortfolio() {
         .filter((value): value is string => Boolean(value))
     )
   ).slice(0, 12);
-
-  useEffect(() => {
-    setCurrentImageIndex(0);
-  }, [currentProjectIndex]);
-
-  const handleNextProject = () => {
-    setCurrentProjectIndex((prev) => Math.min(prev + 1, totalProjects - 1));
-  };
-
-  const handlePrevProject = () => {
-    setCurrentProjectIndex((prev) => Math.max(prev - 1, 0));
-  };
-
-  const handleNextImage = () => {
-    setCurrentImageIndex((prev) => Math.min(prev + 1, currentProjectImages.length - 1));
-  };
-
-  const handlePrevImage = () => {
-    setCurrentImageIndex((prev) => Math.max(prev - 1, 0));
-  };
-
   return (
     <div className="min-h-screen bg-background">
       <SEO
@@ -383,14 +266,10 @@ export default function RenderingPortfolio() {
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
               {galleryDisplayItems.map((item, index) => (
-                <div
+                <Link
                   key={item.id}
-                  className="group cursor-pointer"
-                  onClick={() => {
-                    setCurrentProjectIndex(index);
-                    setCurrentImageIndex(0);
-                    setModalOpen(true);
-                  }}
+                  href={`/projects/rendering/${item.slug}`}
+                  className="group block"
                 >
                   <div className="space-y-4">
                     <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-white/[0.02]">
@@ -412,33 +291,11 @@ export default function RenderingPortfolio() {
                       </p>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
         </section>
-      )}
-
-      {galleryDisplayItems.length > 0 && (
-        <ProcessGalleryModal
-          isOpen={modalOpen}
-          currentImage={currentImage}
-          currentProject={currentProject ? { displayTitle: currentProject.title, description: buildModalDescription(currentProject) } : undefined}
-          images={currentProjectImages}
-          imageIndex={currentImageIndex}
-          projectIndex={currentProjectIndex}
-          totalProjects={totalProjects}
-          onClose={() => setModalOpen(false)}
-          onNextImage={handleNextImage}
-          onPrevImage={handlePrevImage}
-          onNextProject={handleNextProject}
-          onPrevProject={handlePrevProject}
-          canGoNextProject={currentProjectIndex < totalProjects - 1}
-          canGoPrevProject={currentProjectIndex > 0}
-          canGoNextImage={currentImageIndex < currentProjectImages.length - 1}
-          canGoPrevImage={currentImageIndex > 0}
-          categoryLabel="Rendering"
-        />
       )}
 
       <section className="border-t border-white/12 py-16 md:py-20">

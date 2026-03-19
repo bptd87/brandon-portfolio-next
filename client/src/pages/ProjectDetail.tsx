@@ -15,6 +15,7 @@ import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { ProjectDetailSkeleton } from "@/components/SkeletonLoaders";
 import { getProjectPath } from "@/lib/projectRoutes";
+import { getLocalRenderingProjectForProduction } from "@shared/localPortfolios";
 
 // Convert YouTube/Vimeo URLs to embed format
 function getEmbedUrl(url: string): string {
@@ -218,6 +219,14 @@ export default function ProjectDetail() {
       : `More ${disciplineLabel}`;
   const featuredMedia = mediaItems[0] || null;
   const secondaryMedia = mediaItems.slice(1);
+  const linkedRenderingProject =
+    project.discipline === "scenic_design"
+      ? getLocalRenderingProjectForProduction({
+          title: project.title,
+          client: project.client,
+          year: project.year,
+        })
+      : null;
   const openLightboxFor = (imageId: number) => {
     setLightboxImages(lightboxSourceImages);
     const lightboxIndexFromId = lightboxSourceImages.findIndex((img) => img.id === imageId);
@@ -322,6 +331,22 @@ export default function ProjectDetail() {
                         />
                       </div>
                     </div>
+                  ) : featuredMedia.imageType === "rendering" && linkedRenderingProject ? (
+                    <Link
+                      href={`/projects/rendering/${linkedRenderingProject.slug}`}
+                      className="group block cursor-pointer"
+                    >
+                      <figure style={{ viewTransitionName: heroTransitionName } as CSSProperties}>
+                        <img
+                          src={featuredMedia.imageUrl || ""}
+                          alt={featuredMedia.altText || featuredMedia.caption || scenicAlt(project.title)}
+                          className="block w-full rounded-xl object-contain object-top transition-transform duration-500 group-hover:scale-[1.01]"
+                          style={{ maxHeight: "min(74vh, 48rem)" }}
+                          loading="eager"
+                          decoding="async"
+                        />
+                      </figure>
+                    </Link>
                   ) : (
                     <figure
                       className="group cursor-pointer"
@@ -373,6 +398,26 @@ export default function ProjectDetail() {
                             />
                           </div>
                         </div>
+                      ) : item.imageType === "rendering" && linkedRenderingProject ? (
+                        <Link
+                          key={item.id}
+                          href={`/projects/rendering/${linkedRenderingProject.slug}`}
+                          className="group block"
+                        >
+                          <figure className="cursor-pointer">
+                            <img
+                              src={item.imageUrl || ""}
+                              alt={item.altText || item.caption || scenicAlt(project.title)}
+                              className="block w-full rounded-xl object-contain object-top transition-transform duration-500 group-hover:scale-[1.01]"
+                              style={{ maxHeight: "min(64vh, 38rem)" }}
+                              loading="lazy"
+                              decoding="async"
+                            />
+                            <figcaption className="px-1 pt-3 text-sm text-foreground/44">
+                              {item.caption || "View rendering details"}
+                            </figcaption>
+                          </figure>
+                        </Link>
                       ) : (
                         <figure
                           key={item.id}

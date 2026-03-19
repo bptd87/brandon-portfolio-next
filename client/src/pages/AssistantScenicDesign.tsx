@@ -12,8 +12,7 @@ import {
   ASSISTANT_SCENIC_DESIGN_SEO_DESCRIPTION,
   ASSISTANT_SCENIC_DESIGN_SEO_TITLE,
   assistantScenicDesignEntries,
-  assistantScenicYearRange,
-} from "@shared/publicContent";
+} from "@shared/localAssistantScenic";
 
 const HIGHLIGHT_SLUGS = [
   "assisting-the-play-that-goes-wrong",
@@ -407,18 +406,18 @@ export default function AssistantScenicDesign() {
 
                 return (
                   <AnimatedSection key={entry.anchorId}>
-                    <article id={entry.anchorId} className="border-t border-white/10 py-5">
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-foreground/40">
-                        {entry.organization}
-                      </p>
-                      <div className="mt-2 flex items-end justify-between gap-4">
-                        <h3 className="max-w-[34rem] text-[1.22rem] font-sans font-medium leading-[1.08] tracking-[-0.035em] text-foreground">
-                          {entry.title}
-                        </h3>
+                    <article id={entry.anchorId} className="border-t border-white/10 py-6">
+                      <div className="flex items-center justify-between gap-4">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-foreground/40">
+                          {entry.organization}
+                        </p>
                         <p className="shrink-0 text-[0.92rem] tracking-[-0.015em] text-foreground/46">
                           {formatDate(entry.date)}
                         </p>
                       </div>
+                      <h3 className="mt-3 max-w-[34rem] text-[1.22rem] font-sans font-medium leading-[1.08] tracking-[-0.035em] text-foreground">
+                        {entry.title}
+                      </h3>
                       <p className="mt-2 max-w-[38rem] text-[0.96rem] leading-[1.68] tracking-[-0.01em] text-foreground/58">
                         Assistant scenic design with {entry.collaborator}
                         {entry.location ? ` · ${entry.location}` : ""}.

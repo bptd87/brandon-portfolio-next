@@ -1,7 +1,5 @@
 import * as db from './db';
-import {
-  ASSISTANT_SCENIC_DESIGN_PATH,
-} from '@shared/publicContent';
+import { ASSISTANT_SCENIC_DESIGN_PATH } from '@shared/localAssistantScenic';
 import { getLocalArticles } from '@shared/localArticles';
 
 /**

@@ -1,16 +1,20 @@
-import { useMemo, useState } from "react";
-import { ArrowRight, Image as ImageIcon, Play, Search, Video } from "lucide-react";
+import { useMemo } from "react";
+import { ArrowRight, Image as ImageIcon, Play, Video } from "lucide-react";
 import { Link } from "wouter";
 
 import { AnimatedSection } from "@/components/AnimatedSection";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { ProcessGalleryModal } from "@/components/ProcessGalleryModal";
-import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
-import { trpc } from "@/lib/trpc";
 import { getVideoThumbnail } from "@/lib/videoUtils";
+import {
+  getLocalExperientialLeadImage,
+  getLocalExperientialMediaItems,
+  getLocalExperientialSampleHref,
+  getLocalExperientialSamples,
+  type LocalExperientialCategory,
+} from "@shared/localPortfolios";
 
 const EXPERIENTIAL_PORTFOLIO_URL = "https://www.brandonptdavis.com/projects/experiential";
 const EXPERIENTIAL_PORTFOLIO_TITLE =
@@ -34,24 +38,30 @@ type GalleryItem = {
   displayTitle: string | null;
   description?: string | null;
   projectId?: number | null;
+  slug: string;
+  category: LocalExperientialCategory;
+  images?: Array<{
+    imageUrl: string;
+    altText?: string | null;
+  }>;
 };
 
 function GalleryCardGrid({
   items,
-  onItemClick,
   categoryLabel,
-  cardAspectClass = "aspect-video",
-  imageFit = "contain",
+  cardAspectClass = "aspect-[3/2]",
+  imageFit = "cover",
   cardBackgroundClass = "bg-black",
-  cardRoundedClass = "rounded-xl",
+  cardRoundedClass = "rounded-none",
+  imagePaddingClass = "",
 }: {
   items: GalleryItem[];
-  onItemClick: (index: number) => void;
   categoryLabel: string;
   cardAspectClass?: string;
   imageFit?: "cover" | "contain";
   cardBackgroundClass?: string;
   cardRoundedClass?: string;
+  imagePaddingClass?: string;
 }) {
   if (items.length === 0) {
     return (
@@ -65,19 +75,45 @@ function GalleryCardGrid({
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((item, index) => {
-        const displayImage = item.imageUrl || (item.videoUrl ? getVideoThumbnail(item.videoUrl) : null);
+        const leadMedia = item.category === "technical-drawing" ? getLocalExperientialMediaItems(item)[0] : null;
+        const displayImage =
+          (item.category === "technical-drawing" ? leadMedia?.imageUrl : null) ||
+          getLocalExperientialLeadImage(item) ||
+          (item.videoUrl ? getVideoThumbnail(item.videoUrl) : null);
 
         return (
           <AnimatedSection key={item.id} delay={index * 0.06}>
-            <button className="group block w-full text-left" onClick={() => onItemClick(index)}>
-              <div className={`relative overflow-hidden border border-border/60 shadow-lg shadow-black/10 transition-colors group-hover:border-white/40 ${cardAspectClass} ${cardBackgroundClass} ${cardRoundedClass}`}>
+            <Link
+              href={getLocalExperientialSampleHref(item)}
+              className="group block w-full text-left transition-transform duration-300 hover:-translate-y-0.5"
+            >
+              <div
+                className={`relative overflow-hidden border border-white/12 transition-colors duration-300 group-hover:border-white/24 ${cardAspectClass} ${cardBackgroundClass} ${cardRoundedClass}`}
+              >
                 {displayImage ? (
-                  <ProgressiveImage
-                    src={displayImage}
-                    alt={item.altText || item.displayTitle || categoryLabel}
-                    className="h-full w-full"
-                    objectFit={imageFit}
-                  />
+                  <div className={`h-full w-full ${imagePaddingClass}`}>
+                    {item.category === "technical-drawing" ? (
+                      <div className="flex h-full w-full items-center justify-center bg-white">
+                        <img
+                          src={displayImage}
+                          alt={item.altText || item.displayTitle || categoryLabel}
+                          className="max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-[1.01]"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </div>
+                    ) : (
+                      <img
+                        src={displayImage}
+                        alt={item.altText || item.displayTitle || categoryLabel}
+                        className={`h-full w-full transition-transform duration-500 group-hover:scale-[1.02] ${
+                          imageFit === "contain" ? "object-contain" : "object-cover"
+                        }`}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    )}
+                  </div>
                 ) : (
                   <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-cyan-500/10 to-pink-500/10">
                     <Video className="h-12 w-12 text-muted-foreground/30" />
@@ -89,14 +125,6 @@ function GalleryCardGrid({
                     <Play className="ml-0.5 h-5 w-5 text-white" />
                   </div>
                 )}
-
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 backdrop-blur">
-                      <Search className="h-5 w-5 text-white" />
-                    </div>
-                  </div>
-                </div>
               </div>
               <div className="mt-3 min-h-[4.75rem] space-y-1">
                 {item.displayTitle && (
@@ -118,7 +146,7 @@ function GalleryCardGrid({
                   </p>
                 ) : null}
               </div>
-            </button>
+            </Link>
           </AnimatedSection>
         );
       })}
@@ -132,22 +160,22 @@ function PortfolioSection({
   title,
   copy,
   items,
-  onItemClick,
   cardAspectClass,
   imageFit,
   cardBackgroundClass,
   cardRoundedClass,
+  imagePaddingClass,
 }: {
   id: string;
   eyebrow: string;
   title: string;
   copy: string;
   items: GalleryItem[];
-  onItemClick: (index: number) => void;
   cardAspectClass?: string;
   imageFit?: "cover" | "contain";
   cardBackgroundClass?: string;
   cardRoundedClass?: string;
+  imagePaddingClass?: string;
 }) {
   return (
     <section id={id} className="border-t border-white/12 py-20 md:py-24">
@@ -166,164 +194,39 @@ function PortfolioSection({
 
         <GalleryCardGrid
           items={items}
-          onItemClick={onItemClick}
           categoryLabel={title}
           cardAspectClass={cardAspectClass}
           imageFit={imageFit}
           cardBackgroundClass={cardBackgroundClass}
           cardRoundedClass={cardRoundedClass}
+          imagePaddingClass={imagePaddingClass}
         />
       </div>
     </section>
   );
 }
 
-function BrandsGrid() {
-  const { data: brands } = trpc.processGallery.brands.useQuery();
-
-  if (!brands || brands.length === 0) return null;
-
-  return (
-    <section className="border-b border-white/12 py-14">
-      <div className="container max-w-6xl">
-        <AnimatedSection>
-          <div className="mb-8 text-center">
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-white/48">
-              Selected Project Brands
-            </p>
-            <p className="mx-auto max-w-3xl text-sm leading-relaxed text-white/65">
-              Brands represented in projects I supported with agency and production teams.
-            </p>
-          </div>
-        </AnimatedSection>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-          {brands.map((brand) => (
-            <AnimatedSection key={brand.id}>
-              <div
-                className="group flex aspect-square items-center justify-center rounded-xl border border-white/12 bg-white/[0.02] p-4 transition-colors hover:border-white/28"
-              >
-                {brand.logoUrl ? (
-                  brand.websiteUrl ? (
-                    <a href={brand.websiteUrl} target="_blank" rel="noopener noreferrer" className="transition-transform duration-200 group-hover:scale-105">
-                      <img src={brand.logoUrl} alt={brand.name} className="max-h-14 w-auto object-contain" />
-                    </a>
-                  ) : (
-                    <img src={brand.logoUrl} alt={brand.name} className="max-h-14 w-auto object-contain" />
-                  )
-                ) : brand.websiteUrl ? (
-                  <a href={brand.websiteUrl} target="_blank" rel="noopener noreferrer" className="text-center text-xs font-semibold uppercase tracking-[0.16em] text-white/80 transition-colors hover:text-white">
-                    {brand.name}
-                  </a>
-                ) : (
-                  <span className="text-center text-xs font-semibold uppercase tracking-[0.16em] text-white/80">{brand.name}</span>
-                )}
-              </div>
-            </AnimatedSection>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export default function ExperientialPortfolio() {
-  const { data: processGalleryItems } = trpc.processGallery.list.useQuery();
+  const experientialSamples = getLocalExperientialSamples();
 
   const processImagesByCategory = useMemo(() => {
-    if (!processGalleryItems) {
-      return {
-        rendering: [],
-        "technical-drawing": [],
-        "live-events": [],
-      };
-    }
-
-    return processGalleryItems.reduce((acc, item) => {
+    return experientialSamples.reduce((acc, item) => {
       if (!acc[item.category]) acc[item.category] = [];
       acc[item.category].push(item);
       return acc;
-    }, {} as Record<string, typeof processGalleryItems>);
-  }, [processGalleryItems]);
+    }, {} as Record<string, typeof experientialSamples>);
+  }, [experientialSamples]);
 
-  const [processModalOpen, setProcessModalOpen] = useState(false);
-  const [processModalCategory, setProcessModalCategory] = useState<"rendering" | "technical-drawing" | "live-events">("rendering");
-  const [projectIndex, setProjectIndex] = useState(0);
-  const [imageIndex, setImageIndex] = useState(0);
-
-  const categoryItems = processImagesByCategory[processModalCategory] || [];
-
-  const groupedProjects = useMemo(() => {
-    const groups: Array<{
-      id: string;
-      projectId: number | null;
-      mainItem?: (typeof categoryItems)[0];
-      images: typeof categoryItems;
-    }> = [];
-
-    const seenProjects = new Set<number>();
-
-    categoryItems.forEach((item) => {
-      if (item.projectId) {
-        if (!seenProjects.has(item.projectId)) {
-          seenProjects.add(item.projectId);
-          groups.push({
-            id: `project-${item.projectId}`,
-            projectId: item.projectId,
-            mainItem: item,
-            images: [],
-          });
-        }
-      } else {
-        groups.push({
-          id: `single-${item.id}`,
-          projectId: null,
-          mainItem: item,
-          images: [item],
-        });
-      }
-    });
-
-    return groups;
-  }, [categoryItems]);
-
-  const currentProject = groupedProjects[projectIndex];
-  const { data: projectImages, isLoading: isLoadingProjectImages } = trpc.processGallery.projectImages.useQuery(
-    { projectId: currentProject?.projectId! },
-    { enabled: currentProject?.projectId !== null && currentProject?.projectId !== undefined },
-  );
-
-  const currentImages = useMemo(() => {
-    if (!currentProject?.mainItem) {
-      return projectImages && projectImages.length > 0 ? projectImages : currentProject?.images || [];
-    }
-
-    // Always keep the clicked/card image as the first slide, then append project gallery images.
-    if (projectImages && projectImages.length > 0) {
-      const seen = new Set<number>([currentProject.mainItem.id]);
-      const merged = [currentProject.mainItem];
-
-      for (const img of projectImages) {
-        if (seen.has(img.id)) continue;
-        seen.add(img.id);
-        merged.push(img);
-      }
-
-      return merged;
-    }
-
-    return [currentProject.mainItem];
-  }, [currentProject, projectImages]);
-
-  const currentImage = currentImages[imageIndex];
   const experientialImages = Array.from(
     new Set(
-      (processGalleryItems || [])
-        .map((item) => item.imageUrl || (item.videoUrl ? getVideoThumbnail(item.videoUrl) : null))
+      (experientialSamples || [])
+        .map((item) => getLocalExperientialLeadImage(item) || (item.videoUrl ? getVideoThumbnail(item.videoUrl) : null))
         .filter((value): value is string => Boolean(value))
     )
   ).slice(0, 12);
   const experientialPrimaryImage = experientialImages[0];
-  const experientialUpdatedDate = (processGalleryItems || []).reduce((latest, item) => {
+  const experientialUpdatedDate = (experientialSamples || []).reduce((latest, item) => {
+    if (!item.createdAt) return latest;
     const isoDate = new Date(item.createdAt).toISOString().split("T")[0];
     return isoDate > latest ? isoDate : latest;
   }, "");
@@ -341,27 +244,6 @@ export default function ExperientialPortfolio() {
       url: `${EXPERIENTIAL_PORTFOLIO_URL}#live-events`,
     },
   ];
-
-  const canGoNextProject = projectIndex < groupedProjects.length - 1;
-  const canGoPrevProject = projectIndex > 0;
-  const canGoNextImage = imageIndex < currentImages.length - 1;
-  const canGoPrevImage = imageIndex > 0;
-
-  const handleGalleryItemClick = (index: number) => {
-    const item = categoryItems[index];
-
-    const projIndex = groupedProjects.findIndex((group) => {
-      if (group.projectId && item.projectId && group.projectId === item.projectId) return true;
-      if (group.projectId === null && group.mainItem?.id === item.id) return true;
-      return false;
-    });
-
-    if (projIndex >= 0) {
-      setProjectIndex(projIndex);
-      setImageIndex(0);
-      setProcessModalOpen(true);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -415,13 +297,12 @@ export default function ExperientialPortfolio() {
           dateModified: experientialUpdatedDate || undefined,
           keywords: EXPERIENTIAL_PORTFOLIO_KEYWORDS.split(", "),
           image: experientialImages,
-          workExample: (processGalleryItems || [])
+          workExample: (experientialSamples || [])
             .map((item) => ({
               type: "ImageObject" as const,
               contentUrl: item.imageUrl || (item.videoUrl ? getVideoThumbnail(item.videoUrl) : "") || "",
               name:
                 item.displayTitle ||
-                item.project?.title ||
                 item.category.replace(/-/g, " "),
               caption:
                 item.description ||
@@ -526,10 +407,6 @@ export default function ExperientialPortfolio() {
         title="Rendering and Visualization for Pitch and Approval"
         copy="Concept renderings developed for presentation decks, internal reviews, and early alignment. These images are built to communicate tone, hierarchy, and install intent before the project shifts into production detail."
         items={processImagesByCategory.rendering || []}
-        onItemClick={(index) => {
-          setProcessModalCategory("rendering");
-          handleGalleryItemClick(index);
-        }}
       />
 
       <PortfolioSection
@@ -540,12 +417,9 @@ export default function ExperientialPortfolio() {
         items={processImagesByCategory["technical-drawing"] || []}
         cardAspectClass="aspect-[3/2]"
         imageFit="contain"
-        cardBackgroundClass="bg-white/90"
-        cardRoundedClass="rounded-md"
-        onItemClick={(index) => {
-          setProcessModalCategory("technical-drawing");
-          handleGalleryItemClick(index);
-        }}
+        cardBackgroundClass="bg-black"
+        cardRoundedClass="rounded-none"
+        imagePaddingClass=""
       />
 
       <PortfolioSection
@@ -554,14 +428,7 @@ export default function ExperientialPortfolio() {
         title="Live Event and Installation Work in Real Conditions"
         copy="Installed work showing how concept direction performs under deadlines, venue constraints, and audience flow. This is where the design is tested against real schedules, real budgets, and real public use."
         items={processImagesByCategory["live-events"] || []}
-        onItemClick={(index) => {
-          setProcessModalCategory("live-events");
-          handleGalleryItemClick(index);
-        }}
       />
-
-      <BrandsGrid />
-
       <section className="border-t border-white/12 py-20 md:py-24">
         <div className="container max-w-6xl">
           <AnimatedSection>
@@ -579,51 +446,6 @@ export default function ExperientialPortfolio() {
           </AnimatedSection>
         </div>
       </section>
-
-      <ProcessGalleryModal
-        isOpen={processModalOpen}
-        currentImage={currentImage}
-        currentProject={currentProject?.mainItem}
-        images={currentImages}
-        imageIndex={imageIndex}
-        projectIndex={projectIndex}
-        totalProjects={groupedProjects.length}
-        onClose={() => {
-          setProcessModalOpen(false);
-          setProjectIndex(0);
-          setImageIndex(0);
-        }}
-        onNextImage={() => {
-          if (canGoNextImage) setImageIndex((prev) => prev + 1);
-        }}
-        onPrevImage={() => {
-          if (canGoPrevImage) setImageIndex((prev) => prev - 1);
-        }}
-        onNextProject={() => {
-          if (canGoNextProject) {
-            setProjectIndex((prev) => prev + 1);
-            setImageIndex(0);
-          }
-        }}
-        onPrevProject={() => {
-          if (canGoPrevProject) {
-            setProjectIndex((prev) => prev - 1);
-            setImageIndex(0);
-          }
-        }}
-        canGoNextProject={canGoNextProject}
-        canGoPrevProject={canGoPrevProject}
-        canGoNextImage={canGoNextImage}
-        canGoPrevImage={canGoPrevImage}
-        isLoadingImages={isLoadingProjectImages}
-        categoryLabel={
-          processModalCategory === "rendering"
-            ? "Rendering"
-            : processModalCategory === "technical-drawing"
-              ? "Technical Drawing"
-              : "Live Events"
-        }
-      />
 
       <Footer />
     </div>

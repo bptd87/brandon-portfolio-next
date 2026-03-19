@@ -392,8 +392,11 @@ function ArticleDetailContent() {
                 })}
               </time>
               {article.categoryName ? (
-                <Link href={`/articles?category=${encodeURIComponent(article.categoryName)}`}>
-                  <a className="transition-colors hover:text-foreground">{article.categoryName}</a>
+                <Link
+                  href={`/articles?category=${encodeURIComponent(article.categoryName)}`}
+                  className="transition-colors hover:text-foreground"
+                >
+                  {article.categoryName}
                 </Link>
               ) : null}
             </div>

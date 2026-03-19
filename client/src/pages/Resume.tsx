@@ -1,3 +1,6 @@
+import { useMemo, useState } from "react";
+import { Link } from "wouter";
+
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AboutNav from "@/components/AboutNav";
@@ -6,6 +9,383 @@ import StructuredData from "@/components/StructuredData";
 
 import { Download, Award, GraduationCap, Users } from "lucide-react";
 
+type ResumeCredit = {
+  title: string;
+  director: string;
+  company: string;
+};
+
+type ResumeYearSection = {
+  year: string;
+  credits: ResumeCredit[];
+};
+
+type ScenicProjectLink = {
+  slug: string;
+  previewImage: string;
+};
+
+type HoverPreview = {
+  title: string;
+  previewImage: string;
+  x: number;
+  y: number;
+} | null;
+
+const LINE_CLASS =
+  "text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4";
+
+const SCENIC_PROJECTS: Record<string, ScenicProjectLink> = {
+  "The Glass Menagerie|Maples Repertory Theatre": {
+    slug: "the-glass-menagerie",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90010-cover.webp",
+  },
+  "Million Dollar Quartet|South Coast Repertory Theatre": {
+    slug: "million-dollar-quartet",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90087-cover.webp",
+  },
+  "Bell, Book, and Candle|Okoboji Summer Theatre": {
+    slug: "bell-book-and-candle",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90016-cover.webp",
+  },
+  "All's Well That Ends Well|New Swan Theatre Festival": {
+    slug: "alls-well-that-ends-well",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90071-cover.webp",
+  },
+  "Much Ado About Nothing|New Swan Theatre Festival": {
+    slug: "much-ado-about-nothing",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90089-cover.webp",
+  },
+  "Guys on Ice|The Great American Melodrama": {
+    slug: "guys-on-ice",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90045-cover.webp",
+  },
+  "Romero|University of Missouri": {
+    slug: "romero",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90077-cover.webp",
+  },
+  "Urinetown|University of Missouri": {
+    slug: "urinetown",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-cover.webp",
+  },
+  "Barefoot in The Park|Okoboji Summer Theatre": {
+    slug: "barefoot-in-the-park",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90042-cover.webp",
+  },
+  "Freaky Friday|Okoboji Summer Theatre": {
+    slug: "freaky-friday",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90056-cover.webp",
+  },
+  "An Enemy of the People|Stephens College": {
+    slug: "an-enemy-of-the-people",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-enemy-of-the-people-6-of-6-7499.webp",
+  },
+  "Boeing, Boeing|Stephens College": {
+    slug: "boeing-boeing",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90054-cover.webp",
+  },
+  "Cole|Okoboji Summer Theatre": {
+    slug: "cole",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-cole-7-of-8-8632.webp",
+  },
+  'Dial "M" for Murder|Okoboji Summer Theatre': {
+    slug: "dial-m-for-murder",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-dial-m-for-murder-8-of-9-0343.webp",
+  },
+  "Head Over Heels|Theatre SilCo": {
+    slug: "head-over-heels",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90044-cover.webp",
+  },
+  "Loteria|Theatre SilCo": {
+    slug: "loteria-game-on",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90009-cover.webp",
+  },
+  "Spelling Bee|Stephens College": {
+    slug: "the-25th-annual-putnam-county-spelling-bee",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2023-spellng-bee-stephens-college-6-of-6-5514.webp",
+  },
+  "Merry Wives of Windsor|Stephens College": {
+    slug: "the-merry-wives-of-windsor",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-cover.webp",
+  },
+  "An Inspector Calls|Okoboji Summer Theatre": {
+    slug: "an-inspector-calls",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90036-cover.webp",
+  },
+  "Man of La Mancha|Lake Dillon Theatre": {
+    slug: "the-man-of-la-mancha",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2022-man-of-la-mancha-3-of-5-large-4479.webp",
+  },
+  "A Funny Thing Happened…|Lake Dillon Theatre": {
+    slug: "a-funny-thing-happened",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90049-cover.webp",
+  },
+  "Tomas and the Library Lady|Lake Dillon Theatre": {
+    slug: "tomas-and-the-library-lady",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90039-cover.webp",
+  },
+  "Urinetown|Okoboji Summer Theatre": {
+    slug: "urinetown",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-cover.webp",
+  },
+  "The Marvelous Wonderettes: Dream On|Okoboji Summer Theatre": {
+    slug: "the-marvelous-wonderettes-dream-on",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2021-marvelous-wonderettes-photo-call-2-of-10-4679.webp",
+  },
+  "The Penelopiad|University of California Irvine": {
+    slug: "the-penelopiad",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90051-cover.webp",
+  },
+  "Company|University of California Irvine": {
+    slug: "company",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90019-cover.webp",
+  },
+  "The Pajama Game|University of California Irvine": {
+    slug: "the-pajama-game",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90048-cover.webp",
+  },
+  "Parliament Square|University of California Irvine": {
+    slug: "parliament-square",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90018-cover.webp",
+  },
+  "American Idiot|University of California Irvine": {
+    slug: "american-idiot",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90038-cover.webp",
+  },
+  "Vanya, Sonia, Masha, and Spike|Stephens College": {
+    slug: "vanya-and-sonia-and-masha-and-spike",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2016-vanya-sonia-masha-and-spike-stephens-1-of-7-1190.webp",
+  },
+  "All My Sons|Stephens College": {
+    slug: "all-my-sons",
+    previewImage:
+      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-cover.webp",
+  },
+};
+
+const SCENIC_CREDITS: ResumeYearSection[] = [
+  {
+    year: "2025",
+    credits: [
+      { title: "The Glass Menagerie", director: "Dir. Kimberly Braun", company: "Maples Repertory Theatre" },
+      { title: "Million Dollar Quartet", director: "Dir. James Moye", company: "South Coast Repertory Theatre" },
+      { title: "How to Succeed in Business", director: "Dir. Bernie Monroe", company: "Okoboji Summer Theatre" },
+      { title: "Deathtrap", director: "Dir. Fred Rubeck", company: "Okoboji Summer Theatre" },
+      { title: "Bell, Book, and Candle", director: "Dir. Richard Biever", company: "Okoboji Summer Theatre" },
+      { title: "All's Well That Ends Well", director: "Dir. Rob Salas", company: "New Swan Theatre Festival" },
+      { title: "Much Ado About Nothing", director: "Dir. Eli Simon", company: "New Swan Theatre Festival" },
+      { title: "Less Miserable", director: "Dir. John Keating", company: "The Great American Melodrama" },
+      { title: "Romero", director: "Dir. David Crespy", company: "University of Missouri" },
+      { title: "Shut Up, Sherlock!", director: "Dir. Eric Hoit", company: "The Great American Melodrama" },
+      { title: "Guys on Ice", director: "Dir. Dan Kalrer", company: "The Great American Melodrama" },
+    ],
+  },
+  {
+    year: "2024",
+    credits: [
+      { title: "Clue On Stage", director: "Dir. John Hemphill", company: "Stephens College" },
+      { title: "Urinetown", director: "Dir. Joy Powell", company: "University of Missouri" },
+      { title: "The Music Man", director: "Dir. Bernie Monroe", company: "Okoboji Summer Theatre" },
+      { title: "Barefoot in The Park", director: "Dir. Brett Olson", company: "Okoboji Summer Theatre" },
+      { title: "Freaky Friday", director: "Dir. Josh Walden", company: "Okoboji Summer Theatre" },
+      { title: "Baskerville: A Sherlock Holmes Mystery", director: "Dir. Stephen Brotebeck", company: "Okoboji Summer Theatre" },
+      { title: "9 to 5", director: "Dir. Brandon Riley", company: "University of Missouri" },
+      { title: "Footloose", director: "Dir. Jamey Grisham", company: "Stephens College" },
+      { title: "Boeing, Boeing", director: "Dir. John Hemphill", company: "Stephens College" },
+      { title: "Bright Star", director: "Dir. Andre' Rodriguez", company: "Denver School of the Arts" },
+    ],
+  },
+  {
+    year: "2023",
+    credits: [
+      { title: "Christmas Carol", director: "Dir. Courtney Crouse", company: "Stephens College" },
+      { title: "An Enemy of the People", director: "Dir. LR Hults", company: "Stephens College" },
+      { title: "Songs for a New World", director: "Dir. Lisa Brescia", company: "Stephens College" },
+      { title: "The Wedding Singer", director: "Dir. Bernie Monroe", company: "Okoboji Summer Theatre" },
+      { title: 'Dial "M" for Murder', director: "Dir. Fred Rubeck", company: "Okoboji Summer Theatre" },
+      { title: "Cole", director: "Dir. Alison Morooney", company: "Okoboji Summer Theatre" },
+      { title: "Head Over Heels", director: "Dir. Josh Walden", company: "Theatre SilCo" },
+      { title: "Curtain Up! Stephens", director: "Dir. Lisa Brescia", company: "Stephens College" },
+      { title: "Loteria", director: "Dir. Sara Rodriguez", company: "Theatre SilCo" },
+      { title: "Spelling Bee", director: "Dir. Todd Davidson", company: "Stephens College" },
+      { title: "Merry Wives of Windsor", director: "Dir. Jamey Grisham", company: "Stephens College" },
+    ],
+  },
+  {
+    year: "2022",
+    credits: [
+      { title: "White Christmas", director: "Dir. Lisa Brescia", company: "Stephens College" },
+      { title: "Our Town", director: "Dir. Elizabeth Palmieri", company: "Stephens College" },
+      { title: "Legally Blonde", director: "Dir. Amy Fritsche", company: "Okoboji Summer Theatre" },
+      { title: "Bright Star", director: "Dir. Lauren Haughton", company: "Okoboji Summer Theatre" },
+      { title: "An Inspector Calls", director: "Dir. Stephen Brotebeck", company: "Okoboji Summer Theatre" },
+      { title: "Man of La Mancha", director: "Dir. Chris Allerman", company: "Lake Dillon Theatre" },
+      { title: "A Funny Thing Happened…", director: "Dir. Melissa Livingston", company: "Lake Dillon Theatre" },
+      { title: "Curtain Up! Stephens", director: "Dir. Stephens Faculty", company: "Stephens College" },
+      { title: "Tomas and the Library Lady", director: "Dir. Sara Rodriguez", company: "Lake Dillon Theatre" },
+      { title: "A Chorus Line", director: "Dir. Andre' Rodriguez", company: "Denver School of the Arts" },
+      { title: "The Book of Everything", director: "Dir. Allison Watrous", company: "Denver School of the Arts" },
+      { title: "The Bald Soprano", director: "Dir. Brett Olson", company: "Stephens College" },
+    ],
+  },
+  {
+    year: "2021",
+    credits: [
+      { title: "A Smalltowne Christmas", director: "Dir. Richard Stafford", company: "Stephens College" },
+      { title: "Urinetown", director: "Dir. Paul Finocchiaro", company: "Okoboji Summer Theatre" },
+      { title: "The Marvelous Wonderettes: Dream On", director: "Dir. Lauren Haughton", company: "Okoboji Summer Theatre" },
+      { title: "Clue On Stage", director: "Dir. Stephen Brotebeck", company: "Okoboji Summer Theatre" },
+      { title: "Lysistrata", director: "Dir. Jay Stratton", company: "University of Texas El Paso" },
+    ],
+  },
+  {
+    year: "2020",
+    credits: [
+      { title: "A Shayna Maidel", director: "Dir. Lamby Hedge", company: "Western Washington University" },
+      { title: "The Wolves", director: "Dir. Allison Watrous", company: "Denver School of the Arts" },
+      { title: "Peter and the Starcatcher", director: "Dir. Andre Rodriguez", company: "Denver School of the Arts" },
+      { title: "DSA REP", director: "Dir. Various", company: "Denver School of the Arts" },
+      { title: "The Penelopiad", director: "Dir. Sara Rodriguez", company: "University of California Irvine" },
+    ],
+  },
+  {
+    year: "2019",
+    credits: [
+      { title: "Company", director: "Dir. Eli Simon", company: "University of California Irvine" },
+      { title: "Mamma Mia", director: "Dir. Jennifer Hemphill", company: "Stephens College" },
+      { title: "Spitfire Grill", director: "Dir. Lamby Hedge", company: "Western Summer Theatre" },
+      { title: "Mamma Mia", director: "Dir. Robin Levine", company: "Okoboji Summer Theatre" },
+      { title: "Living on Love", director: "Dir. Fred Rubeck", company: "Okoboji Summer Theatre" },
+      { title: "Happily, Ever After", director: "Dir. Courtney Crouse", company: "Okoboji Summer Theatre" },
+      { title: "An American Daughter", director: "Dir. Lamby Hedge", company: "Western Washington University" },
+      { title: "The Pajama Game", director: "Dir. Don Hill", company: "University of California Irvine" },
+      { title: "Parliament Square", director: "Dir. Jane Page", company: "University of California Irvine" },
+    ],
+  },
+  {
+    year: "2018",
+    credits: [
+      { title: "Scary Poppins", director: "Dir. Eric Hoit", company: "The Great American Melodrama" },
+      { title: "The Glass Menagerie", director: "Dir. Lamby Hedge", company: "Western Summer Theatre" },
+      { title: "Young Frankenstein", director: "Dir. Deb Currier", company: "Western Summer Theatre" },
+      { title: "Thoroughly Modern Millie", director: "Dir. Paul Finocchiaro", company: "Okoboji Summer Theatre" },
+      { title: "Over the River, and Through the Woods", director: "Dir. Fred Rubeck", company: "Okoboji Summer Theatre" },
+      { title: "Not Now, Darling", director: "Dir. Fred Rubeck", company: "Okoboji Summer Theatre" },
+      { title: "American Idiot", director: "Dir. Andrew Palermo", company: "University of California Irvine" },
+    ],
+  },
+  {
+    year: "2017",
+    credits: [
+      { title: "Angel Food Cake", director: "Dir. Evan Mueller", company: "Western Summer Theatre" },
+      { title: "I Love You, You're Perfect, Now Change", director: "Dir. Lamby Hedge", company: "Western Summer Theatre" },
+      { title: "The Tavern", director: "Dir. Suzy Newman", company: "The Great American Melodrama" },
+      { title: "The Karaoke Kid", director: "Dir. Dan Schultz", company: "The Great American Melodrama" },
+      { title: "A Connecticut Yankee in King Arthur's Court", director: "Dir. Chuck McLane", company: "The Great American Melodrama" },
+      { title: "When Butter Churns Gold", director: "Dir. Michael Jenkinson", company: "The Great American Melodrama" },
+      { title: "The Foreigner", director: "Dir. Dan Schultz", company: "The Great American Melodrama" },
+      { title: "Holiday Extravaganza", director: "Dir. Suzy Newman", company: "The Great American Melodrama" },
+    ],
+  },
+  {
+    year: "2016",
+    credits: [
+      { title: "Trudy and the Beast", director: "Dir. Eric Hoit", company: "The Great American Melodrama" },
+      { title: "An American Daughter", director: "Dir. Lamby Hedge", company: "Stephens College" },
+      { title: "Nunsense", director: "Dir. Lamby Hedge", company: "Western Washington University" },
+      { title: "Cinderella", director: "Dir. Liz Piccoli", company: "Okoboji Summer Theatre" },
+      { title: "A Murder Is Announced", director: "Dir. Karl Kippola", company: "Okoboji Summer Theatre" },
+      { title: "The Spitfire Grill", director: "Dir. Stephen Brotebeck", company: "Okoboji Summer Theatre" },
+      { title: "Vanya, Sonia, Masha, and Spike", director: "Dir. Lamby Hedge", company: "Stephens College" },
+    ],
+  },
+];
+
+const EARLIER_CREDITS: ResumeCredit[] = [
+  { title: "Urinetown", director: "Dir. Lamby Hedge", company: "Western Summer Theatre" },
+  { title: "Footloose", director: "Dir. Stephen Casey", company: "West Virginia Public Theatre" },
+  { title: "The Liar", director: "Dir. Lamby Hedge", company: "Okoboji Summer Theatre" },
+  { title: "The Giver", director: "Dir. Ken Hailey", company: "Kentucky Repertory Theatre" },
+  { title: "Playhouse Creatures", director: "Dir. Becca Kravitz", company: "Warehouse Theatre Company" },
+  { title: "The Verge", director: "Dir. Cheryl Black", company: "University of Missouri" },
+];
+
+function scenicKey(title: string, company: string) {
+  return `${title}|${company}`;
+}
+
+function ScenicCreditRow({
+  credit,
+  onPreview,
+  onPreviewMove,
+  onPreviewLeave,
+}: {
+  credit: ResumeCredit;
+  onPreview: (credit: ResumeCredit, x: number, y: number) => void;
+  onPreviewMove: (credit: ResumeCredit, x: number, y: number) => void;
+  onPreviewLeave: () => void;
+}) {
+  const linkedProject = SCENIC_PROJECTS[scenicKey(credit.title, credit.company)];
+
+  const inner = (
+    <>
+      <span className="font-medium italic tracking-[-0.02em] text-foreground/94 transition-colors duration-200 group-hover:text-foreground group-focus-visible:text-foreground">
+        {credit.title}
+      </span>
+      <span className="text-foreground/46">{credit.director}</span>
+      <span className="text-foreground/52">{credit.company}</span>
+    </>
+  );
+
+  if (!linkedProject) {
+    return <p className={LINE_CLASS}>{inner}</p>;
+  }
+
+  return (
+    <Link
+      href={`/project/${linkedProject.slug}`}
+      className={`${LINE_CLASS} group block cursor-pointer rounded-[0.35rem] transition-colors duration-200 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/25`}
+      onMouseEnter={(event) => onPreview(credit, event.clientX, event.clientY)}
+      onMouseMove={(event) => onPreviewMove(credit, event.clientX, event.clientY)}
+      onMouseLeave={onPreviewLeave}
+      onFocus={() => onPreview(credit, window.innerWidth * 0.72, 220)}
+      onBlur={onPreviewLeave}
+    >
+      {inner}
+    </Link>
+  );
+}
+
 export default function Resume() {
   const achievements = [
     "2026 BroadwayWorld Los Angeles Best Scenic Design Nominee",
@@ -13,6 +393,49 @@ export default function Resume() {
     "2020 MFA Scenic Design | University of California Irvine",
     "2010 BFA Theatre Design | Stephens College",
   ];
+
+  const [hoverPreview, setHoverPreview] = useState<HoverPreview>(null);
+
+  const previewStyle = useMemo(() => {
+    if (!hoverPreview) return null;
+
+    const previewWidth = 276;
+    const previewHeight = 190;
+    const gutter = 26;
+    const maxX = Math.max(gutter, window.innerWidth - previewWidth - gutter);
+    const maxY = Math.max(gutter, window.innerHeight - previewHeight - gutter);
+
+    return {
+      left: Math.min(Math.max(hoverPreview.x + 22, gutter), maxX),
+      top: Math.min(Math.max(hoverPreview.y - 34, gutter), maxY),
+    };
+  }, [hoverPreview]);
+
+  function showPreview(credit: ResumeCredit, x: number, y: number) {
+    const linkedProject = SCENIC_PROJECTS[scenicKey(credit.title, credit.company)];
+    if (!linkedProject) return;
+    setHoverPreview({
+      title: credit.title,
+      previewImage: linkedProject.previewImage,
+      x,
+      y,
+    });
+  }
+
+  function movePreview(credit: ResumeCredit, x: number, y: number) {
+    const linkedProject = SCENIC_PROJECTS[scenicKey(credit.title, credit.company)];
+    if (!linkedProject) return;
+    setHoverPreview((current) =>
+      current
+        ? { ...current, x, y, title: credit.title, previewImage: linkedProject.previewImage }
+        : {
+            title: credit.title,
+            previewImage: linkedProject.previewImage,
+            x,
+            y,
+          }
+    );
+  }
 
   return (
     <>
@@ -35,26 +458,21 @@ export default function Resume() {
           name: "Brandon PT Davis",
           jobTitle: "Scenic Designer",
           url: "https://www.brandonptdavis.com",
-          description: "Professional scenic designer with over 130 realized productions across regional theatre, summer stock, and academic theatre. USA 829 member since 2023. BroadwayWorld Los Angeles Best Scenic Design Nominee (2026).",
+          description:
+            "Professional scenic designer with over 130 realized productions across regional theatre, summer stock, and academic theatre. USA 829 member since 2023. BroadwayWorld Los Angeles Best Scenic Design Nominee (2026).",
           email: "info@brandonptdavis.com",
           address: {
             addressLocality: "Irvine",
             addressRegion: "CA",
-            addressCountry: "US"
+            addressCountry: "US",
           },
           alumniOf: [
-            {
-              name: "University of California, Irvine",
-              url: "https://www.uci.edu"
-            },
-            {
-              name: "Stephens College",
-              url: "https://www.stephens.edu"
-            }
+            { name: "University of California, Irvine", url: "https://www.uci.edu" },
+            { name: "Stephens College", url: "https://www.stephens.edu" },
           ],
           awards: [
             "BroadwayWorld Los Angeles 2026 - Best Scenic Design Nominee",
-            "USA 829 Membership 2023"
+            "USA 829 Membership 2023",
           ],
           knowsAbout: [
             "Scenic Design",
@@ -67,22 +485,19 @@ export default function Resume() {
             "Scale Model Fabrication",
             "Digital Rendering",
             "Production Design",
-            "Set Design"
-          ]
+            "Set Design",
+          ],
         }}
       />
       <Header />
       <AboutNav />
-      
-      <section className="min-h-screen bg-background pt-20 pb-20">
+
+      <section className="min-h-screen bg-background pb-20 pt-20">
         <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 lg:px-8">
-          {/* Hero */}
           <div className="mb-18">
             <div className="grid gap-10 border-b border-border/25 pb-12 xl:grid-cols-[minmax(0,1.12fr)_minmax(18rem,22rem)] xl:items-center">
               <div className="max-w-3xl xl:max-w-4xl">
-                <p className="text-[0.95rem] leading-7 text-foreground/72">
-                  Resume / CV
-                </p>
+                <p className="text-[0.95rem] leading-7 text-foreground/72">Resume / CV</p>
                 <h1 className="mt-6 max-w-4xl font-sans text-[clamp(3rem,6.4vw,5.85rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
                   Resume, CV, and selected scenic design credits.
                 </h1>
@@ -93,7 +508,7 @@ export default function Resume() {
 
                 <div className="mt-8 flex flex-wrap items-center gap-4 text-[0.95rem] text-foreground/72">
                   <a
-                    href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/KZOFqPARnjQauvWm.pdf"
+                    href="https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/Downloads/resume/KZOFqPARnjQauvWm-8d5c0155c1.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex h-11 items-center gap-2 rounded-full bg-foreground px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-background transition-colors hover:bg-foreground/88"
@@ -102,7 +517,7 @@ export default function Resume() {
                     Resume
                   </a>
                   <a
-                    href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/mSMkRDmbSOQtUykO.pdf"
+                    href="https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/Downloads/resume/mSMkRDmbSOQtUykO-58989945e6.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex h-11 items-center gap-2 rounded-full bg-white/10 px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-foreground transition-colors hover:bg-white/14"
@@ -116,7 +531,7 @@ export default function Resume() {
                   <div className="rounded-[1.2rem] border border-border/25 bg-card/10 px-4 py-3.5">
                     <p className="text-[10px] uppercase tracking-[0.22em] text-foreground/38">Productions</p>
                     <p className="mt-2 inline-flex items-center gap-2 text-[0.98rem] font-medium text-foreground/82">
-                      <Users className="w-4 h-4" />
+                      <Users className="h-4 w-4" />
                       130+
                     </p>
                   </div>
@@ -127,7 +542,7 @@ export default function Resume() {
                   <div className="rounded-[1.2rem] border border-border/25 bg-card/10 px-4 py-3.5">
                     <p className="text-[10px] uppercase tracking-[0.22em] text-foreground/38">Training</p>
                     <p className="mt-2 inline-flex items-center gap-2 text-[0.98rem] font-medium text-foreground/82">
-                      <GraduationCap className="w-4 h-4" />
+                      <GraduationCap className="h-4 w-4" />
                       MFA Scenic Design
                     </p>
                   </div>
@@ -149,204 +564,98 @@ export default function Resume() {
             </div>
           </div>
 
-          {/* Scenic Design */}
           <div className="mb-16">
-            <h2 className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">Selected Scenic Design</h2>
-            <p className="mt-4 max-w-2xl text-[0.98rem] leading-7 text-foreground/58">
-              Selected credits by year. Full lists remain available in the downloadable resume and CV.
-            </p>
-            
+            <div className="flex items-end justify-between gap-6">
+              <div>
+                <h2 className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+                  Selected Scenic Design
+                </h2>
+                <p className="mt-4 max-w-2xl text-[0.98rem] leading-7 text-foreground/58">
+                  Selected credits by year. Hover linked productions to preview the on-site project,
+                  then click through to the scenic design page.
+                </p>
+              </div>
+            </div>
+
             <div className="mt-12 space-y-12">
-              {/* 2025 */}
-              <div className="border-t border-border/20 pt-6 md:pt-7">
-                <h3 className="font-sans text-[1.28rem] font-medium tracking-[-0.03em] text-foreground/88">2025</h3>
-                <div className="mt-6 space-y-2 text-foreground/85">
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">The Glass Menagerie</span><span className="text-foreground/46">Dir. Kimberly Braun</span><span className="text-foreground/52">Maples Repertory Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Million Dollar Quartet</span><span className="text-foreground/46">Dir. James Moye</span><span className="text-foreground/52">South Coast Repertory Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">How to Succeed in Business</span><span className="text-foreground/46">Dir. Bernie Monroe</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Deathtrap</span><span className="text-foreground/46">Dir. Fred Rubeck</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Bell, Book, and Candle</span><span className="text-foreground/46">Dir. Richard Biever</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">All's Well That Ends Well</span><span className="text-foreground/46">Dir. Rob Salas</span><span className="text-foreground/52">New Swan Theatre Festival</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Much Ado About Nothing</span><span className="text-foreground/46">Dir. Eli Simon</span><span className="text-foreground/52">New Swan Theatre Festival</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Less Miserable</span><span className="text-foreground/46">Dir. John Keating</span><span className="text-foreground/52">The Great American Melodrama</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Romero</span><span className="text-foreground/46">Dir. David Crespy</span><span className="text-foreground/52">University of Missouri</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Shut Up, Sherlock!</span><span className="text-foreground/46">Dir. Eric Hoit</span><span className="text-foreground/52">The Great American Melodrama</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Guys on Ice</span><span className="text-foreground/46">Dir. Dan Kalrer</span><span className="text-foreground/52">The Great American Melodrama</span></p>
+              {SCENIC_CREDITS.map((section) => (
+                <div key={section.year} className="border-t border-border/20 pt-6 md:pt-7">
+                  <h3 className="font-sans text-[1.28rem] font-medium tracking-[-0.03em] text-foreground/88">
+                    {section.year}
+                  </h3>
+                  <div className="mt-6 space-y-2 text-foreground/85">
+                    {section.credits.map((credit) => (
+                      <ScenicCreditRow
+                        key={`${section.year}-${credit.title}-${credit.company}`}
+                        credit={credit}
+                        onPreview={showPreview}
+                        onPreviewMove={movePreview}
+                        onPreviewLeave={() => setHoverPreview(null)}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
-
-              {/* 2024 */}
-              <div className="border-t border-border/20 pt-6 md:pt-7">
-                <h3 className="font-sans text-[1.28rem] font-medium tracking-[-0.03em] text-foreground/88">2024</h3>
-                <div className="mt-6 space-y-2 text-foreground/85">
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Clue On Stage</span><span className="text-foreground/46">Dir. John Hemphill</span><span className="text-foreground/52">Stephens College</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Urinetown</span><span className="text-foreground/46">Dir. Joy Powell</span><span className="text-foreground/52">University of Missouri</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">The Music Man</span><span className="text-foreground/46">Dir. Bernie Monroe</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Barefoot in The Park</span><span className="text-foreground/46">Dir. Brett Olson</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Freaky Friday</span><span className="text-foreground/46">Dir. Josh Walden</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Baskerville: A Sherlock Holmes Mystery</span><span className="text-foreground/46">Dir. Stephen Brotebeck</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">9 to 5</span><span className="text-foreground/46">Dir. Brandon Riley</span><span className="text-foreground/52">University of Missouri</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Footloose</span><span className="text-foreground/46">Dir. Jamey Grisham</span><span className="text-foreground/52">Stephens College</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Boeing, Boeing</span><span className="text-foreground/46">Dir. John Hemphill</span><span className="text-foreground/52">Stephens College</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Bright Star</span><span className="text-foreground/46">Dir. Andre' Rodriguez</span><span className="text-foreground/52">Denver School of the Arts</span></p>
-                </div>
-              </div>
-
-              {/* 2023 */}
-              <div className="border-t border-border/20 pt-6 md:pt-7">
-                <h3 className="font-sans text-[1.28rem] font-medium tracking-[-0.03em] text-foreground/88">2023</h3>
-                <div className="mt-6 space-y-2 text-foreground/85">
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Christmas Carol</span><span className="text-foreground/46">Dir. Courtney Crouse</span><span className="text-foreground/52">Stephens College</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">An Enemy of the People</span><span className="text-foreground/46">Dir. LR Hults</span><span className="text-foreground/52">Stephens College</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Songs for a New World</span><span className="text-foreground/46">Dir. Lisa Brescia</span><span className="text-foreground/52">Stephens College</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">The Wedding Singer</span><span className="text-foreground/46">Dir. Bernie Monroe</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Dial "M" for Murder</span><span className="text-foreground/46">Dir. Fred Rubeck</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Cole</span><span className="text-foreground/46">Dir. Alison Morooney</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Head Over Heels</span><span className="text-foreground/46">Dir. Josh Walden</span><span className="text-foreground/52">Theatre SilCo</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Curtain Up! Stephens</span><span className="text-foreground/46">Dir. Lisa Brescia</span><span className="text-foreground/52">Stephens College</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Loteria</span><span className="text-foreground/46">Dir. Sara Rodriguez</span><span className="text-foreground/52">Theatre SilCo</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Spelling Bee</span><span className="text-foreground/46">Dir. Todd Davidson</span><span className="text-foreground/52">Stephens College</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Merry Wives of Windsor</span><span className="text-foreground/46">Dir. Jamey Grisham</span><span className="text-foreground/52">Stephens College</span></p>
-                </div>
-              </div>
-
-              {/* 2022 */}
-              <div className="border-t border-border/20 pt-6 md:pt-7">
-                <h3 className="font-sans text-[1.28rem] font-medium tracking-[-0.03em] text-foreground/88">2022</h3>
-                <div className="mt-6 space-y-2 text-foreground/85">
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">White Christmas</span><span className="text-foreground/46">Dir. Lisa Brescia</span><span className="text-foreground/52">Stephens College</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Our Town</span><span className="text-foreground/46">Dir. Elizabeth Palmieri</span><span className="text-foreground/52">Stephens College</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Legally Blonde</span><span className="text-foreground/46">Dir. Amy Fritsche</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Bright Star</span><span className="text-foreground/46">Dir. Lauren Haughton</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">An Inspector Calls</span><span className="text-foreground/46">Dir. Stephen Brotebeck</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Man of La Mancha</span><span className="text-foreground/46">Dir. Chris Allerman</span><span className="text-foreground/52">Lake Dillon Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">A Funny Thing Happened…</span><span className="text-foreground/46">Dir. Melissa Livingston</span><span className="text-foreground/52">Lake Dillon Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Curtain Up! Stephens</span><span className="text-foreground/46">Dir. Stephens Faculty</span><span className="text-foreground/52">Stephens College</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Tomas and the Library Lady</span><span className="text-foreground/46">Dir. Sara Rodriguez</span><span className="text-foreground/52">Lake Dillon Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">A Chorus Line</span><span className="text-foreground/46">Dir. Andre' Rodriguez</span><span className="text-foreground/52">Denver School of the Arts</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">The Book of Everything</span><span className="text-foreground/46">Dir. Allison Watrous</span><span className="text-foreground/52">Denver School of the Arts</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">The Bald Soprano</span><span className="text-foreground/46">Dir. Brett Olson</span><span className="text-foreground/52">Stephens College</span></p>
-                </div>
-              </div>
-
-              {/* 2021 */}
-              <div className="border-t border-border/20 pt-6 md:pt-7">
-                <h3 className="font-sans text-[1.28rem] font-medium tracking-[-0.03em] text-foreground/88">2021</h3>
-                <div className="mt-6 space-y-2 text-foreground/85">
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">A Smalltowne Christmas</span><span className="text-foreground/46">Dir. Richard Stafford</span><span className="text-foreground/52">Stephens College</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Urinetown</span><span className="text-foreground/46">Dir. Paul Finocchiaro</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">The Marvelous Wonderettes: Dream On</span><span className="text-foreground/46">Dir. Lauren Haughton</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Clue On Stage</span><span className="text-foreground/46">Dir. Stephen Brotebeck</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Lysistrata</span><span className="text-foreground/46">Dir. Jay Stratton</span><span className="text-foreground/52">University of Texas El Paso</span></p>
-                </div>
-              </div>
-
-              {/* 2020 */}
-              <div className="border-t border-border/20 pt-6 md:pt-7">
-                <h3 className="font-sans text-[1.28rem] font-medium tracking-[-0.03em] text-foreground/88">2020</h3>
-                <div className="mt-6 space-y-2 text-foreground/85">
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">A Shayna Maidel</span><span className="text-foreground/46">Dir. Lamby Hedge</span><span className="text-foreground/52">Western Washington University</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">The Wolves</span><span className="text-foreground/46">Dir. Allison Watrous</span><span className="text-foreground/52">Denver School of the Arts</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Peter and the Starcatcher</span><span className="text-foreground/46">Dir. Andre Rodriguez</span><span className="text-foreground/52">Denver School of the Arts</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">DSA REP</span><span className="text-foreground/46">Dir. Various</span><span className="text-foreground/52">Denver School of the Arts</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">The Penelopiad</span><span className="text-foreground/46">Dir. Sara Rodriguez</span><span className="text-foreground/52">University of California Irvine</span></p>
-                </div>
-              </div>
-
-              {/* 2019 */}
-              <div className="border-t border-border/20 pt-6 md:pt-7">
-                <h3 className="font-sans text-[1.28rem] font-medium tracking-[-0.03em] text-foreground/88">2019</h3>
-                <div className="mt-6 space-y-2 text-foreground/85">
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Company</span><span className="text-foreground/46">Dir. Eli Simon</span><span className="text-foreground/52">University of California Irvine</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Mamma Mia</span><span className="text-foreground/46">Dir. Jennifer Hemphill</span><span className="text-foreground/52">Stephens College</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Spitfire Grill</span><span className="text-foreground/46">Dir. Lamby Hedge</span><span className="text-foreground/52">Western Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Mamma Mia</span><span className="text-foreground/46">Dir. Robin Levine</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Living on Love</span><span className="text-foreground/46">Dir. Fred Rubeck</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Happily, Ever After</span><span className="text-foreground/46">Dir. Courtney Crouse</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">An American Daughter</span><span className="text-foreground/46">Dir. Lamby Hedge</span><span className="text-foreground/52">Western Washington University</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">The Pajama Game</span><span className="text-foreground/46">Dir. Don Hill</span><span className="text-foreground/52">University of California Irvine</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Parliament Square</span><span className="text-foreground/46">Dir. Jane Page</span><span className="text-foreground/52">University of California Irvine</span></p>
-                </div>
-              </div>
-
-              {/* 2018 */}
-              <div className="border-t border-border/20 pt-6 md:pt-7">
-                <h3 className="font-sans text-[1.28rem] font-medium tracking-[-0.03em] text-foreground/88">2018</h3>
-                <div className="mt-6 space-y-2 text-foreground/85">
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Scary Poppins</span><span className="text-foreground/46">Dir. Eric Hoit</span><span className="text-foreground/52">The Great American Melodrama</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">The Glass Menagerie</span><span className="text-foreground/46">Dir. Lamby Hedge</span><span className="text-foreground/52">Western Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Young Frankenstein</span><span className="text-foreground/46">Dir. Deb Currier</span><span className="text-foreground/52">Western Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Thoroughly Modern Millie</span><span className="text-foreground/46">Dir. Paul Finocchiaro</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Over the River, and Through the Woods</span><span className="text-foreground/46">Dir. Fred Rubeck</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Not Now, Darling</span><span className="text-foreground/46">Dir. Fred Rubeck</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">American Idiot</span><span className="text-foreground/46">Dir. Andrew Palermo</span><span className="text-foreground/52">University of California Irvine</span></p>
-                </div>
-              </div>
-
-              {/* 2017 */}
-              <div className="border-t border-border/20 pt-6 md:pt-7">
-                <h3 className="font-sans text-[1.28rem] font-medium tracking-[-0.03em] text-foreground/88">2017</h3>
-                <div className="mt-6 space-y-2 text-foreground/85">
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Angel Food Cake</span><span className="text-foreground/46">Dir. Evan Mueller</span><span className="text-foreground/52">Western Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">I Love You, You're Perfect, Now Change</span><span className="text-foreground/46">Dir. Lamby Hedge</span><span className="text-foreground/52">Western Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">The Tavern</span><span className="text-foreground/46">Dir. Suzy Newman</span><span className="text-foreground/52">The Great American Melodrama</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">The Karaoke Kid</span><span className="text-foreground/46">Dir. Dan Schultz</span><span className="text-foreground/52">The Great American Melodrama</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">A Connecticut Yankee in King Arthur's Court</span><span className="text-foreground/46">Dir. Chuck McLane</span><span className="text-foreground/52">The Great American Melodrama</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">When Butter Churns Gold</span><span className="text-foreground/46">Dir. Michael Jenkinson</span><span className="text-foreground/52">The Great American Melodrama</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">The Foreigner</span><span className="text-foreground/46">Dir. Dan Schultz</span><span className="text-foreground/52">The Great American Melodrama</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Holiday Extravaganza</span><span className="text-foreground/46">Dir. Suzy Newman</span><span className="text-foreground/52">The Great American Melodrama</span></p>
-                </div>
-              </div>
-
-              {/* 2016 */}
-              <div className="border-t border-border/20 pt-6 md:pt-7">
-                <h3 className="font-sans text-[1.28rem] font-medium tracking-[-0.03em] text-foreground/88">2016</h3>
-                <div className="mt-6 space-y-2 text-foreground/85">
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Trudy and the Beast</span><span className="text-foreground/46">Dir. Eric Hoit</span><span className="text-foreground/52">The Great American Melodrama</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">An American Daughter</span><span className="text-foreground/46">Dir. Lamby Hedge</span><span className="text-foreground/52">Stephens College</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Nunsense</span><span className="text-foreground/46">Dir. Lamby Hedge</span><span className="text-foreground/52">Western Washington University</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Cinderella</span><span className="text-foreground/46">Dir. Liz Piccoli</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">A Murder Is Announced</span><span className="text-foreground/46">Dir. Karl Kippola</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">The Spitfire Grill</span><span className="text-foreground/46">Dir. Stephen Brotebeck</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-                  <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Vanya, Sonia, Masha, and Spike</span><span className="text-foreground/46">Dir. Lamby Hedge</span><span className="text-foreground/52">Stephens College</span></p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
-          {/* Earlier */}
           <div className="mb-16">
-            <h2 className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">Earlier</h2>
-            
+            <h2 className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+              Earlier
+            </h2>
+
             <div className="mt-6 space-y-2 border-t border-border/20 pt-6 text-foreground/85 md:pt-7">
-              <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Urinetown</span><span className="text-foreground/46">Dir. Lamby Hedge</span><span className="text-foreground/52">Western Summer Theatre</span></p>
-              <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Footloose</span><span className="text-foreground/46">Dir. Stephen Casey</span><span className="text-foreground/52">West Virginia Public Theatre</span></p>
-              <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">The Liar</span><span className="text-foreground/46">Dir. Lamby Hedge</span><span className="text-foreground/52">Okoboji Summer Theatre</span></p>
-              <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">The Giver</span><span className="text-foreground/46">Dir. Ken Hailey</span><span className="text-foreground/52">Kentucky Repertory Theatre</span></p>
-              <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">Playhouse Creatures</span><span className="text-foreground/46">Dir. Becca Kravitz</span><span className="text-foreground/52">Warehouse Theatre Company</span></p>
-              <p className="text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4"><span className="font-medium italic tracking-[-0.02em] text-foreground/94">The Verge</span><span className="text-foreground/46">Dir. Cheryl Black</span><span className="text-foreground/52">University of Missouri</span></p>
+              {EARLIER_CREDITS.map((credit) => (
+                <ScenicCreditRow
+                  key={`${credit.title}-${credit.company}`}
+                  credit={credit}
+                  onPreview={showPreview}
+                  onPreviewMove={movePreview}
+                  onPreviewLeave={() => setHoverPreview(null)}
+                />
+              ))}
             </div>
           </div>
 
-          {/* Achievements & Education */}
           <div className="mb-16">
-            <h2 className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">Achievements & Education</h2>
-            
+            <h2 className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+              Achievements & Education
+            </h2>
+
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               {achievements.map((item, index) => (
-                <div key={item} className="rounded-[1.25rem] border border-border/25 bg-card/10 px-4 py-3.5 text-foreground/82">
+                <div
+                  key={item}
+                  className="rounded-[1.25rem] border border-border/25 bg-card/10 px-4 py-3.5 text-foreground/82"
+                >
                   <p className="inline-flex items-start gap-2">
-                    {index === 0 ? <Award className="mt-0.5 w-4 h-4 text-foreground/62" /> : <span className="mt-0.5 h-4 w-4 rounded-full border border-foreground/14" />}
+                    {index === 0 ? (
+                      <Award className="mt-0.5 h-4 w-4 text-foreground/62" />
+                    ) : (
+                      <span className="mt-0.5 h-4 w-4 rounded-full border border-foreground/14" />
+                    )}
                     <span>{item}</span>
                   </p>
                 </div>
               ))}
             </div>
           </div>
-
-
-
         </div>
+
+        {hoverPreview && previewStyle ? (
+          <div
+            className="pointer-events-none fixed z-50 hidden w-[15rem] overflow-hidden rounded-[0.72rem] border border-white/10 bg-black/88 shadow-[0_22px_50px_rgba(0,0,0,0.45)] backdrop-blur-sm lg:block"
+            style={previewStyle}
+          >
+            <div className="aspect-square w-full overflow-hidden">
+              <img
+                src={hoverPreview.previewImage}
+                alt={`${hoverPreview.title} scenic preview`}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </div>
+        ) : null}
       </section>
 
       <Footer />

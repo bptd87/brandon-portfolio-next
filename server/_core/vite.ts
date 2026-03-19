@@ -6,13 +6,21 @@ import path from "path";
 import { createServer as createViteServer } from "vite";
 import * as db from "../db";
 import {
+  getLegacyCanonicalDestination,
+} from "@shared/publicContent";
+import {
   ASSISTANT_SCENIC_DESIGN_PATH,
   ASSISTANT_SCENIC_DESIGN_SEO_DESCRIPTION,
   ASSISTANT_SCENIC_DESIGN_SEO_TITLE,
   assistantScenicDesignEntries,
-  getLegacyCanonicalDestination,
-} from "@shared/publicContent";
+} from "@shared/localAssistantScenic";
 import { getLocalArticleBySlug, getLocalArticles } from "@shared/localArticles";
+import {
+  getLocalExperientialSampleBySlug,
+  getLocalRenderingProjectBySlug,
+  getLocalExperientialProcessGallery,
+  getLocalRenderingProjects,
+} from "@shared/localPortfolios";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -457,7 +465,7 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
   }
 
   if (decodedPath === "/projects/rendering") {
-    const renderingProjects = await db.getRenderingProjects({ status: "published", galleryOnly: false });
+    const renderingProjects = getLocalRenderingProjects().filter((project) => !project.galleryOnly);
     const socialImages = Array.from(
       new Set(
         renderingProjects
@@ -478,8 +486,47 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
     });
   }
 
+  const renderingProjectMatch = decodedPath.match(/^\/projects\/(?:experiential\/)?rendering\/([^/?#]+)\/?$/i);
+  if (renderingProjectMatch) {
+    const renderingProject = getLocalRenderingProjectBySlug(cleanSlug(renderingProjectMatch[1]));
+    if (renderingProject) {
+      const imageUrls = Array.from(
+        new Set(
+          [
+            renderingProject.coverImageUrl,
+            ...renderingProject.images.map((image) => image.imageUrl),
+          ]
+            .filter((value): value is string => Boolean(value) && isLikelyImageUrl(value))
+            .map((value) => absoluteUrl(origin, value))
+        )
+      ).slice(0, 10);
+
+      const canonicalPath = decodedPath.startsWith("/projects/experiential/rendering/")
+        ? `/projects/experiential/rendering/${renderingProject.slug}`
+        : `/projects/rendering/${renderingProject.slug}`;
+
+      return cacheMeta({
+        title: renderingProject.seoTitle || renderingProject.title || DEFAULT_META.title,
+        description:
+          renderingProject.seoDescription ||
+          renderingProject.excerpt ||
+          DEFAULT_META.description,
+        image: imageUrls[0] || getDefaultShareImage(origin),
+        images: imageUrls,
+        canonical: `${origin}${canonicalPath}`,
+        type: "website",
+        publishedTime: renderingProject.publishedAt
+          ? new Date(renderingProject.publishedAt).toISOString()
+          : undefined,
+        modifiedTime: renderingProject.updatedAt
+          ? new Date(renderingProject.updatedAt).toISOString()
+          : undefined,
+      });
+    }
+  }
+
   if (decodedPath === "/projects/experiential") {
-    const experientialItems = await db.getProcessGalleryByCategory();
+    const experientialItems = getLocalExperientialProcessGallery();
     const socialImages = Array.from(
       new Set(
         experientialItems
@@ -499,6 +546,35 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
       canonical: `${origin}/projects/experiential`,
       type: "website",
     });
+  }
+
+  const experientialSampleMatch = decodedPath.match(
+    /^\/projects\/experiential\/(rendering|technical-drawing|live-events)\/([^/?#]+)\/?$/i
+  );
+  if (experientialSampleMatch) {
+    const category = experientialSampleMatch[1].toLowerCase() as
+      | "rendering"
+      | "technical-drawing"
+      | "live-events";
+    const sample = getLocalExperientialSampleBySlug(category, cleanSlug(experientialSampleMatch[2]));
+
+    if (sample) {
+      const previewImage = sample.imageUrl
+        ? absoluteUrl(origin, sample.imageUrl)
+        : sample.videoUrl
+          ? absoluteUrl(origin, `https://img.youtube.com/vi/${new URL(sample.videoUrl).searchParams.get("v") || sample.videoUrl.split("/").pop()}/hqdefault.jpg`)
+          : getDefaultShareImage(origin);
+
+      return cacheMeta({
+        title: `${sample.displayTitle} | ${sample.categoryLabel} | Brandon PT Davis`,
+        description:
+          sample.description ||
+          `${sample.categoryLabel} sample from Brandon PT Davis's experiential portfolio.`,
+        image: previewImage,
+        canonical: `${origin}/projects/experiential/${sample.category}/${sample.slug}`,
+        type: "website",
+      });
+    }
   }
 
   if (decodedPath === "/news") {

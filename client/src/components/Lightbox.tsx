@@ -58,10 +58,10 @@ export function Lightbox({ images, currentIndex, onClose, onNext, onPrev }: Ligh
       {/* Close button */}
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 z-10 p-3 rounded-full bg-background/80 hover:bg-background border-2 border-border transition-all hover:scale-110"
+        className="absolute right-5 top-5 z-10 text-white/56 transition-colors hover:text-white/88"
         aria-label="Close lightbox"
       >
-        <X className="h-6 w-6" />
+        <X className="h-7 w-7" strokeWidth={1.7} />
       </button>
 
       {/* Navigation arrows */}
@@ -71,10 +71,10 @@ export function Lightbox({ images, currentIndex, onClose, onNext, onPrev }: Ligh
             e.stopPropagation();
             onPrev();
           }}
-          className="absolute left-4 z-10 p-4 rounded-full bg-background/80 hover:bg-background border-2 border-border transition-all hover:scale-110"
+          className="absolute left-5 z-10 text-white/40 transition-colors hover:text-white/82"
           aria-label="Previous image"
         >
-          <ChevronLeft className="h-8 w-8" />
+          <ChevronLeft className="h-8 w-8" strokeWidth={1.6} />
         </button>
       )}
 
@@ -84,23 +84,23 @@ export function Lightbox({ images, currentIndex, onClose, onNext, onPrev }: Ligh
             e.stopPropagation();
             onNext();
           }}
-          className="absolute right-4 z-10 p-4 rounded-full bg-background/80 hover:bg-background border-2 border-border transition-all hover:scale-110"
+          className="absolute right-5 z-10 text-white/40 transition-colors hover:text-white/82"
           aria-label="Next image"
         >
-          <ChevronRight className="h-8 w-8" />
+          <ChevronRight className="h-8 w-8" strokeWidth={1.6} />
         </button>
       )}
 
       {/* Image counter */}
-      <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 px-6 py-3 rounded-full bg-background/80 backdrop-blur-sm border border-border">
-        <p className="text-sm font-semibold">
+      <div className="absolute left-1/2 top-5 z-10 -translate-x-1/2 border border-white/10 bg-black/55 px-5 py-2.5 backdrop-blur-sm">
+        <p className="text-sm font-medium tracking-[-0.02em] text-white/88">
           {currentIndex + 1} / {images.length}
         </p>
       </div>
 
       {/* Main image */}
       <div
-        className="relative w-[94vw] h-[82vh] max-w-[1400px] max-h-[82vh] grid place-items-center overflow-hidden"
+        className="relative grid h-[68vh] w-[78vw] max-h-[68vh] max-w-[1040px] place-items-center overflow-hidden px-6 py-4 md:px-8 md:py-6"
         onClick={(e) => e.stopPropagation()}
       >
         {currentSrc && !imageFailed ? (
@@ -108,7 +108,7 @@ export function Lightbox({ images, currentIndex, onClose, onNext, onPrev }: Ligh
             key={`lightbox-image-${currentIndex}`}
             src={currentSrc}
             alt={currentImage.altText || currentImage.caption || 'Gallery image'}
-            className="block max-w-full max-h-full w-auto h-auto object-contain rounded-lg mx-auto"
+            className="mx-auto block h-auto max-h-full max-w-full object-contain"
             onError={() => setImageFailed(true)}
           />
         ) : (
@@ -127,33 +127,36 @@ export function Lightbox({ images, currentIndex, onClose, onNext, onPrev }: Ligh
         )}
       </div>
 
-      {/* Thumbnail strip (optional, for future enhancement) */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 max-w-4xl overflow-x-auto px-4">
-        {images.map((img, idx) => (
-          <button
-            key={idx}
-            onClick={(e) => {
-              e.stopPropagation();
-              const diff = idx - currentIndex;
-              if (diff > 0) {
-                for (let i = 0; i < diff; i++) onNext();
-              } else if (diff < 0) {
-                for (let i = 0; i < Math.abs(diff); i++) onPrev();
-              }
-            }}
-            className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
-              idx === currentIndex 
-                ? 'border-foreground scale-110' 
-                : 'border-border opacity-50 hover:opacity-100'
-            }`}
-          >
-            <img
-              src={img.imageUrl || ''}
-              alt=""
-              className="w-full h-full object-cover"
-            />
-          </button>
-        ))}
+      {/* Thumbnail strip */}
+      <div className="absolute bottom-5 left-1/2 z-10 w-[min(36rem,calc(100vw-6rem))] -translate-x-1/2 overflow-hidden">
+        <div className="no-scrollbar flex items-center justify-center gap-2 overflow-x-auto px-4 py-1">
+          {images.map((img, idx) => (
+            <button
+              key={idx}
+              onClick={(e) => {
+                e.stopPropagation();
+                const diff = idx - currentIndex;
+                if (diff > 0) {
+                  for (let i = 0; i < diff; i++) onNext();
+                } else if (diff < 0) {
+                  for (let i = 0; i < Math.abs(diff); i++) onPrev();
+                }
+              }}
+              className={`h-14 w-14 flex-shrink-0 overflow-hidden border transition-colors ${
+                idx === currentIndex
+                  ? 'border-white/85'
+                  : 'border-white/12 hover:border-white/28'
+              }`}
+              aria-label={`View image ${idx + 1}`}
+            >
+              <img
+                src={img.imageUrl || ''}
+                alt=""
+                className="h-full w-full object-cover"
+              />
+            </button>
+          ))}
+        </div>
       </div>
     </div>,
     document.body

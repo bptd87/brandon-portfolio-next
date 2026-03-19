@@ -9,10 +9,10 @@ import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { trpc } from "@/lib/trpc";
 import {
-  ASSISTANT_SCENIC_DESIGN_PATH,
   VOYAGELA_ARTICLE_PATH,
   getLegacyCanonicalDestination,
 } from "@shared/publicContent";
+import { ASSISTANT_SCENIC_DESIGN_PATH } from "@shared/localAssistantScenic";
 
 export default function News() {
   return <NewsArchiveContent />;
