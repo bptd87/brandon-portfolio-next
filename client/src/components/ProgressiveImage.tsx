@@ -22,9 +22,9 @@ function applySupabaseTransformations(src: string, width?: number, blurred?: boo
   const pathAfterPublic = src.substring(publicIndex + '/storage/v1/object/public/'.length);
 
   if (blurred) {
-    // Blurred placeholder: tiny width with heavy blur for fast loading
-    // Use very small width for minimal file size
-    return `${baseUrl}/storage/v1/render/image/public/${pathAfterPublic}?width=20&quality=20`;
+    // Blurred placeholder: still lightweight, but not so compressed that
+    // pale drawings and white-background images blow out before the full image loads.
+    return `${baseUrl}/storage/v1/render/image/public/${pathAfterPublic}?width=48&quality=35`;
   } else {
     // For non-WebP images, apply responsive sizing
     const params = new URLSearchParams();
@@ -290,7 +290,7 @@ export function ProgressiveImage({
             absolute inset-0 w-full h-full
             ${objectFit === 'cover' ? 'object-cover' : 'object-contain'}
             ${smartPosition ? objectPosition : ''}
-            scale-105 blur-xl saturate-110
+            scale-[1.01] blur-md saturate-100
             transition-opacity duration-500 ease-out
             ${showSharpImage ? 'opacity-0' : 'opacity-100'}
             ${!shouldLoad ? 'animate-pulse' : ''}

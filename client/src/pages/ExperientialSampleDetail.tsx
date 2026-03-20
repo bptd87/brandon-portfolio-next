@@ -79,6 +79,28 @@ export default function ExperientialSampleDetail() {
     if (!sample) return [];
     return getLocalExperientialMediaItems(sample);
   }, [sample]);
+  const heroImage = useMemo(() => {
+    if (!sample) return null;
+    const fallbackAlt = sample.altText || sample.displayTitle;
+    if (sample.imageUrl) {
+      return {
+        imageUrl: sample.imageUrl,
+        altText: fallbackAlt,
+        caption: "",
+      };
+    }
+    return galleryImages[0] || null;
+  }, [galleryImages, sample]);
+  const detailGalleryImages = useMemo(() => {
+    if (!heroImage) return galleryImages;
+    return galleryImages.filter((image) => image.imageUrl !== heroImage.imageUrl);
+  }, [galleryImages, heroImage]);
+  const lightboxImages = useMemo(() => {
+    const ordered = [];
+    if (heroImage) ordered.push(heroImage);
+    detailGalleryImages.forEach((image) => ordered.push(image));
+    return ordered;
+  }, [detailGalleryImages, heroImage]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -214,7 +236,7 @@ export default function ExperientialSampleDetail() {
                   />
                 </div>
               </div>
-            ) : galleryImages[0]?.imageUrl ? (
+            ) : heroImage?.imageUrl ? (
               <button
                 type="button"
                 onClick={() => setLightboxIndex(0)}
@@ -226,8 +248,8 @@ export default function ExperientialSampleDetail() {
                   }`}
                 >
                   <img
-                    src={galleryImages[0].imageUrl}
-                    alt={galleryImages[0].altText}
+                    src={heroImage.imageUrl}
+                    alt={heroImage.altText}
                     className={categoryConfig.heroImageClass}
                   />
                 </div>
@@ -236,9 +258,9 @@ export default function ExperientialSampleDetail() {
           </div>
         </AnimatedSection>
 
-        {galleryImages.length > 1 ? (
+        {detailGalleryImages.length > 0 ? (
           <div className="grid grid-cols-2 gap-4 pt-6 md:grid-cols-3 lg:grid-cols-4">
-            {galleryImages.slice(1).map((image, index) => (
+            {detailGalleryImages.map((image, index) => (
               <AnimatedSection key={image.imageUrl}>
                 <button
                   type="button"
@@ -259,12 +281,14 @@ export default function ExperientialSampleDetail() {
         ) : null}
       </div>
 
-      {lightboxIndex !== null && galleryImages.length > 0 ? (
+      {lightboxIndex !== null && lightboxImages.length > 0 ? (
         <Lightbox
-          images={galleryImages}
+          images={lightboxImages}
           currentIndex={lightboxIndex}
           onClose={() => setLightboxIndex(null)}
-          onNext={() => setLightboxIndex((current) => (current === null ? 0 : Math.min(current + 1, galleryImages.length - 1)))}
+          onNext={() =>
+            setLightboxIndex((current) => (current === null ? 0 : Math.min(current + 1, lightboxImages.length - 1)))
+          }
           onPrev={() => setLightboxIndex((current) => (current === null ? 0 : Math.max(current - 1, 0)))}
         />
       ) : null}

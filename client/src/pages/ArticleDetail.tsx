@@ -7,7 +7,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { proxyImageUrl } from "@/lib/imageProxy";
 import { Sparkles, Copy, Check, ChevronLeft, ChevronRight, Link as LinkIcon, Play, Pause } from "lucide-react";
 import { Link, useParams } from "wouter";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
@@ -28,6 +28,14 @@ const normalizeQuoteText = (text: string): string => {
   return decoded.replace(/^["“”']+|["“”']+$/g, '').trim();
 };
 
+const getArticleMediaUrl = (url: string): string => {
+  if (!url) return url;
+  if (url.includes("supabase.co/storage/v1/object/public/")) {
+    return url;
+  }
+  return proxyImageUrl(url, 1920);
+};
+
 // Process HTML content to proxy external images
 const processHTMLImages = (html: string): string => {
   if (!html) return html;
@@ -42,7 +50,7 @@ const processHTMLImages = (html: string): string => {
     const srcset = img.getAttribute('srcset') || img.getAttribute('data-srcset');
 
     if (src) {
-      img.setAttribute('src', proxyImageUrl(src, 1920));
+      img.setAttribute('src', getArticleMediaUrl(src));
     } else if (srcset) {
       // Safari-safe fallback: use first candidate URL as src if src is missing.
       const firstCandidate = srcset
@@ -50,7 +58,7 @@ const processHTMLImages = (html: string): string => {
         .map((entry) => entry.trim().split(/\s+/)[0])
         .find(Boolean);
       if (firstCandidate) {
-        img.setAttribute('src', proxyImageUrl(firstCandidate, 1920));
+        img.setAttribute('src', getArticleMediaUrl(firstCandidate));
       }
     }
 
@@ -64,6 +72,98 @@ const processHTMLImages = (html: string): string => {
 
 export default function ArticleDetail() {
   return <ArticleDetailContent />;
+}
+
+function ArticleInlineVideo({ url, caption }: { url: string; caption?: string }) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const frameRef = useRef<HTMLDivElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    const frame = frameRef.current;
+    const video = videoRef.current;
+    if (!frame || !video) return;
+
+    video.muted = true;
+    video.playsInline = true;
+    video.loop = true;
+
+    const observer = new IntersectionObserver(
+      async ([entry]) => {
+        if (!videoRef.current) return;
+
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.55) {
+          try {
+            await videoRef.current.play();
+            setIsPlaying(true);
+          } catch {
+            setIsPlaying(false);
+          }
+          return;
+        }
+
+        videoRef.current.pause();
+        setIsPlaying(false);
+      },
+      {
+        threshold: [0, 0.25, 0.55, 0.8],
+      }
+    );
+
+    observer.observe(frame);
+    return () => observer.disconnect();
+  }, []);
+
+  const handleToggle = async () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      try {
+        await video.play();
+        setIsPlaying(true);
+      } catch {
+        setIsPlaying(false);
+      }
+      return;
+    }
+
+    video.pause();
+    setIsPlaying(false);
+  };
+
+  return (
+    <figure className="my-12">
+      <div
+        ref={frameRef}
+        className="group relative overflow-hidden rounded-[1rem] bg-black shadow-2xl"
+      >
+        <video
+          ref={videoRef}
+          className="h-auto w-full"
+          playsInline
+          muted
+          loop
+          preload="metadata"
+        >
+          <source src={url} type="video/mp4" />
+        </video>
+        <button
+          type="button"
+          aria-label={isPlaying ? "Pause video" : "Play video"}
+          onClick={handleToggle}
+          className="absolute bottom-4 left-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/14 bg-black/40 text-white/80 opacity-0 backdrop-blur transition-all duration-200 group-hover:opacity-100 focus-visible:opacity-100 hover:border-white/24 hover:text-white"
+        >
+          {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="ml-0.5 h-4 w-4" />}
+        </button>
+      </div>
+      {caption && (
+        <figcaption className="mt-4 text-center text-[0.78rem] font-medium uppercase tracking-[0.12em] text-foreground/42">
+          {decodeHTMLEntities(caption)}
+        </figcaption>
+      )}
+    </figure>
+  );
 }
 
 function ArticleDetailContent() {
@@ -83,11 +183,29 @@ function ArticleDetailContent() {
   const scrollGallery = (sectionIndex: number, direction: "prev" | "next") => {
     const container = galleryRefs.current[sectionIndex];
     if (!container) return;
-    const firstFigure = container.querySelector("figure");
-    const figureWidth = firstFigure instanceof HTMLElement ? firstFigure.offsetWidth : Math.round(container.clientWidth * 0.5);
-    const gap = 24;
-    const offset = (figureWidth + gap) * (direction === "next" ? 1 : -1);
-    container.scrollBy({ left: offset, behavior: "smooth" });
+    const figures = Array.from(container.querySelectorAll("figure")) as HTMLElement[];
+    if (!figures.length) return;
+
+    const currentScroll = container.scrollLeft;
+    let currentIndex = 0;
+
+    for (let i = 0; i < figures.length; i += 1) {
+      if (figures[i].offsetLeft <= currentScroll + 8) {
+        currentIndex = i;
+      } else {
+        break;
+      }
+    }
+
+    const targetIndex =
+      direction === "next"
+        ? Math.min(figures.length - 1, currentIndex === 0 ? 2 : currentIndex + 2)
+        : Math.max(0, currentIndex <= 2 ? 0 : currentIndex - 2);
+
+    container.scrollTo({
+      left: figures[targetIndex].offsetLeft,
+      behavior: "smooth",
+    });
   };
 
   const getHeadingId = (text: string, index: number) => {
@@ -303,7 +421,7 @@ function ArticleDetailContent() {
     if (section.type === "image" && section.url) {
       articleImageSlides.push({
         key: `image-${sectionIndex}`,
-        src: proxyImageUrl(section.url, 1920),
+        src: getArticleMediaUrl(section.url),
         alt: section.alt || section.caption || "",
       });
     }
@@ -312,7 +430,7 @@ function ArticleDetailContent() {
         if (!img?.url) return;
         articleImageSlides.push({
           key: `gallery-${sectionIndex}-${imgIndex}`,
-          src: proxyImageUrl(img.url, 1920),
+          src: getArticleMediaUrl(img.url),
           alt: img.alt || img.caption || "",
         });
       });
@@ -502,7 +620,7 @@ function ArticleDetailContent() {
                   [&_ul]:list-disc [&_ol]:list-decimal [&_li]:list-item [&_li]:ml-0
                   prose-img:rounded-xl prose-img:my-12
                   prose-figure:my-12
-                  prose-figcaption:text-sm prose-figcaption:text-foreground/48 prose-figcaption:text-center prose-figcaption:mt-4
+                  prose-figcaption:text-[0.78rem] prose-figcaption:tracking-[0.12em] prose-figcaption:uppercase prose-figcaption:text-foreground/42 prose-figcaption:text-center prose-figcaption:mt-4
                   [&_iframe]:mx-auto [&_iframe]:w-full [&_iframe]:max-w-[58ch] [&_iframe]:my-12 [&_iframe]:rounded-xl [&_iframe]:aspect-[16/9] [&_iframe]:h-auto
                   [&_video]:mx-auto [&_video]:w-full [&_video]:max-w-[58ch] [&_video]:my-12 [&_video]:rounded-xl [&_video]:aspect-[16/9]
                   [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased]"
@@ -526,13 +644,20 @@ function ArticleDetailContent() {
 
                       case 'heading':
                         const level = section.level || 2;
-                        const headingClassName =
-                          level === 2
-                            ? "mt-20 mb-6 font-sans text-[clamp(2rem,2.75vw,2.8rem)] font-medium leading-[0.96] tracking-[-0.055em] text-foreground"
-                            : level === 3
-                              ? "mt-14 mb-4 font-sans text-[clamp(1.5rem,2vw,1.95rem)] font-medium leading-[1.02] tracking-[-0.045em] text-foreground/98"
-                              : "mt-10 mb-3 font-sans text-[0.95rem] font-semibold uppercase tracking-[0.18em] text-foreground/48";
                         const headingText = decodeHTMLEntities(section.text || section.content || '');
+                        const isGhibliShowcaseHeading =
+                          article.slug === "studio-ghibli-inspired-immersive-dining-experience" &&
+                          level === 2 &&
+                          headingText.trim().toLowerCase() === "visual showcase";
+                        const numberedHeadingMatch = level === 3 ? headingText.match(/^(\d+)\.\s+(.+)$/) : null;
+                        const headingClassName =
+                          isGhibliShowcaseHeading
+                            ? "mt-28 mb-12 text-center font-sans text-[clamp(3rem,4vw,4.6rem)] font-medium leading-[0.92] tracking-[-0.075em] text-foreground"
+                            : level === 2
+                            ? "mt-24 mb-7 font-sans text-[clamp(2.3rem,3vw,3.2rem)] font-medium leading-[0.93] tracking-[-0.065em] text-foreground"
+                            : level === 3
+                              ? "mt-16 mb-5 font-sans text-[clamp(1.75rem,2.2vw,2.25rem)] font-medium leading-[0.98] tracking-[-0.055em] text-foreground"
+                              : "mt-10 mb-3 font-sans text-[0.95rem] font-semibold uppercase tracking-[0.18em] text-foreground/48";
 
                         const headingId = level === 2
                           ? getHeadingId(headingText, h2Index)
@@ -545,6 +670,23 @@ function ArticleDetailContent() {
                         if (level === 2) {
                           return <h2 key={index} id={headingId} className={headingClassName}>{headingText}</h2>;
                         } else if (level === 3) {
+                          if (numberedHeadingMatch) {
+                            return (
+                              <div key={index} className="mt-18 mb-7 border-t border-white/10 pt-6">
+                                <div className="flex items-end gap-4 md:gap-5">
+                                  <span className="shrink-0 font-sans text-[clamp(1.55rem,2.2vw,2rem)] font-medium leading-[0.92] tracking-[-0.05em] text-foreground/34">
+                                  {numberedHeadingMatch[1]}
+                                  </span>
+                                  <h3
+                                    id={headingId}
+                                    className="font-sans text-[clamp(2rem,2.35vw,2.5rem)] font-medium leading-[0.94] tracking-[-0.06em] text-foreground"
+                                  >
+                                    {numberedHeadingMatch[2]}
+                                  </h3>
+                                </div>
+                              </div>
+                            );
+                          }
                           return <h3 key={index} id={headingId} className={headingClassName}>{headingText}</h3>;
                         } else if (level === 4) {
                           return <h4 key={index} id={headingId} className={headingClassName}>{headingText}</h4>;
@@ -579,25 +721,102 @@ function ArticleDetailContent() {
                         );
 
                       case 'image':
+                        if (section.display === 'artwork') {
+                          return (
+                            <figure
+                              key={index}
+                              className="relative left-1/2 my-12 w-screen max-w-[56rem] -translate-x-1/2 px-5 sm:px-6"
+                            >
+                              <div className="overflow-hidden rounded-[0.8rem]">
+                                <img
+                                  src={getArticleMediaUrl(section.url)}
+                                  alt={section.alt || section.caption || ''}
+                                  loading="lazy"
+                                  decoding="async"
+                                  className="h-auto w-full cursor-pointer transition-opacity hover:opacity-90"
+                                  onClick={() => openArticleLightboxAt(`image-${index}`)}
+                                />
+                              </div>
+                              {(section.caption || section.alt) && (
+                                <figcaption className="mx-auto mt-4 max-w-[38rem] text-[0.78rem] font-medium uppercase tracking-[0.12em] leading-5 text-foreground/42">
+                                  {decodeHTMLEntities(section.caption || section.alt || '')}
+                                </figcaption>
+                              )}
+                            </figure>
+                          );
+                        }
+
+                        if (section.display === 'infographic') {
+                          return (
+                            <figure
+                              key={index}
+                              className="mx-auto my-8 max-w-[46rem]"
+                            >
+                              <img
+                                src={getArticleMediaUrl(section.url)}
+                                alt={section.alt || section.caption || ''}
+                                loading="lazy"
+                                decoding="async"
+                                className="h-auto w-full cursor-pointer transition-opacity hover:opacity-95"
+                                onClick={() => openArticleLightboxAt(`image-${index}`)}
+                              />
+                              {(section.caption || section.alt) && (
+                                <figcaption className="mx-auto mt-3 max-w-[38rem] text-[0.78rem] font-medium uppercase tracking-[0.12em] leading-5 text-foreground/42">
+                                  {decodeHTMLEntities(section.caption || section.alt || '')}
+                                </figcaption>
+                              )}
+                            </figure>
+                          );
+                        }
+
                         return (
                           <figure key={index} className="rounded-xl overflow-hidden">
-                            <ProgressiveImage
-                              src={proxyImageUrl(section.url, 1920)}
+                            <img
+                              src={getArticleMediaUrl(section.url)}
                               alt={section.alt || section.caption || ''}
                               loading="lazy"
-                              objectFit="contain"
-                              className="cursor-pointer hover:opacity-90 transition-opacity"
+                              decoding="async"
+                              className="h-auto w-full cursor-pointer transition-opacity hover:opacity-90"
                               onClick={() => openArticleLightboxAt(`image-${index}`)}
                             />
-                            {section.caption && (
+                            {(section.caption || section.alt) && (
                               <figcaption>
-                                {decodeHTMLEntities(section.caption)}
+                                {decodeHTMLEntities(section.caption || section.alt || '')}
                               </figcaption>
                             )}
                           </figure>
                         );
 
+                      case 'image_placeholder':
+                        return (
+                          <figure
+                            key={index}
+                            className="my-10 rounded-[0.8rem] border border-dashed border-white/16 bg-white/[0.02] p-6 md:p-8"
+                          >
+                            <div className="aspect-[16/9] rounded-[0.65rem] border border-white/10 bg-black/20" />
+                            <figcaption className="mt-5 space-y-2">
+                              <p className="text-[0.82rem] font-semibold uppercase tracking-[0.18em] text-foreground/42">
+                                Image Placeholder
+                              </p>
+                              <p className="font-sans text-[1.08rem] font-medium tracking-[-0.03em] text-foreground">
+                                {decodeHTMLEntities(section.title || 'Planned image')}
+                              </p>
+                              {section.note && (
+                                <p className="max-w-[46rem] text-[0.98rem] leading-7 text-foreground/62">
+                                  {decodeHTMLEntities(section.note)}
+                                </p>
+                              )}
+                            </figcaption>
+                          </figure>
+                        );
+
                       case 'video':
+                        const videoUrl = section.url || '';
+
+                        if (videoUrl.toLowerCase().endsWith('.mp4')) {
+                          return <ArticleInlineVideo key={index} url={videoUrl} caption={section.caption} />;
+                        }
+
                         // Extract YouTube video ID from URL
                         const getYouTubeId = (url: string) => {
                           const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
@@ -605,7 +824,7 @@ function ArticleDetailContent() {
                           return (match && match[2].length === 11) ? match[2] : null;
                         };
 
-                        const videoId = getYouTubeId(section.url || '');
+                        const videoId = getYouTubeId(videoUrl);
 
                         return (
                           <figure key={index} className="my-12">
@@ -620,7 +839,7 @@ function ArticleDetailContent() {
                               />
                             </div>
                             {section.caption && (
-                              <figcaption className="text-sm text-muted-foreground mt-4 text-center">
+                              <figcaption className="mt-4 text-center text-[0.78rem] font-medium uppercase tracking-[0.12em] text-foreground/42">
                                 {decodeHTMLEntities(section.caption)}
                               </figcaption>
                             )}
@@ -629,30 +848,56 @@ function ArticleDetailContent() {
 
                       case 'gallery':
                         const galleryImages = section.images || [];
-                        const hasGalleryOverflow = galleryImages.length > 2;
                         return (
                           <section key={index} className="my-16 relative left-1/2 w-screen max-w-[84rem] -translate-x-1/2 px-14 sm:px-18 lg:px-24">
-                            <div className="overflow-hidden">
+                            <div className="mx-auto flex max-w-[72rem] items-center justify-center gap-2">
+                              <div className="hidden items-center gap-2 md:flex">
+                                <button
+                                  type="button"
+                                  aria-label="Previous gallery images"
+                                  onClick={() => scrollGallery(index, "prev")}
+                                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/45 text-foreground/65 transition-colors hover:border-border hover:text-foreground"
+                                >
+                                  <ChevronLeft className="h-4 w-4" />
+                                </button>
+                                <button
+                                  type="button"
+                                  aria-label="Next gallery images"
+                                  onClick={() => scrollGallery(index, "next")}
+                                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/45 text-foreground/65 transition-colors hover:border-border hover:text-foreground"
+                                >
+                                  <ChevronRight className="h-4 w-4" />
+                                </button>
+                              </div>
+                            </div>
+                            <div className="mt-10 overflow-hidden">
                               <div
                                 ref={(el) => {
                                   galleryRefs.current[index] = el;
                                 }}
-                                className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory md:gap-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                                className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory md:gap-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
                               >
                                 {galleryImages.map((img: any, imgIndex: number) => (
                                   <figure
                                     key={imgIndex}
-                                    className="flex-none snap-start w-[58vw] sm:w-[46vw] md:w-[calc((100%-2rem)/2)]"
+                                    className={`flex-none snap-start ${
+                                      imgIndex === 0
+                                        ? "w-[58vw] sm:w-[47vw] md:w-[calc((100%-1.5rem)*0.54)]"
+                                        : imgIndex === 1
+                                          ? "w-[50vw] sm:w-[39vw] md:w-[calc((100%-1.5rem)*0.46)]"
+                                          : "w-[50vw] sm:w-[39vw] md:w-[calc((100%-1.5rem)/2)]"
+                                    }`}
                                   >
-                                    <ProgressiveImage
-                                      src={proxyImageUrl(img.url, 1920)}
+                                    <img
+                                      src={getArticleMediaUrl(img.url)}
                                       alt={img.alt || img.caption || ''}
                                       loading="lazy"
-                                      className="h-auto w-full cursor-pointer rounded-xl hover:opacity-90 transition-opacity"
+                                      decoding="async"
+                                      className="h-auto w-full cursor-pointer rounded-xl transition-opacity hover:opacity-90"
                                       onClick={() => openArticleLightboxAt(`gallery-${index}-${imgIndex}`)}
                                     />
                                     {img.caption && (
-                                      <figcaption className="mt-4 max-w-[34rem] text-sm leading-6 text-foreground/58">
+                                      <figcaption className="mt-4 max-w-[34rem] text-[0.86rem] leading-6 tracking-[-0.01em] text-foreground/56">
                                         {decodeHTMLEntities(img.caption)}
                                       </figcaption>
                                     )}
@@ -660,22 +905,6 @@ function ArticleDetailContent() {
                                 ))}
                               </div>
                             </div>
-                            <button
-                              type="button"
-                              aria-label="Previous gallery images"
-                              onClick={() => scrollGallery(index, "prev")}
-                              className="hidden md:flex items-center justify-center absolute left-5 top-[40%] -translate-y-1/2 h-10 w-10 text-white/78 transition-colors hover:text-white"
-                            >
-                              <ChevronLeft className="h-5 w-5" />
-                            </button>
-                            <button
-                              type="button"
-                              aria-label="Next gallery images"
-                              onClick={() => scrollGallery(index, "next")}
-                              className="hidden md:flex items-center justify-center absolute right-5 top-[40%] -translate-y-1/2 h-10 w-10 text-white/78 transition-colors hover:text-white"
-                            >
-                              <ChevronRight className="h-5 w-5" />
-                            </button>
                           </section>
                         );
 
@@ -713,16 +942,6 @@ function ArticleDetailContent() {
                       case 'faq':
                         return (
                           <section key={index} className="my-20 border-t border-white/12 pt-10">
-                            <div className="mb-8 flex items-end justify-between gap-6">
-                              <div>
-                                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
-                                  FAQ
-                                </p>
-                                <h2 className="mt-3 text-[1.65rem] font-sans font-normal tracking-[-0.04em] text-foreground">
-                                  Frequently Asked Questions
-                                </h2>
-                              </div>
-                            </div>
                             <Accordion type="single" collapsible className="space-y-3">
                               {section.items?.map((item: any, faqIndex: number) => (
                                 <AccordionItem

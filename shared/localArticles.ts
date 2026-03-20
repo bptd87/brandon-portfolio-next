@@ -107,9 +107,383 @@ const articleFieldOverridesBySlug: Record<string, Partial<LocalArticle>> = {
     seoDescription:
       "A scenic design essay about critique, revision, URTAs, and learning to think like a designer under pressure.",
   },
+  "what-makes-a-good-scenic-design-rendering": {
+    publishedAt: "2026-03-13",
+  },
 };
 
 const contentOverridesBySlug: Record<string, LocalArticle["content"]> = {
+  "what-makes-a-good-scenic-design-rendering": [
+    {
+      type: "paragraph",
+      text: "A strong scenic rendering is not judged only by beauty. It succeeds when directors, shops, and collaborators can read the image quickly and make better decisions because the visual hierarchy is clear.",
+    },
+    {
+      type: "paragraph",
+      text: "Before we get into lighting styles or textures, let’s talk about the software that supports this work: Vectorworks.",
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "Vectorworks: A Tool for Storytelling and Precision",
+    },
+    {
+      type: "paragraph",
+      text: "Vectorworks serves a dual purpose: it's a drafting/documentation tool and a 3D rendering engine. Its strength lies in accuracy—you can build from the plan up with real-world scale and dimensional clarity. That precision makes it ideal for scenic design, where collaboration with technical directors and production teams is constant.",
+    },
+    {
+      type: "paragraph",
+      text: "Unlike mesh-heavy software, Vectorworks models stay clean, geometric, and readable, especially for beginners. While it isn’t optimized for organic modeling, it creates a solid foundation for scenic work that needs to communicate both art and feasibility.",
+    },
+    {
+      type: "paragraph",
+      text: "I use Vectorworks because it keeps the technical side as strong as the artistic side—and that balance matters.",
+    },
+    {
+      type: "image",
+      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/IkuGmbPwGhzuoiAl-compressed.webp",
+      alt: "Vectorworks rendering in progress, showing layered viewports and material textures in a scenic design project.",
+      caption: "Vectorworks rendering in progress. Drafting and visualization happen in the same space.",
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "Lessons from Fine Art: Rendering as Visual Storytelling",
+    },
+    {
+      type: "paragraph",
+      text: "To teach what makes a rendering successful, I often turn not to software—but to painting. In a recent lecture, I led students through examples by Caravaggio, De La Tour, Rembrandt, and Hopper. These artists didn’t just paint spaces. They crafted moments.",
+    },
+    {
+      type: "paragraph",
+      text: "Their tools were oil and canvas. Ours are digital. But the goals are identical: guide the eye, evoke emotion, and give clarity.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Georges de La Tour – The Penitent Magdalene",
+    },
+    {
+      type: "paragraph",
+      text: "Georges de La Tour was a seventeenth-century French Baroque painter known for quiet interiors lit by a single candle or lamp. Unlike painters who built drama through movement, La Tour often built it through stillness. The result is contemplative rather than loud.",
+    },
+    {
+      type: "paragraph",
+      text: "That matters for scenic rendering because many designers assume impact has to come from complexity. La Tour shows the opposite. A restrained image can feel emotionally rich if the light source is specific and the atmosphere is controlled.",
+    },
+    {
+      type: "image",
+      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/beiQUvBJTRYzwFmL-compressed.webp",
+      alt: "Georges de La Tour’s The Penitent Magdalene, lit by a single candle source in a dark room.",
+      caption: "Georges de La Tour, The Penitent Magdalene. A single controlled light source creates both atmosphere and clarity.",
+    },
+    {
+      type: "list",
+      listType: "bullet",
+      items: [
+        "Focus: Atmospheric Lighting",
+        "Takeaway: A single light source creates emotional tone and spatial clarity.",
+        "Rendering Insight: Less is often more. Lighting should support story, not just visibility."
+      ],
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Caravaggio – The Calling of Saint Matthew",
+    },
+    {
+      type: "paragraph",
+      text: "Caravaggio worked in Rome at the turn of the seventeenth century, and his paintings are often taught through the lens of chiaroscuro: the use of intense contrast between light and dark. But what makes his work useful for scenic designers is not just contrast. It is staging.",
+    },
+    {
+      type: "paragraph",
+      text: "His figures feel arranged with purpose, as if the painting already understands blocking, cueing, and audience focus. In a rendering, that kind of compositional decisiveness helps an image communicate before anyone reads the design notes.",
+    },
+    {
+      type: "image",
+      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/cWACyunzaZoYPAJr-compressed.webp",
+      alt: "Caravaggio’s The Calling of Saint Matthew, using dramatic directional light and diagonal composition.",
+      caption: "Caravaggio, The Calling of Saint Matthew. Light direction and composition tell the story before a viewer reads the scene.",
+    },
+    {
+      type: "list",
+      listType: "bullet",
+      items: [
+        "Focus: Focal Point & Composition",
+        "Takeaway: Diagonals, light direction, and body placement tell the whole story.",
+        "Rendering Insight: Stage your scene. Guide the eye intentionally."
+      ],
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Rembrandt – The Night Watch",
+    },
+    {
+      type: "paragraph",
+      text: "Rembrandt’s The Night Watch is often discussed as a group portrait, but it behaves more like a lesson in hierarchy. Not every figure is given the same emphasis. Light, gesture, and placement determine who matters first and who supports the composition from the edges.",
+    },
+    {
+      type: "paragraph",
+      text: "That principle is essential in rendering. Scenic images often fail when they try to describe everything evenly. Rembrandt reminds us that clarity comes from choosing what deserves attention and allowing the rest of the world to recede.",
+    },
+    {
+      type: "image",
+      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/eUXnBpVeHXYLiqCY-compressed.webp",
+      alt: "Rembrandt’s The Night Watch, demonstrating layered depth and selective emphasis through light.",
+      caption: "Rembrandt, The Night Watch. Hierarchy comes from where the light concentrates and where it recedes.",
+    },
+    {
+      type: "list",
+      listType: "bullet",
+      items: [
+        "Focus: Visual Hierarchy",
+        "Takeaway: Use light to highlight important figures, and shadow to let others recede.",
+        "Rendering Insight: Complex spaces still need clarity. Prioritize depth."
+      ],
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Edward Hopper – Nighthawks",
+    },
+    {
+      type: "paragraph",
+      text: "Edward Hopper is a twentieth-century American painter whose work is often associated with urban loneliness, distance, and psychological atmosphere. In Nighthawks, the architecture does as much emotional work as the figures. Glass, light, and empty street space frame the human isolation inside the diner.",
+    },
+    {
+      type: "paragraph",
+      text: "For scenic rendering, Hopper is a useful reminder that mood does not have to come from spectacle. It can come from spacing, framing, and what is withheld. Sometimes the most powerful part of an image is the world implied just outside it.",
+    },
+    {
+      type: "image",
+      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/HxxVtRIHYkhsdkAA-compressed.webp",
+      alt: "Edward Hopper’s Nighthawks, showing isolated figures in a diner framed by architecture and negative space.",
+      caption: "Edward Hopper, Nighthawks. Mood is carried by silence, spacing, and the world implied just beyond the frame.",
+    },
+    {
+      type: "list",
+      listType: "bullet",
+      items: [
+        "Focus: Architectural Framing & Mood",
+        "Takeaway: Emotion comes from silence, spacing, and negative space.",
+        "Rendering Insight: What’s outside the rendering matters too. Suggest a world beyond the walls."
+      ],
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "The Core Elements of a Good Scenic Rendering",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "1. Story Comes First",
+    },
+    {
+      type: "paragraph",
+      text: "A rendering without story is just a diagram. Before it sells a space, it should feel like a moment. Whether it's tension, warmth, anticipation, or emptiness, your rendering should communicate something even if the viewer doesn’t know the play, script, or event yet.",
+    },
+    {
+      type: "paragraph",
+      text: "If your image doesn’t evoke an emotional cue, then no amount of detail will matter.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "2. Human Figures",
+    },
+    {
+      type: "paragraph",
+      text: "People seek connection with people.",
+    },
+    {
+      type: "paragraph",
+      text: "We are hardwired to seek out other people. That’s why we look at faces in crowds, pause at silhouettes, or follow the gesture of a figure in an image.",
+    },
+    {
+      type: "paragraph",
+      text: "In scenic rendering, figures aren’t just placeholders—they’re emotional touchstones. They let the viewer place themselves in the world. They scale the space, yes—but more importantly, they activate it. A single figure looking out a window can do more storytelling than any object on a shelf.",
+    },
+    {
+      type: "paragraph",
+      text: "This is what makes a space feel inhabited, even in stillness.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "3. Composition Directs the Eye",
+    },
+    {
+      type: "paragraph",
+      text: "Just like a director blocks a scene, the designer blocks a frame. Where the eye lands, where it travels next—those are choices.",
+    },
+    {
+      type: "paragraph",
+      text: "A strong composition tells the viewer how to look at the world you're creating. It's rhythm, framing, and spatial relationships. Composition isn’t a background element. It’s an invisible script, guiding attention, revealing story, and holding emotion in place.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "4. Lighting is the Invisible Narrator",
+    },
+    {
+      type: "paragraph",
+      text: "Light is the design element we feel before we process. It tells us time of day, source, temperature—and more importantly, it tells us how to feel about what we’re seeing.",
+    },
+    {
+      type: "paragraph",
+      text: "Lighting creates depth, defines form, and focuses attention. A shaft of light can suggest revelation. A shadow can imply danger.",
+    },
+    {
+      type: "paragraph",
+      text: "Think of lighting as scenic storytelling in motion, frozen in time.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "5. Color Communicates Instantly",
+    },
+    {
+      type: "paragraph",
+      text: "Before we read space, we read tone. Warm tones imply safety, nostalgia, or intimacy. Cool tones may suggest isolation, control, or modernity. Highly saturated colors feel heightened, theatrical. Muted colors can suggest realism or restraint.",
+    },
+    {
+      type: "paragraph",
+      text: "Your palette does more than decorate—it sets expectations. It’s emotional shorthand. Use it to reinforce genre, story, and atmosphere, not just aesthetics.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "6. Focal Points = Visual Priorities",
+    },
+    {
+      type: "paragraph",
+      text: "The eye needs a place to land. And once it lands, it needs a reason to stay.",
+    },
+    {
+      type: "paragraph",
+      text: "In a scenic rendering, focal points aren’t just about clarity—they’re about intention. Whether it’s a figure under a pool of light, a glowing portal, or a single object in an empty room, your focal point should be where the story concentrates.",
+    },
+    {
+      type: "paragraph",
+      text: "Every scenic image should have visual hierarchy. If everything is emphasized, nothing is understood.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "7. Atmosphere Breathes Life",
+    },
+    {
+      type: "paragraph",
+      text: "Atmosphere is what separates a digital model from a lived-in world. It's not just fog or glow—it's space between things. It's the distance between figure and wall, the bounce of light off a surface, the hint of air in the room.",
+    },
+    {
+      type: "paragraph",
+      text: "Atmosphere tells us the world has depth, weight, and movement, even if no one is speaking or walking through it. It gives the image breath.",
+    },
+    {
+      type: "image",
+      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/kritdqpcCKGLmgqC-compressed.webp",
+      alt: "Rendering for Tomás and the Library Lady with layered shelves, warm light, and spatial depth.",
+      caption: "Tomás and the Library Lady. Layered depth, warm directional light, and atmosphere combine into a complete scenic image.",
+    },
+    {
+      type: "paragraph",
+      text: "Taken together, these principles are not a checklist so much as a way of seeing. A successful scenic rendering does not simply document a set. It organizes attention, creates emotional temperature, and helps other people understand the world of the production before it is built.",
+    },
+    {
+      type: "paragraph",
+      text: "That is why I return to the rendering for Tomás and the Library Lady. It is not successful because it is detailed for its own sake. It works because story, light, composition, hierarchy, color, and atmosphere all support one another in a single image. The rendering invites the viewer into the world and tells them how to feel once they arrive.",
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "FAQ: Scenic Rendering & Vectorworks",
+    },
+    {
+      type: "faq",
+      items: [
+        {
+          question: "What software is best for scenic rendering?",
+          answer: "The best software depends on your goals and your workflow. Vectorworks is a strong option for scenic design because it supports both drafting/documentation and rendering in the same environment, and it stays precise and readable for collaboration with production teams."
+        },
+        {
+          question: "What’s the most important part of a rendering?",
+          answer: "Story. A rendering should communicate a moment—tone, emotion, and intention—before it communicates detail. If the image doesn’t evoke an emotional cue, no amount of polish will matter."
+        },
+        {
+          question: "Do you always add people to your renderings?",
+          answer: "Not always, but I often do when the rendering benefits from scale and emotional activation. Figures help viewers place themselves in the world and can communicate story through gesture, placement, and focus."
+        },
+        {
+          question: "Can Vectorworks produce realistic renderings?",
+          answer: "Yes—especially when you leverage strong composition, lighting choices, material control, and atmosphere. Vectorworks also provides a clean geometric foundation that supports clarity and feasibility, which is central to scenic work."
+        },
+        {
+          question: "Is it okay to leave things implied?",
+          answer: "Yes. A good rendering isn’t trying to show everything—it’s trying to communicate what matters most. Suggestion and restraint can strengthen mood and focus, especially when the goal is storytelling rather than inventory."
+        }
+      ],
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "Final Thoughts",
+    },
+    {
+      type: "paragraph",
+      text: "Scenic rendering is about more than polish—it’s about precision, composition, and emotional weight. A good rendering isn’t trying to show everything. It’s trying to communicate what matters most.",
+    },
+    {
+      type: "paragraph",
+      text: "If you’d like to see how these ideas translate into practice, visit the Rendering & Visualization page to explore examples from past projects.",
+    },
+    {
+      type: "paragraph",
+      text: "In the next post, I’ll break down how camera angles and field of view inside Vectorworks can shift the storytelling of your renderings—without adding complexity.",
+    },
+    {
+      type: "gallery",
+      images: [
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/story%20first.webp",
+          alt: "Infographic illustrating story-first priorities in scenic rendering.",
+          caption: "Story comes first.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/Human%20Figure.webp",
+          alt: "Infographic showing how human figures establish scale and emotional connection in scenic rendering.",
+          caption: "Human figures.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/Composition%20Directs%20the%20Eye_.webp",
+          alt: "Infographic about composition and visual direction in scenic rendering.",
+          caption: "Composition directs the eye.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/Lighting%20is%20the%20Invisible%20Narrator_.webp",
+          alt: "Infographic showing how lighting creates focus, tone, and dramatic meaning in scenic rendering.",
+          caption: "Lighting is the invisible narrator.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/%20Color%20Communicates%20Instantly.webp",
+          alt: "Infographic about using color to establish emotional register and genre in scenic rendering.",
+          caption: "Color communicates instantly.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/Focal%20Points%20%20Visual%20Priorities.webp",
+          alt: "Infographic explaining focal points and visual priorities in scenic rendering.",
+          caption: "Focal points and visual priorities.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/Atmosphere%20Breathes%20Life.webp",
+          alt: "Infographic about atmosphere, depth, and environmental mood in scenic rendering.",
+          caption: "Atmosphere breathes life.",
+        },
+      ],
+    },
+  ],
   "youre-wasting-my-time-a-scenic-design-lesson-in-growth-and-revision": [
     {
       type: "paragraph",
@@ -347,6 +721,999 @@ const voyageLaArticle: LocalArticle = {
   ],
 };
 
+const visualLanguageArticle: LocalArticle = {
+  id: 100004,
+  slug: "the-visual-language-of-scenic-design",
+  title: "The Visual Language of Scenic Design",
+  excerpt:
+    "How the elements and principles of design shape live performance before an audience understands the story intellectually.",
+  coverImageUrl:
+    "/assets/articles/visual-language/cover.png",
+  coverImageAlt:
+    "Abstract scenic environment with layered architectural forms, a glowing focal portal, and a solitary figure establishing scale.",
+  publishedAt: "2026-03-05",
+  updatedAt: "2026-03-20",
+  createdAt: "2026-03-20",
+  categoryName: "Design Philosophy",
+  seoTitle: "The Visual Language of Scenic Design | Elements and Principles in Performance",
+  seoDescription:
+    "An essay on how the elements and principles of design shape scenic environments, audience perception, and live theatrical storytelling.",
+  seoKeywords:
+    "scenic design principles, elements of design, principles of design, scenic design education, theatrical design, live performance design",
+  tags: [
+    { id: 100401, name: "Scenic Design", slug: "scenic-design" },
+    { id: 100402, name: "Design Education", slug: "design-education" },
+    { id: 100403, name: "Design Principles", slug: "design-principles" },
+    { id: 100404, name: "Visual Storytelling", slug: "visual-storytelling" },
+  ],
+  featured: false,
+  content: [
+    {
+      type: "paragraph",
+      text:
+        "Live theatre is experienced visually before it is understood intellectually.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "An audience does not wait for dialogue to begin forming impressions. They register spatial balance, light intensity, color relationships, and architectural scale almost immediately. Scenic design operates within this instinctive perception. It shapes emotional tone, supports storytelling, and guides attention long before narrative context is fully processed.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Because of this, scenic designers are not simply arranging objects onstage. They are constructing environments that influence movement, define relationships, and create emotional conditions for performance.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "At some point in the design process, I often remind students of something essential:",
+    },
+    {
+      type: "quote",
+      text:
+        "My job isn’t to create a rendering. My job is to create a live experience. Renderings help sell it, but the real goal is the audience’s feelings.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "To shape meaningful theatrical environments, designers rely on the foundational elements and principles of design. These ideas are not academic abstractions. They are practical tools that help directors stage action, help performers navigate space, and help audiences understand the world of the play.",
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "The Elements of Design in Scenic Practice",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Point — Establishing Focus",
+    },
+    {
+      type: "paragraph",
+      text:
+        "A point is the simplest visual element, yet it can carry enormous dramatic weight. A single illuminated doorway in a dark environment creates anticipation. A solitary chair placed downstage can suggest emotional isolation before a performer even enters.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Designers use points to anchor visual attention. In large scenic compositions, small concentrated moments often become the audience’s first emotional connection to the space.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Line — Directing Movement and Energy",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Lines exist everywhere in theatre: in staircases, platform edges, portals, railings, and lighting angles. They guide how the audience’s eye travels through the performance.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Diagonal lines often introduce urgency or instability. Horizontal lines can create calm or inevitability. Vertical elements may suggest confinement, ritual, or authority. Designers also consider how performers move in relation to these visual pathways. Movement aligned with scenic lines can feel harmonious, while movement against them can create tension.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Line shapes dramatic momentum as much as visual composition.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Shape — Organizing the Stage Picture",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Shape refers to how scenic elements relate graphically across the stage. Clear geometric compositions can make environments feel intentional and legible. Fragmented or irregular shapes may suggest emotional disruption or social instability.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Directors often respond strongly to shape because it influences blocking patterns. A triangular playing area encourages different staging choices than a symmetrical rectangular one.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Form and Mass — Creating Physical Presence",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Form gives scenic environments dimensional weight. Large architectural masses can establish power relationships. Elevated platforms create hierarchy. Compressed spaces may intensify intimacy or conflict.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Audiences instinctively read form. They sense scale, distance, and physical risk even before performers interact with the environment.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Color — Establishing Emotional Temperature",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Color communicates mood immediately. Warm palettes may suggest memory, comfort, or celebration. Cooler tones can introduce emotional distance, melancholy, or psychological tension.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Onstage, color interacts continuously with lighting and costume. Designers use color not simply for decoration, but as emotional framing that supports genre, period, and tone.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Value — Guiding Attention Through Contrast",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Value describes the relationship between light and dark. Strong contrast can isolate performers and create clear visual hierarchy. Low contrast environments may support realism or ambiguity.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Value also defines spatial depth. Bright foreground areas feel immediate and intimate. Darkened backgrounds can feel distant or unknowable. These relationships help structure audience focus throughout a performance.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Texture — Suggesting Material History",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Texture communicates how a world has been lived in. Rough surfaces can imply age, labor, or decay. Smooth finishes may suggest modernity, wealth, or institutional control.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Lighting reveals texture in subtle ways, enriching scenic environments without adding visual clutter. Even minimal sets gain narrative depth when material surfaces feel authentic.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Space — Constructing Depth and Relationship",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Designers manipulate spatial relationships to influence emotional experience. Layered scenic environments allow simultaneous action across visual planes. Elevation changes reinforce social hierarchy. Narrow spaces intensify confrontation. Open environments can suggest freedom or isolation.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Space in theatre is both physical and psychological.",
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "The Principles of Design in Live Scenic Storytelling",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Balance — Stability and Instability",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Balance refers to how visual weight is distributed across the stage picture. Symmetrical environments often feel formal, ritualistic, or inevitable. Asymmetrical compositions can introduce unease or anticipation.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Designers use balance to shape emotional tone before narrative conflict becomes explicit.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Emphasis — Directing Audience Focus",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Every stage moment requires a focal point. Light concentration, scale contrast, or spatial isolation can establish emphasis. When everything competes equally for attention, audiences may struggle to understand what matters.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Clear emphasis supports both staging clarity and emotional engagement.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Contrast — Defining Difference and Dramatic Tension",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Contrast occurs through differences in value, color, scale, texture, or spatial density. A bright performer against a dark environment becomes instantly significant. A delicate interior placed inside a vast architectural frame can heighten vulnerability.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Designers use contrast to clarify relationships and intensify dramatic stakes.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Rhythm — Creating Visual Pacing",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Rhythm emerges through repetition and variation. Repeating scenic forms can guide the eye across the stage. Alternating light and shadow patterns can support emotional transitions.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Just as dialogue and music create temporal rhythm, scenic design can create visual pacing that shapes how audiences experience time within a performance.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Movement — Dynamic Spatial Experience",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Movement in scenic design is not limited to moving scenery. It exists in how visual energy travels across the stage picture.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Angled compositions, layered sightlines, and directional lighting can suggest motion even in still moments. Designers consider how the eye moves before actors do.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Proportion and Scale — Human Relationship to Environment",
+    },
+    {
+      type: "paragraph",
+      text:
+        "The relationship between performer and architecture communicates meaning immediately. Oversized environments can create vulnerability or awe. Compressed spaces can intensify psychological pressure.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Proportion helps audiences understand power dynamics before they are spoken.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Unity — Creating a Cohesive World",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Unity occurs when scenic elements, lighting, color palette, and spatial logic function together. Even highly stylized productions require internal consistency for audiences to trust the environment.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "When unity is achieved, the design becomes expressive rather than decorative.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Variety — Sustaining Visual Interest",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Variety prevents monotony. Differences in texture, scale, lighting intensity, or spatial arrangement can keep environments visually engaging while still maintaining unity.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Designers balance consistency with variation to support long-form storytelling.",
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "From Live Experience to Visual Communication",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Live theatre is collaborative and temporary. Scenic environments must be imagined, discussed, and refined long before they are physically built. The same visual language that shapes stage pictures must also guide how designers communicate ideas through drawings, models, and renderings.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Understanding the elements and principles of design allows scenic designers to construct images that convey atmosphere, hierarchy, and emotional tone with clarity. In the next article, we will explore how this live visual language translates into scenic rendering practice and how digital tools can support storytelling while keeping the live experience at the center of the work.",
+    },
+  ],
+};
+
+const ghibliImmersiveDiningArticle: LocalArticle = {
+  id: 100005,
+  slug: "studio-ghibli-inspired-immersive-dining-experience",
+  title: "Studio Ghibli-Inspired Immersive Dining Experience",
+  excerpt:
+    "A themed entertainment studio project exploring how theatre design students translated environmental storytelling into a Studio Ghibli-inspired immersive dining concept.",
+  coverImageUrl:
+    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_73b851ea12d14fce8575a0e36e3cf92f.jpeg",
+  coverImageAlt:
+    "Studio Ghibli-inspired immersive dining design project developed by theatre students.",
+  publishedAt: "2025-04-14",
+  updatedAt: "2026-03-20",
+  createdAt: "2025-04-14",
+  categoryName: "Themed Entertainment",
+  seoTitle:
+    "Studio Ghibli-Inspired Immersive Dining Experience | Themed Entertainment Design",
+  seoDescription:
+    "Discover how theatre design students developed a Studio Ghibli-inspired immersive dining concept, using scenic storytelling tools in a themed entertainment studio project.",
+  seoKeywords:
+    "themed entertainment design, immersive dining, studio ghibli inspired design, theatre design education, environmental storytelling, themed experience design",
+  tags: [
+    { id: 100411, name: "Themed Entertainment", slug: "themed-entertainment" },
+    { id: 100412, name: "Design Education", slug: "design-education" },
+    { id: 100413, name: "Immersive Design", slug: "immersive-design" },
+    { id: 100414, name: "Environmental Storytelling", slug: "environmental-storytelling" },
+  ],
+  featured: false,
+  readTime: 9,
+  content: [
+    {
+      type: "heading",
+      level: 2,
+      text: "Course Foundation: Theatrical Design Meets Themed Entertainment",
+    },
+    {
+      type: "paragraph",
+      text:
+        "I created Entertainment and Collaboration during my first year as a full-time professor at Stephens College, and it remains one of the highlights of my teaching career. The course emerged during the College’s transition to a Conservatory model, and I saw an opportunity to address a meaningful gap in traditional theatrical design education. With a background in both academia and professional design, I wanted to give students an honest window into the broader design industries—spaces where theatre artists could thrive, but were rarely taught to see themselves.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "The course was built to bridge the rich storytelling of theatrical design with the demands and opportunities of commercial entertainment. I wanted students to apply their skills to areas like theme parks, immersive dining, film and television, and brand-based experience design. I knew that many students had never considered these paths as valid or accessible, and I wanted to change that.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "The class alternates annually between a focus on Themed Entertainment and Film & Television Design, giving students a well-rounded set of tools and exposure to multiple formats. It's specifically designed for second- and third-year production students and encourages repeat enrollment: first in a support role, then in a leadership role. This cycle simulates the kind of progression they’ll experience in a creative career.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Depending on the year, students explore how scenic design, costume, branding, and visual storytelling apply within either a themed entertainment or a film/TV context. Themed entertainment years focus on environmental storytelling, branding, spatial design, and immersive narrative environments. In film/TV years, students concentrate on cinematic design principles, script-based analysis, and production workflows specific to media and screen-based storytelling processes.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "More than anything, I built this class to empower students. To show them that the work they do in a theatre classroom has value far beyond the black box. That with the right mindset, collaboration, and a few new tools, they can shape the future of storytelling environments—not just react to them.",
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "Structured Learning Path: From Theory to Practice",
+    },
+    {
+      type: "paragraph",
+      text:
+        "The structure of Entertainment and Collaboration adapts each year depending on whether the course focuses on themed entertainment or film/TV. What follows reflects the structure used during the themed entertainment iteration—the one that produced the Ghibli restaurant project highlighted in this post.",
+    },
+    {
+      type: "paragraph",
+      text: "The course is divided into four interconnected phases:",
+    },
+    {
+      type: "list",
+      listType: "bulleted",
+      items: [
+        "Contextual Grounding: Students begin with lectures on the history and theory of experiential design.",
+        "Industry Perspective: Guest speakers from theatre, film, and themed entertainment join via Zoom to offer professional insight and portfolio critique.",
+        "Independent Project: A short individual assignment bridges lecture content and collaborative practice.",
+        "Collaborative Studio Simulation: The class operates as a design studio team tasked with a professional-scale final pitch project.",
+      ],
+    },
+    {
+      type: "paragraph",
+      text:
+        "Historical and conceptual topics included ancient Roman and Baroque garden design, medieval fairs and pageant wagons, World’s Fairs and early amusement parks, Disneyland, and the emergence of narrative environments. These discussions introduced environmental storytelling, audience interaction, multisensory design, and the cultural roles of themed space.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "In the final phase, students self-organized into specialized leadership roles including art director, project manager, interior designer, uniform designer, menu developer, and presentation lead. Together, the group set internal milestones, delegated work, and delivered a fully imagined final presentation modeled after an industry pitch.",
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "Featured Project: Studio Ghibli Immersive Restaurant",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Concept Development Process",
+    },
+    {
+      type: "paragraph",
+      text:
+        "This showcase project simulated real-world entertainment design challenges within a condensed five-week timeline. The all-costume design major student team approached the assignment with minimal previous spatial modeling experience, highlighting the course's focus on adaptability and cross-disciplinary application.",
+    },
+    {
+      type: "paragraph",
+      text: "Project parameters established deliverable requirements without dictating creative direction:",
+    },
+    {
+      type: "list",
+      listType: "bulleted",
+      items: [
+        "Brand identity system",
+        "Comprehensive menu design",
+        "3D scenic modeling and layout",
+        "Staff uniform designs",
+        "Video walkthrough presentation",
+      ],
+    },
+    {
+      type: "paragraph",
+      text:
+        "Students independently generated all spatial and narrative decisions by starting with an empty SketchUp file representing a blank restaurant shell. After concept exploration, they selected Studio Ghibli films as their thematic foundation.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Market research led to the selection of Atlanta, Georgia, as the ideal location, citing a strong local anime fan community, a vibrant food culture scene, demographic alignment with the target audience, and growth potential in the themed entertainment market.",
+    },
+    {
+      type: "gallery",
+      images: [
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_86ddee990fb443c2908e868498a96aca.jpeg",
+          alt: "Ghibli's Delight logo design for the themed entertainment concept.",
+          caption: "Ghibli's Delight Logo Design Themed Entertainment.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_22f94b16c0a24deea95c15b9ef3cb0f8.jpeg",
+          alt: "Production team credits for the Stephens College student project.",
+          caption: "Production Team Credits, Stephens College Students.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_1ad9c76522ee4767b6b6c30554d95252.jpeg",
+          alt: "Location study identifying Atlanta, Georgia, for the themed project.",
+          caption: "Location: Atlanta, GA for Themed Project.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_a668d0d7c5804e0ea645138ad7e92e4a.jpeg",
+          alt: "Research board featuring Studio Ghibli imagery for the themed dining project.",
+          caption: "Ghibli Film Theme Research Images.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_ba4f8a2f0e1c42358544825959579ff4.jpeg",
+          alt: "Additional Studio Ghibli research references gathered by the student team.",
+          caption: "Research Images from Studio Ghibli.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_8920e870105c482fb3afd92049dafb1d.jpeg",
+          alt: "Themed entertainment precedent imagery used during concept development.",
+          caption: "Themed Entertainment Images.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_4a5d11ca16ff4831ae7b8d17bbadf035.jpeg",
+          alt: "Uniform research images supporting the themed restaurant concept.",
+          caption: "Uniform Research for themed project.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_184e465cf6b54645bda7776237e51c7d.jpeg",
+          alt: "Ghibli-inspired food research images gathered for menu development.",
+          caption: "Ghibli Inspired Food Reserach Images.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_297818c5541842cc9f3c8677b441f35d.jpeg",
+          alt: "Food research references used to build the themed menu.",
+          caption: "Food Research Images.",
+        },
+      ],
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Spatial Design and Narrative Integration",
+    },
+    {
+      type: "image",
+      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_178b77734f664399ad1781073a591459.jpg",
+      alt: "Theatre design students behind the Studio Ghibli-inspired immersive dining project, pictured left to right: Arch Crist, Fae Rieman-Royer, Shannon King, Alice Crist, and Makenzie Schutter.",
+      caption:
+        "Theatre design students behind the project, pictured left to right: Arch Crist, Fae Rieman-Royer, Shannon King, Alice Crist, and Makenzie Schutter.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "The team transformed the blank model into a fully realized themed restaurant with a main dining area inspired by My Neighbor Totoro, five side rooms tied to individual Ghibli films, and a themed retail space extending the guest experience.",
+    },
+    {
+      type: "list",
+      listType: "bulleted",
+      items: [
+        "Main dining area inspired by My Neighbor Totoro, with natural textures and dappled lighting",
+        "Five themed side rooms representing Howl's Moving Castle, Ponyo, Spirited Away, Princess Mononoke, and My Neighbor Totoro",
+        "A themed retail space extending the guest experience",
+      ],
+    },
+    {
+      type: "paragraph",
+      text:
+        "Each area featured custom scenic treatments, atmospheric lighting design, and character-specific environmental storytelling elements.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Brand Extensions and Guest Experience",
+    },
+    {
+      type: "paragraph",
+      text:
+        "The immersive concept extended beyond spatial design to include film-inspired uniforms, a custom menu with playful dishes like Soot Sprite Macarons, themed cocktails, and branded merchandise concepts for the retail space.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Students learned to use SketchUp for spatial modeling and Twinmotion for animated walkthroughs with integrated lighting effects, building a presentation language that felt much closer to professional themed entertainment pitching than a standard classroom project.",
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "Skill Development and Professional Applications",
+    },
+    {
+      type: "paragraph",
+      text:
+        "The five-week project yielded measurable growth across technical proficiency, professional practice, transferable design skills, and leadership development.",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Technical Proficiency",
+    },
+    {
+      type: "list",
+      listType: "bulleted",
+      items: [
+        "Rapid acquisition of 3D modeling and visualization software skills",
+        "Translation of 2D design principles into spatial planning concepts",
+        "Implementation of environmental storytelling techniques",
+      ],
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Professional Practice",
+    },
+    {
+      type: "list",
+      listType: "bulleted",
+      items: [
+        "Development of industry-aligned project management workflows",
+        "Creation of client-ready presentation materials and pitch techniques",
+        "Collaborative problem-solving under realistic timeline constraints",
+      ],
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Transferable Design Skills",
+    },
+    {
+      type: "list",
+      listType: "bulleted",
+      items: [
+        "Application of costume design principles to branded uniforms and environmental aesthetics",
+        "Adaptation of narrative structure to physical space progression",
+        "Integration of sensory design elements into cohesive guest experiences",
+      ],
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Leadership Development",
+    },
+    {
+      type: "list",
+      listType: "bulleted",
+      items: [
+        "Implementation of studio-style role specialization and accountability",
+        "Peer-to-peer feedback integration and design iteration processes",
+        "Cross-disciplinary communication and collaborative decision-making",
+      ],
+    },
+    {
+      type: "paragraph",
+      text:
+        "This comprehensive simulation prepared students for diverse career paths in themed entertainment firms, immersive dining concepts, museum exhibition design, and environmental storytelling practice.",
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "Visual Showcase",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Main Room",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Ghibli’s Delights invites guests into a fully realized storybook setting, where the boundary between dining and narrative dissolves. At the heart of the space stands a monumental weeping willow tree, its canopy transforming the room into a lush, animated forest. Lanterns glow softly over curved wooden booths, while hand-crafted props—miniature planes, ribbons, and characters—float above, evoking the wonder of Studio Ghibli films. The visual layering and organic materials create a welcoming environment that feels both fantastical and grounded.",
+    },
+    {
+      type: "gallery",
+      images: [
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_e70b7b314e9640149e69ed68aaa58aa7.jpeg",
+          alt: "Main dining room rendering from the Ghibli restaurant concept.",
+          caption: "Main Room Rendering, Twinmotion.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_ae64299bdc744e1a862aba64bc5a7bbc.jpeg",
+          alt: "Second main dining room rendering from the Twinmotion walkthrough set.",
+          caption: "Main Room Rendering, Twinmotion.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_9a64fc01f81042738ef1a038b90529dd.jpeg",
+          alt: "Main room menu items designed for the themed restaurant.",
+          caption: "Main Room Menu Items. Resturant Design.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_313ff4a76c05405dbbd2524e17b75f9a.jpeg",
+          alt: "Main room themed uniform design for staff in the immersive concept.",
+          caption: "Main Room Themed Uniform Design.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_a668d0d7c5804e0ea645138ad7e92e4a.jpeg",
+          alt: "Research imagery for the main room concept.",
+          caption: "Research Images.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_ba4f8a2f0e1c42358544825959579ff4.jpeg",
+          alt: "Additional research imagery supporting the main room concept.",
+          caption: "Reseach Images.",
+        },
+      ],
+    },
+    {
+      type: "paragraph",
+      text:
+        "The experience extends beyond architecture to include costume and graphic design. Staff uniforms echo the restaurant’s nature-forward palette, and the illustrated menu reinforces the tone with items like No Face Sushi and Kiki’s Chocolate Cake. Together, these elements build a cohesive, multisensory environment that blends hospitality, animation, and themed entertainment design.",
+    },
+    {
+      type: "video",
+      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-videos/ghibli/9e1774_eeb3f5c5725e4a4c829aed62842238b0.mp4",
+      caption: "Main Dining Room Twinmotion Walkthrough",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "My Neighbor Totoro",
+    },
+    {
+      type: "paragraph",
+      text:
+        "The My Neighbor Totoro room is an intimate, forest-nestled hideaway designed to transport guests directly into the rural charm and magical realism of the film. Anchored by a life-sized Totoro holding a leaf umbrella, the space uses warm wood textures, mossy green walls, and a ceiling of interwoven branches to evoke the enchanted woods of the story.",
+    },
+    {
+      type: "gallery",
+      images: [
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_cc2ee6a3cfe846909596c206343f0c76.jpeg",
+          alt: "My Neighbor Totoro rendering from the themed side room.",
+          caption: "My Neighbor Totoro Rendering Twinmotion.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_f6fe10fdf9e14419b17e698f5db576ce.jpeg",
+          alt: "Specialty menu design for the My Neighbor Totoro side room.",
+          caption: "My Neighbor Totoro Specialty Menu Themed Design.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_dbc85f35e2324d59997b78d94b8aa128.jpeg",
+          alt: "Themed uniform design for the Totoro room.",
+          caption: "My Neighbor Totoro Themed Uniform Design.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_c388bca412434470964b9968278b70af.jpeg",
+          alt: "Research imagery for the My Neighbor Totoro concept.",
+          caption: "My Neighbor Totoro Research Images.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_d4e22d4d194f4447a8a8791701665318.jpeg",
+          alt: "Additional research imagery for the My Neighbor Totoro concept.",
+          caption: "My Neighbor Totoro Research Images.",
+        },
+      ],
+    },
+    {
+      type: "paragraph",
+      text:
+        "The experience is brought to life through more than décor. Staff uniforms echo the film’s warm palette, directly referencing Mei’s yellow and orange outfit and Totoro’s soft grey tones. On the menu, Grandma’s Ohagi Mochi and Soot Sprite Macaroons continue the world-building through food.",
+    },
+    {
+      type: "video",
+      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-videos/ghibli/9e1774_253418d025f04fe5b579126461857c96.mp4",
+      caption: "My Neighbor Totoro Twinmotion Walkthrough",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Princess Mononoke",
+    },
+    {
+      type: "paragraph",
+      text:
+        "The Princess Mononoke side room immerses guests in a forest sanctuary that honors the spiritual and environmental themes of the film. Natural textures define the space—from stone flooring and tree trunk columns to vine-covered walls and forest canopy lighting. A life-sized Forest Spirit sculpture watches over the room while Kodama figures observe from surrounding shelves.",
+    },
+    {
+      type: "gallery",
+      images: [
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_061ec2761c384613a9ca1ecf1c6ee3e2.jpeg",
+          alt: "Princess Mononoke rendering from the themed side room concept.",
+          caption: "Princess Mononoke room rendering.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_c56cda73f5a848acabf9fe2e59177573.jpeg",
+          alt: "Alternate Princess Mononoke rendering from the student project.",
+          caption: "Princess Mononoke room rendering.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_3eaf4da0f7f043449ade480b837d4ada.jpeg",
+          alt: "Princess Mononoke themed menu or collateral design.",
+          caption: "Princess Mononoke project development image.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_92300c16da8e486c9cb1231d51515c28.jpeg",
+          alt: "Princess Mononoke costume or branding development image.",
+          caption: "Princess Mononoke project development image.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_e24ad2be54ac4ea0b998478efce810ed.jpeg",
+          alt: "Princess Mononoke inspiration research image.",
+          caption: "Princess Mononoke inspiration research.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_9dc27567f94c4360a1894b69d55c4a0f.jpeg",
+          alt: "Additional Princess Mononoke inspiration research image.",
+          caption: "Princess Mononoke inspiration research.",
+        },
+      ],
+    },
+    {
+      type: "paragraph",
+      text:
+        "The themed experience is supported by costuming and cuisine that reinforce the film’s reverence for nature. Uniforms draw on Ashitaka’s palette and San’s tribal earth tones, while menu items like Tree Spirit Cake Balls and the Spirit of the Forest cocktail extend the story into the guest experience.",
+    },
+    {
+      type: "video",
+      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-videos/ghibli/9e1774_db4c7b43f9a24bb8aeb29cd51b9952e4.mp4",
+      caption: "The Princess Mononoke Twinmotion Walkthrough",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Ponyo",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Bright, buoyant, and overflowing with childhood whimsy, the Ponyo side room plunges guests into an underwater fantasy teeming with charm. Rock formations, fish tank columns, suspended sea creatures, and playful bubble details evoke the film’s aquatic sequences, while a raindrop-inspired chandelier lights the vivid blue walls.",
+    },
+    {
+      type: "gallery",
+      images: [
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_8e1ed7d996e54539b6c2fb8f15b2dd23.jpeg",
+          alt: "Ponyo rendering from the themed side room concept.",
+          caption: "Ponyo room rendering.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_1491bfc552964da88c025647963c62e3.jpeg",
+          alt: "Alternate Ponyo rendering from the student project.",
+          caption: "Ponyo room rendering.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_3108e5433887440ca6bb2d2cb35ec8ee.jpeg",
+          alt: "Ponyo menu or collateral design image.",
+          caption: "Ponyo project development image.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_0ec4b61c87d6408199fa706416ea03e4.jpeg",
+          alt: "Ponyo costume or branding development image.",
+          caption: "Ponyo project development image.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_1997f0253d7242b8a6d90f9687a7da6c.jpeg",
+          alt: "Ponyo inspiration research image.",
+          caption: "Ponyo inspiration research.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_da1584e0cb0347ec9a88f7527ba19a2f.jpeg",
+          alt: "Additional Ponyo inspiration research image.",
+          caption: "Ponyo inspiration research.",
+        },
+      ],
+    },
+    {
+      type: "paragraph",
+      text:
+        "Costumes and menu design extend the tone. The Bucket Dirt Cake and Essence of the Sea drink turn the dining experience into a playful extension of Ponyo’s world, keeping the space accessible to families while maintaining a strong visual identity.",
+    },
+    {
+      type: "video",
+      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-videos/ghibli/9e1774_185d929cb671450e9c83d0c806e4cdad.mp4",
+      caption: "Ponyo Twinmotion Walkthrough",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Spirited Away",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Inspired by the mysterious bathhouse of Spirited Away, this side room becomes a dimly lit lounge where guests can unwind in the ambiance of the spirit realm. Deep red walls, glowing lanterns, cherry blossom branches, and No-Face masks shape a space that feels both elegant and uncanny.",
+    },
+    {
+      type: "gallery",
+      images: [
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_4381eba15641435e9cd0516c150edb3b.jpeg",
+          alt: "Spirited Away rendering from the themed side room.",
+          caption: "Spirited Away Rendering in Twinmotin.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_c24525de37c741b486cf5059533c0d76.jpeg",
+          alt: "Alternate Spirited Away rendering from Twinmotion.",
+          caption: "Spirited Away in Twinmotion.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_6983e616f1fd4978bad2fdace8cef1fb.jpeg",
+          alt: "Spirited Away themed uniform design.",
+          caption: "Spirited Away Themed Uniform Design.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_463521a106b6440e83a232f893ef9b9f.jpeg",
+          alt: "Additional Spirited Away development image.",
+          caption: "Spirited Away project development image.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_8e1f92a8f40a43e59f62b12e733bca14.jpeg",
+          alt: "Spirited Away inspiration research image.",
+          caption: "Spirited Away Inspiration Research.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_08c8e27eb2214b7fb4324a6a411d332e.jpeg",
+          alt: "Additional Spirited Away inspiration research image.",
+          caption: "Spirited Away Inspiration Research.",
+        },
+      ],
+    },
+    {
+      type: "paragraph",
+      text:
+        "Uniforms nod to Chihiro’s transformation, and the menu features Steam Buns and Sponge Cake as modest but iconic references to her journey. The room functions as a quiet portal into the world of spirits, where a meal becomes part of the story.",
+    },
+    {
+      type: "video",
+      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-videos/ghibli/9e1774_67126968704e47d58f1504177be573a9.mp4",
+      caption: "Spirited Away Twinmotion Walkthrough",
+    },
+    {
+      type: "heading",
+      level: 3,
+      text: "Howl's Moving Castle",
+    },
+    {
+      type: "paragraph",
+      text:
+        "The Howl’s Moving Castle room captures the enchanting clutter and romantic mystique of Howl’s traveling home. Deep red wallpaper, eclectic wall art, ornate masks, chandeliers, stained glass details, and velvet upholstery create a richly layered interior inspired by the film’s balance of opulence and chaos.",
+    },
+    {
+      type: "gallery",
+      images: [
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_c311ef858b894aa88b04e1d508faafe6.jpeg",
+          alt: "Howl's Moving Castle rendering from the themed side room.",
+          caption: "Howl's Moving Castle Rendering in Twinmotion.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_ed919a65b8054981b5cdc95262d1589c.jpeg",
+          alt: "Alternate Howl's Moving Castle rendering from Twinmotion.",
+          caption: "Howl's Moving Castle Reindering in Twinmotion.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_9b6ff8a4a3e7473fbeb9e2d4ea78872b.jpeg",
+          alt: "Howl's Moving Castle themed uniform design.",
+          caption: "Howl's Moving Castle Themed Uniform Design.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_6d5e75b7a0fc4afa91284fca90cd8394.jpeg",
+          alt: "Additional Howl's Moving Castle development image.",
+          caption: "Howl's Moving Castle project development image.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_056fa8bfa351456bae15e721f4b4ff08.jpeg",
+          alt: "Howl's Moving Castle inspiration research image.",
+          caption: "Howl's Moving Castle Inspiration Research.",
+        },
+        {
+          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_13c2220500ec4088b87db69b6446c37d.jpeg",
+          alt: "Additional Howl's Moving Castle inspiration research image.",
+          caption: "Howl's Moving Castle Inspiration Research.",
+        },
+      ],
+    },
+    {
+      type: "paragraph",
+      text:
+        "Staff uniforms echo Howl’s palette and Sophie’s hat shop aesthetic, while themed menu items like Sophie’s Hat Cookies and Turnip Head Skewers extend the room’s nostalgia and wit into the guest experience.",
+    },
+    {
+      type: "video",
+      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-videos/ghibli/9e1774_b200c45eaaee4bb28161d9714cc80300.mp4",
+      caption: "Howl's Moving Castle Twinmotion Walkthrough",
+    },
+    {
+      type: "faq",
+      items: [
+        {
+          question: "What software tools do students learn in this course?",
+          answer:
+            "<p>Students are introduced to industry-standard visualization tools including SketchUp for 3D modeling, Twinmotion for animated walkthroughs, and Adobe Creative Suite for presentation materials and branding.</p>",
+        },
+        {
+          question: "How does the course manage collaboration within a single large team?",
+          answer:
+            "<p>Students establish specialized roles based on individual strengths while maintaining collaborative decision-making. Regular internal deadlines and structured check-ins help maintain accountability and momentum.</p>",
+        },
+        {
+          question: "How do theatrical costume design skills transfer to themed entertainment?",
+          answer:
+            "<p>Costume designers bring expertise in character development, material selection, narrative communication, and visual storytelling—skills that translate directly to themed environments, staff presentation, and immersive guest experience design.</p>",
+        },
+        {
+          question: "What career opportunities does this project preparation support?",
+          answer:
+            "<p>Graduates with this experience are better prepared for roles in themed entertainment firms, immersive dining concepts, museum exhibition design, retail storytelling environments, and experiential marketing agencies.</p>",
+        },
+        {
+          question: "Where can I learn more about Stephens College Theatre programs?",
+          answer:
+            "<p>Visit the Stephens College Theatre Program website to explore the broader range of production and design opportunities available to students.</p>",
+        },
+      ],
+    },
+  ],
+};
+
 const dbBackedArticles = (generatedLocalArticles as LocalArticle[]).map((article) => ({
   ...article,
   ...articleFieldOverridesBySlug[article.slug],
@@ -358,7 +1725,18 @@ const baseArticles = dbBackedArticles.some((article) => article.slug === VOYAGEL
   ? dbBackedArticles
   : [...dbBackedArticles, voyageLaArticle];
 
-export const localArticles = baseArticles
+const manualArticles: LocalArticle[] = [
+  voyageLaArticle,
+  visualLanguageArticle,
+  ghibliImmersiveDiningArticle,
+];
+
+const articlesWithManualEntries = [
+  ...baseArticles.filter((article) => !manualArticles.some((manual) => manual.slug === article.slug)),
+  ...manualArticles,
+];
+
+export const localArticles = articlesWithManualEntries
   .map((article) => ({
     ...article,
     excerpt: article.excerpt || "",
