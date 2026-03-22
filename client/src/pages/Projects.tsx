@@ -26,6 +26,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { trpc } from "@/lib/trpc";
 import { getProjectPath } from "@/lib/projectRoutes";
+import { getLocalScenicProjects } from "@shared/localScenicProjects";
 
 type SortKey = "newest" | "oldest" | "title" | "venue";
 type ViewMode = "grid" | "list";
@@ -166,11 +167,37 @@ export default function Projects() {
     discipline: "scenic_design",
   });
 
+  const mergedProjects = useMemo(() => {
+    if (!projects?.length) return [];
+
+    const localBySlug = new Map(
+      getLocalScenicProjects().map((project) => [project.slug, project])
+    );
+
+    return projects.map((project) => {
+      const local = localBySlug.get(project.slug);
+      if (!local) return project;
+
+      return {
+        ...project,
+        client: local.client ?? project.client,
+        location: local.location ?? project.location,
+        subcategory: local.subcategory ?? project.subcategory,
+        year: local.year ?? project.year,
+        month: local.month ?? project.month,
+        excerpt: local.excerpt || project.excerpt,
+        seoTitle: local.seoTitle ?? project.seoTitle,
+        seoDescription: local.seoDescription ?? project.seoDescription,
+        coverImageUrl: local.coverImageUrl || project.coverImageUrl,
+      };
+    });
+  }, [projects]);
+
   const subcategories = useMemo(() => {
-    if (!projects?.length) return [] as Array<{ key: string; label: string }>;
+    if (!mergedProjects.length) return [] as Array<{ key: string; label: string }>;
     const labels = new Map<string, string>();
 
-    for (const project of projects) {
+    for (const project of mergedProjects) {
       const key = normalizeText(project.subcategory);
       if (!key) continue;
       if (!labels.has(key)) labels.set(key, project.subcategory!.trim());
@@ -179,26 +206,28 @@ export default function Projects() {
     return Array.from(labels.entries())
       .sort((a, b) => a[0].localeCompare(b[0]))
       .map(([key, label]) => ({ key, label }));
-  }, [projects]);
+  }, [mergedProjects]);
 
   const venueOptions = useMemo(() => {
-    if (!projects?.length) return [] as string[];
+    if (!mergedProjects.length) return [] as string[];
     return Array.from(
-      new Set(projects.map((project) => getVenueLabel(project)).filter(isNonEmptyString))
+      new Set(mergedProjects.map((project) => getVenueLabel(project)).filter(isNonEmptyString))
     ).sort((a, b) => a.localeCompare(b));
-  }, [projects]);
+  }, [mergedProjects]);
 
   const yearOptions = useMemo(() => {
-    if (!projects?.length) return [] as string[];
+    if (!mergedProjects.length) return [] as string[];
     return Array.from(
-      new Set(projects.map((project) => (project.year ? String(project.year) : null)).filter(isNonEmptyString))
+      new Set(
+        mergedProjects.map((project) => (project.year ? String(project.year) : null)).filter(isNonEmptyString)
+      )
     ).sort((a, b) => Number(b) - Number(a));
-  }, [projects]);
+  }, [mergedProjects]);
 
   const filteredProjects = useMemo(() => {
-    if (!projects?.length) return [];
+    if (!mergedProjects.length) return [];
 
-    return projects.filter((project) => {
+    return mergedProjects.filter((project) => {
       if (
         selectedSubcategory !== "all" &&
         normalizeText(project.subcategory) !== selectedSubcategory
@@ -216,7 +245,7 @@ export default function Projects() {
 
       return true;
     });
-  }, [projects, selectedSubcategory, selectedVenue, selectedYear]);
+  }, [mergedProjects, selectedSubcategory, selectedVenue, selectedYear]);
 
   const sortedProjects = useMemo(() => {
     const list = [...filteredProjects];

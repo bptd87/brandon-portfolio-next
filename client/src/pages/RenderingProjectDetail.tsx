@@ -1,15 +1,18 @@
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { Check, Link2 } from "lucide-react";
 import { Link, useParams, useLocation } from "wouter";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Lightbox } from "@/components/Lightbox";
 import { AnimatePresence } from "framer-motion";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
-import { getLocalRenderingProjectBySlug, getLocalRenderingProjects } from "@shared/localPortfolios";
+import { getLocalRenderingGallery, getLocalRenderingProjectBySlug, getLocalRenderingProjects } from "@shared/localPortfolios";
+import { getLocalScenicProjects } from "@shared/localScenicProjects";
 import { trpc } from "@/lib/trpc";
+import ScenicRenderingGallery from "@/components/ScenicRenderingGallery";
 
 function inferEncodingFormat(url: string): string | undefined {
   const cleanUrl = url.split('?')[0].toLowerCase();
@@ -33,7 +36,6 @@ export default function RenderingProjectDetail() {
       ? "/projects/rendering"
       : "/projects";
   const project = getLocalRenderingProjectBySlug(normalizedSlug);
-  const allProjects = getLocalRenderingProjects().filter((entry) => !entry.galleryOnly);
   const { data: scenicProjects = [] } = trpc.projects.list.useQuery(
     { discipline: "scenic_design" },
     { staleTime: 1000 * 60 * 10 }
@@ -45,6 +47,7 @@ export default function RenderingProjectDetail() {
     : undefined;
 
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [linkCopied, setLinkCopied] = useState(false);
 
   if (!project) {
     return (
@@ -75,10 +78,6 @@ export default function RenderingProjectDetail() {
   // Parse tags for SEO (invisible)
   const tags = project.seoKeywords?.split(',').map(t => t.trim()).filter(Boolean) || [];
 
-  // Find prev/next projects from rendering discipline only
-  const currentIndex = allProjects.findIndex((p) => p.id === project.id);
-  const prevProject = currentIndex > 0 ? allProjects[currentIndex - 1] : null;
-  const nextProject = currentIndex >= 0 && currentIndex < allProjects.length - 1 ? allProjects[currentIndex + 1] : null;
   const scenicProjectMatch =
     scenicProjects.find((entry) => {
       const sameTitle = entry.title.trim().toLowerCase() === project.title.trim().toLowerCase();
@@ -89,7 +88,46 @@ export default function RenderingProjectDetail() {
       if (project.year && entry.year && project.year !== entry.year) return false;
       return true;
     }) || null;
+  const localScenicProjectMatch =
+    getLocalScenicProjects().find((entry) => {
+      const sameTitle = entry.title.trim().toLowerCase() === project.title.trim().toLowerCase();
+      if (!sameTitle) return false;
+      const projectClient = String(project.client || "").trim().toLowerCase();
+      const scenicClient = String(entry.client || "").trim().toLowerCase();
+      if (projectClient && scenicClient && projectClient !== scenicClient) return false;
+      if (project.year && entry.year && project.year !== entry.year) return false;
+      return true;
+    }) || null;
   const scenicProjectHref = scenicProjectMatch ? `/project/${scenicProjectMatch.slug}` : null;
+  const moreRenderingProjects = useMemo(() => {
+    const getProjectTimestamp = (item: any) => {
+      if (item.year) {
+        const month = item.month && item.month >= 1 && item.month <= 12 ? item.month - 1 : 0;
+        return new Date(item.year, month, 1).getTime();
+      }
+      const explicitDate = item.updatedAt || item.publishedAt || item.createdAt;
+      if (explicitDate) return new Date(explicitDate).getTime();
+      return 0;
+    };
+
+    const projects = getLocalRenderingProjects().filter((item) => !item.galleryOnly);
+    const galleryItems = getLocalRenderingGallery();
+
+    const galleryDisplayItems = galleryItems
+      .map((item) => item.project)
+      .filter((item): item is NonNullable<typeof item> => Boolean(item));
+
+    const galleryProjectIds = new Set(galleryDisplayItems.map((item) => item.id));
+    const featuredDisplayItems = projects.filter((entry) => !galleryProjectIds.has(entry.id));
+
+    return [...featuredDisplayItems, ...galleryDisplayItems]
+      .filter((item) => item.slug !== project.slug)
+      .sort((a, b) => {
+        const timeCompare = getProjectTimestamp(b) - getProjectTimestamp(a);
+        if (timeCompare !== 0) return timeCompare;
+        return a.title.localeCompare(b.title);
+      });
+  }, [project.slug]);
 
   // Prepare lightbox images
   const lightboxImages = renderings.map(img => ({
@@ -99,12 +137,57 @@ export default function RenderingProjectDetail() {
   }));
 
   const heroDescription = (() => {
+    const customHeroExcerpt = String(project.heroExcerpt || "").trim();
+    if (customHeroExcerpt) return customHeroExcerpt;
     const excerpt = String(project.excerpt || "").trim();
-    if (!excerpt) return project.year ? `${project.year}` : "";
-    if (!project.year) return excerpt;
-    const yearLabel = String(project.year);
-    return excerpt.includes(yearLabel) ? excerpt : `${excerpt} ${yearLabel}.`;
+    if (!excerpt) return "";
+    const firstSentenceMatch = excerpt.match(/^.+?[.!?](?=\s|$)/);
+    return (firstSentenceMatch?.[0] || excerpt).trim();
   })();
+
+  const renderingBodySections = useMemo(() => {
+    if (project.bodySections?.length) return project.bodySections;
+
+    const paragraphs = String(project.designNotes || "")
+      .split(/\n{2,}/)
+      .map((paragraph) => paragraph.trim())
+      .filter(Boolean);
+
+    if (paragraphs.length === 0) return [];
+
+    const headingPool = [
+      "Spatial Premise",
+      "World and Atmosphere",
+      "Material and Tone",
+      "Composition and Focus",
+      "Story Through Image",
+      "How the Space Operates",
+      "Mood, Scale, and Detail",
+      "Rendering as Communication",
+    ];
+
+    const sectionCount = Math.max(1, Math.ceil(paragraphs.length / 2));
+    const scenicHeadings =
+      localScenicProjectMatch?.sections
+        .filter((section): section is Extract<typeof localScenicProjectMatch.sections[number], { type: "text" }> => section.type === "text")
+        .map((section) => section.heading?.trim())
+        .filter((heading): heading is string => Boolean(heading))
+        .slice(0, sectionCount) || [];
+
+    return Array.from({ length: sectionCount }, (_, index) => {
+      const start = index * 2;
+      return {
+        heading: scenicHeadings[index] || headingPool[index] || `Section ${index + 1}`,
+        paragraphs: paragraphs.slice(start, start + 2),
+      };
+    });
+  }, [localScenicProjectMatch, project.bodySections, project.designNotes]);
+
+  const projectDateLabel = project.year
+    ? project.month && project.month >= 1 && project.month <= 12
+      ? `${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][project.month - 1]} ${project.year}`
+      : `${project.year}`
+    : null;
 
   // Generate SEO-optimized description from excerpt or designNotes
   const seoDescription = project.excerpt || project.designNotes?.substring(0, 160) ||
@@ -127,6 +210,14 @@ export default function RenderingProjectDetail() {
     setLightboxIndex(index);
   };
 
+  const imageIndexById = new Map(renderings.map((item, index) => [String(item.id), index]));
+
+  const openLightboxFor = (mediaId: string) => {
+    const index = imageIndexById.get(mediaId);
+    if (index === undefined) return;
+    setLightboxIndex(index);
+  };
+
   const closeLightbox = () => {
     setLightboxIndex(null);
   };
@@ -140,6 +231,16 @@ export default function RenderingProjectDetail() {
   const prevImage = () => {
     if (lightboxIndex !== null && lightboxIndex > 0) {
       setLightboxIndex(lightboxIndex - 1);
+    }
+  };
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(projectUrl || "");
+      setLinkCopied(true);
+      window.setTimeout(() => setLinkCopied(false), 1800);
+    } catch {
+      setLinkCopied(false);
     }
   };
 
@@ -199,101 +300,191 @@ export default function RenderingProjectDetail() {
         }}
       />
       <Header />
-
-      {/* Sticky Navigation Arrows */}
-      {prevProject && (
-        <button
-          onClick={() => setLocation(`${projectBasePath}/${prevProject.slug}`)}
-          className="fixed left-5 top-1/2 z-50 -translate-y-1/2 text-white/44 transition-colors hover:text-white/78"
-          aria-label="Previous rendering"
-        >
-          <ArrowLeft className="h-7 w-7" strokeWidth={1.6} />
-        </button>
-      )}
-
-      {nextProject && (
-        <button
-          onClick={() => setLocation(`${projectBasePath}/${nextProject.slug}`)}
-          className="fixed right-5 top-1/2 z-50 -translate-y-1/2 text-white/44 transition-colors hover:text-white/78"
-          aria-label="Next rendering"
-        >
-          <ArrowRight className="h-7 w-7" strokeWidth={1.6} />
-        </button>
-      )}
-
-      {/* Editorial Rendering Detail Layout */}
-      <div className="container max-w-6xl pb-16 pt-8 space-y-8 md:pt-10 md:space-y-10">
-
-        {/* Hero: Title + Featured Rendering */}
-        <AnimatedSection>
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,25rem)_minmax(0,1fr)] lg:items-start lg:gap-8">
-            <div className="space-y-5">
-              <div className="space-y-3">
-                <h1 className="max-w-[10ch] font-sans text-[clamp(2.2rem,4.2vw,4.2rem)] font-medium leading-[0.92] tracking-[-0.065em] text-foreground">
-                  {project.title}
-                </h1>
-                {heroDescription && (
-                  <p className="max-w-[30rem] text-[clamp(0.98rem,1.1vw,1.08rem)] leading-[1.72] tracking-[-0.012em] text-foreground/64">
-                    {heroDescription}
-                  </p>
-                )}
+      <main className="pb-20">
+        <section className="px-6 pt-12 md:px-10 md:pt-16">
+          <AnimatedSection>
+            <header className="mx-auto flex w-full max-w-[62rem] flex-col items-center text-center">
+              <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[0.98rem] tracking-[-0.02em] text-foreground/56">
+                {projectDateLabel ? <span>{projectDateLabel}</span> : null}
+                <span>{isExperientialRendering ? "Experiential Rendering" : "Rendering"}</span>
               </div>
+              <h1 className="mt-8 max-w-[12ch] font-sans text-[clamp(3rem,7vw,6.4rem)] font-normal leading-[0.9] tracking-[-0.07em] text-foreground">
+                {project.title}
+              </h1>
+              {heroDescription ? (
+                <p className="mt-8 max-w-[42rem] text-[clamp(1.08rem,1.5vw,1.36rem)] leading-[1.72] tracking-[-0.02em] text-foreground/68">
+                  {heroDescription}
+                </p>
+              ) : null}
+            </header>
+          </AnimatedSection>
+        </section>
 
-              <div className="flex flex-wrap gap-3 pt-1">
-                <Link
-                  href={isExperientialRendering ? "/projects/experiential" : "/projects/rendering"}
-                  className="inline-flex items-center rounded-full border border-white/12 px-4 py-2 text-[0.96rem] tracking-[-0.015em] text-foreground/70 transition-colors hover:border-white/20 hover:text-foreground"
-                >
-                  Back to Renderings
-                </Link>
-                {scenicProjectHref ? (
-                  <Link
-                    href={scenicProjectHref}
-                    className="inline-flex items-center rounded-full border border-white/12 px-4 py-2 text-[0.96rem] tracking-[-0.015em] text-foreground/76 transition-colors hover:border-white/20 hover:text-foreground"
-                  >
-                    View Scenic Design Project
-                  </Link>
+        <section className="px-6 pt-8 md:px-10 md:pt-10">
+          <AnimatedSection>
+            <div className="mx-auto w-full max-w-[62rem]">
+              {renderings[0] ? (
+                <div className="cursor-pointer overflow-hidden rounded-xl bg-black" onClick={() => openLightbox(0)}>
+                  <img
+                    src={renderings[0].imageUrl || ""}
+                    alt={renderings[0].altText || `${project.title} rendering`}
+                    className="block w-full max-h-[min(74vh,48rem)] object-contain"
+                  />
+                </div>
+              ) : null}
+            </div>
+          </AnimatedSection>
+        </section>
+
+        <section className="px-6 pt-8 md:px-10">
+          <AnimatedSection>
+            <div className="mx-auto flex w-full max-w-[62rem] items-center justify-between gap-6 border-t border-white/14 py-4 text-foreground/72">
+              <div className="flex flex-wrap items-center gap-5">
+                {project.client ? (
+                  <span className="text-[0.98rem] tracking-[-0.02em]">{project.client}</span>
+                ) : null}
+                {project.location ? (
+                  <span className="text-[0.98rem] tracking-[-0.02em] text-foreground/56">{project.location}</span>
                 ) : null}
               </div>
-            </div>
-
-            {renderings.length > 0 ? (
-              <div
-                className="cursor-pointer group lg:pt-1"
-                onClick={() => openLightbox(0)}
-              >
-                <img
-                  src={renderings[0].imageUrl || ''}
-                  alt={renderings[0].altText || `${project.title} - Rendering by Brandon PT Davis`}
-                  className="w-full max-h-[64vh] rounded-2xl object-contain object-top transition-opacity group-hover:opacity-95"
-                />
-              </div>
-            ) : null}
-          </div>
-        </AnimatedSection>
-
-        {/* Additional Images (if any) - Clean Grid */}
-        {renderings.length > 1 && (
-          <div className="grid grid-cols-2 gap-4 pt-1 md:grid-cols-3 lg:grid-cols-4">
-            {renderings.slice(1).map((image, index) => (
-              <AnimatedSection key={image.id}>
-                <div
-                  className="group relative aspect-[16/10] cursor-pointer overflow-hidden rounded-xl"
-                  onClick={() => openLightbox(index + 1)}
+              <div className="flex items-center gap-5">
+                <button
+                  type="button"
+                  onClick={handleCopyLink}
+                  className="inline-flex items-center gap-2 text-[0.98rem] tracking-[-0.02em] transition-colors hover:text-foreground"
                 >
-                  <img
-                    src={image.imageUrl || ''}
-                    alt={image.altText || `${project.title} - Image ${index + 2} - Rendering by Brandon PT Davis`}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                  {linkCopied ? <Check className="h-4 w-4" /> : <Link2 className="h-4 w-4" />}
+                  <span>{linkCopied ? "Link copied" : "Share"}</span>
+                </button>
+              </div>
+            </div>
+          </AnimatedSection>
+        </section>
+
+        <section className="container max-w-5xl pt-14 md:pt-18">
+          <div className="mx-auto max-w-[54rem] space-y-24 md:space-y-32">
+            {renderingBodySections.length > 0 ? (
+              <AnimatedSection>
+                <div className="space-y-16 md:space-y-20">
+                  {renderingBodySections.map((section, index) => (
+                    <div key={`${section.heading}-${index}`} className="space-y-5">
+                      <h2 className="font-sans text-[clamp(2rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.05em] text-foreground">
+                        {section.heading}
+                      </h2>
+                      <div className="space-y-8">
+                        {section.paragraphs.map((paragraph, paragraphIndex) => (
+                          <p
+                            key={`${section.heading}-${paragraphIndex}`}
+                            className="text-[1.03rem] leading-[1.9] tracking-[-0.01em] text-foreground/72"
+                          >
+                            {paragraph}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </AnimatedSection>
-            ))}
-          </div>
-        )}
+            ) : null}
 
-      </div>
+            {renderings.length > 1 ? (
+              <AnimatedSection>
+                <ScenicRenderingGallery
+                  items={renderings.slice(1).map((image) => ({
+                    id: String(image.id),
+                    imageUrl: image.imageUrl || "",
+                    altText: image.altText || `${project.title} rendering`,
+                    caption: image.caption || undefined,
+                  }))}
+                  onOpen={openLightboxFor}
+                  visibleCount={2}
+                />
+              </AnimatedSection>
+            ) : null}
+
+          </div>
+        </section>
+
+        {scenicProjectHref && scenicProjectMatch ? (
+          <section className="container max-w-6xl pt-18 md:pt-24">
+            <AnimatedSection>
+              <div className="pt-18 md:pt-24">
+                <div className="mb-12 h-px w-full bg-border/60" />
+                <div className="mb-8 flex items-center justify-between gap-4">
+                  <p className="font-sans text-[1.15rem] tracking-[-0.02em] text-foreground">
+                    Scenic Design Project
+                  </p>
+                </div>
+                <div className="grid gap-x-12 gap-y-8 md:grid-cols-1">
+                  <Link href={scenicProjectHref}>
+                    <a className="group flex items-start gap-5">
+                      <div className="relative h-36 w-36 flex-none overflow-hidden rounded-xl bg-black/85">
+                        {scenicProjectMatch.coverImageUrl ? (
+                          <img
+                            src={scenicProjectMatch.coverImageUrl}
+                            alt={scenicProjectMatch.title}
+                            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                          />
+                        ) : null}
+                        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,31,71,0.18)_0%,rgba(22,64,133,0.42)_55%,rgba(10,18,38,0.74)_100%)]" />
+                      </div>
+                      <div className="min-w-0 pt-1">
+                        <h3 className="text-[1.22rem] leading-[1.18] tracking-[-0.03em] text-foreground/92 transition-colors group-hover:text-foreground">
+                          {scenicProjectMatch.title}
+                        </h3>
+                        <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-foreground/52">
+                          <span>Scenic Design Project</span>
+                          {scenicProjectMatch.client ? <span>{scenicProjectMatch.client}</span> : null}
+                          {scenicProjectMatch.year ? <span>{scenicProjectMatch.year}</span> : null}
+                        </div>
+                      </div>
+                    </a>
+                  </Link>
+                </div>
+              </div>
+            </AnimatedSection>
+          </section>
+        ) : null}
+
+        {moreRenderingProjects.length > 0 ? (
+          <section className="container max-w-5xl pt-18 md:pt-24">
+            <AnimatedSection>
+              <div className="pt-18 md:pt-24">
+                <div className="mb-12 h-px w-full bg-border/60" />
+                <p className="mb-8 font-sans text-[1.15rem] tracking-[-0.02em] text-foreground">
+                  All Renderings
+                </p>
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
+                  {moreRenderingProjects.map((item: any) => (
+                    <Link key={item.id} href={`${projectBasePath}/${item.slug}`}>
+                      <a className="group block">
+                        <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-black/85">
+                          {item.coverImageUrl ? (
+                            <img
+                              src={item.coverImageUrl}
+                              alt={item.title}
+                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                              style={{ objectPosition: "center center" }}
+                            />
+                          ) : <div className="h-full w-full bg-muted" />}
+                        </div>
+                        <div className="pt-3">
+                          <h3 className="text-[1.02rem] font-normal tracking-[-0.02em] text-foreground/88 transition-colors group-hover:text-foreground">
+                            {item.title}
+                          </h3>
+                          <p className="mt-1.5 text-[0.92rem] tracking-[-0.01em] text-foreground/52">
+                            {[item.client, item.year].filter(Boolean).join("  ")}
+                          </p>
+                        </div>
+                      </a>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </AnimatedSection>
+          </section>
+        ) : null}
+      </main>
 
       {/* Lightbox */}
       <AnimatePresence>
@@ -307,6 +498,7 @@ export default function RenderingProjectDetail() {
           />
         )}
       </AnimatePresence>
+      <Footer />
     </div>
   );
 }

@@ -19,7 +19,7 @@ const EXCLUDED_RENDERING_SLUGS = new Set([
 
 const RENDERING_PROJECT_OVERRIDES: Record<
   string,
-  Partial<Pick<LocalRenderingProject, "coverImageUrl" | "images" | "excerpt" | "designNotes">>
+  Partial<Pick<LocalRenderingProject, "coverImageUrl" | "images" | "excerpt" | "designNotes" | "heroExcerpt" | "bodySections">>
 > = {
   "ashes-of-the-underworld": {
     images: [],
@@ -83,7 +83,12 @@ export type LocalRenderingProject = {
   title: string;
   slug: string;
   excerpt: string;
+  heroExcerpt?: string;
   designNotes: string;
+  bodySections?: Array<{
+    heading: string;
+    paragraphs: string[];
+  }>;
   coverImageUrl: string;
   client: string;
   location: string;

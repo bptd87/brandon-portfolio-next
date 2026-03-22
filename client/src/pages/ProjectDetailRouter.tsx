@@ -4,6 +4,8 @@ import { trpc } from "@/lib/trpc";
 import ProjectDetail from "./ProjectDetail";
 import RenderingProjectDetail from "./RenderingProjectDetail";
 import { getLocalRenderingProjectBySlug } from "@shared/localPortfolios";
+import { getLocalScenicProjectBySlug } from "@shared/localScenicProjects";
+import ScenicProjectDetail from "./ScenicProjectDetail";
 
 /**
  * Router component that determines which project detail page to render
@@ -19,6 +21,7 @@ export default function ProjectDetailRouter() {
   const localRenderingProject = isRenderingRoute
     ? getLocalRenderingProjectBySlug(normalizedSlug)
     : null;
+  const localScenicProject = !isRenderingRoute ? getLocalScenicProjectBySlug(normalizedSlug) : null;
 
   useEffect(() => {
     if (!slug || !normalizedSlug || slug === normalizedSlug) return;
@@ -33,7 +36,7 @@ export default function ProjectDetailRouter() {
 
   const { data: project, isLoading } = trpc.projects.getBySlug.useQuery(
     { slug: normalizedSlug },
-    { enabled: !!normalizedSlug && !localRenderingProject }
+    { enabled: !!normalizedSlug && !localRenderingProject && !localScenicProject }
   );
 
   useEffect(() => {
@@ -53,6 +56,10 @@ export default function ProjectDetailRouter() {
 
   if (localRenderingProject && isRenderingRoute) {
     return <RenderingProjectDetail />;
+  }
+
+  if (localScenicProject && !isRenderingRoute) {
+    return <ScenicProjectDetail />;
   }
 
   if (isLoading) {

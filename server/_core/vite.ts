@@ -21,6 +21,7 @@ import {
   getLocalExperientialProcessGallery,
   getLocalRenderingProjects,
 } from "@shared/localPortfolios";
+import { getLocalScenicProjectBySlug } from "@shared/localScenicProjects";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -392,6 +393,49 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
 
   const projectMatch = decodedPath.match(/^\/project\/([^/?#]+)\/?$/i);
   if (projectMatch) {
+    const localScenicProject = getLocalScenicProjectBySlug(cleanSlug(projectMatch[1]));
+    if (localScenicProject?.status === "published") {
+      const imageUrls = Array.from(
+        new Set(
+          localScenicProject.media
+            .map((item) => item.imageUrl)
+            .filter((value): value is string => typeof value === "string" && isLikelyImageUrl(value))
+            .map((value) => toPinterestReadyImageUrl(absoluteUrl(origin, value)))
+        )
+      ).slice(0, 10);
+
+      const coverImage = isLikelyImageUrl(localScenicProject.coverImageUrl || "")
+        ? absoluteUrl(origin, localScenicProject.coverImageUrl)
+        : null;
+      const preferredImage = imageUrls[0] || coverImage || getDefaultShareImage(origin);
+      const pinterestPreferredImage = toPinterestReadyImageUrl(preferredImage);
+      const socialImages = Array.from(
+        new Set([
+          pinterestPreferredImage,
+          ...(coverImage ? [toPinterestReadyImageUrl(coverImage)] : []),
+          ...imageUrls,
+        ])
+      ).slice(0, 10);
+
+      return cacheMeta({
+        title: localScenicProject.seoTitle || localScenicProject.title || DEFAULT_META.title,
+        description:
+          localScenicProject.seoDescription ||
+          localScenicProject.excerpt ||
+          DEFAULT_META.description,
+        image: pinterestPreferredImage,
+        images: socialImages,
+        canonical: `${origin}/project/${localScenicProject.slug}`,
+        type: "website",
+        publishedTime: localScenicProject.publishedAt
+          ? new Date(localScenicProject.publishedAt).toISOString()
+          : undefined,
+        modifiedTime: localScenicProject.updatedAt
+          ? new Date(localScenicProject.updatedAt).toISOString()
+          : undefined,
+      });
+    }
+
     const project = await findProjectByLooseSlug(projectMatch[1]);
     if (project?.status === "published") {
       const projectImages = await db.getProjectImages(project.id);
