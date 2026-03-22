@@ -1,8 +1,9 @@
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
 import { getProjectPath } from "@/lib/projectRoutes";
-import { trpc } from "@/lib/trpc";
-import { ArrowLeft, Briefcase, FileText, Newspaper } from "lucide-react";
+import { getLocalArticles } from "@shared/localArticles";
+import { getLocalScenicProjects } from "@shared/localScenicProjects";
+import { ArrowLeft, Briefcase, FileText } from "lucide-react";
 import { Link, useParams } from "wouter";
 
 const INDEXABLE_TAG_MIN_ITEMS = 3;
@@ -14,22 +15,66 @@ type TagPageSection = {
   icon: typeof Briefcase;
 };
 
-export default function TagDetail() {
-  const { slug } = useParams<{ slug: string }>();
-  const { data, isLoading } = trpc.tags.getBySlug.useQuery({ slug: slug || "" });
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-background text-foreground">
-        <Header />
-        <div className="container flex min-h-[55vh] items-center justify-center">
-          <div className="text-sm tracking-[0.02em] text-foreground/48">Loading tag archive...</div>
-        </div>
-      </div>
-    );
+const unslugify = (value: string) =>
+  value
+    .split("-")
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+
+const getContentTimestamp = (item: {
+  publishedAt?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+  year?: number | null;
+  month?: number | null;
+}) => {
+  if (item.year) {
+    const monthIndex = item.month ? Math.max(item.month - 1, 0) : 6;
+    return new Date(item.year, monthIndex, 1).getTime();
   }
 
-  if (!data || !data.tag) {
+  const fallback = item.publishedAt || item.updatedAt || item.createdAt;
+  return fallback ? new Date(fallback).getTime() : 0;
+};
+
+export default function TagDetail() {
+  const { slug } = useParams<{ slug: string }>();
+  const normalizedSlug = (slug || "").toLowerCase();
+
+  const projects = getLocalScenicProjects()
+    .filter((project) => project.tags.some((tag) => tag.slug === normalizedSlug))
+    .sort((a, b) => getContentTimestamp(b) - getContentTimestamp(a));
+
+  const articles = getLocalArticles()
+    .filter((article) => (article.tags || []).some((tag) => tag.slug === normalizedSlug))
+    .sort((a, b) => getContentTimestamp(b) - getContentTimestamp(a));
+
+  const firstProjectTag = projects
+    .flatMap((project) => project.tags)
+    .find((tag) => tag.slug === normalizedSlug);
+  const firstArticleTag = articles
+    .flatMap((article) => article.tags || [])
+    .find((tag) => tag.slug === normalizedSlug);
+
+  const tagName = firstProjectTag?.name || firstArticleTag?.name || unslugify(normalizedSlug);
+  const totalItems = projects.length + articles.length;
+  const shouldNoindex = totalItems < INDEXABLE_TAG_MIN_ITEMS;
+  const canonicalTagUrl = `https://www.brandonptdavis.com/tags/${normalizedSlug}`;
+
+  const sections: TagPageSection[] = [
+    { id: "projects", label: "Projects", count: projects.length, icon: Briefcase },
+    { id: "articles", label: "Articles", count: articles.length, icon: FileText },
+  ].filter((section) => section.count > 0);
+
+  if (!normalizedSlug || totalItems === 0) {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <Header />
@@ -55,23 +100,11 @@ export default function TagDetail() {
     );
   }
 
-  const { tag, projects, articles, news } = data;
-  const totalItems = projects.length + articles.length + news.length;
-  const shouldNoindex = totalItems < INDEXABLE_TAG_MIN_ITEMS;
-  const canonicalTagSlug = (tag.slug || slug || "").toLowerCase();
-  const canonicalTagUrl = `https://www.brandonptdavis.com/tags/${canonicalTagSlug}`;
-
-  const sections: TagPageSection[] = [
-    { id: "projects", label: "Projects", count: projects.length, icon: Briefcase },
-    { id: "articles", label: "Articles", count: articles.length, icon: FileText },
-    { id: "news", label: "News Archive", count: news.length, icon: Newspaper },
-  ].filter((section) => section.count > 0);
-
   return (
     <>
       <SEO
-        title={`${tag.name} | Brandon PT Davis`}
-        description={`Browse all content tagged with ${tag.name} across projects, articles, and archived news.`}
+        title={`${tagName} | Brandon PT Davis`}
+        description={`Browse all content tagged with ${tagName} across scenic projects and articles.`}
         url={canonicalTagUrl}
         noindex={shouldNoindex}
       />
@@ -92,16 +125,15 @@ export default function TagDetail() {
             <div className="mt-10 max-w-4xl border-t border-white/10 pt-10">
               <p className="text-xs font-bold uppercase tracking-[0.28em] text-white/42">Tag Archive</p>
               <h1 className="mt-4 max-w-[12ch] font-sans text-[clamp(2.8rem,6vw,5.4rem)] font-medium leading-[0.9] tracking-[-0.065em] text-foreground">
-                {tag.name}
+                {tagName}
               </h1>
               <p className="mt-5 max-w-3xl text-[clamp(1.02rem,1.2vw,1.14rem)] leading-[1.72] tracking-[-0.014em] text-foreground/64">
-                {totalItems} {totalItems === 1 ? "item" : "items"} gathered across projects, essays, and archived
-                site writing.
+                {totalItems} {totalItems === 1 ? "item" : "items"} gathered across scenic projects and essays.
               </p>
             </div>
 
             {sections.length > 0 ? (
-              <div className="mt-10 grid gap-3 border-t border-white/10 pt-6 sm:grid-cols-3">
+              <div className="mt-10 grid gap-3 border-t border-white/10 pt-6 sm:grid-cols-2">
                 {sections.map((section) => {
                   const Icon = section.icon;
                   return (
@@ -200,61 +232,6 @@ export default function TagDetail() {
                     </Link>
                   ))}
                 </div>
-              </section>
-            ) : null}
-
-            {news.length > 0 ? (
-              <section id="news" className="border-t border-white/10 pt-8">
-                <div className="mb-8 flex items-center justify-between gap-6">
-                  <h2 className="font-sans text-[clamp(1.9rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.05em] text-foreground">
-                    News Archive
-                  </h2>
-                  <div className="text-sm tracking-[0.08em] text-foreground/42">{news.length}</div>
-                </div>
-
-                <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                  {news.map((item) => (
-                    <Link key={item.id} href={`/news/${item.slug}`} className="group block">
-                      <div className="space-y-4">
-                        {item.coverImageUrl ? (
-                          <div className="overflow-hidden bg-black">
-                            <img
-                              src={item.coverImageUrl}
-                              alt={item.title}
-                              className="aspect-[4/3] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
-                            />
-                          </div>
-                        ) : null}
-
-                        <div className="space-y-2">
-                          <h3 className="font-sans text-[1.5rem] font-medium leading-[1.02] tracking-[-0.04em] text-foreground transition-colors group-hover:text-foreground/84">
-                            {item.title}
-                          </h3>
-                          {item.excerpt ? (
-                            <p className="line-clamp-3 text-[0.98rem] leading-[1.7] tracking-[-0.012em] text-foreground/58">
-                              {item.excerpt}
-                            </p>
-                          ) : null}
-                          <p className="text-[0.76rem] font-bold uppercase tracking-[0.24em] text-white/42">
-                            {new Date(item.date).toLocaleDateString("en-US", {
-                              year: "numeric",
-                              month: "long",
-                              day: "numeric",
-                            })}
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </section>
-            ) : null}
-
-            {totalItems === 0 ? (
-              <section className="border-t border-white/10 pt-10">
-                <p className="max-w-2xl text-[1rem] leading-[1.72] text-foreground/58">
-                  No projects, articles, or archived news are attached to this tag yet.
-                </p>
               </section>
             ) : null}
           </div>

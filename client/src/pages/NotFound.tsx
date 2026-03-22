@@ -11,6 +11,8 @@ export default function NotFound() {
       <SEO
         title="404 | Brandon PT Davis"
         description="The page you’re looking for isn’t available. Return to the portfolio, studio, or homepage."
+        noindex={true}
+        nofollow={true}
       />
 
       <Header />

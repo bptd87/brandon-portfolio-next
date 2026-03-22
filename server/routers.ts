@@ -1581,6 +1581,14 @@ export const appRouter = router({
         }
 
         if (!ENV.resendApiKey || !ENV.contactFromEmail || !ENV.contactToEmail) {
+          if (!ENV.isProduction) {
+            console.warn("Contact submission stored, but email delivery is skipped because mail env vars are missing.");
+            return {
+              success: true,
+              delivery: "skipped",
+            };
+          }
+
           throw new TRPCError({
             code: "INTERNAL_SERVER_ERROR",
             message: "Contact email service is not configured.",
@@ -1600,7 +1608,10 @@ export const appRouter = router({
           text: content,
         });
 
-        return { success: true };
+        return {
+          success: true,
+          delivery: "sent",
+        };
       }),
   }),
 

@@ -167,6 +167,7 @@ export default function Syllabus3DModeling() {
             />
           </div>
         </div>
+
       </section>
 
       <section className="px-6 py-18 md:py-22">
@@ -283,6 +284,50 @@ export default function Syllabus3DModeling() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-6 pb-4 pt-2 md:pb-6 md:pt-4">
+        <div className="mx-auto max-w-6xl border-t border-border/20 pt-10">
+          <div className="max-w-3xl">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+              Related Tutorials
+            </p>
+            <h2 className="mt-4 font-sans text-[clamp(1.8rem,3.6vw,2.8rem)] font-medium leading-[1] tracking-[-0.045em] text-foreground">
+              Tutorial videos used alongside this class.
+            </h2>
+            <p className="mt-5 text-[1rem] leading-7 text-foreground/60 md:text-[1.05rem]">
+              These walkthroughs support the same modeling, rendering, and documentation habits students practice in THA 211, making it easier to review workflows outside class.
+            </p>
+          </div>
+
+          <div className="mt-8 max-w-4xl">
+            <Link href="/studio/tutorials" className="group block">
+              <div className="grid gap-5 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:items-start">
+                <div className="relative aspect-square overflow-hidden rounded-[1.15rem] border border-border/35 bg-card/20">
+                  <img
+                    src="/assets/studio/studio-tutorials-cover.png"
+                    alt="Vectorworks tutorials used in THA 211"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="pt-1">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-foreground/50">
+                    <span>Studio Tutorials</span>
+                    <span>3D Modeling</span>
+                    <span>Rendering</span>
+                  </div>
+                  <h3 className="mt-3 font-sans text-[1.3rem] font-medium leading-[1.06] tracking-[-0.035em] text-foreground transition-colors group-hover:text-foreground/84">
+                    Vectorworks tutorial library
+                  </h3>
+                  <p className="mt-3 text-[0.97rem] leading-7 text-foreground/60">
+                    Video lessons covering drafting, hybrid objects, 3D modeling, rendering, and workflow habits that reinforce the course structure.
+                  </p>
+                </div>
+              </div>
+            </Link>
           </div>
         </div>
       </section>

@@ -87,6 +87,15 @@ interface CreativeWorkSchema {
     name: string;
     roleName?: string;
   }>;
+  isPartOf?: {
+    name: string;
+    url?: string;
+  };
+  mentions?: Array<{
+    type?: string;
+    name: string;
+    url?: string;
+  }>;
 }
 
 interface BreadcrumbItem {
@@ -112,6 +121,15 @@ interface ArticleSchema {
   articleBody?: string;
   wordCount?: number;
   keywords?: string[];
+  isPartOf?: {
+    name: string;
+    url?: string;
+  };
+  about?: Array<{
+    type?: string;
+    name: string;
+    url?: string;
+  }>;
 }
 
 interface VideoObjectSchema {
@@ -477,6 +495,22 @@ export default function StructuredData({ type, person, organization, creativeWor
       }));
     }
 
+    if (data.isPartOf) {
+      schema.isPartOf = {
+        '@type': 'CollectionPage',
+        name: data.isPartOf.name,
+        ...(data.isPartOf.url && { url: data.isPartOf.url }),
+      };
+    }
+
+    if (data.mentions && data.mentions.length > 0) {
+      schema.mentions = data.mentions.map((item) => ({
+        '@type': item.type || 'Thing',
+        name: item.name,
+        ...(item.url && { url: item.url }),
+      }));
+    }
+
     return schema;
   };
 
@@ -538,6 +572,20 @@ export default function StructuredData({ type, person, organization, creativeWor
     if (article.wordCount) schema.wordCount = article.wordCount;
     if (article.keywords && article.keywords.length > 0) {
       schema.keywords = article.keywords.join(', ');
+    }
+    if (article.isPartOf) {
+      schema.isPartOf = {
+        '@type': 'CreativeWorkSeries',
+        name: article.isPartOf.name,
+        ...(article.isPartOf.url && { url: article.isPartOf.url }),
+      };
+    }
+    if (article.about && article.about.length > 0) {
+      schema.about = article.about.map((item) => ({
+        '@type': item.type || 'Thing',
+        name: item.name,
+        ...(item.url && { url: item.url }),
+      }));
     }
 
     schemas.push(schema);

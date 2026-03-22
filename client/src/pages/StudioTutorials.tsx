@@ -2,11 +2,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useMemo, useState } from "react";
 import { ArrowRight, Clock, PlayCircle, Search, TrendingUp } from "lucide-react";
-import { trpc } from "@/lib/trpc";
 import { Link } from "wouter";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Input } from "@/components/ui/input";
+import { getLocalTutorials } from "@shared/localStudio";
 
 const categories = [
   { slug: "getting-started", name: "Getting Started" },
@@ -55,7 +55,8 @@ export default function StudioTutorials() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<"newest" | "alphabetical" | "duration">("newest");
 
-  const { data: tutorials = [], isLoading } = trpc.tutorials.list.useQuery({ status: "published" });
+  const tutorials = getLocalTutorials();
+  const isLoading = false;
 
   const sortedTutorials = useMemo(() => {
     const filtered = tutorials.filter((tutorial: any) => {

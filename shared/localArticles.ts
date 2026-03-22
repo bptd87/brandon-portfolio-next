@@ -8,6 +8,12 @@ export interface LocalArticleAudio {
   durationLabel?: string;
 }
 
+export interface LocalArticleSeries {
+  name: string;
+  slug: string;
+  order: number;
+}
+
 export interface LocalArticle {
   id: number;
   slug: string;
@@ -25,6 +31,8 @@ export interface LocalArticle {
   sourcePublication?: string | null;
   sourceUrl?: string | null;
   audio?: LocalArticleAudio;
+  series?: LocalArticleSeries;
+  linkedScenicProjectSlugs?: string[];
   tags?: Array<{ id: number; name: string; slug: string }>;
   content: LocalArticleBlock[] | string;
   featured?: boolean;
@@ -84,6 +92,23 @@ const slugify = (value: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 
+const normalizeArticleCategory = (categoryName?: string | null) => {
+  switch (categoryName) {
+    case "Technology & Tutorials":
+      return "Tools & Technology";
+    case "Design Philosophy":
+      return "Scenic Design";
+    case "Scenic Design Process":
+      return "Design Process";
+    case "Musical Theatre & Cinema":
+      return "Performance History & Culture";
+    case "Editorial Profiles":
+      return "Profiles & Interviews";
+    default:
+      return categoryName || "";
+  }
+};
+
 const audioBySlug: Record<string, LocalArticleAudio> = {
   "empowering-theatre-students-with-computer-literacy": {
     url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/sign/article_audio/Computer%20Literacy.mp3?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80OTA3YTJmOS04YzBmLTRlODQtOWIwNC04Njc2OTJkMzA5OGEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJhcnRpY2xlX2F1ZGlvL0NvbXB1dGVyIExpdGVyYWN5Lm1wMyIsImlhdCI6MTc3MzgwNjk0NCwiZXhwIjoxODY4NDE0OTQ0fQ.XkGzQOroOzZ3GLCtIEgUJ1AS7X_S9F1fnTUKR0lbAPA",
@@ -101,14 +126,120 @@ const audioBySlug: Record<string, LocalArticleAudio> = {
 };
 
 const articleFieldOverridesBySlug: Record<string, Partial<LocalArticle>> = {
+  "online-portfolio-theatrical-design-2026": {
+    categoryName: "Tools & Technology",
+  },
+  "becoming-a-scenic-designer-a-comprehensive-guide": {
+    categoryName: "Scenic Design",
+  },
+  "video-game-environments-lessons-for-scenic-design": {
+    categoryName: "Scenic Design",
+  },
+  "artistic-vision-in-scenic-design-finding-my-creative-voice": {
+    categoryName: "Scenic Design",
+  },
+  "minimalist-scenic-design-dominating-regional-theatres-in-2025": {
+    categoryName: "Scenic Design",
+  },
+  "the-lights-were-already-on-maude-adams-legacy-at-stephens-college": {
+    categoryName: "Scenic Design",
+  },
+  "the-1960s-musical-revolution-when-hollywoods-golden-formula-met-rock-and-rebellion": {
+    categoryName: "Performance History & Culture",
+  },
+  "building-the-visual-world-art-direction-in-film-television": {
+    categoryName: "Performance History & Culture",
+  },
+  "the-golden-age-of-cinema-musicals-in-the-spotlight": {
+    categoryName: "Performance History & Culture",
+  },
+  "the-golden-age-of-broadway-a-defining-era-in-musical-theatre": {
+    categoryName: "Performance History & Culture",
+  },
+  "operas-foundations-the-evolution-of-scenic-design-in-opera": {
+    categoryName: "Performance History & Culture",
+  },
+  "sora-in-the-studio-testing-ais-potential-for-theatrical-design": {
+    categoryName: "Tools & Technology",
+  },
+  "lighting-styles-in-ai-models": {
+    categoryName: "Tools & Technology",
+  },
+  "computer-hardware-why-scenic-designers-and-all-theatre-designers-need-to-care": {
+    categoryName: "Tools & Technology",
+  },
+  "how-to-create-trim-profiles-in-vectorworks-using-the-polyline-tool": {
+    categoryName: "Tools & Technology",
+  },
+  "the-art-of-presenting-theatre-design-a-guide-for-designers": {
+    categoryName: "Tools & Technology",
+  },
+  "empowering-theatre-students-with-computer-literacy": {
+    categoryName: "Tools & Technology",
+  },
+  "scenic-design-process": {
+    categoryName: "Design Process",
+    series: {
+      name: "Process and Practice",
+      slug: "process-and-practice",
+      order: 1,
+    },
+  },
   "youre-wasting-my-time-a-scenic-design-lesson-in-growth-and-revision": {
+    categoryName: "Design Process",
     excerpt:
       "A reflective essay on critique, revision, and the moment scenic design shifted from presentation toward real-time design thinking.",
     seoDescription:
       "A scenic design essay about critique, revision, URTAs, and learning to think like a designer under pressure.",
+    series: {
+      name: "Process and Practice",
+      slug: "process-and-practice",
+      order: 2,
+    },
+  },
+  "framing-the-martyr-scenic-design-as-memory-work-in-romero": {
+    categoryName: "Design Process",
+    series: {
+      name: "Process and Practice",
+      slug: "process-and-practice",
+      order: 3,
+    },
+    linkedScenicProjectSlugs: ["romero"],
+  },
+  "designing-the-keller-home-a-look-back-at-all-my-sons": {
+    categoryName: "Design Process",
+    series: {
+      name: "Process and Practice",
+      slug: "process-and-practice",
+      order: 4,
+    },
+    linkedScenicProjectSlugs: ["all-my-sons"],
+  },
+  "urinetown-scenic-design-building-a-dystopia-that-feels-uncomfortably-familiar": {
+    categoryName: "Design Process",
+    series: {
+      name: "Process and Practice",
+      slug: "process-and-practice",
+      order: 5,
+    },
+    linkedScenicProjectSlugs: ["urinetown"],
   },
   "what-makes-a-good-scenic-design-rendering": {
+    categoryName: "Tools & Technology",
     publishedAt: "2026-03-13",
+    series: {
+      name: "Design Communication",
+      slug: "design-communication",
+      order: 2,
+    },
+  },
+  "the-evolution-of-themed-entertainment-from-ancient-gardens-to-modern-immersive-experienceses-everything": {
+    categoryName: "Themed Entertainment",
+    series: {
+      name: "Themed Experience",
+      slug: "themed-experience",
+      order: 1,
+    },
   },
 };
 
@@ -661,7 +792,7 @@ const voyageLaArticle: LocalArticle = {
   publishedAt: "2026-02-10",
   updatedAt: "2026-02-12",
   createdAt: "2026-02-10",
-  categoryName: "Editorial Profiles",
+  categoryName: "Profiles & Interviews",
   seoTitle: "VoyageLA Interview | Brandon PT Davis",
   seoDescription:
     "VoyageLA's Rising Stars interview with Brandon PT Davis on scenic design process, career development, and production-focused collaboration.",
@@ -734,12 +865,17 @@ const visualLanguageArticle: LocalArticle = {
   publishedAt: "2026-03-05",
   updatedAt: "2026-03-20",
   createdAt: "2026-03-20",
-  categoryName: "Design Philosophy",
+  categoryName: "Scenic Design",
   seoTitle: "The Visual Language of Scenic Design | Elements and Principles in Performance",
   seoDescription:
     "An essay on how the elements and principles of design shape scenic environments, audience perception, and live theatrical storytelling.",
   seoKeywords:
     "scenic design principles, elements of design, principles of design, scenic design education, theatrical design, live performance design",
+  series: {
+    name: "Design Communication",
+    slug: "design-communication",
+    order: 1,
+  },
   tags: [
     { id: 100401, name: "Scenic Design", slug: "scenic-design" },
     { id: 100402, name: "Design Education", slug: "design-education" },
@@ -1071,6 +1207,11 @@ const ghibliImmersiveDiningArticle: LocalArticle = {
     "Discover how theatre design students developed a Studio Ghibli-inspired immersive dining concept, using scenic storytelling tools in a themed entertainment studio project.",
   seoKeywords:
     "themed entertainment design, immersive dining, studio ghibli inspired design, theatre design education, environmental storytelling, themed experience design",
+  series: {
+    name: "Themed Experience",
+    slug: "themed-experience",
+    order: 2,
+  },
   tags: [
     { id: 100411, name: "Themed Entertainment", slug: "themed-entertainment" },
     { id: 100412, name: "Design Education", slug: "design-education" },
@@ -1717,6 +1858,9 @@ const ghibliImmersiveDiningArticle: LocalArticle = {
 const dbBackedArticles = (generatedLocalArticles as LocalArticle[]).map((article) => ({
   ...article,
   ...articleFieldOverridesBySlug[article.slug],
+  categoryName: normalizeArticleCategory(
+    articleFieldOverridesBySlug[article.slug]?.categoryName ?? article.categoryName
+  ),
   content: contentOverridesBySlug[article.slug] ?? article.content,
   audio: audioBySlug[article.slug],
 }));
@@ -1739,6 +1883,7 @@ const articlesWithManualEntries = [
 export const localArticles = articlesWithManualEntries
   .map((article) => ({
     ...article,
+    categoryName: normalizeArticleCategory(article.categoryName),
     excerpt: article.excerpt || "",
     coverImageAlt: article.coverImageAlt || article.title,
     readTime: article.readTime ?? estimateReadTime(article.content),
@@ -1794,6 +1939,8 @@ export function toLocalArticleRecord(article: LocalArticle) {
     views: 0,
     tags: article.tags || [],
     audio: article.audio,
+    series: article.series,
+    linkedScenicProjectSlugs: article.linkedScenicProjectSlugs || [],
     sourcePublication: article.sourcePublication || null,
     sourceUrl: article.sourceUrl || null,
   };

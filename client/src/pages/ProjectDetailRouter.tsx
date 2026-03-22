@@ -1,7 +1,5 @@
 import { useEffect } from "react";
 import { useLocation, useParams } from "wouter";
-import { trpc } from "@/lib/trpc";
-import ProjectDetail from "./ProjectDetail";
 import RenderingProjectDetail from "./RenderingProjectDetail";
 import { getLocalRenderingProjectBySlug } from "@shared/localPortfolios";
 import { getLocalScenicProjectBySlug } from "@shared/localScenicProjects";
@@ -34,25 +32,9 @@ export default function ProjectDetailRouter() {
     setLocation(nextLocation, { replace: true });
   }, [location, normalizedSlug, setLocation, slug]);
 
-  const { data: project, isLoading } = trpc.projects.getBySlug.useQuery(
-    { slug: normalizedSlug },
-    { enabled: !!normalizedSlug && !localRenderingProject && !localScenicProject }
-  );
-
   useEffect(() => {
-    if (localRenderingProject && isRenderingRoute) return;
-    if (!project?.slug || project.slug === normalizedSlug) return;
-
-    const canonicalPath = location.startsWith("/projects/experiential/rendering/")
-      ? `/projects/experiential/rendering/${project.slug}`
-      : location.startsWith("/projects/rendering/")
-        ? `/projects/rendering/${project.slug}`
-        : `/project/${project.slug}`;
-
-    if (location !== canonicalPath) {
-      setLocation(canonicalPath, { replace: true });
-    }
-  }, [isRenderingRoute, localRenderingProject, location, normalizedSlug, project?.slug, setLocation]);
+    if (localRenderingProject || localScenicProject) return;
+  }, [localRenderingProject, localScenicProject]);
 
   if (localRenderingProject && isRenderingRoute) {
     return <RenderingProjectDetail />;
@@ -62,15 +44,7 @@ export default function ProjectDetailRouter() {
     return <ScenicProjectDetail />;
   }
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <p className="text-muted-foreground">Loading project...</p>
-      </div>
-    );
-  }
-
-  if (!project) {
+  if (!localRenderingProject && !localScenicProject) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
@@ -80,12 +54,5 @@ export default function ProjectDetailRouter() {
     );
   }
 
-  // Route to discipline-specific detail page
-  switch (project.discipline) {
-    case 'rendering':
-      return <RenderingProjectDetail />;
-    case 'scenic_design':
-    default:
-      return <ProjectDetail />;
-  }
+  return null;
 }

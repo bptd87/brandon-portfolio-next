@@ -251,9 +251,11 @@ export default function ProjectDetail() {
           title={`${project.title} | Brandon PT Davis`}
           description={project.excerpt || `${project.title} - Scenic design project by Brandon PT Davis`}
           image={project.coverImageUrl || undefined}
+          imageAlt={`${project.title} project cover image`}
           type="website"
           keywords={project.seoKeywords || undefined}
           url={projectUrl}
+          noindex={true}
         />
       <StructuredData
         type="BreadcrumbList"
@@ -497,15 +499,13 @@ export default function ProjectDetail() {
                           .replace(/^-|-$/g, "");
 
                         return (
-                          <Link key={idx} href={`/about/collaborators#${memberSlug}`}>
-                            <a className="block py-4 transition-colors hover:text-foreground">
-                              <span className="block text-[11px] uppercase tracking-[0.16em] text-foreground/42">
-                                {member.role}
-                              </span>
-                              <span className="mt-2 block text-[1.02rem] leading-7 text-foreground/72">
-                                {member.name}
-                              </span>
-                            </a>
+                          <Link key={idx} href={`/about/collaborators#${memberSlug}`} className="block py-4 transition-colors hover:text-foreground">
+                            <span className="block text-[11px] uppercase tracking-[0.16em] text-foreground/42">
+                              {member.role}
+                            </span>
+                            <span className="mt-2 block text-[1.02rem] leading-7 text-foreground/72">
+                              {member.name}
+                            </span>
                           </Link>
                         );
                       })}
@@ -629,34 +629,32 @@ export default function ProjectDetail() {
                 </h2>
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
                   {relatedProjectsFiltered.map((relatedProject) => (
-                    <Link key={relatedProject.id} href={getProjectPath(relatedProject)}>
-                      <a className="group block">
-                        <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-black/85">
-                          {relatedProject.coverImageUrl ? (
-                            <ProgressiveImage
-                              src={relatedProject.coverImageUrl}
-                              alt={relatedProject.title}
-                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                              aspectRatio="1/1"
-                              smartPosition={true}
-                              loading="lazy"
-                              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
-                            />
-                          ) : (
-                            <div className="h-full w-full bg-muted" />
-                          )}
-                        </div>
-                        <div className="pt-3">
-                          <h3 className="text-[1.02rem] font-normal tracking-[-0.02em] text-foreground/88 transition-colors group-hover:text-foreground">
-                            {relatedProject.title}
-                          </h3>
-                          <p className="mt-1.5 text-[0.92rem] tracking-[-0.01em] text-foreground/52">
-                            {[relatedProject.client || relatedProject.venue || relatedProject.subcategory, relatedProject.year]
-                              .filter(Boolean)
-                              .join("  ")}
-                          </p>
-                        </div>
-                      </a>
+                    <Link key={relatedProject.id} href={getProjectPath(relatedProject)} className="group block">
+                      <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-black/85">
+                        {relatedProject.coverImageUrl ? (
+                          <ProgressiveImage
+                            src={relatedProject.coverImageUrl}
+                            alt={relatedProject.title}
+                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                            aspectRatio="1/1"
+                            smartPosition={true}
+                            loading="lazy"
+                            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+                          />
+                        ) : (
+                          <div className="h-full w-full bg-muted" />
+                        )}
+                      </div>
+                      <div className="pt-3">
+                        <h3 className="text-[1.02rem] font-normal tracking-[-0.02em] text-foreground/88 transition-colors group-hover:text-foreground">
+                          {relatedProject.title}
+                        </h3>
+                        <p className="mt-1.5 text-[0.92rem] tracking-[-0.01em] text-foreground/52">
+                          {[relatedProject.client || relatedProject.venue || relatedProject.subcategory, relatedProject.year]
+                            .filter(Boolean)
+                            .join("  ")}
+                        </p>
+                      </div>
                     </Link>
                   ))}
                 </div>

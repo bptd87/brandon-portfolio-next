@@ -69,7 +69,7 @@ export default function Footer() {
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
             {FOOTER_SECTIONS.map((section) => (
               <div key={section.title}>
-                <h3 className="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/42">
+                <h3 className="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-white/42">
                   {section.title}
                 </h3>
                 <ul className="space-y-3">
@@ -78,14 +78,14 @@ export default function Footer() {
                       {item.internal ? (
                         <Link
                           href={item.href}
-                          className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                          className="text-sm text-white/68 transition-colors hover:text-white"
                         >
                           {item.label}
                         </Link>
                       ) : (
                         <a
                           href={item.href}
-                          className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                          className="text-sm text-white/68 transition-colors hover:text-white"
                         >
                           {item.label}
                         </a>
@@ -99,8 +99,8 @@ export default function Footer() {
 
           <div className="space-y-5 md:min-w-[16rem]">
             <div>
-              <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/42">Connect</p>
-              <p className="mt-2 text-sm leading-7 text-muted-foreground">
+              <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-white/42">Connect</p>
+              <p className="mt-2 text-sm leading-7 text-white/68">
                 Follow current work, studio updates, and professional contact points.
               </p>
             </div>
@@ -113,7 +113,7 @@ export default function Footer() {
                     href={item.href}
                     target={item.href.startsWith("mailto:") ? undefined : "_blank"}
                     rel={item.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/60 bg-background/50 text-foreground/68 transition-colors hover:border-foreground/18 hover:text-foreground"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/60 bg-background/50 text-white/68 transition-colors hover:border-white/18 hover:text-white"
                     title={item.label}
                   >
                     <Icon className="h-4 w-4" />
@@ -124,7 +124,7 @@ export default function Footer() {
                 href="https://www.pinterest.com/BrandonPTDavis/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/60 bg-background/50 text-foreground/68 transition-colors hover:border-foreground/18 hover:text-foreground"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/60 bg-background/50 text-white/68 transition-colors hover:border-white/18 hover:text-white"
                 title="Pinterest"
               >
                 <PinterestIcon className="h-4 w-4" />
@@ -133,22 +133,22 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 border-t border-border/40 pt-6 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col gap-4 border-t border-border/40 pt-6 text-sm text-white/62 md:flex-row md:items-center md:justify-between">
           <p>© {new Date().getFullYear()} Brandon PT Davis. All rights reserved.</p>
           <div className="flex flex-wrap gap-5">
-            <Link href="/privacy" className="transition-colors hover:text-foreground">
+            <Link href="/privacy" className="transition-colors hover:text-white">
               Privacy
             </Link>
-            <Link href="/terms" className="transition-colors hover:text-foreground">
+            <Link href="/terms" className="transition-colors hover:text-white">
               Terms
             </Link>
-            <Link href="/faq" className="transition-colors hover:text-foreground">
+            <Link href="/faq" className="transition-colors hover:text-white">
               FAQ
             </Link>
-            <Link href="/accessibility" className="transition-colors hover:text-foreground">
+            <Link href="/accessibility" className="transition-colors hover:text-white">
               Accessibility
             </Link>
-            <Link href="/sitemap" className="transition-colors hover:text-foreground">
+            <Link href="/sitemap" className="transition-colors hover:text-white">
               Sitemap
             </Link>
           </div>

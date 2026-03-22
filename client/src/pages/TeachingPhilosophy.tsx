@@ -6,19 +6,28 @@ import StructuredData from "@/components/StructuredData";
 import { trpc } from "@/lib/trpc";
 import { ArrowRight, Download } from "lucide-react";
 import { Link } from "wouter";
+import { getLocalScenicProjects } from "@shared/localScenicProjects";
+
+const getProjectTimestamp = (project: any) => {
+  if (project.year) {
+    const monthIndex = project.month ? Math.max(project.month - 1, 0) : 6;
+    return new Date(project.year, monthIndex, 1).getTime();
+  }
+
+  const fallback = project.updatedAt || project.publishedAt || project.createdAt;
+  return fallback ? new Date(fallback).getTime() : 0;
+};
 
 export default function TeachingPhilosophy() {
-  const { data: projects } = trpc.projects.list.useQuery({
-    status: "published",
-  });
-
   const generatePDF = trpc.system.generateTeachingPhilosophyPDF.useMutation();
 
-  const scenicDesignProjects = (projects || []).filter(
-    (project) =>
-      (project.discipline === "scenic_design" || project.discipline === "rendering") &&
-      !!project.coverImageUrl
-  );
+  const scenicDesignProjects = [...getLocalScenicProjects()]
+    .filter((project) => !!project.coverImageUrl)
+    .sort((a, b) => {
+      const timeCompare = getProjectTimestamp(b) - getProjectTimestamp(a);
+      if (timeCompare !== 0) return timeCompare;
+      return a.title.localeCompare(b.title);
+    });
 
   const heroProject =
     scenicDesignProjects.find((project) => project.featured) || scenicDesignProjects[0];
@@ -425,9 +434,9 @@ export default function TeachingPhilosophy() {
                   <p className="mt-3 font-sans text-[1rem] leading-7 text-foreground/74 transition-colors group-hover:text-foreground">
                     {project.title}
                   </p>
-                  {(project.client || project.venue) && (
+                  {project.client && (
                     <p className="text-[0.95rem] leading-6 text-foreground/48 transition-colors group-hover:text-foreground/62">
-                      {project.client || project.venue}
+                      {project.client}
                     </p>
                   )}
                 </Link>

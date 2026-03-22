@@ -7,16 +7,19 @@ import { useEffect } from "react";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { getLocalRenderingGallery, getLocalRenderingProjects } from "@shared/localPortfolios";
+import { getLocalArticles } from "@shared/localArticles";
 
 const RENDERING_PORTFOLIO_URL = "https://www.brandonptdavis.com/projects/rendering";
-const RENDERING_PORTFOLIO_TITLE = "Theatre Renderings | Brandon PT Davis";
+const RENDERING_PORTFOLIO_TITLE = "Scenic Rendering Portfolio | Brandon PT Davis";
 const RENDERING_PORTFOLIO_DESCRIPTION =
-  "Atmospheric theatre renderings by Brandon PT Davis, developed as pre-production communication tools for directors, collaborators, and scenic teams.";
+  "Scenic rendering portfolio by Brandon PT Davis featuring theatre concept renderings, alternate views, and production visualization developed to support directors, collaborators, and scenic teams.";
 const RENDERING_PORTFOLIO_KEYWORDS = [
+  "scenic rendering portfolio",
   "theatre renderings",
   "scenic design renderings",
   "stage design renderings",
   "production renderings",
+  "theatre visualization",
   "pre-production visualization",
   "Brandon PT Davis",
 ].join(", ");
@@ -24,6 +27,9 @@ const RENDERING_PORTFOLIO_KEYWORDS = [
 export default function RenderingPortfolio() {
   const projects = getLocalRenderingProjects().filter((project) => !project.galleryOnly);
   const galleryItems = getLocalRenderingGallery();
+  const renderingSeriesArticles = getLocalArticles()
+    .filter((article) => article.series?.slug === "design-communication")
+    .sort((a, b) => (a.series?.order || 0) - (b.series?.order || 0));
 
   const isLoading = false;
 
@@ -89,6 +95,7 @@ export default function RenderingPortfolio() {
         title={RENDERING_PORTFOLIO_TITLE}
         description={RENDERING_PORTFOLIO_DESCRIPTION}
         image={renderingPortfolioImage}
+        imageAlt={featuredDisplayItems[0]?.altText || galleryDisplayItems[0]?.altText || "Scenic rendering portfolio image"}
         keywords={RENDERING_PORTFOLIO_KEYWORDS}
         url={RENDERING_PORTFOLIO_URL}
       />
@@ -102,7 +109,7 @@ export default function RenderingPortfolio() {
       <StructuredData
         type="CollectionPage"
         collectionPage={{
-          name: "Rendering Portfolio",
+          name: "Scenic Rendering Portfolio",
           url: RENDERING_PORTFOLIO_URL,
           description: RENDERING_PORTFOLIO_DESCRIPTION,
           about:
@@ -125,7 +132,7 @@ export default function RenderingPortfolio() {
       <StructuredData
         type="CreativeWork"
         creativeWork={{
-          name: "Theatre Renderings",
+          name: "Scenic Renderings",
           description: RENDERING_PORTFOLIO_DESCRIPTION,
           url: RENDERING_PORTFOLIO_URL,
           creator: {
@@ -155,10 +162,10 @@ export default function RenderingPortfolio() {
       <section className="pt-12 md:pt-16">
         <div className="container max-w-6xl">
           <div className="mx-auto max-w-5xl text-center">
-            <h1 className="font-sans text-[clamp(2.5rem,6vw,5.3rem)] font-normal leading-[0.94] tracking-[-0.06em] text-foreground">
+            <h1 className="font-sans text-[clamp(2.5rem,6vw,5.3rem)] font-normal leading-[0.94] tracking-[-0.06em] text-white">
               Renderings
             </h1>
-            <p className="mx-auto mt-6 max-w-[44rem] text-[clamp(1.04rem,1.7vw,1.5rem)] leading-[1.5] tracking-[-0.02em] text-foreground/76">
+            <p className="mx-auto mt-6 max-w-[44rem] text-[clamp(1.04rem,1.7vw,1.5rem)] leading-[1.5] tracking-[-0.02em] text-white/76">
               Pre-production renderings developed to clarify atmosphere, spatial rhythm, and visual intent
               before teams move into drafting, budgeting, and fabrication.
             </p>
@@ -170,11 +177,11 @@ export default function RenderingPortfolio() {
         <section className="pb-10 pt-14 md:pb-14 md:pt-16">
           <div className="container max-w-6xl">
             <div className="border-t border-white/12 pt-5">
-              <p className="text-[0.78rem] uppercase tracking-[0.24em] text-foreground/46">Concept Renderings</p>
-              <h2 className="mt-3 max-w-[18ch] font-sans text-[clamp(1.9rem,3vw,3.1rem)] font-normal leading-[0.98] tracking-[-0.05em] text-foreground">
+              <p className="text-[0.78rem] uppercase tracking-[0.24em] text-white/46">Concept Renderings</p>
+              <h2 className="mt-3 max-w-[18ch] font-sans text-[clamp(1.9rem,3vw,3.1rem)] font-normal leading-[0.98] tracking-[-0.05em] text-white">
                 Image-first concept work built to establish scenic tone and visual argument.
               </h2>
-              <p className="mt-4 max-w-[42rem] text-[1rem] leading-8 text-foreground/72">
+              <p className="mt-4 max-w-[42rem] text-[1rem] leading-8 text-white/72">
                 These featured renderings are closer to concept framing than documentation: atmosphere, material
                 language, and narrative tone established early enough to guide scenic design conversations.
               </p>
@@ -197,10 +204,10 @@ export default function RenderingPortfolio() {
                     </div>
                   </div>
                   <div className="pt-3">
-                    <h3 className="text-[1.12rem] font-sans font-normal leading-[1.14] tracking-[-0.03em] text-foreground">
+                    <h3 className="text-[1.12rem] font-sans font-normal leading-[1.14] tracking-[-0.03em] text-white">
                       {item.title}
                     </h3>
-                    <p className="mt-1 text-[0.94rem] tracking-[-0.02em] text-foreground/52">
+                    <p className="mt-1 text-[0.94rem] tracking-[-0.02em] text-white/52">
                       {[item.client, item.year].filter(Boolean).join(" · ")}
                     </p>
                   </div>
@@ -215,7 +222,7 @@ export default function RenderingPortfolio() {
         <section className="pb-8 pt-16 md:pb-12">
           <div className="container max-w-6xl">
             <div className="mb-8 flex items-end justify-between">
-              <h2 className="text-2xl md:text-3xl font-sans font-normal tracking-[-0.05em] text-foreground">
+              <h2 className="text-2xl font-sans font-normal tracking-[-0.05em] text-white md:text-3xl">
                 Scenic Design Renderings
               </h2>
             </div>
@@ -235,16 +242,16 @@ export default function RenderingPortfolio() {
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                       />
                     ) : (
-                      <div className="flex h-full w-full items-center justify-center text-foreground/42">
+                      <div className="flex h-full w-full items-center justify-center text-white/42">
                         Image unavailable
                       </div>
                     )}
                   </div>
                   <div className="pt-4">
-                    <h3 className="text-[1.35rem] font-sans font-normal leading-[1.08] tracking-[-0.04em] text-foreground">
+                    <h3 className="text-[1.35rem] font-sans font-normal leading-[1.08] tracking-[-0.04em] text-white">
                       {item.title}
                     </h3>
-                    <p className="mt-2 text-[0.98rem] tracking-[-0.02em] text-foreground/54">
+                    <p className="mt-2 text-[0.98rem] tracking-[-0.02em] text-white/54">
                       {[item.client, item.year].filter(Boolean).join(" · ")}
                     </p>
                   </div>
@@ -259,7 +266,7 @@ export default function RenderingPortfolio() {
         <section className="border-t border-white/12 py-16 md:py-20">
           <div className="container max-w-6xl">
             <div className="mb-8 flex items-end justify-between">
-              <h2 className="text-2xl md:text-3xl font-sans font-normal tracking-[-0.05em] text-foreground">
+              <h2 className="text-2xl font-sans font-normal tracking-[-0.05em] text-white md:text-3xl">
                 Process and Alternate Views
               </h2>
             </div>
@@ -283,10 +290,10 @@ export default function RenderingPortfolio() {
                       <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/12" />
                     </div>
                     <div>
-                      <h3 className="text-[1.25rem] font-sans font-normal leading-[1.12] tracking-[-0.04em] text-foreground">
+                      <h3 className="text-[1.25rem] font-sans font-normal leading-[1.12] tracking-[-0.04em] text-white">
                         {item.title}
                       </h3>
-                      <p className="mt-2 text-[0.98rem] tracking-[-0.02em] text-foreground/54">
+                      <p className="mt-2 text-[0.98rem] tracking-[-0.02em] text-white/54">
                         {[item.client, item.year].filter(Boolean).join(" · ")}
                       </p>
                     </div>
@@ -302,17 +309,17 @@ export default function RenderingPortfolio() {
         <div className="container max-w-6xl">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
             <div>
-              <h2 className="text-2xl md:text-3xl font-sans font-normal tracking-[-0.05em] text-foreground">
+              <h2 className="text-2xl font-sans font-normal tracking-[-0.05em] text-white md:text-3xl">
                 Rendering in Practice
               </h2>
-              <p className="mt-5 max-w-[40rem] text-[1.04rem] leading-8 text-foreground/72">
+              <p className="mt-5 max-w-[40rem] text-[1.04rem] leading-8 text-white/72">
                 These renderings are built to align collaborators before scenic decisions harden into drafting,
                 budgets, and construction. The focus is always readability: atmosphere, composition, material
                 hierarchy, and staging intent made clear early enough to shape the conversation.
               </p>
             </div>
             <div className="max-w-[34rem]">
-              <ul className="space-y-3 text-[1rem] leading-7 text-foreground/68">
+              <ul className="space-y-3 text-[1rem] leading-7 text-white/68">
                 <li>Atmosphere and light studies for design alignment</li>
                 <li>Visual communication for directors and collaborators</li>
                 <li>Renderings that clarify scenic rhythm and staging focus</li>
@@ -322,6 +329,64 @@ export default function RenderingPortfolio() {
           </div>
         </div>
       </section>
+
+      {renderingSeriesArticles.length > 0 && (
+        <section className="border-t border-white/12 py-16 md:py-20">
+          <div className="container max-w-6xl">
+            <div className="mb-8 flex items-end justify-between gap-6">
+              <div>
+                <p className="text-[0.78rem] uppercase tracking-[0.24em] text-white/46">
+                  Design Communication
+                </p>
+                <h2 className="mt-3 text-2xl font-sans font-normal tracking-[-0.05em] text-white md:text-3xl">
+                  Rendering articles connected to this body of work
+                </h2>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              {renderingSeriesArticles.map((article) => (
+                <Link key={article.id} href={`/articles/${article.slug}`} className="group block">
+                  <div className="grid gap-5 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:items-start">
+                    <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-white/[0.02]">
+                      {article.coverImageUrl ? (
+                        <img
+                          src={article.coverImageUrl}
+                          alt={article.coverImageAlt || article.title}
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                        />
+                      ) : (
+                        <div className="h-full w-full bg-muted" />
+                      )}
+                    </div>
+                    <div className="pt-1">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-white/52">
+                        <span>Part {article.series?.order}</span>
+                        <span>{article.categoryName}</span>
+                        {article.publishedAt ? (
+                          <span>
+                            {new Date(article.publishedAt).toLocaleDateString("en-US", {
+                              month: "short",
+                              day: "numeric",
+                              year: "numeric",
+                            })}
+                          </span>
+                        ) : null}
+                      </div>
+                      <h3 className="mt-3 text-[1.3rem] font-sans font-normal leading-[1.08] tracking-[-0.04em] text-white transition-colors group-hover:text-white/84">
+                        {article.title}
+                      </h3>
+                      <p className="mt-3 max-w-[34rem] text-[0.98rem] leading-7 tracking-[-0.02em] text-white/64">
+                        {article.excerpt}
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <RenderingFAQ />
 

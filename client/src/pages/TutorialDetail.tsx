@@ -14,9 +14,9 @@ import {
 import { useMemo } from "react";
 import { useParams, Link } from "wouter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { trpc } from "@/lib/trpc";
 import StructuredData from "@/components/StructuredData";
 import { SEO } from "@/components/SEO";
+import { getLocalTutorialBySlug } from "@shared/localStudio";
 
 const categories = [
   { slug: "getting-started", name: "Getting Started" },
@@ -75,11 +75,9 @@ const getOverviewParagraphs = (value: string | null | undefined) =>
 export default function TutorialDetail() {
   const params = useParams();
   const slug = params.slug;
-
-  const { data: tutorial, isLoading, error } = trpc.tutorials.getBySlug.useQuery(
-    { slug: slug as string },
-    { enabled: !!slug }
-  );
+  const tutorial = getLocalTutorialBySlug(slug);
+  const isLoading = false;
+  const error = !tutorial && !!slug;
 
   const getYouTubeId = (url: string | undefined | null) => {
     if (!url) return null;
@@ -189,6 +187,8 @@ export default function TutorialDetail() {
 
   const videoId = getYouTubeId(tutorial.video_url);
   const tutorialSummary = getTutorialSummary(tutorial);
+  const structuredUploadDate =
+    tutorial.created_at || tutorial.updated_at || new Date().toISOString();
 
   const defaultTab = tabs[0]?.value || "overview";
 
@@ -206,7 +206,7 @@ export default function TutorialDetail() {
           name: tutorial.title,
           description: tutorialSummary || undefined,
           thumbnailUrl: `https://img.youtube.com/vi/${videoId || ""}/maxresdefault.jpg`,
-          uploadDate: new Date(tutorial.created_at).toISOString(),
+          uploadDate: new Date(structuredUploadDate).toISOString(),
           embedUrl: `https://www.youtube.com/embed/${videoId || ""}`,
           contentUrl: `https://www.youtube.com/watch?v=${videoId || ""}`,
           publisher: {

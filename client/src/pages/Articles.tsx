@@ -11,7 +11,6 @@ import {
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import {
@@ -29,6 +28,7 @@ type ArticleCardItem = {
   title: string;
   excerpt: string | null;
   coverImageUrl?: string | null;
+  coverImageAlt?: string | null;
   publishedAt?: string | Date | null;
   createdAt?: string | Date | null;
   readTime?: number | null;
@@ -72,6 +72,23 @@ const getArticleYear = (article: ArticleCardItem) => {
   return String(new Date(source).getFullYear());
 };
 
+const normalizeCategoryParam = (value: string | null) => {
+  switch (value) {
+    case "Technology & Tutorials":
+      return "Tools & Technology";
+    case "Design Philosophy":
+      return "Scenic Design";
+    case "Scenic Design Process":
+      return "Design Process";
+    case "Musical Theatre & Cinema":
+      return "Performance History & Culture";
+    case "Editorial Profiles":
+      return "Profiles & Interviews";
+    default:
+      return value || "all";
+  }
+};
+
 function ArticleGridCard({
   article,
   eager,
@@ -91,14 +108,12 @@ function ArticleGridCard({
           style={{ viewTransitionName: `article-card-${article.slug}` } as CSSProperties}
         >
           {article.coverImageUrl ? (
-            <ProgressiveImage
+            <img
               src={article.coverImageUrl}
-              alt={`Cover image for article: ${decodeHTMLEntities(article.title)}`}
+              alt={article.coverImageAlt || `Cover image for article: ${decodeHTMLEntities(article.title)}`}
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-              aspectRatio="1/1"
-              smartPosition={true}
               loading={eager ? "eager" : "lazy"}
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 25vw, 20vw"
+              decoding="async"
             />
           ) : (
             <div className="h-full w-full bg-muted" />
@@ -106,7 +121,7 @@ function ArticleGridCard({
         </div>
 
         <div className="pt-4">
-          <p className="text-[1.02rem] font-normal tracking-[-0.02em] text-foreground/88">
+          <p className="text-[1.02rem] font-normal tracking-[-0.02em] text-white/88">
             {decodeHTMLEntities(article.title)}
           </p>
         </div>
@@ -119,7 +134,7 @@ export default function Articles() {
   const [, setLocation] = useLocation();
   const [selectedCategory, setSelectedCategory] = useState<string>(() => {
     if (typeof window === "undefined") return "all";
-    return new URLSearchParams(window.location.search).get("category") || "all";
+    return normalizeCategoryParam(new URLSearchParams(window.location.search).get("category"));
   });
   const [selectedYear, setSelectedYear] = useState<string>(() => {
     if (typeof window === "undefined") return "all";
@@ -140,13 +155,14 @@ export default function Articles() {
       getLocalArticles().map((article) => ({
         id: article.id,
         slug: article.slug,
-        title: decodeHTMLEntities(article.title),
-        excerpt: article.excerpt,
-        coverImageUrl: article.coverImageUrl,
-        publishedAt: article.publishedAt,
+              title: decodeHTMLEntities(article.title),
+              excerpt: article.excerpt,
+              coverImageUrl: article.coverImageUrl,
+              coverImageAlt: article.coverImageAlt,
+              publishedAt: article.publishedAt,
         createdAt: article.createdAt,
         readTime: article.readTime,
-        categoryName: article.categoryName || null,
+        categoryName: normalizeCategoryParam(article.categoryName || null),
       })),
     []
   );
@@ -207,6 +223,39 @@ export default function Articles() {
     selectedCategory === "all" && selectedYear === "all" && sortKey === "newest";
   const currentHeading =
     selectedCategory !== "all" ? selectedCategory : selectedYear !== "all" ? selectedYear : "Articles";
+  const articleArchiveTitle =
+    selectedCategory !== "all"
+      ? `${selectedCategory} Articles | Brandon PT Davis`
+      : selectedYear !== "all"
+        ? `Articles from ${selectedYear} | Brandon PT Davis`
+        : "Scenic Design Articles | Brandon PT Davis";
+  const articleArchiveDescription =
+    selectedCategory !== "all"
+      ? `Read ${selectedCategory.toLowerCase()} articles by Brandon PT Davis, connecting scenic design, production thinking, and visual storytelling.`
+      : selectedYear !== "all"
+        ? `Browse Brandon PT Davis articles published in ${selectedYear}, covering scenic design, process, rendering, and theatre practice.`
+        : "Articles by Brandon PT Davis on scenic design, design process, rendering communication, themed entertainment, and performance culture.";
+  const articleArchiveKeywords = [
+    "scenic design articles",
+    "theatre design writing",
+    "Brandon PT Davis articles",
+    selectedCategory !== "all" ? selectedCategory : null,
+    selectedYear !== "all" ? `${selectedYear} theatre articles` : null,
+  ]
+    .filter(Boolean)
+    .join(", ");
+  const articleCollectionName =
+    selectedCategory !== "all"
+      ? `${selectedCategory} Articles`
+      : selectedYear !== "all"
+        ? `Articles from ${selectedYear}`
+        : "Articles";
+  const articleCollectionDescription =
+    selectedCategory !== "all"
+      ? `${selectedCategory} writing by Brandon PT Davis.`
+      : selectedYear !== "all"
+        ? `Article archive from ${selectedYear}.`
+        : "Article archive covering scenic design practice, production strategy, and theatre process.";
 
   const animateCardDeparture = async (target: HTMLElement) => {
     const card = target.querySelector(".transition-card") as HTMLElement | null;
@@ -259,9 +308,11 @@ export default function Articles() {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Articles | Brandon PT Davis"
-        description="Articles on scenic design practice, process, criticism, and production craft by Brandon PT Davis."
+        title={articleArchiveTitle}
+        description={articleArchiveDescription}
         image={allArticles[0]?.coverImageUrl || undefined}
+        imageAlt={allArticles[0]?.coverImageAlt || allArticles[0]?.title || "Article archive cover image"}
+        keywords={articleArchiveKeywords}
         url="https://www.brandonptdavis.com/articles"
       />
       <StructuredData
@@ -274,13 +325,13 @@ export default function Articles() {
       <StructuredData
         type="CollectionPage"
         collectionPage={{
-          name: "Articles",
+          name: articleCollectionName,
           url: "https://www.brandonptdavis.com/articles",
-          description: "Article archive covering scenic design practice, production strategy, and theatre process.",
+          description: articleCollectionDescription,
           about: "Scenic design writing and production insights by Brandon PT Davis.",
           primaryImageOfPage: allArticles[0]?.coverImageUrl || undefined,
           mainEntity: {
-            name: "Articles",
+            name: articleCollectionName,
             itemListElement: sortedArticles.slice(0, 24).map((article, index) => ({
               position: index + 1,
               name: article.title,
@@ -303,7 +354,7 @@ export default function Articles() {
         <section className="border-b border-border/40 pb-8 pt-24 md:pb-10 md:pt-28">
           <div className="container max-w-6xl">
             <div className="max-w-3xl">
-              <h1 className="font-sans text-[clamp(2.3rem,4.6vw,3.8rem)] font-medium leading-[0.96] tracking-[-0.05em] text-foreground">
+              <h1 className="font-sans text-[clamp(2.3rem,4.6vw,3.8rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
                 {currentHeading}
               </h1>
             </div>
@@ -316,8 +367,8 @@ export default function Articles() {
                     onClick={() => setSelectedCategory("all")}
                     className={`rounded-full border px-4 py-2 text-[0.92rem] transition-colors ${
                       selectedCategory === "all"
-                        ? "border-foreground/30 bg-foreground/10 text-foreground"
-                        : "border-border/40 text-foreground/52 hover:border-border hover:text-foreground/80"
+                        ? "border-white/30 bg-white/10 text-white"
+                        : "border-border/40 text-white/52 hover:border-border hover:text-white/80"
                     }`}
                   >
                     All
@@ -329,8 +380,8 @@ export default function Articles() {
                       onClick={() => setSelectedCategory(category)}
                       className={`rounded-full border px-4 py-2 text-[0.92rem] transition-colors ${
                         selectedCategory === category
-                          ? "border-foreground/30 bg-foreground/10 text-foreground"
-                          : "border-border/40 text-foreground/52 hover:border-border hover:text-foreground/80"
+                          ? "border-white/30 bg-white/10 text-white"
+                          : "border-border/40 text-white/52 hover:border-border hover:text-white/80"
                       }`}
                     >
                       {category}
@@ -344,7 +395,7 @@ export default function Articles() {
                   <PopoverTrigger asChild>
                     <button
                       type="button"
-                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-foreground/82 transition-colors hover:border-border hover:text-foreground"
+                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-white/82 transition-colors hover:border-border hover:text-white"
                     >
                       <SlidersHorizontal className="h-4 w-4" />
                       Filter
@@ -362,14 +413,14 @@ export default function Articles() {
                     <div className="space-y-5">
                       <div className="flex items-center justify-between gap-3">
                         <div>
-                          <p className="text-sm font-medium text-foreground">Filter articles</p>
-                          <p className="text-xs text-foreground/52">Refine by publication year.</p>
+                          <p className="text-sm font-medium text-white">Filter articles</p>
+                          <p className="text-xs text-white/52">Refine by publication year.</p>
                         </div>
                         {selectedYear !== "all" && (
                           <button
                             type="button"
                             onClick={() => setSelectedYear("all")}
-                            className="text-xs text-foreground/55 transition-colors hover:text-foreground"
+                            className="text-xs text-white/55 transition-colors hover:text-white"
                           >
                             Clear
                           </button>
@@ -377,7 +428,7 @@ export default function Articles() {
                       </div>
 
                       <div className="space-y-2">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-foreground/45">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
                           Date
                         </p>
                         <div className="flex flex-wrap gap-2">
@@ -386,8 +437,8 @@ export default function Articles() {
                             onClick={() => setSelectedYear("all")}
                             className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
                               selectedYear === "all"
-                                ? "border-foreground/30 bg-foreground/10 text-foreground"
-                                : "border-border/50 text-foreground/62 hover:border-border hover:text-foreground"
+                                ? "border-white/30 bg-white/10 text-white"
+                                : "border-border/50 text-white/62 hover:border-border hover:text-white"
                             }`}
                           >
                             All dates
@@ -399,8 +450,8 @@ export default function Articles() {
                               onClick={() => setSelectedYear(year)}
                               className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
                                 selectedYear === year
-                                  ? "border-foreground/30 bg-foreground/10 text-foreground"
-                                  : "border-border/50 text-foreground/62 hover:border-border hover:text-foreground"
+                                  ? "border-white/30 bg-white/10 text-white"
+                                  : "border-border/50 text-white/62 hover:border-border hover:text-white"
                               }`}
                             >
                               {year}
@@ -416,7 +467,7 @@ export default function Articles() {
                   <DropdownMenuTrigger asChild>
                     <button
                       type="button"
-                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-foreground/82 transition-colors hover:border-border hover:text-foreground"
+                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-white/82 transition-colors hover:border-border hover:text-white"
                     >
                       <ArrowUpDown className="h-4 w-4" />
                       Sort
@@ -447,7 +498,7 @@ export default function Articles() {
                     className={`inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
                       viewMode === "grid"
                         ? "bg-foreground text-background"
-                        : "text-foreground/55 hover:text-foreground"
+                        : "text-white/55 hover:text-white"
                     }`}
                     aria-label="Grid view"
                   >
@@ -459,7 +510,7 @@ export default function Articles() {
                     className={`inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
                       viewMode === "list"
                         ? "bg-foreground text-background"
-                        : "text-foreground/55 hover:text-foreground"
+                        : "text-white/55 hover:text-white"
                     }`}
                     aria-label="List view"
                   >
@@ -481,14 +532,14 @@ export default function Articles() {
                       const href = itemHref(article);
 
                       return (
-                        <div key={article.id}>
+                        <div key={`${article.id}-${selectedCategory}-${selectedYear}-${sortKey}-${viewMode}`}>
                           <ArticleGridCard
                             article={article}
                             eager={index < 8}
                             href={href}
                             onNavigate={navigateWithTransition}
                           />
-                          <div className="mt-2 text-sm text-foreground/45">
+                          <div className="mt-2 text-sm text-white/45">
                             {[article.categoryName, formatArticleDate(article)]
                               .filter(Boolean)
                               .join(" · ")}
@@ -504,13 +555,13 @@ export default function Articles() {
 
                       return (
                         <a
-                          key={article.id}
+                          key={`${article.id}-${selectedCategory}-${selectedYear}-${sortKey}-${viewMode}`}
                           href={href}
                           onClick={(event) => navigateWithTransition(event, href)}
                           className="group grid gap-4 border-b border-border/35 py-5 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8"
                         >
-                            <div className="space-y-2 text-sm text-foreground/48">
-                              <p className="text-foreground/82">{article.categoryName || "Article"}</p>
+                            <div className="space-y-2 text-sm text-white/48">
+                              <p className="text-white/82">{article.categoryName || "Article"}</p>
                               <p>
                                 {[formatArticleDate(article), article.readTime ? `${article.readTime} min read` : null]
                                   .filter(Boolean)
@@ -519,11 +570,11 @@ export default function Articles() {
                             </div>
 
                             <div className="min-w-0">
-                              <p className="text-[1.12rem] font-normal tracking-[-0.025em] text-foreground/88">
+                              <p className="text-[1.12rem] font-normal tracking-[-0.025em] text-white/88">
                                 {article.title}
                               </p>
                               {article.excerpt ? (
-                                <p className="mt-2 max-w-3xl text-sm leading-6 text-foreground/52">
+                                <p className="mt-2 max-w-3xl text-sm leading-6 text-white/52">
                                   {article.excerpt}
                                 </p>
                               ) : null}
@@ -539,37 +590,37 @@ export default function Articles() {
         ) : (
           <section className="pb-24 pt-16">
             <div className="container max-w-6xl text-center">
-              <p className="text-foreground/55">No articles match the current filters.</p>
+              <p className="text-white/55">No articles match the current filters.</p>
             </div>
           </section>
         )}
 
         <section className="border-t border-border/35 py-16 md:py-20">
           <div className="container max-w-6xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
               About These Articles
             </p>
             <div className="mt-4 grid gap-10 lg:grid-cols-2">
               <div className="space-y-5">
-                <h2 className="font-sans text-[clamp(1.6rem,3vw,2.4rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-foreground">
+                <h2 className="font-sans text-[clamp(1.6rem,3vw,2.4rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-white">
                   Writing on process, criticism, and production.
                 </h2>
-                <p className="max-w-3xl text-[1rem] leading-7 text-foreground/62 md:text-[1.05rem]">
+                <p className="max-w-3xl text-[1rem] leading-7 text-white/62 md:text-[1.05rem]">
                   This section gathers writing on scenic design practice, theatre process, and
                   production analysis. Some pieces are essays; others are profiles, interviews, or
                   published reflections tied to specific projects.
                 </p>
-                <p className="max-w-3xl text-[1rem] leading-7 text-foreground/55 md:text-[1.05rem]">
+                <p className="max-w-3xl text-[1rem] leading-7 text-white/55 md:text-[1.05rem]">
                   Together they document how design ideas are researched, communicated, and carried
                   into production, while also tracing the broader artistic questions behind the work.
                 </p>
               </div>
 
               <div className="space-y-4 rounded-xl bg-card/20 p-6 md:p-8">
-                <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-foreground/45">
+                <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
                   Focus Areas
                 </h3>
-                <ul className="space-y-3 text-sm md:text-base text-foreground/62">
+                <ul className="space-y-3 text-sm text-white/62 md:text-base">
                   <li>Scenic design process and production method</li>
                   <li>Design communication, drafting, and rendering workflow</li>
                   <li>Critical writing on theatre and performance</li>

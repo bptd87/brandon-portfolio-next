@@ -12,35 +12,35 @@ export interface CategoryColor {
 }
 
 export const categoryColors: Record<string, CategoryColor> = {
-  'Editorial Profiles': {
+  'Profiles & Interviews': {
     badge: 'bg-orange-500/90 backdrop-blur-sm',
     text: 'text-orange-500',
     hover: 'hover:bg-orange-500/20 hover:border-orange-500',
     rgb: '249, 115, 22',
     hex: '#F97316',
   },
-  'Design Philosophy': {
+  'Scenic Design': {
     badge: 'bg-purple-500/90 backdrop-blur-sm',
     text: 'text-purple-500',
     hover: 'hover:bg-purple-500/20 hover:border-purple-500',
     rgb: '168, 85, 247', // Purple
     hex: '#A855F7',
   },
-  'Musical Theatre & Cinema': {
+  'Performance History & Culture': {
     badge: 'bg-rose-500/90 backdrop-blur-sm',
     text: 'text-rose-500',
     hover: 'hover:bg-rose-500/20 hover:border-rose-500',
     rgb: '244, 63, 94', // Rose
     hex: '#F43F5E',
   },
-  'Scenic Design Process': {
+  'Design Process': {
     badge: 'bg-yellow-500/90 backdrop-blur-sm',
     text: 'text-yellow-500',
     hover: 'hover:bg-yellow-500/20 hover:border-yellow-500',
     rgb: '234, 179, 8', // Yellow
     hex: '#EAB308',
   },
-  'Technology & Tutorials': {
+  'Tools & Technology': {
     badge: 'bg-cyan-500/90 backdrop-blur-sm',
     text: 'text-cyan-500',
     hover: 'hover:bg-cyan-500/20 hover:border-cyan-500',

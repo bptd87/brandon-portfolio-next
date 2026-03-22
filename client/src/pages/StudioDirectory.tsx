@@ -2,18 +2,19 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ExternalLink, Search } from "lucide-react";
 import { useMemo, useState } from "react";
-import { trpc } from "@/lib/trpc";
 import { SEO } from "@/components/SEO";
 import { Input } from "@/components/ui/input";
 import StructuredData from "@/components/StructuredData";
+import { getLocalStudioDirectory } from "@shared/localStudio";
 
-function getFaviconUrl(url: string, size = 64) {
-  try {
-    const domain = new URL(url).hostname;
-    return `https://www.google.com/s2/favicons?domain=${domain}&sz=${size}`;
-  } catch {
-    return "/default-favicon.png";
-  }
+function getDirectoryPlaceholder(name: string) {
+  const value = String(name || "resource");
+  const hash = value.split("").reduce((total, char) => total + char.charCodeAt(0), 0);
+  const hueA = (hash * 0.82 + 12) % 360;
+  const hueB = (hash * 1.19 + 96) % 360;
+  const hueC = (hash * 1.57 + 208) % 360;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="${value}"><defs><clipPath id="clip"><circle cx="32" cy="32" r="28"/></clipPath><filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.8"/></filter><filter id="paper" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="${hash % 97}"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.035"/></feComponentTransfer></filter></defs><g clip-path="url(#clip)"><rect width="64" height="64" fill="#f4efe7"/><rect width="64" height="64" fill="hsl(${hueA} 32% 92%)" opacity="0.42"/><g filter="url(#soft)"><ellipse cx="22" cy="21" rx="22" ry="16" fill="hsla(${hueA} 88% 60% / 0.70)" transform="rotate(-14 22 21)"/><ellipse cx="44" cy="29" rx="18" ry="13" fill="hsla(${hueB} 92% 56% / 0.58)" transform="rotate(18 44 29)"/><ellipse cx="30" cy="45" rx="21" ry="15" fill="hsla(${hueC} 84% 58% / 0.54)" transform="rotate(-8 30 45)"/><ellipse cx="46" cy="47" rx="11" ry="8" fill="hsla(${hueA} 98% 72% / 0.36)" transform="rotate(26 46 47)"/><ellipse cx="15" cy="41" rx="10" ry="7" fill="hsla(${hueB} 98% 74% / 0.30)" transform="rotate(-24 15 41)"/></g><rect width="64" height="64" filter="url(#paper)" opacity="0.9"/></g><circle cx="32" cy="32" r="28" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="0.9"/></svg>`;
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 }
 
 const categories = [
@@ -29,7 +30,8 @@ export default function StudioDirectory() {
   const [sortBy, setSortBy] = useState<"alphabetical" | "category">("alphabetical");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const { data: resources = [], isLoading } = trpc.scenicDirectory.list.useQuery();
+  const resources = getLocalStudioDirectory();
+  const isLoading = false;
 
   const filteredResources = useMemo(() => {
     const filtered = resources.filter((resource: any) => {
@@ -112,7 +114,7 @@ export default function StudioDirectory() {
               position: index + 1,
               name: resource.name,
               url: resource.url,
-              image: resource.cover_image || getFaviconUrl(resource.url, 64),
+              image: resource.cover_image || getDirectoryPlaceholder(resource.name),
             })),
         }}
       />
@@ -230,13 +232,13 @@ export default function StudioDirectory() {
                         onClick={() => window.open(resource.url, "_blank", "noopener,noreferrer")}
                         className="grid w-full items-start gap-4 border-t border-transparent py-5 text-left transition-colors hover:bg-white/[0.02] md:grid-cols-[64px_minmax(0,1.15fr)_minmax(0,1.5fr)_auto]"
                       >
-                        <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-border/30 bg-white">
+                        <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full">
                           <img
-                            src={resource.cover_image || getFaviconUrl(resource.url, 64)}
+                            src={resource.cover_image || getDirectoryPlaceholder(resource.name)}
                             onError={(e) => {
-                              e.currentTarget.src = "/default-favicon.png";
+                              e.currentTarget.src = getDirectoryPlaceholder(resource.name);
                             }}
-                            className="h-8 w-8 object-contain"
+                            className="h-full w-full object-cover"
                             alt=""
                           />
                         </div>
@@ -275,13 +277,13 @@ export default function StudioDirectory() {
                     onClick={() => window.open(resource.url, "_blank", "noopener,noreferrer")}
                     className="grid w-full items-start gap-4 py-5 text-left transition-colors hover:bg-white/[0.02] md:grid-cols-[64px_minmax(0,1.15fr)_minmax(0,1.5fr)_auto]"
                   >
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-border/30 bg-white">
+                    <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full">
                       <img
-                        src={resource.cover_image || getFaviconUrl(resource.url, 64)}
+                        src={resource.cover_image || getDirectoryPlaceholder(resource.name)}
                         onError={(e) => {
-                          e.currentTarget.src = "/default-favicon.png";
+                          e.currentTarget.src = getDirectoryPlaceholder(resource.name);
                         }}
-                        className="h-8 w-8 object-contain"
+                        className="h-full w-full object-cover"
                         alt=""
                       />
                     </div>

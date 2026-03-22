@@ -4,6 +4,7 @@ interface SEOProps {
   title: string;
   description: string;
   image?: string;
+  imageAlt?: string;
   url?: string;
   type?: "website" | "article";
   author?: string;
@@ -18,6 +19,7 @@ export function SEO({
   title,
   description,
   image = "https://www.brandonptdavis.com/og-default.jpeg",
+  imageAlt,
   url,
   type = "website",
   author,
@@ -58,6 +60,7 @@ export function SEO({
   const canonicalUrl = normalizeCanonicalUrl(rawCanonicalUrl);
   const imageType = inferImageType(image);
   const robotsValue = `${noindex ? "noindex" : "index"},${nofollow ? "nofollow" : "follow"}`;
+  const resolvedImageAlt = imageAlt || title;
 
   return (
     <Helmet>
@@ -78,7 +81,7 @@ export function SEO({
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:type" content={imageType} />
-      <meta property="og:image:alt" content={title} />
+      <meta property="og:image:alt" content={resolvedImageAlt} />
       <meta property="og:site_name" content={siteName} />
       <meta property="og:locale" content="en_US" />
 
@@ -89,7 +92,7 @@ export function SEO({
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
-      <meta name="twitter:image:alt" content={description || title} />
+      <meta name="twitter:image:alt" content={imageAlt || description || title} />
       <meta name="twitter:creator" content={twitterHandle} />
       <meta name="twitter:site" content={twitterSite} />
 

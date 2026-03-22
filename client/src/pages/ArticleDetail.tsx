@@ -15,6 +15,7 @@ import "yet-another-react-lightbox/styles.css";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { getLocalArticleRecordBySlug, getLocalArticles } from "@shared/localArticles";
+import { getLocalScenicProjectBySlug } from "@shared/localScenicProjects";
 
 // Decode HTML entities
 const decodeHTMLEntities = (text: string): string => {
@@ -158,7 +159,7 @@ function ArticleInlineVideo({ url, caption }: { url: string; caption?: string })
         </button>
       </div>
       {caption && (
-        <figcaption className="mt-4 text-center text-[0.78rem] font-medium uppercase tracking-[0.12em] text-foreground/42">
+        <figcaption className="mt-4 text-center text-[0.78rem] font-medium uppercase tracking-[0.12em] text-white/42">
           {decodeHTMLEntities(caption)}
         </figcaption>
       )}
@@ -280,7 +281,7 @@ function ArticleDetailContent() {
         <Header />
         <div className="container py-20 text-center">
           <h1 className="text-4xl font-['Playfair_Display'] italic mb-4">Article Not Found</h1>
-          <p className="text-muted-foreground mb-8">The article you're looking for doesn't exist.</p>
+          <p className="mb-8 text-white/62">The article you're looking for doesn't exist.</p>
           <Link href="/articles">
             <Button>Back to Articles</Button>
           </Link>
@@ -449,29 +450,56 @@ function ArticleDetailContent() {
     setLightboxOpen(true);
   };
 
-  // Get related articles
-  const related = getLocalArticles()
+  const linkedScenicProjects = (article.linkedScenicProjectSlugs || [])
+    .map((projectSlug: string) => getLocalScenicProjectBySlug(projectSlug))
+    .filter(Boolean);
+
+  const relatedCandidates = getLocalArticles()
     .map((candidate) => getLocalArticleRecordBySlug(candidate.slug))
     .filter((candidate): candidate is NonNullable<typeof article> => Boolean(candidate))
-    .filter((candidate) => candidate.id !== article.id && candidate.categoryName === article.categoryName)
-    .slice(0, 4);
+    .filter((candidate) => candidate.id !== article.id);
+
+  const sameSeries = article.series
+    ? relatedCandidates.filter((candidate) => candidate.series?.slug === article.series?.slug)
+    : [];
+  const sameCategory = relatedCandidates.filter((candidate) => candidate.categoryName === article.categoryName);
+  const related = [...sameSeries, ...sameCategory].filter(
+    (candidate, index, array) => array.findIndex((item) => item.id === candidate.id) === index
+  ).slice(0, 4);
+  const articleKeywords = article.seoKeywords
+    ? article.seoKeywords
+    : [
+        article.categoryName,
+        article.series?.name,
+        ...(article.tags || []).map((tag: any) => tag.name),
+        "Brandon PT Davis",
+        "scenic design article",
+      ]
+        .filter(Boolean)
+        .join(", ");
+  const articleDescription =
+    article.excerpt ||
+    `${article.title} by Brandon PT Davis on scenic design, production thinking, and visual storytelling.`;
 
   return (
     <div className="min-h-screen bg-background">
       <SEO
         title={`${article.title} | Brandon PT Davis`}
-        description={article.excerpt || `${article.title} - Article by Brandon PT Davis`}
+        description={articleDescription}
         image={article.coverImageUrl || undefined}
+        imageAlt={article.coverImageAlt || article.title}
         type="article"
         author="Brandon PT Davis"
         publishedTime={article.publishedAt ? new Date(article.publishedAt).toISOString() : undefined}
         modifiedTime={article.updatedAt ? new Date(article.updatedAt).toISOString() : undefined}
+        keywords={articleKeywords}
+        url={`https://www.brandonptdavis.com/articles/${article.slug}`}
       />
       <StructuredData
         type="Article"
         article={{
           headline: article.title,
-          description: article.excerpt || undefined,
+          description: articleDescription,
           image: article.coverImageUrl || undefined,
           author: {
             name: "Brandon PT Davis",
@@ -485,7 +513,25 @@ function ArticleDetailContent() {
           },
           url: `https://www.brandonptdavis.com/articles/${article.slug}`,
           wordCount: wordCount,
-          keywords: article.seoKeywords?.split(',').map(k => k.trim()) || [],
+          keywords: articleKeywords.split(',').map(k => k.trim()).filter(Boolean),
+          ...(article.series
+            ? {
+                isPartOf: {
+                  name: article.series.name,
+                  url: `https://www.brandonptdavis.com/articles?series=${article.series.slug}`,
+                },
+              }
+            : {}),
+          about: [
+            article.categoryName ? { type: "Thing", name: article.categoryName } : null,
+            ...linkedScenicProjects
+              .filter((project): project is NonNullable<(typeof linkedScenicProjects)[number]> => Boolean(project))
+              .map((project) => ({
+              type: "CreativeWork",
+              name: project.title,
+              url: `https://www.brandonptdavis.com/project/${project.slug}`,
+              })),
+          ].filter(Boolean) as Array<{ type?: string; name: string; url?: string }>,
         }}
       />
       <StructuredData
@@ -501,7 +547,7 @@ function ArticleDetailContent() {
       <article className="py-12 md:py-16">
         <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
           <header className="mx-auto max-w-5xl text-center">
-            <div className="flex flex-wrap items-center justify-center gap-4 text-[0.92rem] tracking-[-0.015em] text-foreground/54">
+            <div className="flex flex-wrap items-center justify-center gap-4 text-[0.92rem] tracking-[-0.015em] text-white/54">
               <time dateTime={new Date(article.publishedAt || article.createdAt).toISOString()}>
                 {new Date(article.publishedAt || article.createdAt).toLocaleDateString('en-US', {
                   month: 'long',
@@ -512,22 +558,31 @@ function ArticleDetailContent() {
               {article.categoryName ? (
                 <Link
                   href={`/articles?category=${encodeURIComponent(article.categoryName)}`}
-                  className="transition-colors hover:text-foreground"
+                  className="transition-colors hover:text-white"
                 >
                   {article.categoryName}
                 </Link>
               ) : null}
+              {article.series ? (
+                <span>{article.series.name}</span>
+              ) : null}
             </div>
 
-            <h1 className="mx-auto mt-5 max-w-[14ch] font-sans text-[clamp(2.7rem,5.8vw,5.9rem)] font-medium leading-[0.92] tracking-[-0.072em] text-foreground">
+            <h1 className="mx-auto mt-5 max-w-[14ch] font-sans text-[clamp(2.7rem,5.8vw,5.9rem)] font-medium leading-[0.92] tracking-[-0.072em] text-white">
               {decodeHTMLEntities(article.title)}
             </h1>
 
             {article.excerpt && (
-              <p className="mx-auto mt-5 max-w-[38rem] text-[clamp(1rem,1.45vw,1.34rem)] leading-[1.62] tracking-[-0.018em] text-foreground/68">
+              <p className="mx-auto mt-5 max-w-[38rem] text-[clamp(1rem,1.45vw,1.34rem)] leading-[1.62] tracking-[-0.018em] text-white/68">
                 {decodeHTMLEntities(article.excerpt)}
               </p>
             )}
+
+            {article.series ? (
+              <p className="mx-auto mt-5 max-w-[38rem] text-[0.88rem] font-medium uppercase tracking-[0.16em] text-white/42">
+                Part {article.series.order} of {article.series.name}
+              </p>
+            ) : null}
 
             {article.coverImageUrl && (
               <div className="mx-auto mt-10 max-w-[82rem] overflow-hidden rounded-xl">
@@ -542,7 +597,7 @@ function ArticleDetailContent() {
               </div>
             )}
 
-            <div className="mx-auto mt-8 flex w-full max-w-[58rem] items-center justify-between gap-6 border-t border-white/14 pt-4 text-foreground/72">
+            <div className="mx-auto mt-8 flex w-full max-w-[58rem] items-center justify-between gap-6 border-t border-white/14 pt-4 text-white/72">
               <div className="flex items-center gap-4 sm:gap-5">
                 {articleAudio ? (
                   <>
@@ -562,7 +617,7 @@ function ArticleDetailContent() {
                     <button
                       type="button"
                       onClick={handleAudioToggle}
-                      className="inline-flex items-center gap-3 text-[0.96rem] tracking-[-0.018em] transition-colors hover:text-foreground"
+                      className="inline-flex items-center gap-3 text-[0.96rem] tracking-[-0.018em] transition-colors hover:text-white"
                     >
                       <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/18 bg-white/6">
                         {isAudioPlaying ? <Pause className="h-3.5 w-3.5" /> : <Play className="ml-0.5 h-3.5 w-3.5" />}
@@ -570,7 +625,7 @@ function ArticleDetailContent() {
                       <span>{articleAudio.label || "Listen to article"}</span>
                     </button>
                     {displayedAudioTime ? (
-                      <span className="text-[0.96rem] tracking-[-0.018em] text-foreground/62">
+                      <span className="text-[0.96rem] tracking-[-0.018em] text-white/62">
                         {displayedAudioTime}
                       </span>
                     ) : null}
@@ -580,13 +635,51 @@ function ArticleDetailContent() {
               <button
                 type="button"
                 onClick={handleShare}
-                className="inline-flex items-center gap-2 text-[0.96rem] tracking-[-0.018em] transition-colors hover:text-foreground"
+                className="inline-flex items-center gap-2 text-[0.96rem] tracking-[-0.018em] transition-colors hover:text-white"
               >
                 {linkCopied ? <Check className="h-4 w-4" /> : <LinkIcon className="h-4 w-4" />}
                 <span>{linkCopied ? "Link copied" : "Share"}</span>
               </button>
             </div>
           </header>
+
+          {linkedScenicProjects.length > 0 ? (
+            <div className="mx-auto mt-12 max-w-[58rem] border-t border-white/12 pt-10">
+              <p className="mb-6 font-sans text-[1.05rem] tracking-[-0.02em] text-white">
+                Scenic Design Project
+              </p>
+              <div className="grid gap-6 md:grid-cols-2">
+                {linkedScenicProjects.map((project) => {
+                  if (!project) return null;
+                  return (
+                  <Link key={project.slug} href={`/project/${project.slug}`}>
+                    <div className="group flex cursor-pointer items-start gap-5">
+                      <div className="relative h-32 w-32 flex-none overflow-hidden rounded-xl bg-black/85">
+                        {project.coverImageUrl ? (
+                          <img
+                            src={project.coverImageUrl}
+                            alt={project.title}
+                            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                          />
+                        ) : null}
+                      </div>
+                      <div className="min-w-0 pt-1">
+                        <h3 className="text-[1.18rem] leading-[1.16] tracking-[-0.03em] text-white/92 transition-colors group-hover:text-white">
+                          {project.title}
+                        </h3>
+                        <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-white/52">
+                          <span>{project.subcategory || "Scenic Design"}</span>
+                          {project.client ? <span>{project.client}</span> : null}
+                          {project.year ? <span>{project.year}</span> : null}
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                  );
+                })}
+              </div>
+            </div>
+          ) : null}
 
           <div className="mx-auto mt-14 max-w-[58rem]">
             <div className="min-w-0">
@@ -599,7 +692,7 @@ function ArticleDetailContent() {
                     color: rgba(255,255,255,0.55);
                   }
                   .article-content-${article.id} strong {
-                    color: hsl(var(--foreground));
+                    color: rgba(255,255,255,0.96);
                     font-weight: 700;
                   }
                 `}</style>
@@ -608,19 +701,19 @@ function ArticleDetailContent() {
                   className="article-content article-content-${article.id} article-html-content mx-auto max-w-[56ch]
                   prose prose-lg prose-invert
                   prose-headings:font-sans prose-headings:font-medium prose-headings:leading-[0.98] prose-headings:tracking-[-0.05em]
-                  prose-h2:text-[clamp(2rem,2.75vw,2.8rem)] prose-h2:mt-20 prose-h2:mb-6 prose-h2:scroll-mt-24 prose-h2:text-foreground
-                  prose-h3:text-[clamp(1.5rem,2vw,1.95rem)] prose-h3:mt-14 prose-h3:mb-4 prose-h3:leading-[1.02] prose-h3:text-foreground/98
-                  prose-h4:text-[0.95rem] prose-h4:mt-10 prose-h4:mb-3 prose-h4:font-semibold prose-h4:uppercase prose-h4:tracking-[0.18em] prose-h4:text-foreground/48
-                  prose-p:text-foreground/80 prose-p:leading-[1.9] prose-p:mb-8 prose-p:text-[1.02rem] md:prose-p:text-[1.06rem] prose-p:font-normal prose-p:tracking-[-0.01em]
-                  prose-a:text-foreground prose-a:underline prose-a:decoration-white/35 prose-a:underline-offset-4 hover:prose-a:decoration-white/70 prose-a:font-medium
+                  prose-h2:text-[clamp(2rem,2.75vw,2.8rem)] prose-h2:mt-20 prose-h2:mb-6 prose-h2:scroll-mt-24 prose-h2:text-white
+                  prose-h3:text-[clamp(1.5rem,2vw,1.95rem)] prose-h3:mt-14 prose-h3:mb-4 prose-h3:leading-[1.02] prose-h3:text-white/98
+                  prose-h4:text-[0.95rem] prose-h4:mt-10 prose-h4:mb-3 prose-h4:font-semibold prose-h4:uppercase prose-h4:tracking-[0.18em] prose-h4:text-white/48
+                  prose-p:text-white/80 prose-p:leading-[1.9] prose-p:mb-8 prose-p:text-[1.02rem] md:prose-p:text-[1.06rem] prose-p:font-normal prose-p:tracking-[-0.01em]
+                  prose-a:text-white prose-a:underline prose-a:decoration-white/35 prose-a:underline-offset-4 hover:prose-a:decoration-white/70 prose-a:font-medium
                   prose-strong:font-bold
-                  prose-blockquote:border-0 prose-blockquote:pl-0 prose-blockquote:my-14 prose-blockquote:font-sans prose-blockquote:text-foreground
+                  prose-blockquote:border-0 prose-blockquote:pl-0 prose-blockquote:my-14 prose-blockquote:font-sans prose-blockquote:text-white
                   prose-ul:my-8 prose-ol:my-8 prose-ul:leading-[2] prose-ol:leading-[2] prose-ul:list-disc prose-ol:list-decimal prose-ul:pl-8 prose-ol:pl-8
                   prose-li:my-1.5 prose-li:text-[1.0625rem] prose-li:leading-[1.75] prose-li:ml-0
                   [&_ul]:list-disc [&_ol]:list-decimal [&_li]:list-item [&_li]:ml-0
                   prose-img:rounded-xl prose-img:my-12
                   prose-figure:my-12
-                  prose-figcaption:text-[0.78rem] prose-figcaption:tracking-[0.12em] prose-figcaption:uppercase prose-figcaption:text-foreground/42 prose-figcaption:text-center prose-figcaption:mt-4
+                  prose-figcaption:text-[0.78rem] prose-figcaption:tracking-[0.12em] prose-figcaption:uppercase prose-figcaption:text-white/42 prose-figcaption:text-center prose-figcaption:mt-4
                   [&_iframe]:mx-auto [&_iframe]:w-full [&_iframe]:max-w-[58ch] [&_iframe]:my-12 [&_iframe]:rounded-xl [&_iframe]:aspect-[16/9] [&_iframe]:h-auto
                   [&_video]:mx-auto [&_video]:w-full [&_video]:max-w-[58ch] [&_video]:my-12 [&_video]:rounded-xl [&_video]:aspect-[16/9]
                   [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased]"
@@ -635,7 +728,7 @@ function ArticleDetailContent() {
                             <div className="flex items-start gap-3">
                               <div className="flex-shrink-0 w-2 h-2 rounded-full bg-primary mt-2 animate-pulse" />
                               <p
-                                className="text-sm leading-relaxed text-foreground/80 [&_strong]:font-bold [&_strong]:text-primary [&_strong]:text-base"
+                                className="text-sm leading-relaxed text-white/80 [&_strong]:text-base [&_strong]:font-bold [&_strong]:text-white"
                                 dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(section.text || section.content || '') }}
                               />
                             </div>
@@ -652,12 +745,12 @@ function ArticleDetailContent() {
                         const numberedHeadingMatch = level === 3 ? headingText.match(/^(\d+)\.\s+(.+)$/) : null;
                         const headingClassName =
                           isGhibliShowcaseHeading
-                            ? "mt-28 mb-12 text-center font-sans text-[clamp(3rem,4vw,4.6rem)] font-medium leading-[0.92] tracking-[-0.075em] text-foreground"
+                            ? "mt-28 mb-12 text-center font-sans text-[clamp(3rem,4vw,4.6rem)] font-medium leading-[0.92] tracking-[-0.075em] text-white"
                             : level === 2
-                            ? "mt-24 mb-7 font-sans text-[clamp(2.3rem,3vw,3.2rem)] font-medium leading-[0.93] tracking-[-0.065em] text-foreground"
+                            ? "mt-24 mb-7 font-sans text-[clamp(2.3rem,3vw,3.2rem)] font-medium leading-[0.93] tracking-[-0.065em] text-white"
                             : level === 3
-                              ? "mt-16 mb-5 font-sans text-[clamp(1.75rem,2.2vw,2.25rem)] font-medium leading-[0.98] tracking-[-0.055em] text-foreground"
-                              : "mt-10 mb-3 font-sans text-[0.95rem] font-semibold uppercase tracking-[0.18em] text-foreground/48";
+                              ? "mt-16 mb-5 font-sans text-[clamp(1.75rem,2.2vw,2.25rem)] font-medium leading-[0.98] tracking-[-0.055em] text-white"
+                              : "mt-10 mb-3 font-sans text-[0.95rem] font-semibold uppercase tracking-[0.18em] text-white/48";
 
                         const headingId = level === 2
                           ? getHeadingId(headingText, h2Index)
@@ -674,12 +767,12 @@ function ArticleDetailContent() {
                             return (
                               <div key={index} className="mt-18 mb-7 border-t border-white/10 pt-6">
                                 <div className="flex items-end gap-4 md:gap-5">
-                                  <span className="shrink-0 font-sans text-[clamp(1.55rem,2.2vw,2rem)] font-medium leading-[0.92] tracking-[-0.05em] text-foreground/34">
+                                  <span className="shrink-0 font-sans text-[clamp(1.55rem,2.2vw,2rem)] font-medium leading-[0.92] tracking-[-0.05em] text-white/34">
                                   {numberedHeadingMatch[1]}
                                   </span>
                                   <h3
                                     id={headingId}
-                                    className="font-sans text-[clamp(2rem,2.35vw,2.5rem)] font-medium leading-[0.94] tracking-[-0.06em] text-foreground"
+                                    className="font-sans text-[clamp(2rem,2.35vw,2.5rem)] font-medium leading-[0.94] tracking-[-0.06em] text-white"
                                   >
                                     {numberedHeadingMatch[2]}
                                   </h3>
@@ -698,7 +791,7 @@ function ArticleDetailContent() {
                         return (
                           <p
                             key={index}
-                            className="mb-8 text-[1.02rem] leading-[1.9] tracking-[-0.01em] text-foreground/80 [&_strong]:font-bold [&_strong]:text-foreground"
+                            className="mb-8 text-[1.02rem] leading-[1.9] tracking-[-0.01em] text-white/80 [&_strong]:font-bold [&_strong]:text-white"
                             dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(section.text || section.content || '') }}
                           />
                         );
@@ -707,13 +800,13 @@ function ArticleDetailContent() {
                         const quoteText = normalizeQuoteText(section.text || section.content || '');
                         return (
                           <blockquote key={index} className="my-16 py-2 text-center">
-                            <p className="mx-auto max-w-[34rem] font-sans text-[clamp(1.35rem,2.1vw,1.9rem)] font-medium leading-[1.28] tracking-[-0.04em] text-foreground/92">
-                              <span aria-hidden="true" className="mr-[0.08em] text-foreground/54">“</span>
+                            <p className="mx-auto max-w-[34rem] font-sans text-[clamp(1.35rem,2.1vw,1.9rem)] font-medium leading-[1.28] tracking-[-0.04em] text-white/92">
+                              <span aria-hidden="true" className="mr-[0.08em] text-white/54">“</span>
                               {quoteText}
-                              <span aria-hidden="true" className="ml-[0.04em] text-foreground/54">”</span>
+                              <span aria-hidden="true" className="ml-[0.04em] text-white/54">”</span>
                             </p>
                             {section.author && (
-                              <footer className="mt-5 text-[0.82rem] not-italic font-semibold uppercase tracking-[0.22em] text-foreground/42">
+                              <footer className="mt-5 text-[0.82rem] not-italic font-semibold uppercase tracking-[0.22em] text-white/42">
                                 {decodeHTMLEntities(section.author)}
                               </footer>
                             )}
@@ -738,7 +831,7 @@ function ArticleDetailContent() {
                                 />
                               </div>
                               {(section.caption || section.alt) && (
-                                <figcaption className="mx-auto mt-4 max-w-[38rem] text-[0.78rem] font-medium uppercase tracking-[0.12em] leading-5 text-foreground/42">
+                                <figcaption className="mx-auto mt-4 max-w-[38rem] text-[0.78rem] font-medium uppercase tracking-[0.12em] leading-5 text-white/42">
                                   {decodeHTMLEntities(section.caption || section.alt || '')}
                                 </figcaption>
                               )}
@@ -761,7 +854,7 @@ function ArticleDetailContent() {
                                 onClick={() => openArticleLightboxAt(`image-${index}`)}
                               />
                               {(section.caption || section.alt) && (
-                                <figcaption className="mx-auto mt-3 max-w-[38rem] text-[0.78rem] font-medium uppercase tracking-[0.12em] leading-5 text-foreground/42">
+                                <figcaption className="mx-auto mt-3 max-w-[38rem] text-[0.78rem] font-medium uppercase tracking-[0.12em] leading-5 text-white/42">
                                   {decodeHTMLEntities(section.caption || section.alt || '')}
                                 </figcaption>
                               )}
@@ -795,14 +888,14 @@ function ArticleDetailContent() {
                           >
                             <div className="aspect-[16/9] rounded-[0.65rem] border border-white/10 bg-black/20" />
                             <figcaption className="mt-5 space-y-2">
-                              <p className="text-[0.82rem] font-semibold uppercase tracking-[0.18em] text-foreground/42">
+                              <p className="text-[0.82rem] font-semibold uppercase tracking-[0.18em] text-white/42">
                                 Image Placeholder
                               </p>
-                              <p className="font-sans text-[1.08rem] font-medium tracking-[-0.03em] text-foreground">
+                              <p className="font-sans text-[1.08rem] font-medium tracking-[-0.03em] text-white">
                                 {decodeHTMLEntities(section.title || 'Planned image')}
                               </p>
                               {section.note && (
-                                <p className="max-w-[46rem] text-[0.98rem] leading-7 text-foreground/62">
+                                <p className="max-w-[46rem] text-[0.98rem] leading-7 text-white/62">
                                   {decodeHTMLEntities(section.note)}
                                 </p>
                               )}
@@ -839,7 +932,7 @@ function ArticleDetailContent() {
                               />
                             </div>
                             {section.caption && (
-                              <figcaption className="mt-4 text-center text-[0.78rem] font-medium uppercase tracking-[0.12em] text-foreground/42">
+                              <figcaption className="mt-4 text-center text-[0.78rem] font-medium uppercase tracking-[0.12em] text-white/42">
                                 {decodeHTMLEntities(section.caption)}
                               </figcaption>
                             )}
@@ -856,7 +949,7 @@ function ArticleDetailContent() {
                                   type="button"
                                   aria-label="Previous gallery images"
                                   onClick={() => scrollGallery(index, "prev")}
-                                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/45 text-foreground/65 transition-colors hover:border-border hover:text-foreground"
+                                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/45 text-white/65 transition-colors hover:border-border hover:text-white"
                                 >
                                   <ChevronLeft className="h-4 w-4" />
                                 </button>
@@ -864,7 +957,7 @@ function ArticleDetailContent() {
                                   type="button"
                                   aria-label="Next gallery images"
                                   onClick={() => scrollGallery(index, "next")}
-                                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/45 text-foreground/65 transition-colors hover:border-border hover:text-foreground"
+                                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/45 text-white/65 transition-colors hover:border-border hover:text-white"
                                 >
                                   <ChevronRight className="h-4 w-4" />
                                 </button>
@@ -897,7 +990,7 @@ function ArticleDetailContent() {
                                       onClick={() => openArticleLightboxAt(`gallery-${index}-${imgIndex}`)}
                                     />
                                     {img.caption && (
-                                      <figcaption className="mt-4 max-w-[34rem] text-[0.86rem] leading-6 tracking-[-0.01em] text-foreground/56">
+                                      <figcaption className="mt-4 max-w-[34rem] text-[0.86rem] leading-6 tracking-[-0.01em] text-white/56">
                                         {decodeHTMLEntities(img.caption)}
                                       </figcaption>
                                     )}
@@ -925,7 +1018,7 @@ function ArticleDetailContent() {
                         return (
                           <div
                             key={index}
-                            className="article-html-content [&_p]:mb-8 [&_p]:text-[1.02rem] [&_p]:leading-[1.9] [&_p]:tracking-[-0.01em] [&_p]:text-foreground/80"
+                            className="article-html-content [&_p]:mb-8 [&_p]:text-[1.02rem] [&_p]:leading-[1.9] [&_p]:tracking-[-0.01em] [&_p]:text-white/80"
                             dangerouslySetInnerHTML={{ __html: processHTMLImages(decodeHTMLEntities(section.content)) }}
                           />
                         );
@@ -934,7 +1027,7 @@ function ArticleDetailContent() {
                         return (
                           <div
                             key={index}
-                            className="[&_p]:mb-8 [&_p]:text-[1.02rem] [&_p]:leading-[1.9] [&_p]:tracking-[-0.01em] [&_p]:text-foreground/80"
+                            className="[&_p]:mb-8 [&_p]:text-[1.02rem] [&_p]:leading-[1.9] [&_p]:tracking-[-0.01em] [&_p]:text-white/80"
                             dangerouslySetInnerHTML={{ __html: processHTMLImages(section.content) }}
                           />
                         );
@@ -949,12 +1042,12 @@ function ArticleDetailContent() {
                                   value={`faq-${faqIndex}`}
                                   className="rounded-[1rem] border border-white/10 bg-white/[0.02] px-6 transition-colors data-[state=open]:border-white/16 data-[state=open]:bg-white/[0.035]"
                                 >
-                                  <AccordionTrigger className="py-5 text-left text-[1.04rem] font-medium leading-[1.35] tracking-[-0.02em] text-foreground hover:no-underline">
+                                  <AccordionTrigger className="py-5 text-left text-[1.04rem] font-medium leading-[1.35] tracking-[-0.02em] text-white hover:no-underline">
                                     {decodeHTMLEntities(item.question)}
                                   </AccordionTrigger>
-                                  <AccordionContent className="pb-6 pr-8 text-[0.98rem] leading-7 text-foreground/66">
+                                  <AccordionContent className="pb-6 pr-8 text-[0.98rem] leading-7 text-white/66">
                                     <div
-                                      className="[&_p]:mb-4 [&_a]:text-foreground [&_a]:underline [&_a]:decoration-white/30 [&_a]:underline-offset-4"
+                                      className="[&_p]:mb-4 [&_a]:text-white [&_a]:underline [&_a]:decoration-white/30 [&_a]:underline-offset-4"
                                       dangerouslySetInnerHTML={{ __html: item.answer }}
                                     />
                                   </AccordionContent>
@@ -971,7 +1064,7 @@ function ArticleDetailContent() {
                               <Button
                                 variant="ghost"
                                 size="icon"
-                                className="h-8 w-8 text-foreground/56 hover:bg-white/[0.04] hover:text-foreground"
+                                className="h-8 w-8 text-white/56 hover:bg-white/[0.04] hover:text-white"
                                 onClick={() => {
                                   // Handle both flat (prompt) and nested (content) structures
                                   const text = section.prompt || section.content?.prompt || section.content || '';
@@ -983,12 +1076,12 @@ function ArticleDetailContent() {
                               </Button>
                             </div>
                             <div className="flex items-start gap-3">
-                              <div className="mt-1 rounded-md bg-white/[0.04] p-1.5 text-foreground/62">
+                              <div className="mt-1 rounded-md bg-white/[0.04] p-1.5 text-white/62">
                                 <Sparkles className="w-4 h-4" />
                               </div>
                               <div className="flex-1">
-                                <p className="mb-2 text-xs font-bold uppercase tracking-wider text-foreground/56">AI Prompt</p>
-                                <p className="font-mono text-sm leading-relaxed text-foreground/86 whitespace-pre-wrap">
+                                <p className="mb-2 text-xs font-bold uppercase tracking-wider text-white/56">AI Prompt</p>
+                                <p className="font-mono whitespace-pre-wrap text-sm leading-relaxed text-white/86">
                                   {section.prompt || section.content?.prompt || section.content || ''}
                                 </p>
                               </div>
@@ -1007,7 +1100,7 @@ function ArticleDetailContent() {
               {/* Tags Section */}
               {article.tags && article.tags.length > 0 && (
                 <div className="mx-auto mt-16 max-w-[58ch] border-t border-white/12 pt-12">
-                  <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-foreground/48">Tagged With</h3>
+                  <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white/48">Tagged With</h3>
                   <div className="flex flex-wrap gap-2">
                     {article.tags.map((tag: any) => (
                       <Link key={tag.id} href={`/tags/${tag.slug}`}>
@@ -1040,8 +1133,8 @@ function ArticleDetailContent() {
                   </div>
                   <div className="flex-1">
                     <h3 className="mb-2 text-2xl font-sans font-normal tracking-[-0.04em]">Brandon PT Davis</h3>
-                    <p className="mb-4 text-sm uppercase tracking-wider text-foreground/48">Scenic Designer</p>
-                    <p className="mb-6 leading-relaxed text-foreground/80">
+                    <p className="mb-4 text-sm uppercase tracking-wider text-white/48">Scenic Designer</p>
+                    <p className="mb-6 leading-relaxed text-white/80">
                       Brandon PT Davis is a scenic designer based in Los Angeles.
                       His work explores the intersection of physical space, digital technology, and narrative storytelling.
                     </p>
@@ -1062,9 +1155,11 @@ function ArticleDetailContent() {
           <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
             <div className="border-t border-white/12 pt-12">
               <div className="mb-8 flex items-end justify-between">
-                <h2 className="text-2xl md:text-3xl font-sans font-normal tracking-[-0.05em]">Keep reading</h2>
-                <Link href="/articles">
-                  <a className="text-base text-foreground/72 transition-colors hover:text-foreground">View all</a>
+                <h2 className="text-2xl md:text-3xl font-sans font-normal tracking-[-0.05em]">
+                  {article.series ? `More in ${article.series.name}` : "Keep reading"}
+                </h2>
+                <Link href="/articles" className="text-base text-white/72 transition-colors hover:text-white">
+                  View all
                 </Link>
               </div>
 
@@ -1076,7 +1171,7 @@ function ArticleDetailContent() {
                         <div className="aspect-square overflow-hidden rounded-xl bg-white/[0.02]">
                           <img
                             src={relatedArticle.coverImageUrl}
-                            alt={decodeHTMLEntities(relatedArticle.title)}
+                            alt={relatedArticle.coverImageAlt || decodeHTMLEntities(relatedArticle.title)}
                             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                             loading="lazy"
                           />
@@ -1084,11 +1179,11 @@ function ArticleDetailContent() {
                       )}
 
                       <div className="pt-4">
-                        <h3 className="mb-3 text-[1.45rem] font-sans font-normal leading-[1.12] tracking-[-0.04em] text-foreground transition-colors line-clamp-3 group-hover:text-foreground/82">
+                        <h3 className="mb-3 text-[1.45rem] font-sans font-normal leading-[1.12] tracking-[-0.04em] text-white transition-colors line-clamp-3 group-hover:text-white/82">
                           {decodeHTMLEntities(relatedArticle.title)}
                         </h3>
 
-                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.95rem] tracking-[-0.015em] text-foreground/52">
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.95rem] tracking-[-0.015em] text-white/52">
                           {relatedArticle.categoryName && <span>{relatedArticle.categoryName}</span>}
                           <span>
                             {relatedArticle.publishedAt && new Date(relatedArticle.publishedAt).toLocaleDateString('en-US', {

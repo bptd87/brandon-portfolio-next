@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { getLocalArticles } from "@shared/localArticles";
 
 const galleryImages = [
   {
@@ -114,6 +115,14 @@ export default function About() {
   const galleryRailRef = useRef<HTMLDivElement | null>(null);
   const baseUrl =
     typeof window !== "undefined" ? window.location.origin : "https://www.brandonptdavis.com";
+  const bioArticles = getLocalArticles()
+    .filter(
+      (article) =>
+        article.categoryName === "Profiles & Interviews" ||
+        article.tags?.some((tag) => tag.slug === "biography" || tag.slug === "profile" || tag.slug === "interview")
+    )
+    .sort((a, b) => new Date(b.publishedAt || b.createdAt || 0).getTime() - new Date(a.publishedAt || a.createdAt || 0).getTime())
+    .slice(0, 4);
 
   const scrollGalleryBy = (direction: "prev" | "next") => {
     const rail = galleryRailRef.current;
@@ -380,42 +389,92 @@ export default function About() {
 
             <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
               {navigationCards.map((card) => (
-                <Link key={card.href} href={card.href}>
-                  <a className="group block">
-                    <div className="relative overflow-hidden rounded-[1.35rem] border border-border/40 bg-card/20">
-                      <img
-                        src={card.image}
-                        alt={card.title}
-                        className="aspect-square w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
-                        loading="lazy"
-                      />
-                      {card.imageTitle ? (
-                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-6 text-center">
-                          <div className="absolute inset-0 bg-black/12" />
-                          <p className="relative max-w-[10ch] font-sans text-[1.45rem] font-medium leading-[0.98] tracking-[-0.05em] text-white md:text-[1.65rem]">
-                            {card.imageTitle}
-                          </p>
-                        </div>
-                      ) : null}
-                    </div>
-                    <div className="pt-4">
-                      <p className="text-sm text-foreground/50">{card.label}</p>
-                      <div className="mt-2 flex items-start justify-between gap-3">
-                        <div className="space-y-2">
-                          <h3 className="font-sans text-[1.25rem] font-medium leading-[1.05] tracking-[-0.03em] text-foreground">
-                            {card.title}
-                          </h3>
-                          <p className="text-[0.96rem] leading-7 text-foreground/58">
-                            {card.description}
-                          </p>
-                        </div>
-                        <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-foreground/45 transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
+                <Link key={card.href} href={card.href} className="group block">
+                  <div className="relative overflow-hidden rounded-[1.35rem] border border-border/40 bg-card/20">
+                    <img
+                      src={card.image}
+                      alt={card.title}
+                      className="aspect-square w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
+                      loading="lazy"
+                    />
+                    {card.imageTitle ? (
+                      <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-6 text-center">
+                        <div className="absolute inset-0 bg-black/12" />
+                        <p className="relative max-w-[10ch] font-sans text-[1.45rem] font-medium leading-[0.98] tracking-[-0.05em] text-white md:text-[1.65rem]">
+                          {card.imageTitle}
+                        </p>
                       </div>
+                    ) : null}
+                  </div>
+                  <div className="pt-4">
+                    <p className="text-sm text-foreground/50">{card.label}</p>
+                    <div className="mt-2 flex items-start justify-between gap-3">
+                      <div className="space-y-2">
+                        <h3 className="font-sans text-[1.25rem] font-medium leading-[1.05] tracking-[-0.03em] text-foreground">
+                          {card.title}
+                        </h3>
+                        <p className="text-[0.96rem] leading-7 text-foreground/58">
+                          {card.description}
+                        </p>
+                      </div>
+                      <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-foreground/45 transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
                     </div>
-                  </a>
+                  </div>
                 </Link>
               ))}
             </div>
+
+            {bioArticles.length > 0 ? (
+              <div className="mt-16 border-t border-border/25 pt-10">
+                <div className="mb-8 max-w-3xl">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                    Bio Articles
+                  </p>
+                  <h3 className="mt-4 font-sans text-[clamp(1.6rem,3vw,2.4rem)] font-medium leading-[1] tracking-[-0.04em] text-foreground">
+                    Interviews, profiles, and longer-form writing around the work.
+                  </h3>
+                </div>
+
+                <div className="grid gap-6 md:grid-cols-2">
+                  {bioArticles.map((article) => (
+                    <Link key={article.id} href={`/articles/${article.slug}`} className="group block">
+                      <div className="grid gap-5 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:items-start">
+                        <div className="relative aspect-square overflow-hidden rounded-[1.15rem] border border-border/35 bg-card/20">
+                          {article.coverImageUrl ? (
+                            <img
+                              src={article.coverImageUrl}
+                              alt={article.coverImageAlt || article.title}
+                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <div className="h-full w-full bg-muted" />
+                          )}
+                        </div>
+                        <div className="pt-1">
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-foreground/50">
+                            <span>{article.categoryName}</span>
+                            <span>
+                              {new Date(article.publishedAt || article.createdAt || "").toLocaleDateString("en-US", {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                              })}
+                            </span>
+                          </div>
+                          <h4 className="mt-3 font-sans text-[1.3rem] font-medium leading-[1.06] tracking-[-0.035em] text-foreground transition-colors group-hover:text-foreground/84">
+                            {article.title}
+                          </h4>
+                          <p className="mt-3 text-[0.97rem] leading-7 text-foreground/60">
+                            {article.excerpt}
+                          </p>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ) : null}
           </div>
         </section>
 

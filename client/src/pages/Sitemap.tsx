@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 
 import InfoPageShell from "@/components/InfoPageShell";
+import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 
 const sections = [
@@ -65,6 +66,11 @@ export default function Sitemap() {
 
   return (
     <>
+      <SEO
+        title="Sitemap | Brandon PT Davis"
+        description="Sitemap for Brandon PT Davis covering scenic design projects, renderings, articles, studio resources, teaching pages, and public site information."
+        url="https://www.brandonptdavis.com/sitemap"
+      />
       <StructuredData
         type="BreadcrumbList"
         breadcrumbs={[
@@ -98,7 +104,7 @@ export default function Sitemap() {
         <div className="grid gap-x-12 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
           {sections.map((section) => (
             <section key={section.title} className="border-t border-white/10 pt-5">
-              <h2 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
+              <h2 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/42">
                 {section.title}
               </h2>
               <ul className="space-y-3">
@@ -107,14 +113,14 @@ export default function Sitemap() {
                     {section.title === "RSS Feeds" ? (
                       <a
                         href={link.href}
-                        className="text-[1rem] leading-[1.65] tracking-[-0.01em] text-foreground/72 transition-colors hover:text-foreground"
+                        className="text-[1rem] leading-[1.65] tracking-[-0.01em] text-white/72 transition-colors hover:text-white"
                       >
                         {link.name}
                       </a>
                     ) : (
                       <Link
                         href={link.href}
-                        className="text-[1rem] leading-[1.65] tracking-[-0.01em] text-foreground/72 transition-colors hover:text-foreground"
+                        className="text-[1rem] leading-[1.65] tracking-[-0.01em] text-white/72 transition-colors hover:text-white"
                       >
                         {link.name}
                       </Link>

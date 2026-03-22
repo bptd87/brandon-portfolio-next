@@ -70,13 +70,13 @@ function ShowcaseCard({
       </div>
 
       <div data-showcase-card-copy="true" className={copyClassName || "pt-4"}>
-        <p className="text-[1.06rem] font-medium tracking-[-0.024em] text-foreground/88">
+        <p className="text-[1.06rem] font-medium tracking-[-0.024em] text-white/88">
           {item.title}
         </p>
         {(item.client || item.year) ? (
           <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm tracking-[-0.01em]">
-            {item.client ? <span className="text-foreground/82">{item.client}</span> : null}
-            {item.year ? <span className="text-foreground/42">{item.year}</span> : null}
+            {item.client ? <span className="text-white/82">{item.client}</span> : null}
+            {item.year ? <span className="text-white/42">{item.year}</span> : null}
           </div>
         ) : null}
       </div>
@@ -331,7 +331,7 @@ export function StickyShowcase({
                   {leadOverlayTitle && title ? (
                     <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/26 to-transparent px-6 pb-6 pt-16 md:px-8 md:pb-7">
                       <h1
-                        className={`max-w-[16ch] font-sans text-[clamp(1.9rem,3vw,3rem)] font-medium leading-[0.94] tracking-[-0.055em] text-foreground ${
+                        className={`max-w-[16ch] font-sans text-[clamp(1.9rem,3vw,3rem)] font-medium leading-[0.94] tracking-[-0.055em] text-white ${
                           leadTitleClassName || ""
                         }`}
                       >
@@ -345,7 +345,7 @@ export function StickyShowcase({
                   <div className="max-w-3xl pt-5 md:pt-6">
                     {showBelowTitle ? (
                       <h1
-                        className={`max-w-[14ch] font-sans text-[clamp(2rem,3.8vw,3.45rem)] font-medium leading-[0.94] tracking-[-0.06em] text-foreground ${
+                        className={`max-w-[14ch] font-sans text-[clamp(2rem,3.8vw,3.45rem)] font-medium leading-[0.94] tracking-[-0.06em] text-white ${
                           leadTitleClassName || ""
                         }`}
                       >
@@ -353,22 +353,22 @@ export function StickyShowcase({
                       </h1>
                     ) : null}
                     {visibleFeaturedCredit ? (
-                      <p className={showFeaturedMeta ? "mt-2 text-sm tracking-[-0.01em] text-foreground/52" : "mt-3 text-sm tracking-[-0.01em] text-foreground/52"}>
+                      <p className={showFeaturedMeta ? "mt-2 text-sm tracking-[-0.01em] text-white/52" : "mt-3 text-sm tracking-[-0.01em] text-white/52"}>
                         {visibleFeaturedCredit}
                       </p>
                     ) : null}
                     {showFeaturedMeta ? (
                       <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm tracking-[-0.01em]">
                         {featuredItem.client ? (
-                          <span className="text-foreground/82">{featuredItem.client}</span>
+                          <span className="text-white/82">{featuredItem.client}</span>
                         ) : null}
                         {featuredItem.year ? (
-                          <span className="text-foreground/42">{featuredItem.year}</span>
+                          <span className="text-white/42">{featuredItem.year}</span>
                         ) : null}
                       </div>
                     ) : null}
                     {intro ? (
-                      <p className="mt-3 max-w-2xl text-[0.98rem] leading-7 text-foreground/62 md:text-[1.05rem]">
+                      <p className="mt-3 max-w-2xl text-[0.98rem] leading-7 text-white/62 md:text-[1.05rem]">
                         {intro}
                       </p>
                     ) : null}

@@ -3,9 +3,9 @@ import StructuredData from "@/components/StructuredData";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AboutNav from "@/components/AboutNav";
-import { trpc } from "@/lib/trpc";
 import { ExternalLink, Instagram, Users } from "lucide-react";
 import { useMemo } from "react";
+import { getLocalCollaborators } from "@shared/localStudio";
 
 type RoleFilter =
   | "all"
@@ -37,7 +37,8 @@ const slugifyName = (text: string) =>
     .replace(/^-|-$/g, "");
 
 export default function Collaborators() {
-  const { data: allCollaborators, isLoading } = trpc.collaborators.list.useQuery();
+  const allCollaborators = getLocalCollaborators();
+  const isLoading = false;
 
   const groupedCollaborators = useMemo(
     () =>
@@ -154,7 +155,7 @@ export default function Collaborators() {
             "theatre directors",
             "design team partnerships",
           ],
-          contributor: peopleCollaborators.slice(0, 75).map((collab) => ({
+            contributor: peopleCollaborators.slice(0, 75).map((collab) => ({
             type: "Person" as const,
             name: collab.name,
             roleName: collab.role ? roleLabels[collab.role as RoleFilter] || collab.role : undefined,

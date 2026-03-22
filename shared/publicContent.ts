@@ -54,7 +54,7 @@ export const voyageLaArticle: StaticArticle = {
   coverImageAlt: "VoyageLA Rising Stars interview feature",
   publishedAt: "2026-02-10",
   updatedAt: "2026-02-12",
-  categoryName: "Editorial Profiles",
+  categoryName: "Profiles & Interviews",
   seoTitle: "VoyageLA Interview | Brandon PT Davis",
   seoDescription:
     "VoyageLA's Rising Stars interview with Brandon PT Davis on scenic design process, career development, and production-focused collaboration.",

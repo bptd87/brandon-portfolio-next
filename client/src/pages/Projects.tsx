@@ -24,7 +24,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { trpc } from "@/lib/trpc";
 import { getProjectPath } from "@/lib/projectRoutes";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
 
@@ -135,16 +134,16 @@ function ProjectCard({
         </div>
 
         <div className="pt-4">
-          <p className="text-[1.02rem] font-normal tracking-[-0.02em] text-foreground/88">
+          <p className="text-[1.02rem] font-normal tracking-[-0.02em] text-white/88">
             {project.title}
           </p>
           {(getVenueLabel(project) || formatProjectDate(project)) ? (
             <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm tracking-[-0.01em]">
               {getVenueLabel(project) ? (
-                <span className="text-foreground/82">{getVenueLabel(project)}</span>
+                <span className="text-white/82">{getVenueLabel(project)}</span>
               ) : null}
               {formatProjectDate(project) ? (
-                <span className="text-foreground/42">{formatProjectDate(project)}</span>
+                <span className="text-white/42">{formatProjectDate(project)}</span>
               ) : null}
             </div>
           ) : null}
@@ -162,36 +161,8 @@ export default function Projects() {
   const [sortKey, setSortKey] = useState<SortKey>("newest");
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
 
-  const { data: projects, isLoading } = trpc.projects.list.useQuery({
-    status: "published",
-    discipline: "scenic_design",
-  });
-
-  const mergedProjects = useMemo(() => {
-    if (!projects?.length) return [];
-
-    const localBySlug = new Map(
-      getLocalScenicProjects().map((project) => [project.slug, project])
-    );
-
-    return projects.map((project) => {
-      const local = localBySlug.get(project.slug);
-      if (!local) return project;
-
-      return {
-        ...project,
-        client: local.client ?? project.client,
-        location: local.location ?? project.location,
-        subcategory: local.subcategory ?? project.subcategory,
-        year: local.year ?? project.year,
-        month: local.month ?? project.month,
-        excerpt: local.excerpt || project.excerpt,
-        seoTitle: local.seoTitle ?? project.seoTitle,
-        seoDescription: local.seoDescription ?? project.seoDescription,
-        coverImageUrl: local.coverImageUrl || project.coverImageUrl,
-      };
-    });
-  }, [projects]);
+  const mergedProjects = useMemo(() => getLocalScenicProjects(), []);
+  const isLoading = false;
 
   const subcategories = useMemo(() => {
     if (!mergedProjects.length) return [] as Array<{ key: string; label: string }>;
@@ -305,6 +276,30 @@ export default function Projects() {
 
   const activeFilterCount =
     (selectedVenue !== "all" ? 1 : 0) + (selectedYear !== "all" ? 1 : 0);
+  const scenicArchiveTitle =
+    selectedVenue !== "all"
+      ? `${selectedVenue} Scenic Design | Brandon PT Davis`
+      : selectedCategoryLabel
+        ? `${selectedCategoryLabel} Scenic Design | Brandon PT Davis`
+        : selectedYear !== "all"
+          ? `${selectedYear} Scenic Design Portfolio | Brandon PT Davis`
+          : "Scenic Design Portfolio | Brandon PT Davis";
+  const scenicArchiveDescription =
+    selectedVenue !== "all"
+      ? `Scenic design work by Brandon PT Davis for productions at ${selectedVenue}.`
+      : selectedCategoryLabel
+        ? `${selectedCategoryLabel} scenic design projects by Brandon PT Davis, including realized productions, design notes, and portfolio documentation.`
+        : selectedYear !== "all"
+          ? `Scenic design projects by Brandon PT Davis from ${selectedYear}, spanning realized productions, renderings, and production photography.`
+          : `Explore scenic design productions by Brandon PT Davis. ${pageDescription}`;
+  const scenicCollectionName =
+    selectedVenue !== "all"
+      ? `${selectedVenue} Scenic Design`
+      : selectedCategoryLabel
+        ? `${selectedCategoryLabel} Scenic Design`
+        : selectedYear !== "all"
+          ? `${selectedYear} Scenic Design Portfolio`
+          : "Scenic Design Portfolio";
   const isDefaultAllView =
     selectedSubcategory === "all" &&
     selectedVenue === "all" &&
@@ -367,9 +362,24 @@ export default function Projects() {
   return (
     <div className="min-h-screen">
       <SEO
-        title={`${pageTitle} | Brandon PT Davis`}
-        description={`Explore scenic design productions by Brandon PT Davis. ${pageDescription}`}
+        title={scenicArchiveTitle}
+        description={scenicArchiveDescription}
         image={sortedProjects?.[0]?.coverImageUrl || undefined}
+        imageAlt={
+          sortedProjects?.[0]
+            ? `${sortedProjects[0].title} scenic design cover image`
+            : "Scenic design portfolio cover image"
+        }
+        keywords={[
+          "scenic design portfolio",
+          "theatre set design",
+          "Brandon PT Davis",
+          selectedCategoryLabel,
+          selectedVenue !== "all" ? selectedVenue : null,
+          selectedYear !== "all" ? selectedYear : null,
+        ]
+          .filter(Boolean)
+          .join(", ")}
         url="https://www.brandonptdavis.com/projects"
       />
       <StructuredData
@@ -382,13 +392,13 @@ export default function Projects() {
       <StructuredData
         type="CollectionPage"
         collectionPage={{
-          name: "Scenic Design Portfolio",
+          name: scenicCollectionName,
           url: "https://www.brandonptdavis.com/projects",
-          description: "Portfolio of scenic design productions by Brandon PT Davis.",
+          description: scenicArchiveDescription,
           about: "Scenic design projects in regional theatre, summer stock, and academic production.",
           primaryImageOfPage: sortedProjects?.[0]?.coverImageUrl || undefined,
           mainEntity: {
-            name: "Scenic Design Projects",
+            name: scenicCollectionName,
             itemListElement: sortedProjects.slice(0, 40).map((project, index) => ({
               position: index + 1,
               name: project.title,
@@ -402,9 +412,9 @@ export default function Projects() {
       <StructuredData
         type="CreativeWork"
         creativeWork={{
-          name: "Scenic Design Portfolio",
+          name: scenicCollectionName,
           description:
-            "A curated body of scenic design productions by Brandon PT Davis across regional theatre, summer stock, and academic performance.",
+            scenicArchiveDescription,
           url: "https://www.brandonptdavis.com/projects",
           creator: {
             name: "Brandon PT Davis",
@@ -443,15 +453,15 @@ export default function Projects() {
           <div className="container max-w-6xl">
             <div className="max-w-3xl">
               {currentHeading === pageTitle ? (
-                <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.24em] text-foreground/42">
+                <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.24em] text-white/42">
                   {pageSubtitle}
                 </p>
               ) : null}
-              <h1 className="font-sans text-[clamp(2.3rem,4.6vw,3.8rem)] font-medium leading-[0.96] tracking-[-0.05em] text-foreground">
+              <h1 className="font-sans text-[clamp(2.3rem,4.6vw,3.8rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
                 {currentHeading}
               </h1>
               {currentHeading === pageTitle ? (
-                <p className="mt-6 max-w-3xl text-[1rem] leading-7 text-foreground/58 md:text-[1.05rem]">
+                <p className="mt-6 max-w-3xl text-[1rem] leading-7 text-white/58 md:text-[1.05rem]">
                   {pageIntro}
                 </p>
               ) : null}
@@ -467,7 +477,7 @@ export default function Projects() {
                       className={`inline-flex h-10 items-center rounded-full border px-4 text-sm tracking-[-0.01em] transition-colors ${
                         selectedSubcategory === "all"
                           ? "border-foreground/20 bg-foreground text-background"
-                          : "border-border/50 bg-background/70 text-foreground/70 hover:border-border hover:text-foreground"
+                          : "border-border/50 bg-background/70 text-white/70 hover:border-border hover:text-white"
                       }`}
                     >
                       All
@@ -480,7 +490,7 @@ export default function Projects() {
                         className={`inline-flex h-10 items-center whitespace-nowrap rounded-full border px-4 text-sm tracking-[-0.01em] transition-colors ${
                           selectedSubcategory === category.key
                             ? "border-foreground/20 bg-foreground text-background"
-                            : "border-border/50 bg-background/70 text-foreground/70 hover:border-border hover:text-foreground"
+                            : "border-border/50 bg-background/70 text-white/70 hover:border-border hover:text-white"
                         }`}
                       >
                         {category.label}
@@ -497,8 +507,8 @@ export default function Projects() {
                     onClick={() => setSelectedSubcategory("all")}
                     className={`text-[1.05rem] transition-colors ${
                       selectedSubcategory === "all"
-                        ? "text-foreground"
-                        : "text-foreground/52 hover:text-foreground/80"
+                        ? "text-white"
+                        : "text-white/52 hover:text-white/80"
                     }`}
                   >
                     All
@@ -510,8 +520,8 @@ export default function Projects() {
                       onClick={() => setSelectedSubcategory(category.key)}
                       className={`text-[1.05rem] transition-colors ${
                         selectedSubcategory === category.key
-                          ? "text-foreground"
-                          : "text-foreground/52 hover:text-foreground/80"
+                          ? "text-white"
+                          : "text-white/52 hover:text-white/80"
                       }`}
                     >
                       {category.label}
@@ -525,7 +535,7 @@ export default function Projects() {
                   <PopoverTrigger asChild>
                     <button
                       type="button"
-                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-foreground/82 transition-colors hover:border-border hover:text-foreground"
+                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-white/82 transition-colors hover:border-border hover:text-white"
                     >
                       <SlidersHorizontal className="h-4 w-4" />
                       Filter
@@ -543,8 +553,8 @@ export default function Projects() {
                     <div className="space-y-5">
                       <div className="flex items-center justify-between gap-3">
                         <div>
-                          <p className="text-sm font-medium text-foreground">Filter productions</p>
-                          <p className="text-xs text-foreground/52">Refine by venue or date.</p>
+                          <p className="text-sm font-medium text-white">Filter productions</p>
+                          <p className="text-xs text-white/52">Refine by venue or date.</p>
                         </div>
                         {(selectedVenue !== "all" || selectedYear !== "all") && (
                           <button
@@ -553,7 +563,7 @@ export default function Projects() {
                               setSelectedVenue("all");
                               setSelectedYear("all");
                             }}
-                            className="text-xs text-foreground/55 transition-colors hover:text-foreground"
+                            className="text-xs text-white/55 transition-colors hover:text-white"
                           >
                             Clear
                           </button>
@@ -561,7 +571,7 @@ export default function Projects() {
                       </div>
 
                       <div className="space-y-2">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-foreground/45">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
                           Venue
                         </p>
                         <div className="flex max-h-40 flex-wrap gap-2 overflow-y-auto pr-1">
@@ -570,8 +580,8 @@ export default function Projects() {
                             onClick={() => setSelectedVenue("all")}
                             className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
                               selectedVenue === "all"
-                                ? "border-foreground/30 bg-foreground/10 text-foreground"
-                                : "border-border/50 text-foreground/62 hover:border-border hover:text-foreground"
+                                ? "border-white/30 bg-white/10 text-white"
+                                : "border-border/50 text-white/62 hover:border-border hover:text-white"
                             }`}
                           >
                             All venues
@@ -583,8 +593,8 @@ export default function Projects() {
                               onClick={() => setSelectedVenue(venue)}
                               className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
                                 selectedVenue === venue
-                                  ? "border-foreground/30 bg-foreground/10 text-foreground"
-                                  : "border-border/50 text-foreground/62 hover:border-border hover:text-foreground"
+                                  ? "border-white/30 bg-white/10 text-white"
+                                  : "border-border/50 text-white/62 hover:border-border hover:text-white"
                               }`}
                             >
                               {venue}
@@ -594,7 +604,7 @@ export default function Projects() {
                       </div>
 
                       <div className="space-y-2">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-foreground/45">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
                           Date
                         </p>
                         <div className="flex flex-wrap gap-2">
@@ -603,8 +613,8 @@ export default function Projects() {
                             onClick={() => setSelectedYear("all")}
                             className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
                               selectedYear === "all"
-                                ? "border-foreground/30 bg-foreground/10 text-foreground"
-                                : "border-border/50 text-foreground/62 hover:border-border hover:text-foreground"
+                                ? "border-white/30 bg-white/10 text-white"
+                                : "border-border/50 text-white/62 hover:border-border hover:text-white"
                             }`}
                           >
                             All dates
@@ -616,8 +626,8 @@ export default function Projects() {
                               onClick={() => setSelectedYear(year)}
                               className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
                                 selectedYear === year
-                                  ? "border-foreground/30 bg-foreground/10 text-foreground"
-                                  : "border-border/50 text-foreground/62 hover:border-border hover:text-foreground"
+                                  ? "border-white/30 bg-white/10 text-white"
+                                  : "border-border/50 text-white/62 hover:border-border hover:text-white"
                               }`}
                             >
                               {year}
@@ -633,7 +643,7 @@ export default function Projects() {
                   <DropdownMenuTrigger asChild>
                     <button
                       type="button"
-                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-foreground/82 transition-colors hover:border-border hover:text-foreground"
+                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-white/82 transition-colors hover:border-border hover:text-white"
                     >
                       <ArrowUpDown className="h-4 w-4" />
                       Sort
@@ -664,7 +674,7 @@ export default function Projects() {
                     className={`inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
                       viewMode === "grid"
                         ? "bg-foreground text-background"
-                        : "text-foreground/55 hover:text-foreground"
+                        : "text-white/55 hover:text-white"
                     }`}
                     aria-label="Grid view"
                   >
@@ -676,7 +686,7 @@ export default function Projects() {
                     className={`inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
                       viewMode === "list"
                         ? "bg-foreground text-background"
-                        : "text-foreground/55 hover:text-foreground"
+                        : "text-white/55 hover:text-white"
                     }`}
                     aria-label="List view"
                   >
@@ -687,7 +697,7 @@ export default function Projects() {
             </div>
 
             {(selectedVenue !== "all" || selectedYear !== "all" || sortKey !== "newest") && (
-              <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-foreground/52">
+              <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-white/52">
                 <span>{sortedProjects.length} productions</span>
                 {selectedVenue !== "all" ? <span>Venue: {selectedVenue}</span> : null}
                 {selectedYear !== "all" ? <span>Date: {selectedYear}</span> : null}
@@ -753,20 +763,20 @@ export default function Projects() {
                             onClick={(event) => navigateWithTransition(event, href)}
                             className="group grid gap-4 border-b border-border/35 py-5 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8"
                           >
-                            <div className="space-y-2 text-sm text-foreground/48">
-                              <p className="text-foreground/82">{getVenueLabel(project)}</p>
+                            <div className="space-y-2 text-sm text-white/48">
+                              <p className="text-white/82">{getVenueLabel(project)}</p>
                               <p>{formatProjectDate(project) || "Date unavailable"}</p>
                             </div>
 
                             <div className="min-w-0">
-                              <p className="text-[1.12rem] font-normal tracking-[-0.025em] text-foreground/88">
+                              <p className="text-[1.12rem] font-normal tracking-[-0.025em] text-white/88">
                                 {project.title}
                               </p>
                               {directorLabel ? (
-                                <p className="mt-2 text-sm leading-6 text-foreground/52">{directorLabel}</p>
+                                <p className="mt-2 text-sm leading-6 text-white/52">{directorLabel}</p>
                               ) : null}
                               {project.subcategory ? (
-                                <p className="mt-1 text-sm leading-6 text-foreground/38">{project.subcategory}</p>
+                                <p className="mt-1 text-sm leading-6 text-white/38">{project.subcategory}</p>
                               ) : null}
                             </div>
                           </a>
@@ -781,7 +791,7 @@ export default function Projects() {
         ) : (
           <section className="pb-24 pt-16">
             <div className="container max-w-6xl text-center">
-              <p className="text-foreground/55">
+              <p className="text-white/55">
                 No scenic design productions match the current filters.
               </p>
             </div>
@@ -790,21 +800,21 @@ export default function Projects() {
 
         <section className="border-t border-border/35 py-16 md:py-20">
           <div className="container max-w-6xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
               About This Portfolio
             </p>
             <div className="mt-4 grid gap-10 lg:grid-cols-2">
               <div className="space-y-5">
-                <h2 className="font-sans text-[clamp(1.6rem,3vw,2.4rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-foreground">
+                <h2 className="font-sans text-[clamp(1.6rem,3vw,2.4rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-white">
                   Scenic Design Portfolio in Practice
                 </h2>
-                <p className="max-w-3xl text-[1rem] leading-7 text-foreground/62 md:text-[1.05rem]">
+                <p className="max-w-3xl text-[1rem] leading-7 text-white/62 md:text-[1.05rem]">
                   As a USA 829 scenic designer, this portfolio documents production work across
                   regional theatre, summer stock, and academic performance. The material includes
                   concept development, drafting, white models, rendering studies, and realized
                   stage photography.
                 </p>
-                <p className="max-w-3xl text-[1rem] leading-7 text-foreground/55 md:text-[1.05rem]">
+                <p className="max-w-3xl text-[1rem] leading-7 text-white/55 md:text-[1.05rem]">
                   Each project begins with the script and the collaborative framework around it,
                   then moves through research, spatial study, drafting coordination, and production
                   execution. The aim is consistent: environments that support story, performer
@@ -813,17 +823,17 @@ export default function Projects() {
               </div>
 
               <div className="space-y-4 rounded-xl bg-card/20 p-6 md:p-8">
-                <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-foreground/45">
+                <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
                   Core Focus Areas
                 </h3>
-                <ul className="space-y-3 text-sm md:text-base text-foreground/62">
+                <ul className="space-y-3 text-sm text-white/62 md:text-base">
                   <li>Scenic design for plays and musicals</li>
                   <li>Drafting and build documentation for production teams</li>
                   <li>Rendering studies for visual communication and alignment</li>
                   <li>Collaboration with lighting, costume, and technical teams</li>
                   <li>Story-driven environments for live performance</li>
                 </ul>
-                <p className="pt-2 text-xs uppercase tracking-[0.18em] text-foreground/42">
+                <p className="pt-2 text-xs uppercase tracking-[0.18em] text-white/42">
                   USA 829 • Southern California • Available Nationally
                 </p>
               </div>

@@ -7,8 +7,9 @@ import ScenicRenderingGallery from "@/components/ScenicRenderingGallery";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Button } from "@/components/ui/button";
-import { trpc } from "@/lib/trpc";
-import { getLocalScenicProjectBySlug, type LocalScenicProjectMedia } from "@shared/localScenicProjects";
+import { getLocalScenicProjectBySlug, getLocalScenicProjects, type LocalScenicProjectMedia } from "@shared/localScenicProjects";
+import { getLocalArticles } from "@shared/localArticles";
+import { getLocalRenderingProjectForProduction } from "@shared/localPortfolios";
 import { Check, Link2 } from "lucide-react";
 
 function getEmbedUrl(url: string): string {
@@ -84,7 +85,7 @@ export default function ScenicProjectDetail() {
   const project = getLocalScenicProjectBySlug(normalizedSlug);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [linkCopied, setLinkCopied] = useState(false);
-  const { data: allScenicProjects } = trpc.projects.list.useQuery({ discipline: "scenic_design" });
+  const allScenicProjects = getLocalScenicProjects();
 
   const imageMedia = useMemo(
     () => (project?.media || []).filter((item): item is LocalScenicProjectMedia & { imageUrl: string } => item.type === "image" && !!item.imageUrl),
@@ -210,16 +211,53 @@ export default function ScenicProjectDetail() {
       });
   }, [allScenicProjects, project.slug, project.title]);
 
+  const relatedArticles = useMemo(
+    () =>
+      getLocalArticles()
+        .filter((article) => (article.linkedScenicProjectSlugs || []).includes(project.slug))
+        .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()),
+    [project.slug]
+  );
+  const relatedRenderingProject = useMemo(
+    () =>
+      getLocalRenderingProjectForProduction({
+        title: project.title,
+        client: project.client,
+        year: project.year,
+      }),
+    [project.client, project.title, project.year]
+  );
+  const scenicSeoTitle =
+    project.seoTitle ||
+    `${project.title} Scenic Design${project.client ? ` | ${project.client}` : ""} | Brandon PT Davis`;
+  const scenicSeoDescription =
+    project.seoDescription ||
+    project.excerpt ||
+    `${project.title} scenic design by Brandon PT Davis${project.client ? ` for ${project.client}` : ""}.`;
+  const scenicSeoKeywords =
+    project.seoKeywords ||
+    [
+      project.title,
+      project.subcategory,
+      project.client,
+      project.location,
+      String(project.year || ""),
+      "scenic design",
+      "Brandon PT Davis",
+    ]
+      .filter(Boolean)
+      .join(", ");
+
   const renderCreativeTeam = () => (
     <AnimatedSection>
       <div className="pt-20 md:pt-28">
         <div className="mx-auto w-full max-w-[24rem]">
           <div className="space-y-6 text-center md:space-y-7">
             <div className="space-y-2">
-              <span className="block font-sans text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-foreground/55">
+              <span className="block font-sans text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-white/55">
                 Production
               </span>
-              <span className="block font-sans text-[2.05rem] font-semibold uppercase tracking-[-0.03em] text-foreground md:text-[2.55rem]">
+              <span className="block font-sans text-[2.05rem] font-semibold uppercase tracking-[-0.03em] text-white md:text-[2.55rem]">
                 {project.title}
               </span>
             </div>
@@ -244,14 +282,14 @@ export default function ScenicProjectDetail() {
               const content = (
                 <>
                   <span
-                    className={`block font-sans font-semibold uppercase tracking-[0.1em] text-foreground/58 ${
+                    className={`block font-sans font-semibold uppercase tracking-[0.1em] text-white/58 ${
                       isDirectorCredit ? "text-[0.82rem]" : "text-[0.68rem]"
                     }`}
                   >
                     {isDirectorCredit ? "Directed by" : member.role}
                   </span>
                   <span
-                    className={`mt-2 block font-sans tracking-[-0.03em] text-foreground ${
+                    className={`mt-2 block font-sans tracking-[-0.03em] text-white ${
                       isDirectorCredit
                         ? "text-[2.4rem] font-semibold leading-[1.02]"
                         : isAuthorshipCredit
@@ -270,7 +308,7 @@ export default function ScenicProjectDetail() {
                   href={member.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block transition-colors hover:text-foreground"
+                  className="block transition-colors hover:text-white"
                 >
                   {content}
                 </a>
@@ -287,13 +325,14 @@ export default function ScenicProjectDetail() {
   );
 
   return (
-    <div className="min-h-screen bg-black text-foreground">
+    <div className="min-h-screen bg-black text-white">
       <SEO
-        title={project.seoTitle || `${project.title} | Brandon PT Davis`}
-        description={project.seoDescription || project.excerpt}
+        title={scenicSeoTitle}
+        description={scenicSeoDescription}
         image={project.coverImageUrl || undefined}
+        imageAlt={`${project.title} scenic design cover image`}
         type="website"
-        keywords={project.seoKeywords || undefined}
+        keywords={scenicSeoKeywords}
         url={projectUrl}
       />
       <StructuredData
@@ -308,7 +347,7 @@ export default function ScenicProjectDetail() {
         type="CreativeWork"
         creativeWork={{
           name: project.title,
-          description: project.seoDescription || project.excerpt,
+          description: scenicSeoDescription,
           image: project.coverImageUrl || undefined,
           creator: {
             name: "Brandon PT Davis",
@@ -318,9 +357,56 @@ export default function ScenicProjectDetail() {
           datePublished: project.publishedAt || undefined,
           dateModified: project.updatedAt || undefined,
           genre: project.subcategory || "Scenic Design",
-          keywords: project.seoKeywords?.split(",").map((part) => part.trim()) || [],
+          keywords: scenicSeoKeywords.split(",").map((part) => part.trim()).filter(Boolean),
           mainEntityOfPage: projectUrl,
           url: projectUrl,
+          locationCreated: project.client
+            ? {
+                name: project.client,
+                ...(project.location
+                  ? {
+                      address: {
+                        addressLocality: project.location,
+                      },
+                    }
+                  : {}),
+              }
+            : undefined,
+          workExample:
+            imageMedia.slice(0, 12).map((item) => ({
+              type: "ImageObject" as const,
+              contentUrl: item.imageUrl,
+              caption: item.caption || undefined,
+              name: item.altText || `${project.title} scenic design image`,
+              description: item.caption || scenicSeoDescription,
+              thumbnailUrl: item.imageUrl,
+            })) || undefined,
+          contributor:
+            project.creativeTeam.map((member) => ({
+              type: "Person" as const,
+              name: member.name,
+              roleName: member.role,
+            })) || undefined,
+          isPartOf: {
+            name: "Scenic Design Portfolio",
+            url: "https://www.brandonptdavis.com/projects",
+          },
+          mentions: [
+            ...(relatedRenderingProject
+              ? [
+                  {
+                    type: "CreativeWork",
+                    name: `${relatedRenderingProject.title} rendering series`,
+                    url: `https://www.brandonptdavis.com/projects/rendering/${relatedRenderingProject.slug}`,
+                  },
+                ]
+              : []),
+            ...relatedArticles.slice(0, 3).map((article) => ({
+              type: "Article",
+              name: article.title,
+              url: `https://www.brandonptdavis.com/articles/${article.slug}`,
+            })),
+          ],
         }}
       />
       <Header />
@@ -329,14 +415,14 @@ export default function ScenicProjectDetail() {
         <section className="px-6 pt-12 md:px-10 md:pt-16">
           <AnimatedSection>
             <header className="mx-auto flex w-full max-w-[62rem] flex-col items-center text-center">
-              <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[0.98rem] tracking-[-0.02em] text-foreground/56">
+              <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[0.98rem] tracking-[-0.02em] text-white/56">
                 {projectDateLabel ? <span>{projectDateLabel}</span> : null}
                 <span>{project.subcategory || "Scenic Design"}</span>
               </div>
-              <h1 className="mt-8 max-w-[12ch] font-sans text-[clamp(3rem,7vw,6.4rem)] font-normal leading-[0.9] tracking-[-0.07em] text-foreground">
+              <h1 className="mt-8 max-w-[12ch] font-sans text-[clamp(3rem,7vw,6.4rem)] font-normal leading-[0.9] tracking-[-0.07em] text-white">
                 {project.title}
               </h1>
-              <p className="mt-8 max-w-[42rem] text-[clamp(1.08rem,1.5vw,1.36rem)] leading-[1.72] tracking-[-0.02em] text-foreground/68">
+              <p className="mt-8 max-w-[42rem] text-[clamp(1.08rem,1.5vw,1.36rem)] leading-[1.72] tracking-[-0.02em] text-white/68">
                 {project.excerpt}
               </p>
             </header>
@@ -365,14 +451,14 @@ export default function ScenicProjectDetail() {
 
         <section className="px-6 pt-8 md:px-10">
           <AnimatedSection>
-            <div className="mx-auto flex w-full max-w-[62rem] items-center justify-between gap-6 border-t border-white/14 py-4 text-foreground/72">
+            <div className="mx-auto flex w-full max-w-[62rem] items-center justify-between gap-6 border-t border-white/14 py-4 text-white/72">
               <div className="flex flex-wrap items-center gap-5">
                 {project.clientUrl ? (
                   <a
                     href={project.clientUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[0.98rem] tracking-[-0.02em] transition-colors hover:text-foreground"
+                    className="text-[0.98rem] tracking-[-0.02em] transition-colors hover:text-white"
                   >
                     {project.client}
                   </a>
@@ -380,13 +466,13 @@ export default function ScenicProjectDetail() {
                   <span className="text-[0.98rem] tracking-[-0.02em]">{project.client}</span>
                 ) : null}
                 {project.location ? (
-                  <span className="text-[0.98rem] tracking-[-0.02em] text-foreground/56">{project.location}</span>
+                  <span className="text-[0.98rem] tracking-[-0.02em] text-white/56">{project.location}</span>
                 ) : null}
               </div>
               <button
                 type="button"
                 onClick={handleCopyLink}
-                className="inline-flex items-center gap-2 text-[0.98rem] tracking-[-0.02em] transition-colors hover:text-foreground"
+                className="inline-flex items-center gap-2 text-[0.98rem] tracking-[-0.02em] transition-colors hover:text-white"
               >
                 {linkCopied ? <Check className="h-4 w-4" /> : <Link2 className="h-4 w-4" />}
                 <span>{linkCopied ? "Link copied" : "Share"}</span>
@@ -403,7 +489,7 @@ export default function ScenicProjectDetail() {
                   {section.type === "text" ? (
                     <div className="space-y-5">
                       {section.heading ? (
-                        <h2 className="font-sans text-[clamp(2rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.05em] text-foreground">
+                        <h2 className="font-sans text-[clamp(2rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
                           {section.heading}
                         </h2>
                       ) : null}
@@ -411,7 +497,7 @@ export default function ScenicProjectDetail() {
                         {section.content.map((paragraph, paragraphIndex) => (
                           <p
                             key={paragraphIndex}
-                            className="text-[1.03rem] leading-[1.9] tracking-[-0.01em] text-foreground/72"
+                            className="text-[1.03rem] leading-[1.9] tracking-[-0.01em] text-white/72"
                           >
                             {paragraph}
                           </p>
@@ -449,7 +535,7 @@ export default function ScenicProjectDetail() {
                       return (
                         <div className="relative left-1/2 w-screen max-w-[72rem] -translate-x-1/2 px-8 sm:px-12 lg:px-16 space-y-10 md:space-y-12">
                           {section.heading ? (
-                            <h2 className="mx-auto max-w-[54rem] font-sans text-[clamp(2rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.05em] text-foreground">
+                            <h2 className="mx-auto max-w-[54rem] font-sans text-[clamp(2rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
                               {section.heading}
                             </h2>
                           ) : null}
@@ -472,7 +558,7 @@ export default function ScenicProjectDetail() {
                                     />
                                   </button>
                                   {item.caption ? (
-                                    <figcaption className="text-[0.92rem] leading-6 tracking-[-0.01em] text-foreground/56">
+                                    <figcaption className="text-[0.92rem] leading-6 tracking-[-0.01em] text-white/56">
                                       {item.caption}
                                     </figcaption>
                                   ) : null}
@@ -490,7 +576,7 @@ export default function ScenicProjectDetail() {
                       {section.content?.map((paragraph, paragraphIndex) => (
                         <p
                           key={paragraphIndex}
-                          className="text-[1.03rem] leading-[1.9] tracking-[-0.01em] text-foreground/72"
+                          className="text-[1.03rem] leading-[1.9] tracking-[-0.01em] text-white/72"
                         >
                           {paragraph}
                         </p>
@@ -509,18 +595,75 @@ export default function ScenicProjectDetail() {
           </div>
         </section>
 
-        {(project.creativeTeam.length > 0 || project.links?.length || moreScenicProjects.length > 0) ? (
+        {(project.creativeTeam.length > 0 || project.links?.length || relatedArticles.length > 0 || relatedRenderingProject || moreScenicProjects.length > 0) ? (
           <section className="container max-w-6xl pt-16 md:pt-20">
-            {project.links?.length ? (
+            {(project.links?.length || relatedArticles.length > 0 || relatedRenderingProject) ? (
               <AnimatedSection>
                 <div className="pt-18 md:pt-24">
                   <div className="mb-8 flex items-center justify-between gap-4">
-                    <p className="font-sans text-[1.15rem] tracking-[-0.02em] text-foreground">
+                    <p className="font-sans text-[1.15rem] tracking-[-0.02em] text-white">
                       News, Reviews & Insights
                     </p>
                   </div>
                   <div className="grid gap-x-12 gap-y-8 md:grid-cols-2">
-                    {project.links.map((link, linkIndex) => {
+                    {relatedRenderingProject ? (
+                      <Link key={relatedRenderingProject.slug} href={`/projects/rendering/${relatedRenderingProject.slug}`}>
+                        <div className="group flex cursor-pointer items-start gap-5">
+                          <div className="relative h-36 w-36 flex-none overflow-hidden rounded-xl bg-black/85">
+                            {relatedRenderingProject.coverImageUrl ? (
+                              <img
+                                src={relatedRenderingProject.coverImageUrl}
+                                alt={`${relatedRenderingProject.title} rendering series cover image`}
+                                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                              />
+                            ) : null}
+                            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,31,71,0.08)_0%,rgba(22,64,133,0.16)_55%,rgba(10,18,38,0.42)_100%)]" />
+                          </div>
+                          <div className="min-w-0 pt-1">
+                            <h3 className="text-[1.22rem] leading-[1.18] tracking-[-0.03em] text-white/92 transition-colors group-hover:text-white">
+                              {relatedRenderingProject.title}
+                            </h3>
+                            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-white/52">
+                              <span>Rendering Series</span>
+                              {relatedRenderingProject.client ? <span>{relatedRenderingProject.client}</span> : null}
+                              {relatedRenderingProject.year ? <span>{relatedRenderingProject.year}</span> : null}
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    ) : null}
+                    {relatedArticles.map((article) => (
+                      <Link key={article.slug} href={`/articles/${article.slug}`}>
+                        <div className="group flex cursor-pointer items-start gap-5">
+                          <div className="relative h-36 w-36 flex-none overflow-hidden rounded-xl bg-black/85">
+                            {article.coverImageUrl ? (
+                              <img
+                                src={article.coverImageUrl}
+                                alt={article.coverImageAlt || `${article.title} article cover image`}
+                                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                              />
+                            ) : null}
+                            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,31,71,0.08)_0%,rgba(22,64,133,0.16)_55%,rgba(10,18,38,0.42)_100%)]" />
+                          </div>
+                          <div className="min-w-0 pt-1">
+                            <h3 className="text-[1.22rem] leading-[1.18] tracking-[-0.03em] text-white/92 transition-colors group-hover:text-white">
+                              {article.title}
+                            </h3>
+                            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-white/52">
+                              <span>{article.series?.name || article.categoryName}</span>
+                              <span>
+                                {new Date(article.publishedAt).toLocaleDateString("en-US", {
+                                  month: "short",
+                                  day: "numeric",
+                                  year: "numeric",
+                                })}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                    {(project.links || []).map((link, linkIndex) => {
                       const previewImage = productionImages[linkIndex % Math.max(productionImages.length, 1)];
                       return (
                         <a
@@ -534,17 +677,17 @@ export default function ScenicProjectDetail() {
                             {previewImage?.imageUrl ? (
                               <img
                                 src={previewImage.imageUrl}
-                                alt={previewImage.altText || link.label}
+                                alt={previewImage.altText || `${link.label} related coverage image`}
                                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                               />
                             ) : null}
                             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,31,71,0.18)_0%,rgba(22,64,133,0.42)_55%,rgba(10,18,38,0.74)_100%)]" />
                           </div>
                           <div className="min-w-0 pt-1">
-                            <h3 className="text-[1.22rem] leading-[1.18] tracking-[-0.03em] text-foreground/92 transition-colors group-hover:text-foreground">
+                            <h3 className="text-[1.22rem] leading-[1.18] tracking-[-0.03em] text-white/92 transition-colors group-hover:text-white">
                               {link.label}
                             </h3>
-                            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-foreground/52">
+                            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-white/52">
                               <span>News, Reviews & Insights</span>
                               {project.year ? <span>{project.year}</span> : null}
                             </div>
@@ -561,32 +704,30 @@ export default function ScenicProjectDetail() {
               <AnimatedSection>
                 <div className="pt-18 md:pt-24">
                   <div className="mb-12 h-px w-full bg-border/60" />
-                  <p className="mb-8 font-sans text-[1.15rem] tracking-[-0.02em] text-foreground">
+                  <p className="mb-8 font-sans text-[1.15rem] tracking-[-0.02em] text-white">
                     All Scenic Designs
                   </p>
                   <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
                     {moreScenicProjects.map((item) => (
-                      <Link key={item.id} href={`/project/${item.slug}`}>
-                        <a className="group block">
-                          <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-black/85">
-                            {item.coverImageUrl ? (
-                              <img
-                                src={item.coverImageUrl}
-                                alt={item.title}
-                                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                                style={{ objectPosition: "center center" }}
-                              />
-                            ) : <div className="h-full w-full bg-muted" />}
-                          </div>
-                          <div className="pt-3">
-                            <h3 className="text-[1.02rem] font-normal tracking-[-0.02em] text-foreground/88 transition-colors group-hover:text-foreground">
-                              {item.title}
-                            </h3>
-                            <p className="mt-1.5 text-[0.92rem] tracking-[-0.01em] text-foreground/52">
-                              {[item.client || item.subcategory, item.year].filter(Boolean).join("  ")}
-                            </p>
-                          </div>
-                        </a>
+                      <Link key={item.id} href={`/project/${item.slug}`} className="group block">
+                        <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-black/85">
+                          {item.coverImageUrl ? (
+                            <img
+                              src={item.coverImageUrl}
+                              alt={`${item.title} scenic design project cover image`}
+                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                              style={{ objectPosition: "center center" }}
+                            />
+                          ) : <div className="h-full w-full bg-muted" />}
+                        </div>
+                        <div className="pt-3">
+                          <h3 className="text-[1.02rem] font-normal tracking-[-0.02em] text-white/88 transition-colors group-hover:text-white">
+                            {item.title}
+                          </h3>
+                          <p className="mt-1.5 text-[0.92rem] tracking-[-0.01em] text-white/52">
+                            {[item.client || item.subcategory, item.year].filter(Boolean).join("  ")}
+                          </p>
+                        </div>
                       </Link>
                     ))}
                   </div>

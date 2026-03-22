@@ -7,19 +7,29 @@ import { SEO } from "@/components/SEO";
 import { ProjectGridSkeleton } from "@/components/SkeletonLoaders";
 import { StickyShowcase } from "@/components/StickyShowcase";
 import StructuredData from "@/components/StructuredData";
-import { trpc } from "@/lib/trpc";
 import { getProjectPath } from "@/lib/projectRoutes";
+import { getLocalScenicProjects } from "@shared/localScenicProjects";
+
+const getProjectTimestamp = (project: any) => {
+  if (project.year) {
+    const monthIndex = project.month ? Math.max(project.month - 1, 0) : 6;
+    return new Date(project.year, monthIndex, 1).getTime();
+  }
+
+  const fallback = project.updatedAt || project.publishedAt || project.createdAt;
+  return fallback ? new Date(fallback).getTime() : 0;
+};
 
 export default function Home() {
   const [, setLocation] = useLocation();
   const baseUrl =
     typeof window !== "undefined" ? window.location.origin : "https://www.brandonptdavis.com";
-  const { data: allProjects, isLoading: projectsLoading } = trpc.projects.list.useQuery({
-    status: "published",
-    discipline: "scenic_design",
+  const projects = [...getLocalScenicProjects()].sort((a, b) => {
+    const timeCompare = getProjectTimestamp(b) - getProjectTimestamp(a);
+    if (timeCompare !== 0) return timeCompare;
+    return a.title.localeCompare(b.title);
   });
-
-  const projects = allProjects || [];
+  const projectsLoading = false;
   const [featuredProject, ...remainingProjects] = projects;
   const sideProjects = remainingProjects.slice(0, 3);
   const gridProjects = remainingProjects.slice(3);
@@ -168,6 +178,12 @@ export default function Home() {
         title="Brandon PT Davis | Scenic Designer"
         description="Union scenic designer in Southern California creating story-driven environments for regional theatre, summer stock, and academic production."
         keywords="scenic designer, scenic design portfolio, USA 829 scenic designer, Southern California scenic designer, regional theatre design, stage design, Brandon PT Davis"
+        image={featuredProject?.coverImageUrl || undefined}
+        imageAlt={
+          featuredProject
+            ? `${featuredProject.title} scenic design cover image`
+            : "Brandon PT Davis scenic design portfolio"
+        }
         url="https://www.brandonptdavis.com"
       />
 
@@ -186,10 +202,10 @@ export default function Home() {
               </div>
               <div className="container max-w-6xl">
                 <div className="relative max-w-4xl py-2">
-                  <h1 className="max-w-[13ch] font-sans text-[clamp(2.7rem,6vw,5.6rem)] font-medium leading-[0.92] tracking-[-0.065em] text-foreground">
+                  <h1 className="max-w-[13ch] font-sans text-[clamp(2.7rem,6vw,5.6rem)] font-medium leading-[0.92] tracking-[-0.065em] text-white">
                     {heroTitle}
                   </h1>
-                  <p className="mt-6 max-w-2xl text-[1rem] leading-7 text-foreground/62 md:text-[1.08rem] md:leading-8">
+                  <p className="mt-6 max-w-2xl text-[1rem] leading-7 text-white/62 md:text-[1.08rem] md:leading-8">
                     {heroIntro}
                   </p>
                 </div>
