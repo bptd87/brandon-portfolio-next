@@ -8,6 +8,8 @@ import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 
 import { Download, Award, GraduationCap, Users } from "lucide-react";
+import { getLocalRenderingProjects } from "@shared/localPortfolios";
+import { getLocalScenicProjects } from "@shared/localScenicProjects";
 
 type ResumeCredit = {
   title: string;
@@ -20,8 +22,8 @@ type ResumeYearSection = {
   credits: ResumeCredit[];
 };
 
-type ScenicProjectLink = {
-  slug: string;
+type PortfolioLink = {
+  href: string;
   previewImage: string;
 };
 
@@ -35,163 +37,105 @@ type HoverPreview = {
 const LINE_CLASS =
   "text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4";
 
-const SCENIC_PROJECTS: Record<string, ScenicProjectLink> = {
-  "The Glass Menagerie|Maples Repertory Theatre": {
-    slug: "the-glass-menagerie",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90010-cover.webp",
-  },
-  "Million Dollar Quartet|South Coast Repertory Theatre": {
-    slug: "million-dollar-quartet",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90087-cover.webp",
-  },
-  "Bell, Book, and Candle|Okoboji Summer Theatre": {
-    slug: "bell-book-and-candle",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90016-cover.webp",
-  },
-  "All's Well That Ends Well|New Swan Theatre Festival": {
-    slug: "alls-well-that-ends-well",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90071-cover.webp",
-  },
-  "Much Ado About Nothing|New Swan Theatre Festival": {
-    slug: "much-ado-about-nothing",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90089-cover.webp",
-  },
-  "Guys on Ice|The Great American Melodrama": {
-    slug: "guys-on-ice",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90045-cover.webp",
-  },
-  "Romero|University of Missouri": {
-    slug: "romero",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90077-cover.webp",
-  },
-  "Urinetown|University of Missouri": {
-    slug: "urinetown",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-cover.webp",
-  },
-  "Barefoot in The Park|Okoboji Summer Theatre": {
-    slug: "barefoot-in-the-park",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90042-cover.webp",
-  },
-  "Freaky Friday|Okoboji Summer Theatre": {
-    slug: "freaky-friday",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90056-cover.webp",
-  },
-  "An Enemy of the People|Stephens College": {
-    slug: "an-enemy-of-the-people",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-enemy-of-the-people-6-of-6-7499.webp",
-  },
-  "Boeing, Boeing|Stephens College": {
-    slug: "boeing-boeing",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90054-cover.webp",
-  },
-  "Cole|Okoboji Summer Theatre": {
-    slug: "cole",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-cole-7-of-8-8632.webp",
-  },
-  'Dial "M" for Murder|Okoboji Summer Theatre': {
-    slug: "dial-m-for-murder",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-dial-m-for-murder-8-of-9-0343.webp",
-  },
-  "Head Over Heels|Theatre SilCo": {
-    slug: "head-over-heels",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90044-cover.webp",
-  },
-  "Loteria|Theatre SilCo": {
-    slug: "loteria-game-on",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90009-cover.webp",
-  },
-  "Spelling Bee|Stephens College": {
-    slug: "the-25th-annual-putnam-county-spelling-bee",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2023-spellng-bee-stephens-college-6-of-6-5514.webp",
-  },
-  "Merry Wives of Windsor|Stephens College": {
-    slug: "the-merry-wives-of-windsor",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-cover.webp",
-  },
-  "An Inspector Calls|Okoboji Summer Theatre": {
-    slug: "an-inspector-calls",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90036-cover.webp",
-  },
-  "Man of La Mancha|Lake Dillon Theatre": {
-    slug: "the-man-of-la-mancha",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2022-man-of-la-mancha-3-of-5-large-4479.webp",
-  },
-  "A Funny Thing Happened…|Lake Dillon Theatre": {
-    slug: "a-funny-thing-happened",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90049-cover.webp",
-  },
-  "Tomas and the Library Lady|Lake Dillon Theatre": {
-    slug: "tomas-and-the-library-lady",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90039-cover.webp",
-  },
-  "Urinetown|Okoboji Summer Theatre": {
-    slug: "urinetown",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-cover.webp",
-  },
-  "The Marvelous Wonderettes: Dream On|Okoboji Summer Theatre": {
-    slug: "the-marvelous-wonderettes-dream-on",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2021-marvelous-wonderettes-photo-call-2-of-10-4679.webp",
-  },
-  "The Penelopiad|University of California Irvine": {
-    slug: "the-penelopiad",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90051-cover.webp",
-  },
-  "Company|University of California Irvine": {
-    slug: "company",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90019-cover.webp",
-  },
-  "The Pajama Game|University of California Irvine": {
-    slug: "the-pajama-game",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90048-cover.webp",
-  },
-  "Parliament Square|University of California Irvine": {
-    slug: "parliament-square",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90018-cover.webp",
-  },
-  "American Idiot|University of California Irvine": {
-    slug: "american-idiot",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90038-cover.webp",
-  },
-  "Vanya, Sonia, Masha, and Spike|Stephens College": {
-    slug: "vanya-and-sonia-and-masha-and-spike",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2016-vanya-sonia-masha-and-spike-stephens-1-of-7-1190.webp",
-  },
-  "All My Sons|Stephens College": {
-    slug: "all-my-sons",
-    previewImage:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-cover.webp",
-  },
+type PortfolioLookupMaps = {
+  byTitle: Map<string, PortfolioLink[]>;
+  byTitleAndCompany: Map<string, PortfolioLink[]>;
 };
+
+const CREDIT_TITLE_ALIASES: Record<string, string[]> = {
+  "spelling bee": ["The 25th Annual Putnam County Spelling Bee"],
+  "merry wives of windsor": ["The Merry Wives of Windsor"],
+  "man of la mancha": ["The Man of La Mancha"],
+  "a funny thing happened": ["A Funny Thing Happened on the Way to the Forum"],
+  "tomas and the library lady": ["Tomás and the Library Lady"],
+  "loteria": ["¡LOTERIA: GAME ON!"],
+  'dial "m" for murder': ["Dial “M” for Murder"],
+};
+
+function normalizePortfolioValue(value: string) {
+  return String(value || "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[’‘]/g, "'")
+    .replace(/[“”]/g, '"')
+    .replace(/&/g, " and ")
+    .replace(/…/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
+function getTitleLookupKeys(title: string) {
+  const normalized = normalizePortfolioValue(title);
+  if (!normalized) return [];
+
+  const keys = new Set<string>([
+    normalized,
+    normalized.replace(/^(a|an|the)\s+/, ""),
+  ]);
+
+  for (const alias of CREDIT_TITLE_ALIASES[normalized] || []) {
+    const aliasNormalized = normalizePortfolioValue(alias);
+    if (aliasNormalized) {
+      keys.add(aliasNormalized);
+      keys.add(aliasNormalized.replace(/^(a|an|the)\s+/, ""));
+    }
+  }
+
+  return Array.from(keys).filter(Boolean);
+}
+
+function pushLookupValue(map: Map<string, PortfolioLink[]>, key: string, value: PortfolioLink) {
+  if (!key) return;
+  const existing = map.get(key);
+  if (existing) {
+    existing.push(value);
+    return;
+  }
+  map.set(key, [value]);
+}
+
+function buildPortfolioLookup(): PortfolioLookupMaps {
+  const byTitle = new Map<string, PortfolioLink[]>();
+  const byTitleAndCompany = new Map<string, PortfolioLink[]>();
+
+  const scenicProjects = getLocalScenicProjects().map((project) => ({
+    title: project.title,
+    company: project.client || "",
+    link: {
+      href: `/project/${project.slug}`,
+      previewImage: project.coverImageUrl || "",
+    },
+  }));
+
+  const renderingProjects = getLocalRenderingProjects()
+    .filter((project) => !project.galleryOnly)
+    .map((project) => ({
+      title: project.title,
+      company: project.client || "",
+      link: {
+        href: `/projects/rendering/${project.slug}`,
+        previewImage: project.coverImageUrl,
+      },
+    }));
+
+  for (const project of [...scenicProjects, ...renderingProjects]) {
+    if (!project.link.previewImage) continue;
+
+    const companyKey = normalizePortfolioValue(project.company);
+    for (const titleKey of getTitleLookupKeys(project.title)) {
+      pushLookupValue(byTitle, titleKey, project.link);
+      if (companyKey) {
+        pushLookupValue(byTitleAndCompany, `${titleKey}|${companyKey}`, project.link);
+      }
+    }
+  }
+
+  return { byTitle, byTitleAndCompany };
+}
+
+const PORTFOLIO_LOOKUP = buildPortfolioLookup();
 
 const SCENIC_CREDITS: ResumeYearSection[] = [
   {
@@ -340,8 +284,27 @@ const EARLIER_CREDITS: ResumeCredit[] = [
   { title: "The Verge", director: "Dir. Cheryl Black", company: "University of Missouri" },
 ];
 
-function scenicKey(title: string, company: string) {
-  return `${title}|${company}`;
+function dedupePortfolioLinks(items: PortfolioLink[]) {
+  return items.filter((item, index, array) => array.findIndex((candidate) => candidate.href === item.href) === index);
+}
+
+function findLinkedPortfolio(credit: ResumeCredit) {
+  const companyKey = normalizePortfolioValue(credit.company);
+
+  for (const titleKey of getTitleLookupKeys(credit.title)) {
+    const directMatch = PORTFOLIO_LOOKUP.byTitleAndCompany.get(`${titleKey}|${companyKey}`);
+    if (directMatch?.length) return directMatch[0];
+  }
+
+  const titleMatches = dedupePortfolioLinks(
+    getTitleLookupKeys(credit.title).flatMap((titleKey) => PORTFOLIO_LOOKUP.byTitle.get(titleKey) || [])
+  );
+
+  if (titleMatches.length === 1) {
+    return titleMatches[0];
+  }
+
+  return null;
 }
 
 function ScenicCreditRow({
@@ -355,7 +318,7 @@ function ScenicCreditRow({
   onPreviewMove: (credit: ResumeCredit, x: number, y: number) => void;
   onPreviewLeave: () => void;
 }) {
-  const linkedProject = SCENIC_PROJECTS[scenicKey(credit.title, credit.company)];
+  const linkedProject = findLinkedPortfolio(credit);
 
   const inner = (
     <>
@@ -373,7 +336,7 @@ function ScenicCreditRow({
 
   return (
     <Link
-      href={`/project/${linkedProject.slug}`}
+      href={linkedProject.href}
       className={`${LINE_CLASS} group block cursor-pointer rounded-[0.35rem] transition-colors duration-200 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/25`}
       onMouseEnter={(event) => onPreview(credit, event.clientX, event.clientY)}
       onMouseMove={(event) => onPreviewMove(credit, event.clientX, event.clientY)}
@@ -412,7 +375,7 @@ export default function Resume() {
   }, [hoverPreview]);
 
   function showPreview(credit: ResumeCredit, x: number, y: number) {
-    const linkedProject = SCENIC_PROJECTS[scenicKey(credit.title, credit.company)];
+    const linkedProject = findLinkedPortfolio(credit);
     if (!linkedProject) return;
     setHoverPreview({
       title: credit.title,
@@ -423,7 +386,7 @@ export default function Resume() {
   }
 
   function movePreview(credit: ResumeCredit, x: number, y: number) {
-    const linkedProject = SCENIC_PROJECTS[scenicKey(credit.title, credit.company)];
+    const linkedProject = findLinkedPortfolio(credit);
     if (!linkedProject) return;
     setHoverPreview((current) =>
       current
@@ -571,8 +534,8 @@ export default function Resume() {
                   Selected Scenic Design
                 </h2>
                 <p className="mt-4 max-w-2xl text-[0.98rem] leading-7 text-foreground/58">
-                  Selected credits by year. Hover linked productions to preview the on-site project,
-                  then click through to the scenic design page.
+                  Selected credits by year. Hover linked productions to preview the matching
+                  portfolio entry, then click through to the project page.
                 </p>
               </div>
             </div>

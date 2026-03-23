@@ -15,13 +15,15 @@ import {
   Link as LinkIcon,
   PenTool,
   Globe,
+  Briefcase,
+  Palette,
 } from "lucide-react";
 import { Link } from "wouter";
 
 import { SEO } from "@/components/SEO";
-import { trpc } from "@/lib/trpc";
-import { getProjectPath } from "@/lib/projectRoutes";
 import { getLocalArticles } from "@shared/localArticles";
+import { getLocalExperientialSampleHref, getLocalExperientialSamples, getLocalRenderingProjects } from "@shared/localPortfolios";
+import { getLocalScenicProjects } from "@shared/localScenicProjects";
 
 function PinterestIcon({ className }: { className?: string }) {
   return (
@@ -40,6 +42,7 @@ interface DashboardItem {
   image?: string | null;
   date: string;
   icon: string;
+  label?: string;
   isPinned?: boolean;
 }
 
@@ -113,28 +116,72 @@ export default function Links() {
   const [hasMore, setHasMore] = useState(true);
   const loaderRef = useRef<HTMLDivElement>(null);
 
-  const { data: projects, isLoading: projectsLoading } = trpc.projects.list.useQuery({});
-  const articles = getLocalArticles();
-  const articlesLoading = false;
-  const tutorials: any[] = [];
-  const tutorialsLoading = false;
-
-  const loading = projectsLoading || articlesLoading || tutorialsLoading;
+  const loading = false;
 
   const items = useMemo(() => {
-    if (loading) return [];
-
     const dashboardItems: DashboardItem[] = [];
+    const scenicProjects = getLocalScenicProjects();
+    const renderingProjects = getLocalRenderingProjects().filter((project) => !project.galleryOnly);
+    const experientialSamples = getLocalExperientialSamples();
+    const articles = getLocalArticles();
+    const tutorials: any[] = [];
+
+    const portfolioDate = (input: {
+      updatedAt?: string | null;
+      publishedAt?: string | null;
+      createdAt?: string | null;
+      year?: number | null;
+      month?: number | null;
+    }) => {
+      const explicitDate = input.updatedAt || input.publishedAt || input.createdAt;
+      if (explicitDate) {
+        const date = new Date(explicitDate);
+        if (!Number.isNaN(date.getTime())) return date.toISOString();
+      }
+
+      if (input.year && input.month) {
+        return new Date(input.year, input.month - 1, 15).toISOString();
+      }
+
+      if (input.year) {
+        return new Date(input.year, 6, 1).toISOString();
+      }
+
+      return new Date(0).toISOString();
+    };
 
     const pinnedLinks = [
       {
-        id: "bio-portfolio",
+        id: "bio-scenic-portfolio",
         type: "custom" as const,
-        title: "Portfolio",
-        subtitle: "Selected work",
+        title: "Scenic Portfolio",
+        subtitle: "Built productions",
         url: "/projects",
         date: new Date().toISOString(),
+        icon: "briefcase",
+        label: "Scenic Portfolio",
+        isPinned: true,
+      },
+      {
+        id: "bio-rendering-portfolio",
+        type: "custom" as const,
+        title: "Rendering Portfolio",
+        subtitle: "Concept and presentation work",
+        url: "/projects/rendering",
+        date: new Date().toISOString(),
         icon: "image",
+        label: "Rendering Portfolio",
+        isPinned: true,
+      },
+      {
+        id: "bio-experiential-portfolio",
+        type: "custom" as const,
+        title: "Experiential Portfolio",
+        subtitle: "Events, drawings, and activations",
+        url: "/projects/experiential",
+        date: new Date().toISOString(),
+        icon: "palette",
+        label: "Experiential Portfolio",
         isPinned: true,
       },
       {
@@ -145,6 +192,7 @@ export default function Links() {
         url: "/resume",
         date: new Date().toISOString(),
         icon: "file-text",
+        label: "Resume",
         isPinned: true,
       },
       {
@@ -155,40 +203,57 @@ export default function Links() {
         url: "/studio",
         date: new Date().toISOString(),
         icon: "video",
+        label: "Studio",
         isPinned: true,
       },
     ];
 
     dashboardItems.push(...pinnedLinks);
 
-    if (projects) {
-      projects
-        .filter((p: any) => p.discipline === "scenic_design" || p.discipline === "rendering")
-        .forEach((p: any) => {
-          let dateStr: string;
-          if (p.year && p.month) {
-            dateStr = new Date(p.year, p.month - 1, 15).toISOString();
-          } else if (p.year) {
-            dateStr = new Date(p.year, 6, 1).toISOString();
-          } else if (p.publishedAt) {
-            dateStr = new Date(p.publishedAt).toISOString();
-          } else {
-            dateStr = new Date().toISOString();
-          }
+    scenicProjects.forEach((project) => {
+      dashboardItems.push({
+        id: `scenic-${project.id}`,
+        type: "project",
+        title: project.title,
+        subtitle: project.client || "Scenic Portfolio",
+        url: `/project/${project.slug}`,
+        image: project.coverImageUrl,
+        date: portfolioDate(project),
+        icon: "briefcase",
+        label: "Scenic Project",
+        isPinned: false,
+      });
+    });
 
-          dashboardItems.push({
-            id: `proj-${p.id}`,
-            type: "project",
-            title: p.title,
-            subtitle: p.venue || "Portfolio",
-            url: getProjectPath(p),
-            image: p.coverImageUrl,
-            date: dateStr,
-            icon: "image",
-            isPinned: false,
-          });
-        });
-    }
+    renderingProjects.forEach((project) => {
+      dashboardItems.push({
+        id: `rendering-${project.id}`,
+        type: "project",
+        title: project.title,
+        subtitle: project.client || "Rendering Portfolio",
+        url: `/projects/rendering/${project.slug}`,
+        image: project.coverImageUrl,
+        date: portfolioDate(project),
+        icon: "image",
+        label: "Rendering Project",
+        isPinned: false,
+      });
+    });
+
+    experientialSamples.forEach((sample) => {
+      dashboardItems.push({
+        id: `experiential-${sample.id}`,
+        type: "project",
+        title: sample.displayTitle,
+        subtitle: sample.categoryLabel,
+        url: getLocalExperientialSampleHref(sample),
+        image: sample.imageUrl,
+        date: portfolioDate(sample),
+        icon: "palette",
+        label: sample.categoryLabel,
+        isPinned: false,
+      });
+    });
 
     articles.forEach((a: any) => {
       const d = a.publishedAt ? new Date(a.publishedAt) : new Date(a.createdAt);
@@ -201,33 +266,33 @@ export default function Links() {
         image: a.coverImageUrl,
         date: d.toISOString(),
         icon: "pen-tool",
+        label: "Article",
         isPinned: false,
       });
     });
 
-    if (tutorials) {
-      tutorials.forEach((t: any) => {
-        const d = t.publishDate ? new Date(t.publishDate) : new Date(t.createdAt);
-        dashboardItems.push({
-          id: `tut-${t.id}`,
-          type: "tutorial",
-          title: t.title,
-          subtitle: "Tutorial",
-          url: `/studio/tutorials/${t.slug}`,
-          image: t.thumbnailUrl,
-          date: d.toISOString(),
-          icon: "video",
-          isPinned: false,
-        });
+    tutorials.forEach((t: any) => {
+      const d = t.publishDate ? new Date(t.publishDate) : new Date(t.createdAt);
+      dashboardItems.push({
+        id: `tut-${t.id}`,
+        type: "tutorial",
+        title: t.title,
+        subtitle: "Tutorial",
+        url: `/studio/tutorials/${t.slug}`,
+        image: t.thumbnailUrl,
+        date: d.toISOString(),
+        icon: "video",
+        label: "Tutorial",
+        isPinned: false,
       });
-    }
+    });
 
     return dashboardItems.sort((a, b) => {
       if (a.isPinned && !b.isPinned) return -1;
       if (!a.isPinned && b.isPinned) return 1;
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     });
-  }, [projects, articles, tutorials, loading]);
+  }, []);
 
   useEffect(() => {
     if (!hasMore) return;
@@ -266,6 +331,8 @@ export default function Links() {
       image: ImageIcon,
       news: Newspaper,
       video: Video,
+      briefcase: Briefcase,
+      palette: Palette,
     };
     return map[name.toLowerCase()] || ExternalLink;
   };
@@ -414,7 +481,7 @@ export default function Links() {
                 href={item.url}
                 image={item.image}
                 isExternal={item.url.startsWith("http")}
-                label={item.type === "project" ? "Project" : item.type === "article" ? "Article" : item.type}
+                label={item.label || (item.type === "project" ? "Project" : item.type === "article" ? "Article" : item.type)}
                 title={item.title}
               />
             ))}
