@@ -331,9 +331,7 @@ export function StickyShowcase({
                   {leadOverlayTitle && title ? (
                     <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/26 to-transparent px-6 pb-6 pt-16 md:px-8 md:pb-7">
                       <h1
-                        className={`max-w-[16ch] font-sans text-[clamp(1.9rem,3vw,3rem)] font-medium leading-[0.94] tracking-[-0.055em] text-white ${
-                          leadTitleClassName || ""
-                        }`}
+                        className={`${leadTitleClassName ? "" : "max-w-[16ch]"} font-sans text-[clamp(1.9rem,3vw,3rem)] font-medium leading-[0.94] tracking-[-0.055em] text-white ${leadTitleClassName || ""}`}
                       >
                         {title}
                       </h1>
@@ -345,9 +343,7 @@ export function StickyShowcase({
                   <div className="max-w-2xl pt-5 md:pt-6">
                     {showBelowTitle ? (
                       <h1
-                        className={`max-w-[12ch] font-sans text-[clamp(1.85rem,3.3vw,3.1rem)] font-medium leading-[0.94] tracking-[-0.06em] text-white ${
-                          leadTitleClassName || ""
-                        }`}
+                        className={`${leadTitleClassName ? "" : "max-w-[12ch]"} font-sans text-[clamp(1.85rem,3.3vw,3.1rem)] font-medium leading-[0.94] tracking-[-0.06em] text-white ${leadTitleClassName || ""}`}
                       >
                         {title}
                       </h1>

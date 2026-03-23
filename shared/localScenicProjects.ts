@@ -2884,7 +2884,7 @@ const anInspectorCallsProject: LocalScenicProject = {
   discipline: "scenic_design",
   subcategory: "Drama",
   client: "Okoboji Summer Theatre",
-  location: "Spirit Lake, IA",
+  location: "Okoboji, IA",
   year: 2022,
   month: 7,
   status: "published",
@@ -3435,6 +3435,456 @@ const tomasAndTheLibraryLadyProject: LocalScenicProject = {
     },
   ],
   updatedAt: "2026-02-12T15:04:01+00:00",
+};
+
+const theBaldSopranoProject: LocalScenicProject = {
+  id: 90011,
+  title: "The Bald Soprano",
+  slug: "the-bald-soprano",
+  excerpt:
+    "An absurd domestic interior bent out of proportion, where scenic and lighting design worked together to turn polite drawing-room order into something unstable, comic, and quietly threatening.",
+  discipline: "scenic_design",
+  subcategory: "Comedy",
+  client: "Stephens College",
+  location: "Columbia, MO",
+  year: 2022,
+  month: 1,
+  status: "published",
+  featured: false,
+  seoTitle: "The Bald Soprano | Scenic Design by Brandon PT Davis",
+  seoDescription:
+    "Scenic and lighting design for The Bald Soprano at Stephens College, featuring a distorted domestic setting that reflects miscommunication, repetition, and the breakdown of meaning.",
+  seoKeywords:
+    "The Bald Soprano, Eugene Ionesco, scenic design, lighting design, Stephens College, absurdism, Brandon PT Davis",
+  coverImageUrl:
+    "https://static.wixstatic.com/media/9e1774_8b778c6001174a4faf57b5f49ac5fefb~mv2.jpeg/v1/fit/w_1280,h_853,q_90,enc_avif,quality_auto/9e1774_8b778c6001174a4faf57b5f49ac5fefb~mv2.jpeg",
+  creativeTeam: [
+    { name: "Eugene Ionesco", role: "By" },
+    { name: "Brandon PT Davis", role: "Scenic and Lighting Designer" },
+    { name: "Briann Johnson", role: "Costume Designer" },
+    { name: "Michael Burke", role: "Sound Designer" },
+    { name: "Brett Olson", role: "Director" },
+  ],
+  tags: [
+    { name: "Comedy", slug: "comedy" },
+    { name: "Absurdism", slug: "absurdism" },
+    { name: "Stephens College", slug: "stephens-college" },
+    { name: "The Bald Soprano", slug: "the-bald-soprano" },
+  ],
+  media: [
+    {
+      id: "bald-cover",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_8b778c6001174a4faf57b5f49ac5fefb~mv2.jpeg/v1/fit/w_1280,h_853,q_90,enc_avif,quality_auto/9e1774_8b778c6001174a4faf57b5f49ac5fefb~mv2.jpeg",
+      altText: "The Bald Soprano scenic and lighting design cover image.",
+      kind: "cover",
+    },
+    {
+      id: "bald-prod-1",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_fd7ea968876e4d4ab3d81b40540d75e4~mv2.jpg/v1/fit/w_1920,h_1080,q_90,enc_avif,quality_auto/9e1774_fd7ea968876e4d4ab3d81b40540d75e4~mv2.jpg",
+      altText:
+        "Rendering for The Bald Soprano showing the distorted domestic environment and heightened composition, scenic and lighting design by Brandon PT Davis.",
+      kind: "rendering",
+    },
+    {
+      id: "bald-prod-2",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_a5134ba180a74077b09acf60f35c9f94~mv2.jpg/v1/fit/w_960,h_710,q_90,enc_avif,quality_auto/9e1774_a5134ba180a74077b09acf60f35c9f94~mv2.jpg",
+      altText:
+        "Production still from The Bald Soprano emphasizing the absurd domestic scale and actor framing, scenic and lighting design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "bald-prod-3",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_b51f53b3a18b4b64b3b5092188b4fb05~mv2.jpg/v1/fit/w_960,h_540,q_90,enc_avif,quality_auto/9e1774_b51f53b3a18b4b64b3b5092188b4fb05~mv2.jpg",
+      altText:
+        "Production image from The Bald Soprano showing the fractured drawing-room world in performance, scenic and lighting design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "bald-prod-4",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_e21b9ca41cdf4578bfeb368f22caec51~mv2.jpeg/v1/fit/w_960,h_657,q_90,enc_avif,quality_auto/9e1774_e21b9ca41cdf4578bfeb368f22caec51~mv2.jpeg",
+      altText:
+        "Performance still from The Bald Soprano highlighting warped domestic architecture and comic tension, scenic and lighting design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "bald-prod-5",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_8b778c6001174a4faf57b5f49ac5fefb~mv2.jpeg/v1/fit/w_1280,h_853,q_90,enc_avif,quality_auto/9e1774_8b778c6001174a4faf57b5f49ac5fefb~mv2.jpeg",
+      altText:
+        "Production image from The Bald Soprano showing the full scenic composition and heightened lighting contrast, scenic and lighting design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "bald-prod-6",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_c96b6844660b4206a75a7e4d44973c1e~mv2.jpeg/v1/fit/w_1280,h_853,q_90,enc_avif,quality_auto/9e1774_c96b6844660b4206a75a7e4d44973c1e~mv2.jpeg",
+      altText:
+        "Final production image from The Bald Soprano showing the absurd domestic setting in performance, scenic and lighting design by Brandon PT Davis.",
+      kind: "production",
+    },
+  ],
+  sections: [
+    {
+      type: "text",
+      heading: "A Distorted Drawing Room",
+      content: [
+        "The Bald Soprano called for a domestic world that felt recognizable at first glance, then increasingly unstable the longer the audience sat with it. For Stephens College, the scenic and lighting design approached the room as an absurd drawing-room interior pushed slightly out of alignment, a polite domestic setting that could no longer support the logic it claimed to represent.",
+      ],
+    },
+    {
+      type: "gallery",
+      mediaIds: ["bald-prod-2", "bald-prod-3"],
+    },
+    {
+      type: "text",
+      heading: "Miscommunication in Space",
+      content: [
+        "Because the play is built on repetition, interruption, and the collapse of ordinary language, proportion and composition became central design tools. The environment leaned into distortion rather than realism, allowing furniture, architecture, and light to reinforce the feeling that communication had broken down inside a room still trying to perform civility.",
+        "Lighting was treated as part of that same architecture. Instead of simply illuminating the room, it sharpened awkward pauses, exaggerated tonal shifts, and helped the domestic image slide from familiar to surreal.",
+      ],
+    },
+    {
+      type: "gallery",
+      mediaIds: ["bald-prod-4", "bald-prod-5"],
+    },
+    {
+      type: "text",
+      heading: "Design Goal",
+      content: [
+        "The goal was to build an absurdist environment that could hold both comedy and unease. The world needed to feel visually coherent enough for the audience to enter it, but unstable enough to reflect the play's deeper concern with ritualized speech, failed understanding, and the breakdown of meaning itself.",
+      ],
+    },
+    {
+      type: "gallery",
+      mediaIds: ["bald-prod-6"],
+    },
+    {
+      type: "gallery",
+      mediaIds: ["bald-prod-1"],
+    },
+  ],
+  updatedAt: "2026-03-23T18:30:00.000Z",
+};
+
+const notNowDarlingProject: LocalScenicProject = {
+  id: 90012,
+  title: "Not Now, Darling",
+  slug: "not-now-darling",
+  excerpt:
+    "A British boutique interior sharpened with Wes Anderson-inspired color and farce-ready door logic, giving Not Now, Darling a polished comic world built for speed, confusion, and precision.",
+  discipline: "scenic_design",
+  subcategory: "Comedy",
+  client: "Okoboji Summer Theatre",
+  location: "Okoboji, IA",
+  year: 2018,
+  month: 7,
+  status: "published",
+  featured: false,
+  seoTitle: "Not Now, Darling | Scenic Design by Brandon PT Davis",
+  seoDescription:
+    "Scenic design for Not Now, Darling at Okoboji Summer Theatre, blending British elegance with Wes Anderson-inspired color and farce-ready architecture.",
+  seoKeywords:
+    "Not Now, Darling, scenic design, Okoboji Summer Theatre, comedy, farce, Brandon PT Davis",
+  coverImageUrl:
+    "https://static.wixstatic.com/media/9e1774_ae175a4d81a84509bc388402413d334d~mv2.jpg/v1/fit/w_1920,h_1200,q_90,enc_avif,quality_auto/9e1774_ae175a4d81a84509bc388402413d334d~mv2.jpg",
+  creativeTeam: [
+    { name: "Ray Cooney and John Chapman", role: "Written By" },
+    { name: "Fred Rubeck", role: "Director" },
+    { name: "Brandon PT Davis", role: "Scenic Designer" },
+    { name: "Ashley Harrison", role: "Costume Designer" },
+    { name: "Savannah Bell", role: "Lighting Designer" },
+    { name: "Michael Burke", role: "Sound Designer" },
+  ],
+  tags: [
+    { name: "Comedy", slug: "comedy" },
+    { name: "Farce", slug: "farce" },
+    { name: "Okoboji Summer Theatre", slug: "okoboji-summer-theatre" },
+    { name: "Not Now, Darling", slug: "not-now-darling" },
+  ],
+  media: [
+    {
+      id: "darling-cover",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_ae175a4d81a84509bc388402413d334d~mv2.jpg/v1/fit/w_1920,h_1200,q_90,enc_avif,quality_auto/9e1774_ae175a4d81a84509bc388402413d334d~mv2.jpg",
+      altText: "Not Now, Darling scenic design cover image.",
+      kind: "cover",
+    },
+    {
+      id: "darling-prod-1",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_e7bab995f11c4e908d1e9a5ba8b0e51a~mv2.jpg/v1/fit/w_1920,h_1080,q_90,enc_avif,quality_auto/9e1774_e7bab995f11c4e908d1e9a5ba8b0e51a~mv2.jpg",
+      altText:
+        "Production image from Not Now, Darling showing the polished boutique interior and farce architecture, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "darling-prod-2",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_ae175a4d81a84509bc388402413d334d~mv2.jpg/v1/fit/w_1920,h_1200,q_90,enc_avif,quality_auto/9e1774_ae175a4d81a84509bc388402413d334d~mv2.jpg",
+      altText:
+        "Production still from Not Now, Darling emphasizing British elegance, color, and choreographed door placement, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "darling-prod-3",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_5718f48592cc4087b685e3c7a08d4511~mv2.jpg/v1/fit/w_1920,h_1080,q_90,enc_avif,quality_auto/9e1774_5718f48592cc4087b685e3c7a08d4511~mv2.jpg",
+      altText:
+        "Final production image from Not Now, Darling showing the full comic boutique environment in performance, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+  ],
+  sections: [
+    {
+      type: "text",
+      heading: "A Boutique Built for Farce",
+      content: [
+        "For Not Now, Darling at Okoboji Summer Theatre, the scenic design centered on a polished British boutique interior engineered for comic confusion. The world needed to feel elegant enough to support the play's upper-crust veneer, but also clear and nimble enough to sustain the speed, hiding, and rapid reversals that farce demands.",
+      ],
+    },
+    {
+      type: "gallery",
+      mediaIds: ["darling-prod-1", "darling-prod-2", "darling-prod-3"],
+    },
+    {
+      type: "text",
+      heading: "Color, Precision, and Timing",
+      content: [
+        "The palette leaned into Wes Anderson-inspired color relationships, using controlled contrast and visual polish to sharpen the heightened comedy without losing the setting's retail specificity. Doors and thresholds remained essential compositional devices, giving actors the clean entrances, exits, and near-misses that make this kind of comedy feel effortless when it is actually tightly engineered.",
+        "The design goal was to create a world that looked refined on the surface while functioning like a comic machine underneath. That balance between elegance and precision gave the production a lively visual rhythm and supported the play's escalating misunderstandings with architectural clarity.",
+      ],
+    },
+  ],
+  updatedAt: "2026-03-23T19:05:00.000Z",
+};
+
+const bingoTheWinningMusicalProject: LocalScenicProject = {
+  id: 90013,
+  title: "Bingo: The Winning Musical",
+  slug: "bingo-the-winning-musical",
+  excerpt:
+    "A playful nautical world for Okoboji Summer Theatre, using lakeside color, retail-comedy brightness, and musical-theatre clarity to support the show's fast humor and local charm.",
+  discipline: "scenic_design",
+  subcategory: "Musical Theatre",
+  client: "Okoboji Summer Theatre",
+  location: "Okoboji, IA",
+  year: 2013,
+  month: 7,
+  status: "published",
+  featured: false,
+  seoTitle: "Bingo: The Winning Musical | Scenic Design by Brandon PT Davis",
+  seoDescription:
+    "Scenic design for Bingo: The Winning Musical at Okoboji Summer Theatre, blending nautical themes with playful color to capture the spirit of the Okoboji Lakes region.",
+  seoKeywords:
+    "Bingo The Winning Musical, scenic design, Okoboji Summer Theatre, musical theatre, Brandon PT Davis",
+  coverImageUrl:
+    "https://static.wixstatic.com/media/9e1774_7a14e7e6226249648c1bdb54f57277c5~mv2.jpeg/v1/fill/w_1280,h_854,al_c,q_85/Bingo_1.jpeg",
+  creativeTeam: [
+    {
+      name: "Michael Heitzman, Ilene Reid, and David Holcenberg",
+      role: "Music and Lyrics By",
+    },
+    { name: "Michael Heitzman and Ilene Reid", role: "Book By" },
+    { name: "Andrew David Sotomayor", role: "Music Director" },
+    { name: "Brandon PT Davis", role: "Scenic Designer" },
+    { name: "Kirsteen Buchanan", role: "Costume Designer" },
+    { name: "Justin Hoffecker", role: "Lighting Designer" },
+    { name: "Michael Burke", role: "Sound Designer" },
+    { name: "Dylan Bean", role: "Projection Design" },
+    { name: "Tricia Brouk", role: "Directed and Choreographed By" },
+  ],
+  tags: [
+    { name: "Musical Theatre", slug: "musical-theatre" },
+    { name: "Comedy", slug: "comedy" },
+    { name: "Okoboji Summer Theatre", slug: "okoboji-summer-theatre" },
+    { name: "Bingo: The Winning Musical", slug: "bingo-the-winning-musical" },
+  ],
+  media: [
+    {
+      id: "bingo-cover",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_7a14e7e6226249648c1bdb54f57277c5~mv2.jpeg/v1/fill/w_1280,h_854,al_c,q_85/Bingo_1.jpeg",
+      altText: "Bingo: The Winning Musical scenic design cover image.",
+      kind: "cover",
+    },
+    {
+      id: "bingo-prod-1",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_744e436d04304b668e3b97840ddc0110~mv2.jpg/v1/fit/w_1920,h_1080,q_90,enc_avif,quality_auto/9e1774_744e436d04304b668e3b97840ddc0110~mv2.jpg",
+      altText:
+        "Production image from Bingo: The Winning Musical showing the bright nautical-inspired scenic world, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "bingo-prod-2",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_a27ddce7cbdc426c8089bd92b666c97d~mv2.jpg/v1/fit/w_1920,h_1281,q_90,enc_avif,quality_auto/9e1774_a27ddce7cbdc426c8089bd92b666c97d~mv2.jpg",
+      altText:
+        "Production still from Bingo: The Winning Musical emphasizing playful color and musical-theatre staging, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "bingo-prod-3",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_baa1759c98b04ff59acddee83690793d~mv2.jpg/v1/fit/w_1920,h_1281,q_90,enc_avif,quality_auto/9e1774_baa1759c98b04ff59acddee83690793d~mv2.jpg",
+      altText:
+        "Final production image from Bingo: The Winning Musical showing the full Okoboji-inspired environment in performance, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+  ],
+  sections: [
+    {
+      type: "text",
+      heading: "Okoboji Through a Playful Lens",
+      content: [
+        "For Bingo: The Winning Musical at Okoboji Summer Theatre, the scenic design pulled from the spirit of the Okoboji Lakes region rather than treating the world as a generic community-hall comedy. Nautical motifs, cheerful color, and a polished sense of playful charm helped the production feel rooted in place while still serving the heightened rhythm of musical theatre.",
+      ],
+    },
+    {
+      type: "gallery",
+      mediaIds: ["bingo-prod-1", "bingo-prod-2", "bingo-prod-3"],
+    },
+    {
+      type: "text",
+      heading: "Design Goal",
+      content: [
+        "The goal was to support the show's lively pace with a world that was bright, legible, and theatrically generous. The design needed enough specificity to evoke the character of the region, but enough clarity and openness to keep musical storytelling moving cleanly. That balance between local flavor and compositional simplicity gave the production its buoyant comic energy.",
+      ],
+    },
+  ],
+  updatedAt: "2026-03-23T19:18:00.000Z",
+};
+
+const completeWorksAbridgedProject: LocalScenicProject = {
+  id: 90014,
+  title: "The Complete Works of William Shakespeare (abridged)",
+  slug: "the-complete-works-of-william-shakespeare-abridged",
+  excerpt:
+    "A playful, modular comic set built for speed, theatrical irreverence, and rapid-fire transitions through Shakespeare’s canon.",
+  discipline: "scenic_design",
+  subcategory: "Comedy",
+  client: "Okoboji Summer Theatre",
+  location: "Okoboji, IA",
+  year: 2014,
+  month: 7,
+  status: "published",
+  featured: false,
+  seoTitle: "The Complete Works of William Shakespeare (abridged) | Scenic Design by Brandon PT Davis",
+  seoDescription:
+    "Scenic design for The Complete Works of William Shakespeare (abridged) at Okoboji Summer Theatre, featuring a playful and modular set built for fast transitions and comic energy.",
+  seoKeywords:
+    "The Complete Works of William Shakespeare abridged, scenic design, Okoboji Summer Theatre, comedy, Shakespeare, Brandon PT Davis",
+  coverImageUrl:
+    "https://static.wixstatic.com/media/9e1774_2bec94324c374273920e1926255a1f72~mv2.jpg/v1/fill/w_2500,h_1656,al_c,q_90/Complete%20Works_3.jpg",
+  creativeTeam: [
+    { name: "Adam Long, Daniel Singer, and Jess Winfield", role: "Written By" },
+    { name: "Brandon PT Davis", role: "Scenic Designer" },
+    { name: "Theresa Hartman", role: "Costume Designer" },
+    { name: "Justin Hoffecker", role: "Lighting Designer" },
+    { name: "Michael Burke", role: "Sound Designer" },
+    { name: "David Davalos", role: "Director" },
+  ],
+  tags: [
+    { name: "Comedy", slug: "comedy" },
+    { name: "Shakespeare", slug: "shakespeare" },
+    { name: "Okoboji Summer Theatre", slug: "okoboji-summer-theatre" },
+    {
+      name: "The Complete Works of William Shakespeare (abridged)",
+      slug: "the-complete-works-of-william-shakespeare-abridged",
+    },
+  ],
+  media: [
+    {
+      id: "complete-cover",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_2bec94324c374273920e1926255a1f72~mv2.jpg/v1/fill/w_2500,h_1656,al_c,q_90/Complete%20Works_3.jpg",
+      altText: "The Complete Works of William Shakespeare (abridged) scenic design cover image.",
+      kind: "cover",
+    },
+    {
+      id: "complete-prod-1",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_86dad4721bf34fccb5e95fc11a30563e~mv2.jpg/v1/fit/w_1920,h_1080,q_90,enc_avif,quality_auto/9e1774_86dad4721bf34fccb5e95fc11a30563e~mv2.jpg",
+      altText:
+        "Production image from The Complete Works of William Shakespeare (abridged) showing the modular comic stage environment, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "complete-prod-2",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_e6a96fe702f347019ef14aa9fad1aa8b~mv2.jpg/v1/fit/w_480,h_271,q_90,enc_avif,quality_auto/9e1774_e6a96fe702f347019ef14aa9fad1aa8b~mv2.jpg",
+      altText:
+        "Production still from The Complete Works of William Shakespeare (abridged) highlighting fast-paced theatrical transitions, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "complete-prod-3",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_2bec94324c374273920e1926255a1f72~mv2.jpg/v1/fit/w_480,h_318,q_90,enc_avif,quality_auto/9e1774_2bec94324c374273920e1926255a1f72~mv2.jpg",
+      altText:
+        "Production image from The Complete Works of William Shakespeare (abridged) showing the comic ensemble within the scenic world, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "complete-prod-4",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_d28c0068ef254ea9a471a50bfdfc3d40~mv2.jpg/v1/fit/w_1440,h_806,q_90,enc_avif,quality_auto/9e1774_d28c0068ef254ea9a471a50bfdfc3d40~mv2.jpg",
+      altText:
+        "Final production image from The Complete Works of William Shakespeare (abridged) emphasizing the playful modular environment and comic momentum, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+  ],
+  sections: [
+    {
+      type: "text",
+      heading: "A Modular World for Comic Velocity",
+      content: [
+        "For The Complete Works of William Shakespeare (abridged) at Okoboji Summer Theatre, the scenic design embraced the playful and irreverent spirit of the show. The set was conceived as a modular comic machine, able to pivot quickly through Shakespeare's iconic works without slowing the production's momentum or flattening its theatrical humor.",
+      ],
+    },
+    {
+      type: "gallery",
+      mediaIds: ["complete-prod-1", "complete-prod-2"],
+    },
+    {
+      type: "text",
+      heading: "Fast Transitions, Bold Compositions",
+      content: [
+        "Because the show depends on rapid-fire shifts in style, reference, and performance mode, the environment prioritized flexibility and legibility. Bold visual elements, clear staging zones, and a dynamic layout gave the actors room for physical comedy and improvisational energy while keeping the storytelling readable for the audience.",
+        "The goal was not to illustrate every Shakespearean world literally, but to provide a scenic structure that could absorb chaos, parody, and theatrical invention. That modularity let the production celebrate the speed, humor, and affectionate irreverence at the center of the piece.",
+      ],
+    },
+    {
+      type: "gallery",
+      mediaIds: ["complete-prod-3", "complete-prod-4"],
+    },
+  ],
+  updatedAt: "2026-03-23T19:28:00.000Z",
 };
 
 const theMerryWivesOfWindsorProject: LocalScenicProject = {
@@ -5127,6 +5577,472 @@ const vanyaAndSoniaAndMashaAndSpikeProject: LocalScenicProject = {
   updatedAt: "2026-02-27T11:15:14.646195+00:00",
 };
 
+const theLiarProject: LocalScenicProject = {
+  id: 90015,
+  title: "The Liar",
+  slug: "the-liar",
+  excerpt:
+    "A classical comic world built with elegance, color, and playful exaggeration, giving The Liar a refined environment that could support wit, deception, and fast-moving farce.",
+  discipline: "scenic_design",
+  subcategory: "Comedy",
+  client: "Okoboji Summer Theatre",
+  location: "Okoboji, IA",
+  year: 2012,
+  month: 8,
+  status: "published",
+  featured: false,
+  seoTitle: "The Liar | Scenic Design by Brandon PT Davis",
+  seoDescription:
+    "Scenic design for The Liar at Okoboji Summer Theatre, blending classical elegance with bold playful elements to heighten the comedy's wit and charm.",
+  seoKeywords:
+    "The Liar, David Ives, Pierre Corneille, scenic design, Okoboji Summer Theatre, comedy, Brandon PT Davis",
+  coverImageUrl:
+    "https://static.wixstatic.com/media/9e1774_1f60f572a4444b5daa40b6205b7b5587~mv2.jpg/v1/fill/w_2500,h_1562,al_c,q_90/The%20Liar_5.jpg",
+  creativeTeam: [
+    { name: "David Ives (adapted from Pierre Corneille)", role: "Written By" },
+    { name: "Brandon PT Davis", role: "Scenic Design" },
+    { name: "Theresa Hartman", role: "Costume Design" },
+    { name: "Justin Hoffecker", role: "Lighting Design" },
+    { name: "Michael Burke", role: "Sound Design" },
+    { name: "Lamby Hedge", role: "Director" },
+  ],
+  tags: [
+    { name: "Comedy", slug: "comedy" },
+    { name: "Classical Adaptation", slug: "classical-adaptation" },
+    { name: "Okoboji Summer Theatre", slug: "okoboji-summer-theatre" },
+    { name: "The Liar", slug: "the-liar" },
+  ],
+  links: [],
+  media: [
+    {
+      id: "liar-cover",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_1f60f572a4444b5daa40b6205b7b5587~mv2.jpg/v1/fill/w_2500,h_1562,al_c,q_90/The%20Liar_5.jpg",
+      altText: "The Liar scenic design cover image.",
+      kind: "cover",
+    },
+    {
+      id: "liar-prod-1",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_e5059a27fd4a42aaae1a9f829c38c6a4~mv2.jpg/v1/fit/w_1920,h_1281,q_90,enc_avif,quality_auto/9e1774_e5059a27fd4a42aaae1a9f829c38c6a4~mv2.jpg",
+      altText:
+        "Production image from The Liar showing the classical comic setting and staging, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "liar-prod-2",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_d318b7170d844497a4c70fbe4aa2f383~mv2.jpg/v1/fit/w_960,h_540,q_90,enc_avif,quality_auto/9e1774_d318b7170d844497a4c70fbe4aa2f383~mv2.jpg",
+      altText:
+        "Stage image from The Liar emphasizing wit, movement, and the scenic environment, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "liar-prod-3",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_f8590265118d4240a4796d1f99d7c526~mv2.jpg/v1/fit/w_960,h_640,q_90,enc_avif,quality_auto/9e1774_f8590265118d4240a4796d1f99d7c526~mv2.jpg",
+      altText:
+        "Production still from The Liar highlighting the playful period world and comic staging, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "liar-prod-4",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_09089f132e8a46c2b8e8d2d4c13029e5~mv2.jpg/v1/fit/w_960,h_638,q_90,enc_avif,quality_auto/9e1774_09089f132e8a46c2b8e8d2d4c13029e5~mv2.jpg",
+      altText:
+        "Performance image from The Liar reinforcing the bold visual rhythm of the comic setting, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "liar-prod-5",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_5eb3317bd3234b0a8a2e8371bbf8bcdb~mv2.jpg/v1/fit/w_1920,h_1281,q_90,enc_avif,quality_auto/9e1774_5eb3317bd3234b0a8a2e8371bbf8bcdb~mv2.jpg",
+      altText:
+        "Final production image from The Liar showing the full comic environment, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+  ],
+  sections: [
+    {
+      type: "text",
+      heading: "Classical Elegance with Comic Lift",
+      content: [
+        "The Liar was approached as a classical comedy with enough visual elegance to support heightened language, but enough playfulness to keep the world active and theatrical. The scenic environment balanced refinement with exaggeration, giving the production a setting that could hold both period wit and farcical momentum.",
+      ],
+    },
+    {
+      type: "gallery",
+      mediaIds: ["liar-prod-1", "liar-prod-2"],
+    },
+    {
+      type: "text",
+      heading: "A World for Wit and Deception",
+      content: [
+        "Because the play thrives on mistaken identity, verbal agility, and social performance, the design needed to feel orderly at first glance while still leaving room for comic disruption. Bold accents and carefully framed architecture helped make the environment feel lively rather than museum-like, allowing the comedy to stay buoyant and clear.",
+      ],
+    },
+    {
+      type: "gallery",
+      mediaIds: ["liar-prod-3", "liar-prod-4"],
+    },
+    {
+      type: "text",
+      heading: "Design Goal",
+      content: [
+        "The goal was to create a setting that honored the classical source while giving the adaptation its own theatrical snap. The world needed to feel polished, quick, and welcoming to the audience, supporting the play's wit and charm without losing the precision that makes the farce land.",
+      ],
+    },
+    {
+      type: "gallery",
+      mediaIds: ["liar-prod-5"],
+    },
+  ],
+  updatedAt: "2026-03-23T20:12:00.000Z",
+};
+
+const aSmalltowneChristmasProject: LocalScenicProject = {
+  id: 90016,
+  title: "A Smalltowne Christmas",
+  slug: "a-smalltowne-christmas",
+  excerpt:
+    "A nostalgic holiday setting shaped around warmth, tradition, and small-town cheer, creating a festive world that supports community, memory, and seasonal spectacle.",
+  discipline: "scenic_design",
+  subcategory: "Musical Theatre",
+  client: "Stephens College",
+  location: "Columbia, MO",
+  year: 2021,
+  month: 11,
+  status: "published",
+  featured: false,
+  seoTitle: "A Smalltowne Christmas | Scenic Design by Brandon PT Davis",
+  seoDescription:
+    "Scenic design for A Smalltowne Christmas at Stephens College, capturing the warmth, nostalgia, and festive spirit of a small-town holiday celebration.",
+  seoKeywords:
+    "A Smalltowne Christmas, scenic design, Stephens College, holiday musical, Brandon PT Davis",
+  coverImageUrl:
+    "https://static.wixstatic.com/media/9e1774_1e740d9ed46d46068687c0ffefecf163~mv2.jpg/v1/fill/w_2500,h_1396,al_c,q_90/Smalletown%20Christmas_4.jpg",
+  creativeTeam: [
+    { name: "Stacia Fernandez", role: "Written By" },
+    { name: "Danny J. Rooney", role: "Music and Lyrics By" },
+    { name: "Brandon PT Davis", role: "Scenic Design" },
+    { name: "Briann Johnson & Martha Clarke", role: "Costume Design" },
+    { name: "Vincente Williams", role: "Lighting Design" },
+    { name: "Michael Burke", role: "Sound Design" },
+    { name: "Andrew David Sotomayor", role: "Music Director" },
+    { name: "Stacia Fernandez", role: "Associate Director" },
+    { name: "Richard Stafford", role: "Directed and Choreographed By" },
+  ],
+  tags: [
+    { name: "Musical Theatre", slug: "musical-theatre" },
+    { name: "Holiday Musical", slug: "holiday-musical" },
+    { name: "Stephens College", slug: "stephens-college" },
+    { name: "A Smalltowne Christmas", slug: "a-smalltowne-christmas" },
+  ],
+  links: [],
+  media: [
+    {
+      id: "smalltowne-cover",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_1e740d9ed46d46068687c0ffefecf163~mv2.jpg/v1/fill/w_2500,h_1396,al_c,q_90/Smalletown%20Christmas_4.jpg",
+      altText: "A Smalltowne Christmas scenic design cover image.",
+      kind: "cover",
+    },
+    {
+      id: "smalltowne-prod-1",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_bbd82b940d6745b2927c69f4622d1f02~mv2.jpg/v1/fit/w_1920,h_1282,q_90,enc_avif,quality_auto/9e1774_bbd82b940d6745b2927c69f4622d1f02~mv2.jpg",
+      altText:
+        "Production image from A Smalltowne Christmas showing the festive scenic environment, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "smalltowne-prod-2",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_c7c24b950e7e41beaff8a10c814035f5~mv2.jpg/v1/fit/w_1920,h_1084,q_90,enc_avif,quality_auto/9e1774_c7c24b950e7e41beaff8a10c814035f5~mv2.jpg",
+      altText:
+        "Production still from A Smalltowne Christmas highlighting holiday staging and scenic warmth, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "smalltowne-prod-3",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_807a587021b74831b4b35f6c2762f9ed~mv2.jpg/v1/fit/w_2509,h_1385,q_90,enc_avif,quality_auto/9e1774_807a587021b74831b4b35f6c2762f9ed~mv2.jpg",
+      altText:
+        "Final production image from A Smalltowne Christmas showing the complete holiday world, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+  ],
+  sections: [
+    {
+      type: "text",
+      heading: "Holiday Warmth and Small-Town Memory",
+      content: [
+        "A Smalltowne Christmas was designed to capture the charm of a community gathering around shared holiday traditions. The scenic world leaned into familiarity, warmth, and seasonal texture, creating an environment where nostalgia and performance could live side by side without losing theatrical clarity.",
+      ],
+    },
+    {
+      type: "gallery",
+      mediaIds: ["smalltowne-prod-1", "smalltowne-prod-2"],
+    },
+    {
+      type: "text",
+      heading: "Design Goal",
+      content: [
+        "The design needed to balance festive spectacle with the intimacy of a small-town celebration. Rather than overwhelm the story with decoration, the goal was to create a setting that felt welcoming and communal, allowing the production's music, choreography, and seasonal sentiment to emerge inside a world of believable Christmas cheer.",
+      ],
+    },
+    {
+      type: "gallery",
+      mediaIds: ["smalltowne-prod-3"],
+    },
+  ],
+  updatedAt: "2026-03-23T20:25:00.000Z",
+};
+
+const urinetown2021Project: LocalScenicProject = {
+  id: 90018,
+  title: "Urinetown",
+  slug: "urinetown-2021",
+  excerpt:
+    "A dystopian musical world shaped through Brechtian and German Expressionist influence, using angular architecture, concrete textures, and symbolic lighting to sharpen the satire of Urinetown.",
+  discipline: "scenic_design",
+  subcategory: "Musical Theatre",
+  client: "Okoboji Summer Theatre",
+  location: "Okoboji, IA",
+  year: 2021,
+  month: 8,
+  status: "published",
+  featured: false,
+  seoTitle: "Urinetown (2021) | Scenic Design by Brandon PT Davis",
+  seoDescription:
+    "Scenic design for the 2021 production of Urinetown at Okoboji Summer Theatre, inspired by Brechtian and German Expressionist styles with angular concrete textures and symbolic lighting.",
+  seoKeywords:
+    "Urinetown 2021, Greg Kotis, Mark Hollmann, scenic design, Okoboji Summer Theatre, Brandon PT Davis",
+  coverImageUrl:
+    "https://static.wixstatic.com/media/9e1774_29984e7f9cc248acba8cbac477d69570~mv2.jpeg/v1/fill/w_1280,h_720,al_c,q_85/Urinetown_21_1.jpeg",
+  creativeTeam: [
+    { name: "Greg Kotis", role: "Book By" },
+    { name: "Mark Hollmann and Greg Kotis", role: "Music and Lyrics By" },
+    { name: "Jamie Reed", role: "Music Direction" },
+    { name: "Brandon PT Davis", role: "Scenic Design" },
+    { name: "Cami Huebert", role: "Costume Design" },
+    { name: "Savannah Bell", role: "Lighting Design" },
+    { name: "Austen Yim", role: "Sound Design" },
+    { name: "Paul Finocchiaro", role: "Directed and Choreographed By" },
+  ],
+  tags: [
+    { name: "Musical Theatre", slug: "musical-theatre" },
+    { name: "Dystopian Comedy", slug: "dystopian-comedy" },
+    { name: "Okoboji Summer Theatre", slug: "okoboji-summer-theatre" },
+    { name: "Urinetown", slug: "urinetown" },
+  ],
+  links: [],
+  media: [
+    {
+      id: "urinetown-2021-cover",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_29984e7f9cc248acba8cbac477d69570~mv2.jpeg/v1/fill/w_1280,h_720,al_c,q_85/Urinetown_21_1.jpeg",
+      altText: "Urinetown 2021 scenic design cover image.",
+      kind: "cover",
+    },
+    {
+      id: "urinetown-2021-prod-1",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_003d99bd2e634fa8ada4e5e2604b0085~mv2.jpeg/v1/fit/w_1280,h_720,q_90,enc_avif,quality_auto/9e1774_003d99bd2e634fa8ada4e5e2604b0085~mv2.jpeg",
+      altText:
+        "Production image from the 2021 Urinetown showing the angular dystopian environment, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "urinetown-2021-prod-2",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_e3c4dc42951f467b91d212088a0c4336~mv2.jpeg/v1/fit/w_1277,h_720,q_90,enc_avif,quality_auto/9e1774_e3c4dc42951f467b91d212088a0c4336~mv2.jpeg",
+      altText:
+        "Production still from the 2021 Urinetown emphasizing the expressionist shapes and musical staging, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "urinetown-2021-prod-3",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_ca85b4350512464fa8eebbc76c880778~mv2.jpeg/v1/fit/w_1280,h_720,q_90,enc_avif,quality_auto/9e1774_ca85b4350512464fa8eebbc76c880778~mv2.jpeg",
+      altText:
+        "Production image from the 2021 Urinetown highlighting concrete texture and dystopian atmosphere, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "urinetown-2021-prod-4",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_d7ac9ec334a0485bb8ff003bd301dc15~mv2.jpeg/v1/fit/w_1280,h_720,q_90,enc_avif,quality_auto/9e1774_d7ac9ec334a0485bb8ff003bd301dc15~mv2.jpeg",
+      altText:
+        "Final production image from the 2021 Urinetown showing the complete comic-dystopian scenic world, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+  ],
+  sections: [
+    {
+      type: "text",
+      heading: "Brecht and Expressionism as Musical Satire",
+      content: [
+        "This 2021 production of Urinetown was built around the collision of theatrical satire and authoritarian architecture. The design drew from Brechtian staging and German Expressionist distortion, creating a world of angular forms, hard textures, and visible theatricality that could support both the show's comedy and its political edge.",
+      ],
+    },
+    {
+      type: "gallery",
+      mediaIds: ["urinetown-2021-prod-1", "urinetown-2021-prod-2"],
+    },
+    {
+      type: "text",
+      heading: "Concrete, Symbol, and Social Pressure",
+      content: [
+        "Concrete textures and exaggerated structural rhythms helped make the city feel oppressive without pinning the production to literal realism. The environment needed to function as a symbolic civic machine, one where authority, scarcity, and public control could all be felt spatially, while still leaving enough openness for movement, choreography, and comic address.",
+      ],
+    },
+    {
+      type: "gallery",
+      mediaIds: ["urinetown-2021-prod-3", "urinetown-2021-prod-4"],
+    },
+    {
+      type: "text",
+      heading: "Design Goal",
+      content: [
+        "The goal was to create a stage world that sharpened the musical's dystopian absurdity while giving performers a strong graphic environment to play against. By combining angular composition, raw surfaces, and symbolic lighting, the set reinforced the production's satirical critique without flattening its humor or musical vitality.",
+      ],
+    },
+  ],
+  updatedAt: "2026-03-23T20:50:00.000Z",
+};
+
+const glassMenagerie2011Project: LocalScenicProject = {
+  id: 90017,
+  title: "The Glass Menagerie",
+  slug: "the-glass-menagerie-2011",
+  excerpt:
+    "A memory-driven domestic environment shaped through scrim walls and a revealed cityscape, giving The Glass Menagerie a world suspended between fragile realism and the urge to escape.",
+  discipline: "scenic_design",
+  subcategory: "Drama",
+  client: "Okoboji Summer Theatre",
+  location: "Okoboji, IA",
+  year: 2011,
+  month: 8,
+  status: "published",
+  featured: false,
+  seoTitle: "The Glass Menagerie (2011) | Scenic Design by Brandon PT Davis",
+  seoDescription:
+    "Scenic design for the 2011 production of The Glass Menagerie at Okoboji Summer Theatre, using memory-inspired scrim walls and a revealed cityscape to reflect nostalgia and escape.",
+  seoKeywords:
+    "The Glass Menagerie 2011, Tennessee Williams, scenic design, Okoboji Summer Theatre, Brandon PT Davis",
+  coverImageUrl:
+    "https://static.wixstatic.com/media/9e1774_b4ffb367fedb468bb5028dd449505b28~mv2.jpg/v1/fill/w_2500,h_1406,al_c,q_90/Glass%20Menagerie_2.jpg",
+  creativeTeam: [
+    { name: "Tennessee Williams", role: "Written By" },
+    { name: "Brandon PT Davis", role: "Scenic Design" },
+    { name: "Cynda Galikan", role: "Costume Design" },
+    { name: "Justine Hoffecker", role: "Lighting Design" },
+    { name: "Michael Burke", role: "Sound Design" },
+    { name: "Lamby Hedge", role: "Director" },
+  ],
+  tags: [
+    { name: "Drama", slug: "drama" },
+    { name: "Okoboji Summer Theatre", slug: "okoboji-summer-theatre" },
+    { name: "The Glass Menagerie", slug: "the-glass-menagerie" },
+    { name: "Memory Play", slug: "memory-play" },
+  ],
+  links: [],
+  media: [
+    {
+      id: "glass-2011-cover",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_b4ffb367fedb468bb5028dd449505b28~mv2.jpg/v1/fill/w_2500,h_1406,al_c,q_90/Glass%20Menagerie_2.jpg",
+      altText: "The Glass Menagerie 2011 scenic design cover image.",
+      kind: "cover",
+    },
+    {
+      id: "glass-2011-prod-1",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_5bca4171084942bb91180a6e7693c5cb~mv2.jpg/v1/fit/w_1920,h_1280,q_90,enc_avif,quality_auto/9e1774_5bca4171084942bb91180a6e7693c5cb~mv2.jpg",
+      altText:
+        "Production image from the 2011 Glass Menagerie showing the domestic memory world, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "glass-2011-prod-2",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_633dfc18b996424e8745bc752ae80e76~mv2.jpg/v1/fit/w_1920,h_1280,q_90,enc_avif,quality_auto/9e1774_633dfc18b996424e8745bc752ae80e76~mv2.jpg",
+      altText:
+        "Production still from the 2011 Glass Menagerie highlighting the scrim walls and layered stage space, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "glass-2011-prod-3",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_38eb82a4f6e44c6f864081e3b636408e~mv2.jpg/v1/fit/w_2505,h_1403,q_90,enc_avif,quality_auto/9e1774_38eb82a4f6e44c6f864081e3b636408e~mv2.jpg",
+      altText:
+        "Performance image from the 2011 Glass Menagerie emphasizing nostalgia and theatrical framing, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+    {
+      id: "glass-2011-prod-4",
+      type: "image",
+      imageUrl:
+        "https://static.wixstatic.com/media/9e1774_d43e1059047c46b38696672fb83ac4fd~mv2.jpg/v1/fit/w_1920,h_1080,q_90,enc_avif,quality_auto/9e1774_d43e1059047c46b38696672fb83ac4fd~mv2.jpg",
+      altText:
+        "Final production image from the 2011 Glass Menagerie showing the full scenic environment, scenic design by Brandon PT Davis.",
+      kind: "production",
+    },
+  ],
+  sections: [
+    {
+      type: "text",
+      heading: "A Memory Space for Longing and Escape",
+      content: [
+        "This production of The Glass Menagerie was designed as a world shaped by memory rather than strict realism. The domestic environment needed to feel present enough for the family drama to land, but also unstable enough to suggest the emotional filtering of recollection, longing, and distance.",
+      ],
+    },
+    {
+      type: "gallery",
+      mediaIds: ["glass-2011-prod-1", "glass-2011-prod-2"],
+    },
+    {
+      type: "text",
+      heading: "Scrim Walls and the City Beyond",
+      content: [
+        "Memory-inspired scrim walls allowed the apartment to feel both enclosed and permeable. As sightlines shifted, the city beyond could emerge through the scenic architecture, reinforcing the play's tension between confinement and escape. That revealed urban layer extended the emotional world of the family rather than acting as a simple background image.",
+      ],
+    },
+    {
+      type: "gallery",
+      mediaIds: ["glass-2011-prod-3", "glass-2011-prod-4"],
+    },
+    {
+      type: "text",
+      heading: "Design Goal",
+      content: [
+        "The goal was to support Tennessee Williams' fragile emotional architecture with a setting that felt haunted by memory but still playable for intimate domestic scenes. The environment needed to hold nostalgia, pressure, and the desire to leave, allowing the scenic world to echo the play's central tension without overwhelming it.",
+      ],
+    },
+  ],
+  updatedAt: "2026-03-23T20:38:00.000Z",
+};
+
 const littleShopOfHorrorsProject: LocalScenicProject = {
   id: 23,
   title: "Little Shop of Horrors",
@@ -6040,6 +6956,7 @@ const localScenicProjects: LocalScenicProject[] = [
   anInspectorCallsProject,
   theManOfLaManchaProject,
   aFunnyThingHappenedProject,
+  theBaldSopranoProject,
   tomasAndTheLibraryLadyProject,
   theMerryWivesOfWindsorProject,
   theMarvelousWonderettesDreamOnProject,
@@ -6047,6 +6964,13 @@ const localScenicProjects: LocalScenicProject[] = [
   companyProject,
   thePajamaGameProject,
   parliamentSquareProject,
+  notNowDarlingProject,
+  bingoTheWinningMusicalProject,
+  completeWorksAbridgedProject,
+  theLiarProject,
+  aSmalltowneChristmasProject,
+  urinetown2021Project,
+  glassMenagerie2011Project,
   americanIdiotProject,
   lastTrainToNibrocProject,
   vanyaAndSoniaAndMashaAndSpikeProject,

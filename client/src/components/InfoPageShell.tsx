@@ -3,6 +3,7 @@ import { Link } from "wouter";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { SEO } from "@/components/SEO";
 
 const infoPages = [
   { name: "Privacy", href: "/privacy" },
@@ -27,8 +28,16 @@ export default function InfoPageShell({
   metaLabel,
   children,
 }: InfoPageShellProps) {
+  const canonicalUrl = `https://www.brandonptdavis.com${currentPath}`;
+
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title={`${title} | Brandon PT Davis`}
+        description={intro}
+        url={canonicalUrl}
+      />
+
       <Header />
 
       <main>

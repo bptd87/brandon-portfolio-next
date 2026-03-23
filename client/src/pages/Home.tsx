@@ -8,36 +8,26 @@ import { ProjectGridSkeleton } from "@/components/SkeletonLoaders";
 import { StickyShowcase } from "@/components/StickyShowcase";
 import StructuredData from "@/components/StructuredData";
 import { getProjectPath } from "@/lib/projectRoutes";
+import {
+  scenicPortfolioLandingCopy,
+  scenicShowcaseProps,
+  sortScenicProjectsChronologically,
+  splitScenicShowcaseProjects,
+} from "@/lib/scenicShowcase";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
-
-const getProjectTimestamp = (project: any) => {
-  if (project.year) {
-    const monthIndex = project.month ? Math.max(project.month - 1, 0) : 6;
-    return new Date(project.year, monthIndex, 1).getTime();
-  }
-
-  const fallback = project.updatedAt || project.publishedAt || project.createdAt;
-  return fallback ? new Date(fallback).getTime() : 0;
-};
 
 export default function Home() {
   const [, setLocation] = useLocation();
   const baseUrl =
     typeof window !== "undefined" ? window.location.origin : "https://www.brandonptdavis.com";
-  const projects = [...getLocalScenicProjects()].sort((a, b) => {
-    const timeCompare = getProjectTimestamp(b) - getProjectTimestamp(a);
-    if (timeCompare !== 0) return timeCompare;
-    return a.title.localeCompare(b.title);
-  });
+  const projects = sortScenicProjectsChronologically(getLocalScenicProjects());
   const projectsLoading = false;
-  const [featuredProject, ...remainingProjects] = projects;
-  const sideProjects = remainingProjects.slice(0, 3);
-  const gridProjects = remainingProjects.slice(3);
+  const { featuredProject, showcaseRailProjects, showcaseGridProjects } =
+    splitScenicShowcaseProjects(projects);
   const scenicAlt = (title: string) => `${title} scenic design by Brandon PT Davis`;
-  const heroTitle = "Scenic Design";
-  const heroSubtitle = "Story-driven environments for live performance.";
-  const heroIntro =
-    "A selected body of scenic design work across regional theatre, summer stock, academic production, and new play development. Each project is built around story, rhythm, architecture, and what the audience needs to feel in the room.";
+  const heroTitle = scenicPortfolioLandingCopy.title;
+  const heroSubtitle = scenicPortfolioLandingCopy.subtitle;
+  const heroIntro = scenicPortfolioLandingCopy.intro;
 
   const animateCardDeparture = async (target: HTMLElement) => {
     const card = target.querySelector(".transition-card") as HTMLElement | null;
@@ -218,18 +208,14 @@ export default function Home() {
             </section>
 
             <StickyShowcase
-              continuationItems={gridProjects}
-              desktopColumns={4}
+              continuationItems={showcaseGridProjects}
               featuredItem={featuredProject}
-              hideFeaturedCredit={true}
               itemAlt={scenicAlt}
               itemHref={getProjectPath}
-              leadAspectClassName="lg:aspect-[4/3]"
-              leadImageAspectRatio="3/2"
-              leadTitleClassName="max-w-[12ch] text-[clamp(1.85rem,3.3vw,3.1rem)] font-medium leading-[0.94] tracking-[-0.06em]"
               onNavigate={navigateWithTransition}
-              railItems={sideProjects}
+              railItems={showcaseRailProjects}
               title={featuredProject.title}
+              {...scenicShowcaseProps}
             />
           </>
         ) : null}

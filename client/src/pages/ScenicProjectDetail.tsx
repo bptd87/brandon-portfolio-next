@@ -165,13 +165,16 @@ export default function ScenicProjectDetail() {
   const creativeTeamGroups = useMemo(() => {
     const rolePriority = (role: string) => {
       const normalized = role.toLowerCase().trim();
+      if (normalized.includes("music and lyrics")) return 0;
       if (normalized.includes("book by")) return 0;
       if (normalized.includes("written by") || normalized === "by" || normalized.includes("playwright") || normalized.includes("created by")) return 1;
       if (normalized.includes("adapted by")) return 2;
-      if (normalized === "lyrics by" || normalized === "music and lyrics") return 3;
+      if (normalized === "lyrics by") return 3;
       if (normalized === "music by") return 4;
       if (normalized.includes("original concept")) return 5;
       if (normalized.includes("music director")) return 6;
+      if (normalized.includes("directed")) return 99;
+      if (normalized === "director" || (normalized.includes("director") && !normalized.includes("associate"))) return 99;
       if (normalized.includes("associate director") || normalized.includes("choreo")) return 7;
       if (normalized.includes("scenic")) return 8;
       if (normalized.includes("costume")) return 9;
@@ -179,8 +182,6 @@ export default function ScenicProjectDetail() {
       if (normalized.includes("sound")) return 11;
       if (normalized.includes("projection")) return 12;
       if (normalized.includes("assistant")) return 13;
-      if (normalized.includes("directed")) return 99;
-      if (normalized === "director" || (normalized.includes("director") && !normalized.includes("associate"))) return 99;
       return 50;
     };
 

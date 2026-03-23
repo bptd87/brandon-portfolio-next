@@ -25,6 +25,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { getProjectPath } from "@/lib/projectRoutes";
+import {
+  getScenicProjectTimestamp,
+  scenicPortfolioLandingCopy,
+  scenicShowcaseProps,
+} from "@/lib/scenicShowcase";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
 
 type SortKey = "newest" | "oldest" | "title" | "venue";
@@ -50,16 +55,6 @@ const normalizeText = (value?: string | null) => {
 
 const getVenueLabel = (project: any) => {
   return project.client || project.venue || "Unknown Venue";
-};
-
-const getProjectTimestamp = (project: any) => {
-  if (project.year) {
-    const monthIndex = project.month ? Math.max(project.month - 1, 0) : 6;
-    return new Date(project.year, monthIndex, 1).getTime();
-  }
-
-  const fallback = project.updatedAt || project.publishedAt || project.createdAt;
-  return fallback ? new Date(fallback).getTime() : 0;
 };
 
 const formatProjectDate = (project: any) => {
@@ -229,10 +224,10 @@ export default function Projects() {
       if (sortKey === "venue") {
         const venueCompare = getVenueLabel(a).localeCompare(getVenueLabel(b));
         if (venueCompare !== 0) return venueCompare;
-        return getProjectTimestamp(b) - getProjectTimestamp(a);
+        return getScenicProjectTimestamp(b) - getScenicProjectTimestamp(a);
       }
 
-      const timeCompare = getProjectTimestamp(b) - getProjectTimestamp(a);
+      const timeCompare = getScenicProjectTimestamp(b) - getScenicProjectTimestamp(a);
       if (timeCompare !== 0) {
         return sortKey === "oldest" ? -timeCompare : timeCompare;
       }
@@ -251,12 +246,11 @@ export default function Projects() {
     ? new Date(latestProjectUpdate as any).toISOString().split("T")[0]
     : undefined;
 
-  const pageTitle = "Scenic Design";
-  const pageSubtitle = "Story-driven environments for live performance.";
+  const pageTitle = scenicPortfolioLandingCopy.title;
+  const pageSubtitle = scenicPortfolioLandingCopy.subtitle;
   const pageDescription =
     "Use category, venue, and date filters to move through scenic design productions and compare venues, timelines, and production contexts.";
-  const pageIntro =
-    "A selected body of scenic design work across regional theatre, summer stock, academic production, and new play development. Each project is built around story, rhythm, architecture, and what the audience needs to feel in the room.";
+  const pageIntro = scenicPortfolioLandingCopy.intro;
   const scenicAlt = (title: string) => `${title} scenic design by Brandon PT Davis`;
   const selectedCategoryLabel =
     subcategories.find((item) => item.key === selectedSubcategory)?.label || null;
@@ -717,17 +711,13 @@ export default function Projects() {
               <>
                 <StickyShowcase
                   continuationItems={showcaseGridProjects}
-                  desktopColumns={4}
                   featuredItem={featuredProject}
-                  hideFeaturedCredit={true}
                   itemAlt={scenicAlt}
                   itemHref={getProjectPath}
-                  leadAspectClassName="lg:aspect-[3/2]"
-                  leadImageAspectRatio="3/2"
-                  leadTitleClassName="max-w-[14ch] text-[clamp(2rem,3.8vw,3.45rem)] font-medium leading-[0.94] tracking-[-0.06em]"
                   onNavigate={navigateWithTransition}
                   railItems={showcaseRailProjects}
                   title={featuredProject.title}
+                  {...scenicShowcaseProps}
                 />
               </>
             ) : (
