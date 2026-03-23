@@ -3457,7 +3457,7 @@ const theBaldSopranoProject: LocalScenicProject = {
   seoKeywords:
     "The Bald Soprano, Eugene Ionesco, scenic design, lighting design, Stephens College, absurdism, Brandon PT Davis",
   coverImageUrl:
-    "https://static.wixstatic.com/media/9e1774_8b778c6001174a4faf57b5f49ac5fefb~mv2.jpeg/v1/fit/w_1280,h_853,q_90,enc_avif,quality_auto/9e1774_8b778c6001174a4faf57b5f49ac5fefb~mv2.jpeg",
+    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-bald-soprano/the-bald-soprano-2d959ef49b.jpeg",
   creativeTeam: [
     { name: "Eugene Ionesco", role: "By" },
     { name: "Brandon PT Davis", role: "Scenic and Lighting Designer" },
@@ -3476,7 +3476,7 @@ const theBaldSopranoProject: LocalScenicProject = {
       id: "bald-cover",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_8b778c6001174a4faf57b5f49ac5fefb~mv2.jpeg/v1/fit/w_1280,h_853,q_90,enc_avif,quality_auto/9e1774_8b778c6001174a4faf57b5f49ac5fefb~mv2.jpeg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-bald-soprano/the-bald-soprano-2d959ef49b.jpeg",
       altText: "The Bald Soprano scenic and lighting design cover image.",
       kind: "cover",
     },
@@ -3484,7 +3484,7 @@ const theBaldSopranoProject: LocalScenicProject = {
       id: "bald-prod-1",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_fd7ea968876e4d4ab3d81b40540d75e4~mv2.jpg/v1/fit/w_1920,h_1080,q_90,enc_avif,quality_auto/9e1774_fd7ea968876e4d4ab3d81b40540d75e4~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-bald-soprano/the-bald-soprano-caf4556cac.jpg",
       altText:
         "Rendering for The Bald Soprano showing the distorted domestic environment and heightened composition, scenic and lighting design by Brandon PT Davis.",
       kind: "rendering",
@@ -3493,7 +3493,7 @@ const theBaldSopranoProject: LocalScenicProject = {
       id: "bald-prod-2",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_a5134ba180a74077b09acf60f35c9f94~mv2.jpg/v1/fit/w_960,h_710,q_90,enc_avif,quality_auto/9e1774_a5134ba180a74077b09acf60f35c9f94~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-bald-soprano/the-bald-soprano-06201e4480.jpg",
       altText:
         "Production still from The Bald Soprano emphasizing the absurd domestic scale and actor framing, scenic and lighting design by Brandon PT Davis.",
       kind: "production",
@@ -3502,7 +3502,7 @@ const theBaldSopranoProject: LocalScenicProject = {
       id: "bald-prod-3",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_b51f53b3a18b4b64b3b5092188b4fb05~mv2.jpg/v1/fit/w_960,h_540,q_90,enc_avif,quality_auto/9e1774_b51f53b3a18b4b64b3b5092188b4fb05~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-bald-soprano/the-bald-soprano-39e8a0ac44.jpg",
       altText:
         "Production image from The Bald Soprano showing the fractured drawing-room world in performance, scenic and lighting design by Brandon PT Davis.",
       kind: "production",
@@ -3511,7 +3511,7 @@ const theBaldSopranoProject: LocalScenicProject = {
       id: "bald-prod-4",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_e21b9ca41cdf4578bfeb368f22caec51~mv2.jpeg/v1/fit/w_960,h_657,q_90,enc_avif,quality_auto/9e1774_e21b9ca41cdf4578bfeb368f22caec51~mv2.jpeg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-bald-soprano/the-bald-soprano-8ffd19e8bf.jpeg",
       altText:
         "Performance still from The Bald Soprano highlighting warped domestic architecture and comic tension, scenic and lighting design by Brandon PT Davis.",
       kind: "production",
@@ -3520,7 +3520,7 @@ const theBaldSopranoProject: LocalScenicProject = {
       id: "bald-prod-5",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_8b778c6001174a4faf57b5f49ac5fefb~mv2.jpeg/v1/fit/w_1280,h_853,q_90,enc_avif,quality_auto/9e1774_8b778c6001174a4faf57b5f49ac5fefb~mv2.jpeg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-bald-soprano/the-bald-soprano-2d959ef49b.jpeg",
       altText:
         "Production image from The Bald Soprano showing the full scenic composition and heightened lighting contrast, scenic and lighting design by Brandon PT Davis.",
       kind: "production",
@@ -3529,7 +3529,7 @@ const theBaldSopranoProject: LocalScenicProject = {
       id: "bald-prod-6",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_c96b6844660b4206a75a7e4d44973c1e~mv2.jpeg/v1/fit/w_1280,h_853,q_90,enc_avif,quality_auto/9e1774_c96b6844660b4206a75a7e4d44973c1e~mv2.jpeg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-bald-soprano/the-bald-soprano-33fb979f6b.jpeg",
       altText:
         "Final production image from The Bald Soprano showing the absurd domestic setting in performance, scenic and lighting design by Brandon PT Davis.",
       kind: "production",
@@ -3598,7 +3598,7 @@ const notNowDarlingProject: LocalScenicProject = {
   seoKeywords:
     "Not Now, Darling, scenic design, Okoboji Summer Theatre, comedy, farce, Brandon PT Davis",
   coverImageUrl:
-    "https://static.wixstatic.com/media/9e1774_ae175a4d81a84509bc388402413d334d~mv2.jpg/v1/fit/w_1920,h_1200,q_90,enc_avif,quality_auto/9e1774_ae175a4d81a84509bc388402413d334d~mv2.jpg",
+    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/not-now-darling/not-now-darling-06dc38d64a.jpg",
   creativeTeam: [
     { name: "Ray Cooney and John Chapman", role: "Written By" },
     { name: "Fred Rubeck", role: "Director" },
@@ -3618,7 +3618,7 @@ const notNowDarlingProject: LocalScenicProject = {
       id: "darling-cover",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_ae175a4d81a84509bc388402413d334d~mv2.jpg/v1/fit/w_1920,h_1200,q_90,enc_avif,quality_auto/9e1774_ae175a4d81a84509bc388402413d334d~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/not-now-darling/not-now-darling-06dc38d64a.jpg",
       altText: "Not Now, Darling scenic design cover image.",
       kind: "cover",
     },
@@ -3626,7 +3626,7 @@ const notNowDarlingProject: LocalScenicProject = {
       id: "darling-prod-1",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_e7bab995f11c4e908d1e9a5ba8b0e51a~mv2.jpg/v1/fit/w_1920,h_1080,q_90,enc_avif,quality_auto/9e1774_e7bab995f11c4e908d1e9a5ba8b0e51a~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/not-now-darling/not-now-darling-fdeaa527ac.jpg",
       altText:
         "Production image from Not Now, Darling showing the polished boutique interior and farce architecture, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3635,7 +3635,7 @@ const notNowDarlingProject: LocalScenicProject = {
       id: "darling-prod-2",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_ae175a4d81a84509bc388402413d334d~mv2.jpg/v1/fit/w_1920,h_1200,q_90,enc_avif,quality_auto/9e1774_ae175a4d81a84509bc388402413d334d~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/not-now-darling/not-now-darling-06dc38d64a.jpg",
       altText:
         "Production still from Not Now, Darling emphasizing British elegance, color, and choreographed door placement, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3644,7 +3644,7 @@ const notNowDarlingProject: LocalScenicProject = {
       id: "darling-prod-3",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_5718f48592cc4087b685e3c7a08d4511~mv2.jpg/v1/fit/w_1920,h_1080,q_90,enc_avif,quality_auto/9e1774_5718f48592cc4087b685e3c7a08d4511~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/not-now-darling/not-now-darling-e1d080dc14.jpg",
       altText:
         "Final production image from Not Now, Darling showing the full comic boutique environment in performance, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3694,7 +3694,7 @@ const bingoTheWinningMusicalProject: LocalScenicProject = {
   seoKeywords:
     "Bingo The Winning Musical, scenic design, Okoboji Summer Theatre, musical theatre, Brandon PT Davis",
   coverImageUrl:
-    "https://static.wixstatic.com/media/9e1774_7a14e7e6226249648c1bdb54f57277c5~mv2.jpeg/v1/fill/w_1280,h_854,al_c,q_85/Bingo_1.jpeg",
+    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/bingo-the-winning-musical/bingo-the-winning-musical-dfa9f8cd99.jpeg",
   creativeTeam: [
     {
       name: "Michael Heitzman, Ilene Reid, and David Holcenberg",
@@ -3720,7 +3720,7 @@ const bingoTheWinningMusicalProject: LocalScenicProject = {
       id: "bingo-cover",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_7a14e7e6226249648c1bdb54f57277c5~mv2.jpeg/v1/fill/w_1280,h_854,al_c,q_85/Bingo_1.jpeg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/bingo-the-winning-musical/bingo-the-winning-musical-dfa9f8cd99.jpeg",
       altText: "Bingo: The Winning Musical scenic design cover image.",
       kind: "cover",
     },
@@ -3728,7 +3728,7 @@ const bingoTheWinningMusicalProject: LocalScenicProject = {
       id: "bingo-prod-1",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_744e436d04304b668e3b97840ddc0110~mv2.jpg/v1/fit/w_1920,h_1080,q_90,enc_avif,quality_auto/9e1774_744e436d04304b668e3b97840ddc0110~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/bingo-the-winning-musical/bingo-the-winning-musical-f0bb8f349b.jpg",
       altText:
         "Production image from Bingo: The Winning Musical showing the bright nautical-inspired scenic world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3737,7 +3737,7 @@ const bingoTheWinningMusicalProject: LocalScenicProject = {
       id: "bingo-prod-2",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_a27ddce7cbdc426c8089bd92b666c97d~mv2.jpg/v1/fit/w_1920,h_1281,q_90,enc_avif,quality_auto/9e1774_a27ddce7cbdc426c8089bd92b666c97d~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/bingo-the-winning-musical/bingo-the-winning-musical-f4c0047f35.jpg",
       altText:
         "Production still from Bingo: The Winning Musical emphasizing playful color and musical-theatre staging, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3746,7 +3746,7 @@ const bingoTheWinningMusicalProject: LocalScenicProject = {
       id: "bingo-prod-3",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_baa1759c98b04ff59acddee83690793d~mv2.jpg/v1/fit/w_1920,h_1281,q_90,enc_avif,quality_auto/9e1774_baa1759c98b04ff59acddee83690793d~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/bingo-the-winning-musical/bingo-the-winning-musical-f7f07b768a.jpg",
       altText:
         "Final production image from Bingo: The Winning Musical showing the full Okoboji-inspired environment in performance, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3795,7 +3795,7 @@ const completeWorksAbridgedProject: LocalScenicProject = {
   seoKeywords:
     "The Complete Works of William Shakespeare abridged, scenic design, Okoboji Summer Theatre, comedy, Shakespeare, Brandon PT Davis",
   coverImageUrl:
-    "https://static.wixstatic.com/media/9e1774_2bec94324c374273920e1926255a1f72~mv2.jpg/v1/fill/w_2500,h_1656,al_c,q_90/Complete%20Works_3.jpg",
+    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-complete-works-of-william-shakespeare-abridged/the-complete-works-of-william-shakespeare-abridged-fcc6f3ed4f.jpg",
   creativeTeam: [
     { name: "Adam Long, Daniel Singer, and Jess Winfield", role: "Written By" },
     { name: "Brandon PT Davis", role: "Scenic Designer" },
@@ -3818,7 +3818,7 @@ const completeWorksAbridgedProject: LocalScenicProject = {
       id: "complete-cover",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_2bec94324c374273920e1926255a1f72~mv2.jpg/v1/fill/w_2500,h_1656,al_c,q_90/Complete%20Works_3.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-complete-works-of-william-shakespeare-abridged/the-complete-works-of-william-shakespeare-abridged-fcc6f3ed4f.jpg",
       altText: "The Complete Works of William Shakespeare (abridged) scenic design cover image.",
       kind: "cover",
     },
@@ -3826,7 +3826,7 @@ const completeWorksAbridgedProject: LocalScenicProject = {
       id: "complete-prod-1",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_86dad4721bf34fccb5e95fc11a30563e~mv2.jpg/v1/fit/w_1920,h_1080,q_90,enc_avif,quality_auto/9e1774_86dad4721bf34fccb5e95fc11a30563e~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-complete-works-of-william-shakespeare-abridged/the-complete-works-of-william-shakespeare-abridged-7160001f26.jpg",
       altText:
         "Production image from The Complete Works of William Shakespeare (abridged) showing the modular comic stage environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3835,7 +3835,7 @@ const completeWorksAbridgedProject: LocalScenicProject = {
       id: "complete-prod-2",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_e6a96fe702f347019ef14aa9fad1aa8b~mv2.jpg/v1/fit/w_480,h_271,q_90,enc_avif,quality_auto/9e1774_e6a96fe702f347019ef14aa9fad1aa8b~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-complete-works-of-william-shakespeare-abridged/the-complete-works-of-william-shakespeare-abridged-9ba7165f14.jpg",
       altText:
         "Production still from The Complete Works of William Shakespeare (abridged) highlighting fast-paced theatrical transitions, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3844,7 +3844,7 @@ const completeWorksAbridgedProject: LocalScenicProject = {
       id: "complete-prod-3",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_2bec94324c374273920e1926255a1f72~mv2.jpg/v1/fit/w_480,h_318,q_90,enc_avif,quality_auto/9e1774_2bec94324c374273920e1926255a1f72~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-complete-works-of-william-shakespeare-abridged/the-complete-works-of-william-shakespeare-abridged-5f6ec9e90b.jpg",
       altText:
         "Production image from The Complete Works of William Shakespeare (abridged) showing the comic ensemble within the scenic world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3853,7 +3853,7 @@ const completeWorksAbridgedProject: LocalScenicProject = {
       id: "complete-prod-4",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_d28c0068ef254ea9a471a50bfdfc3d40~mv2.jpg/v1/fit/w_1440,h_806,q_90,enc_avif,quality_auto/9e1774_d28c0068ef254ea9a471a50bfdfc3d40~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-complete-works-of-william-shakespeare-abridged/the-complete-works-of-william-shakespeare-abridged-b0e77e71fe.jpg",
       altText:
         "Final production image from The Complete Works of William Shakespeare (abridged) emphasizing the playful modular environment and comic momentum, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5597,7 +5597,7 @@ const theLiarProject: LocalScenicProject = {
   seoKeywords:
     "The Liar, David Ives, Pierre Corneille, scenic design, Okoboji Summer Theatre, comedy, Brandon PT Davis",
   coverImageUrl:
-    "https://static.wixstatic.com/media/9e1774_1f60f572a4444b5daa40b6205b7b5587~mv2.jpg/v1/fill/w_2500,h_1562,al_c,q_90/The%20Liar_5.jpg",
+    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-liar/the-liar-daa6bff258.jpg",
   creativeTeam: [
     { name: "David Ives (adapted from Pierre Corneille)", role: "Written By" },
     { name: "Brandon PT Davis", role: "Scenic Design" },
@@ -5618,7 +5618,7 @@ const theLiarProject: LocalScenicProject = {
       id: "liar-cover",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_1f60f572a4444b5daa40b6205b7b5587~mv2.jpg/v1/fill/w_2500,h_1562,al_c,q_90/The%20Liar_5.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-liar/the-liar-daa6bff258.jpg",
       altText: "The Liar scenic design cover image.",
       kind: "cover",
     },
@@ -5626,7 +5626,7 @@ const theLiarProject: LocalScenicProject = {
       id: "liar-prod-1",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_e5059a27fd4a42aaae1a9f829c38c6a4~mv2.jpg/v1/fit/w_1920,h_1281,q_90,enc_avif,quality_auto/9e1774_e5059a27fd4a42aaae1a9f829c38c6a4~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-liar/the-liar-214d560e4b.jpg",
       altText:
         "Production image from The Liar showing the classical comic setting and staging, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5635,7 +5635,7 @@ const theLiarProject: LocalScenicProject = {
       id: "liar-prod-2",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_d318b7170d844497a4c70fbe4aa2f383~mv2.jpg/v1/fit/w_960,h_540,q_90,enc_avif,quality_auto/9e1774_d318b7170d844497a4c70fbe4aa2f383~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-liar/the-liar-c183f7b9fc.jpg",
       altText:
         "Stage image from The Liar emphasizing wit, movement, and the scenic environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5644,7 +5644,7 @@ const theLiarProject: LocalScenicProject = {
       id: "liar-prod-3",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_f8590265118d4240a4796d1f99d7c526~mv2.jpg/v1/fit/w_960,h_640,q_90,enc_avif,quality_auto/9e1774_f8590265118d4240a4796d1f99d7c526~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-liar/the-liar-cc3083db71.jpg",
       altText:
         "Production still from The Liar highlighting the playful period world and comic staging, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5653,7 +5653,7 @@ const theLiarProject: LocalScenicProject = {
       id: "liar-prod-4",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_09089f132e8a46c2b8e8d2d4c13029e5~mv2.jpg/v1/fit/w_960,h_638,q_90,enc_avif,quality_auto/9e1774_09089f132e8a46c2b8e8d2d4c13029e5~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-liar/the-liar-edc3844ade.jpg",
       altText:
         "Performance image from The Liar reinforcing the bold visual rhythm of the comic setting, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5662,7 +5662,7 @@ const theLiarProject: LocalScenicProject = {
       id: "liar-prod-5",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_5eb3317bd3234b0a8a2e8371bbf8bcdb~mv2.jpg/v1/fit/w_1920,h_1281,q_90,enc_avif,quality_auto/9e1774_5eb3317bd3234b0a8a2e8371bbf8bcdb~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-liar/the-liar-fe95892931.jpg",
       altText:
         "Final production image from The Liar showing the full comic environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5726,7 +5726,7 @@ const aSmalltowneChristmasProject: LocalScenicProject = {
   seoKeywords:
     "A Smalltowne Christmas, scenic design, Stephens College, holiday musical, Brandon PT Davis",
   coverImageUrl:
-    "https://static.wixstatic.com/media/9e1774_1e740d9ed46d46068687c0ffefecf163~mv2.jpg/v1/fill/w_2500,h_1396,al_c,q_90/Smalletown%20Christmas_4.jpg",
+    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/a-smalltowne-christmas/a-smalltowne-christmas-9717e6782b.jpg",
   creativeTeam: [
     { name: "Stacia Fernandez", role: "Written By" },
     { name: "Danny J. Rooney", role: "Music and Lyrics By" },
@@ -5750,7 +5750,7 @@ const aSmalltowneChristmasProject: LocalScenicProject = {
       id: "smalltowne-cover",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_1e740d9ed46d46068687c0ffefecf163~mv2.jpg/v1/fill/w_2500,h_1396,al_c,q_90/Smalletown%20Christmas_4.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/a-smalltowne-christmas/a-smalltowne-christmas-9717e6782b.jpg",
       altText: "A Smalltowne Christmas scenic design cover image.",
       kind: "cover",
     },
@@ -5758,7 +5758,7 @@ const aSmalltowneChristmasProject: LocalScenicProject = {
       id: "smalltowne-prod-1",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_bbd82b940d6745b2927c69f4622d1f02~mv2.jpg/v1/fit/w_1920,h_1282,q_90,enc_avif,quality_auto/9e1774_bbd82b940d6745b2927c69f4622d1f02~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/a-smalltowne-christmas/a-smalltowne-christmas-384b222098.jpg",
       altText:
         "Production image from A Smalltowne Christmas showing the festive scenic environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5767,7 +5767,7 @@ const aSmalltowneChristmasProject: LocalScenicProject = {
       id: "smalltowne-prod-2",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_c7c24b950e7e41beaff8a10c814035f5~mv2.jpg/v1/fit/w_1920,h_1084,q_90,enc_avif,quality_auto/9e1774_c7c24b950e7e41beaff8a10c814035f5~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/a-smalltowne-christmas/a-smalltowne-christmas-3691d27c7b.jpg",
       altText:
         "Production still from A Smalltowne Christmas highlighting holiday staging and scenic warmth, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5776,7 +5776,7 @@ const aSmalltowneChristmasProject: LocalScenicProject = {
       id: "smalltowne-prod-3",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_807a587021b74831b4b35f6c2762f9ed~mv2.jpg/v1/fit/w_2509,h_1385,q_90,enc_avif,quality_auto/9e1774_807a587021b74831b4b35f6c2762f9ed~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/a-smalltowne-christmas/a-smalltowne-christmas-be19cc2be0.jpg",
       altText:
         "Final production image from A Smalltowne Christmas showing the complete holiday world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5829,7 +5829,7 @@ const urinetown2021Project: LocalScenicProject = {
   seoKeywords:
     "Urinetown 2021, Greg Kotis, Mark Hollmann, scenic design, Okoboji Summer Theatre, Brandon PT Davis",
   coverImageUrl:
-    "https://static.wixstatic.com/media/9e1774_29984e7f9cc248acba8cbac477d69570~mv2.jpeg/v1/fill/w_1280,h_720,al_c,q_85/Urinetown_21_1.jpeg",
+    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/urinetown-2021/urinetown-2021-c871282d6b.jpeg",
   creativeTeam: [
     { name: "Greg Kotis", role: "Book By" },
     { name: "Mark Hollmann and Greg Kotis", role: "Music and Lyrics By" },
@@ -5852,7 +5852,7 @@ const urinetown2021Project: LocalScenicProject = {
       id: "urinetown-2021-cover",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_29984e7f9cc248acba8cbac477d69570~mv2.jpeg/v1/fill/w_1280,h_720,al_c,q_85/Urinetown_21_1.jpeg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/urinetown-2021/urinetown-2021-c871282d6b.jpeg",
       altText: "Urinetown 2021 scenic design cover image.",
       kind: "cover",
     },
@@ -5860,7 +5860,7 @@ const urinetown2021Project: LocalScenicProject = {
       id: "urinetown-2021-prod-1",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_003d99bd2e634fa8ada4e5e2604b0085~mv2.jpeg/v1/fit/w_1280,h_720,q_90,enc_avif,quality_auto/9e1774_003d99bd2e634fa8ada4e5e2604b0085~mv2.jpeg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/urinetown-2021/urinetown-2021-51b22c1e9d.jpeg",
       altText:
         "Production image from the 2021 Urinetown showing the angular dystopian environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5869,7 +5869,7 @@ const urinetown2021Project: LocalScenicProject = {
       id: "urinetown-2021-prod-2",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_e3c4dc42951f467b91d212088a0c4336~mv2.jpeg/v1/fit/w_1277,h_720,q_90,enc_avif,quality_auto/9e1774_e3c4dc42951f467b91d212088a0c4336~mv2.jpeg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/urinetown-2021/urinetown-2021-96279a9e54.jpeg",
       altText:
         "Production still from the 2021 Urinetown emphasizing the expressionist shapes and musical staging, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5878,7 +5878,7 @@ const urinetown2021Project: LocalScenicProject = {
       id: "urinetown-2021-prod-3",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_ca85b4350512464fa8eebbc76c880778~mv2.jpeg/v1/fit/w_1280,h_720,q_90,enc_avif,quality_auto/9e1774_ca85b4350512464fa8eebbc76c880778~mv2.jpeg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/urinetown-2021/urinetown-2021-42a3af6d44.jpeg",
       altText:
         "Production image from the 2021 Urinetown highlighting concrete texture and dystopian atmosphere, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5887,7 +5887,7 @@ const urinetown2021Project: LocalScenicProject = {
       id: "urinetown-2021-prod-4",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_d7ac9ec334a0485bb8ff003bd301dc15~mv2.jpeg/v1/fit/w_1280,h_720,q_90,enc_avif,quality_auto/9e1774_d7ac9ec334a0485bb8ff003bd301dc15~mv2.jpeg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/urinetown-2021/urinetown-2021-61fded10c7.jpeg",
       altText:
         "Final production image from the 2021 Urinetown showing the complete comic-dystopian scenic world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5947,7 +5947,7 @@ const glassMenagerie2011Project: LocalScenicProject = {
   seoKeywords:
     "The Glass Menagerie 2011, Tennessee Williams, scenic design, Okoboji Summer Theatre, Brandon PT Davis",
   coverImageUrl:
-    "https://static.wixstatic.com/media/9e1774_b4ffb367fedb468bb5028dd449505b28~mv2.jpg/v1/fill/w_2500,h_1406,al_c,q_90/Glass%20Menagerie_2.jpg",
+    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-glass-menagerie-2011/the-glass-menagerie-2011-18e039c8c0.jpg",
   creativeTeam: [
     { name: "Tennessee Williams", role: "Written By" },
     { name: "Brandon PT Davis", role: "Scenic Design" },
@@ -5968,7 +5968,7 @@ const glassMenagerie2011Project: LocalScenicProject = {
       id: "glass-2011-cover",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_b4ffb367fedb468bb5028dd449505b28~mv2.jpg/v1/fill/w_2500,h_1406,al_c,q_90/Glass%20Menagerie_2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-glass-menagerie-2011/the-glass-menagerie-2011-18e039c8c0.jpg",
       altText: "The Glass Menagerie 2011 scenic design cover image.",
       kind: "cover",
     },
@@ -5976,7 +5976,7 @@ const glassMenagerie2011Project: LocalScenicProject = {
       id: "glass-2011-prod-1",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_5bca4171084942bb91180a6e7693c5cb~mv2.jpg/v1/fit/w_1920,h_1280,q_90,enc_avif,quality_auto/9e1774_5bca4171084942bb91180a6e7693c5cb~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-glass-menagerie-2011/the-glass-menagerie-2011-a53c40ae0e.jpg",
       altText:
         "Production image from the 2011 Glass Menagerie showing the domestic memory world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5985,7 +5985,7 @@ const glassMenagerie2011Project: LocalScenicProject = {
       id: "glass-2011-prod-2",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_633dfc18b996424e8745bc752ae80e76~mv2.jpg/v1/fit/w_1920,h_1280,q_90,enc_avif,quality_auto/9e1774_633dfc18b996424e8745bc752ae80e76~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-glass-menagerie-2011/the-glass-menagerie-2011-eb79367a23.jpg",
       altText:
         "Production still from the 2011 Glass Menagerie highlighting the scrim walls and layered stage space, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5994,7 +5994,7 @@ const glassMenagerie2011Project: LocalScenicProject = {
       id: "glass-2011-prod-3",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_38eb82a4f6e44c6f864081e3b636408e~mv2.jpg/v1/fit/w_2505,h_1403,q_90,enc_avif,quality_auto/9e1774_38eb82a4f6e44c6f864081e3b636408e~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-glass-menagerie-2011/the-glass-menagerie-2011-2acc2d20ef.jpg",
       altText:
         "Performance image from the 2011 Glass Menagerie emphasizing nostalgia and theatrical framing, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6003,7 +6003,7 @@ const glassMenagerie2011Project: LocalScenicProject = {
       id: "glass-2011-prod-4",
       type: "image",
       imageUrl:
-        "https://static.wixstatic.com/media/9e1774_d43e1059047c46b38696672fb83ac4fd~mv2.jpg/v1/fit/w_1920,h_1080,q_90,enc_avif,quality_auto/9e1774_d43e1059047c46b38696672fb83ac4fd~mv2.jpg",
+        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-glass-menagerie-2011/the-glass-menagerie-2011-a598d1ca19.jpg",
       altText:
         "Final production image from the 2011 Glass Menagerie showing the full scenic environment, scenic design by Brandon PT Davis.",
       kind: "production",
