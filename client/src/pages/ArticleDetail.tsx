@@ -585,7 +585,7 @@ function ArticleDetailContent() {
             ) : null}
 
             {article.coverImageUrl && (
-              <div className="mx-auto mt-10 max-w-[82rem] overflow-hidden rounded-xl">
+              <div className="mx-auto mt-10 max-w-[88rem] overflow-hidden rounded-xl">
                 <img
                   src={article.coverImageUrl}
                   alt={article.coverImageAlt || article.title}
@@ -942,7 +942,7 @@ function ArticleDetailContent() {
                       case 'gallery':
                         const galleryImages = section.images || [];
                         return (
-                          <section key={index} className="my-16 relative left-1/2 w-screen max-w-[84rem] -translate-x-1/2 px-14 sm:px-18 lg:px-24">
+                          <section key={index} className="my-16 relative left-1/2 w-screen max-w-[88rem] -translate-x-1/2 px-14 sm:px-18 lg:px-24">
                             <div className="mx-auto flex max-w-[72rem] items-center justify-center gap-2">
                               <div className="hidden items-center gap-2 md:flex">
                                 <button

@@ -524,7 +524,7 @@ export default function ScenicProjectDetail() {
 
                       if (galleryItems.length > 2) {
                         return (
-                          <div className="relative left-1/2 w-screen max-w-[82rem] -translate-x-1/2 px-6 sm:px-10 lg:px-14">
+                          <div className="relative left-1/2 w-screen max-w-[88rem] -translate-x-1/2 px-6 sm:px-10 lg:px-14">
                             <ScenicRenderingGallery items={galleryItems} onOpen={openLightboxFor} visibleCount={3} />
                           </div>
                         );
@@ -596,7 +596,7 @@ export default function ScenicProjectDetail() {
         </section>
 
         {(project.creativeTeam.length > 0 || project.links?.length || relatedArticles.length > 0 || relatedRenderingProject || moreScenicProjects.length > 0) ? (
-          <section className="container max-w-6xl pt-16 md:pt-20">
+          <section className="container max-w-[88rem] pt-16 md:pt-20">
             {(project.links?.length || relatedArticles.length > 0 || relatedRenderingProject) ? (
               <AnimatedSection>
                 <div className="pt-18 md:pt-24">

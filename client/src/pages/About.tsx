@@ -231,7 +231,7 @@ export default function About() {
 
       <main>
         <section className="pb-14 pt-24 md:pb-16 md:pt-28">
-          <div className="container max-w-6xl">
+          <div className="container max-w-[88rem]">
             <div className="mx-auto max-w-4xl text-center">
               <div className="mx-auto max-w-3xl">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
@@ -262,7 +262,7 @@ export default function About() {
         </section>
 
         <section className="pb-16 pt-8 md:pb-20 md:pt-10">
-          <div className="container max-w-6xl">
+          <div className="container max-w-[88rem]">
             <div className="border-t border-border/20 pt-10">
               <div className="mx-auto max-w-3xl space-y-6">
                 <p className="text-[1rem] leading-8 text-foreground/78 md:text-[1.08rem]">
@@ -344,7 +344,7 @@ export default function About() {
         </section>
 
         <section className="border-y border-border/35 py-16 md:py-20">
-          <div className="container max-w-6xl">
+          <div className="container max-w-[88rem]">
             <div className="max-w-3xl">
               <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
                 Working Approach
@@ -377,7 +377,7 @@ export default function About() {
         </section>
 
         <section className="py-16 md:py-20">
-          <div className="container max-w-6xl">
+          <div className="container max-w-[88rem]">
             <div className="max-w-3xl">
               <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
                 Learn More
@@ -479,7 +479,7 @@ export default function About() {
         </section>
 
         <section className="border-t border-border/35 py-16 md:py-20">
-          <div className="container max-w-[92rem]">
+          <div className="container max-w-[88rem]">
             <div className="flex w-full items-center justify-center gap-2">
               <div className="hidden items-center gap-2 md:flex">
                 <button

@@ -345,7 +345,7 @@ export default function CreativeStatement() {
       <section 
         className="border-t border-border/25 px-6 py-16 md:py-20"
       >
-        <div className="mx-auto max-w-[92rem]">
+        <div className="mx-auto max-w-6xl">
           <div className="flex items-center justify-center gap-2">
             <button
               type="button"
@@ -401,7 +401,7 @@ export default function CreativeStatement() {
         ref={ctaRef}
         className="relative border-y border-border/25 px-6 py-20 opacity-0 translate-y-8 transition-all duration-1000 ease-out md:py-24"
       >
-        <div className="mx-auto max-w-[108rem]">
+        <div className="mx-auto max-w-6xl">
           <div className="rounded-[2rem] border border-white/8 bg-white/[0.06] px-6 py-16 text-center md:px-12 md:py-20">
             <h2 className="mx-auto max-w-4xl font-sans text-[clamp(2.4rem,4.5vw,4.4rem)] font-medium leading-[1.02] tracking-[-0.06em] text-foreground">
               Start a project with a designer who can think concept through execution.

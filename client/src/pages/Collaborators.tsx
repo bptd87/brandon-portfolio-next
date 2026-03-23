@@ -183,9 +183,9 @@ export default function Collaborators() {
 
           </section>
 
-          <section className="mx-auto mt-10 max-w-6xl">
+          <section className="mx-auto mt-10 max-w-[88rem]">
             <div className="flex justify-center">
-              <div className="flex max-w-5xl flex-wrap justify-center gap-x-8 gap-y-3">
+              <div className="flex max-w-6xl flex-wrap justify-center gap-x-8 gap-y-3">
                 {editorialSections.map((section) => {
                   if (!section.items.length) return null;
                   return (
@@ -202,7 +202,7 @@ export default function Collaborators() {
             </div>
           </section>
 
-          <section className="mx-auto mt-14 max-w-6xl border-t border-border/25 pt-14">
+          <section className="mx-auto mt-14 max-w-[88rem] border-t border-border/25 pt-14">
             <div className="grid items-center gap-10 xl:grid-cols-[minmax(18rem,0.95fr)_minmax(0,1.05fr)]">
               <div className="overflow-hidden rounded-[1.5rem] border border-border/30 bg-card/20">
                 <img
@@ -233,7 +233,7 @@ export default function Collaborators() {
           </section>
 
           {isLoading && (
-            <section className="mx-auto mt-14 max-w-6xl">
+            <section className="mx-auto mt-14 max-w-[88rem]">
               <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
                 {[...Array(6)].map((_, index) => (
                   <div
@@ -250,7 +250,7 @@ export default function Collaborators() {
           )}
 
           {!isLoading && (
-            <section className="mx-auto mt-14 max-w-6xl space-y-16">
+            <section className="mx-auto mt-14 max-w-[88rem] space-y-16">
               {editorialSections.map((section, index) => {
                 const collaborators = section.items;
                 if (!collaborators || collaborators.length === 0) return null;

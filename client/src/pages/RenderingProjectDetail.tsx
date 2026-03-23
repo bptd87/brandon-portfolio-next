@@ -436,7 +436,7 @@ export default function RenderingProjectDetail() {
         </section>
 
         {(relatedArticles.length > 0 || (scenicProjectHref && scenicProjectMatch)) ? (
-          <section className="container max-w-6xl pt-18 md:pt-24">
+          <section className="container max-w-[88rem] pt-18 md:pt-24">
             <AnimatedSection>
               <div>
                 <div className="mb-12 h-px w-full bg-border/60" />
@@ -515,7 +515,7 @@ export default function RenderingProjectDetail() {
         ) : null}
 
         {moreRenderingProjects.length > 0 ? (
-          <section className="container max-w-6xl pt-18 md:pt-24">
+          <section className="container max-w-[88rem] pt-18 md:pt-24">
             <AnimatedSection>
               <div>
                 <div className="mb-12 h-px w-full bg-border/60" />

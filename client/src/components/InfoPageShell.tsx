@@ -33,7 +33,7 @@ export default function InfoPageShell({
 
       <main>
         <section className="border-b border-border">
-          <div className="container max-w-6xl py-16 md:py-20">
+          <div className="container max-w-[88rem] py-16 md:py-20">
             <div className="max-w-4xl">
               <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
                 Site Information
@@ -72,7 +72,7 @@ export default function InfoPageShell({
           </div>
         </section>
 
-        <section className="container max-w-6xl py-14 md:py-16">{children}</section>
+        <section className="container max-w-[88rem] py-14 md:py-16">{children}</section>
       </main>
 
       <Footer />

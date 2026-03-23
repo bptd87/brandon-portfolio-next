@@ -207,7 +207,7 @@ export default function StudioApps() {
           </AnimatedSection>
         </section>
 
-        <section className="mx-auto mt-14 max-w-[92rem]">
+        <section className="mx-auto mt-14 max-w-6xl">
           <AnimatedSection>
             <div className="mx-auto max-w-3xl text-center">
               <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">

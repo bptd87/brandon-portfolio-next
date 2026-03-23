@@ -484,7 +484,7 @@ export default function StudioTutorials() {
           </section>
         )}
 
-        <section className="mx-auto max-w-[108rem] border-t border-border/25 pt-20">
+        <section className="mx-auto max-w-6xl border-t border-border/25 pt-20">
           <div className="rounded-[2rem] border border-white/8 bg-white/[0.06] px-6 py-16 text-center md:px-12 md:py-20">
             <h2 className="mx-auto max-w-4xl font-sans text-[clamp(2.4rem,4.5vw,4.2rem)] font-medium leading-[1.02] tracking-[-0.06em] text-foreground">
               Keep learning beyond the tutorial library.

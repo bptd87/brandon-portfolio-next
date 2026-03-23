@@ -34,8 +34,10 @@ export default function Home() {
   const sideProjects = remainingProjects.slice(0, 3);
   const gridProjects = remainingProjects.slice(3);
   const scenicAlt = (title: string) => `${title} scenic design by Brandon PT Davis`;
-  const heroTitle = "Scenic Design by Brandon PT Davis";
-  const heroIntro = "Selected scenic design work for stage.";
+  const heroTitle = "Scenic Design";
+  const heroSubtitle = "Story-driven environments for live performance.";
+  const heroIntro =
+    "A selected body of scenic design work across regional theatre, summer stock, academic production, and new play development. Each project is built around story, rhythm, architecture, and what the audience needs to feel in the room.";
 
   const animateCardDeparture = async (target: HTMLElement) => {
     const card = target.querySelector(".transition-card") as HTMLElement | null;
@@ -200,12 +202,15 @@ export default function Home() {
                 <div className="hero-stage-sweep absolute left-[8%] top-[14%] h-48 w-[72%] rounded-full blur-3xl md:left-[14%] md:top-[18%] md:h-56 md:w-[58%]" />
                 <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-background" />
               </div>
-              <div className="container max-w-6xl">
-                <div className="relative max-w-4xl py-2">
-                  <h1 className="max-w-[13ch] font-sans text-[clamp(2.7rem,6vw,5.6rem)] font-medium leading-[0.92] tracking-[-0.065em] text-white">
+              <div className="container max-w-[88rem]">
+                <div className="relative max-w-3xl py-2">
+                  <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.24em] text-white/42">
+                    {heroSubtitle}
+                  </p>
+                  <h1 className="font-sans text-[clamp(2.3rem,4.6vw,3.8rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
                     {heroTitle}
                   </h1>
-                  <p className="mt-6 max-w-2xl text-[1rem] leading-7 text-white/62 md:text-[1.08rem] md:leading-8">
+                  <p className="mt-6 max-w-3xl text-[1rem] leading-7 text-white/58 md:text-[1.05rem]">
                     {heroIntro}
                   </p>
                 </div>
@@ -219,9 +224,9 @@ export default function Home() {
               hideFeaturedCredit={true}
               itemAlt={scenicAlt}
               itemHref={getProjectPath}
-              leadAspectClassName="lg:aspect-[3/2]"
+              leadAspectClassName="lg:aspect-[4/3]"
               leadImageAspectRatio="3/2"
-              leadTitleClassName="max-w-[14ch] text-[clamp(2rem,3.8vw,3.45rem)] font-medium leading-[0.94] tracking-[-0.06em]"
+              leadTitleClassName="max-w-[12ch] text-[clamp(1.85rem,3.3vw,3.1rem)] font-medium leading-[0.94] tracking-[-0.06em]"
               onNavigate={navigateWithTransition}
               railItems={sideProjects}
               title={featuredProject.title}

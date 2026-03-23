@@ -275,7 +275,7 @@ export function StickyShowcase({
 
   return (
     <section className="pt-8 md:pt-10">
-      <div className="container max-w-6xl">
+      <div className="container max-w-[88rem]">
         <div className="space-y-8 md:hidden">
           {mobileItems.map((item, index) => (
             <ShowcaseCard
@@ -342,10 +342,10 @@ export function StickyShowcase({
                 </div>
 
                 {hasLeadCopy ? (
-                  <div className="max-w-3xl pt-5 md:pt-6">
+                  <div className="max-w-2xl pt-5 md:pt-6">
                     {showBelowTitle ? (
                       <h1
-                        className={`max-w-[14ch] font-sans text-[clamp(2rem,3.8vw,3.45rem)] font-medium leading-[0.94] tracking-[-0.06em] text-white ${
+                        className={`max-w-[12ch] font-sans text-[clamp(1.85rem,3.3vw,3.1rem)] font-medium leading-[0.94] tracking-[-0.06em] text-white ${
                           leadTitleClassName || ""
                         }`}
                       >
@@ -368,7 +368,7 @@ export function StickyShowcase({
                       </div>
                     ) : null}
                     {intro ? (
-                      <p className="mt-3 max-w-2xl text-[0.98rem] leading-7 text-white/62 md:text-[1.05rem]">
+                      <p className="mt-3 max-w-xl text-[0.98rem] leading-7 text-white/62 md:text-[1.05rem]">
                         {intro}
                       </p>
                     ) : null}

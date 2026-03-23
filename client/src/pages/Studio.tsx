@@ -153,7 +153,7 @@ export default function Studio() {
           </AnimatedSection>
         </section>
 
-        <section className="mx-auto mt-14 max-w-[92rem]">
+        <section className="mx-auto mt-14 max-w-6xl">
           <AnimatedSection>
             <div className="mx-auto max-w-3xl text-center">
               <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
@@ -213,7 +213,7 @@ export default function Studio() {
           </div>
         </section>
 
-        <section className="mx-auto mt-20 max-w-[92rem] border-t border-border/18 pt-16">
+        <section className="mx-auto mt-20 max-w-6xl border-t border-border/18 pt-16">
           <AnimatedSection>
             <div className="mx-auto max-w-3xl text-center">
               <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
@@ -275,7 +275,7 @@ export default function Studio() {
           </div>
         </section>
 
-        <section className="mx-auto mt-20 max-w-[92rem] border-t border-border/18 pt-16">
+        <section className="mx-auto mt-20 max-w-6xl border-t border-border/18 pt-16">
           <AnimatedSection>
             <div className="mx-auto max-w-3xl text-center">
               <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">

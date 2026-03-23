@@ -130,7 +130,7 @@ export default function Syllabus3DModeling() {
       </section>
 
       <section className="px-6 py-8 md:py-12">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 xl:grid-cols-[minmax(0,1.05fr)_minmax(18rem,0.95fr)]">
+        <div className="mx-auto grid max-w-[88rem] items-center gap-10 xl:grid-cols-[minmax(0,1.05fr)_minmax(18rem,0.95fr)]">
           <div className="max-w-2xl">
             <h2 className="font-sans text-[clamp(2rem,4vw,3.2rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
               Teaching students how to model, render, and document with clarity.
@@ -171,7 +171,7 @@ export default function Syllabus3DModeling() {
       </section>
 
       <section className="px-6 py-18 md:py-22">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-[88rem]">
           <div className="grid items-start gap-12 md:grid-cols-[180px_1fr]">
             <div className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40 md:sticky md:top-32">
               Overview
@@ -195,7 +195,7 @@ export default function Syllabus3DModeling() {
       </section>
 
       <section className="border-y border-border/25 px-6 py-18 md:py-22">
-        <div className="mx-auto max-w-6xl grid gap-10 lg:grid-cols-2">
+        <div className="mx-auto max-w-[88rem] grid gap-10 lg:grid-cols-2">
           <div className="rounded-[1.5rem] border border-border/25 bg-card/10 p-6 md:p-8">
             <h2 className="font-sans text-[0.9rem] font-semibold uppercase tracking-[0.24em] text-foreground/40">
               Course Objectives
@@ -225,7 +225,7 @@ export default function Syllabus3DModeling() {
       </section>
 
       <section className="px-6 py-18 md:py-22">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-[88rem]">
           <div className="max-w-3xl">
             <h2 className="font-sans text-[clamp(2rem,4vw,3.1rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">
               Evaluation and project structure.
@@ -262,7 +262,7 @@ export default function Syllabus3DModeling() {
       </section>
 
       <section className="border-t border-border/25 px-6 py-18 md:py-22">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-[88rem]">
           <div className="max-w-3xl">
             <h2 className="font-sans text-[clamp(2rem,4vw,3.1rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">
               Weekly modules.
@@ -289,7 +289,7 @@ export default function Syllabus3DModeling() {
       </section>
 
       <section className="px-6 pb-4 pt-2 md:pb-6 md:pt-4">
-        <div className="mx-auto max-w-6xl border-t border-border/20 pt-10">
+        <div className="mx-auto max-w-[88rem] border-t border-border/20 pt-10">
           <div className="max-w-3xl">
             <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
               Related Tutorials
@@ -302,7 +302,7 @@ export default function Syllabus3DModeling() {
             </p>
           </div>
 
-          <div className="mt-8 max-w-4xl">
+          <div className="mt-8 max-w-5xl">
             <Link href="/studio/tutorials" className="group block">
               <div className="grid gap-5 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:items-start">
                 <div className="relative aspect-square overflow-hidden rounded-[1.15rem] border border-border/35 bg-card/20">
@@ -333,7 +333,7 @@ export default function Syllabus3DModeling() {
       </section>
 
       <section className="border-y border-border/25 px-6 py-20 md:py-24">
-        <div className="mx-auto max-w-[108rem]">
+        <div className="mx-auto max-w-[88rem]">
           <div className="rounded-[2rem] border border-white/8 bg-white/[0.06] px-6 py-16 text-center md:px-12 md:py-20">
             <h2 className="mx-auto max-w-4xl font-sans text-[clamp(2.4rem,4.5vw,4.2rem)] font-medium leading-[1.02] tracking-[-0.06em] text-foreground">
               Return to teaching philosophy and course context.

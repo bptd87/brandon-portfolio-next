@@ -450,7 +450,7 @@ export default function Projects() {
 
       <main>
         <section className="border-b border-border/40 pb-8 pt-24 md:pb-10 md:pt-28">
-          <div className="container max-w-6xl">
+          <div className="container max-w-[88rem]">
             <div className="max-w-3xl">
               {currentHeading === pageTitle ? (
                 <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.24em] text-white/42">
@@ -732,7 +732,7 @@ export default function Projects() {
               </>
             ) : (
               <section className="pb-20 pt-12 md:pb-28 md:pt-14">
-                <div className="container max-w-6xl">
+                <div className="container max-w-[88rem]">
                   {viewMode === "grid" ? (
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
                       {sortedProjects.map((project, index) => {
@@ -790,7 +790,7 @@ export default function Projects() {
           </>
         ) : (
           <section className="pb-24 pt-16">
-            <div className="container max-w-6xl text-center">
+            <div className="container max-w-[88rem] text-center">
               <p className="text-white/55">
                 No scenic design productions match the current filters.
               </p>
@@ -799,7 +799,7 @@ export default function Projects() {
         )}
 
         <section className="border-t border-border/35 py-16 md:py-20">
-          <div className="container max-w-6xl">
+          <div className="container max-w-[88rem]">
             <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
               About This Portfolio
             </p>

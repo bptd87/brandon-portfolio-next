@@ -352,7 +352,7 @@ export default function Articles() {
 
       <main>
         <section className="border-b border-border/40 pb-8 pt-24 md:pb-10 md:pt-28">
-          <div className="container max-w-6xl">
+          <div className="container max-w-[88rem]">
             <div className="max-w-3xl">
               <h1 className="font-sans text-[clamp(2.3rem,4.6vw,3.8rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
                 {currentHeading}
@@ -525,7 +525,7 @@ export default function Articles() {
         {sortedArticles.length > 0 ? (
           <>
             <section className="pb-20 pt-12 md:pb-28 md:pt-14">
-              <div className="container max-w-6xl">
+              <div className="container max-w-[88rem]">
                 {viewMode === "grid" ? (
                   <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     {sortedArticles.map((article, index) => {
@@ -589,14 +589,14 @@ export default function Articles() {
           </>
         ) : (
           <section className="pb-24 pt-16">
-            <div className="container max-w-6xl text-center">
+            <div className="container max-w-[88rem] text-center">
               <p className="text-white/55">No articles match the current filters.</p>
             </div>
           </section>
         )}
 
         <section className="border-t border-border/35 py-16 md:py-20">
-          <div className="container max-w-6xl">
+          <div className="container max-w-[88rem]">
             <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
               About These Articles
             </p>

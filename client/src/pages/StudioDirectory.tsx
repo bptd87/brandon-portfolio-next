@@ -135,7 +135,7 @@ export default function StudioDirectory() {
           </p>
         </section>
 
-        <section className="mx-auto mt-10 max-w-6xl border-b border-border/35 pb-8">
+        <section className="mx-auto mt-10 max-w-[88rem] border-b border-border/35 pb-8">
           <div className="flex flex-col gap-6">
             <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
               <button
@@ -200,7 +200,7 @@ export default function StudioDirectory() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-6xl py-14">
+        <section className="mx-auto max-w-[88rem] py-14">
           {isLoading ? (
             <div className="space-y-4">
               {[...Array(8)].map((_, index) => (
@@ -336,7 +336,7 @@ export default function StudioDirectory() {
           )}
         </section>
 
-        <section className="mx-auto max-w-[108rem] border-t border-border/25 pt-20">
+        <section className="mx-auto max-w-[88rem] border-t border-border/25 pt-20">
           <div className="rounded-[2rem] border border-white/8 bg-white/[0.06] px-6 py-16 text-center md:px-12 md:py-20">
             <h2 className="mx-auto max-w-4xl font-sans text-[clamp(2.4rem,4.5vw,4.2rem)] font-medium leading-[1.02] tracking-[-0.06em] text-foreground">
               Know a scenic design resource that belongs in the directory?

@@ -348,7 +348,7 @@ export default function Header() {
           isVisible ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        <div className="container py-4">
+        <div className="container max-w-[88rem] py-4">
           <nav className="flex items-center justify-between gap-6">
             <Link href="/" className="group inline-flex flex-col items-start leading-none transition-all">
               <span className="text-[1.18rem] font-black tracking-[-0.055em] md:text-[1.22rem]">

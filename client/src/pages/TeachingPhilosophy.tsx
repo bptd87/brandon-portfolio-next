@@ -447,7 +447,7 @@ export default function TeachingPhilosophy() {
       )}
 
       <section className="border-y border-border/25 px-6 py-20 md:py-24">
-        <div className="mx-auto max-w-[108rem]">
+        <div className="mx-auto max-w-6xl">
           <div className="rounded-[2rem] border border-white/8 bg-white/[0.06] px-6 py-16 text-center md:px-12 md:py-20">
             <h2 className="mx-auto max-w-4xl font-sans text-[clamp(2.4rem,4.5vw,4.4rem)] font-medium leading-[1.02] tracking-[-0.06em] text-foreground">
               See the scenic design work that informs the classroom.

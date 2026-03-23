@@ -160,7 +160,7 @@ export default function RenderingPortfolio() {
       <Header />
 
       <section className="pt-12 md:pt-16">
-        <div className="container max-w-6xl">
+        <div className="container max-w-[88rem]">
           <div className="mx-auto max-w-5xl text-center">
             <h1 className="font-sans text-[clamp(2.5rem,6vw,5.3rem)] font-normal leading-[0.94] tracking-[-0.06em] text-white">
               Renderings
@@ -175,7 +175,7 @@ export default function RenderingPortfolio() {
 
       {showcaseItems.length > 0 && (
         <section className="pb-10 pt-14 md:pb-14 md:pt-16">
-          <div className="container max-w-6xl">
+          <div className="container max-w-[88rem]">
             <div className="border-t border-white/12 pt-5">
               <p className="text-[0.78rem] uppercase tracking-[0.24em] text-white/46">Concept Renderings</p>
               <h2 className="mt-3 max-w-[18ch] font-sans text-[clamp(1.9rem,3vw,3.1rem)] font-normal leading-[0.98] tracking-[-0.05em] text-white">
@@ -220,7 +220,7 @@ export default function RenderingPortfolio() {
 
       {remainingFeaturedItems.length > 0 && (
         <section className="pb-8 pt-16 md:pb-12">
-          <div className="container max-w-6xl">
+          <div className="container max-w-[88rem]">
             <div className="mb-8 flex items-end justify-between">
               <h2 className="text-2xl font-sans font-normal tracking-[-0.05em] text-white md:text-3xl">
                 Scenic Design Renderings
@@ -264,7 +264,7 @@ export default function RenderingPortfolio() {
 
       {galleryDisplayItems.length > 0 && (
         <section className="border-t border-white/12 py-16 md:py-20">
-          <div className="container max-w-6xl">
+          <div className="container max-w-[88rem]">
             <div className="mb-8 flex items-end justify-between">
               <h2 className="text-2xl font-sans font-normal tracking-[-0.05em] text-white md:text-3xl">
                 Process and Alternate Views
@@ -306,7 +306,7 @@ export default function RenderingPortfolio() {
       )}
 
       <section className="border-t border-white/12 py-16 md:py-20">
-        <div className="container max-w-6xl">
+        <div className="container max-w-[88rem]">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
             <div>
               <h2 className="text-2xl font-sans font-normal tracking-[-0.05em] text-white md:text-3xl">
@@ -332,7 +332,7 @@ export default function RenderingPortfolio() {
 
       {renderingSeriesArticles.length > 0 && (
         <section className="border-t border-white/12 py-16 md:py-20">
-          <div className="container max-w-6xl">
+          <div className="container max-w-[88rem]">
             <div className="mb-8 flex items-end justify-between gap-6">
               <div>
                 <p className="text-[0.78rem] uppercase tracking-[0.24em] text-white/46">

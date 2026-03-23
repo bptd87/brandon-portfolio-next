@@ -138,7 +138,7 @@ export default function SyllabusExperiential() {
       </section>
 
       <section className="px-6 py-8 md:py-12">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 xl:grid-cols-[minmax(18rem,0.95fr)_minmax(0,1.05fr)]">
+        <div className="mx-auto grid max-w-[88rem] items-center gap-10 xl:grid-cols-[minmax(18rem,0.95fr)_minmax(0,1.05fr)]">
           <div className="overflow-hidden rounded-[1.5rem] border border-border/30 bg-card/20">
             <img
               src="/assets/teaching/syllabus-experiential-art.png"
@@ -178,7 +178,7 @@ export default function SyllabusExperiential() {
       </section>
 
       <section className="px-6 py-18 md:py-22">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-[88rem]">
           <div className="grid items-start gap-12 md:grid-cols-[180px_1fr]">
             <div className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40 md:sticky md:top-32">
               Overview
@@ -200,7 +200,7 @@ export default function SyllabusExperiential() {
       </section>
 
       <section className="border-y border-border/25 px-6 py-18 md:py-22">
-        <div className="mx-auto max-w-6xl grid gap-10 lg:grid-cols-2">
+        <div className="mx-auto max-w-[88rem] grid gap-10 lg:grid-cols-2">
           <div className="rounded-[1.5rem] border border-border/25 bg-card/10 p-6 md:p-8">
             <h2 className="font-sans text-[0.9rem] font-semibold uppercase tracking-[0.24em] text-foreground/40">
               Course Objectives
@@ -230,7 +230,7 @@ export default function SyllabusExperiential() {
       </section>
 
       <section className="px-6 py-18 md:py-22">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-[88rem]">
           <div className="max-w-3xl">
             <h2 className="font-sans text-[clamp(2rem,4vw,3.1rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">
               Evaluation and project structure.
@@ -267,7 +267,7 @@ export default function SyllabusExperiential() {
       </section>
 
       <section className="border-t border-border/25 px-6 py-18 md:py-22">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-[88rem]">
           <div className="max-w-3xl">
             <h2 className="font-sans text-[clamp(2rem,4vw,3.1rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">
               Weekly modules.
@@ -295,7 +295,7 @@ export default function SyllabusExperiential() {
 
       {featuredCourseArticle ? (
         <section className="border-t border-border/25 px-6 py-18 md:py-22">
-          <div className="mx-auto max-w-6xl">
+          <div className="mx-auto max-w-[88rem]">
             <div className="max-w-3xl">
               <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
                 Featured Course Article
@@ -317,7 +317,7 @@ export default function SyllabusExperiential() {
                 className="group block overflow-hidden rounded-[1.75rem] border border-border/25 bg-card/10 transition-colors hover:border-border/40 hover:bg-card/14"
               >
                 <div className="overflow-hidden rounded-t-[1.75rem] border-b border-border/20 bg-card/20">
-                  <div className="mx-auto max-w-5xl">
+                  <div className="mx-auto max-w-6xl">
                     <img
                       src="https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_178b77734f664399ad1781073a591459.jpg"
                       alt="Theatre design students behind the Studio Ghibli-inspired immersive dining project."
@@ -358,7 +358,7 @@ export default function SyllabusExperiential() {
       ) : null}
 
       <section className="border-y border-border/25 px-6 py-20 md:py-24">
-        <div className="mx-auto max-w-[108rem]">
+        <div className="mx-auto max-w-[88rem]">
           <div className="rounded-[2rem] border border-white/8 bg-white/[0.06] px-6 py-16 text-center md:px-12 md:py-20">
             <h2 className="mx-auto max-w-4xl font-sans text-[clamp(2.4rem,4.5vw,4.2rem)] font-medium leading-[1.02] tracking-[-0.06em] text-foreground">
               Return to teaching philosophy and course context.
