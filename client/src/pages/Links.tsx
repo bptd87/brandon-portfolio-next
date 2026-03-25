@@ -22,7 +22,7 @@ import { Link } from "wouter";
 
 import { SEO } from "@/components/SEO";
 import { getLocalArticles } from "@shared/localArticles";
-import { getLocalExperientialSampleHref, getLocalExperientialSamples, getLocalRenderingProjects } from "@shared/localPortfolios";
+import { getLocalExperientialProjectHref, getLocalExperientialProjects, getLocalRenderingProjects } from "@shared/localPortfolios";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
 
 function PinterestIcon({ className }: { className?: string }) {
@@ -122,7 +122,7 @@ export default function Links() {
     const dashboardItems: DashboardItem[] = [];
     const scenicProjects = getLocalScenicProjects();
     const renderingProjects = getLocalRenderingProjects().filter((project) => !project.galleryOnly);
-    const experientialSamples = getLocalExperientialSamples();
+    const experientialProjects = getLocalExperientialProjects();
     const articles = getLocalArticles();
     const tutorials: any[] = [];
 
@@ -240,17 +240,26 @@ export default function Links() {
       });
     });
 
-    experientialSamples.forEach((sample) => {
+    experientialProjects.forEach((project) => {
       dashboardItems.push({
-        id: `experiential-${sample.id}`,
+        id: `experiential-${project.slug}`,
         type: "project",
-        title: sample.displayTitle,
-        subtitle: sample.categoryLabel,
-        url: getLocalExperientialSampleHref(sample),
-        image: sample.imageUrl,
-        date: portfolioDate(sample),
+        title: project.title,
+        subtitle: project.mediaTypes.map((category) => {
+          switch (category) {
+            case "rendering":
+              return "Rendering";
+            case "technical-drawing":
+              return "Technical Drawing";
+            case "live-events":
+              return "Live Events";
+          }
+        }).join(" + "),
+        url: getLocalExperientialProjectHref(project),
+        image: project.coverImageUrl,
+        date: portfolioDate({ updatedAt: project.updatedAt, year: project.year }),
         icon: "palette",
-        label: sample.categoryLabel,
+        label: "Experiential Project",
         isPinned: false,
       });
     });

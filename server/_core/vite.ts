@@ -16,6 +16,9 @@ import {
 } from "@shared/localAssistantScenic";
 import { getLocalArticleBySlug, getLocalArticles } from "@shared/localArticles";
 import {
+  getLocalExperientialProjectBySlug,
+  getLocalExperientialProjectForSample,
+  getLocalExperientialProjects,
   getLocalExperientialSampleBySlug,
   getLocalRenderingProjectBySlug,
   getLocalExperientialProcessGallery,
@@ -570,11 +573,11 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
   }
 
   if (decodedPath === "/projects/experiential") {
-    const experientialItems = getLocalExperientialProcessGallery();
+    const experientialItems = getLocalExperientialProjects();
     const socialImages = Array.from(
       new Set(
         experientialItems
-          .map((item) => item.imageUrl)
+          .map((item) => item.coverImageUrl)
           .filter((value): value is string => Boolean(value))
           .map((value) => absoluteUrl(origin, value))
       )
@@ -592,6 +595,25 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
     });
   }
 
+  const experientialProjectMatch = decodedPath.match(/^\/projects\/experiential\/([^/?#]+)\/?$/i);
+  if (experientialProjectMatch) {
+    const projectSlug = cleanSlug(experientialProjectMatch[1]);
+    if (!["rendering", "technical-drawing", "live-events"].includes(projectSlug)) {
+      const project = getLocalExperientialProjectBySlug(projectSlug);
+
+      if (project) {
+        return cacheMeta({
+          title: project.seoTitle,
+          description: project.seoDescription,
+          image: absoluteUrl(origin, project.coverImageUrl || getDefaultShareImage(origin)),
+          canonical: `${origin}/projects/experiential/${project.slug}`,
+          type: "website",
+          modifiedTime: project.updatedAt ? new Date(project.updatedAt).toISOString() : undefined,
+        });
+      }
+    }
+  }
+
   const experientialSampleMatch = decodedPath.match(
     /^\/projects\/experiential\/(rendering|technical-drawing|live-events)\/([^/?#]+)\/?$/i
   );
@@ -603,19 +625,20 @@ async function resolveSeoMeta(req: express.Request): Promise<SeoMeta> {
     const sample = getLocalExperientialSampleBySlug(category, cleanSlug(experientialSampleMatch[2]));
 
     if (sample) {
-      const previewImage = sample.imageUrl
-        ? absoluteUrl(origin, sample.imageUrl)
-        : sample.videoUrl
-          ? absoluteUrl(origin, `https://img.youtube.com/vi/${new URL(sample.videoUrl).searchParams.get("v") || sample.videoUrl.split("/").pop()}/hqdefault.jpg`)
-          : getDefaultShareImage(origin);
+      const project = getLocalExperientialProjectForSample(sample);
+      const previewImage = project?.coverImageUrl
+        ? absoluteUrl(origin, project.coverImageUrl)
+        : sample.imageUrl
+          ? absoluteUrl(origin, sample.imageUrl)
+          : sample.videoUrl
+            ? absoluteUrl(origin, `https://img.youtube.com/vi/${new URL(sample.videoUrl).searchParams.get("v") || sample.videoUrl.split("/").pop()}/hqdefault.jpg`)
+            : getDefaultShareImage(origin);
 
       return cacheMeta({
-        title: `${sample.displayTitle} | ${sample.categoryLabel} | Brandon PT Davis`,
-        description:
-          sample.description ||
-          `${sample.categoryLabel} sample from Brandon PT Davis's experiential portfolio.`,
+        title: project?.seoTitle || `${sample.displayTitle} | ${sample.categoryLabel} | Brandon PT Davis`,
+        description: project?.seoDescription || sample.description || `${sample.categoryLabel} sample from Brandon PT Davis's experiential portfolio.`,
         image: previewImage,
-        canonical: `${origin}/projects/experiential/${sample.category}/${sample.slug}`,
+        canonical: `${origin}${project ? `/projects/experiential/${project.slug}` : `/projects/experiential/${sample.category}/${sample.slug}`}`,
         type: "website",
       });
     }

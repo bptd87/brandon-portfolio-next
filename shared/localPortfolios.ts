@@ -169,6 +169,30 @@ export type LocalExperientialMediaItem = {
   source: "cover" | "attached";
 };
 
+export type LocalExperientialProjectSection = {
+  heading: string;
+  paragraphs: string[];
+};
+
+export type LocalExperientialProject = {
+  slug: string;
+  title: string;
+  summary: string;
+  heroSummary?: string;
+  seoTitle: string;
+  seoDescription: string;
+  year: number | null;
+  updatedAt: string | null;
+  coverImageUrl: string;
+  coverAltText: string;
+  mediaTypes: LocalExperientialCategory[];
+  samples: LocalExperientialSample[];
+  renderings: LocalExperientialRenderingSample[];
+  technicalDrawings: LocalExperientialTechnicalDrawingSample[];
+  liveEvents: LocalExperientialLiveEventSample[];
+  sections: LocalExperientialProjectSection[];
+};
+
 type LocalExperientialMediaSource = {
   category: LocalExperientialCategory;
   imageUrl: string;
@@ -300,6 +324,205 @@ const EXPERIENTIAL_SAMPLE_OVERRIDES: Record<
   },
 };
 
+type LocalExperientialProjectDefinition = {
+  slug: string;
+  title: string;
+  sampleSlugs: string[];
+  summary: string;
+  heroSummary?: string;
+  sections: LocalExperientialProjectSection[];
+  seoTitle?: string;
+  seoDescription?: string;
+  year?: number | null;
+};
+
+const EXPERIENTIAL_PROJECT_DEFINITIONS: LocalExperientialProjectDefinition[] = [
+  {
+    slug: "first-bank-lollipops",
+    title: "First Bank Lollipops",
+    sampleSlugs: ["first-bank-lollipops-commercial", "first-bank-lollipops"],
+    summary:
+      "A campaign-focused experiential project that pairs concept visualization with live documentation, framing how the First Bank Lollipops idea moves from pitch asset to on-site experience.",
+    sections: [
+      {
+        heading: "Concept and Delivery",
+        paragraphs: [
+          "This project is presented as a full experiential case study rather than a single category sample. The visual work supports both internal alignment and outward-facing communication, showing how a campaign concept reads before and during rollout.",
+          "Bringing the rendering and live material together makes the project easier to read as a complete design package: one thread of thinking carried from early visualization through public-facing execution.",
+        ],
+      },
+      {
+        heading: "Why the Pairing Matters",
+        paragraphs: [
+          "Concept imagery establishes tone, hierarchy, and branded presence. Live documentation shows how those decisions hold up once the work meets schedule, audience flow, and production conditions.",
+          "Seen together, the assets function less like isolated images and more like an editorial record of how the idea was framed, approved, and ultimately experienced.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "toyota-gold-cup-activation",
+    title: "Toyota Gold Cup Activation",
+    sampleSlugs: ["toyota-gold-cup-final-29", "toyota-gold-cup-activation"],
+    summary:
+      "An experiential activation package for Toyota Gold Cup that combines concept renderings with live event photography to show sponsor visibility, guest circulation, and event-scale presence.",
+    sections: [
+      {
+        heading: "Designed for Scale",
+        paragraphs: [
+          "The project is organized around visibility and audience movement at event scale. The renderings establish spatial hierarchy early, giving stakeholders a readable view of how branded elements, circulation, and focal moments fit together.",
+          "That early clarity matters for approvals because large-format activations need to communicate quickly to both creative teams and production partners.",
+        ],
+      },
+      {
+        heading: "From Visualization to Experience",
+        paragraphs: [
+          "Live imagery completes the story by showing the work in actual venue conditions. Instead of treating renderings and event photos as separate portfolio buckets, the page frames them as parts of the same production arc.",
+          "That project-by-project structure makes the experiential work read more like a design case study, which is the right lens for clients comparing concept intent with built outcome.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "red-line-cafe",
+    title: "Red Line Cafe",
+    sampleSlugs: ["red-line-cafe"],
+    summary:
+      "Interior concept renderings for Red Line Cafe, focused on atmosphere, customer flow, and presentation-ready visual communication for a branded hospitality environment.",
+    sections: [
+      {
+        heading: "Interior Atmosphere",
+        paragraphs: [
+          "This project is framed around how rendering can communicate tone as clearly as layout. The imagery focuses on atmosphere, customer orientation, and the way brand character is held inside an everyday hospitality space.",
+          "That makes the page function less like a gallery dump and more like a concise editorial presentation of what the design is trying to achieve.",
+        ],
+      },
+      {
+        heading: "Visualization as Alignment",
+        paragraphs: [
+          "The renderings work as approval tools, helping teams read seating zones, branded millwork, and circulation before fabrication or fit-out decisions move forward.",
+          "Presented as a project page, the material can carry explanation alongside imagery, which is exactly what the current experiential portfolio has been missing.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "woody-creek-distillery-activation",
+    title: "Woody Creek Distillery Activation",
+    sampleSlugs: ["woody-creek-distillery-activation"],
+    summary:
+      "A branded activation concept for Woody Creek Distillery, built to show guest-facing visibility, product storytelling, and a flexible event presence that can support presentation and review.",
+    sections: [
+      {
+        heading: "Brand Presence",
+        paragraphs: [
+          "The project emphasizes how an activation can feel legible and branded without losing flexibility. The renderings focus on presence, guest readability, and how the environment supports product storytelling.",
+          "By giving the work a project page instead of a loose category slot, the portfolio can explain intent rather than relying on a single image to do all the work.",
+        ],
+      },
+      {
+        heading: "Presentation-Ready Assets",
+        paragraphs: [
+          "This material is most useful when framed as part of a project narrative: what the activation needs to communicate, how the visual system is structured, and why the concept is organized the way it is.",
+          "That article-like framing makes the portfolio stronger for experiential clients who evaluate thinking, not just image polish.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "rab-activation",
+    title: "Rab Activation",
+    sampleSlugs: ["rab-activation"],
+    summary:
+      "Retail activation renderings for Rab, focused on merchandising clarity, guest circulation, and a branded environment that reads cleanly in presentation and review.",
+    sections: [
+      {
+        heading: "Merchandising and Movement",
+        paragraphs: [
+          "The renderings are organized around circulation, product visibility, and the relationship between display structure and customer movement.",
+          "That makes the work especially suited to an editorial project page, where the portfolio can speak to both atmosphere and retail logic at the same time.",
+        ],
+      },
+      {
+        heading: "Why This Lives as a Project",
+        paragraphs: [
+          "Experiential work like this is clearer when it is grouped by project rather than split into generic gallery categories. The design intent, visual language, and stakeholder use case stay connected in one place.",
+          "That shift helps the page read more like the rest of the site: a designed story with supporting media, not a bucket of disconnected assets.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "park-and-shop",
+    title: "Park & Shop",
+    sampleSlugs: ["park-and-shop-concord-ca", "park-and-shop-technical-drawing"],
+    summary:
+      "A retail environment package for Park & Shop that pairs concept renderings with technical drawing support, showing how presentation imagery and drafting documentation work together inside one project.",
+    sections: [
+      {
+        heading: "One Project, Two Asset Types",
+        paragraphs: [
+          "Park & Shop is exactly the kind of work that benefits from a unified project structure. The renderings communicate brand tone and customer-facing organization, while the drafting clarifies dimensions, layouts, and fabrication logic.",
+          "Keeping those assets together makes the portfolio easier to read because the project no longer has to be mentally reassembled across separate category pages.",
+        ],
+      },
+      {
+        heading: "From Approval to Coordination",
+        paragraphs: [
+          "Renderings support presentation and approval. Technical drawings support execution, coordination, and handoff. The strength of the project is the relationship between those layers, not either one in isolation.",
+          "That is why the new experiential pages should behave more like articles or scenic project pages, with narrative first and categorized media supporting the story underneath.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "lysistrata-covid-documentation",
+    title: "Lysistrata COVID Documentation",
+    sampleSlugs: ["lysistrata-covid-documentation"],
+    summary:
+      "A drafting and documentation package created to support staging clarity and evolving production requirements during COVID-era planning.",
+    sections: [
+      {
+        heading: "Documentation Under Constraint",
+        paragraphs: [
+          "This work is rooted in technical clarity. The drawings serve as communication tools for changing requirements, helping teams track layout decisions and production needs in a period where planning conditions were unusually fluid.",
+          "Framed as a project page, the documentation can carry context and intent rather than appearing as an isolated sheet set.",
+        ],
+      },
+      {
+        heading: "Why It Belongs Here",
+        paragraphs: [
+          "Technical drawing samples deserve the same editorial framing as rendering or scenic work. The design value is not just in the sheet itself, but in the problem it helps a team solve.",
+          "Presenting this as a project makes that problem-solving role legible to clients who need coordination, not just images.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "new-swan-venue-documentation",
+    title: "New Swan Venue Documentation",
+    sampleSlugs: ["new-swan-venue-documentation"],
+    summary:
+      "Venue documentation for New Swan, capturing site conditions and technical information needed to support planning, coordination, and installation decisions.",
+    sections: [
+      {
+        heading: "Recording Existing Conditions",
+        paragraphs: [
+          "This project centers on clarity of information. Venue documentation supports downstream planning by turning existing conditions into something teams can actually work from.",
+          "The value of the page comes from pairing that documentation with a concise explanation of what the material is for and how it supports production decisions.",
+        ],
+      },
+      {
+        heading: "Editorial Framing for Technical Work",
+        paragraphs: [
+          "Grouped inside an article-like project page, the drawings read as part of a process rather than as isolated technical artifacts.",
+          "That framing aligns the experiential portfolio with the rest of the site, where projects are presented as complete stories supported by images, text, and navigation structure.",
+        ],
+      },
+    ],
+  },
+];
+
 function slugifyExperientialTitle(value: string) {
   return String(value || "")
     .trim()
@@ -413,4 +636,167 @@ export function getLocalExperientialMediaItems(sample: LocalExperientialMediaSou
 
 export function getLocalExperientialLeadImage(sample: LocalExperientialMediaSource) {
   return getLocalExperientialMediaItems(sample)[0]?.imageUrl || sample.imageUrl || "";
+}
+
+function getExperientialProjectTimestamp(input: {
+  updatedAt?: string | null;
+  createdAt?: string | null;
+  year?: number | null;
+}) {
+  const explicitDate = input.updatedAt || input.createdAt;
+  if (explicitDate) {
+    const timestamp = new Date(explicitDate).getTime();
+    if (!Number.isNaN(timestamp)) return timestamp;
+  }
+
+  if (input.year) return new Date(input.year, 6, 1).getTime();
+  return 0;
+}
+
+function sortExperientialSamples(items: LocalExperientialSample[]) {
+  return [...items].sort((a, b) => {
+    const timeCompare =
+      getExperientialProjectTimestamp({ updatedAt: a.createdAt, year: a.year }) -
+      getExperientialProjectTimestamp({ updatedAt: b.createdAt, year: b.year });
+
+    if (timeCompare !== 0) return timeCompare;
+    return (a.sortOrder || 0) - (b.sortOrder || 0);
+  });
+}
+
+function pickExperientialProjectLeadSample(samples: LocalExperientialSample[]) {
+  const categoryPriority: LocalExperientialCategory[] = ["live-events", "rendering", "technical-drawing"];
+
+  for (const category of categoryPriority) {
+    const categorySamples = samples.filter((sample) => sample.category === category);
+    for (const sample of categorySamples) {
+      const leadImage = getLocalExperientialLeadImage(sample);
+      if (leadImage) return sample;
+    }
+  }
+
+  return samples[0] || null;
+}
+
+function buildFallbackExperientialSections(sample: LocalExperientialSample): LocalExperientialProjectSection[] {
+  const description = String(sample.description || "").trim();
+  return [
+    {
+      heading: "Project Overview",
+      paragraphs: [
+        description || `${sample.categoryLabel} sample presented as a standalone experiential project page.`,
+        "This fallback project is generated from the portfolio snapshot so new experiential entries can still appear in the unified project system before custom editorial copy is added.",
+      ],
+    },
+  ];
+}
+
+function buildLocalExperientialProjects(): LocalExperientialProject[] {
+  const samples = getLocalExperientialSamples();
+  const sampleBySlug = new Map(samples.map((sample) => [sample.slug, sample]));
+  const definitions: LocalExperientialProjectDefinition[] = [...EXPERIENTIAL_PROJECT_DEFINITIONS];
+
+  for (const sample of samples) {
+    const isAssigned = EXPERIENTIAL_PROJECT_DEFINITIONS.some((definition) => definition.sampleSlugs.includes(sample.slug));
+    if (isAssigned) continue;
+
+    definitions.push({
+      slug: sample.slug,
+      title: sample.displayTitle,
+      sampleSlugs: [sample.slug],
+      summary:
+        String(sample.description || "").trim() ||
+        `${sample.categoryLabel} project from Brandon PT Davis's experiential portfolio.`,
+      sections: buildFallbackExperientialSections(sample),
+    });
+  }
+
+  const projects = definitions
+    .map((definition) => {
+      const projectSamples = definition.sampleSlugs
+        .map((sampleSlug) => sampleBySlug.get(sampleSlug))
+        .filter((sample): sample is LocalExperientialSample => Boolean(sample));
+
+      if (projectSamples.length === 0) return null;
+      const orderedSamples = sortExperientialSamples(projectSamples);
+      const renderings = orderedSamples.filter(
+        (sample): sample is LocalExperientialRenderingSample => sample.category === "rendering"
+      );
+      const technicalDrawings = orderedSamples.filter(
+        (sample): sample is LocalExperientialTechnicalDrawingSample => sample.category === "technical-drawing"
+      );
+      const liveEvents = orderedSamples.filter(
+        (sample): sample is LocalExperientialLiveEventSample => sample.category === "live-events"
+      );
+      const leadSample = pickExperientialProjectLeadSample(orderedSamples);
+      const latestUpdatedAt =
+        [...orderedSamples]
+          .map((sample) => sample.createdAt)
+          .filter((value): value is string => Boolean(value))
+          .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())[0] || null;
+      const derivedYear =
+        definition.year ??
+        [...orderedSamples]
+          .map((sample) => sample.year)
+          .filter((value): value is number => typeof value === "number")
+          .sort((a, b) => b - a)[0] ??
+        null;
+      const mediaTypes = (["live-events", "rendering", "technical-drawing"] as LocalExperientialCategory[]).filter(
+        (category) => orderedSamples.some((sample) => sample.category === category)
+      );
+      const coverImageUrl = leadSample ? getLocalExperientialLeadImage(leadSample) : "";
+      const coverAltText = String(leadSample?.altText || leadSample?.displayTitle || definition.title).trim();
+      const seoDescription = definition.seoDescription || definition.summary;
+
+      return {
+        slug: definition.slug,
+        title: definition.title,
+        summary: definition.summary,
+        heroSummary: definition.heroSummary,
+        seoTitle: definition.seoTitle || `${definition.title} | Experiential Design | Brandon PT Davis`,
+        seoDescription,
+        year: derivedYear,
+        updatedAt: latestUpdatedAt,
+        coverImageUrl,
+        coverAltText,
+        mediaTypes,
+        samples: orderedSamples,
+        renderings,
+        technicalDrawings,
+        liveEvents,
+        sections: definition.sections,
+      } satisfies LocalExperientialProject;
+    })
+    .filter((project): project is NonNullable<typeof project> => Boolean(project));
+
+  return projects.sort((a, b) => {
+      const timeCompare =
+        getExperientialProjectTimestamp({ updatedAt: b.updatedAt, year: b.year }) -
+        getExperientialProjectTimestamp({ updatedAt: a.updatedAt, year: a.year });
+
+      if (timeCompare !== 0) return timeCompare;
+      return a.title.localeCompare(b.title);
+    });
+}
+
+export function getLocalExperientialProjects() {
+  return buildLocalExperientialProjects();
+}
+
+export function getLocalExperientialProjectBySlug(slug: string) {
+  const normalizedSlug = String(slug || "").trim().toLowerCase();
+  return getLocalExperientialProjects().find((project) => project.slug === normalizedSlug) || null;
+}
+
+export function getLocalExperientialProjectForSample(sample: Pick<LocalExperientialSample, "slug">) {
+  const normalizedSlug = String(sample.slug || "").trim().toLowerCase();
+  return (
+    getLocalExperientialProjects().find((project) =>
+      project.samples.some((projectSample) => projectSample.slug === normalizedSlug)
+    ) || null
+  );
+}
+
+export function getLocalExperientialProjectHref(project: Pick<LocalExperientialProject, "slug">) {
+  return `/projects/experiential/${project.slug}`;
 }

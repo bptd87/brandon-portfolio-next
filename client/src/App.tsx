@@ -67,6 +67,7 @@ const DesignHistoryTimeline = lazy(() => import("./pages/DesignHistoryTimeline")
 const RoscoPaintCalculator = lazy(() => import("./pages/RoscoPaintCalculator"));
 const Scenic3DConverter = lazy(() => import("./pages/Scenic3DConverter"));
 const ExperientialPortfolio = lazy(() => import("./pages/ExperientialPortfolio"));
+const ExperientialProjectDetail = lazy(() => import("./pages/ExperientialProjectDetail"));
 const ExperientialSampleDetail = lazy(() => import("./pages/ExperientialSampleDetail"));
 const RenderingPortfolio = lazy(() => import("./pages/RenderingPortfolio"));
 const TutorialDetail = lazy(() => import("./pages/TutorialDetail"));
@@ -118,6 +119,7 @@ function Router() {
           <Route path={"/projects"} component={Projects} />
           <Route path={"/projects/scenic-design"} component={Projects} />
           <Route path={"/projects/experiential"} component={ExperientialPortfolio} />
+          <Route path={"/projects/experiential/:slug"} component={ExperientialProjectDetail} />
           <Route path={"/projects/experiential/rendering/:slug"} component={ExperientialSampleDetail} />
           <Route path={"/projects/experiential/technical-drawing/:slug"} component={ExperientialSampleDetail} />
           <Route path={"/projects/experiential/live-events/:slug"} component={ExperientialSampleDetail} />
