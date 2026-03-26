@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import AboutNav from "@/components/AboutNav";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { formatUtcDate } from "@/lib/date-format";
 import { ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { getLocalArticles } from "@shared/localArticles";
@@ -342,13 +343,7 @@ export default function SyllabusExperiential() {
                   <div className="mx-auto max-w-3xl text-center">
                     <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[0.78rem] uppercase tracking-[0.18em] text-foreground/42">
                       <span>{featuredCourseArticle.categoryName}</span>
-                      <span>
-                        {new Date(featuredCourseArticle.publishedAt).toLocaleDateString("en-US", {
-                          month: "short",
-                          day: "numeric",
-                          year: "numeric",
-                        })}
-                      </span>
+                      <span>{formatUtcDate(featuredCourseArticle.publishedAt, "short")}</span>
                     </div>
                     <h3 className="mt-4 font-sans text-[clamp(1.7rem,3vw,2.45rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">
                       {featuredCourseArticle.title}

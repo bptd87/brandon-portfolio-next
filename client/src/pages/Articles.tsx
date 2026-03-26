@@ -16,6 +16,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { formatUtcDate, getUtcYear } from "@/lib/date-format";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -62,17 +63,13 @@ const getArticleTimestamp = (article: ArticleCardItem) => {
 const formatArticleDate = (article: ArticleCardItem) => {
   const source = article.publishedAt || article.createdAt;
   if (!source) return null;
-  return new Date(source).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
+  return formatUtcDate(source, "short");
 };
 
 const getArticleYear = (article: ArticleCardItem) => {
   const source = article.publishedAt || article.createdAt;
   if (!source) return null;
-  return String(new Date(source).getFullYear());
+  return getUtcYear(source);
 };
 
 const normalizeCategoryParam = (value: string | null) => {

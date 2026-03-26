@@ -16,6 +16,7 @@ import "yet-another-react-lightbox/styles.css";
 
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { formatUtcDate } from "@/lib/date-format";
 import { getLocalArticleRecordBySlug, getLocalArticles } from "@shared/localArticles";
 import { getLocalScenicProjectBySlug } from "@shared/localScenicProjects";
 
@@ -664,11 +665,7 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
           <header className="mx-auto max-w-[62rem] text-center">
             <div className="flex flex-wrap items-center justify-center gap-4 text-[0.92rem] tracking-[-0.015em] text-white/54">
               <time dateTime={new Date(article.publishedAt || article.createdAt).toISOString()}>
-                {new Date(article.publishedAt || article.createdAt).toLocaleDateString('en-US', {
-                  month: 'long',
-                  day: 'numeric',
-                  year: 'numeric'
-                })}
+                {formatUtcDate(article.publishedAt || article.createdAt, "long")}
               </time>
               {article.categoryName ? (
                 <Link
@@ -1300,13 +1297,7 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
 
                         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.95rem] tracking-[-0.015em] text-white/52">
                           {relatedArticle.categoryName && <span>{relatedArticle.categoryName}</span>}
-                          <span>
-                            {relatedArticle.publishedAt && new Date(relatedArticle.publishedAt).toLocaleDateString('en-US', {
-                              month: 'short',
-                              day: 'numeric',
-                              year: 'numeric'
-                            })}
-                          </span>
+                          <span>{formatUtcDate(relatedArticle.publishedAt, "short")}</span>
                           {relatedArticle.readTime && (
                             <>
                               <span>•</span>

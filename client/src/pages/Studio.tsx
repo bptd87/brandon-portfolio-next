@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { formatUtcDate } from "@/lib/date-format";
 import { getLocalArticles } from "@shared/localArticles";
 
 const apps = [
@@ -81,12 +82,7 @@ const studioLinks = [
 ] as const;
 
 function formatArticleDate(value?: string | null) {
-  if (!value) return null;
-  return new Date(value).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
+  return formatUtcDate(value, "short");
 }
 
 export default function Studio() {

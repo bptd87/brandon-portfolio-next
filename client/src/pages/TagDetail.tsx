@@ -2,6 +2,7 @@
 
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
+import { formatUtcDate } from "@/lib/date-format";
 import { getProjectPath } from "@/lib/projectRoutes";
 import { getLocalArticles } from "@shared/localArticles";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
@@ -235,11 +236,7 @@ export default function TagDetail({ slug: slugProp, params }: TagDetailProps = {
                         ) : null}
                         <p className="text-[0.76rem] font-bold uppercase tracking-[0.24em] text-white/42">
                           {article.publishedAt
-                            ? new Date(article.publishedAt).toLocaleDateString("en-US", {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                              })
+                            ? formatUtcDate(article.publishedAt, "long")
                             : "Article"}
                         </p>
                       </div>

@@ -28,6 +28,8 @@ import { getLocalArticles } from "@shared/localArticles";
 import { getLocalExperientialProjectHref, getLocalExperientialProjects, getLocalRenderingProjects } from "@shared/localPortfolios";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
 
+const PINNED_LINK_DATE = "9999-12-31T00:00:00.000Z";
+
 function PinterestIcon({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
@@ -163,7 +165,7 @@ export default function Links() {
         title: "Scenic Portfolio",
         subtitle: "Built productions",
         url: "/projects",
-        date: new Date().toISOString(),
+        date: PINNED_LINK_DATE,
         icon: "briefcase",
         label: "Scenic Portfolio",
         isPinned: true,
@@ -174,7 +176,7 @@ export default function Links() {
         title: "Rendering Portfolio",
         subtitle: "Concept and presentation work",
         url: "/projects/rendering",
-        date: new Date().toISOString(),
+        date: PINNED_LINK_DATE,
         icon: "image",
         label: "Rendering Portfolio",
         isPinned: true,
@@ -185,7 +187,7 @@ export default function Links() {
         title: "Experiential Portfolio",
         subtitle: "Events, drawings, and activations",
         url: "/projects/experiential",
-        date: new Date().toISOString(),
+        date: PINNED_LINK_DATE,
         icon: "palette",
         label: "Experiential Portfolio",
         isPinned: true,
@@ -196,7 +198,7 @@ export default function Links() {
         title: "Resume",
         subtitle: "CV and credits",
         url: "/resume",
-        date: new Date().toISOString(),
+        date: PINNED_LINK_DATE,
         icon: "file-text",
         label: "Resume",
         isPinned: true,
@@ -207,7 +209,7 @@ export default function Links() {
         title: "Studio",
         subtitle: "Tools and tutorials",
         url: "/studio",
-        date: new Date().toISOString(),
+        date: PINNED_LINK_DATE,
         icon: "video",
         label: "Studio",
         isPinned: true,

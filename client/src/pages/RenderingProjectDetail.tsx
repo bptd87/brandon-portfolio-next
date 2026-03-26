@@ -12,6 +12,7 @@ import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { AnimatePresence } from "framer-motion";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { formatUtcDate } from "@/lib/date-format";
 import { getLocalRenderingGallery, getLocalRenderingProjectBySlug, getLocalRenderingProjects } from "@shared/localPortfolios";
 import { getLocalArticles } from "@shared/localArticles";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
@@ -495,13 +496,7 @@ export default function RenderingProjectDetail({
                             </h3>
                             <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-white/52">
                               <span>{article.series?.name || article.categoryName}</span>
-                              <span>
-                                {new Date(article.publishedAt).toLocaleDateString("en-US", {
-                                  month: "short",
-                                  day: "numeric",
-                                  year: "numeric",
-                                })}
-                              </span>
+                              <span>{formatUtcDate(article.publishedAt, "short")}</span>
                             </div>
                           </div>
                         </Link>

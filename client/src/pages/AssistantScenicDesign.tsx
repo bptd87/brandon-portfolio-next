@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { formatUtcDate } from "@/lib/date-format";
 import {
   ASSISTANT_SCENIC_DESIGN_PATH,
   ASSISTANT_SCENIC_DESIGN_SEO_DESCRIPTION,
@@ -48,9 +49,7 @@ const ASSISTANT_SCENIC_KEYWORDS = [
 ].join(", ");
 
 function formatDate(value: string) {
-  return new Date(value).toLocaleDateString("en-US", {
-    year: "numeric",
-  });
+  return formatUtcDate(value, "year");
 }
 
 function trimCopy(value: string, maxLength: number) {

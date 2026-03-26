@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { formatUtcDate } from "@/lib/date-format";
 import { getLocalArticles } from "@shared/localArticles";
 
 const galleryImages = [
@@ -472,13 +473,7 @@ export default function About() {
                         <div className="pt-1">
                           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-foreground/50">
                             <span>{article.categoryName}</span>
-                            <span>
-                              {new Date(article.publishedAt || article.createdAt || "").toLocaleDateString("en-US", {
-                                month: "short",
-                                day: "numeric",
-                                year: "numeric",
-                              })}
-                            </span>
+                            <span>{formatUtcDate(article.publishedAt || article.createdAt, "short")}</span>
                           </div>
                           <h4 className="mt-3 font-sans text-[1.3rem] font-medium leading-[1.06] tracking-[-0.035em] text-foreground transition-colors group-hover:text-foreground/84">
                             {article.title}

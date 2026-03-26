@@ -9,6 +9,7 @@ import { ProgressiveImage } from "@/components/ProgressiveImage";
 import ScenicRenderingGallery from "@/components/ScenicRenderingGallery";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { formatUtcDate } from "@/lib/date-format";
 import { Button } from "@/components/ui/button";
 import { getLocalScenicProjectBySlug, getLocalScenicProjects, type LocalScenicProjectMedia } from "@shared/localScenicProjects";
 import { getLocalArticles } from "@shared/localArticles";
@@ -694,13 +695,7 @@ export default function ScenicProjectDetail({
                             </h3>
                             <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-white/52">
                               <span>{article.series?.name || article.categoryName}</span>
-                              <span>
-                                {new Date(article.publishedAt).toLocaleDateString("en-US", {
-                                  month: "short",
-                                  day: "numeric",
-                                  year: "numeric",
-                                })}
-                              </span>
+                              <span>{formatUtcDate(article.publishedAt, "short")}</span>
                             </div>
                           </div>
                         </div>

@@ -18,6 +18,7 @@ import { Link } from "wouter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import StructuredData from "@/components/StructuredData";
 import { SEO } from "@/components/SEO";
+import { formatUtcDate } from "@/lib/date-format";
 import { getLocalTutorialBySlug } from "@shared/localStudio";
 
 const categories = [
@@ -113,13 +114,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
   };
 
   const formatDate = (dateString: string | Date | undefined) => {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+    return formatUtcDate(dateString, "long") || "";
   };
 
   const overviewParagraphs = getOverviewParagraphs(tutorial?.overview);
@@ -201,7 +196,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
   const videoId = getYouTubeId(tutorial.video_url);
   const tutorialSummary = getTutorialSummary(tutorial);
   const structuredUploadDate =
-    tutorial.created_at || tutorial.updated_at || new Date().toISOString();
+    tutorial.created_at || tutorial.updated_at || "1970-01-01T00:00:00.000Z";
 
   const defaultTab = tabs[0]?.value || "overview";
 

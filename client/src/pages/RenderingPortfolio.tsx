@@ -8,6 +8,7 @@ import { RenderingFAQ } from "@/components/RenderingFAQ";
 import { useEffect } from "react";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { formatUtcDate } from "@/lib/date-format";
 import { getLocalRenderingGallery, getLocalRenderingProjects } from "@shared/localPortfolios";
 import { getLocalArticles } from "@shared/localArticles";
 
@@ -366,15 +367,7 @@ export default function RenderingPortfolio() {
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-white/52">
                         <span>Part {article.series?.order}</span>
                         <span>{article.categoryName}</span>
-                        {article.publishedAt ? (
-                          <span>
-                            {new Date(article.publishedAt).toLocaleDateString("en-US", {
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                            })}
-                          </span>
-                        ) : null}
+                        {article.publishedAt ? <span>{formatUtcDate(article.publishedAt, "short")}</span> : null}
                       </div>
                       <h3 className="mt-3 text-[1.3rem] font-sans font-normal leading-[1.08] tracking-[-0.04em] text-white transition-colors group-hover:text-white/84">
                         {article.title}
