@@ -64,7 +64,9 @@ const navigationCards = [
       "Process, design philosophy, and the principles that shape the work.",
     href: "/creative-statement",
     label: "Process",
-    image: "/assets/about/about-process-art.png",
+    image:
+      resolveBlobMediaUrl("/assets/about/about-process-art.png") ||
+      "/assets/about/about-process-art.png",
     imageTitle: "Creative Statement",
   },
   {
@@ -72,14 +74,18 @@ const navigationCards = [
     description: "Production history, union background, and the broader body of work.",
     href: "/resume",
     label: "Resume",
-    image: "/assets/about/about-resume-art.png",
+    image:
+      resolveBlobMediaUrl("/assets/about/about-resume-art.png") ||
+      "/assets/about/about-resume-art.png",
   },
   {
     title: "Teaching Philosophy",
     description: "Thoughts on scenic design education, mentorship, and professional growth.",
     href: "/about/teaching",
     label: "Teaching",
-    image: "/assets/about/about-teaching-art.png",
+    image:
+      resolveBlobMediaUrl("/assets/about/about-teaching-art.png") ||
+      "/assets/about/about-teaching-art.png",
     imageTitle: "Teaching Philosophy",
   },
   {
@@ -88,7 +94,9 @@ const navigationCards = [
       "Creative partners, theatre companies, and long-running director relationships.",
     href: "/about/collaborators",
     label: "Collaboration",
-    image: "/assets/about/about-collaborators-art.png",
+    image:
+      resolveBlobMediaUrl("/assets/about/about-collaborators-art.png") ||
+      "/assets/about/about-collaborators-art.png",
   },
 ];
 
@@ -412,6 +420,7 @@ export default function About() {
                         src={card.image}
                         alt={card.title}
                         fill
+                        unoptimized
                         quality={82}
                         loading="lazy"
                         sizes="(max-width: 768px) 92vw, (max-width: 1280px) 46vw, 23vw"

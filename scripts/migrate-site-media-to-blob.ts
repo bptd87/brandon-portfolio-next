@@ -2,7 +2,7 @@ import "dotenv/config";
 
 import { put } from "@vercel/blob";
 import { createHash } from "node:crypto";
-import { writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { getLocalArticles } from "../shared/localArticles";
@@ -47,8 +47,9 @@ type MediaAsset = {
   family: AssetFamily;
   pageKey: string;
   mediaId: string;
-  sourceUrl: string;
+  sourceRef: string;
   targetPath: string;
+  sourcePath?: string;
 };
 
 const args = new Set(process.argv.slice(2));
@@ -131,6 +132,30 @@ const ABOUT_MEDIA = [
     sourceUrl:
       "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/profile-headshot.webp",
   },
+  {
+    pageKey: "page",
+    mediaId: "about-process-art",
+    sourceUrl: "/assets/about/about-process-art.png",
+    sourcePath: path.join(process.cwd(), "public", "assets", "about", "about-process-art.png"),
+  },
+  {
+    pageKey: "page",
+    mediaId: "about-resume-art",
+    sourceUrl: "/assets/about/about-resume-art.png",
+    sourcePath: path.join(process.cwd(), "public", "assets", "about", "about-resume-art.png"),
+  },
+  {
+    pageKey: "page",
+    mediaId: "about-teaching-art",
+    sourceUrl: "/assets/about/about-teaching-art.png",
+    sourcePath: path.join(process.cwd(), "public", "assets", "about", "about-teaching-art.png"),
+  },
+  {
+    pageKey: "page",
+    mediaId: "about-collaborators-art",
+    sourceUrl: "/assets/about/about-collaborators-art.png",
+    sourcePath: path.join(process.cwd(), "public", "assets", "about", "about-collaborators-art.png"),
+  },
 ] as const;
 
 function stripQueryAndHash(input: string) {
@@ -169,6 +194,10 @@ function inferMediaKind(sourceUrl: string): MediaKind {
     return "image";
   }
   return "file";
+}
+
+function isLocalPublicAssetPath(value: string) {
+  return value.startsWith("/assets/");
 }
 
 function getMediaRoot(kind: MediaKind) {
@@ -213,13 +242,14 @@ function addAsset(
   family: AssetFamily,
   pageKey: string,
   mediaId: string,
-  sourceUrl: string,
-  targetPath: string
+  sourceRef: string,
+  targetPath: string,
+  sourcePath?: string
 ) {
-  if (!isSupabaseStorageUrl(sourceUrl)) return;
-  if (seen.has(sourceUrl)) return;
-  seen.add(sourceUrl);
-  assets.push({ family, pageKey, mediaId, sourceUrl, targetPath });
+  if (!isSupabaseStorageUrl(sourceRef) && !isLocalPublicAssetPath(sourceRef)) return;
+  if (seen.has(sourceRef)) return;
+  seen.add(sourceRef);
+  assets.push({ family, pageKey, mediaId, sourceRef, targetPath, sourcePath });
 }
 
 function collectUrlsFromValue(value: unknown, visitor: (url: string, trace: string) => void, trace = "root") {
@@ -509,7 +539,8 @@ function collectAboutAssets() {
         asset.pageKey,
         asset.mediaId,
         asset.sourceUrl,
-        createPath(["images", "about", asset.pageKey], asset.mediaId, asset.sourceUrl)
+        createPath(["images", "about", asset.pageKey], asset.mediaId, asset.sourceUrl),
+        asset.sourcePath
       );
   }
 
@@ -544,9 +575,25 @@ function renderManifestFile(entries: Record<string, string>, exportName: string)
 }
 
 async function uploadAsset(asset: MediaAsset) {
-  const response = await fetch(asset.sourceUrl);
+  if (asset.sourcePath) {
+    const buffer = await readFile(asset.sourcePath);
+    const contentType =
+      inferMediaKind(asset.sourceRef) === "image"
+        ? "image/png"
+        : "application/octet-stream";
+    const uploaded = await put(asset.targetPath, buffer, {
+      access: "public",
+      addRandomSuffix: false,
+      allowOverwrite: true,
+      contentType,
+    });
+
+    return uploaded.url;
+  }
+
+  const response = await fetch(asset.sourceRef);
   if (!response.ok) {
-    throw new Error(`Failed to fetch ${asset.sourceUrl}: ${response.status} ${response.statusText}`);
+    throw new Error(`Failed to fetch ${asset.sourceRef}: ${response.status} ${response.statusText}`);
   }
 
   const contentType = response.headers.get("content-type") || "application/octet-stream";
@@ -554,6 +601,7 @@ async function uploadAsset(asset: MediaAsset) {
   const uploaded = await put(asset.targetPath, arrayBuffer, {
     access: "public",
     addRandomSuffix: false,
+    allowOverwrite: true,
     contentType,
   });
 
@@ -597,9 +645,9 @@ async function main() {
     console.log(`Uploading ${asset.targetPath}`);
     const blobUrl = await uploadAsset(asset);
     if (asset.family === "scenic") {
-      scenicManifest[asset.sourceUrl] = blobUrl;
+      scenicManifest[asset.sourceRef] = blobUrl;
     } else {
-      generalManifest[asset.sourceUrl] = blobUrl;
+      generalManifest[asset.sourceRef] = blobUrl;
     }
   }
 

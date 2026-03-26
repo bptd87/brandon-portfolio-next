@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { resolveBlobMediaUrl } from "@shared/mediaBlob";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AboutNav from "@/components/AboutNav";
@@ -210,9 +211,13 @@ export default function Collaborators() {
               <div className="overflow-hidden rounded-[1.5rem] border border-border/30 bg-card/20">
                 <div className="relative aspect-square w-full">
                   <Image
-                    src="/assets/about/about-collaborators-art.png"
+                    src={
+                      resolveBlobMediaUrl("/assets/about/about-collaborators-art.png") ||
+                      "/assets/about/about-collaborators-art.png"
+                    }
                     alt="Abstract collaboration artwork"
                     fill
+                    unoptimized
                     quality={82}
                     sizes="(max-width: 1280px) 92vw, 34vw"
                     className="object-cover"
@@ -274,9 +279,13 @@ export default function Collaborators() {
                       <div className="my-10 overflow-hidden rounded-[1.5rem] border border-border/30 bg-card/20">
                         <div className="relative aspect-[16/6] w-full">
                           <Image
-                            src="/assets/about/about-collaborators-art.png"
+                            src={
+                              resolveBlobMediaUrl("/assets/about/about-collaborators-art.png") ||
+                              "/assets/about/about-collaborators-art.png"
+                            }
                             alt="Abstract collaboration artwork"
                             fill
+                            unoptimized
                             quality={82}
                             sizes="100vw"
                             className="object-cover"

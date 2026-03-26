@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import AboutNav from "@/components/AboutNav";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { resolveBlobMediaUrl } from "@shared/mediaBlob";
 
 import { Download, Award, GraduationCap, Users } from "lucide-react";
 import { getLocalRenderingProjects } from "@shared/localPortfolios";
@@ -519,9 +520,13 @@ export default function Resume() {
                 <div className="mx-auto w-full max-w-[26rem] overflow-hidden rounded-[2rem] border border-border/35 bg-card/20 xl:mx-0">
                   <div className="relative aspect-[9/16] w-full">
                     <Image
-                      src="/assets/about/about-resume-art.png"
+                      src={
+                        resolveBlobMediaUrl("/assets/about/about-resume-art.png") ||
+                        "/assets/about/about-resume-art.png"
+                      }
                       alt="Abstract cyan resume artwork"
                       fill
+                      unoptimized
                       quality={82}
                       sizes="(max-width: 1280px) 92vw, 26rem"
                       className="absolute left-1/2 top-1/2 h-[185%] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 rotate-90 object-cover object-center"

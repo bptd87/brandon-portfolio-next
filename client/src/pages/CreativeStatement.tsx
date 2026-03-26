@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import AboutNav from "@/components/AboutNav";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { resolveBlobMediaUrl } from "@shared/mediaBlob";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { Link } from "wouter";
@@ -197,9 +198,13 @@ export default function CreativeStatement() {
             <div className="overflow-hidden rounded-[1.75rem] border border-border/30 bg-card/20">
               <div className="relative aspect-[4/5] w-full">
                 <Image
-                  src="/assets/about/about-process-art.png"
+                  src={
+                    resolveBlobMediaUrl("/assets/about/about-process-art.png") ||
+                    "/assets/about/about-process-art.png"
+                  }
                   alt="Abstract creative statement artwork"
                   fill
+                  unoptimized
                   quality={82}
                   sizes="(max-width: 1280px) 92vw, 34vw"
                   className="absolute left-1/2 top-1/2 h-full w-full max-w-none -translate-x-1/2 -translate-y-1/2 scale-[1.25] rotate-90 object-cover object-center"
