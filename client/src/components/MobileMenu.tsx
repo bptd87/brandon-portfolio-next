@@ -159,6 +159,14 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               </p>
             </div>
 
+            <Link
+              href="/search"
+              onClick={onClose}
+              className="mb-6 inline-flex h-11 items-center justify-center rounded-full border border-border/45 px-5 text-sm font-medium tracking-[-0.01em] text-foreground/72 transition-colors hover:border-border hover:text-foreground"
+            >
+              Search Site
+            </Link>
+
             <nav className="space-y-2">
               <MenuSection
                 isOpen={workOpen}

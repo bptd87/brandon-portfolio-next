@@ -14,6 +14,7 @@ import {
   Menu,
   PenTool,
   PlayCircle,
+  Search,
   Sparkles,
   UserRound,
   Users,
@@ -416,12 +417,21 @@ export default function Header() {
               </div>
 
               <div className="ml-6 shrink-0">
-                <Link
-                  href="/contact"
-                  className="inline-flex h-10 items-center justify-center rounded-full border border-white/22 px-5 text-[0.9rem] font-medium tracking-[-0.02em] text-white transition-colors hover:border-white/36 hover:bg-white/[0.05]"
-                >
-                  Contact
-                </Link>
+                <div className="flex items-center gap-2">
+                  <Link
+                    href="/search"
+                    aria-label="Search site"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/18 text-white/72 transition-colors hover:border-white/32 hover:bg-white/[0.05] hover:text-white"
+                  >
+                    <Search className="h-4.5 w-4.5" />
+                  </Link>
+                  <Link
+                    href="/contact"
+                    className="inline-flex h-10 items-center justify-center rounded-full border border-white/22 px-5 text-[0.9rem] font-medium tracking-[-0.02em] text-white transition-colors hover:border-white/36 hover:bg-white/[0.05]"
+                  >
+                    Contact
+                  </Link>
+                </div>
               </div>
             </div>
 
