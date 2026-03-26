@@ -1,5 +1,3 @@
-import { Helmet } from 'react-helmet-async';
-
 /**
  * Structured Data component for adding JSON-LD schema markup
  * Supports Person and Organization schemas for rich snippets in search results
@@ -886,12 +884,14 @@ export default function StructuredData({ type, person, organization, creativeWor
   }
 
   return (
-    <Helmet>
+    <>
       {schemas.map((schema, index) => (
-        <script key={index} type="application/ld+json">
-          {JSON.stringify(schema, null, 2)}
-        </script>
+        <script
+          key={`${type}-${index}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
       ))}
-    </Helmet>
+    </>
   );
 }

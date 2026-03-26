@@ -43,7 +43,7 @@ import { getLocalExperientialProjectBySlug, getLocalExperientialProjects, getLoc
 import { getLocalScenicProjectBySlug, getLocalScenicProjects } from "../shared/localScenicProjects";
 import { getLocalCollaborators, getLocalStudioDirectory, getLocalTutorialBySlug, getLocalTutorials } from "../shared/localStudio";
 
-type PublicComponent = ComponentType;
+type PublicComponent = ComponentType<any>;
 
 export type PublicRouteMatch =
   | { kind: "component"; component: PublicComponent }

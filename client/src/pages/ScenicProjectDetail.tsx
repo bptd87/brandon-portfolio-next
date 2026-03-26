@@ -5,6 +5,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Lightbox } from "@/components/Lightbox";
+import { ProgressiveImage } from "@/components/ProgressiveImage";
 import ScenicRenderingGallery from "@/components/ScenicRenderingGallery";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
@@ -456,15 +457,22 @@ export default function ScenicProjectDetail({
           <AnimatedSection>
             <div className="mx-auto w-full max-w-[62rem]">
               {project.coverImageUrl ? (
-                <div className="overflow-hidden rounded-xl bg-black">
-                  <img
+                <div
+                  className="overflow-hidden rounded-xl bg-black"
+                  style={{
+                    maxHeight: "min(74vh,48rem)",
+                  }}
+                >
+                  <ProgressiveImage
                     src={project.coverImageUrl}
                     alt={`${project.title} scenic design cover image`}
-                    className={`block w-full ${project.coverImageFit === "contain" ? "object-contain" : "object-cover"}`}
-                    style={{
-                      maxHeight: "min(74vh,48rem)",
-                      objectPosition: project.coverImagePosition || "center center",
-                    }}
+                    className="block w-full"
+                    containerClassName="w-full"
+                    objectFit={project.coverImageFit === "contain" ? "contain" : "cover"}
+                    loading="eager"
+                    fetchPriority="high"
+                    sizes="(min-width: 1200px) 62rem, calc(100vw - 3rem)"
+                    width={1600}
                   />
                 </div>
               ) : null}
@@ -574,10 +582,14 @@ export default function ScenicProjectDetail({
                                     onClick={() => openLightboxFor(item.id)}
                                     className="block w-full text-left"
                                   >
-                                    <img
+                                    <ProgressiveImage
                                       src={item.imageUrl}
                                       alt={item.altText}
                                       className="block w-full rounded-xl object-cover transition-transform duration-500 hover:scale-[1.01]"
+                                      containerClassName="w-full"
+                                      sizes="(min-width: 1024px) 40vw, 100vw"
+                                      width={1400}
+                                      aspectRatio="4 / 3"
                                     />
                                   </button>
                                   {item.caption ? (
@@ -634,10 +646,14 @@ export default function ScenicProjectDetail({
                         <div className="group flex cursor-pointer items-start gap-5">
                           <div className="relative h-36 w-36 flex-none overflow-hidden rounded-xl bg-black/85">
                             {relatedRenderingProject.coverImageUrl ? (
-                              <img
+                              <ProgressiveImage
                                 src={relatedRenderingProject.coverImageUrl}
                                 alt={`${relatedRenderingProject.title} rendering series cover image`}
                                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                                containerClassName="h-full w-full"
+                                sizes="9rem"
+                                width={288}
+                                aspectRatio="1 / 1"
                               />
                             ) : null}
                             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,31,71,0.08)_0%,rgba(22,64,133,0.16)_55%,rgba(10,18,38,0.42)_100%)]" />
@@ -660,10 +676,14 @@ export default function ScenicProjectDetail({
                         <div className="group flex cursor-pointer items-start gap-5">
                           <div className="relative h-36 w-36 flex-none overflow-hidden rounded-xl bg-black/85">
                             {article.coverImageUrl ? (
-                              <img
+                              <ProgressiveImage
                                 src={article.coverImageUrl}
                                 alt={article.coverImageAlt || `${article.title} article cover image`}
                                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                                containerClassName="h-full w-full"
+                                sizes="9rem"
+                                width={288}
+                                aspectRatio="1 / 1"
                               />
                             ) : null}
                             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,31,71,0.08)_0%,rgba(22,64,133,0.16)_55%,rgba(10,18,38,0.42)_100%)]" />
@@ -698,10 +718,14 @@ export default function ScenicProjectDetail({
                         >
                           <div className="relative h-36 w-36 flex-none overflow-hidden rounded-xl bg-black/85">
                             {previewImage?.imageUrl ? (
-                              <img
+                              <ProgressiveImage
                                 src={previewImage.imageUrl}
                                 alt={previewImage.altText || `${link.label} related coverage image`}
                                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                                containerClassName="h-full w-full"
+                                sizes="9rem"
+                                width={288}
+                                aspectRatio="1 / 1"
                               />
                             ) : null}
                             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,31,71,0.18)_0%,rgba(22,64,133,0.42)_55%,rgba(10,18,38,0.74)_100%)]" />
@@ -735,11 +759,14 @@ export default function ScenicProjectDetail({
                       <Link key={item.id} href={`/project/${item.slug}`} className="group block">
                         <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-black/85">
                           {item.coverImageUrl ? (
-                            <img
+                            <ProgressiveImage
                               src={item.coverImageUrl}
                               alt={`${item.title} scenic design project cover image`}
                               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                              style={{ objectPosition: "center center" }}
+                              containerClassName="h-full w-full"
+                              sizes="(min-width: 768px) 30vw, 96vw"
+                              width={900}
+                              aspectRatio="1 / 1"
                             />
                           ) : <div className="h-full w-full bg-muted" />}
                         </div>

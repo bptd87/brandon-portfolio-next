@@ -13,6 +13,7 @@ import {
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import {
@@ -110,12 +111,16 @@ function ArticleGridCard({
           style={{ viewTransitionName: `article-card-${article.slug}` } as CSSProperties}
         >
           {article.coverImageUrl ? (
-            <img
+            <ProgressiveImage
               src={article.coverImageUrl}
               alt={article.coverImageAlt || `Cover image for article: ${decodeHTMLEntities(article.title)}`}
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
               loading={eager ? "eager" : "lazy"}
-              decoding="async"
+              fetchPriority={eager ? "high" : "auto"}
+              sizes="(min-width: 1280px) 29vw, (min-width: 768px) 30vw, 94vw"
+              width={900}
+              aspectRatio="1 / 1"
+              enableScrollAnimation={!eager}
             />
           ) : (
             <div className="h-full w-full bg-muted" />
