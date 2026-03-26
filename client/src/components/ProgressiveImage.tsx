@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 
 // Apply Supabase image transformations for optimization
-function applySupabaseTransformations(src: string, width?: number, blurred?: boolean, forceTransformWebp?: boolean): string {
+function applySupabaseTransformations(src: string, width?: number, forceTransformWebp?: boolean): string {
   // Only transform Supabase storage URLs
   if (!src.includes('supabase.co/storage/v1/object/public/')) {
     return src;
@@ -11,7 +11,7 @@ function applySupabaseTransformations(src: string, width?: number, blurred?: boo
   // Above-the-fold cards should still request sized transforms instead of
   // pulling the full original asset on first load.
   const isWebP = src.toLowerCase().endsWith('.webp');
-  if (isWebP && !blurred && !forceTransformWebp && !width) {
+  if (isWebP && !forceTransformWebp && !width) {
     return src; // Keep original WebP, it's already optimized
   }
 
@@ -22,25 +22,19 @@ function applySupabaseTransformations(src: string, width?: number, blurred?: boo
   const baseUrl = src.substring(0, publicIndex);
   const pathAfterPublic = src.substring(publicIndex + '/storage/v1/object/public/'.length);
 
-  if (blurred) {
-    // Blurred placeholder: still lightweight, but not so compressed that
-    // pale drawings and white-background images blow out before the full image loads.
-    return `${baseUrl}/storage/v1/render/image/public/${pathAfterPublic}?width=48&quality=35`;
-  } else {
-    const params = new URLSearchParams();
+  const params = new URLSearchParams();
 
-    if (width) {
-      params.set('width', width.toString());
-    }
-
-    params.set('quality', '82');
-
-    return `${baseUrl}/storage/v1/render/image/public/${pathAfterPublic}?${params.toString()}`;
+  if (width) {
+    params.set('width', width.toString());
   }
+
+  params.set('quality', '82');
+
+  return `${baseUrl}/storage/v1/render/image/public/${pathAfterPublic}?${params.toString()}`;
 }
 
 // Apply Cloudinary transformations for automatic optimization
-function applyCloudinaryTransformations(src: string, width?: number, blurred?: boolean): string {
+function applyCloudinaryTransformations(src: string, width?: number): string {
   // Only transform Cloudinary URLs
   if (!src.includes('cloudinary.com')) {
     return src;
@@ -56,26 +50,19 @@ function applyCloudinaryTransformations(src: string, width?: number, blurred?: b
   // Build transformation string
   const transformations = [];
 
-  if (blurred) {
-    // Blurred placeholder: TINY width with blur for smooth color wash
-    transformations.push('w_10');
-    transformations.push('e_blur:1000');
-    transformations.push('q_1');
-  } else {
-    // Normal image: automatic format (WebP with fallback)
-    transformations.push('f_auto');
+  // Normal image: automatic format (WebP with fallback)
+  transformations.push('f_auto');
 
-    // Quality optimization (auto - balances quality and size)
-    transformations.push('q_auto');
+  // Quality optimization (auto - balances quality and size)
+  transformations.push('q_auto');
 
-    // Responsive width if specified
-    if (width) {
-      transformations.push(`w_${width}`);
-    }
-
-    // Auto DPR (device pixel ratio)
-    transformations.push('dpr_auto');
+  // Responsive width if specified
+  if (width) {
+    transformations.push(`w_${width}`);
   }
+
+  // Auto DPR (device pixel ratio)
+  transformations.push('dpr_auto');
 
   const transformString = transformations.join(',');
 
@@ -90,7 +77,7 @@ function generateSupabaseSrcSet(src: string): string {
 
   const widths = [400, 800, 1200, 1600, 2400];
   const srcsetEntries = widths.map(width => {
-    const transformedUrl = applySupabaseTransformations(src, width, false, true);
+    const transformedUrl = applySupabaseTransformations(src, width, true);
     return `${transformedUrl} ${width}w`;
   });
 
@@ -231,15 +218,9 @@ export function ProgressiveImage({
   useEffect(() => {
     if (!imageLoaded) return;
 
-    // If eager loading, show immediately without delay
-    if (loading === 'eager') {
-      setShowSharpImage(true);
-      return;
-    }
-
     const timer = setTimeout(() => {
       setShowSharpImage(true);
-    }, blurFadeDuration);
+    }, loading === 'eager' ? 0 : Math.min(blurFadeDuration, 140));
 
     return () => clearTimeout(timer);
   }, [imageLoaded, blurFadeDuration, loading]);
@@ -247,18 +228,11 @@ export function ProgressiveImage({
   // Apply image transformations based on source (Supabase or Cloudinary)
   const isSupabase = src.includes('supabase.co/storage/v1/object/public/');
   const isCloudinary = src.includes('cloudinary.com');
-  const supportsBlurPlaceholder = isSupabase || isCloudinary;
   
   const optimizedSrc = isSupabase 
-    ? applySupabaseTransformations(src, width, false, forceTransformWebp)
+    ? applySupabaseTransformations(src, width, forceTransformWebp)
     : applyCloudinaryTransformations(src, width);
-    
-  const blurredSrc = supportsBlurPlaceholder
-    ? (isSupabase
-      ? applySupabaseTransformations(src, undefined, true)
-      : applyCloudinaryTransformations(src, undefined, true))
-    : '';
-    
+
   const srcSet = isSupabase
     ? generateSupabaseSrcSet(src)
     : generateSrcSet(src);
@@ -275,30 +249,17 @@ export function ProgressiveImage({
       `}
       style={aspectRatio ? { aspectRatio } : undefined}
     >
-      {/* Blurred placeholder - always used when supported for graceful blur-up */}
-      {!imageError && supportsBlurPlaceholder && (
-        <img
-          src={blurredSrc}
-          alt=""
-          className={`
-            absolute inset-0 w-full h-full
-            ${objectFit === 'cover' ? 'object-cover' : 'object-contain'}
-            ${smartPosition ? objectPosition : ''}
-            scale-[1.01] blur-md saturate-100
-            transition-opacity duration-500 ease-out
-            ${showSharpImage ? 'opacity-0' : 'opacity-100'}
-            ${!shouldLoad ? 'animate-pulse' : ''}
-          `}
+      {!imageError && (
+        <div
           aria-hidden="true"
+          className={`
+            absolute inset-0 bg-[rgba(255,255,255,0.04)]
+            transition-opacity duration-300 ease-out
+            ${showSharpImage ? 'opacity-0' : 'opacity-100'}
+          `}
         />
       )}
 
-      {/* Minimal fallback for non-transformable sources before intersection */}
-      {!shouldLoad && !supportsBlurPlaceholder && (
-        <div className="absolute inset-0 bg-muted/20 animate-pulse" />
-      )}
-
-      {/* Sharp image - fades in over blurred version */}
       {shouldLoad && (
         <img
           src={optimizedSrc}
@@ -309,7 +270,7 @@ export function ProgressiveImage({
             w-full ${imageHeightClass}
             ${objectFit === 'cover' ? 'object-cover' : 'object-contain'}
             ${smartPosition ? objectPosition : ''}
-            transition-opacity duration-500 ease-out
+            transition-opacity duration-300 ease-out
             ${showSharpImage ? 'opacity-100' : 'opacity-0'}
             ${className}
           `}
