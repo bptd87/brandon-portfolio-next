@@ -4,6 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 import { LegacyProviders } from "../components/legacy/Providers";
+import { LegacyClientCleanup } from "../components/site/LegacyClientCleanup";
 import { absoluteUrl, siteMetadata } from "../lib/metadata";
 
 export const metadata: Metadata = {
@@ -62,6 +63,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-gradient-premium">
+        <LegacyClientCleanup />
         <LegacyProviders>{children}</LegacyProviders>
         <Analytics />
         <SpeedInsights />

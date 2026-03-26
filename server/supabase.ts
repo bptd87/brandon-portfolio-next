@@ -5,10 +5,14 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
 const hasServerSupabaseEnv = Boolean(supabaseUrl && supabaseServiceKey);
 
 if (!hasServerSupabaseEnv) {
-  const missing = [];
-  if (!supabaseUrl) missing.push('SUPABASE_URL');
-  if (!supabaseServiceKey) missing.push('SUPABASE_SERVICE_KEY');
-  console.error(`Missing Supabase environment variables: ${missing.join(', ')}`);
+  const isLocalDev = process.env.NODE_ENV === 'development' && process.env.VERCEL !== '1';
+
+  if (isLocalDev) {
+    const missing = [];
+    if (!supabaseUrl) missing.push('SUPABASE_URL');
+    if (!supabaseServiceKey) missing.push('SUPABASE_SERVICE_KEY');
+    console.warn(`Missing Supabase environment variables: ${missing.join(', ')}`);
+  }
 }
 
 function createMissingSupabaseClient(): any {
