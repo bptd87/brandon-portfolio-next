@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight, ChevronLeft, ChevronRight, Mail } from "lucide-react";
+import Image from "next/image";
 import { Link } from "wouter";
 import { useRef } from "react";
 
@@ -252,11 +253,18 @@ export default function About() {
 
               <div className="mx-auto mt-10 max-w-3xl md:mt-12">
                 <div className="overflow-hidden rounded-[1.75rem] border border-border/40 bg-card/20">
-                  <img
-                    src="https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/profile-headshot.webp"
-                    alt="Brandon PT Davis - Scenic Designer"
-                    className="aspect-square w-full object-cover object-top"
-                  />
+                  <div className="relative aspect-square w-full">
+                    <Image
+                      src="https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/profile-headshot.webp"
+                      alt="Brandon PT Davis - Scenic Designer"
+                      fill
+                      priority
+                      fetchPriority="high"
+                      quality={84}
+                      sizes="(max-width: 768px) 92vw, 48rem"
+                      className="object-cover object-top"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -393,12 +401,17 @@ export default function About() {
               {navigationCards.map((card) => (
                 <Link key={card.href} href={card.href} className="group block">
                   <div className="relative overflow-hidden rounded-[1.35rem] border border-border/40 bg-card/20">
-                    <img
-                      src={card.image}
-                      alt={card.title}
-                      className="aspect-square w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
-                      loading="lazy"
-                    />
+                    <div className="relative aspect-square w-full">
+                      <Image
+                        src={card.image}
+                        alt={card.title}
+                        fill
+                        quality={82}
+                        loading="lazy"
+                        sizes="(max-width: 768px) 92vw, (max-width: 1280px) 46vw, 23vw"
+                        className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
+                      />
+                    </div>
                     {card.imageTitle ? (
                       <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-6 text-center">
                         <div className="absolute inset-0 bg-black/12" />
@@ -443,11 +456,14 @@ export default function About() {
                       <div className="grid gap-5 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:items-start">
                         <div className="relative aspect-square overflow-hidden rounded-[1.15rem] border border-border/35 bg-card/20">
                           {article.coverImageUrl ? (
-                            <img
+                            <Image
                               src={article.coverImageUrl}
                               alt={article.coverImageAlt || article.title}
-                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                              fill
+                              quality={80}
                               loading="lazy"
+                              sizes="(max-width: 640px) 42vw, 8.5rem"
+                              className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                             />
                           ) : (
                             <div className="h-full w-full bg-muted" />
@@ -512,12 +528,17 @@ export default function About() {
                   key={image.url}
                   className="w-[min(78vw,40rem)] shrink-0 snap-start md:w-[calc((100%_-_3rem)_/_3)]"
                 >
-                  <img
-                    src={image.url}
-                    alt={image.alt}
-                    className="block w-full rounded-[1.5rem]"
-                    loading="lazy"
-                  />
+                  <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[1.5rem] bg-card/20">
+                    <Image
+                      src={image.url}
+                      alt={image.alt}
+                      fill
+                      quality={82}
+                      loading="lazy"
+                      sizes="(max-width: 768px) 78vw, 33vw"
+                      className="object-cover"
+                    />
+                  </div>
                   <p className="mt-3 max-w-[36rem] text-[0.98rem] leading-7 text-foreground/62">
                     {image.caption}
                   </p>
