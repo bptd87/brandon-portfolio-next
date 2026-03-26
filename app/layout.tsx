@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 import { LegacyProviders } from "../components/legacy/Providers";
@@ -61,6 +63,8 @@ export default function RootLayout({
     >
       <body className="min-h-screen bg-gradient-premium">
         <LegacyProviders>{children}</LegacyProviders>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
