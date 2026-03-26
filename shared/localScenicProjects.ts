@@ -1,3 +1,5 @@
+import { applyScenicMediaManifest } from "./scenicMedia";
+
 export type LocalScenicProjectMedia = {
   id: string;
   type: "image" | "video";
@@ -6982,11 +6984,15 @@ const localScenicProjects: LocalScenicProject[] = [
   theEffectOfGammaRaysProject,
 ];
 
+const resolvedLocalScenicProjects = localScenicProjects.map((project) =>
+  applyScenicMediaManifest(project)
+);
+
 export function getLocalScenicProjects() {
-  return localScenicProjects;
+  return resolvedLocalScenicProjects;
 }
 
 export function getLocalScenicProjectBySlug(slug: string) {
   const normalizedSlug = String(slug || "").trim().toLowerCase();
-  return localScenicProjects.find((project) => project.slug === normalizedSlug) || null;
+  return resolvedLocalScenicProjects.find((project) => project.slug === normalizedSlug) || null;
 }

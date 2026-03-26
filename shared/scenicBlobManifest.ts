@@ -1,0 +1,11 @@
+export const scenicBlobManifest: Record<string, string> = {
+  "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-cover.webp": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/all-my-sons/all-my-sons-cover.webp",
+  "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-gallery-150013.webp": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/all-my-sons/sons-prod-1.webp",
+  "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-gallery-150018.webp": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/all-my-sons/sons-prod-2.webp",
+  "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-gallery-150054.webp": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/all-my-sons/sons-prod-3.webp",
+  "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-gallery-150070.webp": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/all-my-sons/sons-prod-4.webp",
+  "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-gallery-150073.webp": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/all-my-sons/sons-render-1.webp",
+  "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-gallery-150078.webp": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/all-my-sons/sons-prod-5.webp",
+  "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-gallery-150175.webp": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/all-my-sons/sons-prod-6.webp",
+  "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-gallery-150182.webp": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/all-my-sons/sons-prod-7.webp",
+};

@@ -19,6 +19,7 @@ NEXT_PUBLIC_SITE_URL="https://www.brandonptdavis.com"
 SUPABASE_URL="https://your-project.supabase.co"
 SUPABASE_SERVICE_KEY="your-service-role-key"
 NEXT_PUBLIC_SUPABASE_ANON_KEY="your-anon-key"
+BLOB_READ_WRITE_TOKEN="vercel_blob_rw_token"
 ADMIN_EMAILS="you@example.com,second-admin@example.com"
 ```
 
