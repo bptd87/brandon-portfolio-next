@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   BarChart3,
   ExternalLink,
@@ -15,13 +15,31 @@ import {
 import { Button } from "../../client/src/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../client/src/components/ui/card";
 import { readPublicEnv } from "../../client/src/lib/readPublicEnv";
-import { trpc } from "../../client/src/lib/trpc";
 
 const DASHBOARD_URL = readPublicEnv(
   "NEXT_PUBLIC_ANALYTICS_DASHBOARD_URL",
   "NEXT_PUBLIC_POSTHOG_DASHBOARD_URL",
   "VITE_PUBLIC_POSTHOG_DASHBOARD_URL"
 );
+
+type AnalyticsOverviewPayload = {
+  pageViews30d: number;
+  pageViewsDeltaPct: number;
+  visitors30d: number;
+  projectViews30d: number;
+  contactSubmits30d: number;
+  contactConversionPct: number;
+  topPages: Array<{ path: string; views: number; visitors: number }>;
+  topProjects: Array<{ slug: string; title: string; views: number }>;
+  countryBreakdown: Array<{ country: string; views: number }>;
+  recentCities: Array<{
+    timestamp: string;
+    city: string;
+    region: string;
+    country: string;
+    path: string;
+  }>;
+};
 
 function MetricCard({
   title,
@@ -49,7 +67,38 @@ function MetricCard({
 }
 
 export function AnalyticsOverview() {
-  const { data, isLoading, error, refetch, isFetching } = trpc.analytics.getOverview.useQuery();
+  const [data, setData] = useState<AnalyticsOverviewPayload | null>(null);
+  const [error, setError] = useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFetching, setIsFetching] = useState(false);
+
+  const loadOverview = useCallback(async () => {
+    setError(null);
+    setIsFetching(true);
+
+    try {
+      const response = await fetch("/api/admin/analytics", {
+        credentials: "same-origin",
+        cache: "no-store",
+      });
+      const payload = (await response.json()) as AnalyticsOverviewPayload & { error?: string };
+
+      if (!response.ok) {
+        throw new Error(payload.error || "Failed to load analytics.");
+      }
+
+      setData(payload);
+    } catch (loadError) {
+      setError(loadError instanceof Error ? loadError : new Error("Failed to load analytics."));
+    } finally {
+      setIsLoading(false);
+      setIsFetching(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    void loadOverview();
+  }, [loadOverview]);
 
   const topPages = useMemo(() => data?.topPages?.slice(0, 8) ?? [], [data?.topPages]);
   const topProjects = useMemo(() => data?.topProjects?.slice(0, 8) ?? [], [data?.topProjects]);
@@ -93,7 +142,7 @@ export function AnalyticsOverview() {
                 <CardTitle className="text-base">Top Pages</CardTitle>
                 <CardDescription>Most-viewed pages over the last 30 days.</CardDescription>
               </div>
-              <Button type="button" variant="outline" size="sm" onClick={() => refetch()} disabled={isFetching}>
+              <Button type="button" variant="outline" size="sm" onClick={() => void loadOverview()} disabled={isFetching}>
                 Refresh
               </Button>
             </div>

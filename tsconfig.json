@@ -16,6 +16,8 @@
     "node_modules",
     "build",
     "dist",
+    "client/src/pages/admin/**/*",
+    "client/src/components/admin/**/*",
     "**/*.test.ts"
   ],
   "compilerOptions": {
