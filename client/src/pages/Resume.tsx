@@ -529,7 +529,7 @@ export default function Resume() {
                       unoptimized
                       quality={82}
                       sizes="(max-width: 1280px) 92vw, 26rem"
-                      className="absolute left-1/2 top-1/2 h-[185%] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 rotate-90 object-cover object-center"
+                      className="object-cover object-center scale-[1.18]"
                     />
                   </div>
                 </div>
