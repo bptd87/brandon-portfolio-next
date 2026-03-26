@@ -3,6 +3,7 @@ import {
   generatedLocalStudioDirectory,
   generatedLocalTutorials,
 } from "./localStudio.generated";
+import { applyBlobMediaManifest } from "./mediaBlob";
 
 export type LocalTutorialResource = {
   title: string;
@@ -88,7 +89,7 @@ export type LocalStudioDirectoryEntry = {
 };
 
 export function getLocalTutorials() {
-  return generatedLocalTutorials as LocalTutorial[];
+  return applyBlobMediaManifest(generatedLocalTutorials as LocalTutorial[]);
 }
 
 export function getLocalTutorialBySlug(slug?: string | null) {
@@ -98,9 +99,9 @@ export function getLocalTutorialBySlug(slug?: string | null) {
 }
 
 export function getLocalCollaborators() {
-  return generatedLocalCollaborators as LocalCollaborator[];
+  return applyBlobMediaManifest(generatedLocalCollaborators as LocalCollaborator[]);
 }
 
 export function getLocalStudioDirectory() {
-  return generatedLocalStudioDirectory as LocalStudioDirectoryEntry[];
+  return applyBlobMediaManifest(generatedLocalStudioDirectory as LocalStudioDirectoryEntry[]);
 }

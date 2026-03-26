@@ -1,4 +1,5 @@
 import { generatedLocalArticles } from "./localArticles.generated";
+import { applyBlobMediaManifest } from "./mediaBlob";
 
 export type LocalArticleBlock = Record<string, any>;
 
@@ -1891,6 +1892,7 @@ export const localArticles = articlesWithManualEntries
     updatedAt: article.updatedAt || article.publishedAt,
     status: "published" as const,
   }))
+  .map((article) => applyBlobMediaManifest(article))
   .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
 export const voyageLaArticleRecord =

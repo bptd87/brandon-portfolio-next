@@ -7,6 +7,7 @@ import AboutNav from "@/components/AboutNav";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { formatUtcDate } from "@/lib/date-format";
+import { resolveBlobMediaUrl } from "@shared/mediaBlob";
 import { ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { getLocalArticles } from "@shared/localArticles";
@@ -328,7 +329,10 @@ export default function SyllabusExperiential() {
                   <div className="mx-auto max-w-6xl">
                     <div className="relative aspect-[16/8] w-full">
                       <Image
-                        src="https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_178b77734f664399ad1781073a591459.jpg"
+                        src={
+                          resolveBlobMediaUrl("https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_178b77734f664399ad1781073a591459.jpg") ||
+                          "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_178b77734f664399ad1781073a591459.jpg"
+                        }
                         alt="Theatre design students behind the Studio Ghibli-inspired immersive dining project."
                         fill
                         quality={82}

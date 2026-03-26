@@ -4,6 +4,7 @@ import {
   generatedRenderingGallery,
   generatedRenderingProjects,
 } from "./localPortfolios.generated";
+import { applyBlobMediaManifest } from "./mediaBlob";
 
 // Public rendering and experiential landing pages read from these generated
 // local snapshots instead of live TRPC queries. Re-run `pnpm generate:portfolios`
@@ -215,7 +216,7 @@ export type LocalExperientialBrand = {
 };
 
 export function getLocalRenderingProjects() {
-  return (generatedRenderingProjects as LocalRenderingProject[])
+  return applyBlobMediaManifest(generatedRenderingProjects as LocalRenderingProject[])
     .filter((project) => !EXCLUDED_RENDERING_SLUGS.has(project.slug))
     .map((project) => {
       const override = RENDERING_PROJECT_OVERRIDES[project.slug];
@@ -259,17 +260,19 @@ export function getLocalRenderingProjectForProduction(input: {
 }
 
 export function getLocalRenderingGallery() {
-  return (generatedRenderingGallery as LocalRenderingGalleryItem[]).filter(
+  return applyBlobMediaManifest(generatedRenderingGallery as LocalRenderingGalleryItem[]).filter(
     (item) => item.project?.slug && !EXCLUDED_RENDERING_SLUGS.has(item.project.slug)
   );
 }
 
 export function getLocalExperientialProcessGallery() {
-  return generatedExperientialProcessGallery as LocalExperientialProcessGalleryItem[];
+  return applyBlobMediaManifest(
+    generatedExperientialProcessGallery as LocalExperientialProcessGalleryItem[]
+  );
 }
 
 export function getLocalExperientialBrands() {
-  return generatedExperientialBrands as LocalExperientialBrand[];
+  return applyBlobMediaManifest(generatedExperientialBrands as LocalExperientialBrand[]);
 }
 
 const EXPERIENTIAL_CATEGORY_LABELS: Record<LocalExperientialCategory, string> = {

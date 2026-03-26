@@ -1,3 +1,5 @@
+import { resolveBlobMediaUrl } from "./mediaBlob";
+
 export const ASSISTANT_SCENIC_DESIGN_PATH = "/assistant-scenic-design";
 export const ASSISTANT_SCENIC_DESIGN_SEO_TITLE =
   "Assistant Scenic Design Credits | Brandon PT Davis";
@@ -20,7 +22,7 @@ export interface AssistantScenicDesignEntry {
   featured?: boolean;
 }
 
-export const assistantScenicDesignEntries: AssistantScenicDesignEntry[] = [
+const rawAssistantScenicDesignEntries: AssistantScenicDesignEntry[] = [
   {
     anchorId: "the-play-that-goes-wrong-seattle-rep",
     legacyNewsSlugs: ["assisting-the-play-that-goes-wrong"],
@@ -280,6 +282,13 @@ export const assistantScenicDesignEntries: AssistantScenicDesignEntry[] = [
     coverImageAlt: "Utah Shakespeare Festival 2021 season",
   },
 ];
+
+export const assistantScenicDesignEntries: AssistantScenicDesignEntry[] = rawAssistantScenicDesignEntries.map(
+  (entry) => ({
+    ...entry,
+    coverImageUrl: resolveBlobMediaUrl(entry.coverImageUrl) || entry.coverImageUrl,
+  })
+);
 
 export const assistantScenicYearRange = (() => {
   const years = assistantScenicDesignEntries.map((entry) => new Date(entry.date).getFullYear());
