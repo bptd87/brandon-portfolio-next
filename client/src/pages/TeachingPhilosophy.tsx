@@ -5,7 +5,6 @@ import Footer from "@/components/Footer";
 import AboutNav from "@/components/AboutNav";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
-import { trpc } from "@/lib/trpc";
 import { ArrowRight, Download } from "lucide-react";
 import { Link } from "wouter";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
@@ -21,8 +20,6 @@ const getProjectTimestamp = (project: any) => {
 };
 
 export default function TeachingPhilosophy() {
-  const generatePDF = trpc.system.generateTeachingPhilosophyPDF.useMutation();
-
   const scenicDesignProjects = [...getLocalScenicProjects()]
     .filter((project) => !!project.coverImageUrl)
     .sort((a, b) => {
@@ -462,24 +459,15 @@ export default function TeachingPhilosophy() {
                 <span>View Portfolio</span>
                 <ArrowRight className="h-4 w-4" />
               </Link>
-              <button
-                type="button"
-                onClick={async () => {
-                  try {
-                    const result = await generatePDF.mutateAsync();
-                    if (result.success && result.url) {
-                      window.open(result.url, "_blank");
-                    }
-                  } catch (error) {
-                    console.error("Failed to generate PDF:", error);
-                  }
-                }}
-                disabled={generatePDF.isPending}
+              <a
+                href="/api/teaching-philosophy-pdf"
+                target="_blank"
+                rel="noreferrer"
                 className="inline-flex h-11 items-center gap-2 rounded-full bg-white/10 px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-foreground transition-colors hover:bg-white/14 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <Download className="h-4 w-4" />
                 <span>Download Teaching Philosophy</span>
-              </button>
+              </a>
             </div>
           </div>
         </div>

@@ -2,10 +2,9 @@ import "server-only";
 
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createClient, type User as SupabaseUser } from "@supabase/supabase-js";
 import { parse } from "cookie";
 
-import * as db from "../../server/db";
 import { supabase as serviceSupabase } from "../../server/supabase";
 import { COOKIE_NAME } from "../../shared/const";
 
@@ -14,6 +13,58 @@ const supabaseAnonKey =
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
   process.env.VITE_SUPABASE_ANON_KEY ||
   process.env.SUPABASE_ANON_KEY;
+
+type AdminUser = {
+  id: string;
+  email: string | null;
+  name: string | null;
+  role: "admin";
+};
+
+function getConfiguredAdminEmails() {
+  const raw = process.env.ADMIN_EMAILS || process.env.ADMIN_EMAIL || "";
+  return new Set(
+    raw
+      .split(",")
+      .map((value) => value.trim().toLowerCase())
+      .filter(Boolean)
+  );
+}
+
+function getSupabaseUserRole(user: SupabaseUser) {
+  const appRole = user.app_metadata?.role;
+  if (typeof appRole === "string" && appRole.trim()) {
+    return appRole.trim().toLowerCase();
+  }
+
+  const metadataRole = user.user_metadata?.role;
+  if (typeof metadataRole === "string" && metadataRole.trim()) {
+    return metadataRole.trim().toLowerCase();
+  }
+
+  return null;
+}
+
+function toAdminUser(user: SupabaseUser): AdminUser | null {
+  const normalizedEmail = user.email?.trim().toLowerCase() ?? null;
+  const configuredAdminEmails = getConfiguredAdminEmails();
+  const role = getSupabaseUserRole(user);
+
+  if (role !== "admin" && (!normalizedEmail || !configuredAdminEmails.has(normalizedEmail))) {
+    return null;
+  }
+
+  return {
+    id: user.id,
+    email: user.email ?? null,
+    name:
+      (typeof user.user_metadata?.full_name === "string" && user.user_metadata.full_name) ||
+      (typeof user.user_metadata?.name === "string" && user.user_metadata.name) ||
+      user.email ||
+      null,
+    role: "admin",
+  };
+}
 
 function getSupabaseAuthClient() {
   if (!supabaseUrl || !supabaseAnonKey) {
@@ -48,18 +99,7 @@ export async function getUserFromAccessToken(token?: string | null) {
     return null;
   }
 
-  await db.upsertUser({
-    openId: user.id,
-    email: user.email ?? null,
-    name:
-      (typeof user.user_metadata?.full_name === "string" && user.user_metadata.full_name) ||
-      (typeof user.user_metadata?.name === "string" && user.user_metadata.name) ||
-      user.email ||
-      null,
-    lastSignedIn: new Date(),
-  });
-
-  return (await db.getUserByOpenId(user.id)) ?? null;
+  return toAdminUser(user);
 }
 
 export async function getCurrentAdminUser() {
@@ -67,7 +107,7 @@ export async function getCurrentAdminUser() {
   const token = cookieStore.get(COOKIE_NAME)?.value ?? null;
   const user = await getUserFromAccessToken(token);
 
-  if (!user || user.role !== "admin") {
+  if (!user) {
     return null;
   }
 
@@ -79,7 +119,7 @@ export async function getAdminUserFromRequest(request: Request) {
   const token = parse(cookieHeader)[COOKIE_NAME] ?? null;
   const user = await getUserFromAccessToken(token);
 
-  if (!user || user.role !== "admin") {
+  if (!user) {
     return null;
   }
 
@@ -107,10 +147,6 @@ export async function signInAdminUser(email: string, password: string) {
 
   if (!user) {
     throw new Error("Unable to verify the signed-in account.");
-  }
-
-  if (user.role !== "admin") {
-    throw new Error("Admin access required.");
   }
 
   return {

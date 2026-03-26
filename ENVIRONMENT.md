@@ -19,12 +19,15 @@ NEXT_PUBLIC_SITE_URL="https://www.brandonptdavis.com"
 SUPABASE_URL="https://your-project.supabase.co"
 SUPABASE_SERVICE_KEY="your-service-role-key"
 NEXT_PUBLIC_SUPABASE_ANON_KEY="your-anon-key"
+ADMIN_EMAILS="you@example.com,second-admin@example.com"
 ```
 
 These power:
 - admin sign-in
 - protected asset API routes
 - media upload/browse/delete in `/admin`
+
+`ADMIN_EMAILS` is optional if your Supabase users already carry `role=admin` in `app_metadata` or `user_metadata`. It is a clean fallback if you want to keep admin access out of the old local database layer.
 
 ### Contact Form
 

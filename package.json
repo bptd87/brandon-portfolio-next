@@ -8,11 +8,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
-    "dev:legacy": "NODE_ENV=development tsx watch server/_core/index.ts",
     "build": "next build --webpack",
-    "build:legacy": "vite build",
     "start": "next start",
-    "start:legacy": "NODE_ENV=production tsx server/_core/index.ts",
     "check": "next build --webpack",
     "format": "prettier --write .",
     "test": "vitest run",
