@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
@@ -227,13 +228,16 @@ export default function StudioApps() {
                 <Link href={app.href} className="group block">
                   <article className="border-t border-border/14 pt-4">
                     <div className="relative overflow-hidden rounded-[1rem] border border-border/16 bg-card/10">
-                      <img
-                        src={app.image}
-                        alt={app.title}
-                        className="aspect-square w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                        loading="lazy"
-                        decoding="async"
-                      />
+                      <div className="relative aspect-square w-full">
+                        <Image
+                          src={app.image}
+                          alt={app.title}
+                          fill
+                          quality={82}
+                          sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 22vw"
+                          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                        />
+                      </div>
                       <div className="pointer-events-none absolute inset-0 rounded-[1rem] ring-1 ring-inset ring-white/5" />
                     </div>
 
@@ -270,13 +274,16 @@ export default function StudioApps() {
           <div className="grid gap-12 xl:grid-cols-[minmax(0,0.92fr)_minmax(0,1fr)] xl:items-center">
             <AnimatedSection>
               <div className="overflow-hidden rounded-[1.15rem] border border-border/18 bg-card/10">
-                <img
-                  src="/assets/studio/studio-app-iphone-install.png"
-                  alt="Illustrative artwork showing how to save a website as an app on iPhone"
-                  className="aspect-square w-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                />
+                <div className="relative aspect-square w-full">
+                  <Image
+                    src="/assets/studio/studio-app-iphone-install.png"
+                    alt="Illustrative artwork showing how to save a website as an app on iPhone"
+                    fill
+                    quality={82}
+                    sizes="(max-width: 1280px) 92vw, 42vw"
+                    className="object-cover"
+                  />
+                </div>
               </div>
             </AnimatedSection>
 

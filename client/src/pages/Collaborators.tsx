@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import Header from "@/components/Header";
@@ -207,12 +208,16 @@ export default function Collaborators() {
           <section className="mx-auto mt-14 max-w-[88rem] border-t border-border/25 pt-14">
             <div className="grid items-center gap-10 xl:grid-cols-[minmax(18rem,0.95fr)_minmax(0,1.05fr)]">
               <div className="overflow-hidden rounded-[1.5rem] border border-border/30 bg-card/20">
-                <img
-                  src="/assets/about/about-collaborators-art.png"
-                  alt="Abstract collaboration artwork"
-                  className="aspect-square w-full object-cover"
-                  loading="lazy"
-                />
+                <div className="relative aspect-square w-full">
+                  <Image
+                    src="/assets/about/about-collaborators-art.png"
+                    alt="Abstract collaboration artwork"
+                    fill
+                    quality={82}
+                    sizes="(max-width: 1280px) 92vw, 34vw"
+                    className="object-cover"
+                  />
+                </div>
               </div>
 
               <div className="max-w-2xl">
@@ -267,12 +272,16 @@ export default function Collaborators() {
 
                     {section.id === "companies" && (
                       <div className="my-10 overflow-hidden rounded-[1.5rem] border border-border/30 bg-card/20">
-                        <img
-                          src="/assets/about/about-collaborators-art.png"
-                          alt="Abstract collaboration artwork"
-                          className="aspect-[16/6] w-full object-cover"
-                          loading="lazy"
-                        />
+                        <div className="relative aspect-[16/6] w-full">
+                          <Image
+                            src="/assets/about/about-collaborators-art.png"
+                            alt="Abstract collaboration artwork"
+                            fill
+                            quality={82}
+                            sizes="100vw"
+                            className="object-cover"
+                          />
+                        </div>
                       </div>
                     )}
 

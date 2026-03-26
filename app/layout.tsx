@@ -62,6 +62,10 @@ export default function RootLayout({
       style={{ colorScheme: "dark" }}
       suppressHydrationWarning
     >
+      <head>
+        <link rel="dns-prefetch" href="https://xibkuwouvisabnfowthn.supabase.co" />
+        <link rel="preconnect" href="https://xibkuwouvisabnfowthn.supabase.co" crossOrigin="" />
+      </head>
       <body className="min-h-screen bg-gradient-premium">
         <LegacyClientCleanup />
         <LegacyProviders>{children}</LegacyProviders>

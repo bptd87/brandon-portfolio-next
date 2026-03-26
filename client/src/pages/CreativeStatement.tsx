@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AboutNav from "@/components/AboutNav";
@@ -195,12 +196,14 @@ export default function CreativeStatement() {
           <div className="grid items-center gap-10 xl:grid-cols-[minmax(18rem,0.95fr)_minmax(0,1.05fr)]">
             <div className="overflow-hidden rounded-[1.75rem] border border-border/30 bg-card/20">
               <div className="relative aspect-[4/5] w-full">
-              <img
-                src="/assets/about/about-process-art.png"
-                alt="Abstract creative statement artwork"
-                className="absolute left-1/2 top-1/2 h-full w-full max-w-none -translate-x-1/2 -translate-y-1/2 scale-[1.25] rotate-90 object-cover object-center"
-                loading="lazy"
-              />
+                <Image
+                  src="/assets/about/about-process-art.png"
+                  alt="Abstract creative statement artwork"
+                  fill
+                  quality={82}
+                  sizes="(max-width: 1280px) 92vw, 34vw"
+                  className="absolute left-1/2 top-1/2 h-full w-full max-w-none -translate-x-1/2 -translate-y-1/2 scale-[1.25] rotate-90 object-cover object-center"
+                />
               </div>
             </div>
 
@@ -378,12 +381,16 @@ export default function CreativeStatement() {
                   href={getProjectHref(project)}
                   className="group block w-[min(74vw,28rem)] shrink-0 snap-start md:w-[calc((100%_-_3rem)_/_3)]"
                 >
-                  <img
-                    src={project.coverImageUrl || ""}
-                    alt={project.title}
-                    className="block aspect-[16/9] w-full rounded-[1rem] object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-                    loading="lazy"
-                  />
+                  <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[1rem]">
+                    <Image
+                      src={project.coverImageUrl || ""}
+                      alt={project.title}
+                      fill
+                      quality={82}
+                      sizes="(max-width: 768px) 74vw, 33vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                    />
+                  </div>
                   <p className="mt-3 font-sans text-[1rem] leading-7 text-foreground/74 transition-colors group-hover:text-foreground">
                     {project.title}
                   </p>

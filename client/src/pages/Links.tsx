@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ExternalLink,
@@ -71,13 +72,16 @@ function FeedCard({
     <article className="group block">
       <div className="relative overflow-hidden rounded-[0.72rem] border border-border/18 bg-card/10">
         {image ? (
-          <img
-            src={image}
-            alt={title}
-            className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-[1.035]"
-            loading="lazy"
-            decoding="async"
-          />
+          <div className="relative aspect-[4/5] w-full">
+            <Image
+              src={image}
+              alt={title}
+              fill
+              quality={82}
+              sizes="(max-width: 640px) 44vw, (max-width: 1024px) 28vw, 18vw"
+              className="object-cover transition-transform duration-700 group-hover:scale-[1.035]"
+            />
+          </div>
         ) : (
           <div className="aspect-[4/5] w-full bg-card/10" />
         )}
@@ -375,11 +379,17 @@ export default function Links() {
         <section className="border-b border-border/18 pb-10 md:pb-14">
           <div className="mx-auto max-w-3xl text-center">
             <div className="mx-auto mb-5 h-20 w-20 overflow-hidden rounded-full border border-border/30 bg-card/20 md:h-24 md:w-24">
-              <img
-                src={bioData.profileImage}
-                alt={bioData.name}
-                className="h-full w-full object-cover"
-              />
+              <div className="relative h-full w-full">
+                <Image
+                  src={bioData.profileImage}
+                  alt={bioData.name}
+                  fill
+                  priority
+                  quality={82}
+                  sizes="6rem"
+                  className="object-cover"
+                />
+              </div>
             </div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
               Scenic Design

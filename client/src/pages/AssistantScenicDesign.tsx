@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react";
 import { Link } from "wouter";
@@ -249,13 +250,16 @@ export default function AssistantScenicDesign() {
                 <AnimatedSection key={entry.anchorId}>
                   <article id={entry.anchorId} className="group flex h-full flex-col">
                     <div className="flex h-[18rem] items-end overflow-hidden rounded-[0.85rem] bg-black/70 md:h-[20rem] xl:h-[18.5rem]">
-                      <img
-                        src={entry.coverImageUrl}
-                        alt={entry.coverImageAlt}
-                        className="max-h-full w-full rounded-[0.85rem] object-contain object-bottom transition-transform duration-500 group-hover:scale-[1.015]"
-                        loading="lazy"
-                        decoding="async"
-                      />
+                      <div className="relative h-full w-full">
+                        <Image
+                          src={entry.coverImageUrl}
+                          alt={entry.coverImageAlt}
+                          fill
+                          quality={82}
+                          sizes="(max-width: 1024px) 92vw, 30vw"
+                          className="rounded-[0.85rem] object-contain object-bottom transition-transform duration-500 group-hover:scale-[1.015]"
+                        />
+                      </div>
                     </div>
                     <div className="pt-4">
                       <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-foreground/40">
@@ -326,13 +330,16 @@ export default function AssistantScenicDesign() {
                         className="w-[72vw] max-w-[52rem] flex-none snap-center md:w-[calc((100%-2rem)/3)] md:max-w-none"
                       >
                         <div className="overflow-hidden rounded-[0.9rem] bg-black/70">
-                          <img
-                            src={entry.coverImageUrl}
-                            alt={entry.coverImageAlt}
-                            className="h-auto w-full rounded-[0.9rem]"
-                            loading="lazy"
-                            decoding="async"
-                          />
+                          <div className="relative aspect-[16/10] w-full">
+                            <Image
+                              src={entry.coverImageUrl}
+                              alt={entry.coverImageAlt}
+                              fill
+                              quality={82}
+                              sizes="(max-width: 768px) 72vw, 33vw"
+                              className="rounded-[0.9rem] object-contain"
+                            />
+                          </div>
                         </div>
                         <figcaption className="pt-4">
                           <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-foreground/40">

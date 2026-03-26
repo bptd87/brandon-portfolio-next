@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AboutNav from "@/components/AboutNav";
@@ -142,12 +143,16 @@ export default function SyllabusExperiential() {
       <section className="px-6 py-8 md:py-12">
         <div className="mx-auto grid max-w-[88rem] items-center gap-10 xl:grid-cols-[minmax(18rem,0.95fr)_minmax(0,1.05fr)]">
           <div className="overflow-hidden rounded-[1.5rem] border border-border/30 bg-card/20">
-            <img
-              src="/assets/teaching/syllabus-experiential-art.png"
-              alt="Experiential design syllabus artwork"
-              className="aspect-square w-full object-cover"
-              loading="lazy"
-            />
+            <div className="relative aspect-square w-full">
+              <Image
+                src="/assets/teaching/syllabus-experiential-art.png"
+                alt="Experiential design syllabus artwork"
+                fill
+                quality={82}
+                sizes="(max-width: 1280px) 92vw, 34vw"
+                className="object-cover"
+              />
+            </div>
           </div>
 
           <div className="max-w-2xl">
@@ -320,12 +325,16 @@ export default function SyllabusExperiential() {
               >
                 <div className="overflow-hidden rounded-t-[1.75rem] border-b border-border/20 bg-card/20">
                   <div className="mx-auto max-w-6xl">
-                    <img
-                      src="https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_178b77734f664399ad1781073a591459.jpg"
-                      alt="Theatre design students behind the Studio Ghibli-inspired immersive dining project."
-                      className="aspect-[16/8] w-full rounded-t-[1.75rem] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                      loading="lazy"
-                    />
+                    <div className="relative aspect-[16/8] w-full">
+                      <Image
+                        src="https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_178b77734f664399ad1781073a591459.jpg"
+                        alt="Theatre design students behind the Studio Ghibli-inspired immersive dining project."
+                        fill
+                        quality={82}
+                        sizes="100vw"
+                        className="rounded-t-[1.75rem] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                      />
+                    </div>
                   </div>
                 </div>
 

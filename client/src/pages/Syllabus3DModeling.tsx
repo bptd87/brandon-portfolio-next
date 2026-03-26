@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AboutNav from "@/components/AboutNav";
@@ -161,12 +162,16 @@ export default function Syllabus3DModeling() {
           </div>
 
           <div className="overflow-hidden rounded-[1.5rem] border border-border/30 bg-card/20">
-            <img
-              src="/assets/teaching/syllabus-3d-modeling-art.png"
-              alt="3D modeling syllabus artwork"
-              className="aspect-square w-full object-cover"
-              loading="lazy"
-            />
+            <div className="relative aspect-square w-full">
+              <Image
+                src="/assets/teaching/syllabus-3d-modeling-art.png"
+                alt="3D modeling syllabus artwork"
+                fill
+                quality={82}
+                sizes="(max-width: 1280px) 92vw, 34vw"
+                className="object-cover"
+              />
+            </div>
           </div>
         </div>
 
@@ -308,11 +313,13 @@ export default function Syllabus3DModeling() {
             <Link href="/studio/tutorials" className="group block">
               <div className="grid gap-5 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:items-start">
                 <div className="relative aspect-square overflow-hidden rounded-[1.15rem] border border-border/35 bg-card/20">
-                  <img
+                  <Image
                     src="/assets/studio/studio-tutorials-cover.png"
                     alt="Vectorworks tutorials used in THA 211"
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                    loading="lazy"
+                    fill
+                    quality={80}
+                    sizes="(max-width: 640px) 42vw, 8.5rem"
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                   />
                 </div>
                 <div className="pt-1">

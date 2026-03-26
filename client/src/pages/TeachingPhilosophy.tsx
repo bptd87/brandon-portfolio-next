@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AboutNav from "@/components/AboutNav";
@@ -212,11 +213,13 @@ export default function TeachingPhilosophy() {
 
           <div className="overflow-hidden rounded-[1.5rem] border border-border/30 bg-card/20">
             <div className="relative aspect-[4/5] w-full">
-              <img
+              <Image
                 src="/assets/about/about-teaching-art.png"
                 alt="Abstract teaching philosophy artwork"
+                fill
+                quality={82}
+                sizes="(max-width: 1280px) 92vw, 34vw"
                 className="absolute left-1/2 top-1/2 h-full w-full max-w-none -translate-x-1/2 -translate-y-1/2 scale-[1.25] rotate-90 object-cover object-center"
-                loading="lazy"
               />
             </div>
           </div>
@@ -378,12 +381,16 @@ export default function TeachingPhilosophy() {
                     href={card.href}
                     className="group block"
                   >
-                    <img
-                      src={card.image}
-                      alt={card.title}
-                      className="aspect-square w-full rounded-[1rem] object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-                      loading="lazy"
-                    />
+                    <div className="relative aspect-square w-full overflow-hidden rounded-[1rem]">
+                      <Image
+                        src={card.image}
+                        alt={card.title}
+                        fill
+                        quality={82}
+                        sizes="(max-width: 768px) 92vw, 46vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                      />
+                    </div>
                     <div className="mt-4 flex items-start justify-between gap-4">
                       <div>
                         <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.22em] text-foreground/38">
@@ -424,12 +431,16 @@ export default function TeachingPhilosophy() {
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               {featuredWork.map((project) => (
                 <Link key={project.id} href={getProjectHref(project)} className="group block">
-                  <img
-                    src={project.coverImageUrl || ""}
-                    alt={project.title}
-                    className="aspect-[3/2] w-full rounded-[1rem] object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-                    loading="lazy"
-                  />
+                  <div className="relative aspect-[3/2] w-full overflow-hidden rounded-[1rem]">
+                    <Image
+                      src={project.coverImageUrl || ""}
+                      alt={project.title}
+                      fill
+                      quality={82}
+                      sizes="(max-width: 768px) 92vw, 31vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                    />
+                  </div>
                   <p className="mt-3 font-sans text-[1rem] leading-7 text-foreground/74 transition-colors group-hover:text-foreground">
                     {project.title}
                   </p>

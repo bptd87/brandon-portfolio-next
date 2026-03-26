@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { ArrowRight, BookOpen, Calendar, Play, Wrench } from "lucide-react";
 import { Link } from "wouter";
 
@@ -173,13 +174,16 @@ export default function Studio() {
                 <Link href={item.href} className="group block">
                   <article className="border-t border-border/14 pt-4">
                     <div className="relative overflow-hidden rounded-[1rem] border border-border/16 bg-card/10">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="aspect-square w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                        loading="lazy"
-                        decoding="async"
-                      />
+                      <div className="relative aspect-square w-full">
+                        <Image
+                          src={item.image}
+                          alt={item.title}
+                          fill
+                          quality={82}
+                          sizes="(max-width: 640px) 92vw, (max-width: 1280px) 46vw, 30vw"
+                          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                        />
+                      </div>
                       {item.imageTitle ? (
                         <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-6 text-center">
                           <div className="absolute inset-0 bg-black/10" />
@@ -233,13 +237,16 @@ export default function Studio() {
                 <Link href={app.href} className="group block">
                   <article className="border-t border-border/14 pt-4">
                     <div className="relative overflow-hidden rounded-[1rem] border border-border/16 bg-card/10">
-                      <img
-                        src={app.image}
-                        alt={app.title}
-                        className="aspect-square w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                        loading="lazy"
-                        decoding="async"
-                      />
+                      <div className="relative aspect-square w-full">
+                        <Image
+                          src={app.image}
+                          alt={app.title}
+                          fill
+                          quality={82}
+                          sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 22vw"
+                          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                        />
+                      </div>
                       <div className="pointer-events-none absolute inset-0 rounded-[1rem] ring-1 ring-inset ring-white/5" />
                     </div>
 
@@ -297,13 +304,16 @@ export default function Studio() {
                     <article className="border-t border-border/14 pt-4">
                       <div className="relative overflow-hidden rounded-[1rem] border border-border/16 bg-card/10">
                         {article.coverImageUrl ? (
-                          <img
-                            src={article.coverImageUrl}
-                            alt={article.title}
-                            className="aspect-square w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                            loading="lazy"
-                            decoding="async"
-                          />
+                          <div className="relative aspect-square w-full">
+                            <Image
+                              src={article.coverImageUrl}
+                              alt={article.title}
+                              fill
+                              quality={82}
+                              sizes="(max-width: 640px) 92vw, (max-width: 1280px) 46vw, 30vw"
+                              className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                            />
+                          </div>
                         ) : (
                           <div className="flex aspect-square w-full items-center justify-center bg-card/10">
                             <BookOpen className="h-10 w-10 text-foreground/28" />
