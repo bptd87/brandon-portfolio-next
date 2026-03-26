@@ -23,6 +23,7 @@ export function ScenicDirectoryManager() {
     const [search, setSearch] = useState('');
     const [statusFilter, setStatusFilter] = useState('all');
     const { data: entries, isLoading, refetch } = trpc.scenicDirectory.list.useQuery();
+    type ScenicDirectoryEntry = NonNullable<typeof entries>[number];
     const deleteMutation = trpc.scenicDirectory.delete.useMutation({
         onSuccess: () => {
             toast.success('Entry deleted');
@@ -34,8 +35,8 @@ export function ScenicDirectoryManager() {
     });
 
     const filteredEntries = useMemo(() => {
-        const rows = entries || [];
-        return rows.filter((entry) => {
+        const rows: ScenicDirectoryEntry[] = entries || [];
+        return rows.filter((entry: ScenicDirectoryEntry) => {
             const q = search.toLowerCase();
             const searchMatch = !search || [entry.title, entry.categorySlug, entry.location, entry.description]
                 .filter(Boolean)
@@ -48,7 +49,11 @@ export function ScenicDirectoryManager() {
     }, [entries, search, statusFilter]);
 
     const categories = useMemo(() => {
-        const set = new Set((entries || []).map((e) => e.categorySlug).filter(Boolean));
+        const set = new Set<string>(
+            (entries || [])
+                .map((e: ScenicDirectoryEntry) => e.categorySlug)
+                .filter((value: ScenicDirectoryEntry["categorySlug"]): value is string => typeof value === 'string' && value.length > 0)
+        );
         return Array.from(set).sort();
     }, [entries]);
 
