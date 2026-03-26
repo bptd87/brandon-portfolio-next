@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import MobileMenu from "./MobileMenu";
+import SearchOverlay from "./SearchOverlay";
 
 type MenuItem = {
   name: string;
@@ -131,6 +132,7 @@ export default function Header() {
   const [aboutOpen, setAboutOpen] = useState(false);
   const [studioOpen, setStudioOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollYRef = useRef(0);
 
@@ -185,6 +187,23 @@ export default function Header() {
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        setSearchOpen(true);
+      }
+
+      if (event.key === "/" && !(event.target instanceof HTMLInputElement) && !(event.target instanceof HTMLTextAreaElement)) {
+        event.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   const handlePortfolioMouseLeave = () => {
@@ -419,7 +438,11 @@ export default function Header() {
               <div className="ml-6 shrink-0">
                 <div className="flex items-center gap-2">
                   <Link
-                    href="/search"
+                    href="#"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      setSearchOpen(true);
+                    }}
                     aria-label="Search site"
                     className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/18 text-white/72 transition-colors hover:border-white/32 hover:bg-white/[0.05] hover:text-white"
                   >
@@ -448,7 +471,12 @@ export default function Header() {
         </div>
       </header>
 
-      <MobileMenu isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+      <MobileMenu
+        isOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        onOpenSearch={() => setSearchOpen(true)}
+      />
+      <SearchOverlay open={searchOpen} onOpenChange={setSearchOpen} />
     </>
   );
 }

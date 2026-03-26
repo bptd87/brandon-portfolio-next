@@ -7,6 +7,7 @@ import { ChevronDown, X } from "lucide-react";
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
+  onOpenSearch: () => void;
 }
 
 const PORTFOLIO_LINKS = [
@@ -88,7 +89,7 @@ function MenuSection({
   );
 }
 
-export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+export default function MobileMenu({ isOpen, onClose, onOpenSearch }: MobileMenuProps) {
   const [pathname] = useLocation();
   const [workOpen, setWorkOpen] = useState(true);
   const [aboutOpen, setAboutOpen] = useState(false);
@@ -160,8 +161,12 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             </div>
 
             <Link
-              href="/search"
-              onClick={onClose}
+              href="#"
+              onClick={(event) => {
+                event.preventDefault();
+                onClose();
+                onOpenSearch();
+              }}
               className="mb-6 inline-flex h-11 items-center justify-center rounded-full border border-border/45 px-5 text-sm font-medium tracking-[-0.01em] text-foreground/72 transition-colors hover:border-border hover:text-foreground"
             >
               Search Site

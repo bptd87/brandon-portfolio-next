@@ -224,7 +224,7 @@ export default function TeachingPhilosophy() {
                 unoptimized
                 quality={82}
                 sizes="(max-width: 1280px) 92vw, 34vw"
-                className="object-cover object-center scale-[1.08]"
+                className="absolute left-1/2 top-1/2 h-full w-full max-w-none -translate-x-1/2 -translate-y-1/2 scale-[1.25] rotate-90 object-cover object-center"
               />
             </div>
           </div>

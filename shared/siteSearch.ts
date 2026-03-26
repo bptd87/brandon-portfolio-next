@@ -10,7 +10,6 @@ import {
 } from "./localPortfolios";
 import { getLocalScenicProjects } from "./localScenicProjects";
 import {
-  getLocalCollaborators,
   getLocalStudioDirectory,
   getLocalTutorials,
 } from "./localStudio";
@@ -27,11 +26,13 @@ export type SiteSearchEntry = {
   meta?: string;
   keywords: string[];
   featured?: boolean;
+  bodyText?: string;
   searchText: string;
 };
 
 export type SiteSearchResult = SiteSearchEntry & {
   score: number;
+  snippet: string;
 };
 
 function normalizeSearchValue(value: string) {
@@ -45,10 +46,6 @@ function normalizeSearchValue(value: string) {
     .replace(/\s+/g, " ")
     .trim()
     .toLowerCase();
-}
-
-function slugifyAnchor(value: string) {
-  return normalizeSearchValue(value).replace(/\s+/g, "-");
 }
 
 function uniqueKeywords(values: Array<string | null | undefined>) {
@@ -73,6 +70,7 @@ function toEntry(input: Omit<SiteSearchEntry, "searchText">) {
     input.section,
     input.description,
     input.meta,
+    input.bodyText,
     ...keywords,
   ]).join(" ");
 
@@ -94,6 +92,151 @@ function createEntry(input: SearchEntryInput) {
   });
 }
 
+function stripHtml(value: string) {
+  return value.replace(/<[^>]+>/g, " ");
+}
+
+function collapseWhitespace(value: string) {
+  return value.replace(/\s+/g, " ").trim();
+}
+
+function extractArticleBodyText(content: unknown): string {
+  if (typeof content === "string") {
+    return collapseWhitespace(stripHtml(content));
+  }
+
+  if (!Array.isArray(content)) return "";
+
+  const parts: string[] = [];
+
+  for (const block of content) {
+    if (!block || typeof block !== "object") continue;
+
+    if (typeof block.text === "string") {
+      parts.push(block.text);
+    }
+
+    if (typeof block.content === "string") {
+      parts.push(stripHtml(block.content));
+    }
+
+    if (typeof block.caption === "string") {
+      parts.push(block.caption);
+    }
+
+    if (typeof block.alt === "string") {
+      parts.push(block.alt);
+    }
+
+    if (Array.isArray(block.items)) {
+      for (const item of block.items) {
+        if (typeof item === "string") {
+          parts.push(item);
+        } else if (item && typeof item === "object") {
+          if (typeof item.question === "string") parts.push(item.question);
+          if (typeof item.answer === "string") parts.push(item.answer);
+          if (typeof item.text === "string") parts.push(item.text);
+          if (typeof item.content === "string") parts.push(stripHtml(item.content));
+        }
+      }
+    }
+
+    if (Array.isArray(block.images)) {
+      for (const image of block.images) {
+        if (!image || typeof image !== "object") continue;
+        if (typeof image.alt === "string") parts.push(image.alt);
+        if (typeof image.caption === "string") parts.push(image.caption);
+      }
+    }
+  }
+
+  return collapseWhitespace(parts.join(" "));
+}
+
+function extractTutorialBodyText(tutorial: ReturnType<typeof getLocalTutorials>[number]) {
+  return collapseWhitespace(
+    [
+      tutorial.description,
+      tutorial.overview,
+      ...(tutorial.learning_objectives || []),
+      ...(tutorial.pro_tips || []),
+      ...(tutorial.common_pitfalls || []),
+      ...(tutorial.key_concepts || []).flatMap((concept) => [concept.title, concept.content]),
+      ...(tutorial.transcript || []).map((item) => item.text),
+    ]
+      .filter(Boolean)
+      .join(" ")
+  );
+}
+
+function extractScenicBodyText(project: ReturnType<typeof getLocalScenicProjects>[number]) {
+  return collapseWhitespace(
+    [
+      project.excerpt,
+      ...project.creativeTeam.flatMap((member) => [member.name, member.role]),
+      ...project.sections.flatMap((section) => {
+        if (section.type === "text") {
+          return [section.heading, ...section.content];
+        }
+
+        if (section.type === "video") {
+          return [section.heading, ...(section.content || [])];
+        }
+
+        return [section.heading];
+      }),
+      ...project.media.flatMap((media) => [media.altText, media.caption]),
+    ]
+      .filter(Boolean)
+      .join(" ")
+  );
+}
+
+function extractRenderingBodyText(project: ReturnType<typeof getLocalRenderingProjects>[number]) {
+  return collapseWhitespace(
+    [
+      project.excerpt,
+      project.heroExcerpt,
+      project.designNotes,
+      ...(project.bodySections || []).flatMap((section) => [section.heading, ...section.paragraphs]),
+      ...project.images.flatMap((image) => [image.altText, image.caption]),
+    ]
+      .filter(Boolean)
+      .join(" ")
+  );
+}
+
+function extractExperientialBodyText(sample: ReturnType<typeof getLocalExperientialSamples>[number]) {
+  return collapseWhitespace(
+    [
+      sample.description,
+      sample.altText,
+      ...sample.images.flatMap((image) => [image.title, image.caption, image.altText]),
+    ]
+      .filter(Boolean)
+      .join(" ")
+  );
+}
+
+function buildSnippet(source: string | undefined, fallback: string, terms: string[]) {
+  const body = collapseWhitespace(source || "");
+  if (!body) return fallback;
+
+  const lower = body.toLowerCase();
+  const hit = terms
+    .map((term) => lower.indexOf(term))
+    .filter((index) => index >= 0)
+    .sort((a, b) => a - b)[0];
+
+  if (hit == null) return fallback;
+
+  const start = Math.max(0, hit - 72);
+  const end = Math.min(body.length, hit + 148);
+  const snippet = body.slice(start, end).trim();
+
+  return `${start > 0 ? "..." : ""}${snippet}${end < body.length ? "..." : ""}`;
+}
+
 export function buildSiteSearchEntries(): SiteSearchEntry[] {
   const scenicEntries = getLocalScenicProjects().map((project) =>
     createEntry({
@@ -105,6 +248,7 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
       description: project.excerpt,
       meta: [project.client, project.location, project.year].filter(Boolean).join(" • "),
       featured: project.featured,
+      bodyText: extractScenicBodyText(project),
       keywords: [
         project.title,
         project.slug,
@@ -124,16 +268,17 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
         id: `rendering:${project.slug}`,
         title: project.title,
         href: `/projects/rendering/${project.slug}`,
-        section: "Portfolio",
-        kind: "Rendering Project",
-        description: project.excerpt,
-        meta: [project.client, project.location, project.year].filter(Boolean).join(" • "),
-        featured: project.featured,
-        keywords: [
-          project.title,
-          project.slug,
-          project.excerpt,
-          project.designNotes,
+      section: "Portfolio",
+      kind: "Rendering Project",
+      description: project.excerpt,
+      meta: [project.client, project.location, project.year].filter(Boolean).join(" • "),
+      featured: project.featured,
+      bodyText: extractRenderingBodyText(project),
+      keywords: [
+        project.title,
+        project.slug,
+        project.excerpt,
+        project.designNotes,
           project.client,
           project.location,
         ],
@@ -149,6 +294,7 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
       kind: "Experiential Sample",
       description: sample.description,
       meta: [sample.category, sample.year].filter(Boolean).join(" • "),
+      bodyText: extractExperientialBodyText(sample),
       keywords: [
         sample.displayTitle,
         sample.slug,
@@ -183,6 +329,7 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
       description: article.excerpt,
       meta: [article.categoryName, article.sourcePublication].filter(Boolean).join(" • "),
       featured: article.featured,
+      bodyText: extractArticleBodyText(article.content),
       keywords: [
         article.title,
         article.slug,
@@ -205,6 +352,7 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
       kind: "Tutorial",
       description: tutorial.description || tutorial.overview || "Scenic workflow tutorial.",
       meta: [tutorial.category, tutorial.difficulty].filter(Boolean).join(" • "),
+      bodyText: extractTutorialBodyText(tutorial),
       keywords: [
         tutorial.title,
         tutorial.slug,
@@ -216,28 +364,6 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
         ...(tutorial.key_concepts || []).flatMap((concept) => [concept.title, concept.content]),
         ...(tutorial.pro_tips || []),
         ...(tutorial.related_resources || []).flatMap((resource) => [resource.title, resource.type]),
-      ],
-    })
-  );
-
-  const collaboratorEntries = getLocalCollaborators().map((collaborator) =>
-    createEntry({
-      id: `collaborator:${collaborator.slug}`,
-      title: collaborator.name,
-      href: `/about/collaborators#${slugifyAnchor(collaborator.name)}`,
-      section: "People",
-      kind: "Collaborator",
-      description: collaborator.bio || `${collaborator.name} is featured in the collaborators index.`,
-      meta: collaborator.role,
-      featured: collaborator.featured,
-      keywords: [
-        collaborator.name,
-        collaborator.slug,
-        collaborator.role,
-        collaborator.bio,
-        collaborator.website,
-        collaborator.portfolioUrl,
-        collaborator.instagramHandle,
       ],
     })
   );
@@ -292,7 +418,6 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
     ...brandEntries,
     ...articleEntries,
     ...tutorialEntries,
-    ...collaboratorEntries,
     ...assistantEntries,
     ...directoryEntries,
   ];
@@ -347,7 +472,11 @@ export function searchSiteIndex(entries: SiteSearchEntry[], query: string) {
     if (text.includes(normalizedQuery)) score += 8;
     if (entry.featured) score += 3;
 
-    results.push({ ...entry, score });
+    results.push({
+      ...entry,
+      score,
+      snippet: buildSnippet(entry.bodyText, entry.description, terms),
+    });
   }
 
   return results.sort((a, b) => b.score - a.score || a.title.localeCompare(b.title));
