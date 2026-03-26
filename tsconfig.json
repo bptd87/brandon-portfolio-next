@@ -19,34 +19,7 @@
     "dist",
     ".next/dev/**/*",
     "api/**/*",
-    "client/src/_core/**/*",
-    "client/src/main.tsx",
-    "client/src/App.tsx",
-    "client/src/pages/admin/**/*",
-    "client/src/components/admin/**/*",
-    "client/src/pages/Admin.tsx",
-    "client/src/pages/AdminProjectEdit.tsx",
-    "client/src/pages/AuthDebug.tsx",
-    "client/src/pages/ComponentShowcase.tsx",
-    "client/src/pages/Contact.tsx",
-    "client/src/pages/Login.tsx",
-    "client/src/pages/News.tsx",
-    "client/src/pages/NewsDetail.tsx",
-    "client/src/pages/ProjectDetail.tsx",
-    "client/src/pages/ProjectDetailRouter.tsx",
-    "client/src/components/TodoDialog.tsx",
-    "server/_core/**/*",
-    "server/db.ts",
-    "server/dbTypes.ts",
-    "server/generateTeachingPhilosophyPDF.ts",
-    "server/imageCompression.ts",
-    "server/imageProxy.ts",
-    "server/routers.ts",
-    "server/routers/**/*",
-    "server/rss.ts",
-    "server/sitemap.ts",
     "server/*test.ts",
-    "vite.config.ts",
     "**/*.test.ts"
   ],
   "compilerOptions": {
@@ -66,8 +39,7 @@
     "moduleResolution": "bundler",
     "baseUrl": ".",
     "types": [
-      "node",
-      "vite/client"
+      "node"
     ],
     "paths": {
       "@/*": [
