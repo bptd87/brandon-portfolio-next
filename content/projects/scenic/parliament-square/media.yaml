@@ -1,0 +1,66 @@
+gallery:
+  - id: parliament-cover
+    kind: cover
+    asset: project-images/project-90018-cover.webp
+    alt: Parliament Square scenic design cover image.
+  - id: parliament-prod-1
+    kind: production
+    asset: project-images/project-90018-gallery-150128.webp
+    alt: >-
+      Production image from Parliament Square showing the circular stone path and sparse political landscape, scenic
+      design by Brandon PT Davis.
+  - id: parliament-prod-2
+    kind: production
+    asset: project-images/project-90018-gallery-150143.webp
+    alt: >-
+      Production image from Parliament Square highlighting the ritual staging geometry and fractured environment, scenic
+      design by Brandon PT Davis.
+  - id: parliament-prod-3
+    kind: production
+    asset: project-images/project-90018-gallery-150150.webp
+    alt: >-
+      Production still from Parliament Square emphasizing concrete textures and political isolation, scenic design by
+      Brandon PT Davis.
+  - id: parliament-prod-4
+    kind: production
+    asset: project-images/project-90018-gallery-150159.webp
+    alt: >-
+      Performance image from Parliament Square showing the stone circle as a container for protest, scenic design by
+      Brandon PT Davis.
+  - id: parliament-prod-5
+    kind: production
+    asset: project-images/project-90018-gallery-150166.webp
+    alt: >-
+      Production image from Parliament Square with the cold palette and minimal architecture in view, scenic design by
+      Brandon PT Davis.
+  - id: parliament-prod-6
+    kind: production
+    asset: project-images/project-90018-gallery-150188.webp
+    alt: >-
+      Production image from Parliament Square emphasizing the environment's meditative austerity, scenic design by
+      Brandon PT Davis.
+  - id: parliament-prod-7
+    kind: production
+    asset: project-images/project-90018-gallery-150202.webp
+    alt: >-
+      Production image from Parliament Square showing the scenic world pressing the political against the personal,
+      scenic design by Brandon PT Davis.
+  - id: parliament-prod-8
+    kind: production
+    asset: project-images/project-90018-gallery-150205.webp
+    alt: >-
+      Production still from Parliament Square highlighting symbolic decay and empty public space, scenic design by
+      Brandon PT Davis.
+  - id: parliament-prod-9
+    kind: production
+    asset: project-images/project-90018-gallery-150214.webp
+    alt: >-
+      Production image from Parliament Square reinforcing the scenic world's tension between resilience and sacrifice,
+      scenic design by Brandon PT Davis.
+  - id: parliament-render-1
+    kind: rendering
+    asset: project-images/project-90018-gallery-150241.webp
+    alt: >-
+      Rendering for Parliament Square exploring the circular path, concrete surfaces, and ritual scenic composition,
+      scenic design by Brandon PT Davis.
+videos: []

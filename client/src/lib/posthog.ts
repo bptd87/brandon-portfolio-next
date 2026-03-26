@@ -1,7 +1,8 @@
 import posthog from "posthog-js";
+import { readPublicEnv } from "./readPublicEnv";
 
-const POSTHOG_KEY = import.meta.env.VITE_PUBLIC_POSTHOG_KEY?.trim();
-const POSTHOG_HOST = import.meta.env.VITE_PUBLIC_POSTHOG_HOST?.trim();
+const POSTHOG_KEY = readPublicEnv("NEXT_PUBLIC_POSTHOG_KEY", "VITE_PUBLIC_POSTHOG_KEY");
+const POSTHOG_HOST = readPublicEnv("NEXT_PUBLIC_POSTHOG_HOST", "VITE_PUBLIC_POSTHOG_HOST");
 
 let initialized = false;
 

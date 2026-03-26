@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { ChevronDown, X } from "lucide-react";

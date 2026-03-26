@@ -1,15 +1,15 @@
 # Brandon PT Davis Portfolio
 
-Professional portfolio website for scenic and experiential designer Brandon PT Davis, showcasing theatrical productions, design work, and creative projects.
+Professional portfolio website for scenic and experiential designer Brandon PT Davis, rebuilt as a Next.js site with static public pages and a protected media-first admin workspace.
 
 ## Tech Stack
 
-- **Frontend**: React 19 + Vite + Tailwind CSS 4
-- **Backend**: Express 4 + tRPC 11
-- **Database**: MySQL/TiDB (via Drizzle ORM)
-- **Image CDN**: Cloudinary
-- **Authentication**: Manus OAuth
-- **Deployment**: Manus Platform
+- **App**: Next.js 16 + React 19 + Tailwind CSS 4
+- **Admin/API**: Next App Router + tRPC 11
+- **Content model**: local snapshot files in `shared/*`
+- **Media**: Supabase Storage public URLs
+- **Authentication**: Supabase-backed admin sign-in
+- **Deployment target**: Vercel
 
 ## Getting Started
 
@@ -33,20 +33,18 @@ Professional portfolio website for scenic and experiential designer Brandon PT D
    ```
 
 3. **Set up environment variables**
-   
-   Contact the project owner for the required environment variables. You'll need:
-   
-   - `DATABASE_URL` - MySQL/TiDB connection string
-   - `JWT_SECRET` - Session cookie signing secret
-   - `CLOUDINARY_CLOUD_NAME` - Cloudinary account name
-   - `CLOUDINARY_API_KEY` - Cloudinary API key
-   - `CLOUDINARY_API_SECRET` - Cloudinary API secret
-   - `VITE_APP_ID` - Manus OAuth application ID
-   - `OAUTH_SERVER_URL` - Manus OAuth backend URL
-   - `VITE_OAUTH_PORTAL_URL` - Manus login portal URL
-   - Other system environment variables (see `server/_core/env.ts`)
 
-   Create a `.env` file in the project root with these values.
+   See [ENVIRONMENT.md](/Users/brandonptdavis/Documents/Code/brandon-portfolio-v2/ENVIRONMENT.md) for the current Next/Vercel env contract.
+
+   At minimum for the modern app you will usually need:
+
+   - `SITE_URL`
+   - `SUPABASE_URL`
+   - `SUPABASE_SERVICE_KEY`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `RESEND_API_KEY`
+   - `CONTACT_FROM_EMAIL`
+   - `CONTACT_TO_EMAIL`
 
 4. **Run development server**
    ```bash
@@ -156,12 +154,12 @@ pnpm test --watch
 
 ## Deployment
 
-This project is deployed on the Manus Platform. Changes pushed to the main branch are NOT automatically deployed.
+The active deployment target is Vercel.
 
-To deploy:
-1. Create a checkpoint in Manus UI
-2. Click "Publish" in the Management UI
-3. Configure custom domain in Settings → Domains
+Before deployment:
+1. Configure the variables listed in [ENVIRONMENT.md](/Users/brandonptdavis/Documents/Code/brandon-portfolio-v2/ENVIRONMENT.md)
+2. Verify `/admin` sign-in works with production env values
+3. Smoke test key public routes and asset browsing in the built app
 
 ## Contributing
 

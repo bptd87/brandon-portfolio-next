@@ -1,0 +1,42 @@
+- type: text
+  heading: A New York of Exterior Lives
+  content:
+    - >-
+      For Company at UCI, the design grew out of observation. A solo trip to New York the spring before the production
+      became the seed: white or cream walls, trim layered in decades of paint, and buildings that felt strangely
+      uninhabited because life seemed to happen outside, in motion, in the city itself.
+- type: gallery
+  mediaIds:
+    - company-prod-1
+    - company-prod-2
+- type: text
+  heading: Coupled Buildings and Solitude
+  content:
+    - >-
+      That sensibility shaped the architecture. Two coupled buildings framed stage right, linked structures echoing
+      partnership, while a lone red-brick building stood apart at stage left, reflecting Bobby's solitude. Fire escapes,
+      stoops, and ladders climbed throughout the composition, offering both physical and metaphorical mobility.
+- type: gallery
+  mediaIds:
+    - company-prod-3
+    - company-prod-4
+- type: text
+  heading: Design Goal
+  content:
+    - >-
+      Backlit windows glowed in purples, pinks, and blues, hinting at private lives just out of reach, while a
+      color-shifting cyc formed the skyline and moved with mood and music. Rather than literal apartments, the design
+      created a landscape of longing: an exterior world where people connect, drift, and orbit love, holding the ache
+      and possibility of modern adulthood.
+- type: gallery
+  mediaIds:
+    - company-prod-5
+    - company-prod-6
+    - company-prod-7
+    - company-prod-8
+    - company-prod-9
+    - company-prod-10
+    - company-prod-11
+- type: gallery
+  mediaIds:
+    - company-render-1

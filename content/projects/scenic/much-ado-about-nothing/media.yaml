@@ -1,0 +1,34 @@
+gallery:
+  - id: man-cover
+    kind: cover
+    asset: project-images/project-90089-cover.webp
+    alt: Much Ado About Nothing scenic design cover image.
+  - id: man-prod-1
+    kind: production
+    asset: project-images/project-90089-gallery-150032.webp
+    alt: Production image from Much Ado About Nothing at New Swan Theatre Festival, scenic design by Brandon PT Davis.
+  - id: man-prod-2
+    kind: production
+    asset: project-images/project-90089-gallery-150124.webp
+    alt: >-
+      Scene transition on the open-air Shakespearean set for Much Ado About Nothing at New Swan, scenic design by
+      Brandon PT Davis.
+  - id: man-prod-3
+    kind: production
+    asset: project-images/project-90089-gallery-150063.webp
+    alt: >-
+      Wide stage view of the courtyard-inspired set for Much Ado About Nothing at New Swan Theatre Festival in Irvine,
+      scenic design by Brandon PT Davis.
+  - id: man-prod-4
+    kind: production
+    asset: project-images/project-90089-gallery-150079.webp
+    alt: >-
+      Ensemble stage picture framed by the rustic architecture of Much Ado About Nothing, scenic design by Brandon PT
+      Davis.
+  - id: man-prod-5
+    kind: production
+    asset: project-images/project-90089-gallery-150096.webp
+    alt: >-
+      Night-lit stage composition showing arches and playing levels in Much Ado About Nothing, scenic design by Brandon
+      PT Davis.
+videos: []

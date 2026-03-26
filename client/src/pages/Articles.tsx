@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useMemo, useState, type CSSProperties, type MouseEvent } from "react";
 import { useLocation } from "wouter";
 import {
@@ -527,7 +529,7 @@ export default function Articles() {
             <section className="pb-20 pt-12 md:pb-28 md:pt-14">
               <div className="container max-w-[88rem]">
                 {viewMode === "grid" ? (
-                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {sortedArticles.map((article, index) => {
                       const href = itemHref(article);
 
@@ -535,7 +537,7 @@ export default function Articles() {
                         <div key={`${article.id}-${selectedCategory}-${selectedYear}-${sortKey}-${viewMode}`}>
                           <ArticleGridCard
                             article={article}
-                            eager={index < 8}
+                            eager={index < 4}
                             href={href}
                             onNavigate={navigateWithTransition}
                           />

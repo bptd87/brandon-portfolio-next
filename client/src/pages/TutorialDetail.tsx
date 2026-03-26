@@ -1,3 +1,5 @@
+"use client";
+
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import {
@@ -12,7 +14,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { useMemo } from "react";
-import { useParams, Link } from "wouter";
+import { Link } from "wouter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import StructuredData from "@/components/StructuredData";
 import { SEO } from "@/components/SEO";
@@ -72,9 +74,20 @@ const getOverviewParagraphs = (value: string | null | undefined) =>
     .map((paragraph) => paragraph.trim())
     .filter(Boolean);
 
-export default function TutorialDetail() {
-  const params = useParams();
-  const slug = params.slug;
+type TutorialDetailProps = {
+  slug?: string;
+  params?: {
+    slug?: string;
+  };
+};
+
+export default function TutorialDetail({ slug: slugProp, params }: TutorialDetailProps = {}) {
+  const slug =
+    slugProp ||
+    params?.slug ||
+    (typeof window !== "undefined"
+      ? window.location.pathname.split("/").filter(Boolean).pop() || ""
+      : "");
   const tutorial = getLocalTutorialBySlug(slug);
   const isLoading = false;
   const error = !tutorial && !!slug;

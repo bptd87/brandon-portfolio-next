@@ -1,5 +1,7 @@
+"use client";
+
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link, useLocation, useParams } from "wouter";
+import Link from "next/link";
 import Header from "@/components/Header";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Lightbox } from "@/components/Lightbox";
@@ -11,6 +13,14 @@ import { getLocalScenicProjectBySlug, getLocalScenicProjects, type LocalScenicPr
 import { getLocalArticles } from "@shared/localArticles";
 import { getLocalRenderingProjectForProduction } from "@shared/localPortfolios";
 import { Check, Link2 } from "lucide-react";
+
+type ScenicProjectDetailProps = {
+  slug?: string;
+  currentPath?: string;
+  params?: {
+    slug?: string;
+  };
+};
 
 function getEmbedUrl(url: string): string {
   if (!url) return "";
@@ -78,10 +88,22 @@ function AutoPlayEmbed({ url, title }: { url: string; title: string }) {
   );
 }
 
-export default function ScenicProjectDetail() {
-  const { slug } = useParams<{ slug: string }>();
-  const [location] = useLocation();
-  const normalizedSlug = String(slug || "").trim().toLowerCase();
+export default function ScenicProjectDetail({
+  slug: slugProp,
+  currentPath,
+  params,
+}: ScenicProjectDetailProps = {}) {
+  const resolvedPath =
+    currentPath || (typeof window !== "undefined" ? window.location.pathname : "/project");
+  const normalizedSlug = String(
+    slugProp ||
+      params?.slug ||
+      (typeof window !== "undefined"
+        ? window.location.pathname.split("/").filter(Boolean).pop() || ""
+        : "")
+  )
+    .trim()
+    .toLowerCase();
   const project = getLocalScenicProjectBySlug(normalizedSlug);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [linkCopied, setLinkCopied] = useState(false);
@@ -109,7 +131,7 @@ export default function ScenicProjectDetail() {
     );
   }
 
-  const projectUrl = `https://www.brandonptdavis.com${location}`;
+  const projectUrl = `https://www.brandonptdavis.com${resolvedPath}`;
   const lightboxImages = imageMedia.map((item) => ({
     imageUrl: item.imageUrl || null,
     caption: item.caption || null,

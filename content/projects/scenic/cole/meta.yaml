@@ -1,0 +1,51 @@
+type: project
+discipline: scenic
+slug: cole
+title: Cole
+status: published
+featured: false
+excerpt: >-
+  A late-night jazz-age room for Cole, anchored by a grounded bar, black-and-white tile, and an onstage band so the
+  music feels intimate and sourced from the space itself.
+seoTitle: Cole | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for Cole at Okoboji Summer Theatre, using a jazz-age bar, integrated band, and cabaret intimacy to
+  support Cole Porter’s music.
+seoKeywords:
+  - Cole scenic design
+  - Okoboji Summer Theatre
+  - cabaret scenic design
+  - jazz-age stage design
+  - Brandon PT Davis
+  - musical revue scenery
+client: Okoboji Summer Theatre
+clientUrl: https://okobojisummertheatre.org/
+location: Okoboji, IA
+year: 2023
+month: 6
+subcategory: Musical Theatre
+cover:
+  asset: portfolio/projects/2026/03/2023-cole-7-of-8-8632.webp
+  alt: Cole scenic design cover image
+team:
+  - role: Written By
+    name: Benny Green and Alan Strachan
+  - role: Music By
+    name: Cole Porter
+  - role: Director
+    name: Alison Morooney
+  - role: Scenic Design
+    name: Brandon PT Davis
+  - role: Costume Design
+    name: Kirsteen Buchanan
+  - role: Lighting Design
+    name: Savannah Bell
+  - role: Sound Design
+    name: Kayla Sliger
+tags:
+  - musical-theatre
+  - cabaret
+  - cole-porter
+  - okoboji-summer-theatre
+links: []
+updatedAt: '2026-03-01T10:13:53.302815+00:00'

@@ -1,3 +1,5 @@
+"use client";
+
 import { Link, useLocation } from "wouter";
 
 export default function AboutNav() {

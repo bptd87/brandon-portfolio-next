@@ -1,0 +1,23 @@
+type: project
+discipline: rendering
+slug: an-inspector-calls
+title: An Inspector Calls
+status: published
+featured: false
+excerpt: >-
+  A tense domestic world for An Inspector Calls, built to hold respectability on the surface while making room for
+  pressure, unease, and collapse underneath.
+seoTitle: An Inspector Calls
+seoDescription: >-
+  Explore the captivating scenic design of J.B. Priestley's "An Inspector Calls" and discover how it enhances this
+  gripping moral thriller on class and responsibility.
+seoKeywords: []
+client: Okoboji Summer Theatre
+location: Spirit Lake, IA
+year: 2022
+month: 7
+cover:
+  asset: project-images/project-90036-gallery-150134.webp
+  alt: An Inspector Calls rendering project cover image
+publishedAt: '2026-02-19T11:02:04.334Z'
+updatedAt: '2026-02-19T11:02:04.334Z'

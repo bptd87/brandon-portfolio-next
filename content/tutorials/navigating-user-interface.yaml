@@ -1,0 +1,229 @@
+id: 1
+title: 'Vectorworks Tutorial: Navigating the User Interface for Scenic Designers'
+slug: navigating-user-interface
+content: null
+category: Getting Started
+difficulty: Beginner
+duration: 634
+created_at: '2026-02-12T10:46:45.557242+00:00'
+updated_at: '2026-02-22T11:22:57.948959+00:00'
+status: published
+featured: false
+seo_title: null
+seo_description: null
+seo_keywords: null
+learning_objectives:
+  - Understand the Vectorworks menu bar and its theatrical design applications
+  - Navigate the Basic Tool Palette and Attributes Palette
+  - Master the Object Info Palette for precise object control
+  - Use the Navigation Palette to manage classes, layers, and viewports
+  - Understand the X, Y, and Z axis system and coordinate origin
+  - Toggle between 2D and 3D views using keyboard shortcuts
+  - Configure workspace palettes for optimal workflow
+key_concepts:
+  - title: THE COORDINATE ORIGIN (0,0)
+    content: >-
+      All Vectorworks models should be created as close to the origin (0,0) as possible. Straying too far from zero will
+      affect Vectorworks' ability to render perspectives correctly. The origin is where the X and Y axes intersect.
+  - title: X, Y, AND Z AXES
+    content: >-
+      Green axis = North/South (Y-axis), Red axis = East/West (X-axis), Blue axis = Up/Down (Z-axis). Positive numbers
+      extend East, North, and Up from origin. Negative numbers extend West, South, and Down.
+  - title: TOP/PLAN VIEW VS 3D VIEWS
+    content: >-
+      Top/Plan view is the default 2D drafting view. Use Right Isometric, Front, Left, and other 3D views to visualize
+      and model scenic elements in three dimensions. Toggle views using the View Bar or number pad shortcuts.
+pro_tips:
+  - Customize your workspace layout early and save it as a workspace preset for consistency across projects.
+  - 'Use the number pad to quickly switch between views: 1=Front, 3=Right, 7=Top, 0=Isometric.'
+  - Keep the Object Info Palette visible at all times—it's your primary tool for precise object control.
+  - If palettes disappear, go to Window > Palettes to restore them.
+shortcuts:
+  - keys: 0-9 (Number Pad)
+    action: Switch between standard views
+  - keys: Cmd/Ctrl + Scroll
+    action: Zoom in and out
+  - keys: Spacebar + Drag
+    action: Pan around the workspace
+common_pitfalls:
+  - Placing models too far from the origin (0,0), which breaks perspective rendering
+  - Not understanding the difference between Design Layers and Sheet Layers
+  - Closing critical palettes (Object Info, Navigation) and not knowing how to restore them
+  - Confusing the View Bar with the Navigation Palette—they offer similar but different controls
+  - Not customizing the workspace layout, leading to inefficient palette placement
+transcript:
+  - text: '[Music]'
+    time: '0:00'
+  - text: >-
+      Hello, this is Brandon PT Davis. I'm a theatrical scenic designer, and today I'm going to share with you a
+      Vectorworks tutorial about the user interface.
+    time: '0:05'
+  - text: We're going to start off by opening the software. I have the software here on my desktop.
+    time: '0:17'
+  - text: As you notice, the Vectorworks software takes time to open. This is normal because the software is very large.
+    time: '0:23'
+  - text: >-
+      As the software opens, you'll notice that the Vectorworks template user template here is set as a default that
+      says 'Do not use the sheet.' It recommends to close the file, click the file, and select an existing file or open
+      a template.
+    time: '0:32'
+  - text: >-
+      My students at UTEP have been provided with a specific template for them to learn the software, so now I'm going
+      to close this file.
+    time: '0:53'
+  - text: >-
+      To open the file, I'm going to go to File > New, and under here I have the UTEP Basics template. I'm going to
+      press OK.
+    time: '1:04'
+  - text: >-
+      Now that we have the proper Vectorworks template installed, I'm going to speak with you about the Vectorworks user
+      interface.
+    time: '1:18'
+  - text: >-
+      Like many software programs, the Vectorworks user interface has a menu bar across the top—items such as File,
+      Edit, Tools, Text, View, Window, Cloud, and Help.
+    time: '1:25'
+  - text: >-
+      You may have seen in other software programs Vectorworks will use these similar but also differently than other
+      programs you may be used to. We will talk specifically about these tools, these menu items, as we move forward.
+    time: '1:39'
+  - text: We also have the Modify, Model, Spotlight, and Event menu items. These items are more specific to Vectorworks.
+    time: '1:55'
+  - text: >-
+      On the left side here, we have the Basic Tool Palette. The Basic Tool Palette is a combination of tools that you
+      use most frequently throughout the Vectorworks software. This would include things like the square tool, 2D line
+      tool, measuring tools, and annotations. We'll speak more specifically about the basic tool set in the next video.
+    time: '2:09'
+  - text: >-
+      The Attributes Palette allows you to edit and modify specific attributes within the 2D objects that you are
+      creating in Vectorworks.
+    time: '2:32'
+  - text: >-
+      The Tool Set Palette—this palette is very specific to the Vectorworks workspace that you're using. There is a
+      variety of tools that you can use throughout the Vectorworks software, and we will speak specifically to how they
+      apply to theatrical design during the course of these tutorials.
+    time: '2:44'
+  - text: >-
+      We also have a Snapping Palette. A Snapping Palette modifies the way that you interact with the object through
+      Vectorworks. We can move the Snapping Palette right now into the top left corner. We can also change where we have
+      all the palettes in Vectorworks so that we can work in our most effective manner. My preference is to have the
+      workspace configured as shown here.
+    time: '3:01'
+  - text: >-
+      To the right side, we have the Object Info Palette. The Object Info Palette provides information about objects
+      that you're working with in Vectorworks. I will draw a rectangle to show you some of the functionality of the
+      Object Info Palette.
+    time: '3:36'
+  - text: >-
+      So here we can see class, layer, and plane information, as well as width and height. We can modify the rotation of
+      the object as well. There's also data information, and if we're working with 3D objects, we can modify the
+      textures that are applied to the object through the window render options in the Object Info Palette.
+    time: '3:53'
+  - text: >-
+      Below the Object Info Palette is the Navigation Palette. The Navigation Palette is a way to navigate through many
+      aspects of the software. We have our classes here, layers, sheet layers, viewports, saved views, and file
+      references.
+    time: '4:18'
+  - text: >-
+      On the top, we have the Resource Manager. The Resource Manager is a way to store lots of information throughout
+      Vectorworks. Resource Manager items include gradients, hatches, images, line types, materials, record formats,
+      Renderworks backgrounds, Renderworks styles, Renderworks textures, a resource folder, roof styles, script, sketch
+      styles, slab styles, text style, tiles, wall style, and worksheet.
+    time: '4:50'
+  - text: >-
+      At the center, we have the Vectorworks workspace. This large square in the center—the Vectorworks workspace by
+      default is in Top/Plan view. Top/Plan view is also the 2D view.
+    time: '5:29'
+  - text: >-
+      We also have a ruler on the X and Y axis, and at the center we have zero, zero. In order to explain the X, Y, and
+      Z axis and our views, I will show you these arrow symbols that I've created.
+    time: '5:45'
+  - text: >-
+      Thinking of the green North and South as the Y-axis, and red East and West as the X-axis. At the center and the
+      ruler, we have zero, zero. It is recommended that your models be as close and/or on zero, zero as possible when
+      creating your model.
+    time: '6:04'
+  - text: Straying too far away from zero, zero will affect Vectorworks' ability to render the view in perspective.
+    time: '6:31'
+  - text: >-
+      Now I will go to a Right Isometric view and show you the axis. We have the green axis—the North and South as our
+      Y-axis. The red East and West as our X-axis. And the Z-axis is up and down.
+    time: '6:48'
+  - text: >-
+      If we look at the ruler again from this view, we have East as positive numbers—four inches, eight inches, further
+      on it's infinite. If we look towards the West from zero, we go into negative numbers—negative four, et cetera. The
+      same applies both to North and South and the Z-axis up and down—negative, positive numbers.
+    time: '7:08'
+  - text: >-
+      The View Bar across the top offers some of the same functionality as the Navigation Palette. Here we can toggle
+      through the classes and change the active class that we're using. We can toggle through our design and sheet
+      layers. We can also change our screen and layer plane views. Saved views will be stored here.
+    time: '7:47'
+  - text: >-
+      These items here affect how you zoom into Vectorworks, so I can zoom to page or I can zoom to the object. We can
+      also zoom in with this functionality. This is a numeric way to view the zoom functions.
+    time: '8:19'
+  - text: >-
+      These are the working plane views, which we will talk more about when we get into 3D. But we can toggle through
+      the views using this slider. So here is top, right, left. You can also use the number pad and change the views as
+      well.
+    time: '8:49'
+  - text: This icon here will change to your previous and next views that you are looking at within your Vectorworks file.
+    time: '9:22'
+  - text: >-
+      This icon is the Rotate Plan. This would be used if you were working in 3D and wanted to adjust the ground plan to
+      a different view.
+    time: '9:35'
+  - text: >-
+      You can also modify the perspective with this dropdown, and the render settings can be modified with this
+      dropdown.
+    time: '9:50'
+  - text: The View Bar located here will be changed depending on the tools that you have accessed.
+    time: '10:02'
+  - text: >-
+      And this palette here will give you access to shortcuts from both document preferences and Vectorworks
+      preferences.
+    time: '10:12'
+  - text: >-
+      This concludes the Vectorworks tutorial on user interface. If you have any questions, please let me know. Thank
+      you.
+    time: '10:22'
+related_resources:
+  - url: https://app-help.vectorworks.net/2025/eng/VW2025_Guide/QuickStart/Quick_Start_tutorials.htm
+    type: Official Documentation
+    title: Vectorworks Quick Start Tutorials
+  - url: https://app-help.vectorworks.net/2026/eng/VW2026_Guide/Start/Customizing_workspaces.htm
+    type: Official Documentation
+    title: Customizing Workspaces Guide
+  - url: https://www.youtube.com/playlist?list=PLiLCoe7DU1HYNYeFLC3R1C-C7JshE_a0G
+    type: Video Series
+    title: 'Vectorworks 101''s: User Interface Playlist'
+  - url: https://university.vectorworks.net/course/view.php?id=331
+    type: Online Course
+    title: Scenic and Set Design with Vectorworks Course
+  - url: https://forum.vectorworks.net/
+    type: Community
+    title: Vectorworks Community Board
+related_tutorials:
+  - slug: classes-and-layers
+    title: 'Vectorworks 2: Classes and Layers'
+  - slug: basic-2d-tools
+    title: 'Vectorworks 3: Basic 2D Tools'
+  - slug: 2d-theater-ground-plan
+    title: 'Vectorworks 5: 2D Theater Ground Plan'
+overview: >-
+  This tutorial introduces the Vectorworks user interface specifically for scenic designers. You'll learn how to
+  navigate the workspace, understand the coordinate system, and configure palettes for theatrical drafting and 3D
+  modeling.
+
+
+  The walkthrough covers the menu bar, tool palettes, and the critical Object Info and Navigation palettes that control
+  your drawing organization. You'll also learn the X/Y/Z axis system and why keeping your model near the origin (0,0) is
+  essential for rendering.
+
+
+  Finally, the tutorial explores view controls, zoom functions, and workspace customization—showing how to set up an
+  efficient environment for scenic design work.
+description: Master the Vectorworks workspace, palettes, and coordinate system to build an efficient scenic design workflow.
+cover_image: https://img.youtube.com/vi/jRI33g1oSt0/maxresdefault.jpg
+video_url: https://www.youtube.com/watch?v=jRI33g1oSt0

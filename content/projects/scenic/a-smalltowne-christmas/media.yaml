@@ -1,0 +1,24 @@
+gallery:
+  - id: smalltowne-cover
+    kind: cover
+    asset: project-images/rescued/a-smalltowne-christmas/a-smalltowne-christmas-9717e6782b.jpg
+    alt: A Smalltowne Christmas scenic design cover image.
+  - id: smalltowne-prod-1
+    kind: production
+    asset: project-images/rescued/a-smalltowne-christmas/a-smalltowne-christmas-384b222098.jpg
+    alt: >-
+      Production image from A Smalltowne Christmas showing the festive scenic environment, scenic design by Brandon PT
+      Davis.
+  - id: smalltowne-prod-2
+    kind: production
+    asset: project-images/rescued/a-smalltowne-christmas/a-smalltowne-christmas-3691d27c7b.jpg
+    alt: >-
+      Production still from A Smalltowne Christmas highlighting holiday staging and scenic warmth, scenic design by
+      Brandon PT Davis.
+  - id: smalltowne-prod-3
+    kind: production
+    asset: project-images/rescued/a-smalltowne-christmas/a-smalltowne-christmas-be19cc2be0.jpg
+    alt: >-
+      Final production image from A Smalltowne Christmas showing the complete holiday world, scenic design by Brandon PT
+      Davis.
+videos: []

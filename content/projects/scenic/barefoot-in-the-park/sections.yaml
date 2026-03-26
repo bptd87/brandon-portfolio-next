@@ -1,0 +1,38 @@
+- type: text
+  heading: A New York Walk-Up
+  content:
+    - >-
+      The design for Barefoot in the Park centered on a compact New York walk-up that amplifies the play’s emotional
+      temperature through scale, proximity, and verticality. Tight architectural boundaries and selective furnishing
+      choices helped stage the couple’s shifting rhythms while preserving clarity for fast comic timing.
+- type: gallery
+  mediaIds:
+    - barefoot-prod-1
+    - barefoot-prod-2
+- type: text
+  heading: Geometry for Comedy
+  content:
+    - >-
+      Rather than over-rendering period detail, the scenic approach prioritized playable geometry and social pressure.
+      Doors, stairs, and window relationships all functioned as storytelling tools, giving actors clean pathways for
+      entrances, reversals, and escalating comic friction.
+- type: gallery
+  mediaIds:
+    - barefoot-prod-3
+    - barefoot-prod-4
+- type: text
+  heading: Design Goal
+  content:
+    - >-
+      The apartment needed to track the movement from romantic idealism to negotiated partnership without losing the wit
+      of the play. The set works less as a realistic container than as a pressure system, letting architecture shape
+      tempo, intimacy, and the comic stakes of everyday domestic life.
+- type: gallery
+  mediaIds:
+    - barefoot-prod-5
+    - barefoot-prod-6
+    - barefoot-prod-7
+    - barefoot-prod-8
+- type: gallery
+  mediaIds:
+    - barefoot-render-1

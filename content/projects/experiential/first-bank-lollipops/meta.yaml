@@ -1,0 +1,20 @@
+type: project
+discipline: experiential
+slug: first-bank-lollipops
+title: First Bank Lollipops
+status: published
+featured: false
+excerpt: >-
+  A campaign-focused experiential project that pairs concept visualization with live documentation, framing how the
+  First Bank Lollipops idea moves from pitch asset to on-site experience.
+seoTitle: First Bank Lollipops | Experiential Design | Brandon PT Davis
+seoDescription: >-
+  A campaign-focused experiential project that pairs concept visualization with live documentation, framing how the
+  First Bank Lollipops idea moves from pitch asset to on-site experience.
+cover:
+  asset: about-images/experiential-process/rendering/1771839325696-first_bank_lollipops.png
+  alt: First Bank Lollipops
+mediaTypes:
+  - live-events
+  - rendering
+updatedAt: '2026-02-23T09:35:28.087Z'

@@ -1,0 +1,34 @@
+gallery:
+  - id: aw-cover
+    kind: cover
+    asset: project-images/project-90071-cover.webp
+    alt: All's Well That Ends Well scenic design cover image.
+  - id: aw-prod-1
+    kind: production
+    asset: project-images/project-90071-gallery-150012.webp
+    alt: Production image from All's Well That Ends Well at New Swan Theatre Festival, scenic design by Brandon PT Davis.
+  - id: aw-prod-2
+    kind: production
+    asset: project-images/project-90071-gallery-150047.webp
+    alt: >-
+      Performance image from All's Well That Ends Well with the New Swan stage world visible, scenic design by Brandon
+      PT Davis.
+  - id: aw-prod-3
+    kind: production
+    asset: project-images/project-90071-gallery-150057.webp
+    alt: Stage picture from All's Well That Ends Well at New Swan Theatre Festival, scenic design by Brandon PT Davis.
+  - id: aw-prod-4
+    kind: production
+    asset: project-images/project-90071-gallery-150162.webp
+    alt: Stage image from All's Well That Ends Well at New Swan Theatre Festival, scenic design by Brandon PT Davis.
+  - id: aw-prod-5
+    kind: production
+    asset: project-images/project-90071-gallery-150178.webp
+    alt: Performance image from All's Well That Ends Well with actor pathways visible, scenic design by Brandon PT Davis.
+  - id: aw-prod-6
+    kind: production
+    asset: project-images/project-90071-gallery-150229.webp
+    alt: >-
+      Production image from All's Well That Ends Well at New Swan with cast and scenic world visible, scenic design by
+      Brandon PT Davis.
+videos: []

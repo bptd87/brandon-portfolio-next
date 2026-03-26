@@ -1,0 +1,34 @@
+gallery:
+  - id: forum-cover
+    kind: cover
+    asset: project-images/project-90049-cover.webp
+    alt: A Funny Thing Happened on the Way to the Forum scenic design cover image.
+  - id: forum-prod-1
+    kind: production
+    asset: project-images/project-90049-gallery-150103.webp
+    alt: Production image from Forum showing the trio of Roman house façades, scenic design by Brandon PT Davis.
+  - id: forum-prod-2
+    kind: production
+    asset: project-images/project-90049-gallery-150216.webp
+    alt: >-
+      Performance image from Forum with actors moving through the farce-driven Roman architecture, scenic design by
+      Brandon PT Davis.
+  - id: forum-prod-3
+    kind: production
+    asset: project-images/project-90049-gallery-150228.webp
+    alt: >-
+      Production still from Forum highlighting the exaggerated façades and playful classical motifs, scenic design by
+      Brandon PT Davis.
+  - id: forum-prod-4
+    kind: production
+    asset: project-images/project-90049-gallery-150235.webp
+    alt: >-
+      Final production image from Forum showing the full scenic environment and comic staging, scenic design by Brandon
+      PT Davis.
+  - id: forum-render-1
+    kind: rendering
+    asset: project-images/project-90049-gallery-150252.webp
+    alt: >-
+      Rendering for Forum exploring the trio of Roman houses and the heightened comic world, scenic design by Brandon PT
+      Davis.
+videos: []

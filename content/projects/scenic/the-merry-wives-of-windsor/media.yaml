@@ -1,0 +1,66 @@
+gallery:
+  - id: wives-cover
+    kind: cover
+    asset: project-images/project-90053-cover.webp
+    alt: The Merry Wives of Windsor scenic design cover image.
+  - id: wives-render-1
+    kind: rendering
+    asset: project-images/project-90053-gallery-150015.webp
+    alt: >-
+      Rendering for The Merry Wives of Windsor exploring the comic civic world and open architecture, scenic design by
+      Brandon PT Davis.
+  - id: wives-prod-1
+    kind: production
+    asset: project-images/project-90053-gallery-150051.webp
+    alt: >-
+      Production image from The Merry Wives of Windsor showing the shared scenic environment, scenic design by Brandon
+      PT Davis.
+  - id: wives-prod-2
+    kind: production
+    asset: project-images/project-90053-gallery-150074.webp
+    alt: >-
+      Performance image from The Merry Wives of Windsor with actors moving through the public playing space, scenic
+      design by Brandon PT Davis.
+  - id: wives-prod-3
+    kind: production
+    asset: project-images/project-90053-gallery-150170.webp
+    alt: >-
+      Production still from The Merry Wives of Windsor highlighting doorways, concealment, and comic staging, scenic
+      design by Brandon PT Davis.
+  - id: wives-prod-4
+    kind: production
+    asset: project-images/project-90053-gallery-150181.webp
+    alt: >-
+      Stage image from The Merry Wives of Windsor showing architectural framing and ensemble action, scenic design by
+      Brandon PT Davis.
+  - id: wives-prod-5
+    kind: production
+    asset: project-images/project-90053-gallery-150197.webp
+    alt: >-
+      Production image from The Merry Wives of Windsor emphasizing shared civic space and comic movement, scenic design
+      by Brandon PT Davis.
+  - id: wives-render-2
+    kind: rendering
+    asset: project-images/project-90053-gallery-150212.webp
+    alt: >-
+      Rendering for The Merry Wives of Windsor studying the scenic composition and pathways for farce, scenic design by
+      Brandon PT Davis.
+  - id: wives-render-3
+    kind: rendering
+    asset: project-images/project-90053-gallery-150218.webp
+    alt: >-
+      Rendering for The Merry Wives of Windsor showing the social world and threshold-driven scenic logic, scenic design
+      by Brandon PT Davis.
+  - id: wives-prod-6
+    kind: production
+    asset: project-images/project-90053-gallery-150237.webp
+    alt: >-
+      Production image from The Merry Wives of Windsor highlighting the playful public atmosphere, scenic design by
+      Brandon PT Davis.
+  - id: wives-prod-7
+    kind: production
+    asset: project-images/project-90053-gallery-150250.webp
+    alt: >-
+      Final production image from The Merry Wives of Windsor showing the complete scenic world, scenic design by Brandon
+      PT Davis.
+videos: []

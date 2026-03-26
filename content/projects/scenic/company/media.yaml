@@ -1,0 +1,74 @@
+gallery:
+  - id: company-cover
+    kind: cover
+    asset: project-images/project-90019-cover.webp
+    alt: Company scenic design cover image.
+  - id: company-prod-1
+    kind: production
+    asset: project-images/project-90019-gallery-150026.webp
+    alt: >-
+      Production image from Company showing the coupled buildings and urban scenic composition, scenic design by Brandon
+      PT Davis.
+  - id: company-prod-2
+    kind: production
+    asset: project-images/project-90019-gallery-150028.webp
+    alt: >-
+      Production image from Company highlighting the exterior city world and embedded orchestra, scenic design by
+      Brandon PT Davis.
+  - id: company-prod-3
+    kind: production
+    asset: project-images/project-90019-gallery-150031.webp
+    alt: >-
+      Production still from Company emphasizing architectural contrast and stage movement, scenic design by Brandon PT
+      Davis.
+  - id: company-prod-4
+    kind: production
+    asset: project-images/project-90019-gallery-150033.webp
+    alt: >-
+      Performance image from Company showing stoops, levels, and shifting emotional proximity, scenic design by Brandon
+      PT Davis.
+  - id: company-prod-5
+    kind: production
+    asset: project-images/project-90019-gallery-150076.webp
+    alt: >-
+      Production image from Company with backlit windows and skyline color shaping the mood, scenic design by Brandon PT
+      Davis.
+  - id: company-prod-6
+    kind: production
+    asset: project-images/project-90019-gallery-150100.webp
+    alt: Production image from Company showing the cityscape as a landscape of longing, scenic design by Brandon PT Davis.
+  - id: company-render-1
+    kind: rendering
+    asset: project-images/project-90019-gallery-150102.webp
+    alt: >-
+      Rendering for Company exploring the coupled buildings, lone brick structure, and skyline rhythm, scenic design by
+      Brandon PT Davis.
+  - id: company-prod-7
+    kind: production
+    asset: project-images/project-90019-gallery-150116.webp
+    alt: >-
+      Production image from Company highlighting ladders, escapes, and movement through the city, scenic design by
+      Brandon PT Davis.
+  - id: company-prod-8
+    kind: production
+    asset: project-images/project-90019-gallery-150125.webp
+    alt: >-
+      Performance image from Company reinforcing the exterior architecture and ensemble relationships, scenic design by
+      Brandon PT Davis.
+  - id: company-prod-9
+    kind: production
+    asset: project-images/project-90019-gallery-150165.webp
+    alt: >-
+      Production still from Company with the glowing skyline and nonlinear emotional rhythm in view, scenic design by
+      Brandon PT Davis.
+  - id: company-prod-10
+    kind: production
+    asset: project-images/project-90019-gallery-150208.webp
+    alt: >-
+      Production image from Company emphasizing the set's view of intimacy from the outside looking in, scenic design by
+      Brandon PT Davis.
+  - id: company-prod-11
+    kind: production
+    asset: project-images/project-90019-gallery-150240.webp
+    alt: Final production image from Company showing the complete New York scenic world, scenic design by Brandon PT Davis.
+videos: []

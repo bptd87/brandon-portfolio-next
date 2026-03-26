@@ -1,0 +1,50 @@
+gallery:
+  - id: dialm-cover
+    kind: cover
+    asset: portfolio/projects/2026/03/2023-dial-m-for-murder-8-of-9-0343.webp
+    alt: Dial M for Murder scenic design cover image.
+  - id: dialm-prod-1
+    kind: production
+    asset: portfolio/projects/2026/03/2023-dial-m-for-murder-8-of-9-1391.webp
+    alt: >-
+      Production image from Dial M for Murder showing the apartment set in performance, scenic design by Brandon PT
+      Davis.
+  - id: dialm-prod-2
+    kind: production
+    asset: portfolio/projects/2026/03/2023-dial-m-for-murder-2-of-9-1570.webp
+    alt: Scene from Dial M for Murder framed by the apartment architecture, scenic design by Brandon PT Davis.
+  - id: dialm-prod-3
+    kind: production
+    asset: portfolio/projects/2026/03/2023-dial-m-for-murder-5-of-9-1570.webp
+    alt: >-
+      Production still emphasizing the controlled apartment palette in Dial M for Murder, scenic design by Brandon PT
+      Davis.
+  - id: dialm-prod-4
+    kind: production
+    asset: portfolio/projects/2026/03/2023-dial-m-for-murder-7-of-9-1570.webp
+    alt: >-
+      Performance image from Dial M for Murder using doors and sightlines to build suspense, scenic design by Brandon PT
+      Davis.
+  - id: dialm-prod-5
+    kind: production
+    asset: portfolio/projects/2026/03/2023-dial-m-for-murder-4-of-9-1570.webp
+    alt: >-
+      Dial M for Murder production image showing the room’s centered fireplace and formal composition, scenic design by
+      Brandon PT Davis.
+  - id: dialm-prod-6
+    kind: production
+    asset: portfolio/projects/2026/03/lindsey-21-1750.webp
+    alt: >-
+      Production still highlighting the isolated apartment environment in Dial M for Murder, scenic design by Brandon PT
+      Davis.
+  - id: dialm-prod-7
+    kind: production
+    asset: portfolio/projects/2026/03/2023-dial-m-for-murder-6-of-9-1570.webp
+    alt: Final production image from Dial M for Murder, scenic design by Brandon PT Davis.
+  - id: dialm-render-1
+    kind: rendering
+    asset: portfolio/projects/2026/03/2023-dial-m-for-murder-1-of-9-1570.webp
+    alt: >-
+      Rendering for Dial M for Murder testing the apartment layout and negative space, scenic design by Brandon PT
+      Davis.
+videos: []

@@ -1,0 +1,55 @@
+type: project
+discipline: scenic
+slug: guys-on-ice
+title: Guys on Ice
+status: published
+featured: true
+excerpt: >-
+  A playable frozen-lake environment for Guys on Ice, balancing broad musical comedy with the quiet sincerity of
+  Midwestern winter life.
+seoTitle: Guys on Ice | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for Guys on Ice at The Great American Melodrama, balancing a playable frozen-lake comedy world with
+  Midwestern specificity, winter texture, and a clear performance environment.
+seoKeywords:
+  - Guys on Ice
+  - scenic design
+  - Great American Melodrama
+  - musical comedy
+  - Brandon PT Davis
+  - theatre design
+client: The Great American Melodrama
+clientUrl: https://sloreview.org/2025/02/15/guys-on-ice-is-warm-and-funny/
+location: Oceano, CA
+year: 2025
+month: 1
+subcategory: Musical Theatre
+cover:
+  asset: project-images/project-90045-cover.webp
+  alt: Guys on Ice scenic design cover image
+team:
+  - role: Book & Lyrics
+    name: Fred Alley
+  - role: Music
+    name: James Kaplan
+  - role: Music Director
+    name: Andy Hudson
+  - role: Scenic Designer
+    name: Brandon PT Davis
+  - role: Costume Designer
+    name: Dan Klarer
+  - role: Lighting Designer
+    name: Cody Soper
+  - role: Sound Designer
+    name: Nathan Miklas
+  - role: Director
+    name: Dan Klarer
+tags:
+  - musical-theatre
+  - comedy
+  - winter
+  - guys-on-ice
+links:
+  - label: SLO Review
+    url: https://sloreview.org/2025/02/15/guys-on-ice-is-warm-and-funny/
+updatedAt: '2026-02-12T15:03:57+00:00'

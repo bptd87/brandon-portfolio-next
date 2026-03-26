@@ -1,0 +1,32 @@
+type: article
+slug: how-to-create-trim-profiles-in-vectorworks-using-the-polyline-tool
+title: How to Create Trim Profiles in Vectorworks Using the Polyline Tool
+status: published
+featured: false
+excerpt: >-
+  A practical Vectorworks workflow for creating clean, reusable trim profiles with the Polyline tool for scenic drafting
+  and production packages.
+category: Tools & Technology
+seoTitle: Create Trim Profiles in Vectorworks with the Polyline Tool
+seoDescription: >-
+  Step-by-step Vectorworks guidance for building trim profiles with the Polyline tool, including cleanup standards,
+  reusable symbols, and production-ready drafting habits.
+seoKeywords:
+  - vectorworks trim profile
+  - polyline tool vectorworks
+  - scenic drafting workflow
+  - theatrical drafting details
+  - vectorworks molding profile
+cover:
+  asset: article-images/covers/article-31/generated-1771537505545-cover.png
+  alt: How to Create Trim Profiles in Vectorworks Using the Polyline Tool
+tags:
+  - vectorworks
+  - trim-profiles
+  - scenic-drafting
+  - polyline-tool
+  - technical-theatre
+readTime: 8
+publishedAt: '2024-12-23T00:00:00+00:00'
+updatedAt: '2026-02-19T21:44:58.453271+00:00'
+linkedScenicProjectSlugs: []

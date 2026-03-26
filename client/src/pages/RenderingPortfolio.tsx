@@ -1,3 +1,5 @@
+"use client";
+
 import { Link } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -350,10 +352,11 @@ export default function RenderingPortfolio() {
                   <div className="grid gap-5 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:items-start">
                     <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-white/[0.02]">
                       {article.coverImageUrl ? (
-                        <img
+                        <ProgressiveImage
                           src={article.coverImageUrl}
                           alt={article.coverImageAlt || article.title}
                           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 8.5rem, 8.5rem"
                         />
                       ) : (
                         <div className="h-full w-full bg-muted" />

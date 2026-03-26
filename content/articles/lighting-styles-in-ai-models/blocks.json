@@ -1,0 +1,622 @@
+[
+  {
+    "type": "paragraph",
+    "text": "Lighting vocabulary is one of the fastest ways to change emotional tone in AI-generated imagery. The value of this guide is not novelty prompts, but clearer control over mood, depth, and narrative emphasis."
+  },
+  {
+    "type": "paragraph",
+    "text": "The world of AI image generation has evolved dramatically over the past few years. Midjourney, launched in 2022, revolutionized how we think about AI art by introducing a sophisticated prompt-based system that could interpret complex lighting instructions. Despite newer models emerging, Midjourney remains relevant today because it pioneered the language of lighting in AI prompts — establishing terms like \"cinematic lighting,\" \"golden hour,\" and \"volumetric light\" that have become standard vocabulary across platforms."
+  },
+  {
+    "type": "paragraph",
+    "text": "Sora, released by OpenAI in early 2024, builds upon this foundation while making the process more intuitive. Where Midjourney requires specific technical terminology and syntax for best results, Sora embraces natural language prompting, allowing designers to describe lighting scenarios in conversational terms. This accessibility makes it particularly valuable for theatre professionals who may not be versed in AI prompt engineering."
+  },
+  {
+    "type": "paragraph",
+    "text": "One particularly helpful approach I’ve discovered is using ChatGPT or other large language models (LLMs) as an intermediary when working with these art generators. The LLM can help translate your creative vision into the precise language that Midjourney or Sora responds to best. For example, telling ChatGPT \"I want an artist’s studio at sunset with dramatic shadows\" might yield a refined prompt like \"An artist’s studio with scattered supplies, bathed in golden hour light with long, angular shadows stretching across wooden floorboards, cinematic composition, ultra-detailed.\""
+  },
+  {
+    "type": "paragraph",
+    "text": "Now, with AI art tools like Sora and Midjourney, I have new ways to experiment with lighting digitally. These tools offer scenic designers fast, visual ways to explore tone, color, and visibility long before stepping into a theater. But what does that actually mean in practice?"
+  },
+  {
+    "type": "paragraph",
+    "text": "In this article, I’ll explore 20 lighting styles used in AI image generation. Each style is paired with example prompts for both Sora and Midjourney, showing how a single scene can transform entirely based on how it’s lit. While I’m showcasing the visual results from Sora exclusively, I’ve included the corresponding Midjourney prompt terminology to help those who might prefer that platform understand the different tagging approaches needed to achieve similar lighting effects."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "The Scene: An Artist’s Studio"
+  },
+  {
+    "type": "paragraph",
+    "text": "To isolate the impact of lighting, I created a consistent base prompt:"
+  },
+  {
+    "type": "paragraph",
+    "text": "\"An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail.\""
+  },
+  {
+    "type": "paragraph",
+    "text": "I then applied 20 different lighting styles to this exact scene — nothing else changed. What emerged was a study of how powerful and nuanced lighting can be."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Cinematic & Realistic Lighting Styles"
+  },
+  {
+    "type": "paragraph",
+    "text": "These lighting styles aim to replicate natural, believable light or evoke the refined, motivated setups seen in film. From the soft glow of daylight to the bold contrasts of low-key lighting, these techniques prioritize realism, storytelling, and emotional nuance. They’re ideal for use in AI-generated scenes that want to feel grounded, cinematic, or timeless."
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "1. Cinematic Lighting"
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "<strong>Description:</strong> Polished, motivated lighting setups that create drama, depth, and mood, often mimicking film stills.",
+      "<strong>Sora Prompt Tag:</strong> \"moody cinematic lighting with practicals and volumetric shadows\"",
+      "<strong>MidJourney Tags:</strong> <em>cinematic lighting, film still, volumetric, anamorphic</em>"
+    ]
+  },
+  {
+    "type": "ai_prompt",
+    "prompt": "An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with moody cinematic lighting with practicals and volumetric shadows."
+  },
+  {
+    "type": "image",
+    "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/1-cinematic-lighting-4606.webp",
+    "caption": "",
+    "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "2. Natural Lighting"
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "<strong>Description:</strong> Soft, ambient light that mimics daylight. Balanced and realistic.",
+      "<strong>Sora Prompt Tag:</strong> \"soft natural daylight from a nearby window\"",
+      "<strong>MidJourney Tags:</strong> <em>natural lighting, daylight, sunlit, soft shadows</em>"
+    ]
+  },
+  {
+    "type": "ai_prompt",
+    "prompt": "An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with soft natural daylight from a nearby window."
+  },
+  {
+    "type": "image",
+    "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/2-natural-lighting-1719.webp",
+    "caption": "",
+    "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "3. Golden Hour Lighting"
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "<strong>Description:</strong> Warm, low-angle light occurring shortly after sunrise or before sunset. Enhances skin tones and colors.",
+      "<strong>Sora Prompt Tag:</strong> \"warm golden hour light casting long soft shadows\"",
+      "<strong>MidJourney Tags:</strong> <em>golden hour, sunset, warm glow, long shadows</em>"
+    ]
+  },
+  {
+    "type": "ai_prompt",
+    "prompt": "An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with warm golden hour light casting long soft shadows."
+  },
+  {
+    "type": "image",
+    "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/3-golden-hour-7458.webp",
+    "caption": "",
+    "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "4. Moonlight / Night Exterior"
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "<strong>Description:</strong> Cool, dim light from the moon or ambient night environment. Often serene or mysterious.",
+      "<strong>Sora Prompt Tag:</strong> \"cool moonlight casting pale shadows through trees\"",
+      "<strong>MidJourney Tags:</strong> <em>moonlight, night lighting, cool ambient, blue tones</em>"
+    ]
+  },
+  {
+    "type": "ai_prompt",
+    "prompt": "An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with cool moonlight casting pale shadows through trees."
+  },
+  {
+    "type": "image",
+    "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/4-moon-lihgt-0450.webp",
+    "caption": "",
+    "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "5. Backlighting"
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "<strong>Description:</strong> Light source positioned behind the subject, creating silhouettes or rim lighting.",
+      "<strong>Sora Prompt Tag:</strong> \"backlighting with soft glow outlining the subject\"",
+      "<strong>MidJourney Tags:</strong> <em>backlit, silhouette, rim lighting</em>"
+    ]
+  },
+  {
+    "type": "ai_prompt",
+    "prompt": "An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with backlighting with soft glow outlining the subject."
+  },
+  {
+    "type": "image",
+    "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/5-backlighting-5809.webp",
+    "caption": "",
+    "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "6. Soft Lighting"
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "<strong>Description:</strong> Diffused, even light that minimizes harsh shadows. Often used in portraits.",
+      "<strong>Sora Prompt Tag:</strong> \"soft diffused lighting with gentle transitions\"",
+      "<strong>MidJourney Tags:</strong> <em>soft lighting, diffused, low contrast, even lighting</em>"
+    ]
+  },
+  {
+    "type": "ai_prompt",
+    "prompt": "An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with soft diffused lighting with gentle transitions."
+  },
+  {
+    "type": "image",
+    "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/6-soft-lighting-2029.webp",
+    "caption": "",
+    "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "7. Hard Lighting"
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "<strong>Description:</strong> Intense, direct lighting that creates sharp edges and deep contrast.",
+      "<strong>Sora Prompt Tag:</strong> \"direct hard light casting sharp shadows\"",
+      "<strong>MidJourney Tags:</strong> <em>hard lighting, high contrast, dramatic</em>"
+    ]
+  },
+  {
+    "type": "ai_prompt",
+    "prompt": "An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with direct hard light casting sharp shadows."
+  },
+  {
+    "type": "image",
+    "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/7-hard-lighting-5378.webp",
+    "caption": "",
+    "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "8. High-Key Lighting"
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "<strong>Description:</strong> Bright, low-contrast lighting that eliminates shadows. Used in comedies or product visuals.",
+      "<strong>Sora Prompt Tag:</strong> \"bright high-key lighting with minimal shadows\"",
+      "<strong>MidJourney Tags:</strong> <em>high-key, bright, clean, even exposure</em>"
+    ]
+  },
+  {
+    "type": "ai_prompt",
+    "prompt": "An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with bright high-key lighting with minimal shadows."
+  },
+  {
+    "type": "image",
+    "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/8-high-key-5958.webp",
+    "caption": "",
+    "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "9. Low-Key Lighting"
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "<strong>Description:</strong> Dark, high-contrast lighting that emphasizes shadows and mystery. Often used in noir or horror.",
+      "<strong>Sora Prompt Tag:</strong> \"dark low-key lighting with dramatic shadows\"",
+      "<strong>MidJourney Tags:</strong> <em>low-key, dark, high contrast, noir</em>"
+    ]
+  },
+  {
+    "type": "ai_prompt",
+    "prompt": "An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with dark low-key lighting with dramatic shadows."
+  },
+  {
+    "type": "image",
+    "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/9-low-key-5567.webp",
+    "caption": "",
+    "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Stylized & Genre-Based Lighting Styles"
+  },
+  {
+    "type": "paragraph",
+    "text": "These lighting styles lean into specific aesthetics, genres, or artistic movements. They’re less about realism and more about creating a distinct visual signature — whether it’s the neon glow of cyberpunk, the eerie shadows of horror, or the saturated warmth of retro photography. Use these when you want your AI-generated scene to evoke a particular mood, era, or cultural reference."
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "10. Neon Lighting"
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "<strong>Description:</strong> Bright, saturated colors from artificial neon sources. Evokes cyberpunk or retro aesthetics.",
+      "<strong>Sora Prompt Tag:</strong> \"vibrant neon lighting in pink and blue tones\"",
+      "<strong>MidJourney Tags:</strong> <em>neon lighting, cyberpunk, vibrant, saturated</em>"
+    ]
+  },
+  {
+    "type": "ai_prompt",
+    "prompt": "An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with vibrant neon lighting in pink and blue tones."
+  },
+  {
+    "type": "image",
+    "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/11-retro-lighting-7750.webp",
+    "caption": "",
+    "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "11. Candlelight / Firelight"
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "<strong>Description:</strong> Warm, flickering light from candles or fire. Intimate and organic.",
+      "<strong>Sora Prompt Tag:</strong> \"warm candlelight with soft flickering glow\"",
+      "<strong>MidJourney Tags:</strong> <em>candlelight, firelight, warm, flickering</em>"
+    ]
+  },
+  {
+    "type": "ai_prompt",
+    "prompt": "An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with warm candlelight with soft flickering glow."
+  },
+  {
+    "type": "image",
+    "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/15-romantic-lighting-9035.webp",
+    "caption": "",
+    "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "12. Horror Lighting"
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "<strong>Description:</strong> Unsettling, low-angle or colored lighting designed to create tension and fear.",
+      "<strong>Sora Prompt Tag:</strong> \"eerie horror lighting from below with green and red gels\"",
+      "<strong>MidJourney Tags:</strong> <em>horror lighting, eerie, low-angle, unsettling</em>"
+    ]
+  },
+  {
+    "type": "ai_prompt",
+    "prompt": "An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with eerie horror lighting from below with green and red gels."
+  },
+  {
+    "type": "image",
+    "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/14-horror-lighting-2254.webp",
+    "caption": "",
+    "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "13. Chiaroscuro"
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "<strong>Description:</strong> Strong contrast between light and dark, inspired by Renaissance painting techniques.",
+      "<strong>Sora Prompt Tag:</strong> \"dramatic chiaroscuro lighting with deep shadows and bright highlights\"",
+      "<strong>MidJourney Tags:</strong> <em>chiaroscuro, Rembrandt lighting, high contrast, Renaissance</em>"
+    ]
+  },
+  {
+    "type": "ai_prompt",
+    "prompt": "An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with dramatic chiaroscuro lighting with deep shadows and bright highlights."
+  },
+  {
+    "type": "image",
+    "url": "https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/chiaroscuro-lighting-1024x1024.webp",
+    "caption": "",
+    "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "14. Volumetric Lighting (God Rays)"
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "<strong>Description:</strong> Visible beams of light cutting through mist, fog, or dust. Adds depth and atmosphere.",
+      "<strong>Sora Prompt Tag:</strong> \"volumetric lighting with visible light beams through dust\"",
+      "<strong>MidJourney Tags:</strong> <em>volumetric lighting, god rays, atmospheric, beams</em>"
+    ]
+  },
+  {
+    "type": "ai_prompt",
+    "prompt": "An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with volumetric lighting with visible light beams through dust."
+  },
+  {
+    "type": "image",
+    "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/18-volumetric-lighting-8614.webp",
+    "caption": "",
+    "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Performance & Stylized Presentation"
+  },
+  {
+    "type": "paragraph",
+    "text": "These lighting styles are rooted in live performance, photography, and intentional artistic presentation. They’re designed to highlight subjects, create drama, or evoke specific moods through controlled, directional light. Whether you’re simulating a stage environment or crafting a stylized portrait, these techniques bring intentionality and polish to AI-generated imagery."
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "15. Spotlight"
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "<strong>Description:</strong> Focused, intense beam of light isolating a subject or area. Theatrical and dramatic.",
+      "<strong>Sora Prompt Tag:</strong> \"single spotlight illuminating the center of the room\"",
+      "<strong>MidJourney Tags:</strong> <em>spotlight, theatrical, focused, dramatic</em>"
+    ]
+  },
+  {
+    "type": "ai_prompt",
+    "prompt": "An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with single spotlight illuminating the center of the room."
+  },
+  {
+    "type": "image",
+    "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/20-spotlight-9647.webp",
+    "caption": "",
+    "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "16. Rim Lighting"
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "<strong>Description:</strong> Light that outlines the edges of a subject, separating it from the background.",
+      "<strong>Sora Prompt Tag:</strong> \"rim lighting creating a glowing outline around objects\"",
+      "<strong>MidJourney Tags:</strong> <em>rim lighting, edge lighting, separation, glow</em>"
+    ]
+  },
+  {
+    "type": "ai_prompt",
+    "prompt": "An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with rim lighting creating a glowing outline around objects."
+  },
+  {
+    "type": "image",
+    "url": "https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/rim-lighting-1024x1024.webp",
+    "caption": "",
+    "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "17. Practical Lighting"
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "<strong>Description:</strong> Light sources visible within the scene (lamps, candles, screens). Adds realism and motivation.",
+      "<strong>Sora Prompt Tag:</strong> \"practical lighting from desk lamps and overhead bulbs\"",
+      "<strong>MidJourney Tags:</strong> <em>practical lighting, motivated, realistic, visible sources</em>"
+    ]
+  },
+  {
+    "type": "ai_prompt",
+    "prompt": "An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with practical lighting from desk lamps and overhead bulbs."
+  },
+  {
+    "type": "image",
+    "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/16-tv-computer-glow-0251.webp",
+    "caption": "",
+    "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "18. Studio Lighting"
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "<strong>Description:</strong> Controlled, professional lighting setup used in photography studios. Clean and polished.",
+      "<strong>Sora Prompt Tag:</strong> \"professional studio lighting with softboxes and key lights\"",
+      "<strong>MidJourney Tags:</strong> <em>studio lighting, professional, clean, controlled</em>"
+    ]
+  },
+  {
+    "type": "ai_prompt",
+    "prompt": "An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with professional studio lighting with softboxes and key lights."
+  },
+  {
+    "type": "image",
+    "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/17-theatre-lighting-3980.webp",
+    "caption": "",
+    "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "19. Silhouette Lighting"
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "<strong>Description:</strong> Subject is completely dark against a bright background, emphasizing shape over detail.",
+      "<strong>Sora Prompt Tag:</strong> \"silhouette lighting with bright background and dark foreground\"",
+      "<strong>MidJourney Tags:</strong> <em>silhouette, backlit, shape, contrast</em>"
+    ]
+  },
+  {
+    "type": "ai_prompt",
+    "prompt": "An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with silhouette lighting with bright background and dark foreground."
+  },
+  {
+    "type": "image",
+    "url": "https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/silhouette-lighting-1024x1024.webp",
+    "caption": "",
+    "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "20. Colored Gel Lighting"
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "<strong>Description:</strong> Light filtered through colored gels to create specific moods or theatrical effects.",
+      "<strong>Sora Prompt Tag:</strong> \"theatrical gel lighting in deep blue and amber tones\"",
+      "<strong>MidJourney Tags:</strong> <em>colored gels, theatrical, saturated, mood</em>"
+    ]
+  },
+  {
+    "type": "ai_prompt",
+    "prompt": "An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, lit with theatrical gel lighting in deep blue and amber tones."
+  },
+  {
+    "type": "image",
+    "url": "https://manus-user-assets.s3.us-west-1.amazonaws.com/brandon-portfolio-v2/wp-content/uploads/2023/11/colored-gel-lighting-1024x1024.webp",
+    "caption": "",
+    "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Tips for Crafting an Effective Prompt"
+  },
+  {
+    "type": "paragraph",
+    "text": "When I work with AI-generated images, I’ve found that <strong>placing the lighting description at the end of the prompt</strong> yields the most consistent results. This structure helps the AI prioritize the lighting style over other scene elements, creating more intentional and cohesive visuals."
+  },
+  {
+    "type": "paragraph",
+    "text": "For example:"
+  },
+  {
+    "type": "paragraph",
+    "text": "<em>“An artist’s studio with a tall window, scattered paintbrushes, a large canvas on an easel, wooden floors, and shelves filled with art supplies. The space is lived-in and atmospheric, with cinematic framing and ultra-realistic detail, <strong>lit with warm golden hour light casting long soft shadows</strong>.”</em>"
+  },
+  {
+    "type": "paragraph",
+    "text": "By ending with the lighting instruction, the AI treats it as a guiding principle for the entire scene — not just an afterthought."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Why It Matters for Theatre Designers"
+  },
+  {
+    "type": "paragraph",
+    "text": "As a scenic designer, I think about how light interacts with space constantly. Light doesn’t just illuminate — it helps me craft narrative visually. It shapes the rhythm of a production, builds atmosphere, and transitions me emotionally from moment to moment. Scenic design is inseparable from lighting — the textures, materials, and architecture of a set are all in conversation with how they are illuminated. As designers, I rely on this interplay to reveal space, emphasize scale, and reinforce meaning."
+  },
+  {
+    "type": "paragraph",
+    "text": "AI-generated images allow me to test those lighting choices early in the conceptual process. We can preview how a mood might shift between acts, or how a set might feel under warm candlelight versus harsh white overheads. It’s not just about aesthetics — it’s about narrative development. AI helps me visualize not just what a set looks like, but what it feels like."
+  },
+  {
+    "type": "paragraph",
+    "text": "Lighting isn’t just aesthetic — it drives meaning. A cozy studio under soft daylight feels like a space of comfort and creativity. Lit from below with horror-style gels, the same studio becomes ominous. Add in neon lighting, and suddenly we’re in a retro fever dream. These changes go beyond mood; they suggest character, genre, and narrative."
+  },
+  {
+    "type": "paragraph",
+    "text": "As AI-generated imagery becomes a tool in theatre design, previs, and storytelling, understanding lighting gives scenic and production designers more intentional control over tone, transitions, and the emotional pacing of a show. Whether I’m rendering scenic concepts or pitching a design, these lighting styles can help communicate your vision more effectively."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "What’s Next for Theatre Visualization"
+  },
+  {
+    "type": "paragraph",
+    "text": "This experiment opens the door to more than just mood boards — imagine using lighting variation to communicate time of day, emotional arc, or even different play acts. We’ll be sharing visual comparisons of each style on [Instagram / YouTube / Portfolio Site] to show how dramatically the mood can shift with nothing more than light."
+  },
+  {
+    "type": "paragraph",
+    "text": "Want to try it yourself? You can apply these styles to your own scenic rendering workflows — using AI to visualize how different lighting approaches might support your designs. Download the full list of Sora prompts or adapt them for MidJourney to begin experimenting."
+  },
+  {
+    "type": "faq",
+    "items": [
+      {
+        "question": "Can I use these lighting styles in other AI generators like Dall-E 3?",
+        "answer": "Yes! While the specific syntax might vary slightly between models, terms like \"Golden Hour,\" \"Cinematic Lighting,\" and \"Chiaroscuro\" are universally understood concepts in photography and art that most modern AI models (Dall-E 3, Stable Diffusion, etc.) will recognize and render effectively."
+      },
+      {
+        "question": "Why do my results look different than the examples?",
+        "answer": "AI image generation is non-deterministic, meaning that even with the exact same prompt, you will get a unique result every time. These prompts are designed to be starting points—feel free to re-roll or adjust the weights to get the look you want."
+      },
+      {
+        "question": "Do I need to place the lighting tag at the end of the prompt?",
+        "answer": "It is generally recommended. Placing style modifiers and lighting descriptions at the end of a prompt tends to help the AI apply them as a global filter over the entire scene, ensuring the lighting is consistent with your subject matter."
+      }
+    ]
+  }
+]

@@ -1,0 +1,30 @@
+gallery:
+  - id: glass-2011-cover
+    kind: cover
+    asset: project-images/rescued/the-glass-menagerie-2011/the-glass-menagerie-2011-18e039c8c0.jpg
+    alt: The Glass Menagerie 2011 scenic design cover image.
+  - id: glass-2011-prod-1
+    kind: production
+    asset: project-images/rescued/the-glass-menagerie-2011/the-glass-menagerie-2011-a53c40ae0e.jpg
+    alt: >-
+      Production image from the 2011 Glass Menagerie showing the domestic memory world, scenic design by Brandon PT
+      Davis.
+  - id: glass-2011-prod-2
+    kind: production
+    asset: project-images/rescued/the-glass-menagerie-2011/the-glass-menagerie-2011-eb79367a23.jpg
+    alt: >-
+      Production still from the 2011 Glass Menagerie highlighting the scrim walls and layered stage space, scenic design
+      by Brandon PT Davis.
+  - id: glass-2011-prod-3
+    kind: production
+    asset: project-images/rescued/the-glass-menagerie-2011/the-glass-menagerie-2011-2acc2d20ef.jpg
+    alt: >-
+      Performance image from the 2011 Glass Menagerie emphasizing nostalgia and theatrical framing, scenic design by
+      Brandon PT Davis.
+  - id: glass-2011-prod-4
+    kind: production
+    asset: project-images/rescued/the-glass-menagerie-2011/the-glass-menagerie-2011-a598d1ca19.jpg
+    alt: >-
+      Final production image from the 2011 Glass Menagerie showing the full scenic environment, scenic design by Brandon
+      PT Davis.
+videos: []

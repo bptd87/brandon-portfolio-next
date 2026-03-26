@@ -1,0 +1,54 @@
+gallery:
+  - id: angel-cover
+    kind: cover
+    asset: project-images/project-90043-cover.webp
+    alt: Angel Street scenic design cover image.
+  - id: angel-prod-1
+    kind: production
+    asset: project-images/project-90043-gallery-150025.webp
+    alt: >-
+      Production image from Angel Street showing the Victorian drawing room and formal architecture, scenic design by
+      Brandon PT Davis.
+  - id: angel-prod-2
+    kind: production
+    asset: project-images/project-90043-gallery-150110.webp
+    alt: >-
+      Production image from Angel Street highlighting wainscoting, staircase, and enclosed domestic atmosphere, scenic
+      design by Brandon PT Davis.
+  - id: angel-prod-3
+    kind: production
+    asset: project-images/project-90043-gallery-150129.webp
+    alt: >-
+      Production still from Angel Street showing period furnishings and practical lighting, scenic design by Brandon PT
+      Davis.
+  - id: angel-prod-4
+    kind: production
+    asset: project-images/project-90043-gallery-150215.webp
+    alt: >-
+      Production image from Angel Street emphasizing domestic control and observation in the drawing room, scenic design
+      by Brandon PT Davis.
+  - id: angel-render-1
+    kind: rendering
+    asset: project-images/project-90043-gallery-150234.webp
+    alt: >-
+      Rendering for Angel Street exploring the formal Victorian room and psychological tension, scenic design by Brandon
+      PT Davis.
+  - id: angel-prod-5
+    kind: production
+    asset: project-images/project-90043-gallery-150142.webp
+    alt: >-
+      Production image from Angel Street reinforcing the density and enclosure of the room, scenic design by Brandon PT
+      Davis.
+  - id: angel-prod-6
+    kind: production
+    asset: project-images/project-90043-gallery-150155.webp
+    alt: >-
+      Production still from Angel Street showing shifts in power within a stable realistic environment, scenic design by
+      Brandon PT Davis.
+  - id: angel-prod-7
+    kind: production
+    asset: project-images/project-90043-gallery-150194.webp
+    alt: >-
+      Final production image from Angel Street showing the complete drawing room world in performance, scenic design by
+      Brandon PT Davis.
+videos: []

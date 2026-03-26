@@ -1,0 +1,36 @@
+type: article
+slug: empowering-theatre-students-with-computer-literacy
+title: Empowering Theatre Production Students with Computer Literacy
+status: published
+featured: false
+excerpt: >-
+  Why computer literacy matters in theatre training, with a practical framework for helping production students work
+  confidently across digital tools.
+category: Tools & Technology
+seoTitle: Empowering Theatre Production Students with Computer Literacy
+seoDescription: >-
+  A theatre education guide for building student computer literacy through practical workflows, tool fluency, and
+  production-ready digital habits across design disciplines.
+seoKeywords:
+  - theatre education
+  - computer literacy
+  - design education
+  - technical skills
+  - student development
+cover:
+  asset: article-images/article-60148-cover.webp
+  alt: Empowering Theatre Production Students with Computer Literacy
+tags:
+  - theatre-education
+  - computer-literacy
+  - student-development
+  - design-education
+  - technical-skills
+readTime: 5
+publishedAt: '2024-09-17T00:00:00+00:00'
+updatedAt: '2026-02-19T19:28:12.891+00:00'
+audio:
+  asset: article_audio/Computer%20Literacy.mp3
+  label: Listen to article
+  durationLabel: '5:50'
+linkedScenicProjectSlugs: []

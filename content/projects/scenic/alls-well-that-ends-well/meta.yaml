@@ -1,0 +1,50 @@
+type: project
+discipline: scenic
+slug: alls-well-that-ends-well
+title: All's Well That Ends Well
+status: published
+featured: false
+excerpt: >-
+  Drapery, heraldic detail, and operatic reveal carried this New Swan production between the ceremonial restraint of
+  Roussillon and the warmer theatrical world of Florence.
+seoTitle: All's Well That Ends Well | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for All's Well That Ends Well at New Swan Theatre Festival, using curtains, heraldic signage, stucco
+  textures, and operatic transitions to shape Shakespeare’s shifting worlds.
+seoKeywords:
+  - All's Well That Ends Well
+  - scenic design
+  - New Swan Theatre Festival
+  - Shakespeare
+  - Brandon PT Davis
+  - theatre design
+client: New Swan Theatre Festival
+location: Irvine, CA
+year: 2025
+month: 7
+subcategory: Shakespeare
+cover:
+  asset: project-images/project-90071-cover.webp
+  alt: All's Well That Ends Well scenic design cover image
+team:
+  - role: By
+    name: William Shakespeare
+  - role: Scenic Designer
+    name: Brandon PT Davis
+  - role: Costume Designer
+    name: Ayrika Johnson
+  - role: Lighting Designer
+    name: Nita Mendoza
+  - role: Sound Designer
+    name: Aerik Harbert
+  - role: Director
+    name: Rob Salas
+tags:
+  - shakespeare
+  - classical-theatre
+  - festival-production
+  - alls-well-that-ends-well
+links:
+  - label: Culture OC Feature
+    url: https://www.cultureoc.org/post/double-the-drama-new-swan-s-shakespeare-season-embraces-romance-wit-and-reinvention
+updatedAt: '2026-02-12T15:04:00+00:00'

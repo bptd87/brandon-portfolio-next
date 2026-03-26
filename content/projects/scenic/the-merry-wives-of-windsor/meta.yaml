@@ -1,0 +1,50 @@
+type: project
+discipline: scenic
+slug: the-merry-wives-of-windsor
+title: The Merry Wives of Windsor
+status: published
+featured: false
+excerpt: >-
+  Shakespeare’s comedy reframed as a campy 1950s sitcom, with bold color, graphic framing, and flown doors giving Merry
+  Wives a faster, more cinematic rhythm.
+seoTitle: The Merry Wives of Windsor | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for The Merry Wives of Windsor at Stephens College, reimagined through the campy visual language of a
+  1950s sitcom with flown color doors, graphic framing, and playful theatrical transitions.
+seoKeywords:
+  - The Merry Wives of Windsor
+  - scenic design
+  - Stephens College
+  - Shakespeare
+  - comedy
+  - Brandon PT Davis
+client: Stephens College
+location: Columbia, MO
+year: 2022
+month: 2
+subcategory: Shakespeare
+cover:
+  asset: project-images/project-90053-cover.webp
+  alt: The Merry Wives of Windsor scenic design cover image
+team:
+  - role: By
+    name: William Shakespeare
+  - role: Scenic Designer
+    name: Brandon PT Davis
+  - role: Costume Designer
+    name: Alice Crist
+  - role: Lighting Designer
+    name: Lennox Emery
+  - role: Sound Designer
+    name: Michael Burke
+  - role: Director
+    name: Jamey Grisham
+tags:
+  - shakespeare
+  - comedy
+  - stephens-college
+  - the-merry-wives-of-windsor
+links:
+  - label: Season Listing
+    url: https://www.patreon.com/posts/there-is-here-71725274
+updatedAt: '2026-02-12T15:03:59+00:00'

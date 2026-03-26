@@ -1,0 +1,47 @@
+type: project
+discipline: scenic
+slug: the-bald-soprano
+title: The Bald Soprano
+status: published
+featured: false
+excerpt: >-
+  An absurd domestic interior bent out of proportion, where scenic and lighting design worked together to turn polite
+  drawing-room order into something unstable, comic, and quietly threatening.
+seoTitle: The Bald Soprano | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic and lighting design for The Bald Soprano at Stephens College, featuring a distorted domestic setting that
+  reflects miscommunication, repetition, and the breakdown of meaning.
+seoKeywords:
+  - The Bald Soprano
+  - Eugene Ionesco
+  - scenic design
+  - lighting design
+  - Stephens College
+  - absurdism
+  - Brandon PT Davis
+client: Stephens College
+location: Columbia, MO
+year: 2022
+month: 1
+subcategory: Comedy
+cover:
+  asset: project-images/rescued/the-bald-soprano/the-bald-soprano-2d959ef49b.jpeg
+  alt: The Bald Soprano scenic design cover image
+team:
+  - role: By
+    name: Eugene Ionesco
+  - role: Scenic and Lighting Designer
+    name: Brandon PT Davis
+  - role: Costume Designer
+    name: Briann Johnson
+  - role: Sound Designer
+    name: Michael Burke
+  - role: Director
+    name: Brett Olson
+tags:
+  - comedy
+  - absurdism
+  - stephens-college
+  - the-bald-soprano
+links: []
+updatedAt: '2026-03-23T18:30:00.000Z'

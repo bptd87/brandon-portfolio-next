@@ -1,0 +1,54 @@
+type: project
+discipline: scenic
+slug: a-funny-thing-happened
+title: A Funny Thing Happened on the Way to the Forum
+status: published
+featured: false
+excerpt: >-
+  Three heightened Roman façades turned A Funny Thing Happened on the Way to the Forum into a comic machine, balancing
+  classical reference with cartoon-like exaggeration and the speed of farce.
+seoTitle: A Funny Thing Happened on the Way to the Forum | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for A Funny Thing Happened on the Way to the Forum at Lake Dillon Theatre Company, using playful Roman
+  architecture and three distinct house façades to support the pace and absurdity of farce.
+seoKeywords:
+  - A Funny Thing Happened on the Way to the Forum
+  - scenic design
+  - Lake Dillon Theatre Company
+  - musical comedy
+  - farce
+  - Brandon PT Davis
+client: Lake Dillon Theatre Company
+location: Silverthorne, CO
+year: 2022
+month: 6
+subcategory: Musical Theatre
+cover:
+  asset: project-images/project-90049-cover.webp
+  alt: A Funny Thing Happened on the Way to the Forum scenic design cover image
+team:
+  - role: Music and Lyrics
+    name: Stephen Sondheim
+  - role: Music Director
+    name: Len Rhodes
+  - role: Choreographer
+    name: Rachel Leigh Dolan
+  - role: Scenic Designer
+    name: Brandon PT Davis
+  - role: Costume Designer
+    name: Rachel Anne Germinario
+  - role: Lighting Designer
+    name: Kenrick Fischer
+  - role: Sound Designer
+    name: Matthew Eckstein
+  - role: Director
+    name: Mellisa Livingston
+tags:
+  - musical-theatre
+  - comedy
+  - farce
+  - a-funny-thing-happened
+links:
+  - label: Summit Daily Listing
+    url: https://www.summitdaily.com/news/travel-to-ancient-rome-with-a-funny-thing-happened-on-the-way-to-the-forum/
+updatedAt: '2026-02-12T15:03:57+00:00'

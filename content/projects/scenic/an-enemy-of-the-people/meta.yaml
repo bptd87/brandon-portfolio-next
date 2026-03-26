@@ -1,0 +1,47 @@
+type: project
+discipline: scenic
+slug: an-enemy-of-the-people
+title: An Enemy of the People
+status: published
+featured: false
+excerpt: >-
+  A grayscale illustrated world punctured by red furniture, making scrutiny feel constant and comfort impossible in An
+  Enemy of the People.
+seoTitle: An Enemy of the People | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for An Enemy of the People at Stephens College, using a grayscale illustrated world and red accents to
+  heighten moral tension and exposure.
+seoKeywords:
+  - An Enemy of the People scenic design
+  - Stephens College theatre
+  - Brandon PT Davis
+  - grayscale set design
+  - dramatic theatre scenery
+client: Stephens College
+location: Columbia, MO
+year: 2023
+month: 10
+subcategory: Drama
+cover:
+  asset: portfolio/projects/2026/03/2023-enemy-of-the-people-6-of-6-7499.webp
+  alt: An Enemy of the People scenic design cover image
+team:
+  - role: Book By
+    name: Henrik Ibsen
+  - role: Director
+    name: L.R. Hults
+  - role: Scenic Design
+    name: Brandon PT Davis
+  - role: Costume Design
+    name: Martha C. Clarke
+  - role: Lighting Design
+    name: Zack Anderson
+  - role: Sound Design
+    name: Michael Burke
+tags:
+  - drama
+  - ibsen
+  - stephens-college
+  - an-enemy-of-the-people
+links: []
+updatedAt: '2026-03-01T10:26:51.60406+00:00'

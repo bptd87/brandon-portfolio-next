@@ -1,0 +1,58 @@
+type: project
+discipline: scenic
+slug: head-over-heels
+title: Head Over Heels
+status: published
+featured: false
+excerpt: >-
+  Arcadia reimagined through 1980s club culture, using a modular, high-saturation world that moves with the pulse of the
+  Go-Go’s.
+seoTitle: Head Over Heels | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for Head Over Heels at Theatre SilCo, using club-culture energy, modular scenery, and vibrant color to
+  support transformation, rebellion, and joy.
+seoKeywords:
+  - Head Over Heels scenic design
+  - Theatre SilCo
+  - Brandon PT Davis
+  - musical theatre design
+  - Go-Go's musical
+  - club-inspired stage design
+client: Theatre SilCo
+location: Silverthorne, CO
+year: 2023
+month: 6
+subcategory: Musical Theatre
+cover:
+  asset: project-images/project-90044-cover.webp
+  alt: Head Over Heels scenic design cover image
+  position: center top
+team:
+  - role: Book By
+    name: Jeff Whitty
+  - role: Adapted By
+    name: James Magruder
+  - role: Music & Lyrics By
+    name: The Go-Go’s
+  - role: Music Direction
+    name: Timothy Fletcher
+  - role: Directed & Choreographed By
+    name: Josh Walden
+  - role: Scenic Designer
+    name: Brandon PT Davis
+  - role: Costume Designer
+    name: Melissa Livingston
+  - role: Lighting Designer
+    name: Merle DeWitt III
+  - role: Sound Designer
+    name: Hudson Waldrop
+tags:
+  - musical-theatre
+  - the-go-gos
+  - queer-theatre
+  - head-over-heels
+links:
+  - label: Summit Daily Listing
+    url: >-
+      https://www.summitdaily.com/news/keystone-art-festival-returns-with-1-major-change-and-3-other-things-to-do-in-summit-county-this-weekend/
+updatedAt: '2026-02-12T15:03:57+00:00'

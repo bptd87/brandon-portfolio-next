@@ -1,0 +1,39 @@
+- type: text
+  heading: Compressing the Proscenium
+  content:
+    - >-
+      For Last Train to Nibroc, scale was the first problem to solve. The script is intimate. The proscenium was not. I
+      built a smaller, textured frame inside the larger architecture using reclaimed Kentucky barn wood, immediately
+      compressing the stage into a world that felt personal rather than theatrical.
+- type: gallery
+  mediaIds:
+    - nibroc-prod-1
+    - nibroc-prod-2
+- type: text
+  heading: Warmth, Sightlines, and Quiet Tension
+  content:
+    - >-
+      The stage was raked slightly to focus sightlines and give the environment a gentle push forward. It added subtle
+      tension without feeling stylized. The barn wood brought warmth and history into the room, something grounded and
+      honest that reflected the play's rural setting and emotional vulnerability.
+- type: gallery
+  mediaIds:
+    - nibroc-prod-3
+    - nibroc-prod-4
+- type: text
+  heading: Design Goal
+  content:
+    - >-
+      A 30-foot backdrop carried the journey between locations, allowing transitions to remain fluid without breaking
+      the rhythm of the characters' conversations. This design wasn't about spectacle. It was about proximity. The
+      architecture supported stillness, and the materials carried nostalgia without becoming sentimental.
+- type: gallery
+  mediaIds:
+    - nibroc-prod-5
+    - nibroc-prod-6
+    - nibroc-prod-7
+- type: gallery
+  mediaIds:
+    - nibroc-render-1
+    - nibroc-render-2
+    - nibroc-render-3

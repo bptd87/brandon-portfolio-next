@@ -1,0 +1,40 @@
+- type: text
+  heading: A World Without Comfort
+  content:
+    - >-
+      For An Enemy of the People at Stephens College, I wanted the world to feel stripped down and confrontational. I
+      kept the entire environment in grayscale, walls, architecture, and floor, treating the space almost like a
+      three-dimensional drawing. The inspiration came from Tokyo’s 2D Cafe, where depth feels flattened and reality
+      feels slightly unstable.
+- type: gallery
+  mediaIds:
+    - enemy-prod-1
+    - enemy-prod-2
+- type: text
+  heading: Architecture as Exposure
+  content:
+    - >-
+      The backdrop included rough, sketch-like line work that suggested architecture without fully rendering it. It
+      wasn’t about realism. It was about exposure. In a play centered on truth and public scrutiny, I didn’t want the
+      room to provide comfort.
+- type: gallery
+  mediaIds:
+    - enemy-prod-3
+    - enemy-prod-4
+- type: text
+  heading: Design Goal
+  content:
+    - >-
+      The only real color in the space came from the red furniture. Those pieces punctured the monochrome world. Red
+      became a visual interruption: pressure, danger, accusation. It made the actors feel like they were standing inside
+      an argument.
+    - >-
+      The minimal palette forced focus onto performance and language. There was nowhere to hide. The environment felt
+      stark, almost clinical, but still theatrical. The design wasn’t decorative. It was a frame that amplified the
+      play’s themes of power, resistance, and the cost of speaking out.
+- type: gallery
+  mediaIds:
+    - enemy-prod-5
+- type: gallery
+  mediaIds:
+    - enemy-render-1

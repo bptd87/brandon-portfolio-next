@@ -1,0 +1,53 @@
+type: project
+discipline: scenic
+slug: freaky-friday
+title: Freaky Friday
+status: published
+featured: true
+excerpt: >-
+  A fast, flexible scenic system for Freaky Friday, designed to hold body-swap comedy, emotional reversals, and
+  high-energy ensemble motion without losing clarity.
+seoTitle: Freaky Friday | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for Freaky Friday at Okoboji Summer Theatre, using modular zones and legible transitions to support
+  comedy, transformation, and musical momentum.
+seoKeywords:
+  - Freaky Friday scenic design
+  - musical theatre scenic design
+  - Okoboji Summer Theatre
+  - Brandon PT Davis
+client: Okoboji Summer Theatre
+clientUrl: https://okobojisummertheatre.org/
+location: Okoboji, IA
+year: 2024
+month: 7
+subcategory: Musical Theatre
+cover:
+  asset: project-images/project-90056-cover.webp
+  alt: Freaky Friday scenic design cover image
+team:
+  - role: Book By
+    name: Bridget Carpenter
+  - role: Music By
+    name: Tom Kitt
+  - role: Lyrics By
+    name: Brian Yorkey
+  - role: Director / Choreographer
+    name: Josh Walden
+  - role: Scenic Designer
+    name: Brandon PT Davis
+  - role: Costume Designer
+    name: Zachary Phelps
+  - role: Lighting Designer
+    name: Savannah Bell
+  - role: Sound Designer
+    name: Kayla Slinger
+tags:
+  - musical-theatre
+  - comedy
+  - transformation
+  - freaky-friday
+links:
+  - label: Wyatt Munsey Production Photos
+    url: https://www.wyattmunsey.com/production-photos/project-three-sng7y-9b7xy
+updatedAt: '2026-02-12T15:03:57+00:00'

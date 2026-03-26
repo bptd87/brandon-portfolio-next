@@ -1,0 +1,51 @@
+type: project
+discipline: scenic
+slug: boeing-boeing
+title: Boeing, Boeing
+status: published
+featured: false
+excerpt: >-
+  A sleek Paris apartment turned into a machine for farce, using polished surfaces, calibrated entrances, and escalating
+  comic collapse in Boeing, Boeing.
+seoTitle: Boeing, Boeing | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for Boeing, Boeing at Stephens College, using midcentury architecture, color, and precise door placement
+  to support the timing and choreography of classic farce.
+seoKeywords:
+  - Boeing Boeing
+  - scenic design
+  - Stephens College
+  - farce
+  - comedy
+  - midcentury modern
+  - Brandon PT Davis
+client: Stephens College
+location: Columbia, MO
+year: 2023
+month: 2
+subcategory: Comedy
+cover:
+  asset: project-images/project-90054-cover.webp
+  alt: Boeing, Boeing scenic design cover image
+team:
+  - role: Playwright
+    name: Marc Camoletti
+  - role: Scenic Designer
+    name: Brandon PT Davis
+  - role: Costume Designer
+    name: Fae Riemann-Royer
+  - role: Lighting Designer
+    name: Katie Cohen
+  - role: Sound Designer
+    name: Michael Burke
+  - role: Director
+    name: John Hemphill
+tags:
+  - comedy
+  - farce
+  - stephens-college
+  - boeing-boeing
+links:
+  - label: Stephens Connect Listing
+    url: https://stephensconnect.stephens.edu/events
+updatedAt: '2026-02-12T15:03:58+00:00'

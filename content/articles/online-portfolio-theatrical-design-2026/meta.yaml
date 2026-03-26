@@ -1,0 +1,35 @@
+type: article
+slug: online-portfolio-theatrical-design-2026
+title: 'The Modern Theatrical Design Portfolio: A Guide for 2026'
+status: published
+featured: false
+excerpt: >-
+  How to build a scenic-focused digital portfolio in 2026 with stronger structure, better indexing, and clearer project
+  storytelling.
+category: Tools & Technology
+seoTitle: 'The Modern Theatrical Design Portfolio: A Guide for 2026'
+seoDescription: >-
+  A 2026 portfolio strategy guide for scenic designers covering site architecture, SEO fundamentals, project narrative
+  structure, and conversion-focused presentation.
+seoKeywords:
+  - portfolio design
+  - theatrical design
+  - SEO for designers
+  - digital portfolio
+  - web design
+cover:
+  asset: article-images/article-60126-cover.webp
+  alt: 'The Modern Theatrical Design Portfolio: A Guide for 2026'
+tags:
+  - theatrical-design
+  - portfolio-design
+  - seo-for-designers
+  - digital-portfolio
+  - web-design
+readTime: 3
+publishedAt: '2026-02-06T00:00:00+00:00'
+updatedAt: '2026-02-19T19:28:12.127+00:00'
+audio:
+  asset: article_audio/Modern%20Portfolio.mp3
+  label: Listen to article
+linkedScenicProjectSlugs: []

@@ -1,3 +1,5 @@
+"use client";
+
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AboutNav from "@/components/AboutNav";
@@ -25,12 +27,12 @@ export default function CreativeStatement() {
     return a.title.localeCompare(b.title);
   });
 
-  const statementGallery = scenicDesignProjects.length > 0
-    ? scenicDesignProjects
-        .filter((project) => !!project.coverImageUrl && !!project.slug)
-        .sort(() => Math.random() - 0.5)
-        .slice(0, 9)
-    : [];
+  const statementGallery =
+    scenicDesignProjects.length > 0
+      ? scenicDesignProjects
+          .filter((project) => !!project.coverImageUrl && !!project.slug)
+          .slice(0, 9)
+      : [];
 
   // Scroll animation refs
   const galleryRailRef = useRef<HTMLDivElement | null>(null);

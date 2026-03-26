@@ -1,0 +1,38 @@
+- type: text
+  heading: A Familiar American Exterior
+  content:
+    - >-
+      All My Sons is set within a postwar suburban home defined by a modest house, open porch, and backyard. The scenic
+      environment reflects the optimism and order associated with the American Dream, presenting a space that initially
+      feels stable, welcoming, and complete.
+- type: gallery
+  mediaIds:
+    - sons-prod-1
+    - sons-prod-2
+- type: text
+  heading: Openness Working Against Comfort
+  content:
+    - >-
+      As the play unfolds, the openness of the setting begins to work against that sense of comfort. Private
+      conversations and moral conflicts are placed in full view, allowing tension to emerge through realism rather than
+      overt symbolism. The layout and scenic details suggest a world carefully maintained, echoing the emotional
+      restraint and denial within the Keller family.
+- type: gallery
+  mediaIds:
+    - sons-prod-3
+    - sons-prod-4
+- type: text
+  heading: Design Goal
+  content:
+    - >-
+      The design grounded the story in a familiar domestic setting while allowing emotional shifts to register clearly.
+      The everyday suburban space became a quiet framework for the play's central moral questions and the consequences
+      of choices made in silence.
+- type: gallery
+  mediaIds:
+    - sons-prod-5
+    - sons-prod-6
+    - sons-prod-7
+- type: gallery
+  mediaIds:
+    - sons-render-1

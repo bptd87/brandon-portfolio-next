@@ -1,10 +1,12 @@
+"use client";
+
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
 import { getProjectPath } from "@/lib/projectRoutes";
 import { getLocalArticles } from "@shared/localArticles";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
 import { ArrowLeft, Briefcase, FileText } from "lucide-react";
-import { Link, useParams } from "wouter";
+import { Link } from "wouter";
 
 const INDEXABLE_TAG_MIN_ITEMS = 3;
 
@@ -45,9 +47,21 @@ const getContentTimestamp = (item: {
   return fallback ? new Date(fallback).getTime() : 0;
 };
 
-export default function TagDetail() {
-  const { slug } = useParams<{ slug: string }>();
-  const normalizedSlug = (slug || "").toLowerCase();
+type TagDetailProps = {
+  slug?: string;
+  params?: {
+    slug?: string;
+  };
+};
+
+export default function TagDetail({ slug: slugProp, params }: TagDetailProps = {}) {
+  const normalizedSlug = (
+    slugProp ||
+    params?.slug ||
+    (typeof window !== "undefined"
+      ? window.location.pathname.split("/").filter(Boolean).pop() || ""
+      : "")
+  ).toLowerCase();
 
   const projects = getLocalScenicProjects()
     .filter((project) => project.tags.some((tag) => tag.slug === normalizedSlug))

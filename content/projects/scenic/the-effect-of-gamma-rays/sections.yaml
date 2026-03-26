@@ -1,0 +1,30 @@
+- type: text
+  heading: A House of Erosion
+  content:
+    - >-
+      The environment was shaped by layers of deterioration and memory. Faded yellow wallpaper, sun-bleached and subtly
+      stained, suggested years of exposure and emotional erosion. Sections of exposed newspaper lining beneath the paper
+      hinted at past attempts to insulate or repair the home, reinforcing both economic strain and the passage of time.
+- type: gallery
+  mediaIds:
+    - gamma-prod-1
+    - gamma-prod-2
+- type: text
+  heading: Distressed Surfaces and Physical Weight
+  content:
+    - >-
+      The walls carried a brittle quality, curling edges, uneven seams, and tonal shifts that caught the light in uneasy
+      ways. To ground the world in physical authenticity, portions of the set were built from reclaimed dock lumber
+      sourced from Lake Okoboji. The wood's natural weathering introduced a tactile realism that contrasted with the
+      fragile interior surfaces.
+- type: gallery
+  mediaIds:
+    - gamma-prod-3
+    - gamma-prod-4
+- type: text
+  heading: Design Goal
+  content:
+    - >-
+      That combination of distressed paper and worn timber created a space that felt both structurally present and
+      emotionally unraveling. The environment gave the characters a world marked by damage, but not without endurance,
+      allowing the play's fragile hope to register against a setting that had clearly survived too much.

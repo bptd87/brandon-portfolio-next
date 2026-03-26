@@ -1,0 +1,38 @@
+- type: text
+  heading: Three Houses, Three Comic Engines
+  content:
+    - >-
+      Three houses stood at the center of the design for A Funny Thing Happened on the Way to the Forum: the home of
+      Senex, the lively brothel of Lycus, and the worn, modest dwelling of Erronius. Each façade was rendered in a
+      heightened, cartoon-like style that matched the musical’s farcical humor while still carrying echoes of ancient
+      Rome.
+- type: gallery
+  mediaIds:
+    - forum-prod-1
+    - forum-prod-2
+- type: text
+  heading: Classical Texture, Comic Precision
+  content:
+    - >-
+      To strike that balance, the design drew from Greco-Roman pottery and decorative motifs. Columns and carved details
+      appeared throughout the architecture, treated with just enough exaggeration to feel witty without tipping into
+      parody. The set needed clarity and flexibility, anchoring comic situations while transforming easily as the farce
+      unfolded.
+- type: gallery
+  mediaIds:
+    - forum-prod-3
+    - forum-prod-4
+- type: text
+  heading: Design Goal
+  content:
+    - >-
+      Each house held its own personality: Senex’s home suggested domestic order ready to unravel; Lycus’s façade leaned
+      into flamboyance and theatricality; Erronius’s dwelling offered contrast in its simplicity. Together, the trio
+      formed a visual shorthand for tangled relationships and chaotic schemes.
+    - >-
+      What tied the design together was its overall sense of exaggeration, architectural features pushed just far enough
+      to feel humorous while preserving the sophistication of a classical world. That blend of whimsy and structure
+      created a stage where disguises, comic chases, and mistaken identities felt perfectly at home.
+- type: gallery
+  mediaIds:
+    - forum-render-1

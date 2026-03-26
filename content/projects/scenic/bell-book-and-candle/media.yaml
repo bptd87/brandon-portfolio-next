@@ -1,0 +1,36 @@
+gallery:
+  - id: bbc-cover
+    kind: cover
+    asset: project-images/project-90016-cover.webp
+    alt: Bell, Book, and Candle scenic design cover image.
+  - id: bbc-prod-1
+    kind: production
+    asset: project-images/project-90016-gallery-150114.webp
+    alt: Production image from Bell, Book, and Candle at Okoboji Summer Theatre, scenic design by Brandon PT Davis.
+  - id: bbc-prod-2
+    kind: production
+    asset: project-images/project-90016-gallery-150253.webp
+    alt: Stage image from Bell, Book, and Candle showing the domestic apartment world, scenic design by Brandon PT Davis.
+  - id: bbc-prod-3
+    kind: production
+    asset: project-images/project-90016-gallery-150160.webp
+    alt: >-
+      Performance image from Bell, Book, and Candle within the grounded interior setting, scenic design by Brandon PT
+      Davis.
+  - id: bbc-prod-4
+    kind: production
+    asset: project-images/project-90016-gallery-150137.webp
+    alt: >-
+      Production view of Bell, Book, and Candle emphasizing furniture layout and actor pathways, scenic design by
+      Brandon PT Davis.
+  - id: bbc-prod-5
+    kind: production
+    asset: project-images/project-90016-gallery-150247.webp
+    alt: Stage picture from Bell, Book, and Candle at Okoboji Summer Theatre, scenic design by Brandon PT Davis.
+  - id: bbc-render-1
+    kind: rendering
+    asset: project-images/project-90016-gallery-150203.webp
+    alt: >-
+      Rendering for Bell, Book, and Candle exploring the grounded apartment interior and green mid-century palette,
+      scenic design by Brandon PT Davis.
+videos: []

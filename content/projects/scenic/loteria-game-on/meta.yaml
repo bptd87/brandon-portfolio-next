@@ -1,0 +1,53 @@
+type: project
+discipline: scenic
+slug: loteria-game-on
+title: '¡LOTERIA: GAME ON!'
+status: published
+featured: false
+excerpt: >-
+  Beginning in a suburban basement family room, the design transforms into a vivid Loteria card-world where childhood
+  play, digital spectacle, and cultural memory collide in full view of the audience.
+seoTitle: '¡LOTERIA: GAME ON! | Scenic Design by Brandon PT Davis'
+seoDescription: >-
+  Scenic design for ¡LOTERIA: GAME ON! at Theatre SilCo, moving from a suburban family basement into a bright,
+  8-bit-inspired Loteria universe built for theatrical play and young audiences.
+seoKeywords:
+  - Loteria Game On
+  - scenic design
+  - Theatre SilCo
+  - theatre for young audiences
+  - projection design
+  - Brandon PT Davis
+client: Theatre SilCo
+location: Silverthorne, CO
+year: 2023
+month: 3
+subcategory: Theatre for Young Audiences
+cover:
+  asset: project-images/project-90009-cover.webp
+  alt: '¡LOTERIA: GAME ON! scenic design cover image'
+team:
+  - role: Playwright
+    name: Mabelle Reynoso
+  - role: Scenic Design
+    name: Brandon PT Davis
+  - role: Costume Design
+    name: Lauryn Terceira
+  - role: Lighting Design
+    name: Jesús Lopez
+  - role: Sound Design
+    name: Grayson Moreno
+  - role: Projection Design
+    name: Merle Dewitt
+  - role: Director
+    name: Sara Rodriguez
+tags:
+  - theatre-for-young-audiences
+  - new-work
+  - projection-design
+  - theatre-silco
+  - loteria-game-on
+links:
+  - label: Mabelle Reynoso Play Page
+    url: https://www.mabellereynoso.com/loteria-game-on
+updatedAt: '2026-02-12T15:03:56+00:00'

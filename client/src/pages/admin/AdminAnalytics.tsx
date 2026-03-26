@@ -34,12 +34,25 @@ import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getPostHogDebugInfo } from "@/lib/posthog";
+import { readPublicEnv } from "@/lib/readPublicEnv";
 import { trpc } from "@/lib/trpc";
 
-const DASHBOARD_URL = import.meta.env.VITE_PUBLIC_POSTHOG_DASHBOARD_URL?.trim() || "";
-const PROJECT_URL = import.meta.env.VITE_PUBLIC_POSTHOG_PROJECT_URL?.trim() || "";
-const RECORDINGS_URL = import.meta.env.VITE_PUBLIC_POSTHOG_RECORDINGS_URL?.trim() || "";
-const FUNNELS_URL = import.meta.env.VITE_PUBLIC_POSTHOG_FUNNELS_URL?.trim() || "";
+const DASHBOARD_URL = readPublicEnv(
+  "NEXT_PUBLIC_POSTHOG_DASHBOARD_URL",
+  "VITE_PUBLIC_POSTHOG_DASHBOARD_URL"
+);
+const PROJECT_URL = readPublicEnv(
+  "NEXT_PUBLIC_POSTHOG_PROJECT_URL",
+  "VITE_PUBLIC_POSTHOG_PROJECT_URL"
+);
+const RECORDINGS_URL = readPublicEnv(
+  "NEXT_PUBLIC_POSTHOG_RECORDINGS_URL",
+  "VITE_PUBLIC_POSTHOG_RECORDINGS_URL"
+);
+const FUNNELS_URL = readPublicEnv(
+  "NEXT_PUBLIC_POSTHOG_FUNNELS_URL",
+  "VITE_PUBLIC_POSTHOG_FUNNELS_URL"
+);
 
 const TRACKED_EVENTS = [
   {

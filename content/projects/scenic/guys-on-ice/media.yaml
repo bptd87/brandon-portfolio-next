@@ -1,0 +1,36 @@
+gallery:
+  - id: goi-cover
+    kind: cover
+    asset: project-images/project-90045-cover.webp
+    alt: Guys on Ice scenic design cover image.
+  - id: goi-prod-1
+    kind: production
+    asset: project-images/project-90045-gallery-150164.webp
+    alt: >-
+      Audience perspective of the completed Guys on Ice set at The Great American Melodrama, scenic design by Brandon PT
+      Davis.
+  - id: goi-prod-2
+    kind: production
+    asset: project-images/project-90045-gallery-150062.webp
+    alt: Cast interaction framed by the cabin-inspired scenic world of Guys on Ice, scenic design by Brandon PT Davis.
+  - id: goi-prod-3
+    kind: production
+    asset: project-images/project-90045-gallery-150179.webp
+    alt: Wide stage view showing environment and actor pathways in Guys on Ice, scenic design by Brandon PT Davis.
+  - id: goi-prod-4
+    kind: production
+    asset: project-images/project-90045-gallery-150163.webp
+    alt: Performance moment across the central scenic playing area in Guys on Ice, scenic design by Brandon PT Davis.
+  - id: goi-prod-5
+    kind: production
+    asset: project-images/project-90045-gallery-150156.webp
+    alt: >-
+      Production image of Guys on Ice at The Great American Melodrama with full set context, scenic design by Brandon PT
+      Davis.
+  - id: goi-render-1
+    kind: rendering
+    asset: project-images/project-90045-gallery-150050.webp
+    alt: >-
+      Scenic rendering for Guys on Ice with focus on atmosphere, structure, and sightlines, scenic design by Brandon PT
+      Davis.
+videos: []

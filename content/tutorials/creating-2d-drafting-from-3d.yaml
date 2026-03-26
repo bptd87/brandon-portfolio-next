@@ -1,0 +1,271 @@
+id: 19
+title: 'Vectorworks Tutorial: Creating 2D Drafting from 3D Models'
+slug: creating-2d-drafting-from-3d
+content: null
+category: 2d-drafting
+difficulty: Advanced
+duration: 1440
+created_at: '2026-02-12T10:46:46.278044+00:00'
+updated_at: '2026-02-22T11:22:57.948959+00:00'
+status: published
+featured: false
+seo_title: null
+seo_description: null
+seo_keywords: null
+learning_objectives:
+  - Create viewports from design layers and place them on sheet layers with proper scale
+  - Adjust rendering modes (wireframe, hidden line, Renderworks) for optimal 2D linework
+  - Create custom Renderworks styles for model drafting with subtle shadows
+  - Generate section viewports with proper cut lines and directional markers
+  - Create detail viewports at larger scales (3-inch) to highlight trim profiles
+  - Adjust line weights in Advanced Properties to emphasize cut sections
+  - Add dimensions, annotations, and drawing labels with proper class organization
+  - Update out-of-date viewports and publish final PDFs with Title Block Manager
+key_concepts:
+  - title: VIEWPORT WORKFLOW
+    content: >-
+      Start by creating viewports from your design layer (View > Create Viewport). Vectorworks auto-generates drawing
+      numbers and names. Place viewports on dedicated sheet layers (e.g., 'Elevations'). Set the scale to half-inch
+      (1/2" = 1'-0") for elevations and plans. Initially, viewports display in wireframe—you'll adjust rendering later.
+      Use Ctrl+Shift+drag to duplicate viewports, then change the view (Top/Plan, Front, Left, etc.) in Object Info
+      Palette. This viewport-based workflow keeps your design layer clean and makes it easy to update drawings when the
+      model changes.
+  - title: RENDERING MODES FOR DRAFTING
+    content: >-
+      Wireframe rendering shows all edges (visible and hidden), which isn't ideal for construction drawings. Change
+      Background Render to 'Hidden Line' to show only visible edges—this creates clean 2D linework. For enhanced
+      clarity, use a custom Renderworks style (e.g., 'Model Drafting') with Background Render set to Renderworks and
+      Foreground Render set to Hidden Line. Enable anti-aliasing, shadows, and textures; disable color. This adds subtle
+      shadows where elements meet, helping details 'pop' and making drawings easier to read for carpenters.
+  - title: SECTION VIEWPORTS
+    content: >-
+      Create section viewports by drawing a cut line (use a simple line) where you want to slice through the model.
+      Extend the line half an inch above and below the drawing to avoid overlap. Select the viewport, go to View >
+      Create Section Viewport, define the top and bottom of the cut line, then choose the direction (left or right).
+      Vectorworks auto-generates the drawing number. Set scale to half-inch and name the section (e.g., 'Section 1').
+      Sections reveal internal construction details like door reveals, trim profiles, and wall assemblies—critical for
+      builders.
+  - title: DETAIL VIEWPORTS
+    content: >-
+      Detail viewports zoom in on specific areas at larger scales (e.g., 3-inch scale = 3" = 1'-0"). Draw a circle
+      around the trim profile or detail you want to highlight (place the circle on the 'None' class). With the circle
+      selected, go to View > Create Detail Viewport, change the scale to 3-inch, and name it (e.g., 'Baseboard'). Detail
+      viewports show trim profiles, joinery, and fastener locations at a scale where carpenters can read dimensions
+      clearly. These are essential for communicating construction intent.
+  - title: LINE WEIGHT CONTROL
+    content: >-
+      Adjust line weights in the viewport's Advanced Properties to emphasize cut sections. Set 'Section Line' to medium
+      line weight so cut elements stand out from elements beyond the cut plane. Set 'Extents Beyond' to a lighter line
+      weight to de-emphasize background elements. If wall and molding blend together, enable 'Separate Cross Sections'
+      to create clearer delineation. These adjustments make it easier for carpenters to understand where different
+      components meet, especially trim and molding intersections.
+  - title: DIMENSIONING AND ANNOTATIONS
+    content: >-
+      Add dimensions and annotations after all viewports are created. Place drawing labels on the correct class (e.g.,
+      'Drawing Label'). Dimension overall wall width, door width, reveal depth, and key trim features. Keep dimensions
+      clear and readable with space between text and linework. Add human figures for scale (place on 'Entourage' class).
+      Adjust section markers so they're smaller and don't overlap drawings. Align drawing labels and viewports for
+      visual cleanliness. Before publishing, update any out-of-date viewports (red dashed lines indicate outdated
+      viewports).
+pro_tips:
+  - Use Ctrl+Shift+drag to duplicate viewports quickly—saves time when creating multiple views of the same model
+  - Set viewport scale to half-inch (1/2" = 1'-0") for elevations and plans—standard construction drawing scale
+  - Change Background Render to 'Hidden Line' for clean 2D linework—removes hidden edges that clutter drawings
+  - >-
+    Create a custom Renderworks style called 'Model Drafting' with subtle shadows—helps details pop without overwhelming
+    linework
+  - Extend section cut lines half an inch above and below drawings—prevents overlap with viewport borders
+  - Set section line weight to medium in Advanced Properties—makes cut elements stand out from background
+  - Enable 'Separate Cross Sections' to clarify where trim meets wall—critical for carpenter readability
+  - Use 3-inch scale for detail viewports—large enough to show trim profiles and fastener locations clearly
+  - Place circles for detail viewports on 'None' class—keeps them invisible in final drawings
+  - Organize all viewports on 'Viewport' class—makes it easy to select and manage all viewports at once
+  - Add human figures for scale on 'Entourage' class—helps builders understand real-world dimensions
+  - Keep dimensions clear with space between text and linework—prevents visual clutter
+  - Align drawing labels and viewports for visual cleanliness—creates professional-looking sheet layouts
+  - Update out-of-date viewports (red dashed lines) before publishing—ensures drawings reflect latest model changes
+  - Use Title Block Manager to update drawing information before publishing—keeps metadata consistent
+shortcuts:
+  - keys: Ctrl + Shift + Drag
+    action: Duplicate viewport
+  - keys: Cmd/Ctrl + U
+    action: Update selected viewport
+  - keys: Cmd/Ctrl + A
+    action: Select all (useful for updating all viewports)
+common_pitfalls:
+  - Leaving viewports in wireframe rendering—shows hidden edges and creates cluttered, unreadable drawings
+  - >-
+    Not using Hidden Line or Renderworks for Background Render—results in linework that doesn't match construction
+    drawing standards
+  - Placing section cut lines directly on top of drawings—causes overlap and visual confusion
+  - Not adjusting line weights in Advanced Properties—makes cut sections blend with background elements
+  - Using the same scale for details as elevations—trim profiles are too small to read at half-inch scale
+  - Placing detail circles on visible classes—circles appear in final drawings and look unprofessional
+  - Not organizing viewports on 'Viewport' class—makes it hard to select and manage all viewports at once
+  - Forgetting to add dimensions to key features—builders can't construct without dimensions
+  - Overlapping section markers with drawings—creates visual clutter and makes drawings hard to read
+  - Not aligning drawing labels and viewports—creates messy, unprofessional sheet layouts
+  - Publishing without updating out-of-date viewports—final drawings don't reflect latest model changes
+  - Not using Title Block Manager before publishing—drawing metadata is inconsistent or missing
+transcript:
+  - text: >-
+      Hello. This is Brandon PT Davis, theatrical scenic designer. In this Vectorworks tutorial video, I'm going to show
+      you how to take a 3D model and create 2D drafting.
+    time: '0:05'
+  - text: >-
+      So the first thing I have is a 2D/3D symbol, also known as a hybrid symbol. This is the 2D element, and here's the
+      3D element of our basic wall. I'm going to go back into Top/Plan view.
+    time: '0:14'
+  - text: >-
+      Currently, I have this class called 'Set Wall.' If you had a more complex drawing, you might have a lot of
+      different classes, which would give you the ability to turn different elements on and off. That lets you control
+      what you're showing in your viewports.
+    time: '0:32'
+  - text: >-
+      We want to transfer this to a sheet layer. I'm going to put this on Sheet Layer 1, Elevations. I'll go to View and
+      create a viewport. I'll let Vectorworks generate the viewport drawing number and name.
+    time: '0:58'
+  - text: >-
+      We want to create this on the Elevations sheet layer, using the default drawing label that comes with this file.
+      We'll let this be Drawing 1. This is the wall plan. We'll do the wall front later.
+    time: '1:12'
+  - text: >-
+      Make sure your layers are selected. We have one layer in this file. This is also where you could toggle different
+      classes on and off, but this file is simple, so we'll use all of the classes that are currently in the file.
+    time: '1:44'
+  - text: >-
+      We're going to change our scale to half-inch scale. We'll keep the rendering set to wireframe and the view set to
+      Top/Plan. Then I'll press OK.
+    time: '2:01'
+  - text: >-
+      Now it's transferred me to the sheet layer. What I'm going to do is shift this to the top. If I hold Control and
+      Shift, I can drag and duplicate, so now I have two of these viewports.
+    time: '2:14'
+  - text: >-
+      In the Object Info palette, if I scroll down to the View section, I can change this to Front view. Now we have the
+      front view, but it's still in wireframe, so it doesn't really look like 2D drafting yet.
+    time: '2:32'
+  - text: >-
+      To fix that, we need to adjust the rendering mode. Under Background Render, I'm going to select Hidden Line and
+      press Update. That gives us the linework we would expect in 2D drafting.
+    time: '2:54'
+  - text: >-
+      Now, because we're using 3D models, we can enhance this further. I have a custom Renderworks style called 'Model
+      Drafting,' which gives a white model drafting look.
+    time: '3:12'
+  - text: >-
+      If I go into the Renderworks style and edit it, you can see the settings I'm using. Anti-aliasing, shadows, and
+      textures are turned on. Color is turned off. Camera effects and grass are off. Anti-aliasing and curved geometry
+      are set to high, soft shadows are low, indirect lighting is low, and environmental lighting is enabled.
+    time: '3:41'
+  - text: >-
+      I'm going to set the Background Render to that custom Renderworks style and the Foreground Render to Hidden Line,
+      then update the viewport. This gives us a little bit of shadowing that helps the details pop.
+    time: '4:28'
+  - text: You can see subtle shadows where the wall meets other elements. That's where we'll start with this document.
+    time: '4:59'
+  - text: >-
+      Next, I'm going to create two sections. I'll draw a line centered between the door so we can get a section through
+      the door. I want the section marker to extend half an inch above and below so it doesn't sit directly on top of
+      the drawing.
+    time: '5:10'
+  - text: >-
+      I'll select the viewport, go to View, and create a Section Viewport. I'll define the top and bottom of the cut
+      line, then choose the direction of the section. I want the section to cut to the right of the drawing.
+    time: '5:57'
+  - text: >-
+      I'll double-click to confirm. Vectorworks generates the drawing number automatically. I'll name this Section 1,
+      keep it at half-inch scale, and press OK.
+    time: '6:42'
+  - text: Now I have my first section. I'll slide it over so it lines up with the drawing above.
+    time: '7:23'
+  - text: >-
+      I'm going to repeat the process to create another section, placing the cut line closer to the center of the wall.
+      Again, I'll go to View, create Section Viewport, verify the drawing label, and press OK.
+    time: '7:35'
+  - text: Now I have two sections, and I'll align them so they line up properly.
+    time: '8:16'
+  - text: >-
+      If I go into the Advanced Properties of the section viewport, I can adjust the line weights. Sometimes I'll set
+      the section line to a medium line weight so it stands out more.
+    time: '8:31'
+  - text: >-
+      If the wall and molding blend together too much, I can go back into Advanced Properties and separate cross
+      sections. I'll also make sure the extents beyond are set to a lighter line weight. After updating, you can see
+      clearer delineation between elements.
+    time: '9:19'
+  - text: This makes it easier for carpenters to understand where different components meet, especially trim and molding.
+    time: '9:57'
+  - text: >-
+      Next, I'm going to create some detail viewports. I'll draw circles around the trim profiles I want to highlight.
+      These circles are on the None class.
+    time: '10:09'
+  - text: >-
+      I'll start with the baseboard. With the circle selected, I'll go to View, create a Detail Viewport, and change the
+      scale to three-inch scale. I'll name it Baseboard and press OK.
+    time: '10:44'
+  - text: I'll quickly repeat this process for the other trim details.
+    time: '11:18'
+  - text: >-
+      Now that all the viewports are created, we need to organize and annotate them. First, I'll make sure all viewports
+      are on the Viewport class.
+    time: '12:21'
+  - text: >-
+      I'll go into Annotations and start adding dimensions. I'll place the drawing labels on the correct class and
+      dimension the overall wall width and key elements.
+    time: '12:38'
+  - text: I like to keep dimensions clear and readable, with some space between text and linework.
+    time: '13:21'
+  - text: I'll add a human figure for scale and make sure it's on the correct class.
+    time: '14:06'
+  - text: >-
+      For the sections, I'll adjust the section markers so they're smaller and not overlapping the drawing. I'll also
+      dimension key features like door width and reveal depth.
+    time: '15:01'
+  - text: >-
+      This is a good place to communicate important construction information to the builders, especially around doors
+      and trim details.
+    time: '17:35'
+  - text: I'll align the drawing labels and viewports so everything is evenly spaced and visually clean.
+    time: '19:08'
+  - text: >-
+      If you see red dashed lines, that means the viewport is out of date. It's a good idea to update everything before
+      publishing.
+    time: '22:27'
+  - text: Finally, I'll go to the Title Block Manager and update any drawing information as needed.
+    time: '23:01'
+  - text: I'll publish the drawing, making sure Sheet Layer 1 is selected, and save the PDF.
+    time: '23:34'
+  - text: >-
+      Here's the final drawing with clean linework and dimensions. That concludes this Vectorworks tutorial. If you have
+      any questions, let me know. Thank you.
+    time: '24:00'
+related_resources:
+  - url: https://www.vectorworks.net/
+    type: Documentation
+    title: Vectorworks Viewports Guide
+  - url: https://www.youtube.com/vectorworks
+    type: Video
+    title: Advanced Section Viewport Techniques
+  - url: https://forum.vectorworks.net/
+    type: Community
+    title: Vectorworks Forum - Viewports & Sheet Layers
+related_tutorials:
+  - slug: sheet-layers
+    title: 'Vectorworks Tutorial: Sheet Layers'
+  - slug: 2d-annotations-dimensioning
+    title: 'Vectorworks Tutorial: 2D Annotations and Dimensioning'
+  - slug: hybrid-symbols
+    title: 'Vectorworks Tutorial: Hybrid Symbols'
+overview: >-
+  This tutorial demonstrates the professional workflow for converting 3D models into production-ready 2D construction
+  drawings. You'll learn how to create viewports from hybrid symbols, adjust rendering modes (wireframe, hidden line,
+  custom Renderworks) for optimal linework, create section viewports with proper cut lines, generate detail viewports at
+  larger scales, adjust line weights for clarity, add dimensions and annotations, organize drawings on sheet layers, and
+  publish final PDFs. This workflow is essential for scenic designers who need to communicate 3D designs to carpenters
+  and builders through clear, dimensioned construction documents.
+description: >-
+  Master the complete workflow for generating professional construction drawings from 3D models, including viewports,
+  sections, details, and dimensioning.
+cover_image: https://img.youtube.com/vi/Q-oM0jkKuS0/maxresdefault.jpg
+video_url: https://www.youtube.com/watch?v=Q-oM0jkKuS0

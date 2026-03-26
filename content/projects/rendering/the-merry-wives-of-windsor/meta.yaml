@@ -1,0 +1,21 @@
+type: project
+discipline: rendering
+slug: the-merry-wives-of-windsor
+title: The Merry Wives of Windsor
+status: published
+featured: false
+excerpt: >-
+  A playful rendering for The Merry Wives of Windsor, built around comic movement, social energy, and the elasticity of
+  Shakespearean farce.
+seoTitle: The Merry Wives of Windsor
+seoDescription: Scenic design for Shakespeare's comedy set in Windsor, England.
+seoKeywords: []
+client: Stephens College
+location: Columbia, MO
+year: 2022
+month: 2
+cover:
+  asset: project-images/project-90053-gallery-150015.webp
+  alt: The Merry Wives of Windsor rendering project cover image
+publishedAt: '2026-02-19T11:02:02.980Z'
+updatedAt: '2026-02-19T11:02:02.980Z'

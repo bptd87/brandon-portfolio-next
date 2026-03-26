@@ -1,0 +1,38 @@
+type: article
+slug: designing-the-keller-home-a-look-back-at-all-my-sons
+title: 'Designing the Keller Home: A Look Back at All My Sons'
+status: published
+featured: false
+excerpt: A scenic case study of All My Sons focused on spatial ethics, domestic realism, and the dramaturgy of the Keller home.
+category: Design Process
+seoTitle: 'Designing the Keller Home: A Look Back at All My Sons'
+seoDescription: >-
+  A scenic design case study of Arthur Miller's All My Sons, analyzing environment, social tension, revision process,
+  and the storytelling function of domestic space.
+seoKeywords:
+  - All My Sons scenic design
+  - Arthur Miller
+  - scenic design case study
+  - residential set design
+  - theatre design process
+  - Keller home design
+cover:
+  asset: article-images/article-60133-cover.webp
+  alt: 'Designing the Keller Home: A Look Back at All My Sons'
+tags:
+  - design-process
+  - scenic-design
+  - stephens-college
+  - theatre-history
+  - all-my-sons
+  - residential-set-design
+  - arthur-miller
+readTime: 8
+publishedAt: '2025-03-19T00:00:00+00:00'
+updatedAt: '2026-02-12T15:04:15+00:00'
+linkedScenicProjectSlugs:
+  - all-my-sons
+series:
+  name: Process and Practice
+  slug: process-and-practice
+  order: 4

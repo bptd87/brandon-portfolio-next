@@ -1,123 +1,72 @@
 # Environment Variables
 
-This document lists all environment variables required for local development.
+This project now runs as a Next.js app with a protected admin workspace, static public pages, Supabase-backed media storage, and server-side analytics helpers.
 
-## Required Variables
+## Recommended Vercel Variables
 
-Contact the project owner to obtain values for these variables.
-
-### Database
+### Canonical Site URL
 
 ```bash
-# MySQL/TiDB connection string
-DATABASE_URL="mysql://user:password@host:port/database?ssl=true"
+SITE_URL="https://www.brandonptdavis.com"
+NEXT_PUBLIC_SITE_URL="https://www.brandonptdavis.com"
 ```
 
-### Authentication
+`SITE_URL` is the server-side source of truth. `NEXT_PUBLIC_SITE_URL` is optional, but helps keep client-side links and previews aligned.
+
+### Admin Authentication
 
 ```bash
-# JWT secret for session cookies
-JWT_SECRET="your-secret-key-here"
-
-# Manus OAuth configuration
-VITE_APP_ID="your-app-id"
-OAUTH_SERVER_URL="https://api.manus.im"
-VITE_OAUTH_PORTAL_URL="https://oauth.manus.im"
-OWNER_OPEN_ID="owner-open-id"
-OWNER_NAME="Brandon PT Davis"
+SUPABASE_URL="https://your-project.supabase.co"
+SUPABASE_SERVICE_KEY="your-service-role-key"
+NEXT_PUBLIC_SUPABASE_ANON_KEY="your-anon-key"
 ```
 
-### Cloudinary (Image CDN)
+These power:
+- admin sign-in
+- protected asset API routes
+- media upload/browse/delete in `/admin`
+
+### Contact Form
 
 ```bash
-# Cloudinary account credentials
-CLOUDINARY_CLOUD_NAME="your-cloud-name"
-CLOUDINARY_API_KEY="your-api-key"
-CLOUDINARY_API_SECRET="your-api-secret"
-```
-
-### Manus Built-in Services
-
-```bash
-# Manus Forge API (LLM, Storage, Notifications)
-BUILT_IN_FORGE_API_URL="https://forge.manus.im"
-BUILT_IN_FORGE_API_KEY="your-server-api-key"
-VITE_FRONTEND_FORGE_API_KEY="your-frontend-api-key"
-VITE_FRONTEND_FORGE_API_URL="https://forge.manus.im"
+RESEND_API_KEY="your-resend-key"
+CONTACT_FROM_EMAIL="hello@your-domain.com"
+CONTACT_TO_EMAIL="you@your-domain.com"
 ```
 
 ### Analytics
 
 ```bash
-# Manus Analytics
-VITE_ANALYTICS_ENDPOINT="https://manus-analytics.com"
-VITE_ANALYTICS_WEBSITE_ID="your-website-id"
+NEXT_PUBLIC_ANALYTICS_DASHBOARD_URL="https://..."
+POSTHOG_PERSONAL_API_KEY="..."
+POSTHOG_PROJECT_ID="..."
+POSTHOG_API_HOST="https://us.posthog.com"
+IPINFO_TOKEN="..."
 ```
 
-### Application
+Current state:
+- the admin analytics UI is provider-neutral
+- server-side analytics queries currently still read from PostHog
+- city/location enrichment uses coarse geo data and can continue even as traffic reporting moves toward Vercel Analytics
+
+If you remove PostHog later, keep the location layer and replace the traffic source behind the existing analytics UI.
+
+## Local Development
+
+Create `.env.local` or `.env` in the project root and add the values above.
 
 ```bash
-# App branding
-VITE_APP_TITLE="Brandon PT Davis | Scenic & Experiential Design"
-VITE_APP_LOGO="/logo.svg"
+pnpm dev
 ```
 
-## Setting Up Locally
+## Vercel Notes
 
-1. **Create `.env` file**
-   ```bash
-   touch .env
-   ```
-
-2. **Add variables**
-   Copy the required variables above and fill in the values provided by the project owner.
-
-3. **Verify setup**
-   ```bash
-   pnpm dev
-   ```
-   
-   If environment variables are missing, you'll see errors in the console.
+- Set production values in Vercel Project Settings → Environment Variables.
+- Use the same `SITE_URL` / `NEXT_PUBLIC_SITE_URL` in Production and Preview if you want stable canonical behavior.
+- If `SITE_URL` is omitted, the app will fall back to Vercel URL hints, but the preferred production setup is to set it explicitly.
 
 ## Security Notes
 
-- **NEVER commit `.env` files to Git**
-- The `.gitignore` file already excludes `.env`
-- Keep credentials secure and private
-- Rotate secrets if accidentally exposed
-- Use different credentials for development vs production
-
-## Production Environment
-
-Production environment variables are managed through the Manus Platform:
-- Set via Management UI → Settings → Secrets
-- Automatically injected at runtime
-- Not stored in code repository
-
-## Troubleshooting
-
-### Missing Environment Variables
-
-If you see errors like `DATABASE_URL is not defined`:
-
-1. Check `.env` file exists in project root
-2. Verify variable names match exactly (case-sensitive)
-3. Restart development server after adding variables
-4. Contact project owner for correct values
-
-### Database Connection Errors
-
-- Verify `DATABASE_URL` format is correct
-- Check database is accessible from your network
-- Ensure SSL is enabled if required
-- Test connection with database client
-
-### Cloudinary Errors
-
-- Verify all three Cloudinary variables are set
-- Check credentials are correct in Cloudinary dashboard
-- Ensure API access is enabled for your account
-
-## Environment Variable Reference
-
-See `server/_core/env.ts` for the complete list of environment variables used by the application.
+- Never commit real secrets.
+- Keep `SUPABASE_SERVICE_KEY` server-only.
+- Only expose `NEXT_PUBLIC_*` variables intentionally.

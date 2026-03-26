@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { getAllNews, getAllCategories } from "./db";
+import { getSiteUrlFromHost } from "../lib/env/site";
 
 export async function generateRSSFeed(req: Request, res: Response) {
   try {
@@ -11,7 +12,7 @@ export async function generateRSSFeed(req: Request, res: Response) {
     const categoryMap = new Map(allCategories.map(c => [c.id, c.name]));
 
     // Build RSS feed
-    const siteUrl = process.env.VITE_APP_URL || `https://${req.get('host')}`;
+    const siteUrl = getSiteUrlFromHost(req.get("host"));
     const feedUrl = `${siteUrl}/api/news/rss`;
     const now = new Date().toUTCString();
 

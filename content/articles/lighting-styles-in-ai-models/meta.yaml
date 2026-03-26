@@ -1,0 +1,32 @@
+type: article
+slug: lighting-styles-in-ai-models
+title: 'Lighting Styles in AI Models: How Lighting Changes Everything'
+status: published
+featured: false
+excerpt: >-
+  A lighting-reference guide to AI image prompting, showing how lighting language shifts mood, depth, and narrative
+  emphasis across generated scenes.
+category: Tools & Technology
+seoTitle: 'Lighting Styles in AI Models: How Lighting Changes Everything'
+seoDescription: >-
+  Learn how lighting styles in AI tools influence atmosphere, composition, and storytelling clarity, with prompt
+  strategies designers can adapt to production ideation.
+seoKeywords:
+  - AI lighting
+  - AI image generation
+  - design tools
+  - digital rendering
+  - lighting design
+cover:
+  asset: article-images/article-60146-cover.webp
+  alt: 'Lighting Styles in AI Models: How Lighting Changes Everything'
+tags:
+  - ai-lighting
+  - ai-image-generation
+  - design-tools
+  - digital-rendering
+  - lighting-design
+readTime: 18
+publishedAt: '2025-03-21T00:00:00+00:00'
+updatedAt: '2026-02-12T15:04:15+00:00'
+linkedScenicProjectSlugs: []

@@ -28,14 +28,11 @@ export class SDKServer {
   }
 
   async authenticateRequest(req: Request) {
-    // Check for bearer token first (from Supabase Auth)
     let token = req.cookies?.[COOKIE_NAME];
-    let isSupabaseToken = false;
 
     const authHeader = req.headers.authorization;
     if (authHeader && authHeader.startsWith('Bearer ')) {
       token = authHeader.substring(7);
-      isSupabaseToken = true;
     }
 
     if (!token) {
@@ -50,31 +47,29 @@ export class SDKServer {
     }
 
     try {
-      let openId: string;
+      let openId: string | null = null;
 
-      if (isSupabaseToken) {
-        // Verify Supabase JWT
-        const { data: { user }, error } = await supabase.auth.getUser(token);
-        if (error || !user) throw new Error("Invalid Supabase token");
-        openId = user.id;
+      const { data: { user: supabaseUser }, error: supabaseError } = await supabase.auth.getUser(token);
 
-        // Sync user to our local DB
+      if (!supabaseError && supabaseUser) {
+        openId = supabaseUser.id;
+
         await db.upsertUser({
-          openId: user.id,
-          email: user.email,
+          openId: supabaseUser.id,
+          email: supabaseUser.email,
           lastSignedIn: new Date(),
         });
 
-        if (user.id !== ENV.ownerOpenId) {
-          if (shouldLogAuthEvent(`owner-mismatch:${user.id}`)) {
-            console.log(`[Auth] User logged in with ID: ${user.id}. Expected OWNER_OPEN_ID: '${ENV.ownerOpenId}'`);
+        if (supabaseUser.id !== ENV.ownerOpenId) {
+          if (shouldLogAuthEvent(`owner-mismatch:${supabaseUser.id}`)) {
+            console.log(`[Auth] User logged in with ID: ${supabaseUser.id}. Expected OWNER_OPEN_ID: '${ENV.ownerOpenId}'`);
             console.log(`[Auth] WARNING: OWNER_OPEN_ID mismatch. Please restart the server if you recently updated .env`);
           }
-        } else if (shouldLogAuthEvent(`admin-success:${user.id}`)) {
-          console.log(`[Auth] Admin login successful for user: ${user.id}`);
+        } else if (shouldLogAuthEvent(`admin-success:${supabaseUser.id}`)) {
+          console.log(`[Auth] Admin login successful for user: ${supabaseUser.id}`);
         }
-      } else {
-        // Legacy cookie auth (dev-login)
+      } else if (!authHeader) {
+        // Legacy cookie auth fallback for dev-only sessions.
         const payload = JSON.parse(Buffer.from(token, 'base64').toString());
         openId = payload.openId;
       }

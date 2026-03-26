@@ -1,0 +1,49 @@
+type: project
+discipline: scenic
+slug: angel-street
+title: Angel Street
+status: published
+featured: false
+excerpt: >-
+  A dense Victorian drawing room for Angel Street, letting domestic realism and psychological unease coexist inside the
+  same controlled interior.
+seoTitle: Angel Street | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for Angel Street at Okoboji Summer Theatre, building a formal Victorian drawing room where domestic
+  realism and psychological tension coexist.
+seoKeywords:
+  - Angel Street
+  - Gaslight
+  - scenic design
+  - Okoboji Summer Theatre
+  - Brandon PT Davis
+client: Okoboji Summer Theatre
+location: Columbia, MO
+year: 2013
+month: 7
+subcategory: Drama
+cover:
+  asset: project-images/project-90043-cover.webp
+  alt: Angel Street scenic design cover image
+team:
+  - role: Playwright
+    name: Patrick Hamilton
+  - role: Scenic Designer
+    name: Brandon PT Davis
+  - role: Costume Designer
+    name: Ashley Harrison
+  - role: Lighting Designer
+    name: Christopher Boew
+  - role: Sound Designer
+    name: Michael Burke
+  - role: Director
+    name: Rich Cole
+tags:
+  - drama
+  - okoboji-summer-theatre
+  - angel-street
+  - victorian-thriller
+links:
+  - label: Listing
+    url: https://www.dglobe.com/news/summer-theater-announces-2013-schedule
+updatedAt: '2026-02-12T15:04:01+00:00'

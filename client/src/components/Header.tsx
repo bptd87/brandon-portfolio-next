@@ -1,3 +1,5 @@
+"use client";
+
 import { Link, useLocation } from "wouter";
 import { useState, useRef, useEffect } from "react";
 import type { ReactNode } from "react";

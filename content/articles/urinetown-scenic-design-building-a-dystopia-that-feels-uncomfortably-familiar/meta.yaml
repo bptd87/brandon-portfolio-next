@@ -1,0 +1,37 @@
+type: article
+slug: urinetown-scenic-design-building-a-dystopia-that-feels-uncomfortably-familiar
+title: 'Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar'
+status: published
+featured: false
+excerpt: >-
+  A scenic breakdown of Urinetown focused on authoritarian architecture, class contrast, and the mechanics of dystopian
+  satire.
+category: Design Process
+seoTitle: 'Urinetown Scenic Design: Dystopia, Power, and Class'
+seoDescription: >-
+  A scenic case study of Urinetown examining industrial visual language, class-coded space, modular transitions, and the
+  dramaturgy of dystopian control.
+seoKeywords:
+  - Urinetown
+  - dystopian design
+  - musical theatre design
+  - scenic design case study
+  - production design
+cover:
+  asset: article-images/article-60141-cover.webp
+  alt: 'Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar'
+tags:
+  - production-design
+  - urinetown
+  - musical-theatre-design
+  - scenic-design-case-study
+  - dystopian-design
+readTime: 7
+publishedAt: '2025-04-22T00:00:00+00:00'
+updatedAt: '2026-02-12T15:04:14+00:00'
+linkedScenicProjectSlugs:
+  - urinetown
+series:
+  name: Process and Practice
+  slug: process-and-practice
+  order: 5

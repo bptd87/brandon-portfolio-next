@@ -1,0 +1,265 @@
+id: 17
+title: 'Vectorworks Tutorial: Modeling a Table'
+slug: modeling-a-table
+content: null
+category: 3d-modeling
+difficulty: Advanced
+duration: 2268
+created_at: '2026-02-12T10:46:46.210522+00:00'
+updated_at: '2026-02-22T11:22:57.948959+00:00'
+status: published
+featured: false
+seo_title: null
+seo_description: null
+seo_keywords: null
+learning_objectives:
+  - Import and scale reference images to real-world dimensions for accurate modeling
+  - Draft 2D profiles for table components (top, legs, supports) using measurement tools
+  - Create swept geometry for curved table legs using profile and path curves
+  - Use solid modeling operations (Add Solid, Edit Solid) to combine and refine geometry
+  - Apply and map wood textures with correct grain direction using Auto Plane
+  - Create hybrid symbols with clean 2D top-plan representations and detailed 3D geometry
+  - Follow professional modeling practices (modeling at origin, organized workflow)
+  - Troubleshoot common modeling issues (extrude direction, sweep alignment, texture mapping)
+key_concepts:
+  - title: REFERENCE IMAGE WORKFLOW
+    content: >-
+      Start by importing a reference photo or sketch of the object you're modeling. Scale the image to real-world
+      dimensions by measuring a known dimension (e.g., table height ~30 inches) and using the scale tool. This gives you
+      an accurate tracing guide. Always save your project immediately after importing references to avoid losing work.
+      Keep the reference on a separate layer or class so you can toggle visibility during modeling.
+  - title: DRAFTING PROFILES FIRST
+    content: >-
+      Before creating 3D geometry, draft all 2D profiles in top/plan view: table top circles, leg squares, cross
+      supports. Use measurement tools (tape measure) to extract dimensions from the scaled reference. Round measurements
+      to practical increments (e.g., 2.447' becomes 2'5" exactly). Use duplication and mirror tools to create
+      symmetrical elements efficiently. This 2D foundation ensures accurate 3D extrusions and sweeps.
+  - title: SWEEP TOOL FOR CURVED LEGS
+    content: >-
+      For curved furniture legs, use the Sweep tool: (1) Draw the path curve (centerline of the leg) in front view, (2)
+      Draw the profile shape (cross-section) perpendicular to the path, (3) Right-click the profile and choose Model >
+      Sweep. The profile follows the path to create the 3D leg. Leave gaps in the sweep path where square blocks will be
+      inserted. Use polyline or oval tools to create smooth, organic curves that match the reference.
+  - title: SOLID MODELING OPERATIONS
+    content: >-
+      Combine multiple 3D objects into a single solid using Add Solid. This merges separate extrudes, sweeps, and
+      primitives into one unified object. Use Edit Solid to modify geometry after creation—you can delete faces, add new
+      sweeps, or adjust dimensions without starting over. Always model components at Z=0 (origin) for easier duplication
+      and symbol creation. Use front view to verify vertical alignment of stacked components.
+  - title: TEXTURE MAPPING
+    content: >-
+      Apply wood textures from the Resource Manager by dragging onto 3D objects. If grain direction is wrong (e.g.,
+      vertical grain on horizontal surfaces), select the object, go to Render > Texture > Auto Plane, then rotate the
+      texture 90 degrees in the Object Info Palette. For complex objects, ungroup and apply textures per part with
+      individual rotations. Use realistic wood textures with visible grain for presentation-quality renders.
+  - title: HYBRID SYMBOL CREATION
+    content: >-
+      Convert finished 3D models to hybrid symbols: (1) Select the model, press Cmd+K, (2) Name it, set insertion point
+      to center, use world-based units, (3) Double-click the symbol to edit, (4) Draw a simple 2D circle or rectangle in
+      the 2D component (set to medium line weight class, attributes by class), (5) Exit and convert to hybrid when
+      prompted. Hybrid symbols show clean 2D graphics in top/plan view and full 3D detail in other views—essential for
+      efficient drawing sets.
+pro_tips:
+  - Always save your project immediately after importing reference images—Vectorworks can crash during complex modeling
+  - >-
+    Scale reference images to real-world dimensions before tracing—this ensures accurate measurements throughout the
+    modeling process
+  - >-
+    Round measurements to practical increments (e.g., 2'5" instead of 2'4.447")—this simplifies modeling and matches
+    real-world fabrication
+  - >-
+    Use the mirror tool to create symmetrical elements—model one leg, mirror at 45°, then mirror again to complete the
+    set
+  - Hold 'B' key to see behind selected objects—useful for aligning circles or checking overlap during drafting
+  - >-
+    For sweeps, draw the path curve first, then duplicate and offset it by the leg thickness—this ensures consistent
+    wall thickness
+  - Use polyline or oval tools for organic curves—they're easier to control than freehand bezier curves
+  - Model all components at Z=0 (origin)—this makes duplication, mirroring, and symbol creation much easier
+  - Use front view to verify vertical alignment—top/plan view can't show if components are stacked correctly
+  - If an extrude disappears, check the extrude height in Object Info Palette—you may have extruded to zero or negative
+  - >-
+    Use Edit Solid to refine geometry after creation—you can delete faces and paste in revised sweeps without starting
+    over
+  - Apply textures after modeling is complete—texture mapping is easier on finalized geometry
+  - >-
+    Use Auto Plane for texture mapping—it automatically aligns textures to faces, then rotate 90° if grain direction is
+    wrong
+  - Create hybrid symbols for all furniture—2D circles in top/plan view keep drawings clean while preserving 3D detail
+  - Set symbol insertion point to center—this makes placement and rotation much easier in floor plans
+shortcuts:
+  - keys: Cmd/Ctrl + M
+    action: Mirror selected objects
+  - keys: B (hold)
+    action: See behind selected objects
+  - keys: X
+    action: Resize/scale selected objects
+  - keys: Cmd/Ctrl + K
+    action: Create symbol from selected objects
+  - keys: Cmd/Ctrl + S
+    action: Save project
+common_pitfalls:
+  - Forgetting to scale reference images—results in wildly incorrect dimensions (e.g., 12-foot-tall table)
+  - Not saving the project immediately—risk losing hours of work if Vectorworks crashes during modeling
+  - Extruding to zero or negative height—causes geometry to disappear; always check Object Info Palette
+  - Drawing sweep paths without leaving gaps for square blocks—requires redrawing the entire sweep
+  - Not modeling at Z=0 (origin)—makes duplication and mirroring much harder
+  - Applying textures before modeling is complete—texture mapping breaks when geometry changes
+  - Using wrong texture mapping plane—results in stretched or incorrectly oriented grain
+  - Not rotating textures 90° on vertical surfaces—grain runs wrong direction (e.g., horizontal grain on legs)
+  - Creating 3D-only symbols instead of hybrid symbols—results in cluttered top/plan views with full 3D detail
+  - Not setting symbol insertion point to center—makes placement and rotation awkward
+  - Forgetting to set 2D component to 'by class' attributes—symbol doesn't respond to class visibility changes
+  - Not using Add Solid to combine components—results in multiple separate objects instead of one unified solid
+transcript:
+  - text: >-
+      Hello, this is Brandon PT Davis, theatrical scene designer. In this tutorial I'm going to show you how I would
+      approach modeling a table.
+    time: '0:04'
+  - text: >-
+      The first step is of course finding the table in the real world, or perhaps you're designing a table from your
+      mind. Either way, I like to have a reference. I've copied and pasted this reference into my Vectorworks file.
+    time: '0:17'
+  - text: >-
+      One of the things that I always recommend when starting a new project is to save your Vectorworks file so you
+      won't lose it. So I'm going to go to Save and call this project 'table project.' But you might have a specific
+      workflow in which you need to save your project, and if that's the case then do so.
+    time: '0:38'
+  - text: >-
+      With this image here, one of the first things you want to do is check the size. Right now it says it's 12 foot
+      tall by 12 foot 9 by 14 foot 9 and a half, which I think is a little bit big.
+    time: '1:05'
+  - text: >-
+      So what I recommend is scaling your project so that when we're tracing elements, we have something to base reality
+      off of. Knowing what I know about tables, this table is probably about 30 inches tall.
+    time: '1:17'
+  - text: >-
+      As I look at this object, I see a top which is probably a couple simple extrudes, and we have these legs which I
+      would say are going to be a sweep, and then we have these cross pieces which again are probably a simple extrude.
+    time: '1:37'
+  - text: >-
+      I'm going to start by getting the top laid out. I'm going to take the circle tool and go outside to outside. Right
+      now it says it's roughly 2 foot 5, so I'm going to round this down. Let's say the table top is 2 foot 5.
+    time: '2:03'
+  - text: >-
+      Then I'm going to duplicate it. If I hold B, I can see behind my shape. I'm going to select, hit X, and make the
+      inner circle smaller for the detail. It says about 1 foot 1.447, so we'll round that to a half inch.
+    time: '2:40'
+  - text: >-
+      We have four legs. You can take the tape measure tool—it says about 2 inches, so I'm going to do a 2 inch by 2
+      inch square. From the center it's about here. It looks inset a little bit, so I'm going to offset the leg in using
+      Ctrl or Command M.
+    time: '3:20'
+  - text: >-
+      To get these equally distributed, I'm going to use the mirror tool. Mirror at 45 degrees for the other side, then
+      mirror again to complete the set. Now we have the leg locations.
+    time: '4:34'
+  - text: >-
+      This cross piece looks about an inch and a half because it's inset from the leg. So I'll duplicate the leg block,
+      reduce the width by about a half inch, stretch it to reach the other side, duplicate and rotate for the second
+      direction.
+    time: '5:01'
+  - text: Now I'm going to do the sweep for the leg. I'll draw the bottom curve and focus on the center of the curved parts.
+    time: '5:58'
+  - text: >-
+      Since we're doing a sweep, I'm going to duplicate this line and move it over one inch, because we decided the leg
+      thickness is 2 inches. Right now the line is about 2 foot 3.6. Since we're tracing, I'm going to call it 2 foot 4
+      just to simplify.
+    time: '6:25'
+  - text: >-
+      Now I'm going to draw the rectangular parts because these will be extruded later. This is about 3 inches, and the
+      top one is a little shorter. From the top down let's say it's 2 and three quarters and 1 inch thick.
+    time: '7:14'
+  - text: Now I'm going to use the polyline tool and trace the leg profile the best that I can.
+    time: '8:27'
+  - text: If tracing gets messy, another approach is using oval tools and duplicating to keep consistent curves.
+    time: '9:23'
+  - text: >-
+      Once the profile is drawn, I'll use Add Surface, then use the Split tool to clean up extra segments. Now we just
+      have the profile.
+    time: '13:05'
+  - text: >-
+      Now I have a full profile. I'm going to change the plane to screen plane, change the view to front view,
+      right-click and go to Model Sweep. Now we have the swept leg with a gap for the square pieces.
+    time: '15:20'
+  - text: >-
+      Back in top plan view, I'll use the 2 inch by 2 inch block we drafted, center it on the post. I'm going to extrude
+      the block to 2.75 inches.
+    time: '15:52'
+  - text: >-
+      If it disappears, it usually means the extrude height was wrong, so double check that you didn't extrude to zero.
+      Then move it into place, duplicate for the second block, and stretch as needed.
+    time: '16:30'
+  - text: Then select everything and use Add Solid. Now the leg is sitting at zero, which is good practice for modeling.
+    time: '17:36'
+  - text: >-
+      If I want a taper detail at the bottom, I can go into Edit Solid, delete the old piece, and paste in a revised
+      sweep. Sometimes scaling the sweep profile is faster so the size hits 2 inches exactly.
+    time: '23:05'
+  - text: If we only have half of one element, mirror it inside the solid edit so it becomes complete when we exit.
+    time: '26:46'
+  - text: >-
+      Now we need the height. This is about 1 and a half inches proud, and this is about another inch and a half. So I'm
+      going to extrude the top circle 1.5 inches and the lower ring 1.5 inches, then align them in front view based on
+      the reference.
+    time: '27:54'
+  - text: If you want the underside inset, you can offset in and clip surface, then delete the inner boundary.
+    time: '29:03'
+  - text: >-
+      Now we need the mid supports. I'll extrude them, then adjust their Z height in front view until they sit about
+      midway like the reference.
+    time: '30:09'
+  - text: Once the 3D is working, delete the 2D tracing geometry and extra references.
+    time: '31:14'
+  - text: >-
+      Last detail is a fillet on the top edge. Go to the 3D fillet tool, set it to about three quarter inch, then fine
+      tune in the Object Info Palette.
+    time: '31:51'
+  - text: >-
+      Now we can add a texture. Go to the Resource Manager, search for wood, drag a wood texture into the file, and
+      apply it to the table.
+    time: '32:50'
+  - text: >-
+      If the grain direction is wrong on the posts, select the posts, go to Render, try Auto Plane, then rotate the
+      texture 90 degrees. If needed you can ungroup and adjust rotations per part.
+    time: '34:07'
+  - text: >-
+      Once the table looks good, keep it near zero zero. Select the table, hit Command K to create a symbol. Name it
+      'table,' set insertion point to center, use world-based units, press OK. Now it's a 3D symbol.
+    time: '35:46'
+  - text: >-
+      To make it a hybrid symbol, double-click, edit the 2D component, draw a simple 2D circle for top plan, set it to
+      your 2D medium line weight class, make attributes by class, exit. When asked to convert to hybrid, say yes. Now
+      you have a hybrid symbol with a clean 2D top plan and the 3D table.
+    time: '36:49'
+  - text: If you have any questions, feel free to reach out. Thank you.
+    time: '37:41'
+related_resources:
+  - url: https://www.vectorworks.net/
+    type: Documentation
+    title: Vectorworks 3D Modeling Guide
+  - url: https://www.youtube.com/vectorworks
+    type: Video
+    title: Advanced Sweep and Loft Techniques
+  - url: https://forum.vectorworks.net/
+    type: Community
+    title: Vectorworks Forum - 3D Modeling
+related_tutorials:
+  - slug: 3d-modeling-tools
+    title: 'Vectorworks Tutorial: 3D Modeling Tools'
+  - slug: 3d-modeling-basics
+    title: 'Vectorworks Tutorial: 3D Modeling Basics'
+  - slug: hybrid-symbols
+    title: 'Vectorworks Tutorial: Hybrid Symbols'
+overview: >-
+  This comprehensive tutorial demonstrates a professional workflow for modeling complex furniture objects in
+  Vectorworks. You'll learn how to use reference images effectively, scale them to real-world dimensions, draft accurate
+  2D profiles, create swept geometry for curved legs, use solid modeling operations (add solid, edit solid), apply and
+  map textures correctly, and convert the final model into a hybrid symbol with clean 2D and 3D representations. This
+  tutorial is essential for scenic designers who need to model custom furniture, props, or set pieces with realistic
+  detail and efficient workflow practices.
+description: >-
+  Master the complete workflow for 3D modeling furniture from a reference image, including scaling, drafting profiles,
+  creating sweeps, solid modeling operations, texturing, and creating hybrid symbols.
+cover_image: https://img.youtube.com/vi/TdZeKdL-DVc/maxresdefault.jpg
+video_url: https://www.youtube.com/watch?v=TdZeKdL-DVc

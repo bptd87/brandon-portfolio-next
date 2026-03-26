@@ -1,0 +1,104 @@
+gallery:
+  - id: pajama-cover
+    kind: cover
+    asset: project-images/project-90048-cover.webp
+    alt: The Pajama Game scenic design cover image.
+  - id: pajama-prod-1
+    kind: production
+    asset: project-images/project-90048-gallery-150024.webp
+    alt: >-
+      Production image from The Pajama Game showing the Sleep-Tite factory world and ensemble staging, scenic design by
+      Brandon PT Davis.
+  - id: pajama-render-1
+    kind: rendering
+    asset: project-images/project-90048-gallery-150038.webp
+    alt: >-
+      Rendering for The Pajama Game exploring the factory signage and modular scenic composition, scenic design by
+      Brandon PT Davis.
+  - id: pajama-prod-2
+    kind: production
+    asset: project-images/project-90048-gallery-150053.webp
+    alt: >-
+      Production image from The Pajama Game emphasizing the graphic factory environment and choreography space, scenic
+      design by Brandon PT Davis.
+  - id: pajama-prod-3
+    kind: production
+    asset: project-images/project-90048-gallery-150081.webp
+    alt: >-
+      Production image from The Pajama Game highlighting signage and period workplace structure, scenic design by
+      Brandon PT Davis.
+  - id: pajama-prod-4
+    kind: production
+    asset: project-images/project-90048-gallery-150083.webp
+    alt: Performance image from The Pajama Game showing modular scenic units in motion, scenic design by Brandon PT Davis.
+  - id: pajama-prod-5
+    kind: production
+    asset: project-images/project-90048-gallery-150091.webp
+    alt: >-
+      Production still from The Pajama Game with dance staging and factory signage in view, scenic design by Brandon PT
+      Davis.
+  - id: pajama-prod-6
+    kind: production
+    asset: project-images/project-90048-gallery-150113.webp
+    alt: >-
+      Production image from The Pajama Game showing the scenic world supporting romance and labor conflict, scenic
+      design by Brandon PT Davis.
+  - id: pajama-prod-7
+    kind: production
+    asset: project-images/project-90048-gallery-150119.webp
+    alt: >-
+      Production image from The Pajama Game highlighting the modular factory atmosphere, scenic design by Brandon PT
+      Davis.
+  - id: pajama-prod-8
+    kind: production
+    asset: project-images/project-90048-gallery-150126.webp
+    alt: >-
+      Production still from The Pajama Game emphasizing period color and ensemble movement, scenic design by Brandon PT
+      Davis.
+  - id: pajama-render-2
+    kind: rendering
+    asset: project-images/project-90048-gallery-150138.webp
+    alt: >-
+      Rendering for The Pajama Game showing factory transitions and theatrical composition, scenic design by Brandon PT
+      Davis.
+  - id: pajama-prod-9
+    kind: production
+    asset: project-images/project-90048-gallery-150146.webp
+    alt: Production image from The Pajama Game reinforcing the postwar factory energy, scenic design by Brandon PT Davis.
+  - id: pajama-render-3
+    kind: rendering
+    asset: project-images/project-90048-gallery-150172.webp
+    alt: >-
+      Rendering for The Pajama Game exploring signage, movement paths, and period theatricality, scenic design by
+      Brandon PT Davis.
+  - id: pajama-render-4
+    kind: rendering
+    asset: project-images/project-90048-gallery-150204.webp
+    alt: >-
+      Rendering for The Pajama Game studying scenic transitions and factory architecture, scenic design by Brandon PT
+      Davis.
+  - id: pajama-prod-10
+    kind: production
+    asset: project-images/project-90048-gallery-150206.webp
+    alt: >-
+      Production image from The Pajama Game showing scenic rhythm during a large musical number, scenic design by
+      Brandon PT Davis.
+  - id: pajama-prod-11
+    kind: production
+    asset: project-images/project-90048-gallery-150219.webp
+    alt: >-
+      Production image from The Pajama Game highlighting the adaptability of the modular set, scenic design by Brandon
+      PT Davis.
+  - id: pajama-render-5
+    kind: rendering
+    asset: project-images/project-90048-gallery-150230.webp
+    alt: >-
+      Rendering for The Pajama Game showing the Sleep-Tite world with bold period signage, scenic design by Brandon PT
+      Davis.
+  - id: pajama-render-6
+    kind: rendering
+    asset: project-images/project-90048-gallery-150242.webp
+    alt: >-
+      Final rendering for The Pajama Game capturing the lively factory world and musical energy, scenic design by
+      Brandon PT Davis.
+videos: []

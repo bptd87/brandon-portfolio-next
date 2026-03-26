@@ -1,0 +1,47 @@
+type: project
+discipline: scenic
+slug: dont-dress-for-dinner
+title: Don't Dress for Dinner
+status: published
+featured: false
+excerpt: >-
+  A restored French farmhouse reimagined as both romantic getaway and comedic trap, using exposed timber beams, textured
+  plaster, and a tightly organized layout to support farce.
+seoTitle: Don't Dress for Dinner | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for Don't Dress for Dinner at Okoboji Summer Theatre, using a French farmhouse setting with timber
+  framing, rustic detail, and precise farce-driven layout.
+seoKeywords:
+  - Don't Dress for Dinner
+  - scenic design
+  - Okoboji Summer Theatre
+  - comedy
+  - Brandon PT Davis
+client: Okoboji Summer Theatre
+location: Okoboji, IA
+year: 2013
+month: 6
+subcategory: Comedy
+cover:
+  asset: portfolio/projects/2026/02/2013-dont-dress-for-dinner-okoboji-summer-theatre-1-of-7-3733.webp
+  alt: Don't Dress for Dinner scenic design cover image
+team:
+  - role: Playwright
+    name: Marc Camoletti
+  - role: Scenic Design
+    name: Brandon PT Davis
+  - role: Costume Design
+    name: Ashley Harrison
+  - role: Lighting Design
+    name: Halea Coulter
+  - role: Sound Design
+    name: Michael Burke
+  - role: Director
+    name: Dan Schultz
+tags:
+  - comedy
+  - okoboji-summer-theatre
+  - dont-dress-for-dinner
+  - farce
+links: []
+updatedAt: '2026-02-26T06:19:09.582627+00:00'

@@ -1,0 +1,19 @@
+type: project
+discipline: experiential
+slug: new-swan-venue-documentation
+title: New Swan Venue Documentation
+status: published
+featured: false
+excerpt: >-
+  Venue documentation for New Swan, capturing site conditions and technical information needed to support planning,
+  coordination, and installation decisions.
+seoTitle: New Swan Venue Documentation | Experiential Design | Brandon PT Davis
+seoDescription: >-
+  Venue documentation for New Swan, capturing site conditions and technical information needed to support planning,
+  coordination, and installation decisions.
+cover:
+  asset: portfolio/general/2026/02/design-drafting-new-swan-4-2142.webp
+  alt: New Swan Venue Documentation
+mediaTypes:
+  - technical-drawing
+updatedAt: '2026-02-23T09:33:12.784Z'

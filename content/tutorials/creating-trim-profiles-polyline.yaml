@@ -1,0 +1,213 @@
+id: 7
+title: 'Vectorworks Quick Tip: Creating Trim Profiles with the Polyline Tool'
+slug: creating-trim-profiles-polyline
+content: null
+category: 2D Drafting
+difficulty: null
+duration: 374
+created_at: '2026-02-12T10:46:45.828993+00:00'
+updated_at: '2026-02-22T11:22:57.948959+00:00'
+status: published
+featured: false
+seo_title: null
+seo_description: null
+seo_keywords: null
+learning_objectives:
+  - Source trim profile reference images with dimensional data from manufacturer websites
+  - Import and configure reference images in Vectorworks (JPEG vs PNG considerations)
+  - Trace complex profiles using polyline tool with multiple vertex modes
+  - Apply accurate real-world dimensions to traced geometry using Object Info palette
+  - Convert traced profiles to reusable 2D symbols with proper class assignments
+  - Organize trim profile symbols in Resource Manager for efficient reuse
+key_concepts:
+  - title: POLYLINE TOOL
+    content: >-
+      A versatile drawing tool that creates connected line segments and curves in a single object. The polyline tool
+      supports multiple vertex modes (corner, radius arc, bezier) that can be toggled during drawing, making it ideal
+      for tracing complex shapes like trim profiles.
+  - title: VERTEX MODES
+    content: >-
+      Different point types available in the polyline tool: Corner Vertex creates sharp angles, Radius Point Arc creates
+      smooth curves with adjustable radius, and Bezier creates flowing curves with control handles. Toggle between modes
+      using the 'U' hotkey while drawing.
+  - title: REFERENCE IMAGE IMPORT
+    content: >-
+      The process of bringing external images into Vectorworks as tracing guides. JPEG format offers smaller file sizes,
+      while PNG format preserves transparency data. Reference images should include dimensional information for accurate
+      scaling after tracing.
+  - title: OBJECT INFO PALETTE
+    content: >-
+      The palette that displays and allows editing of selected object properties including dimensions, position, class
+      assignment, and other attributes. Use this palette to apply accurate real-world dimensions to traced geometry by
+      entering X and Y dimension values.
+  - title: 2D SYMBOLS
+    content: >-
+      Reusable graphic elements stored in the Resource Manager that can be placed multiple times in drawings. Converting
+      trim profiles to symbols ensures consistency, saves time, and allows instant updates across all instances when the
+      symbol definition is edited.
+  - title: CLASS ASSIGNMENT
+    content: >-
+      The process of assigning drawn geometry to specific classes that control graphic appearance and visibility. Trim
+      profiles should be assigned to appropriate classes (e.g., 'Section Hatch') before converting to symbols to ensure
+      proper display in different drawing contexts.
+pro_tips:
+  - >-
+    Source trim profiles from manufacturer websites like uDecor.com that provide both profile images and accurate
+    dimensional data in a single location.
+  - >-
+    Save reference images with descriptive filenames that include product codes or profile names to maintain
+    organization and traceability.
+  - >-
+    Choose JPEG format for reference images when transparency isn't needed—smaller file sizes improve Vectorworks
+    performance.
+  - >-
+    Trace profiles directly without pre-scaling the reference image; it's faster to apply accurate dimensions after
+    tracing using the Object Info palette.
+  - >-
+    Use the 'U' hotkey to toggle between polyline vertex modes (corner, arc, bezier) while actively drawing—no need to
+    stop and restart.
+  - >-
+    Assign traced profiles to appropriate classes (like 'Section Hatch') before converting to symbols to ensure proper
+    graphic display in documentation.
+  - >-
+    Convert trim profiles to 2D symbols using Cmd/Ctrl+K, then enable 'Convert to Group' option for easier editing in 2D
+    workflows.
+  - >-
+    Name symbols descriptively (e.g., 'Crown Molding - Product Code') in the Resource Manager to quickly identify
+    profiles in complex drawing packages.
+  - >-
+    Use 'Next Mouse Click' insertion mode when creating symbols to control exactly where the symbol's origin point will
+    be located.
+  - >-
+    Store completed trim profile symbols in a dedicated library file that can be shared across projects and team members
+    for consistency.
+shortcuts:
+  - keys:
+      - '5'
+    action: Activate Polyline Tool
+    description: Quickly switch to the polyline tool for tracing profiles
+  - keys:
+      - U
+    action: Toggle Vertex Mode
+    description: Cycle between corner, arc, and bezier vertex modes while drawing
+  - keys:
+      - Cmd/Ctrl
+      - K
+    action: Create Symbol
+    description: Convert selected geometry to a reusable 2D or 3D symbol
+  - keys:
+      - Double Click
+    action: Complete Polyline
+    description: Finish drawing the current polyline and exit the tool
+common_pitfalls:
+  - >-
+    Attempting to scale reference images before tracing instead of tracing first and scaling geometry afterward—this
+    adds unnecessary complexity and steps.
+  - >-
+    Not sourcing dimensional data along with profile images, forcing guesswork when scaling traced geometry to
+    real-world sizes.
+  - >-
+    Forgetting to assign traced geometry to appropriate classes before converting to symbols, resulting in symbols that
+    don't display correctly in section views.
+  - >-
+    Not using 'Convert to Group' option when creating 2D symbols, making it harder to edit symbol geometry later in 2D
+    workflows.
+  - >-
+    Creating symbols without descriptive names, leading to confusion when selecting from dozens of similar trim profiles
+    in the Resource Manager.
+transcript:
+  - text: >-
+      Hello, this is Brandon PT Davis, theatrical scenic designer. In this Vectorworks tutorial, we'll be using the
+      polyline tool to show how you can quickly create trim profiles for your drawings.
+    time: '0:04'
+  - text: >-
+      To start this tutorial, I'm going to go to uDecor.com to get a trim profile that has real-world information. In
+      the website, I can see the trim profile here, and I also have the size information and material.
+    time: '0:21'
+  - text: >-
+      What I'm going to do is right-click and save the image. The image is already named with the product code, so I'm
+      going to simply add 'crown molding' for my workflow.
+    time: '0:39'
+  - text: >-
+      Now in my Vectorworks file, I'm going to go to File > Import and select Image File. I have the image file on my
+      desktop, so I will open it. The dialog will ask if I prefer a JPEG or PNG. A JPEG is smaller in size, but the PNG
+      is going to have data for transparency. In this example, I'm not really concerned about transparency, so I'm going
+      to go ahead and select the JPEG file.
+    time: '0:58'
+  - text: >-
+      Typically, some Vectorworks users would then try to go to the Modify > Scale options to try to get the trim
+      profile as close as possible, but I find that it's best to just trace the profile and scale it after.
+    time: '1:35'
+  - text: >-
+      I'm going to use the Polyline Tool (hotkey 5) to trace the object. I'm starting out with the Corner Vertex mode.
+      Now I can toggle to the Point Arc mode by pressing U. Alternatively, what you can do is just select the main
+      points using the Line Tool.
+    time: '1:51'
+  - text: >-
+      Now I'm going to double-click and use Add Vertex mode with the Radius Point on Arc selected. Then I'll use the
+      Move Polygon Point to try to make the profile match the shape below as close as possible.
+    time: '3:06'
+  - text: >-
+      Once I'm satisfied with the profile, I'm going to change the class from None to my Section Hatch. I will then
+      delete the reference image.
+    time: '4:19'
+  - text: >-
+      I have returned to the reference website to check for the dimension data. It says the breadth is five and a half
+      inches, and the height and width are four inches. I'm going to use the height and width information to scale the
+      object.
+    time: '4:39'
+  - text: I'm going to select the object and change the X dimension to 4 inches and the Y dimension to 4 inches.
+    time: '4:55'
+  - text: >-
+      Now that I have the trim profile scaled, I'm going to create a 2D symbol. To create the 2D symbol, I'm going to
+      hit Command or Control+K. I'm going to name this symbol 'Crown Molding.'
+    time: '5:08'
+  - text: >-
+      I'm going to select Next Mouse Click and keep it as a world-based unit. I'm going to uncheck 'Insert in Wall'
+      since I will not be applying this to a three-dimensional wall. I'm going to select 'Convert to Group' so that I'm
+      working in a 2D workflow and can easily modify the molding.
+    time: '5:28'
+  - text: >-
+      Now when I return to my Resource Manager, I can find the 2D shape that was created. If I double-click on this
+      object, I can then place an instance of it in the document.
+    time: '5:53'
+  - text: >-
+      This completes the Vectorworks tutorial on the Polyline Tool. If you have any questions, feel free to ask. Thank
+      you.
+    time: '6:07'
+related_resources:
+  - url: https://app-help.vectorworks.net/2024/eng/VW2024_Guide/Shapes2/Polyline_Tool.htm
+    title: Vectorworks Polyline Tool Documentation
+  - url: https://www.udecor.com
+    title: uDecor Architectural Trim Catalog
+  - url: https://university.vectorworks.net
+    title: Vectorworks Symbol Creation Guide
+related_tutorials:
+  - slug: basics-tool-palette
+    title: 'Vectorworks Tutorial: Basics Tool Palette'
+  - slug: understanding-classes
+    title: 'Vectorworks Tutorial: Understanding Classes'
+  - slug: sheet-layers
+    title: 'Vectorworks Tutorial: Sheet Layers'
+overview: >-
+  This quick-tip tutorial demonstrates a practical workflow for creating accurate architectural trim and molding
+  profiles in Vectorworks. The tutorial walks through the complete process: sourcing reference images with real-world
+  dimensions from manufacturer websites, importing images into Vectorworks, tracing profiles using the polyline tool
+  with multiple vertex modes, scaling traced geometry to match actual dimensions, and converting finished profiles into
+  reusable 2D symbols.
+
+
+  The workflow emphasizes efficiency by showing how to trace profiles directly without pre-scaling the reference image,
+  then applying accurate dimensions after tracing is complete. This approach saves time and reduces complexity compared
+  to traditional scaling methods. The tutorial covers essential polyline techniques including corner vertex mode, radius
+  point arc mode, and polygon point editing for achieving smooth curves that match the reference profile.
+
+
+  Finally, the tutorial demonstrates how to convert the finished profile into a 2D symbol stored in the Resource
+  Manager, making it instantly available for reuse across multiple drawings. This symbol workflow ensures consistency
+  across documentation and eliminates the need to redraw common trim profiles repeatedly.
+description: >-
+  Learn how to quickly create accurate trim and molding profiles by tracing reference images using the polyline tool and
+  converting them to reusable 2D symbols.
+cover_image: https://img.youtube.com/vi/EZB5O-Wmsk4/maxresdefault.jpg
+video_url: https://www.youtube.com/watch?v=EZB5O-Wmsk4

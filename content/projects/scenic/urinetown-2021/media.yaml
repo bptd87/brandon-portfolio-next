@@ -1,0 +1,30 @@
+gallery:
+  - id: urinetown-2021-cover
+    kind: cover
+    asset: project-images/rescued/urinetown-2021/urinetown-2021-c871282d6b.jpeg
+    alt: Urinetown 2021 scenic design cover image.
+  - id: urinetown-2021-prod-1
+    kind: production
+    asset: project-images/rescued/urinetown-2021/urinetown-2021-51b22c1e9d.jpeg
+    alt: >-
+      Production image from the 2021 Urinetown showing the angular dystopian environment, scenic design by Brandon PT
+      Davis.
+  - id: urinetown-2021-prod-2
+    kind: production
+    asset: project-images/rescued/urinetown-2021/urinetown-2021-96279a9e54.jpeg
+    alt: >-
+      Production still from the 2021 Urinetown emphasizing the expressionist shapes and musical staging, scenic design
+      by Brandon PT Davis.
+  - id: urinetown-2021-prod-3
+    kind: production
+    asset: project-images/rescued/urinetown-2021/urinetown-2021-42a3af6d44.jpeg
+    alt: >-
+      Production image from the 2021 Urinetown highlighting concrete texture and dystopian atmosphere, scenic design by
+      Brandon PT Davis.
+  - id: urinetown-2021-prod-4
+    kind: production
+    asset: project-images/rescued/urinetown-2021/urinetown-2021-61fded10c7.jpeg
+    alt: >-
+      Final production image from the 2021 Urinetown showing the complete comic-dystopian scenic world, scenic design by
+      Brandon PT Davis.
+videos: []

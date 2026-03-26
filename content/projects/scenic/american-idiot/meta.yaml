@@ -1,0 +1,60 @@
+type: project
+discipline: scenic
+slug: american-idiot
+title: American Idiot
+status: published
+featured: false
+excerpt: >-
+  Southern California concrete infrastructure fused with Green Day’s pulse, creating a stark environment of suburban
+  monotony, urban decay, and restless transformation in American Idiot.
+seoTitle: American Idiot | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for American Idiot at University of California Irvine, using modular concrete architecture, projection,
+  and industrial atmosphere to support rebellion and transformation.
+seoKeywords:
+  - American Idiot
+  - scenic design
+  - UC Irvine
+  - Green Day
+  - musical theatre
+  - Brandon PT Davis
+client: University of California Irvine
+location: Irvine, CA
+year: 2018
+month: 6
+subcategory: Musical Theatre
+cover:
+  asset: project-images/project-90038-cover.webp
+  alt: American Idiot scenic design cover image
+team:
+  - role: Book By
+    name: Billie Joe Armstrong & Michael Mayer
+  - role: Music By
+    name: Green Day
+  - role: Lyrics By
+    name: Billie Joe Armstrong
+  - role: Music Director
+    name: Lex Leigh
+  - role: Choreographer
+    name: Allison Eversol
+  - role: Scenic Designer
+    name: Brandon PT Davis
+  - role: Costume Designer
+    name: Jennifer Clark
+  - role: Lighting Designer
+    name: David Hern
+  - role: Sound Designer
+    name: Jordan Tani
+  - role: Projection Design
+    name: Elizabeth Barrett
+  - role: Director
+    name: Andrew Palermo
+tags:
+  - musical-theatre
+  - university-of-california-irvine
+  - green-day
+  - american-idiot
+links:
+  - label: Listing
+    url: https://drama.arts.uci.edu/events/american-idiot
+updatedAt: '2026-02-12T15:04:00+00:00'

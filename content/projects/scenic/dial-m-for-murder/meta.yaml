@@ -1,0 +1,48 @@
+type: project
+discipline: scenic
+slug: dial-m-for-murder
+title: Dial “M” for Murder
+status: published
+featured: false
+excerpt: >-
+  An elegant apartment held inside darkness, where every threshold, sightline, and piece of furniture sharpens suspense
+  in Dial “M” for Murder.
+seoTitle: Dial “M” for Murder | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for Dial “M” for Murder at Okoboji Summer Theatre, using a precise apartment interior, negative space,
+  and controlled sightlines to heighten suspense.
+seoKeywords:
+  - Dial M for Murder scenic design
+  - Okoboji Summer Theatre
+  - suspense scenic design
+  - Brandon PT Davis
+  - dramatic apartment set
+client: Okoboji Summer Theatre
+clientUrl: https://okobojisummertheatre.org/
+location: Okoboji, IA
+year: 2023
+month: 8
+subcategory: Drama
+cover:
+  asset: portfolio/projects/2026/03/2023-dial-m-for-murder-8-of-9-0343.webp
+  alt: Dial “M” for Murder scenic design cover image
+team:
+  - role: Book By
+    name: Frederic Knott
+  - role: Director
+    name: Fred Rubeck
+  - role: Scenic Design
+    name: Brandon PT Davis
+  - role: Lighting Design
+    name: Alice Crist
+  - role: Lighting Design
+    name: Savannah Bell
+  - role: Sound Design
+    name: Kayla Sliger
+tags:
+  - drama
+  - suspense
+  - okoboji-summer-theatre
+  - dial-m-for-murder
+links: []
+updatedAt: '2026-03-01T08:59:54.564733+00:00'

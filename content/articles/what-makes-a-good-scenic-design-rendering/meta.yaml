@@ -1,0 +1,36 @@
+type: article
+slug: what-makes-a-good-scenic-design-rendering
+title: What Makes a Good Scenic Design Rendering?
+status: published
+featured: false
+excerpt: >-
+  What makes a scenic rendering useful in production: clear visual hierarchy, material logic, and communication choices
+  teams can actually build from.
+category: Tools & Technology
+seoTitle: 'Scenic Rendering Principles: What Makes a Rendering Production-Ready'
+seoDescription: >-
+  Core scenic rendering principles for theatre production: readability, material clarity, lighting logic, and
+  communication choices that support build decisions.
+seoKeywords:
+  - scenic rendering principles
+  - scenic design rendering
+  - theatre rendering techniques
+  - production-ready renderings
+  - scenic communication
+cover:
+  asset: article-images/article-60130-cover.webp
+  alt: What Makes a Good Scenic Design Rendering?
+tags:
+  - design-presentation
+  - scenic-rendering
+  - vectorworks
+  - theatrical-rendering
+  - design-visualization
+readTime: 6
+publishedAt: '2026-03-13'
+updatedAt: '2026-02-19T19:28:12.638+00:00'
+linkedScenicProjectSlugs: []
+series:
+  name: Design Communication
+  slug: design-communication
+  order: 2

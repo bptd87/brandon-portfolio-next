@@ -1,0 +1,41 @@
+type: article
+slug: youre-wasting-my-time-a-scenic-design-lesson-in-growth-and-revision
+title: You're Wasting My Time! — A Scenic Design Lesson in Growth and Revision
+status: published
+featured: false
+excerpt: >-
+  A reflective essay on critique, revision, and the moment scenic design shifted from presentation toward real-time
+  design thinking.
+category: Design Process
+seoTitle: 'Scenic Design Growth: Critique and Revision Standards'
+seoDescription: A scenic design essay about critique, revision, URTAs, and learning to think like a designer under pressure.
+seoKeywords:
+  - scenic design critique
+  - design revision
+  - creative growth
+  - portfolio review
+  - URTA
+  - design process
+  - theatre design education
+cover:
+  asset: article-images/article-60142-cover.webp
+  alt: You're Wasting My Time! — A Scenic Design Lesson in Growth and Revision
+tags:
+  - design-process
+  - portfolio-development
+  - scenic-design
+  - creative-growth
+  - urta
+  - design-education
+  - critique-culture
+readTime: 6
+publishedAt: '2025-04-17T00:00:00+00:00'
+updatedAt: '2026-02-12T15:04:15+00:00'
+audio:
+  asset: article_audio/Your%20Wasting%20My%20Time.mp3
+  label: Listen to article
+linkedScenicProjectSlugs: []
+series:
+  name: Process and Practice
+  slug: process-and-practice
+  order: 2

@@ -1,3 +1,5 @@
+"use client";
+
 import { Link } from "wouter";
 
 import InfoPageShell from "@/components/InfoPageShell";

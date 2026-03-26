@@ -1,0 +1,36 @@
+- type: text
+  heading: A Frozen-Lake Playing Space
+  content:
+    - >-
+      For Guys on Ice, the scenic design focused on creating a playable frozen-lake environment that could support both
+      broad comedy and moments of quiet sincerity. The composition balances a strong horizon line and open negative
+      space with practical ice-fishing architecture so performers can move cleanly while the audience always reads
+      relationship dynamics.
+- type: gallery
+  mediaIds:
+    - goi-prod-1
+    - goi-prod-2
+- type: text
+  heading: Midwestern Winter Vernacular
+  content:
+    - >-
+      Material and texture choices were built around Midwestern winter vernacular, with surfaces suggesting wear,
+      weather, and local history rather than caricature. The design needed to feel specific to place and season while
+      still supporting the comic energy of the piece.
+- type: gallery
+  mediaIds:
+    - goi-prod-3
+    - goi-prod-4
+- type: text
+  heading: Design Goal
+  content:
+    - >-
+      The larger goal was to ground the humor in a recognizable world. By keeping the environment legible and specific,
+      the production could hold both the exaggerated rhythms of musical comedy and the quieter emotional texture of
+      friendship, ritual, and community.
+- type: gallery
+  mediaIds:
+    - goi-prod-5
+- type: gallery
+  mediaIds:
+    - goi-render-1

@@ -1,0 +1,38 @@
+type: article
+slug: the-visual-language-of-scenic-design
+title: The Visual Language of Scenic Design
+status: published
+featured: false
+excerpt: >-
+  How the elements and principles of design shape live performance before an audience understands the story
+  intellectually.
+category: Scenic Design
+seoTitle: The Visual Language of Scenic Design | Elements and Principles in Performance
+seoDescription: >-
+  An essay on how the elements and principles of design shape scenic environments, audience perception, and live
+  theatrical storytelling.
+seoKeywords:
+  - scenic design principles
+  - elements of design
+  - principles of design
+  - scenic design education
+  - theatrical design
+  - live performance design
+cover:
+  asset: /assets/articles/visual-language/cover.png
+  alt: >-
+    Abstract scenic environment with layered architectural forms, a glowing focal portal, and a solitary figure
+    establishing scale.
+tags:
+  - scenic-design
+  - design-education
+  - design-principles
+  - visual-storytelling
+readTime: 6
+publishedAt: '2026-03-05'
+updatedAt: '2026-03-20'
+linkedScenicProjectSlugs: []
+series:
+  name: Design Communication
+  slug: design-communication
+  order: 1

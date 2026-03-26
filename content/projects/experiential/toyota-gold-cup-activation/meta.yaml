@@ -1,0 +1,21 @@
+type: project
+discipline: experiential
+slug: toyota-gold-cup-activation
+title: Toyota Gold Cup Activation
+status: published
+featured: false
+excerpt: >-
+  An experiential activation package for Toyota Gold Cup that combines concept renderings with live event photography to
+  show sponsor visibility, guest circulation, and event-scale presence.
+seoTitle: Toyota Gold Cup Activation | Experiential Design | Brandon PT Davis
+seoDescription: >-
+  An experiential activation package for Toyota Gold Cup that combines concept renderings with live event photography to
+  show sponsor visibility, guest circulation, and event-scale presence.
+year: 2025
+cover:
+  asset: about-images/experiential-process/live-events/1771290240875-toyota-gold-cup-final-29.png
+  alt: Toyota Gold Cup Final 29
+mediaTypes:
+  - live-events
+  - rendering
+updatedAt: '2026-02-17T01:14:25.079Z'

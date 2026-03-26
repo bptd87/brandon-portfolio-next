@@ -1,13 +1,14 @@
 import * as db from './db';
 import { ASSISTANT_SCENIC_DESIGN_PATH } from '@shared/localAssistantScenic';
 import { getLocalArticles } from '@shared/localArticles';
+import { getConfiguredSiteUrl } from '../lib/env/site';
 
 /**
  * Sitemap utilities for generating XML sitemaps
  * Following Google's sitemap protocol: https://www.sitemaps.org/protocol.html
  */
 
-const SITE_URL = process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
+const SITE_URL = getConfiguredSiteUrl();
 
 interface SitemapUrl {
   loc: string;
@@ -134,7 +135,7 @@ function isLikelyImageUrl(value: string): boolean {
  * Generate main sitemap with all pages
  */
 export async function generateMainSitemap(baseUrl?: string): Promise<string> {
-  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
+  const SITE_URL = baseUrl || getConfiguredSiteUrl();
   const urls: SitemapUrl[] = [];
 
   // Homepage - highest priority
@@ -318,7 +319,7 @@ export async function generateMainSitemap(baseUrl?: string): Promise<string> {
  * Generate image sitemap with all project images
  */
 export async function generateImageSitemap(baseUrl?: string): Promise<string> {
-  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
+  const SITE_URL = baseUrl || getConfiguredSiteUrl();
   const projects = await db.getAllProjects();
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -369,7 +370,7 @@ export async function generateImageSitemap(baseUrl?: string): Promise<string> {
  * Generate sitemap index
  */
 export function generateSitemapIndex(baseUrl?: string): string {
-  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
+  const SITE_URL = baseUrl || getConfiguredSiteUrl();
   const now = new Date().toISOString();
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -393,7 +394,7 @@ export function generateSitemapIndex(baseUrl?: string): string {
  * Generate video sitemap with all project videos
  */
 export async function generateVideoSitemap(baseUrl?: string): Promise<string> {
-  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
+  const SITE_URL = baseUrl || getConfiguredSiteUrl();
   const projects = await db.getAllProjects();
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -456,7 +457,7 @@ export async function generateVideoSitemap(baseUrl?: string): Promise<string> {
  * Generate RSS feed for articles
  */
 export async function generateArticlesRSS(baseUrl?: string): Promise<string> {
-  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
+  const SITE_URL = baseUrl || getConfiguredSiteUrl();
   const publishedArticles = getLocalArticles();
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -507,7 +508,7 @@ export async function generateArticlesRSS(baseUrl?: string): Promise<string> {
  * Generate RSS feed for news
  */
 export async function generateNewsRSS(baseUrl?: string): Promise<string> {
-  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
+  const SITE_URL = baseUrl || getConfiguredSiteUrl();
   const newsItems = await db.getAllNews({ status: 'published' });
   const publishedNews = newsItems.filter(n => n.status === 'published');
   publishedNews.sort((a, b) =>
@@ -558,7 +559,7 @@ export async function generateNewsRSS(baseUrl?: string): Promise<string> {
  * Generate RSS feed for projects
  */
 export async function generateProjectsRSS(baseUrl?: string): Promise<string> {
-  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
+  const SITE_URL = baseUrl || getConfiguredSiteUrl();
   const projects = await db.getAllProjects({ status: 'published' });
   const publishedProjects = projects
     .filter((p) => p.status === 'published')
@@ -661,7 +662,7 @@ export async function generateProjectsRSS(baseUrl?: string): Promise<string> {
  * Generate RSS feed for tutorials
  */
 export async function generateTutorialsRSS(baseUrl?: string): Promise<string> {
-  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
+  const SITE_URL = baseUrl || getConfiguredSiteUrl();
   const tutorials = await db.getAllTutorials({ status: 'published' });
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -714,7 +715,7 @@ export async function generateTutorialsRSS(baseUrl?: string): Promise<string> {
  * Generate robots.txt
  */
 export function generateRobotsTxt(baseUrl?: string): string {
-  const SITE_URL = baseUrl || process.env.VITE_APP_URL || 'https://www.brandonptdavis.com';
+  const SITE_URL = baseUrl || getConfiguredSiteUrl();
   return `# Brandon PT Davis Portfolio - Robots.txt
 User-agent: *
 Allow: /

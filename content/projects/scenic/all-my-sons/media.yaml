@@ -1,0 +1,50 @@
+gallery:
+  - id: sons-cover
+    kind: cover
+    asset: project-images/project-90017-cover.webp
+    alt: All My Sons scenic design cover image.
+  - id: sons-prod-1
+    kind: production
+    asset: project-images/project-90017-gallery-150013.webp
+    alt: Production image from All My Sons showing the postwar suburban house and yard, scenic design by Brandon PT Davis.
+  - id: sons-prod-2
+    kind: production
+    asset: project-images/project-90017-gallery-150018.webp
+    alt: >-
+      Production image from All My Sons highlighting the open porch and domestic realism, scenic design by Brandon PT
+      Davis.
+  - id: sons-prod-3
+    kind: production
+    asset: project-images/project-90017-gallery-150054.webp
+    alt: Production still from All My Sons emphasizing the ordered suburban environment, scenic design by Brandon PT Davis.
+  - id: sons-prod-4
+    kind: production
+    asset: project-images/project-90017-gallery-150070.webp
+    alt: >-
+      Production image from All My Sons showing how the open setting exposes private conflict, scenic design by Brandon
+      PT Davis.
+  - id: sons-prod-5
+    kind: production
+    asset: project-images/project-90017-gallery-150078.webp
+    alt: >-
+      Production image from All My Sons reinforcing the tension between comfort and moral collapse, scenic design by
+      Brandon PT Davis.
+  - id: sons-prod-6
+    kind: production
+    asset: project-images/project-90017-gallery-150175.webp
+    alt: >-
+      Production still from All My Sons showing the suburban framework for the play's emotional shifts, scenic design by
+      Brandon PT Davis.
+  - id: sons-prod-7
+    kind: production
+    asset: project-images/project-90017-gallery-150182.webp
+    alt: >-
+      Final production image from All My Sons showing the complete family home in performance, scenic design by Brandon
+      PT Davis.
+  - id: sons-render-1
+    kind: rendering
+    asset: project-images/project-90017-gallery-150073.webp
+    alt: >-
+      Rendering for All My Sons exploring the porch, yard, and postwar suburban composition, scenic design by Brandon PT
+      Davis.
+videos: []

@@ -1,0 +1,34 @@
+gallery:
+  - id: inspector-cover
+    kind: cover
+    asset: project-images/project-90036-cover.webp
+    alt: An Inspector Calls scenic design cover image.
+  - id: inspector-prod-1
+    kind: production
+    asset: project-images/project-90036-gallery-150019.webp
+    alt: Production image from An Inspector Calls showing the Birling interior, scenic design by Brandon PT Davis.
+  - id: inspector-prod-2
+    kind: production
+    asset: project-images/project-90036-gallery-150118.webp
+    alt: >-
+      Performance image from An Inspector Calls highlighting the domestic world before it begins to fracture, scenic
+      design by Brandon PT Davis.
+  - id: inspector-render-1
+    kind: rendering
+    asset: project-images/project-90036-gallery-150134.webp
+    alt: >-
+      Rendering for An Inspector Calls exploring the poised but unstable domestic interior, scenic design by Brandon PT
+      Davis.
+  - id: inspector-prod-3
+    kind: production
+    asset: project-images/project-90036-gallery-150183.webp
+    alt: >-
+      Production still from An Inspector Calls with actors framed by the controlled geometry of the set, scenic design
+      by Brandon PT Davis.
+  - id: inspector-prod-4
+    kind: production
+    asset: project-images/project-90036-gallery-150221.webp
+    alt: >-
+      Final production image from An Inspector Calls showing the family under increasing pressure, scenic design by
+      Brandon PT Davis.
+videos: []

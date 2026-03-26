@@ -1,11 +1,14 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Check, Link2 } from "lucide-react";
-import { Link, useParams, useLocation } from "wouter";
+import { Link, useLocation } from "wouter";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { useEffect, useMemo, useState } from "react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Lightbox } from "@/components/Lightbox";
+import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { AnimatePresence } from "framer-motion";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
@@ -13,6 +16,14 @@ import { getLocalRenderingGallery, getLocalRenderingProjectBySlug, getLocalRende
 import { getLocalArticles } from "@shared/localArticles";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
 import ScenicRenderingGallery from "@/components/ScenicRenderingGallery";
+
+type RenderingProjectDetailProps = {
+  slug?: string;
+  currentPath?: string;
+  params?: {
+    slug?: string;
+  };
+};
 
 function inferEncodingFormat(url: string): string | undefined {
   const cleanUrl = url.split('?')[0].toLowerCase();
@@ -24,12 +35,27 @@ function inferEncodingFormat(url: string): string | undefined {
   return undefined;
 }
 
-export default function RenderingProjectDetail() {
-  const { slug } = useParams<{ slug: string }>();
+export default function RenderingProjectDetail({
+  slug: slugProp,
+  currentPath,
+  params,
+}: RenderingProjectDetailProps = {}) {
   const [location, setLocation] = useLocation();
-  const normalizedSlug = String(slug || "").trim().toLowerCase();
-  const isExperientialRendering = location.startsWith("/projects/experiential/rendering");
-  const isRenderingRoute = location.startsWith("/projects/rendering");
+  const resolvedPath =
+    currentPath ||
+    location ||
+    (typeof window !== "undefined" ? window.location.pathname : "/projects/rendering");
+  const normalizedSlug = String(
+    slugProp ||
+      params?.slug ||
+      (typeof window !== "undefined"
+        ? window.location.pathname.split("/").filter(Boolean).pop() || ""
+        : "")
+  )
+    .trim()
+    .toLowerCase();
+  const isExperientialRendering = resolvedPath.startsWith("/projects/experiential/rendering");
+  const isRenderingRoute = resolvedPath.startsWith("/projects/rendering");
   const projectBasePath = isExperientialRendering
     ? "/projects/experiential/rendering"
     : isRenderingRoute
@@ -355,10 +381,14 @@ export default function RenderingProjectDetail() {
             <div className="mx-auto w-full max-w-[62rem]">
               {renderings[0] ? (
                 <div className="cursor-pointer overflow-hidden rounded-xl bg-black" onClick={() => openLightbox(0)}>
-                  <img
+                  <ProgressiveImage
                     src={renderings[0].imageUrl || ""}
                     alt={renderings[0].altText || `${project.title} rendering`}
                     className="block w-full max-h-[min(74vh,48rem)] object-contain"
+                    objectFit="contain"
+                    loading="eager"
+                    fetchPriority="high"
+                    sizes="(max-width: 768px) 100vw, 62rem"
                   />
                 </div>
               ) : null}
@@ -450,10 +480,11 @@ export default function RenderingProjectDetail() {
                         <Link key={article.id} href={`/articles/${article.slug}`} className="group flex items-start gap-5">
                           <div className="relative h-36 w-36 flex-none overflow-hidden rounded-xl bg-black/85">
                             {article.coverImageUrl ? (
-                              <img
+                              <ProgressiveImage
                                 src={article.coverImageUrl}
                                 alt={article.coverImageAlt || `${article.title} article cover image`}
                                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                                sizes="9rem"
                               />
                             ) : null}
                             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,31,71,0.08)_0%,rgba(22,64,133,0.16)_55%,rgba(10,18,38,0.42)_100%)]" />
@@ -488,10 +519,11 @@ export default function RenderingProjectDetail() {
                     <Link href={scenicProjectHref} className="group flex items-start gap-5">
                       <div className="relative h-36 w-36 flex-none overflow-hidden rounded-xl bg-black/85">
                         {scenicProjectMatch.coverImageUrl ? (
-                          <img
+                          <ProgressiveImage
                             src={scenicProjectMatch.coverImageUrl}
                             alt={`${scenicProjectMatch.title} scenic design project cover image`}
                             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                            sizes="9rem"
                           />
                         ) : null}
                         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,31,71,0.18)_0%,rgba(22,64,133,0.42)_55%,rgba(10,18,38,0.74)_100%)]" />
@@ -527,11 +559,11 @@ export default function RenderingProjectDetail() {
                     <Link key={item.id} href={`${projectBasePath}/${item.slug}`} className="group block">
                         <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-black/85">
                           {item.coverImageUrl ? (
-                            <img
+                            <ProgressiveImage
                               src={item.coverImageUrl}
                               alt={`${item.title} rendering preview image`}
                               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                              style={{ objectPosition: "center center" }}
+                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                             />
                           ) : <div className="h-full w-full bg-muted" />}
                         </div>

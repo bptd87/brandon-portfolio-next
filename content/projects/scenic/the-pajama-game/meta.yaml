@@ -1,0 +1,55 @@
+type: project
+discipline: scenic
+slug: the-pajama-game
+title: The Pajama Game
+status: published
+featured: false
+excerpt: >-
+  Bold signage, modular factory architecture, and mid-century graphic energy support both romance and labor tension in
+  The Pajama Game.
+seoTitle: The Pajama Game | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for The Pajama Game at University of California Irvine, using bold factory signage, modular staging, and
+  1950s graphic language to support dance, romance, and labor conflict.
+seoKeywords:
+  - The Pajama Game
+  - scenic design
+  - UC Irvine
+  - musical theatre
+  - Brandon PT Davis
+client: University of California Irvine
+location: Irvine, CA
+year: 2019
+month: 6
+subcategory: Musical Theatre
+cover:
+  asset: project-images/project-90048-cover.webp
+  alt: The Pajama Game scenic design cover image
+team:
+  - role: Book By
+    name: George Abbott & Richard Bissell
+  - role: Music and Lyrics
+    name: Richard Adler & Jerry Ross
+  - role: Music Director
+    name: Lex Leigh
+  - role: Choreographer
+    name: Allison Eversol
+  - role: Scenic Designer
+    name: Brandon PT Davis
+  - role: Costume Designer
+    name: Sarah Monaghan
+  - role: Lighting Designer
+    name: Natori Cummings-Haynes
+  - role: Sound Designer
+    name: Ningru Guo
+  - role: Director
+    name: Don Hill
+tags:
+  - musical-theatre
+  - university-of-california-irvine
+  - the-pajama-game
+  - mid-century-musical
+links:
+  - label: Listing
+    url: https://drama.arts.uci.edu/events/pajama-game
+updatedAt: '2026-02-12T15:03:56+00:00'

@@ -2,7 +2,18 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, FolderKanban, Newspaper, FileText, ArrowUpRight, TrendingUp, Layout } from "lucide-react";
+import {
+  Loader2,
+  FolderKanban,
+  Newspaper,
+  FileText,
+  ArrowUpRight,
+  TrendingUp,
+  Layout,
+  Upload,
+  ImageIcon,
+  Code2,
+} from "lucide-react";
 import { Link } from "wouter";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { trpc } from "@/lib/trpc";
@@ -142,6 +153,24 @@ export default function Admin() {
               <Link href="/admin/rendering-gallery">
                 <Layout className="h-5 w-5" />
                 Manage Rendering Gallery
+              </Link>
+            </Button>
+            <Button className="w-full justify-start gap-3 h-12 text-base" variant="outline" asChild>
+              <Link href="/admin/uploads">
+                <Upload className="h-5 w-5" />
+                Upload New Assets
+              </Link>
+            </Button>
+            <Button className="w-full justify-start gap-3 h-12 text-base" variant="outline" asChild>
+              <Link href="/admin/assets">
+                <ImageIcon className="h-5 w-5" />
+                Browse Asset Library
+              </Link>
+            </Button>
+            <Button className="w-full justify-start gap-3 h-12 text-base" variant="outline" asChild>
+              <Link href="/admin/snippets">
+                <Code2 className="h-5 w-5" />
+                Copy Page Snippets
               </Link>
             </Button>
           </CardContent>

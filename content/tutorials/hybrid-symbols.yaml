@@ -1,0 +1,191 @@
+id: 13
+title: 'Vectorworks Tutorial: Hybrid Symbols'
+slug: hybrid-symbols
+content: null
+category: 3d-modeling
+difficulty: null
+duration: 306
+created_at: '2026-02-12T10:46:46.080162+00:00'
+updated_at: '2026-02-22T11:22:57.948959+00:00'
+status: published
+featured: false
+seo_title: null
+seo_description: null
+seo_keywords: null
+learning_objectives:
+  - Create a 3D symbol and convert it into a hybrid symbol with 2D components
+  - Access and navigate the 2D Component edit mode for hybrid symbols
+  - Manually trace 2D Top/Plan representations using the Polyline tool
+  - Apply appropriate class attributes to 2D components for proper lineweight display
+  - Generate automatic 2D components from 3D geometry using Hidden Line rendering
+  - Understand the performance implications of auto-generation vs manual tracing methods
+key_concepts:
+  - title: HYBRID SYMBOL
+    content: >-
+      A symbol that contains both 2D and 3D components, allowing it to display differently in plan view versus 3D views.
+      The 2D component shows in Top/Plan view while the 3D component displays in isometric and perspective views.
+  - title: 2D COMPONENT
+    content: >-
+      The screen plane or plan view representation of a hybrid symbol. This component is created separately from the 3D
+      geometry and can be customized to show appropriate detail levels for documentation purposes.
+  - title: COMPONENT EDIT MODE
+    content: >-
+      A special editing environment accessed by double-clicking a symbol and selecting '2D Component'. In this mode, you
+      can create or modify the 2D representation while viewing the 3D geometry as a reference.
+  - title: SCREEN PLANE
+    content: >-
+      A drawing plane that always faces the viewer regardless of view orientation. 2D components in hybrid symbols are
+      created on the screen plane so they display correctly in Top/Plan view.
+  - title: HIDDEN LINE RENDER
+    content: >-
+      An automatic generation method that creates 2D linework from 3D geometry by calculating which edges are visible
+      from a specific viewpoint. Useful for complex geometry but can be processor-intensive.
+  - title: MANUAL TRACING
+    content: >-
+      The recommended method of creating 2D components by using the Polyline tool to trace over the 3D geometry.
+      Provides better control, cleaner linework, and avoids performance issues with complex models.
+pro_tips:
+  - >-
+    Always set the insertion point to '3D object center' when creating symbols that will become hybrid symbols - this
+    ensures proper alignment between 2D and 3D components.
+  - >-
+    Check 'Change 2D objects from Layer Plane to Screen Plane' when creating the initial symbol to ensure 2D components
+    display correctly in all views.
+  - >-
+    Use the 'Show 3D' option with 'Show all details' when manually tracing - this gives you the clearest reference for
+    creating your 2D component.
+  - >-
+    Class your 2D components appropriately (e.g., '2D Medium Lineweight') to ensure they print and display with the
+    correct line weights in documentation.
+  - >-
+    For simple geometry like tables and chairs, manual tracing is faster and more reliable than auto-generation - you
+    have complete control over what lines appear.
+  - >-
+    Avoid using 'Generate 2D component from 3D' for complex models - it can overwhelm your computer and cause crashes.
+    Reserve this method for simple, low-polygon geometry.
+  - >-
+    When manually tracing, work methodically around the perimeter of the object in Top/Plan view to create a clean,
+    closed polyline that accurately represents the footprint.
+  - >-
+    Test your hybrid symbol in both Top/Plan and 3D views immediately after creation to verify both components display
+    correctly before using it in your project.
+  - >-
+    Keep your 2D components simple and focused on essential information - overly detailed 2D representations can clutter
+    plan drawings and slow down performance.
+  - >-
+    If you need to edit a hybrid symbol later, you can always delete the existing 2D component and create a new one -
+    the 3D component remains unchanged.
+shortcuts:
+  - keys: Ctrl+K (Win) / Cmd+K (Mac)
+    description: Create Symbol from selected objects
+  - keys: Double-click symbol
+    description: Open Edit Symbol options dialog
+  - keys: Exit Symbol button
+    description: Leave symbol edit mode and return to drawing
+common_pitfalls:
+  - >-
+    Forgetting to check 'Change 2D objects from Layer Plane to Screen Plane' when creating the initial symbol, resulting
+    in 2D components that don't display correctly in Top/Plan view.
+  - >-
+    Using auto-generation for complex models, which can cause software crashes or extremely long processing times -
+    always prefer manual tracing for detailed geometry.
+  - >-
+    Not classing the 2D component properly, resulting in linework that prints too heavy or too light in construction
+    documents.
+  - >-
+    Creating overly detailed 2D components that include every edge and detail from the 3D model, cluttering plan views
+    and reducing drawing clarity.
+  - >-
+    Failing to test the hybrid symbol in both 2D and 3D views before using it extensively in a project, discovering
+    display issues only after placing multiple instances.
+  - >-
+    Not setting the insertion point correctly, causing alignment issues between the 2D and 3D components when the symbol
+    is placed and rotated.
+transcript:
+  - text: >-
+      Hello, this is Brandon PT Davis, theatrical scenic designer. In this Vectorworks tutorial video, we're going to
+      cover hybrid symbols.
+    time: '0:06'
+  - text: >-
+      If you aren't familiar with symbols, I recommend watching my previous video on symbols. In that video, we covered
+      how to create a symbol, including 2D, 3D, and grouped symbols. A hybrid symbol is when you combine the 2D and 3D
+      elements into a single symbol.
+    time: '0:14'
+  - text: >-
+      For this tutorial, I've created a table. Right now, the table is just a 3D object. I'm going to start off by
+      selecting the components that I want in my symbol.
+    time: '0:44'
+  - text: >-
+      Then I'm going to go to Modify > Create Symbol, or press Control + K. I'm going to name the symbol 'Table,' and
+      I'm going to make sure the insertion point is set to the 3D object center.
+    time: '1:03'
+  - text: >-
+      I'm going to keep the units world-based. I'm going to uncheck Story-Aware and Insert in Wall. I'm going to leave
+      'Leave instance in place' checked. I'm also going to check 'Change 2D objects from Layer Plane to Screen Plane.'
+      I'm going to keep 'Convert to group' unchecked.
+    time: '1:22'
+  - text: >-
+      Now I'm going to press OK. I'm going to store this in the Resource Manager. I won't put it in a folder for this
+      tutorial. Press OK. Now we have a 3D symbol.
+    time: '1:42'
+  - text: >-
+      If I go to Top/Plan view, we can see the wireframe, which is not ideal. To change the wireframe into a drafted 2D
+      top/plan graphic, I'm going to double-click and open the Edit Symbol options.
+    time: '1:56'
+  - text: >-
+      I'm going to select 2D Component and press OK. Now we're in the component edit mode. Up here, we can create a 2D
+      representation for multiple views, but the most effective for our purposes will be Top/Plan view.
+    time: '2:13'
+  - text: >-
+      We can show different sides of the object. I'm going to keep Show 3D selected and set this to show all details.
+      What I'm going to do is use the Polyline tool and trace the top/plan view of the table.
+    time: '2:37'
+  - text: I'm going to class the 2D object in our 2D medium lineweight class. Now it looks like an appropriate 2D graphic.
+    time: '3:20'
+  - text: >-
+      I'll exit the symbol, and it will ask if I want to continue because I've converted the 3D symbol into a hybrid
+      symbol by adding a screen plane or hybrid object. I'm going to choose Yes.
+    time: '3:32'
+  - text: >-
+      Now I have a 2D view of the table in Top/Plan view, but if I swivel into any of the 3D views, I still have the 3D
+      table.
+    time: '3:46'
+  - text: >-
+      Alternatively, you can double-click and go back into the 2D component, delete what you drew, then go back into 3D.
+      Right-click, and you can generate a 2D component from the 3D component.
+    time: '3:58'
+  - text: >-
+      You want to generate a Hidden Line render and press OK. The software will now generate what it believes is the
+      correct 2D representation. In this case, it's accurate. I'm going to press Exit Symbol.
+    time: '4:19'
+  - text: >-
+      So we still have a hybrid symbol with a 2D Top/Plan view and a 3D element. When it comes to allowing Vectorworks
+      to generate the hybrid model, please note that more complex models can overwhelm your computer and cause it to
+      crash.
+    time: '4:35'
+  - text: >-
+      I recommend tracing the object yourself. This concludes the hybrid symbol tutorial. If you have any questions, let
+      me know. Thank you.
+    time: '5:01'
+related_resources:
+  - url: https://university.vectorworks.net
+    title: 'Vectorworks University: Hybrid Symbols'
+  - url: https://app-help.vectorworks.net
+    title: 'User Guide: Symbol Types and Workflows'
+  - url: https://forum.vectorworks.net
+    title: 'Community Forum: Symbol Best Practices'
+related_tutorials:
+  - slug: understanding-symbols
+    title: 'Vectorworks Tutorial: Understanding Symbols'
+  - slug: 3d-modeling-basics
+    title: 'Vectorworks Tutorial: 3D Modeling Basics'
+overview: >-
+  This tutorial demonstrates how to create hybrid symbols that combine 2D and 3D representations in a single symbol.
+  You'll learn the complete workflow for converting a 3D symbol into a hybrid symbol, including creating custom 2D
+  components for Top/Plan views through manual tracing or auto-generation. The tutorial covers practical techniques for
+  creating clean 2D graphics, managing component edit modes, and understanding the trade-offs between manual tracing and
+  automatic generation methods. This skill is essential for creating efficient symbols that display appropriately in
+  both 2D documentation and 3D visualization contexts.
+description: null
+cover_image: https://img.youtube.com/vi/XeBfq6Kv1LY/maxresdefault.jpg
+video_url: https://www.youtube.com/watch?v=XeBfq6Kv1LY

@@ -1,0 +1,40 @@
+- type: text
+  heading: Control as Architecture
+  content:
+    - >-
+      For Dial “M” for Murder at Okoboji Summer Theatre, I wanted the room to feel precise. This play is about control,
+      who has it, who loses it, and how long that illusion lasts. The apartment of Tony and Margot Wendice needed to
+      look composed and intentional, almost curated.
+- type: gallery
+  mediaIds:
+    - dialm-prod-1
+    - dialm-prod-2
+- type: text
+  heading: Negative Space as Pressure
+  content:
+    - >-
+      I leaned into clean architectural lines, paneled walls, balanced bookcases, and a centered fireplace to create a
+      sense of order. The palette stayed cool and refined, allowing the actors and lighting to drive emotional shifts.
+      Surrounding the apartment, I let darkness take over. The negative space wasn’t empty, it was pressure. It made the
+      room feel isolated, suspended, and slightly exposed.
+- type: gallery
+  mediaIds:
+    - dialm-prod-3
+    - dialm-prod-4
+- type: text
+  heading: Design Goal
+  content:
+    - >-
+      The layout was built around movement and sightlines. Every door, threshold, and furniture placement supported the
+      mechanics of the plot. Suspense in this play is spatial: who can see whom, who can hear what, and who is trapped.
+    - >-
+      The design avoided clutter because clutter distracts from tension. The apartment felt elegant, but never
+      comfortable. As the story tightened, the room didn’t change, it revealed how fragile that control really was.
+- type: gallery
+  mediaIds:
+    - dialm-prod-5
+    - dialm-prod-6
+    - dialm-prod-7
+- type: gallery
+  mediaIds:
+    - dialm-render-1

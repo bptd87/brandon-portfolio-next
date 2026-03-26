@@ -1,0 +1,47 @@
+type: project
+discipline: scenic
+slug: vanya-and-sonia-and-masha-and-spike
+title: Vanya and Sonia and Masha and Spike
+status: published
+featured: false
+excerpt: >-
+  A Bucks County porch that feels both sheltering and restrictive, giving Vanya and Sonia and Masha and Spike a
+  nostalgic domestic frame for rivalry, wit, and longing.
+seoTitle: Vanya and Sonia and Masha and Spike | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for Vanya and Sonia and Masha and Spike at Stephens College, using a Bucks County porch and warm
+  domestic architecture to support nostalgia, comedy, and emotional tension.
+seoKeywords:
+  - Vanya and Sonia and Masha and Spike
+  - scenic design
+  - Stephens College
+  - comedy
+  - Brandon PT Davis
+client: Stephens College
+location: Columbia, MO
+year: 2016
+month: 2
+subcategory: Comedy
+cover:
+  asset: portfolio/projects/2026/02/2016-vanya-sonia-masha-and-spike-stephens-1-of-7-1190.webp
+  alt: Vanya and Sonia and Masha and Spike scenic design cover image
+team:
+  - role: Playwright
+    name: Christopher Durang
+  - role: Scenic Design
+    name: Brandon PT Davis
+  - role: Costume Design
+    name: Elizabeth McManus
+  - role: Lighting Design
+    name: Sarah Aker
+  - role: Sound Design
+    name: Michael Burke
+  - role: Director
+    name: Lamby Hedge
+tags:
+  - comedy
+  - stephens-college
+  - christopher-durang
+  - vanya-and-sonia-and-masha-and-spike
+links: []
+updatedAt: '2026-02-27T11:15:14.646195+00:00'

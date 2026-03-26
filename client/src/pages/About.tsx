@@ -1,3 +1,5 @@
+"use client";
+
 import { ArrowRight, ChevronLeft, ChevronRight, Mail } from "lucide-react";
 import { Link } from "wouter";
 import { useRef } from "react";

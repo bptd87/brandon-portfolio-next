@@ -1,0 +1,36 @@
+gallery:
+  - id: lamancha-cover
+    kind: cover
+    asset: portfolio/projects/2026/02/2022-man-of-la-mancha-3-of-5-large-4479.webp
+    alt: The Man of La Mancha scenic design cover image.
+  - id: lamancha-prod-1
+    kind: production
+    asset: portfolio/projects/2026/02/2022-man-of-la-mancha-3-of-5-large-5473.webp
+    alt: >-
+      Production image from The Man of La Mancha showing the warehouse-inspired playing space, scenic design by Brandon
+      PT Davis.
+  - id: lamancha-prod-2
+    kind: production
+    asset: portfolio/projects/2026/02/2022-man-of-la-mancha-2-of-5-large-5474.webp
+    alt: >-
+      Production image from The Man of La Mancha with industrial textures and modular scenic structure visible, scenic
+      design by Brandon PT Davis.
+  - id: lamancha-prod-3
+    kind: production
+    asset: portfolio/projects/2026/02/2022-man-of-la-mancha-1-of-5-large-5473.webp
+    alt: >-
+      Performance image from The Man of La Mancha centered in the circular ritual floor pattern, scenic design by
+      Brandon PT Davis.
+  - id: lamancha-prod-4
+    kind: production
+    asset: portfolio/projects/2026/02/2022-man-of-la-mancha-4-of-5-large-5474.webp
+    alt: >-
+      Production still from The Man of La Mancha with actors and musicians inhabiting the scenic world, scenic design by
+      Brandon PT Davis.
+  - id: lamancha-prod-5
+    kind: production
+    asset: portfolio/projects/2026/02/2022-man-of-la-mancha-5-of-5-large-5521.webp
+    alt: >-
+      Final production image from The Man of La Mancha showing the full found-object warehouse environment, scenic
+      design by Brandon PT Davis.
+videos: []

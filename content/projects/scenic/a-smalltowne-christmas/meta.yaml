@@ -1,0 +1,53 @@
+type: project
+discipline: scenic
+slug: a-smalltowne-christmas
+title: A Smalltowne Christmas
+status: published
+featured: false
+excerpt: >-
+  A nostalgic holiday setting shaped around warmth, tradition, and small-town cheer, creating a festive world that
+  supports community, memory, and seasonal spectacle.
+seoTitle: A Smalltowne Christmas | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for A Smalltowne Christmas at Stephens College, capturing the warmth, nostalgia, and festive spirit of a
+  small-town holiday celebration.
+seoKeywords:
+  - A Smalltowne Christmas
+  - scenic design
+  - Stephens College
+  - holiday musical
+  - Brandon PT Davis
+client: Stephens College
+location: Columbia, MO
+year: 2021
+month: 11
+subcategory: Musical Theatre
+cover:
+  asset: project-images/rescued/a-smalltowne-christmas/a-smalltowne-christmas-9717e6782b.jpg
+  alt: A Smalltowne Christmas scenic design cover image
+team:
+  - role: Written By
+    name: Stacia Fernandez
+  - role: Music and Lyrics By
+    name: Danny J. Rooney
+  - role: Scenic Design
+    name: Brandon PT Davis
+  - role: Costume Design
+    name: Briann Johnson & Martha Clarke
+  - role: Lighting Design
+    name: Vincente Williams
+  - role: Sound Design
+    name: Michael Burke
+  - role: Music Director
+    name: Andrew David Sotomayor
+  - role: Associate Director
+    name: Stacia Fernandez
+  - role: Directed and Choreographed By
+    name: Richard Stafford
+tags:
+  - musical-theatre
+  - holiday-musical
+  - stephens-college
+  - a-smalltowne-christmas
+links: []
+updatedAt: '2026-03-23T20:25:00.000Z'

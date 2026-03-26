@@ -1,3 +1,5 @@
+"use client";
+
 import { Instagram, Linkedin, Mail, Youtube } from "lucide-react";
 import { Link } from "wouter";
 
@@ -52,6 +54,8 @@ const SOCIAL_LINKS = [
     icon: Mail,
   },
 ] as const;
+
+const COPYRIGHT_YEAR = 2026;
 
 function PinterestIcon({ className }: { className?: string }) {
   return (
@@ -134,7 +138,7 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col gap-4 border-t border-border/40 pt-6 text-sm text-white/62 md:flex-row md:items-center md:justify-between">
-          <p>© {new Date().getFullYear()} Brandon PT Davis. All rights reserved.</p>
+          <p>© {COPYRIGHT_YEAR} Brandon PT Davis. All rights reserved.</p>
           <div className="flex flex-wrap gap-5">
             <Link href="/privacy" className="transition-colors hover:text-white">
               Privacy

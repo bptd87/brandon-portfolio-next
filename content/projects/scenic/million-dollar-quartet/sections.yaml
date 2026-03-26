@@ -1,0 +1,48 @@
+- type: text
+  heading: Inside Sun Records
+  content:
+    - >-
+      The design invites audiences into Sun Records on the day Elvis Presley, Johnny Cash, Jerry Lee Lewis, and Carl
+      Perkins came together for their legendary jam session. Collaborating with co-scenic designer Efren Delgadillo Jr.,
+      director James Moye, and associate director Kim Martin-Cotten, the work balances authenticity with theatricality,
+      capturing both the intimacy of a Memphis studio and the explosive energy of rock and roll in the making.
+- type: gallery
+  mediaIds:
+    - mdq-prod-1
+    - mdq-prod-3
+- type: text
+  heading: The Room as Performance Engine
+  content:
+    - >-
+      The environment stays detailed and grounded: wood floors, period recording equipment, and control-room windows
+      lined with gold records. At the same time, theatrical elements heighten the musical impact. Chief among them is
+      the illuminated SUN sign, drawn from Elvis concert signage, which lets the studio become both a place of work and
+      a stage for myth.
+    - >-
+      That double identity was important. The room needed to hold the closeness of a rehearsal space while still
+      supporting the heightened, public feeling of history happening in front of an audience.
+- type: gallery
+  mediaIds:
+    - mdq-prod-4
+    - mdq-prod-5
+- type: text
+  heading: Design Goal
+  content:
+    - >-
+      The goal was to honor the spirit of collaboration at the heart of the play. The space amplifies the relationships
+      in the room: musicians facing one another, sharing energy, finding rhythm, and pushing boundaries. The set becomes
+      not just a place to perform, but a portrait of how artists influence one another and, together, change the course
+      of American music.
+- type: gallery
+  mediaIds:
+    - mdq-prod-6
+    - mdq-prod-7
+    - mdq-prod-8
+- type: video
+  heading: Walkthrough
+  mediaId: mdq-video
+- type: gallery
+  mediaIds:
+    - mdq-render-1
+    - mdq-render-2
+    - mdq-render-3

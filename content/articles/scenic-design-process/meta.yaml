@@ -1,0 +1,36 @@
+type: article
+slug: scenic-design-process
+title: 'Navigating the Scenic Design Process: A Comprehensive Guide'
+status: published
+featured: false
+excerpt: >-
+  A practical step-by-step guide to the scenic design process, from script analysis and visual research through
+  drafting, tech, and opening night.
+category: Design Process
+seoTitle: 'Scenic Design Process Guide: From Script to Opening Night'
+seoDescription: >-
+  A practical scenic design process guide covering script analysis, research, concept development, drafting, and
+  production collaboration from first read to opening night.
+seoKeywords:
+  - scenic design process
+  - scenic designer workflow
+  - theatre design process
+  - script analysis for designers
+  - scenic design production workflow
+cover:
+  asset: article-images/article-60147-cover.webp
+  alt: 'Navigating the Scenic Design Process: A Comprehensive Guide'
+tags:
+  - design-process
+  - theatrical-design
+  - scenic-design-workflow
+  - production-process
+  - design-methodology
+readTime: 9
+publishedAt: '2024-10-02T00:00:00+00:00'
+updatedAt: '2026-02-12T15:04:14+00:00'
+linkedScenicProjectSlugs: []
+series:
+  name: Process and Practice
+  slug: process-and-practice
+  order: 1

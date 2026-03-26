@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo, type MouseEvent } from "react";
 import { useLocation } from "wouter";
 

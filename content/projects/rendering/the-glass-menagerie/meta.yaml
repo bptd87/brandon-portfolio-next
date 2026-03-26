@@ -1,0 +1,25 @@
+type: project
+discipline: rendering
+slug: the-glass-menagerie
+title: The Glass Menagerie
+status: published
+featured: false
+excerpt: >
+  The Glass Menagerie at Maples Repertory Theatre, directed by Kimberly Braun, was staged as a memory play shaped by Tom
+  Wingfield’s recollection rather than a literal apartment. The scenic environment emphasized fluid movement and
+  emotional geography, supporting the play’s themes of longing, confinement, and escape.
+seoTitle: The Glass Menagerie
+seoDescription: >
+  The Glass Menagerie at Maples Repertory Theatre, directed by Kimberly Braun, was staged as a memory play shaped by Tom
+  Wingfield’s recollection rather than a literal apartment. The scenic environment emphasized fluid movement and
+  emotional geography, supporting the play’s themes of longing, confinement, and escape.
+seoKeywords: []
+client: Maples Repertory Theatre
+location: ' Macon, MO'
+year: 2025
+month: 10
+cover:
+  asset: project-images/project-90010-gallery-150168.webp
+  alt: The Glass Menagerie rendering project cover image
+publishedAt: '2026-02-19T11:01:51.231Z'
+updatedAt: '2026-02-19T11:01:51.231Z'

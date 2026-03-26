@@ -1,0 +1,51 @@
+type: project
+discipline: scenic
+slug: parliament-square
+title: Parliament Square
+status: published
+featured: false
+excerpt: >-
+  A circular stone path and fractured concrete world create a ritual landscape of protest, sacrifice, and political
+  exhaustion in Parliament Square.
+seoTitle: Parliament Square | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for Parliament Square at University of California Irvine, using a circular stone path, fractured
+  concrete, and a cold ritual landscape to support protest and political tension.
+seoKeywords:
+  - Parliament Square
+  - scenic design
+  - UC Irvine
+  - drama
+  - Brandon PT Davis
+client: University of California Irvine
+location: Irvine, CA
+year: 2019
+month: 2
+subcategory: Drama
+cover:
+  asset: project-images/project-90018-cover.webp
+  alt: Parliament Square scenic design cover image
+team:
+  - role: Playwright
+    name: James Fritz
+  - role: Scenic Designer
+    name: Brandon PT Davis
+  - role: Costume Designer
+    name: Matthew Martinez
+  - role: Lighting Designer
+    name: Jacob P. Brinkman
+  - role: Sound Design
+    name: Ezra Anisman & Garrett Gagnon
+  - role: Projection Design
+    name: Merle DeWitt III
+  - role: Director
+    name: Jane Page
+tags:
+  - drama
+  - university-of-california-irvine
+  - parliament-square
+  - political-theatre
+links:
+  - label: Listing
+    url: https://www.arts.uci.edu/press-room/uci-drama-CA-premiere-parliament-square
+updatedAt: '2026-02-12T15:03:59+00:00'

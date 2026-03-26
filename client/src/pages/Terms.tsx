@@ -1,3 +1,5 @@
+"use client";
+
 import InfoPageShell from "@/components/InfoPageShell";
 import StructuredData from "@/components/StructuredData";
 
@@ -35,11 +37,7 @@ const sections = [
 ];
 
 export default function Terms() {
-  const updated = new Date().toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
+  const updated = "March 26, 2026";
 
   return (
     <>

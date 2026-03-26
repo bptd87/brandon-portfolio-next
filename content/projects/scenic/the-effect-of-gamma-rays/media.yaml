@@ -1,0 +1,30 @@
+gallery:
+  - id: gamma-cover
+    kind: cover
+    asset: portfolio/projects/2026/02/gamma-rays-1-5794.webp
+    alt: The Effect of Gamma Rays on Man-in-the-Moon Marigolds scenic design cover image.
+  - id: gamma-prod-1
+    kind: production
+    asset: portfolio/projects/2026/02/gamma-rays-2-6823.webp
+    alt: >-
+      Production image from The Effect of Gamma Rays on Man-in-the-Moon Marigolds showing the distressed domestic
+      interior, scenic design by Brandon PT Davis.
+  - id: gamma-prod-2
+    kind: production
+    asset: portfolio/projects/2026/02/gamma-rays-3-6823.webp
+    alt: >-
+      Production image from The Effect of Gamma Rays on Man-in-the-Moon Marigolds highlighting faded wallpaper and
+      emotional erosion, scenic design by Brandon PT Davis.
+  - id: gamma-prod-3
+    kind: production
+    asset: portfolio/projects/2026/02/gamma-rays-4-6823.webp
+    alt: >-
+      Production still from The Effect of Gamma Rays on Man-in-the-Moon Marigolds showing the brittle interior surfaces
+      and compressed space, scenic design by Brandon PT Davis.
+  - id: gamma-prod-4
+    kind: production
+    asset: portfolio/projects/2026/02/gamma-rays-1-6823.webp
+    alt: >-
+      Final production image from The Effect of Gamma Rays on Man-in-the-Moon Marigolds showing the full scenic
+      environment in performance, scenic design by Brandon PT Davis.
+videos: []

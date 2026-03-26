@@ -1,0 +1,34 @@
+gallery:
+  - id: rom-cover
+    kind: cover
+    asset: project-images/project-90077-cover.webp
+    alt: Romero scenic design cover image.
+  - id: rom-prod-1
+    kind: production
+    asset: project-images/project-90077-gallery-150014.webp
+    alt: Wide house perspective of the Romero set with layered playing spaces, scenic design by Brandon PT Davis.
+  - id: rom-prod-2
+    kind: production
+    asset: project-images/project-90077-gallery-150117.webp
+    alt: Lighting and scenic texture interplay in a dramatic scene from Romero, scenic design by Brandon PT Davis.
+  - id: rom-prod-3
+    kind: production
+    asset: project-images/project-90077-gallery-150169.webp
+    alt: Primary stage composition for Romero at University of Missouri, scenic design by Brandon PT Davis.
+  - id: rom-prod-4
+    kind: production
+    asset: project-images/project-90077-gallery-150192.webp
+    alt: >-
+      Scene transition across the central platform system in Romero at University of Missouri, scenic design by Brandon
+      PT Davis.
+  - id: rom-prod-5
+    kind: production
+    asset: project-images/project-90077-gallery-150236.webp
+    alt: >-
+      Final production view of Romero showing the full environment and actor pathways, scenic design by Brandon PT
+      Davis.
+  - id: rom-prod-6
+    kind: production
+    asset: project-images/project-90077-gallery-150246.webp
+    alt: Actors positioned within the architectural and symbolic scenic world of Romero, scenic design by Brandon PT Davis.
+videos: []

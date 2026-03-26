@@ -1,3 +1,5 @@
+"use client";
+
 import { ArrowRight, BookOpen, Calendar, Play, Wrench } from "lucide-react";
 import { Link } from "wouter";
 

@@ -1,0 +1,311 @@
+id: 14
+title: 'Vectorworks Tutorial: Basics of Textures'
+slug: basics-of-textures
+content: null
+category: 3d-modeling
+difficulty: Intermediate
+duration: 801
+created_at: '2026-02-12T10:46:46.114413+00:00'
+updated_at: '2026-02-22T11:22:57.948959+00:00'
+status: published
+featured: false
+seo_title: null
+seo_description: null
+seo_keywords: null
+learning_objectives:
+  - Understand the differences between OpenGL (now called 'Shaded'), Fast Renderworks, and Final Quality Renderworks
+  - Apply pre-made Renderworks textures from the Resource Manager to 3D objects
+  - Adjust texture mapping types (Plane, Auto-Align Plane, Perimeter, Sphere, Cylinder)
+  - Edit texture parameters including scale, offset, rotation, and mapping mode
+  - 'Understand and modify texture shaders: color, reflectivity, transparency, and bump'
+  - Apply textures by face to create multi-material objects
+  - Create custom Renderworks textures from imported images
+  - Configure lighting (spotlights) to enhance texture visualization
+  - Optimize texture scale settings within the texture definition vs. Object Info Palette
+key_concepts:
+  - title: RENDERWORKS RENDERING MODES
+    content: >-
+      OpenGL (now called 'Shaded' in current Vectorworks versions) is the fastest, simplified render mode that doesn't
+      calculate lighting. Fast Renderworks adds basic lighting calculations. Final Quality Renderworks produces
+      photorealistic results with full lighting, shadows, and reflections—but requires more processing time. Use
+      Shaded/OpenGL for modeling, Renderworks for presentation.
+  - title: TEXTURE MAPPING TYPES
+    content: >-
+      Plane projects texture from a single direction. Auto-Align Plane projects texture perpendicular to each face.
+      Perimeter wraps texture around the object's perimeter. Sphere and Cylinder are optimized for spherical and
+      cylindrical geometry. Choose the map type that best matches your object's shape.
+  - title: TEXTURE SHADERS
+    content: >-
+      Color shader defines the base image or color. Reflectivity controls how light bounces off the surface (mirror,
+      glossy, matte). Transparency controls how see-through the material is (glass = high transparency). Bump creates
+      simulated surface texture without changing geometry.
+  - title: TEXTURE SCALE SETTINGS
+    content: >-
+      Texture scale can be adjusted in two places: in the Object Info Palette (per-object override) or within the
+      texture definition itself (affects all instances). Editing the texture definition is preferred for consistency
+      across multiple objects using the same material.
+  - title: APPLY BY FACE
+    content: >-
+      Instead of applying one texture to an entire object, you can apply different textures to individual faces. This
+      allows multi-material objects like a wooden box with a stone top. Select the face in the Object Info Palette and
+      assign the texture.
+  - title: FRESNEL REFLECTIVITY
+    content: >-
+      Fresnel is a physically-accurate reflection model where surfaces reflect more light at glancing angles. This
+      creates realistic reflections on materials like water, glass, and polished surfaces. Adjusting Fresnel values
+      affects how reflections change based on viewing angle.
+pro_tips:
+  - >-
+    Work in Shaded mode (formerly OpenGL) while modeling and adjusting textures—only switch to Renderworks when you need
+    to check the final appearance
+  - Rename long texture names to shorter, descriptive names (e.g., 'Stonework') to keep your Resource Manager organized
+  - >-
+    Edit texture scale in the texture definition (Resource Manager > Edit) rather than per-object for consistency across
+    your model
+  - >-
+    Start with Vectorworks' pre-made textures and modify them rather than building from scratch—they have well-tuned
+    shader settings
+  - >-
+    Use bump mapping at 20-50% for subtle surface texture; 100% bump can look unrealistic unless you're creating rough
+    materials
+  - Set reflectivity to Mirror mode at 5-15% for realistic glossy surfaces like polished stone or finished wood
+  - Add a spotlight when testing reflective materials—reflections are more visible with directional lighting
+  - For glass materials, keep transparency at 80-95% and add slight reflectivity for realism
+  - >-
+    When creating custom textures from images, ensure the image tiles seamlessly or use large enough scale to avoid
+    visible repeats
+  - >-
+    Use Auto-Align Plane mapping for architectural objects (boxes, walls) and Perimeter for cylindrical objects
+    (columns, pipes)
+  - >-
+    Adjust blurriness on mirror reflections to soften them—sharp mirror reflections (0% blur) rarely occur in real
+    materials
+  - Save custom textures to your user library so you can reuse them across projects
+  - Test textures on simple geometry (cubes, cylinders) before applying to complex models
+  - >-
+    Keep texture file sizes reasonable—high-resolution images (4K+) can slow down rendering without noticeable quality
+    improvement
+shortcuts:
+  - keys: Cmd/Ctrl + Click
+    action: Select individual faces for face-specific texture application
+  - keys: Resource Manager
+    action: Access pre-made Renderworks textures and edit texture definitions
+  - keys: Object Info > Render
+    action: View and modify textures applied to selected objects
+common_pitfalls:
+  - Using Final Quality Renderworks while modeling—it's too slow. Stick to OpenGL and only render for final checks
+  - Not adjusting texture scale, resulting in unrealistic material appearance (e.g., wood grain that's 10 feet wide)
+  - Applying textures without considering the mapping type—Plane mapping on a cylinder will look distorted
+  - Setting bump to 100% on every texture, creating overly rough, unrealistic surfaces
+  - Not renaming textures, leading to a cluttered Resource Manager with cryptic names
+  - >-
+    Adjusting texture scale in Object Info Palette instead of the texture definition, causing inconsistency across
+    objects
+  - Forgetting to add lighting when testing reflective materials—reflections won't be visible without light sources
+  - Using high-resolution texture images that slow down rendering without improving visual quality
+  - >-
+    Not understanding the difference between bump (simulated texture) and actual 3D geometry—bump doesn't change the
+    silhouette
+  - Applying glass textures without adjusting transparency, resulting in opaque 'glass' objects
+transcript:
+  - text: >-
+      Hello, this is Brandon PT Davis, theatrical scenic designer. In this Vectorworks tutorial, we're going to cover
+      the basics of textures.
+    time: '0:06'
+  - text: Textures in Vectorworks are what give you the ability to bring life to your 3D objects.
+    time: '0:13'
+  - text: Currently, the object we're looking at in OpenGL is just a white cube with no textures on it.
+    time: '0:20'
+  - text: If you're not familiar with the render options, OpenGL is the most simplified render mode in Vectorworks.
+    time: '0:34'
+  - text: We can also change our render options to Fast Renderworks and Final Quality Renderworks.
+    time: '0:45'
+  - text: You can build your own library of render styles, and we'll go over how to modify those in another video.
+    time: '0:53'
+  - text: >-
+      If I click Final Quality Renderworks, you'll see it generates an image that shows shadows and how light reflects
+      on your model.
+    time: '1:01'
+  - text: >-
+      Now I'm going to switch back to OpenGL, because when you use Renderworks, your computer has to process how light
+      affects the object, and that takes time.
+    time: '1:16'
+  - text: So OpenGL is a simplified version of that.
+    time: '1:36'
+  - text: In the Resource Manager, Vectorworks has hundreds of pre-made Renderworks textures that you can select.
+    time: '1:40'
+  - text: 'I''ve selected three to start this tutorial: a glass, a stone, and a wood texture.'
+    time: '1:52'
+  - text: >-
+      The first one I'm going to show you is the wood texture. I'm going to select it and drop it onto our one-foot by
+      one-foot cube.
+    time: '2:00'
+  - text: In the Object Info Palette, I can go to the Render settings. Here we have the texture that's been applied.
+    time: '2:19'
+  - text: From the dropdown, I can change the texture easily.
+    time: '2:30'
+  - text: We also have the map type, scale, offset, and rotation.
+    time: '2:32'
+  - text: These controls let you quickly adjust the texture, including flipping it if needed.
+    time: '2:41'
+  - text: The map type controls how the texture is projected onto the object.
+    time: '2:51'
+  - text: For mapping, we have Plane, Auto-Align Plane, Sphere, Cylinder, and Perimeter.
+    time: '2:59'
+  - text: My process is to choose the map type that seems best for the object, and then adjust if needed.
+    time: '3:06'
+  - text: Right now it's set to Perimeter.
+    time: '3:18'
+  - text: >-
+      Before changing the map type, I can also adjust the scale to make the texture smaller, since we're dealing with a
+      one-foot cube.
+    time: '3:22'
+  - text: I can also change the rotation.
+    time: '3:31'
+  - text: >-
+      In Plane mode, it maps the texture based on a single plane across the object. That can look less accurate on some
+      faces.
+    time: '3:37'
+  - text: Auto-Align Plane chooses each face and projects the texture onto that face.
+    time: '4:02'
+  - text: >-
+      Perimeter maps around the perimeter of the object. With a cube, it can feel similar to Auto-Align, but it's
+      handling the mapping differently.
+    time: '4:15'
+  - text: >-
+      There are also Sphere and Cylinder modes, which make more sense when you're mapping spherical or cylindrical
+      objects.
+    time: '4:34'
+  - text: >-
+      Another thing we can do is apply textures by face. For example, I can map stone only to the top face, while the
+      rest stays wood.
+    time: '4:52'
+  - text: >-
+      Now I'm going to switch to Final Quality Renderworks so you can see how it looks with more realistic lighting and
+      shadows.
+    time: '5:18'
+  - text: Now with our stone texture, I'm going to show you that we can edit the texture parameters.
+    time: '5:34'
+  - text: In the Resource Manager, I can right-click the stone texture and choose Edit.
+    time: '5:41'
+  - text: The name is long, so I can rename it to something simpler, like 'Stonework,' to keep the file organized.
+    time: '5:49'
+  - text: >-
+      Then we can adjust the shaders. Textures aren't just images—you can also control reflectivity, transparency, and
+      bump.
+    time: '6:05'
+  - text: If I look at the color shader, I can edit it and see the image the shader is based on.
+    time: '6:13'
+  - text: From the dropdown, I can also adjust the color and Fresnel, or build my own color shaders in Vectorworks.
+    time: '6:28'
+  - text: Reflectivity affects how light hits the object. For now, I'll keep it using the image's reflectivity.
+    time: '6:42'
+  - text: Transparency controls how transparent the object is. Stone isn't transparent, so we keep that low.
+    time: '6:54'
+  - text: >-
+      Bump creates a simulated surface texture. Right now the bump is set to 20, so I'm going to increase it to 100% for
+      the sake of the tutorial.
+    time: '7:02'
+  - text: I'll press OK.
+    time: '7:20'
+  - text: Now I'll go back to Final Quality Renderworks and re-render.
+    time: '7:25'
+  - text: Watch the stone—you'll see it gains a little more depth. It's subtle, but it looks more realistic.
+    time: '7:41'
+  - text: Now I'm going to copy these cubes, reset the mapping, and reapply textures.
+    time: '7:56'
+  - text: >-
+      We want to revert to Overall mapping, then I'll apply the glass texture to one cube and the stonework texture to
+      another.
+    time: '8:19'
+  - text: Glass has a lot of transparency. If I edit the glass texture, we can see the transparency is set to 90%.
+    time: '8:36'
+  - text: >-
+      If I render in Final Quality Renderworks, the textures look more realistic than OpenGL, and we can continue to
+      modify them as needed.
+    time: '8:54'
+  - text: If I wanted the stonework to be glossier, I could right-click and edit it.
+    time: '9:13'
+  - text: I'm going to change the reflectivity to Mirror.
+    time: '9:20'
+  - text: >-
+      100% would be too intense, so I'll set it to about 15% and press OK. It will re-render, and now it's a bit
+      shinier.
+    time: '9:26'
+  - text: You can see the glossiness better if we add a light.
+    time: '9:44'
+  - text: In the Visualization palette, I'm going to add a spotlight and press OK.
+    time: '9:48'
+  - text: Then I'll adjust the spotlight so it's pointing directly down.
+    time: '10:03'
+  - text: Now you can see the mirror glossiness more clearly—but it's too intense.
+    time: '10:46'
+  - text: So I'll go back, edit the mirror reflectivity, and reduce it to around 5% so it looks more realistic.
+    time: '10:53'
+  - text: This is a few of the things you can do with textures in Vectorworks.
+    time: '11:06'
+  - text: >-
+      You can also create your own textures. If I go down to the bottom and create a new Renderworks texture, I can
+      import an image.
+    time: '11:13'
+  - text: Here's a marble image.
+    time: '11:31'
+  - text: I'll change the reflectivity to Mirror, maybe set it to 10%.
+    time: '11:36'
+  - text: >-
+      You can also adjust blurriness. The dialog explains that this controls how blurry the reflection is, so increasing
+      it makes reflections softer.
+    time: '11:44'
+  - text: I can also modify the texture so it reflects a bit of green, keep transparency at none, and set bump to around 9.
+    time: '11:59'
+  - text: And we'll name it 'Marble.'
+    time: '12:10'
+  - text: Press OK, go into our 3D view, and apply the marble texture.
+    time: '12:16'
+  - text: At first, the marble pattern may look too small.
+    time: '12:22'
+  - text: You can adjust the scale in the Object Info Palette, but it's better to edit the texture and set the scale there.
+    time: '12:29'
+  - text: I'll set it to one foot for now, and that works nicely.
+    time: '12:46'
+  - text: Now if I go to Final Quality Renderworks, it looks more realistic.
+    time: '12:52'
+  - text: That's how you can create a marble texture—or any texture—in Vectorworks.
+    time: '13:02'
+  - text: >-
+      As you move forward in Vectorworks, you'll probably become more interested in studying how Renderworks textures
+      affect your model.
+    time: '13:09'
+  - text: But as a basic introduction, I think this is a good start. If you have any questions, let me know.
+    time: '13:21'
+related_resources:
+  - url: https://www.vectorworks.net/
+    type: Documentation
+    title: Vectorworks Renderworks Guide
+  - url: https://www.youtube.com/vectorworks
+    type: Video
+    title: Advanced Renderworks Techniques
+  - url: https://forum.vectorworks.net/
+    type: Community
+    title: Vectorworks Forum - Rendering
+related_tutorials:
+  - slug: 3d-modeling-basics
+    title: 'Vectorworks Tutorial: 3D Modeling Basics'
+  - slug: hybrid-symbols
+    title: 'Vectorworks Tutorial: Hybrid Symbols'
+  - slug: resource-manager-basics
+    title: 'Vectorworks Tutorial: Resource Manager Basics'
+overview: >-
+  This tutorial introduces Renderworks textures in Vectorworks, covering how to apply pre-made textures, adjust mapping
+  types, edit texture parameters, and create custom textures from scratch. You'll learn the differences between OpenGL
+  and Renderworks rendering modes, understand texture shaders (color, reflectivity, transparency, bump), and master the
+  controls for scaling, rotating, and mapping textures onto 3D objects. The tutorial demonstrates practical workflows
+  for wood, stone, glass, and marble textures, showing how to achieve realistic results through proper texture
+  configuration and lighting.
+
+
+  **Note:** In current versions of Vectorworks, OpenGL rendering mode has been renamed to "Shaded." The concepts and
+  workflows remain the same.
+description: Learn how to apply, edit, and create custom Renderworks textures to bring life to your 3D models in Vectorworks.
+cover_image: https://img.youtube.com/vi/9iApEa1XTug/maxresdefault.jpg
+video_url: https://www.youtube.com/watch?v=9iApEa1XTug

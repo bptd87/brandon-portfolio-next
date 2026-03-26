@@ -1,11 +1,14 @@
+"use client";
+
 import { useMemo, useState } from "react";
-import { Link, useLocation, useParams } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Check, Link2, Play } from "lucide-react";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Lightbox } from "@/components/Lightbox";
+import { ProgressiveImage } from "@/components/ProgressiveImage";
 import ScenicRenderingGallery from "@/components/ScenicRenderingGallery";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
@@ -18,6 +21,14 @@ import {
   type LocalExperientialProject,
   type LocalExperientialSample,
 } from "@shared/localPortfolios";
+
+type ExperientialProjectDetailProps = {
+  slug?: string;
+  currentPath?: string;
+  params?: {
+    slug?: string;
+  };
+};
 
 type ProjectGalleryImage = {
   key: string;
@@ -199,10 +210,25 @@ function MediaSection({
   );
 }
 
-export default function ExperientialProjectDetail() {
-  const { slug } = useParams<{ slug: string }>();
+export default function ExperientialProjectDetail({
+  slug: slugProp,
+  currentPath,
+  params,
+}: ExperientialProjectDetailProps = {}) {
   const [location] = useLocation();
-  const normalizedSlug = String(slug || "").trim().toLowerCase();
+  const resolvedPath =
+    currentPath ||
+    location ||
+    (typeof window !== "undefined" ? window.location.pathname : "/projects/experiential");
+  const normalizedSlug = String(
+    slugProp ||
+      params?.slug ||
+      (typeof window !== "undefined"
+        ? window.location.pathname.split("/").filter(Boolean).pop() || ""
+        : "")
+  )
+    .trim()
+    .toLowerCase();
   const project = getLocalExperientialProjectBySlug(normalizedSlug);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [linkCopied, setLinkCopied] = useState(false);
@@ -244,7 +270,7 @@ export default function ExperientialProjectDetail() {
     );
   }
 
-  const projectUrl = `https://www.brandonptdavis.com${location}`;
+  const projectUrl = `https://www.brandonptdavis.com${resolvedPath}`;
   const detailImages = galleryImages.map((image) => ({
     imageUrl: image.imageUrl,
     caption: image.caption || image.sampleTitle,
@@ -349,10 +375,13 @@ export default function ExperientialProjectDetail() {
                     onClick={() => setLightboxIndex(heroImageIndex >= 0 ? heroImageIndex : 0)}
                     className="block w-full text-left"
                   >
-                    <img
+                    <ProgressiveImage
                       src={project.coverImageUrl}
                       alt={`${project.title} experiential design cover image`}
                       className="block w-full max-h-[min(74vh,48rem)] object-cover"
+                      loading="eager"
+                      fetchPriority="high"
+                      sizes="(max-width: 768px) 100vw, 62rem"
                     />
                   </button>
                 </div>
@@ -438,10 +467,11 @@ export default function ExperientialProjectDetail() {
                     <Link key={item.slug} href={getLocalExperientialProjectHref(item)} className="group block">
                       <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-black/85">
                         {item.coverImageUrl ? (
-                          <img
+                          <ProgressiveImage
                             src={item.coverImageUrl}
                             alt={`${item.title} experiential design preview image`}
                             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           />
                         ) : (
                           <div className="h-full w-full bg-muted" />

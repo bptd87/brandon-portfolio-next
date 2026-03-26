@@ -1,0 +1,165 @@
+[
+  {
+    "type": "paragraph",
+    "text": "Trim profiles are small details that can slow an entire drafting set if they are built inconsistently. This workflow focuses on clean geometry and repeatable construction so profiles remain easy to revise and reuse across a full scenic package."
+  },
+  {
+    "type": "paragraph",
+    "text": "This refreshed guide walks through a practical workflow for drawing trim profiles with the Polyline tool, validating dimensions, and turning your profile into reusable production assets."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Why Trim Profiles Matter in Scenic Drafting"
+  },
+  {
+    "type": "paragraph",
+    "text": "When trim is drafted accurately, your model reads cleaner, your sections communicate depth better, and your shop drawings avoid confusion. Small profile decisions create major downstream clarity."
+  },
+  {
+    "type": "list",
+    "ordered": false,
+    "listType": "bullet",
+    "items": [
+      "Consistent detail language across elevations, sections, and 3D views",
+      "Faster revisions through reusable symbols and profile libraries",
+      "Cleaner communication between design, TD, and fabrication teams"
+    ]
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Step 1: Source and Scale a Real-World Profile"
+  },
+  {
+    "type": "paragraph",
+    "text": "Start with a manufacturer profile sheet or a measured field reference. Import the profile image or PDF, then calibrate it to a known dimension before drawing over it."
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Calibration Checklist"
+  },
+  {
+    "type": "list",
+    "ordered": false,
+    "listType": "bullet",
+    "items": [
+      "Set document units before tracing",
+      "Use one verified dimension to scale the reference",
+      "Lock the reference layer to avoid accidental movement"
+    ]
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Step 2: Trace With the Polyline Tool Intentionally"
+  },
+  {
+    "type": "video",
+    "url": "https://youtu.be/EZB5O-Wmsk4",
+    "caption": "Watch the original tutorial walkthrough: creating trim profiles in Vectorworks with the Polyline tool."
+  },
+  {
+    "type": "paragraph",
+    "text": "Use fewer points than you think you need. Place corners first, then shape curves with arc and bezier controls only where the profile actually changes direction."
+  },
+  {
+    "type": "image",
+    "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-31/generated-1771537519704-polyline-process.png",
+    "alt": "Generated drafting visual showing a trim profile traced with Vectorworks polyline control points and arcs.",
+    "caption": "Generated process visual: tracing a trim profile with controlled point placement and curve handles."
+  },
+  {
+    "type": "list",
+    "ordered": true,
+    "listType": "numbered",
+    "items": [
+      "Draft the outer contour in a single closed polyline.",
+      "Switch point modes only when geometry demands it.",
+      "Run a quick zoomed pass to remove redundant points.",
+      "Check for closure before converting to other geometry."
+    ]
+  },
+  {
+    "type": "heading",
+    "level": 3,
+    "text": "Common Polyline Mistakes to Avoid"
+  },
+  {
+    "type": "list",
+    "ordered": false,
+    "listType": "bullet",
+    "items": [
+      "Over-pointing curves, which creates lumpy extrusions",
+      "Mismatched tangent transitions at profile shoulders",
+      "Leaving micro-gaps that break solid operations later"
+    ]
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Step 3: Convert to Reusable Scenic Assets"
+  },
+  {
+    "type": "paragraph",
+    "text": "After validating the 2D profile, convert it into symbols and extrusion-ready geometry. Organize these assets into a profile library so future shows can reuse proven details."
+  },
+  {
+    "type": "image",
+    "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-31/generated-1771537531903-profile-library.png",
+    "alt": "Generated scenic design drafting sheet showing reusable trim profile symbols and 3D molding studies.",
+    "caption": "Generated drafting visual: trim profiles organized as reusable symbols for repeated scenic applications."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "QA Before You Publish the Drawing Set"
+  },
+  {
+    "type": "list",
+    "ordered": false,
+    "listType": "bullet",
+    "items": [
+      "Confirm profile dimensions against source reference",
+      "Verify lineweights and class standards for plotting",
+      "Test the profile in one sample extrusion condition",
+      "Confirm naming conventions for handoff clarity"
+    ]
+  },
+  {
+    "type": "quote",
+    "text": "Great scenic drafting is often invisible when it works and painfully obvious when it doesn’t. Clean profiles are one of those quiet quality signals.",
+    "author": "Brandon PT Davis"
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Frequently Asked Questions"
+  },
+  {
+    "type": "faq",
+    "items": [
+      {
+        "question": "Should I trace every tiny curve in a profile exactly?",
+        "answer": "No. Preserve the defining geometry and fabrication intent, but avoid unnecessary complexity that slows editing and introduces noise."
+      },
+      {
+        "question": "What is the best way to reuse trim profiles across projects?",
+        "answer": "Store cleaned profiles as named symbols in a dedicated resource file, then reference that library into new productions."
+      },
+      {
+        "question": "When should I convert a 2D profile to 3D?",
+        "answer": "Convert once your 2D profile is dimensionally verified and point-clean. Early 3D conversion often hides drafting errors."
+      },
+      {
+        "question": "Can this workflow support custom scenic molding for CNC output?",
+        "answer": "Yes, if your profile is closed, scaled correctly, and exported with the fabrication team’s required file standards."
+      },
+      {
+        "question": "Where was this article originally adapted from?",
+        "answer": "This refreshed version references the original post concept published at https://ggjwk4vwfr.wixstudio.com/bptd/post/how-to-create-trim-profiles-in-vectorworks-using-the-polyline-tool."
+      }
+    ]
+  }
+]

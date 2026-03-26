@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo, useState } from "react";
 import type { CSSProperties, MouseEvent } from "react";
 import { useLocation } from "wouter";
@@ -730,8 +732,8 @@ export default function Projects() {
 
                         return (
                           <ProjectCard
-                            key={project.id}
-                            eager={index < 8}
+                            key={project.slug}
+                            eager={index < 4}
                             href={href}
                             onNavigate={navigateWithTransition}
                             project={project}
@@ -748,7 +750,7 @@ export default function Projects() {
 
                         return (
                           <a
-                            key={project.id}
+                            key={project.slug}
                             href={href}
                             onClick={(event) => navigateWithTransition(event, href)}
                             className="group grid gap-4 border-b border-border/35 py-5 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8"

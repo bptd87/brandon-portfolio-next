@@ -1,0 +1,330 @@
+id: 8
+title: 'Vectorworks Tutorial: 2D Edit and Modify Tricks'
+slug: 2d-edit-modify-tricks
+content: null
+category: 2D Drafting
+difficulty: null
+duration: 767
+created_at: '2026-02-12T10:46:45.879181+00:00'
+updated_at: '2026-02-22T11:22:57.948959+00:00'
+status: published
+featured: false
+seo_title: null
+seo_description: null
+seo_keywords: null
+learning_objectives:
+  - Master Mirror Tool in both standard and duplicate modes for creating symmetrical designs
+  - Use Reshape Tool to modify polygon geometry including moving handles, edges, and adding/deleting vertices
+  - Apply Offset Tool with distance and point modes to create parallel geometry at precise distances
+  - Utilize Split Tool in line, point, and trim modes to divide and separate 2D shapes
+  - Connect and combine multiple line segments using single, dual, and multiple object modes
+  - Apply Modify menu commands including Move, Align, Rotate, and Scale with precise numerical control
+  - 'Create complex shapes using Boolean operations: Add Surface, Clip Surface, and Intersect Surface'
+  - Convert between lines and polygons using Compose and Decompose commands
+  - Duplicate objects along paths with control over spacing, offset, and tangency options
+key_concepts:
+  - title: MIRROR TOOL
+    content: >-
+      A transformation tool that creates mirrored copies of objects across a user-defined axis. Standard mode moves the
+      object to the mirrored position, while Duplicate mode creates a copy and leaves the original in place. Essential
+      for creating symmetrical scenic elements.
+  - title: RESHAPE TOOL
+    content: >-
+      An editing tool that allows direct manipulation of polygon geometry through multiple modes: Move Polygon Handles
+      adjusts individual vertices, Move Edges Parallel shifts entire edges, Add Vertex creates new points (with corner
+      or radius options), and Delete Vertex removes points. Activated by double-clicking 2D shapes.
+  - title: OFFSET TOOL
+    content: >-
+      Creates parallel copies of objects at specified distances. Offset Distance Mode duplicates or moves geometry by a
+      numerical value, while Offset by Points Mode allows visual placement. Hotkey 'O' provides quick access. Essential
+      for creating wall thicknesses, borders, and parallel elements.
+  - title: SPLIT TOOL
+    content: >-
+      Divides 2D and 3D objects into separate pieces using three modes: Line Split cuts along a drawn line, Point Split
+      divides at a single location, and Trim Mode removes portions of geometry based on directional indication. Critical
+      for breaking complex shapes into manageable components.
+  - title: CONNECT/COMBINE TOOL
+    content: >-
+      Joins line segments and shapes using multiple modes: Single Object Connect extends one line to another, Dual
+      Object Connect joins two lines at a point (keeping them separate), Dual Object Combine merges two lines into a
+      single polygon, and Multiple Object Connect joins many lines to a destination point. Hotkey 'L'.
+  - title: BOOLEAN OPERATIONS
+    content: >-
+      Geometric operations that combine or subtract shapes: Add Surface merges multiple shapes into one polygon, Clip
+      Surface subtracts one shape from another, and Intersect Surface creates a new shape from overlapping areas. Found
+      in Modify menu and right-click context menu.
+  - title: DUPLICATE ALONG PATH
+    content: >-
+      An advanced feature (Edit > Duplicate Along Path) that distributes copies of an object along a curved or straight
+      path. Options include duplicate by number or fixed distance, start offset, and tangency control. Center Object to
+      Path places object centers on the path, while Tangent to Path rotates objects to follow path direction.
+pro_tips:
+  - >-
+    Access Mirror Tool from Basics Tool Palette; always select the object first, then activate the tool to see mode
+    options.
+  - Double-click any 2D shape to instantly enter Reshape Tool mode without navigating through menus.
+  - Use hotkey 'O' for Offset Tool and hotkey 'L' for Connect/Combine Tool to speed up repetitive drafting tasks.
+  - >-
+    In Reshape Tool, press 'U' to toggle between corner vertex and radius arc modes while adding vertices for smooth
+    curves.
+  - >-
+    Close open polylines by selecting the shape and checking 'Closed' in the Object Info Palette—essential after using
+    Split Tool in Trim mode.
+  - >-
+    Right-click on selected objects to access Align/Distribute, Compose/Decompose, and Boolean operations without
+    opening the Modify menu.
+  - Use Modify > Move (Cmd/Ctrl+M) with numerical X/Y offsets for precise object positioning instead of dragging by eye.
+  - >-
+    Hold Ctrl (Windows) or Option (Mac) while dragging objects to duplicate them in place—watch for the plus sign cursor
+    indicator.
+  - >-
+    In Duplicate Along Path, use 'Center Object to Path' for circular objects and 'Tangent to Path' for directional
+    objects like arrows or posts.
+  - >-
+    Combine Boolean operations (Add, Clip, Intersect) with Reshape Tool to create complex architectural trim profiles
+    and scenic details efficiently.
+shortcuts:
+  - keys:
+      - X
+    action: Selection Tool
+    description: Activate selection tool to select objects before applying modifications
+  - keys:
+      - O
+    action: Offset Tool
+    description: Quick access to offset tool for creating parallel geometry
+  - keys:
+      - L
+    action: Connect/Combine Tool
+    description: Quick access to connect and combine line segments
+  - keys:
+      - Cmd/Ctrl
+      - M
+    action: Move Selection
+    description: Open Move dialog for precise numerical positioning
+  - keys:
+      - Cmd/Ctrl
+      - R
+    action: Rotate Right
+    description: Rotate selected objects clockwise
+  - keys:
+      - Cmd/Ctrl
+      - L
+    action: Rotate Left
+    description: Rotate selected objects counterclockwise
+  - keys:
+      - Ctrl/Option
+      - Drag
+    action: Duplicate Object
+    description: Hold modifier key while dragging to create duplicate
+  - keys:
+      - Double Click
+    action: Enter Reshape Mode
+    description: Double-click any 2D shape to enter Reshape Tool
+  - keys:
+      - U
+    action: Toggle Vertex Mode
+    description: Switch between corner and radius arc modes in Reshape Tool
+common_pitfalls:
+  - >-
+    Forgetting to select objects before activating Mirror, Offset, or Split tools—tools require active selection to
+    function.
+  - >-
+    Using Offset Tool in 'Offset Original' mode when you meant to keep the original—always check the mode before
+    clicking.
+  - >-
+    Not closing polylines after using Split Tool in Trim mode, leaving open shapes that won't fill with hatches or
+    textures.
+  - Attempting to use Connect/Combine Tool on shapes instead of line segments—tool works on lines, not closed polygons.
+  - >-
+    Forgetting to select the path object in Duplicate Along Path dialog—must click 'Next' to designate which object is
+    the path.
+  - >-
+    Using 'Duplicate by Number' in Duplicate Along Path without considering path length, resulting in overlapping or
+    sparse distributions.
+  - >-
+    Not understanding the difference between Dual Object Connect (keeps separate lines) and Dual Object Combine (creates
+    single polygon).
+  - >-
+    Applying Boolean operations (Add/Clip/Intersect) to objects on different layers or classes, which can produce
+    unexpected results.
+transcript:
+  - text: >-
+      Hello, this is Brandon PT Davis, theatrical scenic designer. This Vectorworks tutorial is going to cover 2D Edit
+      and Modify tricks and tools.
+    time: '0:04'
+  - text: >-
+      The first tool I'm going to show you in this tutorial is the Mirror Tool. The Mirror Tool can be accessed in the
+      Basics Tool Palette. In order to use the tool, you first need to select an object. I'm going to hit X for the
+      Select tool, and now I'm going to select the Mirror Tool.
+    time: '0:17'
+  - text: >-
+      There are two modes in the Mirror Tool: Standard mode and Duplicate mode. The Standard mode will mirror the item
+      on the other side from which you have indicated the mirror. The Duplicate mode will mirror and duplicate the item.
+    time: '0:41'
+  - text: >-
+      The next tool is the Reshape Tool. It can be found in the Tools Palette, and it can also be activated by
+      double-clicking on a 2D shape. There are a few modes within the Reshape Tool.
+    time: '1:01'
+  - text: >-
+      The Reshape Tool has the Move Polygon Handles mode, which allows you to select the polygon handle and move it
+      individually. The Move Edges Parallel mode allows you to move the active edge. We can also further modify a shape
+      by adding vertex points in Vertex mode.
+    time: '1:17'
+  - text: >-
+      I can add a radius by clicking on one of the handles and pulling out. I can also add a corner point. The Delete
+      Vertex mode allows you to delete the vertices.
+    time: '1:41'
+  - text: >-
+      The Offset Tool allows you to offset an object. Before you can offset, you first have to select the object and
+      then go into the Offset Tool. You can also access the Offset Tool by pressing the letter O.
+    time: '2:09'
+  - text: >-
+      The Offset Tool is currently set at a distance of 6 inches, and the mode is Offset Distance Mode and Duplicate.
+      Here I have duplicated the offset. I can now lower the offset to 1 inch, and I'm going to change from Duplicate
+      and Offset mode to Offset Original mode. You can also offset by points—select the object and then you can move to
+      where you want to offset the object.
+    time: '2:29'
+  - text: >-
+      The Split Tool, with the icon located here, is a powerful tool that can be used in both 2D and 3D applications.
+      Before you can use the Split Tool, you first must select the shape. Now that the shape is selected, I'm going to
+      go to the Split Tool.
+    time: '3:10'
+  - text: >-
+      There are three modes in the Split Tool. The first mode is the Line Split mode. I'm going to select a point and
+      then a second point, creating a line. Now when I go to select, I have two separate objects.
+    time: '3:34'
+  - text: >-
+      Going back to the Split Tool, I can change the mode to Point Split mode, in which case I will pick a point. Now
+      I've split the object with the Split Point mode.
+    time: '3:54'
+  - text: >-
+      The last mode in the Split Tool is the Trim mode. I will draw a line and then indicate the direction in which I
+      want to keep the object. This polyline is now an open shape as it doesn't have a line on all sides. In
+      Vectorworks, if you go to the Object Info Palette, you can select 'Close' to close the shape.
+    time: '4:12'
+  - text: >-
+      The Connect/Combine Tool allows you to connect or combine line segments. The first mode is the Single Object
+      Connect mode. I'm going to select the object that I want connected and then the point to which I want it to be
+      connected to. Now the line has been extended to this line. The hotkey for the Connect/Combine Tool is the letter
+      L.
+    time: '4:40'
+  - text: >-
+      The next mode is the Dual Object Connect mode. In this mode, I will select two objects and they will connect with
+      each other at a point, but they are two separate entities.
+    time: '5:11'
+  - text: >-
+      If you want to combine these objects, you can choose the Dual Object Combine mode. In this mode, it creates a
+      polygon.
+    time: '5:25'
+  - text: >-
+      The last mode in the Connect/Combine Tool is the Multiple Object Connect mode. First, you must select the
+      destination to which you want your objects to connect, then select the objects. Now all these line segments are
+      connected to this line segment.
+    time: '5:43'
+  - text: >-
+      The next portion of this tutorial, I'm going to talk to you about the Modify drop-down menu. The Modify menu has
+      many commands that are useful in your 2D drafting.
+    time: '6:04'
+  - text: >-
+      The Modify > Move command at the top of the menu will allow you to move an object. First select the object and go
+      Modify > Move. You can also use hotkeys Control or Command+M. Doing so, the Move Selection dialog box will pop up.
+      I have an X offset of 3 inches and the Y offset of minus 2. You can modify the dialog as needed and press OK. Now
+      this rectangle has moved.
+    time: '6:15'
+  - text: >-
+      If you ever have a series of objects that you need aligned, you can go to Modify > Align, and there's Align to
+      Grid, Align/Distribute, and there's also some 3D commands. You can also right-click on the objects and go to
+      Align/Distribute and make your decision from here. I'm going to align all these objects to the top.
+    time: '6:58'
+  - text: >-
+      The Modify menu bar also allows you to rotate objects. We have hotkeys Command+R and Command+L as well. If you
+      have a complex 2D object or model, you can select the item and go to Modify > Scale.
+    time: '7:28'
+  - text: >-
+      You can scale by factor symmetrically, symmetric by distance, or asymmetrically. Choosing Symmetric in the Modify
+      Scale will scale the object in X, Y, Z directions proportionally. You can also choose to scale the object by
+      Symmetric by Distance. Here I will select the current distance and then input the new distance and press OK.
+    time: '7:52'
+  - text: >-
+      Another important Modify command are the Add/Subtract commands. I'm going to take these two objects, select both,
+      go to Modify and Add Surface. Now these two objects are a single polyline.
+    time: '8:34'
+  - text: I can also take two objects, right-click, and Clip the Surface. Now the square is cut out of the circle.
+    time: '8:54'
+  - text: >-
+      The third Modify option is to go to Modify and Intersect the Surface. Now where the surface is intersecting is its
+      own independent shape.
+    time: '9:12'
+  - text: >-
+      From the Modify command, you can select an object and go to Convert to Lines. Now the shape is a series of lines.
+      You can also take a series of lines and go to Modify > Compose. The 2D lines have now been converted to a polygon.
+      You can also right-click and find the same functions: Compose, Decompose, or return the lines back to lines.
+    time: '9:26'
+  - text: >-
+      The next feature I'm going to show you in the Vectorworks software is Duplicate. You can duplicate an object by
+      holding the Option or Alt key and selecting the object. As you see now, there is a plus sign above the cursor. As
+      I pull, I will then have a duplicate object. You can also click and duplicate in place. Now there are two objects.
+    time: '10:06'
+  - text: >-
+      The last feature I'm going to share with you in this tutorial is the Edit > Duplicate Along Path function. In
+      order to duplicate along a path, we need an object (which will be the circle) and a path. I'm going to use the
+      Polyline Tool to draw a path.
+    time: '10:34'
+  - text: >-
+      I'm going to select both the object and the path and go to Edit > Duplicate Along Path. The Duplicate Along Path
+      dialog will pop up. The first item says 'Select a path object.' Currently the object is selected and the path is
+      not. To select the path, press Next.
+    time: '11:02'
+  - text: >-
+      Under the Duplicate Placement items, you have two options: either Duplicate by Number of Duplicates or Duplicate
+      by Fixed Distance. When choosing the Fixed Distance, we can offset the start point by a number indicated.
+    time: '11:30'
+  - text: >-
+      I'm going to choose to duplicate the path by 1 foot and will offset the path by 6 inches. By selecting 'Center
+      Object to Path,' the circle will be duplicated from its center. If you have an object like a square, you can
+      select 'Tangent to Path' to keep the objects tangent to the path. I'm going to press OK.
+    time: '11:49'
+  - text: >-
+      I have three circles that are evenly spaced by 1 foot along the path. The first object is 6 inches offset from the
+      start. This concludes the Vectorworks tutorial. If you have any questions, please feel free to ask. Thank you.
+    time: '12:22'
+related_resources:
+  - url: https://app-help.vectorworks.net/2024/eng/VW2024_Guide/Shapes2/2D_editing_tools.htm
+    title: Vectorworks 2D Editing Tools Documentation
+  - url: https://university.vectorworks.net
+    title: Vectorworks Modify Menu Commands Guide
+  - url: https://www.youtube.com/vectorworks
+    title: Duplicate Along Path Tutorial Video
+related_tutorials:
+  - slug: basics-tool-palette
+    title: 'Vectorworks Tutorial: Basics Tool Palette'
+  - slug: creating-trim-profiles-polyline
+    title: 'Vectorworks Quick Tip: Creating Trim Profiles with the Polyline Tool'
+  - slug: understanding-classes
+    title: 'Vectorworks Tutorial: Understanding Classes'
+overview: >-
+  This comprehensive tutorial covers the essential 2D editing and modification tools that form the foundation of
+  efficient drafting workflows in Vectorworks. The tutorial systematically demonstrates ten powerful tools and commands:
+  Mirror Tool (standard and duplicate modes), Reshape Tool (move polygon handles, move edges parallel, add/delete
+  vertex), Offset Tool (distance and point modes), Split Tool (line, point, and trim modes), Connect/Combine Tool
+  (single, dual, and multiple object modes), and key Modify menu commands including Move, Align/Distribute, Rotate,
+  Scale, Add/Subtract surfaces, Convert to Lines, and Compose/Decompose.
+
+
+  The tutorial emphasizes practical workflows for each tool, showing how to access them via tool palettes, hotkeys, and
+  right-click context menus. Each tool section demonstrates multiple modes and options, helping users understand when to
+  use standard versus duplicate modes, symmetric versus asymmetric scaling, and single versus multiple object
+  operations. The tutorial also covers essential shape manipulation techniques like closing open polylines, converting
+  between lines and polygons, and using Boolean operations (add, subtract, intersect) to create complex shapes from
+  simple primitives.
+
+
+  The final section introduces the powerful Duplicate Along Path feature, which allows users to distribute objects
+  evenly along curved or straight paths with precise control over spacing, offset, and tangency. This advanced technique
+  is essential for creating repeating elements like fence posts, lighting fixtures, or decorative patterns in scenic
+  design documentation.
+description: >-
+  Master essential 2D editing and modification tools including Mirror, Reshape, Offset, Split, Connect/Combine, and
+  advanced Modify menu commands for efficient drafting workflows.
+cover_image: https://img.youtube.com/vi/8lTla9cvIPk/maxresdefault.jpg
+video_url: https://www.youtube.com/watch?v=8lTla9cvIPk

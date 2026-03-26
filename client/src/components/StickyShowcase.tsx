@@ -277,9 +277,9 @@ export function StickyShowcase({
     <section className="pt-8 md:pt-10">
       <div className="container max-w-[88rem]">
         <div className="space-y-8 md:hidden">
-          {mobileItems.map((item, index) => (
+          {mobileItems.map((item) => (
             <ShowcaseCard
-              key={`mobile-${item.id}`}
+              key={`mobile-${item.slug}`}
               item={item}
               itemAlt={itemAlt}
               itemHref={itemHref}
@@ -385,8 +385,8 @@ export function StickyShowcase({
                 className="relative space-y-10 will-change-transform"
                 style={{ transform: `translateY(-${railShift}px)` }}
               >
-                {desktopItems.map((item, index) => (
-                  <div key={item.id} className="relative" data-showcase-card-shell="true">
+                {desktopItems.map((item) => (
+                  <div key={item.slug} className="relative" data-showcase-card-shell="true">
                     <ShowcaseCard
                       copyClassName="pt-4"
                       item={item}
@@ -402,8 +402,8 @@ export function StickyShowcase({
           </div>
 
           <div className="hidden md:grid md:grid-cols-3 md:gap-x-6 md:gap-y-10 lg:hidden">
-            {desktopItems.map((item, index) => (
-              <div key={item.id} className="relative">
+            {desktopItems.map((item) => (
+              <div key={item.slug} className="relative">
                 <ShowcaseCard
                   copyClassName="pt-4"
                   item={item}
@@ -420,9 +420,9 @@ export function StickyShowcase({
         {continuationItems && continuationItems.length > 0 ? (
           <div className="pt-2 md:pt-3">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {continuationItems.map((item, index) => (
+              {continuationItems.map((item) => (
                 <ShowcaseCard
-                  key={item.id}
+                  key={item.slug}
                   copyClassName="pt-4"
                   item={item}
                   itemAlt={itemAlt}

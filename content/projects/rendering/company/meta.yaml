@@ -1,0 +1,23 @@
+type: project
+discipline: rendering
+slug: company
+title: Company
+status: published
+featured: false
+excerpt: >-
+  A rendering for Company focused on urban rhythm, intimacy, and the emotional friction between public life and private
+  uncertainty.
+seoTitle: Company
+seoDescription: >-
+  Explore the captivating scenic design of Sondheim's musical, showcasing the complexities of marriage and relationships
+  in vibrant New York City.
+seoKeywords: []
+client: University of California Irvine
+location: Irvine, CA
+year: 2019
+month: 11
+cover:
+  asset: project-images/project-90019-gallery-150102.webp
+  alt: Company rendering project cover image
+publishedAt: '2026-02-19T11:02:09.677Z'
+updatedAt: '2026-02-19T11:02:09.677Z'

@@ -1,0 +1,20 @@
+type: project
+discipline: experiential
+slug: park-and-shop
+title: Park & Shop
+status: published
+featured: false
+excerpt: >-
+  A retail environment package for Park & Shop that pairs concept renderings with technical drawing support, showing how
+  presentation imagery and drafting documentation work together inside one project.
+seoTitle: Park & Shop | Experiential Design | Brandon PT Davis
+seoDescription: >-
+  A retail environment package for Park & Shop that pairs concept renderings with technical drawing support, showing how
+  presentation imagery and drafting documentation work together inside one project.
+cover:
+  asset: about-images/experiential-process/rendering/1771293058270-rendering_park_and_shop_2.webp
+  alt: Park and Shop | Concord, CA
+mediaTypes:
+  - rendering
+  - technical-drawing
+updatedAt: '2026-02-23T09:25:48.534Z'

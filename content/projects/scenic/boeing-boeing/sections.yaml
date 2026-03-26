@@ -1,0 +1,41 @@
+- type: text
+  heading: A Paris Apartment Built for Farce
+  content:
+    - >-
+      For Boeing, Boeing, I leaned fully into midcentury modernism to evoke the stylish, high-stakes world of Marc
+      Camoletti’s French farce. A sleek 1960s Paris apartment, defined by clean geometry, rich wood, warm neutrals, and
+      bold accents, became an active comic partner rather than a passive backdrop.
+- type: gallery
+  mediaIds:
+    - boeing-prod-1
+    - boeing-prod-2
+- type: text
+  heading: Timing Through Architecture
+  content:
+    - >-
+      Bernard’s entry vestibule, framed by blonde brick and anchored by a cobalt-blue front door, served as a visual and
+      rhythmic focal point as lives spiraled into farce. Above, an orange Sputnik chandelier pushed the period language
+      further while heightening the visual tempo of the room. Every furnishing and every angle had to reinforce the
+      image of curated control.
+- type: gallery
+  mediaIds:
+    - boeing-prod-3
+    - boeing-prod-4
+- type: text
+  heading: Design Goal
+  content:
+    - >-
+      The apartment was designed around six doors, each positioned to support the timing and choreography essential to
+      farce. Furniture, décor, and circulation patterns had to look elegant while also functioning like a machine. The
+      world projected polish and illusion, but that order was always meant to feel precarious.
+    - >-
+      As the comedy escalated, subtle visual clues, mismatched details, creeping plants, and the increasing pressure of
+      the architecture, suggested the chaos gathering beneath Bernard’s carefully managed life. The set was never just
+      background; it drove pace, stakes, and absurdity.
+- type: gallery
+  mediaIds:
+    - boeing-prod-5
+    - boeing-prod-6
+- type: gallery
+  mediaIds:
+    - boeing-render-1

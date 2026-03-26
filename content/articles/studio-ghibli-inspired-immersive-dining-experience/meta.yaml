@@ -1,0 +1,36 @@
+type: article
+slug: studio-ghibli-inspired-immersive-dining-experience
+title: Studio Ghibli-Inspired Immersive Dining Experience
+status: published
+featured: false
+excerpt: >-
+  A themed entertainment studio project exploring how theatre design students translated environmental storytelling into
+  a Studio Ghibli-inspired immersive dining concept.
+category: Themed Entertainment
+seoTitle: Studio Ghibli-Inspired Immersive Dining Experience | Themed Entertainment Design
+seoDescription: >-
+  Discover how theatre design students developed a Studio Ghibli-inspired immersive dining concept, using scenic
+  storytelling tools in a themed entertainment studio project.
+seoKeywords:
+  - themed entertainment design
+  - immersive dining
+  - studio ghibli inspired design
+  - theatre design education
+  - environmental storytelling
+  - themed experience design
+cover:
+  asset: article-images/ghibli/9e1774_73b851ea12d14fce8575a0e36e3cf92f.jpeg
+  alt: Studio Ghibli-inspired immersive dining design project developed by theatre students.
+tags:
+  - themed-entertainment
+  - design-education
+  - immersive-design
+  - environmental-storytelling
+readTime: 9
+publishedAt: '2025-04-14'
+updatedAt: '2026-03-20'
+linkedScenicProjectSlugs: []
+series:
+  name: Themed Experience
+  slug: themed-experience
+  order: 2

@@ -1,0 +1,45 @@
+- type: text
+  heading: A Civic Machine
+  content:
+    - >-
+      Urinetown was designed as a civic machine: industrial, compressed, and deliberately stratified to support the
+      musical’s satire of power, scarcity, and class. Layered levels and clear circulation paths allowed scenes to pivot
+      quickly between public spectacle and private confrontation while preserving visual pressure on the ensemble.
+- type: gallery
+  mediaIds:
+    - uri-prod-1
+    - uri-prod-2
+- type: text
+  heading: Infrastructure as Storytelling
+  content:
+    - >-
+      The palette and detailing leaned into distressed infrastructure so the environment felt governed, policed, and
+      monetized. Steel framing, elevated offices, and the logic of containment all helped turn the world into an
+      apparatus of control rather than a neutral backdrop.
+    - >-
+      Transitions were structured to keep momentum high, reinforcing the show’s tonal shift between absurd comedy and
+      political warning. The set needed to support ensemble traffic, musical energy, and abrupt changes in status while
+      always keeping hierarchy visible.
+- type: gallery
+  mediaIds:
+    - uri-prod-4
+    - uri-prod-5
+- type: text
+  heading: Design Goal
+  content:
+    - >-
+      The overall goal was to make the satire feel both distant and uncomfortably familiar. The architecture had to feel
+      theatrical enough to support the show’s comic exaggeration, but grounded enough that the power structures onstage
+      still felt recognizable.
+- type: gallery
+  mediaIds:
+    - uri-prod-6
+    - uri-prod-7
+    - uri-prod-8
+    - uri-prod-9
+    - uri-prod-10
+- type: gallery
+  mediaIds:
+    - uri-render-1
+    - uri-render-2
+    - uri-render-3

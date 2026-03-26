@@ -1,5 +1,7 @@
+"use client";
+
 import { useEffect } from "react";
-import { Link, useLocation, useParams } from "wouter";
+import { Link, useLocation } from "wouter";
 
 import Header from "@/components/Header";
 import {
@@ -9,11 +11,31 @@ import {
   type LocalExperientialCategory,
 } from "@shared/localPortfolios";
 
-export default function ExperientialSampleDetail() {
-  const params = useParams<{ category: LocalExperientialCategory; slug: string }>();
+type ExperientialSampleDetailProps = {
+  category?: LocalExperientialCategory;
+  slug?: string;
+  params?: {
+    category?: LocalExperientialCategory;
+    slug?: string;
+  };
+};
+
+export default function ExperientialSampleDetail({
+  category: categoryProp,
+  slug: slugProp,
+  params,
+}: ExperientialSampleDetailProps = {}) {
   const [, setLocation] = useLocation();
-  const category = params.category as LocalExperientialCategory;
-  const slug = String(params.slug || "").trim().toLowerCase();
+  const category = (categoryProp || params?.category) as LocalExperientialCategory;
+  const slug = String(
+    slugProp ||
+      params?.slug ||
+      (typeof window !== "undefined"
+        ? window.location.pathname.split("/").filter(Boolean).pop() || ""
+        : "")
+  )
+    .trim()
+    .toLowerCase();
   const sample = getLocalExperientialSampleBySlug(category, slug);
   const project = sample ? getLocalExperientialProjectForSample(sample) : null;
 

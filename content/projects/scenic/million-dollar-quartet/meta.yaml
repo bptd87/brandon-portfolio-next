@@ -1,0 +1,58 @@
+type: project
+discipline: scenic
+slug: million-dollar-quartet
+title: Million Dollar Quartet
+status: published
+featured: true
+excerpt: >-
+  A co-scenic design for South Coast Repertory’s 2025 production of Million Dollar Quartet, built around the intimacy of
+  Sun Records and the explosive energy of four artists changing music history together.
+seoTitle: Million Dollar Quartet | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for Million Dollar Quartet at South Coast Repertory, balancing the intimacy of Sun Records with the
+  scale and electricity of a mythic live jam session.
+seoKeywords:
+  - Million Dollar Quartet
+  - scenic design
+  - South Coast Repertory
+  - musical theatre
+  - Sun Records
+  - Brandon PT Davis
+client: South Coast Repertory Theatre
+clientUrl: https://www.scr.org/plays/productions/25-26-season/million-dollar-quartet/
+location: Costa Mesa, CA
+year: 2025
+month: 9
+subcategory: Musical Theatre
+cover:
+  asset: project-images/project-90087-cover.webp
+  alt: Million Dollar Quartet scenic design cover image
+team:
+  - role: Book By
+    name: Colin Escott and Floyd Mutrux
+  - role: Original Concept and Direction By
+    name: Floyd Mutrux
+  - role: Director
+    name: James Moye
+  - role: Associate Director
+    name: Kim Martin-Cotten
+  - role: Music Director
+    name: Wiley DeWeese
+  - role: Co-Scenic Designers
+    name: Brandon PT Davis and Efren Delgadillo Jr.
+  - role: Costume Designer
+    name: Kish Finnegan
+  - role: Lighting Designer
+    name: Lonnie Rafael Alcaraz
+  - role: Sound Designer
+    name: Jeff Polunas
+tags:
+  - musical-theatre
+  - 1950s
+  - rock-and-roll
+  - regional-theatre
+  - million-dollar-quartet
+links:
+  - label: South Coast Repertory Production
+    url: https://www.scr.org/plays/productions/25-26-season/million-dollar-quartet/
+updatedAt: '2026-02-12T15:03:58+00:00'

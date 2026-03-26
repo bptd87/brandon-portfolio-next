@@ -1,3 +1,5 @@
+"use client";
+
 import { type MouseEvent } from "react";
 import { useLocation } from "wouter";
 
@@ -9,12 +11,18 @@ import { StickyShowcase } from "@/components/StickyShowcase";
 import StructuredData from "@/components/StructuredData";
 import { getProjectPath } from "@/lib/projectRoutes";
 import {
-  scenicPortfolioLandingCopy,
   scenicShowcaseProps,
   sortScenicProjectsChronologically,
   splitScenicShowcaseProjects,
 } from "@/lib/scenicShowcase";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
+
+const homeLandingCopy = {
+  subtitle: "Brandon PT Davis",
+  title: "Scenic design, rendering, and spatial storytelling for live performance.",
+  intro:
+    "A portfolio of theatre and experiential work shaped by story, rhythm, architecture, and the emotional logic of performance.",
+} as const;
 
 export default function Home() {
   const [, setLocation] = useLocation();
@@ -25,9 +33,9 @@ export default function Home() {
   const { featuredProject, showcaseRailProjects, showcaseGridProjects } =
     splitScenicShowcaseProjects(projects);
   const scenicAlt = (title: string) => `${title} scenic design by Brandon PT Davis`;
-  const heroTitle = scenicPortfolioLandingCopy.title;
-  const heroSubtitle = scenicPortfolioLandingCopy.subtitle;
-  const heroIntro = scenicPortfolioLandingCopy.intro;
+  const heroTitle = homeLandingCopy.title;
+  const heroSubtitle = homeLandingCopy.subtitle;
+  const heroIntro = homeLandingCopy.intro;
 
   const animateCardDeparture = async (target: HTMLElement) => {
     const card = target.querySelector(".transition-card") as HTMLElement | null;

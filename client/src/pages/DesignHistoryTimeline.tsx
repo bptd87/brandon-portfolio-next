@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, MapPin, Search, Palette, Users, Landmark, ChevronDown, Shuffle } from 'lucide-react';

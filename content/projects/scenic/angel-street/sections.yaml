@@ -1,0 +1,38 @@
+- type: text
+  heading: A Formal Interior
+  content:
+    - >-
+      The setting for Angel Street centers on a Victorian drawing room shaped by period detail and domestic realism. The
+      space reflects late nineteenth-century order, refinement, and social structure while accommodating the play's
+      psychological tension.
+- type: gallery
+  mediaIds:
+    - angel-prod-1
+    - angel-prod-2
+- type: text
+  heading: Observation and Enclosure
+  content:
+    - >-
+      Architectural elements such as wainscoting, decorative trim, and a functional staircase establish a formal
+      interior defined by control and observation. Period furnishings and practical lighting create a believable,
+      lived-in environment. As the story progresses, the room's density and enclosure quietly reinforce a growing sense
+      of confinement without relying on overt visual metaphor.
+- type: gallery
+  mediaIds:
+    - angel-prod-3
+    - angel-prod-4
+- type: text
+  heading: Design Goal
+  content:
+    - >-
+      The design supports the performers by allowing shifts in power and perception to unfold within a stable, realistic
+      setting. The drawing room becomes an active container for the narrative, where domestic order and manipulation
+      coexist in plain sight.
+- type: gallery
+  mediaIds:
+    - angel-prod-5
+    - angel-prod-6
+    - angel-prod-7
+- type: gallery
+  mediaIds:
+    - angel-render-1

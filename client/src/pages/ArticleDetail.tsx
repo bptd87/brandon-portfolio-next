@@ -1,3 +1,5 @@
+"use client";
+
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ProgressiveImage } from '@/components/ProgressiveImage';
@@ -6,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { proxyImageUrl } from "@/lib/imageProxy";
 import { Sparkles, Copy, Check, ChevronLeft, ChevronRight, Link as LinkIcon, Play, Pause } from "lucide-react";
-import { Link, useParams } from "wouter";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import Lightbox from "yet-another-react-lightbox";
@@ -17,11 +19,42 @@ import StructuredData from "@/components/StructuredData";
 import { getLocalArticleRecordBySlug, getLocalArticles } from "@shared/localArticles";
 import { getLocalScenicProjectBySlug } from "@shared/localScenicProjects";
 
+const NAMED_HTML_ENTITIES: Record<string, string> = {
+  amp: "&",
+  apos: "'",
+  gt: ">",
+  lt: "<",
+  nbsp: " ",
+  quot: '"',
+  hellip: "...",
+  ndash: "-",
+  mdash: "-",
+  lsquo: "'",
+  rsquo: "'",
+  ldquo: '"',
+  rdquo: '"',
+};
+
 // Decode HTML entities
 const decodeHTMLEntities = (text: string): string => {
-  const textarea = document.createElement('textarea');
-  textarea.innerHTML = text;
-  return textarea.value;
+  if (!text) return "";
+
+  if (typeof document !== "undefined") {
+    const textarea = document.createElement("textarea");
+    textarea.innerHTML = text;
+    return textarea.value;
+  }
+
+  return text
+    .replace(/&#(\d+);/g, (_, value) => {
+      const code = Number.parseInt(value, 10);
+      return Number.isNaN(code) ? _ : String.fromCodePoint(code);
+    })
+    .replace(/&#x([0-9a-f]+);/gi, (_, value) => {
+      const code = Number.parseInt(value, 16);
+      return Number.isNaN(code) ? _ : String.fromCodePoint(code);
+    })
+    .replace(/&([a-z]+);/gi, (entity, name) => NAMED_HTML_ENTITIES[name.toLowerCase()] ?? entity);
 };
 
 const normalizeQuoteText = (text: string): string => {
@@ -37,42 +70,121 @@ const getArticleMediaUrl = (url: string): string => {
   return proxyImageUrl(url, 1920);
 };
 
+const getHtmlTextContent = (html: string): string => {
+  if (!html) return "";
+
+  if (typeof document !== "undefined") {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    return div.textContent || "";
+  }
+
+  return decodeHTMLEntities(html)
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/(p|div|li|h[1-6]|blockquote|section|article)>/gi, "\n")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/[ \t]+\n/g, "\n")
+    .replace(/\n{2,}/g, "\n")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+};
+
+const getImageAttribute = (tag: string, name: string) => {
+  const match = tag.match(new RegExp(`${name}\\s*=\\s*(["'])(.*?)\\1`, "i"));
+  if (match) return match[2];
+
+  const unquoted = tag.match(new RegExp(`${name}\\s*=\\s*([^\\s>]+)`, "i"));
+  return unquoted?.[1] || null;
+};
+
+const removeImageAttribute = (tag: string, name: string) =>
+  tag.replace(new RegExp(`\\s${name}\\s*=\\s*(?:"[^"]*"|'[^']*'|[^\\s>]+)`, "gi"), "");
+
+const setImageAttribute = (tag: string, name: string, value: string) => {
+  const escapedValue = value.replace(/"/g, "&quot;");
+  if (new RegExp(`\\s${name}\\s*=`, "i").test(tag)) {
+    return tag.replace(
+      new RegExp(`\\s${name}\\s*=\\s*(?:"[^"]*"|'[^']*'|[^\\s>]+)`, "i"),
+      ` ${name}="${escapedValue}"`
+    );
+  }
+  return tag.replace(/^<img/i, `<img ${name}="${escapedValue}"`);
+};
+
 // Process HTML content to proxy external images
 const processHTMLImages = (html: string): string => {
   if (!html) return html;
 
-  const div = document.createElement('div');
-  div.innerHTML = html;
+  if (typeof document !== "undefined") {
+    const div = document.createElement("div");
+    div.innerHTML = html;
 
-  // Find all img tags and proxy their source attrs
-  const images = div.querySelectorAll('img');
-  images.forEach(img => {
-    const src = img.getAttribute('src') || img.getAttribute('data-src') || img.getAttribute('data-lazy-src');
-    const srcset = img.getAttribute('srcset') || img.getAttribute('data-srcset');
+    // Find all img tags and proxy their source attrs
+    const images = div.querySelectorAll("img");
+    images.forEach((img) => {
+      const src =
+        img.getAttribute("src") ||
+        img.getAttribute("data-src") ||
+        img.getAttribute("data-lazy-src");
+      const srcset = img.getAttribute("srcset") || img.getAttribute("data-srcset");
 
+      if (src) {
+        img.setAttribute("src", getArticleMediaUrl(src));
+      } else if (srcset) {
+        // Safari-safe fallback: use first candidate URL as src if src is missing.
+        const firstCandidate = srcset
+          .split(",")
+          .map((entry) => entry.trim().split(/\s+/)[0])
+          .find(Boolean);
+        if (firstCandidate) {
+          img.setAttribute("src", getArticleMediaUrl(firstCandidate));
+        }
+      }
+
+      // Prevent malformed legacy srcset strings from breaking image selection.
+      img.removeAttribute("srcset");
+      img.removeAttribute("sizes");
+    });
+
+    return div.innerHTML;
+  }
+
+  return html.replace(/<img\b[^>]*>/gi, (tag) => {
+    const src =
+      getImageAttribute(tag, "src") ||
+      getImageAttribute(tag, "data-src") ||
+      getImageAttribute(tag, "data-lazy-src");
+    const srcset = getImageAttribute(tag, "srcset") || getImageAttribute(tag, "data-srcset");
+
+    let nextTag = removeImageAttribute(removeImageAttribute(tag, "srcset"), "sizes");
     if (src) {
-      img.setAttribute('src', getArticleMediaUrl(src));
-    } else if (srcset) {
-      // Safari-safe fallback: use first candidate URL as src if src is missing.
+      nextTag = setImageAttribute(nextTag, "src", getArticleMediaUrl(src));
+      return nextTag;
+    }
+
+    if (srcset) {
       const firstCandidate = srcset
-        .split(',')
+        .split(",")
         .map((entry) => entry.trim().split(/\s+/)[0])
         .find(Boolean);
       if (firstCandidate) {
-        img.setAttribute('src', getArticleMediaUrl(firstCandidate));
+        nextTag = setImageAttribute(nextTag, "src", getArticleMediaUrl(firstCandidate));
       }
     }
 
-    // Prevent malformed legacy srcset strings from breaking image selection.
-    img.removeAttribute('srcset');
-    img.removeAttribute('sizes');
+    return nextTag;
   });
-
-  return div.innerHTML;
 };
 
-export default function ArticleDetail() {
-  return <ArticleDetailContent />;
+type ArticleDetailProps = {
+  slug?: string;
+  params?: {
+    slug?: string;
+  };
+};
+
+export default function ArticleDetail({ slug }: ArticleDetailProps = {}) {
+  return <ArticleDetailContent slug={slug} />;
 }
 
 function ArticleInlineVideo({ url, caption }: { url: string; caption?: string }) {
@@ -167,8 +279,13 @@ function ArticleInlineVideo({ url, caption }: { url: string; caption?: string })
   );
 }
 
-function ArticleDetailContent() {
-  const { slug } = useParams<{ slug: string }>();
+function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
+  const slug =
+    slugProp ||
+    params?.slug ||
+    (typeof window !== "undefined"
+      ? window.location.pathname.split("/").filter(Boolean).pop() || ""
+      : "");
   const article = getLocalArticleRecordBySlug(slug);
 
   const galleryRefs = useRef<Record<number, HTMLDivElement | null>>({});
@@ -357,9 +474,7 @@ function ArticleDetailContent() {
 
 
       // Extract text content from HTML to find Q&A pairs
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = htmlContent;
-      const textContent = tempDiv.textContent || '';
+      const textContent = getHtmlTextContent(htmlContent);
 
       // Look for Q: and A: pattern in the text content
       const lines = textContent.split('\n').map(l => l.trim()).filter(l => l.length > 0);
@@ -546,7 +661,7 @@ function ArticleDetailContent() {
       <Header />
       <article className="py-12 md:py-16">
         <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
-          <header className="mx-auto max-w-5xl text-center">
+          <header className="mx-auto max-w-[62rem] text-center">
             <div className="flex flex-wrap items-center justify-center gap-4 text-[0.92rem] tracking-[-0.015em] text-white/54">
               <time dateTime={new Date(article.publishedAt || article.createdAt).toISOString()}>
                 {new Date(article.publishedAt || article.createdAt).toLocaleDateString('en-US', {
@@ -568,18 +683,18 @@ function ArticleDetailContent() {
               ) : null}
             </div>
 
-            <h1 className="mx-auto mt-5 max-w-[14ch] font-sans text-[clamp(2.7rem,5.8vw,5.9rem)] font-medium leading-[0.92] tracking-[-0.072em] text-white">
+            <h1 className="mx-auto mt-5 max-w-[15ch] font-sans text-[clamp(2.7rem,5.8vw,5.9rem)] font-medium leading-[0.92] tracking-[-0.072em] text-white">
               {decodeHTMLEntities(article.title)}
             </h1>
 
             {article.excerpt && (
-              <p className="mx-auto mt-5 max-w-[38rem] text-[clamp(1rem,1.45vw,1.34rem)] leading-[1.62] tracking-[-0.018em] text-white/68">
+              <p className="mx-auto mt-5 max-w-[42rem] text-[clamp(1rem,1.45vw,1.34rem)] leading-[1.62] tracking-[-0.018em] text-white/68">
                 {decodeHTMLEntities(article.excerpt)}
               </p>
             )}
 
             {article.series ? (
-              <p className="mx-auto mt-5 max-w-[38rem] text-[0.88rem] font-medium uppercase tracking-[0.16em] text-white/42">
+              <p className="mx-auto mt-5 max-w-[42rem] text-[0.88rem] font-medium uppercase tracking-[0.16em] text-white/42">
                 Part {article.series.order} of {article.series.name}
               </p>
             ) : null}
@@ -597,7 +712,7 @@ function ArticleDetailContent() {
               </div>
             )}
 
-            <div className="mx-auto mt-8 flex w-full max-w-[58rem] items-center justify-between gap-6 border-t border-white/14 pt-4 text-white/72">
+            <div className="mx-auto mt-8 flex w-full max-w-[62rem] items-center justify-between gap-6 border-t border-white/14 pt-4 text-white/72">
               <div className="flex items-center gap-4 sm:gap-5">
                 {articleAudio ? (
                   <>
@@ -644,7 +759,7 @@ function ArticleDetailContent() {
           </header>
 
           {linkedScenicProjects.length > 0 ? (
-            <div className="mx-auto mt-12 max-w-[58rem] border-t border-white/12 pt-10">
+            <div className="mx-auto mt-12 max-w-[62rem] border-t border-white/12 pt-10">
               <p className="mb-6 font-sans text-[1.05rem] tracking-[-0.02em] text-white">
                 Scenic Design Project
               </p>
@@ -681,7 +796,7 @@ function ArticleDetailContent() {
             </div>
           ) : null}
 
-          <div className="mx-auto mt-14 max-w-[58rem]">
+          <div className="mx-auto mt-14 max-w-[54rem]">
             <div className="min-w-0">
               <div className="relative">
                 <style>{`
@@ -698,13 +813,13 @@ function ArticleDetailContent() {
                 `}</style>
 
                 <div
-                  className="article-content article-content-${article.id} article-html-content mx-auto max-w-[56ch]
+                  className="article-content article-content-${article.id} article-html-content mx-auto max-w-none
                   prose prose-lg prose-invert
                   prose-headings:font-sans prose-headings:font-medium prose-headings:leading-[0.98] prose-headings:tracking-[-0.05em]
                   prose-h2:text-[clamp(2rem,2.75vw,2.8rem)] prose-h2:mt-20 prose-h2:mb-6 prose-h2:scroll-mt-24 prose-h2:text-white
                   prose-h3:text-[clamp(1.5rem,2vw,1.95rem)] prose-h3:mt-14 prose-h3:mb-4 prose-h3:leading-[1.02] prose-h3:text-white/98
                   prose-h4:text-[0.95rem] prose-h4:mt-10 prose-h4:mb-3 prose-h4:font-semibold prose-h4:uppercase prose-h4:tracking-[0.18em] prose-h4:text-white/48
-                  prose-p:text-white/80 prose-p:leading-[1.9] prose-p:mb-8 prose-p:text-[1.02rem] md:prose-p:text-[1.06rem] prose-p:font-normal prose-p:tracking-[-0.01em]
+                  prose-p:text-white/80 prose-p:leading-[1.9] prose-p:mb-8 prose-p:text-[1.04rem] md:prose-p:text-[1.08rem] prose-p:font-normal prose-p:tracking-[-0.01em]
                   prose-a:text-white prose-a:underline prose-a:decoration-white/35 prose-a:underline-offset-4 hover:prose-a:decoration-white/70 prose-a:font-medium
                   prose-strong:font-bold
                   prose-blockquote:border-0 prose-blockquote:pl-0 prose-blockquote:my-14 prose-blockquote:font-sans prose-blockquote:text-white
@@ -714,8 +829,8 @@ function ArticleDetailContent() {
                   prose-img:rounded-xl prose-img:my-12
                   prose-figure:my-12
                   prose-figcaption:text-[0.78rem] prose-figcaption:tracking-[0.12em] prose-figcaption:uppercase prose-figcaption:text-white/42 prose-figcaption:text-center prose-figcaption:mt-4
-                  [&_iframe]:mx-auto [&_iframe]:w-full [&_iframe]:max-w-[58ch] [&_iframe]:my-12 [&_iframe]:rounded-xl [&_iframe]:aspect-[16/9] [&_iframe]:h-auto
-                  [&_video]:mx-auto [&_video]:w-full [&_video]:max-w-[58ch] [&_video]:my-12 [&_video]:rounded-xl [&_video]:aspect-[16/9]
+                  [&_iframe]:mx-auto [&_iframe]:w-full [&_iframe]:max-w-full [&_iframe]:my-12 [&_iframe]:rounded-xl [&_iframe]:aspect-[16/9] [&_iframe]:h-auto
+                  [&_video]:mx-auto [&_video]:w-full [&_video]:max-w-full [&_video]:my-12 [&_video]:rounded-xl [&_video]:aspect-[16/9]
                   [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased]"
                 >
                   {Array.isArray(processedSections) && (() => {
@@ -800,7 +915,7 @@ function ArticleDetailContent() {
                         const quoteText = normalizeQuoteText(section.text || section.content || '');
                         return (
                           <blockquote key={index} className="my-16 py-2 text-center">
-                            <p className="mx-auto max-w-[34rem] font-sans text-[clamp(1.35rem,2.1vw,1.9rem)] font-medium leading-[1.28] tracking-[-0.04em] text-white/92">
+                            <p className="mx-auto max-w-[42rem] font-sans text-[clamp(1.35rem,2.1vw,1.9rem)] font-medium leading-[1.28] tracking-[-0.04em] text-white/92">
                               <span aria-hidden="true" className="mr-[0.08em] text-white/54">“</span>
                               {quoteText}
                               <span aria-hidden="true" className="ml-[0.04em] text-white/54">”</span>
@@ -818,7 +933,7 @@ function ArticleDetailContent() {
                           return (
                             <figure
                               key={index}
-                              className="relative left-1/2 my-12 w-screen max-w-[56rem] -translate-x-1/2 px-5 sm:px-6"
+                              className="relative left-1/2 my-12 w-screen max-w-[68rem] -translate-x-1/2 px-5 sm:px-6"
                             >
                               <div className="overflow-hidden rounded-[0.8rem]">
                                 <img
@@ -831,7 +946,7 @@ function ArticleDetailContent() {
                                 />
                               </div>
                               {(section.caption || section.alt) && (
-                                <figcaption className="mx-auto mt-4 max-w-[38rem] text-[0.78rem] font-medium uppercase tracking-[0.12em] leading-5 text-white/42">
+                                <figcaption className="mx-auto mt-4 max-w-[46rem] text-[0.78rem] font-medium uppercase tracking-[0.12em] leading-5 text-white/42">
                                   {decodeHTMLEntities(section.caption || section.alt || '')}
                                 </figcaption>
                               )}
@@ -843,7 +958,7 @@ function ArticleDetailContent() {
                           return (
                             <figure
                               key={index}
-                              className="mx-auto my-8 max-w-[46rem]"
+                              className="mx-auto my-8 max-w-[58rem]"
                             >
                               <img
                                 src={getArticleMediaUrl(section.url)}
@@ -854,7 +969,7 @@ function ArticleDetailContent() {
                                 onClick={() => openArticleLightboxAt(`image-${index}`)}
                               />
                               {(section.caption || section.alt) && (
-                                <figcaption className="mx-auto mt-3 max-w-[38rem] text-[0.78rem] font-medium uppercase tracking-[0.12em] leading-5 text-white/42">
+                                <figcaption className="mx-auto mt-3 max-w-[46rem] text-[0.78rem] font-medium uppercase tracking-[0.12em] leading-5 text-white/42">
                                   {decodeHTMLEntities(section.caption || section.alt || '')}
                                 </figcaption>
                               )}
@@ -895,7 +1010,7 @@ function ArticleDetailContent() {
                                 {decodeHTMLEntities(section.title || 'Planned image')}
                               </p>
                               {section.note && (
-                                <p className="max-w-[46rem] text-[0.98rem] leading-7 text-white/62">
+                                <p className="max-w-[56rem] text-[0.98rem] leading-7 text-white/62">
                                   {decodeHTMLEntities(section.note)}
                                 </p>
                               )}
@@ -1018,7 +1133,7 @@ function ArticleDetailContent() {
                         return (
                           <div
                             key={index}
-                            className="article-html-content [&_p]:mb-8 [&_p]:text-[1.02rem] [&_p]:leading-[1.9] [&_p]:tracking-[-0.01em] [&_p]:text-white/80"
+                            className="article-html-content [&_p]:mb-8 [&_p]:text-[1.04rem] [&_p]:leading-[1.9] [&_p]:tracking-[-0.01em] [&_p]:text-white/80"
                             dangerouslySetInnerHTML={{ __html: processHTMLImages(decodeHTMLEntities(section.content)) }}
                           />
                         );
@@ -1027,7 +1142,7 @@ function ArticleDetailContent() {
                         return (
                           <div
                             key={index}
-                            className="[&_p]:mb-8 [&_p]:text-[1.02rem] [&_p]:leading-[1.9] [&_p]:tracking-[-0.01em] [&_p]:text-white/80"
+                            className="[&_p]:mb-8 [&_p]:text-[1.04rem] [&_p]:leading-[1.9] [&_p]:tracking-[-0.01em] [&_p]:text-white/80"
                             dangerouslySetInnerHTML={{ __html: processHTMLImages(section.content) }}
                           />
                         );
@@ -1099,7 +1214,7 @@ function ArticleDetailContent() {
 
               {/* Tags Section */}
               {article.tags && article.tags.length > 0 && (
-                <div className="mx-auto mt-16 max-w-[58ch] border-t border-white/12 pt-12">
+                <div className="mx-auto mt-16 max-w-[54rem] border-t border-white/12 pt-12">
                   <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white/48">Tagged With</h3>
                   <div className="flex flex-wrap gap-2">
                     {article.tags.map((tag: any) => (
@@ -1119,7 +1234,7 @@ function ArticleDetailContent() {
 
 
               {/* Author Bio with Engagement */}
-              <div className="mx-auto mt-16 max-w-[58ch] border-t border-white/12 pt-12">
+              <div className="mx-auto mt-16 max-w-[54rem] border-t border-white/12 pt-12">
                 <div className="flex items-start gap-6">
                   <div className="flex-shrink-0">
                     <div className="w-20 h-20 rounded-full overflow-hidden border border-border/60 shadow-lg">

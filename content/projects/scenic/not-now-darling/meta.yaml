@@ -1,0 +1,49 @@
+type: project
+discipline: scenic
+slug: not-now-darling
+title: Not Now, Darling
+status: published
+featured: false
+excerpt: >-
+  A British boutique interior sharpened with Wes Anderson-inspired color and farce-ready door logic, giving Not Now,
+  Darling a polished comic world built for speed, confusion, and precision.
+seoTitle: Not Now, Darling | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for Not Now, Darling at Okoboji Summer Theatre, blending British elegance with Wes Anderson-inspired
+  color and farce-ready architecture.
+seoKeywords:
+  - Not Now
+  - Darling
+  - scenic design
+  - Okoboji Summer Theatre
+  - comedy
+  - farce
+  - Brandon PT Davis
+client: Okoboji Summer Theatre
+location: Okoboji, IA
+year: 2018
+month: 7
+subcategory: Comedy
+cover:
+  asset: project-images/rescued/not-now-darling/not-now-darling-06dc38d64a.jpg
+  alt: Not Now, Darling scenic design cover image
+team:
+  - role: Written By
+    name: Ray Cooney and John Chapman
+  - role: Director
+    name: Fred Rubeck
+  - role: Scenic Designer
+    name: Brandon PT Davis
+  - role: Costume Designer
+    name: Ashley Harrison
+  - role: Lighting Designer
+    name: Savannah Bell
+  - role: Sound Designer
+    name: Michael Burke
+tags:
+  - comedy
+  - farce
+  - okoboji-summer-theatre
+  - not-now-darling
+links: []
+updatedAt: '2026-03-23T19:05:00.000Z'

@@ -1,0 +1,47 @@
+type: project
+discipline: scenic
+slug: last-train-to-nibroc
+title: Last Train to Nibroc
+status: published
+featured: false
+excerpt: >-
+  An intimate, warm playing space carved inside a much larger proscenium, using reclaimed barn wood, a slight rake, and
+  a long backdrop to support closeness and quiet change in Last Train to Nibroc.
+seoTitle: Last Train to Nibroc | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for Last Train to Nibroc at Okoboji Summer Theatre, creating an intimate barn-wood frame inside a large
+  proscenium to support closeness, memory, and gentle transition.
+seoKeywords:
+  - Last Train to Nibroc
+  - scenic design
+  - Okoboji Summer Theatre
+  - drama
+  - Brandon PT Davis
+client: Okoboji Summer Theatre
+location: Okoboji, IA
+year: 2016
+month: 6
+subcategory: Drama
+cover:
+  asset: portfolio/projects/2026/03/2016-the-last-train-to-nibroc-3-of-10-7894.webp
+  alt: Last Train to Nibroc scenic design cover image
+team:
+  - role: Playwright
+    name: Arlene Hutton
+  - role: Scenic Design
+    name: Brandon PT Davis
+  - role: Costume Design
+    name: Kristin Cook
+  - role: Lighting Design
+    name: Josh Hiser
+  - role: Sound Design
+    name: Michael Burke
+  - role: Director
+    name: Janice Goldberg
+tags:
+  - drama
+  - okoboji-summer-theatre
+  - last-train-to-nibroc
+  - period-drama
+links: []
+updatedAt: '2026-03-01T10:42:52.420651+00:00'

@@ -1,0 +1,54 @@
+type: project
+discipline: scenic
+slug: tomas-and-the-library-lady
+title: Tomás and the Library Lady
+status: published
+featured: false
+excerpt: >-
+  Warm, legible spaces for Tomás and the Library Lady, designed to move between domestic reality and imaginative
+  expansion while supporting bilingual storytelling and literacy.
+seoTitle: Tomás and the Library Lady | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for Tomás and the Library Lady at Lake Dillon Theatre Company, using warm, readable spaces and library
+  motifs as portals into literacy, belonging, and imaginative growth.
+seoKeywords:
+  - Tomás and the Library Lady
+  - scenic design
+  - Lake Dillon Theatre Company
+  - theatre for young audiences
+  - bilingual theatre
+  - Brandon PT Davis
+client: Lake Dillon Theatre Company
+location: Silverthorne, CO
+year: 2022
+month: 3
+subcategory: Theatre for Young Audiences
+cover:
+  asset: project-images/project-90039-cover.webp
+  alt: Tomás and the Library Lady scenic design cover image
+team:
+  - role: From the Book by
+    name: Pat Mora
+  - role: Adapted by
+    name: José Cruz González
+  - role: Scenic Designer
+    name: Brandon PT Davis
+  - role: Costume Designer
+    name: Lauryn Terciera
+  - role: Lighting Designer
+    name: Nita Mendoza
+  - role: Sound Designer
+    name: Noel Nichols
+  - role: Projection Designer
+    name: Jesús López Vargas
+  - role: Director
+    name: Sara Rodriguez
+tags:
+  - theatre-for-young-audiences
+  - bilingual-theatre
+  - education
+  - tomas-and-the-library-lady
+links:
+  - label: TYA/USA Membership Spotlight
+    url: https://www.tyausa.org/tya-today/membership-spotlight-april-2024/
+updatedAt: '2026-02-12T15:04:01+00:00'

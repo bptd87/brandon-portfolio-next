@@ -1,0 +1,132 @@
+id: 4
+title: 'Vectorworks Tutorial: Installing a Workspace and Template'
+slug: installing-workspace-template
+content: null
+category: Getting Started
+difficulty: Beginner
+duration: 340
+created_at: '2026-02-12T10:46:45.721169+00:00'
+updated_at: '2026-02-22T11:22:57.948959+00:00'
+status: published
+featured: false
+seo_title: null
+seo_description: null
+seo_keywords: null
+learning_objectives:
+  - Understand the purpose of workspaces and templates in Vectorworks
+  - Locate and install a Vectorworks User Folder
+  - Configure Vectorworks preferences to use custom workspaces
+  - Remove default workspaces to streamline your workflow
+  - Set up organizational templates for consistent project standards
+key_concepts:
+  - title: VECTORWORKS USER FOLDER
+    content: >-
+      The Vectorworks User Folder contains custom workspaces, templates, libraries, and preferences specific to an
+      organization. Installing this folder ensures you have access to standardized tools and settings used by your team.
+  - title: WORKSPACES
+    content: >-
+      Workspaces control the arrangement of tool palettes, menus, and interface elements in Vectorworks. Custom
+      workspaces streamline workflows by providing only the tools relevant to your discipline (scenic design, lighting,
+      architecture, etc.).
+  - title: TEMPLATES
+    content: >-
+      Templates are pre-configured Vectorworks files that include standard layers, classes, sheet borders, title blocks,
+      and other document settings. Using organizational templates ensures all team drawings follow the same standards.
+pro_tips:
+  - >-
+    Copy the Vectorworks User Folder to your Documents directory before installing it. This keeps the original folder
+    intact in case you need to reinstall or share it with colleagues.
+  - >-
+    Deleting default workspaces from the application folder prevents confusion and ensures you only see the workspace
+    provided by your organization. This is especially helpful for students or new team members.
+  - >-
+    After installing a new workspace, always open the organizational template to verify everything installed correctly.
+    Check that tool palettes appear in the expected locations and that templates load properly.
+shortcuts: []
+common_pitfalls:
+  - Installing the User Folder to the wrong location (must go in Documents, not inside Vectorworks application)
+  - Selecting a subfolder instead of the top-level User Folder when changing preferences
+  - Forgetting to restart Vectorworks after changing the User Folder location
+  - Not having administrator privileges to delete default workspaces from Program Files (Windows)
+  - Choosing 'Yes' when asked to copy existing preferences (should choose 'No' for clean install)
+transcript:
+  - text: >-
+      Hello, I'm Brandon PT Davis, theatrical scenic designer. Today I'm going to share with you a Vectorworks tutorial
+      on the installation of a workspace and template.
+    time: '0:00'
+  - text: >-
+      Workspaces and templates are used to standardize communication when working in Vectorworks as a company or
+      organization. If you obtain a Vectorworks User Folder from an organization—in this case, this is the Vectorworks
+      2021 User Folder for the University of Texas in El Paso—I recommend that you copy the folder and place it in your
+      Documents.
+    time: '0:16'
+  - text: >-
+      After installing Vectorworks 2021, open the software. You need to access the Vectorworks Preferences. The quickest
+      way to access Vectorworks Preferences is to click the arrow icon here. Vectorworks Preferences is on the bottom.
+      Now click this icon saying 'Changing the user data and preference folder may require restart of Vectorworks. You
+      will be given the opportunity to save unsaved documents. Are you sure you want to continue?' Click Yes.
+    time: '1:00'
+  - text: >-
+      Next you need to access the Vectorworks User Folder that you placed in your Documents. So I'm going to go to
+      Documents, scroll until I find the Vectorworks folder. Do not go into the folder—make sure that you are on the
+      topmost where it says 'Folder Vectorworks 2021 User Folder.' Select the folder.
+    time: '1:56'
+  - text: >-
+      The first question: 'Would you like to copy the contents of the existing user data and preference folder to a new
+      location in order to retain all your preferences and content?' Click No. It says now, 'Do you want to save the
+      changes you made in the document Untitled 2?' Click No. Vectorworks will shut down. Press OK.
+    time: '2:29'
+  - text: >-
+      Now that Vectorworks has closed, we are going to go back into the File Explorer. We're going to go to the C drive,
+      Program Files, Vectorworks 2021, and Workspaces.
+    time: '2:59'
+  - text: >-
+      If you're using a Mac, you will do a similar process, but instead you will find the Vectorworks 2021 application
+      folder, still going to the Workspace folder within the application folder.
+    time: '3:26'
+  - text: >-
+      We are going to delete all of the Vectorworks workspaces that are default to the software. Deleting the
+      Vectorworks default workspaces will streamline your workflow when only having the workspace that is provided by
+      your company or organization.
+    time: '3:41'
+  - text: >-
+      Now I'm going to close and reopen Vectorworks 2021. Now that we have opened the Vectorworks software, we see that
+      all of the tools and palettes are in the proper place.
+    time: '4:18'
+  - text: >-
+      The next order of business is to go to File, New, scroll down and open the UTEP Basic—or whichever basic template
+      your company has provided. Press OK.
+    time: '4:39'
+  - text: That completes the tutorial. If you have any questions, feel free to ask. Thank you.
+    time: '4:59'
+related_resources:
+  - url: https://university.vectorworks.net/
+    title: Vectorworks University - Workspaces
+    description: Official training on workspace customization
+  - url: https://app-help.vectorworks.net/
+    title: Vectorworks Help - User Folder
+    description: Documentation on User Folder structure
+  - url: https://forum.vectorworks.net/
+    title: Vectorworks Forum - Workspace Setup
+    description: Community discussions on workspace configuration
+related_tutorials:
+  - slug: navigating-user-interface
+    title: 'Vectorworks Tutorial: Navigating the User Interface'
+  - slug: understanding-classes
+    title: 'Vectorworks Tutorial: Understanding Classes'
+  - slug: understanding-design-layers
+    title: 'Vectorworks Tutorial: Understanding Design Layers'
+overview: >-
+  This tutorial walks you through the complete process of installing a custom Vectorworks workspace and template
+  provided by an organization. Workspaces and templates are essential tools for standardizing communication when working
+  as part of a company or design team.
+
+
+  The tutorial covers copying the Vectorworks User Folder to your documents, accessing and modifying Vectorworks
+  preferences, removing default workspaces from the application folder, and opening organizational templates. This setup
+  process ensures that all team members work with consistent tools, palettes, and document standards.
+description: >-
+  Learn how to properly install and configure a Vectorworks workspace and template provided by your organization or
+  company to ensure standardized communication and workflow.
+cover_image: https://img.youtube.com/vi/CXBfG2L3ZmI/maxresdefault.jpg
+video_url: https://www.youtube.com/watch?v=CXBfG2L3ZmI

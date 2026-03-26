@@ -1,0 +1,24 @@
+gallery:
+  - id: bingo-cover
+    kind: cover
+    asset: project-images/rescued/bingo-the-winning-musical/bingo-the-winning-musical-dfa9f8cd99.jpeg
+    alt: 'Bingo: The Winning Musical scenic design cover image.'
+  - id: bingo-prod-1
+    kind: production
+    asset: project-images/rescued/bingo-the-winning-musical/bingo-the-winning-musical-f0bb8f349b.jpg
+    alt: >-
+      Production image from Bingo: The Winning Musical showing the bright nautical-inspired scenic world, scenic design
+      by Brandon PT Davis.
+  - id: bingo-prod-2
+    kind: production
+    asset: project-images/rescued/bingo-the-winning-musical/bingo-the-winning-musical-f4c0047f35.jpg
+    alt: >-
+      Production still from Bingo: The Winning Musical emphasizing playful color and musical-theatre staging, scenic
+      design by Brandon PT Davis.
+  - id: bingo-prod-3
+    kind: production
+    asset: project-images/rescued/bingo-the-winning-musical/bingo-the-winning-musical-f7f07b768a.jpg
+    alt: >-
+      Final production image from Bingo: The Winning Musical showing the full Okoboji-inspired environment in
+      performance, scenic design by Brandon PT Davis.
+videos: []

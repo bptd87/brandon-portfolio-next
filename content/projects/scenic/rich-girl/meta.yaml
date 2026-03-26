@@ -1,0 +1,47 @@
+type: project
+discipline: scenic
+slug: rich-girl
+title: Rich Girl
+status: published
+featured: false
+excerpt: >-
+  A contemporary Manhattan penthouse becomes an elegant shell for Rich Girl, pairing polished minimalism with emotional
+  exposure to reflect wealth, restraint, and fracture.
+seoTitle: Rich Girl | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for Rich Girl at Okoboji Summer Theatre, using a sleek Manhattan penthouse to balance polish, privilege,
+  and emotional vulnerability.
+seoKeywords:
+  - Rich Girl
+  - scenic design
+  - Okoboji Summer Theatre
+  - drama
+  - Brandon PT Davis
+client: Okoboji Summer Theatre
+location: Okoboji, IA
+year: 2014
+month: 7
+subcategory: Drama
+cover:
+  asset: portfolio/projects/2026/02/2014-rich-girl-okoboji-summer-theatre-3-of-8-2094.webp
+  alt: Rich Girl scenic design cover image
+team:
+  - role: Playwright
+    name: Victoria Stewart
+  - role: Scenic Design
+    name: Brandon PT Davis
+  - role: Costume Design
+    name: Kirsteen Buchanan
+  - role: Lighting Design
+    name: Savannah Bell
+  - role: Sound Design
+    name: Michael Burke
+  - role: Director
+    name: Rich Cole
+tags:
+  - drama
+  - okoboji-summer-theatre
+  - rich-girl
+  - contemporary-drama
+links: []
+updatedAt: '2026-02-27T10:18:35.878251+00:00'

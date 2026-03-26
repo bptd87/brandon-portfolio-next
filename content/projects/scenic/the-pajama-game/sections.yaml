@@ -1,0 +1,46 @@
+- type: text
+  heading: A Factory with Personality
+  content:
+    - >-
+      The Pajama Game needed a world that could move as fast as the score. Bold signage and shifting factory elements
+      framed the 1950s Sleep-Tite Pajama Factory, giving the stage a strong graphic identity while keeping transitions
+      quick and dance-friendly.
+- type: gallery
+  mediaIds:
+    - pajama-prod-1
+    - pajama-prod-2
+- type: text
+  heading: Romance and Labor in the Same Space
+  content:
+    - >-
+      The story balances spirited romance with a sharp labor dispute, so the scenic world had to support both. Repeating
+      structures and a vibrant factory palette suggested postwar optimism, while signage and movable units emphasized
+      workplace mechanics and the conflict over fair wages driving the plot.
+- type: gallery
+  mediaIds:
+    - pajama-prod-3
+    - pajama-prod-4
+- type: text
+  heading: Design Goal
+  content:
+    - >-
+      A modular approach supported dance-heavy staging, allowing rolling units to transform quickly from intimate
+      encounters to full-ensemble numbers. The result was a world that felt playful yet pointed: period-authentic enough
+      to ground the audience, theatrical enough to energize a story about love, labor, and finding joy amid conflict.
+- type: gallery
+  mediaIds:
+    - pajama-prod-5
+    - pajama-prod-6
+    - pajama-prod-7
+    - pajama-prod-8
+    - pajama-prod-9
+    - pajama-prod-10
+    - pajama-prod-11
+- type: gallery
+  mediaIds:
+    - pajama-render-1
+    - pajama-render-2
+    - pajama-render-3
+    - pajama-render-4
+    - pajama-render-5
+    - pajama-render-6

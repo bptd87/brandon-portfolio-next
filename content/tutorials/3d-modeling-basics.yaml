@@ -1,0 +1,328 @@
+id: 12
+title: 'Vectorworks Tutorial: 3D Modeling Basics'
+slug: 3d-modeling-basics
+content: null
+category: 3D Modeling
+difficulty: Intermediate
+duration: 1274
+created_at: '2026-02-12T10:46:46.050386+00:00'
+updated_at: '2026-02-22T11:22:57.948959+00:00'
+status: published
+featured: false
+seo_title: null
+seo_description: null
+seo_keywords: null
+learning_objectives:
+  - Create 3D geometry from 2D shapes using Extrude command with custom heights and Z-plane positioning
+  - Combine multiple 3D objects using Add Solids, Subtract Solids, and Intersect Solids operations
+  - Create complex sectioned forms using Section Solids with custom sectioning surfaces
+  - Build stepped and tapered profiles using Multiple Extrude and Tapered Extrude commands
+  - Generate rotational forms using Sweep with custom angles, segments, and center points
+  - Apply trim profiles along custom paths using Extrude Along Path with proper centerline offset
+  - Work effectively with the Z-plane to position 3D objects in space
+  - Use the Split tool to divide 3D objects for detailed modeling work
+  - Understand object stacking order and its effect on Multiple Extrude operations
+key_concepts:
+  - title: EXTRUDE
+    content: >-
+      Command that converts 2D shapes into 3D solids by extending them perpendicular to their plane. Can be controlled
+      via height, direction, and Z-plane position. Accessible via Model menu or Ctrl/Cmd+E hotkey.
+  - title: ADD SOLIDS
+    content: >-
+      Boolean operation that combines multiple 3D objects into a single unified solid. Useful for creating complex forms
+      from simple primitives. Accessible via Model menu, right-click context menu, or Ctrl+Alt+A hotkey.
+  - title: SUBTRACT SOLIDS
+    content: >-
+      Boolean operation that removes one solid from another, creating voids or cutouts. Direction of subtraction is
+      controlled by object selection order shown in dark orange. Accessible via Ctrl+Alt+S hotkey.
+  - title: INTERSECT SOLIDS
+    content: >-
+      Boolean operation that keeps only the overlapping volume where two solids meet, removing everything else. Useful
+      for creating complex intersecting forms. Accessible via Ctrl+Alt+I hotkey.
+  - title: SECTION SOLIDS
+    content: >-
+      Operation that cuts a 3D object using another object as a sectioning surface, removing material on one side.
+      Direction can be reversed, and section face can inherit the sectioning object's color.
+  - title: MULTIPLE EXTRUDE
+    content: >-
+      Command that creates a stepped extrusion between two or more 2D shapes. Top shape in stacking order becomes the
+      top profile, bottom shape becomes the bottom profile. Can create pyramids using a locus point as top shape.
+  - title: TAPERED EXTRUDE
+    content: >-
+      Command that creates a tapered 3D form from a 2D shape using angle and height parameters. Base shape is maintained
+      while sides taper inward. Can create pyramids or flat-topped tapered forms depending on height-to-angle ratio.
+  - title: SWEEP
+    content: >-
+      Command that rotates a 2D profile around a center point to create rotational forms like columns, bowls, or vases.
+      Controlled by sweep angle (up to 360°), segment angle (affects smoothness), and center locus position.
+  - title: EXTRUDE ALONG PATH
+    content: >-
+      Command that follows a polyline path with a 2D profile to create moldings, trim, or organic forms. Profile
+      extrudes from its center, so path must be offset by half the profile width for accurate edge placement. Supports
+      uniform scaling along path.
+pro_tips:
+  - >-
+    Always check the Z-plane position of extruded objects in the Object Info Palette - objects default to Z=0 but can be
+    raised or lowered by modifying the bottom Z value
+  - >-
+    When extruding in Front view, remember to change the plane from Layer Plane to Screen Plane so the extrusion goes in
+    the correct direction (along Y-axis instead of Z-axis)
+  - >-
+    Use Shift+C to quickly toggle through different 3D views (isometric, front, right, back) without navigating menus -
+    essential for checking your model from all angles
+  - >-
+    For Add/Subtract/Intersect Solids operations, the dark orange highlight in the dialog indicates which object is the
+    primary operation target - pay attention to this to get the desired result
+  - >-
+    All solid operations (Add, Subtract, Intersect, Section) can be edited after creation using Edit Solid command -
+    you're not locked into your first iteration
+  - >-
+    When using Multiple Extrude, object stacking order matters - use Send to Front/Send to Back to control which shape
+    becomes the top profile and which becomes the bottom
+  - >-
+    To create a pyramid with Multiple Extrude, use a 2D locus point as the top shape - this creates a point at the top
+    instead of a flat profile
+  - >-
+    For Sweep operations, place a 2D locus to define a custom center point - this allows you to create wider or more
+    complex rotational forms than using the default center
+  - >-
+    The Split tool works on 3D objects just like 2D objects - use it to divide complex 3D forms into separate pieces for
+    detailed work or material assignments
+  - >-
+    When using Extrude Along Path, always offset your path by half the profile width - the profile extrudes from its
+    center, not its edge, so an unmodified traced path will be incorrectly positioned
+  - >-
+    If your Extrude Along Path molding appears backwards, edit the path polyline and reverse its direction - this is a
+    common issue that's easily fixed
+  - >-
+    Use the Uniform Scale parameter in Extrude Along Path to create profiles that grow or shrink along the path - set to
+    1 for consistent size, or 2 to double the size at the end
+  - >-
+    For Tapered Extrude, if the taper angle is too steep for the height, the object will come to a point - reduce height
+    or angle to maintain a flat top if needed
+  - >-
+    Adjust the segment angle in Sweep to control smoothness - smaller angles create smoother circles, larger angles
+    (like 45°) create multi-sided polygonal forms
+shortcuts:
+  - keys: Ctrl/Cmd + E
+    action: Extrude selected 2D shape into 3D solid
+  - keys: Ctrl + Alt + A
+    action: Add Solids - combine multiple 3D objects into one
+  - keys: Ctrl + Alt + S
+    action: Subtract Solids - remove one solid from another
+  - keys: Ctrl + Alt + I
+    action: Intersect Solids - keep only overlapping volume
+  - keys: Ctrl + Alt + X
+    action: Extrude Along Path - apply profile along polyline
+  - keys: Shift + C
+    action: Toggle through 3D views (isometric, front, right, back)
+common_pitfalls:
+  - >-
+    Forgetting to check Z-plane position after extruding - objects may be sitting at Z=0 when they should be elevated,
+    causing alignment issues with other elements
+  - >-
+    Extruding in the wrong direction because the plane wasn't changed from Layer Plane to Screen Plane when working in
+    Front view - always verify plane setting before extruding
+  - >-
+    Selecting objects in the wrong order for Subtract Solids - the dark orange object in the dialog is the one being
+    subtracted, so if the result is backwards, run the command again and select differently
+  - >-
+    Using Multiple Extrude with shapes in the wrong stacking order - the top shape in the layers panel becomes the top
+    profile, so use Send to Front/Back to control the result
+  - >-
+    Tracing a path directly on the edge of a wall for Extrude Along Path without offsetting - the profile extrudes from
+    its center, so the molding will be half inside the wall and half outside
+  - >-
+    Not reversing the path direction for Extrude Along Path when the molding profile appears backwards - this is a
+    common issue that requires editing the path and using the Reverse Direction command
+  - >-
+    Setting the Tapered Extrude angle too steep for the height, causing the object to come to a point when a flat top is
+    desired - reduce angle or increase height to maintain the top face
+  - >-
+    Using too large a segment angle in Sweep operations, creating a faceted polygonal form instead of a smooth circular
+    one - reduce segment angle for smoother results
+  - >-
+    Forgetting that you can use the Split tool on 3D objects - many users assume it only works on 2D shapes, but it's
+    equally useful for dividing 3D solids
+  - >-
+    Not using Edit Solid to refine boolean operations after creation - you can always go back and adjust
+    Add/Subtract/Intersect/Section operations instead of starting over
+transcript:
+  - text: >-
+      Hello, this is Brandon PT Davis, theatrical scenic designer. In this Vectorworks tutorial, I'm going to show you
+      the basics of 3D modeling.
+    time: '0:05'
+  - text: >-
+      To start the tutorial, I have drawn a 2-foot by 2-foot rectangle, centered at 0,0 on the X and Y axis. Many of the
+      most commonly used 3D modeling tools can be found in the Model menu tab.
+    time: '0:14'
+  - text: >-
+      I'm going to first select our rectangle in Top/Plan view, go to the Model menu, and select Extrude. You can also
+      do this by pressing Control or Command + E. Now that I've pressed Control + E, you can see the X and Y are set to
+      two feet by two feet, which can be modified in the menu. I'm going to set the extrusion to four feet and press OK.
+    time: '0:38'
+  - text: >-
+      In Top/Plan view, it appears that nothing has happened, but if I toggle into a 3D view, you'll see that our
+      rectangle has been extruded to be four feet tall. If you look in the Object Info Palette, you can see the X and Y
+      are both equal to two feet, the extrude is four foot zero, and the bottom Z value is sitting at zero on the plane.
+      We can modify this by adding two feet. Now our rectangle is above the Z plane by two feet.
+    time: '1:12'
+  - text: >-
+      In the next example of a simple extrude, I have drawn a rectangle in Top/Plan view that is four feet by twelve
+      feet. If I change the plane from Layer Plane to Screen Plane and change our view from Top/Plan to Front view, I
+      can now extrude the object by three inches. The object is now sitting on the X and Y axis and extruded along the Y
+      axis. If I go back to Top/Plan view, you can see it is a rectangle.
+    time: '2:06'
+  - text: >-
+      In this example, I'm going to show you how to add a solid. I have taken the previous rectangle, duplicated it, and
+      rotated it by 90 degrees. Currently, these are two separate objects. If I click both objects by holding Shift and
+      go to Model > Add Solids, or use the hotkey Control + Alt + A, the object becomes one object. You can also access
+      Add Solids by selecting both objects, right-clicking, and choosing Add Solids.
+    time: '2:54'
+  - text: >-
+      The next basic 3D function I'm going to show you is Subtract Solids. We can do this by first drawing this
+      rectangle at 24 by 24, then extruding it by one inch. Let's make that 24 inches. Selecting both objects, you can
+      go to Model > Subtract Solids, or press Control + Alt + S.
+    time: '3:34'
+  - text: >-
+      Notice this dialog has popped up. We select the dark orange object and press OK, and it will subtract the object
+      from the bottom. Or I can run Subtract Solids again and choose a different subtraction direction, depending on
+      which object is highlighted in dark orange.
+    time: '4:31'
+  - text: >-
+      The next basic function I'm going to show you is Intersect Solids. I'm going to go to our 3D Modeling tool set,
+      select the Sphere tool, start from the center, and draw it out. I'm going to go to Front view and make sure the
+      sphere is sitting at zero on the Z plane. Then I'm going to select the two objects and go to Model > Intersect
+      Solids, or press Control + Alt + I. You can also do this by right-clicking and choosing Intersect Solids. What
+      you'll notice is that everything outside of the sphere has been removed, and what remains is the intersection.
+    time: '4:59'
+  - text: Keep in mind that with these solid operations, you can also go to Edit Solid and adjust your previous iteration.
+    time: '6:01'
+  - text: >-
+      The next function I want to share with you is Section Solids. We'll start by creating a sphere. I'm going to make
+      it a radius of about two inches, and I'm going to color it red. Next, I'm going to use the Polyline tool to draw
+      an organic curve. I'll move it into position.
+    time: '6:24'
+  - text: >-
+      One of the interesting things with Vectorworks is that you can extrude a line, so I'm going to press Control or
+      Command + E and extrude this four inches. I'll go to Front view and adjust placement. I'm going to move the sphere
+      up two inches so it sits properly relative to zero. Then I'm going to color the polyline extrude green.
+    time: '7:01'
+  - text: >-
+      Now I'm back in 3D. If I press Shift + C, that's how I toggle through the 3D views. I'm going to select both
+      objects, right-click, and go to Model > Section Solids. You can also find Section Solids in the Model menu. The
+      dialog indicates which object is the sectioning surface. I want the extruded polyline to be the sectioning
+      surface, and I want the sphere to be the object we're sectioning.
+    time: '7:33'
+  - text: >-
+      If I click the arrows to confirm the selections and press OK, you'll see that everything on one side of the
+      polyline has been subtracted. If I want to reverse the direction, I can go to the Object Info Palette and click
+      Reverse Direction, which switches which side is kept. Another option is Use Section Color. If I select that, the
+      section face will take the color of the sectioning object, so the green becomes the face color on the sphere.
+    time: '8:16'
+  - text: >-
+      The next function I'm going to share with you is Multiple Extrude. To start this demonstration, I have multiple
+      rectangles on the page. I have one rectangle with another rectangle centered inside it, another rectangle with a
+      rectangle on the edge, and another example that we'll use to create a pyramid.
+    time: '9:08'
+  - text: >-
+      I'm going to switch into a 3D view by pressing Shift + C. I'm going to select both rectangles and go to the Model
+      tool set. Here we have Multiple Extrude. Extrude is for a single shape, and Multiple Extrude is for multiple
+      shapes. You can also use the hotkey Control + E. The shape order matters. The shape that is on top in the stacking
+      order becomes the top profile, and the shape on the bottom becomes the bottom profile. We can control the
+      extrusion height. For example, I can change six inches to four inches and press OK.
+    time: '9:40'
+  - text: >-
+      Now we have the bottom rectangle and the top rectangle forming a stepped extrude. If I double-click, I can change
+      the stacking order using Send to Front, which changes how the multiple extrude behaves. I'll switch it back for
+      this example. I'll go to Model and run Multiple Extrude again, keeping it at four inches, so you can see how the
+      top and bottom shapes relate.
+    time: '10:25'
+  - text: >-
+      To make a pyramid shape, I'm going to take this rectangle and use the 2D Locus tool to place a point in the
+      center. I'm going to select both and go to Model > Multiple Extrude, keep it at four inches, and press OK. Now we
+      have three examples of a multiple extrude.
+    time: '11:31'
+  - text: >-
+      The next Model function I'm going to show you is Tapered Extrude, which is similar to Multiple Extrude but gives
+      you more control. If I go to Model > Tapered Extrude, I can set the height and taper angle. Looking at the Object
+      Info Palette helps illustrate how it works. If I change the height to one foot, you can see the base shape is
+      maintained, and it tapers in based on the angle.
+    time: '12:05'
+  - text: >-
+      If I change the angle to 25 degrees, it becomes more dramatic and forms a pyramid shape. Because the height
+      exceeds the taper, it comes to a point, but if I reduce the height to four inches, we get a flat top.
+    time: '13:04'
+  - text: >-
+      Next, I'm going to show you Sweep. I have drawn a polyline to illustrate how the Sweep function works. Right now
+      I'm in Top/Plan view, but I want to be in Front view, so I need to remember to change the plane appropriately. If
+      I go to Model > Sweep, I'm going to press OK so it sweeps around 360 degrees and creates this shape.
+    time: '13:36'
+  - text: >-
+      In the Object Info Palette, you can see the sweep is 360 degrees. We can change that to 180 degrees for a half
+      sweep, and then back to 360. We can also adjust the segments. If I change the segment angle to 45 degrees, it
+      becomes a multi-sided object. If I reduce the segment angle back down, it looks smoother, like a circle. You can
+      also adjust the height and radius in the Object Info Palette.
+    time: '14:18'
+  - text: >-
+      If I go back to Front view, I can add a 2D locus to change the center of the sweep. Now the sweep is wider because
+      we've changed where the center is.
+    time: '15:46'
+  - text: >-
+      As a bonus, I want to show you that with this 3D object—and all 3D objects—you can still use the Split tool. I'm
+      going to select the Split tool, come from the center holding Shift, and now I have two halves of the object. You
+      can use the Split tool to divide 3D objects as needed.
+    time: '16:25'
+  - text: >-
+      The last model function I'm going to show you is Extrude Along Path. Currently, I have a polyline that I've
+      extruded to 12 feet tall, so imagine this is a wall. Now I'm going to take this trim profile and move it into
+      position. I'm going to create another polyline and trace the wall. This will be our path.
+    time: '16:59'
+  - text: >-
+      Best practice is to copy the wall line first, then use the Offset tool to offset by half the profile width,
+      because Extrude Along Path extrudes from the center of the profile, not the edge. Now I'm going to demonstrate the
+      correct method. Go to Model > Extrude Along Path. You can also use the hotkey Control + Alt + X.
+    time: '17:40'
+  - text: >-
+      The dark orange selection is the path, and the light orange selection is the profile. I'm going to press OK. If I
+      go to Front view, we may need to raise our path. One thing you may notice is that the path direction can be
+      backwards. This is common. If that happens, edit the path and reverse its direction, then exit. Now the molding is
+      going the correct way.
+    time: '18:33'
+  - text: >-
+      In the first example, when we traced the outside, remember that the path is based on the center of the profile,
+      not the edge. So you need to offset the path so it represents the centerline of the molding.
+    time: '19:25'
+  - text: >-
+      A couple other options in Extrude Along Path: if I select both the profile and the path and run Extrude Along
+      Path, there is a Uniform Scale option. By default it's set to 1. If I change it to 2 and press OK, the profile
+      becomes twice as large at the end. You can modify these settings in the Object Info Palette. You can change the
+      scaling mode from exponential to uniform and set it back to 1.
+    time: '20:11'
+  - text: This concludes the tutorial on basic modeling techniques. If you have any questions, please feel free to ask.
+    time: '21:14'
+related_resources:
+  - url: https://university.vectorworks.net
+    title: 'Vectorworks University: 3D Modeling Fundamentals'
+  - url: https://app-help.vectorworks.net
+    title: 'Vectorworks Help: Solid Modeling Operations'
+  - url: https://forum.vectorworks.net
+    title: 'Community Forum: 3D Modeling Tips & Tricks'
+related_tutorials:
+  - slug: understanding-design-layers
+    title: 'Vectorworks Tutorial: Understanding Design Layers'
+  - slug: resource-manager-basics
+    title: 'Vectorworks Tutorial: Resource Manager Basics'
+overview: >-
+  This comprehensive tutorial introduces essential 3D modeling operations in Vectorworks, covering nine fundamental
+  techniques that form the foundation of scenic design modeling. You'll learn how to create 3D geometry from 2D shapes
+  using Extrude, combine multiple solids using Add/Subtract/Intersect operations, create complex forms with Section
+  Solids, build stepped profiles with Multiple Extrude, generate tapered shapes, create rotational forms with Sweep, and
+  apply profiles along custom paths with Extrude Along Path. The tutorial demonstrates practical applications for each
+  technique, including creating walls, moldings, organic forms, and architectural details. You'll also learn essential
+  concepts like working with the Z-plane, understanding object stacking order, managing profile centerlines, and using
+  the Split tool on 3D objects. This tutorial provides the complete toolkit needed to begin creating professional 3D
+  scenic elements in Vectorworks.
+description: null
+cover_image: https://img.youtube.com/vi/Jjz1zXDXafs/maxresdefault.jpg
+video_url: https://www.youtube.com/watch?v=Jjz1zXDXafs

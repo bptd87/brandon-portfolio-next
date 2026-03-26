@@ -1,3 +1,5 @@
+"use client";
+
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import Header from "@/components/Header";

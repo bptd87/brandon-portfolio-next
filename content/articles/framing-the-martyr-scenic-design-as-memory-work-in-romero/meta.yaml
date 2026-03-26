@@ -1,0 +1,35 @@
+type: article
+slug: framing-the-martyr-scenic-design-as-memory-work-in-romero
+title: 'Framing the Martyr: Scenic Design as Memory Work in Romero'
+status: published
+featured: false
+excerpt: How Romero used scenic space as memory architecture, shaping ritual, grief, and political urgency onstage.
+category: Design Process
+seoTitle: 'Framing the Martyr: Scenic Design as Memory Work in Romero'
+seoDescription: >-
+  A scenic design analysis of Romero focused on memory-based spatial strategy, ritual structure, and collaborative
+  world-building for nonlinear storytelling.
+seoKeywords:
+  - Romero scenic design
+  - memory work in theatre
+  - ritual design language
+  - nonlinear dramaturgy
+  - scenic design process
+cover:
+  asset: article-images/article-60129-cover.webp
+  alt: 'Framing the Martyr: Scenic Design as Memory Work in Romero'
+tags:
+  - design-process
+  - romero-production
+  - memory-work
+  - scenic-design-analysis
+  - theatrical-storytelling
+readTime: 3
+publishedAt: '2025-04-22T00:00:00+00:00'
+updatedAt: '2026-02-12T15:04:15+00:00'
+linkedScenicProjectSlugs:
+  - romero
+series:
+  name: Process and Practice
+  slug: process-and-practice
+  order: 3

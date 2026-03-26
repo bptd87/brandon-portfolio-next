@@ -1,0 +1,53 @@
+type: project
+discipline: scenic
+slug: urinetown
+title: Urinetown
+status: published
+featured: false
+excerpt: >-
+  A compressed civic machine for Urinetown, industrial, stratified, and sharply theatrical, built to hold the musical’s
+  satire of scarcity, power, and class.
+seoTitle: Urinetown | Scenic Design by Brandon PT Davis
+seoDescription: >-
+  Scenic design for Urinetown at the University of Missouri, using industrial levels, distressed infrastructure, and
+  civic architecture to support satire, power, and ensemble movement.
+seoKeywords:
+  - Urinetown scenic design
+  - University of Missouri theatre
+  - dystopian musical design
+  - Brandon PT Davis
+  - scenic design
+client: University of Missouri
+location: Columbia, MO
+year: 2024
+month: 11
+subcategory: Musical Theatre
+cover:
+  asset: project-images/project-90041-cover.webp
+  alt: Urinetown scenic design cover image
+team:
+  - role: Music & Lyrics by
+    name: Mark Hollman
+  - role: Book & Lyrics by
+    name: Greg Koti
+  - role: Music Direction
+    name: Audra Sergel
+  - role: Choreographed by
+    name: Emily Ehling
+  - role: Scenic Designer
+    name: Brandon PT Davis
+  - role: Costume Designer
+    name: Marc W. Vial II
+  - role: Lighting Designer
+    name: Vincente Williams
+  - role: Sound Designer
+    name: Devin Stevenson
+  - role: Director
+    name: Joy Powell
+tags:
+  - musical-theatre
+  - satire
+  - dystopian
+  - urinetown
+links: []
+updatedAt: '2026-02-12T15:04:00+00:00'

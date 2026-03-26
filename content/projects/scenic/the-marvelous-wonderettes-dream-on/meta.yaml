@@ -1,0 +1,49 @@
+type: project
+discipline: scenic
+slug: the-marvelous-wonderettes-dream-on
+title: 'The Marvelous Wonderettes: Dream On'
+status: published
+featured: false
+excerpt: >-
+  A familiar high school gym stage becomes a container for time, letting 1960s polish shift into 1970s warmth,
+  nostalgia, and reunion energy in Wonderettes: Dream On.
+seoTitle: 'The Marvelous Wonderettes: Dream On | Scenic Design by Brandon PT Davis'
+seoDescription: >-
+  Scenic design for The Marvelous Wonderettes: Dream On at Okoboji Summer Theatre, using a high school reunion gym that
+  evolves from early-1960s polish into 1970s nostalgia.
+seoKeywords:
+  - The Marvelous Wonderettes Dream On
+  - scenic design
+  - Okoboji Summer Theatre
+  - musical theatre
+  - Brandon PT Davis
+client: Okoboji Summer Theatre
+location: Okoboji, IA
+year: 2021
+month: 7
+subcategory: Musical Theatre
+cover:
+  asset: portfolio/projects/2026/02/2021-marvelous-wonderettes-photo-call-2-of-10-4679.webp
+  alt: 'The Marvelous Wonderettes: Dream On scenic design cover image'
+team:
+  - role: Written by
+    name: Roger Bean
+  - role: Music Director
+    name: Tom Andes
+  - role: Scenic Design
+    name: Brandon PT Davis
+  - role: Costume Design
+    name: Asher Lipscomb
+  - role: Lighting Design
+    name: Savannah Bell
+  - role: Sound Design
+    name: Austen Yim
+  - role: Director
+    name: Lauren Haughton
+tags:
+  - musical-theatre
+  - jukebox-musical
+  - okoboji-summer-theatre
+  - the-marvelous-wonderettes-dream-on
+links: []
+updatedAt: '2026-02-28T21:00:18.614718+00:00'

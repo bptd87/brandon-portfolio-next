@@ -1,0 +1,38 @@
+gallery:
+  - id: enemy-cover
+    kind: cover
+    asset: portfolio/projects/2026/03/2023-enemy-of-the-people-6-of-6-7499.webp
+    alt: An Enemy of the People scenic design cover image.
+  - id: enemy-prod-1
+    kind: production
+    asset: portfolio/projects/2026/03/2023-enemy-of-the-people-6-of-6-8866.webp
+    alt: >-
+      Production image from An Enemy of the People showing the grayscale scenic world, scenic design by Brandon PT
+      Davis.
+  - id: enemy-prod-2
+    kind: production
+    asset: portfolio/projects/2026/03/2023-enemy-of-the-people-2-of-6-8866.webp
+    alt: Scene from An Enemy of the People framed by the illustrated architecture, scenic design by Brandon PT Davis.
+  - id: enemy-prod-3
+    kind: production
+    asset: portfolio/projects/2026/03/2023-enemy-of-the-people-1-of-6-8866.webp
+    alt: >-
+      Production still emphasizing the monochrome visual language in An Enemy of the People, scenic design by Brandon PT
+      Davis.
+  - id: enemy-prod-4
+    kind: production
+    asset: portfolio/projects/2026/03/2023-enemy-of-the-people-3-of-6-8866.webp
+    alt: >-
+      Performance image from An Enemy of the People showing the red furniture against the grayscale world, scenic design
+      by Brandon PT Davis.
+  - id: enemy-prod-5
+    kind: production
+    asset: portfolio/projects/2026/03/2023-enemy-of-the-people-4-of-6-8866.webp
+    alt: Final production image from An Enemy of the People, scenic design by Brandon PT Davis.
+  - id: enemy-render-1
+    kind: rendering
+    asset: portfolio/projects/2026/03/2023-enemy-of-the-people-5-of-6-8886.webp
+    alt: >-
+      Rendering for An Enemy of the People testing the flattened grayscale environment and red focal furniture, scenic
+      design by Brandon PT Davis.
+videos: []
