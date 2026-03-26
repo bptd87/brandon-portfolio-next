@@ -32,18 +32,26 @@ interface StickyShowcaseProps {
 
 function ShowcaseCard({
   copyClassName,
+  eager = false,
+  enableScrollAnimation = false,
+  fetchPriority = "auto",
   item,
   itemAlt,
   itemHref,
   onNavigate,
   sizes,
+  width = 960,
 }: {
   copyClassName?: string;
+  eager?: boolean;
+  enableScrollAnimation?: boolean;
+  fetchPriority?: "high" | "low" | "auto";
   item: StickyShowcaseItem;
   itemAlt: (title: string) => string;
   itemHref: (item: StickyShowcaseItem) => string;
   onNavigate: (event: MouseEvent<HTMLAnchorElement>, href: string) => void;
   sizes: string;
+  width?: number;
 }) {
   const href = itemHref(item);
 
@@ -61,8 +69,12 @@ function ShowcaseCard({
             className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
             aspectRatio="1/1"
             smartPosition={true}
-            loading="eager"
+            loading={eager ? "eager" : "lazy"}
+            fetchPriority={fetchPriority}
             sizes={sizes}
+            width={width}
+            enableScrollAnimation={enableScrollAnimation}
+            forceTransformWebp
           />
         ) : (
           <div className="h-full w-full bg-muted" />
@@ -277,14 +289,17 @@ export function StickyShowcase({
     <section className="pt-8 md:pt-10">
       <div className="container max-w-[88rem]">
         <div className="space-y-8 md:hidden">
-          {mobileItems.map((item) => (
+          {mobileItems.map((item, index) => (
             <ShowcaseCard
               key={`mobile-${item.slug}`}
+              eager={index === 0}
+              fetchPriority={index === 0 ? "high" : "auto"}
               item={item}
               itemAlt={itemAlt}
               itemHref={itemHref}
               onNavigate={onNavigate}
               sizes="100vw"
+              width={index === 0 ? 1440 : 1080}
             />
           ))}
         </div>
@@ -324,6 +339,9 @@ export function StickyShowcase({
                       loading="eager"
                       fetchPriority="high"
                       sizes="(max-width: 1024px) 100vw, 66vw"
+                      width={1600}
+                      enableScrollAnimation={false}
+                      forceTransformWebp
                     />
                   ) : (
                     <div className="h-full w-full bg-muted" />
@@ -394,6 +412,7 @@ export function StickyShowcase({
                       itemHref={itemHref}
                       onNavigate={onNavigate}
                       sizes="24vw"
+                      width={760}
                     />
                   </div>
                 ))}
@@ -411,6 +430,7 @@ export function StickyShowcase({
                   itemHref={itemHref}
                   onNavigate={onNavigate}
                   sizes="(max-width: 1024px) 33vw, 24vw"
+                  width={760}
                 />
               </div>
             ))}
@@ -429,6 +449,7 @@ export function StickyShowcase({
                   itemHref={itemHref}
                   onNavigate={onNavigate}
                   sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                  width={960}
                 />
               ))}
             </div>

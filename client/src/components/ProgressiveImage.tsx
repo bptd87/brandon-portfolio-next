@@ -7,10 +7,11 @@ function applySupabaseTransformations(src: string, width?: number, blurred?: boo
     return src;
   }
 
-  // Skip transformation for WebP images unless we need a blurred placeholder
-  // (Supabase converts WebP to JPEG which is larger)
+  // Keep original WebP files only when we don't need responsive resizing.
+  // Above-the-fold cards should still request sized transforms instead of
+  // pulling the full original asset on first load.
   const isWebP = src.toLowerCase().endsWith('.webp');
-  if (isWebP && !blurred && !forceTransformWebp) {
+  if (isWebP && !blurred && !forceTransformWebp && !width) {
     return src; // Keep original WebP, it's already optimized
   }
 
@@ -24,16 +25,19 @@ function applySupabaseTransformations(src: string, width?: number, blurred?: boo
   if (blurred) {
     // Blurred placeholder: still lightweight, but not so compressed that
     // pale drawings and white-background images blow out before the full image loads.
-    return `${baseUrl}/storage/v1/render/image/public/${pathAfterPublic}?width=48&quality=35`;
+    return `${baseUrl}/storage/v1/render/image/public/${pathAfterPublic}?width=48&quality=35${isWebP ? '&format=webp' : ''}`;
   } else {
-    // For non-WebP images, apply responsive sizing
     const params = new URLSearchParams();
-    
+
     if (width) {
       params.set('width', width.toString());
     }
-    
-    params.set('quality', '85');
+
+    params.set('quality', '82');
+
+    if (isWebP) {
+      params.set('format', 'webp');
+    }
 
     return `${baseUrl}/storage/v1/render/image/public/${pathAfterPublic}?${params.toString()}`;
   }
@@ -88,15 +92,9 @@ function generateSupabaseSrcSet(src: string): string {
     return '';
   }
 
-  // Skip srcset for WebP images (already optimized, and Supabase converts to JPEG)
-  const isWebP = src.toLowerCase().endsWith('.webp');
-  if (isWebP) {
-    return ''; // Browser will use original WebP
-  }
-
   const widths = [400, 800, 1200, 1600, 2400];
   const srcsetEntries = widths.map(width => {
-    const transformedUrl = applySupabaseTransformations(src, width);
+    const transformedUrl = applySupabaseTransformations(src, width, false, true);
     return `${transformedUrl} ${width}w`;
   });
 
@@ -322,7 +320,7 @@ export function ProgressiveImage({
           onClick={onClick}
           loading={loading}
           fetchPriority={fetchPriority}
-          decoding="async"
+          decoding={loading === 'eager' ? 'sync' : 'async'}
           onLoad={() => setImageLoaded(true)}
           onError={() => setImageError(true)}
         />

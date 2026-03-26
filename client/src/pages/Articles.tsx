@@ -121,6 +121,7 @@ function ArticleGridCard({
               width={900}
               aspectRatio="1 / 1"
               enableScrollAnimation={!eager}
+              forceTransformWebp
             />
           ) : (
             <div className="h-full w-full bg-muted" />
@@ -542,7 +543,7 @@ export default function Articles() {
                         <div key={`${article.id}-${selectedCategory}-${selectedYear}-${sortKey}-${viewMode}`}>
                           <ArticleGridCard
                             article={article}
-                            eager={index < 4}
+                            eager={index < 2}
                             href={href}
                             onNavigate={navigateWithTransition}
                           />
