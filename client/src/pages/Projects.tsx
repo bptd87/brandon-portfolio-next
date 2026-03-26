@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import type { CSSProperties, MouseEvent } from "react";
 import { useLocation } from "wouter";
+import Image from "next/image";
 import {
   ArrowUpDown,
   Check,
@@ -14,7 +15,6 @@ import {
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { SEO } from "@/components/SEO";
 import { PortfolioGridSkeleton } from "@/components/SkeletonLoaders";
 import { StickyShowcase } from "@/components/StickyShowcase";
@@ -117,16 +117,16 @@ function ProjectCard({
           style={{ viewTransitionName: `project-card-${project.slug}` } as CSSProperties}
         >
           {project.coverImageUrl ? (
-            <ProgressiveImage
+            <Image
               src={project.coverImageUrl}
               alt={scenicAlt(project.title)}
-              className="aspect-square w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
-              smartPosition={true}
+              fill
+              quality={82}
+              className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
+              priority={Boolean(eager)}
               loading={eager ? "eager" : "lazy"}
               fetchPriority={eager ? "high" : "auto"}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 25vw, 20vw"
-              width={960}
-              forceTransformWebp
             />
           ) : (
             <div className="aspect-square w-full bg-muted" />

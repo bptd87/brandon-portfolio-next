@@ -2,6 +2,7 @@
 
 import React, { useMemo, useState, type CSSProperties, type MouseEvent } from "react";
 import { useLocation } from "wouter";
+import Image from "next/image";
 import {
   ArrowUpDown,
   Check,
@@ -13,7 +14,6 @@ import {
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import {
@@ -111,17 +111,16 @@ function ArticleGridCard({
           style={{ viewTransitionName: `article-card-${article.slug}` } as CSSProperties}
         >
           {article.coverImageUrl ? (
-            <ProgressiveImage
+            <Image
               src={article.coverImageUrl}
               alt={article.coverImageAlt || `Cover image for article: ${decodeHTMLEntities(article.title)}`}
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+              fill
+              quality={82}
+              className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+              priority={Boolean(eager)}
               loading={eager ? "eager" : "lazy"}
               fetchPriority={eager ? "high" : "auto"}
               sizes="(min-width: 1280px) 29vw, (min-width: 768px) 30vw, 94vw"
-              width={900}
-              aspectRatio="1 / 1"
-              enableScrollAnimation={!eager}
-              forceTransformWebp
             />
           ) : (
             <div className="h-full w-full bg-muted" />

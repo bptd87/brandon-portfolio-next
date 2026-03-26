@@ -1,7 +1,6 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import type { CSSProperties, MouseEvent } from "react";
-
-import { ProgressiveImage } from "@/components/ProgressiveImage";
+import Image from "next/image";
 
 export interface StickyShowcaseItem {
   id: number | string;
@@ -63,18 +62,16 @@ function ShowcaseCard({
         style={{ viewTransitionName: `project-card-${item.slug}` } as CSSProperties}
       >
         {item.coverImageUrl ? (
-          <ProgressiveImage
+          <Image
             src={item.coverImageUrl}
             alt={itemAlt(item.title)}
-            className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
-            aspectRatio="1/1"
-            smartPosition={true}
+            fill
+            quality={82}
+            priority={eager}
             loading={eager ? "eager" : "lazy"}
             fetchPriority={fetchPriority}
             sizes={sizes}
-            width={width}
-            enableScrollAnimation={enableScrollAnimation}
-            forceTransformWebp
+            className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
           />
         ) : (
           <div className="h-full w-full bg-muted" />
@@ -330,18 +327,15 @@ export function StickyShowcase({
                   style={{ viewTransitionName: `project-card-${featuredItem.slug}` } as CSSProperties}
                 >
                   {featuredItem.coverImageUrl ? (
-                    <ProgressiveImage
+                    <Image
                       src={featuredItem.coverImageUrl}
                       alt={itemAlt(featuredItem.title)}
-                      className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
-                      aspectRatio={leadImageAspectRatio || "16/9"}
-                      smartPosition={true}
-                      loading="eager"
+                      fill
+                      quality={84}
+                      priority
                       fetchPriority="high"
                       sizes="(max-width: 1024px) 100vw, 66vw"
-                      width={1600}
-                      enableScrollAnimation={false}
-                      forceTransformWebp
+                      className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
                     />
                   ) : (
                     <div className="h-full w-full bg-muted" />
