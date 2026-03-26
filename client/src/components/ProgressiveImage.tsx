@@ -25,7 +25,7 @@ function applySupabaseTransformations(src: string, width?: number, blurred?: boo
   if (blurred) {
     // Blurred placeholder: still lightweight, but not so compressed that
     // pale drawings and white-background images blow out before the full image loads.
-    return `${baseUrl}/storage/v1/render/image/public/${pathAfterPublic}?width=48&quality=35${isWebP ? '&format=webp' : ''}`;
+    return `${baseUrl}/storage/v1/render/image/public/${pathAfterPublic}?width=48&quality=35`;
   } else {
     const params = new URLSearchParams();
 
@@ -34,10 +34,6 @@ function applySupabaseTransformations(src: string, width?: number, blurred?: boo
     }
 
     params.set('quality', '82');
-
-    if (isWebP) {
-      params.set('format', 'webp');
-    }
 
     return `${baseUrl}/storage/v1/render/image/public/${pathAfterPublic}?${params.toString()}`;
   }
