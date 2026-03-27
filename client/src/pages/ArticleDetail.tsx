@@ -425,6 +425,20 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
   while (i < contentSections.length) {
     const section = contentSections[i];
 
+    if (
+      section.type === "heading" &&
+      section.level === 2 &&
+      (section.text || "").toLowerCase().includes("faq") &&
+      contentSections[i + 1]?.type === "faq"
+    ) {
+      processedSections.push({
+        ...contentSections[i + 1],
+        heading: section.text || "Frequently Asked Questions",
+      });
+      i += 2;
+      continue;
+    }
+
     // Check if this is an FAQ heading
     if (section.type === 'heading' && section.level === 2 &&
       (section.text || '').toLowerCase().includes('frequently asked questions')) {
@@ -464,7 +478,11 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
       }
 
       if (faqItems.length > 0) {
-        processedSections.push({ type: 'faq', items: faqItems });
+        processedSections.push({
+          type: 'faq',
+          heading: section.text || 'Frequently Asked Questions',
+          items: faqItems,
+        });
       }
       continue; // Don't increment i, already moved past FAQ
     }
@@ -503,7 +521,7 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
 
 
         // Check if there's an FAQ heading in this section
-        const faqHeadingMatch = htmlContent.match(/<h2[^>]*>.*?FAQ.*?<\/h2>/i);
+        const faqHeadingMatch = htmlContent.match(/<h2[^>]*>(.*?)<\/h2>/i);
         if (faqHeadingMatch) {
           const faqHeadingIndex = htmlContent.indexOf(faqHeadingMatch[0]);
           const beforeFaq = htmlContent.substring(0, faqHeadingIndex).trim();
@@ -513,7 +531,11 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
         }
 
         // FAQ accordion
-        processedSections.push({ type: 'faq', items: faqItems });
+        processedSections.push({
+          type: 'faq',
+          heading: faqHeadingMatch ? getHtmlTextContent(faqHeadingMatch[1]) : 'Frequently Asked Questions',
+          items: faqItems,
+        });
 
         continue;
       }
@@ -754,44 +776,6 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
               </button>
             </div>
           </header>
-
-          {linkedScenicProjects.length > 0 ? (
-            <div className="mx-auto mt-12 max-w-[62rem] border-t border-white/12 pt-10">
-              <p className="mb-6 font-sans text-[1.05rem] tracking-[-0.02em] text-white">
-                Scenic Design Project
-              </p>
-              <div className="grid gap-6 md:grid-cols-2">
-                {linkedScenicProjects.map((project) => {
-                  if (!project) return null;
-                  return (
-                  <Link key={project.slug} href={`/project/${project.slug}`}>
-                    <div className="group flex cursor-pointer items-start gap-5">
-                      <div className="relative h-32 w-32 flex-none overflow-hidden rounded-xl bg-black/85">
-                        {project.coverImageUrl ? (
-                          <img
-                            src={project.coverImageUrl}
-                            alt={project.title}
-                            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                          />
-                        ) : null}
-                      </div>
-                      <div className="min-w-0 pt-1">
-                        <h3 className="text-[1.18rem] leading-[1.16] tracking-[-0.03em] text-white/92 transition-colors group-hover:text-white">
-                          {project.title}
-                        </h3>
-                        <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-white/52">
-                          <span>{project.subcategory || "Scenic Design"}</span>
-                          {project.client ? <span>{project.client}</span> : null}
-                          {project.year ? <span>{project.year}</span> : null}
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                  );
-                })}
-              </div>
-            </div>
-          ) : null}
 
           <div className="mx-auto mt-14 max-w-[54rem]">
             <div className="min-w-0">
@@ -1146,26 +1130,36 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
 
                       case 'faq':
                         return (
-                          <section key={index} className="my-20 border-t border-white/12 pt-10">
-                            <Accordion type="single" collapsible className="space-y-3">
-                              {section.items?.map((item: any, faqIndex: number) => (
-                                <AccordionItem
-                                  key={faqIndex}
-                                  value={`faq-${faqIndex}`}
-                                  className="rounded-[1rem] border border-white/10 bg-white/[0.02] px-6 transition-colors data-[state=open]:border-white/16 data-[state=open]:bg-white/[0.035]"
-                                >
-                                  <AccordionTrigger className="py-5 text-left text-[1.04rem] font-medium leading-[1.35] tracking-[-0.02em] text-white hover:no-underline">
-                                    {decodeHTMLEntities(item.question)}
-                                  </AccordionTrigger>
-                                  <AccordionContent className="pb-6 pr-8 text-[0.98rem] leading-7 text-white/66">
-                                    <div
-                                      className="[&_p]:mb-4 [&_a]:text-white [&_a]:underline [&_a]:decoration-white/30 [&_a]:underline-offset-4"
-                                      dangerouslySetInnerHTML={{ __html: item.answer }}
-                                    />
-                                  </AccordionContent>
-                                </AccordionItem>
-                              ))}
-                            </Accordion>
+                          <section
+                            key={index}
+                            className="mt-8 mb-20 max-w-[50rem]"
+                          >
+                            <h2 className="mb-5 font-sans text-[clamp(1.65rem,2.2vw,2.2rem)] font-medium leading-[0.98] tracking-[-0.05em] text-white">
+                              {decodeHTMLEntities(section.heading || "Frequently Asked Questions")}
+                            </h2>
+                            <div className="overflow-hidden rounded-[1.1rem] border border-white/8 bg-white/[0.02]">
+                              <Accordion type="single" collapsible className="space-y-0 px-5 py-1 md:px-6 md:py-2">
+                                {section.items?.map((item: any, faqIndex: number) => (
+                                  <AccordionItem
+                                    key={faqIndex}
+                                    value={`faq-${faqIndex}`}
+                                    className="border-b border-white/8 last:border-b-0"
+                                  >
+                                    <AccordionTrigger className="py-4 text-left hover:no-underline">
+                                      <div className="pr-6 text-[0.98rem] font-medium leading-[1.35] tracking-[-0.02em] text-white md:text-[1.04rem]">
+                                        {decodeHTMLEntities(item.question)}
+                                      </div>
+                                    </AccordionTrigger>
+                                    <AccordionContent className="pb-5">
+                                      <div
+                                        className="max-w-3xl pr-8 text-[0.96rem] leading-7 text-white/64 [&_p]:mb-4 [&_a]:text-white [&_a]:underline [&_a]:decoration-white/30 [&_a]:underline-offset-4"
+                                        dangerouslySetInnerHTML={{ __html: item.answer }}
+                                      />
+                                    </AccordionContent>
+                                  </AccordionItem>
+                                ))}
+                              </Accordion>
+                            </div>
                           </section>
                         );
 
@@ -1262,14 +1256,78 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
         </div>
       </article>
 
+      {linkedScenicProjects.length > 0 && (
+        <section className={related.length > 0 ? "pb-10" : "pb-20"}>
+          <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
+            <div className="border-t border-white/12 pt-12">
+              <div className="mb-8 flex items-end justify-between">
+                <div>
+                  <p className="mb-3 text-[0.72rem] font-medium uppercase tracking-[0.2em] text-white/40">
+                    Scenic Design Project
+                  </p>
+                  <h2 className="text-2xl md:text-3xl font-sans font-normal tracking-[-0.05em] text-white">
+                    Related production
+                  </h2>
+                </div>
+              </div>
+
+              <div className={`grid grid-cols-1 gap-6 ${linkedScenicProjects.length === 1 ? "lg:grid-cols-6" : "lg:grid-cols-3"}`}>
+                {linkedScenicProjects.map((project) => {
+                  if (!project) return null;
+                  const singleProject = linkedScenicProjects.length === 1;
+                  return (
+                    <Link
+                      key={project.slug}
+                      href={`/project/${project.slug}`}
+                      className={singleProject ? "lg:col-span-2 xl:col-span-1" : ""}
+                    >
+                      <div className="group h-full cursor-pointer transition-all duration-300 hover:-translate-y-0.5">
+                        <div className="aspect-square overflow-hidden rounded-xl bg-white/[0.02]">
+                          {project.coverImageUrl ? (
+                            <img
+                              src={project.coverImageUrl}
+                              alt={project.title}
+                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                              loading="lazy"
+                            />
+                          ) : null}
+                        </div>
+
+                        <div className="pt-4">
+                          <h3 className={`${singleProject ? "line-clamp-2 text-[1.35rem]" : "line-clamp-3 text-[1.45rem]"} mb-3 font-sans font-normal leading-[1.12] tracking-[-0.04em] text-white transition-colors group-hover:text-white/82`}>
+                            {project.title}
+                          </h3>
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.95rem] tracking-[-0.015em] text-white/52">
+                            <span>{project.subcategory || "Scenic Design"}</span>
+                            {project.client ? <span>{project.client}</span> : null}
+                            {project.year ? <span>{project.year}</span> : null}
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {related.length > 0 && (
         <section className="pb-20">
           <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
             <div className="border-t border-white/12 pt-12">
               <div className="mb-8 flex items-end justify-between">
-                <h2 className="text-2xl md:text-3xl font-sans font-normal tracking-[-0.05em]">
-                  {article.series ? `More in ${article.series.name}` : "Keep reading"}
-                </h2>
+                <div>
+                  {article.series ? (
+                    <p className="mb-3 text-[0.72rem] font-medium uppercase tracking-[0.2em] text-white/40">
+                      Collection
+                    </p>
+                  ) : null}
+                  <h2 className="text-2xl md:text-3xl font-sans font-normal tracking-[-0.05em]">
+                    {article.series ? `More in ${article.series.name}` : "Keep reading"}
+                  </h2>
+                </div>
                 <Link href="/articles" className="text-base text-white/72 transition-colors hover:text-white">
                   View all
                 </Link>

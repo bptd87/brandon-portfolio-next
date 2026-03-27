@@ -273,8 +273,7 @@ function extractExperientialBodyText(sample: ReturnType<typeof getLocalExperient
 
 function createProfileEntries() {
   const aboutImage =
-    resolveBlobMediaUrl("https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/profile-headshot.webp") ||
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/profile-headshot.webp";
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
   const profileBody = collapseWhitespace(stringifyVoiceProfile(voiceProfile));
 
   return [
@@ -442,6 +441,18 @@ function isFuzzyTokenMatch(term: string, token: string) {
   return getEditDistance(term, token) <= (term.length >= 8 ? 2 : 1);
 }
 
+function hasProfileIntent(normalizedQuery: string) {
+  return /(^|\s)(brandon|bio|biography|about|from|based|located|live|origin|background|designer|process|philosophy|teach|teaching|student|education)(\s|$)/.test(
+    normalizedQuery
+  );
+}
+
+function hasStudioIntent(normalizedQuery: string) {
+  return /(^|\s)(vectorworks|tutorial|studio|draft|drafting|render|rendering|model|modeling|tool|software|workflow)(\s|$)/.test(
+    normalizedQuery
+  );
+}
+
 export function buildSiteSearchEntries(): SiteSearchEntry[] {
   const profileEntries = createProfileEntries();
   const scenicEntries = getLocalScenicProjects().map((project) =>
@@ -588,6 +599,7 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
       kind: "Assistant Scenic Credit",
       description: entry.excerpt,
       meta: [entry.organization, entry.collaborator, entry.location].filter(Boolean).join(" • "),
+      imageUrl: entry.coverImageUrl,
       featured: entry.featured,
       keywords: [
         entry.title,
@@ -644,6 +656,9 @@ export function searchSiteIndex(entries: SiteSearchEntry[], query: string) {
   const terms = significantTerms.length > 0 ? significantTerms : rawTerms;
   if (terms.length === 0) return [] as SiteSearchResult[];
 
+  const profileIntent = hasProfileIntent(normalizedQuery);
+  const studioIntent = hasStudioIntent(normalizedQuery);
+
   const results: SiteSearchResult[] = [];
 
   for (const entry of entries) {
@@ -688,6 +703,17 @@ export function searchSiteIndex(entries: SiteSearchEntry[], query: string) {
     else if (title.includes(normalizedQuery)) score += 14;
     if (text.includes(normalizedQuery)) score += 8;
     if (entry.featured) score += 3;
+    if (entry.imageUrl) score += 1;
+
+    if (profileIntent) {
+      if (entry.id.startsWith("profile:")) score += 38;
+      if (entry.section === "People") score += 12;
+      if (!studioIntent && entry.section === "Studio") score -= 10;
+    }
+
+    if (!profileIntent && studioIntent && entry.section === "Studio") {
+      score += 10;
+    }
 
     results.push({
       ...entry,

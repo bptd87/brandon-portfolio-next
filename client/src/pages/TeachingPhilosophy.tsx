@@ -4,6 +4,7 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AboutNav from "@/components/AboutNav";
+import AboutVerticalArt from "@/components/AboutVerticalArt";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { resolveBlobMediaUrl } from "@shared/mediaBlob";
@@ -212,22 +213,12 @@ export default function TeachingPhilosophy() {
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-[1.5rem] border border-border/30 bg-card/20">
-            <div className="relative aspect-[4/5] w-full">
-              <Image
-                src={
-                  resolveBlobMediaUrl("/assets/about/about-teaching-art.png") ||
-                  "/assets/about/about-teaching-art.png"
-                }
-                alt="Abstract teaching philosophy artwork"
-                fill
-                unoptimized
-                quality={82}
-                sizes="(max-width: 1280px) 92vw, 34vw"
-                className="absolute left-1/2 top-1/2 h-full w-full max-w-none -translate-x-1/2 -translate-y-1/2 scale-[1.25] rotate-90 object-cover object-center"
-              />
-            </div>
-          </div>
+          <AboutVerticalArt
+            src="/assets/about/about-teaching-art.png"
+            alt="Abstract teaching philosophy artwork"
+            sizes="(max-width: 1280px) 92vw, 34vw"
+            maxWidthClassName="max-w-[28rem]"
+          />
         </div>
       </section>
 

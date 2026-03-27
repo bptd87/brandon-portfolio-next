@@ -3,7 +3,7 @@
 import { ArrowRight, ChevronLeft, ChevronRight, Mail } from "lucide-react";
 import Image from "next/image";
 import { Link } from "wouter";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import AboutNav from "@/components/AboutNav";
 import Footer from "@/components/Footer";
@@ -57,6 +57,9 @@ const galleryImages = [
     caption: "Brandon in the scene shop at The Great American Melodrama.",
   },
 ];
+
+const ABOUT_HEADSHOT_URL =
+  "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
 
 const navigationCards = [
   {
@@ -129,6 +132,8 @@ const SITE_URL = getConfiguredSiteUrl();
 
 export default function About() {
   const galleryRailRef = useRef<HTMLDivElement | null>(null);
+  const galleryItemRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
   const bioArticles = getLocalArticles()
     .filter(
       (article) =>
@@ -139,15 +144,51 @@ export default function About() {
     .slice(0, 4);
 
   const scrollGalleryBy = (direction: "prev" | "next") => {
+    const nextIndex =
+      direction === "next"
+        ? Math.min(activeGalleryIndex + 1, galleryImages.length - 1)
+        : Math.max(activeGalleryIndex - 1, 0);
+
+    const target = galleryItemRefs.current[nextIndex];
+    if (!target) return;
+
+    target.scrollIntoView({
+      behavior: "smooth",
+      inline: "start",
+      block: "nearest",
+    });
+  };
+
+  useEffect(() => {
     const rail = galleryRailRef.current;
     if (!rail) return;
 
-    const amount = Math.max(rail.clientWidth * 0.72, 320);
-    rail.scrollBy({
-      left: direction === "next" ? amount : -amount,
-      behavior: "smooth",
-    });
-  };
+    const updateActiveIndex = () => {
+      const railLeft = rail.getBoundingClientRect().left;
+      let closestIndex = 0;
+      let closestDistance = Number.POSITIVE_INFINITY;
+
+      galleryItemRefs.current.forEach((item, index) => {
+        if (!item) return;
+        const distance = Math.abs(item.getBoundingClientRect().left - railLeft);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      setActiveGalleryIndex(closestIndex);
+    };
+
+    updateActiveIndex();
+    rail.addEventListener("scroll", updateActiveIndex, { passive: true });
+    window.addEventListener("resize", updateActiveIndex);
+
+    return () => {
+      rail.removeEventListener("scroll", updateActiveIndex);
+      window.removeEventListener("resize", updateActiveIndex);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -212,14 +253,12 @@ export default function About() {
           name: "About Brandon PT Davis",
           description:
             "Profile of Brandon PT Davis, scenic designer and USA 829 member based in Southern California.",
-          primaryImageOfPage:
-            resolveBlobMediaUrl("https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/profile-headshot.webp") ||
-              "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/profile-headshot.webp",
+          primaryImageOfPage: ABOUT_HEADSHOT_URL,
           mainEntity: {
             name: "Brandon PT Davis",
             jobTitle: "Scenic Designer",
             url: `${SITE_URL}/about`,
-            image: "https://www.brandonptdavis.com/android-chrome-512x512.png",
+            image: ABOUT_HEADSHOT_URL,
             description:
               "Scenic designer and conceptual artist with 130+ production credits across regional theatre and academic stages.",
             sameAs: [
@@ -267,10 +306,7 @@ export default function About() {
                 <div className="overflow-hidden rounded-[1.75rem] border border-border/40 bg-card/20">
                   <div className="relative aspect-square w-full">
                     <Image
-                      src={
-                        resolveBlobMediaUrl("https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/profile-headshot.webp") ||
-                        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/profile-headshot.webp"
-                      }
+                      src={ABOUT_HEADSHOT_URL}
                       alt="Brandon PT Davis - Scenic Designer"
                       fill
                       priority
@@ -513,6 +549,7 @@ export default function About() {
                 <button
                   type="button"
                   onClick={() => scrollGalleryBy("prev")}
+                  disabled={activeGalleryIndex === 0}
                   className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/45 text-foreground/65 transition-colors hover:border-border hover:text-foreground"
                   aria-label="Scroll gallery left"
                 >
@@ -521,6 +558,7 @@ export default function About() {
                 <button
                   type="button"
                   onClick={() => scrollGalleryBy("next")}
+                  disabled={activeGalleryIndex === galleryImages.length - 1}
                   className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/45 text-foreground/65 transition-colors hover:border-border hover:text-foreground"
                   aria-label="Scroll gallery right"
                 >
@@ -533,20 +571,21 @@ export default function About() {
               ref={galleryRailRef}
               className="mt-10 flex snap-x snap-mandatory items-start gap-6 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
-              {galleryImages.map((image) => (
+              {galleryImages.map((image, index) => (
                 <div
                   key={image.url}
-                  className="w-[min(78vw,40rem)] shrink-0 snap-start md:w-[calc((100%_-_3rem)_/_3)]"
+                  ref={(node) => {
+                    galleryItemRefs.current[index] = node;
+                  }}
+                  className="w-[min(84vw,36rem)] shrink-0 snap-start sm:w-[min(64vw,30rem)] md:w-[calc((100%-3rem)/3)]"
                 >
-                  <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[1.5rem] bg-card/20">
-                    <Image
+                  <div className="overflow-hidden rounded-[1.5rem] bg-card/20">
+                    <img
                       src={image.url}
                       alt={image.alt}
-                      fill
-                      quality={82}
                       loading="lazy"
-                      sizes="(max-width: 768px) 78vw, 33vw"
-                      className="object-cover"
+                      decoding="async"
+                      className="block h-auto w-full"
                     />
                   </div>
                   <p className="mt-3 max-w-[36rem] text-[0.98rem] leading-7 text-foreground/62">

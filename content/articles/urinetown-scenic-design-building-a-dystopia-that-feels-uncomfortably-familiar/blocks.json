@@ -189,77 +189,31 @@
     "text": "Frequently Asked Questions"
   },
   {
-    "type": "heading",
-    "level": 3,
-    "text": "What inspired the scenic design for Urinetown?"
-  },
-  {
-    "type": "paragraph",
-    "text": "The design draws from German Expressionist film, Brutalist architecture, and dystopian cinema like Blade Runner. These influences helped create a world that feels authoritarian, industrial, and emotionally oppressive."
-  },
-  {
-    "type": "heading",
-    "level": 3,
-    "text": "How does the set support the satire of Urinetown?"
-  },
-  {
-    "type": "paragraph",
-    "text": "The set uses familiar corporate imagery, exaggerated scale, and vertical hierarchy to reinforce themes of control, scarcity, and class division—allowing the humor to coexist with discomfort."
-  },
-  {
-    "type": "heading",
-    "level": 3,
-    "text": "Why is Public Amenity #9 placed on the lowest level?"
-  },
-  {
-    "type": "paragraph",
-    "text": "Keeping Public Amenity #9 at the lowest elevation reinforces the social hierarchy of the world. It visually positions the poor as “beneath” UGC while making the space the emotional heart of the rebellion."
-  },
-  {
-    "type": "heading",
-    "level": 3,
-    "text": "What role does lighting play in the design?"
-  },
-  {
-    "type": "paragraph",
-    "text": "Lighting defines shifts in tone throughout the show. LED strips allowed for dramatic contrasts—enhancing musical numbers while intensifying the oppressive atmosphere of the city."
-  },
-  {
-    "type": "heading",
-    "level": 3,
-    "text": "How does this production differ from previous designs of Urinetown?"
-  },
-  {
-    "type": "paragraph",
-    "text": "This version leans darker and more industrial, influenced by post-pandemic realities. The satire feels sharper, and the world is intentionally closer to our own, making the social commentary harder to ignore."
-  },
-  {
-    "type": "heading",
-    "level": 2,
-    "text": "FAQ: Urinetown Scenic Design"
-  },
-  {
     "type": "faq",
     "items": [
       {
-        "question": "Why does Urinetown scenic design often feel industrial?",
-        "answer": "The design language supports the show's satire by using rigid structures, exposed materials, and compressed space to reflect control, scarcity, and social pressure."
+        "question": "What inspired the scenic design for Urinetown?",
+        "answer": "The design draws from German Expressionist film, Brutalist architecture, and dystopian cinema such as Blade Runner. Those references helped shape a world that feels authoritarian, industrial, and emotionally oppressive."
       },
       {
-        "question": "How did this production approach class contrast onstage?",
-        "answer": "We separated visual worlds through scale, texture, and finish: civic power spaces felt monolithic and imposed, while working-class areas carried layered wear and improvisation."
+        "question": "How does the set support the satire of Urinetown?",
+        "answer": "The set uses familiar corporate imagery, exaggerated scale, and vertical hierarchy to reinforce themes of control, scarcity, and class division. That structure lets the humor coexist with real discomfort."
       },
       {
-        "question": "What visual references shaped the design?",
-        "answer": "The palette drew from expressionist cinema, brutalist massing, and industrial futurism to create a city that feels authoritarian, crowded, and emotionally cold."
+        "question": "Why is Public Amenity #9 placed on the lowest level?",
+        "answer": "Keeping Public Amenity #9 at the lowest elevation reinforces the social hierarchy of the world. It positions the poor as physically beneath UGC while making the space the emotional center of the rebellion."
       },
       {
-        "question": "How was flexibility built into the set?",
-        "answer": "Modular architecture and repeatable units allowed rapid transitions, supporting musical rhythm without sacrificing narrative clarity or the production's dystopian tone."
+        "question": "What role does lighting play in the design?",
+        "answer": "Lighting defines the shifts in tone throughout the show. LED strips allowed for sharp contrast, helping musical moments land while intensifying the city's oppressive atmosphere."
       },
       {
-        "question": "What was the central design goal for this staging?",
-        "answer": "To create a world that felt uncomfortably familiar, where environment and power structures actively shape the story instead of functioning as passive background."
+        "question": "How was the set built to support the pace of a musical?",
+        "answer": "A modular structure and repeatable scenic language allowed quick transitions without breaking the world. The set had to move with the score while still carrying narrative weight."
+      },
+      {
+        "question": "How does this production differ from previous designs of Urinetown?",
+        "answer": "This version leans darker and more industrial, shaped in part by post-pandemic reality. The satire feels sharper, and the world is intentionally closer to our own, making the social commentary harder to ignore."
       }
     ]
   }

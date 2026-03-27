@@ -1,5 +1,6 @@
 import { generatedLocalArticles } from "./localArticles.generated";
 import { applyBlobMediaManifest } from "./mediaBlob";
+import urinetownArticleBlocks from "../content/articles/urinetown-scenic-design-building-a-dystopia-that-feels-uncomfortably-familiar/blocks.json";
 
 export type LocalArticleBlock = Record<string, any>;
 
@@ -218,6 +219,7 @@ const articleFieldOverridesBySlug: Record<string, Partial<LocalArticle>> = {
   },
   "urinetown-scenic-design-building-a-dystopia-that-feels-uncomfortably-familiar": {
     categoryName: "Design Process",
+    publishedAt: "2024-11-03",
     series: {
       name: "Process and Practice",
       slug: "process-and-practice",
@@ -245,6 +247,8 @@ const articleFieldOverridesBySlug: Record<string, Partial<LocalArticle>> = {
 };
 
 const contentOverridesBySlug: Record<string, LocalArticle["content"]> = {
+  "urinetown-scenic-design-building-a-dystopia-that-feels-uncomfortably-familiar":
+    urinetownArticleBlocks as LocalArticle["content"],
   "what-makes-a-good-scenic-design-rendering": [
     {
       type: "paragraph",
@@ -1856,6 +1860,368 @@ const ghibliImmersiveDiningArticle: LocalArticle = {
   ],
 };
 
+const workingOffstageArticle: LocalArticle = {
+  id: 100006,
+  slug: "working-offstage-expanding-a-scenic-design-career-beyond-theatre",
+  title: "Working Offstage: Expanding a Scenic Design Career Beyond Theatre",
+  excerpt:
+    "A practical essay on how scenic designers can expand into themed entertainment, architectural visualization, rendering, and other adjacent industries without abandoning theatre.",
+  coverImageUrl:
+    "/assets/articles/working-offstage/cover.webp",
+  coverImageAlt:
+    "Abstract theatrical architecture opening into adjacent design worlds beyond the stage, with a solitary figure standing in a warm amber haze.",
+  publishedAt: "2026-03-26",
+  updatedAt: "2026-03-26",
+  createdAt: "2026-03-26",
+  categoryName: "Design Process",
+  seoTitle:
+    "Working Offstage: Expanding a Scenic Design Career Beyond Theatre",
+  seoDescription:
+    "How scenic designers can build sustainable careers beyond theatre through themed entertainment, visualization, rendering, freelance pricing, and better scope management.",
+  seoKeywords:
+    "scenic design career, themed entertainment careers, architectural rendering freelance, scenic designer freelance rates, offstage design work, experiential design career, scenic design beyond theatre",
+  series: {
+    name: "Process and Practice",
+    slug: "process-and-practice",
+    order: 6,
+  },
+  tags: [
+    { id: 100415, name: "Career Development", slug: "career-development" },
+    { id: 100416, name: "Scenic Design", slug: "scenic-design" },
+    { id: 100417, name: "Themed Entertainment", slug: "themed-entertainment" },
+    { id: 100418, name: "Experiential Design", slug: "experiential-design" },
+    { id: 100419, name: "Freelance Practice", slug: "freelance-practice" },
+  ],
+  featured: false,
+  content: [
+    {
+      type: "paragraph",
+      text:
+        "There are moments in a career where things shift.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Sometimes the change is external. Work slows down. A theatre you have worked with regularly brings in new designers. Or something larger hits, like a global pandemic, and the industry pauses in a way no one expected.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Other times, the shift is internal. You want to try something different. You want a better balance. Or you are looking for a way to make the career more sustainable over time.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "That is not failure. That is the job.",
+    },
+    {
+      type: "quote",
+      text:
+        "Working offstage does not mean starting over. It means applying the same skill set in a different context.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Most scenic designers do not follow a single path. They build a mix. For many, that second lane is education. I have done that, and it works well for a lot of designers. But it is not for everyone, and it is not the only option.",
+    },
+    {
+      type: "list",
+      listType: "bullet",
+      items: [
+        "Themed entertainment",
+        "Architectural rendering",
+        "Drafting and visualization",
+        "Film and television",
+      ],
+    },
+    {
+      type: "image",
+      url: "/assets/articles/working-offstage/transfer-editorial.webp",
+      alt: "Atmospheric blue editorial artwork with layered translucent planes and luminous architectural openings suggesting expansion beyond a single path.",
+      caption:
+        "A broader career can still grow from the same core scenic instincts.",
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "The Skill Set Already Transfers",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Scenic designers are already trained to move between disciplines. We interpret ideas quickly. We build environments from partial information. We translate conversations into visual form. We move between drafting, modeling, rendering, and communication without thinking twice about it.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "That workflow is not specific to theatre. It applies directly to themed environments, architectural visualization, and production design for camera. The tools may shift slightly, and clients may speak a different language, but the core process is the same.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "In many ways, you are not learning something entirely new. You are recognizing the value of what you already know how to do.",
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "When Theatre Is Not Enough or Not Available",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Theatre work is not always consistent. Even in a strong network, seasons fluctuate. Budgets change. Priorities shift.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "There are also moments where you might want something different, whether that means more financial stability, a different pace, or simply a different kind of problem to solve.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "That is where working offstage becomes useful. It is not a replacement for theatre. It is a parallel track, and for many designers it becomes part of a broader career model that shifts over time.",
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "The Real Adjustment: Time Becomes the Product",
+    },
+    {
+      type: "paragraph",
+      text:
+        "The biggest shift when stepping into offstage work is not design. It is how the work is structured.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "In theatre, you are often paid per production. There is an understanding of the scope, even if it is not always clearly defined. In adjacent industries, especially in freelance work, you are billing for time.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "That changes how you approach everything. You are not just delivering a design. You are managing hours, revisions, file conditions, and expectations in a much more direct way.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "That is where many scenic designers need to recalibrate.",
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "Start with the Market, Not Guessing",
+    },
+    {
+      type: "paragraph",
+      text:
+        "When I first started working outside of theatre, the instinct was to pick a number that felt reasonable. That is not how this works.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Instead, look at what companies are already paying. Spend time on LinkedIn and review full-time roles in your area: 3D designers, visualization artists, experiential designers. Take those salary ranges and break them into hourly equivalents. That becomes your baseline.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "If you are unsure where to land, a simple approach is to start at the lower end of that range and add around 20 percent to account for freelance realities like taxes, software, and downtime between projects.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "That adjustment is not about inflating your rate. It is about aligning it with how you are actually working.",
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "Where Things Actually Go Wrong: Scope",
+    },
+    {
+      type: "paragraph",
+      text:
+        "One of the first projects I took on outside of theatre was described as a quick rendering pass: clean up the model, add some texture, and get it presentable. It did not go that way.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "The file needed more than cleanup. Geometry had to be rebuilt. Materials did not translate. Lighting had to be rethought. What sounded like a short task turned into something much closer to a full design pass.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "That experience stuck with me, because the issue was not the work. The issue was agreeing to it before fully understanding what I was stepping into.",
+    },
+    {
+      type: "list",
+      listType: "bullet",
+      items: [
+        "Open the files",
+        "Review PDFs",
+        "Look at reference images",
+        "Ask what the deliverables actually are",
+      ],
+    },
+    {
+      type: "image",
+      url: "/assets/articles/working-offstage/scope-editorial.webp",
+      alt: "Warm charcoal editorial artwork of stacked translucent planes and shifting surfaces suggesting unseen layers of complexity inside a project.",
+      caption:
+        "Scope rarely appears all at once. It usually reveals itself in layers.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Pricing matters, but scope is where projects fall apart. What gets described as a quick rendering is often asking for far more work than the original language suggests.",
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "The Core Strategy: Give a Range",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Once you understand the scope, do not lock yourself into a fixed number of hours. Always give a range.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "If something feels like it will take around 30 hours, say: “This will likely take between 20 and 40 hours depending on revisions and file condition.”",
+    },
+    {
+      type: "paragraph",
+      text:
+        "This is one of the most important habits you can build. It protects you from unknowns, sets expectations early, and gives you flexibility without renegotiating mid-project. Clients in architecture, film, and experiential work are used to this structure. It signals that you understand how these projects function.",
+    },
+    {
+      type: "image",
+      url: "/assets/articles/working-offstage/pricing-editorial.webp",
+      alt: "Soft blue editorial artwork with measured horizontal bands and quiet shifts in light suggesting structure, calibration, and flexibility.",
+      caption:
+        "A useful range creates structure without pretending the work is fixed.",
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "Why the Range Matters More Than the Rate",
+    },
+    {
+      type: "paragraph",
+      text:
+        "You can have a solid hourly rate and still lose money if the scope expands. That is why the range matters more than the number itself.",
+    },
+    {
+      type: "list",
+      listType: "bullet",
+      items: [
+        "Files are rarely clean",
+        "Expectations evolve",
+        "Creative work is not fixed",
+      ],
+    },
+    {
+      type: "paragraph",
+      text:
+        "Scenic designers already understand this instinctively. We are used to things changing in the room. The adjustment is learning how to account for that change before the work begins.",
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "Be Honest. That Is the Long Game.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "The goal is not to stretch hours or overestimate. It is to be accurate. Track your time. Stay within the range you set. If something shifts, communicate early.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Because the real goal is not a single project. It is building relationships that lead to more work. That only happens if people trust how you work.",
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "A Broader Career Model",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Most sustainable careers in scenic design are built across multiple lanes. Theatre may remain central, but it does not have to carry everything.",
+    },
+    {
+      type: "list",
+      listType: "bullet",
+      items: [
+        "A regional production",
+        "A themed entertainment concept",
+        "A rendering package for an architectural client",
+        "A short-term project for a brand or agency",
+      ],
+    },
+    {
+      type: "paragraph",
+      text:
+        "Those shifts are not a step away from theatre. They are part of a larger practice. Working offstage is not about leaving the field. It is about expanding how you operate within it.",
+    },
+    {
+      type: "paragraph",
+      text:
+        "Once you start approaching your career that way, those transitions stop feeling like disruptions. They just become part of the rhythm of the work.",
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "Related Reading",
+    },
+    {
+      type: "html",
+      content:
+        '<ul><li><a href="/articles/the-evolution-of-themed-entertainment-from-ancient-gardens-to-modern-immersive-experienceses-everything">The Evolution of Themed Entertainment</a></li><li><a href="/projects/experiential">Experiential Design Portfolio</a></li><li><a href="/about/teaching">Teaching Philosophy</a></li></ul>',
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "FAQ: Working Offstage as a Scenic Designer",
+    },
+    {
+      type: "faq",
+      items: [
+        {
+          question: "Is it common for scenic designers to work outside of theatre?",
+          answer:
+            "Yes. Many scenic designers build careers across multiple areas, including education, drafting, rendering, and design work in adjacent industries. Theatre is often the foundation, but not the only lane.",
+        },
+        {
+          question: "Do I need to learn completely new skills to work in other industries?",
+          answer:
+            "Not usually. The core skills, including visual storytelling, drafting, modeling, and rendering, transfer directly. The adjustment is more about workflow, pace, and communication.",
+        },
+        {
+          question: "How do I figure out what to charge as a freelancer?",
+          answer:
+            "Start by looking at full-time salary ranges for similar roles in your area. Convert that into an hourly rate, then add around 20 percent to account for freelance costs like taxes, software, and downtime.",
+        },
+        {
+          question: "Why is giving an hourly range better than a fixed estimate?",
+          answer:
+            "A range accounts for unknowns like file condition, revisions, and scope changes. It protects your time and sets clearer expectations with clients before the work begins.",
+        },
+        {
+          question: "What if I underestimate the time required?",
+          answer:
+            "Communicate early. If you have provided a range, you already have a structure for explaining why the project is shifting. Transparency is key to maintaining trust.",
+        },
+        {
+          question: "Is working offstage a replacement for theatre?",
+          answer:
+            "No. It is a way to expand your practice. Many designers move between theatre and adjacent industries depending on the season, workload, and opportunities available.",
+        },
+      ],
+    },
+  ],
+};
+
 const dbBackedArticles = (generatedLocalArticles as LocalArticle[]).map((article) => ({
   ...article,
   ...articleFieldOverridesBySlug[article.slug],
@@ -1874,6 +2240,7 @@ const manualArticles: LocalArticle[] = [
   voyageLaArticle,
   visualLanguageArticle,
   ghibliImmersiveDiningArticle,
+  workingOffstageArticle,
 ];
 
 const articlesWithManualEntries = [

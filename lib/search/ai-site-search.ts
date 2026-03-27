@@ -479,15 +479,15 @@ function buildHeuristicFallback(query: string, candidates: SearchCandidate[]): A
 }
 
 export async function runAISiteSearch(query: string): Promise<AISiteSearchResponse | null> {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) return null;
-
   const trimmedQuery = collapseWhitespace(query);
   if (trimmedQuery.length < 3) return null;
 
   const { candidates } = buildCandidates(trimmedQuery);
-  if (!candidates.length) return null;
   const fallback = buildHeuristicFallback(trimmedQuery, candidates);
+  if (!candidates.length) return fallback;
+
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) return fallback;
 
   let response: Response;
   try {
@@ -576,7 +576,7 @@ export async function runAISiteSearch(query: string): Promise<AISiteSearchRespon
         ? collapseWhitespace(parsed.insight)
         : "These results connect the query to portfolio pages, writing, and collaborators already on the site.",
     connections,
-    recommendations,
+    recommendations: recommendations.length > 0 ? recommendations : fallback.recommendations,
     relatedQueries,
   };
 }
