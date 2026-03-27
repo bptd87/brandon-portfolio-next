@@ -17,7 +17,7 @@
   },
   {
     "type": "image",
-    "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/ThXLoYAq4LaKTJjGMptg7T-img-1_1770549319000_na1fn_aGFyZHdhcmUtYXJ0aWNsZS1kZXNpZ25lci13b3Jrc3BhY2U-compressed.webp",
+    "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/computer-hardware-why-scenic-designers-and-all-theatre-designers-need-to-care/body/thxloyaq4laktjjgmptg7t-img-1_1770549319000_na1fn_agfyzhdhcmutyxj0awnszs1kzxnpz25lci13b3jrc3bhy2u-compressed-bd60ee39.webp",
     "caption": "A scenic designer's workspace with powerful hardware ready for complex 3D modeling and rendering",
     "alt": "Understanding Computer Hardware: Why Scenic Designers (and All Theatre Designers) Need to Care scenic design by Brandon PT Davis"
   },
@@ -73,7 +73,7 @@
   },
   {
     "type": "image",
-    "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/ThXLoYAq4LaKTJjGMptg7T-img-2_1770549317000_na1fn_aGFyZHdhcmUtYXJ0aWNsZS1jcHUtZ3B1-compressed.webp",
+    "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/computer-hardware-why-scenic-designers-and-all-theatre-designers-need-to-care/body/thxloyaq4laktjjgmptg7t-img-2_1770549317000_na1fn_agfyzhdhcmutyxj0awnszs1jchutz3b1-compressed-5e370874.webp",
     "caption": "Modern CPU and GPU components - the powerhouses behind your design software",
     "alt": "Understanding Computer Hardware: Why Scenic Designers (and All Theatre Designers) Need to Care scenic design by Brandon PT Davis"
   },
@@ -144,8 +144,12 @@
     ]
   },
   {
+    "type": "paragraph",
+    "text": "One practical nuance matters here: Vectorworks still splits the load between CPU and GPU in ways designers can feel immediately. CPU strength affects calculations, file handling, and many heavier processing tasks, while the GPU has a bigger impact on viewport navigation, real-time previews, and multi-display responsiveness. That is why scenic designers often feel slowdown not from one dramatic bottleneck, but from trying to draft, render, research, and present all at once."
+  },
+  {
     "type": "image",
-    "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/ThXLoYAq4LaKTJjGMptg7T-img-3_1770549314000_na1fn_aGFyZHdhcmUtYXJ0aWNsZS1yZW5kZXJpbmc-compressed.webp",
+    "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/computer-hardware-why-scenic-designers-and-all-theatre-designers-need-to-care/body/thxloyaq4laktjjgmptg7t-img-3_1770549314000_na1fn_agfyzhdhcmutyxj0awnszs1yzw5kzxjpbmc-compressed-42f3ff1e.webp",
     "caption": "Real-time rendering of complex scenic designs requires powerful GPU and CPU coordination",
     "alt": "Understanding Computer Hardware: Why Scenic Designers (and All Theatre Designers) Need to Care scenic design by Brandon PT Davis"
   },
@@ -443,6 +447,25 @@
     "type": "quote",
     "text": "The best computer for theatre design isn't the most expensive one—it's the one that disappears into your workflow and lets you focus on creating.",
     "author": ""
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Further Reading & Resources"
+  },
+  {
+    "type": "paragraph",
+    "text": "If you are specing a machine around Vectorworks-heavy scenic workflows, it helps to compare personal recommendations against the software's published guidance and tested hardware lists. These are the resources I would check first, along with one companion article from this site."
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "<a href=\"https://www.vectorworks.net/sysreq\" target=\"_blank\" rel=\"noopener noreferrer\">Vectorworks System Requirements</a> — official baseline requirements and current performance guidance for supported versions.",
+      "<a href=\"https://www.vectorworks.net/en-US/support/quality-tested-hardware\" target=\"_blank\" rel=\"noopener noreferrer\">Vectorworks Quality Tested Hardware</a> — verified workstation and laptop configurations, including Dell Precision, HP Z, Lenovo workstations, and Apple hardware.",
+      "<a href=\"https://www.vectorworks.net/en-US/support\" target=\"_blank\" rel=\"noopener noreferrer\">Vectorworks Support Documentation</a> — broader documentation and hardware guidance for workflow troubleshooting.",
+      "<a href=\"/articles/what-makes-a-good-scenic-design-rendering\">What Makes a Good Scenic Design Rendering?</a> — a companion piece on how hardware speed supports rendering decisions, communication, and visual hierarchy."
+    ]
   },
   {
     "type": "heading",

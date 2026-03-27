@@ -34,7 +34,7 @@ const rawAssistantScenicDesignEntries: AssistantScenicDesignEntry[] = [
     excerpt:
       "Assistant scenic design credit on Seattle Rep's The Play That Goes Wrong, supporting a precision comedy environment where scenic timing is part of the performance engine.",
     coverImageUrl:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/news-images/news-2-cover.webp",
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/news/news-2-cover-906f6fb9.webp",
     coverImageAlt: "The Play That Goes Wrong at Seattle Rep",
     location: "Seattle, WA",
     externalUrl: "https://www.seattlerep.org/plays/202526-season/the-play-that-goes-wrong",
@@ -51,7 +51,7 @@ const rawAssistantScenicDesignEntries: AssistantScenicDesignEntry[] = [
     excerpt:
       "Fifth season of assistant scenic collaboration with Jo Winiarski at Utah Shakespeare Festival, reinforcing continuity, scale management, and high-volume repertory support.",
     coverImageUrl:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/news-images/news-4-cover.webp",
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/news/news-4-cover-ec3d0671.webp",
     coverImageAlt: "Utah Shakespeare Festival fifth season milestone",
     featured: true,
   },
@@ -66,7 +66,7 @@ const rawAssistantScenicDesignEntries: AssistantScenicDesignEntry[] = [
     excerpt:
       "Assistant scenic design support for Utah Shakespeare Festival 2025, including The Importance of Being Earnest, A Gentleman's Guide to Love and Murder, and Steel Magnolias.",
     coverImageUrl:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/news-images/news-90005-cover.webp",
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/news/news-90005-cover-5fec4d2f.webp",
     coverImageAlt: "Utah Shakespeare Festival 2025 season",
     featured: true,
   },
@@ -81,7 +81,7 @@ const rawAssistantScenicDesignEntries: AssistantScenicDesignEntry[] = [
     excerpt:
       "Assistant scenic design credit for The Book Club Play at Cincinnati Playhouse in the Park, supporting scenic development, drafting, and design execution.",
     coverImageUrl:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/news-images/news-90007-cover.webp",
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/news/news-90007-cover-a1147d05.webp",
     coverImageAlt: "The Book Club Play at Cincinnati Playhouse in the Park",
     featured: true,
   },
@@ -96,7 +96,7 @@ const rawAssistantScenicDesignEntries: AssistantScenicDesignEntry[] = [
     excerpt:
       "Assistant scenic design support for Ragtime at The Ruth and Nathan Hale Theater, focused on documentation, drafting, and production-ready scenic communication.",
     coverImageUrl:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/news-images/news-90009-cover.webp",
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/news/news-90009-cover-a4a51f5c.webp",
     coverImageAlt: "Ragtime at The Ruth and Nathan Hale Theater",
     featured: true,
   },
@@ -111,7 +111,7 @@ const rawAssistantScenicDesignEntries: AssistantScenicDesignEntry[] = [
     excerpt:
       "Assistant scenic design work for Souvenir at Pioneer Theatre Company, supporting scenic drawings, 3D coordination, and design implementation.",
     coverImageUrl:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/news-images/news-90008-cover.webp",
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/news/news-90008-cover-218e2c9c.webp",
     coverImageAlt: "Souvenir at Pioneer Theatre Company",
     featured: true,
   },
@@ -126,7 +126,7 @@ const rawAssistantScenicDesignEntries: AssistantScenicDesignEntry[] = [
     excerpt:
       "Assistant scenic design credit for Jersey Boys at Pioneer Theatre Company, with drafting and 3D model support for a fast-moving, music-driven production.",
     coverImageUrl:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/news-images/news-120001-cover.webp",
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/news/news-120001-cover-92d4f579.webp",
     coverImageAlt: "Jersey Boys at Pioneer Theatre Company",
     location: "Pioneer Theatre Company, Salt Lake City, UT",
     externalUrl: "https://pioneertheatre.org/shows/jersey-boys/",
@@ -142,7 +142,7 @@ const rawAssistantScenicDesignEntries: AssistantScenicDesignEntry[] = [
     excerpt:
       "Supporting Jo Winiarski's scenic designs for The Mountaintop and Silent Sky at the Utah Shakespeare Festival.",
     coverImageUrl:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/news-images/news-90004-cover.webp",
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/news/news-90004-cover-eae7349a.webp",
     coverImageAlt: "Utah Shakespeare Festival 2024 season",
   },
   {
@@ -156,7 +156,7 @@ const rawAssistantScenicDesignEntries: AssistantScenicDesignEntry[] = [
     excerpt:
       "Assistant scenic design support for Natasha, Pierre & The Great Comet of 1812 at Pioneer Theatre Company, including drafting and production coordination.",
     coverImageUrl:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/news-images/news-90010-cover.webp",
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/news/news-90010-cover-0cd6af15.webp",
     coverImageAlt: "Natasha, Pierre & The Great Comet of 1812 at Pioneer Theatre Company",
     location: "Pioneer Theatre Company, Salt Lake City, UT",
     externalUrl: "https://pioneertheatre.org/shows/natasha-pierre-the-great-comet-of-1812/",
@@ -172,7 +172,7 @@ const rawAssistantScenicDesignEntries: AssistantScenicDesignEntry[] = [
     excerpt:
       "Assistant scenic design support for Native Gardens at Pioneer Theatre Company, including detailed drafting and spatial development for two contrasting homes.",
     coverImageUrl:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/news-images/news-120002-cover.webp",
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/news/news-120002-cover-986cfdd2.webp",
     coverImageAlt: "Native Gardens at Pioneer Theatre Company",
     location: "Pioneer Theatre Company, Salt Lake City, UT",
     externalUrl: "https://pioneertheatre.org/production/native-gardens/",
@@ -188,7 +188,7 @@ const rawAssistantScenicDesignEntries: AssistantScenicDesignEntry[] = [
     excerpt:
       "Assistant scenic design credit on the world premiere of Bottle Shock! The Musical at California Center for the Arts, Escondido.",
     coverImageUrl:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/news-images/news-120003-cover.webp",
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/news/news-120003-cover-2d7e0b23.webp",
     coverImageAlt: "Bottle Shock! The Musical at California Center for the Arts, Escondido",
     location: "California Center for the Arts Escondido, Escondido, CA",
     externalUrl: "https://artcenter.org/event/bottleshockthemusical/",
@@ -204,7 +204,7 @@ const rawAssistantScenicDesignEntries: AssistantScenicDesignEntry[] = [
     excerpt:
       "Assistant scenic design work on The Fears at Signature Theatre in New York, supporting execution, communication, and design continuity in an Off-Broadway production context.",
     coverImageUrl:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/news-images/news-90006-cover.webp",
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/news/news-90006-cover-9b9beaa5.webp",
     coverImageAlt: "The Fears at Signature Theatre",
   },
   {
@@ -218,7 +218,7 @@ const rawAssistantScenicDesignEntries: AssistantScenicDesignEntry[] = [
     excerpt:
       "Supporting Jo Winiarski's scenic designs for Romeo and Juliet and A Midsummer Night's Dream at the Utah Shakespeare Festival.",
     coverImageUrl:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio-images/Assistant%20Scenic%20Design/KAR_1163a.jpg",
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/news/kar_1163a-ca11e8de.jpg",
     coverImageAlt: "Utah Shakespeare Festival 2023 production photo",
   },
   {
@@ -232,7 +232,7 @@ const rawAssistantScenicDesignEntries: AssistantScenicDesignEntry[] = [
     excerpt:
       "Assistant scenic design work for Clue On Stage at Dallas Theater Center, supporting production drafting, layout coordination, and scenic documentation.",
     coverImageUrl:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/news-images/news-120005-cover.webp",
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/news/news-120005-cover-09b49480.webp",
     coverImageAlt: "Clue: On Stage at Dallas Theater Center",
     location: "Dallas Theatre Center, Dallas, TX",
     externalUrl: "https://www.dallastheatercenter.org/",
@@ -248,7 +248,7 @@ const rawAssistantScenicDesignEntries: AssistantScenicDesignEntry[] = [
     excerpt:
       "Supporting Jo Winiarski's scenic designs for Trouble in Mind, Clue: On Stage, and The Sound of Music during an on-site summer season in Cedar City, Utah.",
     coverImageUrl:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/news-images/news-90002-cover.webp",
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/news/news-90002-cover-b5150e6e.webp",
     coverImageAlt: "Utah Shakespeare Festival 2022 season",
   },
   {
@@ -262,7 +262,7 @@ const rawAssistantScenicDesignEntries: AssistantScenicDesignEntry[] = [
     excerpt:
       "Assistant scenic design support for the world premiere of A Distinct Society at Pioneer Theatre Company, including drafting and 3D model deliverables.",
     coverImageUrl:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/news-images/news-120002-cover.webp",
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/news/news-120002-cover-986cfdd2.webp",
     coverImageAlt: "A Distinct Society at Pioneer Theatre Company",
     location: "Pioneer Theatre Company, Salt Lake City, UT",
     externalUrl: "https://pioneertheatre.org/",
@@ -278,7 +278,7 @@ const rawAssistantScenicDesignEntries: AssistantScenicDesignEntry[] = [
     excerpt:
       "Supporting Jo Winiarski's scenic designs for The Pirates of Penzance and Ragtime during an on-site summer season in Cedar City, Utah.",
     coverImageUrl:
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/news-images/news-90001-cover.webp",
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/news/news-90001-cover-c6335831.webp",
     coverImageAlt: "Utah Shakespeare Festival 2021 season",
   },
 ];

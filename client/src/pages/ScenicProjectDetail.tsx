@@ -9,6 +9,7 @@ import { ProgressiveImage } from "@/components/ProgressiveImage";
 import ScenicRenderingGallery from "@/components/ScenicRenderingGallery";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { CreditNameLinks } from "@/components/CreditNameLinks";
 import { formatUtcDate } from "@/lib/date-format";
 import { Button } from "@/components/ui/button";
 import { getLocalScenicProjectBySlug, getLocalScenicProjects, type LocalScenicProjectMedia } from "@shared/localScenicProjects";
@@ -322,26 +323,26 @@ export default function ScenicProjectDetail({
                           : "text-[1.18rem] font-normal leading-[1.14]"
                     }`}
                   >
-                    {member.name}
+                    {member.url ? (
+                      <a
+                        href={member.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="transition-colors hover:text-white/78"
+                      >
+                        {member.name}
+                      </a>
+                    ) : (
+                      <CreditNameLinks
+                        name={member.name}
+                        className="transition-colors hover:text-white/78"
+                      />
+                    )}
                   </span>
                 </>
               );
 
-              return member.url ? (
-                <a
-                  key={`${member.role}-${member.name}`}
-                  href={member.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block transition-colors hover:text-white"
-                >
-                  {content}
-                </a>
-              ) : (
-                <div key={`${member.role}-${member.name}`}>
-                  {content}
-                </div>
-              );
+              return <div key={`${member.role}-${member.name}`}>{content}</div>;
             })}
           </div>
         </div>

@@ -90,7 +90,7 @@ const millionDollarQuartet: LocalScenicProject = {
   seoKeywords:
     "Million Dollar Quartet, scenic design, South Coast Repertory, musical theatre, Sun Records, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90087-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-cover-5a61d757.webp",
   creativeTeam: [
     { name: "Colin Escott and Floyd Mutrux", role: "Book By" },
     { name: "Floyd Mutrux", role: "Original Concept and Direction By" },
@@ -120,7 +120,7 @@ const millionDollarQuartet: LocalScenicProject = {
       id: "mdq-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90087-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-cover-5a61d757.webp",
       altText: "Million Dollar Quartet scenic design cover image.",
       kind: "cover",
     },
@@ -128,7 +128,7 @@ const millionDollarQuartet: LocalScenicProject = {
       id: "mdq-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90087-gallery-150210.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150210-2ab544ca.webp",
       altText:
         "Cast blocking across the studio set architecture in Million Dollar Quartet at SCR, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -137,7 +137,7 @@ const millionDollarQuartet: LocalScenicProject = {
       id: "mdq-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90087-gallery-150207.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150207-7d8a45e3.webp",
       altText:
         "Performance moment on the Sun Records-inspired set for Million Dollar Quartet at South Coast Repertory, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -146,7 +146,7 @@ const millionDollarQuartet: LocalScenicProject = {
       id: "mdq-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90087-gallery-150223.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150223-755c8e5d.webp",
       altText:
         "Band-centered stage composition with warm practical lighting in Million Dollar Quartet, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -155,7 +155,7 @@ const millionDollarQuartet: LocalScenicProject = {
       id: "mdq-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90087-gallery-150174.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150174-8f646b43.webp",
       altText:
         "Scene work on the vintage studio interior built for Million Dollar Quartet, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -164,7 +164,7 @@ const millionDollarQuartet: LocalScenicProject = {
       id: "mdq-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90087-gallery-150067.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150067-01e01870.webp",
       altText:
         "Onstage action framed by the recording booth and studio details in Million Dollar Quartet, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -173,7 +173,7 @@ const millionDollarQuartet: LocalScenicProject = {
       id: "mdq-prod-7",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90087-gallery-150108.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150108-f491af26.webp",
       altText:
         "Wide audience-view perspective of the Million Dollar Quartet set at South Coast Repertory, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -182,7 +182,7 @@ const millionDollarQuartet: LocalScenicProject = {
       id: "mdq-prod-8",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90087-gallery-150190.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150190-7ee08c4c.webp",
       altText:
         "Production image highlighting the full studio footprint for Million Dollar Quartet, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -197,7 +197,7 @@ const millionDollarQuartet: LocalScenicProject = {
       id: "mdq-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90087-gallery-150244.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150244-8d464658.webp",
       altText:
         "Rendering study showing depth, instrument placement, and sightlines for Million Dollar Quartet, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -206,7 +206,7 @@ const millionDollarQuartet: LocalScenicProject = {
       id: "mdq-render-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90087-gallery-150087.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150087-7a630428.webp",
       altText:
         "Early rendering pass for Million Dollar Quartet emphasizing period texture and performance focus, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -215,7 +215,7 @@ const millionDollarQuartet: LocalScenicProject = {
       id: "mdq-render-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90087-gallery-150123.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150123-58759f4e.webp",
       altText:
         "Concept rendering of the period recording studio environment for Million Dollar Quartet, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -290,7 +290,7 @@ const glassMenagerie: LocalScenicProject = {
   seoKeywords:
     "The Glass Menagerie, scenic design, Maples Repertory Theatre, Tennessee Williams, Brandon PT Davis, memory play, theatre design",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90010-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-cover-775dc22f.webp",
   creativeTeam: [
     { name: "Tennessee Williams", role: "By" },
     { name: "Kimberly Braun", role: "Director" },
@@ -316,7 +316,7 @@ const glassMenagerie: LocalScenicProject = {
       id: "gm-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90010-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-cover-775dc22f.webp",
       altText: "The Glass Menagerie scenic design cover image.",
       kind: "cover",
     },
@@ -324,7 +324,7 @@ const glassMenagerie: LocalScenicProject = {
       id: "gm-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90010-gallery-150121.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150121-18849ccd.webp",
       altText: "Stage production photo of scenic design for The Glass Menagerie at Maples Repertory Theatre. View 2.",
       kind: "production",
     },
@@ -332,7 +332,7 @@ const glassMenagerie: LocalScenicProject = {
       id: "gm-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90010-gallery-150167.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150167-705248fb.webp",
       altText: "Wide production view of The Glass Menagerie at Maples Repertory Theatre in Macon, scenic design by Brandon PT Davis.",
       kind: "production",
     },
@@ -340,7 +340,7 @@ const glassMenagerie: LocalScenicProject = {
       id: "gm-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90010-gallery-150147.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150147-80530627.webp",
       altText: "Performance moment centered in the fragile interior world of The Glass Menagerie, scenic design by Brandon PT Davis.",
       kind: "production",
     },
@@ -348,7 +348,7 @@ const glassMenagerie: LocalScenicProject = {
       id: "gm-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90010-gallery-150109.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150109-a740442f.webp",
       altText: "Scene work across the primary platform system in The Glass Menagerie, scenic design by Brandon PT Davis.",
       kind: "production",
     },
@@ -356,7 +356,7 @@ const glassMenagerie: LocalScenicProject = {
       id: "gm-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90010-gallery-150052.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150052-9b675ddb.webp",
       altText: "Audience perspective of The Glass Menagerie with layered scenic planes, scenic design by Brandon PT Davis.",
       kind: "production",
     },
@@ -364,7 +364,7 @@ const glassMenagerie: LocalScenicProject = {
       id: "gm-prod-7",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90010-gallery-150084.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150084-22778dc8.webp",
       altText: "Actors framed by the memory-play architecture in The Glass Menagerie, scenic design by Brandon PT Davis.",
       kind: "production",
     },
@@ -372,7 +372,7 @@ const glassMenagerie: LocalScenicProject = {
       id: "gm-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90010-gallery-150168.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90010-gallery-150168-5dda40de.webp",
       altText: "Concept rendering for The Glass Menagerie exploring atmosphere and spatial drift, scenic design by Brandon PT Davis.",
       kind: "rendering",
     },
@@ -380,7 +380,7 @@ const glassMenagerie: LocalScenicProject = {
       id: "gm-prod-8",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90010-gallery-150020.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150020-9c38d1a9.webp",
       altText: "Production still emphasizing sightlines and negative space in The Glass Menagerie, scenic design by Brandon PT Davis.",
       kind: "production",
     },
@@ -388,7 +388,7 @@ const glassMenagerie: LocalScenicProject = {
       id: "gm-prod-9",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90010-gallery-150106.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150106-9de48421.webp",
       altText: "Stage production photo of scenic design for The Glass Menagerie at Maples Repertory Theatre. View 1.",
       kind: "production",
     },
@@ -396,7 +396,7 @@ const glassMenagerie: LocalScenicProject = {
       id: "gm-prod-10",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90010-gallery-150095.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150095-1deb7561.webp",
       altText: "Full-stage composition showing layered depth in The Glass Menagerie at Maples Repertory Theatre, scenic design by Brandon PT Davis.",
       kind: "production",
     },
@@ -404,7 +404,7 @@ const glassMenagerie: LocalScenicProject = {
       id: "gm-prod-11",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90010-gallery-150022.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150022-df9b68ff.webp",
       altText: "House view of the scenic environment for The Glass Menagerie in Macon, scenic design by Brandon PT Davis.",
       kind: "production",
     },
@@ -412,7 +412,7 @@ const glassMenagerie: LocalScenicProject = {
       id: "gm-prod-12",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90010-gallery-150211.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150211-d9f6b2ed.webp",
       altText: "Ensemble stage picture inside the poetic world of The Glass Menagerie, scenic design by Brandon PT Davis.",
       kind: "production",
     },
@@ -483,7 +483,7 @@ const allsWellThatEndsWell: LocalScenicProject = {
   seoKeywords:
     "All's Well That Ends Well, scenic design, New Swan Theatre Festival, Shakespeare, Brandon PT Davis, theatre design",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90071-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-cover-375c8ade.webp",
   creativeTeam: [
     { name: "William Shakespeare", role: "By" },
     { name: "Brandon PT Davis", role: "Scenic Designer" },
@@ -509,7 +509,7 @@ const allsWellThatEndsWell: LocalScenicProject = {
       id: "aw-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90071-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-cover-375c8ade.webp",
       altText: "All's Well That Ends Well scenic design cover image.",
       kind: "cover",
     },
@@ -517,7 +517,7 @@ const allsWellThatEndsWell: LocalScenicProject = {
       id: "aw-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90071-gallery-150012.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-gallery-150012-b2c92b49.webp",
       altText:
         "Production image from All's Well That Ends Well at New Swan Theatre Festival, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -526,7 +526,7 @@ const allsWellThatEndsWell: LocalScenicProject = {
       id: "aw-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90071-gallery-150047.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-gallery-150047-919d0e10.webp",
       altText:
         "Performance image from All's Well That Ends Well with the New Swan stage world visible, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -535,7 +535,7 @@ const allsWellThatEndsWell: LocalScenicProject = {
       id: "aw-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90071-gallery-150057.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-gallery-150057-702f2abc.webp",
       altText:
         "Stage picture from All's Well That Ends Well at New Swan Theatre Festival, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -544,7 +544,7 @@ const allsWellThatEndsWell: LocalScenicProject = {
       id: "aw-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90071-gallery-150162.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-gallery-150162-81976b2e.webp",
       altText:
         "Stage image from All's Well That Ends Well at New Swan Theatre Festival, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -553,7 +553,7 @@ const allsWellThatEndsWell: LocalScenicProject = {
       id: "aw-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90071-gallery-150178.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-gallery-150178-4ad34fa7.webp",
       altText:
         "Performance image from All's Well That Ends Well with actor pathways visible, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -562,7 +562,7 @@ const allsWellThatEndsWell: LocalScenicProject = {
       id: "aw-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90071-gallery-150229.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-gallery-150229-a8aaa5e2.webp",
       altText:
         "Production image from All's Well That Ends Well at New Swan with cast and scenic world visible, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -629,7 +629,7 @@ const bellBookAndCandle: LocalScenicProject = {
   seoKeywords:
     "Bell, Book, and Candle, scenic design, Okoboji Summer Theatre, comedy, Brandon PT Davis, theatre design",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90016-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90016-cover-7a4ed712.webp",
   creativeTeam: [
     { name: "John Van Druten", role: "Playwright" },
     { name: "Brandon PT Davis", role: "Scenic Design" },
@@ -655,7 +655,7 @@ const bellBookAndCandle: LocalScenicProject = {
       id: "bbc-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90016-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90016-cover-7a4ed712.webp",
       altText: "Bell, Book, and Candle scenic design cover image.",
       kind: "cover",
     },
@@ -663,7 +663,7 @@ const bellBookAndCandle: LocalScenicProject = {
       id: "bbc-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90016-gallery-150114.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90016-gallery-150114-59d7bd6e.webp",
       altText:
         "Production image from Bell, Book, and Candle at Okoboji Summer Theatre, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -672,7 +672,7 @@ const bellBookAndCandle: LocalScenicProject = {
       id: "bbc-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90016-gallery-150253.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90016-gallery-150253-8fbdad21.webp",
       altText:
         "Stage image from Bell, Book, and Candle showing the domestic apartment world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -681,7 +681,7 @@ const bellBookAndCandle: LocalScenicProject = {
       id: "bbc-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90016-gallery-150160.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90016-gallery-150160-5c40af7a.webp",
       altText:
         "Performance image from Bell, Book, and Candle within the grounded interior setting, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -690,7 +690,7 @@ const bellBookAndCandle: LocalScenicProject = {
       id: "bbc-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90016-gallery-150137.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90016-gallery-150137-30da06e5.webp",
       altText:
         "Production view of Bell, Book, and Candle emphasizing furniture layout and actor pathways, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -699,7 +699,7 @@ const bellBookAndCandle: LocalScenicProject = {
       id: "bbc-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90016-gallery-150247.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90016-gallery-150247-b5bae563.webp",
       altText:
         "Stage picture from Bell, Book, and Candle at Okoboji Summer Theatre, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -708,7 +708,7 @@ const bellBookAndCandle: LocalScenicProject = {
       id: "bbc-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90016-gallery-150203.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90016-gallery-150203-19d42e5d.webp",
       altText:
         "Rendering for Bell, Book, and Candle exploring the grounded apartment interior and green mid-century palette, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -780,7 +780,7 @@ const muchAdoAboutNothing: LocalScenicProject = {
   seoKeywords:
     "Much Ado About Nothing, scenic design, New Swan Theatre Festival, Shakespeare, Brandon PT Davis, western scenic design",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90089-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90089-cover-a7f4725c.webp",
   creativeTeam: [
     { name: "William Shakespeare", role: "By" },
     { name: "Brandon PT Davis", role: "Scenic Designer" },
@@ -806,7 +806,7 @@ const muchAdoAboutNothing: LocalScenicProject = {
       id: "man-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90089-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90089-cover-a7f4725c.webp",
       altText: "Much Ado About Nothing scenic design cover image.",
       kind: "cover",
     },
@@ -814,7 +814,7 @@ const muchAdoAboutNothing: LocalScenicProject = {
       id: "man-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90089-gallery-150032.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90089-gallery-150032-ce3e4bda.webp",
       altText:
         "Production image from Much Ado About Nothing at New Swan Theatre Festival, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -823,7 +823,7 @@ const muchAdoAboutNothing: LocalScenicProject = {
       id: "man-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90089-gallery-150124.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90089-gallery-150124-98204140.webp",
       altText:
         "Scene transition on the open-air Shakespearean set for Much Ado About Nothing at New Swan, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -832,7 +832,7 @@ const muchAdoAboutNothing: LocalScenicProject = {
       id: "man-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90089-gallery-150063.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90089-gallery-150063-602fad8c.webp",
       altText:
         "Wide stage view of the courtyard-inspired set for Much Ado About Nothing at New Swan Theatre Festival in Irvine, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -841,7 +841,7 @@ const muchAdoAboutNothing: LocalScenicProject = {
       id: "man-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90089-gallery-150079.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90089-gallery-150079-d09aadaa.webp",
       altText:
         "Ensemble stage picture framed by the rustic architecture of Much Ado About Nothing, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -850,7 +850,7 @@ const muchAdoAboutNothing: LocalScenicProject = {
       id: "man-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90089-gallery-150096.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90089-gallery-150096-a49794ed.webp",
       altText:
         "Night-lit stage composition showing arches and playing levels in Much Ado About Nothing, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -916,7 +916,7 @@ const guysOnIce: LocalScenicProject = {
   seoKeywords:
     "Guys on Ice, scenic design, Great American Melodrama, musical comedy, Brandon PT Davis, theatre design",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90045-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-cover-ef6d8f84.webp",
   creativeTeam: [
     { name: "Fred Alley", role: "Book & Lyrics" },
     { name: "James Kaplan", role: "Music" },
@@ -944,7 +944,7 @@ const guysOnIce: LocalScenicProject = {
       id: "goi-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90045-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-cover-ef6d8f84.webp",
       altText: "Guys on Ice scenic design cover image.",
       kind: "cover",
     },
@@ -952,7 +952,7 @@ const guysOnIce: LocalScenicProject = {
       id: "goi-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90045-gallery-150164.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-gallery-150164-90d3ad5f.webp",
       altText:
         "Audience perspective of the completed Guys on Ice set at The Great American Melodrama, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -961,7 +961,7 @@ const guysOnIce: LocalScenicProject = {
       id: "goi-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90045-gallery-150062.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-gallery-150062-599a4c3a.webp",
       altText:
         "Cast interaction framed by the cabin-inspired scenic world of Guys on Ice, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -970,7 +970,7 @@ const guysOnIce: LocalScenicProject = {
       id: "goi-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90045-gallery-150179.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-gallery-150179-ab370422.webp",
       altText:
         "Wide stage view showing environment and actor pathways in Guys on Ice, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -979,7 +979,7 @@ const guysOnIce: LocalScenicProject = {
       id: "goi-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90045-gallery-150163.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-gallery-150163-52e755c3.webp",
       altText:
         "Performance moment across the central scenic playing area in Guys on Ice, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -988,7 +988,7 @@ const guysOnIce: LocalScenicProject = {
       id: "goi-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90045-gallery-150156.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-gallery-150156-e63ffcd5.webp",
       altText:
         "Production image of Guys on Ice at The Great American Melodrama with full set context, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -997,7 +997,7 @@ const guysOnIce: LocalScenicProject = {
       id: "goi-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90045-gallery-150050.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-gallery-150050-41a996ef.webp",
       altText:
         "Scenic rendering for Guys on Ice with focus on atmosphere, structure, and sightlines, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -1067,7 +1067,7 @@ const romero: LocalScenicProject = {
   seoKeywords:
     "Romero scenic design, University of Missouri theatre, world premiere scenic design, Brandon PT Davis, ritual staging",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90077-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-cover-176d0cf7.webp",
   creativeTeam: [
     { name: "Xiomara Cornejo", role: "Playwright" },
     { name: "Brandon PT Davis", role: "Scenic Designer" },
@@ -1095,7 +1095,7 @@ const romero: LocalScenicProject = {
       id: "rom-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90077-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-cover-176d0cf7.webp",
       altText: "Romero scenic design cover image.",
       kind: "cover",
     },
@@ -1103,7 +1103,7 @@ const romero: LocalScenicProject = {
       id: "rom-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90077-gallery-150014.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-gallery-150014-a1fd754e.webp",
       altText:
         "Wide house perspective of the Romero set with layered playing spaces, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1112,7 +1112,7 @@ const romero: LocalScenicProject = {
       id: "rom-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90077-gallery-150117.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-gallery-150117-05260bec.webp",
       altText:
         "Lighting and scenic texture interplay in a dramatic scene from Romero, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1121,7 +1121,7 @@ const romero: LocalScenicProject = {
       id: "rom-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90077-gallery-150169.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-gallery-150169-c11924da.webp",
       altText:
         "Primary stage composition for Romero at University of Missouri, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1130,7 +1130,7 @@ const romero: LocalScenicProject = {
       id: "rom-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90077-gallery-150192.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-gallery-150192-b5032774.webp",
       altText:
         "Scene transition across the central platform system in Romero at University of Missouri, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1139,7 +1139,7 @@ const romero: LocalScenicProject = {
       id: "rom-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90077-gallery-150236.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-gallery-150236-9c607f1e.webp",
       altText:
         "Final production view of Romero showing the full environment and actor pathways, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1148,7 +1148,7 @@ const romero: LocalScenicProject = {
       id: "rom-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90077-gallery-150246.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-gallery-150246-a5626620.webp",
       altText:
         "Actors positioned within the architectural and symbolic scenic world of Romero, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1214,7 +1214,7 @@ const urinetownProject: LocalScenicProject = {
   seoKeywords:
     "Urinetown scenic design, University of Missouri theatre, dystopian musical design, Brandon PT Davis, scenic design",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-cover-cb5cfbfe.webp",
   creativeTeam: [
     { name: "Mark Hollman", role: "Music & Lyrics by" },
     { name: "Greg Koti", role: "Book & Lyrics by" },
@@ -1238,7 +1238,7 @@ const urinetownProject: LocalScenicProject = {
       id: "uri-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-cover-cb5cfbfe.webp",
       altText: "Urinetown scenic design cover image.",
       kind: "cover",
     },
@@ -1246,7 +1246,7 @@ const urinetownProject: LocalScenicProject = {
       id: "uri-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-gallery-150035.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150035-53b1b5b2.webp",
       altText:
         "Production image of Urinetown at University of Missouri with the full scenic footprint, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1255,7 +1255,7 @@ const urinetownProject: LocalScenicProject = {
       id: "uri-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-gallery-150049.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150049-133e6708.webp",
       altText:
         "Cast moment on the industrial comic world of Urinetown, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1264,7 +1264,7 @@ const urinetownProject: LocalScenicProject = {
       id: "uri-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-gallery-150071.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150071-f7909ab9.webp",
       altText:
         "Onstage action framed by the urban architecture in Urinetown at Mizzou, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1273,7 +1273,7 @@ const urinetownProject: LocalScenicProject = {
       id: "uri-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-gallery-150089.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150089-d5824113.webp",
       altText:
         "Production still of Urinetown highlighting ensemble traffic through the set, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1282,7 +1282,7 @@ const urinetownProject: LocalScenicProject = {
       id: "uri-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-gallery-150111.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150111-ce548e2f.webp",
       altText:
         "Scene transition on the multi-level structure for Urinetown, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1291,7 +1291,7 @@ const urinetownProject: LocalScenicProject = {
       id: "uri-prod-7",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-gallery-150209.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150209-c1a606aa.webp",
       altText:
         "Performance image of Urinetown with the civic-industrial set framing the cast, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1300,7 +1300,7 @@ const urinetownProject: LocalScenicProject = {
       id: "uri-prod-8",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-gallery-150217.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150217-5d37b53f.webp",
       altText:
         "House-right audience view of Urinetown at University of Missouri, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1309,7 +1309,7 @@ const urinetownProject: LocalScenicProject = {
       id: "uri-prod-9",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-gallery-150238.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150238-71e435a4.webp",
       altText:
         "Final production angle showing the complete Urinetown scenic composition, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1318,7 +1318,7 @@ const urinetownProject: LocalScenicProject = {
       id: "uri-prod-10",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-gallery-150023.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150023-bded7553.webp",
       altText:
         "Stage picture from Urinetown emphasizing texture, levels, and ensemble composition, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1327,7 +1327,7 @@ const urinetownProject: LocalScenicProject = {
       id: "uri-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-gallery-150082.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90041-gallery-150082-4664ad60.webp",
       altText:
         "Scenic rendering for Urinetown testing massing, pathways, and tonal contrast, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -1336,7 +1336,7 @@ const urinetownProject: LocalScenicProject = {
       id: "uri-render-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-gallery-150120.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90041-gallery-150120-56940bd6.webp",
       altText:
         "Rendering pass for Urinetown establishing geometry and actor flow, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -1345,7 +1345,7 @@ const urinetownProject: LocalScenicProject = {
       id: "uri-render-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-gallery-150199.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90041-gallery-150199-ef242aeb.webp",
       altText:
         "Perspective rendering of Urinetown with emphasis on depth and silhouette, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -1415,7 +1415,7 @@ const barefootInTheParkProject: LocalScenicProject = {
   seoKeywords:
     "Barefoot in the Park scenic design, Neil Simon, Okoboji Summer Theatre, Brandon PT Davis, comedy scenic design",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90042-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-cover-29f63e4a.webp",
   creativeTeam: [
     { name: "Neil Simon", role: "Book By" },
     { name: "Brett Olson", role: "Director" },
@@ -1441,7 +1441,7 @@ const barefootInTheParkProject: LocalScenicProject = {
       id: "barefoot-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90042-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-cover-29f63e4a.webp",
       altText: "Barefoot in the Park scenic design cover image.",
       kind: "cover",
     },
@@ -1449,7 +1449,7 @@ const barefootInTheParkProject: LocalScenicProject = {
       id: "barefoot-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90042-gallery-150044.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150044-43d006c1.webp",
       altText:
         "Production image from Barefoot in the Park showing the apartment environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1458,7 +1458,7 @@ const barefootInTheParkProject: LocalScenicProject = {
       id: "barefoot-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90042-gallery-150045.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150045-c738c03c.webp",
       altText:
         "Scene from Barefoot in the Park using the walk-up layout for comic staging, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1467,7 +1467,7 @@ const barefootInTheParkProject: LocalScenicProject = {
       id: "barefoot-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90042-gallery-150048.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150048-d3621f09.webp",
       altText:
         "Production still emphasizing the apartment geometry in Barefoot in the Park, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1476,7 +1476,7 @@ const barefootInTheParkProject: LocalScenicProject = {
       id: "barefoot-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90042-gallery-150140.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150140-c45c03d1.webp",
       altText:
         "Barefoot in the Park production image with actors framed by the compact set, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1485,7 +1485,7 @@ const barefootInTheParkProject: LocalScenicProject = {
       id: "barefoot-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90042-gallery-150158.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150158-cc147037.webp",
       altText:
         "Performance image from Barefoot in the Park showing the apartment in use, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1494,7 +1494,7 @@ const barefootInTheParkProject: LocalScenicProject = {
       id: "barefoot-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90042-gallery-150161.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150161-2dfb7d1e.webp",
       altText:
         "Production still highlighting sightlines and furnishing relationships in Barefoot in the Park, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1503,7 +1503,7 @@ const barefootInTheParkProject: LocalScenicProject = {
       id: "barefoot-prod-7",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90042-gallery-150193.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150193-5cbfaf9a.webp",
       altText:
         "Comedy scene from Barefoot in the Park staged through the apartment’s compressed architecture, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1512,7 +1512,7 @@ const barefootInTheParkProject: LocalScenicProject = {
       id: "barefoot-prod-8",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90042-gallery-150226.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150226-1095aa70.webp",
       altText:
         "Final production angle from Barefoot in the Park, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1521,7 +1521,7 @@ const barefootInTheParkProject: LocalScenicProject = {
       id: "barefoot-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90042-gallery-150042.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90042-gallery-150042-927a7e0f.webp",
       altText:
         "Scenic rendering for Barefoot in the Park testing the walk-up apartment layout, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -1590,7 +1590,7 @@ const freakyFridayProject: LocalScenicProject = {
   seoKeywords:
     "Freaky Friday scenic design, musical theatre scenic design, Okoboji Summer Theatre, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90056-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-friday-cover.webp",
   creativeTeam: [
     { name: "Bridget Carpenter", role: "Book By" },
     { name: "Tom Kitt", role: "Music By" },
@@ -1618,7 +1618,7 @@ const freakyFridayProject: LocalScenicProject = {
       id: "freaky-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90056-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-friday-cover.webp",
       altText: "Freaky Friday scenic design cover image.",
       kind: "cover",
     },
@@ -1626,7 +1626,7 @@ const freakyFridayProject: LocalScenicProject = {
       id: "freaky-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90056-gallery-150101.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-prod-1.webp",
       altText:
         "Production image from Freaky Friday showing the scenic environment in action, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1635,7 +1635,7 @@ const freakyFridayProject: LocalScenicProject = {
       id: "freaky-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90056-gallery-150041.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-prod-2.webp",
       altText:
         "Scene from Freaky Friday framed by the modular scenic system, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1644,7 +1644,7 @@ const freakyFridayProject: LocalScenicProject = {
       id: "freaky-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90056-gallery-150068.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-prod-3.webp",
       altText:
         "Production still emphasizing transitions and stage zones in Freaky Friday, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1653,7 +1653,7 @@ const freakyFridayProject: LocalScenicProject = {
       id: "freaky-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90056-gallery-150130.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-prod-4.webp",
       altText:
         "Performance image from Freaky Friday showing scenic flexibility for musical staging, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1662,7 +1662,7 @@ const freakyFridayProject: LocalScenicProject = {
       id: "freaky-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90056-gallery-150149.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-prod-5.webp",
       altText:
         "Freaky Friday production moment using the set’s contemporary domestic and school cues, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1671,7 +1671,7 @@ const freakyFridayProject: LocalScenicProject = {
       id: "freaky-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90056-gallery-150198.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-prod-6.webp",
       altText:
         "Production still highlighting ensemble flow through the Freaky Friday set, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1680,7 +1680,7 @@ const freakyFridayProject: LocalScenicProject = {
       id: "freaky-prod-7",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90056-gallery-150151.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-prod-7.webp",
       altText:
         "Final production image from Freaky Friday, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1689,7 +1689,7 @@ const freakyFridayProject: LocalScenicProject = {
       id: "freaky-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90056-gallery-150088.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-render-1.webp",
       altText:
         "Scenic rendering for Freaky Friday testing scenic zones and movement paths, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -1698,7 +1698,7 @@ const freakyFridayProject: LocalScenicProject = {
       id: "freaky-render-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90056-gallery-150046.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-render-2.webp",
       altText:
         "Rendering pass for Freaky Friday showing transformation-based scene logic, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -1707,7 +1707,7 @@ const freakyFridayProject: LocalScenicProject = {
       id: "freaky-render-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90056-gallery-150145.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-render-3.webp",
       altText:
         "Perspective rendering for Freaky Friday exploring modular units and tonal contrast, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -1775,7 +1775,7 @@ const anEnemyOfThePeopleProject: LocalScenicProject = {
   seoKeywords:
     "An Enemy of the People scenic design, Stephens College theatre, Brandon PT Davis, grayscale set design, dramatic theatre scenery",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-enemy-of-the-people-6-of-6-7499.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-enemy-of-the-people-6-of-6-7499-f113149d.webp",
   creativeTeam: [
     { name: "Henrik Ibsen", role: "Book By" },
     { name: "L.R. Hults", role: "Director" },
@@ -1796,7 +1796,7 @@ const anEnemyOfThePeopleProject: LocalScenicProject = {
       id: "enemy-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-enemy-of-the-people-6-of-6-7499.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-enemy-of-the-people-6-of-6-7499-f113149d.webp",
       altText: "An Enemy of the People scenic design cover image.",
       kind: "cover",
     },
@@ -1804,7 +1804,7 @@ const anEnemyOfThePeopleProject: LocalScenicProject = {
       id: "enemy-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-enemy-of-the-people-6-of-6-8866.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-enemy-of-the-people-6-of-6-8866-f0c28220.webp",
       altText:
         "Production image from An Enemy of the People showing the grayscale scenic world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1813,7 +1813,7 @@ const anEnemyOfThePeopleProject: LocalScenicProject = {
       id: "enemy-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-enemy-of-the-people-2-of-6-8866.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-enemy-of-the-people-2-of-6-8866-2d074a16.webp",
       altText:
         "Scene from An Enemy of the People framed by the illustrated architecture, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1822,7 +1822,7 @@ const anEnemyOfThePeopleProject: LocalScenicProject = {
       id: "enemy-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-enemy-of-the-people-1-of-6-8866.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-enemy-of-the-people-1-of-6-8866-b0007652.webp",
       altText:
         "Production still emphasizing the monochrome visual language in An Enemy of the People, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1831,7 +1831,7 @@ const anEnemyOfThePeopleProject: LocalScenicProject = {
       id: "enemy-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-enemy-of-the-people-3-of-6-8866.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-enemy-of-the-people-3-of-6-8866-71ade6c1.webp",
       altText:
         "Performance image from An Enemy of the People showing the red furniture against the grayscale world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1840,7 +1840,7 @@ const anEnemyOfThePeopleProject: LocalScenicProject = {
       id: "enemy-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-enemy-of-the-people-4-of-6-8866.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-enemy-of-the-people-4-of-6-8866-0424e2d5.webp",
       altText:
         "Final production image from An Enemy of the People, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1849,7 +1849,7 @@ const anEnemyOfThePeopleProject: LocalScenicProject = {
       id: "enemy-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-enemy-of-the-people-5-of-6-8886.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-enemy-of-the-people-5-of-6-8886-8cf30d1c.webp",
       altText:
         "Rendering for An Enemy of the People testing the flattened grayscale environment and red focal furniture, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -1919,7 +1919,7 @@ const dialMForMurderProject: LocalScenicProject = {
   seoKeywords:
     "Dial M for Murder scenic design, Okoboji Summer Theatre, suspense scenic design, Brandon PT Davis, dramatic apartment set",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-dial-m-for-murder-8-of-9-0343.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-dial-m-for-murder-8-of-9-0343-ca01b79d.webp",
   creativeTeam: [
     { name: "Frederic Knott", role: "Book By" },
     { name: "Fred Rubeck", role: "Director" },
@@ -1940,7 +1940,7 @@ const dialMForMurderProject: LocalScenicProject = {
       id: "dialm-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-dial-m-for-murder-8-of-9-0343.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-dial-m-for-murder-8-of-9-0343-ca01b79d.webp",
       altText: "Dial M for Murder scenic design cover image.",
       kind: "cover",
     },
@@ -1948,7 +1948,7 @@ const dialMForMurderProject: LocalScenicProject = {
       id: "dialm-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-dial-m-for-murder-8-of-9-1391.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-dial-m-for-murder-8-of-9-1391-1cdcb77f.webp",
       altText:
         "Production image from Dial M for Murder showing the apartment set in performance, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1957,7 +1957,7 @@ const dialMForMurderProject: LocalScenicProject = {
       id: "dialm-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-dial-m-for-murder-2-of-9-1570.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-dial-m-for-murder-2-of-9-1570-35478f40.webp",
       altText:
         "Scene from Dial M for Murder framed by the apartment architecture, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1966,7 +1966,7 @@ const dialMForMurderProject: LocalScenicProject = {
       id: "dialm-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-dial-m-for-murder-5-of-9-1570.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-dial-m-for-murder-5-of-9-1570-00f90098.webp",
       altText:
         "Production still emphasizing the controlled apartment palette in Dial M for Murder, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1975,7 +1975,7 @@ const dialMForMurderProject: LocalScenicProject = {
       id: "dialm-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-dial-m-for-murder-7-of-9-1570.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-dial-m-for-murder-7-of-9-1570-b27c01bf.webp",
       altText:
         "Performance image from Dial M for Murder using doors and sightlines to build suspense, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1984,7 +1984,7 @@ const dialMForMurderProject: LocalScenicProject = {
       id: "dialm-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-dial-m-for-murder-4-of-9-1570.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-dial-m-for-murder-4-of-9-1570-a0144edb.webp",
       altText:
         "Dial M for Murder production image showing the room’s centered fireplace and formal composition, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -1993,7 +1993,7 @@ const dialMForMurderProject: LocalScenicProject = {
       id: "dialm-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/lindsey-21-1750.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/lindsey-21-1750-2fb70691.webp",
       altText:
         "Production still highlighting the isolated apartment environment in Dial M for Murder, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2002,7 +2002,7 @@ const dialMForMurderProject: LocalScenicProject = {
       id: "dialm-prod-7",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-dial-m-for-murder-6-of-9-1570.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-dial-m-for-murder-6-of-9-1570-4c34d185.webp",
       altText:
         "Final production image from Dial M for Murder, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2011,7 +2011,7 @@ const dialMForMurderProject: LocalScenicProject = {
       id: "dialm-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-dial-m-for-murder-1-of-9-1570.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-dial-m-for-murder-1-of-9-1570-44e29126.webp",
       altText:
         "Rendering for Dial M for Murder testing the apartment layout and negative space, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -2081,7 +2081,7 @@ const coleProject: LocalScenicProject = {
   seoKeywords:
     "Cole scenic design, Okoboji Summer Theatre, cabaret scenic design, jazz-age stage design, Brandon PT Davis, musical revue scenery",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-cole-7-of-8-8632.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-7-of-8-8632-b71c63cf.webp",
   creativeTeam: [
     { name: "Benny Green and Alan Strachan", role: "Written By" },
     { name: "Cole Porter", role: "Music By" },
@@ -2103,7 +2103,7 @@ const coleProject: LocalScenicProject = {
       id: "cole-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-cole-7-of-8-8632.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-7-of-8-8632-b71c63cf.webp",
       altText: "Cole scenic design cover image.",
       kind: "cover",
     },
@@ -2111,7 +2111,7 @@ const coleProject: LocalScenicProject = {
       id: "cole-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-cole-7-of-8-9492.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-7-of-8-9492-c82b3043.webp",
       altText:
         "Production image from Cole showing the jazz-age room and bar, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2120,7 +2120,7 @@ const coleProject: LocalScenicProject = {
       id: "cole-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-cole-1-of-8-9656.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-1-of-8-9656-a755fc11.webp",
       altText:
         "Scene from Cole framed by the cabaret environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2129,7 +2129,7 @@ const coleProject: LocalScenicProject = {
       id: "cole-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-cole-2-of-8-9656.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-2-of-8-9656-47f4560a.webp",
       altText:
         "Production still emphasizing the integrated band and room layout in Cole, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2138,7 +2138,7 @@ const coleProject: LocalScenicProject = {
       id: "cole-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-cole-4-of-8-9657.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-4-of-8-9657-dd7dff5f.webp",
       altText:
         "Performance image from Cole showing art deco-inspired geometry and proximity, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2147,7 +2147,7 @@ const coleProject: LocalScenicProject = {
       id: "cole-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-cole-5-of-8-9657.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-5-of-8-9657-742ca04d.webp",
       altText:
         "Production image from Cole highlighting choreography and microphone work, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2156,7 +2156,7 @@ const coleProject: LocalScenicProject = {
       id: "cole-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-cole-3-of-8-9657.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-3-of-8-9657-637dfce3.webp",
       altText:
         "Cole production still showing the room’s texture and proportion, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2165,7 +2165,7 @@ const coleProject: LocalScenicProject = {
       id: "cole-prod-7",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-cole-6-of-8-9657.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-6-of-8-9657-61c79fc7.webp",
       altText:
         "Final production image from Cole, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2174,7 +2174,7 @@ const coleProject: LocalScenicProject = {
       id: "cole-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2023-cole-8-of-8-9688.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-8-of-8-9688-141aefc1.webp",
       altText:
         "Rendering for Cole testing the jazz-age room, onstage band, and bar geometry, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -2243,7 +2243,7 @@ const headOverHeelsProject: LocalScenicProject = {
   seoKeywords:
     "Head Over Heels scenic design, Theatre SilCo, Brandon PT Davis, musical theatre design, Go-Go's musical, club-inspired stage design",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90044-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-cover-de6a3605.webp",
   coverImagePosition: "center top",
   coverImageFit: "contain",
   creativeTeam: [
@@ -2274,7 +2274,7 @@ const headOverHeelsProject: LocalScenicProject = {
       id: "hoh-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90044-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-cover-de6a3605.webp",
       altText: "Head Over Heels scenic design cover image.",
       kind: "cover",
     },
@@ -2282,7 +2282,7 @@ const headOverHeelsProject: LocalScenicProject = {
       id: "hoh-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90044-gallery-150097.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150097-e2770c1c.webp",
       altText:
         "Production image from Head Over Heels showing the modular Arcadian world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2291,7 +2291,7 @@ const headOverHeelsProject: LocalScenicProject = {
       id: "hoh-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90044-gallery-150127.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150127-19a4afbc.webp",
       altText:
         "Scene from Head Over Heels framed by vivid color and stylized architecture, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2300,7 +2300,7 @@ const headOverHeelsProject: LocalScenicProject = {
       id: "hoh-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90044-gallery-150148.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150148-e5dd8ca6.webp",
       altText:
         "Production still from Head Over Heels emphasizing club-inspired theatricality, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2309,7 +2309,7 @@ const headOverHeelsProject: LocalScenicProject = {
       id: "hoh-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90044-gallery-150064.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150064-e710f8d3.webp",
       altText:
         "Head Over Heels performance image showing the set’s modular scene shifts, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2318,7 +2318,7 @@ const headOverHeelsProject: LocalScenicProject = {
       id: "hoh-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90044-gallery-150201.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150201-5af362e8.webp",
       altText:
         "Production image from Head Over Heels highlighting electric palette and theatrical rhythm, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2327,7 +2327,7 @@ const headOverHeelsProject: LocalScenicProject = {
       id: "hoh-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90044-gallery-150231.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150231-8d50248c.webp",
       altText:
         "Final production image from Head Over Heels, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2336,7 +2336,7 @@ const headOverHeelsProject: LocalScenicProject = {
       id: "hoh-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90044-gallery-150090.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90044-gallery-150090-d1bd1e6c.webp",
       altText:
         "Rendering for Head Over Heels testing the modular, club-inspired Arcadian world, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -2406,7 +2406,7 @@ const putnamCountySpellingBeeProject: LocalScenicProject = {
   seoKeywords:
     "Putnam County Spelling Bee scenic design, Stephens College theatre, Brandon PT Davis, musical theatre scenic design, school gymnasium set",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2023-spellng-bee-stephens-college-6-of-6-5514.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-6-of-6-5514-9770ab58.webp",
   creativeTeam: [
     { name: "Rachael Sheinkin", role: "Book By" },
     { name: "William Finn", role: "Music and Lyrics" },
@@ -2426,7 +2426,7 @@ const putnamCountySpellingBeeProject: LocalScenicProject = {
       id: "spelling-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2023-spellng-bee-stephens-college-6-of-6-5514.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-6-of-6-5514-9770ab58.webp",
       altText: "The 25th Annual Putnam County Spelling Bee scenic design cover image.",
       kind: "cover",
     },
@@ -2434,7 +2434,7 @@ const putnamCountySpellingBeeProject: LocalScenicProject = {
       id: "spelling-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2023-spellng-bee-stephens-college-5-of-6-7204.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-5-of-6-7204-f6fc8191.webp",
       altText:
         "Production image from The 25th Annual Putnam County Spelling Bee showing the gymnasium set, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2443,7 +2443,7 @@ const putnamCountySpellingBeeProject: LocalScenicProject = {
       id: "spelling-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2023-spellng-bee-stephens-college-4-of-6-7204.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-4-of-6-7204-0e56fab9.webp",
       altText:
         "Scene from Putnam County Spelling Bee framed by the competition setup, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2452,7 +2452,7 @@ const putnamCountySpellingBeeProject: LocalScenicProject = {
       id: "spelling-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2023-spellng-bee-stephens-college-1-of-6-7204.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-1-of-6-7204-2f449803.webp",
       altText:
         "Production still emphasizing the school-gym atmosphere in Putnam County Spelling Bee, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2461,7 +2461,7 @@ const putnamCountySpellingBeeProject: LocalScenicProject = {
       id: "spelling-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2023-spellng-bee-stephens-college-2-of-6-7204.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-2-of-6-7204-a8b5064f.webp",
       altText:
         "Performance image from Putnam County Spelling Bee showing the spelling platform and ensemble staging, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2470,7 +2470,7 @@ const putnamCountySpellingBeeProject: LocalScenicProject = {
       id: "spelling-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2023-spellng-bee-stephens-college-3-of-6-7204.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-3-of-6-7204-789e2b19.webp",
       altText:
         "Putnam County Spelling Bee production image highlighting the local sponsor details and gym setting, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2479,7 +2479,7 @@ const putnamCountySpellingBeeProject: LocalScenicProject = {
       id: "spelling-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2023-spellng-bee-stephens-college-6-of-6-7204.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-6-of-6-7204-e869600a.webp",
       altText:
         "Final production image from The 25th Annual Putnam County Spelling Bee, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2544,7 +2544,7 @@ const loteriaGameOnProject: LocalScenicProject = {
   seoKeywords:
     "Loteria Game On, scenic design, Theatre SilCo, theatre for young audiences, projection design, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90009-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-cover-3f380dfa.webp",
   creativeTeam: [
     { name: "Mabelle Reynoso", role: "Playwright" },
     { name: "Brandon PT Davis", role: "Scenic Design" },
@@ -2572,7 +2572,7 @@ const loteriaGameOnProject: LocalScenicProject = {
       id: "loteria-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90009-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-cover-3f380dfa.webp",
       altText: "¡LOTERIA: GAME ON! scenic design cover image.",
       kind: "cover",
     },
@@ -2580,7 +2580,7 @@ const loteriaGameOnProject: LocalScenicProject = {
       id: "loteria-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90009-gallery-150069.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150069-841739b7.webp",
       altText:
         "Production image from ¡LOTERIA: GAME ON! showing the basement family-room world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2589,7 +2589,7 @@ const loteriaGameOnProject: LocalScenicProject = {
       id: "loteria-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90009-gallery-150072.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150072-b53ecf81.webp",
       altText:
         "Performance image from ¡LOTERIA: GAME ON! with the family-room environment and central playing space, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2598,7 +2598,7 @@ const loteriaGameOnProject: LocalScenicProject = {
       id: "loteria-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90009-gallery-150075.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150075-da6650d9.webp",
       altText:
         "Production still from ¡LOTERIA: GAME ON! highlighting the domestic room before transformation, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2607,7 +2607,7 @@ const loteriaGameOnProject: LocalScenicProject = {
       id: "loteria-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90009-gallery-150086.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150086-80b15030.webp",
       altText:
         "Stage image from ¡LOTERIA: GAME ON! featuring actors within the modular basement set, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2616,7 +2616,7 @@ const loteriaGameOnProject: LocalScenicProject = {
       id: "loteria-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90009-gallery-150115.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150115-e66396d4.webp",
       altText:
         "Production image from ¡LOTERIA: GAME ON! emphasizing the playful theatrical world of the show, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2625,7 +2625,7 @@ const loteriaGameOnProject: LocalScenicProject = {
       id: "loteria-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90009-gallery-150122.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150122-101de9a7.webp",
       altText:
         "Performance image from ¡LOTERIA: GAME ON! showing scenic color and layered stage action, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2634,7 +2634,7 @@ const loteriaGameOnProject: LocalScenicProject = {
       id: "loteria-prod-7",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90009-gallery-150153.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150153-e0a05162.webp",
       altText:
         "Production still from ¡LOTERIA: GAME ON! highlighting theatrical play and audience-facing composition, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2643,7 +2643,7 @@ const loteriaGameOnProject: LocalScenicProject = {
       id: "loteria-prod-8",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90009-gallery-150213.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150213-09af2504.webp",
       altText:
         "Image from ¡LOTERIA: GAME ON! showing the transformed game-inspired world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2652,7 +2652,7 @@ const loteriaGameOnProject: LocalScenicProject = {
       id: "loteria-prod-9",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90009-gallery-150233.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150233-a285c5ac.webp",
       altText:
         "Production image from ¡LOTERIA: GAME ON! with performers inside the vibrant scenic environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2661,7 +2661,7 @@ const loteriaGameOnProject: LocalScenicProject = {
       id: "loteria-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90009-gallery-150191.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90009-gallery-150191-d5547329.webp",
       altText:
         "Rendering for ¡LOTERIA: GAME ON! showing the family-room environment before transformation, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -2670,7 +2670,7 @@ const loteriaGameOnProject: LocalScenicProject = {
       id: "loteria-render-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90009-gallery-150222.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90009-gallery-150222-46ec93d2.webp",
       altText:
         "Rendering for ¡LOTERIA: GAME ON! exploring the heightened Loteria card-world, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -2740,7 +2740,7 @@ const boeingBoeingProject: LocalScenicProject = {
   seoKeywords:
     "Boeing Boeing, scenic design, Stephens College, farce, comedy, midcentury modern, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90054-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-cover-ff265a2b.webp",
   creativeTeam: [
     { name: "Marc Camoletti", role: "Playwright" },
     { name: "Brandon PT Davis", role: "Scenic Designer" },
@@ -2766,7 +2766,7 @@ const boeingBoeingProject: LocalScenicProject = {
       id: "boeing-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90054-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-cover-ff265a2b.webp",
       altText: "Boeing, Boeing scenic design cover image.",
       kind: "cover",
     },
@@ -2774,7 +2774,7 @@ const boeingBoeingProject: LocalScenicProject = {
       id: "boeing-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90054-gallery-150017.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-gallery-150017-1f2d32dc.webp",
       altText:
         "Production image from Boeing, Boeing showing the midcentury apartment interior, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2783,7 +2783,7 @@ const boeingBoeingProject: LocalScenicProject = {
       id: "boeing-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90054-gallery-150104.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-gallery-150104-e468bb20.webp",
       altText:
         "Performance image from Boeing, Boeing emphasizing the apartment layout and multiple entrances, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2792,7 +2792,7 @@ const boeingBoeingProject: LocalScenicProject = {
       id: "boeing-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90054-gallery-150139.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90054-gallery-150139-425d2231.webp",
       altText:
         "Rendering for Boeing, Boeing exploring the polished Paris apartment and farce-driven door layout, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -2801,7 +2801,7 @@ const boeingBoeingProject: LocalScenicProject = {
       id: "boeing-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90054-gallery-150141.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-gallery-150141-8576e570.webp",
       altText:
         "Production still from Boeing, Boeing highlighting the central living room composition, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2810,7 +2810,7 @@ const boeingBoeingProject: LocalScenicProject = {
       id: "boeing-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90054-gallery-150185.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-gallery-150185-8b4b4d28.webp",
       altText:
         "Scene from Boeing, Boeing showing actors moving through the apartment's choreographed doorways, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2819,7 +2819,7 @@ const boeingBoeingProject: LocalScenicProject = {
       id: "boeing-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90054-gallery-150243.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-gallery-150243-65d91900.webp",
       altText:
         "Production image from Boeing, Boeing with the apartment's furniture and graphic detail visible, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2828,7 +2828,7 @@ const boeingBoeingProject: LocalScenicProject = {
       id: "boeing-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90054-gallery-150251.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-gallery-150251-02683572.webp",
       altText:
         "Final production image from Boeing, Boeing showing the complete scenic environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2897,7 +2897,7 @@ const anInspectorCallsProject: LocalScenicProject = {
   seoKeywords:
     "An Inspector Calls, scenic design, Okoboji Summer Theatre, J.B. Priestley, Brandon PT Davis, drama, theatre design",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90036-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90036-cover-73346e1d.webp",
   creativeTeam: [
     { name: "J.B. Priestley", role: "Playwright" },
     { name: "Brandon PT Davis", role: "Scenic Designer" },
@@ -2923,7 +2923,7 @@ const anInspectorCallsProject: LocalScenicProject = {
       id: "inspector-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90036-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90036-cover-73346e1d.webp",
       altText: "An Inspector Calls scenic design cover image.",
       kind: "cover",
     },
@@ -2931,7 +2931,7 @@ const anInspectorCallsProject: LocalScenicProject = {
       id: "inspector-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90036-gallery-150019.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90036-gallery-150019-e62e8136.webp",
       altText:
         "Production image from An Inspector Calls showing the Birling interior, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2940,7 +2940,7 @@ const anInspectorCallsProject: LocalScenicProject = {
       id: "inspector-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90036-gallery-150118.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90036-gallery-150118-d9e60a33.webp",
       altText:
         "Performance image from An Inspector Calls highlighting the domestic world before it begins to fracture, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2949,7 +2949,7 @@ const anInspectorCallsProject: LocalScenicProject = {
       id: "inspector-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90036-gallery-150134.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90036-gallery-150134-a12bad84.webp",
       altText:
         "Rendering for An Inspector Calls exploring the poised but unstable domestic interior, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -2958,7 +2958,7 @@ const anInspectorCallsProject: LocalScenicProject = {
       id: "inspector-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90036-gallery-150183.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90036-gallery-150183-8b902db4.webp",
       altText:
         "Production still from An Inspector Calls with actors framed by the controlled geometry of the set, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -2967,7 +2967,7 @@ const anInspectorCallsProject: LocalScenicProject = {
       id: "inspector-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90036-gallery-150221.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90036-gallery-150221-2fa31d56.webp",
       altText:
         "Final production image from An Inspector Calls showing the family under increasing pressure, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3031,7 +3031,7 @@ const theManOfLaManchaProject: LocalScenicProject = {
   seoKeywords:
     "The Man of La Mancha, scenic design, Lake Dillon Theatre Company, musical theatre, Don Quixote, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2022-man-of-la-mancha-3-of-5-large-4479.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2022-man-of-la-mancha-3-of-5-large-4479-f458638b.webp",
   creativeTeam: [
     { name: "Dale Wasserman", role: "Written by" },
     { name: "Mitch Leigh", role: "Music by" },
@@ -3056,7 +3056,7 @@ const theManOfLaManchaProject: LocalScenicProject = {
       id: "lamancha-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2022-man-of-la-mancha-3-of-5-large-4479.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2022-man-of-la-mancha-3-of-5-large-4479-f458638b.webp",
       altText: "The Man of La Mancha scenic design cover image.",
       kind: "cover",
     },
@@ -3064,7 +3064,7 @@ const theManOfLaManchaProject: LocalScenicProject = {
       id: "lamancha-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2022-man-of-la-mancha-3-of-5-large-5473.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2022-man-of-la-mancha-3-of-5-large-5473-f7f02325.webp",
       altText:
         "Production image from The Man of La Mancha showing the warehouse-inspired playing space, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3073,7 +3073,7 @@ const theManOfLaManchaProject: LocalScenicProject = {
       id: "lamancha-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2022-man-of-la-mancha-2-of-5-large-5474.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2022-man-of-la-mancha-2-of-5-large-5474-815484ab.webp",
       altText:
         "Production image from The Man of La Mancha with industrial textures and modular scenic structure visible, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3082,7 +3082,7 @@ const theManOfLaManchaProject: LocalScenicProject = {
       id: "lamancha-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2022-man-of-la-mancha-1-of-5-large-5473.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2022-man-of-la-mancha-1-of-5-large-5473-e9da7da4.webp",
       altText:
         "Performance image from The Man of La Mancha centered in the circular ritual floor pattern, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3091,7 +3091,7 @@ const theManOfLaManchaProject: LocalScenicProject = {
       id: "lamancha-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2022-man-of-la-mancha-4-of-5-large-5474.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2022-man-of-la-mancha-4-of-5-large-5474-4b8a4979.webp",
       altText:
         "Production still from The Man of La Mancha with actors and musicians inhabiting the scenic world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3100,7 +3100,7 @@ const theManOfLaManchaProject: LocalScenicProject = {
       id: "lamancha-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2022-man-of-la-mancha-5-of-5-large-5521.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2022-man-of-la-mancha-5-of-5-large-5521-023504d6.webp",
       altText:
         "Final production image from The Man of La Mancha showing the full found-object warehouse environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3164,7 +3164,7 @@ const aFunnyThingHappenedProject: LocalScenicProject = {
   seoKeywords:
     "A Funny Thing Happened on the Way to the Forum, scenic design, Lake Dillon Theatre Company, musical comedy, farce, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90049-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90049-cover-3094f147.webp",
   creativeTeam: [
     { name: "Stephen Sondheim", role: "Music and Lyrics" },
     { name: "Len Rhodes", role: "Music Director" },
@@ -3192,7 +3192,7 @@ const aFunnyThingHappenedProject: LocalScenicProject = {
       id: "forum-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90049-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90049-cover-3094f147.webp",
       altText: "A Funny Thing Happened on the Way to the Forum scenic design cover image.",
       kind: "cover",
     },
@@ -3200,7 +3200,7 @@ const aFunnyThingHappenedProject: LocalScenicProject = {
       id: "forum-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90049-gallery-150103.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90049-gallery-150103-64738161.webp",
       altText:
         "Production image from Forum showing the trio of Roman house façades, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3209,7 +3209,7 @@ const aFunnyThingHappenedProject: LocalScenicProject = {
       id: "forum-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90049-gallery-150216.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90049-gallery-150216-1cca291c.webp",
       altText:
         "Performance image from Forum with actors moving through the farce-driven Roman architecture, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3218,7 +3218,7 @@ const aFunnyThingHappenedProject: LocalScenicProject = {
       id: "forum-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90049-gallery-150228.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90049-gallery-150228-f76dbf29.webp",
       altText:
         "Production still from Forum highlighting the exaggerated façades and playful classical motifs, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3227,7 +3227,7 @@ const aFunnyThingHappenedProject: LocalScenicProject = {
       id: "forum-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90049-gallery-150235.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90049-gallery-150235-825d9c24.webp",
       altText:
         "Final production image from Forum showing the full scenic environment and comic staging, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3236,7 +3236,7 @@ const aFunnyThingHappenedProject: LocalScenicProject = {
       id: "forum-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90049-gallery-150252.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90049-gallery-150252-3473b4ca.webp",
       altText:
         "Rendering for Forum exploring the trio of Roman houses and the heightened comic world, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -3301,7 +3301,7 @@ const tomasAndTheLibraryLadyProject: LocalScenicProject = {
   seoKeywords:
     "Tomás and the Library Lady, scenic design, Lake Dillon Theatre Company, theatre for young audiences, bilingual theatre, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90039-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-cover-dee4ec53.webp",
   creativeTeam: [
     { name: "Pat Mora", role: "From the Book by" },
     { name: "José Cruz González", role: "Adapted by" },
@@ -3329,7 +3329,7 @@ const tomasAndTheLibraryLadyProject: LocalScenicProject = {
       id: "tomas-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90039-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-cover-dee4ec53.webp",
       altText: "Tomás and the Library Lady scenic design cover image.",
       kind: "cover",
     },
@@ -3337,7 +3337,7 @@ const tomasAndTheLibraryLadyProject: LocalScenicProject = {
       id: "tomas-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90039-gallery-150021.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-gallery-150021-8f3e3ec8.webp",
       altText:
         "Production image from Tomás and the Library Lady showing the welcoming scenic world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3346,7 +3346,7 @@ const tomasAndTheLibraryLadyProject: LocalScenicProject = {
       id: "tomas-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90039-gallery-150030.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-gallery-150030-e9e8fd22.webp",
       altText:
         "Performance image from Tomás and the Library Lady highlighting the domestic space and storytelling environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3355,7 +3355,7 @@ const tomasAndTheLibraryLadyProject: LocalScenicProject = {
       id: "tomas-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90039-gallery-150034.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-gallery-150034-713cb452.webp",
       altText:
         "Production still from Tomás and the Library Lady emphasizing movement between intimate and imaginative space, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3364,7 +3364,7 @@ const tomasAndTheLibraryLadyProject: LocalScenicProject = {
       id: "tomas-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90039-gallery-150080.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-gallery-150080-bbb3340a.webp",
       altText:
         "Stage image from Tomás and the Library Lady showing the library motifs within the scenic design, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3373,7 +3373,7 @@ const tomasAndTheLibraryLadyProject: LocalScenicProject = {
       id: "tomas-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90039-gallery-150092.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-gallery-150092-f45f3aae.webp",
       altText:
         "Production image from Tomás and the Library Lady with performers framed by the scenic architecture, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3382,7 +3382,7 @@ const tomasAndTheLibraryLadyProject: LocalScenicProject = {
       id: "tomas-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90039-gallery-150177.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-gallery-150177-badff38c.webp",
       altText:
         "Final production image from Tomás and the Library Lady showing the complete theatrical environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3391,7 +3391,7 @@ const tomasAndTheLibraryLadyProject: LocalScenicProject = {
       id: "tomas-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90039-gallery-150225.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90039-gallery-150225-b18093aa.webp",
       altText:
         "Rendering for Tomás and the Library Lady exploring the library as a portal of imagination, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -3459,7 +3459,7 @@ const theBaldSopranoProject: LocalScenicProject = {
   seoKeywords:
     "The Bald Soprano, Eugene Ionesco, scenic design, lighting design, Stephens College, absurdism, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-bald-soprano/the-bald-soprano-2d959ef49b.jpeg",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-bald-soprano-2d959ef49b-596768d7.jpeg",
   creativeTeam: [
     { name: "Eugene Ionesco", role: "By" },
     { name: "Brandon PT Davis", role: "Scenic and Lighting Designer" },
@@ -3478,7 +3478,7 @@ const theBaldSopranoProject: LocalScenicProject = {
       id: "bald-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-bald-soprano/the-bald-soprano-2d959ef49b.jpeg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-bald-soprano-2d959ef49b-596768d7.jpeg",
       altText: "The Bald Soprano scenic and lighting design cover image.",
       kind: "cover",
     },
@@ -3486,7 +3486,7 @@ const theBaldSopranoProject: LocalScenicProject = {
       id: "bald-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-bald-soprano/the-bald-soprano-caf4556cac.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-bald-soprano-caf4556cac-cedac5d3.jpg",
       altText:
         "Rendering for The Bald Soprano showing the distorted domestic environment and heightened composition, scenic and lighting design by Brandon PT Davis.",
       kind: "rendering",
@@ -3495,7 +3495,7 @@ const theBaldSopranoProject: LocalScenicProject = {
       id: "bald-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-bald-soprano/the-bald-soprano-06201e4480.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-bald-soprano-06201e4480-3a71fb84.jpg",
       altText:
         "Production still from The Bald Soprano emphasizing the absurd domestic scale and actor framing, scenic and lighting design by Brandon PT Davis.",
       kind: "production",
@@ -3504,7 +3504,7 @@ const theBaldSopranoProject: LocalScenicProject = {
       id: "bald-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-bald-soprano/the-bald-soprano-39e8a0ac44.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-bald-soprano-39e8a0ac44-3c617948.jpg",
       altText:
         "Production image from The Bald Soprano showing the fractured drawing-room world in performance, scenic and lighting design by Brandon PT Davis.",
       kind: "production",
@@ -3513,7 +3513,7 @@ const theBaldSopranoProject: LocalScenicProject = {
       id: "bald-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-bald-soprano/the-bald-soprano-8ffd19e8bf.jpeg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-bald-soprano-8ffd19e8bf-ccc7e268.jpeg",
       altText:
         "Performance still from The Bald Soprano highlighting warped domestic architecture and comic tension, scenic and lighting design by Brandon PT Davis.",
       kind: "production",
@@ -3522,7 +3522,7 @@ const theBaldSopranoProject: LocalScenicProject = {
       id: "bald-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-bald-soprano/the-bald-soprano-2d959ef49b.jpeg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-bald-soprano-2d959ef49b-596768d7.jpeg",
       altText:
         "Production image from The Bald Soprano showing the full scenic composition and heightened lighting contrast, scenic and lighting design by Brandon PT Davis.",
       kind: "production",
@@ -3531,7 +3531,7 @@ const theBaldSopranoProject: LocalScenicProject = {
       id: "bald-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-bald-soprano/the-bald-soprano-33fb979f6b.jpeg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-bald-soprano-33fb979f6b-1c8ce220.jpeg",
       altText:
         "Final production image from The Bald Soprano showing the absurd domestic setting in performance, scenic and lighting design by Brandon PT Davis.",
       kind: "production",
@@ -3600,7 +3600,7 @@ const notNowDarlingProject: LocalScenicProject = {
   seoKeywords:
     "Not Now, Darling, scenic design, Okoboji Summer Theatre, comedy, farce, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/not-now-darling/not-now-darling-06dc38d64a.jpg",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/not-now-darling-06dc38d64a-75b5cb64.jpg",
   creativeTeam: [
     { name: "Ray Cooney and John Chapman", role: "Written By" },
     { name: "Fred Rubeck", role: "Director" },
@@ -3620,7 +3620,7 @@ const notNowDarlingProject: LocalScenicProject = {
       id: "darling-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/not-now-darling/not-now-darling-06dc38d64a.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/not-now-darling-06dc38d64a-75b5cb64.jpg",
       altText: "Not Now, Darling scenic design cover image.",
       kind: "cover",
     },
@@ -3628,7 +3628,7 @@ const notNowDarlingProject: LocalScenicProject = {
       id: "darling-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/not-now-darling/not-now-darling-fdeaa527ac.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/not-now-darling-fdeaa527ac-79c0ba0c.jpg",
       altText:
         "Production image from Not Now, Darling showing the polished boutique interior and farce architecture, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3637,7 +3637,7 @@ const notNowDarlingProject: LocalScenicProject = {
       id: "darling-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/not-now-darling/not-now-darling-06dc38d64a.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/not-now-darling-06dc38d64a-75b5cb64.jpg",
       altText:
         "Production still from Not Now, Darling emphasizing British elegance, color, and choreographed door placement, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3646,7 +3646,7 @@ const notNowDarlingProject: LocalScenicProject = {
       id: "darling-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/not-now-darling/not-now-darling-e1d080dc14.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/not-now-darling-e1d080dc14-b42d51ee.jpg",
       altText:
         "Final production image from Not Now, Darling showing the full comic boutique environment in performance, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3696,7 +3696,7 @@ const bingoTheWinningMusicalProject: LocalScenicProject = {
   seoKeywords:
     "Bingo The Winning Musical, scenic design, Okoboji Summer Theatre, musical theatre, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/bingo-the-winning-musical/bingo-the-winning-musical-dfa9f8cd99.jpeg",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/bingo-the-winning-musical-dfa9f8cd99-91272f42.jpeg",
   creativeTeam: [
     {
       name: "Michael Heitzman, Ilene Reid, and David Holcenberg",
@@ -3722,7 +3722,7 @@ const bingoTheWinningMusicalProject: LocalScenicProject = {
       id: "bingo-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/bingo-the-winning-musical/bingo-the-winning-musical-dfa9f8cd99.jpeg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/bingo-the-winning-musical-dfa9f8cd99-91272f42.jpeg",
       altText: "Bingo: The Winning Musical scenic design cover image.",
       kind: "cover",
     },
@@ -3730,7 +3730,7 @@ const bingoTheWinningMusicalProject: LocalScenicProject = {
       id: "bingo-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/bingo-the-winning-musical/bingo-the-winning-musical-f0bb8f349b.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/bingo-the-winning-musical-f0bb8f349b-4dab6b4f.jpg",
       altText:
         "Production image from Bingo: The Winning Musical showing the bright nautical-inspired scenic world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3739,7 +3739,7 @@ const bingoTheWinningMusicalProject: LocalScenicProject = {
       id: "bingo-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/bingo-the-winning-musical/bingo-the-winning-musical-f4c0047f35.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/bingo-the-winning-musical-f4c0047f35-473dba87.jpg",
       altText:
         "Production still from Bingo: The Winning Musical emphasizing playful color and musical-theatre staging, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3748,7 +3748,7 @@ const bingoTheWinningMusicalProject: LocalScenicProject = {
       id: "bingo-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/bingo-the-winning-musical/bingo-the-winning-musical-f7f07b768a.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/bingo-the-winning-musical-f7f07b768a-f5ae4421.jpg",
       altText:
         "Final production image from Bingo: The Winning Musical showing the full Okoboji-inspired environment in performance, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3797,7 +3797,7 @@ const completeWorksAbridgedProject: LocalScenicProject = {
   seoKeywords:
     "The Complete Works of William Shakespeare abridged, scenic design, Okoboji Summer Theatre, comedy, Shakespeare, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-complete-works-of-william-shakespeare-abridged/the-complete-works-of-william-shakespeare-abridged-fcc6f3ed4f.jpg",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-complete-works-of-william-shakespeare-abridged-fcc6f3ed4f-4c52fd98.jpg",
   creativeTeam: [
     { name: "Adam Long, Daniel Singer, and Jess Winfield", role: "Written By" },
     { name: "Brandon PT Davis", role: "Scenic Designer" },
@@ -3820,7 +3820,7 @@ const completeWorksAbridgedProject: LocalScenicProject = {
       id: "complete-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-complete-works-of-william-shakespeare-abridged/the-complete-works-of-william-shakespeare-abridged-fcc6f3ed4f.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-complete-works-of-william-shakespeare-abridged-fcc6f3ed4f-4c52fd98.jpg",
       altText: "The Complete Works of William Shakespeare (abridged) scenic design cover image.",
       kind: "cover",
     },
@@ -3828,7 +3828,7 @@ const completeWorksAbridgedProject: LocalScenicProject = {
       id: "complete-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-complete-works-of-william-shakespeare-abridged/the-complete-works-of-william-shakespeare-abridged-7160001f26.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-complete-works-of-william-shakespeare-abridged-7160001f26-b758f1f6.jpg",
       altText:
         "Production image from The Complete Works of William Shakespeare (abridged) showing the modular comic stage environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3837,7 +3837,7 @@ const completeWorksAbridgedProject: LocalScenicProject = {
       id: "complete-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-complete-works-of-william-shakespeare-abridged/the-complete-works-of-william-shakespeare-abridged-9ba7165f14.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-complete-works-of-william-shakespeare-abridged-9ba7165f14-036a08a1.jpg",
       altText:
         "Production still from The Complete Works of William Shakespeare (abridged) highlighting fast-paced theatrical transitions, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3846,7 +3846,7 @@ const completeWorksAbridgedProject: LocalScenicProject = {
       id: "complete-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-complete-works-of-william-shakespeare-abridged/the-complete-works-of-william-shakespeare-abridged-5f6ec9e90b.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-complete-works-of-william-shakespeare-abridged-5f6ec9e90b-ff89656e.jpg",
       altText:
         "Production image from The Complete Works of William Shakespeare (abridged) showing the comic ensemble within the scenic world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3855,7 +3855,7 @@ const completeWorksAbridgedProject: LocalScenicProject = {
       id: "complete-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-complete-works-of-william-shakespeare-abridged/the-complete-works-of-william-shakespeare-abridged-b0e77e71fe.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-complete-works-of-william-shakespeare-abridged-b0e77e71fe-36ee44f9.jpg",
       altText:
         "Final production image from The Complete Works of William Shakespeare (abridged) emphasizing the playful modular environment and comic momentum, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3909,7 +3909,7 @@ const theMerryWivesOfWindsorProject: LocalScenicProject = {
   seoKeywords:
     "The Merry Wives of Windsor, scenic design, Stephens College, Shakespeare, comedy, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-cover-4f96e9e8.webp",
   creativeTeam: [
     { name: "William Shakespeare", role: "By" },
     { name: "Brandon PT Davis", role: "Scenic Designer" },
@@ -3935,7 +3935,7 @@ const theMerryWivesOfWindsorProject: LocalScenicProject = {
       id: "wives-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-cover-4f96e9e8.webp",
       altText: "The Merry Wives of Windsor scenic design cover image.",
       kind: "cover",
     },
@@ -3943,7 +3943,7 @@ const theMerryWivesOfWindsorProject: LocalScenicProject = {
       id: "wives-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-gallery-150015.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90053-gallery-150015-31e01022.webp",
       altText:
         "Rendering for The Merry Wives of Windsor exploring the comic civic world and open architecture, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -3952,7 +3952,7 @@ const theMerryWivesOfWindsorProject: LocalScenicProject = {
       id: "wives-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-gallery-150051.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150051-f5bf5fb6.webp",
       altText:
         "Production image from The Merry Wives of Windsor showing the shared scenic environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3961,7 +3961,7 @@ const theMerryWivesOfWindsorProject: LocalScenicProject = {
       id: "wives-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-gallery-150074.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150074-573bc38e.webp",
       altText:
         "Performance image from The Merry Wives of Windsor with actors moving through the public playing space, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3970,7 +3970,7 @@ const theMerryWivesOfWindsorProject: LocalScenicProject = {
       id: "wives-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-gallery-150170.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150170-afa39912.webp",
       altText:
         "Production still from The Merry Wives of Windsor highlighting doorways, concealment, and comic staging, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3979,7 +3979,7 @@ const theMerryWivesOfWindsorProject: LocalScenicProject = {
       id: "wives-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-gallery-150181.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150181-d24832cb.webp",
       altText:
         "Stage image from The Merry Wives of Windsor showing architectural framing and ensemble action, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3988,7 +3988,7 @@ const theMerryWivesOfWindsorProject: LocalScenicProject = {
       id: "wives-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-gallery-150197.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150197-48389e80.webp",
       altText:
         "Production image from The Merry Wives of Windsor emphasizing shared civic space and comic movement, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -3997,7 +3997,7 @@ const theMerryWivesOfWindsorProject: LocalScenicProject = {
       id: "wives-render-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-gallery-150212.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90053-gallery-150212-1de109ac.webp",
       altText:
         "Rendering for The Merry Wives of Windsor studying the scenic composition and pathways for farce, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -4006,7 +4006,7 @@ const theMerryWivesOfWindsorProject: LocalScenicProject = {
       id: "wives-render-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-gallery-150218.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90053-gallery-150218-e5e62fe2.webp",
       altText:
         "Rendering for The Merry Wives of Windsor showing the social world and threshold-driven scenic logic, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -4015,7 +4015,7 @@ const theMerryWivesOfWindsorProject: LocalScenicProject = {
       id: "wives-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-gallery-150237.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150237-9026dda3.webp",
       altText:
         "Production image from The Merry Wives of Windsor highlighting the playful public atmosphere, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4024,7 +4024,7 @@ const theMerryWivesOfWindsorProject: LocalScenicProject = {
       id: "wives-prod-7",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-gallery-150250.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150250-14ae5400.webp",
       altText:
         "Final production image from The Merry Wives of Windsor showing the complete scenic world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4094,7 +4094,7 @@ const theMarvelousWonderettesDreamOnProject: LocalScenicProject = {
   seoKeywords:
     "The Marvelous Wonderettes Dream On, scenic design, Okoboji Summer Theatre, musical theatre, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2021-marvelous-wonderettes-photo-call-2-of-10-4679.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-2-of-10-4679-66380fbd.webp",
   creativeTeam: [
     { name: "Roger Bean", role: "Written by" },
     { name: "Tom Andes", role: "Music Director" },
@@ -4116,7 +4116,7 @@ const theMarvelousWonderettesDreamOnProject: LocalScenicProject = {
       id: "wonderettes-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2021-marvelous-wonderettes-photo-call-2-of-10-4679.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-2-of-10-4679-66380fbd.webp",
       altText: "The Marvelous Wonderettes: Dream On scenic design cover image.",
       kind: "cover",
     },
@@ -4124,7 +4124,7 @@ const theMarvelousWonderettesDreamOnProject: LocalScenicProject = {
       id: "wonderettes-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2021-marvelous-wonderettes-photo-call-1-of-10-5746.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-1-of-10-5746-7d654713.webp",
       altText:
         "Production image from The Marvelous Wonderettes: Dream On showing the reunion gym stage, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4133,7 +4133,7 @@ const theMarvelousWonderettesDreamOnProject: LocalScenicProject = {
       id: "wonderettes-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2021-marvelous-wonderettes-photo-call-2-of-10-5746.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-2-of-10-5746-7f198da3.webp",
       altText:
         "Production image from The Marvelous Wonderettes: Dream On highlighting the polished 1960s reunion atmosphere, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4142,7 +4142,7 @@ const theMarvelousWonderettesDreamOnProject: LocalScenicProject = {
       id: "wonderettes-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2021-marvelous-wonderettes-photo-call-3-of-10-5785.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-3-of-10-5785-fe457f00.webp",
       altText:
         "Performance image from The Marvelous Wonderettes: Dream On with the reunion stage and period details visible, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4151,7 +4151,7 @@ const theMarvelousWonderettesDreamOnProject: LocalScenicProject = {
       id: "wonderettes-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2021-marvelous-wonderettes-photo-call-4-of-10-5870.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-4-of-10-5870-ee71ba3d.webp",
       altText:
         "Production still from The Marvelous Wonderettes: Dream On emphasizing the gym architecture and stage composition, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4160,7 +4160,7 @@ const theMarvelousWonderettesDreamOnProject: LocalScenicProject = {
       id: "wonderettes-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2021-marvelous-wonderettes-photo-call-6-of-10-5870.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-6-of-10-5870-2084a115.webp",
       altText:
         "Production image from The Marvelous Wonderettes: Dream On showing the warmer later-decade palette and reunion staging, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4169,7 +4169,7 @@ const theMarvelousWonderettesDreamOnProject: LocalScenicProject = {
       id: "wonderettes-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2021-marvelous-wonderettes-photo-call-8-of-10-5870.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-8-of-10-5870-13e8412e.webp",
       altText:
         "Final production image from The Marvelous Wonderettes: Dream On showing the complete reunion environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4178,7 +4178,7 @@ const theMarvelousWonderettesDreamOnProject: LocalScenicProject = {
       id: "wonderettes-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2021-marvelous-wonderettes-photo-call-7-of-10-5870.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-7-of-10-5870-1cd71a3d.webp",
       altText:
         "Rendering for The Marvelous Wonderettes: Dream On exploring the reunion stage environment and period atmosphere, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -4247,7 +4247,7 @@ const thePenelopiadProject: LocalScenicProject = {
   seoKeywords:
     "The Penelopiad, scenic design, UC Irvine, Margaret Atwood, classical theatre, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90051-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-cover-e4376934.webp",
   creativeTeam: [
     { name: "Margaret Atwood", role: "Playwright" },
     { name: "Luke Shepherd", role: "Composer" },
@@ -4275,7 +4275,7 @@ const thePenelopiadProject: LocalScenicProject = {
       id: "penelopiad-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90051-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-cover-e4376934.webp",
       altText: "The Penelopiad scenic design cover image.",
       kind: "cover",
     },
@@ -4283,7 +4283,7 @@ const thePenelopiadProject: LocalScenicProject = {
       id: "penelopiad-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90051-gallery-150077.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150077-fa49100b.webp",
       altText:
         "Production image from The Penelopiad showing the ritual scenic environment and chorus staging, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4292,7 +4292,7 @@ const thePenelopiadProject: LocalScenicProject = {
       id: "penelopiad-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90051-gallery-150085.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150085-f2b6c0a2.webp",
       altText:
         "Production image from The Penelopiad highlighting the layered memory space and ensemble composition, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4301,7 +4301,7 @@ const thePenelopiadProject: LocalScenicProject = {
       id: "penelopiad-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90051-gallery-150099.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150099-9d051c46.webp",
       altText:
         "Scene from The Penelopiad emphasizing chorus visibility and mythic geometry, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4310,7 +4310,7 @@ const thePenelopiadProject: LocalScenicProject = {
       id: "penelopiad-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90051-gallery-150132.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150132-62d7293e.webp",
       altText:
         "Production still from The Penelopiad showing the scenic architecture as container and witness, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4319,7 +4319,7 @@ const thePenelopiadProject: LocalScenicProject = {
       id: "penelopiad-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90051-gallery-150154.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90051-gallery-150154-b1fde856.webp",
       altText:
         "Rendering for The Penelopiad exploring the ritual scenic composition and staging framework, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -4328,7 +4328,7 @@ const thePenelopiadProject: LocalScenicProject = {
       id: "penelopiad-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90051-gallery-150227.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150227-b6a966e9.webp",
       altText:
         "Production image from The Penelopiad focusing on testimony, procession, and shared visual authority, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4337,7 +4337,7 @@ const thePenelopiadProject: LocalScenicProject = {
       id: "penelopiad-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90051-gallery-150232.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150232-69e3ddad.webp",
       altText:
         "Production image from The Penelopiad showing the scenic world supporting both epic framing and intimacy, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4346,7 +4346,7 @@ const thePenelopiadProject: LocalScenicProject = {
       id: "penelopiad-prod-7",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90051-gallery-150239.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150239-82c44197.webp",
       altText:
         "Production still from The Penelopiad highlighting spatial layering and chorus movement, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4355,7 +4355,7 @@ const thePenelopiadProject: LocalScenicProject = {
       id: "penelopiad-prod-8",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90051-gallery-150245.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150245-288b0bff.webp",
       altText:
         "Final production image from The Penelopiad showing the full scenic environment in performance, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4364,7 +4364,7 @@ const thePenelopiadProject: LocalScenicProject = {
       id: "penelopiad-prod-9",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90051-gallery-150059.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150059-6b46fd5e.webp",
       altText:
         "Production image from The Penelopiad reinforcing the set's symbolic texture and mythic atmosphere, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4438,7 +4438,7 @@ const companyProject: LocalScenicProject = {
   seoKeywords:
     "Company, scenic design, Stephen Sondheim, UC Irvine, musical theatre, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90019-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-cover-42d5b1b2.webp",
   creativeTeam: [
     { name: "Stephen Sondheim", role: "Music and Lyrics" },
     { name: "George Furth", role: "Book By" },
@@ -4467,7 +4467,7 @@ const companyProject: LocalScenicProject = {
       id: "company-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90019-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-cover-42d5b1b2.webp",
       altText: "Company scenic design cover image.",
       kind: "cover",
     },
@@ -4475,7 +4475,7 @@ const companyProject: LocalScenicProject = {
       id: "company-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90019-gallery-150026.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150026-decccaaf.webp",
       altText:
         "Production image from Company showing the coupled buildings and urban scenic composition, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4484,7 +4484,7 @@ const companyProject: LocalScenicProject = {
       id: "company-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90019-gallery-150028.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150028-e1310148.webp",
       altText:
         "Production image from Company highlighting the exterior city world and embedded orchestra, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4493,7 +4493,7 @@ const companyProject: LocalScenicProject = {
       id: "company-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90019-gallery-150031.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150031-f649799f.webp",
       altText:
         "Production still from Company emphasizing architectural contrast and stage movement, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4502,7 +4502,7 @@ const companyProject: LocalScenicProject = {
       id: "company-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90019-gallery-150033.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150033-3c025c2d.webp",
       altText:
         "Performance image from Company showing stoops, levels, and shifting emotional proximity, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4511,7 +4511,7 @@ const companyProject: LocalScenicProject = {
       id: "company-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90019-gallery-150076.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150076-4c345fa6.webp",
       altText:
         "Production image from Company with backlit windows and skyline color shaping the mood, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4520,7 +4520,7 @@ const companyProject: LocalScenicProject = {
       id: "company-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90019-gallery-150100.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150100-4c863819.webp",
       altText:
         "Production image from Company showing the cityscape as a landscape of longing, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4529,7 +4529,7 @@ const companyProject: LocalScenicProject = {
       id: "company-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90019-gallery-150102.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90019-gallery-150102-ec4c6874.webp",
       altText:
         "Rendering for Company exploring the coupled buildings, lone brick structure, and skyline rhythm, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -4538,7 +4538,7 @@ const companyProject: LocalScenicProject = {
       id: "company-prod-7",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90019-gallery-150116.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150116-9e1fc6e6.webp",
       altText:
         "Production image from Company highlighting ladders, escapes, and movement through the city, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4547,7 +4547,7 @@ const companyProject: LocalScenicProject = {
       id: "company-prod-8",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90019-gallery-150125.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150125-94768884.webp",
       altText:
         "Performance image from Company reinforcing the exterior architecture and ensemble relationships, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4556,7 +4556,7 @@ const companyProject: LocalScenicProject = {
       id: "company-prod-9",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90019-gallery-150165.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150165-d25ef8d3.webp",
       altText:
         "Production still from Company with the glowing skyline and nonlinear emotional rhythm in view, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4565,7 +4565,7 @@ const companyProject: LocalScenicProject = {
       id: "company-prod-10",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90019-gallery-150208.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150208-88a9e2cc.webp",
       altText:
         "Production image from Company emphasizing the set's view of intimacy from the outside looking in, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4574,7 +4574,7 @@ const companyProject: LocalScenicProject = {
       id: "company-prod-11",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90019-gallery-150240.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150240-c1ace8a3.webp",
       altText:
         "Final production image from Company showing the complete New York scenic world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4650,7 +4650,7 @@ const thePajamaGameProject: LocalScenicProject = {
   seoKeywords:
     "The Pajama Game, scenic design, UC Irvine, musical theatre, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90048-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-cover-31192793.webp",
   creativeTeam: [
     { name: "George Abbott & Richard Bissell", role: "Book By" },
     { name: "Richard Adler & Jerry Ross", role: "Music and Lyrics" },
@@ -4679,7 +4679,7 @@ const thePajamaGameProject: LocalScenicProject = {
       id: "pajama-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90048-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-cover-31192793.webp",
       altText: "The Pajama Game scenic design cover image.",
       kind: "cover",
     },
@@ -4687,7 +4687,7 @@ const thePajamaGameProject: LocalScenicProject = {
       id: "pajama-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90048-gallery-150024.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150024-3d0dace9.webp",
       altText:
         "Production image from The Pajama Game showing the Sleep-Tite factory world and ensemble staging, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4696,7 +4696,7 @@ const thePajamaGameProject: LocalScenicProject = {
       id: "pajama-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90048-gallery-150038.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150038-7aa812ba.webp",
       altText:
         "Rendering for The Pajama Game exploring the factory signage and modular scenic composition, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -4705,7 +4705,7 @@ const thePajamaGameProject: LocalScenicProject = {
       id: "pajama-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90048-gallery-150053.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150053-79a4a706.webp",
       altText:
         "Production image from The Pajama Game emphasizing the graphic factory environment and choreography space, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4714,7 +4714,7 @@ const thePajamaGameProject: LocalScenicProject = {
       id: "pajama-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90048-gallery-150081.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150081-f085aa1c.webp",
       altText:
         "Production image from The Pajama Game highlighting signage and period workplace structure, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4723,7 +4723,7 @@ const thePajamaGameProject: LocalScenicProject = {
       id: "pajama-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90048-gallery-150083.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150083-4436afe2.webp",
       altText:
         "Performance image from The Pajama Game showing modular scenic units in motion, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4732,7 +4732,7 @@ const thePajamaGameProject: LocalScenicProject = {
       id: "pajama-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90048-gallery-150091.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150091-d653ce9d.webp",
       altText:
         "Production still from The Pajama Game with dance staging and factory signage in view, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4741,7 +4741,7 @@ const thePajamaGameProject: LocalScenicProject = {
       id: "pajama-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90048-gallery-150113.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150113-f8ee0dbf.webp",
       altText:
         "Production image from The Pajama Game showing the scenic world supporting romance and labor conflict, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4750,7 +4750,7 @@ const thePajamaGameProject: LocalScenicProject = {
       id: "pajama-prod-7",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90048-gallery-150119.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150119-0cbc5b32.webp",
       altText:
         "Production image from The Pajama Game highlighting the modular factory atmosphere, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4759,7 +4759,7 @@ const thePajamaGameProject: LocalScenicProject = {
       id: "pajama-prod-8",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90048-gallery-150126.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150126-65311181.webp",
       altText:
         "Production still from The Pajama Game emphasizing period color and ensemble movement, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4768,7 +4768,7 @@ const thePajamaGameProject: LocalScenicProject = {
       id: "pajama-render-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90048-gallery-150138.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150138-045be059.webp",
       altText:
         "Rendering for The Pajama Game showing factory transitions and theatrical composition, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -4777,7 +4777,7 @@ const thePajamaGameProject: LocalScenicProject = {
       id: "pajama-prod-9",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90048-gallery-150146.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150146-85071687.webp",
       altText:
         "Production image from The Pajama Game reinforcing the postwar factory energy, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4786,7 +4786,7 @@ const thePajamaGameProject: LocalScenicProject = {
       id: "pajama-render-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90048-gallery-150172.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150172-fa983456.webp",
       altText:
         "Rendering for The Pajama Game exploring signage, movement paths, and period theatricality, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -4795,7 +4795,7 @@ const thePajamaGameProject: LocalScenicProject = {
       id: "pajama-render-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90048-gallery-150204.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150204-1eb8cc47.webp",
       altText:
         "Rendering for The Pajama Game studying scenic transitions and factory architecture, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -4804,7 +4804,7 @@ const thePajamaGameProject: LocalScenicProject = {
       id: "pajama-prod-10",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90048-gallery-150206.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150206-9a85c769.webp",
       altText:
         "Production image from The Pajama Game showing scenic rhythm during a large musical number, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4813,7 +4813,7 @@ const thePajamaGameProject: LocalScenicProject = {
       id: "pajama-prod-11",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90048-gallery-150219.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150219-cf9d5446.webp",
       altText:
         "Production image from The Pajama Game highlighting the adaptability of the modular set, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4822,7 +4822,7 @@ const thePajamaGameProject: LocalScenicProject = {
       id: "pajama-render-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90048-gallery-150230.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150230-31072f5e.webp",
       altText:
         "Rendering for The Pajama Game showing the Sleep-Tite world with bold period signage, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -4831,7 +4831,7 @@ const thePajamaGameProject: LocalScenicProject = {
       id: "pajama-render-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90048-gallery-150242.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150242-07812088.webp",
       altText:
         "Final rendering for The Pajama Game capturing the lively factory world and musical energy, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -4914,7 +4914,7 @@ const parliamentSquareProject: LocalScenicProject = {
   seoKeywords:
     "Parliament Square, scenic design, UC Irvine, drama, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90018-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-cover-3b50f3a4.webp",
   creativeTeam: [
     { name: "James Fritz", role: "Playwright" },
     { name: "Brandon PT Davis", role: "Scenic Designer" },
@@ -4941,7 +4941,7 @@ const parliamentSquareProject: LocalScenicProject = {
       id: "parliament-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90018-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-cover-3b50f3a4.webp",
       altText: "Parliament Square scenic design cover image.",
       kind: "cover",
     },
@@ -4949,7 +4949,7 @@ const parliamentSquareProject: LocalScenicProject = {
       id: "parliament-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90018-gallery-150128.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-gallery-150128-e7691d71.webp",
       altText:
         "Production image from Parliament Square showing the circular stone path and sparse political landscape, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4958,7 +4958,7 @@ const parliamentSquareProject: LocalScenicProject = {
       id: "parliament-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90018-gallery-150143.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-gallery-150143-98bc6786.webp",
       altText:
         "Production image from Parliament Square highlighting the ritual staging geometry and fractured environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4967,7 +4967,7 @@ const parliamentSquareProject: LocalScenicProject = {
       id: "parliament-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90018-gallery-150150.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-gallery-150150-e6921b4b.webp",
       altText:
         "Production still from Parliament Square emphasizing concrete textures and political isolation, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4976,7 +4976,7 @@ const parliamentSquareProject: LocalScenicProject = {
       id: "parliament-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90018-gallery-150159.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-gallery-150159-3968ab1c.webp",
       altText:
         "Performance image from Parliament Square showing the stone circle as a container for protest, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4985,7 +4985,7 @@ const parliamentSquareProject: LocalScenicProject = {
       id: "parliament-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90018-gallery-150166.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-gallery-150166-fbd524eb.webp",
       altText:
         "Production image from Parliament Square with the cold palette and minimal architecture in view, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -4994,7 +4994,7 @@ const parliamentSquareProject: LocalScenicProject = {
       id: "parliament-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90018-gallery-150188.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-gallery-150188-8eab105b.webp",
       altText:
         "Production image from Parliament Square emphasizing the environment's meditative austerity, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5003,7 +5003,7 @@ const parliamentSquareProject: LocalScenicProject = {
       id: "parliament-prod-7",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90018-gallery-150202.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-gallery-150202-8991ab50.webp",
       altText:
         "Production image from Parliament Square showing the scenic world pressing the political against the personal, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5012,7 +5012,7 @@ const parliamentSquareProject: LocalScenicProject = {
       id: "parliament-prod-8",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90018-gallery-150205.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-gallery-150205-4a077830.webp",
       altText:
         "Production still from Parliament Square highlighting symbolic decay and empty public space, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5021,7 +5021,7 @@ const parliamentSquareProject: LocalScenicProject = {
       id: "parliament-prod-9",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90018-gallery-150214.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-gallery-150214-db908fa1.webp",
       altText:
         "Production image from Parliament Square reinforcing the scenic world's tension between resilience and sacrifice, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5030,7 +5030,7 @@ const parliamentSquareProject: LocalScenicProject = {
       id: "parliament-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90018-gallery-150241.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90018-gallery-150241-aebfba62.webp",
       altText:
         "Rendering for Parliament Square exploring the circular path, concrete surfaces, and ritual scenic composition, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -5104,7 +5104,7 @@ const americanIdiotProject: LocalScenicProject = {
   seoKeywords:
     "American Idiot, scenic design, UC Irvine, Green Day, musical theatre, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90038-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-cover-6c8f8ee1.webp",
   creativeTeam: [
     { name: "Billie Joe Armstrong & Michael Mayer", role: "Book By" },
     { name: "Green Day", role: "Music By" },
@@ -5135,7 +5135,7 @@ const americanIdiotProject: LocalScenicProject = {
       id: "idiot-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90038-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-cover-6c8f8ee1.webp",
       altText: "American Idiot scenic design cover image.",
       kind: "cover",
     },
@@ -5143,7 +5143,7 @@ const americanIdiotProject: LocalScenicProject = {
       id: "idiot-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90038-gallery-150011.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150011-0658b26b.webp",
       altText:
         "Production image from American Idiot showing the modular concrete environment and ensemble staging, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5152,7 +5152,7 @@ const americanIdiotProject: LocalScenicProject = {
       id: "idiot-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90038-gallery-150036.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150036-d4003d4b.webp",
       altText:
         "Production image from American Idiot emphasizing the hard-edged architectural world and rebellious energy, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5161,7 +5161,7 @@ const americanIdiotProject: LocalScenicProject = {
       id: "idiot-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90038-gallery-150065.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150065-a0cd87d4.webp",
       altText:
         "Production still from American Idiot showing industrial forms and the show's kinetic physicality, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5170,7 +5170,7 @@ const americanIdiotProject: LocalScenicProject = {
       id: "idiot-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90038-gallery-150066.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150066-fc967fed.webp",
       altText:
         "Production image from American Idiot highlighting the concrete framework and projection atmosphere, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5179,7 +5179,7 @@ const americanIdiotProject: LocalScenicProject = {
       id: "idiot-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90038-gallery-150094.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150094-386d8ea8.webp",
       altText:
         "Production image from American Idiot showing the conflict between space and identity, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5188,7 +5188,7 @@ const americanIdiotProject: LocalScenicProject = {
       id: "idiot-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90038-gallery-150105.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150105-855dc2cb.webp",
       altText:
         "Production image from American Idiot reinforcing the score's raw energy within a minimalist industrial frame, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5197,7 +5197,7 @@ const americanIdiotProject: LocalScenicProject = {
       id: "idiot-prod-7",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90038-gallery-150152.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150152-33062a7e.webp",
       altText:
         "Production still from American Idiot with projection and concrete forms supporting emotional transition, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5206,7 +5206,7 @@ const americanIdiotProject: LocalScenicProject = {
       id: "idiot-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90038-gallery-150176.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90038-gallery-150176-92a3fb6f.webp",
       altText:
         "Rendering for American Idiot exploring the Southern California concrete metaphor and industrial scenic world, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -5215,7 +5215,7 @@ const americanIdiotProject: LocalScenicProject = {
       id: "idiot-prod-8",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90038-gallery-150196.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-gallery-150196-ae0b4a4b.webp",
       altText:
         "Final production image from American Idiot showing the full scenic environment in performance, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5283,7 +5283,7 @@ const lastTrainToNibrocProject: LocalScenicProject = {
   seoKeywords:
     "Last Train to Nibroc, scenic design, Okoboji Summer Theatre, drama, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2016-the-last-train-to-nibroc-3-of-10-7894.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-3-of-10-7894-558b9e2f.webp",
   creativeTeam: [
     { name: "Arlene Hutton", role: "Playwright" },
     { name: "Brandon PT Davis", role: "Scenic Design" },
@@ -5304,7 +5304,7 @@ const lastTrainToNibrocProject: LocalScenicProject = {
       id: "nibroc-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2016-the-last-train-to-nibroc-3-of-10-7894.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-3-of-10-7894-558b9e2f.webp",
       altText: "Last Train to Nibroc scenic design cover image.",
       kind: "cover",
     },
@@ -5312,7 +5312,7 @@ const lastTrainToNibrocProject: LocalScenicProject = {
       id: "nibroc-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2016-the-last-train-to-nibroc-1-of-10-9188.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-1-of-10-9188-78d80ea0.webp",
       altText:
         "Production image from Last Train to Nibroc showing the intimate barn-wood framed stage, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5321,7 +5321,7 @@ const lastTrainToNibrocProject: LocalScenicProject = {
       id: "nibroc-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2016-the-last-train-to-nibroc-1-of-1-9386.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-1-of-1-9386-27475243.webp",
       altText:
         "Production image from Last Train to Nibroc highlighting the compressed proscenium and warm material palette, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5330,7 +5330,7 @@ const lastTrainToNibrocProject: LocalScenicProject = {
       id: "nibroc-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2016-the-last-train-to-nibroc-3-of-10-9188.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-3-of-10-9188-2c3b6171.webp",
       altText:
         "Production still from Last Train to Nibroc showing the environment's closeness and stillness, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5339,7 +5339,7 @@ const lastTrainToNibrocProject: LocalScenicProject = {
       id: "nibroc-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2016-the-last-train-to-nibroc-4-of-10-9386.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-4-of-10-9386-ed54be72.webp",
       altText:
         "Production image from Last Train to Nibroc emphasizing the raked stage and intimate playing space, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5348,7 +5348,7 @@ const lastTrainToNibrocProject: LocalScenicProject = {
       id: "nibroc-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2016-the-last-train-to-nibroc-5-of-10-9386.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-5-of-10-9386-3e89f0d9.webp",
       altText:
         "Production image from Last Train to Nibroc showing the long backdrop supporting fluid scene changes, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5357,7 +5357,7 @@ const lastTrainToNibrocProject: LocalScenicProject = {
       id: "nibroc-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2016-the-last-train-to-nibroc-6-of-10-9386.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-6-of-10-9386-d83750e4.webp",
       altText:
         "Production still from Last Train to Nibroc reinforcing the design's quiet emotional tone, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5366,7 +5366,7 @@ const lastTrainToNibrocProject: LocalScenicProject = {
       id: "nibroc-prod-7",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2016-the-last-train-to-nibroc-7-of-10-9386.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-7-of-10-9386-fb7dcd85.webp",
       altText:
         "Production image from Last Train to Nibroc showing the architecture holding the characters gently, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5375,7 +5375,7 @@ const lastTrainToNibrocProject: LocalScenicProject = {
       id: "nibroc-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2016-the-last-train-to-nibroc-9-of-10-9386.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-9-of-10-9386-66e1d692.webp",
       altText:
         "Rendering for Last Train to Nibroc exploring the compressed proscenium and barn-wood material language, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -5384,7 +5384,7 @@ const lastTrainToNibrocProject: LocalScenicProject = {
       id: "nibroc-render-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2016-the-last-train-to-nibroc-8-of-10-9386.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-8-of-10-9386-a2f7597b.webp",
       altText:
         "Rendering for Last Train to Nibroc showing the intimate scenic scale and backdrop system, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -5393,7 +5393,7 @@ const lastTrainToNibrocProject: LocalScenicProject = {
       id: "nibroc-render-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/03/2016-the-last-train-to-nibroc-10-of-10-9386.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-10-of-10-9386-3fe47120.webp",
       altText:
         "Final rendering for Last Train to Nibroc capturing the quiet, close scenic atmosphere, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -5461,7 +5461,7 @@ const vanyaAndSoniaAndMashaAndSpikeProject: LocalScenicProject = {
   seoKeywords:
     "Vanya and Sonia and Masha and Spike, scenic design, Stephens College, comedy, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2016-vanya-sonia-masha-and-spike-stephens-1-of-7-1190.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-1-of-7-1190-d193baa9.webp",
   creativeTeam: [
     { name: "Christopher Durang", role: "Playwright" },
     { name: "Brandon PT Davis", role: "Scenic Design" },
@@ -5482,7 +5482,7 @@ const vanyaAndSoniaAndMashaAndSpikeProject: LocalScenicProject = {
       id: "vanya-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2016-vanya-sonia-masha-and-spike-stephens-1-of-7-1190.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-1-of-7-1190-d193baa9.webp",
       altText: "Vanya and Sonia and Masha and Spike scenic design cover image.",
       kind: "cover",
     },
@@ -5490,7 +5490,7 @@ const vanyaAndSoniaAndMashaAndSpikeProject: LocalScenicProject = {
       id: "vanya-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2016-vanya-sonia-masha-and-spike-stephens-2-of-7-2374.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-2-of-7-2374-dc489aad.webp",
       altText:
         "Production image from Vanya and Sonia and Masha and Spike showing the Bucks County porch and domestic architecture, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5499,7 +5499,7 @@ const vanyaAndSoniaAndMashaAndSpikeProject: LocalScenicProject = {
       id: "vanya-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2016-vanya-sonia-masha-and-spike-stephens-3-of-7-2374.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-3-of-7-2374-9937df06.webp",
       altText:
         "Production image from Vanya and Sonia and Masha and Spike highlighting the porch as a threshold and gathering space, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5508,7 +5508,7 @@ const vanyaAndSoniaAndMashaAndSpikeProject: LocalScenicProject = {
       id: "vanya-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2016-vanya-sonia-masha-and-spike-stephens-1-of-7-2374.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-1-of-7-2374-7c5829fa.webp",
       altText:
         "Production image from Vanya and Sonia and Masha and Spike emphasizing the warm wood tones and lived-in domestic world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5517,7 +5517,7 @@ const vanyaAndSoniaAndMashaAndSpikeProject: LocalScenicProject = {
       id: "vanya-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2016-vanya-sonia-masha-and-spike-stephens-1-of-2-8633.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-1-of-2-8633-c4ca37e0.webp",
       altText:
         "Production still from Vanya and Sonia and Masha and Spike showing the scenic environment supporting layered comic staging, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5526,7 +5526,7 @@ const vanyaAndSoniaAndMashaAndSpikeProject: LocalScenicProject = {
       id: "vanya-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/vanya-act-2-45-large-2372.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/vanya-act-2-45-large-2372-50c5b833.webp",
       altText:
         "Production image from Vanya and Sonia and Masha and Spike reinforcing the porch as both sanctuary and constraint, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5535,7 +5535,7 @@ const vanyaAndSoniaAndMashaAndSpikeProject: LocalScenicProject = {
       id: "vanya-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2016-vanya-sonia-masha-and-spike-stephens-2-of-2-8670.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-2-of-2-8670-9f110775.webp",
       altText:
         "Final production image from Vanya and Sonia and Masha and Spike showing the full domestic scenic world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5599,7 +5599,7 @@ const theLiarProject: LocalScenicProject = {
   seoKeywords:
     "The Liar, David Ives, Pierre Corneille, scenic design, Okoboji Summer Theatre, comedy, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-liar/the-liar-daa6bff258.jpg",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-daa6bff258-03b7fc44.jpg",
   creativeTeam: [
     { name: "David Ives (adapted from Pierre Corneille)", role: "Written By" },
     { name: "Brandon PT Davis", role: "Scenic Design" },
@@ -5620,7 +5620,7 @@ const theLiarProject: LocalScenicProject = {
       id: "liar-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-liar/the-liar-daa6bff258.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-daa6bff258-03b7fc44.jpg",
       altText: "The Liar scenic design cover image.",
       kind: "cover",
     },
@@ -5628,7 +5628,7 @@ const theLiarProject: LocalScenicProject = {
       id: "liar-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-liar/the-liar-214d560e4b.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-214d560e4b-80e3c3aa.jpg",
       altText:
         "Production image from The Liar showing the classical comic setting and staging, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5637,7 +5637,7 @@ const theLiarProject: LocalScenicProject = {
       id: "liar-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-liar/the-liar-c183f7b9fc.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-c183f7b9fc-5e5aa5bc.jpg",
       altText:
         "Stage image from The Liar emphasizing wit, movement, and the scenic environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5646,7 +5646,7 @@ const theLiarProject: LocalScenicProject = {
       id: "liar-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-liar/the-liar-cc3083db71.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-cc3083db71-88cf4ecf.jpg",
       altText:
         "Production still from The Liar highlighting the playful period world and comic staging, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5655,7 +5655,7 @@ const theLiarProject: LocalScenicProject = {
       id: "liar-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-liar/the-liar-edc3844ade.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-edc3844ade-3cb3266a.jpg",
       altText:
         "Performance image from The Liar reinforcing the bold visual rhythm of the comic setting, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5664,7 +5664,7 @@ const theLiarProject: LocalScenicProject = {
       id: "liar-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-liar/the-liar-fe95892931.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-fe95892931-5d621e18.jpg",
       altText:
         "Final production image from The Liar showing the full comic environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5728,7 +5728,7 @@ const aSmalltowneChristmasProject: LocalScenicProject = {
   seoKeywords:
     "A Smalltowne Christmas, scenic design, Stephens College, holiday musical, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/a-smalltowne-christmas/a-smalltowne-christmas-9717e6782b.jpg",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/a-smalltowne-christmas-9717e6782b-8c625df9.jpg",
   creativeTeam: [
     { name: "Stacia Fernandez", role: "Written By" },
     { name: "Danny J. Rooney", role: "Music and Lyrics By" },
@@ -5752,7 +5752,7 @@ const aSmalltowneChristmasProject: LocalScenicProject = {
       id: "smalltowne-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/a-smalltowne-christmas/a-smalltowne-christmas-9717e6782b.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/a-smalltowne-christmas-9717e6782b-8c625df9.jpg",
       altText: "A Smalltowne Christmas scenic design cover image.",
       kind: "cover",
     },
@@ -5760,7 +5760,7 @@ const aSmalltowneChristmasProject: LocalScenicProject = {
       id: "smalltowne-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/a-smalltowne-christmas/a-smalltowne-christmas-384b222098.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/a-smalltowne-christmas-384b222098-e5143cc7.jpg",
       altText:
         "Production image from A Smalltowne Christmas showing the festive scenic environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5769,7 +5769,7 @@ const aSmalltowneChristmasProject: LocalScenicProject = {
       id: "smalltowne-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/a-smalltowne-christmas/a-smalltowne-christmas-3691d27c7b.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/a-smalltowne-christmas-3691d27c7b-5598713b.jpg",
       altText:
         "Production still from A Smalltowne Christmas highlighting holiday staging and scenic warmth, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5778,7 +5778,7 @@ const aSmalltowneChristmasProject: LocalScenicProject = {
       id: "smalltowne-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/a-smalltowne-christmas/a-smalltowne-christmas-be19cc2be0.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/a-smalltowne-christmas-be19cc2be0-0b29fd45.jpg",
       altText:
         "Final production image from A Smalltowne Christmas showing the complete holiday world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5831,7 +5831,7 @@ const urinetown2021Project: LocalScenicProject = {
   seoKeywords:
     "Urinetown 2021, Greg Kotis, Mark Hollmann, scenic design, Okoboji Summer Theatre, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/urinetown-2021/urinetown-2021-c871282d6b.jpeg",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/urinetown-2021-c871282d6b-f398cd2f.jpeg",
   creativeTeam: [
     { name: "Greg Kotis", role: "Book By" },
     { name: "Mark Hollmann and Greg Kotis", role: "Music and Lyrics By" },
@@ -5854,7 +5854,7 @@ const urinetown2021Project: LocalScenicProject = {
       id: "urinetown-2021-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/urinetown-2021/urinetown-2021-c871282d6b.jpeg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/urinetown-2021-c871282d6b-f398cd2f.jpeg",
       altText: "Urinetown 2021 scenic design cover image.",
       kind: "cover",
     },
@@ -5862,7 +5862,7 @@ const urinetown2021Project: LocalScenicProject = {
       id: "urinetown-2021-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/urinetown-2021/urinetown-2021-51b22c1e9d.jpeg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/urinetown-2021-51b22c1e9d-0502fb13.jpeg",
       altText:
         "Production image from the 2021 Urinetown showing the angular dystopian environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5871,7 +5871,7 @@ const urinetown2021Project: LocalScenicProject = {
       id: "urinetown-2021-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/urinetown-2021/urinetown-2021-96279a9e54.jpeg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/urinetown-2021-96279a9e54-b8e91501.jpeg",
       altText:
         "Production still from the 2021 Urinetown emphasizing the expressionist shapes and musical staging, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5880,7 +5880,7 @@ const urinetown2021Project: LocalScenicProject = {
       id: "urinetown-2021-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/urinetown-2021/urinetown-2021-42a3af6d44.jpeg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/urinetown-2021-42a3af6d44-995559d9.jpeg",
       altText:
         "Production image from the 2021 Urinetown highlighting concrete texture and dystopian atmosphere, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5889,7 +5889,7 @@ const urinetown2021Project: LocalScenicProject = {
       id: "urinetown-2021-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/urinetown-2021/urinetown-2021-61fded10c7.jpeg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/urinetown-2021-61fded10c7-8e6f48c3.jpeg",
       altText:
         "Final production image from the 2021 Urinetown showing the complete comic-dystopian scenic world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5949,7 +5949,7 @@ const glassMenagerie2011Project: LocalScenicProject = {
   seoKeywords:
     "The Glass Menagerie 2011, Tennessee Williams, scenic design, Okoboji Summer Theatre, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-glass-menagerie-2011/the-glass-menagerie-2011-18e039c8c0.jpg",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-glass-menagerie-2011-18e039c8c0-56e7d0a8.jpg",
   creativeTeam: [
     { name: "Tennessee Williams", role: "Written By" },
     { name: "Brandon PT Davis", role: "Scenic Design" },
@@ -5970,7 +5970,7 @@ const glassMenagerie2011Project: LocalScenicProject = {
       id: "glass-2011-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-glass-menagerie-2011/the-glass-menagerie-2011-18e039c8c0.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-glass-menagerie-2011-18e039c8c0-56e7d0a8.jpg",
       altText: "The Glass Menagerie 2011 scenic design cover image.",
       kind: "cover",
     },
@@ -5978,7 +5978,7 @@ const glassMenagerie2011Project: LocalScenicProject = {
       id: "glass-2011-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-glass-menagerie-2011/the-glass-menagerie-2011-a53c40ae0e.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-glass-menagerie-2011-a53c40ae0e-269007f3.jpg",
       altText:
         "Production image from the 2011 Glass Menagerie showing the domestic memory world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5987,7 +5987,7 @@ const glassMenagerie2011Project: LocalScenicProject = {
       id: "glass-2011-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-glass-menagerie-2011/the-glass-menagerie-2011-eb79367a23.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-glass-menagerie-2011-eb79367a23-5a0d525e.jpg",
       altText:
         "Production still from the 2011 Glass Menagerie highlighting the scrim walls and layered stage space, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -5996,7 +5996,7 @@ const glassMenagerie2011Project: LocalScenicProject = {
       id: "glass-2011-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-glass-menagerie-2011/the-glass-menagerie-2011-2acc2d20ef.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-glass-menagerie-2011-2acc2d20ef-4d9c26ac.jpg",
       altText:
         "Performance image from the 2011 Glass Menagerie emphasizing nostalgia and theatrical framing, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6005,7 +6005,7 @@ const glassMenagerie2011Project: LocalScenicProject = {
       id: "glass-2011-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/rescued/the-glass-menagerie-2011/the-glass-menagerie-2011-a598d1ca19.jpg",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-glass-menagerie-2011-a598d1ca19-6c14fbf9.jpg",
       altText:
         "Final production image from the 2011 Glass Menagerie showing the full scenic environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6065,7 +6065,7 @@ const littleShopOfHorrorsProject: LocalScenicProject = {
   seoKeywords:
     "Little Shop of Horrors, scenic design, Okoboji Summer Theatre, musical theatre, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/little-shop-of-horrors-02-0430.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/little-shop-of-horrors-02-0430-e1e668ba.webp",
   creativeTeam: [
     { name: "Howard Ashman", role: "Written by" },
     { name: "Alan Menken", role: "Music By" },
@@ -6088,7 +6088,7 @@ const littleShopOfHorrorsProject: LocalScenicProject = {
       id: "little-shop-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/little-shop-of-horrors-02-0430.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/little-shop-of-horrors-02-0430-e1e668ba.webp",
       altText: "Little Shop of Horrors scenic design cover image.",
       kind: "cover",
     },
@@ -6096,7 +6096,7 @@ const littleShopOfHorrorsProject: LocalScenicProject = {
       id: "little-shop-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2015-little-shop-of-horrors-7-of-9-1481.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2015-little-shop-of-horrors-7-of-9-1481-6cd46cad.webp",
       altText:
         "Production image from Little Shop of Horrors showing the gritty flower shop and Skid Row environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6105,7 +6105,7 @@ const littleShopOfHorrorsProject: LocalScenicProject = {
       id: "little-shop-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2015-little-shop-of-horrors-2-of-9-1481.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2015-little-shop-of-horrors-2-of-9-1481-9655ab32.webp",
       altText:
         "Production image from Little Shop of Horrors emphasizing the brick storefront and cramped scenic frame, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6114,7 +6114,7 @@ const littleShopOfHorrorsProject: LocalScenicProject = {
       id: "little-shop-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2015-little-shop-of-horrors-3-of-9-1481.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2015-little-shop-of-horrors-3-of-9-1481-ce2b1988.webp",
       altText:
         "Production still from Little Shop of Horrors highlighting the grounded storefront realism, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6123,7 +6123,7 @@ const littleShopOfHorrorsProject: LocalScenicProject = {
       id: "little-shop-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2015-little-shop-of-horrors-4-of-9-1481.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2015-little-shop-of-horrors-4-of-9-1481-4b2444d7.webp",
       altText:
         "Production image from Little Shop of Horrors showing practical counters, windows, and detailed shop textures, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6132,7 +6132,7 @@ const littleShopOfHorrorsProject: LocalScenicProject = {
       id: "little-shop-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2015-little-shop-of-horrors-6-of-9-1481.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2015-little-shop-of-horrors-6-of-9-1481-1c45a635.webp",
       altText:
         "Production image from Little Shop of Horrors reinforcing the claustrophobic tension of the small scenic world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6141,7 +6141,7 @@ const littleShopOfHorrorsProject: LocalScenicProject = {
       id: "little-shop-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2015-little-shop-of-horrors-8-of-9-1481.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2015-little-shop-of-horrors-8-of-9-1481-bb97ce55.webp",
       altText:
         "Production still from Little Shop of Horrors showing the world as danger increases around the shop, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6150,7 +6150,7 @@ const littleShopOfHorrorsProject: LocalScenicProject = {
       id: "little-shop-prod-7",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/little-shop-of-horrors-02-1481.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/little-shop-of-horrors-02-1481-60179d7d.webp",
       altText:
         "Final production image from Little Shop of Horrors showing the full scenic environment in performance, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6214,7 +6214,7 @@ const richGirlProject: LocalScenicProject = {
   seoKeywords:
     "Rich Girl, scenic design, Okoboji Summer Theatre, drama, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2014-rich-girl-okoboji-summer-theatre-3-of-8-2094.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2014-rich-girl-okoboji-summer-theatre-3-of-8-2094-bd9037d8.webp",
   creativeTeam: [
     { name: "Victoria Stewart", role: "Playwright" },
     { name: "Brandon PT Davis", role: "Scenic Design" },
@@ -6235,7 +6235,7 @@ const richGirlProject: LocalScenicProject = {
       id: "rich-girl-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2014-rich-girl-okoboji-summer-theatre-3-of-8-2094.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2014-rich-girl-okoboji-summer-theatre-3-of-8-2094-bd9037d8.webp",
       altText: "Rich Girl scenic design cover image.",
       kind: "cover",
     },
@@ -6243,7 +6243,7 @@ const richGirlProject: LocalScenicProject = {
       id: "rich-girl-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2014-rich-girl-okoboji-summer-theatre-3-of-8-3670.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2014-rich-girl-okoboji-summer-theatre-3-of-8-3670-51246a14.webp",
       altText:
         "Production image from Rich Girl showing the contemporary penthouse environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6252,7 +6252,7 @@ const richGirlProject: LocalScenicProject = {
       id: "rich-girl-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/rich-girl-5-3670.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/rich-girl-5-3670-a9dce5ca.webp",
       altText:
         "Production image from Rich Girl highlighting the sleek domestic architecture and polished palette, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6261,7 +6261,7 @@ const richGirlProject: LocalScenicProject = {
       id: "rich-girl-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2014-rich-girl-okoboji-summer-theatre-4-of-8-3670.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2014-rich-girl-okoboji-summer-theatre-4-of-8-3670-aee16070.webp",
       altText:
         "Production image from Rich Girl emphasizing openness, scale, and emotional distance, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6270,7 +6270,7 @@ const richGirlProject: LocalScenicProject = {
       id: "rich-girl-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2014-rich-girl-okoboji-summer-theatre-5-of-8-3670.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2014-rich-girl-okoboji-summer-theatre-5-of-8-3670-314a2c6a.webp",
       altText:
         "Production still from Rich Girl showing the refined interior shell and city-facing atmosphere, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6279,7 +6279,7 @@ const richGirlProject: LocalScenicProject = {
       id: "rich-girl-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2014-rich-girl-okoboji-summer-theatre-6-of-8-3707.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2014-rich-girl-okoboji-summer-theatre-6-of-8-3707-4626e751.webp",
       altText:
         "Production image from Rich Girl highlighting the elegant restraint of the penthouse world, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6288,7 +6288,7 @@ const richGirlProject: LocalScenicProject = {
       id: "rich-girl-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2014-rich-girl-okoboji-summer-theatre-7-of-8-3759.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2014-rich-girl-okoboji-summer-theatre-7-of-8-3759-f6de54ee.webp",
       altText:
         "Final production image from Rich Girl showing the complete scenic environment in performance, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6297,7 +6297,7 @@ const richGirlProject: LocalScenicProject = {
       id: "rich-girl-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/rich-girl-sketch-large-3759.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/rich-girl-sketch-large-3759-550cb2db.webp",
       altText:
         "Rendering for Rich Girl exploring the penthouse composition, furnishings, and emotional restraint, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -6365,7 +6365,7 @@ const angelStreetProject: LocalScenicProject = {
   seoKeywords:
     "Angel Street, Gaslight, scenic design, Okoboji Summer Theatre, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90043-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-cover-487c1e5d.webp",
   creativeTeam: [
     { name: "Patrick Hamilton", role: "Playwright" },
     { name: "Brandon PT Davis", role: "Scenic Designer" },
@@ -6391,7 +6391,7 @@ const angelStreetProject: LocalScenicProject = {
       id: "angel-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90043-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-cover-487c1e5d.webp",
       altText: "Angel Street scenic design cover image.",
       kind: "cover",
     },
@@ -6399,7 +6399,7 @@ const angelStreetProject: LocalScenicProject = {
       id: "angel-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90043-gallery-150025.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-gallery-150025-e9797b75.webp",
       altText:
         "Production image from Angel Street showing the Victorian drawing room and formal architecture, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6408,7 +6408,7 @@ const angelStreetProject: LocalScenicProject = {
       id: "angel-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90043-gallery-150110.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-gallery-150110-b9e8d99e.webp",
       altText:
         "Production image from Angel Street highlighting wainscoting, staircase, and enclosed domestic atmosphere, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6417,7 +6417,7 @@ const angelStreetProject: LocalScenicProject = {
       id: "angel-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90043-gallery-150129.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-gallery-150129-0d9bf5e0.webp",
       altText:
         "Production still from Angel Street showing period furnishings and practical lighting, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6426,7 +6426,7 @@ const angelStreetProject: LocalScenicProject = {
       id: "angel-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90043-gallery-150215.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-gallery-150215-12788cb7.webp",
       altText:
         "Production image from Angel Street emphasizing domestic control and observation in the drawing room, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6435,7 +6435,7 @@ const angelStreetProject: LocalScenicProject = {
       id: "angel-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90043-gallery-150234.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90043-gallery-150234-a88f8a7e.webp",
       altText:
         "Rendering for Angel Street exploring the formal Victorian room and psychological tension, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -6444,7 +6444,7 @@ const angelStreetProject: LocalScenicProject = {
       id: "angel-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90043-gallery-150142.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-gallery-150142-4a0cde35.webp",
       altText:
         "Production image from Angel Street reinforcing the density and enclosure of the room, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6453,7 +6453,7 @@ const angelStreetProject: LocalScenicProject = {
       id: "angel-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90043-gallery-150155.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-gallery-150155-077d718a.webp",
       altText:
         "Production still from Angel Street showing shifts in power within a stable realistic environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6462,7 +6462,7 @@ const angelStreetProject: LocalScenicProject = {
       id: "angel-prod-7",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90043-gallery-150194.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-gallery-150194-b65bff28.webp",
       altText:
         "Final production image from Angel Street showing the complete drawing room world in performance, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6530,7 +6530,7 @@ const dontDressForDinnerProject: LocalScenicProject = {
   seoKeywords:
     "Don't Dress for Dinner, scenic design, Okoboji Summer Theatre, comedy, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2013-dont-dress-for-dinner-okoboji-summer-theatre-1-of-7-3733.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-1-of-7-3733-2a2cf2a4.webp",
   creativeTeam: [
     { name: "Marc Camoletti", role: "Playwright" },
     { name: "Brandon PT Davis", role: "Scenic Design" },
@@ -6551,7 +6551,7 @@ const dontDressForDinnerProject: LocalScenicProject = {
       id: "dinner-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2013-dont-dress-for-dinner-okoboji-summer-theatre-1-of-7-3733.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-1-of-7-3733-2a2cf2a4.webp",
       altText: "Don't Dress for Dinner scenic design cover image.",
       kind: "cover",
     },
@@ -6559,7 +6559,7 @@ const dontDressForDinnerProject: LocalScenicProject = {
       id: "dinner-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2013-dont-dress-for-dinner-okoboji-summer-theatre-7-of-7-5278.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-7-of-7-5278-627ee2db.webp",
       altText:
         "Production image from Don't Dress for Dinner showing the restored French farmhouse environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6568,7 +6568,7 @@ const dontDressForDinnerProject: LocalScenicProject = {
       id: "dinner-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2013-dont-dress-for-dinner-okoboji-summer-theatre-6-of-7-5280.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-6-of-7-5280-a6012fc3.webp",
       altText:
         "Production image from Don't Dress for Dinner highlighting exposed timber beams and rustic architectural detail, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6577,7 +6577,7 @@ const dontDressForDinnerProject: LocalScenicProject = {
       id: "dinner-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2013-dont-dress-for-dinner-okoboji-summer-theatre-1-of-7-5333.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-1-of-7-5333-b089c7cc.webp",
       altText:
         "Production image from Don't Dress for Dinner emphasizing layered depth and door placement for farce, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6586,7 +6586,7 @@ const dontDressForDinnerProject: LocalScenicProject = {
       id: "dinner-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2013-dont-dress-for-dinner-okoboji-summer-theatre-2-of-7-5502.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-2-of-7-5502-091af54f.webp",
       altText:
         "Production still from Don't Dress for Dinner showing the farmhouse interior as romantic setting and comic engine, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6595,7 +6595,7 @@ const dontDressForDinnerProject: LocalScenicProject = {
       id: "dinner-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2013-dont-dress-for-dinner-okoboji-summer-theatre-3-of-7-5321.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-3-of-7-5321-51819b0e.webp",
       altText:
         "Production image from Don't Dress for Dinner reinforcing sightlines and timing within the scenic layout, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6604,7 +6604,7 @@ const dontDressForDinnerProject: LocalScenicProject = {
       id: "dinner-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2013-dont-dress-for-dinner-okoboji-summer-theatre-4-of-7-5292.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-4-of-7-5292-2be249a4.webp",
       altText:
         "Production image from Don't Dress for Dinner highlighting warmth, elegance, and ensemble movement, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6613,7 +6613,7 @@ const dontDressForDinnerProject: LocalScenicProject = {
       id: "dinner-prod-7",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/2013-dont-dress-for-dinner-okoboji-summer-theatre-5-of-7-5280.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-5-of-7-5280-9f703f75.webp",
       altText:
         "Final production image from Don't Dress for Dinner showing the complete French farmhouse world in performance, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6677,7 +6677,7 @@ const allMySonsProject: LocalScenicProject = {
   seoKeywords:
     "All My Sons, scenic design, Stephens College, Arthur Miller, drama, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-cover-aa4e4e0c.webp",
   creativeTeam: [
     { name: "Brandon PT Davis", role: "Scenic Designer" },
     { name: "Kate Wood", role: "Costume Designer" },
@@ -6702,7 +6702,7 @@ const allMySonsProject: LocalScenicProject = {
       id: "sons-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-cover.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-cover-aa4e4e0c.webp",
       altText: "All My Sons scenic design cover image.",
       kind: "cover",
     },
@@ -6710,7 +6710,7 @@ const allMySonsProject: LocalScenicProject = {
       id: "sons-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-gallery-150013.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-gallery-150013-2dc9c7df.webp",
       altText:
         "Production image from All My Sons showing the postwar suburban house and yard, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6719,7 +6719,7 @@ const allMySonsProject: LocalScenicProject = {
       id: "sons-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-gallery-150018.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-gallery-150018-16235fd3.webp",
       altText:
         "Production image from All My Sons highlighting the open porch and domestic realism, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6728,7 +6728,7 @@ const allMySonsProject: LocalScenicProject = {
       id: "sons-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-gallery-150054.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-gallery-150054-a4cbbf69.webp",
       altText:
         "Production still from All My Sons emphasizing the ordered suburban environment, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6737,7 +6737,7 @@ const allMySonsProject: LocalScenicProject = {
       id: "sons-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-gallery-150070.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-gallery-150070-34f3888b.webp",
       altText:
         "Production image from All My Sons showing how the open setting exposes private conflict, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6746,7 +6746,7 @@ const allMySonsProject: LocalScenicProject = {
       id: "sons-prod-5",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-gallery-150078.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-gallery-150078-86884a86.webp",
       altText:
         "Production image from All My Sons reinforcing the tension between comfort and moral collapse, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6755,7 +6755,7 @@ const allMySonsProject: LocalScenicProject = {
       id: "sons-prod-6",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-gallery-150175.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-gallery-150175-668ab496.webp",
       altText:
         "Production still from All My Sons showing the suburban framework for the play's emotional shifts, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6764,7 +6764,7 @@ const allMySonsProject: LocalScenicProject = {
       id: "sons-prod-7",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-gallery-150182.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-gallery-150182-c867246e.webp",
       altText:
         "Final production image from All My Sons showing the complete family home in performance, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6773,7 +6773,7 @@ const allMySonsProject: LocalScenicProject = {
       id: "sons-render-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-gallery-150073.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90017-gallery-150073-bd354494.webp",
       altText:
         "Rendering for All My Sons exploring the porch, yard, and postwar suburban composition, scenic design by Brandon PT Davis.",
       kind: "rendering",
@@ -6841,7 +6841,7 @@ const theEffectOfGammaRaysProject: LocalScenicProject = {
   seoKeywords:
     "The Effect of Gamma Rays on Man-in-the-Moon Marigolds, scenic design, Okoboji Summer Theatre, drama, Brandon PT Davis",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/gamma-rays-1-5794.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/gamma-rays-1-5794-fc8ce725.webp",
   creativeTeam: [
     { name: "Paul Zindel", role: "Playwright" },
     { name: "Brandon PT Davis", role: "Scenic Design" },
@@ -6862,7 +6862,7 @@ const theEffectOfGammaRaysProject: LocalScenicProject = {
       id: "gamma-cover",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/gamma-rays-1-5794.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/gamma-rays-1-5794-fc8ce725.webp",
       altText: "The Effect of Gamma Rays on Man-in-the-Moon Marigolds scenic design cover image.",
       kind: "cover",
     },
@@ -6870,7 +6870,7 @@ const theEffectOfGammaRaysProject: LocalScenicProject = {
       id: "gamma-prod-1",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/gamma-rays-2-6823.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/gamma-rays-2-6823-b60a2d8e.webp",
       altText:
         "Production image from The Effect of Gamma Rays on Man-in-the-Moon Marigolds showing the distressed domestic interior, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6879,7 +6879,7 @@ const theEffectOfGammaRaysProject: LocalScenicProject = {
       id: "gamma-prod-2",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/gamma-rays-3-6823.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/gamma-rays-3-6823-f76d4aff.webp",
       altText:
         "Production image from The Effect of Gamma Rays on Man-in-the-Moon Marigolds highlighting faded wallpaper and emotional erosion, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6888,7 +6888,7 @@ const theEffectOfGammaRaysProject: LocalScenicProject = {
       id: "gamma-prod-3",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/gamma-rays-4-6823.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/gamma-rays-4-6823-557175e3.webp",
       altText:
         "Production still from The Effect of Gamma Rays on Man-in-the-Moon Marigolds showing the brittle interior surfaces and compressed space, scenic design by Brandon PT Davis.",
       kind: "production",
@@ -6897,7 +6897,7 @@ const theEffectOfGammaRaysProject: LocalScenicProject = {
       id: "gamma-prod-4",
       type: "image",
       imageUrl:
-        "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/projects/2026/02/gamma-rays-1-6823.webp",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/gamma-rays-1-6823-4aad8265.webp",
       altText:
         "Final production image from The Effect of Gamma Rays on Man-in-the-Moon Marigolds showing the full scenic environment in performance, scenic design by Brandon PT Davis.",
       kind: "production",

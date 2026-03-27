@@ -52,9 +52,9 @@ export const voyageLaArticle: StaticArticle = {
     "VoyageLA featured Brandon PT Davis in a Rising Stars profile focused on scenic design growth, artistic voice, and long-term career direction in Southern California.",
   coverImageUrl:
     resolveBlobMediaUrl(
-      "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/news-images/news-150001-cover.webp"
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/local-articles/news-150001-cover-6b3d12c4.webp"
     ) ||
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/news-images/news-150001-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/local-articles/news-150001-cover-6b3d12c4.webp",
   coverImageAlt: "VoyageLA Rising Stars interview feature",
   publishedAt: "2026-02-10",
   updatedAt: "2026-02-12",

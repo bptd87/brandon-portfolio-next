@@ -272,7 +272,7 @@ function ArticleInlineVideo({ url, caption }: { url: string; caption?: string })
         </button>
       </div>
       {caption && (
-        <figcaption className="mt-4 text-center text-[0.78rem] font-medium uppercase tracking-[0.12em] text-white/42">
+        <figcaption className="mt-4 text-center text-[0.88rem] italic text-white">
           {decodeHTMLEntities(caption)}
         </figcaption>
       )}
@@ -809,7 +809,7 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
                   [&_ul]:list-disc [&_ol]:list-decimal [&_li]:list-item [&_li]:ml-0
                   prose-img:rounded-xl prose-img:my-12
                   prose-figure:my-12
-                  prose-figcaption:text-[0.78rem] prose-figcaption:tracking-[0.12em] prose-figcaption:uppercase prose-figcaption:text-white/42 prose-figcaption:text-center prose-figcaption:mt-4
+                  prose-figcaption:text-[0.88rem] prose-figcaption:italic prose-figcaption:text-white prose-figcaption:text-center prose-figcaption:mt-4
                   [&_iframe]:mx-auto [&_iframe]:w-full [&_iframe]:max-w-full [&_iframe]:my-12 [&_iframe]:rounded-xl [&_iframe]:aspect-[16/9] [&_iframe]:h-auto
                   [&_video]:mx-auto [&_video]:w-full [&_video]:max-w-full [&_video]:my-12 [&_video]:rounded-xl [&_video]:aspect-[16/9]
                   [text-rendering:optimizeLegibility] [-webkit-font-smoothing:antialiased]"
@@ -914,20 +914,20 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
                           return (
                             <figure
                               key={index}
-                              className="relative left-1/2 my-12 w-screen max-w-[68rem] -translate-x-1/2 px-5 sm:px-6"
+                              className="relative left-1/2 my-12 flex w-screen max-w-[68rem] -translate-x-1/2 flex-col items-center px-5 sm:px-6"
                             >
-                              <div className="overflow-hidden rounded-[0.8rem]">
+                              <div className="overflow-hidden rounded-[0.8rem] bg-white/[0.02]">
                                 <img
                                   src={getArticleMediaUrl(section.url)}
                                   alt={section.alt || section.caption || ''}
                                   loading="lazy"
                                   decoding="async"
-                                  className="h-auto w-full cursor-pointer transition-opacity hover:opacity-90"
+                                  className="mx-auto max-h-[78vh] w-auto max-w-full cursor-pointer transition-opacity hover:opacity-90"
                                   onClick={() => openArticleLightboxAt(`image-${index}`)}
                                 />
                               </div>
                               {(section.caption || section.alt) && (
-                                <figcaption className="mx-auto mt-4 max-w-[46rem] text-[0.78rem] font-medium uppercase tracking-[0.12em] leading-5 text-white/42">
+                                <figcaption className="mt-4 w-full max-w-[min(100%,46rem)] text-left text-[0.88rem] italic leading-6 text-white">
                                   {decodeHTMLEntities(section.caption || section.alt || '')}
                                 </figcaption>
                               )}
@@ -939,18 +939,18 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
                           return (
                             <figure
                               key={index}
-                              className="mx-auto my-8 max-w-[58rem]"
+                              className="mx-auto my-8 flex max-w-[58rem] flex-col items-center"
                             >
                               <img
                                 src={getArticleMediaUrl(section.url)}
                                 alt={section.alt || section.caption || ''}
                                 loading="lazy"
                                 decoding="async"
-                                className="h-auto w-full cursor-pointer transition-opacity hover:opacity-95"
+                                className="mx-auto max-h-[78vh] w-auto max-w-full cursor-pointer transition-opacity hover:opacity-95"
                                 onClick={() => openArticleLightboxAt(`image-${index}`)}
                               />
                               {(section.caption || section.alt) && (
-                                <figcaption className="mx-auto mt-3 max-w-[46rem] text-[0.78rem] font-medium uppercase tracking-[0.12em] leading-5 text-white/42">
+                                <figcaption className="mt-3 w-full max-w-[min(100%,46rem)] text-left text-[0.88rem] italic leading-6 text-white">
                                   {decodeHTMLEntities(section.caption || section.alt || '')}
                                 </figcaption>
                               )}
@@ -959,17 +959,17 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
                         }
 
                         return (
-                          <figure key={index} className="rounded-xl overflow-hidden">
+                          <figure key={index} className="flex flex-col items-center rounded-xl overflow-hidden">
                             <img
                               src={getArticleMediaUrl(section.url)}
                               alt={section.alt || section.caption || ''}
                               loading="lazy"
                               decoding="async"
-                              className="h-auto w-full cursor-pointer transition-opacity hover:opacity-90"
+                              className="mx-auto max-h-[78vh] w-auto max-w-full cursor-pointer transition-opacity hover:opacity-90"
                               onClick={() => openArticleLightboxAt(`image-${index}`)}
                             />
                             {(section.caption || section.alt) && (
-                              <figcaption>
+                              <figcaption className="mt-3 w-full max-w-[min(100%,46rem)] text-left text-[0.88rem] italic leading-6 text-white">
                                 {decodeHTMLEntities(section.caption || section.alt || '')}
                               </figcaption>
                             )}
@@ -1028,7 +1028,7 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
                               />
                             </div>
                             {section.caption && (
-                              <figcaption className="mt-4 text-center text-[0.78rem] font-medium uppercase tracking-[0.12em] text-white/42">
+                              <figcaption className="mt-4 text-center text-[0.88rem] italic text-white">
                                 {decodeHTMLEntities(section.caption)}
                               </figcaption>
                             )}

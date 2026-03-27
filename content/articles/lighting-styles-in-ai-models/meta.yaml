@@ -4,13 +4,13 @@ title: 'Lighting Styles in AI Models: How Lighting Changes Everything'
 status: published
 featured: false
 excerpt: >-
-  A lighting-reference guide to AI image prompting, showing how lighting language shifts mood, depth, and narrative
-  emphasis across generated scenes.
+  Explore how 20 different lighting styles transform AI-generated scenes in Sora and Midjourney, with practical
+  prompt strategies for theatre designers and visual storytellers.
 category: Tools & Technology
 seoTitle: 'Lighting Styles in AI Models: How Lighting Changes Everything'
 seoDescription: >-
-  Learn how lighting styles in AI tools influence atmosphere, composition, and storytelling clarity, with prompt
-  strategies designers can adapt to production ideation.
+  Explore how 20 different lighting styles transform AI-generated scenes in Sora and Midjourney, with practical
+  prompts for theatre designers and visual storytellers.
 seoKeywords:
   - AI lighting
   - AI image generation
@@ -18,15 +18,18 @@ seoKeywords:
   - digital rendering
   - lighting design
 cover:
-  asset: article-images/article-60146-cover.webp
-  alt: 'Lighting Styles in AI Models: How Lighting Changes Everything'
+  asset: /assets/articles/lighting-styles-in-ai-models/cover-generated.png
+  alt: >-
+    A blank canvas on an easel in a hazy artist's studio, lit by a warm spotlight and cool window light.
 tags:
   - ai-lighting
   - ai-image-generation
   - design-tools
   - digital-rendering
   - lighting-design
-readTime: 18
-publishedAt: '2025-03-21T00:00:00+00:00'
-updatedAt: '2026-02-12T15:04:15+00:00'
+readTime: 10
+publishedAt: '2025-03-30T10:35:16.063Z'
+updatedAt: '2025-03-31T10:02:51.299Z'
 linkedScenicProjectSlugs: []
+sourcePublication: Scenic Insights Archive
+sourceUrl: https://ggjwk4vwfr.wixstudio.com/bptd/post/lighting-styles-in-ai-models-how-lighting-changes-everything

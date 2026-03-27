@@ -7,9 +7,9 @@ import { resolveBlobMediaUrl } from "@shared/mediaBlob";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AboutNav from "@/components/AboutNav";
-import { ExternalLink, Instagram, Users } from "lucide-react";
+import { Instagram, Users } from "lucide-react";
 import { useMemo } from "react";
-import { getLocalCollaborators } from "@shared/localStudio";
+import { getLocalCollaborators, getLocalCollaboratorPortfolioUrlByName } from "@shared/localStudio";
 
 type RoleFilter =
   | "all"
@@ -296,7 +296,7 @@ export default function Collaborators() {
 
                     <div className="mt-8 grid gap-x-8 gap-y-8 sm:grid-cols-2 xl:grid-cols-4">
                       {collaborators.map((collaborator) => {
-                        const website = collaborator.website || collaborator.portfolioUrl;
+                        const website = getLocalCollaboratorPortfolioUrlByName(collaborator.name);
                         const instagramLabel = (collaborator.instagramHandle || "Instagram").replace(
                           /^@+/,
                           ""
@@ -314,7 +314,18 @@ export default function Collaborators() {
                             className="scroll-mt-32 border-t border-border/20 pt-3"
                           >
                             <h3 className="font-sans text-[1.08rem] font-medium leading-[1.15] tracking-[-0.035em] text-foreground">
-                              {collaborator.name}
+                              {website ? (
+                                <a
+                                  href={website}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="transition-colors hover:text-foreground/72"
+                                >
+                                  {collaborator.name}
+                                </a>
+                              ) : (
+                                collaborator.name
+                              )}
                             </h3>
                             {section.id === "designers" && itemRole && (
                               <p className="mt-1 text-[0.82rem] leading-5 text-foreground/38">
@@ -332,21 +343,6 @@ export default function Collaborators() {
                                 >
                                   <Instagram className="h-3.5 w-3.5" />
                                   @{instagramLabel}
-                                </a>
-                              )}
-
-                              {website && (
-                                <a
-                                  href={website}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1.5 text-[0.82rem] font-medium text-foreground/46 transition-colors hover:text-foreground"
-                                >
-                                  <ExternalLink className="h-3.5 w-3.5" />
-                                  {collaborator.role === "theatre_company" ||
-                                  collaborator.role === "partner_company"
-                                    ? "Website"
-                                    : "Portfolio"}
                                 </a>
                               )}
                             </div>

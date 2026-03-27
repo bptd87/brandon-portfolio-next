@@ -1,0 +1,32 @@
+type: article
+slug: the-evolutionof-narrativein-cinema
+title: 'The Evolution of Narrative in Cinema'
+status: published
+featured: false
+excerpt: >-
+  A scenic-focused history of early film language, tracing how editing, camera placement, synchronized sound, color,
+  and mise-en-scene reshaped visual storytelling before the 1940s.
+category: Performance History & Culture
+seoTitle: 'The Evolution of Narrative in Cinema: Editing, Sound, Color, and Mise-en-Scène'
+seoDescription: >-
+  Explore how early filmmakers built the foundations of cinematic storytelling through continuity editing, montage,
+  sound, Technicolor, and expressive mise-en-scene.
+seoKeywords:
+  - early cinema history
+  - film narrative evolution
+  - mise-en-scene in film
+  - silent film history
+  - technicolor history
+  - citizen kane cinematography
+cover:
+  asset: /assets/articles/evolution-narrative-cinema/cover.webp
+  alt: 'Cinematic editorial cover showing the transition from silent film grammar to sound, color, and deep-focus cinema.'
+tags:
+  - film-history
+  - cinematic-language
+  - mise-en-scene
+  - visual-storytelling
+  - early-cinema
+readTime: 8
+publishedAt: '2025-01-31T00:00:00+00:00'
+updatedAt: '2025-03-17T00:00:00+00:00'

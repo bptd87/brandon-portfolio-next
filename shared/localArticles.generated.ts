@@ -7,7 +7,7 @@ export const generatedLocalArticles = [
     "slug": "online-portfolio-theatrical-design-2026",
     "title": "The Modern Theatrical Design Portfolio: A Guide for 2026",
     "excerpt": "How to build a scenic-focused digital portfolio in 2026 with stronger structure, better indexing, and clearer project storytelling.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60126-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60126-cover-da1abac1.webp",
     "coverImageAlt": "The Modern Theatrical Design Portfolio: A Guide for 2026",
     "publishedAt": "2026-02-06T00:00:00+00:00",
     "updatedAt": "2026-02-19T19:28:12.127+00:00",
@@ -56,7 +56,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/VYXXNpVZbRaQXhtZ-compressed.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/vyxxnpvzbraqxhtz-compressed-d2a2f128.webp",
         "caption": "A well-structured portfolio site creates clear pathways for visitors to explore your theatrical design work",
         "alt": "Digital illustration of website structure with nature and technology elements showing homepage, portfolio, about, contact, and blog pages connected by glowing vines"
       },
@@ -120,7 +120,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/nkgLMSIhpJQKDxkP-compressed.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/nkglmsihpjqkdxkp-compressed-b88c4ac5.webp",
         "caption": "Strategic SEO practices help your theatrical portfolio reach the right audience through organic search",
         "alt": "Digital illustration of SEO optimization concepts for a theatrical portfolio with search engine results, keywords, and theatrical spotlights"
       },
@@ -175,7 +175,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/fKXxdRoNdeiVVwah-compressed.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/fkxxdrondeivvwah-compressed-562e840b.webp",
         "caption": "A robust content strategy combines portfolio showcases with articles and news to drive organic traffic",
         "alt": "Digital illustration of content strategy showing multiple content types like tutorials, portfolio images, news, and articles connected through a central hub with theatrical lighting"
       },
@@ -254,7 +254,7 @@ export const generatedLocalArticles = [
     "slug": "video-game-environments-lessons-for-scenic-design",
     "title": "Video Game Environments: Lessons for Scenic Design",
     "excerpt": "How environment design lessons from games can sharpen scenic world-building, audience orientation, and spatial storytelling.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60127-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60127-cover-33bc044c.webp",
     "coverImageAlt": "Video Game Environments: Lessons for Scenic Design",
     "publishedAt": "2026-01-06T00:00:00+00:00",
     "updatedAt": "2026-02-19T19:28:12.269+00:00",
@@ -316,7 +316,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/EFwoYBIJxCBuNgJi-compressed.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/efwoybijxcbungji-compressed-ac645412.webp",
         "alt": "Scenic painting process for Mamma Mia at Okoboji Summer Theatre showing Grecian stone floor created with stencil and Hudson sprayer technique",
         "caption": "Scenic painting process for Mamma Mia at Okoboji Summer Theatre - Grecian stone floor created with stencil and Hudson sprayer"
       },
@@ -356,7 +356,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/zYiekeunCGdBcELA-compressed.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/zyiekeuncgdbcela-compressed-0ca8e1e4.webp",
         "alt": "Skyrim Nordic ruins environment showing detailed stone texture weathering moss and atmospheric lighting that conveys age and history",
         "caption": "Skyrim's Nordic ruins demonstrate how texture conveys age, weight, and history through stone weathering and atmospheric lighting"
       },
@@ -378,7 +378,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/QEgWsxWBsjjidvHo-compressed.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/qegwsxwbsjjidvho-compressed-da0513d2.webp",
         "alt": "Aged white brick scenic wall from Barefoot in the Park production showing texture layering technique with eggshell white paint and brown washes designed by Brandon PT Davis",
         "caption": "Aged white brick wall from Barefoot in the Park showing texture layering with eggshell white paint and brown washes"
       },
@@ -444,7 +444,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/vkVhfCCtlPvDRWFq-compressed.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/vkvhfcctlpvdrwfq-compressed-8708fb1f.webp",
         "alt": "Environmental storytelling in The Last of Us Part II showing abandoned interior with intentional clutter decay and personal objects that tell human stories",
         "caption": "Environmental storytelling in The Last of Us Part II - abandoned interiors that still feel personal through intentional clutter and decay"
       },
@@ -467,7 +467,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/JIXcJwOkNcIYOmJL-compressed.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/jixcjwoknciyomjl-compressed-f8813c6c.webp",
         "alt": "The Last of Us Part II overgrown post-apocalyptic environment showing decay atmosphere and nature reclaiming urban spaces",
         "caption": "The Last of Us Part II uses decay and overgrowth to tell human stories through environmental details"
       },
@@ -512,7 +512,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/ALRyuzTLDqMNBBro-compressed.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/alryuztldqmnbbro-compressed-813fe7a5.webp",
         "alt": "Elden Ring dramatic castle architecture showing scale texture and atmospheric lighting that transforms architecture into mythology",
         "caption": "Elden Ring transforms architecture into mythology through dramatic scale, texture, and atmospheric lighting"
       },
@@ -582,7 +582,7 @@ export const generatedLocalArticles = [
     "slug": "the-evolution-of-themed-entertainment-from-ancient-gardens-to-modern-immersive-experienceses-everything",
     "title": "The Evolution of Themed Entertainment: From Ancient Gardens to Modern Immersive Experienceses Everything",
     "excerpt": "A design-history survey tracing themed entertainment from early spectacle gardens to contemporary immersive environments and experience-led storytelling.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60132-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60132-cover-6f575272.webp",
     "coverImageAlt": "The Evolution of Themed Entertainment: From Ancient Gardens to Modern Immersive Experienceses Everything",
     "publishedAt": "2025-08-15T00:00:00+00:00",
     "updatedAt": "2026-02-12T15:04:14+00:00",
@@ -640,7 +640,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/WwwyAPBUmvyTXcBL.jpg?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/wwwyapbumvytxcbl-f80ad741.jpg",
         "alt": "Elegant garden with statues, a central fountain, lush greenery, and a classical building. Soft light creates a serene atmosphere.",
         "caption": "Elegant garden with statues, a central fountain, lush greenery, and a classical building. Soft light creates a serene atmosphere."
       },
@@ -669,7 +669,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/GIBNkVQcxxPaTqbW.jpg?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/gibnkvqcxxpatqbw-3f5b34e5.jpg",
         "alt": "Medieval market scene with people in period clothing, stalls with striped canopies, and intricate half-timbered buildings under a blue sky.",
         "caption": "Medieval market scene with people in period clothing, stalls with striped canopies, and intricate half-timbered buildings under a blue sky."
       },
@@ -698,7 +698,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/vodnMaDhCnyCynIf.jpg?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/vodnmadhcnycynif-f504da09.jpg",
         "alt": "Elegant garden with a waterfall, ornate architecture, and people strolling. Lush greenery, bright flowers, and mountains under a blue sky.",
         "caption": "Elegant garden with a waterfall, ornate architecture, and people strolling. Lush greenery, bright flowers, and mountains under a blue sky."
       },
@@ -722,7 +722,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/IbrmPFPYihMCeemY.jpg?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/ibrmpfpyihmceemy-15d6091c.jpg",
         "alt": "A grand château with blue roofs, surrounded by formal gardens and a reflective moat, set against a river and forest under a clear blue sky.",
         "caption": "A grand château with blue roofs, surrounded by formal gardens and a reflective moat, set against a river and forest under a clear blue sky."
       },
@@ -742,7 +742,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/MBAZaZwZgdFotmNq.jpg?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/mbazazwzgdfotmnq-75c58128.jpg",
         "alt": "Industrial scene with smokestacks and factories by a river. People in 19th-century attire gather, creating a bustling, smoky atmosphere.",
         "caption": "Industrial scene with smokestacks and factories by a river. People in 19th-century attire gather, creating a bustling, smoky atmosphere."
       },
@@ -762,7 +762,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/BkHylUaLTFEpNueH.jpg?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/bkhylualtfepnueh-1f8138ec.jpg",
         "alt": "Vintage photo of Luna Park, Coney Island, shows large crowds and elaborate architecture with towers.",
         "caption": "Vintage photo of Luna Park, Coney Island, shows large crowds and elaborate architecture with towers."
       },
@@ -781,7 +781,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/OJNiQkkrUhFhBiUv.jpg?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/ojniqkkruhfhbiuv-57061708.jpg",
         "alt": "Colorful, empty swing ride with vibrant patterns and lights, set against a bright background, evoking a festive and playful atmosphere.",
         "caption": "Colorful, empty swing ride with vibrant patterns and lights, set against a bright background, evoking a festive and playful atmosphere."
       },
@@ -804,7 +804,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/eQKWKJpvmdysouIn.jpg?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/eqkwkjpvmdysouin-7a4697de.jpg",
         "alt": "Illustrated Disneyland map with labeled attractions, railroad tracks, and scenic landscape. Vintage style with muted colors. Text reads",
         "caption": "Illustrated Disneyland map with labeled attractions, railroad tracks, and scenic landscape. Vintage style with muted colors. Text reads"
       },
@@ -823,7 +823,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YrOyOBYkLcGPOSwo.jpeg?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/yroyobyklcgposwo-0a38ab1f.jpeg",
         "alt": "Production image from The Evolution of Themed Entertainment: From Ancient Gardens to Modern Immersive Experienceses Everything",
         "caption": "Production image from The Evolution of Themed Entertainment: From Ancient Gardens to Modern Immersive Experienceses Everything"
       },
@@ -846,7 +846,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/UPymHYKVVWMvScqX.jpg?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/upymhykvvwmvscqx-374f6975.jpg",
         "alt": "Roller coaster with riders on a loop at Cedar Point. Blue track, clear sky.",
         "caption": "Roller coaster with riders on a loop at Cedar Point. Blue track, clear sky."
       },
@@ -878,7 +878,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/GuCMjRfRhtlbuOIJ.jpg?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/gucmjrfrhtlbuoij-c4abe64d.jpg",
         "alt": "Colorful urban alley with neon lights; an orange car with glowing green lights; signs read",
         "caption": "Colorful urban alley with neon lights; an orange car with glowing green lights; signs read"
       },
@@ -888,7 +888,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/BnEsFWHrOPZjkAQG.jpg?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/bnesfwhropzjkaqg-e8279b0e.jpg",
         "alt": "Couple holding hands walks towards an enchanted cottage at night. Lanterns glow in trees, flowers bloom, and",
         "caption": "Couple holding hands walks towards an enchanted cottage at night. Lanterns glow in trees, flowers bloom, and"
       },
@@ -907,7 +907,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/wELjpocLtJzBvvie.jpg?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/weljpocltjzbvvie-7b7821db.jpg",
         "alt": "Woman in red dress and hat holds a tablet surrounded by blue butterflies, with a mystical, ethereal atmosphere against a teal background.",
         "caption": "Woman in red dress and hat holds a tablet surrounded by blue butterflies, with a mystical, ethereal atmosphere against a teal background."
       },
@@ -939,7 +939,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/qxKlYRXGAqzJQFSe.jpg?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/the-evolution-of-themed-entertainment-from-ancient-gardens-to-modern-immersive-experienceses-everything/body/qxklyrxgaqzjqfse-3bafe100.jpg",
         "alt": "People socialize at a colorful, lively street market at night. Signs read",
         "caption": "People socialize at a colorful, lively street market at night. Signs read"
       },
@@ -962,7 +962,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/JSgqAZYVtOclpvta.jpg?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/jsgqazyvtoclpvta-22030058.jpg",
         "alt": "People on a ship's deck watch a vibrant night sky featuring flying characters and constellations. Some are taking photos with phones.",
         "caption": "People on a ship's deck watch a vibrant night sky featuring flying characters and constellations. Some are taking photos with phones."
       },
@@ -1039,7 +1039,7 @@ export const generatedLocalArticles = [
     "slug": "what-makes-a-good-scenic-design-rendering",
     "title": "What Makes a Good Scenic Design Rendering?",
     "excerpt": "What makes a scenic rendering useful in production: clear visual hierarchy, material logic, and communication choices teams can actually build from.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60130-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60130-cover-43cb5436.webp",
     "coverImageAlt": "What Makes a Good Scenic Design Rendering?",
     "publishedAt": "2025-05-08T00:00:00+00:00",
     "updatedAt": "2026-02-19T19:28:12.638+00:00",
@@ -1105,7 +1105,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/IkuGmbPwGhzuoiAl-compressed.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/local-articles/ikugmbpwghzuoial-compressed-db4d6373.webp",
         "alt": "Vectorworks rendering in progress, showing layered viewports and material textures in a scenic design project.",
         "caption": "Vectorworks rendering in progress. Drafting and visualization happen in the same space."
       },
@@ -1129,7 +1129,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/beiQUvBJTRYzwFmL-compressed.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/local-articles/beiquvbjtryzwfml-compressed-e4cf948e.webp",
         "alt": "Painting “The Penitent Magdalene” by Georges de La Tour featuring a single light source creating dramatic atmosphere.",
         "caption": ""
       },
@@ -1149,7 +1149,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/cWACyunzaZoYPAJr-compressed.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/local-articles/cwacyunzazoypajr-compressed-a24696a0.webp",
         "alt": "Painting “The Calling of Saint Matthew” by Caravaggio capturing strong diagonals and dramatic light on figures.",
         "caption": ""
       },
@@ -1169,7 +1169,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/eUXnBpVeHXYLiqCY-compressed.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/local-articles/euxnbpvehxyliqcy-compressed-d2fa63b8.webp",
         "alt": "Painting “The Night Watch” by Rembrandt demonstrating strong contrast and depth through light and shadow.",
         "caption": ""
       },
@@ -1189,7 +1189,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/HxxVtRIHYkhsdkAA-compressed.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/local-articles/hxxvtrihykhsdkaa-compressed-79554678.webp",
         "alt": "Edward Hopper’s painting “Nighthawks” depicting quiet architectural framing and a sense of distance and mood.",
         "caption": ""
       },
@@ -1316,7 +1316,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/kritdqpcCKGLmgqC-compressed.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/local-articles/kritdqpcckglmgqc-compressed-c76d5db0.webp",
         "alt": "Scenic design rendering of Tomás and the Library Lady showing a warmly lit library interior with layered depth, directional lighting, and textured scenic elements.",
         "caption": ""
       },
@@ -1378,7 +1378,7 @@ export const generatedLocalArticles = [
     "slug": "becoming-a-scenic-designer-a-comprehensive-guide",
     "title": "Becoming a Scenic Designer: A Comprehensive Guide",
     "excerpt": "A realistic guide to becoming a scenic designer, covering training paths, portfolio development, collaboration habits, and career positioning.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60128-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/becoming-a-scenic-designer-a-comprehensive-guide/body/article-60128-cover-46186dd2.webp",
     "coverImageAlt": "Becoming a Scenic Designer: A Comprehensive Guide",
     "publishedAt": "2025-04-24T00:00:00+00:00",
     "updatedAt": "2026-02-12T15:04:17+00:00",
@@ -1427,7 +1427,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60128-cover.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/becoming-a-scenic-designer-a-comprehensive-guide/body/article-60128-cover-46186dd2.webp",
         "alt": "Scenic design production image for Becoming a Scenic Designer: A Comprehensive Guide",
         "caption": "Production image from Becoming a Scenic Designer: A Comprehensive Guide"
       },
@@ -1602,7 +1602,7 @@ export const generatedLocalArticles = [
     "slug": "framing-the-martyr-scenic-design-as-memory-work-in-romero",
     "title": "Framing the Martyr: Scenic Design as Memory Work in Romero",
     "excerpt": "How Romero used scenic space as memory architecture, shaping ritual, grief, and political urgency onstage.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60129-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60129-cover-1f854f91.webp",
     "coverImageAlt": "Framing the Martyr: Scenic Design as Memory Work in Romero",
     "publishedAt": "2025-04-22T00:00:00+00:00",
     "updatedAt": "2026-02-12T15:04:15+00:00",
@@ -1668,7 +1668,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60129/NSDXIabkySOVQmMt.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/nsdxiabkysovqmmt-7cb02bac.webp",
         "alt": "Scenic rendering for Romero featuring a cruciform frame, fractured platform, and symbolic floor markings.",
         "caption": "Romero scenic design rendering developed in Vectorworks and Photoshop."
       },
@@ -1712,32 +1712,32 @@ export const generatedLocalArticles = [
         "type": "gallery",
         "images": [
           {
-            "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60129/CguePZLEletOMAFs.webp",
+            "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/cguepzleletomafs-35bc5fa9.webp",
             "alt": "Reference image from Framing the Martyr: Scenic Design as Memory Work in Romero",
             "caption": "Reference image from Framing the Martyr: Scenic Design as Memory Work in Romero"
           },
           {
-            "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60129/SaBxzVmlsPiKmnVt.webp",
+            "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/sabxzvmlspikmnvt-67b6d19e.webp",
             "alt": "Reference image from Framing the Martyr: Scenic Design as Memory Work in Romero",
             "caption": "Reference image from Framing the Martyr: Scenic Design as Memory Work in Romero"
           },
           {
-            "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60129/mmopPApoMqifedaj.webp",
+            "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/mmoppapomqifedaj-0d91b2cd.webp",
             "alt": "Reference image from Framing the Martyr: Scenic Design as Memory Work in Romero",
             "caption": "Reference image from Framing the Martyr: Scenic Design as Memory Work in Romero"
           },
           {
-            "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60129/ZBeRzbUCjwWbWmwy.webp",
+            "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/zberzbucjwwbwmwy-4ef8aee0.webp",
             "alt": "Reference image from Framing the Martyr: Scenic Design as Memory Work in Romero",
             "caption": "Reference image from Framing the Martyr: Scenic Design as Memory Work in Romero"
           },
           {
-            "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60129/lNuSgNnsPgAVEcmo.webp",
+            "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/lnusgnnspgavecmo-5e4c0292.webp",
             "alt": "Reference image from Framing the Martyr: Scenic Design as Memory Work in Romero",
             "caption": "Reference image from Framing the Martyr: Scenic Design as Memory Work in Romero"
           },
           {
-            "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60129/pWBkVMWHuUcyIULK.webp",
+            "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/pwbkvmwhuucyiulk-e70d543a.webp",
             "alt": "Reference image from Framing the Martyr: Scenic Design as Memory Work in Romero",
             "caption": "Reference image from Framing the Martyr: Scenic Design as Memory Work in Romero"
           }
@@ -1825,7 +1825,7 @@ export const generatedLocalArticles = [
     "slug": "urinetown-scenic-design-building-a-dystopia-that-feels-uncomfortably-familiar",
     "title": "Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar",
     "excerpt": "A scenic breakdown of Urinetown focused on authoritarian architecture, class contrast, and the mechanics of dystopian satire.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60141-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60141-cover-6b1b47c0.webp",
     "coverImageAlt": "Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar",
     "publishedAt": "2025-04-22T00:00:00+00:00",
     "updatedAt": "2026-02-12T15:04:14+00:00",
@@ -1909,22 +1909,22 @@ export const generatedLocalArticles = [
         "type": "gallery",
         "images": [
           {
-            "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/zhQtGmUSFKLnhayG.png?_i=AA",
+            "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/zhqtgmusfklnhayg-49b343f2.png",
             "alt": "Production image from Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar",
             "caption": "Production image from Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar"
           },
           {
-            "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/rspbtnRZSUlEIpnv.png?_i=AA",
+            "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/rspbtnrzsuleipnv-649911d7.png",
             "alt": "Production image from Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar",
             "caption": "Production image from Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar"
           },
           {
-            "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/njRcGPaopppgzXxy.png?_i=AA",
+            "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/njrcgpaopppgzxxy-b12f061a.png",
             "alt": "Production image from Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar",
             "caption": "Production image from Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar"
           },
           {
-            "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/HmTLAtiLNFTuhXFU.png?_i=AA",
+            "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/hmtlatilnftuhxfu-1cb2b7d5.png",
             "alt": "Production image from Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar",
             "caption": "Production image from Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar"
           }
@@ -1967,7 +1967,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/GAraNkGLCmexrwUV.png?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/garankglcmexrwuv-602b0209.png",
         "alt": "Image",
         "caption": "Image"
       },
@@ -1986,7 +1986,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YwxgcyixKEQDfuSe.png?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/ywxgcyixkeqdfuse-a09743d3.png",
         "alt": "Image",
         "caption": "Image"
       },
@@ -2005,7 +2005,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/mHzdJpigmMnwGtAe.png?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/mhzdjpigmmnwgtae-726f2ce0.png",
         "alt": "Production image from Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar",
         "caption": "Production image from Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar"
       },
@@ -2135,7 +2135,7 @@ export const generatedLocalArticles = [
     "slug": "the-lights-were-already-on-maude-adams-legacy-at-stephens-college",
     "title": "The Lights Were Already On: Maude Adams' Legacy at Stephens College",
     "excerpt": "A scenic reflection on how Maude Adams' legacy at Stephens College continues to influence theatre training, pedagogy, and design values.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60131-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60131-cover-591e90cb.webp",
     "coverImageAlt": "The Lights Were Already On: Maude Adams' Legacy at Stephens College",
     "publishedAt": "2025-04-17T00:00:00+00:00",
     "updatedAt": "2026-02-12T15:04:17+00:00",
@@ -2184,7 +2184,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/kSoLxECTXAzObemD.webp?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/ksolxectxazobemd-6bd2085c.webp",
         "alt": "Stephens College, Columbia Hall in Columbia, MO.",
         "caption": "Stephens College, Columbia Hall in Columbia, MO."
       },
@@ -2211,7 +2211,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/EIhDZlwIwwmUggiI.webp?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/eihdzlwiwwmuggii-03ea34e7.webp",
         "alt": "Image",
         "caption": "Maude Adams as Peter Pan on Broadway"
       },
@@ -2246,7 +2246,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/GuexjIKQkWXQaUZN.webp?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/guexjikqkwxqauzn-18d0e1a2.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -2277,7 +2277,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/rlqTPqDcPTKEPDQX.webp?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/rlqtpqdcptkepdqx-78650c38.webp",
         "alt": "William Inge, Stephens College",
         "caption": "William Inge later in life."
       },
@@ -2296,7 +2296,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/rovVcuqylwKaKrIa.webp?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/rovvcuqylwkakria-ad4c841b.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -2369,7 +2369,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/RsnMyQCvxGIynOjI.webp?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/rsnmyqcvxgiynoji-9cf26a4d.webp",
         "alt": "Image",
         "caption": "Stephens Students working on a production at the Okoboji Summer Theatre."
       },
@@ -2422,7 +2422,7 @@ export const generatedLocalArticles = [
     "slug": "youre-wasting-my-time-a-scenic-design-lesson-in-growth-and-revision",
     "title": "You're Wasting My Time! — A Scenic Design Lesson in Growth and Revision",
     "excerpt": "A formative critique story about scenic growth, revision discipline, and learning to protect standards without losing curiosity.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60142-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60142-cover-5be64406.webp",
     "coverImageAlt": "You're Wasting My Time! — A Scenic Design Lesson in Growth and Revision",
     "publishedAt": "2025-04-17T00:00:00+00:00",
     "updatedAt": "2026-02-12T15:04:15+00:00",
@@ -2481,7 +2481,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60142-cover.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60142-cover-5be64406.webp",
         "alt": "Production image for You're Wasting My Time! — A Scenic Design Lesson in Growth and Revision",
         "caption": "Production image related to You're Wasting My Time! — A Scenic Design Lesson in Growth and Revision"
       },
@@ -2625,7 +2625,7 @@ export const generatedLocalArticles = [
     "slug": "sora-in-the-studio-testing-ais-potential-for-theatrical-design",
     "title": "Sora in the Studio: Testing AI's Potential for Theatrical Design",
     "excerpt": "A scenic designer's field test of Sora for concept development and team communication, with practical guidance for production use.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60143-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60143-cover-6b812c4f.webp",
     "coverImageAlt": "Sora in the Studio: Testing AI's Potential for Theatrical Design",
     "publishedAt": "2025-03-31T00:00:00+00:00",
     "updatedAt": "2026-02-12T15:04:15+00:00",
@@ -2695,7 +2695,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60143/MUEhnpNdIvgrmNbd.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/muehnpndivgrmnbd-00a78c9d.webp",
         "alt": "Production image from Sora in the Studio: Testing AI's Potential for Theatrical Design",
         "caption": "Production image from Sora in the Studio: Testing AI's Potential for Theatrical Design"
       },
@@ -2749,7 +2749,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60143/HfLxyQapfvDjAHXw.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/hflxyqapfvdjahxw-50c31b44.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -2803,7 +2803,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60143/QNbroXDEQyVrPDVJ.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/qnbroxdeqyvrpdvj-6afe9ff6.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -2826,7 +2826,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60143/eyivtDrCUdJhdPtr.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/eyivtdrcudjhdptr-c778b35e.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -2845,7 +2845,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60143/FdnYDlxJCKCuXXqC.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/fdnydlxjckcuxxqc-eceba2a4.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -2869,7 +2869,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60143/RMvayovbwQQSUgNg.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/rmvayovbwqqsugng-935892aa.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -2879,7 +2879,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60143/eYKLTJCHdFQmQykt.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/eykltjchdfqmqykt-7223883c.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -2912,7 +2912,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60143/JZomCMLwRHVoWKLe.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/jzomcmlwrhvowkle-aa404e4c.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -2922,7 +2922,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60143/HFwvNJhDgzPJjxxt.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/hfwvnjhdgzpjjxxt-d3e3f40a.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -2946,7 +2946,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60143/LmcmMWnSbdVzJkYN.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/lmcmmwnsbdvzjkyn-abde7a2d.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -2956,7 +2956,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60143/TpylqyCPSRXZPxmM.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/tpylqycpsrxzpxmm-bfdc1198.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -2993,7 +2993,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60143/tlEuvEToICkbLmQP.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/tleuvetoickblmqp-b63a14bb.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -3012,7 +3012,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60143/pAlbZRqdPGOnnVxT.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/palbzrqdpgonnvxt-06f5bc08.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -3022,7 +3022,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60143/FIXGUrQTHdCRMaxm.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/fixgurqthdcrmaxm-bafaa41b.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -3059,7 +3059,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60143/jTiuCxeXJJnDZjkT.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/jtiucxexjjndzjkt-3921f4bc.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -3069,7 +3069,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60143/HTfSxpsrfcnUbqog.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/htfsxpsrfcnubqog-7a07a3f8.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -3079,7 +3079,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60143/jeMuXCuHoXcHpJhx.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/jemuxcuhoxchpjhx-4271197f.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -3089,7 +3089,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60143/RznZjKCCpZTeIHkr.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/rznzjkccpzteihkr-9ceb8646.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -3149,7 +3149,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60143/FLTJyFChcWeorePp.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/fltjyfchcweorepp-ec6c5864.webp",
         "alt": "Image",
         "caption": "Image"
       },
@@ -3270,7 +3270,7 @@ export const generatedLocalArticles = [
     "slug": "lighting-styles-in-ai-models",
     "title": "Lighting Styles in AI Models: How Lighting Changes Everything",
     "excerpt": "A lighting-reference guide to AI image prompting, showing how lighting language shifts mood, depth, and narrative emphasis across generated scenes.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60146-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60146-cover-a30408c0.webp",
     "coverImageAlt": "Lighting Styles in AI Models: How Lighting Changes Everything",
     "publishedAt": "2025-03-21T00:00:00+00:00",
     "updatedAt": "2026-02-12T15:04:15+00:00",
@@ -3379,7 +3379,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/1-cinematic-lighting-4606.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/1-cinematic-lighting-4606-d6a76ee8.webp",
         "caption": "",
         "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
       },
@@ -3403,7 +3403,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/2-natural-lighting-1719.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/2-natural-lighting-1719-1444caa3.webp",
         "caption": "",
         "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
       },
@@ -3427,7 +3427,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/3-golden-hour-7458.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/3-golden-hour-7458-45d883fe.webp",
         "caption": "",
         "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
       },
@@ -3451,7 +3451,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/4-moon-lihgt-0450.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/4-moon-lihgt-0450-9a710366.webp",
         "caption": "",
         "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
       },
@@ -3475,7 +3475,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/5-backlighting-5809.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/5-backlighting-5809-5e5a4f69.webp",
         "caption": "",
         "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
       },
@@ -3499,7 +3499,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/6-soft-lighting-2029.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/6-soft-lighting-2029-cd3d4724.webp",
         "caption": "",
         "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
       },
@@ -3523,7 +3523,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/7-hard-lighting-5378.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/7-hard-lighting-5378-3aba3260.webp",
         "caption": "",
         "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
       },
@@ -3547,7 +3547,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/8-high-key-5958.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/8-high-key-5958-1c6902cd.webp",
         "caption": "",
         "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
       },
@@ -3571,7 +3571,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/9-low-key-5567.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/9-low-key-5567-c59b7c5d.webp",
         "caption": "",
         "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
       },
@@ -3604,7 +3604,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/11-retro-lighting-7750.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/11-retro-lighting-7750-610cdfd2.webp",
         "caption": "",
         "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
       },
@@ -3628,7 +3628,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/15-romantic-lighting-9035.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/15-romantic-lighting-9035-90df225b.webp",
         "caption": "",
         "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
       },
@@ -3652,7 +3652,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/14-horror-lighting-2254.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/14-horror-lighting-2254-c91c088d.webp",
         "caption": "",
         "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
       },
@@ -3700,7 +3700,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/18-volumetric-lighting-8614.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/18-volumetric-lighting-8614-0958dd31.webp",
         "caption": "",
         "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
       },
@@ -3733,7 +3733,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/20-spotlight-9647.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/20-spotlight-9647-f4db789b.webp",
         "caption": "",
         "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
       },
@@ -3781,7 +3781,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/16-tv-computer-glow-0251.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/16-tv-computer-glow-0251-70cfb0a7.webp",
         "caption": "",
         "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
       },
@@ -3805,7 +3805,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/articles_gallery/2026/03/17-theatre-lighting-3980.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/17-theatre-lighting-3980-bef895a4.webp",
         "caption": "",
         "alt": "Lighting Styles in AI Models: How Lighting Changes Everything scenic design by Brandon PT Davis"
       },
@@ -3936,7 +3936,7 @@ export const generatedLocalArticles = [
     "slug": "designing-the-keller-home-a-look-back-at-all-my-sons",
     "title": "Designing the Keller Home: A Look Back at All My Sons",
     "excerpt": "A scenic case study of All My Sons focused on spatial ethics, domestic realism, and the dramaturgy of the Keller home.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60133-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60133-cover-7cc7640f.webp",
     "coverImageAlt": "Designing the Keller Home: A Look Back at All My Sons",
     "publishedAt": "2025-03-19T00:00:00+00:00",
     "updatedAt": "2026-02-12T15:04:15+00:00",
@@ -4029,7 +4029,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/ywavDPWgyGNzueom.webp?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/ywavdpwgygnzueom-d94e42d8.webp",
         "alt": "All My Sons scenic model rendering",
         "caption": "Early scenic model rendering for All My Sons, establishing the Keller home architecture and spatial relationships."
       },
@@ -4061,7 +4061,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/MnUexVnykBtRmWmG.webp?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/mnuexvnykbtrmwmg-ad229661.webp",
         "alt": "Keller home elevation and plan study",
         "caption": "Drafting studies mapping sightlines, circulation, and domestic scale for the Keller property."
       },
@@ -4088,7 +4088,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/xosXuGnDVMzNloht.webp?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/xosxugndvmznloht-b6de8100.webp",
         "alt": "All My Sons production photo at Stephens College",
         "caption": "Production image from Stephens College highlighting the lived-in realism and tension of the Keller yard."
       },
@@ -4111,7 +4111,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/BtHqIrAhmWkcnQKL.webp?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/bthqirahmwkcnqkl-5a9a77bd.webp",
         "alt": "All My Sons final design composition",
         "caption": "Final scenic composition balancing post-war suburban aspiration with the play’s underlying moral rupture."
       },
@@ -4235,7 +4235,7 @@ export const generatedLocalArticles = [
     "slug": "computer-hardware-why-scenic-designers-and-all-theatre-designers-need-to-care",
     "title": "Understanding Computer Hardware: Why Scenic Designers (and All Theatre Designers) Need to Care",
     "excerpt": "A practical hardware guide for scenic designers who need dependable drafting, modeling, and rendering performance in real production timelines.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60144-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60144-cover-01f1bc20.webp",
     "coverImageAlt": "Understanding Computer Hardware: Why Scenic Designers (and All Theatre Designers) Need to Care",
     "publishedAt": "2025-03-15T00:00:00+00:00",
     "updatedAt": "2026-02-19T19:28:12.769+00:00",
@@ -4292,7 +4292,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/ThXLoYAq4LaKTJjGMptg7T-img-1_1770549319000_na1fn_aGFyZHdhcmUtYXJ0aWNsZS1kZXNpZ25lci13b3Jrc3BhY2U-compressed.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/thxloyaq4laktjjgmptg7t-img-1_1770549319000_na1fn_agfyzhdhcmutyxj0awnszs1kzxnpz25lci13b3jrc3bhy2u-compressed-bd60ee39.webp",
         "caption": "A scenic designer's workspace with powerful hardware ready for complex 3D modeling and rendering",
         "alt": "Understanding Computer Hardware: Why Scenic Designers (and All Theatre Designers) Need to Care scenic design by Brandon PT Davis"
       },
@@ -4348,7 +4348,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/ThXLoYAq4LaKTJjGMptg7T-img-2_1770549317000_na1fn_aGFyZHdhcmUtYXJ0aWNsZS1jcHUtZ3B1-compressed.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/thxloyaq4laktjjgmptg7t-img-2_1770549317000_na1fn_agfyzhdhcmutyxj0awnszs1jchutz3b1-compressed-5e370874.webp",
         "caption": "Modern CPU and GPU components - the powerhouses behind your design software",
         "alt": "Understanding Computer Hardware: Why Scenic Designers (and All Theatre Designers) Need to Care scenic design by Brandon PT Davis"
       },
@@ -4420,7 +4420,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/ThXLoYAq4LaKTJjGMptg7T-img-3_1770549314000_na1fn_aGFyZHdhcmUtYXJ0aWNsZS1yZW5kZXJpbmc-compressed.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/thxloyaq4laktjjgmptg7t-img-3_1770549314000_na1fn_agfyzhdhcmutyxj0awnszs1yzw5kzxjpbmc-compressed-42f3ff1e.webp",
         "caption": "Real-time rendering of complex scenic designs requires powerful GPU and CPU coordination",
         "alt": "Understanding Computer Hardware: Why Scenic Designers (and All Theatre Designers) Need to Care scenic design by Brandon PT Davis"
       },
@@ -4760,7 +4760,7 @@ export const generatedLocalArticles = [
     "slug": "the-1960s-musical-revolution-when-hollywoods-golden-formula-met-rock-and-rebellion",
     "title": "The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion",
     "excerpt": "How 1960s musicals disrupted inherited formulas and reshaped scenic language across film, stage, and popular culture.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60134-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60134-cover-6e0e0737.webp",
     "coverImageAlt": "The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion",
     "publishedAt": "2025-03-12T00:00:00+00:00",
     "updatedAt": "2026-02-12T15:04:16+00:00",
@@ -4847,7 +4847,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/NqsyGOhDkQmlSkIa.png?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/nqsygohdkqmlskia-35ec4f4d.png",
         "alt": "The 28th Annual Academy Awards, arrivals at the Pantages Theatre in 1956.",
         "caption": "The 28th Annual Academy Awards, arrivals at the Pantages Theatre in 1956."
       },
@@ -4893,17 +4893,17 @@ export const generatedLocalArticles = [
         "type": "gallery",
         "images": [
           {
-            "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/dNBzhJNMcjrrmEgq.webp?_i=AA",
+            "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/dnbzhjnmcjrrmegq-2f27b79f.webp",
             "alt": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion",
             "caption": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion"
           },
           {
-            "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/CnHHsNdlGPcLhvdN.png?_i=AA",
+            "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/cnhhsndlgpclhvdn-cddff068.png",
             "alt": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion",
             "caption": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion"
           },
           {
-            "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/gPpMNorAzCeewWZD.png?_i=AA",
+            "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/gppmnorazceewwzd-f641549d.png",
             "alt": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion",
             "caption": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion"
           }
@@ -4934,17 +4934,17 @@ export const generatedLocalArticles = [
         "type": "gallery",
         "images": [
           {
-            "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/vQAcZVqcFPQVeJzQ.png?_i=AA",
+            "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/vqaczvqcfpqvejzq-c4ceab4c.png",
             "alt": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion",
             "caption": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion"
           },
           {
-            "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/MawyxsYvlQXojlhz.png?_i=AA",
+            "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/mawyxsyvlqxojlhz-788416ec.png",
             "alt": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion",
             "caption": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion"
           },
           {
-            "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/fmmSlDQPFJVqOKPd.png?_i=AA",
+            "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/fmmsldqpfjvqokpd-c289254e.png",
             "alt": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion",
             "caption": "Production image from The 1960s Musical Revolution: When Hollywood's Golden Formula Met Rock and Rebellion"
           }
@@ -4986,7 +4986,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/NkSgGRWbgFcVcaxl.png?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/nksggrwbgfcvcaxl-d6d613b1.png",
         "alt": "Image",
         "caption": "Image"
       },
@@ -5000,7 +5000,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/OYsZvKkoXDzWAaLO.png?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/oyszvkkoxdzwaalo-b65ce14c.png",
         "alt": "Image",
         "caption": "Image"
       },
@@ -5014,7 +5014,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/AlKOeDfAgfGNCLlr.png?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/alkoedfagfgncllr-704c4a37.png",
         "alt": "Image",
         "caption": "Image"
       },
@@ -5188,7 +5188,7 @@ export const generatedLocalArticles = [
     "slug": "artistic-vision-in-scenic-design-finding-my-creative-voice",
     "title": "Artistic Vision in Scenic Design: Finding My Creative Voice",
     "excerpt": "A reflection on building artistic voice in scenic design while staying accountable to story, collaboration, and craft.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60135-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60135-cover-7dfe2991.webp",
     "coverImageAlt": "Artistic Vision in Scenic Design: Finding My Creative Voice",
     "publishedAt": "2025-03-03T00:00:00+00:00",
     "updatedAt": "2026-02-12T15:04:13+00:00",
@@ -5295,7 +5295,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60135/hUppxibRTivRKIdz.png",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/huppxibrtivrkidz-d68054af.png",
         "alt": "Brandon PT Davis and Gretchen Ugalde Scenic Designers at Disneyland Resort in California.",
         "caption": "Brandon and Gretchen at Disneyland, Fall 2025"
       },
@@ -5306,7 +5306,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60135/generated-1771536148700-voice.png",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/generated-1771536148700-voice-1a3857ae.png",
         "alt": "Generated editorial image representing artistic identity and scenic design practice in a rehearsal-focused environment.",
         "caption": "A generated editorial image reflecting artistic identity, process, and creative independence in scenic design."
       },
@@ -5449,7 +5449,7 @@ export const generatedLocalArticles = [
     "slug": "building-the-visual-world-art-direction-in-film-television",
     "title": "Building the Visual World: Art Direction in Film & Television",
     "excerpt": "How art direction builds coherent visual worlds in film and television through concept alignment, team coordination, and material execution.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60138-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60138-cover-05b7319f.webp",
     "coverImageAlt": "Building the Visual World: Art Direction in Film & Television",
     "publishedAt": "2025-02-21T00:00:00+00:00",
     "updatedAt": "2026-02-12T15:04:16+00:00",
@@ -5544,7 +5544,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/QnYCHyGYOIQweyMm.png?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/qnychygyoiqweymm-b24a0b7b.png",
         "alt": "Production design workflow diagram",
         "caption": "Production design workflow from concept development through set build and final screen execution."
       },
@@ -5704,7 +5704,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/EoNwdccLcWYjeZfJ.png?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/eonwdcclcwyjezfj-f4b00b82.png",
         "alt": "Film art department collaborating on set",
         "caption": "Art department team collaborating on practical set details during active film production."
       },
@@ -5814,7 +5814,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/shffyYMghiDOIblw.png?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/shffyymghidoiblw-840a9456.png",
         "alt": "Art Directors Guild identity mark",
         "caption": "Art Directors Guild emblem representing professional practice in film and television art direction."
       },
@@ -5875,7 +5875,7 @@ export const generatedLocalArticles = [
     "slug": "the-golden-age-of-cinema-musicals-in-the-spotlight",
     "title": "The Golden Age of Cinema: Musicals in the Spotlight",
     "excerpt": "How Hollywood's musical era fused choreography, camera, and scenic composition into a visual language that still influences stage design.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60136-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60136-cover-db4aee28.webp",
     "coverImageAlt": "The Golden Age of Cinema: Musicals in the Spotlight",
     "publishedAt": "2025-02-12T00:00:00+00:00",
     "updatedAt": "2026-02-12T15:04:16+00:00",
@@ -6076,7 +6076,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60136/uDtyxRbhyLKtewon.png",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/udtyxrbhylktewon-196744f6.png",
         "alt": "Golden Age synchronized swimming image featuring Esther Williams in iconic MGM aquatic choreography.",
         "caption": "Esther Williams in a classic synchronized swimming sequence from the Golden Age of Hollywood musicals."
       },
@@ -6150,7 +6150,7 @@ export const generatedLocalArticles = [
     "slug": "the-golden-age-of-broadway-a-defining-era-in-musical-theatre",
     "title": "The Golden Age of Broadway: A Defining Era in Musical Theatre",
     "excerpt": "A scenic lens on Broadway's Golden Age and the design vocabulary that still shapes musical theatre production today.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60137-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/the-golden-age-of-broadway-a-defining-era-in-musical-theatre/body/article-60137-cover-9d1036f2.webp",
     "coverImageAlt": "The Golden Age of Broadway: A Defining Era in Musical Theatre",
     "publishedAt": "2025-02-10T00:00:00+00:00",
     "updatedAt": "2026-02-12T15:04:16+00:00",
@@ -6200,7 +6200,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60137-cover.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/the-golden-age-of-broadway-a-defining-era-in-musical-theatre/body/article-60137-cover-9d1036f2.webp",
         "alt": "Scenic design production image for The Golden Age of Broadway: A Defining Era in Musical Theatre",
         "caption": "Production image from The Golden Age of Broadway: A Defining Era in Musical Theatre"
       },
@@ -6417,7 +6417,7 @@ export const generatedLocalArticles = [
     "slug": "operas-foundations-the-evolution-of-scenic-design-in-opera",
     "title": "Opera's Foundations: The First Act in American Entertainment",
     "excerpt": "A scenic design history of opera from Baroque machinery to contemporary staging, and what those traditions still teach designers now.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60139-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60139-cover-a959d6f2.webp",
     "coverImageAlt": "Opera's Foundations: The First Act in American Entertainment",
     "publishedAt": "2025-01-07T00:00:00+00:00",
     "updatedAt": "2026-02-12T15:04:14+00:00",
@@ -6508,7 +6508,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/UJMxzVzNFqOQnRdJ.png?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/ujmxzvznfqoqnrdj-89492c7d.png",
         "alt": "Masked Ball at the Opera, 1873, Édouard Manet",
         "caption": "Masked Ball at the Opera, 1873 — Édouard ManetElegant masquerade ball with guests in black suits and masks, ornate lighting overhead, and a vibrant jester figure anchoring the scene."
       },
@@ -6698,7 +6698,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/zbaouFTTuNkZBufW.png?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/zbaoufttunkzbufw-83e1886c.png",
         "alt": "Image",
         "caption": "The Pirates of Penzance, Utah Shakespeare Festival (2021)"
       },
@@ -6809,7 +6809,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/NyKwQQgAFVYVKNhK.png?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/nykwqqgafvyvknhk-cc1f0a7c.png",
         "alt": "The Dance Foyer at the Opera, 1872 — Edgar DegasBallet dancers rehearse in an ornate interior, emphasizing discipline, ritual, and performance culture.",
         "caption": "The Dance Foyer at the Opera, 1872 — Edgar DegasBallet dancers rehearse in an ornate interior, emphasizing discipline, ritual, and performance culture."
       },
@@ -6946,7 +6946,7 @@ export const generatedLocalArticles = [
     "slug": "minimalist-scenic-design-dominating-regional-theatres-in-2025",
     "title": "Minimalist Scenic Design: Dominating Regional Theatres in 2025",
     "excerpt": "Why minimalist scenic design continues to lead regional theatre in 2025, and how restraint can increase flexibility, clarity, and visual impact.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60140-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60140-cover-8bd0b962.webp",
     "coverImageAlt": "Minimalist Scenic Design: Dominating Regional Theatres in 2025",
     "publishedAt": "2025-01-04T00:00:00+00:00",
     "updatedAt": "2026-02-12T15:04:17+00:00",
@@ -7004,7 +7004,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60140/generated-1771536661832-minimalist-stage.png",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/generated-1771536661832-minimalist-stage-8824dd5b.png",
         "alt": "Generated editorial image of a minimalist proscenium stage with modular scenic elements and projected textures.",
         "caption": "A generated editorial image of a minimalist proscenium stage using modular architecture and projection for narrative flexibility."
       },
@@ -7030,7 +7030,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60140/generated-1771536669611-trends-2025.png",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/generated-1771536669611-trends-2025-cc95a99b.png",
         "alt": "Generated editorial image of a regional theatre design workflow combining projection mapping and sustainable scenic materials.",
         "caption": "A generated editorial image of a regional theatre integrating projection mapping, modular scenic units, and sustainable material choices."
       },
@@ -7347,7 +7347,7 @@ export const generatedLocalArticles = [
     "slug": "how-to-create-trim-profiles-in-vectorworks-using-the-polyline-tool",
     "title": "How to Create Trim Profiles in Vectorworks Using the Polyline Tool",
     "excerpt": "A practical Vectorworks workflow for creating clean, reusable trim profiles with the Polyline tool for scenic drafting and production packages.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/covers/article-31/generated-1771537505545-cover.png",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/generated-1771537505545-cover-c5466590.png",
     "coverImageAlt": "How to Create Trim Profiles in Vectorworks Using the Polyline Tool",
     "publishedAt": "2024-12-23T00:00:00+00:00",
     "updatedAt": "2026-02-19T21:44:58.453271+00:00",
@@ -7453,7 +7453,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-31/generated-1771537519704-polyline-process.png",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/generated-1771537519704-polyline-process-69f2640b.png",
         "alt": "Generated drafting visual showing a trim profile traced with Vectorworks polyline control points and arcs.",
         "caption": "Generated process visual: tracing a trim profile with controlled point placement and curve handles."
       },
@@ -7494,7 +7494,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-31/generated-1771537531903-profile-library.png",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/generated-1771537531903-profile-library-d92e569a.png",
         "alt": "Generated scenic design drafting sheet showing reusable trim profile symbols and 3D molding studies.",
         "caption": "Generated drafting visual: trim profiles organized as reusable symbols for repeated scenic applications."
       },
@@ -7556,7 +7556,7 @@ export const generatedLocalArticles = [
     "slug": "the-art-of-presenting-theatre-design-a-guide-for-designers",
     "title": "The Art of Presenting Theatre Design: A Guide for Designers",
     "excerpt": "How to present scenic design ideas with clarity and authority to directors, producers, shops, and creative teams.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60145-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60145-cover-9971e817.webp",
     "coverImageAlt": "The Art of Presenting Theatre Design: A Guide for Designers",
     "publishedAt": "2024-10-24T00:00:00+00:00",
     "updatedAt": "2026-02-12T15:04:16+00:00",
@@ -7660,7 +7660,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/mFhzIRXAtPZxcvrV.webp?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/mfhzirxatpzxcvrv-3d123d03.webp",
         "caption": "",
         "alt": "Image"
       },
@@ -7707,7 +7707,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/bclDzTDaRKOLWtZg.webp?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/bcldztdarkolwtzg-c5f74042.webp",
         "caption": "",
         "alt": "Image"
       },
@@ -7774,7 +7774,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/KAwkIYrzXVdUxJEY.webp?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/kawkiyrzxvduxjey-622a32a3.webp",
         "caption": "",
         "alt": "Image"
       },
@@ -7801,7 +7801,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663337866878/YJeSksjzwnmmiXNV.webp?_i=AA",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/manus/generated-articles/yjesksjzwnmmixnv-e7a879ec.webp",
         "caption": "",
         "alt": "Image"
       },
@@ -7863,7 +7863,7 @@ export const generatedLocalArticles = [
     "slug": "scenic-design-process",
     "title": "Navigating the Scenic Design Process: A Comprehensive Guide",
     "excerpt": "A practical step-by-step guide to the scenic design process, from script analysis and visual research through drafting, tech, and opening night.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60147-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60147-cover-734aaf66.webp",
     "coverImageAlt": "Navigating the Scenic Design Process: A Comprehensive Guide",
     "publishedAt": "2024-10-02T00:00:00+00:00",
     "updatedAt": "2026-02-12T15:04:14+00:00",
@@ -7942,7 +7942,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60147/generated-1771534112152-3.png",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/generated-1771534112152-3-0712587c.png",
         "alt": "Editorial image depicting scenic design preproduction collaboration with script, research references, and early concept sketches.",
         "caption": "Early preproduction collaboration: script analysis, reference gathering, and concept sketch alignment with the directing team."
       },
@@ -8064,7 +8064,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60147/generated-1771534123101-4.png",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/generated-1771534123101-4-feb3cb5c.png",
         "alt": "Editorial image of scenic design development materials including drafting sheets, elevations, and build references.",
         "caption": "Design development phase: technical documentation and production-ready design details for build teams."
       },
@@ -8137,7 +8137,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60147/generated-1771534095830-1.png",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/generated-1771534095830-1-ccaf6f96.png",
         "alt": "Editorial image of a scenic design preproduction workflow with taped ground plan, script analysis notes, and collaborative drafting tools.",
         "caption": "Preproduction workflow: script analysis, planning tools, and taped ground plan used to align design intent before rehearsal."
       },
@@ -8192,7 +8192,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/article-60147/generated-1771534103467-2.png",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/generated-1771534103467-2-10030804.png",
         "alt": "Editorial image of technical rehearsal showing scenic transitions, lighting cues, and production communication onstage.",
         "caption": "Production and performance workflow: technical rehearsal and cue coordination used to maintain scenic consistency through opening."
       },
@@ -8246,7 +8246,7 @@ export const generatedLocalArticles = [
     "slug": "empowering-theatre-students-with-computer-literacy",
     "title": "Empowering Theatre Production Students with Computer Literacy",
     "excerpt": "Why computer literacy matters in theatre training, with a practical framework for helping production students work confidently across digital tools.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/article-60148-cover.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/article-60148-cover-a9216370.webp",
     "coverImageAlt": "Empowering Theatre Production Students with Computer Literacy",
     "publishedAt": "2024-09-17T00:00:00+00:00",
     "updatedAt": "2026-02-19T19:28:12.891+00:00",
@@ -8314,7 +8314,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/YUQMqdNcHrxzTpUx-compressed.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/yuqmqdnchrxztpux-compressed-2ecb253f.webp",
         "alt": "Theatre student working in dramatic theatrical space with cyan stage lighting",
         "caption": "Modern theatre students need guidance navigating traditional desktop software interfaces in professional production environments"
       },
@@ -8343,7 +8343,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/YhabWEkEtHPKyYvY-compressed.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/yhabwekethpkyyvy-compressed-ff4180d8.webp",
         "alt": "Computer hardware components with dramatic cyan lighting",
         "caption": "Understanding hardware components empowers students to make informed purchasing decisions based on their specific software needs"
       },
@@ -8389,7 +8389,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "image",
-        "url": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/VzHQxInbkvpsmwgK-compressed.webp",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-articles/vzhqxinbkvpsmwgk-compressed-2a4a05d1.webp",
         "alt": "Holographic AI interface with cyan graphics floating above laptop",
         "caption": "Exploring AI tools opens new creative possibilities for theatre production students while raising important ethical questions"
       },

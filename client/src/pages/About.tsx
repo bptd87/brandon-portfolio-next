@@ -17,42 +17,42 @@ import { getConfiguredSiteUrl } from "../../../lib/env/site";
 
 const galleryImages = [
   {
-    url: resolveBlobMediaUrl("https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-uci.webp") || "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-uci.webp",
+    url: resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-uci-144f3c95.webp") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-uci-144f3c95.webp",
     alt: "UC Irvine graduate school days",
     caption: "Brandon and Gretchen at Apple Park in 2022.",
   },
   {
-    url: resolveBlobMediaUrl("https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-teaching.webp") || "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-teaching.webp",
+    url: resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-teaching-8566b656.webp") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-teaching-8566b656.webp",
     alt: "Teaching scenic design to students",
     caption: "Brandon with Stephens College students during the strike.",
   },
   {
-    url: resolveBlobMediaUrl("https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-teams.webp") || "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-teams.webp",
+    url: resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-teams-ee0e5092.webp") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-teams-ee0e5092.webp",
     alt: "Working with creative teams",
     caption: "Brandon, Gretchen, and Lonnie Alcaraz [Lighting Designer] in Costa Mesa in 2023.",
   },
   {
-    url: resolveBlobMediaUrl("https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-mentors.webp") || "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-mentors.webp",
+    url: resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-mentors-de7b3237.webp") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-mentors-de7b3237.webp",
     alt: "Collaborating with mentors",
     caption: "Brandon, Gretchen, and Alan Muraoka [Scenic and Production Designer] at South Coast Rep in 2024.",
   },
   {
-    url: resolveBlobMediaUrl("https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-collaborations.webp") || "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-collaborations.webp",
+    url: resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-collaborations-3a11416a.webp") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-collaborations-3a11416a.webp",
     alt: "Creative collaborations",
     caption: "Brandon, Gretchen, Michael and Ruth Anne Burek, and Katie Cohen at the Association Party in Okoboji, Iowa, in 2023.",
   },
   {
-    url: resolveBlobMediaUrl("https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-family.webp") || "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-family.webp",
+    url: resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-family-305c20d0.webp") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-family-305c20d0.webp",
     alt: "Family and community",
     caption: "Brandon with the Ugalde Burks family at Thanksgiving in 2023.",
   },
   {
-    url: resolveBlobMediaUrl("https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-partnerships.webp") || "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-partnerships.webp",
+    url: resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-partnerships-081c8f6b.webp") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-partnerships-081c8f6b.webp",
     alt: "Design partnerships",
     caption: "Brandon, Gretchen, and Tom Buderwitz [Scenic Designer] in Santa Monica, California.",
   },
   {
-    url: resolveBlobMediaUrl("https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-behind-scenes.webp") || "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/gallery-behind-scenes.webp",
+    url: resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-behind-scenes-56903846.webp") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/gallery-behind-scenes-56903846.webp",
     alt: "Behind the scenes",
     caption: "Brandon in the scene shop at The Great American Melodrama.",
   },

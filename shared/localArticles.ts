@@ -1,6 +1,12 @@
 import { generatedLocalArticles } from "./localArticles.generated";
 import { applyBlobMediaManifest } from "./mediaBlob";
 import urinetownArticleBlocks from "../content/articles/urinetown-scenic-design-building-a-dystopia-that-feels-uncomfortably-familiar/blocks.json";
+import conceptMusicalArticleBlocks from "../content/articles/when-broadway-got-a-revolution-the-rise-of-the-concept-musical-in-the-1970s/blocks.json";
+import britishMegamusicalArticleBlocks from "../content/articles/when-broadway-got-spectacular-the-rise-of-the-british-megamusical/blocks.json";
+import evolutionNarrativeCinemaArticleBlocks from "../content/articles/the-evolutionof-narrativein-cinema/blocks.json";
+import musicalCinema1980sArticleBlocks from "../content/articles/the-1980s-musical-cinema-revolution-when-mtv-met-broadway-on-the-silver-screen/blocks.json";
+import lightingStylesArticleBlocks from "../content/articles/lighting-styles-in-ai-models/blocks.json";
+import computerHardwareArticleBlocks from "../content/articles/computer-hardware-why-scenic-designers-and-all-theatre-designers-need-to-care/blocks.json";
 
 export type LocalArticleBlock = Record<string, any>;
 
@@ -113,16 +119,16 @@ const normalizeArticleCategory = (categoryName?: string | null) => {
 
 const audioBySlug: Record<string, LocalArticleAudio> = {
   "empowering-theatre-students-with-computer-literacy": {
-    url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/sign/article_audio/Computer%20Literacy.mp3?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80OTA3YTJmOS04YzBmLTRlODQtOWIwNC04Njc2OTJkMzA5OGEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJhcnRpY2xlX2F1ZGlvL0NvbXB1dGVyIExpdGVyYWN5Lm1wMyIsImlhdCI6MTc3MzgwNjk0NCwiZXhwIjoxODY4NDE0OTQ0fQ.XkGzQOroOzZ3GLCtIEgUJ1AS7X_S9F1fnTUKR0lbAPA",
+    url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/audio/migrated/supabase/local-articles/computer-literacy-751a62f4.mp3",
     label: "Listen to article",
     durationLabel: "5:50",
   },
   "youre-wasting-my-time-a-scenic-design-lesson-in-growth-and-revision": {
-    url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/sign/article_audio/Your%20Wasting%20My%20Time.mp3?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80OTA3YTJmOS04YzBmLTRlODQtOWIwNC04Njc2OTJkMzA5OGEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJhcnRpY2xlX2F1ZGlvL1lvdXIgV2FzdGluZyBNeSBUaW1lLm1wMyIsImlhdCI6MTc3MzgxNjQ5OCwiZXhwIjoxODY4NDI0NDk4fQ.mwUiLn-Rgqvp1rjZ93dOIqCAMJSmj4OvnG9mjCzzxc4",
+    url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/audio/migrated/supabase/local-articles/your-wasting-my-time-a8f5760c.mp3",
     label: "Listen to article",
   },
   "online-portfolio-theatrical-design-2026": {
-    url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/sign/article_audio/Modern%20Portfolio.mp3?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80OTA3YTJmOS04YzBmLTRlODQtOWIwNC04Njc2OTJkMzA5OGEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJhcnRpY2xlX2F1ZGlvL01vZGVybiBQb3J0Zm9saW8ubXAzIiwiaWF0IjoxNzczOTA2OTIxLCJleHAiOjE4Njg1MTQ5MjF9.GYRBOPNy7nrDfGE9LxjDMkFTEa6R1zNMIMdAwhUlGzg",
+    url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/audio/migrated/supabase/local-articles/modern-portfolio-a0618467.mp3",
     label: "Listen to article",
   },
 };
@@ -166,6 +172,17 @@ const articleFieldOverridesBySlug: Record<string, Partial<LocalArticle>> = {
   },
   "lighting-styles-in-ai-models": {
     categoryName: "Tools & Technology",
+    excerpt:
+      "Explore how 20 different lighting styles transform AI-generated scenes in Sora and Midjourney, with practical prompt strategies for theatre designers and visual storytellers.",
+    coverImageUrl: "/assets/articles/lighting-styles-in-ai-models/cover-generated.png",
+    coverImageAlt:
+      "A blank canvas on an easel in a hazy artist's studio, lit by a warm spotlight and cool window light.",
+    seoTitle: "Lighting Styles in AI Models: How Lighting Changes Everything",
+    seoDescription:
+      "Explore how 20 different lighting styles transform AI-generated scenes in Sora and Midjourney, with practical prompts for theatre designers and visual storytellers.",
+    publishedAt: "2025-03-30T10:35:16.063Z",
+    updatedAt: "2025-03-31T10:02:51.299Z",
+    readTime: 10,
   },
   "computer-hardware-why-scenic-designers-and-all-theatre-designers-need-to-care": {
     categoryName: "Tools & Technology",
@@ -247,6 +264,10 @@ const articleFieldOverridesBySlug: Record<string, Partial<LocalArticle>> = {
 };
 
 const contentOverridesBySlug: Record<string, LocalArticle["content"]> = {
+  "lighting-styles-in-ai-models":
+    lightingStylesArticleBlocks as LocalArticle["content"],
+  "computer-hardware-why-scenic-designers-and-all-theatre-designers-need-to-care":
+    computerHardwareArticleBlocks as LocalArticle["content"],
   "urinetown-scenic-design-building-a-dystopia-that-feels-uncomfortably-familiar":
     urinetownArticleBlocks as LocalArticle["content"],
   "what-makes-a-good-scenic-design-rendering": [
@@ -277,7 +298,7 @@ const contentOverridesBySlug: Record<string, LocalArticle["content"]> = {
     },
     {
       type: "image",
-      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/IkuGmbPwGhzuoiAl-compressed.webp",
+      url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/what-makes-a-good-scenic-design-rendering/body/ikugmbpwghzuoial-compressed-db4d6373.webp",
       alt: "Vectorworks rendering in progress, showing layered viewports and material textures in a scenic design project.",
       caption: "Vectorworks rendering in progress. Drafting and visualization happen in the same space.",
     },
@@ -309,7 +330,7 @@ const contentOverridesBySlug: Record<string, LocalArticle["content"]> = {
     },
     {
       type: "image",
-      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/beiQUvBJTRYzwFmL-compressed.webp",
+      url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/what-makes-a-good-scenic-design-rendering/body/beiquvbjtryzwfml-compressed-e4cf948e.webp",
       alt: "Georges de La Tour’s The Penitent Magdalene, lit by a single candle source in a dark room.",
       caption: "Georges de La Tour, The Penitent Magdalene. A single controlled light source creates both atmosphere and clarity.",
     },
@@ -337,7 +358,7 @@ const contentOverridesBySlug: Record<string, LocalArticle["content"]> = {
     },
     {
       type: "image",
-      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/cWACyunzaZoYPAJr-compressed.webp",
+      url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/what-makes-a-good-scenic-design-rendering/body/cwacyunzazoypajr-compressed-a24696a0.webp",
       alt: "Caravaggio’s The Calling of Saint Matthew, using dramatic directional light and diagonal composition.",
       caption: "Caravaggio, The Calling of Saint Matthew. Light direction and composition tell the story before a viewer reads the scene.",
     },
@@ -365,7 +386,7 @@ const contentOverridesBySlug: Record<string, LocalArticle["content"]> = {
     },
     {
       type: "image",
-      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/eUXnBpVeHXYLiqCY-compressed.webp",
+      url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/what-makes-a-good-scenic-design-rendering/body/euxnbpvehxyliqcy-compressed-d2fa63b8.webp",
       alt: "Rembrandt’s The Night Watch, demonstrating layered depth and selective emphasis through light.",
       caption: "Rembrandt, The Night Watch. Hierarchy comes from where the light concentrates and where it recedes.",
     },
@@ -393,7 +414,7 @@ const contentOverridesBySlug: Record<string, LocalArticle["content"]> = {
     },
     {
       type: "image",
-      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/HxxVtRIHYkhsdkAA-compressed.webp",
+      url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/what-makes-a-good-scenic-design-rendering/body/hxxvtrihykhsdkaa-compressed-79554678.webp",
       alt: "Edward Hopper’s Nighthawks, showing isolated figures in a diner framed by architecture and negative space.",
       caption: "Edward Hopper, Nighthawks. Mood is carried by silence, spacing, and the world implied just beyond the frame.",
     },
@@ -520,7 +541,7 @@ const contentOverridesBySlug: Record<string, LocalArticle["content"]> = {
     },
     {
       type: "image",
-      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/body/kritdqpcCKGLmgqC-compressed.webp",
+      url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/what-makes-a-good-scenic-design-rendering/body/kritdqpcckglmgqc-compressed-c76d5db0.webp",
       alt: "Rendering for Tomás and the Library Lady with layered shelves, warm light, and spatial depth.",
       caption: "Tomás and the Library Lady. Layered depth, warm directional light, and atmosphere combine into a complete scenic image.",
     },
@@ -583,37 +604,37 @@ const contentOverridesBySlug: Record<string, LocalArticle["content"]> = {
       type: "gallery",
       images: [
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/story%20first.webp",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/what-makes-a-good-scenic-design-rendering/body/story-first-3a6d4484.webp",
           alt: "Infographic illustrating story-first priorities in scenic rendering.",
           caption: "Story comes first.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/Human%20Figure.webp",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/what-makes-a-good-scenic-design-rendering/body/human-figure-cbbc32f2.webp",
           alt: "Infographic showing how human figures establish scale and emotional connection in scenic rendering.",
           caption: "Human figures.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/Composition%20Directs%20the%20Eye_.webp",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/what-makes-a-good-scenic-design-rendering/body/composition-directs-the-eye_-07469e04.webp",
           alt: "Infographic about composition and visual direction in scenic rendering.",
           caption: "Composition directs the eye.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/Lighting%20is%20the%20Invisible%20Narrator_.webp",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/what-makes-a-good-scenic-design-rendering/body/lighting-is-the-invisible-narrator_-653d28bf.webp",
           alt: "Infographic showing how lighting creates focus, tone, and dramatic meaning in scenic rendering.",
           caption: "Lighting is the invisible narrator.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/%20Color%20Communicates%20Instantly.webp",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/what-makes-a-good-scenic-design-rendering/body/color-communicates-instantly-7721ee21.webp",
           alt: "Infographic about using color to establish emotional register and genre in scenic rendering.",
           caption: "Color communicates instantly.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/Focal%20Points%20%20Visual%20Priorities.webp",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/what-makes-a-good-scenic-design-rendering/body/focal-points-visual-priorities-353a2475.webp",
           alt: "Infographic explaining focal points and visual priorities in scenic rendering.",
           caption: "Focal points and visual priorities.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/Atmosphere%20Breathes%20Life.webp",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/what-makes-a-good-scenic-design-rendering/body/atmosphere-breathes-life-5c8933c1.webp",
           alt: "Infographic about atmosphere, depth, and environmental mood in scenic rendering.",
           caption: "Atmosphere breathes life.",
         },
@@ -761,22 +782,22 @@ const contentOverridesBySlug: Record<string, LocalArticle["content"]> = {
       type: "gallery",
       images: [
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/Brandon%20URTAS%20Chicago%202017%20-1.webp",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/youre-wasting-my-time-a-scenic-design-lesson-in-growth-and-revision/body/brandon-urtas-chicago-2017--1-84401178.webp",
           alt: "Brandon PT Davis at URTAs Chicago 2017.",
           caption: "URTAs, Chicago, 2017.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/Brandon%20URTAS%20Chicago%202017%20-2.webp",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/youre-wasting-my-time-a-scenic-design-lesson-in-growth-and-revision/body/brandon-urtas-chicago-2017--2-9a8ef6f1.webp",
           alt: "Portfolio review moment at URTAs Chicago 2017.",
           caption: "Portfolio review, URTAs Chicago, 2017.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/Brandon%20URTAS%20Chicago%202017%20-4.webp",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/youre-wasting-my-time-a-scenic-design-lesson-in-growth-and-revision/body/brandon-urtas-chicago-2017--4-351716e8.webp",
           alt: "Photo of Chicago's Water Tower district with the historic Water Tower and the John Hancock building.",
           caption: "Chicago Water Tower district, with the Water Tower and John Hancock building.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/Brandon%20URTAS%20Chicago%202017%20-3.webp",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/youre-wasting-my-time-a-scenic-design-lesson-in-growth-and-revision/body/brandon-urtas-chicago-2017--3-66ac8b67.webp",
           alt: "Hotel room selfie from the Chicago URTAs trip in 2017.",
           caption: "Hotel room selfie, Chicago, 2017.",
         },
@@ -792,7 +813,7 @@ const voyageLaArticle: LocalArticle = {
   excerpt:
     "VoyageLA featured Brandon PT Davis in a Rising Stars profile focused on scenic design growth, artistic voice, and long-term career direction in Southern California.",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/news-images/news-150001-cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/local-articles/news-150001-cover-6b3d12c4.webp",
   coverImageAlt: "VoyageLA Rising Stars interview feature",
   publishedAt: "2026-02-10",
   updatedAt: "2026-02-12",
@@ -1199,7 +1220,7 @@ const ghibliImmersiveDiningArticle: LocalArticle = {
   excerpt:
     "A themed entertainment studio project exploring how theatre design students translated environmental storytelling into a Studio Ghibli-inspired immersive dining concept.",
   coverImageUrl:
-    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_73b851ea12d14fce8575a0e36e3cf92f.jpeg",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/local-articles/9e1774_73b851ea12d14fce8575a0e36e3cf92f-e82d34cd.jpeg",
   coverImageAlt:
     "Studio Ghibli-inspired immersive dining design project developed by theatre students.",
   publishedAt: "2025-04-14",
@@ -1334,47 +1355,47 @@ const ghibliImmersiveDiningArticle: LocalArticle = {
       type: "gallery",
       images: [
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_86ddee990fb443c2908e868498a96aca.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_86ddee990fb443c2908e868498a96aca-3777e957.jpeg",
           alt: "Ghibli's Delight logo design for the themed entertainment concept.",
           caption: "Ghibli's Delight Logo Design Themed Entertainment.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_22f94b16c0a24deea95c15b9ef3cb0f8.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_22f94b16c0a24deea95c15b9ef3cb0f8-1bcb3b1d.jpeg",
           alt: "Production team credits for the Stephens College student project.",
           caption: "Production Team Credits, Stephens College Students.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_1ad9c76522ee4767b6b6c30554d95252.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_1ad9c76522ee4767b6b6c30554d95252-b3eaa20d.jpeg",
           alt: "Location study identifying Atlanta, Georgia, for the themed project.",
           caption: "Location: Atlanta, GA for Themed Project.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_a668d0d7c5804e0ea645138ad7e92e4a.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_a668d0d7c5804e0ea645138ad7e92e4a-af3a8d50.jpeg",
           alt: "Research board featuring Studio Ghibli imagery for the themed dining project.",
           caption: "Ghibli Film Theme Research Images.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_ba4f8a2f0e1c42358544825959579ff4.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_ba4f8a2f0e1c42358544825959579ff4-cfb6bb8c.jpeg",
           alt: "Additional Studio Ghibli research references gathered by the student team.",
           caption: "Research Images from Studio Ghibli.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_8920e870105c482fb3afd92049dafb1d.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_8920e870105c482fb3afd92049dafb1d-b1664a8d.jpeg",
           alt: "Themed entertainment precedent imagery used during concept development.",
           caption: "Themed Entertainment Images.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_4a5d11ca16ff4831ae7b8d17bbadf035.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_4a5d11ca16ff4831ae7b8d17bbadf035-73cfb98c.jpeg",
           alt: "Uniform research images supporting the themed restaurant concept.",
           caption: "Uniform Research for themed project.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_184e465cf6b54645bda7776237e51c7d.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_184e465cf6b54645bda7776237e51c7d-91204026.jpeg",
           alt: "Ghibli-inspired food research images gathered for menu development.",
           caption: "Ghibli Inspired Food Reserach Images.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_297818c5541842cc9f3c8677b441f35d.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_297818c5541842cc9f3c8677b441f35d-aedf7552.jpeg",
           alt: "Food research references used to build the themed menu.",
           caption: "Food Research Images.",
         },
@@ -1387,7 +1408,7 @@ const ghibliImmersiveDiningArticle: LocalArticle = {
     },
     {
       type: "image",
-      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_178b77734f664399ad1781073a591459.jpg",
+      url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_178b77734f664399ad1781073a591459-1bbb9ee2.jpg",
       alt: "Theatre design students behind the Studio Ghibli-inspired immersive dining project, pictured left to right: Arch Crist, Fae Rieman-Royer, Shannon King, Alice Crist, and Makenzie Schutter.",
       caption:
         "Theatre design students behind the project, pictured left to right: Arch Crist, Fae Rieman-Royer, Shannon King, Alice Crist, and Makenzie Schutter.",
@@ -1516,32 +1537,32 @@ const ghibliImmersiveDiningArticle: LocalArticle = {
       type: "gallery",
       images: [
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_e70b7b314e9640149e69ed68aaa58aa7.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_e70b7b314e9640149e69ed68aaa58aa7-fc5e0ded.jpeg",
           alt: "Main dining room rendering from the Ghibli restaurant concept.",
           caption: "Main Room Rendering, Twinmotion.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_ae64299bdc744e1a862aba64bc5a7bbc.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_ae64299bdc744e1a862aba64bc5a7bbc-f7666497.jpeg",
           alt: "Second main dining room rendering from the Twinmotion walkthrough set.",
           caption: "Main Room Rendering, Twinmotion.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_9a64fc01f81042738ef1a038b90529dd.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_9a64fc01f81042738ef1a038b90529dd-e9ea8554.jpeg",
           alt: "Main room menu items designed for the themed restaurant.",
           caption: "Main Room Menu Items. Resturant Design.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_313ff4a76c05405dbbd2524e17b75f9a.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_313ff4a76c05405dbbd2524e17b75f9a-b45458b6.jpeg",
           alt: "Main room themed uniform design for staff in the immersive concept.",
           caption: "Main Room Themed Uniform Design.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_a668d0d7c5804e0ea645138ad7e92e4a.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_a668d0d7c5804e0ea645138ad7e92e4a-af3a8d50.jpeg",
           alt: "Research imagery for the main room concept.",
           caption: "Research Images.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_ba4f8a2f0e1c42358544825959579ff4.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_ba4f8a2f0e1c42358544825959579ff4-cfb6bb8c.jpeg",
           alt: "Additional research imagery supporting the main room concept.",
           caption: "Reseach Images.",
         },
@@ -1554,7 +1575,7 @@ const ghibliImmersiveDiningArticle: LocalArticle = {
     },
     {
       type: "video",
-      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-videos/ghibli/9e1774_eeb3f5c5725e4a4c829aed62842238b0.mp4",
+      url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/video/articles/studio-ghibli-inspired-immersive-dining-experience/video/9e1774_eeb3f5c5725e4a4c829aed62842238b0-696dc42d.mp4",
       caption: "Main Dining Room Twinmotion Walkthrough",
     },
     {
@@ -1571,27 +1592,27 @@ const ghibliImmersiveDiningArticle: LocalArticle = {
       type: "gallery",
       images: [
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_cc2ee6a3cfe846909596c206343f0c76.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_cc2ee6a3cfe846909596c206343f0c76-5436b28d.jpeg",
           alt: "My Neighbor Totoro rendering from the themed side room.",
           caption: "My Neighbor Totoro Rendering Twinmotion.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_f6fe10fdf9e14419b17e698f5db576ce.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_f6fe10fdf9e14419b17e698f5db576ce-11c79c51.jpeg",
           alt: "Specialty menu design for the My Neighbor Totoro side room.",
           caption: "My Neighbor Totoro Specialty Menu Themed Design.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_dbc85f35e2324d59997b78d94b8aa128.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_dbc85f35e2324d59997b78d94b8aa128-02c5f71e.jpeg",
           alt: "Themed uniform design for the Totoro room.",
           caption: "My Neighbor Totoro Themed Uniform Design.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_c388bca412434470964b9968278b70af.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_c388bca412434470964b9968278b70af-b37e0c9e.jpeg",
           alt: "Research imagery for the My Neighbor Totoro concept.",
           caption: "My Neighbor Totoro Research Images.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_d4e22d4d194f4447a8a8791701665318.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_d4e22d4d194f4447a8a8791701665318-442c299e.jpeg",
           alt: "Additional research imagery for the My Neighbor Totoro concept.",
           caption: "My Neighbor Totoro Research Images.",
         },
@@ -1604,7 +1625,7 @@ const ghibliImmersiveDiningArticle: LocalArticle = {
     },
     {
       type: "video",
-      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-videos/ghibli/9e1774_253418d025f04fe5b579126461857c96.mp4",
+      url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/video/articles/studio-ghibli-inspired-immersive-dining-experience/video/9e1774_253418d025f04fe5b579126461857c96-be7f2d61.mp4",
       caption: "My Neighbor Totoro Twinmotion Walkthrough",
     },
     {
@@ -1621,32 +1642,32 @@ const ghibliImmersiveDiningArticle: LocalArticle = {
       type: "gallery",
       images: [
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_061ec2761c384613a9ca1ecf1c6ee3e2.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_061ec2761c384613a9ca1ecf1c6ee3e2-89b4a256.jpeg",
           alt: "Princess Mononoke rendering from the themed side room concept.",
           caption: "Princess Mononoke room rendering.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_c56cda73f5a848acabf9fe2e59177573.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_c56cda73f5a848acabf9fe2e59177573-8a67752d.jpeg",
           alt: "Alternate Princess Mononoke rendering from the student project.",
           caption: "Princess Mononoke room rendering.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_3eaf4da0f7f043449ade480b837d4ada.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_3eaf4da0f7f043449ade480b837d4ada-3b3cf486.jpeg",
           alt: "Princess Mononoke themed menu or collateral design.",
           caption: "Princess Mononoke project development image.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_92300c16da8e486c9cb1231d51515c28.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_92300c16da8e486c9cb1231d51515c28-b23808a4.jpeg",
           alt: "Princess Mononoke costume or branding development image.",
           caption: "Princess Mononoke project development image.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_e24ad2be54ac4ea0b998478efce810ed.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_e24ad2be54ac4ea0b998478efce810ed-7f04cbb5.jpeg",
           alt: "Princess Mononoke inspiration research image.",
           caption: "Princess Mononoke inspiration research.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_9dc27567f94c4360a1894b69d55c4a0f.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_9dc27567f94c4360a1894b69d55c4a0f-97b6a62a.jpeg",
           alt: "Additional Princess Mononoke inspiration research image.",
           caption: "Princess Mononoke inspiration research.",
         },
@@ -1659,7 +1680,7 @@ const ghibliImmersiveDiningArticle: LocalArticle = {
     },
     {
       type: "video",
-      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-videos/ghibli/9e1774_db4c7b43f9a24bb8aeb29cd51b9952e4.mp4",
+      url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/video/articles/studio-ghibli-inspired-immersive-dining-experience/video/9e1774_db4c7b43f9a24bb8aeb29cd51b9952e4-aebfa44a.mp4",
       caption: "The Princess Mononoke Twinmotion Walkthrough",
     },
     {
@@ -1676,32 +1697,32 @@ const ghibliImmersiveDiningArticle: LocalArticle = {
       type: "gallery",
       images: [
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_8e1ed7d996e54539b6c2fb8f15b2dd23.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_8e1ed7d996e54539b6c2fb8f15b2dd23-2951de09.jpeg",
           alt: "Ponyo rendering from the themed side room concept.",
           caption: "Ponyo room rendering.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_1491bfc552964da88c025647963c62e3.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_1491bfc552964da88c025647963c62e3-4c557d22.jpeg",
           alt: "Alternate Ponyo rendering from the student project.",
           caption: "Ponyo room rendering.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_3108e5433887440ca6bb2d2cb35ec8ee.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_3108e5433887440ca6bb2d2cb35ec8ee-c2df9e49.jpeg",
           alt: "Ponyo menu or collateral design image.",
           caption: "Ponyo project development image.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_0ec4b61c87d6408199fa706416ea03e4.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_0ec4b61c87d6408199fa706416ea03e4-af02f7e3.jpeg",
           alt: "Ponyo costume or branding development image.",
           caption: "Ponyo project development image.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_1997f0253d7242b8a6d90f9687a7da6c.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_1997f0253d7242b8a6d90f9687a7da6c-a70e89d1.jpeg",
           alt: "Ponyo inspiration research image.",
           caption: "Ponyo inspiration research.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_da1584e0cb0347ec9a88f7527ba19a2f.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_da1584e0cb0347ec9a88f7527ba19a2f-bc083b6c.jpeg",
           alt: "Additional Ponyo inspiration research image.",
           caption: "Ponyo inspiration research.",
         },
@@ -1714,7 +1735,7 @@ const ghibliImmersiveDiningArticle: LocalArticle = {
     },
     {
       type: "video",
-      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-videos/ghibli/9e1774_185d929cb671450e9c83d0c806e4cdad.mp4",
+      url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/video/articles/studio-ghibli-inspired-immersive-dining-experience/video/9e1774_185d929cb671450e9c83d0c806e4cdad-8face6f8.mp4",
       caption: "Ponyo Twinmotion Walkthrough",
     },
     {
@@ -1731,32 +1752,32 @@ const ghibliImmersiveDiningArticle: LocalArticle = {
       type: "gallery",
       images: [
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_4381eba15641435e9cd0516c150edb3b.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_4381eba15641435e9cd0516c150edb3b-5fc5e15c.jpeg",
           alt: "Spirited Away rendering from the themed side room.",
           caption: "Spirited Away Rendering in Twinmotin.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_c24525de37c741b486cf5059533c0d76.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_c24525de37c741b486cf5059533c0d76-77f59399.jpeg",
           alt: "Alternate Spirited Away rendering from Twinmotion.",
           caption: "Spirited Away in Twinmotion.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_6983e616f1fd4978bad2fdace8cef1fb.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_6983e616f1fd4978bad2fdace8cef1fb-8629b9b1.jpeg",
           alt: "Spirited Away themed uniform design.",
           caption: "Spirited Away Themed Uniform Design.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_463521a106b6440e83a232f893ef9b9f.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_463521a106b6440e83a232f893ef9b9f-3ffc890c.jpeg",
           alt: "Additional Spirited Away development image.",
           caption: "Spirited Away project development image.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_8e1f92a8f40a43e59f62b12e733bca14.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_8e1f92a8f40a43e59f62b12e733bca14-8f4645b7.jpeg",
           alt: "Spirited Away inspiration research image.",
           caption: "Spirited Away Inspiration Research.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_08c8e27eb2214b7fb4324a6a411d332e.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_08c8e27eb2214b7fb4324a6a411d332e-8ce5162a.jpeg",
           alt: "Additional Spirited Away inspiration research image.",
           caption: "Spirited Away Inspiration Research.",
         },
@@ -1769,7 +1790,7 @@ const ghibliImmersiveDiningArticle: LocalArticle = {
     },
     {
       type: "video",
-      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-videos/ghibli/9e1774_67126968704e47d58f1504177be573a9.mp4",
+      url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/video/articles/studio-ghibli-inspired-immersive-dining-experience/video/9e1774_67126968704e47d58f1504177be573a9-7eca867c.mp4",
       caption: "Spirited Away Twinmotion Walkthrough",
     },
     {
@@ -1786,32 +1807,32 @@ const ghibliImmersiveDiningArticle: LocalArticle = {
       type: "gallery",
       images: [
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_c311ef858b894aa88b04e1d508faafe6.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_c311ef858b894aa88b04e1d508faafe6-151023dc.jpeg",
           alt: "Howl's Moving Castle rendering from the themed side room.",
           caption: "Howl's Moving Castle Rendering in Twinmotion.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_ed919a65b8054981b5cdc95262d1589c.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_ed919a65b8054981b5cdc95262d1589c-beffc0db.jpeg",
           alt: "Alternate Howl's Moving Castle rendering from Twinmotion.",
           caption: "Howl's Moving Castle Reindering in Twinmotion.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_9b6ff8a4a3e7473fbeb9e2d4ea78872b.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_9b6ff8a4a3e7473fbeb9e2d4ea78872b-f13203e1.jpeg",
           alt: "Howl's Moving Castle themed uniform design.",
           caption: "Howl's Moving Castle Themed Uniform Design.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_6d5e75b7a0fc4afa91284fca90cd8394.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_6d5e75b7a0fc4afa91284fca90cd8394-930158f7.jpeg",
           alt: "Additional Howl's Moving Castle development image.",
           caption: "Howl's Moving Castle project development image.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_056fa8bfa351456bae15e721f4b4ff08.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_056fa8bfa351456bae15e721f4b4ff08-f90d97c3.jpeg",
           alt: "Howl's Moving Castle inspiration research image.",
           caption: "Howl's Moving Castle Inspiration Research.",
         },
         {
-          url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_13c2220500ec4088b87db69b6446c37d.jpeg",
+          url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_13c2220500ec4088b87db69b6446c37d-6c1b0947.jpeg",
           alt: "Additional Howl's Moving Castle inspiration research image.",
           caption: "Howl's Moving Castle Inspiration Research.",
         },
@@ -1824,7 +1845,7 @@ const ghibliImmersiveDiningArticle: LocalArticle = {
     },
     {
       type: "video",
-      url: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-videos/ghibli/9e1774_b200c45eaaee4bb28161d9714cc80300.mp4",
+      url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/video/articles/studio-ghibli-inspired-immersive-dining-experience/video/9e1774_b200c45eaaee4bb28161d9714cc80300-251e1a52.mp4",
       caption: "Howl's Moving Castle Twinmotion Walkthrough",
     },
     {
@@ -2222,6 +2243,139 @@ const workingOffstageArticle: LocalArticle = {
   ],
 };
 
+const conceptMusicalArticle: LocalArticle = {
+  id: 100007,
+  slug: "when-broadway-got-a-revolution-the-rise-of-the-concept-musical-in-the-1970s",
+  title: "The Rise of the Concept Musical in the 1970s",
+  excerpt:
+    "A scenic-focused history of the concept musical and the artists who pushed Broadway away from tidy plots and toward thematic structure, fragmentation, and theatrical self-awareness.",
+  coverImageUrl: "/assets/articles/concept-musical-1970s/cover.webp",
+  coverImageAlt:
+    "Warm theatrical montage cover featuring Stephen Sondheim, Harold Prince, Michael Bennett, and Bob Fosse.",
+  publishedAt: "2025-03-05T10:56:06.270Z",
+  updatedAt: "2025-03-17T09:06:34.261Z",
+  createdAt: "2025-03-05T10:56:06.270Z",
+  categoryName: "Performance History & Culture",
+  seoTitle: "The Rise of the Concept Musical in the 1970s",
+  seoDescription:
+    "Explore how Sondheim, Prince, Bennett, and Fosse reshaped Broadway in the 1970s through concept musicals that prioritized theme, structure, and theatrical form over conventional plot.",
+  seoKeywords:
+    "concept musical, Broadway history, Stephen Sondheim, Harold Prince, Bob Fosse, Michael Bennett, musical theatre history",
+  tags: [
+    { id: 100420, name: "Concept Musical", slug: "concept-musical" },
+    { id: 100421, name: "Broadway History", slug: "broadway-history" },
+    { id: 100422, name: "Musical Theatre History", slug: "musical-theatre-history" },
+    { id: 100423, name: "Stephen Sondheim", slug: "stephen-sondheim" },
+    { id: 100424, name: "Entertainment History", slug: "entertainment-history" },
+  ],
+  featured: false,
+  readTime: 11,
+  sourcePublication: "Scenic Insights Archive",
+  sourceUrl:
+    "https://ggjwk4vwfr.wixstudio.com/bptd/post/when-broadway-got-a-revolution-the-rise-of-the-concept-musical-in-the-1970s",
+  content: conceptMusicalArticleBlocks as LocalArticle["content"],
+};
+
+const britishMegamusicalArticle: LocalArticle = {
+  id: 100008,
+  slug: "when-broadway-got-spectacular-the-rise-of-the-british-megamusical",
+  title: "When Broadway Got Spectacular: The Rise of the British Megamusical",
+  excerpt:
+    "A scenic-focused look at how British megamusicals turned Broadway into a global entertainment machine through spectacle, branding, technology, and industrial-scale production.",
+  coverImageUrl: "/assets/articles/british-megamusical/cover.webp",
+  coverImageAlt:
+    "Warm cinematic megamusical cover with a chandelier, barricade imagery, and sweeping theatrical light.",
+  publishedAt: "2025-03-10T09:55:44.718Z",
+  updatedAt: "2025-03-17T09:05:54.095Z",
+  createdAt: "2025-03-10T09:55:44.718Z",
+  categoryName: "Performance History & Culture",
+  seoTitle: "The Rise of the British Megamusical",
+  seoDescription:
+    "Explore how Andrew Lloyd Webber, Cameron Mackintosh, and their collaborators reshaped Broadway through megamusicals like Cats, Les Miserables, The Phantom of the Opera, and Miss Saigon.",
+  seoKeywords:
+    "british megamusical, Broadway history, Andrew Lloyd Webber, Cameron Mackintosh, Phantom of the Opera, Les Miserables, Cats musical, theatre spectacle",
+  tags: [
+    { id: 100430, name: "British Megamusical", slug: "british-megamusical" },
+    { id: 100431, name: "Broadway History", slug: "broadway-history" },
+    { id: 100432, name: "Andrew Lloyd Webber", slug: "andrew-lloyd-webber" },
+    { id: 100433, name: "Cameron Mackintosh", slug: "cameron-mackintosh" },
+    { id: 100434, name: "Phantom of the Opera", slug: "phantom-of-the-opera" },
+    { id: 100435, name: "Theatre Spectacle", slug: "theatre-spectacle" },
+  ],
+  featured: false,
+  readTime: 8,
+  sourcePublication: "Scenic Insights Archive",
+  sourceUrl:
+    "https://ggjwk4vwfr.wixstudio.com/bptd/post/when-broadway-got-spectacular-the-rise-of-the-british-megamusical",
+  content: britishMegamusicalArticleBlocks as LocalArticle["content"],
+};
+
+const evolutionNarrativeCinemaArticle: LocalArticle = {
+  id: 100009,
+  slug: "the-evolutionof-narrativein-cinema",
+  title: "The Evolution of Narrative in Cinema",
+  excerpt:
+    "A scenic-focused history of early film language, tracing how editing, framing, sound, color, and mise-en-scene reshaped visual storytelling before the 1940s.",
+  coverImageUrl: "/assets/articles/evolution-narrative-cinema/cover.webp",
+  coverImageAlt:
+    "Cinematic editorial cover showing the transition from silent film grammar to sound, color, and deep-focus cinema.",
+  publishedAt: "2025-01-31T00:00:00.000Z",
+  updatedAt: "2025-03-17T00:00:00.000Z",
+  createdAt: "2025-01-31T00:00:00.000Z",
+  categoryName: "Performance History & Culture",
+  seoTitle: "The Evolution of Narrative in Cinema",
+  seoDescription:
+    "Explore how early filmmakers built cinematic storytelling through editing, camera logic, synchronized sound, Technicolor, and expressive mise-en-scene.",
+  seoKeywords:
+    "early cinema history, film narrative evolution, mise-en-scene, silent film, technicolor history, citizen kane cinematography",
+  tags: [
+    { id: 100440, name: "Film History", slug: "film-history" },
+    { id: 100441, name: "Cinematic Language", slug: "cinematic-language" },
+    { id: 100442, name: "Mise-en-Scene", slug: "mise-en-scene" },
+    { id: 100443, name: "Visual Storytelling", slug: "visual-storytelling" },
+    { id: 100444, name: "Early Cinema", slug: "early-cinema" }
+  ],
+  featured: false,
+  readTime: 8,
+  sourcePublication: "Scenic Insights Archive",
+  sourceUrl: "https://ggjwk4vwfr.wixstudio.com/bptd/post/the-evolutionof-narrativein-cinema",
+  content: evolutionNarrativeCinemaArticleBlocks as LocalArticle["content"],
+};
+
+const musicalCinema1980sArticle: LocalArticle = {
+  id: 100010,
+  slug: "the-1980s-musical-cinema-revolution-when-mtv-met-broadway-on-the-silver-screen",
+  title: "The 1980s Musical Cinema Revolution",
+  excerpt:
+    "A scenic-focused study of how MTV aesthetics, youth-centered narratives, and cross-platform adaptation reshaped musical storytelling in the 1980s.",
+  coverImageUrl: "/assets/articles/musical-cinema-1980s/hero-art.jpeg",
+  coverImageAlt:
+    "Stylized 1980s musical-cinema collage with dancers, records, neon light, and theatrical motion.",
+  publishedAt: "2025-03-16T02:22:53.114Z",
+  updatedAt: "2025-03-17T09:01:52.098Z",
+  createdAt: "2025-03-16T02:22:53.114Z",
+  categoryName: "Performance History & Culture",
+  seoTitle: "The 1980s Musical Cinema Revolution",
+  seoDescription:
+    "Explore how MTV, Fame, Flashdance, Footloose, Hairspray, Menken and Ashman, and Disney's renaissance transformed movie musicals and Broadway adaptation logic.",
+  seoKeywords:
+    "1980s movie musicals, MTV musical cinema, Flashdance, Footloose, Hairspray, Menken and Ashman, Disney Renaissance, film to stage adaptation",
+  tags: [
+    { id: 100450, name: "Musical Cinema", slug: "musical-cinema" },
+    { id: 100451, name: "Film History", slug: "film-history" },
+    { id: 100452, name: "Broadway History", slug: "broadway-history" },
+    { id: 100453, name: "MTV", slug: "mtv" },
+    { id: 100454, name: "Disney Renaissance", slug: "disney-renaissance" },
+    { id: 100455, name: "Bob Fosse", slug: "bob-fosse" }
+  ],
+  featured: false,
+  readTime: 10,
+  sourcePublication: "Scenic Insights Archive",
+  sourceUrl:
+    "https://ggjwk4vwfr.wixstudio.com/bptd/post/the-1980s-musical-cinema-revolution-when-mtv-met-broadway-on-the-silver-screen",
+  content: musicalCinema1980sArticleBlocks as LocalArticle["content"],
+};
+
 const dbBackedArticles = (generatedLocalArticles as LocalArticle[]).map((article) => ({
   ...article,
   ...articleFieldOverridesBySlug[article.slug],
@@ -2241,6 +2395,10 @@ const manualArticles: LocalArticle[] = [
   visualLanguageArticle,
   ghibliImmersiveDiningArticle,
   workingOffstageArticle,
+  conceptMusicalArticle,
+  britishMegamusicalArticle,
+  evolutionNarrativeCinemaArticle,
+  musicalCinema1980sArticle,
 ];
 
 const articlesWithManualEntries = [

@@ -8,7 +8,7 @@ export const generatedRenderingProjects = [
     "slug": "the-northwind-mare-tavern",
     "excerpt": "A fantasy tavern emerges from twilight mist—carved horse-head gables, glowing lanterns, stone walls weathered by imagined centuries. Emberreach invites guests into a Tamriel-inspired realm where dining becomes adventure, and every detail whispers of distant quests and fireside tales.",
     "designNotes": "Image set for The Northwind Mare Tavern — (2026). The work balances emotional atmosphere with stage logic, helping teams evaluate ideas before they are built. A fantasy tavern emerges from twilight mist—carved horse-head gables, glowing lanterns, stone walls weathered by imagined centuries.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio-images/projects/120001/image-150061.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/image-150061-d434fc14.webp",
     "client": "",
     "location": "",
     "year": 2026,
@@ -30,7 +30,7 @@ export const generatedRenderingProjects = [
     "slug": "the-glass-menagerie",
     "excerpt": "The Glass Menagerie at Maples Repertory Theatre, directed by Kimberly Braun, was staged as a memory play shaped by Tom Wingfield’s recollection rather than a literal apartment. The scenic environment emphasized fluid movement and emotional geography, supporting the play’s themes of longing, confinement, and escape.\n",
     "designNotes": "Visualization sequence for The Glass Menagerie — Maples Repertory Theatre (2025). Renderings are used here as decision tools, aligning scenic intent with directorial storytelling goals. The Glass Menagerie at Maples Repertory Theatre, directed by Kimberly Braun, was staged as a memory play shaped by Tom Wingfield’s recollection rather than a literal apartment.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90010-gallery-150168.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90010-gallery-150168-5dda40de.webp",
     "client": "Maples Repertory Theatre",
     "location": " Macon, MO",
     "year": 2025,
@@ -47,7 +47,7 @@ export const generatedRenderingProjects = [
     "images": [
       {
         "id": 14,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90010-gallery-150168.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90010-gallery-150168-5dda40de.webp",
         "altText": "Scenic rendering for The Glass Menagerie at Maples Repertory Theatre. View 1.",
         "caption": "",
         "sortOrder": 0
@@ -60,7 +60,7 @@ export const generatedRenderingProjects = [
     "slug": "bell-book-and-candle",
     "excerpt": "Bell, Book and Candle was designed as a grounded, realistic interior that supports the play’s wit and intimacy while quietly framing its supernatural undercurrents. The scenic design focused on creating a believable, mid-century apartment environment with a warm domestic scale and a distinctive green palette that subtly heightened the play’s mood without pushing the space into abstraction.",
     "designNotes": "Scenic rendering series for Bell, Book, and Candle — Okoboji Summer Theatre (2025). This rendering package supports early collaboration by translating concept language into actionable visual cues. Bell, Book and Candle was designed as a grounded, realistic interior that supports the play’s wit and intimacy while quietly framing its supernatural undercurrents.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90016-gallery-150203.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90016-gallery-150203-19d42e5d.webp",
     "client": "Okoboji Summer Theatre",
     "location": "Okoboji, IA",
     "year": 2025,
@@ -77,7 +77,7 @@ export const generatedRenderingProjects = [
     "images": [
       {
         "id": 15,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90016-gallery-150203.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90016-gallery-150203-19d42e5d.webp",
         "altText": "Scenic rendering for Bell, Book, and Candle at Okoboji Summer Theatre. View 1.",
         "caption": "",
         "sortOrder": 6
@@ -90,7 +90,7 @@ export const generatedRenderingProjects = [
     "slug": "urinetown",
     "excerpt": "Explore the innovative scenic design of Urinetown, a satirical musical that cleverly tackles a dystopian water shortage. Discover how visuals enhance storytelling!",
     "designNotes": "Scenic rendering series for Urinetown — University of Missouri (2024). This rendering package supports early collaboration by translating concept language into actionable visual cues.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-gallery-150082.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90041-gallery-150082-4664ad60.webp",
     "client": "University of Missouri",
     "location": "Columbia, MO",
     "year": 2024,
@@ -107,21 +107,21 @@ export const generatedRenderingProjects = [
     "images": [
       {
         "id": 20,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-gallery-150082.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90041-gallery-150082-4664ad60.webp",
         "altText": "Scenic rendering for Urinetown at University of Missouri. View 3.",
         "caption": "",
         "sortOrder": 0
       },
       {
         "id": 21,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-gallery-150120.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90041-gallery-150120-56940bd6.webp",
         "altText": "Scenic rendering for Urinetown at University of Missouri. View 2.",
         "caption": "",
         "sortOrder": 0
       },
       {
         "id": 22,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-gallery-150199.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90041-gallery-150199-ef242aeb.webp",
         "altText": "Scenic rendering for Urinetown at University of Missouri. View 1.",
         "caption": "",
         "sortOrder": 0
@@ -134,7 +134,7 @@ export const generatedRenderingProjects = [
     "slug": "barefoot-in-the-park",
     "excerpt": "Scenic design for Neil Simon's romantic comedy about newlyweds in a New York City walk-up.",
     "designNotes": "Rendering study for Barefoot in the Park — Okoboji Summer Theatre (2024). The image set is composed to clarify spatial hierarchy, tone, and actor pathways before production execution. Scenic design for Neil Simon's romantic comedy about newlyweds in a New York City walk-up.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90042-gallery-150042.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90042-gallery-150042-927a7e0f.webp",
     "client": "Okoboji Summer Theatre",
     "location": "Okoboji, IA",
     "year": 2024,
@@ -151,7 +151,7 @@ export const generatedRenderingProjects = [
     "images": [
       {
         "id": 23,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90042-gallery-150042.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90042-gallery-150042-927a7e0f.webp",
         "altText": "Scenic rendering for Barefoot in the Park at Okoboji Summer Theatre. View 1.",
         "caption": "",
         "sortOrder": 0
@@ -164,7 +164,7 @@ export const generatedRenderingProjects = [
     "slug": "head-over-heels",
     "excerpt": "Explore the vibrant scenic design of \"Head Over Heels,\" the jukebox musical that celebrates The Go-Go's. Uncover creativity and inspiration behind the stage!",
     "designNotes": "Rendering study for Head Over Heels — Theatre SilCo (2023). The image set is composed to clarify spatial hierarchy, tone, and actor pathways before production execution.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90044-gallery-150090.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90044-gallery-150090-d1bd1e6c.webp",
     "client": "Theatre SilCo",
     "location": "Silverthorne, CO",
     "year": 2023,
@@ -181,7 +181,7 @@ export const generatedRenderingProjects = [
     "images": [
       {
         "id": 41,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90044-gallery-150090.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90044-gallery-150090-d1bd1e6c.webp",
         "altText": "Scenic rendering for Head Over Heels at Theatre SilCo. View 1.",
         "caption": "",
         "sortOrder": 0
@@ -194,7 +194,7 @@ export const generatedRenderingProjects = [
     "slug": "loteria-game-on",
     "excerpt": "¡Lotería: Game On! is the world premiere of a bilingual play by Mabelle Reynoso, directed by Sara Rodriguez. The scenic design transforms a familiar suburban basement living room into a vibrant, game-driven world inspired by Lotería, video games, and imaginative play, blending physical scenery, projection, and dynamic lighting to support a fast-moving theatrical experience.",
     "designNotes": "Visualization sequence for ¡LOTERIA: GAME ON! — Theatre SilCo (2023). Renderings are used here as decision tools, aligning scenic intent with directorial storytelling goals. ¡Lotería: Game On! is the world premiere of a bilingual play by Mabelle Reynoso, directed by Sara Rodriguez.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90009-gallery-150191.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90009-gallery-150191-d5547329.webp",
     "client": "Theatre SilCo",
     "location": "Silverthorne, CO",
     "year": 2023,
@@ -211,14 +211,14 @@ export const generatedRenderingProjects = [
     "images": [
       {
         "id": 39,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90009-gallery-150191.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90009-gallery-150191-d5547329.webp",
         "altText": "Scenic rendering for ¡LOTERIA: GAME ON! at Theatre SilCo. View 2.",
         "caption": "",
         "sortOrder": 0
       },
       {
         "id": 40,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90009-gallery-150222.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90009-gallery-150222-46ec93d2.webp",
         "altText": "Scenic rendering for ¡LOTERIA: GAME ON! at Theatre SilCo. View 1.",
         "caption": "",
         "sortOrder": 0
@@ -231,7 +231,7 @@ export const generatedRenderingProjects = [
     "slug": "boeing-boeing",
     "excerpt": "Scenic design for Marc Camoletti's French farce about an American architect juggling three stewardess fiancées.",
     "designNotes": "Scenic rendering series for Boeing, Boeing — Stephens College (2023). This rendering package supports early collaboration by translating concept language into actionable visual cues. Scenic design for Marc Camoletti's French farce about an American architect juggling three stewardess fiancées.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90054-gallery-150139.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90054-gallery-150139-425d2231.webp",
     "client": "Stephens College",
     "location": "Columbia, MO",
     "year": 2023,
@@ -248,7 +248,7 @@ export const generatedRenderingProjects = [
     "images": [
       {
         "id": 38,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90054-gallery-150139.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90054-gallery-150139-425d2231.webp",
         "altText": "Scenic rendering for Boeing, Boeing at Stephens College. View 1.",
         "caption": "",
         "sortOrder": 0
@@ -261,7 +261,7 @@ export const generatedRenderingProjects = [
     "slug": "an-inspector-calls",
     "excerpt": "Explore the captivating scenic design of J.B. Priestley's \"An Inspector Calls\" and discover how it enhances this gripping moral thriller on class and responsibility.",
     "designNotes": "Concept rendering package for An Inspector Calls — Okoboji Summer Theatre (2022). The visual approach prioritizes atmosphere and material character while maintaining practical scenic readability. B. Priestley's \"An Inspector Calls\" and.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90036-gallery-150134.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90036-gallery-150134-a12bad84.webp",
     "client": "Okoboji Summer Theatre",
     "location": "Spirit Lake, IA",
     "year": 2022,
@@ -278,7 +278,7 @@ export const generatedRenderingProjects = [
     "images": [
       {
         "id": 45,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90036-gallery-150134.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90036-gallery-150134-a12bad84.webp",
         "altText": "Scenic rendering for An Inspector Calls at Okoboji Summer Theatre. View 1.",
         "caption": "",
         "sortOrder": 0
@@ -291,7 +291,7 @@ export const generatedRenderingProjects = [
     "slug": "a-funny-thing-happened",
     "excerpt": "Scenic design for the Sondheim musical comedy set in ancient Rome.",
     "designNotes": "Rendering study for A Funny Thing Happened on the Way to the Forum — Lake Dillon Theatre (2022). The image set is composed to clarify spatial hierarchy, tone, and actor pathways before production execution. Scenic design for the Sondheim musical comedy set in ancient Rome.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90049-gallery-150252.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90049-gallery-150252-3473b4ca.webp",
     "client": "Lake Dillon Theatre",
     "location": "Silverthorne, CO",
     "year": 2022,
@@ -308,7 +308,7 @@ export const generatedRenderingProjects = [
     "images": [
       {
         "id": 47,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90049-gallery-150252.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90049-gallery-150252-3473b4ca.webp",
         "altText": "Scenic rendering for A Funny Thing Happened on the Way to the Forum at Lake Dillon Theatre. View 1.",
         "caption": "",
         "sortOrder": 0
@@ -321,7 +321,7 @@ export const generatedRenderingProjects = [
     "slug": "tomas-and-the-library-lady",
     "excerpt": "Explore the vibrant scenic design of \"Tomás and the Library Lady,\" a bilingual play that celebrates literacy and the transformative power of libraries.",
     "designNotes": "Concept rendering package for Tomás and the Library Lady — Lake Dillon Theatre (2022). The visual approach prioritizes atmosphere and material character while maintaining practical scenic readability.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90039-gallery-150225.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90039-gallery-150225-b18093aa.webp",
     "client": "Lake Dillon Theatre",
     "location": "Silverthorne, CO",
     "year": 2022,
@@ -338,7 +338,7 @@ export const generatedRenderingProjects = [
     "images": [
       {
         "id": 46,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90039-gallery-150225.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90039-gallery-150225-b18093aa.webp",
         "altText": "Scenic rendering for Tomás and the Library Lady at Lake Dillon Theatre. View 1.",
         "caption": "",
         "sortOrder": 0
@@ -351,7 +351,7 @@ export const generatedRenderingProjects = [
     "slug": "the-merry-wives-of-windsor",
     "excerpt": "Scenic design for Shakespeare's comedy set in Windsor, England.",
     "designNotes": "Pre-production rendering study for The Merry Wives of Windsor — Stephens College (2022). Each frame is structured to communicate mood, scale, and narrative focus without relying on technical jargon. Scenic design for Shakespeare's comedy set in Windsor, England.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-gallery-150015.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90053-gallery-150015-31e01022.webp",
     "client": "Stephens College",
     "location": "Columbia, MO",
     "year": 2022,
@@ -368,21 +368,21 @@ export const generatedRenderingProjects = [
     "images": [
       {
         "id": 42,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-gallery-150015.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90053-gallery-150015-31e01022.webp",
         "altText": "Scenic rendering for The Merry Wives of Windsor at Stephens College. View 1.",
         "caption": "",
         "sortOrder": 0
       },
       {
         "id": 43,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-gallery-150212.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90053-gallery-150212-1de109ac.webp",
         "altText": "Scenic rendering for The Merry Wives of Windsor at Stephens College. View 2.",
         "caption": "",
         "sortOrder": 0
       },
       {
         "id": 44,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-gallery-150218.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90053-gallery-150218-e5e62fe2.webp",
         "altText": "Scenic rendering for The Merry Wives of Windsor at Stephens College. View 3.",
         "caption": "",
         "sortOrder": 0
@@ -395,7 +395,7 @@ export const generatedRenderingProjects = [
     "slug": "ashes-of-the-underworld",
     "excerpt": "A liminal space between life and death, inspired by The Penelopiad. Grecian ruins decay among lifeless trees while fire burns eternal. Created during pandemic isolation in Chicago, when artists found themselves suspended between the theatre that was and whatever might come next.",
     "designNotes": "Ashes of the Underworld is a concept rendering inspired by The Penelopiad, existing in a liminal space between yesterday and tomorrow, life and death, Heaven and Hell. The image depicts Grecian ruins in perpetual decay—crumbling columns stand sentinel among lifeless trees, their skeletal branches reaching toward an uncertain sky. Fire burns eternal in braziers scattered throughout the desolate landscape, casting an otherworldly glow across the rubble-strewn ground.\n\nPenelope sits in quiet contemplation, a solitary figure amid the wreckage of her world, reflecting on choices made and paths not taken. The architecture speaks of glory long past, while the construction materials scattered about suggest a world perpetually building and rebuilding itself, never quite whole.\n\nThis rendering was created during the pandemic in Chicago, a time when artists found themselves in their own liminal space—suspended between the theatre that was and whatever might come next. The isolation of that period found its way into every shadow and every flame, transforming a classical myth into a meditation on artistic exile and the search for creative outlet when all stages had gone dark. Created using Vectorworks for modeling, Twinmotion for rendering, and Photoshop for final atmospheric touches.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio-images/projects/90013/image-150157.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/image-150157-a26d93a2.webp",
     "client": "",
     "location": "Chicago, IL",
     "year": 2021,
@@ -412,21 +412,21 @@ export const generatedRenderingProjects = [
     "images": [
       {
         "id": 11,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/migrated/external/1771226871303-0012F1AD-66FD-41BD-91E0-34C5B5420FA5_1_105_c-7c0c6217a7.jpg",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771226871303-0012f1ad-66fd-41bd-91e0-34c5b5420fa5_1_105_c-7c0c6217a7-161759a3.jpg",
         "altText": "Scenic rendering for Ashes of the Underworld in Chicago, IL. View 1.",
         "caption": "",
         "sortOrder": 0
       },
       {
         "id": 12,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/migrated/external/1771226877260-2960BDC8-FC6F-4701-8E0C-5ADE2F536612_1_105_c-225ea8235b.jpg",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771226877260-2960bdc8-fc6f-4701-8e0c-5ade2f536612_1_105_c-225ea8235b-b7f3b9be.jpg",
         "altText": "Scenic rendering for Ashes of the Underworld in Chicago, IL. View 2.",
         "caption": "",
         "sortOrder": 1
       },
       {
         "id": 13,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/migrated/external/1771226885894-D729C095-12C8-469B-8DB5-EA601E086B3C_1_105_c-a45f759a5b.jpg",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771226885894-d729c095-12c8-469b-8db5-ea601e086b3c_1_105_c-a45f759a5b-f156738b.jpg",
         "altText": "Scenic rendering for Ashes of the Underworld in Chicago, IL. View 3.",
         "caption": "",
         "sortOrder": 2
@@ -439,7 +439,7 @@ export const generatedRenderingProjects = [
     "slug": "the-penelopiad",
     "excerpt": "Explore the innovative scenic design of Margaret Atwood's The Penelopiad, a captivating retelling of The Odyssey from Penelope's unique perspective.",
     "designNotes": "Visualization sequence for The Penelopiad — University of California Irvine (2020). Renderings are used here as decision tools, aligning scenic intent with directorial storytelling goals.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90051-gallery-150154.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90051-gallery-150154-b1fde856.webp",
     "client": "University of California Irvine",
     "location": "Irvine, CA",
     "year": 2020,
@@ -456,7 +456,7 @@ export const generatedRenderingProjects = [
     "images": [
       {
         "id": 48,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90051-gallery-150154.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90051-gallery-150154-b1fde856.webp",
         "altText": "Scenic rendering for The Penelopiad at University of California Irvine. View 1.",
         "caption": "",
         "sortOrder": 0
@@ -469,7 +469,7 @@ export const generatedRenderingProjects = [
     "slug": "isolation",
     "excerpt": "Set in a quiet, imagined interior, this rendering explores themes of isolation, distance, and the weight of solitude. A contemplative space where architecture becomes emotion, and emptiness speaks volumes.",
     "designNotes": "Scenic rendering series for Isolation — (2020). This rendering package supports early collaboration by translating concept language into actionable visual cues. Set in a quiet, imagined interior, this rendering explores themes of isolation, distance, and the weight of solitude.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90015-gallery-150098.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90015-gallery-150098-7894270b.webp",
     "client": "",
     "location": "Chicago, IL",
     "year": 2020,
@@ -491,7 +491,7 @@ export const generatedRenderingProjects = [
     "slug": "company",
     "excerpt": "Explore the captivating scenic design of Sondheim's musical, showcasing the complexities of marriage and relationships in vibrant New York City.",
     "designNotes": "Scenic rendering series for Company — University of California Irvine (2019). This rendering package supports early collaboration by translating concept language into actionable visual cues.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90019-gallery-150102.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90019-gallery-150102-ec4c6874.webp",
     "client": "University of California Irvine",
     "location": "Irvine, CA",
     "year": 2019,
@@ -508,7 +508,7 @@ export const generatedRenderingProjects = [
     "images": [
       {
         "id": 56,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90019-gallery-150102.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90019-gallery-150102-ec4c6874.webp",
         "altText": "Scenic rendering for Company at University of California Irvine. View 1.",
         "caption": "",
         "sortOrder": 0
@@ -521,7 +521,7 @@ export const generatedRenderingProjects = [
     "slug": "parliament-square",
     "excerpt": "Explore the stunning theatrical and scenic design of Parliament Square. Discover its history, artistry, and how it enhances the cultural landscape.",
     "designNotes": "Pre-production rendering study for Parliament Square — University of California Irvine (2019). Each frame is structured to communicate mood, scale, and narrative focus without relying on technical jargon.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90018-gallery-150241.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90018-gallery-150241-aebfba62.webp",
     "client": "University of California Irvine",
     "location": "Irvine, CA",
     "year": 2019,
@@ -538,7 +538,7 @@ export const generatedRenderingProjects = [
     "images": [
       {
         "id": 49,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90018-gallery-150241.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90018-gallery-150241-aebfba62.webp",
         "altText": "Scenic rendering for Parliament Square at University of California Irvine. View 1.",
         "caption": "",
         "sortOrder": 0
@@ -551,7 +551,7 @@ export const generatedRenderingProjects = [
     "slug": "american-idiot",
     "excerpt": "Explore the stunning scenic design of the Green Day rock musical \"American Idiot.\" Discover how innovative visuals enhance this powerful theatrical experience.",
     "designNotes": "Image set for American Idiot — University of California Irvine (2018). The work balances emotional atmosphere with stage logic, helping teams evaluate ideas before they are built. \".",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90038-gallery-150176.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90038-gallery-150176-92a3fb6f.webp",
     "client": "University of California Irvine",
     "location": "Irvine, CA",
     "year": 2018,
@@ -568,7 +568,7 @@ export const generatedRenderingProjects = [
     "images": [
       {
         "id": 57,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90038-gallery-150176.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90038-gallery-150176-92a3fb6f.webp",
         "altText": "Scenic rendering for American Idiot at University of California Irvine. View 1.",
         "caption": "",
         "sortOrder": 0
@@ -581,7 +581,7 @@ export const generatedRenderingProjects = [
     "slug": "angel-food-cake",
     "excerpt": "A mobile home interior for the West Coast premiere of Angel Food Cake at Western Summer Theatre. Plaid upholstery, red-checkered backsplash, wood-paneled walls—everyday space holding extraordinary emotional weight. The home itself becomes a character.",
     "designNotes": "Scenic rendering series for Angel Food Cake — Western Summer Theatre (2017). This rendering package supports early collaboration by translating concept language into actionable visual cues. A mobile home interior for the West Coast premiere of Angel Food Cake at Western Summer Theatre.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90014-gallery-150055.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90014-gallery-150055-c702d0ae.webp",
     "client": "Western Summer Theatre",
     "location": "Bellingham, WA",
     "year": 2017,
@@ -603,7 +603,7 @@ export const generatedRenderingProjects = [
     "slug": "angel-street",
     "excerpt": "Explore the captivating scenic design of \"Angel Street,\" Patrick Hamilton's Victorian thriller. Discover how visual elements enhance this gripping Gaslight tale!",
     "designNotes": "Visualization sequence for Angel Street — Okoboji Summer Theatre (2013). Renderings are used here as decision tools, aligning scenic intent with directorial storytelling goals.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90043-gallery-150234.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90043-gallery-150234-a88f8a7e.webp",
     "client": "Okoboji Summer Theatre",
     "location": "Columbia, MO",
     "year": 2013,
@@ -620,7 +620,7 @@ export const generatedRenderingProjects = [
     "images": [
       {
         "id": 58,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90043-gallery-150234.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90043-gallery-150234-a88f8a7e.webp",
         "altText": "Scenic rendering for Angel Street at Okoboji Summer Theatre. View 1.",
         "caption": "",
         "sortOrder": 0
@@ -633,7 +633,7 @@ export const generatedRenderingProjects = [
     "slug": "all-my-sons",
     "excerpt": "All My Sons is set in a postwar suburban world that appears stable, orderly, and complete. The scenic design centers on a modest family home with an open porch and backyard, creating a familiar environment shaped by optimism and routine.",
     "designNotes": "Image set for All My Sons — Stephens College (2010). The work balances emotional atmosphere with stage logic, helping teams evaluate ideas before they are built. All My Sons is set in a postwar suburban world that appears stable, orderly, and complete.",
-    "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-gallery-150073.webp",
+    "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90017-gallery-150073-bd354494.webp",
     "client": "Stephens College",
     "location": "Columbia, MO",
     "year": 2010,
@@ -650,7 +650,7 @@ export const generatedRenderingProjects = [
     "images": [
       {
         "id": 59,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-gallery-150073.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90017-gallery-150073-bd354494.webp",
         "altText": "Scenic rendering for All My Sons at Stephens College. View 1.",
         "caption": "",
         "sortOrder": 7
@@ -674,7 +674,7 @@ export const generatedRenderingGallery = [
       "slug": "the-glass-menagerie",
       "excerpt": "The Glass Menagerie at Maples Repertory Theatre, directed by Kimberly Braun, was staged as a memory play shaped by Tom Wingfield’s recollection rather than a literal apartment. The scenic environment emphasized fluid movement and emotional geography, supporting the play’s themes of longing, confinement, and escape.\n",
       "designNotes": "Visualization sequence for The Glass Menagerie — Maples Repertory Theatre (2025). Renderings are used here as decision tools, aligning scenic intent with directorial storytelling goals. The Glass Menagerie at Maples Repertory Theatre, directed by Kimberly Braun, was staged as a memory play shaped by Tom Wingfield’s recollection rather than a literal apartment.",
-      "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90010-gallery-150168.webp",
+      "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90010-gallery-150168-5dda40de.webp",
       "client": "Maples Repertory Theatre",
       "location": " Macon, MO",
       "year": 2025,
@@ -691,7 +691,7 @@ export const generatedRenderingGallery = [
       "images": [
         {
           "id": 14,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90010-gallery-150168.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90010-gallery-150168-5dda40de.webp",
           "altText": "Scenic rendering for The Glass Menagerie at Maples Repertory Theatre. View 1.",
           "caption": "",
           "sortOrder": 0
@@ -713,7 +713,7 @@ export const generatedRenderingGallery = [
       "slug": "bell-book-and-candle",
       "excerpt": "Bell, Book and Candle was designed as a grounded, realistic interior that supports the play’s wit and intimacy while quietly framing its supernatural undercurrents. The scenic design focused on creating a believable, mid-century apartment environment with a warm domestic scale and a distinctive green palette that subtly heightened the play’s mood without pushing the space into abstraction.",
       "designNotes": "Scenic rendering series for Bell, Book, and Candle — Okoboji Summer Theatre (2025). This rendering package supports early collaboration by translating concept language into actionable visual cues. Bell, Book and Candle was designed as a grounded, realistic interior that supports the play’s wit and intimacy while quietly framing its supernatural undercurrents.",
-      "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90016-gallery-150203.webp",
+      "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90016-gallery-150203-19d42e5d.webp",
       "client": "Okoboji Summer Theatre",
       "location": "Okoboji, IA",
       "year": 2025,
@@ -730,7 +730,7 @@ export const generatedRenderingGallery = [
       "images": [
         {
           "id": 15,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90016-gallery-150203.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90016-gallery-150203-19d42e5d.webp",
           "altText": "Scenic rendering for Bell, Book, and Candle at Okoboji Summer Theatre. View 1.",
           "caption": "",
           "sortOrder": 6
@@ -752,7 +752,7 @@ export const generatedRenderingGallery = [
       "slug": "urinetown",
       "excerpt": "Explore the innovative scenic design of Urinetown, a satirical musical that cleverly tackles a dystopian water shortage. Discover how visuals enhance storytelling!",
       "designNotes": "Scenic rendering series for Urinetown — University of Missouri (2024). This rendering package supports early collaboration by translating concept language into actionable visual cues.",
-      "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-gallery-150082.webp",
+      "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90041-gallery-150082-4664ad60.webp",
       "client": "University of Missouri",
       "location": "Columbia, MO",
       "year": 2024,
@@ -769,21 +769,21 @@ export const generatedRenderingGallery = [
       "images": [
         {
           "id": 20,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-gallery-150082.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90041-gallery-150082-4664ad60.webp",
           "altText": "Scenic rendering for Urinetown at University of Missouri. View 3.",
           "caption": "",
           "sortOrder": 0
         },
         {
           "id": 21,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-gallery-150120.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90041-gallery-150120-56940bd6.webp",
           "altText": "Scenic rendering for Urinetown at University of Missouri. View 2.",
           "caption": "",
           "sortOrder": 0
         },
         {
           "id": 22,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90041-gallery-150199.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90041-gallery-150199-ef242aeb.webp",
           "altText": "Scenic rendering for Urinetown at University of Missouri. View 1.",
           "caption": "",
           "sortOrder": 0
@@ -805,7 +805,7 @@ export const generatedRenderingGallery = [
       "slug": "barefoot-in-the-park",
       "excerpt": "Scenic design for Neil Simon's romantic comedy about newlyweds in a New York City walk-up.",
       "designNotes": "Rendering study for Barefoot in the Park — Okoboji Summer Theatre (2024). The image set is composed to clarify spatial hierarchy, tone, and actor pathways before production execution. Scenic design for Neil Simon's romantic comedy about newlyweds in a New York City walk-up.",
-      "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90042-gallery-150042.webp",
+      "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90042-gallery-150042-927a7e0f.webp",
       "client": "Okoboji Summer Theatre",
       "location": "Okoboji, IA",
       "year": 2024,
@@ -822,7 +822,7 @@ export const generatedRenderingGallery = [
       "images": [
         {
           "id": 23,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90042-gallery-150042.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90042-gallery-150042-927a7e0f.webp",
           "altText": "Scenic rendering for Barefoot in the Park at Okoboji Summer Theatre. View 1.",
           "caption": "",
           "sortOrder": 0
@@ -844,7 +844,7 @@ export const generatedRenderingGallery = [
       "slug": "boeing-boeing",
       "excerpt": "Scenic design for Marc Camoletti's French farce about an American architect juggling three stewardess fiancées.",
       "designNotes": "Scenic rendering series for Boeing, Boeing — Stephens College (2023). This rendering package supports early collaboration by translating concept language into actionable visual cues. Scenic design for Marc Camoletti's French farce about an American architect juggling three stewardess fiancées.",
-      "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90054-gallery-150139.webp",
+      "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90054-gallery-150139-425d2231.webp",
       "client": "Stephens College",
       "location": "Columbia, MO",
       "year": 2023,
@@ -861,7 +861,7 @@ export const generatedRenderingGallery = [
       "images": [
         {
           "id": 38,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90054-gallery-150139.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90054-gallery-150139-425d2231.webp",
           "altText": "Scenic rendering for Boeing, Boeing at Stephens College. View 1.",
           "caption": "",
           "sortOrder": 0
@@ -883,7 +883,7 @@ export const generatedRenderingGallery = [
       "slug": "loteria-game-on",
       "excerpt": "¡Lotería: Game On! is the world premiere of a bilingual play by Mabelle Reynoso, directed by Sara Rodriguez. The scenic design transforms a familiar suburban basement living room into a vibrant, game-driven world inspired by Lotería, video games, and imaginative play, blending physical scenery, projection, and dynamic lighting to support a fast-moving theatrical experience.",
       "designNotes": "Visualization sequence for ¡LOTERIA: GAME ON! — Theatre SilCo (2023). Renderings are used here as decision tools, aligning scenic intent with directorial storytelling goals. ¡Lotería: Game On! is the world premiere of a bilingual play by Mabelle Reynoso, directed by Sara Rodriguez.",
-      "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90009-gallery-150191.webp",
+      "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90009-gallery-150191-d5547329.webp",
       "client": "Theatre SilCo",
       "location": "Silverthorne, CO",
       "year": 2023,
@@ -900,14 +900,14 @@ export const generatedRenderingGallery = [
       "images": [
         {
           "id": 39,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90009-gallery-150191.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90009-gallery-150191-d5547329.webp",
           "altText": "Scenic rendering for ¡LOTERIA: GAME ON! at Theatre SilCo. View 2.",
           "caption": "",
           "sortOrder": 0
         },
         {
           "id": 40,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90009-gallery-150222.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90009-gallery-150222-46ec93d2.webp",
           "altText": "Scenic rendering for ¡LOTERIA: GAME ON! at Theatre SilCo. View 1.",
           "caption": "",
           "sortOrder": 0
@@ -929,7 +929,7 @@ export const generatedRenderingGallery = [
       "slug": "head-over-heels",
       "excerpt": "Explore the vibrant scenic design of \"Head Over Heels,\" the jukebox musical that celebrates The Go-Go's. Uncover creativity and inspiration behind the stage!",
       "designNotes": "Rendering study for Head Over Heels — Theatre SilCo (2023). The image set is composed to clarify spatial hierarchy, tone, and actor pathways before production execution.",
-      "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90044-gallery-150090.webp",
+      "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90044-gallery-150090-d1bd1e6c.webp",
       "client": "Theatre SilCo",
       "location": "Silverthorne, CO",
       "year": 2023,
@@ -946,7 +946,7 @@ export const generatedRenderingGallery = [
       "images": [
         {
           "id": 41,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90044-gallery-150090.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90044-gallery-150090-d1bd1e6c.webp",
           "altText": "Scenic rendering for Head Over Heels at Theatre SilCo. View 1.",
           "caption": "",
           "sortOrder": 0
@@ -968,7 +968,7 @@ export const generatedRenderingGallery = [
       "slug": "the-merry-wives-of-windsor",
       "excerpt": "Scenic design for Shakespeare's comedy set in Windsor, England.",
       "designNotes": "Pre-production rendering study for The Merry Wives of Windsor — Stephens College (2022). Each frame is structured to communicate mood, scale, and narrative focus without relying on technical jargon. Scenic design for Shakespeare's comedy set in Windsor, England.",
-      "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-gallery-150015.webp",
+      "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90053-gallery-150015-31e01022.webp",
       "client": "Stephens College",
       "location": "Columbia, MO",
       "year": 2022,
@@ -985,21 +985,21 @@ export const generatedRenderingGallery = [
       "images": [
         {
           "id": 42,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-gallery-150015.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90053-gallery-150015-31e01022.webp",
           "altText": "Scenic rendering for The Merry Wives of Windsor at Stephens College. View 1.",
           "caption": "",
           "sortOrder": 0
         },
         {
           "id": 43,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-gallery-150212.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90053-gallery-150212-1de109ac.webp",
           "altText": "Scenic rendering for The Merry Wives of Windsor at Stephens College. View 2.",
           "caption": "",
           "sortOrder": 0
         },
         {
           "id": 44,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90053-gallery-150218.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90053-gallery-150218-e5e62fe2.webp",
           "altText": "Scenic rendering for The Merry Wives of Windsor at Stephens College. View 3.",
           "caption": "",
           "sortOrder": 0
@@ -1021,7 +1021,7 @@ export const generatedRenderingGallery = [
       "slug": "an-inspector-calls",
       "excerpt": "Explore the captivating scenic design of J.B. Priestley's \"An Inspector Calls\" and discover how it enhances this gripping moral thriller on class and responsibility.",
       "designNotes": "Concept rendering package for An Inspector Calls — Okoboji Summer Theatre (2022). The visual approach prioritizes atmosphere and material character while maintaining practical scenic readability. B. Priestley's \"An Inspector Calls\" and.",
-      "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90036-gallery-150134.webp",
+      "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90036-gallery-150134-a12bad84.webp",
       "client": "Okoboji Summer Theatre",
       "location": "Spirit Lake, IA",
       "year": 2022,
@@ -1038,7 +1038,7 @@ export const generatedRenderingGallery = [
       "images": [
         {
           "id": 45,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90036-gallery-150134.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90036-gallery-150134-a12bad84.webp",
           "altText": "Scenic rendering for An Inspector Calls at Okoboji Summer Theatre. View 1.",
           "caption": "",
           "sortOrder": 0
@@ -1060,7 +1060,7 @@ export const generatedRenderingGallery = [
       "slug": "tomas-and-the-library-lady",
       "excerpt": "Explore the vibrant scenic design of \"Tomás and the Library Lady,\" a bilingual play that celebrates literacy and the transformative power of libraries.",
       "designNotes": "Concept rendering package for Tomás and the Library Lady — Lake Dillon Theatre (2022). The visual approach prioritizes atmosphere and material character while maintaining practical scenic readability.",
-      "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90039-gallery-150225.webp",
+      "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90039-gallery-150225-b18093aa.webp",
       "client": "Lake Dillon Theatre",
       "location": "Silverthorne, CO",
       "year": 2022,
@@ -1077,7 +1077,7 @@ export const generatedRenderingGallery = [
       "images": [
         {
           "id": 46,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90039-gallery-150225.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90039-gallery-150225-b18093aa.webp",
           "altText": "Scenic rendering for Tomás and the Library Lady at Lake Dillon Theatre. View 1.",
           "caption": "",
           "sortOrder": 0
@@ -1099,7 +1099,7 @@ export const generatedRenderingGallery = [
       "slug": "a-funny-thing-happened",
       "excerpt": "Scenic design for the Sondheim musical comedy set in ancient Rome.",
       "designNotes": "Rendering study for A Funny Thing Happened on the Way to the Forum — Lake Dillon Theatre (2022). The image set is composed to clarify spatial hierarchy, tone, and actor pathways before production execution. Scenic design for the Sondheim musical comedy set in ancient Rome.",
-      "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90049-gallery-150252.webp",
+      "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90049-gallery-150252-3473b4ca.webp",
       "client": "Lake Dillon Theatre",
       "location": "Silverthorne, CO",
       "year": 2022,
@@ -1116,7 +1116,7 @@ export const generatedRenderingGallery = [
       "images": [
         {
           "id": 47,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90049-gallery-150252.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90049-gallery-150252-3473b4ca.webp",
           "altText": "Scenic rendering for A Funny Thing Happened on the Way to the Forum at Lake Dillon Theatre. View 1.",
           "caption": "",
           "sortOrder": 0
@@ -1138,7 +1138,7 @@ export const generatedRenderingGallery = [
       "slug": "the-penelopiad",
       "excerpt": "Explore the innovative scenic design of Margaret Atwood's The Penelopiad, a captivating retelling of The Odyssey from Penelope's unique perspective.",
       "designNotes": "Visualization sequence for The Penelopiad — University of California Irvine (2020). Renderings are used here as decision tools, aligning scenic intent with directorial storytelling goals.",
-      "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90051-gallery-150154.webp",
+      "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90051-gallery-150154-b1fde856.webp",
       "client": "University of California Irvine",
       "location": "Irvine, CA",
       "year": 2020,
@@ -1155,7 +1155,7 @@ export const generatedRenderingGallery = [
       "images": [
         {
           "id": 48,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90051-gallery-150154.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90051-gallery-150154-b1fde856.webp",
           "altText": "Scenic rendering for The Penelopiad at University of California Irvine. View 1.",
           "caption": "",
           "sortOrder": 0
@@ -1177,7 +1177,7 @@ export const generatedRenderingGallery = [
       "slug": "parliament-square",
       "excerpt": "Explore the stunning theatrical and scenic design of Parliament Square. Discover its history, artistry, and how it enhances the cultural landscape.",
       "designNotes": "Pre-production rendering study for Parliament Square — University of California Irvine (2019). Each frame is structured to communicate mood, scale, and narrative focus without relying on technical jargon.",
-      "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90018-gallery-150241.webp",
+      "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90018-gallery-150241-aebfba62.webp",
       "client": "University of California Irvine",
       "location": "Irvine, CA",
       "year": 2019,
@@ -1194,7 +1194,7 @@ export const generatedRenderingGallery = [
       "images": [
         {
           "id": 49,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90018-gallery-150241.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90018-gallery-150241-aebfba62.webp",
           "altText": "Scenic rendering for Parliament Square at University of California Irvine. View 1.",
           "caption": "",
           "sortOrder": 0
@@ -1216,7 +1216,7 @@ export const generatedRenderingGallery = [
       "slug": "company",
       "excerpt": "Explore the captivating scenic design of Sondheim's musical, showcasing the complexities of marriage and relationships in vibrant New York City.",
       "designNotes": "Scenic rendering series for Company — University of California Irvine (2019). This rendering package supports early collaboration by translating concept language into actionable visual cues.",
-      "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90019-gallery-150102.webp",
+      "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90019-gallery-150102-ec4c6874.webp",
       "client": "University of California Irvine",
       "location": "Irvine, CA",
       "year": 2019,
@@ -1233,7 +1233,7 @@ export const generatedRenderingGallery = [
       "images": [
         {
           "id": 56,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90019-gallery-150102.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90019-gallery-150102-ec4c6874.webp",
           "altText": "Scenic rendering for Company at University of California Irvine. View 1.",
           "caption": "",
           "sortOrder": 0
@@ -1255,7 +1255,7 @@ export const generatedRenderingGallery = [
       "slug": "american-idiot",
       "excerpt": "Explore the stunning scenic design of the Green Day rock musical \"American Idiot.\" Discover how innovative visuals enhance this powerful theatrical experience.",
       "designNotes": "Image set for American Idiot — University of California Irvine (2018). The work balances emotional atmosphere with stage logic, helping teams evaluate ideas before they are built. \".",
-      "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90038-gallery-150176.webp",
+      "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90038-gallery-150176-92a3fb6f.webp",
       "client": "University of California Irvine",
       "location": "Irvine, CA",
       "year": 2018,
@@ -1272,7 +1272,7 @@ export const generatedRenderingGallery = [
       "images": [
         {
           "id": 57,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90038-gallery-150176.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90038-gallery-150176-92a3fb6f.webp",
           "altText": "Scenic rendering for American Idiot at University of California Irvine. View 1.",
           "caption": "",
           "sortOrder": 0
@@ -1294,7 +1294,7 @@ export const generatedRenderingGallery = [
       "slug": "angel-street",
       "excerpt": "Explore the captivating scenic design of \"Angel Street,\" Patrick Hamilton's Victorian thriller. Discover how visual elements enhance this gripping Gaslight tale!",
       "designNotes": "Visualization sequence for Angel Street — Okoboji Summer Theatre (2013). Renderings are used here as decision tools, aligning scenic intent with directorial storytelling goals.",
-      "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90043-gallery-150234.webp",
+      "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90043-gallery-150234-a88f8a7e.webp",
       "client": "Okoboji Summer Theatre",
       "location": "Columbia, MO",
       "year": 2013,
@@ -1311,7 +1311,7 @@ export const generatedRenderingGallery = [
       "images": [
         {
           "id": 58,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90043-gallery-150234.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90043-gallery-150234-a88f8a7e.webp",
           "altText": "Scenic rendering for Angel Street at Okoboji Summer Theatre. View 1.",
           "caption": "",
           "sortOrder": 0
@@ -1333,7 +1333,7 @@ export const generatedRenderingGallery = [
       "slug": "all-my-sons",
       "excerpt": "All My Sons is set in a postwar suburban world that appears stable, orderly, and complete. The scenic design centers on a modest family home with an open porch and backyard, creating a familiar environment shaped by optimism and routine.",
       "designNotes": "Image set for All My Sons — Stephens College (2010). The work balances emotional atmosphere with stage logic, helping teams evaluate ideas before they are built. All My Sons is set in a postwar suburban world that appears stable, orderly, and complete.",
-      "coverImageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-gallery-150073.webp",
+      "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90017-gallery-150073-bd354494.webp",
       "client": "Stephens College",
       "location": "Columbia, MO",
       "year": 2010,
@@ -1350,7 +1350,7 @@ export const generatedRenderingGallery = [
       "images": [
         {
           "id": 59,
-          "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/project-90017-gallery-150073.webp",
+          "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90017-gallery-150073-bd354494.webp",
           "altText": "Scenic rendering for All My Sons at Stephens College. View 1.",
           "caption": "",
           "sortOrder": 7
@@ -1379,7 +1379,7 @@ export const generatedExperientialProcessGallery = [
   {
     "id": 12,
     "category": "live-events",
-    "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/experiential-process/live-events/1771290240875-toyota-gold-cup-final-29.png",
+    "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771290240875-toyota-gold-cup-final-29-7a55189c.png",
     "videoUrl": null,
     "altText": "",
     "displayTitle": "Toyota Gold Cup Final 29",
@@ -1392,7 +1392,7 @@ export const generatedExperientialProcessGallery = [
     "images": [
       {
         "id": 110,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/migrated/external/1771290461111-Toyota-Gold-Cup-Final-29-271bdafcb3.png",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771290461111-toyota-gold-cup-final-29-271bdafcb3-f83fc5ec.png",
         "videoUrl": null,
         "altText": "Toyota Gold Cup Final 29 scenic design by Brandon PT Davis",
         "caption": "",
@@ -1402,7 +1402,7 @@ export const generatedExperientialProcessGallery = [
       },
       {
         "id": 107,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/migrated/external/1771290350722-Screenshot-2026-01-12-at-1.15.34-PM-Large-3fe1d90b43.jpg",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771290350722-screenshot-2026-01-12-at-1.15.34-pm-large-3fe1d90b43-d6882595.jpg",
         "videoUrl": null,
         "altText": "Scenic rendering for Toyota Gold Cup Final 29 with event-scale composition, scenic design by Brandon PT Davis.",
         "caption": "",
@@ -1412,7 +1412,7 @@ export const generatedExperientialProcessGallery = [
       },
       {
         "id": 108,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/migrated/external/1771290353280-Screenshot-2026-01-12-at-1.16.08-PM-Large-338452b69d.jpg",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771290353280-screenshot-2026-01-12-at-1.16.08-pm-large-338452b69d-dad572d1.jpg",
         "videoUrl": null,
         "altText": "Rendering variation for Toyota Gold Cup Final 29 exploring layout and sightlines, scenic design by Brandon PT Davis.",
         "caption": "",
@@ -1422,7 +1422,7 @@ export const generatedExperientialProcessGallery = [
       },
       {
         "id": 109,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/migrated/external/1771290358832-Screenshot-2026-01-12-at-1.17.01-PM-Large-c69eb3f5ac.jpg",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771290358832-screenshot-2026-01-12-at-1.17.01-pm-large-c69eb3f5ac-ab348846.jpg",
         "videoUrl": null,
         "altText": "Concept rendering view for Toyota Gold Cup Final 29, scenic design by Brandon PT Davis.",
         "caption": "",
@@ -1435,7 +1435,7 @@ export const generatedExperientialProcessGallery = [
   {
     "id": 6,
     "category": "rendering",
-    "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/experiential-process/rendering/1771226600321-96246012-2a71-42d9-85e2-77e5d3bafaae_1_105_c.webp",
+    "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771226600321-96246012-2a71-42d9-85e2-77e5d3bafaae_1_105_c-ac41a841.webp",
     "videoUrl": null,
     "altText": "",
     "displayTitle": "Red Line Cafe",
@@ -1448,7 +1448,7 @@ export const generatedExperientialProcessGallery = [
     "images": [
       {
         "id": 67,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/migrated/external/1771226855050-123EC95D-9F48-4292-9576-7FF272705190_1_105_c-717c507f1a.jpg",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771226855050-123ec95d-9f48-4292-9576-7ff272705190_1_105_c-717c507f1a-5bdd61ac.jpg",
         "videoUrl": null,
         "altText": "96246012 2A71 42D9 85E2 77E5D3BAFAAE 1 105d scenic design by Brandon PT Davis",
         "caption": "",
@@ -1458,7 +1458,7 @@ export const generatedExperientialProcessGallery = [
       },
       {
         "id": 68,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/migrated/external/1771226871303-0012F1AD-66FD-41BD-91E0-34C5B5420FA5_1_105_c-7c0c6217a7.jpg",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771226871303-0012f1ad-66fd-41bd-91e0-34c5b5420fa5_1_105_c-7c0c6217a7-161759a3.jpg",
         "videoUrl": null,
         "altText": "Scenic rendering study for project 96246012 2A71 42D9 85E2 77E5D3BAFAAE 1 105d, scenic design by Brandon PT Davis.",
         "caption": "",
@@ -1468,7 +1468,7 @@ export const generatedExperientialProcessGallery = [
       },
       {
         "id": 69,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/migrated/external/1771226877260-2960BDC8-FC6F-4701-8E0C-5ADE2F536612_1_105_c-225ea8235b.jpg",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771226877260-2960bdc8-fc6f-4701-8e0c-5ade2f536612_1_105_c-225ea8235b-b7f3b9be.jpg",
         "videoUrl": null,
         "altText": "Alternate scenic rendering angle for project 96246012 2A71 42D9 85E2 77E5D3BAFAAE 1 105d, scenic design by Brandon PT Davis.",
         "caption": "",
@@ -1478,7 +1478,7 @@ export const generatedExperientialProcessGallery = [
       },
       {
         "id": 70,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/migrated/external/1771226885894-D729C095-12C8-469B-8DB5-EA601E086B3C_1_105_c-a45f759a5b.jpg",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771226885894-d729c095-12c8-469b-8db5-ea601e086b3c_1_105_c-a45f759a5b-f156738b.jpg",
         "videoUrl": null,
         "altText": "Concept rendering pass for project 96246012 2A71 42D9 85E2 77E5D3BAFAAE 1 105d, scenic design by Brandon PT Davis.",
         "caption": "",
@@ -1491,7 +1491,7 @@ export const generatedExperientialProcessGallery = [
   {
     "id": 7,
     "category": "rendering",
-    "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/experiential-process/rendering/1771227455469-83bbfb7c-e9f1-4f5c-97b4-bad4986df276_1_105_c.webp",
+    "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771227455469-83bbfb7c-e9f1-4f5c-97b4-bad4986df276_1_105_c-36653a52.webp",
     "videoUrl": null,
     "altText": "",
     "displayTitle": "Wood Creek Distillery Activation",
@@ -1506,7 +1506,7 @@ export const generatedExperientialProcessGallery = [
   {
     "id": 13,
     "category": "rendering",
-    "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/experiential-process/rendering/1771290715451-rab_render.webp",
+    "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771290715451-rab_render-ec5cfafb.webp",
     "videoUrl": null,
     "altText": "",
     "displayTitle": "Rab Activation",
@@ -1521,7 +1521,7 @@ export const generatedExperientialProcessGallery = [
   {
     "id": 14,
     "category": "rendering",
-    "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/experiential-process/rendering/1771290861401-image1-enhanced.webp",
+    "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771290861401-image1-enhanced-b400b098.webp",
     "videoUrl": null,
     "altText": "",
     "displayTitle": "Toyota  Gold Cup Activation",
@@ -1534,7 +1534,7 @@ export const generatedExperientialProcessGallery = [
     "images": [
       {
         "id": 111,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/migrated/external/1771290965345-Image1-39ac4253ed.jpg",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771290965345-image1-39ac4253ed-d9a2385a.jpg",
         "videoUrl": null,
         "altText": "Toyota  Gold Cup Activation scenic design by Brandon PT Davis",
         "caption": "",
@@ -1544,7 +1544,7 @@ export const generatedExperientialProcessGallery = [
       },
       {
         "id": 112,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/migrated/external/1771290968388-Image2-8f0a934b2b.jpg",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771290968388-image2-8f0a934b2b-c8f51bca.jpg",
         "videoUrl": null,
         "altText": "Toyota  Gold Cup Activation scenic design by Brandon PT Davis",
         "caption": "",
@@ -1554,7 +1554,7 @@ export const generatedExperientialProcessGallery = [
       },
       {
         "id": 113,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/migrated/external/1771290970620-Image4-190ae6f96e.jpg",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771290970620-image4-190ae6f96e-7c2ac0de.jpg",
         "videoUrl": null,
         "altText": "Toyota  Gold Cup Activation scenic design by Brandon PT Davis",
         "caption": "",
@@ -1564,7 +1564,7 @@ export const generatedExperientialProcessGallery = [
       },
       {
         "id": 114,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/migrated/external/1771290972787-Image5-4570ec4bc9.jpg",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771290972787-image5-4570ec4bc9-14a15767.jpg",
         "videoUrl": null,
         "altText": "Toyota  Gold Cup Activation scenic design by Brandon PT Davis",
         "caption": "",
@@ -1574,7 +1574,7 @@ export const generatedExperientialProcessGallery = [
       },
       {
         "id": 115,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/project-images/migrated/external/1771290975327-Image8-6babe1f5ab.jpg",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771290975327-image8-6babe1f5ab-c28deb6f.jpg",
         "videoUrl": null,
         "altText": "Toyota  Gold Cup Activation scenic design by Brandon PT Davis",
         "caption": "",
@@ -1587,7 +1587,7 @@ export const generatedExperientialProcessGallery = [
   {
     "id": 15,
     "category": "rendering",
-    "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/experiential-process/rendering/1771293058270-rendering_park_and_shop_2.webp",
+    "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771293058270-rendering_park_and_shop_2-3e16644f.webp",
     "videoUrl": null,
     "altText": "",
     "displayTitle": "Park and Shop | Concord, CA",
@@ -1602,7 +1602,7 @@ export const generatedExperientialProcessGallery = [
   {
     "id": 19,
     "category": "rendering",
-    "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/experiential-process/rendering/1771839325696-first_bank_lollipops.png",
+    "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771839325696-first_bank_lollipops-b3b5a475.png",
     "videoUrl": null,
     "altText": "",
     "displayTitle": "First Bank Lollipops",
@@ -1617,7 +1617,7 @@ export const generatedExperientialProcessGallery = [
   {
     "id": 16,
     "category": "technical-drawing",
-    "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/experiential-process/technical-drawing/1771838745874-design_drafting_park_and_shop_2.jpg",
+    "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771838745874-design_drafting_park_and_shop_2-01448a76.jpg",
     "videoUrl": null,
     "altText": "",
     "displayTitle": "Park & Shop Techncial Drawing",
@@ -1630,7 +1630,7 @@ export const generatedExperientialProcessGallery = [
     "images": [
       {
         "id": 368,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/general/2026/02/design-drafting-park-and-shop-1-2627.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/design-drafting-park-and-shop-1-2627-5760f918.webp",
         "videoUrl": null,
         "altText": "Park & Shop Techncial Drawing scenic design by Brandon PT Davis",
         "caption": "",
@@ -1643,7 +1643,7 @@ export const generatedExperientialProcessGallery = [
   {
     "id": 17,
     "category": "technical-drawing",
-    "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/experiential-process/technical-drawing/1771838895784-design_drafting_lysistrata_3.jpg",
+    "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771838895784-design_drafting_lysistrata_3-8a5436de.jpg",
     "videoUrl": null,
     "altText": "",
     "displayTitle": "Lysistrata Covid Documentation ",
@@ -1656,7 +1656,7 @@ export const generatedExperientialProcessGallery = [
     "images": [
       {
         "id": 369,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/general/2026/02/design-drafting-lysistrata-2-0658.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/design-drafting-lysistrata-2-0658-26891768.webp",
         "videoUrl": null,
         "altText": "Lysistrata Covid Documentation  scenic design by Brandon PT Davis",
         "caption": "",
@@ -1666,7 +1666,7 @@ export const generatedExperientialProcessGallery = [
       },
       {
         "id": 370,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/general/2026/02/design-drafting-lysistrata-4-2027.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/design-drafting-lysistrata-4-2027-2d24e30e.webp",
         "videoUrl": null,
         "altText": "Lysistrata Covid Documentation  scenic design by Brandon PT Davis",
         "caption": "",
@@ -1676,7 +1676,7 @@ export const generatedExperientialProcessGallery = [
       },
       {
         "id": 371,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/general/2026/02/design-drafting-lysistrata-5-3362.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/design-drafting-lysistrata-5-3362-5dbe612b.webp",
         "videoUrl": null,
         "altText": "Lysistrata Covid Documentation  scenic design by Brandon PT Davis",
         "caption": "",
@@ -1686,7 +1686,7 @@ export const generatedExperientialProcessGallery = [
       },
       {
         "id": 372,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/general/2026/02/design-drafting-lysistrata-6-4688.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/design-drafting-lysistrata-6-4688-7488e3ca.webp",
         "videoUrl": null,
         "altText": "Lysistrata Covid Documentation  scenic design by Brandon PT Davis",
         "caption": "",
@@ -1699,7 +1699,7 @@ export const generatedExperientialProcessGallery = [
   {
     "id": 18,
     "category": "technical-drawing",
-    "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/experiential-process/technical-drawing/1771839189798-design_drafting_new_swan_3.jpg",
+    "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771839189798-design_drafting_new_swan_3-1fbce563.jpg",
     "videoUrl": null,
     "altText": "",
     "displayTitle": "New Swan Venue Docuementation ",
@@ -1712,7 +1712,7 @@ export const generatedExperientialProcessGallery = [
     "images": [
       {
         "id": 373,
-        "imageUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/portfolio/general/2026/02/design-drafting-new-swan-4-2142.webp",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/design-drafting-new-swan-4-2142-c7512dea.webp",
         "videoUrl": null,
         "altText": "New Swan Venue Docuementation  scenic design by Brandon PT Davis",
         "caption": "",
@@ -1728,7 +1728,7 @@ export const generatedExperientialBrands = [
   {
     "id": 8,
     "name": "Rab",
-    "logoUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/brands/1771222466100-rab.png",
+    "logoUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771222466100-rab-0aaf2f7d.png",
     "websiteUrl": "",
     "sortOrder": 2,
     "active": true
@@ -1736,7 +1736,7 @@ export const generatedExperientialBrands = [
   {
     "id": 9,
     "name": "cvs pharmacy",
-    "logoUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/brands/1771222659120-cvs-pharmacy.png",
+    "logoUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771222659120-cvs-pharmacy-e677adfa.png",
     "websiteUrl": "",
     "sortOrder": 3,
     "active": true
@@ -1744,7 +1744,7 @@ export const generatedExperientialBrands = [
   {
     "id": 10,
     "name": "southwest airlines",
-    "logoUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/brands/1771222670695-southwest-airlines.png",
+    "logoUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771222670695-southwest-airlines-0daff686.png",
     "websiteUrl": "",
     "sortOrder": 4,
     "active": true
@@ -1752,7 +1752,7 @@ export const generatedExperientialBrands = [
   {
     "id": 11,
     "name": "caterpillar",
-    "logoUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/brands/1771222674382-pankaj-gupta-5.png",
+    "logoUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771222674382-pankaj-gupta-5-8b5e7eba.png",
     "websiteUrl": "",
     "sortOrder": 5,
     "active": true
@@ -1760,7 +1760,7 @@ export const generatedExperientialBrands = [
   {
     "id": 12,
     "name": "nvidia",
-    "logoUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/brands/1771222680019-nvidia.png",
+    "logoUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771222680019-nvidia-569384a1.png",
     "websiteUrl": "",
     "sortOrder": 6,
     "active": true
@@ -1768,7 +1768,7 @@ export const generatedExperientialBrands = [
   {
     "id": 13,
     "name": "toyota",
-    "logoUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/brands/1771222701734-toyota.png",
+    "logoUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771222701734-toyota-7b437bb6.png",
     "websiteUrl": "",
     "sortOrder": 7,
     "active": true
@@ -1776,7 +1776,7 @@ export const generatedExperientialBrands = [
   {
     "id": 14,
     "name": "red bull",
-    "logoUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/brands/1771222705103-red-bull.png",
+    "logoUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771222705103-red-bull-debaf4d6.png",
     "websiteUrl": "",
     "sortOrder": 8,
     "active": true
@@ -1784,7 +1784,7 @@ export const generatedExperientialBrands = [
   {
     "id": 15,
     "name": "herm s",
-    "logoUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/brands/1771223214202-herm-s.png",
+    "logoUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771223214202-herm-s-3928e4b4.png",
     "websiteUrl": "",
     "sortOrder": 9,
     "active": true
@@ -1792,7 +1792,7 @@ export const generatedExperientialBrands = [
   {
     "id": 16,
     "name": "davines north america",
-    "logoUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/brands/1771223217835-davines-north-america.png",
+    "logoUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771223217835-davines-north-america-f271b957.png",
     "websiteUrl": "",
     "sortOrder": 10,
     "active": true
@@ -1800,7 +1800,7 @@ export const generatedExperientialBrands = [
   {
     "id": 17,
     "name": "firstbank",
-    "logoUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/brands/1771223221396-firstbank.png",
+    "logoUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771223221396-firstbank-62884a06.png",
     "websiteUrl": "",
     "sortOrder": 11,
     "active": true
@@ -1808,7 +1808,7 @@ export const generatedExperientialBrands = [
   {
     "id": 18,
     "name": "palo alto networks",
-    "logoUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/brands/1771223225068-palo-alto-networks.png",
+    "logoUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771223225068-palo-alto-networks-8e3b1066.png",
     "websiteUrl": "",
     "sortOrder": 12,
     "active": true
@@ -1816,7 +1816,7 @@ export const generatedExperientialBrands = [
   {
     "id": 19,
     "name": "riken",
-    "logoUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/brands/1771223228628-riken.png",
+    "logoUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771223228628-riken-7ce37177.png",
     "websiteUrl": "",
     "sortOrder": 13,
     "active": true
@@ -1824,7 +1824,7 @@ export const generatedExperientialBrands = [
   {
     "id": 20,
     "name": "returnpro",
-    "logoUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/brands/1771223233519-returnpro.png",
+    "logoUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771223233519-returnpro-0edb6147.png",
     "websiteUrl": "",
     "sortOrder": 14,
     "active": true
@@ -1832,7 +1832,7 @@ export const generatedExperientialBrands = [
   {
     "id": 21,
     "name": "xrp ledger community",
-    "logoUrl": "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/brands/1771223238893-xrp-ledger-community.png",
+    "logoUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771223238893-xrp-ledger-community-099c7930.png",
     "websiteUrl": "",
     "sortOrder": 15,
     "active": true

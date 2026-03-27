@@ -476,7 +476,7 @@ export default function Resume() {
 
                 <div className="mt-8 flex flex-wrap items-center gap-4 text-[0.95rem] text-foreground/72">
                   <a
-                    href="https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/Downloads/resume/KZOFqPARnjQauvWm-8d5c0155c1.pdf"
+                    href="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/pdf/downloads/resume/kzofqparnjqauvwm-8d5c0155c1-c3638d1b.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex h-11 items-center gap-2 rounded-full bg-foreground px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-background transition-colors hover:bg-foreground/88"
@@ -485,7 +485,7 @@ export default function Resume() {
                     Resume
                   </a>
                   <a
-                    href="https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/Downloads/resume/mSMkRDmbSOQtUykO-58989945e6.pdf"
+                    href="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/pdf/downloads/resume/msmkrdmbsoqtuyko-58989945e6-d6f5c926.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex h-11 items-center gap-2 rounded-full bg-white/10 px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-foreground transition-colors hover:bg-white/14"

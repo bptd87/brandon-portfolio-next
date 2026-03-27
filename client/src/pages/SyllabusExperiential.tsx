@@ -330,8 +330,8 @@ export default function SyllabusExperiential() {
                     <div className="relative aspect-[16/8] w-full">
                       <Image
                         src={
-                          resolveBlobMediaUrl("https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_178b77734f664399ad1781073a591459.jpg") ||
-                          "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/article-images/ghibli/9e1774_178b77734f664399ad1781073a591459.jpg"
+                          resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_178b77734f664399ad1781073a591459-1bbb9ee2.jpg") ||
+                          "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/studio-ghibli-inspired-immersive-dining-experience/body/9e1774_178b77734f664399ad1781073a591459-1bbb9ee2.jpg"
                         }
                         alt="Theatre design students behind the Studio Ghibli-inspired immersive dining project."
                         fill

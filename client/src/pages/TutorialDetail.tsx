@@ -219,7 +219,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
           contentUrl: `https://www.youtube.com/watch?v=${videoId || ""}`,
           publisher: {
             name: "Brandon PT Davis Design",
-            logo: "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/site-assets/publisher-logo-favicon-32.png",
+            logo: "https://www.brandonptdavis.com/favicon-32x32.png",
           },
         }}
       />

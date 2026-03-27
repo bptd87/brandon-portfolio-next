@@ -15,8 +15,10 @@
     "test": "vitest run",
     "generate:articles": "node scripts/generate-local-articles.mjs",
     "generate:portfolios": "node scripts/generate-local-portfolios.mjs",
+    "migrate:manus-assets:blob": "node --import tsx scripts/migrate-manus-assets-to-blob.ts",
     "migrate:scenic-media:blob": "node --import tsx scripts/migrate-scenic-media-to-blob.ts",
-    "migrate:site-media:blob": "node --import tsx scripts/migrate-site-media-to-blob.ts"
+    "migrate:site-media:blob": "node --import tsx scripts/migrate-site-media-to-blob.ts",
+    "migrate:supabase-assets:blob": "node --import tsx scripts/migrate-supabase-assets-to-blob.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
