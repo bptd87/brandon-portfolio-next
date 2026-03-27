@@ -9,6 +9,7 @@ export const metadata = buildPageMetadata({
   description:
     "Search projects, articles, tutorials, collaborators, and credits across the Brandon PT Davis site.",
   pathname: "/search",
+  noindex: true,
 });
 
 export default function Page() {

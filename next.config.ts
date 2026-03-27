@@ -39,6 +39,11 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/project/rss.xml",
+        destination: "/projects/rss.xml",
+        permanent: true,
+      },
+      {
         source:
           "/scenic-insights/sora-in-the-studio-testing-ais-potential-for-theatrical-design",
         destination:

@@ -59,6 +59,8 @@ const sections = [
       { name: "Articles RSS", href: "/articles/rss.xml" },
       { name: "News RSS", href: "/news/rss.xml" },
       { name: "Tutorials RSS", href: "/studio/tutorials/rss.xml" },
+      { name: "Image Sitemap", href: "/image-sitemap.xml" },
+      { name: "Video Sitemap", href: "/video-sitemap.xml" },
     ],
   },
 ];
