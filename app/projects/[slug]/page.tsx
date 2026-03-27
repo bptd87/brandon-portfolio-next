@@ -1,5 +1,6 @@
 import { permanentRedirect } from "next/navigation";
 import { getLocalScenicProjects } from "../../../shared/localScenicProjects";
+import { resolveLegacyProjectPath } from "../../../shared/legacyRedirects";
 
 type ScenicAliasPageProps = {
   params: Promise<{ slug: string }>;
@@ -13,5 +14,5 @@ export async function generateStaticParams() {
 
 export default async function Page({ params }: ScenicAliasPageProps) {
   const { slug } = await params;
-  permanentRedirect(`/project/${slug}`);
+  permanentRedirect(resolveLegacyProjectPath(slug));
 }

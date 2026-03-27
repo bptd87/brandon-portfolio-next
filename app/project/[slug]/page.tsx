@@ -1,6 +1,9 @@
+import { permanentRedirect } from "next/navigation";
+
 import ScenicProjectDetailPage from "../../../client/src/pages/ScenicProjectDetail";
 import { NextPathProvider } from "../../../components/routing/NextPathProvider";
 import { buildPageMetadata } from "../../../lib/metadata";
+import { resolveLegacyProjectPath } from "../../../shared/legacyRedirects";
 import { getLocalScenicProjectBySlug, getLocalScenicProjects } from "../../../shared/localScenicProjects";
 
 type ScenicProjectPageProps = {
@@ -30,6 +33,12 @@ export async function generateMetadata({ params }: ScenicProjectPageProps) {
 
 export default async function Page({ params }: ScenicProjectPageProps) {
   const { slug } = await params;
+  const project = getLocalScenicProjectBySlug(slug);
+
+  if (!project) {
+    permanentRedirect(resolveLegacyProjectPath(slug));
+  }
+
   return (
     <NextPathProvider currentPath={`/project/${slug}`}>
       <ScenicProjectDetailPage slug={slug} currentPath={`/project/${slug}`} />

@@ -39,6 +39,56 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/index.html",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/home",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/portfolio",
+        destination: "/projects",
+        permanent: true,
+      },
+      {
+        source: "/scale-converter",
+        destination: "/studio/apps/scale-calculator",
+        permanent: true,
+      },
+      {
+        source: "/directory",
+        destination: "/studio/directory",
+        permanent: true,
+      },
+      {
+        source: "/scenic-insights-all",
+        destination: "/articles",
+        permanent: true,
+      },
+      {
+        source: "/scenic-insights-design-philosophy",
+        destination: "/articles",
+        permanent: true,
+      },
+      {
+        source: "/articles/navigating-the-scenic-design-process-a-comprehensive-guide",
+        destination: "/articles/scenic-design-process",
+        permanent: true,
+      },
+      {
+        source: "/articles/scenic-rendering-principles",
+        destination: "/articles/what-makes-a-good-scenic-design-rendering",
+        permanent: true,
+      },
+      {
+        source: "/articles/the-modern-theatrical-design-portfolio",
+        destination: "/articles/online-portfolio-theatrical-design-2026",
+        permanent: true,
+      },
+      {
         source: "/project/rss.xml",
         destination: "/projects/rss.xml",
         permanent: true,
