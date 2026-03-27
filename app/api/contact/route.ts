@@ -21,16 +21,34 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Please complete all required fields." }, { status: 400 });
   }
 
-  if (resendApiKey && contactFromEmail && contactToEmail) {
-    const resend = new Resend(resendApiKey);
+  if (!resendApiKey || !contactFromEmail || !contactToEmail) {
+    return NextResponse.json(
+      { error: "Contact delivery is not configured yet." },
+      { status: 503 }
+    );
+  }
 
-    await resend.emails.send({
+  try {
+    const resend = new Resend(resendApiKey);
+    const result = await resend.emails.send({
       from: contactFromEmail,
       to: contactToEmail,
       replyTo: parsed.data.email,
       subject: `New Contact Form Submission: ${parsed.data.subject}`,
       text: `From: ${parsed.data.name} (${parsed.data.email})\nSubject: ${parsed.data.subject}\n\nMessage:\n${parsed.data.message}`,
     });
+
+    if (result.error) {
+      return NextResponse.json(
+        { error: "Message delivery failed. Please try email instead." },
+        { status: 502 }
+      );
+    }
+  } catch {
+    return NextResponse.json(
+      { error: "Message delivery failed. Please try email instead." },
+      { status: 502 }
+    );
   }
 
   return NextResponse.json({ success: true });
