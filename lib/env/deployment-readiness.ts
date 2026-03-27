@@ -26,9 +26,8 @@ export function getDeploymentReadinessChecks(): DeploymentCheck[] {
     process.env.NEXT_PUBLIC_ANALYTICS_DASHBOARD_URL ||
     process.env.NEXT_PUBLIC_POSTHOG_DASHBOARD_URL ||
     "";
-  const posthogApiKey = process.env.POSTHOG_PERSONAL_API_KEY || "";
-  const posthogProjectId = process.env.POSTHOG_PROJECT_ID || "";
-  const ipinfoToken = process.env.IPINFO_TOKEN || "";
+  const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY || "";
+  const posthogHost = process.env.NEXT_PUBLIC_POSTHOG_HOST || "";
 
   return [
     {
@@ -64,24 +63,16 @@ export function getDeploymentReadinessChecks(): DeploymentCheck[] {
       label: "Analytics Dashboard Link",
       status: hasValue(analyticsDashboardUrl) ? "ready" : "optional",
       detail: hasValue(analyticsDashboardUrl)
-        ? "Admin can open the external analytics workspace directly."
-        : "Optional: set NEXT_PUBLIC_ANALYTICS_DASHBOARD_URL when the Vercel analytics destination is ready.",
+        ? "The workbench can open the external analytics workspace directly."
+        : "Optional: set NEXT_PUBLIC_ANALYTICS_DASHBOARD_URL to link straight to the external dashboard.",
     },
     {
-      label: "Server Analytics Backend",
-      status: hasValue(posthogApiKey) && hasValue(posthogProjectId) ? "ready" : "optional",
+      label: "PostHog Browser Tracking",
+      status: hasValue(posthogKey) ? "ready" : "optional",
       detail:
-        hasValue(posthogApiKey) && hasValue(posthogProjectId)
-          ? "PostHog-backed server queries are available while traffic reporting transitions."
-          : "Optional: keep POSTHOG_PERSONAL_API_KEY and POSTHOG_PROJECT_ID until the replacement traffic source is wired in.",
-    },
-    {
-      label: "City-Level Geo Signal",
-      status: hasValue(ipinfoToken) ? "ready" : "optional",
-      detail: hasValue(ipinfoToken)
-        ? "IPINFO_TOKEN is present for coarse city and region enrichment."
-        : "Optional but recommended if city data matters after moving traffic reporting to Vercel.",
+        hasValue(posthogKey)
+          ? `Client-side PostHog tracking is configured${hasValue(posthogHost) ? " with a custom host" : ""}.`
+          : "Optional but recommended if you want external city analytics and custom event tracking.",
     },
   ];
 }
-

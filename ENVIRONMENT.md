@@ -1,6 +1,6 @@
 # Environment Variables
 
-This project now runs as a Next.js app with a protected admin workspace, static public pages, Supabase-backed media storage, and server-side analytics helpers.
+This project now runs as a Next.js app with a static public site, an optional protected asset workbench, Blob-backed media migration in progress, and external analytics.
 
 ## Recommended Vercel Variables
 
@@ -42,18 +42,15 @@ CONTACT_TO_EMAIL="you@your-domain.com"
 
 ```bash
 NEXT_PUBLIC_ANALYTICS_DASHBOARD_URL="https://..."
-POSTHOG_PERSONAL_API_KEY="..."
-POSTHOG_PROJECT_ID="..."
-POSTHOG_API_HOST="https://us.posthog.com"
-IPINFO_TOKEN="..."
+NEXT_PUBLIC_POSTHOG_KEY="phc_..."
+NEXT_PUBLIC_POSTHOG_HOST="https://us.i.posthog.com"
+NEXT_PUBLIC_POSTHOG_DASHBOARD_URL="https://us.posthog.com/project/..."
 ```
 
 Current state:
-- the admin analytics UI is provider-neutral
-- server-side analytics queries currently still read from PostHog
-- city/location enrichment uses coarse geo data and can continue even as traffic reporting moves toward Vercel Analytics
-
-If you remove PostHog later, keep the location layer and replace the traffic source behind the existing analytics UI.
+- Vercel Analytics handles high-level site traffic and performance
+- PostHog runs client-side for city/location analytics and custom events
+- analytics are reviewed in external dashboards, not inside the site
 
 ## Local Development
 

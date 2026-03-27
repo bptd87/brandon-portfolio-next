@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AlertCircle, ArrowRight, CheckCircle2, Clock3, FileText } from "lucide-react";
+import { AlertCircle, CheckCircle2, Clock3 } from "lucide-react";
 
 import { AssetManager } from "../../components/admin/AssetManager";
 import { AdminShell } from "../../components/admin/AdminShell";
@@ -57,6 +57,10 @@ export default function AdminHomePage() {
   const directory = getLocalStudioDirectory();
   const collaborators = getLocalCollaborators();
   const deploymentChecks = getDeploymentReadinessChecks();
+  const analyticsDashboardUrl =
+    process.env.NEXT_PUBLIC_ANALYTICS_DASHBOARD_URL ||
+    process.env.NEXT_PUBLIC_POSTHOG_DASHBOARD_URL ||
+    "";
 
   const statusMeta = {
     ready: {
@@ -81,28 +85,37 @@ export default function AdminHomePage() {
       currentPath="/admin"
       eyebrow="Admin Workbench"
       title="See media, copy URLs, and build static pages faster."
-      description="The public site is static and file-first, so the main job here is to inspect assets, copy stable URLs or snippets, and use analytics to decide what to build next."
+      description="The public site is static and file-first, so the main job here is to inspect assets, copy stable URLs or snippets, and move quickly when building new pages."
     >
       <section className="grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(20rem,24rem)]">
           <div className="rounded-[1.5rem] border border-border/25 bg-card/20 p-6">
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-foreground/40">
-              Analytics
+              External Analytics
             </p>
             <h2 className="mt-3 text-2xl font-medium tracking-[-0.03em] text-foreground">
-              Watch demand before building the next page.
+              Use PostHog and Vercel outside the site.
             </h2>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-foreground/58">
-              Use the analytics dashboard to see traffic, project interest, and contact behavior,
-              then come back here to gather media and build the next static page.
+              Analytics no longer live inside the site. Use the external dashboard for traffic,
+              location, and contact signals, then come back here to gather media and build the next
+              static page.
             </p>
             <div className="mt-5">
-              <Link
-                href="/admin/analytics"
-                className="inline-flex h-11 items-center justify-center rounded-full border border-border/35 px-5 text-sm font-medium transition-colors hover:bg-foreground/[0.04]"
-              >
-                Open Analytics
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
+              {analyticsDashboardUrl ? (
+                <a
+                  href={analyticsDashboardUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex h-11 items-center justify-center rounded-full border border-border/35 px-5 text-sm font-medium transition-colors hover:bg-foreground/[0.04]"
+                >
+                  Open Dashboard
+                </a>
+              ) : (
+                <div className="text-sm leading-6 text-foreground/58">
+                  Set `NEXT_PUBLIC_ANALYTICS_DASHBOARD_URL` to link directly to the external
+                  analytics workspace.
+                </div>
+              )}
             </div>
           </div>
 
@@ -145,17 +158,10 @@ export default function AdminHomePage() {
                 What Vercel still needs before ship.
               </h2>
               <p className="mt-3 max-w-3xl text-sm leading-6 text-foreground/58">
-                This keeps the production contract visible inside the admin: core auth and contact
-                envs, the analytics transition path, and the city-level geo signal you want to keep.
+                This keeps the production contract visible inside the workbench: contact delivery,
+                external analytics wiring, and the basic environment setup the site still needs.
               </p>
             </div>
-            <Link
-              href="/admin/analytics"
-              className="inline-flex h-11 items-center justify-center rounded-full border border-border/35 px-5 text-sm font-medium transition-colors hover:bg-foreground/[0.04]"
-            >
-              Review Analytics
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
           </div>
 
           <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -197,8 +203,8 @@ export default function AdminHomePage() {
           <div className="mt-4 grid gap-4 md:grid-cols-3">
             {[
               {
-                title: "1. Check analytics",
-                text: "See what people are actually viewing before deciding which page or portfolio area to expand.",
+                title: "1. Check demand",
+                text: "Use the external analytics dashboard before deciding which page or portfolio area to expand.",
               },
               {
                 title: "2. Collect assets",

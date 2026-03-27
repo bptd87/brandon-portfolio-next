@@ -5,6 +5,7 @@ import "./globals.css";
 
 import { LegacyProviders } from "../components/legacy/Providers";
 import { LegacyClientCleanup } from "../components/site/LegacyClientCleanup";
+import { PostHogAnalytics } from "../components/site/PostHogAnalytics";
 import { absoluteUrl, siteMetadata } from "../lib/metadata";
 
 export const metadata: Metadata = {
@@ -64,12 +65,10 @@ export default function RootLayout({
       style={{ colorScheme: "dark" }}
       suppressHydrationWarning
     >
-      <head>
-        <link rel="dns-prefetch" href="https://xibkuwouvisabnfowthn.supabase.co" />
-        <link rel="preconnect" href="https://xibkuwouvisabnfowthn.supabase.co" crossOrigin="" />
-      </head>
+      <head />
       <body className="min-h-screen bg-gradient-premium">
         <LegacyClientCleanup />
+        <PostHogAnalytics />
         <LegacyProviders>{children}</LegacyProviders>
         {isProduction ? <Analytics /> : null}
         {isProduction ? <SpeedInsights /> : null}

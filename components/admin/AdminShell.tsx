@@ -4,7 +4,6 @@ import { AdminSignOutButton } from "./AdminSignOutButton";
 
 const NAV_ITEMS = [
   { href: "/admin", label: "Workbench" },
-  { href: "/admin/analytics", label: "Analytics" },
   { href: "/admin/assets", label: "Assets" },
   { href: "/admin/uploads", label: "Uploads" },
   { href: "/admin/snippets", label: "Snippets" },

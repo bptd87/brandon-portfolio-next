@@ -15,7 +15,7 @@ const sections = [
     title: "Information We Collect",
     items: [
       "Contact details submitted voluntarily through forms or email.",
-      "Basic analytics and usage information, such as browser, pages visited, timing, and session-level interaction data collected through PostHog.",
+      "Basic analytics and usage information, such as browser, pages visited, approximate location, and interaction events collected through Vercel Analytics and PostHog.",
       "Technical data needed for site security, spam prevention, and performance monitoring.",
     ],
   },
@@ -44,7 +44,7 @@ const sections = [
 ];
 
 export default function Privacy() {
-  const updated = "March 26, 2026";
+  const updated = "March 27, 2026";
 
   return (
     <>
