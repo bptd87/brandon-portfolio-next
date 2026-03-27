@@ -158,36 +158,20 @@ pnpm test --coverage
 - Mock external dependencies
 - Aim for >80% coverage
 
-## Database Changes
+## Data Changes
 
-### Schema Modifications
+The public site is file-first.
 
-1. **Edit schema**
-   ```typescript
-   // drizzle/schema.ts
-   export const projects = sqliteTable('projects', {
-     id: text('id').primaryKey(),
-     title: text('title').notNull(),
-     newField: text('new_field'), // Add new field
-   });
-   ```
+1. Update the relevant content or shared data source:
+   - `content/articles/*`
+   - `shared/localArticles.ts`
+   - `shared/localScenicProjects.ts`
+   - `shared/localPortfolios.generated.ts`
+   - `shared/localStudio.ts`
 
-2. **Generate migration**
-   ```bash
-   pnpm drizzle-kit generate
-   ```
+2. If the change includes media, keep it on Vercel Blob or under `client/public/`.
 
-3. **Review SQL**
-   Check `drizzle/migrations/` for generated SQL
-
-4. **Apply migration**
-   - Use Manus UI Database panel
-   - Or contact project owner
-
-5. **Update query helpers**
-   ```typescript
-   // server/db.ts
-   export async function getProjects() {
+3. If a helper or search surface depends on that data, update the corresponding shared utility before shipping.
      return db.select().from(projects);
    }
    ```
