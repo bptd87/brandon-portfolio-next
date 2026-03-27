@@ -36,6 +36,17 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: __dirname,
   },
+  async redirects() {
+    return [
+      {
+        source:
+          "/scenic-insights/sora-in-the-studio-testing-ais-potential-for-theatrical-design",
+        destination:
+          "/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default withMDX(nextConfig);
