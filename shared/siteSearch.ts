@@ -1,4 +1,5 @@
 import { getLocalArticles } from "./localArticles";
+import { resolveBlobMediaUrl } from "./mediaBlob";
 import {
   assistantScenicDesignEntries,
   ASSISTANT_SCENIC_DESIGN_PATH,
@@ -13,6 +14,7 @@ import {
   getLocalStudioDirectory,
   getLocalTutorials,
 } from "./localStudio";
+import { voiceProfile } from "./voiceProfile";
 
 export type SiteSearchSection = "Portfolio" | "Writing" | "Studio" | "People";
 
@@ -24,10 +26,12 @@ export type SiteSearchEntry = {
   kind: string;
   description: string;
   meta?: string;
+  imageUrl?: string;
   keywords: string[];
   featured?: boolean;
   bodyText?: string;
   searchText: string;
+  searchTokens?: string[];
 };
 
 export type SiteSearchResult = SiteSearchEntry & {
@@ -48,6 +52,39 @@ function normalizeSearchValue(value: string) {
     .toLowerCase();
 }
 
+const SEARCH_STOPWORDS = new Set([
+  "a",
+  "an",
+  "and",
+  "are",
+  "about",
+  "best",
+  "can",
+  "connect",
+  "connected",
+  "does",
+  "for",
+  "from",
+  "how",
+  "i",
+  "in",
+  "is",
+  "me",
+  "of",
+  "or",
+  "tell",
+  "the",
+  "their",
+  "them",
+  "to",
+  "what",
+  "when",
+  "where",
+  "which",
+  "who",
+  "why",
+]);
+
 function uniqueKeywords(values: Array<string | null | undefined>) {
   const seen = new Set<string>();
   const keywords: string[] = [];
@@ -64,13 +101,21 @@ function uniqueKeywords(values: Array<string | null | undefined>) {
 
 function toEntry(input: Omit<SiteSearchEntry, "searchText">) {
   const keywords = uniqueKeywords(input.keywords);
+  const tokenSource = uniqueKeywords([
+    input.title,
+    input.kind,
+    input.section,
+    input.description,
+    input.meta,
+    ...keywords,
+  ]);
   const searchText = uniqueKeywords([
     input.title,
     input.kind,
     input.section,
     input.description,
     input.meta,
-    input.bodyText,
+    input.bodyText?.slice(0, 420),
     ...keywords,
   ]).join(" ");
 
@@ -78,6 +123,7 @@ function toEntry(input: Omit<SiteSearchEntry, "searchText">) {
     ...input,
     keywords,
     searchText,
+    searchTokens: tokenSource.flatMap((value) => value.split(" ").filter(Boolean)),
   };
 }
 
@@ -98,6 +144,13 @@ function stripHtml(value: string) {
 
 function collapseWhitespace(value: string) {
   return value.replace(/\s+/g, " ").trim();
+}
+
+function stringifyVoiceProfile(value: unknown): string {
+  if (typeof value === "string") return value;
+  if (Array.isArray(value)) return value.map(stringifyVoiceProfile).join(" ");
+  if (!value || typeof value !== "object") return "";
+  return Object.values(value).map(stringifyVoiceProfile).join(" ");
 }
 
 function extractArticleBodyText(content: unknown): string {
@@ -218,6 +271,125 @@ function extractExperientialBodyText(sample: ReturnType<typeof getLocalExperient
   );
 }
 
+function createProfileEntries() {
+  const aboutImage =
+    resolveBlobMediaUrl("https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/profile-headshot.webp") ||
+    "https://xibkuwouvisabnfowthn.supabase.co/storage/v1/object/public/about-images/profile-headshot.webp";
+  const profileBody = collapseWhitespace(stringifyVoiceProfile(voiceProfile));
+
+  return [
+    createEntry({
+      id: "profile:about",
+      title: "About Brandon PT Davis",
+      href: "/about",
+      section: "People",
+      kind: "Profile",
+      description:
+        "Biography, current base in Orange County, California, and the creative throughline connecting theatre, teaching, and experiential work.",
+      meta: "About • Scenic Designer • Irvine, CA",
+      imageUrl: aboutImage,
+      bodyText: [voiceProfile.location.summary, profileBody].join(" "),
+      keywords: [
+        "Brandon PT Davis",
+        "Brandon",
+        "where is Brandon from",
+        "where is Brandon based",
+        "where is Brandon located",
+        "where does Brandon live",
+        "Central Missouri",
+        "Irvine",
+        "Orange County",
+        "California",
+        "Southern California",
+        "scenic designer",
+        "artist first",
+        "creative identity",
+        "background",
+        "bio",
+        "biography",
+        "origin",
+        "about",
+      ],
+    }),
+    createEntry({
+      id: "profile:resume",
+      title: "Resume & Credits",
+      href: "/resume",
+      section: "People",
+      kind: "Resume",
+      description:
+        "Production history, collaborators, teaching, and the broader professional record across theatre and related work.",
+      meta: "Resume • Credits",
+      imageUrl: resolveBlobMediaUrl("/assets/about/about-resume-art.png") || "/assets/about/about-resume-art.png",
+      bodyText: [
+        voiceProfile.careerReality.workload,
+        voiceProfile.careerReality.extensions,
+        voiceProfile.careerReality.sustainability,
+      ].join(" "),
+      keywords: [
+        "resume",
+        "credits",
+        "production history",
+        "career",
+        "workload",
+        "productions per year",
+        "Brandon PT Davis resume",
+      ],
+    }),
+    createEntry({
+      id: "profile:teaching",
+      title: "Teaching Philosophy",
+      href: "/about/teaching",
+      section: "People",
+      kind: "Teaching",
+      description:
+        "Teaching values, industry-facing classroom priorities, and how scenic design education connects to real production practice.",
+      meta: "Teaching • Education",
+      imageUrl: resolveBlobMediaUrl("/assets/about/about-teaching-art.png") || "/assets/about/about-teaching-art.png",
+      bodyText: [
+        voiceProfile.teaching.philosophy,
+        voiceProfile.teaching.gap,
+        ...voiceProfile.teaching.priorities,
+      ].join(" "),
+      keywords: [
+        "teaching",
+        "education",
+        "students",
+        "teaching philosophy",
+        "portfolio development",
+        "communication skills",
+        "industry workflows",
+      ],
+    }),
+    createEntry({
+      id: "profile:statement",
+      title: "Creative Statement",
+      href: "/creative-statement",
+      section: "People",
+      kind: "Creative Statement",
+      description:
+        "A concise view of Brandon's process, scenic design philosophy, collaboration values, and relationship to tools and storytelling.",
+      meta: "Process • Philosophy",
+      imageUrl: resolveBlobMediaUrl("/assets/about/about-process-art.png") || "/assets/about/about-process-art.png",
+      bodyText: [
+        voiceProfile.process.startingPoint,
+        voiceProfile.process.philosophy,
+        voiceProfile.creativeIdentity.definitionOfScenicDesign,
+        voiceProfile.tools.renderingInsight,
+      ].join(" "),
+      keywords: [
+        "creative statement",
+        "process",
+        "philosophy",
+        "storytelling",
+        "rendering",
+        "drafting",
+        "model building",
+      ],
+    }),
+  ];
+}
+
 function buildSnippet(source: string | undefined, fallback: string, terms: string[]) {
   const body = collapseWhitespace(source || "");
   if (!body) return fallback;
@@ -237,7 +409,41 @@ function buildSnippet(source: string | undefined, fallback: string, terms: strin
   return `${start > 0 ? "..." : ""}${snippet}${end < body.length ? "..." : ""}`;
 }
 
+function getEditDistance(a: string, b: string) {
+  if (a === b) return 0;
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+
+  const rows = Array.from({ length: a.length + 1 }, (_, index) => index);
+
+  for (let j = 1; j <= b.length; j += 1) {
+    let previous = rows[0];
+    rows[0] = j;
+
+    for (let i = 1; i <= a.length; i += 1) {
+      const temp = rows[i];
+      rows[i] = Math.min(
+        rows[i] + 1,
+        rows[i - 1] + 1,
+        previous + (a[i - 1] === b[j - 1] ? 0 : 1)
+      );
+      previous = temp;
+    }
+  }
+
+  return rows[a.length];
+}
+
+function isFuzzyTokenMatch(term: string, token: string) {
+  if (!term || !token) return false;
+  if (token.includes(term) || term.includes(token)) return true;
+  if (Math.abs(term.length - token.length) > 2) return false;
+  if (term.length < 4 || token.length < 4) return false;
+  return getEditDistance(term, token) <= (term.length >= 8 ? 2 : 1);
+}
+
 export function buildSiteSearchEntries(): SiteSearchEntry[] {
+  const profileEntries = createProfileEntries();
   const scenicEntries = getLocalScenicProjects().map((project) =>
     createEntry({
       id: `scenic:${project.slug}`,
@@ -247,6 +453,7 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
       kind: "Scenic Project",
       description: project.excerpt,
       meta: [project.client, project.location, project.year].filter(Boolean).join(" • "),
+      imageUrl: project.coverImageUrl || undefined,
       featured: project.featured,
       bodyText: extractScenicBodyText(project),
       keywords: [
@@ -272,6 +479,7 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
       kind: "Rendering Project",
       description: project.excerpt,
       meta: [project.client, project.location, project.year].filter(Boolean).join(" • "),
+      imageUrl: project.coverImageUrl || undefined,
       featured: project.featured,
       bodyText: extractRenderingBodyText(project),
       keywords: [
@@ -294,6 +502,7 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
       kind: "Experiential Sample",
       description: sample.description,
       meta: [sample.category, sample.year].filter(Boolean).join(" • "),
+      imageUrl: sample.imageUrl,
       bodyText: extractExperientialBodyText(sample),
       keywords: [
         sample.displayTitle,
@@ -315,6 +524,7 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
       kind: "Experiential Brand",
       description: "Brand partner within the experiential portfolio.",
       meta: "Experiential Design",
+      imageUrl: brand.logoUrl,
       keywords: [brand.name, brand.websiteUrl],
     })
   );
@@ -328,6 +538,7 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
       kind: "Article",
       description: article.excerpt,
       meta: [article.categoryName, article.sourcePublication].filter(Boolean).join(" • "),
+      imageUrl: article.coverImageUrl,
       featured: article.featured,
       bodyText: extractArticleBodyText(article.content),
       keywords: [
@@ -412,6 +623,7 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
   );
 
   return [
+    ...profileEntries,
     ...scenicEntries,
     ...renderingEntries,
     ...experientialEntries,
@@ -427,7 +639,9 @@ export function searchSiteIndex(entries: SiteSearchEntry[], query: string) {
   const normalizedQuery = normalizeSearchValue(query);
   if (!normalizedQuery) return [] as SiteSearchResult[];
 
-  const terms = Array.from(new Set(normalizedQuery.split(" ").filter(Boolean)));
+  const rawTerms = Array.from(new Set(normalizedQuery.split(" ").filter(Boolean)));
+  const significantTerms = rawTerms.filter((term) => !SEARCH_STOPWORDS.has(term));
+  const terms = significantTerms.length > 0 ? significantTerms : rawTerms;
   if (terms.length === 0) return [] as SiteSearchResult[];
 
   const results: SiteSearchResult[] = [];
@@ -439,6 +653,7 @@ export function searchSiteIndex(entries: SiteSearchEntry[], query: string) {
     const meta = normalizeSearchValue(entry.meta || "");
     const keywords = entry.keywords;
     const text = entry.searchText;
+    const tokens = entry.searchTokens || [];
 
     let matchedTerms = 0;
 
@@ -449,8 +664,9 @@ export function searchSiteIndex(entries: SiteSearchEntry[], query: string) {
       const inMeta = meta.includes(term);
       const inKeyword = keywords.some((keyword) => keyword.includes(term));
       const inText = text.includes(term);
+      const fuzzyTokenMatch = tokens.some((token) => isFuzzyTokenMatch(term, token));
 
-      if (!(inTitle || inDescription || inMeta || inKeyword || inText)) {
+      if (!(inTitle || inDescription || inMeta || inKeyword || inText || fuzzyTokenMatch)) {
         matchedTerms = -1;
         break;
       }
@@ -463,6 +679,7 @@ export function searchSiteIndex(entries: SiteSearchEntry[], query: string) {
       if (inMeta) score += 7;
       if (inDescription) score += 4;
       if (inText) score += 2;
+      if (fuzzyTokenMatch && !(inTitle || inKeyword)) score += 3;
     }
 
     if (matchedTerms !== terms.length) continue;

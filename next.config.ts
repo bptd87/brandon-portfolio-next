@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
+    qualities: [75, 82, 84],
     remotePatterns: [
       {
         protocol: "https",

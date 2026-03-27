@@ -336,7 +336,7 @@ export default function SyllabusExperiential() {
                         alt="Theatre design students behind the Studio Ghibli-inspired immersive dining project."
                         fill
                         quality={82}
-                        sizes="100vw"
+                        sizes="(max-width: 768px) 100vw, 72rem"
                         className="rounded-t-[1.75rem] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                       />
                     </div>

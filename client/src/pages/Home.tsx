@@ -16,6 +16,7 @@ import {
   splitScenicShowcaseProjects,
 } from "@/lib/scenicShowcase";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
+import { getConfiguredSiteUrl } from "../../../lib/env/site";
 
 const homeLandingCopy = {
   subtitle: "Brandon PT Davis",
@@ -24,10 +25,10 @@ const homeLandingCopy = {
     "A portfolio of theatre and experiential work shaped by story, rhythm, architecture, and the emotional logic of performance.",
 } as const;
 
+const SITE_URL = getConfiguredSiteUrl();
+
 export default function Home() {
   const [, setLocation] = useLocation();
-  const baseUrl =
-    typeof window !== "undefined" ? window.location.origin : "https://www.brandonptdavis.com";
   const projects = sortScenicProjectsChronologically(getLocalScenicProjects());
   const projectsLoading = false;
   const { featuredProject, showcaseRailProjects, showcaseGridProjects } =
@@ -89,7 +90,7 @@ export default function Home() {
         person={{
           name: "Brandon PT Davis",
           jobTitle: "Scenic Designer",
-          url: baseUrl,
+          url: SITE_URL,
           image: "https://www.brandonptdavis.com/android-chrome-512x512.png",
           description:
             "Union scenic designer based in Southern California with 130+ production credits across regional theatre, summer stock, and academic stages. Member of USA 829.",
@@ -133,13 +134,13 @@ export default function Home() {
         }}
         organization={{
           name: "Brandon PT Davis Design",
-          url: baseUrl,
+          url: SITE_URL,
           image: "https://www.brandonptdavis.com/android-chrome-512x512.png",
           description:
             "Scenic design studio focused on story-driven environments for regional theatre, summer stock, and academic production.",
           founder: {
             name: "Brandon PT Davis",
-            url: `${baseUrl}/about`,
+            url: `${SITE_URL}/about`,
           },
           foundingDate: "2015",
           email: "info@brandonptdavis.com",
@@ -161,7 +162,7 @@ export default function Home() {
         type="WebSite"
         webSite={{
           name: "Brandon PT Davis",
-          url: baseUrl,
+          url: SITE_URL,
           description: "Professional scenic designer creating story-driven theatrical environments.",
           inLanguage: "en-US",
           publisher: {

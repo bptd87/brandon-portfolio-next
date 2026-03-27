@@ -55,6 +55,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isProduction = process.env.NODE_ENV === "production";
+
   return (
     <html
       lang="en"
@@ -69,8 +71,8 @@ export default function RootLayout({
       <body className="min-h-screen bg-gradient-premium">
         <LegacyClientCleanup />
         <LegacyProviders>{children}</LegacyProviders>
-        <Analytics />
-        <SpeedInsights />
+        {isProduction ? <Analytics /> : null}
+        {isProduction ? <SpeedInsights /> : null}
       </body>
     </html>
   );

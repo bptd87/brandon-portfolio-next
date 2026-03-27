@@ -18,10 +18,12 @@ import {
   Sparkles,
   UserRound,
   Users,
+  X,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import MobileMenu from "./MobileMenu";
 import SearchOverlay from "./SearchOverlay";
+import BrandMark from "./BrandMark";
 
 type MenuItem = {
   name: string;
@@ -372,12 +374,17 @@ export default function Header() {
       >
         <div className="container max-w-[88rem] py-4">
           <nav className="flex items-center justify-between gap-6">
-            <Link href="/" className="group inline-flex flex-col items-start leading-none transition-all">
-              <span className="text-[1.18rem] font-black tracking-[-0.055em] md:text-[1.22rem]">
-                BRANDON PT DAVIS
+            <Link href="/" className="group inline-flex items-center gap-0 leading-none transition-all">
+              <span className="relative flex h-[3.2rem] w-[3.2rem] shrink-0 items-center justify-center">
+                <BrandMark className="h-full w-full transition-transform duration-200 group-hover:scale-[1.02]" />
               </span>
-              <span className="mt-1 pl-[0.08rem] text-[9px] font-medium uppercase tracking-[0.24em] text-white/46 md:text-[9.5px]">
-                SCENIC DESIGNER
+              <span className="-ml-[4px] flex min-w-0 flex-col items-start justify-center pt-[1px]">
+                <span className="text-[1.12rem] font-black tracking-[-0.055em] md:text-[1.16rem]">
+                  BRANDON PT DAVIS
+                </span>
+                <span className="mt-1 pl-[0.06rem] text-[8.5px] font-medium uppercase tracking-[0.28em] text-white/46 md:text-[9px]">
+                  SCENIC DESIGN
+                </span>
               </span>
             </Link>
 
@@ -433,21 +440,23 @@ export default function Header() {
                     />
                   ) : null}
                 </div>
+
+                <button
+                  type="button"
+                  onClick={() => setSearchOpen((value) => !value)}
+                  aria-label="Search site"
+                  className="ml-1 inline-flex h-10 w-10 items-center justify-center text-white/58 transition-colors hover:text-white"
+                >
+                  {searchOpen ? (
+                    <X className="h-[1.05rem] w-[1.05rem]" />
+                  ) : (
+                    <Search className="h-[1.05rem] w-[1.05rem]" />
+                  )}
+                </button>
               </div>
 
-              <div className="ml-6 shrink-0">
-                <div className="flex items-center gap-2">
-                  <Link
-                    href="#"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      setSearchOpen(true);
-                    }}
-                    aria-label="Search site"
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/18 text-white/72 transition-colors hover:border-white/32 hover:bg-white/[0.05] hover:text-white"
-                  >
-                    <Search className="h-4.5 w-4.5" />
-                  </Link>
+              <div className="ml-10 shrink-0">
+                <div className="flex items-center gap-4">
                   <Link
                     href="/contact"
                     className="inline-flex h-10 items-center justify-center rounded-full border border-white/22 px-5 text-[0.9rem] font-medium tracking-[-0.02em] text-white transition-colors hover:border-white/36 hover:bg-white/[0.05]"

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { ChevronDown, X } from "lucide-react";
+import BrandMark from "./BrandMark";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -131,12 +132,17 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }: MobileMenu
       <div className="fixed inset-x-0 top-0 z-50 h-[100dvh] overflow-y-auto border-b border-border/35 bg-background/96 backdrop-blur-2xl">
         <div className="container flex min-h-full flex-col py-5">
           <div className="flex items-start justify-between gap-6 border-b border-border/35 pb-5">
-            <Link href="/" onClick={onClose} className="inline-flex flex-col leading-none">
-              <span className="text-[1.18rem] font-black tracking-[-0.055em] text-foreground">
-                BRANDON PT DAVIS
+            <Link href="/" onClick={onClose} className="inline-flex items-center gap-0 leading-none">
+              <span className="relative flex h-[3.2rem] w-[3.2rem] shrink-0 items-center justify-center">
+                <BrandMark className="h-full w-full" />
               </span>
-              <span className="mt-1 pl-[0.08rem] text-[9px] font-medium uppercase tracking-[0.24em] text-foreground/48">
-                SCENIC DESIGNER
+              <span className="-ml-[4px] flex min-w-0 flex-col items-start justify-center pt-[1px]">
+                <span className="text-[1.12rem] font-black tracking-[-0.055em] text-foreground">
+                  BRANDON PT DAVIS
+                </span>
+                <span className="mt-1 pl-[0.06rem] text-[8.5px] font-medium uppercase tracking-[0.28em] text-foreground/48">
+                  SCENIC DESIGN
+                </span>
               </span>
             </Link>
 

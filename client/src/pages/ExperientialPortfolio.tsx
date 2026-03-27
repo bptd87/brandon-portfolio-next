@@ -14,6 +14,7 @@ import {
   getLocalExperientialProjects,
   type LocalExperientialProject,
 } from "@shared/localPortfolios";
+import { getConfiguredSiteUrl } from "../../../lib/env/site";
 
 const EXPERIENTIAL_PORTFOLIO_URL = "https://www.brandonptdavis.com/projects/experiential";
 const EXPERIENTIAL_PORTFOLIO_TITLE = "Experiential Design Portfolio | Brandon PT Davis";
@@ -35,6 +36,8 @@ const experientialPortfolioLandingCopy = {
     "A selected body of experiential work organized as project case studies rather than separate media buckets. Renderings, technical drawing, and finished work live together so each page can show the full design story from early concept through real-world execution.",
 } as const;
 
+const SITE_URL = getConfiguredSiteUrl();
+
 function getExperientialProjectTimestamp(project: LocalExperientialProject) {
   if (project.updatedAt) {
     const timestamp = new Date(project.updatedAt).getTime();
@@ -55,8 +58,6 @@ function sortExperientialProjectsChronologically(projects: LocalExperientialProj
 
 export default function ExperientialPortfolio() {
   const [, setLocation] = useLocation();
-  const baseUrl =
-    typeof window !== "undefined" ? window.location.origin : "https://www.brandonptdavis.com";
   const projects = sortExperientialProjectsChronologically(getLocalExperientialProjects());
   const { featuredProject, showcaseRailProjects, showcaseGridProjects } =
     splitScenicShowcaseProjects(projects);
@@ -170,7 +171,7 @@ export default function ExperientialPortfolio() {
       <StructuredData
         type="BreadcrumbList"
         breadcrumbs={[
-          { name: "Home", url: baseUrl },
+          { name: "Home", url: SITE_URL },
           { name: "Experiential Design Portfolio", url: EXPERIENTIAL_PORTFOLIO_URL },
         ]}
       />
@@ -187,7 +188,7 @@ export default function ExperientialPortfolio() {
             itemListElement: projects.slice(0, 40).map((project, index) => ({
               position: index + 1,
               name: project.title,
-              url: `${baseUrl}${getLocalExperientialProjectHref(project)}`,
+              url: `${SITE_URL}${getLocalExperientialProjectHref(project)}`,
               datePublished: project.year ? `${project.year}-01-01` : undefined,
               image: project.coverImageUrl || undefined,
             })),
@@ -202,7 +203,7 @@ export default function ExperientialPortfolio() {
           url: EXPERIENTIAL_PORTFOLIO_URL,
           creator: {
             name: "Brandon PT Davis",
-            url: `${baseUrl}/about`,
+            url: `${SITE_URL}/about`,
           },
           genre: "Experiential Design",
           about: "Project-based experiential design portfolio",

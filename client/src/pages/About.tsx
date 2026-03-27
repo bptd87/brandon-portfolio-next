@@ -13,6 +13,7 @@ import StructuredData from "@/components/StructuredData";
 import { resolveBlobMediaUrl } from "@shared/mediaBlob";
 import { formatUtcDate } from "@/lib/date-format";
 import { getLocalArticles } from "@shared/localArticles";
+import { getConfiguredSiteUrl } from "../../../lib/env/site";
 
 const galleryImages = [
   {
@@ -124,10 +125,10 @@ const workingPrinciples = [
   },
 ];
 
+const SITE_URL = getConfiguredSiteUrl();
+
 export default function About() {
   const galleryRailRef = useRef<HTMLDivElement | null>(null);
-  const baseUrl =
-    typeof window !== "undefined" ? window.location.origin : "https://www.brandonptdavis.com";
   const bioArticles = getLocalArticles()
     .filter(
       (article) =>
@@ -161,7 +162,7 @@ export default function About() {
         person={{
           name: "Brandon PT Davis",
           jobTitle: "Scenic Designer",
-          url: `${baseUrl}/about`,
+          url: `${SITE_URL}/about`,
           image: "https://www.brandonptdavis.com/android-chrome-512x512.png",
           description:
             "Scenic designer and conceptual artist known for a dramaturgical approach to stage space, with work at South Coast Repertory and 130+ productions across regional theatre, contemporary drama, and classical repertoire. Member of USA 829.",
@@ -207,7 +208,7 @@ export default function About() {
       <StructuredData
         type="ProfilePage"
         profilePage={{
-          url: "https://www.brandonptdavis.com/about",
+          url: `${SITE_URL}/about`,
           name: "About Brandon PT Davis",
           description:
             "Profile of Brandon PT Davis, scenic designer and USA 829 member based in Southern California.",
@@ -217,7 +218,7 @@ export default function About() {
           mainEntity: {
             name: "Brandon PT Davis",
             jobTitle: "Scenic Designer",
-            url: "https://www.brandonptdavis.com/about",
+            url: `${SITE_URL}/about`,
             image: "https://www.brandonptdavis.com/android-chrome-512x512.png",
             description:
               "Scenic designer and conceptual artist with 130+ production credits across regional theatre and academic stages.",
@@ -235,8 +236,8 @@ export default function About() {
       <StructuredData
         type="BreadcrumbList"
         breadcrumbs={[
-          { name: "Home", url: "https://www.brandonptdavis.com" },
-          { name: "About", url: "https://www.brandonptdavis.com/about" },
+          { name: "Home", url: SITE_URL },
+          { name: "About", url: `${SITE_URL}/about` },
         ]}
       />
 

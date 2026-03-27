@@ -113,7 +113,7 @@ function ProjectCard({
     <a href={href} onClick={(event) => onNavigate(event, href)}>
       <div className="group">
         <div
-          className="transition-card relative overflow-hidden rounded-xl bg-background/50"
+          className="transition-card relative aspect-square overflow-hidden rounded-xl bg-background/50"
           style={{ viewTransitionName: `project-card-${project.slug}` } as CSSProperties}
         >
           {project.coverImageUrl ? (

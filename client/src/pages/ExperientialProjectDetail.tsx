@@ -125,7 +125,7 @@ function SampleGallery({
           {galleryItems.map((image) => (
             <figure key={image.id} className="space-y-3">
               <button type="button" onClick={() => onOpenImage(image.id)} className="block w-full text-left">
-                <div className="flex aspect-[4/3] items-center justify-center overflow-hidden rounded-xl bg-white">
+                <div className="flex aspect-square items-center justify-center overflow-hidden rounded-xl bg-white">
                   <img
                     src={image.imageUrl}
                     alt={image.altText}
@@ -142,15 +142,20 @@ function SampleGallery({
           ))}
         </div>
       ) : galleryItems.length > 1 ? (
-        <ScenicRenderingGallery items={galleryItems} onOpen={onOpenImage} visibleCount={2} />
+        <ScenicRenderingGallery
+          items={galleryItems}
+          onOpen={onOpenImage}
+          visibleCount={2}
+          squareItems
+        />
       ) : galleryItems[0] ? (
         <figure className="space-y-3">
           <button type="button" onClick={() => onOpenImage(galleryItems[0].id)} className="block w-full text-left">
-            <div className="overflow-hidden rounded-xl bg-black">
+            <div className="aspect-square overflow-hidden rounded-xl bg-black">
               <img
                 src={galleryItems[0].imageUrl}
                 alt={galleryItems[0].altText}
-                className="block w-full object-cover transition-transform duration-500 hover:scale-[1.01]"
+                className="block h-full w-full object-cover transition-transform duration-500 hover:scale-[1.01]"
               />
             </div>
           </button>
@@ -471,7 +476,10 @@ export default function ExperientialProjectDetail({
                             src={item.coverImageUrl}
                             alt={`${item.title} experiential design preview image`}
                             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                            containerClassName="h-full w-full"
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            width={900}
+                            aspectRatio="1 / 1"
                           />
                         ) : (
                           <div className="h-full w-full bg-muted" />

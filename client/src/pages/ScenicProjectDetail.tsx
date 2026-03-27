@@ -751,7 +751,7 @@ export default function ScenicProjectDetail({
                   </p>
                   <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
                     {moreScenicProjects.map((item) => (
-                      <Link key={item.id} href={`/project/${item.slug}`} className="group block">
+                      <Link key={item.slug} href={`/project/${item.slug}`} className="group block">
                         <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-black/85">
                           {item.coverImageUrl ? (
                             <ProgressiveImage

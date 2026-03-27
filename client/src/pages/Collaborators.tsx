@@ -287,7 +287,7 @@ export default function Collaborators() {
                             fill
                             unoptimized
                             quality={82}
-                            sizes="100vw"
+                            sizes="(max-width: 768px) 100vw, 80rem"
                             className="object-cover"
                           />
                         </div>

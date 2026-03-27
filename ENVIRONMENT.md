@@ -74,3 +74,8 @@ pnpm dev
 - Never commit real secrets.
 - Keep `SUPABASE_SERVICE_KEY` server-only.
 - Only expose `NEXT_PUBLIC_*` variables intentionally.
+# OpenAI
+- `OPENAI_API_KEY`
+- `OPENAI_SEARCH_MODEL`
+  - Optional override for AI site search.
+  - Default: `gpt-4.1-mini`

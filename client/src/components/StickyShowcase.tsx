@@ -295,7 +295,7 @@ export function StickyShowcase({
               itemAlt={itemAlt}
               itemHref={itemHref}
               onNavigate={onNavigate}
-              sizes="100vw"
+              sizes="(max-width: 767px) calc(100vw - 2rem), 0px"
               width={index === 0 ? 1440 : 1080}
             />
           ))}

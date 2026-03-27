@@ -12,12 +12,14 @@ type ScenicRenderingGalleryProps = {
   items: ScenicRenderingGalleryItem[];
   onOpen: (mediaId: string) => void;
   visibleCount?: number;
+  squareItems?: boolean;
 };
 
 export default function ScenicRenderingGallery({
   items,
   onOpen,
   visibleCount = 2,
+  squareItems = false,
 }: ScenicRenderingGalleryProps) {
   const [startIndex, setStartIndex] = useState(0);
   const canGoPrev = startIndex > 0;
@@ -58,11 +60,15 @@ export default function ScenicRenderingGallery({
               onClick={() => onOpen(item.id)}
               className="block w-full text-left"
             >
-              <img
-                src={item.imageUrl}
-                alt={item.altText}
-                className="block w-full rounded-xl object-cover transition-transform duration-500 hover:scale-[1.01]"
-              />
+              <div className={squareItems ? "aspect-square overflow-hidden rounded-xl" : ""}>
+                <img
+                  src={item.imageUrl}
+                  alt={item.altText}
+                  className={`block w-full rounded-xl object-cover transition-transform duration-500 hover:scale-[1.01] ${
+                    squareItems ? "h-full" : ""
+                  }`}
+                />
+              </div>
             </button>
             {item.caption ? (
               <figcaption className="text-[0.92rem] leading-6 tracking-[-0.01em] text-foreground/56">
