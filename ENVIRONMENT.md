@@ -78,4 +78,4 @@ pnpm dev
 
 ## Legacy Note
 
-Some maintenance scripts in `scripts/` still reference Supabase for older migration/history workflows. Those are no longer required by the live public site, but they are the reason some old Supabase env names may still appear in legacy scripts or notes until that tooling is fully retired.
+No Supabase environment variables are required for the live site or its remaining maintenance tooling.

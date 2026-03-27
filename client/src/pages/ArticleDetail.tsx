@@ -65,7 +65,7 @@ const normalizeQuoteText = (text: string): string => {
 
 const getArticleMediaUrl = (url: string): string => {
   if (!url) return url;
-  if (url.includes("supabase.co/storage/v1/object/public/")) {
+  if (url.startsWith("/") || url.includes("blob.vercel-storage.com")) {
     return url;
   }
   return proxyImageUrl(url, 1920);

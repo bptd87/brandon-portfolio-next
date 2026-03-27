@@ -1,5 +1,3 @@
-import { scenicBlobManifest } from "./scenicBlobManifest";
-
 export const SCENIC_BLOB_ROOT = "images/projects/scenic-design";
 
 function stripQueryAndHash(input: string) {
@@ -35,22 +33,11 @@ export function getScenicBlobPath(projectSlug: string, mediaId: string, sourceUr
 
 export function resolveScenicMediaUrl(url?: string | null) {
   if (!url) return url ?? null;
-  return scenicBlobManifest[url] || url;
+  return url;
 }
 
 export function applyScenicMediaManifest<T extends { coverImageUrl?: string | null; media?: Array<any> }>(
   project: T
 ): T {
-  return {
-    ...project,
-    coverImageUrl: resolveScenicMediaUrl(project.coverImageUrl),
-    media: Array.isArray(project.media)
-      ? project.media.map((item) =>
-          item?.type === "image" && item?.imageUrl
-            ? { ...item, imageUrl: resolveScenicMediaUrl(item.imageUrl) }
-            : item
-        )
-      : project.media,
-  };
+  return project;
 }
-

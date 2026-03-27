@@ -1,12 +1,10 @@
-import { mediaBlobManifest } from "./mediaBlobManifest";
-
 function isPlainObject(value: unknown): value is Record<string, unknown> {
   return Object.prototype.toString.call(value) === "[object Object]";
 }
 
 export function resolveBlobMediaUrl(url?: string | null) {
   if (!url) return url ?? null;
-  return mediaBlobManifest[url] || url;
+  return url;
 }
 
 export function applyBlobMediaManifest<T>(value: T): T {

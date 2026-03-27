@@ -1,38 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 
-// Apply Supabase image transformations for optimization
-function applySupabaseTransformations(src: string, width?: number, forceTransformWebp?: boolean): string {
-  // Only transform Supabase storage URLs
-  if (!src.includes('supabase.co/storage/v1/object/public/')) {
-    return src;
-  }
-
-  // Keep original WebP files only when we don't need responsive resizing.
-  // Above-the-fold cards should still request sized transforms instead of
-  // pulling the full original asset on first load.
-  const isWebP = src.toLowerCase().endsWith('.webp');
-  if (isWebP && !forceTransformWebp && !width) {
-    return src; // Keep original WebP, it's already optimized
-  }
-
-  // Parse Supabase URL: https://{project}.supabase.co/storage/v1/object/public/{bucket}/{path}
-  const publicIndex = src.indexOf('/storage/v1/object/public/');
-  if (publicIndex === -1) return src;
-
-  const baseUrl = src.substring(0, publicIndex);
-  const pathAfterPublic = src.substring(publicIndex + '/storage/v1/object/public/'.length);
-
-  const params = new URLSearchParams();
-
-  if (width) {
-    params.set('width', width.toString());
-  }
-
-  params.set('quality', '82');
-
-  return `${baseUrl}/storage/v1/render/image/public/${pathAfterPublic}?${params.toString()}`;
-}
-
 // Apply Cloudinary transformations for automatic optimization
 function applyCloudinaryTransformations(src: string, width?: number): string {
   // Only transform Cloudinary URLs
@@ -67,21 +34,6 @@ function applyCloudinaryTransformations(src: string, width?: number): string {
   const transformString = transformations.join(',');
 
   return `${baseUrl}${transformString}/${pathAfterUpload}`;
-}
-
-// Generate responsive srcset for Supabase images
-function generateSupabaseSrcSet(src: string): string {
-  if (!src.includes('supabase.co/storage/v1/object/public/')) {
-    return '';
-  }
-
-  const widths = [400, 800, 1200, 1600, 2400];
-  const srcsetEntries = widths.map(width => {
-    const transformedUrl = applySupabaseTransformations(src, width, true);
-    return `${transformedUrl} ${width}w`;
-  });
-
-  return srcsetEntries.join(', ');
 }
 
 // Generate responsive srcset for Cloudinary images
@@ -226,16 +178,11 @@ export function ProgressiveImage({
   }, [imageLoaded, blurFadeDuration, loading]);
 
   // Apply image transformations based on source (Supabase or Cloudinary)
-  const isSupabase = src.includes('supabase.co/storage/v1/object/public/');
   const isCloudinary = src.includes('cloudinary.com');
-  
-  const optimizedSrc = isSupabase 
-    ? applySupabaseTransformations(src, width, forceTransformWebp)
-    : applyCloudinaryTransformations(src, width);
+  void forceTransformWebp;
 
-  const srcSet = isSupabase
-    ? generateSupabaseSrcSet(src)
-    : generateSrcSet(src);
+  const optimizedSrc = isCloudinary ? applyCloudinaryTransformations(src, width) : src;
+  const srcSet = generateSrcSet(src);
   const imageHeightClass = aspectRatio ? 'h-full' : 'h-auto';
 
   return (

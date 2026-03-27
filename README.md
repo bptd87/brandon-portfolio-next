@@ -79,14 +79,10 @@ client/public/       static public assets
 pnpm dev
 pnpm build
 pnpm test
-pnpm run generate:articles
-pnpm run generate:portfolios
-pnpm run migrate:supabase-assets:blob -- --write
 pnpm run migrate:manus-assets:blob -- --write
 ```
 
 ## Notes
 
 - The public site no longer depends on Supabase at runtime.
-- The `@supabase/supabase-js` dependency currently remains only because some legacy scripts still use it.
 - Tutorial pages intentionally use YouTube embeds and thumbnails.
