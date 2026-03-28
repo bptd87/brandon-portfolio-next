@@ -21,6 +21,7 @@ import { SEO } from "@/components/SEO";
 import { formatUtcDate } from "@/lib/date-format";
 import { getLocalTutorialBySlug } from "@shared/localStudio";
 import DeferredYouTubeEmbed from "@/components/DeferredYouTubeEmbed";
+import { getYouTubeThumbnail } from "@/lib/videoUtils";
 
 const categories = [
   { slug: "getting-started", name: "Getting Started" },
@@ -195,6 +196,9 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
   }
 
   const videoId = getYouTubeId(tutorial.video_url);
+  const tutorialThumbnail =
+    getYouTubeThumbnail(tutorial.video_url || "") ||
+    `https://img.youtube.com/vi/${videoId || ""}/hqdefault.jpg`;
   const tutorialSummary = getTutorialSummary(tutorial);
   const structuredUploadDate =
     tutorial.created_at || tutorial.updated_at || "1970-01-01T00:00:00.000Z";
@@ -206,7 +210,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
       <SEO
         title={`${tutorial.title} | Brandon PT Davis`}
         description={tutorialSummary}
-        image={`https://img.youtube.com/vi/${videoId || ""}/maxresdefault.jpg`}
+        image={tutorialThumbnail}
         type="website"
       />
       <StructuredData
@@ -214,7 +218,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
         videoObject={{
           name: tutorial.title,
           description: tutorialSummary || undefined,
-          thumbnailUrl: `https://img.youtube.com/vi/${videoId || ""}/maxresdefault.jpg`,
+          thumbnailUrl: tutorialThumbnail,
           uploadDate: new Date(structuredUploadDate).toISOString(),
           embedUrl: `https://www.youtube.com/embed/${videoId || ""}`,
           contentUrl: `https://www.youtube.com/watch?v=${videoId || ""}`,
@@ -229,7 +233,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
         howTo={{
           name: tutorial.title,
           description: tutorialSummary || undefined,
-          image: `https://img.youtube.com/vi/${videoId || ""}/maxresdefault.jpg`,
+          image: tutorialThumbnail,
           totalTime: tutorial.duration
             ? `PT${Math.floor(Number(tutorial.duration) / 60)}M`
             : undefined,

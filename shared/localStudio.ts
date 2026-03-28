@@ -131,8 +131,14 @@ const manualCollaborators: LocalCollaborator[] = [
   },
 ];
 
+const normalizeYouTubeThumbnail = (value?: string | null) =>
+  typeof value === "string" ? value.replace("/maxresdefault.jpg", "/hqdefault.jpg") : value;
+
 export function getLocalTutorials() {
-  return applyBlobMediaManifest(generatedLocalTutorials as LocalTutorial[]);
+  return applyBlobMediaManifest(generatedLocalTutorials as LocalTutorial[]).map((tutorial) => ({
+    ...tutorial,
+    cover_image: normalizeYouTubeThumbnail(tutorial.cover_image),
+  }));
 }
 
 export function getLocalTutorialBySlug(slug?: string | null) {

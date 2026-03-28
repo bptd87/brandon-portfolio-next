@@ -19,7 +19,7 @@ export default function DeferredYouTubeEmbed({
   const [isActivated, setIsActivated] = useState(false);
 
   const thumbnailUrl = useMemo(
-    () => `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+    () => `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
     [videoId]
   );
 
@@ -53,6 +53,11 @@ export default function DeferredYouTubeEmbed({
         alt={title}
         loading={eagerPoster ? "eager" : "lazy"}
         decoding="async"
+        onError={(event) => {
+          const img = event.currentTarget;
+          if (!img.src.includes("/hqdefault.jpg")) return;
+          img.src = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+        }}
         className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.015]"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-black/15" />

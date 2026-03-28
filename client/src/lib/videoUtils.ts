@@ -36,9 +36,9 @@ export function getYouTubeEmbedUrl(url: string): string {
 export function getYouTubeThumbnail(url: string): string | null {
   const videoId = extractYouTubeId(url);
   if (!videoId) return null;
-  
-  // Try maxresdefault first (1280x720), falls back to hqdefault (480x360) if not available
-  return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+
+  // Use the stable HQ thumbnail to avoid repeated 404s on videos that do not expose maxresdefault.
+  return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 }
 
 /**

@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ProgressiveImage } from '@/components/ProgressiveImage';
@@ -11,7 +12,6 @@ import { Sparkles, Copy, Check, ChevronLeft, ChevronRight, Link as LinkIcon, Pla
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
-import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
 import { SEO } from "@/components/SEO";
@@ -20,6 +20,10 @@ import { formatUtcDate } from "@/lib/date-format";
 import { getLocalArticleRecordBySlug, getLocalArticles } from "@shared/localArticles";
 import { getLocalScenicProjectBySlug } from "@shared/localScenicProjects";
 import DeferredYouTubeEmbed from "@/components/DeferredYouTubeEmbed";
+
+const Lightbox = dynamic(() => import("yet-another-react-lightbox"), {
+  ssr: false,
+});
 
 const NAMED_HTML_ENTITIES: Record<string, string> = {
   amp: "&",

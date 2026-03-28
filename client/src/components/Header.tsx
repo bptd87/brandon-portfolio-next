@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { Link, useLocation } from "wouter";
 import { useState, useRef, useEffect } from "react";
 import type { ReactNode } from "react";
@@ -22,8 +23,11 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import MobileMenu from "./MobileMenu";
-import SearchOverlay from "./SearchOverlay";
 import BrandMark from "./BrandMark";
+
+const SearchOverlay = dynamic(() => import("./SearchOverlay"), {
+  ssr: false,
+});
 
 type MenuItem = {
   name: string;
