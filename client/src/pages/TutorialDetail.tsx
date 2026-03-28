@@ -20,6 +20,7 @@ import StructuredData from "@/components/StructuredData";
 import { SEO } from "@/components/SEO";
 import { formatUtcDate } from "@/lib/date-format";
 import { getLocalTutorialBySlug } from "@shared/localStudio";
+import DeferredYouTubeEmbed from "@/components/DeferredYouTubeEmbed";
 
 const categories = [
   { slug: "getting-started", name: "Getting Started" },
@@ -303,19 +304,15 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
           <section className="mt-10">
             <div className="overflow-hidden rounded-[1.1rem] border border-border/28 bg-card/10">
-              <div className="aspect-[16/9]">
-                <iframe
-                  width="100%"
-                  height="100%"
-                  src={`https://www.youtube.com/embed/${videoId || ""}`}
+              {videoId ? (
+                <DeferredYouTubeEmbed
+                  videoId={videoId}
                   title={tutorial.title}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
-                  className="h-full w-full"
+                  eagerPoster
                 />
-              </div>
+              ) : (
+                <div className="aspect-[16/9] bg-black/30" />
+              )}
             </div>
 
             <div className="mt-5 flex flex-col gap-5 border-b border-border/20 pb-8 md:flex-row md:items-start md:justify-between">

@@ -19,6 +19,7 @@ import StructuredData from "@/components/StructuredData";
 import { formatUtcDate } from "@/lib/date-format";
 import { getLocalArticleRecordBySlug, getLocalArticles } from "@shared/localArticles";
 import { getLocalScenicProjectBySlug } from "@shared/localScenicProjects";
+import DeferredYouTubeEmbed from "@/components/DeferredYouTubeEmbed";
 
 const NAMED_HTML_ENTITIES: Record<string, string> = {
   amp: "&",
@@ -718,13 +719,17 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
             ) : null}
 
             {article.coverImageUrl && (
-              <div className="mx-auto mt-10 max-w-[88rem] overflow-hidden rounded-xl">
-                <img
+              <div className="mx-auto mt-10 max-w-[88rem] overflow-hidden rounded-xl bg-white/[0.02]">
+                <ProgressiveImage
                   src={article.coverImageUrl}
                   alt={article.coverImageAlt || article.title}
                   loading="eager"
-                  decoding="async"
-                  className="h-auto w-full cursor-pointer object-cover"
+                  fetchPriority="high"
+                  aspectRatio="16 / 9"
+                  objectFit="cover"
+                  enableScrollAnimation={false}
+                  sizes="(min-width: 1280px) 1120px, 100vw"
+                  className="cursor-pointer"
                   onClick={() => openArticleLightboxAt("cover")}
                 />
               </div>
@@ -1016,16 +1021,11 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
 
                         return (
                           <figure key={index} className="my-12">
-                            <div className="relative w-full rounded-xl overflow-hidden shadow-2xl" style={{ paddingBottom: '56.25%' }}>
-                              <iframe
-                                className="absolute top-0 left-0 w-full h-full"
-                                src={`https://www.youtube.com/embed/${videoId}`}
-                                title={section.caption || 'Video'}
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                              />
-                            </div>
+                            <DeferredYouTubeEmbed
+                              videoId={videoId || ""}
+                              title={section.caption || "Article video"}
+                              className="rounded-xl shadow-2xl"
+                            />
                             {section.caption && (
                               <figcaption className="mt-4 text-center text-[0.88rem] italic text-white">
                                 {decodeHTMLEntities(section.caption)}
