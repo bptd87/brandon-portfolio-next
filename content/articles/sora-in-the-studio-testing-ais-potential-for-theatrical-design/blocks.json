@@ -1,15 +1,15 @@
 [
   {
     "type": "paragraph",
-    "text": "I approached Sora as a studio tool, not a replacement for design thinking. The question was simple: can it accelerate research and communication without flattening authorship, collaboration, or production reality?"
+    "text": "I approached <a href=\"https://openai.com/sora/\" target=\"_blank\" rel=\"noopener noreferrer\">Sora</a> as a studio tool, not a replacement for design thinking. The question was simple: can it accelerate research and communication without flattening authorship, collaboration, or production reality?"
   },
   {
     "type": "paragraph",
-    "text": "I share those concerns. Yet I can't ignore how the landscape is shifting around us. In architectural visualization and commercial production, AI is already becoming standard practice. Detailed 3D modeling that once took days in Cinema 4D or Unreal Engine is increasingly being replaced by faster, AI-driven alternatives—not because they're better, but because they're more economical and efficient."
+    "text": "I share those concerns. Yet I can't ignore how the landscape is shifting around us. In architectural visualization and commercial production, AI is already becoming standard practice. Detailed 3D modeling that once took days in <a href=\"https://www.maxon.net/en/cinema-4d\" target=\"_blank\" rel=\"noopener noreferrer\">Cinema 4D</a> or <a href=\"https://www.unrealengine.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Unreal Engine</a> is increasingly being replaced by faster, AI-driven alternatives—not because they're better, but because they're more economical and efficient."
   },
   {
     "type": "paragraph",
-    "text": "What makes Sora different is its remarkable ability to understand and transform existing images. Unlike tools like Midjourney that excel at generating images from text descriptions, Sora can take a designer's original rendering and enhance it while maintaining the core design elements. This image-to-image capability is revolutionary for designers who already have visualization skills but want to elevate their presentations without starting from scratch."
+    "text": "What makes Sora different is its remarkable ability to understand and transform existing images. Unlike tools like <a href=\"https://www.midjourney.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Midjourney</a> that excel at generating images from text descriptions, Sora can take a designer's original rendering and enhance it while maintaining the core design elements. This image-to-image capability is revolutionary for designers who already have visualization skills but want to elevate their presentations without starting from scratch."
   },
   {
     "type": "paragraph",
@@ -22,7 +22,7 @@
   },
   {
     "type": "paragraph",
-    "text": "Before diving into my experiments, it's worth highlighting what makes Sora distinctive in the AI landscape. Unlike Gigapixel AI, which enhances resolution but often produces unpredictable results and requires significant time investment, Sora offers more creative control while maintaining reasonable processing speeds. Though not as lightning-fast as Midjourney, Sora's learning curve is considerably gentler—especially for designers who already think visually rather than textually."
+    "text": "Before diving into my experiments, it's worth highlighting what makes Sora distinctive in the AI landscape. Unlike <a href=\"https://www.topazlabs.com/gigapixel\" target=\"_blank\" rel=\"noopener noreferrer\">Gigapixel AI</a>, which enhances resolution but often produces unpredictable results and requires significant time investment, Sora offers more creative control while maintaining reasonable processing speeds. Though not as lightning-fast as Midjourney, Sora's learning curve is considerably gentler—especially for designers who already think visually rather than textually."
   },
   {
     "type": "paragraph",
@@ -31,8 +31,8 @@
   {
     "type": "image",
     "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/muehnpndivgrmnbd-00a78c9d.webp",
-    "alt": "Production image from Sora in the Studio: Testing AI's Potential for Theatrical Design",
-    "caption": "Production image from Sora in the Studio: Testing AI's Potential for Theatrical Design"
+    "alt": "Digital collage of screens with text on a yellow background and a glowing hand reaching for a landscape print on a desk under a lamp.",
+    "caption": "Sora workflow collage"
   },
   {
     "type": "heading",
@@ -46,10 +46,10 @@
   {
     "type": "list",
     "items": [
-      "Primary design software: Vectorworks for drafting and basic 3D modeling",
+      "Primary design software: <a href=\"https://www.vectorworks.net/\" target=\"_blank\" rel=\"noopener noreferrer\">Vectorworks</a> for drafting and basic 3D modeling",
       "Rendering enhancement: Sora for image-to-video and retexturing",
-      "Post-processing: Adobe Photoshop for fine-tuning AI outputs",
-      "Prompt development: ChatGPT to help craft precise instructions (essential for Sora's workflow)",
+      "Post-processing: <a href=\"https://www.adobe.com/products/photoshop.html\" target=\"_blank\" rel=\"noopener noreferrer\">Adobe Photoshop</a> for fine-tuning AI outputs",
+      "Prompt development: <a href=\"https://openai.com/chatgpt/\" target=\"_blank\" rel=\"noopener noreferrer\">ChatGPT</a> to help craft precise instructions (essential for Sora's workflow)",
       "Hardware: 16″ MacBook Pro M4 Max with 64GB RAM for local work"
     ],
     "ordered": false,
@@ -85,12 +85,17 @@
   {
     "type": "image",
     "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/hflxyqapfvdjahxw-50c31b44.webp",
-    "alt": "Image",
-    "caption": "Image"
+    "alt": "Cafe interior with two people at the counter. Red and black decor with a menu above. Shelves with books and plants in the foreground.",
+    "caption": "Red Line Cafe concept rendering"
   },
   {
     "type": "ai_prompt",
     "prompt": "This was a simple request to see how the software would interpret the atmosphere, layout, and depth of the space."
+  },
+  {
+    "type": "video",
+    "url": "https://video.wixstatic.com/video/9e1774_2f61386ce4fe4c3d82d8b28240595aa0/480p/mp4/file.mp4",
+    "caption": "Sora animation test from the Red Line Cafe rendering"
   },
   {
     "type": "heading",
@@ -129,6 +134,12 @@
     "text": "Process & Prompt"
   },
   {
+    "type": "image",
+    "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/all-my-sons-before-original.jpeg",
+    "alt": "A man on a porch and a couple on a bench are in a theater set resembling a house with trees. The scene is lit warmly, evoking calm.",
+    "caption": "All My Sons rendering before Sora enhancement"
+  },
+  {
     "type": "paragraph",
     "text": "The All My Sons rendering was an older image I had previously enhanced using Gigapixel AI. I wanted to see if Sora could refine the textures while preserving the original design elements."
   },
@@ -139,8 +150,8 @@
   {
     "type": "image",
     "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/qnbroxdeqyvrpdvj-6afe9ff6.webp",
-    "alt": "Image",
-    "caption": "Image"
+    "alt": "A man stands on a wooden porch, while a couple sits on a bench in a yard with tall trees. The mood is somber, with muted colors.",
+    "caption": "All My Sons rendering after Sora retexturing"
   },
   {
     "type": "paragraph",
@@ -162,8 +173,8 @@
   {
     "type": "image",
     "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/eyivtdrcudjhdptr-c778b35e.webp",
-    "alt": "Image",
-    "caption": "Image"
+    "alt": "A stage with a triangular arch, a person in front, and two large photos. Yellow stars on the floor. Text reads 'San Salvador, March 1980.'",
+    "caption": "Romero Vectorworks rendering"
   },
   {
     "type": "heading",
@@ -181,8 +192,8 @@
   {
     "type": "image",
     "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/fdnydlxjckcuxxqc-eceba2a4.webp",
-    "alt": "Image",
-    "caption": "Image"
+    "alt": "Man in clerical attire at podium in a dark room. Behind are photos, a triangular frame, and text reading 'San Salvador, El Salvador, March 1930.'",
+    "caption": "Romero rendering after Sora enhancement"
   },
   {
     "type": "heading",
@@ -200,13 +211,13 @@
   },
   {
     "type": "paragraph",
-    "text": "ContextI had created a simple graphic for a blog about connections between scenic design and video game level design. I wanted to see if Sora could enhance the visual appeal through texture and lighting while maintaining the essential information."
+    "text": "I had created a simple graphic for a blog about connections between scenic design and video game level design. I wanted to see if Sora could enhance the visual appeal through texture and lighting while maintaining the essential information."
   },
   {
     "type": "image",
     "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/rmvayovbwqqsugng-935892aa.webp",
-    "alt": "Image",
-    "caption": "Image"
+    "alt": "Simplified level design diagram with labeled stages: Blockout, Focal Point, and Guidance. Beige, red, and green colors, with text.",
+    "caption": "Video game level design graphic before Sora"
   },
   {
     "type": "ai_prompt",
@@ -215,8 +226,8 @@
   {
     "type": "image",
     "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/eykltjchdfqmqykt-7223883c.webp",
-    "alt": "Image",
-    "caption": "Image"
+    "alt": "Video Game Level Design: Three stages labeled Blockout, Focal Point, and Guidance. Each has 3D cubes; Guidance includes a glowing crystal.",
+    "caption": "Graphic after Sora enhancement"
   },
   {
     "type": "heading",
@@ -248,8 +259,8 @@
   {
     "type": "image",
     "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/jzomcmlwrhvowkle-aa404e4c.webp",
-    "alt": "Image",
-    "caption": "Image"
+    "alt": "Man on stage under a 'BOMONT' sign and sports banners. Blue and purple lighting sets a dramatic mood with stone-like pillars flanking the scene.",
+    "caption": "Footloose rendering before sketch conversion"
   },
   {
     "type": "ai_prompt",
@@ -258,8 +269,8 @@
   {
     "type": "image",
     "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/hfwvnjhdgzpjjxxt-d3e3f40a.webp",
-    "alt": "Image",
-    "caption": "Image"
+    "alt": "Man stands in gym with banners above labeled with sports and years. 'BOMONT' appears on the wall in a pencil sketch with a reflective mood.",
+    "caption": "Sketch-style rendering generated with Sora"
   },
   {
     "type": "paragraph",
@@ -282,8 +293,8 @@
   {
     "type": "image",
     "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/lmcmmwnsbdvzjkyn-abde7a2d.webp",
-    "alt": "Image",
-    "caption": "Image"
+    "alt": "Stage set with rustic timber-framed walls and stone accents. A lone person stands near a window, with wooden tables on a wooden floor.",
+    "caption": "Falstaff scenic model photo"
   },
   {
     "type": "ai_prompt",
@@ -292,8 +303,8 @@
   {
     "type": "image",
     "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/tpylqycpsrxzpxmm-bfdc1198.webp",
-    "alt": "Image",
-    "caption": "Image"
+    "alt": "Lively tavern scene with a jovial man in brown speaking to captivated patrons. Timber-framed walls, rustic attire, and warm lighting.",
+    "caption": "Falstaff tavern scene after Sora population and retexturing"
   },
   {
     "type": "heading",
@@ -329,8 +340,8 @@
   {
     "type": "image",
     "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/tleuvetoickblmqp-b63a14bb.webp",
-    "alt": "Image",
-    "caption": "Image"
+    "alt": "Wooden beams on beige plaster next to a gray stone wall. Rustic textures and earthy tones create a medieval, sturdy vibe.",
+    "caption": "Texture sheet generated from the Falstaff image"
   },
   {
     "type": "heading",
@@ -348,8 +359,8 @@
   {
     "type": "image",
     "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/palbzrqdpgonnvxt-06f5bc08.webp",
-    "alt": "Image",
-    "caption": "Image"
+    "alt": "Stone path leads to a medieval village with wooden houses; flowers and greenery surround the scene on a peaceful, sunny day.",
+    "caption": "Skyrim path reference image"
   },
   {
     "type": "ai_prompt",
@@ -358,8 +369,8 @@
   {
     "type": "image",
     "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/fixgurqthdcrmaxm-bafaa41b.webp",
-    "alt": "Image",
-    "caption": "Image"
+    "alt": "Rough cobblestone path with variously sized gray stones set in brown earth, creating a rustic texture and pattern.",
+    "caption": "Seamless cobblestone texture generated from the reference image"
   },
   {
     "type": "heading",
@@ -386,7 +397,7 @@
   },
   {
     "type": "paragraph",
-    "text": "After seeing how well Sora translated a model photo into a theatrical image, I wondered what it would do with a costume rendering. My colleague and friend, Lauryn Terceira, graciously allowed me to use one of her designs for this test."
+    "text": "After seeing how well Sora translated a model photo into a theatrical image, I wondered what it would do with a costume rendering. My colleague and friend, <a href=\"https://www.laurynterceira.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Lauryn Terceira</a>, graciously allowed me to use one of her designs for this test."
   },
   {
     "type": "paragraph",
@@ -394,9 +405,9 @@
   },
   {
     "type": "image",
-    "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/jtiucxexjjndzjkt-3921f4bc.webp",
-    "alt": "Image",
-    "caption": "Image"
+    "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/costume-sketch-original.jpg",
+    "alt": "Fashion sketch of a woman in a floral dress and boots, surrounded by vintage illustrations and coat sketches. Text reads 'IBE-Act II Cecily Cardew.'",
+    "caption": "Lauryn Terceira costume rendering for Cecily Cardew"
   },
   {
     "type": "ai_prompt",
@@ -404,9 +415,9 @@
   },
   {
     "type": "image",
-    "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/htfsxpsrfcnubqog-7a07a3f8.webp",
-    "alt": "Image",
-    "caption": "Image"
+    "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/costume-realism-original.jpeg",
+    "alt": "Woman in an orange floral dress with puffed sleeves stands against patterned wallpaper. She wears green gloves and brown boots, expressing calmness.",
+    "caption": "Cecily Cardew rendering translated to realism"
   },
   {
     "type": "paragraph",
@@ -415,8 +426,8 @@
   {
     "type": "image",
     "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/jemuxcuhoxchpjhx-4271197f.webp",
-    "alt": "Image",
-    "caption": "Image"
+    "alt": "Yellow and orange floral pattern with green leaves on a peach background, featuring large blooming flowers and flowing leaves.",
+    "caption": "Printed floral fabric swatch"
   },
   {
     "type": "ai_prompt",
@@ -424,9 +435,9 @@
   },
   {
     "type": "image",
-    "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/rznzjkccpzteihkr-9ceb8646.webp",
-    "alt": "Image",
-    "caption": "Image"
+    "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/costume-pattern-original.jpeg",
+    "alt": "Young woman in a floral dress with puffy sleeves, green gloves, and brown boots stands in front of patterned wallpaper, smiling softly.",
+    "caption": "Updated Cecily Cardew look with integrated floral pattern"
   },
   {
     "type": "heading",
@@ -435,7 +446,7 @@
   },
   {
     "type": "paragraph",
-    "text": "While the colors weren't an exact match, the result was surprisingly accurate. This demonstrated how Sora could help align visual elements between scenic and costume designs, particularly during concept development or pitch presentations. I'm grateful to Lauryn Terceira for allowing me to experiment with her beautiful costume designs for this test."
+    "text": "While the colors weren't an exact match, the result was surprisingly accurate. This demonstrated how Sora could help align visual elements between scenic and costume designs, particularly during concept development or pitch presentations. I'm grateful to <a href=\"https://www.laurynterceira.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Lauryn Terceira</a> for allowing me to experiment with her beautiful costume designs for this test."
   },
   {
     "type": "heading",
@@ -485,8 +496,8 @@
   {
     "type": "image",
     "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/body/fltjyfchcweorepp-ec6c5864.webp",
-    "alt": "Image",
-    "caption": "Image"
+    "alt": "Sketch of a room on paper, laptop with 'AI,' and a model on a desk. Papers read 'Client Presentation' and 'Production Meeting.'",
+    "caption": "AI-assisted studio workflow sketch"
   },
   {
     "type": "heading",
@@ -530,9 +541,9 @@
   {
     "type": "list",
     "items": [
-      "Sora Official Documentation",
-      "RunwayML – Alternative for intensive rendering tasks",
-      "ChatGPT Prompt Engineering Guide"
+      "<a href=\"https://openai.com/sora/\" target=\"_blank\" rel=\"noopener noreferrer\">Sora Official Documentation</a>",
+      "<a href=\"https://runwayml.com/\" target=\"_blank\" rel=\"noopener noreferrer\">RunwayML</a> — Alternative for intensive rendering tasks.",
+      "<a href=\"https://developers.openai.com/api/docs/guides/prompt-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">ChatGPT Prompt Engineering Guide</a>"
     ],
     "ordered": false,
     "listType": "bullet"
@@ -559,7 +570,7 @@
   {
     "type": "list",
     "items": [
-      "United Scenic Artists",
+      "<a href=\"https://www.usa829.org/\" target=\"_blank\" rel=\"noopener noreferrer\">United Scenic Artists</a>",
       "Scenic Design & Technology Professionals (Facebook Group)",
       "Artificial Intelligence in Design – Forum discussing ethical AI use in creative fields"
     ],
@@ -574,9 +585,9 @@
   {
     "type": "list",
     "items": [
-      "Vectorworks – Industry standard for scenic drafting",
-      "SketchUp – Accessible 3D modeling",
-      "Adobe Creative Cloud – Essential for post-processing"
+      "<a href=\"https://www.vectorworks.net/\" target=\"_blank\" rel=\"noopener noreferrer\">Vectorworks</a> — Industry standard for scenic drafting.",
+      "<a href=\"https://www.sketchup.com/\" target=\"_blank\" rel=\"noopener noreferrer\">SketchUp</a> — Accessible 3D modeling.",
+      "<a href=\"https://www.adobe.com/creativecloud.html\" target=\"_blank\" rel=\"noopener noreferrer\">Adobe Creative Cloud</a> — Essential for post-processing."
     ],
     "ordered": false,
     "listType": "bullet"

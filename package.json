@@ -13,6 +13,7 @@
     "check": "next build --webpack",
     "format": "prettier --write .",
     "test": "vitest run",
+    "generate:file-first-article-overrides": "node --import tsx scripts/generate-file-first-article-overrides.ts",
     "migrate:manus-assets:blob": "node --import tsx scripts/migrate-manus-assets-to-blob.ts"
   },
   "dependencies": {

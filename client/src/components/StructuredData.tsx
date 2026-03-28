@@ -3,6 +3,8 @@
  * Supports Person and Organization schemas for rich snippets in search results
  */
 
+import Script from "next/script";
+
 interface PersonSchema {
   name: string;
   jobTitle?: string;
@@ -886,11 +888,14 @@ export default function StructuredData({ type, person, organization, creativeWor
   return (
     <>
       {schemas.map((schema, index) => (
-        <script
+        <Script
           key={`${type}-${index}`}
+          id={`${type}-${index}-jsonld`}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-        />
+          strategy="beforeInteractive"
+        >
+          {JSON.stringify(schema).replace(/</g, "\\u003c")}
+        </Script>
       ))}
     </>
   );

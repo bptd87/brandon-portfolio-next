@@ -13,7 +13,7 @@
   },
   {
     "type": "paragraph",
-    "text": "One particularly helpful approach I've discovered is using ChatGPT or other large language models (LLMs) as an intermediary when working with these art generators. The LLM can help translate your creative vision into the precise language that Midjourney or Sora responds to best. For example, telling ChatGPT \"I want an artist's studio at sunset with dramatic shadows\" might yield a refined prompt like \"An artist's studio with scattered supplies, bathed in golden hour light with long, angular shadows stretching across wooden floorboards, cinematic composition, ultra-detailed.\""
+    "text": "One particularly helpful approach I've discovered is using <a href=\"https://openai.com/chatgpt/\" target=\"_blank\" rel=\"noopener noreferrer\">ChatGPT</a> or other large language models (LLMs) as an intermediary when working with these art generators. The LLM can help translate your creative vision into the precise language that Midjourney or Sora responds to best. For example, telling ChatGPT \"I want an artist's studio at sunset with dramatic shadows\" might yield a refined prompt like \"An artist's studio with scattered supplies, bathed in golden hour light with long, angular shadows stretching across wooden floorboards, cinematic composition, ultra-detailed.\""
   },
   {
     "type": "paragraph",
@@ -510,7 +510,7 @@
   },
   {
     "type": "paragraph",
-    "text": "If you're struggling to get the right results, use ChatGPT or another LLM to help refine your prompts. Simply describe what you want to see, and the LLM can help translate your vision into the technical language that Midjourney and Sora understand best."
+    "text": "If you're struggling to get the right results, use <a href=\"https://openai.com/chatgpt/\" target=\"_blank\" rel=\"noopener noreferrer\">ChatGPT</a> or another LLM to help refine your prompts. Simply describe what you want to see, and the LLM can help translate your vision into the technical language that Midjourney and Sora understand best."
   },
   {
     "type": "ai_prompt",
@@ -532,7 +532,7 @@
   },
   {
     "type": "paragraph",
-    "text": "Lighting is one of the most effective tools theatre designers have to craft narrative visually. It shapes the rhythm of a production, builds atmosphere, and transitions me emotionally from moment to moment. Scenic design is inseparable from lighting — the textures, materials, and architecture of a set are all in conversation with how they are illuminated. As designers, I rely on this interplay to reveal space, emphasize scale, and reinforce meaning."
+    "text": "Lighting is one of the most effective tools theatre designers have to craft narrative visually. It shapes the rhythm of a production, builds atmosphere, and moves me emotionally from moment to moment. Scenic design is inseparable from lighting — the textures, materials, and architecture of a set are all in conversation with how they are illuminated. As a designer, I rely on this interplay to reveal space, emphasize scale, and reinforce meaning."
   },
   {
     "type": "paragraph",
@@ -553,11 +553,11 @@
   },
   {
     "type": "paragraph",
-    "text": "This experiment opens the door to more than just mood boards — imagine using lighting variation to communicate time of day, emotional arc, or even different play acts. We'll be sharing visual comparisons of each style on [Instagram / YouTube / Portfolio Site] to show how dramatically the mood can shift with nothing more than light."
+    "text": "This experiment opens the door to more than just mood boards — imagine using lighting variation to communicate time of day, emotional arc, or even different play acts. You can connect this kind of prompt testing back to the <a href=\"/projects/rendering\">Rendering &amp; Visualization portfolio</a> and the broader <a href=\"/articles\">article archive</a> to see how lighting decisions support design communication."
   },
   {
     "type": "paragraph",
-    "text": "Want to try it yourself? You can apply these styles to your own scenic rendering workflows — using AI to visualize how different lighting approaches might support your designs. Download the full list of Sora prompts or adapt them for MidJourney to begin experimenting."
+    "text": "Want to try it yourself? You can apply these styles to your own scenic rendering workflows — using AI to visualize how different lighting approaches might support your designs. Download the full list of Sora prompts or adapt them for Midjourney to begin experimenting."
   },
   {
     "type": "faq",

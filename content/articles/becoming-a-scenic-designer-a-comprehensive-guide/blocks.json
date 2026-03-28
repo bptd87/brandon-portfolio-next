@@ -9,9 +9,9 @@
   },
   {
     "type": "image",
-    "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/becoming-a-scenic-designer-a-comprehensive-guide/body/article-60128-cover-46186dd2.webp",
-    "alt": "Scenic design production image for Becoming a Scenic Designer: A Comprehensive Guide",
-    "caption": "Production image from Becoming a Scenic Designer: A Comprehensive Guide"
+    "url": "/assets/articles/becoming-a-scenic-designer-a-comprehensive-guide/early-practice.webp",
+    "alt": "Layered watercolor washes, vellum-like planes, and faint scenic linework suggesting repetition, revision, and early scenic design practice.",
+    "caption": "Early growth rarely arrives as a breakthrough. It builds in layers, through revision, uncertainty, and repeated returns to the work."
   },
   {
     "type": "heading",
@@ -85,6 +85,12 @@
     "text": "This is my work."
   },
   {
+    "type": "image",
+    "url": "/assets/articles/becoming-a-scenic-designer-a-comprehensive-guide/quiet-authorship.webp",
+    "alt": "A soft watercolor opening framed by charcoal and smoky blue-gray washes with delicate architectural traces, suggesting a scenic designer's voice coming into focus.",
+    "caption": "At some point the scattered effort starts to resolve, and the work begins to feel less like practice and more like authorship."
+  },
+  {
     "type": "heading",
     "level": 2,
     "text": "Collaborating as a Scenic Designer: From Contributor to Vision Partner"
@@ -146,6 +152,10 @@
   {
     "type": "paragraph",
     "text": "You’ll feel like a designer."
+  },
+  {
+    "type": "paragraph",
+    "text": "If you want to keep building from that point, this article pairs well with [Navigating the Scenic Design Process](/articles/scenic-design-process), [Artistic Vision in Scenic Design](/articles/artistic-vision-in-scenic-design-finding-my-creative-voice), and [You're Wasting My Time! — A Scenic Design Lesson in Growth and Revision](/articles/youre-wasting-my-time-a-scenic-design-lesson-in-growth-and-revision)."
   },
   {
     "type": "heading",

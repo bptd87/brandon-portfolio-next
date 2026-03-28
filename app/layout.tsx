@@ -63,6 +63,7 @@ export default function RootLayout({
       lang="en"
       className="dark"
       style={{ colorScheme: "dark" }}
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <head />

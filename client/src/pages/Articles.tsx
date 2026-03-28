@@ -114,9 +114,7 @@ function ArticleGridCard({
               fill
               quality={82}
               className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-              priority={Boolean(eager)}
               loading={eager ? "eager" : "lazy"}
-              fetchPriority={eager ? "high" : "auto"}
               sizes="(min-width: 1280px) 29vw, (min-width: 768px) 30vw, 94vw"
             />
           ) : (

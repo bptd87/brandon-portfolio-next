@@ -14,7 +14,6 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import { SEO } from "@/components/SEO";
-import StructuredData from "@/components/StructuredData";
 import { formatUtcDate } from "@/lib/date-format";
 import { getLocalArticleRecordBySlug, getLocalArticles } from "@shared/localArticles";
 import { getLocalScenicProjectBySlug } from "@shared/localScenicProjects";
@@ -149,6 +148,10 @@ const processHTMLImages = (html: string): string => {
       // Prevent malformed legacy srcset strings from breaking image selection.
       img.removeAttribute("srcset");
       img.removeAttribute("sizes");
+      img.removeAttribute("width");
+      img.removeAttribute("height");
+      img.removeAttribute("style");
+      img.removeAttribute("data-image-dimensions");
     });
 
     return div.innerHTML;
@@ -183,13 +186,14 @@ const processHTMLImages = (html: string): string => {
 
 type ArticleDetailProps = {
   slug?: string;
+  article?: ReturnType<typeof getLocalArticleRecordBySlug>;
   params?: {
     slug?: string;
   };
 };
 
-export default function ArticleDetail({ slug }: ArticleDetailProps = {}) {
-  return <ArticleDetailContent slug={slug} />;
+export default function ArticleDetail({ slug, article }: ArticleDetailProps = {}) {
+  return <ArticleDetailContent slug={slug} article={article} />;
 }
 
 function ArticleInlineVideo({ url, caption }: { url: string; caption?: string }) {
@@ -258,11 +262,12 @@ function ArticleInlineVideo({ url, caption }: { url: string; caption?: string })
       >
         <video
           ref={videoRef}
-          className="h-auto w-full"
+          className="aspect-[16/9] h-auto w-full bg-black object-cover"
           playsInline
           muted
           loop
           preload="metadata"
+          controls
         >
           <source src={url} type="video/mp4" />
         </video>
@@ -284,14 +289,9 @@ function ArticleInlineVideo({ url, caption }: { url: string; caption?: string })
   );
 }
 
-function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
-  const slug =
-    slugProp ||
-    params?.slug ||
-    (typeof window !== "undefined"
-      ? window.location.pathname.split("/").filter(Boolean).pop() || ""
-      : "");
-  const article = getLocalArticleRecordBySlug(slug);
+function ArticleDetailContent({ slug: slugProp, article: initialArticle, params }: ArticleDetailProps) {
+  const slug = slugProp || params?.slug || "";
+  const article = initialArticle || getLocalArticleRecordBySlug(slug);
 
   const galleryRefs = useRef<Record<number, HTMLDivElement | null>>({});
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -643,53 +643,6 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
         keywords={articleKeywords}
         url={`https://www.brandonptdavis.com/articles/${article.slug}`}
       />
-      <StructuredData
-        type="Article"
-        article={{
-          headline: article.title,
-          description: articleDescription,
-          image: article.coverImageUrl || undefined,
-          author: {
-            name: "Brandon PT Davis",
-            url: "https://www.brandonptdavis.com/about",
-          },
-          datePublished: article.publishedAt ? new Date(article.publishedAt).toISOString() : new Date(article.createdAt).toISOString(),
-          dateModified: article.updatedAt ? new Date(article.updatedAt).toISOString() : undefined,
-          publisher: {
-            name: "Brandon PT Davis Design",
-            logo: "https://www.brandonptdavis.com/android-chrome-512x512.png",
-          },
-          url: `https://www.brandonptdavis.com/articles/${article.slug}`,
-          wordCount: wordCount,
-          keywords: articleKeywords.split(',').map(k => k.trim()).filter(Boolean),
-          ...(article.series
-            ? {
-                isPartOf: {
-                  name: article.series.name,
-                },
-              }
-            : {}),
-          about: [
-            article.categoryName ? { type: "Thing", name: article.categoryName } : null,
-            ...linkedScenicProjects
-              .filter((project): project is NonNullable<(typeof linkedScenicProjects)[number]> => Boolean(project))
-              .map((project) => ({
-              type: "CreativeWork",
-              name: project.title,
-              url: `https://www.brandonptdavis.com/project/${project.slug}`,
-              })),
-          ].filter(Boolean) as Array<{ type?: string; name: string; url?: string }>,
-        }}
-      />
-      <StructuredData
-        type="BreadcrumbList"
-        breadcrumbs={[
-          { name: "Home", url: "https://www.brandonptdavis.com" },
-          { name: "Articles", url: "https://www.brandonptdavis.com/articles" },
-          { name: article.title, url: `https://www.brandonptdavis.com/articles/${article.slug}` },
-        ]}
-
-      />
       <Header />
       <article className="py-12 md:py-16">
         <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
@@ -935,8 +888,9 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
                                   alt={section.alt || section.caption || ''}
                                   loading="lazy"
                                   enableScrollAnimation={false}
+                                  containerClassName="w-full"
                                   sizes="(min-width: 1280px) 1088px, 100vw"
-                                  className="mx-auto max-h-[78vh] w-auto max-w-full cursor-pointer bg-white/[0.02] transition-opacity hover:opacity-90"
+                                  className="mx-auto w-full cursor-pointer bg-white/[0.02] transition-opacity hover:opacity-90"
                                   onClick={() => openArticleLightboxAt(`image-${index}`)}
                                 />
                               </div>
@@ -953,15 +907,16 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
                           return (
                             <figure
                               key={index}
-                              className="mx-auto my-8 flex max-w-[58rem] flex-col items-center"
+                              className="mx-auto my-8 flex w-full max-w-[58rem] flex-col items-center"
                             >
                               <ProgressiveImage
                                 src={getArticleMediaUrl(section.url)}
                                 alt={section.alt || section.caption || ''}
                                 loading="lazy"
                                 enableScrollAnimation={false}
+                                containerClassName="w-full"
                                 sizes="(min-width: 1024px) 58rem, 100vw"
-                                className="mx-auto max-h-[78vh] w-auto max-w-full cursor-pointer bg-white/[0.02] transition-opacity hover:opacity-95"
+                                className="mx-auto w-full cursor-pointer bg-white/[0.02] transition-opacity hover:opacity-95"
                                 onClick={() => openArticleLightboxAt(`image-${index}`)}
                               />
                               {(section.caption || section.alt) && (
@@ -974,14 +929,15 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
                         }
 
                         return (
-                          <figure key={index} className="flex flex-col items-center">
+                          <figure key={index} className="flex w-full flex-col items-center">
                             <ProgressiveImage
                               src={getArticleMediaUrl(section.url)}
                               alt={section.alt || section.caption || ''}
                               loading="lazy"
                               enableScrollAnimation={false}
+                              containerClassName="w-full"
                               sizes="(min-width: 1024px) 58rem, 100vw"
-                              className="mx-auto max-h-[78vh] w-auto max-w-full cursor-pointer bg-white/[0.02] transition-opacity hover:opacity-90"
+                              className="mx-auto w-full cursor-pointer bg-white/[0.02] transition-opacity hover:opacity-90"
                               onClick={() => openArticleLightboxAt(`image-${index}`)}
                             />
                             {(section.caption || section.alt) && (

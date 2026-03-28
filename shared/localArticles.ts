@@ -1,5 +1,9 @@
 import { generatedLocalArticles } from "./localArticles.generated";
 import { applyBlobMediaManifest } from "./mediaBlob";
+import {
+  fileFirstArticleContentBySlug,
+  fileFirstArticleFieldsBySlug,
+} from "./fileFirstArticles.generated";
 import urinetownArticleBlocks from "../content/articles/urinetown-scenic-design-building-a-dystopia-that-feels-uncomfortably-familiar/blocks.json";
 import conceptMusicalArticleBlocks from "../content/articles/when-broadway-got-a-revolution-the-rise-of-the-concept-musical-in-the-1970s/blocks.json";
 import britishMegamusicalArticleBlocks from "../content/articles/when-broadway-got-spectacular-the-rise-of-the-british-megamusical/blocks.json";
@@ -7,6 +11,8 @@ import evolutionNarrativeCinemaArticleBlocks from "../content/articles/the-evolu
 import musicalCinema1980sArticleBlocks from "../content/articles/the-1980s-musical-cinema-revolution-when-mtv-met-broadway-on-the-silver-screen/blocks.json";
 import lightingStylesArticleBlocks from "../content/articles/lighting-styles-in-ai-models/blocks.json";
 import computerHardwareArticleBlocks from "../content/articles/computer-hardware-why-scenic-designers-and-all-theatre-designers-need-to-care/blocks.json";
+import soraArticleBlocks from "../content/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/blocks.json";
+import themedEntertainmentArticleBlocks from "../content/articles/the-evolution-of-themed-entertainment-from-ancient-gardens-to-modern-immersive-experienceses-everything/blocks.json";
 
 export type LocalArticleBlock = Record<string, any>;
 
@@ -169,6 +175,11 @@ const articleFieldOverridesBySlug: Record<string, Partial<LocalArticle>> = {
   },
   "sora-in-the-studio-testing-ais-potential-for-theatrical-design": {
     categoryName: "Tools & Technology",
+    coverImageAlt:
+      "Desk with architectural sketches, a laptop, and a tablet displaying ruins against a yellow wall with shadows and drawings.",
+    seoTitle: "Sora in the Studio | AI for Scenic Design Workflows",
+    seoDescription:
+      "Field-tested notes on using Sora for scenic design ideation, communication, and iteration, including practical limits and production-safe use cases.",
   },
   "lighting-styles-in-ai-models": {
     categoryName: "Tools & Technology",
@@ -206,6 +217,8 @@ const articleFieldOverridesBySlug: Record<string, Partial<LocalArticle>> = {
   },
   "youre-wasting-my-time-a-scenic-design-lesson-in-growth-and-revision": {
     categoryName: "Design Process",
+    coverImageAlt:
+      "Scenic design student standing beside a review display with a model, drawings, and rendering boards.",
     excerpt:
       "A reflective essay on critique, revision, and the moment scenic design shifted from presentation toward real-time design thinking.",
     seoDescription:
@@ -247,6 +260,8 @@ const articleFieldOverridesBySlug: Record<string, Partial<LocalArticle>> = {
   "what-makes-a-good-scenic-design-rendering": {
     categoryName: "Tools & Technology",
     publishedAt: "2026-03-13",
+    coverImageAlt:
+      "Designer seated at a drafting table under a warm spotlight inside a teal studio space.",
     series: {
       name: "Design Communication",
       slug: "design-communication",
@@ -268,6 +283,10 @@ const contentOverridesBySlug: Record<string, LocalArticle["content"]> = {
     lightingStylesArticleBlocks as LocalArticle["content"],
   "computer-hardware-why-scenic-designers-and-all-theatre-designers-need-to-care":
     computerHardwareArticleBlocks as LocalArticle["content"],
+  "sora-in-the-studio-testing-ais-potential-for-theatrical-design":
+    soraArticleBlocks as LocalArticle["content"],
+  "the-evolution-of-themed-entertainment-from-ancient-gardens-to-modern-immersive-experienceses-everything":
+    themedEntertainmentArticleBlocks as LocalArticle["content"],
   "urinetown-scenic-design-building-a-dystopia-that-feels-uncomfortably-familiar":
     urinetownArticleBlocks as LocalArticle["content"],
   "what-makes-a-good-scenic-design-rendering": [
@@ -804,6 +823,28 @@ const contentOverridesBySlug: Record<string, LocalArticle["content"]> = {
       ],
     },
   ],
+};
+
+const fileFirstFieldMap = fileFirstArticleFieldsBySlug as Record<string, Partial<LocalArticle>>;
+const fileFirstContentMap = fileFirstArticleContentBySlug as Record<string, LocalArticle["content"]>;
+
+const mergeArticleSources = (article: LocalArticle): LocalArticle => {
+  const runtimeFieldOverrides = articleFieldOverridesBySlug[article.slug] ?? {};
+  const fileFirstFields = fileFirstFieldMap[article.slug] ?? {};
+  const categoryName = normalizeArticleCategory(
+    fileFirstFields.categoryName ?? runtimeFieldOverrides.categoryName ?? article.categoryName
+  );
+  const content =
+    fileFirstContentMap[article.slug] ?? contentOverridesBySlug[article.slug] ?? article.content;
+
+  return {
+    ...article,
+    ...runtimeFieldOverrides,
+    ...fileFirstFields,
+    categoryName,
+    content,
+    audio: audioBySlug[article.slug] ?? article.audio,
+  };
 };
 
 const voyageLaArticle: LocalArticle = {
@@ -2376,15 +2417,7 @@ const musicalCinema1980sArticle: LocalArticle = {
   content: musicalCinema1980sArticleBlocks as LocalArticle["content"],
 };
 
-const dbBackedArticles = (generatedLocalArticles as LocalArticle[]).map((article) => ({
-  ...article,
-  ...articleFieldOverridesBySlug[article.slug],
-  categoryName: normalizeArticleCategory(
-    articleFieldOverridesBySlug[article.slug]?.categoryName ?? article.categoryName
-  ),
-  content: contentOverridesBySlug[article.slug] ?? article.content,
-  audio: audioBySlug[article.slug],
-}));
+const dbBackedArticles = (generatedLocalArticles as LocalArticle[]).map(mergeArticleSources);
 
 const baseArticles = dbBackedArticles.some((article) => article.slug === VOYAGELA_ARTICLE_SLUG)
   ? dbBackedArticles
@@ -2407,6 +2440,7 @@ const articlesWithManualEntries = [
 ];
 
 export const localArticles = articlesWithManualEntries
+  .map(mergeArticleSources)
   .map((article) => ({
     ...article,
     categoryName: normalizeArticleCategory(article.categoryName),

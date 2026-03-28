@@ -85,7 +85,7 @@
   {
     "type": "video",
     "url": "https://www.youtube.com/embed/PSZxmZmBfnU?feature=oembed",
-    "caption": ""
+    "caption": "The Wizard of Oz (1939)"
   },
   {
     "type": "paragraph",
@@ -94,7 +94,7 @@
   {
     "type": "video",
     "url": "https://www.youtube.com/embed/g8P-ksDCBls?feature=oembed",
-    "caption": ""
+    "caption": "Meet Me in St. Louis (1944)"
   },
   {
     "type": "paragraph",
@@ -103,7 +103,7 @@
   {
     "type": "video",
     "url": "https://www.youtube.com/embed/ku5WeNn_unE?feature=oembed",
-    "caption": ""
+    "caption": "On the Town (1949)"
   },
   {
     "type": "paragraph",
@@ -112,16 +112,20 @@
   {
     "type": "video",
     "url": "https://www.youtube.com/embed/swloMVFALXw?feature=oembed",
-    "caption": ""
+    "caption": "Singin’ in the Rain (1952)"
   },
   {
     "type": "paragraph",
-    "text": "An American in Paris (1951)Featuring an extended ballet sequence, the film pushed the boundaries of dance as cinematic storytelling."
+    "text": "An American in Paris (1951): Featuring an extended ballet sequence, the film pushed the boundaries of dance as cinematic storytelling."
   },
   {
     "type": "video",
     "url": "https://www.youtube.com/embed/mM-K2xVFyk0?feature=oembed",
-    "caption": "The Band Wagon (1953)Another Minnelli production, this film offered a stylish, self-referential look at the theatre industry itself."
+    "caption": "An American in Paris (1951)"
+  },
+  {
+    "type": "paragraph",
+    "text": "The Band Wagon (1953): Another Minnelli production, this film offered a stylish, self-referential look at the theatre industry itself."
   },
   {
     "type": "heading",
@@ -143,12 +147,16 @@
   {
     "type": "video",
     "url": "https://www.youtube.com/embed/jHCsOFWuIb4?feature=oembed",
-    "caption": "Bob FosseThough his influence peaked later, Fosse’s early film work in the 1950s introduced a stylized, angular movement vocabulary that would reshape Broadway and film."
+    "caption": "Gene Kelly and character-driven choreography"
+  },
+  {
+    "type": "paragraph",
+    "text": "Bob Fosse: Though his influence peaked later, Fosse’s early film work in the 1950s introduced a stylized, angular movement vocabulary that would reshape Broadway and film."
   },
   {
     "type": "video",
     "url": "https://www.youtube.com/embed/BIiZuAVZH4w?feature=oembed",
-    "caption": ""
+    "caption": "Bob Fosse's early film choreography style"
   },
   {
     "type": "heading",
@@ -180,7 +188,7 @@
   {
     "type": "video",
     "url": "https://www.youtube.com/embed/xYW64moSLKg?feature=oembed",
-    "caption": ""
+    "caption": "Esther Williams and synchronized swimming spectacle"
   },
   {
     "type": "heading",

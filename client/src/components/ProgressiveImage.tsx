@@ -92,8 +92,7 @@ export function ProgressiveImage({
 }: ProgressiveImageProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
-  const [shouldLoad, setShouldLoad] = useState(loading === 'eager' || !aspectRatio);
-  const [showSharpImage, setShowSharpImage] = useState(false);
+  const [shouldLoad] = useState(true);
   const [isInView, setIsInView] = useState(!enableScrollAnimation); // Start visible if animation disabled
   const [objectPosition, setObjectPosition] = useState<string>('object-center');
   const imgRef = useRef<HTMLDivElement>(null);
@@ -125,30 +124,7 @@ export function ProgressiveImage({
     return () => observer.disconnect();
   }, [enableScrollAnimation, animationDelay]);
 
-  // Intersection Observer for preloading
-  useEffect(() => {
-    // Without an explicit aspect ratio, the container can have zero height before load.
-    // In that case, skip custom intersection gating and let the browser handle lazy loading.
-    if (loading === 'eager' || !aspectRatio || !imgRef.current) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setShouldLoad(true);
-            observer.disconnect();
-          }
-        });
-      },
-      {
-        rootMargin: preloadMargin,
-      }
-    );
-
-    observer.observe(imgRef.current);
-
-    return () => observer.disconnect();
-  }, [loading, preloadMargin]);
+  void preloadMargin;
 
   // Smart positioning for portrait vs landscape
   useEffect(() => {
@@ -166,24 +142,15 @@ export function ProgressiveImage({
     };
   }, [src, smartPosition, shouldLoad]);
 
-  // Hold blurred version for minimum duration, then fade to sharp
-  useEffect(() => {
-    if (!imageLoaded) return;
-
-    const timer = setTimeout(() => {
-      setShowSharpImage(true);
-    }, loading === 'eager' ? 0 : Math.min(blurFadeDuration, 140));
-
-    return () => clearTimeout(timer);
-  }, [imageLoaded, blurFadeDuration, loading]);
-
   // Apply image transformations based on source (Supabase or Cloudinary)
   const isCloudinary = src.includes('cloudinary.com');
   void forceTransformWebp;
+  void blurFadeDuration;
 
   const optimizedSrc = isCloudinary ? applyCloudinaryTransformations(src, width) : src;
   const srcSet = generateSrcSet(src);
   const imageHeightClass = aspectRatio ? 'h-full' : 'h-auto';
+  const resolvedObjectFit = aspectRatio ? objectFit : 'contain';
 
   return (
     <div
@@ -196,13 +163,13 @@ export function ProgressiveImage({
       `}
       style={aspectRatio ? { aspectRatio } : undefined}
     >
-      {!imageError && (
+      {!imageError && shouldLoad && (
         <div
           aria-hidden="true"
           className={`
             absolute inset-0 bg-[rgba(255,255,255,0.04)]
             transition-opacity duration-300 ease-out
-            ${showSharpImage ? 'opacity-0' : 'opacity-100'}
+            ${imageLoaded ? 'opacity-0' : 'opacity-100'}
           `}
         />
       )}
@@ -215,11 +182,10 @@ export function ProgressiveImage({
           alt={alt}
           className={`
             w-full ${imageHeightClass}
-            ${objectFit === 'cover' ? 'object-cover' : 'object-contain'}
+            ${resolvedObjectFit === 'cover' ? 'object-cover' : 'object-contain'}
             ${smartPosition ? objectPosition : ''}
             rounded-[0.8rem]
-            transition-opacity duration-300 ease-out
-            ${showSharpImage ? 'opacity-100' : 'opacity-0'}
+            opacity-100
             ${className}
           `}
           onClick={onClick}

@@ -2,8 +2,12 @@ import type { Metadata } from "next";
 
 import ArticleDetailPage from "../../../client/src/pages/ArticleDetail";
 import { NextPathProvider } from "../../../components/routing/NextPathProvider";
-import { buildPageMetadata } from "../../../lib/metadata";
-import { getLocalArticleBySlug, getLocalArticles } from "../../../shared/localArticles";
+import { buildPageMetadata, stripHtml } from "../../../lib/metadata";
+import {
+  getLocalArticleBySlug,
+  getLocalArticleRecordBySlug,
+  getLocalArticles,
+} from "../../../shared/localArticles";
 
 type ArticlePageProps = {
   params: Promise<{
@@ -46,9 +50,87 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 
 export default async function Page({ params }: ArticlePageProps) {
   const { slug } = await params;
+  const article = getLocalArticleRecordBySlug(slug);
+  const articleDescription = article?.excerpt
+    ? stripHtml(article.excerpt)
+    : article
+      ? `${article.title} by Brandon PT Davis on scenic design, production thinking, and visual storytelling.`
+      : undefined;
+  const articleJsonLd = article
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: article.title,
+        description: articleDescription,
+        image: article.coverImageUrl || undefined,
+        author: {
+          "@type": "Person",
+          name: "Brandon PT Davis",
+          url: "https://www.brandonptdavis.com/about",
+        },
+        datePublished: article.publishedAt
+          ? new Date(article.publishedAt).toISOString()
+          : article.createdAt
+            ? new Date(article.createdAt).toISOString()
+            : undefined,
+        dateModified: article.updatedAt ? new Date(article.updatedAt).toISOString() : undefined,
+        publisher: {
+          "@type": "Organization",
+          name: "Brandon PT Davis Design",
+          logo: "https://www.brandonptdavis.com/android-chrome-512x512.png",
+        },
+        url: `https://www.brandonptdavis.com/articles/${article.slug}`,
+        keywords: article.seoKeywords || undefined,
+      }
+    : null;
+  const breadcrumbJsonLd = article
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://www.brandonptdavis.com",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Articles",
+            item: "https://www.brandonptdavis.com/articles",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: article.title,
+            item: `https://www.brandonptdavis.com/articles/${article.slug}`,
+          },
+        ],
+      }
+    : null;
+
   return (
-    <NextPathProvider currentPath={`/articles/${slug}`}>
-      <ArticleDetailPage slug={slug} />
-    </NextPathProvider>
+    <>
+      {articleJsonLd ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(articleJsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
+      ) : null}
+      {breadcrumbJsonLd ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
+      ) : null}
+      <NextPathProvider currentPath={`/articles/${slug}`}>
+        <ArticleDetailPage slug={slug} article={article} />
+      </NextPathProvider>
+    </>
   );
 }

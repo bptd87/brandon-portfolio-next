@@ -88,7 +88,7 @@
   },
   {
     "type": "paragraph",
-    "text": "Tools like <a href='https://chat.openai.com' target='_blank'>ChatGPT</a> can help you draft descriptive alt text quickly. Describe the scene, the design elements, and the production context. For example: 'Scenic design for The Glass Menagerie featuring a translucent apartment set with fire escape, designed by Brandon PT Davis for South Coast Repertory, 2025.'"
+    "text": "Tools like <a href='https://openai.com/chatgpt/' target='_blank' rel='noopener noreferrer'>ChatGPT</a> can help you draft descriptive alt text quickly. Describe the scene, the design elements, and the production context. For example: 'Scenic design for The Glass Menagerie featuring a translucent apartment set with fire escape, designed by Brandon PT Davis for South Coast Repertory, 2025.'"
   },
   {
     "type": "heading",
@@ -131,6 +131,10 @@
     "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/online-portfolio-theatrical-design-2026/body/fkxxdrondeivvwah-compressed-562e840b.webp",
     "caption": "A robust content strategy combines portfolio showcases with articles and news to drive organic traffic",
     "alt": "Digital illustration of content strategy showing multiple content types like tutorials, portfolio images, news, and articles connected through a central hub with theatrical lighting"
+  },
+  {
+    "type": "paragraph",
+    "text": "On a working portfolio site, that usually means giving your <a href=\"/projects\">Projects</a>, <a href=\"/about\">About</a>, <a href=\"/resume\">Resume</a>, <a href=\"/contact\">Contact</a>, and <a href=\"/articles\">Articles</a> pages distinct jobs instead of letting them blur together."
   },
   {
     "type": "paragraph",
