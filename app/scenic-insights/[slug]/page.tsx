@@ -1,4 +1,6 @@
-import { permanentRedirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
+
+import { getLocalArticleBySlug } from "../../../shared/localArticles";
 
 const LEGACY_ARTICLE_REDIRECTS: Record<string, string> = {
   "navigating-the-scenic-design-process-a-comprehensive-guide": "/articles/scenic-design-process",
@@ -21,5 +23,9 @@ type PageProps = {
 
 export default async function Page({ params }: PageProps) {
   const { slug } = await params;
-  permanentRedirect(LEGACY_ARTICLE_REDIRECTS[slug] || "/articles");
+  const destination = LEGACY_ARTICLE_REDIRECTS[slug] || (getLocalArticleBySlug(slug) ? `/articles/${slug}` : null);
+  if (!destination) {
+    notFound();
+  }
+  permanentRedirect(destination);
 }

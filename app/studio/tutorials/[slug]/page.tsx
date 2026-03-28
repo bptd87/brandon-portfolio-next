@@ -1,6 +1,7 @@
 import TutorialDetailPage from "../../../../client/src/pages/TutorialDetail";
 import { NextPathProvider } from "../../../../components/routing/NextPathProvider";
 import { buildPageMetadata } from "../../../../lib/metadata";
+import { notFound } from "next/navigation";
 import { getLocalTutorialBySlug, getLocalTutorials } from "../../../../shared/localStudio";
 
 type TutorialPageProps = {
@@ -8,6 +9,7 @@ type TutorialPageProps = {
 };
 
 export const dynamic = "force-static";
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   return getLocalTutorials().map((tutorial) => ({ slug: tutorial.slug }));
@@ -34,6 +36,11 @@ export async function generateMetadata({ params }: TutorialPageProps) {
 
 export default async function Page({ params }: TutorialPageProps) {
   const { slug } = await params;
+  const tutorial = getLocalTutorialBySlug(slug);
+
+  if (!tutorial) {
+    notFound();
+  }
 
   return (
     <NextPathProvider currentPath={`/studio/tutorials/${slug}`}>

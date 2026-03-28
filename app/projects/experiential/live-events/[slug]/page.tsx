@@ -1,15 +1,15 @@
 import {
+  ExperientialSamplePage,
   getExperientialSampleMetadata,
   getExperientialSampleStaticParams,
 } from "../../../../../components/site/ExperientialSamplePage";
-import ExperientialSampleDetailPage from "../../../../../client/src/pages/ExperientialSampleDetail";
-import { NextPathProvider } from "../../../../../components/routing/NextPathProvider";
 
 type SamplePageProps = {
   params: Promise<{ slug: string }>;
 };
 
 export const dynamic = "force-static";
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   return getExperientialSampleStaticParams("live-events");
@@ -21,11 +21,5 @@ export async function generateMetadata({ params }: SamplePageProps) {
 }
 
 export default async function LiveEventSamplePage({ params }: SamplePageProps) {
-  const { slug } = await params;
-
-  return (
-    <NextPathProvider currentPath={`/projects/experiential/live-events/${slug}`}>
-      <ExperientialSampleDetailPage category="live-events" slug={slug} />
-    </NextPathProvider>
-  );
+  return <ExperientialSamplePage category="live-events" params={params} />;
 }

@@ -517,12 +517,11 @@ export default function DesignHistoryTimeline() {
                 Design History Timeline
               </div>
               <h1 className="font-sans text-[clamp(2.5rem,6vw,5rem)] font-medium leading-[0.94] tracking-[-0.06em] text-foreground">
-                Design periods, references, and historical context.
+                Design periods, references, and historical context for interiors and architecture.
               </h1>
               <p className="mt-6 max-w-2xl text-[1rem] leading-7 text-foreground/60 md:text-[1.05rem]">
                 A working reference library for architectural and interior design history. Search by
-                movement, region, or characteristic, then open any period for palette, figures, and
-                notable works.
+                movement, region, or characteristic, then open any period for palette, figures, notable works, and visual reference.
               </p>
             </div>
 

@@ -1,4 +1,4 @@
-import { permanentRedirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 import ScenicProjectDetailPage from "../../../client/src/pages/ScenicProjectDetail";
 import { NextPathProvider } from "../../../components/routing/NextPathProvider";
@@ -36,7 +36,11 @@ export default async function Page({ params }: ScenicProjectPageProps) {
   const project = getLocalScenicProjectBySlug(slug);
 
   if (!project) {
-    permanentRedirect(resolveLegacyProjectPath(slug));
+    const destination = resolveLegacyProjectPath(slug);
+    if (!destination) {
+      notFound();
+    }
+    permanentRedirect(destination);
   }
 
   return (

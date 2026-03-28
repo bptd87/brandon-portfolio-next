@@ -7,7 +7,7 @@ export const dynamic = "force-static";
 export const metadata = buildPageMetadata({
   title: "About Brandon PT Davis",
   description:
-    "Southern California scenic designer with production credits across regional theatre, summer stock, and education.",
+    "About Brandon PT Davis, a scenic designer working across theatre, rendering, experiential design, and scenic design education.",
   pathname: "/about",
 });
 

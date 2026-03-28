@@ -5,9 +5,9 @@ import { buildPageMetadata } from "../lib/metadata";
 export const dynamic = "force-static";
 
 export const metadata = buildPageMetadata({
-  title: "Brandon PT Davis | Scenic Designer",
+  title: "Scenic Designer for Theatre, Rendering, and Experiential Work",
   description:
-    "Union scenic designer in Southern California creating story-driven environments for regional theatre, summer stock, and academic production.",
+    "Brandon PT Davis is a scenic designer creating theatre environments, concept renderings, and experiential design work for regional productions, universities, and branded spaces.",
   pathname: "/",
 });
 

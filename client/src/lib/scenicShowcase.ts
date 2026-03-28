@@ -36,7 +36,7 @@ export const scenicShowcaseProps = {
 
 export const scenicPortfolioLandingCopy = {
   title: "Scenic Design",
-  subtitle: "Story-driven environments for live performance.",
+  subtitle: "Production environments built for story, rhythm, and performance.",
   intro:
-    "A selected body of scenic design work across regional theatre, summer stock, academic production, and new play development. Each project is built around story, rhythm, architecture, and what the audience needs to feel in the room.",
+    "A selected body of scenic design work across musicals, plays, Shakespeare, and new work. These productions are organized as portfolio case studies with images, credits, and the spatial thinking behind the design.",
 } as const;

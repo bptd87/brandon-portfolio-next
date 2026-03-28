@@ -656,7 +656,6 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
             ? {
                 isPartOf: {
                   name: article.series.name,
-                  url: `https://www.brandonptdavis.com/articles?series=${article.series.slug}`,
                 },
               }
             : {}),

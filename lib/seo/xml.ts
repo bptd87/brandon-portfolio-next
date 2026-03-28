@@ -54,6 +54,13 @@ function toIsoDate(value?: string | Date | null) {
   return date.toISOString();
 }
 
+function toAbsoluteAssetUrl(value: string) {
+  if (!value) return value;
+  if (/^https?:\/\//i.test(value)) return value;
+  if (value.startsWith("/")) return absoluteUrl(value);
+  return value;
+}
+
 export function xmlResponse(body: string) {
   return new Response(body, {
     headers: {
@@ -123,7 +130,7 @@ export function buildImageSitemap(entries: ImageSitemapEntry[]) {
         .map((entry) => {
           return [
             "<image:image>",
-            `<image:loc>${escapeXml(entry.imageUrl)}</image:loc>`,
+            `<image:loc>${escapeXml(toAbsoluteAssetUrl(entry.imageUrl))}</image:loc>`,
             entry.title ? `<image:title>${escapeXml(entry.title)}</image:title>` : "",
             entry.caption ? `<image:caption>${escapeXml(entry.caption)}</image:caption>` : "",
             "</image:image>",
@@ -153,10 +160,10 @@ export function buildVideoSitemap(entries: VideoSitemapEntry[]) {
         "<url>",
         `<loc>${escapeXml(pageUrl)}</loc>`,
         "<video:video>",
-        `<video:thumbnail_loc>${escapeXml(entry.thumbnailUrl)}</video:thumbnail_loc>`,
+        `<video:thumbnail_loc>${escapeXml(toAbsoluteAssetUrl(entry.thumbnailUrl))}</video:thumbnail_loc>`,
         `<video:title>${escapeXml(entry.title)}</video:title>`,
         `<video:description>${escapeXml(stripHtml(entry.description))}</video:description>`,
-        `<video:player_loc allow_embed="yes">${escapeXml(entry.playerUrl)}</video:player_loc>`,
+        `<video:player_loc allow_embed="yes">${escapeXml(toAbsoluteAssetUrl(entry.playerUrl))}</video:player_loc>`,
         publishedAt ? `<video:publication_date>${escapeXml(publishedAt)}</video:publication_date>` : "",
         "<video:family_friendly>yes</video:family_friendly>",
         "</video:video>",

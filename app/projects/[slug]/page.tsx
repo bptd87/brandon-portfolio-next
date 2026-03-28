@@ -1,4 +1,4 @@
-import { permanentRedirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { getLocalScenicProjects } from "../../../shared/localScenicProjects";
 import { resolveLegacyProjectPath } from "../../../shared/legacyRedirects";
 
@@ -14,5 +14,9 @@ export async function generateStaticParams() {
 
 export default async function Page({ params }: ScenicAliasPageProps) {
   const { slug } = await params;
-  permanentRedirect(resolveLegacyProjectPath(slug));
+  const destination = resolveLegacyProjectPath(slug);
+  if (!destination) {
+    notFound();
+  }
+  permanentRedirect(destination);
 }

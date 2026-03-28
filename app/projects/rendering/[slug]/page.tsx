@@ -1,6 +1,7 @@
 import RenderingProjectDetailPage from "../../../../client/src/pages/RenderingProjectDetail";
 import { NextPathProvider } from "../../../../components/routing/NextPathProvider";
 import { buildPageMetadata } from "../../../../lib/metadata";
+import { notFound } from "next/navigation";
 import { getLocalRenderingProjectBySlug, getLocalRenderingProjects } from "../../../../shared/localPortfolios";
 
 type RenderingProjectPageProps = {
@@ -8,6 +9,7 @@ type RenderingProjectPageProps = {
 };
 
 export const dynamic = "force-static";
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   return getLocalRenderingProjects().map((project) => ({ slug: project.slug }));
@@ -30,6 +32,11 @@ export async function generateMetadata({ params }: RenderingProjectPageProps) {
 
 export default async function Page({ params }: RenderingProjectPageProps) {
   const { slug } = await params;
+  const project = getLocalRenderingProjectBySlug(slug);
+
+  if (!project) {
+    notFound();
+  }
 
   return (
     <NextPathProvider currentPath={`/projects/rendering/${slug}`}>

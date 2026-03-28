@@ -80,8 +80,8 @@ export default function StudioApps() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title="Scenic Design Tools | Professional Calculators & Resources"
-        description="Web-based tools for scenic designers: scale calculators, dimension references, paint mixers, and design resources. Professional apps for theatrical designers."
+        title="Studio Apps for Scenic Design Workflow"
+        description="Production-focused calculators, reference tools, and utilities for scenic drafting, paint, modeling, and research."
         keywords="scenic design calculator, architecture scale converter, paint mixing calculator, Rosco paint, design history timeline, theatrical design tools, scenic design apps, web-based design tools"
         type="website"
         url="https://www.brandonptdavis.com/studio/apps"
@@ -100,6 +100,7 @@ export default function StudioApps() {
           name: "Scenic Design Tools",
           url: "https://www.brandonptdavis.com/studio/apps",
           description: "Browser-based scenic design calculators, references, and utility apps.",
+          description: "Production-focused scenic design apps for drafting, scale, paint, modeling, and research.",
           about: "Studio applications for scenic design workflow.",
           primaryImageOfPage:
             "https://www.brandonptdavis.com/assets/studio/studio-app-scenic-3d-converter.png",
@@ -193,11 +194,11 @@ export default function StudioApps() {
                 Studio Apps
               </p>
               <h1 className="mt-5 font-sans text-[clamp(3rem,6vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
-                Scenic design tools for production workflow.
+                Scenic design tools for drafting, paint, modeling, and research.
               </h1>
               <p className="mx-auto mt-7 max-w-3xl text-[1.06rem] leading-8 text-foreground/62 md:text-[1.14rem]">
-                Practical calculators, references, and utility apps for scenic drafting, paint,
-                modeling, and research, built to be fast on desktop and useful on site.
+                Practical calculators, reference tools, and utilities built for scenic workflow,
+                whether you are drafting at a desk, mixing paint in the shop, or checking dimensions on site.
               </p>
             </div>
 
@@ -217,7 +218,7 @@ export default function StudioApps() {
                 App Library
               </p>
               <h2 className="mt-4 font-sans text-[clamp(2.1rem,4vw,3.2rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
-                Practical tools for scenic design workflow.
+                Practical tools for production-ready scenic workflow.
               </h2>
             </div>
           </AnimatedSection>

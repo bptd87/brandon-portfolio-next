@@ -94,8 +94,9 @@ export function ContactPage() {
               Start a scenic design conversation.
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-[1rem] leading-7 text-white/58 md:text-[1.08rem]">
-              Professional scenic design inquiries are welcome. Share the production, venue,
-              timeline, and design goals, and I&apos;ll follow up with next steps.
+              Scenic design, rendering, teaching, and collaboration inquiries are welcome. Share
+              the production, venue, timeline, and design goals, and I&apos;ll respond with a clear
+              next step.
             </p>
           </div>
         </section>
@@ -119,7 +120,7 @@ export function ContactPage() {
               </p>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-white/54">
                 Include the production, venue, schedule, and scope if you know them. More context
-                makes the next step faster and clearer.
+                helps me respond with the right next step more quickly.
               </p>
             </div>
 

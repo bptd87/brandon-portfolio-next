@@ -467,11 +467,11 @@ export default function Resume() {
               <div className="max-w-3xl xl:max-w-4xl">
                 <p className="text-[0.95rem] leading-7 text-foreground/72">Resume / CV</p>
                 <h1 className="mt-6 max-w-4xl font-sans text-[clamp(3rem,6.4vw,5.85rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
-                  Resume, CV, and selected scenic design credits.
+                  Resume, CV, and selected production credits.
                 </h1>
                 <p className="mt-7 max-w-3xl text-[1.05rem] leading-8 text-foreground/60 md:text-[1.12rem]">
                   Scenic design credits across regional theatre, summer stock, academic production,
-                  and new work development, with downloadable resume and CV for full reference.
+                  and new work development, with resume and CV downloads for a fuller professional record.
                 </p>
 
                 <div className="mt-8 flex flex-wrap items-center gap-4 text-[0.95rem] text-foreground/72">

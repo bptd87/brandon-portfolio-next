@@ -20,9 +20,9 @@ import { getConfiguredSiteUrl } from "../../../lib/env/site";
 
 const homeLandingCopy = {
   subtitle: "Brandon PT Davis",
-  title: "Scenic design, rendering, and spatial storytelling for live performance.",
+  title: "Scenic design, rendering, and experiential work shaped by story.",
   intro:
-    "A portfolio of theatre and experiential work shaped by story, rhythm, architecture, and the emotional logic of performance.",
+    "A portfolio of theatre environments, concept renderings, and experiential design work built around story, architecture, and the emotional logic of performance.",
 } as const;
 
 const SITE_URL = getConfiguredSiteUrl();

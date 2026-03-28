@@ -69,8 +69,8 @@ export default function StudioDirectory() {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Scenic Directory | Brandon PT Davis"
-        description="A curated collection of essential resources for scenic designers, including industry organizations, software, suppliers, and research archives."
+        title="Scenic Design Resource Directory | Brandon PT Davis"
+        description="A curated scenic design resource directory covering theatre organizations, archives, software, drafting references, and production suppliers."
         keywords="scenic design resources, theatre suppliers, design software, theatrical organizations, scenic design community"
         type="website"
         url="https://www.brandonptdavis.com/studio/directory"
@@ -85,12 +85,12 @@ export default function StudioDirectory() {
       />
       <StructuredData
         type="CollectionPage"
-        collectionPage={{
-          name: "Scenic Directory",
-          url: "https://www.brandonptdavis.com/studio/directory",
-          description:
-            "Curated scenic design resource directory for industry, software, modeling, and supplier links.",
-          about: "External resources for scenic designers and theatre production teams.",
+          collectionPage={{
+            name: "Scenic Directory",
+            url: "https://www.brandonptdavis.com/studio/directory",
+            description:
+            "Curated scenic design resource directory for theatre organizations, archives, software, modeling, and supplier links.",
+            about: "External resources for scenic designers and theatre production teams.",
           mainEntity: {
             name: "Directory Resources",
             itemListElement: (resources || []).slice(0, 150).map((resource: any, index: number) => ({
@@ -107,7 +107,7 @@ export default function StudioDirectory() {
         itemList={{
           name: "Scenic Directory Resource Links",
           description:
-            "Outbound links to scenic design resources, software, suppliers, and research references.",
+            "Outbound links to scenic design resources, software, suppliers, and theatre research references.",
           url: "https://www.brandonptdavis.com/studio/directory",
           itemListElement: (resources || [])
             .filter((resource: any) => typeof resource.url === "string" && resource.url.startsWith("http"))
@@ -132,8 +132,8 @@ export default function StudioDirectory() {
             Scenic Directory
           </h1>
           <p className="mx-auto mt-8 max-w-3xl text-center text-[1.08rem] leading-8 text-foreground/60 md:text-[1.16rem]">
-            A curated index of organizations, archives, software, references, and suppliers that
-            support scenic design research and professional practice.
+            A curated index of theatre organizations, archives, software, drafting references, and
+            suppliers that support scenic design research and professional practice.
           </p>
         </section>
 

@@ -84,9 +84,9 @@ const millionDollarQuartet: LocalScenicProject = {
   month: 9,
   status: "published",
   featured: true,
-  seoTitle: "Million Dollar Quartet | Scenic Design by Brandon PT Davis",
+  seoTitle: "Million Dollar Quartet Scenic Design | South Coast Repertory",
   seoDescription:
-    "Scenic design for Million Dollar Quartet at South Coast Repertory, balancing the intimacy of Sun Records with the scale and electricity of a mythic live jam session.",
+    "Scenic design for South Coast Repertory's Million Dollar Quartet, shaping Sun Records as both an intimate studio and a mythic live music environment.",
   seoKeywords:
     "Million Dollar Quartet, scenic design, South Coast Repertory, musical theatre, Sun Records, Brandon PT Davis",
   coverImageUrl:
@@ -121,7 +121,8 @@ const millionDollarQuartet: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-cover-5a61d757.webp",
-      altText: "Million Dollar Quartet scenic design cover image.",
+      altText:
+        "Million Dollar Quartet scenic design cover at South Coast Repertory, shaping Sun Records as an intimate studio and live music environment.",
       kind: "cover",
     },
     {
@@ -284,9 +285,9 @@ const glassMenagerie: LocalScenicProject = {
   month: 10,
   status: "published",
   featured: true,
-  seoTitle: "The Glass Menagerie | Scenic Design by Brandon PT Davis",
+  seoTitle: "The Glass Menagerie Scenic Design | Maples Repertory Theatre",
   seoDescription:
-    "Scenic design for The Glass Menagerie at Maples Repertory Theatre, shaped as a memory play environment that emphasizes emotional geography, fragility, and the pull between domestic enclosure and imagined escape.",
+    "Scenic design for The Glass Menagerie at Maples Repertory Theatre, framing the Wingfield apartment as memory architecture caught between domestic confinement, fragility, and escape.",
   seoKeywords:
     "The Glass Menagerie, scenic design, Maples Repertory Theatre, Tennessee Williams, Brandon PT Davis, memory play, theatre design",
   coverImageUrl:
@@ -317,7 +318,8 @@ const glassMenagerie: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-cover-775dc22f.webp",
-      altText: "The Glass Menagerie scenic design cover image.",
+      altText:
+        "The Glass Menagerie scenic design cover at Maples Repertory Theatre, framing the Wingfield apartment as memory architecture.",
       kind: "cover",
     },
     {
@@ -325,7 +327,8 @@ const glassMenagerie: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150121-18849ccd.webp",
-      altText: "Stage production photo of scenic design for The Glass Menagerie at Maples Repertory Theatre. View 2.",
+      altText:
+        "Production photo from The Glass Menagerie at Maples Repertory Theatre, scenic design by Brandon PT Davis.",
       kind: "production",
     },
     {
@@ -389,7 +392,8 @@ const glassMenagerie: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-gallery-150106-9de48421.webp",
-      altText: "Stage production photo of scenic design for The Glass Menagerie at Maples Repertory Theatre. View 1.",
+      altText:
+        "Production photo from The Glass Menagerie at Maples Repertory Theatre, showing the memory-play apartment, scenic design by Brandon PT Davis.",
       kind: "production",
     },
     {
@@ -477,7 +481,7 @@ const allsWellThatEndsWell: LocalScenicProject = {
   month: 7,
   status: "published",
   featured: false,
-  seoTitle: "All's Well That Ends Well | Scenic Design by Brandon PT Davis",
+  seoTitle: "All's Well That Ends Well Scenic Design | New Swan Theatre Festival",
   seoDescription:
     "Scenic design for All's Well That Ends Well at New Swan Theatre Festival, using curtains, heraldic signage, stucco textures, and operatic transitions to shape Shakespeare’s shifting worlds.",
   seoKeywords:
@@ -510,7 +514,8 @@ const allsWellThatEndsWell: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-cover-375c8ade.webp",
-      altText: "All's Well That Ends Well scenic design cover image.",
+      altText:
+        "All's Well That Ends Well scenic design cover at New Swan Theatre Festival, with drapery, heraldic detail, and a world that moves between Roussillon and Florence.",
       kind: "cover",
     },
     {
@@ -623,7 +628,7 @@ const bellBookAndCandle: LocalScenicProject = {
   month: 7,
   status: "published",
   featured: false,
-  seoTitle: "Bell, Book, and Candle | Scenic Design by Brandon PT Davis",
+  seoTitle: "Bell, Book, and Candle Scenic Design | Okoboji Summer Theatre",
   seoDescription:
     "Scenic design for Bell, Book, and Candle at Okoboji Summer Theatre, built as a grounded mid-century apartment that supports intimacy, wit, and subtle magical undertones.",
   seoKeywords:
@@ -656,7 +661,8 @@ const bellBookAndCandle: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90016-cover-7a4ed712.webp",
-      altText: "Bell, Book, and Candle scenic design cover image.",
+      altText:
+        "Bell, Book, and Candle scenic design cover at Okoboji Summer Theatre, with a grounded mid-century apartment and subtle magical atmosphere.",
       kind: "cover",
     },
     {
@@ -807,7 +813,7 @@ const muchAdoAboutNothing: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90089-cover-a7f4725c.webp",
-      altText: "Much Ado About Nothing scenic design cover image.",
+      altText: "Much Ado About Nothing scenic design cover at the production venue, by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -910,7 +916,7 @@ const guysOnIce: LocalScenicProject = {
   month: 1,
   status: "published",
   featured: true,
-  seoTitle: "Guys on Ice | Scenic Design by Brandon PT Davis",
+  seoTitle: "Guys on Ice Scenic Design | The Great American Melodrama",
   seoDescription:
     "Scenic design for Guys on Ice at The Great American Melodrama, balancing a playable frozen-lake comedy world with Midwestern specificity, winter texture, and a clear performance environment.",
   seoKeywords:
@@ -945,7 +951,8 @@ const guysOnIce: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-cover-ef6d8f84.webp",
-      altText: "Guys on Ice scenic design cover image.",
+      altText:
+        "Guys on Ice scenic design cover at The Great American Melodrama, presenting a frozen-lake comic world with winter texture.",
       kind: "cover",
     },
     {
@@ -1061,9 +1068,9 @@ const romero: LocalScenicProject = {
   month: 1,
   status: "published",
   featured: true,
-  seoTitle: "Romero | Scenic Design by Brandon PT Davis",
+  seoTitle: "Romero Scenic Design | University of Missouri",
   seoDescription:
-    "Scenic design for Romero at the University of Missouri, shaped as a ritual space for memory, grief, witness, and spiritual rupture.",
+    "Scenic design for the world-premiere Romero at the University of Missouri, building a ritualized environment for memory, witness, political violence, and spiritual reckoning.",
   seoKeywords:
     "Romero scenic design, University of Missouri theatre, world premiere scenic design, Brandon PT Davis, ritual staging",
   coverImageUrl:
@@ -1096,7 +1103,8 @@ const romero: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-cover-176d0cf7.webp",
-      altText: "Romero scenic design cover image.",
+      altText:
+        "Romero scenic design cover at the University of Missouri, framing the world premiere as a ritual memory space.",
       kind: "cover",
     },
     {
@@ -1208,9 +1216,9 @@ const urinetownProject: LocalScenicProject = {
   month: 11,
   status: "published",
   featured: false,
-  seoTitle: "Urinetown | Scenic Design by Brandon PT Davis",
+  seoTitle: "Urinetown Scenic Design | University of Missouri",
   seoDescription:
-    "Scenic design for Urinetown at the University of Missouri, using industrial levels, distressed infrastructure, and civic architecture to support satire, power, and ensemble movement.",
+    "Scenic design for Urinetown at the University of Missouri, using industrial platforms, distressed civic architecture, and class-coded vertical space to sharpen the musical's satire.",
   seoKeywords:
     "Urinetown scenic design, University of Missouri theatre, dystopian musical design, Brandon PT Davis, scenic design",
   coverImageUrl:
@@ -1239,7 +1247,8 @@ const urinetownProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-cover-cb5cfbfe.webp",
-      altText: "Urinetown scenic design cover image.",
+      altText:
+        "Urinetown scenic design cover at the University of Missouri, using industrial levels and distressed civic architecture.",
       kind: "cover",
     },
     {
@@ -1409,7 +1418,7 @@ const barefootInTheParkProject: LocalScenicProject = {
   month: 8,
   status: "published",
   featured: false,
-  seoTitle: "Barefoot in the Park | Scenic Design by Brandon PT Davis",
+  seoTitle: "Barefoot in the Park Scenic Design | Okoboji Summer Theatre",
   seoDescription:
     "Scenic design for Barefoot in the Park at Okoboji Summer Theatre, using a compact New York walk-up to support comedy, pressure, and relationship dynamics.",
   seoKeywords:
@@ -1442,7 +1451,8 @@ const barefootInTheParkProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-cover-29f63e4a.webp",
-      altText: "Barefoot in the Park scenic design cover image.",
+      altText:
+        "Barefoot in the Park scenic design cover at Okoboji Summer Theatre, centering the apartment world of the play.",
       kind: "cover",
     },
     {
@@ -1584,9 +1594,9 @@ const freakyFridayProject: LocalScenicProject = {
   month: 7,
   status: "published",
   featured: true,
-  seoTitle: "Freaky Friday | Scenic Design by Brandon PT Davis",
+  seoTitle: "Freaky Friday Scenic Design | Okoboji Summer Theatre",
   seoDescription:
-    "Scenic design for Freaky Friday at Okoboji Summer Theatre, using modular zones and legible transitions to support comedy, transformation, and musical momentum.",
+    "Scenic design for Freaky Friday at Okoboji Summer Theatre, using fast modular shifts and clear visual zones to support body-swap comedy, family conflict, and musical pace.",
   seoKeywords:
     "Freaky Friday scenic design, musical theatre scenic design, Okoboji Summer Theatre, Brandon PT Davis",
   coverImageUrl:
@@ -1619,7 +1629,8 @@ const freakyFridayProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/projects/scenic-design/freaky-friday/freaky-friday-cover.webp",
-      altText: "Freaky Friday scenic design cover image.",
+      altText:
+        "Freaky Friday scenic design cover at Okoboji Summer Theatre, using modular zones for a fast-changing body-swap story.",
       kind: "cover",
     },
     {
@@ -1797,7 +1808,7 @@ const anEnemyOfThePeopleProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-enemy-of-the-people-6-of-6-7499-f113149d.webp",
-      altText: "An Enemy of the People scenic design cover image.",
+      altText: "Scenic design for An Enemy of the People by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -1941,7 +1952,7 @@ const dialMForMurderProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-dial-m-for-murder-8-of-9-0343-ca01b79d.webp",
-      altText: "Dial M for Murder scenic design cover image.",
+      altText: "Scenic design for Dial M for Murder by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -2104,7 +2115,7 @@ const coleProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-7-of-8-8632-b71c63cf.webp",
-      altText: "Cole scenic design cover image.",
+      altText: "Scenic design for Cole by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -2275,7 +2286,7 @@ const headOverHeelsProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-cover-de6a3605.webp",
-      altText: "Head Over Heels scenic design cover image.",
+      altText: "Scenic design for Head Over Heels by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -2427,7 +2438,7 @@ const putnamCountySpellingBeeProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-6-of-6-5514-9770ab58.webp",
-      altText: "The 25th Annual Putnam County Spelling Bee scenic design cover image.",
+      altText: "Scenic design for The 25th Annual Putnam County Spelling Bee by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -2573,7 +2584,7 @@ const loteriaGameOnProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-cover-3f380dfa.webp",
-      altText: "¡LOTERIA: GAME ON! scenic design cover image.",
+      altText: "Scenic design for ¡LOTERIA: GAME ON! by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -2767,7 +2778,7 @@ const boeingBoeingProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-cover-ff265a2b.webp",
-      altText: "Boeing, Boeing scenic design cover image.",
+      altText: "Scenic design for Boeing, Boeing by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -2924,7 +2935,7 @@ const anInspectorCallsProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90036-cover-73346e1d.webp",
-      altText: "An Inspector Calls scenic design cover image.",
+      altText: "Scenic design for An Inspector Calls by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -3057,7 +3068,7 @@ const theManOfLaManchaProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2022-man-of-la-mancha-3-of-5-large-4479-f458638b.webp",
-      altText: "The Man of La Mancha scenic design cover image.",
+      altText: "Scenic design for The Man of La Mancha by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -3193,7 +3204,7 @@ const aFunnyThingHappenedProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90049-cover-3094f147.webp",
-      altText: "A Funny Thing Happened on the Way to the Forum scenic design cover image.",
+      altText: "Scenic design for A Funny Thing Happened on the Way to the Forum by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -3330,7 +3341,7 @@ const tomasAndTheLibraryLadyProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-cover-dee4ec53.webp",
-      altText: "Tomás and the Library Lady scenic design cover image.",
+      altText: "Scenic design for Tomás and the Library Lady by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -3621,7 +3632,7 @@ const notNowDarlingProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/not-now-darling-06dc38d64a-75b5cb64.jpg",
-      altText: "Not Now, Darling scenic design cover image.",
+      altText: "Scenic design for Not Now, Darling by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -3723,7 +3734,7 @@ const bingoTheWinningMusicalProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/bingo-the-winning-musical-dfa9f8cd99-91272f42.jpeg",
-      altText: "Bingo: The Winning Musical scenic design cover image.",
+      altText: "Scenic design for Bingo: The Winning Musical by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -3821,7 +3832,7 @@ const completeWorksAbridgedProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-complete-works-of-william-shakespeare-abridged-fcc6f3ed4f-4c52fd98.jpg",
-      altText: "The Complete Works of William Shakespeare (abridged) scenic design cover image.",
+      altText: "Scenic design for The Complete Works of William Shakespeare (abridged) by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -3936,7 +3947,7 @@ const theMerryWivesOfWindsorProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-cover-4f96e9e8.webp",
-      altText: "The Merry Wives of Windsor scenic design cover image.",
+      altText: "Scenic design for The Merry Wives of Windsor by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -4117,7 +4128,7 @@ const theMarvelousWonderettesDreamOnProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-2-of-10-4679-66380fbd.webp",
-      altText: "The Marvelous Wonderettes: Dream On scenic design cover image.",
+      altText: "Scenic design for The Marvelous Wonderettes: Dream On by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -4241,7 +4252,7 @@ const thePenelopiadProject: LocalScenicProject = {
   month: 2,
   status: "published",
   featured: true,
-  seoTitle: "The Penelopiad | Scenic Design by Brandon PT Davis",
+  seoTitle: "The Penelopiad Scenic Design | UC Irvine",
   seoDescription:
     "Scenic design for The Penelopiad at University of California Irvine, building a ritual memory space for testimony, chorus visibility, and layered mythic staging.",
   seoKeywords:
@@ -4276,7 +4287,8 @@ const thePenelopiadProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-cover-e4376934.webp",
-      altText: "The Penelopiad scenic design cover image.",
+      altText:
+        "The Penelopiad scenic design cover at University of California Irvine, building a ritual memory space for testimony and chorus.",
       kind: "cover",
     },
     {
@@ -4432,7 +4444,7 @@ const companyProject: LocalScenicProject = {
   month: 11,
   status: "published",
   featured: true,
-  seoTitle: "Company | Scenic Design by Brandon PT Davis",
+  seoTitle: "Company Scenic Design | UC Irvine",
   seoDescription:
     "Scenic design for Company at University of California Irvine, creating a New York cityscape of longing, movement, and shifting emotional rhythm.",
   seoKeywords:
@@ -4468,7 +4480,8 @@ const companyProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-cover-42d5b1b2.webp",
-      altText: "Company scenic design cover image.",
+      altText:
+        "Company scenic design cover at University of California Irvine, using a cityscape of longing and shifting emotional rhythm.",
       kind: "cover",
     },
     {
@@ -4680,7 +4693,7 @@ const thePajamaGameProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-cover-31192793.webp",
-      altText: "The Pajama Game scenic design cover image.",
+      altText: "Scenic design for The Pajama Game by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -4942,7 +4955,7 @@ const parliamentSquareProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-cover-3b50f3a4.webp",
-      altText: "Parliament Square scenic design cover image.",
+      altText: "Scenic design for Parliament Square by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -5136,7 +5149,7 @@ const americanIdiotProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90038-cover-6c8f8ee1.webp",
-      altText: "American Idiot scenic design cover image.",
+      altText: "Scenic design for American Idiot by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -5305,7 +5318,7 @@ const lastTrainToNibrocProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-3-of-10-7894-558b9e2f.webp",
-      altText: "Last Train to Nibroc scenic design cover image.",
+      altText: "Scenic design for Last Train to Nibroc by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -5483,7 +5496,7 @@ const vanyaAndSoniaAndMashaAndSpikeProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-1-of-7-1190-d193baa9.webp",
-      altText: "Vanya and Sonia and Masha and Spike scenic design cover image.",
+      altText: "Scenic design for Vanya and Sonia and Masha and Spike by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -5621,7 +5634,7 @@ const theLiarProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-daa6bff258-03b7fc44.jpg",
-      altText: "The Liar scenic design cover image.",
+      altText: "Scenic design for The Liar by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -5753,7 +5766,7 @@ const aSmalltowneChristmasProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/a-smalltowne-christmas-9717e6782b-8c625df9.jpg",
-      altText: "A Smalltowne Christmas scenic design cover image.",
+      altText: "Scenic design for A Smalltowne Christmas by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -5825,7 +5838,7 @@ const urinetown2021Project: LocalScenicProject = {
   month: 8,
   status: "published",
   featured: false,
-  seoTitle: "Urinetown (2021) | Scenic Design by Brandon PT Davis",
+  seoTitle: "Urinetown (2021) Scenic Design | Okoboji Summer Theatre",
   seoDescription:
     "Scenic design for the 2021 production of Urinetown at Okoboji Summer Theatre, inspired by Brechtian and German Expressionist styles with angular concrete textures and symbolic lighting.",
   seoKeywords:
@@ -5855,7 +5868,8 @@ const urinetown2021Project: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/urinetown-2021-c871282d6b-f398cd2f.jpeg",
-      altText: "Urinetown 2021 scenic design cover image.",
+      altText:
+        "Urinetown 2021 scenic design cover at Okoboji Summer Theatre, shaped by Brechtian and expressionist influence.",
       kind: "cover",
     },
     {
@@ -5943,7 +5957,7 @@ const glassMenagerie2011Project: LocalScenicProject = {
   month: 8,
   status: "published",
   featured: false,
-  seoTitle: "The Glass Menagerie (2011) | Scenic Design by Brandon PT Davis",
+  seoTitle: "The Glass Menagerie (2011) Scenic Design | Okoboji Summer Theatre",
   seoDescription:
     "Scenic design for the 2011 production of The Glass Menagerie at Okoboji Summer Theatre, using memory-inspired scrim walls and a revealed cityscape to reflect nostalgia and escape.",
   seoKeywords:
@@ -5971,7 +5985,8 @@ const glassMenagerie2011Project: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-glass-menagerie-2011-18e039c8c0-56e7d0a8.jpg",
-      altText: "The Glass Menagerie 2011 scenic design cover image.",
+      altText:
+        "The Glass Menagerie 2011 scenic design cover at Okoboji Summer Theatre, with scrim walls and a revealed cityscape.",
       kind: "cover",
     },
     {
@@ -6089,7 +6104,8 @@ const littleShopOfHorrorsProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/little-shop-of-horrors-02-0430-e1e668ba.webp",
-      altText: "Little Shop of Horrors scenic design cover image.",
+      altText:
+        "Little Shop of Horrors scenic design cover at Okoboji Summer Theatre, showing a gritty Skid Row storefront.",
       kind: "cover",
     },
     {
@@ -6236,7 +6252,7 @@ const richGirlProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2014-rich-girl-okoboji-summer-theatre-3-of-8-2094-bd9037d8.webp",
-      altText: "Rich Girl scenic design cover image.",
+      altText: "Scenic design for Rich Girl by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -6392,7 +6408,7 @@ const angelStreetProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-cover-487c1e5d.webp",
-      altText: "Angel Street scenic design cover image.",
+      altText: "Scenic design for Angel Street by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -6552,7 +6568,7 @@ const dontDressForDinnerProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-1-of-7-3733-2a2cf2a4.webp",
-      altText: "Don't Dress for Dinner scenic design cover image.",
+      altText: "Scenic design for Don't Dress for Dinner by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -6703,7 +6719,7 @@ const allMySonsProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-cover-aa4e4e0c.webp",
-      altText: "All My Sons scenic design cover image.",
+      altText: "Scenic design for All My Sons by Brandon PT Davis.",
       kind: "cover",
     },
     {
@@ -6863,7 +6879,8 @@ const theEffectOfGammaRaysProject: LocalScenicProject = {
       type: "image",
       imageUrl:
         "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/gamma-rays-1-5794-fc8ce725.webp",
-      altText: "The Effect of Gamma Rays on Man-in-the-Moon Marigolds scenic design cover image.",
+      altText:
+        "Scenic design for The Effect of Gamma Rays on Man-in-the-Moon Marigolds by Brandon PT Davis.",
       kind: "cover",
     },
     {

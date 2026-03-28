@@ -5,9 +5,9 @@ import { buildPageMetadata } from "../../lib/metadata";
 export const dynamic = "force-static";
 
 export const metadata = buildPageMetadata({
-  title: "Resume",
+  title: "Resume and Scenic Design Credits",
   description:
-    "Production history, teaching, training, and portfolio-linked scenic design credits.",
+    "Resume, CV, teaching history, awards, and selected scenic design credits across regional theatre, summer stock, and academic production.",
   pathname: "/resume",
 });
 

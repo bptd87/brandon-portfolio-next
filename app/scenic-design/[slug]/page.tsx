@@ -1,4 +1,4 @@
-import { permanentRedirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 import { resolveLegacyProjectPath } from "../../../shared/legacyRedirects";
 
@@ -8,5 +8,9 @@ type PageProps = {
 
 export default async function Page({ params }: PageProps) {
   const { slug } = await params;
-  permanentRedirect(resolveLegacyProjectPath(slug));
+  const destination = resolveLegacyProjectPath(slug);
+  if (!destination) {
+    notFound();
+  }
+  permanentRedirect(destination);
 }

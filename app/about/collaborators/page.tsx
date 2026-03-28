@@ -5,9 +5,9 @@ import { buildPageMetadata } from "../../../lib/metadata";
 export const dynamic = "force-static";
 
 export const metadata = buildPageMetadata({
-  title: "Collaborators",
+  title: "Collaborators and Creative Partners",
   description:
-    "Creative partners, directors, and theatre companies that shape Brandon PT Davis's design practice.",
+    "Directors, designers, theatre companies, and recurring creative partners who shape Brandon PT Davis's scenic design practice.",
   pathname: "/about/collaborators",
 });
 

@@ -104,7 +104,7 @@ export default function StudioTutorials() {
     <div className="min-h-screen bg-background">
       <SEO
         title="Vectorworks Tutorials | Brandon PT Davis"
-        description="Free Vectorworks tutorials for scenic designers. Step-by-step video lessons covering 2D drafting, 3D modeling, rendering, and advanced techniques for theatrical design."
+        description="Step-by-step Vectorworks tutorials for scenic designers covering drafting, 3D modeling, rendering, and production-ready workflow."
         keywords="Vectorworks tutorials, scenic design software, 3D modeling theatre, rendering tutorials, CAD for theatre, Vectorworks training, theatrical design software"
         type="website"
         url="https://www.brandonptdavis.com/studio/tutorials"
@@ -123,7 +123,7 @@ export default function StudioTutorials() {
           name: "Vectorworks Tutorials",
           url: "https://www.brandonptdavis.com/studio/tutorials",
           description:
-            "Structured tutorial paths for scenic designers using Vectorworks and rendering workflows.",
+            "Structured tutorial paths for scenic designers using Vectorworks for drafting, modeling, rendering, and workflow.",
           about: "Tutorial videos and walkthroughs by Brandon PT Davis.",
           primaryImageOfPage: tutorials?.[0]?.cover_image || undefined,
           mainEntity: {
@@ -142,7 +142,7 @@ export default function StudioTutorials() {
         course={{
           name: "Vectorworks Tutorials for Scenic Designers",
           description:
-            "A structured tutorial library covering drafting, modeling, rendering, and production-ready documentation workflows.",
+            "A structured tutorial library covering drafting, modeling, rendering, and production-ready documentation for scenic designers.",
           url: "https://www.brandonptdavis.com/studio/tutorials",
           provider: {
             name: "Brandon PT Davis",
@@ -506,7 +506,7 @@ export default function StudioTutorials() {
                 <TrendingUp className="h-4 w-4" />
               </a>
               <a
-                href="/articles?category=technology-tutorials"
+                href="/articles"
                 className="inline-flex h-11 items-center gap-2 rounded-full bg-white/10 px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-foreground transition-colors hover:bg-white/14"
               >
                 <span>Read Related Articles</span>

@@ -297,11 +297,11 @@ export default function DimensionReference() {
             Dimension Reference
           </p>
           <h1 className="mt-4 font-sans text-[clamp(2.4rem,7vw,5rem)] font-medium leading-[0.95] tracking-[-0.065em] text-foreground">
-            Standard dimensions for scenic, event, and architectural work.
+            Standard dimensions for scenic, event, exhibit, and architectural work.
           </h1>
           <p className="mx-auto mt-5 max-w-3xl text-[0.98rem] leading-7 text-foreground/60 md:text-[1.08rem] md:leading-8">
-            A quick mobile-friendly lookup tool for common furniture, theatre, experiential, and
-            architecture dimensions.
+            A quick mobile-friendly lookup tool for common furniture, theatre, exhibit, event, and
+            architectural dimensions.
           </p>
         </div>
       </section>

@@ -7,7 +7,7 @@ export const dynamic = "force-static";
 export const metadata = buildPageMetadata({
   title: "Scenic Design Portfolio",
   description:
-    "Portfolio of scenic design projects across musicals, plays, Shakespeare, and regional theatre.",
+    "Selected scenic design projects for musicals, plays, and Shakespeare, with production images, credits, and story-led environments developed for theatre.",
   pathname: "/projects",
 });
 

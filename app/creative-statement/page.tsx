@@ -5,9 +5,9 @@ import { buildPageMetadata } from "../../lib/metadata";
 export const dynamic = "force-static";
 
 export const metadata = buildPageMetadata({
-  title: "Creative Statement",
+  title: "Creative Statement on Scenic Design",
   description:
-    "Creative statement on architecture, history, collaboration, and narrative storytelling in scenic design.",
+    "A creative statement on scenic design, architecture, history, collaboration, and story-led space making in live performance.",
   pathname: "/creative-statement",
   type: "article",
 });

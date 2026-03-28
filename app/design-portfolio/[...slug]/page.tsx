@@ -1,4 +1,4 @@
-import { permanentRedirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 import { resolveLegacyProjectPath } from "../../../shared/legacyRedirects";
 
@@ -19,8 +19,10 @@ export default async function Page({ params }: PageProps) {
   }
 
   if (parts.length === 2 && parts[0] === "scenic-design") {
-    permanentRedirect(resolveLegacyProjectPath(parts[1]));
+    const destination = resolveLegacyProjectPath(parts[1]);
+    if (!destination) notFound();
+    permanentRedirect(destination);
   }
 
-  permanentRedirect("/projects");
+  notFound();
 }

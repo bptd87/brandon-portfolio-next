@@ -160,11 +160,11 @@ export default function ScaleCalculator() {
               Scale Calculator
             </p>
             <h1 className="mt-4 font-sans text-[clamp(2.45rem,8vw,5.1rem)] font-medium leading-[0.95] tracking-[-0.065em] text-foreground sm:text-[clamp(2.8rem,7vw,5.1rem)]">
-              Convert real dimensions to model scale and back.
+              Convert full-size dimensions to model scale and back.
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-[0.98rem] leading-7 text-foreground/60 md:mt-7 md:max-w-3xl md:text-[1.12rem] md:leading-8">
               A mobile-friendly scale converter for scenic drafting, model building, and 3D
-              printing workflow.
+              printing, built around the measurements designers actually use.
             </p>
           </div>
         </section>

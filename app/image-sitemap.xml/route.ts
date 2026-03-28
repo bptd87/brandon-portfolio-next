@@ -1,4 +1,5 @@
 import { buildImageSitemap, xmlResponse } from "../../lib/seo/xml";
+import { absoluteUrl } from "../../lib/metadata";
 import { getLocalArticles } from "../../shared/localArticles";
 import { resolveBlobMediaUrl } from "../../shared/mediaBlob";
 import { assistantScenicDesignEntries } from "../../shared/localAssistantScenic";
@@ -33,6 +34,13 @@ function uniqueEntries(entries: ImageEntry[]) {
   });
 }
 
+function toAbsoluteImageUrl(url: string) {
+  if (!url) return url;
+  if (/^https?:\/\//i.test(url)) return url;
+  if (url.startsWith("/")) return absoluteUrl(url);
+  return url;
+}
+
 function articleBodyImages(article: ReturnType<typeof getLocalArticles>[number]): ImageEntry[] {
   if (!Array.isArray(article.content)) return [];
 
@@ -44,7 +52,7 @@ function articleBodyImages(article: ReturnType<typeof getLocalArticles>[number])
     if (typeof block.url === "string" && block.url) {
       images.push({
         pathname: `/articles/${article.slug}`,
-        imageUrl: block.url,
+        imageUrl: toAbsoluteImageUrl(block.url),
         title: article.title,
         caption: block.caption || block.alt || article.excerpt,
       });
@@ -55,7 +63,7 @@ function articleBodyImages(article: ReturnType<typeof getLocalArticles>[number])
         if (!image || typeof image !== "object" || typeof image.url !== "string" || !image.url) continue;
         images.push({
           pathname: `/articles/${article.slug}`,
-          imageUrl: image.url,
+          imageUrl: toAbsoluteImageUrl(image.url),
           title: article.title,
           caption: image.caption || image.alt || article.excerpt,
         });
@@ -69,15 +77,19 @@ function articleBodyImages(article: ReturnType<typeof getLocalArticles>[number])
 export function GET() {
   const profileHeadshot =
     "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
-  const aboutResumeArt =
-    resolveBlobMediaUrl("/assets/about/about-resume-art.png") || "/assets/about/about-resume-art.png";
-  const aboutTeachingArt =
-    resolveBlobMediaUrl("/assets/about/about-teaching-art.png") || "/assets/about/about-teaching-art.png";
-  const aboutProcessArt =
-    resolveBlobMediaUrl("/assets/about/about-process-art.png") || "/assets/about/about-process-art.png";
-  const aboutCollaboratorsArt =
+  const aboutResumeArt = toAbsoluteImageUrl(
+    resolveBlobMediaUrl("/assets/about/about-resume-art.png") || "/assets/about/about-resume-art.png"
+  );
+  const aboutTeachingArt = toAbsoluteImageUrl(
+    resolveBlobMediaUrl("/assets/about/about-teaching-art.png") || "/assets/about/about-teaching-art.png"
+  );
+  const aboutProcessArt = toAbsoluteImageUrl(
+    resolveBlobMediaUrl("/assets/about/about-process-art.png") || "/assets/about/about-process-art.png"
+  );
+  const aboutCollaboratorsArt = toAbsoluteImageUrl(
     resolveBlobMediaUrl("/assets/about/about-collaborators-art.png") ||
-    "/assets/about/about-collaborators-art.png";
+      "/assets/about/about-collaborators-art.png"
+  );
 
   const entries = uniqueEntries([
     {
@@ -116,7 +128,7 @@ export function GET() {
           ? [
               {
                 pathname: `/articles/${article.slug}`,
-                imageUrl: article.coverImageUrl,
+                imageUrl: toAbsoluteImageUrl(article.coverImageUrl),
                 title: article.title,
                 caption: article.coverImageAlt || article.excerpt,
               },
@@ -139,7 +151,7 @@ export function GET() {
         .filter((item) => item.type === "image" && item.imageUrl)
         .map((item) => ({
           pathname: `/project/${project.slug}`,
-          imageUrl: item.imageUrl!,
+          imageUrl: toAbsoluteImageUrl(item.imageUrl!),
           title: project.title,
           caption: item.caption || item.altText || project.excerpt,
         })),
@@ -150,7 +162,7 @@ export function GET() {
           ? [
               {
                 pathname: `/projects/rendering/${project.slug}`,
-                imageUrl: project.coverImageUrl,
+                imageUrl: toAbsoluteImageUrl(project.coverImageUrl),
                 title: project.title,
                 caption: project.excerpt || project.seoDescription,
               },
@@ -158,7 +170,7 @@ export function GET() {
           : []),
         ...project.images.map((image) => ({
           pathname: `/projects/rendering/${project.slug}`,
-          imageUrl: image.imageUrl,
+          imageUrl: toAbsoluteImageUrl(image.imageUrl),
           title: project.title,
           caption: image.caption || image.altText || project.excerpt || project.seoDescription,
         })),
@@ -168,7 +180,7 @@ export function GET() {
         ? [
             {
               pathname: `/projects/experiential/${project.slug}`,
-              imageUrl: project.coverImageUrl,
+                imageUrl: toAbsoluteImageUrl(project.coverImageUrl),
               title: project.title,
               caption: project.summary || project.seoDescription,
             },
@@ -177,7 +189,7 @@ export function GET() {
       ...project.samples.flatMap((sample) =>
         getLocalExperientialMediaItems(sample).map((image) => ({
           pathname: `/projects/experiential/${project.slug}`,
-          imageUrl: image.imageUrl,
+          imageUrl: toAbsoluteImageUrl(image.imageUrl),
           title: project.title,
           caption: image.caption || image.altText || project.summary || project.seoDescription,
         }))
@@ -195,7 +207,7 @@ export function GET() {
       .filter((entry) => entry.coverImageUrl)
       .map((entry) => ({
         pathname: "/assistant-scenic-design",
-        imageUrl: entry.coverImageUrl,
+        imageUrl: toAbsoluteImageUrl(entry.coverImageUrl),
         title: entry.title,
         caption: [entry.organization, entry.collaborator, entry.date.slice(0, 4)].filter(Boolean).join(" · "),
       })),
@@ -203,7 +215,7 @@ export function GET() {
       .filter((tutorial) => tutorial.cover_image)
       .map((tutorial) => ({
         pathname: `/studio/tutorials/${tutorial.slug}`,
-        imageUrl: String(tutorial.cover_image),
+        imageUrl: toAbsoluteImageUrl(String(tutorial.cover_image)),
         title: tutorial.title,
         caption: tutorial.description || tutorial.overview || tutorial.seo_description || tutorial.title,
       })),

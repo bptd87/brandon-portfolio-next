@@ -7,7 +7,7 @@ export const dynamic = "force-static";
 export const metadata = buildPageMetadata({
   title: "Experiential Design Portfolio",
   description:
-    "Experiential design projects spanning renderings, technical drawings, and live event documentation.",
+    "Experiential design case studies combining renderings, technical drawing, and live event documentation to show concept, coordination, and built outcome.",
   pathname: "/projects/experiential",
 });
 

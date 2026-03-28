@@ -5,9 +5,9 @@ import { buildPageMetadata } from "../../../lib/metadata";
 export const dynamic = "force-static";
 
 export const metadata = buildPageMetadata({
-  title: "Scenic Directory | Brandon PT Davis",
+  title: "Scenic Design Resource Directory | Brandon PT Davis",
   description:
-    "Curated directory of scenic resources, organizations, archives, and reference links.",
+    "Curated scenic design directory of theatre organizations, software, archives, drafting references, and production suppliers.",
   pathname: "/studio/directory",
 });
 

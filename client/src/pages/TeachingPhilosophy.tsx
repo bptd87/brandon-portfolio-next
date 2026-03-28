@@ -102,7 +102,7 @@ export default function TeachingPhilosophy() {
         description="A teaching philosophy centered on scenic design process, professional practice, mentorship, and adaptable design pedagogy."
         keywords="teaching philosophy scenic design, scenic design education, theatre design pedagogy, vectorworks instruction, design mentorship, experiential design syllabus"
         image={heroProject?.coverImageUrl ?? undefined}
-        url="https://www.brandonptdavis.com/teaching-philosophy"
+        url="https://www.brandonptdavis.com/about/teaching"
         type="article"
       />
       <StructuredData
@@ -110,7 +110,7 @@ export default function TeachingPhilosophy() {
         breadcrumbs={[
           { name: "Home", url: "https://www.brandonptdavis.com" },
           { name: "About", url: "https://www.brandonptdavis.com/about" },
-          { name: "Teaching Philosophy", url: "https://www.brandonptdavis.com/teaching-philosophy" },
+          { name: "Teaching Philosophy", url: "https://www.brandonptdavis.com/about/teaching" },
         ]}
       />
       <StructuredData
@@ -137,7 +137,7 @@ export default function TeachingPhilosophy() {
           name: "Scenic Design Pedagogy and Professional Practice",
           description:
             "A teaching framework for scenic design students combining storytelling, drafting, visualization, research, and professional collaboration.",
-          url: "https://www.brandonptdavis.com/teaching-philosophy",
+          url: "https://www.brandonptdavis.com/about/teaching",
           provider: {
             name: "Brandon PT Davis",
             url: "https://www.brandonptdavis.com/about",

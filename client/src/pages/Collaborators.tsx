@@ -108,8 +108,8 @@ export default function Collaborators() {
   return (
     <>
       <SEO
-        title="Collaborators"
-        description="Directors, designers, theatre companies, and creative partners who have collaborated with Brandon PT Davis on scenic design productions."
+        title="Collaborators and Creative Partners"
+        description="Directors, designers, theatre companies, and recurring creative partners who have collaborated with Brandon PT Davis on scenic design productions."
         url="https://www.brandonptdavis.com/about/collaborators"
       />
       <StructuredData
@@ -177,12 +177,12 @@ export default function Collaborators() {
               Collaborators
             </p>
             <h1 className="mx-auto mt-6 max-w-5xl text-center font-sans text-[clamp(3rem,6vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
-              Directors, designers, companies, and long-running creative partners.
+              Directors, designers, companies, and recurring creative partners.
             </h1>
             <p className="mx-auto mt-8 max-w-3xl text-center text-[1.08rem] leading-8 text-foreground/60 md:text-[1.16rem]">
               Scenic design is built through relationships. This page gathers the people and
-              organizations whose work has shaped productions through conversation, trust, and
-              repeat collaboration over time.
+              organizations whose work has shaped productions through repeat collaboration, shared
+              process, and long-term trust over time.
             </p>
 
           </section>

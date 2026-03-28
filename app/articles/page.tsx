@@ -9,7 +9,7 @@ export const dynamic = "force-static";
 export const metadata: Metadata = buildPageMetadata({
   title: "Scenic Design Articles",
   description:
-    "Articles on scenic design, production thinking, rendering communication, and theatre practice.",
+    "Articles on scenic design, rendering, theatre history, production thinking, and visual storytelling by Brandon PT Davis.",
   pathname: "/articles",
   type: "article",
 });

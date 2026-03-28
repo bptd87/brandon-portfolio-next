@@ -1,4 +1,4 @@
-import { permanentRedirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 import { resolveLegacyProjectPath, resolveLegacyTagPath } from "../../../shared/legacyRedirects";
 
@@ -11,8 +11,12 @@ export default async function Page({ params }: PageProps) {
   const [first, second] = slug || [];
 
   if (first === "tag" || first === "category") {
-    permanentRedirect(resolveLegacyTagPath(second));
+    const destination = resolveLegacyTagPath(second);
+    if (!destination) notFound();
+    permanentRedirect(destination);
   }
 
-  permanentRedirect(resolveLegacyProjectPath(first));
+  const destination = resolveLegacyProjectPath(first);
+  if (!destination) notFound();
+  permanentRedirect(destination);
 }

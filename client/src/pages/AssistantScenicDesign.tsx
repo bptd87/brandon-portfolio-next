@@ -206,9 +206,9 @@ export default function AssistantScenicDesign() {
                 Assistant Scenic Design
               </h1>
               <p className="mx-auto max-w-[42rem] text-[clamp(1rem,1.35vw,1.22rem)] leading-[1.68] tracking-[-0.015em] text-foreground/66">
-                A companion portfolio of assistant scenic credits centered on drafting,
+                A companion portfolio of assistant scenic credits centered on drafting, design
                 coordination, repertory support, and production communication across regional
-                theatre and long-term collaborations.
+                theatre, Off-Broadway, and long-term collaborations.
               </p>
               <div className="pt-1">
                 <Link

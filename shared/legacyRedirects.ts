@@ -4,12 +4,13 @@ import {
   getLocalExperientialSampleHref,
   getLocalRenderingProjectBySlug,
 } from "./localPortfolios";
-import { getLocalScenicProjectBySlug } from "./localScenicProjects";
+import { getLocalArticles } from "./localArticles";
+import { getLocalScenicProjectBySlug, getLocalScenicProjects } from "./localScenicProjects";
 import { getLocalTutorialBySlug } from "./localStudio";
 
 const LEGACY_PROJECT_ALIASES: Record<string, string> = {
-  all: "/projects/scenic-design",
-  "scenic-design-archive": "/projects/scenic-design",
+  all: "/projects",
+  "scenic-design-archive": "/projects",
   rab: "/projects/experiential/rendering/rab-activation",
   "red-line-caf": "/projects/experiential/rendering/red-line-cafe",
   lysistrata: "/projects/experiential/technical-drawing/lysistrata-covid-documentation",
@@ -40,6 +41,13 @@ const LEGACY_TAG_ALIASES: Record<string, string> = {
   "south-coast-rep": "south-coast-repertory-theatre",
 };
 
+const KNOWN_TAG_SLUGS = new Set(
+  [
+    ...getLocalArticles().flatMap((article) => (article.tags || []).map((tag) => tag.slug)),
+    ...getLocalScenicProjects().flatMap((project) => (project.tags || []).map((tag) => tag.slug)),
+  ].filter(Boolean)
+);
+
 function normalizeLegacySlug(value?: string | null) {
   return String(value || "")
     .trim()
@@ -53,15 +61,15 @@ function normalizeLegacySlug(value?: string | null) {
 
 export function resolveLegacyTagPath(rawSlug?: string | null) {
   const normalized = normalizeLegacySlug(rawSlug);
-  if (!normalized) return "/articles";
+  if (!normalized) return null;
 
   const slug = LEGACY_TAG_ALIASES[normalized] || normalized;
-  return `/tags/${slug}`;
+  return KNOWN_TAG_SLUGS.has(slug) ? `/tags/${slug}` : null;
 }
 
 export function resolveLegacyTutorialPath(rawSlug?: string | null) {
   const normalized = normalizeLegacySlug(rawSlug);
-  if (!normalized) return "/studio/tutorials";
+  if (!normalized) return null;
 
   const alias = LEGACY_TUTORIAL_ALIASES[normalized];
   if (alias === "") return "/studio/tutorials";
@@ -76,12 +84,12 @@ export function resolveLegacyTutorialPath(rawSlug?: string | null) {
     return `/studio/tutorials/${normalized}`;
   }
 
-  return "/studio/tutorials";
+  return null;
 }
 
 export function resolveLegacyProjectPath(rawSlug?: string | null) {
   const normalized = normalizeLegacySlug(rawSlug);
-  if (!normalized) return "/projects";
+  if (!normalized) return null;
 
   const alias = LEGACY_PROJECT_ALIASES[normalized];
   if (alias) return alias;
@@ -105,5 +113,5 @@ export function resolveLegacyProjectPath(rawSlug?: string | null) {
     }
   }
 
-  return "/projects";
+  return null;
 }

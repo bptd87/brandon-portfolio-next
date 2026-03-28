@@ -337,11 +337,11 @@ export default function RoscoPaintCalculator() {
                 Rosco Paint Calculator
               </p>
               <h1 className="mt-4 font-sans text-[clamp(2.4rem,7vw,5rem)] font-medium leading-[0.95] tracking-[-0.065em] text-foreground">
-                Mix scenic paint colors with a cleaner, practical workflow.
+                Mix scenic paint colors with a practical production workflow.
               </h1>
               <p className="mx-auto mt-5 max-w-3xl text-[0.98rem] leading-7 text-foreground/60 md:text-[1.08rem] md:leading-8">
                 Choose a target color, generate a Rosco Off-Broadway recipe, and optionally limit
-                results to the paints you already have in stock.
+                results to the paints already on hand in your stock.
               </p>
             </div>
           </section>

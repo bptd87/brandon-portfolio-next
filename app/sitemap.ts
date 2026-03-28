@@ -14,12 +14,10 @@ const STATIC_ROUTES: Array<{ pathname: string; priority?: number; changeFrequenc
   { pathname: "/about", priority: 0.8, changeFrequency: "monthly" },
   { pathname: "/about/collaborators", priority: 0.6, changeFrequency: "monthly" },
   { pathname: "/about/teaching", priority: 0.6, changeFrequency: "monthly" },
-  { pathname: "/about/philosophy", priority: 0.6, changeFrequency: "monthly" },
   { pathname: "/resume", priority: 0.7, changeFrequency: "monthly" },
   { pathname: "/creative-statement", priority: 0.6, changeFrequency: "monthly" },
   { pathname: "/assistant-scenic-design", priority: 0.6, changeFrequency: "monthly" },
   { pathname: "/projects", priority: 0.9, changeFrequency: "weekly" },
-  { pathname: "/projects/scenic-design", priority: 0.8, changeFrequency: "weekly" },
   { pathname: "/projects/rendering", priority: 0.8, changeFrequency: "weekly" },
   { pathname: "/projects/experiential", priority: 0.8, changeFrequency: "weekly" },
   { pathname: "/articles", priority: 0.8, changeFrequency: "weekly" },
@@ -34,7 +32,6 @@ const STATIC_ROUTES: Array<{ pathname: string; priority?: number; changeFrequenc
   { pathname: "/studio/apps/scenic-3d-converter", priority: 0.5, changeFrequency: "monthly" },
   { pathname: "/contact", priority: 0.6, changeFrequency: "monthly" },
   { pathname: "/links", priority: 0.4, changeFrequency: "monthly" },
-  { pathname: "/news", priority: 0.2, changeFrequency: "yearly" },
   { pathname: "/syllabus/experiential-design", priority: 0.3, changeFrequency: "yearly" },
   { pathname: "/syllabus/3d-modeling", priority: 0.3, changeFrequency: "yearly" },
   { pathname: "/faq", priority: 0.4, changeFrequency: "monthly" },
@@ -54,24 +51,6 @@ function toLastModified(...candidates: Array<string | number | null | undefined>
   }
 
   return undefined;
-}
-
-function uniqueTagSlugs() {
-  const tagSlugs = new Set<string>();
-
-  for (const article of getLocalArticles()) {
-    for (const tag of article.tags || []) {
-      if (tag?.slug) tagSlugs.add(tag.slug);
-    }
-  }
-
-  for (const project of getLocalScenicProjects()) {
-    for (const tag of project.tags || []) {
-      if (tag?.slug) tagSlugs.add(tag.slug);
-    }
-  }
-
-  return [...tagSlugs].sort();
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -123,12 +102,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: tutorial.featured ? 0.6 : 0.5,
   }));
 
-  const tagEntries: MetadataRoute.Sitemap = uniqueTagSlugs().map((slug) => ({
-    url: absoluteUrl(`/tags/${slug}`),
-    changeFrequency: "weekly",
-    priority: 0.4,
-  }));
-
   return [
     ...staticEntries,
     ...scenicEntries,
@@ -137,6 +110,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...experientialSampleEntries,
     ...articleEntries,
     ...tutorialEntries,
-    ...tagEntries,
   ];
 }

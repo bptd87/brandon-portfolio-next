@@ -33,7 +33,7 @@ const experientialPortfolioLandingCopy = {
   title: "Experiential Design",
   subtitle: "Project-based concept, documentation, and built proof.",
   intro:
-    "A selected body of experiential work organized as project case studies rather than separate media buckets. Renderings, technical drawing, and finished work live together so each page can show the full design story from early concept through real-world execution.",
+    "A selected body of experiential design work organized as case studies rather than separate media buckets. Renderings, technical drawing, and live documentation live together so each project can read from early concept through built outcome.",
 } as const;
 
 const SITE_URL = getConfiguredSiteUrl();

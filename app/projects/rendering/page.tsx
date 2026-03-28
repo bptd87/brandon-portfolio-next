@@ -7,7 +7,7 @@ export const dynamic = "force-static";
 export const metadata = buildPageMetadata({
   title: "Rendering Portfolio",
   description:
-    "Concept images, scenic visualization studies, and rendering projects by Brandon PT Davis.",
+    "Theatre renderings and scenic visualization studies by Brandon PT Davis, showing concept atmosphere, spatial rhythm, and communication before production build.",
   pathname: "/projects/rendering",
 });
 

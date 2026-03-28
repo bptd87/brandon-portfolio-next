@@ -5,9 +5,9 @@ import { buildPageMetadata } from "../../../lib/metadata";
 export const dynamic = "force-static";
 
 export const metadata = buildPageMetadata({
-  title: "Studio Apps",
+  title: "Studio Apps for Scenic Design Workflow",
   description:
-    "Interactive tools and utilities for scenic design workflow, drafting, and visualization.",
+    "Production-focused calculators, reference tools, and utilities for scenic drafting, paint, modeling, and research.",
   pathname: "/studio/apps",
 });
 
