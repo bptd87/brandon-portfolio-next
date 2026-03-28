@@ -12,6 +12,15 @@ NEXT_PUBLIC_SITE_URL="https://www.brandonptdavis.com"
 ```
 
 `SITE_URL` is the server-side source of truth. `NEXT_PUBLIC_SITE_URL` is optional but useful for consistent client-side URLs and previews.
+When deployed on Vercel, the app also falls back to `NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL` and `VERCEL_PROJECT_PRODUCTION_URL` before using a preview deployment URL.
+
+### Search Console Verification
+
+```bash
+GOOGLE_SITE_VERIFICATION="google-site-verification-token"
+```
+
+Optional. When present, this is emitted through Next.js metadata so Google Search Console verification can be managed from Vercel environment variables instead of hardcoding a meta tag.
 
 ### Vercel Blob
 

@@ -37,5 +37,5 @@ export function GET() {
     items: [...scenicItems, ...renderingItems, ...experientialItems],
   });
 
-  return xmlResponse(feed);
+  return xmlResponse(feed, { noindex: true });
 }

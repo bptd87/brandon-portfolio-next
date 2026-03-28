@@ -1,13 +1,31 @@
 import TagDetailPage from "../../../client/src/pages/TagDetail";
 import { NextPathProvider } from "../../../components/routing/NextPathProvider";
 import { buildPageMetadata } from "../../../lib/metadata";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { getLocalArticles } from "../../../shared/localArticles";
+import { resolveLegacyTagPath } from "../../../shared/legacyRedirects";
 import { getLocalScenicProjects } from "../../../shared/localScenicProjects";
+
+const INDEXABLE_TAG_MIN_ITEMS = 3;
 
 type TagPageProps = {
   params: Promise<{ slug: string }>;
 };
+
+function getTagCounts(normalizedSlug: string) {
+  const projectCount = getLocalScenicProjects().filter((project) =>
+    project.tags.some((tag) => tag.slug === normalizedSlug)
+  ).length;
+  const articleCount = getLocalArticles().filter((article) =>
+    (article.tags || []).some((tag) => tag.slug === normalizedSlug)
+  ).length;
+
+  return {
+    projectCount,
+    articleCount,
+    totalItems: projectCount + articleCount,
+  };
+}
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -27,20 +45,16 @@ export async function generateStaticParams() {
     }
   }
 
-  return Array.from(tagSlugs).map((slug) => ({ slug }));
+  return Array.from(tagSlugs)
+    .filter((slug) => getTagCounts(slug).totalItems >= INDEXABLE_TAG_MIN_ITEMS)
+    .map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: TagPageProps) {
   const { slug } = await params;
   const normalizedSlug = slug.toLowerCase();
   const tagName = normalizedSlug.replace(/-/g, " ");
-  const projectCount = getLocalScenicProjects().filter((project) =>
-    project.tags.some((tag) => tag.slug === normalizedSlug)
-  ).length;
-  const articleCount = getLocalArticles().filter((article) =>
-    (article.tags || []).some((tag) => tag.slug === normalizedSlug)
-  ).length;
-  const totalItems = projectCount + articleCount;
+  const { totalItems } = getTagCounts(normalizedSlug);
 
   return buildPageMetadata({
     title: `${tagName} | Tag Archive`,
@@ -54,11 +68,13 @@ export async function generateMetadata({ params }: TagPageProps) {
 export default async function Page({ params }: TagPageProps) {
   const { slug } = await params;
   const normalizedSlug = slug.toLowerCase();
-  const hasTag =
-    getLocalArticles().some((article) => (article.tags || []).some((tag) => tag.slug === normalizedSlug)) ||
-    getLocalScenicProjects().some((project) => project.tags.some((tag) => tag.slug === normalizedSlug));
+  const { totalItems } = getTagCounts(normalizedSlug);
 
-  if (!hasTag) {
+  if (totalItems < INDEXABLE_TAG_MIN_ITEMS) {
+    const destination = resolveLegacyTagPath(slug);
+    if (destination) {
+      permanentRedirect(destination);
+    }
     notFound();
   }
 

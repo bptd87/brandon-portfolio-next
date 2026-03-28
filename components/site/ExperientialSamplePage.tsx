@@ -34,6 +34,7 @@ export function getExperientialSampleMetadata(
     description: sample.description,
     pathname: getLocalExperientialSampleHref(sample),
     image: sample.imageUrl,
+    noindex: true,
     type: "article",
   });
 }

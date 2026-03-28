@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { permanentRedirect } from "next/navigation";
 
 import ArticleDetailPage from "../../../client/src/pages/ArticleDetail";
 import { NextPathProvider } from "../../../components/routing/NextPathProvider";
@@ -8,6 +9,7 @@ import {
   getLocalArticleRecordBySlug,
   getLocalArticles,
 } from "../../../shared/localArticles";
+import { resolveLegacyArticlePath } from "../../../shared/legacyRedirects";
 
 type ArticlePageProps = {
   params: Promise<{
@@ -51,6 +53,14 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 export default async function Page({ params }: ArticlePageProps) {
   const { slug } = await params;
   const article = getLocalArticleRecordBySlug(slug);
+
+  if (!article) {
+    const destination = resolveLegacyArticlePath(slug);
+    if (destination) {
+      permanentRedirect(destination);
+    }
+  }
+
   const articleDescription = article?.excerpt
     ? stripHtml(article.excerpt)
     : article

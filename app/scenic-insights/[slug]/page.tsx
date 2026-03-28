@@ -1,6 +1,7 @@
 import { notFound, permanentRedirect } from "next/navigation";
 
 import { getLocalArticleBySlug } from "../../../shared/localArticles";
+import { resolveLegacyArticlePath } from "../../../shared/legacyRedirects";
 
 const LEGACY_ARTICLE_REDIRECTS: Record<string, string> = {
   "navigating-the-scenic-design-process-a-comprehensive-guide": "/articles/scenic-design-process",
@@ -15,6 +16,8 @@ const LEGACY_ARTICLE_REDIRECTS: Record<string, string> = {
   "golden-age-broadway":
     "/articles/the-golden-age-of-broadway-a-defining-era-in-musical-theatre",
   "opera-foundations": "/articles/operas-foundations-the-evolution-of-scenic-design-in-opera",
+  "a-scenic-design-lesson-that-still-sticks":
+    "/articles/youre-wasting-my-time-a-scenic-design-lesson-in-growth-and-revision",
 };
 
 type PageProps = {
@@ -23,7 +26,8 @@ type PageProps = {
 
 export default async function Page({ params }: PageProps) {
   const { slug } = await params;
-  const destination = LEGACY_ARTICLE_REDIRECTS[slug] || (getLocalArticleBySlug(slug) ? `/articles/${slug}` : null);
+  const destination =
+    LEGACY_ARTICLE_REDIRECTS[slug] || resolveLegacyArticlePath(slug) || (getLocalArticleBySlug(slug) ? `/articles/${slug}` : null);
   if (!destination) {
     notFound();
   }

@@ -1,6 +1,7 @@
 import { notFound, permanentRedirect } from "next/navigation";
 
 import { getLocalArticleBySlug } from "../../../shared/localArticles";
+import { resolveLegacyArticlePath } from "../../../shared/legacyRedirects";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -8,8 +9,9 @@ type PageProps = {
 
 export default async function Page({ params }: PageProps) {
   const { slug } = await params;
-  if (!getLocalArticleBySlug(slug)) {
+  const destination = getLocalArticleBySlug(slug) ? `/articles/${slug}` : resolveLegacyArticlePath(slug);
+  if (!destination) {
     notFound();
   }
-  permanentRedirect(`/articles/${slug}`);
+  permanentRedirect(destination);
 }

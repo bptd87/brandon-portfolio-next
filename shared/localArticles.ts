@@ -825,8 +825,10 @@ const contentOverridesBySlug: Record<string, LocalArticle["content"]> = {
   ],
 };
 
-const fileFirstFieldMap = fileFirstArticleFieldsBySlug as Record<string, Partial<LocalArticle>>;
-const fileFirstContentMap = fileFirstArticleContentBySlug as Record<string, LocalArticle["content"]>;
+const fileFirstFieldMap =
+  fileFirstArticleFieldsBySlug as unknown as Record<string, Partial<LocalArticle>>;
+const fileFirstContentMap =
+  fileFirstArticleContentBySlug as unknown as Record<string, LocalArticle["content"]>;
 
 const mergeArticleSources = (article: LocalArticle): LocalArticle => {
   const runtimeFieldOverrides = articleFieldOverridesBySlug[article.slug] ?? {};

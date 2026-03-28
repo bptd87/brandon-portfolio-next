@@ -8,6 +8,7 @@ export const metadata = buildPageMetadata({
   title: "Sitemap",
   description: "HTML sitemap for Brandon PT Davis.",
   pathname: "/sitemap",
+  noindex: true,
 });
 
 export default function Page() {

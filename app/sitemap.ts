@@ -3,7 +3,6 @@ import { absoluteUrl } from "../lib/metadata";
 import { getLocalArticles } from "../shared/localArticles";
 import {
   getLocalExperientialProjects,
-  getLocalExperientialSamples,
   getLocalRenderingProjects,
 } from "../shared/localPortfolios";
 import { getLocalScenicProjects } from "../shared/localScenicProjects";
@@ -38,7 +37,6 @@ const STATIC_ROUTES: Array<{ pathname: string; priority?: number; changeFrequenc
   { pathname: "/privacy", priority: 0.2, changeFrequency: "yearly" },
   { pathname: "/terms", priority: 0.2, changeFrequency: "yearly" },
   { pathname: "/accessibility", priority: 0.3, changeFrequency: "yearly" },
-  { pathname: "/sitemap", priority: 0.2, changeFrequency: "monthly" },
 ];
 
 function toLastModified(...candidates: Array<string | number | null | undefined>) {
@@ -81,13 +79,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  const experientialSampleEntries: MetadataRoute.Sitemap = getLocalExperientialSamples().map((sample) => ({
-    url: absoluteUrl(`/projects/experiential/${sample.category}/${sample.slug}`),
-    lastModified: toLastModified(sample.createdAt, sample.year ? `${sample.year}-01-01` : null),
-    changeFrequency: "monthly",
-    priority: 0.5,
-  }));
-
   const articleEntries: MetadataRoute.Sitemap = getLocalArticles().map((article) => ({
     url: absoluteUrl(`/articles/${article.slug}`),
     lastModified: toLastModified(article.updatedAt, article.publishedAt, article.createdAt),
@@ -107,7 +98,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...scenicEntries,
     ...renderingEntries,
     ...experientialProjectEntries,
-    ...experientialSampleEntries,
     ...articleEntries,
     ...tutorialEntries,
   ];

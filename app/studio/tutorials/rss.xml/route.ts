@@ -18,5 +18,5 @@ export function GET() {
     })),
   });
 
-  return xmlResponse(feed);
+  return xmlResponse(feed, { noindex: true });
 }

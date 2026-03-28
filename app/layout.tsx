@@ -16,8 +16,25 @@ export const metadata: Metadata = {
   },
   description: siteMetadata.description,
   applicationName: siteMetadata.siteName,
+  authors: [{ name: "Brandon PT Davis", url: absoluteUrl("/about") }],
+  creator: "Brandon PT Davis",
+  publisher: "Brandon PT Davis",
   alternates: {
     canonical: absoluteUrl("/"),
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
   },
   openGraph: {
     type: "website",
@@ -49,6 +66,7 @@ export const metadata: Metadata = {
     ],
     apple: "/apple-touch-icon.png",
   },
+  category: "portfolio",
 };
 
 export default function RootLayout({

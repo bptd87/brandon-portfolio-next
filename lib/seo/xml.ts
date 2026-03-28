@@ -61,11 +61,12 @@ function toAbsoluteAssetUrl(value: string) {
   return value;
 }
 
-export function xmlResponse(body: string) {
+export function xmlResponse(body: string, options?: { noindex?: boolean }) {
   return new Response(body, {
     headers: {
       "Content-Type": "application/xml; charset=utf-8",
       "Cache-Control": "public, max-age=900, s-maxage=3600, stale-while-revalidate=86400",
+      ...(options?.noindex ? { "X-Robots-Tag": "noindex, follow" } : {}),
     },
   });
 }

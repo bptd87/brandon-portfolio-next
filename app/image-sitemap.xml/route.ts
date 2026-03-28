@@ -6,8 +6,6 @@ import { assistantScenicDesignEntries } from "../../shared/localAssistantScenic"
 import {
   getLocalExperientialMediaItems,
   getLocalExperientialProjects,
-  getLocalExperientialSampleHref,
-  getLocalExperientialSamples,
   getLocalRenderingProjects,
 } from "../../shared/localPortfolios";
 import { getLocalScenicProjects } from "../../shared/localScenicProjects";
@@ -195,14 +193,6 @@ export function GET() {
         }))
       ),
     ]),
-    ...getLocalExperientialSamples().flatMap((sample) =>
-      getLocalExperientialMediaItems(sample).map((image) => ({
-        pathname: getLocalExperientialSampleHref(sample),
-        imageUrl: image.imageUrl,
-        title: sample.displayTitle,
-        caption: image.caption || image.altText || sample.description,
-      }))
-    ),
     ...assistantScenicDesignEntries
       .filter((entry) => entry.coverImageUrl)
       .map((entry) => ({

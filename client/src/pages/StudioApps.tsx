@@ -99,7 +99,6 @@ export default function StudioApps() {
         collectionPage={{
           name: "Scenic Design Tools",
           url: "https://www.brandonptdavis.com/studio/apps",
-          description: "Browser-based scenic design calculators, references, and utility apps.",
           description: "Production-focused scenic design apps for drafting, scale, paint, modeling, and research.",
           about: "Studio applications for scenic design workflow.",
           primaryImageOfPage:

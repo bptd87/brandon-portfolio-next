@@ -7060,16 +7060,18 @@ function mergeScenicMedia(
 }
 
 function applyFileFirstScenicProject(project: LocalScenicProject): LocalScenicProject {
-  const fieldOverride = (fileFirstScenicProjectFieldsBySlug as Record<string, Partial<LocalScenicProject>>)[
-    project.slug
-  ];
-  const mediaOverride = (fileFirstScenicProjectMediaBySlug as Record<
+  const fieldOverride = (fileFirstScenicProjectFieldsBySlug as unknown as Record<
+    string,
+    Partial<LocalScenicProject>
+  >)[project.slug];
+  const mediaOverride = (fileFirstScenicProjectMediaBySlug as unknown as Record<
     string,
     Array<Partial<LocalScenicProjectMedia> & Pick<LocalScenicProjectMedia, "id" | "type">>
   >)[project.slug];
-  const sectionOverride = (fileFirstScenicProjectSectionsBySlug as Record<string, LocalScenicProjectSection[]>)[
-    project.slug
-  ];
+  const sectionOverride = (fileFirstScenicProjectSectionsBySlug as unknown as Record<
+    string,
+    LocalScenicProjectSection[]
+  >)[project.slug];
 
   const nextProject = fieldOverride ? { ...project, ...fieldOverride } : project;
   return {

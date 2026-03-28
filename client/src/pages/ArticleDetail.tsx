@@ -1179,14 +1179,13 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
                   <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white/48">Tagged With</h3>
                   <div className="flex flex-wrap gap-2">
                     {article.tags.map((tag: any) => (
-                      <Link key={tag.id} href={`/tags/${tag.slug}`}>
-                        <Badge
-                          variant="outline"
-                          className="text-sm font-normal px-4 py-2 rounded-full transition-all hover:scale-105 cursor-pointer"
-                        >
-                          {tag.name}
-                        </Badge>
-                      </Link>
+                      <Badge
+                        key={tag.id}
+                        variant="outline"
+                        className="text-sm font-normal px-4 py-2 rounded-full"
+                      >
+                        {tag.name}
+                      </Badge>
                     ))}
                   </div>
                 </div>

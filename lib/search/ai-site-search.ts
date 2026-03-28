@@ -556,16 +556,16 @@ export async function runAISiteSearch(query: string): Promise<AISiteSearchRespon
   const relatedQueries = Array.isArray(parsed.relatedQueries)
     ? parsed.relatedQueries
         .filter((value: unknown): value is string => typeof value === "string")
-        .map((value) => collapseWhitespace(value))
-        .filter(Boolean)
+        .map((value: string) => collapseWhitespace(value))
+        .filter((value: string) => Boolean(value))
         .slice(0, 3)
     : [];
 
   const connections = Array.isArray(parsed.connections)
     ? parsed.connections
         .filter((value: unknown): value is string => typeof value === "string")
-        .map((value) => collapseWhitespace(value))
-        .filter(Boolean)
+        .map((value: string) => collapseWhitespace(value))
+        .filter((value: string) => Boolean(value))
         .slice(0, 3)
     : [];
 

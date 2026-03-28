@@ -187,10 +187,6 @@ const RENDERING_PROJECT_OVERRIDES: Record<
       },
     ],
   },
-  company: {
-    excerpt:
-      "A rendering for Company focused on urban rhythm, intimacy, and the emotional friction between public life and private uncertainty.",
-  },
   "parliament-square": {
     excerpt:
       "A spare civic space for Parliament Square, composed to hold tension, surveillance, and the uneasy balance between public order and private fear.",
@@ -513,11 +509,11 @@ function mergeRenderingImages(
 }
 
 function applyFileFirstRenderingProject(project: LocalRenderingProject): LocalRenderingProject {
-  const fieldOverride = (fileFirstRenderingProjectFieldsBySlug as Record<
+  const fieldOverride = (fileFirstRenderingProjectFieldsBySlug as unknown as Record<
     string,
     Partial<LocalRenderingProject>
   >)[project.slug];
-  const contentOverride = (fileFirstRenderingProjectContentBySlug as Record<
+  const contentOverride = (fileFirstRenderingProjectContentBySlug as unknown as Record<
     string,
     Partial<
       Pick<LocalRenderingProject, "images" | "designNotes" | "heroExcerpt" | "bodySections">

@@ -28,6 +28,9 @@ export function buildPageMetadata(input: {
 }) {
   const canonical = absoluteUrl(input.pathname);
   const image = input.image || absoluteUrl("/og-default.jpeg");
+  const title = input.title.includes(siteMetadata.siteName)
+    ? { absolute: input.title }
+    : input.title;
   const keywords = input.keywords
     ? input.keywords
         .split(",")
@@ -36,7 +39,7 @@ export function buildPageMetadata(input: {
     : undefined;
 
   return {
-    title: input.title,
+    title,
     description: input.description,
     keywords,
     alternates: {
