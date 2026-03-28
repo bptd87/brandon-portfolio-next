@@ -4,11 +4,13 @@ slug: isolation
 title: Isolation
 status: published
 featured: false
-excerpt: A solitary interior study where emptiness, distance, and stillness carry the emotional weight of the image.
-seoTitle: Isolation - Experiential Scenic Design by Brandon PT Davis
+excerpt: >-
+  A spare interior study where distance, silence, and a controlled palette make the isolation feel specific instead of
+  symbolic.
+seoTitle: Isolation Rendering | Brandon PT Davis
 seoDescription: >-
-  Explore 'Isolation,' a contemplative rendering by Brandon PT Davis. This independent project from 2020 delves into
-  themes of solitude and emotional architecture.
+  Interior rendering study for Isolation, using negative space, restraint, and quiet geometry to make solitude feel
+  specific, controlled, and emotionally present.
 seoKeywords:
   - Isolation
   - scenic design
@@ -20,7 +22,9 @@ seoKeywords:
 location: Chicago, IL
 year: 2020
 cover:
-  asset: project-images/project-90015-gallery-150098.webp
-  alt: Isolation rendering project cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90015-gallery-150098-7894270b.webp
+  alt: Sparse interior rendering exploring distance, stillness, and emotional isolation.
 publishedAt: '2026-02-19T08:57:55.493Z'
 updatedAt: '2026-02-19T08:57:55.493Z'
+createdAt: '2026-02-19T08:57:55.493Z'

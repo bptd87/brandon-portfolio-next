@@ -1,11 +1,34 @@
 images:
-  - asset: project-images/project-90041-gallery-150082.webp
-    alt: Scenic rendering for Urinetown at University of Missouri. View 3.
-  - asset: project-images/project-90041-gallery-150120.webp
-    alt: Scenic rendering for Urinetown at University of Missouri. View 2.
-  - asset: project-images/project-90041-gallery-150199.webp
-    alt: Scenic rendering for Urinetown at University of Missouri. View 1.
+  - asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90041-gallery-150082-4664ad60.webp
+    alt: Rendering of the civic-industrial world for Urinetown at the University of Missouri.
+  - asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90041-gallery-150120-56940bd6.webp
+    alt: Alternate rendering angle for Urinetown emphasizing circulation, levels, and public pressure.
+  - asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90041-gallery-150199-ef242aeb.webp
+    alt: Perspective rendering for Urinetown showing exposed structure, depth, and managed movement.
 designNotes: >-
-  Scenic rendering series for Urinetown — University of Missouri (2024). This rendering package supports early
-  collaboration by translating concept language into actionable visual cues.
-bodySections: []
+  Rendering sequence for Urinetown — University of Missouri (2024). The images treat the city as a theatrical machine,
+  clarifying hierarchy, circulation, and the civic pressure that keeps the satire legible.
+heroExcerpt: >-
+  These images treat the world of Urinetown as an urban machine: funny in its exaggeration, severe in its logic, and
+  always pressing back on the people inside it.
+bodySections:
+  - heading: Satire Through Infrastructure
+    paragraphs:
+      - >-
+        The images were not meant to simply look dystopian. They needed to show a world whose pipes, platforms, and
+        public systems feel so omnipresent that the city itself starts acting like an authority figure.
+      - >-
+        That approach helps the satire stay legible. The environment is exaggerated, but it is exaggerated with purpose,
+        so the audience can feel how policy, scarcity, and spectacle are all working together.
+  - heading: A City That Presses Back
+    paragraphs:
+      - >-
+        The rendering composition leans on vertical pressure, exposed structure, and a sense of circulation that is
+        always being managed from above. Characters should appear contained by the same mechanisms they are trying to
+        survive.
+      - >-
+        What matters most is that the world feels theatrical and political at the same time. The room is funny until it
+        stops being funny, and the design has to live right on that edge.

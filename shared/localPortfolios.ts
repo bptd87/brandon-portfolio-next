@@ -1,4 +1,8 @@
 import {
+  fileFirstRenderingProjectContentBySlug,
+  fileFirstRenderingProjectFieldsBySlug,
+} from "./fileFirstProjects.generated";
+import {
   generatedExperientialBrands,
   generatedExperientialProcessGallery,
   generatedRenderingGallery,
@@ -22,24 +26,140 @@ const RENDERING_PROJECT_OVERRIDES: Record<
   string,
   Partial<Pick<LocalRenderingProject, "coverImageUrl" | "images" | "excerpt" | "designNotes" | "heroExcerpt" | "bodySections">>
 > = {
+  "the-northwind-mare-tavern": {
+    excerpt:
+      "A fantasy tavern rendering built around weathered timber, lantern glow, and the feeling that the room has already lived through a few long winters before the viewer arrives.",
+    heroExcerpt:
+      "The tavern reads as a lived-in threshold between shelter and adventure, with carved wood, worn stone, and practical light carrying the scenic read before anyone speaks.",
+    bodySections: [
+      {
+        heading: "A World You Can Enter",
+        paragraphs: [
+          "The goal was not just to make a fantasy interior look detailed. It was to make the room feel used. The carving, lantern placement, and surface wear all needed to suggest a place shaped by habit, memory, and folklore rather than ornament alone.",
+          "That matters in rendering work because a space feels believable when it seems to have a life before the frame and after it, not when every object is trying to announce the genre all at once.",
+        ],
+      },
+      {
+        heading: "Atmosphere as Structure",
+        paragraphs: [
+          "Mist, warm practical light, and the heavy silhouette of the architecture help the image read like a stage picture: clear focal hierarchy in front, depth beyond, and enough visual weight to hold the eye in the room.",
+          "The rendering is ultimately about hospitality and suspense sharing the same frame. It should feel welcoming, but never entirely safe.",
+        ],
+      },
+    ],
+  },
   "ashes-of-the-underworld": {
     images: [],
+  },
+  "the-glass-menagerie": {
+    excerpt:
+      "A rendering sequence for The Glass Menagerie shaped around memory instead of literal realism, using thresholds, scrim, and softened architecture to hold longing, confinement, and escape in one room.",
+    heroExcerpt:
+      "These images support a memory play rather than a fixed apartment box, so the room can breathe, blur, and hold emotional distance without losing its domestic truth.",
+    bodySections: [
+      {
+        heading: "Memory Before Architecture",
+        paragraphs: [
+          "The rendering work began with the idea that Tom is not recalling a blueprint. He is recalling pressure, tenderness, and the parts of home that would not let him go. That pushed the images away from literal enclosure and toward a more permeable remembered space.",
+          "Scrim, threshold, and partial framing became useful because they let the room feel present without insisting on total solidity. The world stays recognizable, but it never hardens into a straightforward apartment illustration.",
+        ],
+      },
+      {
+        heading: "Emotional Geography",
+        paragraphs: [
+          "The renderings had to communicate how the family shares space while also living at different emotional distances from one another. Sightlines, platform relationships, and the pressure of the room all help stage that separation.",
+          "Used this way, the images become a design conversation about atmosphere and movement, not just finish selection. They help clarify how the production should feel when memory and action start occupying the same frame.",
+        ],
+      },
+    ],
   },
   "head-over-heels": {
     excerpt:
       "A bright, pop-inflected world for Head Over Heels, balancing theatrical excess with clear spatial structure for movement, comedy, and transformation.",
+    heroExcerpt:
+      "The design keeps the color loud but the layout readable, so the production can stay playful without losing the paths actors need to move, pivot, and land the jokes.",
+    bodySections: [
+      {
+        heading: "Pop With Purpose",
+        paragraphs: [
+          "The visual language leans into bold color and heightened style, but it still has to behave like a working stage environment. The renderings are meant to show that the spectacle is disciplined, not random.",
+          "That balance is what keeps the world from feeling decorative only. It stays theatrical while still giving the company clean sightlines and a usable playing space.",
+        ],
+      },
+      {
+        heading: "Space for Momentum",
+        paragraphs: [
+          "The production needs a layout that can support quick shifts in tone, ensemble movement, and the show's constant sense of motion. The images therefore prioritize circulation as much as visual punch.",
+          "When the room is designed this way, the style supports the comedy instead of crowding it. The result feels energetic, but still built for the stage.",
+        ],
+      },
+    ],
   },
   "boeing-boeing": {
     excerpt:
-      "A crisp farce interior for Boeing, Boeing, designed to support speed, entrances, and the escalating mechanics of the play’s comic timing.",
+      "A crisp Paris apartment for Boeing, Boeing, built to handle fast entrances, overlapping schedules, and the mechanical precision of the farce.",
+    heroExcerpt:
+      "The room has to read cleanly at a glance and still have enough friction in the details for the comedy to keep escalating without confusion.",
+    bodySections: [
+      {
+        heading: "Entrances as Choreography",
+        paragraphs: [
+          "This kind of farce lives or dies on circulation, so the rendering has to make doors, thresholds, and sightlines feel obvious and reliable. The audience should understand the room before the first scramble begins.",
+          "That clarity is what makes the comic timing work. Once the geography is legible, the pace can keep getting faster without the set turning into visual noise.",
+        ],
+      },
+      {
+        heading: "A Room That Can Absorb Chaos",
+        paragraphs: [
+          "The apartment needs enough polish to feel credible, but not so much preciousness that it breaks when the plot starts piling on complications. The design keeps the domestic setting sturdy and practical.",
+          "In rendering terms, the job is to show a room that can take repeated collisions of character, timing, and misunderstanding and still read as the same place.",
+        ],
+      },
+    ],
   },
   "an-inspector-calls": {
     excerpt:
-      "A tense domestic world for An Inspector Calls, built to hold respectability on the surface while making room for pressure, unease, and collapse underneath.",
+      "A tense dining room for An Inspector Calls, holding respectability on the surface while pressure and unease gather underneath.",
+    heroExcerpt:
+      "The image needs to feel proper and controlled at first glance, then gradually reveal how brittle that order becomes once the interrogation begins.",
+    bodySections: [
+      {
+        heading: "Respectability as a Surface",
+        paragraphs: [
+          "The room has to look socially complete: polished, stable, and carefully composed. That sense of order is important because it gives the production something solid to disturb.",
+          "The rendering therefore resists melodrama and lets the unease emerge from proportion, arrangement, and the cold clarity of the domestic setting.",
+        ],
+      },
+      {
+        heading: "Pressure in the Room",
+        paragraphs: [
+          "As the evening darkens, the space should feel less like a home and more like a place where the family can no longer hide from itself. The visual tension comes from how little the room can actually absorb.",
+          "That makes the design useful in production: it supports the shift from confidence to exposure without needing to overstate the mood.",
+        ],
+      },
+    ],
   },
   "tomas-and-the-library-lady": {
     excerpt:
-      "A warm, story-led environment for Tomás and the Library Lady, shaped around discovery, memory, and the transformative promise of books.",
+      "A warm library world for Tomás and the Library Lady, shaped around discovery, welcome, and the quiet change that happens when a space makes room for a child.",
+    heroExcerpt:
+      "The setting should feel practical and kind, with enough visual clarity that the production's warmth reads as lived experience rather than decoration.",
+    bodySections: [
+      {
+        heading: "A Room That Invites Reading",
+        paragraphs: [
+          "The library needs to feel approachable and specific, not idealized. Shelves, tables, and paths through the room all matter because the space has to suggest real use by real people.",
+          "That groundedness gives the story its emotional weight. The design is doing quiet work by making access feel ordinary, generous, and meaningful all at once.",
+        ],
+      },
+      {
+        heading: "Small Details, Real Stakes",
+        paragraphs: [
+          "The renderings keep the gestures modest so the transformation lands through atmosphere rather than spectacle. Light, scale, and material warmth carry the feeling forward.",
+          "In production terms, that restraint helps the room support the story instead of competing with it. The image becomes a welcoming frame for the performance.",
+        ],
+      },
+    ],
   },
   "the-merry-wives-of-windsor": {
     excerpt:
@@ -47,7 +167,25 @@ const RENDERING_PROJECT_OVERRIDES: Record<
   },
   isolation: {
     excerpt:
-      "A solitary interior study where emptiness, distance, and stillness carry the emotional weight of the image.",
+      "A spare interior study where distance, silence, and a controlled palette make the isolation feel specific instead of symbolic.",
+    heroExcerpt:
+      "The rendering keeps the space intentionally restrained so the emptiness reads as design intent, not just absence.",
+    bodySections: [
+      {
+        heading: "Emptiness as Composition",
+        paragraphs: [
+          "The room works by withholding rather than adding. Negative space, simple geometry, and a quiet material palette do most of the emotional lifting.",
+          "That restraint keeps the image from turning abstract. It stays legible as a place someone inhabits, even as it makes that inhabitation feel lonely.",
+        ],
+      },
+      {
+        heading: "Stillness With Intent",
+        paragraphs: [
+          "The production value of this kind of image comes from control. Nothing needs to shout, but every choice has to reinforce the sense of distance and separation.",
+          "The result is a rendering that feels calm on the surface and emotionally loaded underneath, which is where the piece needs to live.",
+        ],
+      },
+    ],
   },
   company: {
     excerpt:
@@ -55,19 +193,157 @@ const RENDERING_PROJECT_OVERRIDES: Record<
   },
   "parliament-square": {
     excerpt:
-      "A spare, civic space for Parliament Square, composed to hold tension, surveillance, and the uneasy balance between public order and private fear.",
+      "A spare civic space for Parliament Square, composed to hold tension, surveillance, and the uneasy balance between public order and private fear.",
+    heroExcerpt:
+      "These renderings treat the room as an instrument of scrutiny: public enough to feel institutional, exposed enough to keep every conversation unstable.",
+    bodySections: [
+      {
+        heading: "A Room Under Watch",
+        paragraphs: [
+          "The visual idea was restraint rather than spectacle. Parliament Square works when the space feels official, intelligible, and slightly unforgiving, so the audience senses how power circulates through the room before any overt conflict arrives.",
+          "That meant keeping the architecture clean and legible while letting the image carry pressure through emptiness, proportion, and the suggestion of surveillance.",
+        ],
+      },
+      {
+        heading: "How Tension Holds",
+        paragraphs: [
+          "The rendering needed to show that this is a room built for procedure but vulnerable to intrusion. Composition, sightlines, and negative space all help support that contradiction.",
+          "Instead of overexplaining the concept, the image lets the institutional calm do the work. The tension comes from what the room refuses to soften.",
+        ],
+      },
+    ],
   },
   "angel-food-cake": {
     excerpt:
       "A modest mobile home interior for Angel Food Cake, where familiar domestic detail carries humor, tenderness, and emotional strain.",
+    heroExcerpt:
+      "The room stays practical and lived-in, letting small domestic choices carry the story instead of pushing the emotion too hard.",
+    bodySections: [
+      {
+        heading: "Everyday Scale",
+        paragraphs: [
+          "The design works best when it feels familiar rather than polished. The mobile home setting needs to read as a real place people have worked to maintain, not a decorative version of one.",
+          "That groundedness is what gives the production room to breathe. The humor and hurt both land more cleanly when the environment is honest about its scale and limits.",
+        ],
+      },
+      {
+        heading: "Warmth Without Gloss",
+        paragraphs: [
+          "Material detail does the emotional work here: worn surfaces, practical furniture, and a room that has been adapted over time all suggest care without sentimentality.",
+          "The rendering ultimately helps the production by making the space feel inhabited, which keeps the story human even when it turns difficult.",
+        ],
+      },
+    ],
   },
   "angel-street": {
     excerpt:
       "A Victorian interior for Angel Street, shaped to support claustrophobia, ornament, and the slow psychological pressure of the play.",
+    heroExcerpt:
+      "The rendering work for Angel Street was about letting comfort and control occupy the same room, so the domestic image could slowly turn against the person living inside it.",
+    bodySections: [
+      {
+        heading: "A Drawing Room with Teeth",
+        paragraphs: [
+          "The room needed to feel credible, furnished, and socially polished, but never relaxed. Decorative richness was useful only if it also supported a sense of enclosure and constant observation.",
+          "That is where rendering becomes especially valuable on a piece like this: it helps test how much beauty the space can hold before beauty starts reading as pressure.",
+        ],
+      },
+      {
+        heading: "Psychology Through Detail",
+        paragraphs: [
+          "Scale, trim, furniture placement, and visual density all contribute to the emotional argument. The audience should feel that the room is meticulously kept and yet increasingly unsafe.",
+          "The image set clarifies that the design is not trying to illustrate gothic mood in the abstract. It is trying to make control visible through domestic order.",
+        ],
+      },
+    ],
   },
   "all-my-sons": {
     excerpt:
       "A postwar family home for All My Sons, designed as an ordinary backyard world whose familiarity makes its moral fractures feel more devastating.",
+    heroExcerpt:
+      "These renderings focus on the danger of normalcy: a house, porch, and yard that look open and familiar enough to feel trustworthy until the story begins exposing what that comfort has been protecting.",
+    bodySections: [
+      {
+        heading: "Ordinary on Purpose",
+        paragraphs: [
+          "The strength of the design lies in its refusal to announce tragedy too early. The house needed to look like a place built for routine, family habit, and postwar stability so the eventual pressure could arrive through recognition rather than visual warning.",
+          "That is why the rendering language stays grounded. Familiar siding, porch structure, and backyard openness all support the moral shock of the play far better than a design that signals collapse from the beginning.",
+        ],
+      },
+      {
+        heading: "Exposure in an Open Yard",
+        paragraphs: [
+          "The exterior setting is deceptively generous. It provides space, air, and community visibility, but it also denies the characters privacy once the emotional temperature changes.",
+          "The renderings help show how that openness works dramaturgically. The yard is not merely picturesque background; it is the place where private failure becomes public fact.",
+        ],
+      },
+    ],
+  },
+  "bell-book-and-candle": {
+    excerpt:
+      "A rendering series for Bell, Book, and Candle that keeps the apartment grounded and livable while letting color, texture, and atmosphere quietly support the play’s supernatural edge.",
+    heroExcerpt:
+      "The images stay rooted in a believable interior, but they leave enough tonal slippage for the room to feel charming, uncanny, and emotionally mobile all at once.",
+    bodySections: [
+      {
+        heading: "A Real Room First",
+        paragraphs: [
+          "The design works best when the apartment reads as a place people genuinely occupy, not as a decorative idea about magic. The rendering therefore starts with domestic credibility: scale, furniture logic, and a room you can imagine someone moving through every day.",
+          "Once that realism is in place, color and atmosphere can begin doing quieter conceptual work. The supernatural tone arrives through nuance rather than visual announcement.",
+        ],
+      },
+      {
+        heading: "Mood Without Overstatement",
+        paragraphs: [
+          "A green-dominant palette and carefully tuned lighting give the space a subtle otherworldliness without severing it from the play’s wit and intimacy.",
+          "The rendering set is meant to show that the room can carry both flirtation and enchantment. It should remain approachable even as it starts to feel a little off-center.",
+        ],
+      },
+    ],
+  },
+  urinetown: {
+    excerpt:
+      "A rendering series for Urinetown built around civic decay, satirical scale, and the feeling of a city infrastructure so overdetermined that it begins shaping human behavior.",
+    heroExcerpt:
+      "These images treat the world of Urinetown as an urban machine: funny in its exaggeration, severe in its logic, and always pressing back on the people inside it.",
+    bodySections: [
+      {
+        heading: "Satire Through Infrastructure",
+        paragraphs: [
+          "The images were not meant to simply look dystopian. They needed to show a world whose pipes, platforms, and public systems feel so omnipresent that the city itself starts acting like an authority figure.",
+          "That approach helps the satire stay legible. The environment is exaggerated, but it is exaggerated with purpose, so the audience can feel how policy, scarcity, and spectacle are all working together.",
+        ],
+      },
+      {
+        heading: "A City That Presses Back",
+        paragraphs: [
+          "The rendering composition leans on vertical pressure, exposed structure, and a sense of circulation that is always being managed from above. Characters should appear contained by the same mechanisms they are trying to survive.",
+          "What matters most is that the world feels theatrical and political at the same time. The room is funny until it stops being funny, and the design has to live right on that edge.",
+        ],
+      },
+    ],
+  },
+  company: {
+    excerpt:
+      "A rendering sequence for Company that treats the city as both social architecture and emotional pressure, letting the world feel lively, exposed, and slightly lonely all at once.",
+    heroExcerpt:
+      "The image work balances urban energy with interior distance, so the architecture can support Company’s wit while still holding Bobby’s isolation in plain view.",
+    bodySections: [
+      {
+        heading: "Public Life, Private Distance",
+        paragraphs: [
+          "The renderings needed to support a New York that feels shared, fast, and constantly in motion while still allowing the central loneliness of the piece to stay visible. That tension is built through layered exterior access, stacked sightlines, and a city that always seems to be happening just beyond reach.",
+          "Rather than illustrating a single realistic apartment, the images help describe a system of social spaces that Bobby moves through without fully inhabiting.",
+        ],
+      },
+      {
+        heading: "Rhythm in the Architecture",
+        paragraphs: [
+          "Stoops, fire escapes, and linked facades help the rendering operate like a musical score. The eye keeps moving, but the structure also keeps revealing who is connected and who is left outside that connection.",
+          "That is the real value of the images here: they let the production test how architecture can carry comedy, movement, and emotional estrangement at the same time.",
+        ],
+      },
+    ],
   },
 };
 
@@ -215,13 +491,57 @@ export type LocalExperientialBrand = {
   active: boolean;
 };
 
+function mergeRenderingImages(
+  currentImages: LocalRenderingProjectImage[],
+  nextImages?: Array<Partial<LocalRenderingProjectImage>>
+) {
+  if (!nextImages?.length) return currentImages;
+
+  return currentImages.map((image, index) => {
+    const override = nextImages[index];
+    if (!override) return image;
+
+    return {
+      ...image,
+      ...override,
+      imageUrl: override.imageUrl ?? image.imageUrl,
+      altText: override.altText ?? image.altText,
+      caption: override.caption ?? image.caption,
+      sortOrder: override.sortOrder ?? image.sortOrder,
+    };
+  });
+}
+
+function applyFileFirstRenderingProject(project: LocalRenderingProject): LocalRenderingProject {
+  const fieldOverride = (fileFirstRenderingProjectFieldsBySlug as Record<
+    string,
+    Partial<LocalRenderingProject>
+  >)[project.slug];
+  const contentOverride = (fileFirstRenderingProjectContentBySlug as Record<
+    string,
+    Partial<
+      Pick<LocalRenderingProject, "images" | "designNotes" | "heroExcerpt" | "bodySections">
+    >
+  >)[project.slug];
+
+  const nextProject = fieldOverride ? { ...project, ...fieldOverride } : project;
+  return {
+    ...nextProject,
+    ...(contentOverride || {}),
+    images: mergeRenderingImages(project.images, contentOverride?.images),
+  };
+}
+
+function applyRenderingProjectOverrides(project: LocalRenderingProject): LocalRenderingProject {
+  const fileFirstProject = applyFileFirstRenderingProject(project);
+  const override = RENDERING_PROJECT_OVERRIDES[fileFirstProject.slug];
+  return override ? { ...fileFirstProject, ...override } : fileFirstProject;
+}
+
 export function getLocalRenderingProjects() {
   return applyBlobMediaManifest(generatedRenderingProjects as LocalRenderingProject[])
     .filter((project) => !EXCLUDED_RENDERING_SLUGS.has(project.slug))
-    .map((project) => {
-      const override = RENDERING_PROJECT_OVERRIDES[project.slug];
-      return override ? { ...project, ...override } : project;
-    });
+    .map((project) => applyRenderingProjectOverrides(project));
 }
 
 export function getLocalRenderingProjectBySlug(slug: string) {
@@ -260,9 +580,12 @@ export function getLocalRenderingProjectForProduction(input: {
 }
 
 export function getLocalRenderingGallery() {
-  return applyBlobMediaManifest(generatedRenderingGallery as LocalRenderingGalleryItem[]).filter(
-    (item) => item.project?.slug && !EXCLUDED_RENDERING_SLUGS.has(item.project.slug)
-  );
+  return applyBlobMediaManifest(generatedRenderingGallery as LocalRenderingGalleryItem[])
+    .filter((item) => item.project?.slug && !EXCLUDED_RENDERING_SLUGS.has(item.project.slug))
+    .map((item) => ({
+      ...item,
+      project: item.project ? applyRenderingProjectOverrides(item.project as LocalRenderingProject) : null,
+    }));
 }
 
 export function getLocalExperientialProcessGallery() {

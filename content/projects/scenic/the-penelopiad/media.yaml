@@ -1,63 +1,76 @@
 gallery:
   - id: penelopiad-cover
     kind: cover
-    asset: project-images/project-90051-cover.webp
-    alt: The Penelopiad scenic design cover image.
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-cover-e4376934.webp
+    alt: >-
+      The Penelopiad scenic design cover at University of California Irvine, building a ritual memory space for
+      testimony and chorus.
   - id: penelopiad-prod-1
     kind: production
-    asset: project-images/project-90051-gallery-150077.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150077-fa49100b.webp
     alt: >-
       Production image from The Penelopiad showing the ritual scenic environment and chorus staging, scenic design by
       Brandon PT Davis.
   - id: penelopiad-prod-2
     kind: production
-    asset: project-images/project-90051-gallery-150085.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150085-f2b6c0a2.webp
     alt: >-
       Production image from The Penelopiad highlighting the layered memory space and ensemble composition, scenic design
       by Brandon PT Davis.
   - id: penelopiad-prod-3
     kind: production
-    asset: project-images/project-90051-gallery-150099.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150099-9d051c46.webp
     alt: Scene from The Penelopiad emphasizing chorus visibility and mythic geometry, scenic design by Brandon PT Davis.
   - id: penelopiad-prod-4
     kind: production
-    asset: project-images/project-90051-gallery-150132.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150132-62d7293e.webp
     alt: >-
       Production still from The Penelopiad showing the scenic architecture as container and witness, scenic design by
       Brandon PT Davis.
   - id: penelopiad-render-1
     kind: rendering
-    asset: project-images/project-90051-gallery-150154.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90051-gallery-150154-b1fde856.webp
     alt: >-
       Rendering for The Penelopiad exploring the ritual scenic composition and staging framework, scenic design by
       Brandon PT Davis.
   - id: penelopiad-prod-5
     kind: production
-    asset: project-images/project-90051-gallery-150227.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150227-b6a966e9.webp
     alt: >-
       Production image from The Penelopiad focusing on testimony, procession, and shared visual authority, scenic design
       by Brandon PT Davis.
   - id: penelopiad-prod-6
     kind: production
-    asset: project-images/project-90051-gallery-150232.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150232-69e3ddad.webp
     alt: >-
       Production image from The Penelopiad showing the scenic world supporting both epic framing and intimacy, scenic
       design by Brandon PT Davis.
   - id: penelopiad-prod-7
     kind: production
-    asset: project-images/project-90051-gallery-150239.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150239-82c44197.webp
     alt: >-
       Production still from The Penelopiad highlighting spatial layering and chorus movement, scenic design by Brandon
       PT Davis.
   - id: penelopiad-prod-8
     kind: production
-    asset: project-images/project-90051-gallery-150245.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150245-288b0bff.webp
     alt: >-
       Final production image from The Penelopiad showing the full scenic environment in performance, scenic design by
       Brandon PT Davis.
   - id: penelopiad-prod-9
     kind: production
-    asset: project-images/project-90051-gallery-150059.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150059-6b46fd5e.webp
     alt: >-
       Production image from The Penelopiad reinforcing the set's symbolic texture and mythic atmosphere, scenic design
       by Brandon PT Davis.

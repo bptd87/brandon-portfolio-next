@@ -1,10 +1,30 @@
 images:
-  - asset: project-images/project-90016-gallery-150203.webp
-    alt: Scenic rendering for Bell, Book, and Candle at Okoboji Summer Theatre. View 1.
+  - asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90016-gallery-150203-19d42e5d.webp
+    alt: Rendering of the apartment interior for Bell, Book, and Candle at Okoboji Summer Theatre.
     sortOrder: 6
 designNotes: >-
-  Scenic rendering series for Bell, Book, and Candle — Okoboji Summer Theatre (2025). This rendering package supports
-  early collaboration by translating concept language into actionable visual cues. Bell, Book and Candle was designed as
-  a grounded, realistic interior that supports the play’s wit and intimacy while quietly framing its supernatural
-  undercurrents.
-bodySections: []
+  Rendering study for Bell, Book, and Candle — Okoboji Summer Theatre (2025). The image begins with a credible
+  mid-century apartment, then lets palette and atmosphere introduce just enough tonal slippage for the room to feel
+  charming, intimate, and slightly uncanny.
+heroExcerpt: >-
+  The images stay rooted in a believable interior, but they leave enough tonal slippage for the room to feel charming,
+  uncanny, and emotionally mobile all at once.
+bodySections:
+  - heading: A Real Room First
+    paragraphs:
+      - >-
+        The design works best when the apartment reads as a place people genuinely occupy, not as a decorative idea
+        about magic. The rendering therefore starts with domestic credibility: scale, furniture logic, and a room you
+        can imagine someone moving through every day.
+      - >-
+        Once that realism is in place, color and atmosphere can begin doing quieter conceptual work. The supernatural
+        tone arrives through nuance rather than visual announcement.
+  - heading: Mood Without Overstatement
+    paragraphs:
+      - >-
+        A green-dominant palette and carefully tuned lighting give the space a subtle otherworldliness without severing
+        it from the play’s wit and intimacy.
+      - >-
+        The rendering set is meant to show that the room can carry both flirtation and enchantment. It should remain
+        approachable even as it starts to feel a little off-center.

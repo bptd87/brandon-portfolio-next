@@ -1,7 +1,28 @@
 images:
-  - asset: project-images/project-90019-gallery-150102.webp
-    alt: Scenic rendering for Company at University of California Irvine. View 1.
+  - asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90019-gallery-150102-ec4c6874.webp
+    alt: Rendering of linked stoops, facades, and layered city access for Company at the University of California Irvine.
 designNotes: >-
-  Scenic rendering series for Company — University of California Irvine (2019). This rendering package supports early
-  collaboration by translating concept language into actionable visual cues.
-bodySections: []
+  Rendering sequence for Company — University of California Irvine (2019). The images use stoops, facades, and layered
+  city access to test how architecture can carry comedy, movement, and emotional distance at the same time.
+heroExcerpt: >-
+  The image work balances urban energy with interior distance, so the architecture can support Company’s wit while still
+  holding Bobby’s isolation in plain view.
+bodySections:
+  - heading: Public Life, Private Distance
+    paragraphs:
+      - >-
+        The renderings needed to support a New York that feels shared, fast, and constantly in motion while still
+        allowing the central loneliness of the piece to stay visible. That tension is built through layered exterior
+        access, stacked sightlines, and a city that always seems to be happening just beyond reach.
+      - >-
+        Rather than illustrating a single realistic apartment, the images help describe a system of social spaces that
+        Bobby moves through without fully inhabiting.
+  - heading: Rhythm in the Architecture
+    paragraphs:
+      - >-
+        Stoops, fire escapes, and linked facades help the rendering operate like a musical score. The eye keeps moving,
+        but the structure also keeps revealing who is connected and who is left outside that connection.
+      - >-
+        That is the real value of the images here: they let the production test how architecture can carry comedy,
+        movement, and emotional estrangement at the same time.

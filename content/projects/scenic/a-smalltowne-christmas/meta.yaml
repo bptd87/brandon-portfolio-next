@@ -23,8 +23,9 @@ year: 2021
 month: 11
 subcategory: Musical Theatre
 cover:
-  asset: project-images/rescued/a-smalltowne-christmas/a-smalltowne-christmas-9717e6782b.jpg
-  alt: A Smalltowne Christmas scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/a-smalltowne-christmas-9717e6782b-8c625df9.jpg
+  alt: Scenic design for A Smalltowne Christmas by Brandon PT Davis.
 team:
   - role: Written By
     name: Stacia Fernandez
@@ -45,9 +46,13 @@ team:
   - role: Directed and Choreographed By
     name: Richard Stafford
 tags:
-  - musical-theatre
-  - holiday-musical
-  - stephens-college
-  - a-smalltowne-christmas
+  - name: Musical Theatre
+    slug: musical-theatre
+  - name: Holiday Musical
+    slug: holiday-musical
+  - name: Stephens College
+    slug: stephens-college
+  - name: A Smalltowne Christmas
+    slug: a-smalltowne-christmas
 links: []
 updatedAt: '2026-03-23T20:25:00.000Z'

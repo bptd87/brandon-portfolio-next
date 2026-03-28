@@ -24,8 +24,9 @@ year: 2022
 month: 2
 subcategory: Shakespeare
 cover:
-  asset: project-images/project-90053-cover.webp
-  alt: The Merry Wives of Windsor scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-cover-4f96e9e8.webp
+  alt: Scenic design for The Merry Wives of Windsor by Brandon PT Davis.
 team:
   - role: By
     name: William Shakespeare
@@ -40,10 +41,14 @@ team:
   - role: Director
     name: Jamey Grisham
 tags:
-  - shakespeare
-  - comedy
-  - stephens-college
-  - the-merry-wives-of-windsor
+  - name: Shakespeare
+    slug: shakespeare
+  - name: Comedy
+    slug: comedy
+  - name: Stephens College
+    slug: stephens-college
+  - name: The Merry Wives of Windsor
+    slug: the-merry-wives-of-windsor
 links:
   - label: Season Listing
     url: https://www.patreon.com/posts/there-is-here-71725274

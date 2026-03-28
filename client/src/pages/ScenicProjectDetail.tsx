@@ -96,6 +96,10 @@ export default function ScenicProjectDetail({
   currentPath,
   params,
 }: ScenicProjectDetailProps = {}) {
+  const getDisplayHeading = (heading?: string | null) => {
+    return String(heading || "").trim();
+  };
+
   const resolvedPath =
     currentPath || (typeof window !== "undefined" ? window.location.pathname : "/project");
   const normalizedSlug = String(
@@ -521,9 +525,9 @@ export default function ScenicProjectDetail({
                 <AnimatedSection>
                   {section.type === "text" ? (
                     <div className="space-y-5">
-                      {section.heading ? (
+                      {getDisplayHeading(section.heading) ? (
                         <h2 className="font-sans text-[clamp(2rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
-                          {section.heading}
+                          {getDisplayHeading(section.heading)}
                         </h2>
                       ) : null}
                       <div className="space-y-8">
@@ -567,9 +571,9 @@ export default function ScenicProjectDetail({
 
                       return (
                         <div className="relative left-1/2 w-screen max-w-[72rem] -translate-x-1/2 px-8 sm:px-12 lg:px-16 space-y-10 md:space-y-12">
-                          {section.heading ? (
+                          {getDisplayHeading(section.heading) ? (
                             <h2 className="mx-auto max-w-[54rem] font-sans text-[clamp(2rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
-                              {section.heading}
+                              {getDisplayHeading(section.heading)}
                             </h2>
                           ) : null}
                           {firstPair.length > 0 ? (

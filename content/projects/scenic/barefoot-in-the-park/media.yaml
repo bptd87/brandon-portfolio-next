@@ -1,46 +1,56 @@
 gallery:
   - id: barefoot-cover
     kind: cover
-    asset: project-images/project-90042-cover.webp
-    alt: Barefoot in the Park scenic design cover image.
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-cover-29f63e4a.webp
+    alt: Barefoot in the Park scenic design cover at Okoboji Summer Theatre, centering the apartment world of the play.
   - id: barefoot-prod-1
     kind: production
-    asset: project-images/project-90042-gallery-150044.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150044-43d006c1.webp
     alt: Production image from Barefoot in the Park showing the apartment environment, scenic design by Brandon PT Davis.
   - id: barefoot-prod-2
     kind: production
-    asset: project-images/project-90042-gallery-150045.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150045-c738c03c.webp
     alt: Scene from Barefoot in the Park using the walk-up layout for comic staging, scenic design by Brandon PT Davis.
   - id: barefoot-prod-3
     kind: production
-    asset: project-images/project-90042-gallery-150048.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150048-d3621f09.webp
     alt: Production still emphasizing the apartment geometry in Barefoot in the Park, scenic design by Brandon PT Davis.
   - id: barefoot-prod-4
     kind: production
-    asset: project-images/project-90042-gallery-150140.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150140-c45c03d1.webp
     alt: Barefoot in the Park production image with actors framed by the compact set, scenic design by Brandon PT Davis.
   - id: barefoot-prod-5
     kind: production
-    asset: project-images/project-90042-gallery-150158.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150158-cc147037.webp
     alt: Performance image from Barefoot in the Park showing the apartment in use, scenic design by Brandon PT Davis.
   - id: barefoot-prod-6
     kind: production
-    asset: project-images/project-90042-gallery-150161.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150161-2dfb7d1e.webp
     alt: >-
       Production still highlighting sightlines and furnishing relationships in Barefoot in the Park, scenic design by
       Brandon PT Davis.
   - id: barefoot-prod-7
     kind: production
-    asset: project-images/project-90042-gallery-150193.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150193-5cbfaf9a.webp
     alt: >-
       Comedy scene from Barefoot in the Park staged through the apartment’s compressed architecture, scenic design by
       Brandon PT Davis.
   - id: barefoot-prod-8
     kind: production
-    asset: project-images/project-90042-gallery-150226.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-gallery-150226-1095aa70.webp
     alt: Final production angle from Barefoot in the Park, scenic design by Brandon PT Davis.
   - id: barefoot-render-1
     kind: rendering
-    asset: project-images/project-90042-gallery-150042.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90042-gallery-150042-927a7e0f.webp
     alt: Scenic rendering for Barefoot in the Park testing the walk-up apartment layout, scenic design by Brandon PT Davis.
 videos: []

@@ -1,4 +1,9 @@
 import { applyScenicMediaManifest } from "./scenicMedia";
+import {
+  fileFirstScenicProjectFieldsBySlug,
+  fileFirstScenicProjectMediaBySlug,
+  fileFirstScenicProjectSectionsBySlug,
+} from "./fileFirstProjects.generated";
 
 export type LocalScenicProjectMedia = {
   id: string;
@@ -248,9 +253,10 @@ const millionDollarQuartet: LocalScenicProject = {
     },
     {
       type: "text",
-      heading: "Design Goal",
+      heading: "The Studio as Collaboration",
       content: [
-        "The goal was to honor the spirit of collaboration at the heart of the play. The space amplifies the relationships in the room: musicians facing one another, sharing energy, finding rhythm, and pushing boundaries. The set becomes not just a place to perform, but a portrait of how artists influence one another and, together, change the course of American music.",
+        "The set was built to honor the jam-session energy at the heart of the piece. By keeping the musicians facing one another and the room open, the design makes the performance feel shared, rhythmic, and alive.",
+        "It is not just a stage for the songs. It is a portrait of artists listening, pushing, and turning a recording studio into a moment of music history.",
       ],
     },
     {
@@ -447,10 +453,10 @@ const glassMenagerie: LocalScenicProject = {
     },
     {
       type: "text",
-      heading: "Design Goal",
+      heading: "Memory Made Physical",
       content: [
-        "A key visual component was the memory wall, a collage of framed images depicting fragments of Tom and Laura's past. These images were intentionally vague, grayed photographs with subtle noise and muted color, designed to feel incomplete and unreliable. Rather than illustrating specific moments, they functioned as emotional echoes, reinforcing the idea that memory is selective, fragile, and shaped by longing.",
-        "Throughout the process, the design remained focused on supporting the actors and the text. The space was built to breathe, allowing lighting, movement, and performance to activate it. The production photographs reveal how the design held different scales of intimacy: close domestic exchanges, larger ensemble compositions, and moments where the architecture itself seemed to recede into memory. The world was never meant to be fully solid; it was meant to hold pressure and tenderness at the same time.",
+        "The memory wall became the clearest visual cue in the room, a collage of framed fragments from Tom and Laura's past. Kept deliberately vague, the images feel more like recollection than documentation, which suits a play where memory is always partial and a little unreliable.",
+        "The rest of the space stays open and responsive so lighting, movement, and performance can do their work. That balance lets the apartment hold intimacy, distance, and longing in the same frame without ever feeling overdesigned.",
       ],
     },
     {
@@ -599,10 +605,10 @@ const allsWellThatEndsWell: LocalScenicProject = {
     },
     {
       type: "text",
-      heading: "Design Goal",
+      heading: "Reveal and Conceal",
       content: [
-        "The central design goal was to let reveal and conceal do the storytelling. Each movement of the drapery had to feel precise and charged, carrying the grand, stylized rhythm of opera while still leaving room for actor movement and comedic clarity. The architecture stayed intentionally light so the audience could feel the stage changing in front of them.",
-        "The result was a world that could move between courtly restraint and Mediterranean warmth without losing coherence. The production photographs show how fabric, signage, and garden detail worked together to create a stage picture that was both elegant and flexible, giving Shakespeare’s shifting worlds a strong visual logic without overbuilding them.",
+        "The design lets reveal and conceal do the storytelling. Each movement of the drapery feels precise and charged, carrying the grand, stylized rhythm of opera while still leaving room for actor movement and comedic clarity. The architecture stays intentionally light so the audience can feel the stage changing in front of them.",
+        "The result is a world that can move between courtly restraint and Mediterranean warmth without losing coherence. The production photographs show how fabric, signage, and garden detail worked together to create a stage picture that is both elegant and flexible, giving Shakespeare’s shifting worlds a clear visual logic without overbuilding them.",
       ],
     },
     {
@@ -746,10 +752,10 @@ const bellBookAndCandle: LocalScenicProject = {
     },
     {
       type: "text",
-      heading: "Design Goal",
+      heading: "A Room with a Whisper of Magic",
       content: [
-        "Textures and finishes reinforced the realism of the room. Wood flooring, soft furnishings, framed artwork, and practical lighting helped the environment feel curated but not precious. The apartment suggested history and routine, allowing the magical undertones of the story to emerge through action and performance rather than through overt scenic effects.",
-        "Ultimately, the design aimed to disappear into the storytelling. By committing fully to realism, the set created a stable world in which humor, relationships, and subtle enchantment could unfold organically.",
+        "Textures and finishes keep the apartment grounded in believable mid-century domestic life, which gives the supernatural undertones somewhere solid to land.",
+        "Green walls, practical detail, and lived-in warmth keep the room human and specific, so the play's enchantment feels like it is slipping in through the edges instead of announcing itself.",
       ],
     },
     {
@@ -888,9 +894,9 @@ const muchAdoAboutNothing: LocalScenicProject = {
     },
     {
       type: "text",
-      heading: "Design Goal",
+      heading: "A Frontier Stage for Banter",
       content: [
-        "By merging Shakespeare’s battles of love and misunderstanding with the visual language of western cinema, the design aimed to create a world that felt playful, textured, and theatrically legible. The saloon backdrop, bar, and signage invited the audience into a dust-filled landscape of gamblers, gunfighters, and lovers while still leaving space for performance to lead.",
+        "By merging Shakespeare’s battles of love and misunderstanding with the visual language of western cinema, the design creates a world that feels playful, textured, and theatrically legible. The saloon backdrop, bar, and signage invite the audience into a dust-filled landscape of gamblers, gunfighters, and lovers while still leaving space for performance to lead.",
       ],
     },
     {
@@ -1035,9 +1041,9 @@ const guysOnIce: LocalScenicProject = {
     },
     {
       type: "text",
-      heading: "Design Goal",
+      heading: "Grounding the Lake",
       content: [
-        "The larger goal was to ground the humor in a recognizable world. By keeping the environment legible and specific, the production could hold both the exaggerated rhythms of musical comedy and the quieter emotional texture of friendship, ritual, and community.",
+        "The larger goal was to ground the humor in a recognizable world. Keeping the environment legible and specific lets the production hold both the exaggerated rhythms of musical comedy and the quieter emotional texture of friendship, ritual, and community.",
       ],
     },
     {
@@ -1188,10 +1194,10 @@ const romero: LocalScenicProject = {
     },
     {
       type: "text",
-      heading: "Design Goal",
+      heading: "Ritual, Rupture, and Witness",
       content: [
-        "Puppeteer Lil Lamberta’s masks and oversized figures punctured realism, while Cherie Sampson’s layered projections grounded each moment in living memory. The entire design was built to support rupture, allowing sudden shifts in tone, time, and identity while still holding the audience.",
-        "This was not a play about one man. It was about a nation in spiritual reckoning. Designing Romero meant listening, holding space, and letting the silence speak.",
+        "Lil Lamberta’s masks and oversized figures break the surface of realism, while Cherie Sampson’s projections keep each moment anchored in living memory. The design welcomes those interruptions instead of smoothing them over, so shifts in tone, time, and identity can land with real force.",
+        "Romero is larger than a single life. The space had to hold a nation in spiritual reckoning, which meant listening closely, leaving room for silence, and letting the room carry witness as much as image.",
       ],
     },
     {
@@ -1386,9 +1392,10 @@ const urinetownProject: LocalScenicProject = {
     },
     {
       type: "text",
-      heading: "Design Goal",
+      heading: "A City That Polices Itself",
       content: [
-        "The overall goal was to make the satire feel both distant and uncomfortably familiar. The architecture had to feel theatrical enough to support the show’s comic exaggeration, but grounded enough that the power structures onstage still felt recognizable.",
+        "The architecture was shaped to make the town’s rules visible at a glance. Levels, barriers, and industrial framing turn the world into a system of control, which gives the satire a physical target.",
+        "That clarity keeps the comedy sharp, but it also leaves the audience with something more uneasy: a civic machine that feels theatrical and, at the same time, all too recognizable.",
       ],
     },
     {
@@ -1562,9 +1569,9 @@ const barefootInTheParkProject: LocalScenicProject = {
     },
     {
       type: "text",
-      heading: "Design Goal",
+      heading: "A Walk-Up with Pressure",
       content: [
-        "The apartment needed to track the movement from romantic idealism to negotiated partnership without losing the wit of the play. The set works less as a realistic container than as a pressure system, letting architecture shape tempo, intimacy, and the comic stakes of everyday domestic life.",
+        "The apartment needed to track the movement from romantic idealism to negotiated partnership without losing the wit of the play. The set works less as a realistic container than as a pressure system, shaping tempo, intimacy, and the comic stakes of everyday domestic life.",
       ],
     },
     {
@@ -1749,9 +1756,10 @@ const freakyFridayProject: LocalScenicProject = {
     },
     {
       type: "text",
-      heading: "Design Goal",
+      heading: "A Stage That Can Switch on Cue",
       content: [
-        "The set was tuned for transformation: spaces had to feel stable enough for character stakes while remaining agile enough for the show’s body-swap mechanics. Rather than locking scenes into realism, the design focused on clarity, speed, and contrast so each shift could land instantly.",
+        "The modular layout keeps the story moving fast, letting each location read instantly even as identities and emotional stakes flip underneath it.",
+        "That agility gives the production room for comic chaos without losing the family relationships at the center of the show.",
       ],
     },
     {
@@ -1891,10 +1899,10 @@ const anEnemyOfThePeopleProject: LocalScenicProject = {
     },
     {
       type: "text",
-      heading: "Design Goal",
+      heading: "Red as Interruption",
       content: [
-        "The only real color in the space came from the red furniture. Those pieces punctured the monochrome world. Red became a visual interruption: pressure, danger, accusation. It made the actors feel like they were standing inside an argument.",
-        "The minimal palette forced focus onto performance and language. There was nowhere to hide. The environment felt stark, almost clinical, but still theatrical. The design wasn’t decorative. It was a frame that amplified the play’s themes of power, resistance, and the cost of speaking out.",
+        "The only real color in the space comes from the red furniture, and those pieces puncture the monochrome world. Red becomes a visual interruption: pressure, danger, accusation. It makes the actors feel like they are standing inside an argument.",
+        "The minimal palette forces focus onto performance and language. There is nowhere to hide. The environment feels stark, almost clinical, but still theatrical, and the design works as a frame that amplifies the play’s themes of power, resistance, and the cost of speaking out.",
       ],
     },
     {
@@ -2053,10 +2061,10 @@ const dialMForMurderProject: LocalScenicProject = {
     },
     {
       type: "text",
-      heading: "Design Goal",
+      heading: "Suspense in the Floor Plan",
       content: [
-        "The layout was built around movement and sightlines. Every door, threshold, and furniture placement supported the mechanics of the plot. Suspense in this play is spatial: who can see whom, who can hear what, and who is trapped.",
-        "The design avoided clutter because clutter distracts from tension. The apartment felt elegant, but never comfortable. As the story tightened, the room didn’t change, it revealed how fragile that control really was.",
+        "The layout was built around movement and sightlines, with every door, threshold, and furniture placement supporting the mechanics of the plot. Suspense in this play is spatial: who can see whom, who can hear what, and who is trapped.",
+        "The design avoids clutter because clutter distracts from tension. The apartment feels elegant, but never comfortable. As the story tightens, the room does not change so much as reveal how fragile that control really is.",
       ],
     },
     {
@@ -2378,11 +2386,11 @@ const headOverHeelsProject: LocalScenicProject = {
     },
     {
       type: "text",
-      heading: "Design Goal",
+      heading: "Pop, Motion, and Queer Joy",
       content: [
-        "A custom high-saturation palette amplified the show’s irreverent tone. Shifting panels, stylized platforms, and dynamic projection elements let each location evolve with the characters’ emotional arcs, creating a visual rhythm that matched the pulse of the Go-Go’s music.",
-        "Our goal was to honor the themes of transformation, identity, and freedom while embedding a pop sensibility that felt fresh and theatrical. Whether evoking a dance floor, a throne room, or a forest of fabulous confusion, the design kept its eye on the core: joy, rebellion, and love in all its forms.",
-        "Ultimately, the scenic world acted as a visual celebration, of queerness, of musical energy, and of theatre’s power to transport. This wasn’t nostalgia; it was momentum in full technicolor.",
+        "A custom high-saturation palette amplifies the show’s irreverent tone. Shifting panels, stylized platforms, and dynamic projection elements let each location evolve with the characters’ emotional arcs, creating a visual rhythm that matches the pulse of the Go-Go’s music.",
+        "The design honors transformation, identity, and freedom while keeping a pop sensibility that feels fresh and theatrical. Whether evoking a dance floor, a throne room, or a forest of fabulous confusion, the scenic world keeps its eye on the core: joy, rebellion, and love in all its forms.",
+        "Ultimately, the set acts as a visual celebration of queerness, musical energy, and theatre’s power to transport. This is not nostalgia; it is momentum in full technicolor.",
       ],
     },
     {
@@ -4407,9 +4415,9 @@ const thePenelopiadProject: LocalScenicProject = {
     },
     {
       type: "text",
-      heading: "Design Goal",
+      heading: "Witness and Counter-Witness",
       content: [
-        "Material language balanced austerity with symbolic texture, supporting the work's interrogation of authorship, gendered history, and inherited myth. The set functioned as both container and witness, giving Penelope and the maids equal visual authority inside the same world while maintaining theatrical tension across the evening.",
+        "Material language balances austerity with symbolic texture, supporting the work's interrogation of authorship, gendered history, and inherited myth. The set functions as both container and witness, giving Penelope and the maids equal visual authority inside the same world while maintaining theatrical tension across the evening.",
       ],
     },
     {
@@ -4618,9 +4626,10 @@ const companyProject: LocalScenicProject = {
     },
     {
       type: "text",
-      heading: "Design Goal",
+      heading: "A Skyline of Longing",
       content: [
-        "Backlit windows glowed in purples, pinks, and blues, hinting at private lives just out of reach, while a color-shifting cyc formed the skyline and moved with mood and music. Rather than literal apartments, the design created a landscape of longing: an exterior world where people connect, drift, and orbit love, holding the ache and possibility of modern adulthood.",
+        "Backlit windows in purples, pinks, and blues hint at private lives just out of reach, while the shifting skyline moves with mood and music.",
+        "By treating New York as an exterior landscape of longing, the design gives Bobby's isolation and the show's emotional drift a clear visual shape.",
       ],
     },
     {
@@ -5259,9 +5268,9 @@ const americanIdiotProject: LocalScenicProject = {
     },
     {
       type: "text",
-      heading: "Design Goal",
+      heading: "Minimalism in Motion",
       content: [
-        "We moved away from Broadway's heavy TV-screen concept and leaned into immersion. Elizabeth Barrett's projections became a kinetic layer, trading static media for visceral spectacle and fluid transitions so the emotional undercurrents of the score could sit inside a minimalist frame. The set stayed unyielding while the characters fought to redefine themselves within it.",
+        "We moved away from Broadway's heavy TV-screen concept and leaned into immersion. Elizabeth Barrett's projections became a kinetic layer, trading static media for visceral spectacle and fluid transitions so the emotional undercurrents of the score could sit inside a minimalist frame. The set stays unyielding while the characters fight to redefine themselves within it.",
       ],
     },
     {
@@ -6197,9 +6206,9 @@ const littleShopOfHorrorsProject: LocalScenicProject = {
     },
     {
       type: "text",
-      heading: "Design Goal",
+      heading: "A Shop That Tightens",
       content: [
-        "Details were specific: layered brick texture, working windows, period signage, and practical counters that allowed choreography to move cleanly through the shop. The goal wasn't nostalgia for a 1960s musical. It was tension. As the plant grew, the environment didn't become bigger. It became more claustrophobic.",
+        "Details are specific: layered brick texture, working windows, period signage, and practical counters that allow choreography to move cleanly through the shop. The goal is not nostalgia for a 1960s musical. It is tension. As the plant grows, the environment does not become bigger. It becomes more claustrophobic.",
       ],
     },
     {
@@ -6820,9 +6829,10 @@ const allMySonsProject: LocalScenicProject = {
     },
     {
       type: "text",
-      heading: "Design Goal",
+      heading: "The Backyard as Moral Pressure",
       content: [
-        "The design grounded the story in a familiar domestic setting while allowing emotional shifts to register clearly. The everyday suburban space became a quiet framework for the play's central moral questions and the consequences of choices made in silence.",
+        "The open suburban setting keeps the Keller home familiar at first glance, then slowly turns that familiarity against itself as private choices come into public view.",
+        "By staying understated, the design lets the play's moral pressure build in plain sight, where the calm surface only makes the fracture underneath feel sharper.",
       ],
     },
     {
@@ -7001,8 +7011,79 @@ const localScenicProjects: LocalScenicProject[] = [
   theEffectOfGammaRaysProject,
 ];
 
+function mergeScenicCreativeTeam(
+  currentTeam: LocalScenicProjectTeamMember[],
+  nextTeam?: LocalScenicProjectTeamMember[]
+) {
+  if (!nextTeam?.length) return currentTeam;
+
+  return nextTeam.map((member) => {
+    const existing = currentTeam.find(
+      (currentMember) => currentMember.name === member.name && currentMember.role === member.role
+    );
+    return existing?.url && !member.url ? { ...member, url: existing.url } : member;
+  });
+}
+
+function mergeScenicTags(
+  currentTags: Array<{ name: string; slug: string }>,
+  nextTags?: Array<{ name: string; slug: string }>
+) {
+  if (!nextTags?.length) return currentTags;
+
+  return nextTags.map((tag) => currentTags.find((currentTag) => currentTag.slug === tag.slug) || tag);
+}
+
+function mergeScenicMedia(
+  currentMedia: LocalScenicProjectMedia[],
+  nextMedia?: Array<Partial<LocalScenicProjectMedia> & Pick<LocalScenicProjectMedia, "id" | "type">>
+) {
+  if (!nextMedia?.length) return currentMedia;
+
+  const currentById = new Map(currentMedia.map((item) => [item.id, item]));
+  const merged = nextMedia.map((item) => {
+    const current = currentById.get(item.id);
+    return {
+      ...(current || {}),
+      ...item,
+      imageUrl: item.imageUrl ?? current?.imageUrl,
+      videoUrl: item.videoUrl ?? current?.videoUrl,
+      altText: item.altText ?? current?.altText ?? "",
+      caption: item.caption ?? current?.caption,
+      kind: item.kind ?? current?.kind,
+    } as LocalScenicProjectMedia;
+  });
+
+  const mergedIds = new Set(merged.map((item) => item.id));
+  const extras = currentMedia.filter((item) => !mergedIds.has(item.id));
+  return [...merged, ...extras];
+}
+
+function applyFileFirstScenicProject(project: LocalScenicProject): LocalScenicProject {
+  const fieldOverride = (fileFirstScenicProjectFieldsBySlug as Record<string, Partial<LocalScenicProject>>)[
+    project.slug
+  ];
+  const mediaOverride = (fileFirstScenicProjectMediaBySlug as Record<
+    string,
+    Array<Partial<LocalScenicProjectMedia> & Pick<LocalScenicProjectMedia, "id" | "type">>
+  >)[project.slug];
+  const sectionOverride = (fileFirstScenicProjectSectionsBySlug as Record<string, LocalScenicProjectSection[]>)[
+    project.slug
+  ];
+
+  const nextProject = fieldOverride ? { ...project, ...fieldOverride } : project;
+  return {
+    ...nextProject,
+    creativeTeam: mergeScenicCreativeTeam(project.creativeTeam, fieldOverride?.creativeTeam),
+    tags: mergeScenicTags(project.tags, fieldOverride?.tags),
+    links: fieldOverride?.links ?? project.links,
+    media: mergeScenicMedia(project.media, mediaOverride),
+    sections: sectionOverride ?? project.sections,
+  };
+}
+
 const resolvedLocalScenicProjects = localScenicProjects.map((project) =>
-  applyScenicMediaManifest(project)
+  applyScenicMediaManifest(applyFileFirstScenicProject(project))
 );
 
 export function getLocalScenicProjects() {

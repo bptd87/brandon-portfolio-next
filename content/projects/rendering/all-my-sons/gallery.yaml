@@ -1,9 +1,29 @@
 images:
-  - asset: project-images/project-90017-gallery-150073.webp
-    alt: Scenic rendering for All My Sons at Stephens College. View 1.
+  - asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90017-gallery-150073-bd354494.webp
+    alt: Rendering of the Keller family house and yard for All My Sons at Stephens College.
     sortOrder: 7
 designNotes: >-
-  Image set for All My Sons — Stephens College (2010). The work balances emotional atmosphere with stage logic, helping
-  teams evaluate ideas before they are built. All My Sons is set in a postwar suburban world that appears stable,
-  orderly, and complete.
-bodySections: []
+  Rendering study for All My Sons — Stephens College (2010). The image keeps the house grounded, familiar, and
+  deceptively open so the eventual moral collapse arrives through recognition instead of theatrical warning signs.
+heroExcerpt: >-
+  These renderings focus on the danger of normalcy: a house, porch, and yard that look open and familiar enough to feel
+  trustworthy until the story begins exposing what that comfort has been protecting.
+bodySections:
+  - heading: Ordinary on Purpose
+    paragraphs:
+      - >-
+        The strength of the design lies in its refusal to announce tragedy too early. The house needed to look like a
+        place built for routine, family habit, and postwar stability so the eventual pressure could arrive through
+        recognition rather than visual warning.
+      - >-
+        That is why the rendering language stays grounded. Familiar siding, porch structure, and backyard openness all
+        support the moral shock of the play far better than a design that signals collapse from the beginning.
+  - heading: Exposure in an Open Yard
+    paragraphs:
+      - >-
+        The exterior setting is deceptively generous. It provides space, air, and community visibility, but it also
+        denies the characters privacy once the emotional temperature changes.
+      - >-
+        The renderings help show how that openness works dramaturgically. The yard is not merely picturesque background;
+        it is the place where private failure becomes public fact.

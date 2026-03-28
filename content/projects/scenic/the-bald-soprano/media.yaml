@@ -1,41 +1,48 @@
 gallery:
   - id: bald-cover
     kind: cover
-    asset: project-images/rescued/the-bald-soprano/the-bald-soprano-2d959ef49b.jpeg
-    alt: The Bald Soprano scenic and lighting design cover image.
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-bald-soprano-2d959ef49b-596768d7.jpeg
+    alt: Distorted drawing-room environment for The Bald Soprano, where domestic order starts to feel comic and unstable.
   - id: bald-prod-1
     kind: rendering
-    asset: project-images/rescued/the-bald-soprano/the-bald-soprano-caf4556cac.jpg
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-bald-soprano-caf4556cac-cedac5d3.jpg
     alt: >-
       Rendering for The Bald Soprano showing the distorted domestic environment and heightened composition, scenic and
       lighting design by Brandon PT Davis.
   - id: bald-prod-2
     kind: production
-    asset: project-images/rescued/the-bald-soprano/the-bald-soprano-06201e4480.jpg
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-bald-soprano-06201e4480-3a71fb84.jpg
     alt: >-
       Production still from The Bald Soprano emphasizing the absurd domestic scale and actor framing, scenic and
       lighting design by Brandon PT Davis.
   - id: bald-prod-3
     kind: production
-    asset: project-images/rescued/the-bald-soprano/the-bald-soprano-39e8a0ac44.jpg
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-bald-soprano-39e8a0ac44-3c617948.jpg
     alt: >-
       Production image from The Bald Soprano showing the fractured drawing-room world in performance, scenic and
       lighting design by Brandon PT Davis.
   - id: bald-prod-4
     kind: production
-    asset: project-images/rescued/the-bald-soprano/the-bald-soprano-8ffd19e8bf.jpeg
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-bald-soprano-8ffd19e8bf-ccc7e268.jpeg
     alt: >-
       Performance still from The Bald Soprano highlighting warped domestic architecture and comic tension, scenic and
       lighting design by Brandon PT Davis.
   - id: bald-prod-5
     kind: production
-    asset: project-images/rescued/the-bald-soprano/the-bald-soprano-2d959ef49b.jpeg
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-bald-soprano-2d959ef49b-596768d7.jpeg
     alt: >-
       Production image from The Bald Soprano showing the full scenic composition and heightened lighting contrast,
       scenic and lighting design by Brandon PT Davis.
   - id: bald-prod-6
     kind: production
-    asset: project-images/rescued/the-bald-soprano/the-bald-soprano-33fb979f6b.jpeg
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-bald-soprano-33fb979f6b-1c8ce220.jpeg
     alt: >-
       Final production image from The Bald Soprano showing the absurd domestic setting in performance, scenic and
       lighting design by Brandon PT Davis.

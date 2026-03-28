@@ -7,10 +7,10 @@ featured: true
 excerpt: >-
   A co-scenic design for South Coast Repertory’s 2025 production of Million Dollar Quartet, built around the intimacy of
   Sun Records and the explosive energy of four artists changing music history together.
-seoTitle: Million Dollar Quartet | Scenic Design by Brandon PT Davis
+seoTitle: Million Dollar Quartet Scenic Design | South Coast Repertory
 seoDescription: >-
-  Scenic design for Million Dollar Quartet at South Coast Repertory, balancing the intimacy of Sun Records with the
-  scale and electricity of a mythic live jam session.
+  Scenic design for South Coast Repertory's Million Dollar Quartet, shaping Sun Records as both an intimate studio and a
+  mythic live music environment.
 seoKeywords:
   - Million Dollar Quartet
   - scenic design
@@ -25,8 +25,11 @@ year: 2025
 month: 9
 subcategory: Musical Theatre
 cover:
-  asset: project-images/project-90087-cover.webp
-  alt: Million Dollar Quartet scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-cover-5a61d757.webp
+  alt: >-
+    Million Dollar Quartet scenic design cover at South Coast Repertory, shaping Sun Records as an intimate studio and
+    live music environment.
 team:
   - role: Book By
     name: Colin Escott and Floyd Mutrux
@@ -47,12 +50,18 @@ team:
   - role: Sound Designer
     name: Jeff Polunas
 tags:
-  - musical-theatre
-  - 1950s
-  - rock-and-roll
-  - regional-theatre
-  - million-dollar-quartet
+  - name: Musical Theatre
+    slug: musical-theatre
+  - name: 1950s
+    slug: 1950s
+  - name: Rock and Roll
+    slug: rock-and-roll
+  - name: Regional Theatre
+    slug: regional-theatre
+  - name: Million Dollar Quartet
+    slug: million-dollar-quartet
 links:
   - label: South Coast Repertory Production
     url: https://www.scr.org/plays/productions/25-26-season/million-dollar-quartet/
 updatedAt: '2026-02-12T15:03:58+00:00'
+createdAt: '2026-02-07T05:46:01+00:00'

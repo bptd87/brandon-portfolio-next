@@ -24,8 +24,9 @@ year: 2022
 month: 6
 subcategory: Musical Theatre
 cover:
-  asset: project-images/project-90049-cover.webp
-  alt: A Funny Thing Happened on the Way to the Forum scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90049-cover-3094f147.webp
+  alt: Scenic design for A Funny Thing Happened on the Way to the Forum by Brandon PT Davis.
 team:
   - role: Music and Lyrics
     name: Stephen Sondheim
@@ -44,10 +45,14 @@ team:
   - role: Director
     name: Mellisa Livingston
 tags:
-  - musical-theatre
-  - comedy
-  - farce
-  - a-funny-thing-happened
+  - name: Musical Theatre
+    slug: musical-theatre
+  - name: Comedy
+    slug: comedy
+  - name: Farce
+    slug: farce
+  - name: A Funny Thing Happened on the Way to the Forum
+    slug: a-funny-thing-happened
 links:
   - label: Summit Daily Listing
     url: https://www.summitdaily.com/news/travel-to-ancient-rome-with-a-funny-thing-happened-on-the-way-to-the-forum/

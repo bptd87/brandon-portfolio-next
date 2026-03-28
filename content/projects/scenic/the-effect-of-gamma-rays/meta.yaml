@@ -23,8 +23,9 @@ year: 2010
 month: 7
 subcategory: Drama
 cover:
-  asset: portfolio/projects/2026/02/gamma-rays-1-5794.webp
-  alt: The Effect of Gamma Rays on Man-in-the-Moon Marigolds scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/gamma-rays-1-5794-fc8ce725.webp
+  alt: Scenic design for The Effect of Gamma Rays on Man-in-the-Moon Marigolds by Brandon PT Davis.
 team:
   - role: Playwright
     name: Paul Zindel
@@ -39,9 +40,13 @@ team:
   - role: Director
     name: Beth Leonard
 tags:
-  - drama
-  - okoboji-summer-theatre
-  - paul-zindel
-  - the-effect-of-gamma-rays-on-man-in-the-moon-marigolds
+  - name: Drama
+    slug: drama
+  - name: Okoboji Summer Theatre
+    slug: okoboji-summer-theatre
+  - name: Paul Zindel
+    slug: paul-zindel
+  - name: The Effect of Gamma Rays on Man-in-the-Moon Marigolds
+    slug: the-effect-of-gamma-rays-on-man-in-the-moon-marigolds
 links: []
 updatedAt: '2026-02-23T09:57:49.72121+00:00'

@@ -25,8 +25,9 @@ year: 2018
 month: 7
 subcategory: Comedy
 cover:
-  asset: project-images/rescued/not-now-darling/not-now-darling-06dc38d64a.jpg
-  alt: Not Now, Darling scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/not-now-darling-06dc38d64a-75b5cb64.jpg
+  alt: Scenic design for Not Now, Darling by Brandon PT Davis.
 team:
   - role: Written By
     name: Ray Cooney and John Chapman
@@ -41,9 +42,13 @@ team:
   - role: Sound Designer
     name: Michael Burke
 tags:
-  - comedy
-  - farce
-  - okoboji-summer-theatre
-  - not-now-darling
+  - name: Comedy
+    slug: comedy
+  - name: Farce
+    slug: farce
+  - name: Okoboji Summer Theatre
+    slug: okoboji-summer-theatre
+  - name: Not Now, Darling
+    slug: not-now-darling
 links: []
 updatedAt: '2026-03-23T19:05:00.000Z'

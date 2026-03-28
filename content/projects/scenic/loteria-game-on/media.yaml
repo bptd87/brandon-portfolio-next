@@ -1,68 +1,80 @@
 gallery:
   - id: loteria-cover
     kind: cover
-    asset: project-images/project-90009-cover.webp
-    alt: '¡LOTERIA: GAME ON! scenic design cover image.'
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-cover-3f380dfa.webp
+    alt: 'Scenic design for ¡LOTERIA: GAME ON! by Brandon PT Davis.'
   - id: loteria-prod-1
     kind: production
-    asset: project-images/project-90009-gallery-150069.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150069-841739b7.webp
     alt: >-
       Production image from ¡LOTERIA: GAME ON! showing the basement family-room world, scenic design by Brandon PT
       Davis.
   - id: loteria-prod-2
     kind: production
-    asset: project-images/project-90009-gallery-150072.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150072-b53ecf81.webp
     alt: >-
       Performance image from ¡LOTERIA: GAME ON! with the family-room environment and central playing space, scenic
       design by Brandon PT Davis.
   - id: loteria-prod-3
     kind: production
-    asset: project-images/project-90009-gallery-150075.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150075-da6650d9.webp
     alt: >-
       Production still from ¡LOTERIA: GAME ON! highlighting the domestic room before transformation, scenic design by
       Brandon PT Davis.
   - id: loteria-prod-4
     kind: production
-    asset: project-images/project-90009-gallery-150086.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150086-80b15030.webp
     alt: >-
       Stage image from ¡LOTERIA: GAME ON! featuring actors within the modular basement set, scenic design by Brandon PT
       Davis.
   - id: loteria-prod-5
     kind: production
-    asset: project-images/project-90009-gallery-150115.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150115-e66396d4.webp
     alt: >-
       Production image from ¡LOTERIA: GAME ON! emphasizing the playful theatrical world of the show, scenic design by
       Brandon PT Davis.
   - id: loteria-prod-6
     kind: production
-    asset: project-images/project-90009-gallery-150122.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150122-101de9a7.webp
     alt: >-
       Performance image from ¡LOTERIA: GAME ON! showing scenic color and layered stage action, scenic design by Brandon
       PT Davis.
   - id: loteria-prod-7
     kind: production
-    asset: project-images/project-90009-gallery-150153.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150153-e0a05162.webp
     alt: >-
       Production still from ¡LOTERIA: GAME ON! highlighting theatrical play and audience-facing composition, scenic
       design by Brandon PT Davis.
   - id: loteria-prod-8
     kind: production
-    asset: project-images/project-90009-gallery-150213.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150213-09af2504.webp
     alt: 'Image from ¡LOTERIA: GAME ON! showing the transformed game-inspired world, scenic design by Brandon PT Davis.'
   - id: loteria-prod-9
     kind: production
-    asset: project-images/project-90009-gallery-150233.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-gallery-150233-a285c5ac.webp
     alt: >-
       Production image from ¡LOTERIA: GAME ON! with performers inside the vibrant scenic environment, scenic design by
       Brandon PT Davis.
   - id: loteria-render-1
     kind: rendering
-    asset: project-images/project-90009-gallery-150191.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90009-gallery-150191-d5547329.webp
     alt: >-
       Rendering for ¡LOTERIA: GAME ON! showing the family-room environment before transformation, scenic design by
       Brandon PT Davis.
   - id: loteria-render-2
     kind: rendering
-    asset: project-images/project-90009-gallery-150222.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90009-gallery-150222-46ec93d2.webp
     alt: 'Rendering for ¡LOTERIA: GAME ON! exploring the heightened Loteria card-world, scenic design by Brandon PT Davis.'
 videos: []

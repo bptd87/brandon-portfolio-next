@@ -7,7 +7,7 @@ featured: true
 excerpt: >-
   New York framed as a landscape of longing in Company, pairing coupled buildings, a lone brick structure, and a
   color-shifting skyline to reflect connection, solitude, and modern adulthood.
-seoTitle: Company | Scenic Design by Brandon PT Davis
+seoTitle: Company Scenic Design | UC Irvine
 seoDescription: >-
   Scenic design for Company at University of California Irvine, creating a New York cityscape of longing, movement, and
   shifting emotional rhythm.
@@ -24,8 +24,11 @@ year: 2019
 month: 11
 subcategory: Musical Theatre
 cover:
-  asset: project-images/project-90019-cover.webp
-  alt: Company scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-cover-42d5b1b2.webp
+  alt: >-
+    Company scenic design cover at University of California Irvine, using a cityscape of longing and shifting emotional
+    rhythm.
 team:
   - role: Music and Lyrics
     name: Stephen Sondheim
@@ -46,10 +49,14 @@ team:
   - role: Director
     name: Eli Simon
 tags:
-  - musical-theatre
-  - university-of-california-irvine
-  - stephen-sondheim
-  - company
+  - name: Musical Theatre
+    slug: musical-theatre
+  - name: University of California Irvine
+    slug: university-of-california-irvine
+  - name: Stephen Sondheim
+    slug: stephen-sondheim
+  - name: Company
+    slug: company
 links:
   - label: Review
     url: https://newuniversity.org/2019/12/02/uci-dramas-relevant-take-on-company/

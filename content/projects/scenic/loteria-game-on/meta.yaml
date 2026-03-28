@@ -24,8 +24,9 @@ year: 2023
 month: 3
 subcategory: Theatre for Young Audiences
 cover:
-  asset: project-images/project-90009-cover.webp
-  alt: '¡LOTERIA: GAME ON! scenic design cover image'
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90009-cover-3f380dfa.webp
+  alt: 'Scenic design for ¡LOTERIA: GAME ON! by Brandon PT Davis.'
 team:
   - role: Playwright
     name: Mabelle Reynoso
@@ -42,11 +43,16 @@ team:
   - role: Director
     name: Sara Rodriguez
 tags:
-  - theatre-for-young-audiences
-  - new-work
-  - projection-design
-  - theatre-silco
-  - loteria-game-on
+  - name: Theatre for Young Audiences
+    slug: theatre-for-young-audiences
+  - name: New Work
+    slug: new-work
+  - name: Projection Design
+    slug: projection-design
+  - name: Theatre SilCo
+    slug: theatre-silco
+  - name: Loteria Game On
+    slug: loteria-game-on
 links:
   - label: Mabelle Reynoso Play Page
     url: https://www.mabellereynoso.com/loteria-game-on

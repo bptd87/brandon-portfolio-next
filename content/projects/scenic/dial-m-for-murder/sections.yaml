@@ -22,14 +22,15 @@
     - dialm-prod-3
     - dialm-prod-4
 - type: text
-  heading: Design Goal
+  heading: Suspense in the Floor Plan
   content:
     - >-
-      The layout was built around movement and sightlines. Every door, threshold, and furniture placement supported the
-      mechanics of the plot. Suspense in this play is spatial: who can see whom, who can hear what, and who is trapped.
+      The layout was built around movement and sightlines, with every door, threshold, and furniture placement
+      supporting the mechanics of the plot. Suspense in this play is spatial: who can see whom, who can hear what, and
+      who is trapped.
     - >-
-      The design avoided clutter because clutter distracts from tension. The apartment felt elegant, but never
-      comfortable. As the story tightened, the room didn’t change, it revealed how fragile that control really was.
+      The design avoids clutter because clutter distracts from tension. The apartment feels elegant, but never
+      comfortable. As the story tightens, the room does not change so much as reveal how fragile that control really is.
 - type: gallery
   mediaIds:
     - dialm-prod-5

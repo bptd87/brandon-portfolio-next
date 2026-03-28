@@ -23,8 +23,9 @@ year: 2013
 month: 6
 subcategory: Comedy
 cover:
-  asset: portfolio/projects/2026/02/2013-dont-dress-for-dinner-okoboji-summer-theatre-1-of-7-3733.webp
-  alt: Don't Dress for Dinner scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-1-of-7-3733-2a2cf2a4.webp
+  alt: Scenic design for Don't Dress for Dinner by Brandon PT Davis.
 team:
   - role: Playwright
     name: Marc Camoletti
@@ -39,9 +40,13 @@ team:
   - role: Director
     name: Dan Schultz
 tags:
-  - comedy
-  - okoboji-summer-theatre
-  - dont-dress-for-dinner
-  - farce
+  - name: Comedy
+    slug: comedy
+  - name: Okoboji Summer Theatre
+    slug: okoboji-summer-theatre
+  - name: Don't Dress for Dinner
+    slug: dont-dress-for-dinner
+  - name: Farce
+    slug: farce
 links: []
 updatedAt: '2026-02-26T06:19:09.582627+00:00'

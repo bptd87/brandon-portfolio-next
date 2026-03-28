@@ -1,9 +1,31 @@
 images:
-  - asset: project-images/project-90010-gallery-150168.webp
-    alt: Scenic rendering for The Glass Menagerie at Maples Repertory Theatre. View 1.
+  - asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90010-gallery-150168-5dda40de.webp
+    alt: Rendering of the memory-driven apartment for The Glass Menagerie at Maples Repertory Theatre.
 designNotes: >-
-  Visualization sequence for The Glass Menagerie — Maples Repertory Theatre (2025). Renderings are used here as decision
-  tools, aligning scenic intent with directorial storytelling goals. The Glass Menagerie at Maples Repertory Theatre,
-  directed by Kimberly Braun, was staged as a memory play shaped by Tom Wingfield’s recollection rather than a literal
-  apartment.
-bodySections: []
+  Rendering study for The Glass Menagerie — Maples Repertory Theatre (2025). The image softens the apartment into a
+  remembered landscape, using thresholds and partial framing to keep the room present without locking it into literal
+  realism.
+heroExcerpt: >-
+  These images support a memory play rather than a fixed apartment box, so the room can breathe, blur, and hold
+  emotional distance without losing its domestic truth.
+bodySections:
+  - heading: Memory Before Architecture
+    paragraphs:
+      - >-
+        The rendering work began with the idea that Tom is not recalling a blueprint. He is recalling pressure,
+        tenderness, and the parts of home that would not let him go. That pushed the images away from literal enclosure
+        and toward a more permeable remembered space.
+      - >-
+        Scrim, threshold, and partial framing became useful because they let the room feel present without insisting on
+        total solidity. The world stays recognizable, but it never hardens into a straightforward apartment
+        illustration.
+  - heading: Emotional Geography
+    paragraphs:
+      - >-
+        The renderings had to communicate how the family shares space while also living at different emotional distances
+        from one another. Sightlines, platform relationships, and the pressure of the room all help stage that
+        separation.
+      - >-
+        Used this way, the images become a design conversation about atmosphere and movement, not just finish selection.
+        They help clarify how the production should feel when memory and action start occupying the same frame.

@@ -7,7 +7,7 @@ featured: false
 excerpt: >-
   A compact New York walk-up whose scale, stairs, and thresholds turn Barefoot in the Park into a comedy of spatial
   pressure.
-seoTitle: Barefoot in the Park | Scenic Design by Brandon PT Davis
+seoTitle: Barefoot in the Park Scenic Design | Okoboji Summer Theatre
 seoDescription: >-
   Scenic design for Barefoot in the Park at Okoboji Summer Theatre, using a compact New York walk-up to support comedy,
   pressure, and relationship dynamics.
@@ -24,8 +24,9 @@ year: 2024
 month: 8
 subcategory: Comedy
 cover:
-  asset: project-images/project-90042-cover.webp
-  alt: Barefoot in the Park scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90042-cover-29f63e4a.webp
+  alt: Barefoot in the Park scenic design cover at Okoboji Summer Theatre, centering the apartment world of the play.
 team:
   - role: Book By
     name: Neil Simon
@@ -40,10 +41,14 @@ team:
   - role: Sound Designer
     name: Kayla Slinger
 tags:
-  - comedy
-  - neil-simon
-  - okoboji-summer-theatre
-  - barefoot-in-the-park
+  - name: Comedy
+    slug: comedy
+  - name: Neil Simon
+    slug: neil-simon
+  - name: Okoboji Summer Theatre
+    slug: okoboji-summer-theatre
+  - name: Barefoot in the Park
+    slug: barefoot-in-the-park
 links:
   - label: KIWA Radio Listing
     url: https://kiwaradio.com/event/okoboji-summer-theatre-presents-barefoot-in-the-park/

@@ -14,6 +14,8 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "generate:file-first-article-overrides": "node --import tsx scripts/generate-file-first-article-overrides.ts",
+    "generate:file-first-project-overrides": "node --import tsx scripts/generate-file-first-project-overrides.ts",
+    "export:project-content": "node --import tsx scripts/export-project-content.ts",
     "migrate:manus-assets:blob": "node --import tsx scripts/migrate-manus-assets-to-blob.ts"
   },
   "dependencies": {

@@ -7,10 +7,10 @@ featured: false
 excerpt: >-
   A compressed civic machine for Urinetown, industrial, stratified, and sharply theatrical, built to hold the musical’s
   satire of scarcity, power, and class.
-seoTitle: Urinetown | Scenic Design by Brandon PT Davis
+seoTitle: Urinetown Scenic Design | University of Missouri
 seoDescription: >-
-  Scenic design for Urinetown at the University of Missouri, using industrial levels, distressed infrastructure, and
-  civic architecture to support satire, power, and ensemble movement.
+  Scenic design for Urinetown at the University of Missouri, using industrial platforms, distressed civic architecture,
+  and class-coded vertical space to sharpen the musical's satire.
 seoKeywords:
   - Urinetown scenic design
   - University of Missouri theatre
@@ -23,8 +23,11 @@ year: 2024
 month: 11
 subcategory: Musical Theatre
 cover:
-  asset: project-images/project-90041-cover.webp
-  alt: Urinetown scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-cover-cb5cfbfe.webp
+  alt: >-
+    Urinetown scenic design cover at the University of Missouri, using industrial levels and distressed civic
+    architecture.
 team:
   - role: Music & Lyrics by
     name: Mark Hollman
@@ -45,9 +48,13 @@ team:
   - role: Director
     name: Joy Powell
 tags:
-  - musical-theatre
-  - satire
-  - dystopian
-  - urinetown
+  - name: Musical Theatre
+    slug: musical-theatre
+  - name: Satire
+    slug: satire
+  - name: Dystopian
+    slug: dystopian
+  - name: Urinetown
+    slug: urinetown
 links: []
 updatedAt: '2026-02-12T15:04:00+00:00'

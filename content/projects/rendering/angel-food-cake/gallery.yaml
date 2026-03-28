@@ -1,6 +1,24 @@
 images: []
 designNotes: >-
-  Scenic rendering series for Angel Food Cake — Western Summer Theatre (2017). This rendering package supports early
-  collaboration by translating concept language into actionable visual cues. A mobile home interior for the West Coast
-  premiere of Angel Food Cake at Western Summer Theatre.
-bodySections: []
+  Rendering study for Angel Food Cake — Western Summer Theatre (2017). The image keeps the room practical and lived-in,
+  relying on material wear and domestic scale to carry feeling instead of polishing the space into abstraction.
+heroExcerpt: >-
+  The room stays practical and lived-in, letting small domestic choices carry the story instead of pushing the emotion
+  too hard.
+bodySections:
+  - heading: Everyday Scale
+    paragraphs:
+      - >-
+        The design works best when it feels familiar rather than polished. The mobile home setting needs to read as a
+        real place people have worked to maintain, not a decorative version of one.
+      - >-
+        That groundedness is what gives the production room to breathe. The humor and hurt both land more cleanly when
+        the environment is honest about its scale and limits.
+  - heading: Warmth Without Gloss
+    paragraphs:
+      - >-
+        Material detail does the emotional work here: worn surfaces, practical furniture, and a room that has been
+        adapted over time all suggest care without sentimentality.
+      - >-
+        The rendering ultimately helps the production by making the space feel inhabited, which keeps the story human
+        even when it turns difficult.

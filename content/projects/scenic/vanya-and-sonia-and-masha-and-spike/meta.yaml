@@ -23,8 +23,9 @@ year: 2016
 month: 2
 subcategory: Comedy
 cover:
-  asset: portfolio/projects/2026/02/2016-vanya-sonia-masha-and-spike-stephens-1-of-7-1190.webp
-  alt: Vanya and Sonia and Masha and Spike scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-1-of-7-1190-d193baa9.webp
+  alt: Scenic design for Vanya and Sonia and Masha and Spike by Brandon PT Davis.
 team:
   - role: Playwright
     name: Christopher Durang
@@ -39,9 +40,13 @@ team:
   - role: Director
     name: Lamby Hedge
 tags:
-  - comedy
-  - stephens-college
-  - christopher-durang
-  - vanya-and-sonia-and-masha-and-spike
+  - name: Comedy
+    slug: comedy
+  - name: Stephens College
+    slug: stephens-college
+  - name: Christopher Durang
+    slug: christopher-durang
+  - name: Vanya and Sonia and Masha and Spike
+    slug: vanya-and-sonia-and-masha-and-spike
 links: []
 updatedAt: '2026-02-27T11:15:14.646195+00:00'

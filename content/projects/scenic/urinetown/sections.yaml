@@ -25,12 +25,14 @@
     - uri-prod-4
     - uri-prod-5
 - type: text
-  heading: Design Goal
+  heading: A City That Polices Itself
   content:
     - >-
-      The overall goal was to make the satire feel both distant and uncomfortably familiar. The architecture had to feel
-      theatrical enough to support the show’s comic exaggeration, but grounded enough that the power structures onstage
-      still felt recognizable.
+      The architecture was shaped to make the town’s rules visible at a glance. Levels, barriers, and industrial framing
+      turn the world into a system of control, which gives the satire a physical target.
+    - >-
+      That clarity keeps the comedy sharp, but it also leaves the audience with something more uneasy: a civic machine
+      that feels theatrical and, at the same time, all too recognizable.
 - type: gallery
   mediaIds:
     - uri-prod-6

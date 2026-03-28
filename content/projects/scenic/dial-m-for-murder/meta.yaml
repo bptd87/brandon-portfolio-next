@@ -24,8 +24,9 @@ year: 2023
 month: 8
 subcategory: Drama
 cover:
-  asset: portfolio/projects/2026/03/2023-dial-m-for-murder-8-of-9-0343.webp
-  alt: Dial “M” for Murder scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-dial-m-for-murder-8-of-9-0343-ca01b79d.webp
+  alt: Scenic design for Dial M for Murder by Brandon PT Davis.
 team:
   - role: Book By
     name: Frederic Knott
@@ -40,9 +41,13 @@ team:
   - role: Sound Design
     name: Kayla Sliger
 tags:
-  - drama
-  - suspense
-  - okoboji-summer-theatre
-  - dial-m-for-murder
+  - name: Drama
+    slug: drama
+  - name: Suspense
+    slug: suspense
+  - name: Okoboji Summer Theatre
+    slug: okoboji-summer-theatre
+  - name: Dial M for Murder
+    slug: dial-m-for-murder
 links: []
 updatedAt: '2026-03-01T08:59:54.564733+00:00'

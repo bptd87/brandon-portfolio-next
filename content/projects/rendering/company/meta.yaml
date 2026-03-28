@@ -5,19 +5,21 @@ title: Company
 status: published
 featured: false
 excerpt: >-
-  A rendering for Company focused on urban rhythm, intimacy, and the emotional friction between public life and private
-  uncertainty.
-seoTitle: Company
+  A rendering sequence for Company that treats the city as both social architecture and emotional pressure, letting the
+  world feel lively, exposed, and slightly lonely all at once.
+seoTitle: Company Rendering | Scenic Visualization by Brandon PT Davis
 seoDescription: >-
-  Explore the captivating scenic design of Sondheim's musical, showcasing the complexities of marriage and relationships
-  in vibrant New York City.
+  Rendering sequence for Company, balancing urban energy, layered social space, and the quiet isolation at the center
+  of the musical.
 seoKeywords: []
 client: University of California Irvine
 location: Irvine, CA
 year: 2019
 month: 11
 cover:
-  asset: project-images/project-90019-gallery-150102.webp
-  alt: Company rendering project cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90019-gallery-150102-ec4c6874.webp
+  alt: Rendering of the linked urban architecture for Company at the University of California Irvine.
 publishedAt: '2026-02-19T11:02:09.677Z'
 updatedAt: '2026-02-19T11:02:09.677Z'
+createdAt: '2026-02-19T11:02:09.677Z'

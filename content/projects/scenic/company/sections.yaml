@@ -21,13 +21,14 @@
     - company-prod-3
     - company-prod-4
 - type: text
-  heading: Design Goal
+  heading: A Skyline of Longing
   content:
     - >-
-      Backlit windows glowed in purples, pinks, and blues, hinting at private lives just out of reach, while a
-      color-shifting cyc formed the skyline and moved with mood and music. Rather than literal apartments, the design
-      created a landscape of longing: an exterior world where people connect, drift, and orbit love, holding the ache
-      and possibility of modern adulthood.
+      Backlit windows in purples, pinks, and blues hint at private lives just out of reach, while the shifting skyline
+      moves with mood and music.
+    - >-
+      By treating New York as an exterior landscape of longing, the design gives Bobby's isolation and the show's
+      emotional drift a clear visual shape.
 - type: gallery
   mediaIds:
     - company-prod-5

@@ -23,8 +23,9 @@ year: 2014
 month: 7
 subcategory: Drama
 cover:
-  asset: portfolio/projects/2026/02/2014-rich-girl-okoboji-summer-theatre-3-of-8-2094.webp
-  alt: Rich Girl scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2014-rich-girl-okoboji-summer-theatre-3-of-8-2094-bd9037d8.webp
+  alt: Scenic design for Rich Girl by Brandon PT Davis.
 team:
   - role: Playwright
     name: Victoria Stewart
@@ -39,9 +40,13 @@ team:
   - role: Director
     name: Rich Cole
 tags:
-  - drama
-  - okoboji-summer-theatre
-  - rich-girl
-  - contemporary-drama
+  - name: Drama
+    slug: drama
+  - name: Okoboji Summer Theatre
+    slug: okoboji-summer-theatre
+  - name: Rich Girl
+    slug: rich-girl
+  - name: Contemporary Drama
+    slug: contemporary-drama
 links: []
 updatedAt: '2026-02-27T10:18:35.878251+00:00'

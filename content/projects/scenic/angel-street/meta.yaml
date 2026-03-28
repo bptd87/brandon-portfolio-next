@@ -23,8 +23,9 @@ year: 2013
 month: 7
 subcategory: Drama
 cover:
-  asset: project-images/project-90043-cover.webp
-  alt: Angel Street scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90043-cover-487c1e5d.webp
+  alt: Scenic design for Angel Street by Brandon PT Davis.
 team:
   - role: Playwright
     name: Patrick Hamilton
@@ -39,10 +40,14 @@ team:
   - role: Director
     name: Rich Cole
 tags:
-  - drama
-  - okoboji-summer-theatre
-  - angel-street
-  - victorian-thriller
+  - name: Drama
+    slug: drama
+  - name: Okoboji Summer Theatre
+    slug: okoboji-summer-theatre
+  - name: Angel Street
+    slug: angel-street
+  - name: Victorian Thriller
+    slug: victorian-thriller
 links:
   - label: Listing
     url: https://www.dglobe.com/news/summer-theater-announces-2013-schedule

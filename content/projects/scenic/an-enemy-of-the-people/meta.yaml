@@ -23,8 +23,9 @@ year: 2023
 month: 10
 subcategory: Drama
 cover:
-  asset: portfolio/projects/2026/03/2023-enemy-of-the-people-6-of-6-7499.webp
-  alt: An Enemy of the People scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-enemy-of-the-people-6-of-6-7499-f113149d.webp
+  alt: Scenic design for An Enemy of the People by Brandon PT Davis.
 team:
   - role: Book By
     name: Henrik Ibsen
@@ -39,9 +40,13 @@ team:
   - role: Sound Design
     name: Michael Burke
 tags:
-  - drama
-  - ibsen
-  - stephens-college
-  - an-enemy-of-the-people
+  - name: Drama
+    slug: drama
+  - name: Ibsen
+    slug: ibsen
+  - name: Stephens College
+    slug: stephens-college
+  - name: An Enemy of the People
+    slug: an-enemy-of-the-people
 links: []
 updatedAt: '2026-03-01T10:26:51.60406+00:00'

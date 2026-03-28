@@ -1,6 +1,25 @@
 images: []
 designNotes: >-
-  Image set for The Northwind Mare Tavern — (2026). The work balances emotional atmosphere with stage logic, helping
-  teams evaluate ideas before they are built. A fantasy tavern emerges from twilight mist—carved horse-head gables,
-  glowing lanterns, stone walls weathered by imagined centuries.
-bodySections: []
+  Rendering study for The Northwind Mare Tavern — (2026). The image treats atmosphere as structure, using mist,
+  practical light, and surface wear to make the room feel inhabited rather than merely genre-coded.
+heroExcerpt: >-
+  The tavern reads as a lived-in threshold between shelter and adventure, with carved wood, worn stone, and practical
+  light carrying the scenic read before anyone speaks.
+bodySections:
+  - heading: A World You Can Enter
+    paragraphs:
+      - >-
+        The goal was not just to make a fantasy interior look detailed. It was to make the room feel used. The carving,
+        lantern placement, and surface wear all needed to suggest a place shaped by habit, memory, and folklore rather
+        than ornament alone.
+      - >-
+        That matters in rendering work because a space feels believable when it seems to have a life before the frame
+        and after it, not when every object is trying to announce the genre all at once.
+  - heading: Atmosphere as Structure
+    paragraphs:
+      - >-
+        Mist, warm practical light, and the heavy silhouette of the architecture help the image read like a stage
+        picture: clear focal hierarchy in front, depth beyond, and enough visual weight to hold the eye in the room.
+      - >-
+        The rendering is ultimately about hospitality and suspense sharing the same frame. It should feel welcoming, but
+        never entirely safe.

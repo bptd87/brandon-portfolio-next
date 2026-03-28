@@ -1,7 +1,27 @@
 images:
-  - asset: project-images/project-90043-gallery-150234.webp
-    alt: Scenic rendering for Angel Street at Okoboji Summer Theatre. View 1.
+  - asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90043-gallery-150234-a88f8a7e.webp
+    alt: Rendering of the Victorian drawing room for Angel Street at Okoboji Summer Theatre.
 designNotes: >-
-  Visualization sequence for Angel Street — Okoboji Summer Theatre (2013). Renderings are used here as decision tools,
-  aligning scenic intent with directorial storytelling goals.
-bodySections: []
+  Rendering study for Angel Street — Okoboji Summer Theatre (2013). The images test how much polish and ornament the
+  room can hold before comfort begins to read as control and pressure.
+heroExcerpt: >-
+  The rendering work for Angel Street was about letting comfort and control occupy the same room, so the domestic image
+  could slowly turn against the person living inside it.
+bodySections:
+  - heading: A Drawing Room with Teeth
+    paragraphs:
+      - >-
+        The room needed to feel credible, furnished, and socially polished, but never relaxed. Decorative richness was
+        useful only if it also supported a sense of enclosure and constant observation.
+      - >-
+        That is where rendering becomes especially valuable on a piece like this: it helps test how much beauty the
+        space can hold before beauty starts reading as pressure.
+  - heading: Psychology Through Detail
+    paragraphs:
+      - >-
+        Scale, trim, furniture placement, and visual density all contribute to the emotional argument. The audience
+        should feel that the room is meticulously kept and yet increasingly unsafe.
+      - >-
+        The image set clarifies that the design is not trying to illustrate gothic mood in the abstract. It is trying to
+        make control visible through domestic order.

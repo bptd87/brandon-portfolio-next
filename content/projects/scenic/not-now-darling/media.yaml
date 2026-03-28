@@ -1,23 +1,27 @@
 gallery:
   - id: darling-cover
     kind: cover
-    asset: project-images/rescued/not-now-darling/not-now-darling-06dc38d64a.jpg
-    alt: Not Now, Darling scenic design cover image.
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/not-now-darling-06dc38d64a-75b5cb64.jpg
+    alt: Scenic design for Not Now, Darling by Brandon PT Davis.
   - id: darling-prod-1
     kind: production
-    asset: project-images/rescued/not-now-darling/not-now-darling-fdeaa527ac.jpg
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/not-now-darling-fdeaa527ac-79c0ba0c.jpg
     alt: >-
       Production image from Not Now, Darling showing the polished boutique interior and farce architecture, scenic
       design by Brandon PT Davis.
   - id: darling-prod-2
     kind: production
-    asset: project-images/rescued/not-now-darling/not-now-darling-06dc38d64a.jpg
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/not-now-darling-06dc38d64a-75b5cb64.jpg
     alt: >-
       Production still from Not Now, Darling emphasizing British elegance, color, and choreographed door placement,
       scenic design by Brandon PT Davis.
   - id: darling-prod-3
     kind: production
-    asset: project-images/rescued/not-now-darling/not-now-darling-e1d080dc14.jpg
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/not-now-darling-e1d080dc14-b42d51ee.jpg
     alt: >-
       Final production image from Not Now, Darling showing the full comic boutique environment in performance, scenic
       design by Brandon PT Davis.

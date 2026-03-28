@@ -5,13 +5,12 @@ title: The Northwind Mare Tavern
 status: draft
 featured: false
 excerpt: >-
-  A fantasy tavern emerges from twilight mist—carved horse-head gables, glowing lanterns, stone walls weathered by
-  imagined centuries. Emberreach invites guests into a Tamriel-inspired realm where dining becomes adventure, and every
-  detail whispers of distant quests and fireside tales.
-seoTitle: The Northwind Mare Tavern - Fantasy Scenic Design Rendering
+  A fantasy tavern rendering built around weathered timber, lantern glow, and the feeling that the room has already
+  lived through a few long winters before the viewer arrives.
+seoTitle: The Northwind Mare Tavern Rendering | Brandon PT Davis
 seoDescription: >-
-  Explore Brandon PT Davis's scenic rendering of The Northwind Mare Tavern, a fantasy-inspired experiential design.
-  Immerse yourself in a Tamriel-esque world of adventure and detailed craftsmanship.
+  Fantasy tavern rendering shaped around weathered timber, lantern glow, and the feeling of a room that has sheltered
+  travelers for generations before the story begins.
 seoKeywords:
   - fantasy tavern
   - scenic design
@@ -26,7 +25,9 @@ seoKeywords:
 year: 2026
 month: 1
 cover:
-  asset: portfolio-images/projects/120001/image-150061.webp
-  alt: The Northwind Mare Tavern rendering project cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/image-150061-d434fc14.webp
+  alt: Fantasy tavern rendering with carved timber, lantern light, and weathered stone for The Northwind Mare Tavern.
 publishedAt: '2026-02-19T08:57:56.048Z'
 updatedAt: '2026-02-19T08:57:56.048Z'
+createdAt: '2026-02-19T08:57:56.048Z'

@@ -25,8 +25,9 @@ year: 2022
 month: 7
 subcategory: Drama
 cover:
-  asset: project-images/project-90036-cover.webp
-  alt: An Inspector Calls scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90036-cover-73346e1d.webp
+  alt: Scenic design for An Inspector Calls by Brandon PT Davis.
 team:
   - role: Playwright
     name: J.B. Priestley
@@ -41,10 +42,14 @@ team:
   - role: Director
     name: Stephen Brotebeck
 tags:
-  - drama
-  - period-piece
-  - okoboji-summer-theatre
-  - an-inspector-calls
+  - name: Drama
+    slug: drama
+  - name: Period Piece
+    slug: period-piece
+  - name: Okoboji Summer Theatre
+    slug: okoboji-summer-theatre
+  - name: An Inspector Calls
+    slug: an-inspector-calls
 links:
   - label: Lakes News Shopper Listing
     url: >-

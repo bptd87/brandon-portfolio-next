@@ -1,7 +1,27 @@
 images:
-  - asset: project-images/project-90044-gallery-150090.webp
-    alt: Scenic rendering for Head Over Heels at Theatre SilCo. View 1.
+  - asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90044-gallery-150090-d1bd1e6c.webp
+    alt: Rendering of the bold, pop-inflected playing space for Head Over Heels at Theatre SilCo.
 designNotes: >-
-  Rendering study for Head Over Heels — Theatre SilCo (2023). The image set is composed to clarify spatial hierarchy,
-  tone, and actor pathways before production execution.
-bodySections: []
+  Rendering study for Head Over Heels — Theatre SilCo (2023). The images keep the palette loud and playful while still
+  clarifying actor pathways, focal hierarchy, and the practical logic underneath the spectacle.
+heroExcerpt: >-
+  The design keeps the color loud but the layout readable, so the production can stay playful without losing the paths
+  actors need to move, pivot, and land the jokes.
+bodySections:
+  - heading: Pop With Purpose
+    paragraphs:
+      - >-
+        The visual language leans into bold color and heightened style, but it still has to behave like a working stage
+        environment. The renderings are meant to show that the spectacle is disciplined, not random.
+      - >-
+        That balance is what keeps the world from feeling decorative only. It stays theatrical while still giving the
+        company clean sightlines and a usable playing space.
+  - heading: Space for Momentum
+    paragraphs:
+      - >-
+        The production needs a layout that can support quick shifts in tone, ensemble movement, and the show's constant
+        sense of motion. The images therefore prioritize circulation as much as visual punch.
+      - >-
+        When the room is designed this way, the style supports the comedy instead of crowding it. The result feels
+        energetic, but still built for the stage.

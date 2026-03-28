@@ -1,41 +1,48 @@
 gallery:
   - id: vanya-cover
     kind: cover
-    asset: portfolio/projects/2026/02/2016-vanya-sonia-masha-and-spike-stephens-1-of-7-1190.webp
-    alt: Vanya and Sonia and Masha and Spike scenic design cover image.
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-1-of-7-1190-d193baa9.webp
+    alt: Scenic design for Vanya and Sonia and Masha and Spike by Brandon PT Davis.
   - id: vanya-prod-1
     kind: production
-    asset: portfolio/projects/2026/02/2016-vanya-sonia-masha-and-spike-stephens-2-of-7-2374.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-2-of-7-2374-dc489aad.webp
     alt: >-
       Production image from Vanya and Sonia and Masha and Spike showing the Bucks County porch and domestic
       architecture, scenic design by Brandon PT Davis.
   - id: vanya-prod-2
     kind: production
-    asset: portfolio/projects/2026/02/2016-vanya-sonia-masha-and-spike-stephens-3-of-7-2374.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-3-of-7-2374-9937df06.webp
     alt: >-
       Production image from Vanya and Sonia and Masha and Spike highlighting the porch as a threshold and gathering
       space, scenic design by Brandon PT Davis.
   - id: vanya-prod-3
     kind: production
-    asset: portfolio/projects/2026/02/2016-vanya-sonia-masha-and-spike-stephens-1-of-7-2374.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-1-of-7-2374-7c5829fa.webp
     alt: >-
       Production image from Vanya and Sonia and Masha and Spike emphasizing the warm wood tones and lived-in domestic
       world, scenic design by Brandon PT Davis.
   - id: vanya-prod-4
     kind: production
-    asset: portfolio/projects/2026/02/2016-vanya-sonia-masha-and-spike-stephens-1-of-2-8633.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-1-of-2-8633-c4ca37e0.webp
     alt: >-
       Production still from Vanya and Sonia and Masha and Spike showing the scenic environment supporting layered comic
       staging, scenic design by Brandon PT Davis.
   - id: vanya-prod-5
     kind: production
-    asset: portfolio/projects/2026/02/vanya-act-2-45-large-2372.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/vanya-act-2-45-large-2372-50c5b833.webp
     alt: >-
       Production image from Vanya and Sonia and Masha and Spike reinforcing the porch as both sanctuary and constraint,
       scenic design by Brandon PT Davis.
   - id: vanya-prod-6
     kind: production
-    asset: portfolio/projects/2026/02/2016-vanya-sonia-masha-and-spike-stephens-2-of-2-8670.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-2-of-2-8670-9f110775.webp
     alt: >-
       Final production image from Vanya and Sonia and Masha and Spike showing the full domestic scenic world, scenic
       design by Brandon PT Davis.

@@ -23,8 +23,9 @@ year: 2013
 month: 7
 subcategory: Musical Theatre
 cover:
-  asset: project-images/rescued/bingo-the-winning-musical/bingo-the-winning-musical-dfa9f8cd99.jpeg
-  alt: 'Bingo: The Winning Musical scenic design cover image'
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/bingo-the-winning-musical-dfa9f8cd99-91272f42.jpeg
+  alt: 'Scenic design for Bingo: The Winning Musical by Brandon PT Davis.'
 team:
   - role: Music and Lyrics By
     name: Michael Heitzman, Ilene Reid, and David Holcenberg
@@ -45,9 +46,13 @@ team:
   - role: Directed and Choreographed By
     name: Tricia Brouk
 tags:
-  - musical-theatre
-  - comedy
-  - okoboji-summer-theatre
-  - bingo-the-winning-musical
+  - name: Musical Theatre
+    slug: musical-theatre
+  - name: Comedy
+    slug: comedy
+  - name: Okoboji Summer Theatre
+    slug: okoboji-summer-theatre
+  - name: 'Bingo: The Winning Musical'
+    slug: bingo-the-winning-musical
 links: []
 updatedAt: '2026-03-23T19:18:00.000Z'

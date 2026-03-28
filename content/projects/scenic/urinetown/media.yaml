@@ -1,58 +1,73 @@
 gallery:
   - id: uri-cover
     kind: cover
-    asset: project-images/project-90041-cover.webp
-    alt: Urinetown scenic design cover image.
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-cover-cb5cfbfe.webp
+    alt: >-
+      Urinetown scenic design cover at the University of Missouri, using industrial levels and distressed civic
+      architecture.
   - id: uri-prod-1
     kind: production
-    asset: project-images/project-90041-gallery-150035.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150035-53b1b5b2.webp
     alt: >-
       Production image of Urinetown at University of Missouri with the full scenic footprint, scenic design by Brandon
       PT Davis.
   - id: uri-prod-2
     kind: production
-    asset: project-images/project-90041-gallery-150049.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150049-133e6708.webp
     alt: Cast moment on the industrial comic world of Urinetown, scenic design by Brandon PT Davis.
   - id: uri-prod-4
     kind: production
-    asset: project-images/project-90041-gallery-150071.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150071-f7909ab9.webp
     alt: Onstage action framed by the urban architecture in Urinetown at Mizzou, scenic design by Brandon PT Davis.
   - id: uri-prod-5
     kind: production
-    asset: project-images/project-90041-gallery-150089.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150089-d5824113.webp
     alt: Production still of Urinetown highlighting ensemble traffic through the set, scenic design by Brandon PT Davis.
   - id: uri-prod-6
     kind: production
-    asset: project-images/project-90041-gallery-150111.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150111-ce548e2f.webp
     alt: Scene transition on the multi-level structure for Urinetown, scenic design by Brandon PT Davis.
   - id: uri-prod-7
     kind: production
-    asset: project-images/project-90041-gallery-150209.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150209-c1a606aa.webp
     alt: Performance image of Urinetown with the civic-industrial set framing the cast, scenic design by Brandon PT Davis.
   - id: uri-prod-8
     kind: production
-    asset: project-images/project-90041-gallery-150217.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150217-5d37b53f.webp
     alt: House-right audience view of Urinetown at University of Missouri, scenic design by Brandon PT Davis.
   - id: uri-prod-9
     kind: production
-    asset: project-images/project-90041-gallery-150238.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150238-71e435a4.webp
     alt: Final production angle showing the complete Urinetown scenic composition, scenic design by Brandon PT Davis.
   - id: uri-prod-10
     kind: production
-    asset: project-images/project-90041-gallery-150023.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90041-gallery-150023-bded7553.webp
     alt: >-
       Stage picture from Urinetown emphasizing texture, levels, and ensemble composition, scenic design by Brandon PT
       Davis.
   - id: uri-render-1
     kind: rendering
-    asset: project-images/project-90041-gallery-150082.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90041-gallery-150082-4664ad60.webp
     alt: Scenic rendering for Urinetown testing massing, pathways, and tonal contrast, scenic design by Brandon PT Davis.
   - id: uri-render-2
     kind: rendering
-    asset: project-images/project-90041-gallery-150120.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90041-gallery-150120-56940bd6.webp
     alt: Rendering pass for Urinetown establishing geometry and actor flow, scenic design by Brandon PT Davis.
   - id: uri-render-3
     kind: rendering
-    asset: project-images/project-90041-gallery-150199.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90041-gallery-150199-ef242aeb.webp
     alt: Perspective rendering of Urinetown with emphasis on depth and silhouette, scenic design by Brandon PT Davis.
 videos: []

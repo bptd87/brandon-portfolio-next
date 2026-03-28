@@ -1,20 +1,23 @@
 images: []
 designNotes: >-
-  Ashes of the Underworld is a concept rendering inspired by The Penelopiad, existing in a liminal space between
-  yesterday and tomorrow, life and death, Heaven and Hell. The image depicts Grecian ruins in perpetual decay—crumbling
-  columns stand sentinel among lifeless trees, their skeletal branches reaching toward an uncertain sky. Fire burns
-  eternal in braziers scattered throughout the desolate landscape, casting an otherworldly glow across the rubble-strewn
-  ground.
-
-
-  Penelope sits in quiet contemplation, a solitary figure amid the wreckage of her world, reflecting on choices made and
-  paths not taken. The architecture speaks of glory long past, while the construction materials scattered about suggest
-  a world perpetually building and rebuilding itself, never quite whole.
-
-
-  This rendering was created during the pandemic in Chicago, a time when artists found themselves in their own liminal
-  space—suspended between the theatre that was and whatever might come next. The isolation of that period found its way
-  into every shadow and every flame, transforming a classical myth into a meditation on artistic exile and the search
-  for creative outlet when all stages had gone dark. Created using Vectorworks for modeling, Twinmotion for rendering,
-  and Photoshop for final atmospheric touches.
-bodySections: []
+  Concept rendering inspired by The Penelopiad, using ruin, fire, and suspended space to imagine an underworld caught
+  between mythic aftermath and pandemic-era emotional isolation.
+bodySections:
+  - heading: Ruin as a Living Condition
+    paragraphs:
+      - >-
+        The rendering imagines the underworld not as a single destination but as a place suspended between endings and
+        continuations. Ruins, braziers, and exposed ground all suggest a world that is still trying to remake itself
+        without ever becoming whole.
+      - >-
+        That tension is what gives the image its weight. It is not simply ancient or devastated; it is caught in the
+        act of ongoing aftermath.
+  - heading: Pandemic Silence in the Myth
+    paragraphs:
+      - >-
+        Created during the pandemic in Chicago, the piece carries the emotional suspension of that moment. The solitary
+        figure, the distance in the composition, and the persistent fire all reflect a creative life waiting for a new
+        stage to appear.
+      - >-
+        The result is part classical reference and part contemporary emotional document, with myth used as a structure
+        for processing isolation.

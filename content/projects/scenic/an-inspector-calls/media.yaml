@@ -1,33 +1,39 @@
 gallery:
   - id: inspector-cover
     kind: cover
-    asset: project-images/project-90036-cover.webp
-    alt: An Inspector Calls scenic design cover image.
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90036-cover-73346e1d.webp
+    alt: Scenic design for An Inspector Calls by Brandon PT Davis.
   - id: inspector-prod-1
     kind: production
-    asset: project-images/project-90036-gallery-150019.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90036-gallery-150019-e62e8136.webp
     alt: Production image from An Inspector Calls showing the Birling interior, scenic design by Brandon PT Davis.
   - id: inspector-prod-2
     kind: production
-    asset: project-images/project-90036-gallery-150118.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90036-gallery-150118-d9e60a33.webp
     alt: >-
       Performance image from An Inspector Calls highlighting the domestic world before it begins to fracture, scenic
       design by Brandon PT Davis.
   - id: inspector-render-1
     kind: rendering
-    asset: project-images/project-90036-gallery-150134.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90036-gallery-150134-a12bad84.webp
     alt: >-
       Rendering for An Inspector Calls exploring the poised but unstable domestic interior, scenic design by Brandon PT
       Davis.
   - id: inspector-prod-3
     kind: production
-    asset: project-images/project-90036-gallery-150183.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90036-gallery-150183-8b902db4.webp
     alt: >-
       Production still from An Inspector Calls with actors framed by the controlled geometry of the set, scenic design
       by Brandon PT Davis.
   - id: inspector-prod-4
     kind: production
-    asset: project-images/project-90036-gallery-150221.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90036-gallery-150221-2fa31d56.webp
     alt: >-
       Final production image from An Inspector Calls showing the family under increasing pressure, scenic design by
       Brandon PT Davis.

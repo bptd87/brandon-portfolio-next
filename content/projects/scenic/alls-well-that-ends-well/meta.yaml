@@ -7,7 +7,7 @@ featured: false
 excerpt: >-
   Drapery, heraldic detail, and operatic reveal carried this New Swan production between the ceremonial restraint of
   Roussillon and the warmer theatrical world of Florence.
-seoTitle: All's Well That Ends Well | Scenic Design by Brandon PT Davis
+seoTitle: All's Well That Ends Well Scenic Design | New Swan Theatre Festival
 seoDescription: >-
   Scenic design for All's Well That Ends Well at New Swan Theatre Festival, using curtains, heraldic signage, stucco
   textures, and operatic transitions to shape Shakespeare’s shifting worlds.
@@ -24,8 +24,11 @@ year: 2025
 month: 7
 subcategory: Shakespeare
 cover:
-  asset: project-images/project-90071-cover.webp
-  alt: All's Well That Ends Well scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-cover-375c8ade.webp
+  alt: >-
+    All's Well That Ends Well scenic design cover at New Swan Theatre Festival, with drapery, heraldic detail, and a
+    world that moves between Roussillon and Florence.
 team:
   - role: By
     name: William Shakespeare
@@ -40,10 +43,14 @@ team:
   - role: Director
     name: Rob Salas
 tags:
-  - shakespeare
-  - classical-theatre
-  - festival-production
-  - alls-well-that-ends-well
+  - name: Shakespeare
+    slug: shakespeare
+  - name: Classical Theatre
+    slug: classical-theatre
+  - name: Festival Production
+    slug: festival-production
+  - name: All's Well That Ends Well
+    slug: alls-well-that-ends-well
 links:
   - label: Culture OC Feature
     url: https://www.cultureoc.org/post/double-the-drama-new-swan-s-shakespeare-season-embraces-romance-wit-and-reinvention

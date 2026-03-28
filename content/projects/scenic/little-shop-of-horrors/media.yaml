@@ -1,47 +1,55 @@
 gallery:
   - id: little-shop-cover
     kind: cover
-    asset: portfolio/projects/2026/02/little-shop-of-horrors-02-0430.webp
-    alt: Little Shop of Horrors scenic design cover image.
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/little-shop-of-horrors-02-0430-e1e668ba.webp
+    alt: Little Shop of Horrors scenic design cover at Okoboji Summer Theatre, showing a gritty Skid Row storefront.
   - id: little-shop-prod-1
     kind: production
-    asset: portfolio/projects/2026/02/2015-little-shop-of-horrors-7-of-9-1481.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2015-little-shop-of-horrors-7-of-9-1481-6cd46cad.webp
     alt: >-
       Production image from Little Shop of Horrors showing the gritty flower shop and Skid Row environment, scenic
       design by Brandon PT Davis.
   - id: little-shop-prod-2
     kind: production
-    asset: portfolio/projects/2026/02/2015-little-shop-of-horrors-2-of-9-1481.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2015-little-shop-of-horrors-2-of-9-1481-9655ab32.webp
     alt: >-
       Production image from Little Shop of Horrors emphasizing the brick storefront and cramped scenic frame, scenic
       design by Brandon PT Davis.
   - id: little-shop-prod-3
     kind: production
-    asset: portfolio/projects/2026/02/2015-little-shop-of-horrors-3-of-9-1481.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2015-little-shop-of-horrors-3-of-9-1481-ce2b1988.webp
     alt: >-
       Production still from Little Shop of Horrors highlighting the grounded storefront realism, scenic design by
       Brandon PT Davis.
   - id: little-shop-prod-4
     kind: production
-    asset: portfolio/projects/2026/02/2015-little-shop-of-horrors-4-of-9-1481.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2015-little-shop-of-horrors-4-of-9-1481-4b2444d7.webp
     alt: >-
       Production image from Little Shop of Horrors showing practical counters, windows, and detailed shop textures,
       scenic design by Brandon PT Davis.
   - id: little-shop-prod-5
     kind: production
-    asset: portfolio/projects/2026/02/2015-little-shop-of-horrors-6-of-9-1481.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2015-little-shop-of-horrors-6-of-9-1481-1c45a635.webp
     alt: >-
       Production image from Little Shop of Horrors reinforcing the claustrophobic tension of the small scenic world,
       scenic design by Brandon PT Davis.
   - id: little-shop-prod-6
     kind: production
-    asset: portfolio/projects/2026/02/2015-little-shop-of-horrors-8-of-9-1481.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2015-little-shop-of-horrors-8-of-9-1481-bb97ce55.webp
     alt: >-
       Production still from Little Shop of Horrors showing the world as danger increases around the shop, scenic design
       by Brandon PT Davis.
   - id: little-shop-prod-7
     kind: production
-    asset: portfolio/projects/2026/02/little-shop-of-horrors-02-1481.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/little-shop-of-horrors-02-1481-60179d7d.webp
     alt: >-
       Final production image from Little Shop of Horrors showing the full scenic environment in performance, scenic
       design by Brandon PT Davis.

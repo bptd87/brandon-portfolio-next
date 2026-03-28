@@ -24,8 +24,9 @@ year: 2010
 month: 10
 subcategory: Drama
 cover:
-  asset: project-images/project-90017-cover.webp
-  alt: All My Sons scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-cover-aa4e4e0c.webp
+  alt: Scenic design for All My Sons by Brandon PT Davis.
 team:
   - role: Scenic Designer
     name: Brandon PT Davis
@@ -38,10 +39,14 @@ team:
   - role: Director
     name: Lamby Hedge
 tags:
-  - drama
-  - stephens-college
-  - arthur-miller
-  - all-my-sons
+  - name: Drama
+    slug: drama
+  - name: Stephens College
+    slug: stephens-college
+  - name: Arthur Miller
+    slug: arthur-miller
+  - name: All My Sons
+    slug: all-my-sons
 links:
   - label: Listing
     url: https://www.ibiblio.org/miller/2010productions

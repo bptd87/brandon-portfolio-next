@@ -23,8 +23,9 @@ year: 2021
 month: 7
 subcategory: Musical Theatre
 cover:
-  asset: portfolio/projects/2026/02/2021-marvelous-wonderettes-photo-call-2-of-10-4679.webp
-  alt: 'The Marvelous Wonderettes: Dream On scenic design cover image'
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2021-marvelous-wonderettes-photo-call-2-of-10-4679-66380fbd.webp
+  alt: 'Scenic design for The Marvelous Wonderettes: Dream On by Brandon PT Davis.'
 team:
   - role: Written by
     name: Roger Bean
@@ -41,9 +42,13 @@ team:
   - role: Director
     name: Lauren Haughton
 tags:
-  - musical-theatre
-  - jukebox-musical
-  - okoboji-summer-theatre
-  - the-marvelous-wonderettes-dream-on
+  - name: Musical Theatre
+    slug: musical-theatre
+  - name: Jukebox Musical
+    slug: jukebox-musical
+  - name: Okoboji Summer Theatre
+    slug: okoboji-summer-theatre
+  - name: 'The Marvelous Wonderettes: Dream On'
+    slug: the-marvelous-wonderettes-dream-on
 links: []
 updatedAt: '2026-02-28T21:00:18.614718+00:00'

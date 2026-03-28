@@ -23,8 +23,9 @@ year: 2019
 month: 2
 subcategory: Drama
 cover:
-  asset: project-images/project-90018-cover.webp
-  alt: Parliament Square scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-cover-3b50f3a4.webp
+  alt: Scenic design for Parliament Square by Brandon PT Davis.
 team:
   - role: Playwright
     name: James Fritz
@@ -41,10 +42,14 @@ team:
   - role: Director
     name: Jane Page
 tags:
-  - drama
-  - university-of-california-irvine
-  - parliament-square
-  - political-theatre
+  - name: Drama
+    slug: drama
+  - name: University of California Irvine
+    slug: university-of-california-irvine
+  - name: Parliament Square
+    slug: parliament-square
+  - name: Political Theatre
+    slug: political-theatre
 links:
   - label: Listing
     url: https://www.arts.uci.edu/press-room/uci-drama-CA-premiere-parliament-square

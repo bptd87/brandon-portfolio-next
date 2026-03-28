@@ -25,8 +25,9 @@ year: 2012
 month: 8
 subcategory: Comedy
 cover:
-  asset: project-images/rescued/the-liar/the-liar-daa6bff258.jpg
-  alt: The Liar scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-liar-daa6bff258-03b7fc44.jpg
+  alt: Scenic design for The Liar by Brandon PT Davis.
 team:
   - role: Written By
     name: David Ives (adapted from Pierre Corneille)
@@ -41,9 +42,13 @@ team:
   - role: Director
     name: Lamby Hedge
 tags:
-  - comedy
-  - classical-adaptation
-  - okoboji-summer-theatre
-  - the-liar
+  - name: Comedy
+    slug: comedy
+  - name: Classical Adaptation
+    slug: classical-adaptation
+  - name: Okoboji Summer Theatre
+    slug: okoboji-summer-theatre
+  - name: The Liar
+    slug: the-liar
 links: []
 updatedAt: '2026-03-23T20:12:00.000Z'

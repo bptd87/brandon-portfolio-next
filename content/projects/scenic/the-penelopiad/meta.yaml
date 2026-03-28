@@ -7,7 +7,7 @@ featured: true
 excerpt: >-
   A ritual memory space for The Penelopiad, where Penelope and the maids testify within the same visual architecture,
   balancing epic framing with intimate address.
-seoTitle: The Penelopiad | Scenic Design by Brandon PT Davis
+seoTitle: The Penelopiad Scenic Design | UC Irvine
 seoDescription: >-
   Scenic design for The Penelopiad at University of California Irvine, building a ritual memory space for testimony,
   chorus visibility, and layered mythic staging.
@@ -24,8 +24,11 @@ year: 2020
 month: 2
 subcategory: Drama
 cover:
-  asset: project-images/project-90051-cover.webp
-  alt: The Penelopiad scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-cover-e4376934.webp
+  alt: >-
+    The Penelopiad scenic design cover at University of California Irvine, building a ritual memory space for testimony
+    and chorus.
 team:
   - role: Playwright
     name: Margaret Atwood
@@ -44,10 +47,14 @@ team:
   - role: Director
     name: Sara Rodriguez
 tags:
-  - classical-theatre
-  - university-of-california-irvine
-  - margaret-atwood
-  - the-penelopiad
+  - name: Classical Theatre
+    slug: classical-theatre
+  - name: University of California Irvine
+    slug: university-of-california-irvine
+  - name: Margaret Atwood
+    slug: margaret-atwood
+  - name: The Penelopiad
+    slug: the-penelopiad
 links:
   - label: Review
     url: https://newuniversity.org/2020/02/10/ucis-the-penelopiad-brings-new-narrative-to-a-classic-greek-epic/

@@ -25,8 +25,9 @@ year: 2023
 month: 2
 subcategory: Comedy
 cover:
-  asset: project-images/project-90054-cover.webp
-  alt: Boeing, Boeing scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-cover-ff265a2b.webp
+  alt: Scenic design for Boeing, Boeing by Brandon PT Davis.
 team:
   - role: Playwright
     name: Marc Camoletti
@@ -41,10 +42,14 @@ team:
   - role: Director
     name: John Hemphill
 tags:
-  - comedy
-  - farce
-  - stephens-college
-  - boeing-boeing
+  - name: Comedy
+    slug: comedy
+  - name: Farce
+    slug: farce
+  - name: Stephens College
+    slug: stephens-college
+  - name: Boeing, Boeing
+    slug: boeing-boeing
 links:
   - label: Stephens Connect Listing
     url: https://stephensconnect.stephens.edu/events

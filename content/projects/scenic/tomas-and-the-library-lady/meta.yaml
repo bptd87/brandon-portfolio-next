@@ -24,8 +24,9 @@ year: 2022
 month: 3
 subcategory: Theatre for Young Audiences
 cover:
-  asset: project-images/project-90039-cover.webp
-  alt: Tomás and the Library Lady scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-cover-dee4ec53.webp
+  alt: Scenic design for Tomás and the Library Lady by Brandon PT Davis.
 team:
   - role: From the Book by
     name: Pat Mora
@@ -44,10 +45,14 @@ team:
   - role: Director
     name: Sara Rodriguez
 tags:
-  - theatre-for-young-audiences
-  - bilingual-theatre
-  - education
-  - tomas-and-the-library-lady
+  - name: Theatre for Young Audiences
+    slug: theatre-for-young-audiences
+  - name: Bilingual Theatre
+    slug: bilingual-theatre
+  - name: Education
+    slug: education
+  - name: Tomás and the Library Lady
+    slug: tomas-and-the-library-lady
 links:
   - label: TYA/USA Membership Spotlight
     url: https://www.tyausa.org/tya-today/membership-spotlight-april-2024/

@@ -1,7 +1,27 @@
 images:
-  - asset: project-images/project-90039-gallery-150225.webp
-    alt: Scenic rendering for Tomás and the Library Lady at Lake Dillon Theatre. View 1.
+  - asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90039-gallery-150225-b18093aa.webp
+    alt: Rendering of the welcoming library interior for Tomás and the Library Lady at Lake Dillon Theatre.
 designNotes: >-
-  Concept rendering package for Tomás and the Library Lady — Lake Dillon Theatre (2022). The visual approach prioritizes
-  atmosphere and material character while maintaining practical scenic readability.
-bodySections: []
+  Rendering study for Tomás and the Library Lady — Lake Dillon Theatre (2022). The library is shaped to feel specific,
+  kind, and truly used, so the emotional transformation grows out of the room’s welcome rather than spectacle.
+heroExcerpt: >-
+  The setting should feel practical and kind, with enough visual clarity that the production's warmth reads as lived
+  experience rather than decoration.
+bodySections:
+  - heading: A Room That Invites Reading
+    paragraphs:
+      - >-
+        The library needs to feel approachable and specific, not idealized. Shelves, tables, and paths through the room
+        all matter because the space has to suggest real use by real people.
+      - >-
+        That groundedness gives the story its emotional weight. The design is doing quiet work by making access feel
+        ordinary, generous, and meaningful all at once.
+  - heading: Small Details, Real Stakes
+    paragraphs:
+      - >-
+        The renderings keep the gestures modest so the transformation lands through atmosphere rather than spectacle.
+        Light, scale, and material warmth carry the feeling forward.
+      - >-
+        In production terms, that restraint helps the room support the story instead of competing with it. The image
+        becomes a welcoming frame for the performance.

@@ -23,8 +23,9 @@ year: 2014
 month: 8
 subcategory: Musical Theatre
 cover:
-  asset: portfolio/projects/2026/02/little-shop-of-horrors-02-0430.webp
-  alt: Little Shop of Horrors scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/little-shop-of-horrors-02-0430-e1e668ba.webp
+  alt: Little Shop of Horrors scenic design cover at Okoboji Summer Theatre, showing a gritty Skid Row storefront.
 team:
   - role: Written by
     name: Howard Ashman
@@ -43,9 +44,13 @@ team:
   - role: Director
     name: Terry Berliner
 tags:
-  - musical-theatre
-  - okoboji-summer-theatre
-  - little-shop-of-horrors
-  - horror-comedy
+  - name: Musical Theatre
+    slug: musical-theatre
+  - name: Okoboji Summer Theatre
+    slug: okoboji-summer-theatre
+  - name: Little Shop of Horrors
+    slug: little-shop-of-horrors
+  - name: Horror Comedy
+    slug: horror-comedy
 links: []
 updatedAt: '2026-02-28T11:19:53.894921+00:00'

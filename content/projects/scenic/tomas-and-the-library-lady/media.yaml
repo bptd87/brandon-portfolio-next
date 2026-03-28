@@ -1,47 +1,55 @@
 gallery:
   - id: tomas-cover
     kind: cover
-    asset: project-images/project-90039-cover.webp
-    alt: Tomás and the Library Lady scenic design cover image.
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-cover-dee4ec53.webp
+    alt: Scenic design for Tomás and the Library Lady by Brandon PT Davis.
   - id: tomas-prod-1
     kind: production
-    asset: project-images/project-90039-gallery-150021.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-gallery-150021-8f3e3ec8.webp
     alt: >-
       Production image from Tomás and the Library Lady showing the welcoming scenic world, scenic design by Brandon PT
       Davis.
   - id: tomas-prod-2
     kind: production
-    asset: project-images/project-90039-gallery-150030.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-gallery-150030-e9e8fd22.webp
     alt: >-
       Performance image from Tomás and the Library Lady highlighting the domestic space and storytelling environment,
       scenic design by Brandon PT Davis.
   - id: tomas-prod-3
     kind: production
-    asset: project-images/project-90039-gallery-150034.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-gallery-150034-713cb452.webp
     alt: >-
       Production still from Tomás and the Library Lady emphasizing movement between intimate and imaginative space,
       scenic design by Brandon PT Davis.
   - id: tomas-prod-4
     kind: production
-    asset: project-images/project-90039-gallery-150080.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-gallery-150080-bbb3340a.webp
     alt: >-
       Stage image from Tomás and the Library Lady showing the library motifs within the scenic design, scenic design by
       Brandon PT Davis.
   - id: tomas-prod-5
     kind: production
-    asset: project-images/project-90039-gallery-150092.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-gallery-150092-f45f3aae.webp
     alt: >-
       Production image from Tomás and the Library Lady with performers framed by the scenic architecture, scenic design
       by Brandon PT Davis.
   - id: tomas-prod-6
     kind: production
-    asset: project-images/project-90039-gallery-150177.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-gallery-150177-badff38c.webp
     alt: >-
       Final production image from Tomás and the Library Lady showing the complete theatrical environment, scenic design
       by Brandon PT Davis.
   - id: tomas-render-1
     kind: rendering
-    asset: project-images/project-90039-gallery-150225.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90039-gallery-150225-b18093aa.webp
     alt: >-
       Rendering for Tomás and the Library Lady exploring the library as a portal of imagination, scenic design by
       Brandon PT Davis.

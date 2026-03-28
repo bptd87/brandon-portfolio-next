@@ -1,47 +1,55 @@
 gallery:
   - id: dinner-cover
     kind: cover
-    asset: portfolio/projects/2026/02/2013-dont-dress-for-dinner-okoboji-summer-theatre-1-of-7-3733.webp
-    alt: Don't Dress for Dinner scenic design cover image.
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-1-of-7-3733-2a2cf2a4.webp
+    alt: Scenic design for Don't Dress for Dinner by Brandon PT Davis.
   - id: dinner-prod-1
     kind: production
-    asset: portfolio/projects/2026/02/2013-dont-dress-for-dinner-okoboji-summer-theatre-7-of-7-5278.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-7-of-7-5278-627ee2db.webp
     alt: >-
       Production image from Don't Dress for Dinner showing the restored French farmhouse environment, scenic design by
       Brandon PT Davis.
   - id: dinner-prod-2
     kind: production
-    asset: portfolio/projects/2026/02/2013-dont-dress-for-dinner-okoboji-summer-theatre-6-of-7-5280.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-6-of-7-5280-a6012fc3.webp
     alt: >-
       Production image from Don't Dress for Dinner highlighting exposed timber beams and rustic architectural detail,
       scenic design by Brandon PT Davis.
   - id: dinner-prod-3
     kind: production
-    asset: portfolio/projects/2026/02/2013-dont-dress-for-dinner-okoboji-summer-theatre-1-of-7-5333.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-1-of-7-5333-b089c7cc.webp
     alt: >-
       Production image from Don't Dress for Dinner emphasizing layered depth and door placement for farce, scenic design
       by Brandon PT Davis.
   - id: dinner-prod-4
     kind: production
-    asset: portfolio/projects/2026/02/2013-dont-dress-for-dinner-okoboji-summer-theatre-2-of-7-5502.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-2-of-7-5502-091af54f.webp
     alt: >-
       Production still from Don't Dress for Dinner showing the farmhouse interior as romantic setting and comic engine,
       scenic design by Brandon PT Davis.
   - id: dinner-prod-5
     kind: production
-    asset: portfolio/projects/2026/02/2013-dont-dress-for-dinner-okoboji-summer-theatre-3-of-7-5321.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-3-of-7-5321-51819b0e.webp
     alt: >-
       Production image from Don't Dress for Dinner reinforcing sightlines and timing within the scenic layout, scenic
       design by Brandon PT Davis.
   - id: dinner-prod-6
     kind: production
-    asset: portfolio/projects/2026/02/2013-dont-dress-for-dinner-okoboji-summer-theatre-4-of-7-5292.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-4-of-7-5292-2be249a4.webp
     alt: >-
       Production image from Don't Dress for Dinner highlighting warmth, elegance, and ensemble movement, scenic design
       by Brandon PT Davis.
   - id: dinner-prod-7
     kind: production
-    asset: portfolio/projects/2026/02/2013-dont-dress-for-dinner-okoboji-summer-theatre-5-of-7-5280.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2013-dont-dress-for-dinner-okoboji-summer-theatre-5-of-7-5280-9f703f75.webp
     alt: >-
       Final production image from Don't Dress for Dinner showing the complete French farmhouse world in performance,
       scenic design by Brandon PT Davis.

@@ -21,12 +21,14 @@
     - freaky-prod-3
     - freaky-prod-4
 - type: text
-  heading: Design Goal
+  heading: A Stage That Can Switch on Cue
   content:
     - >-
-      The set was tuned for transformation: spaces had to feel stable enough for character stakes while remaining agile
-      enough for the show’s body-swap mechanics. Rather than locking scenes into realism, the design focused on clarity,
-      speed, and contrast so each shift could land instantly.
+      The modular layout keeps the story moving fast, letting each location read instantly even as identities and
+      emotional stakes flip underneath it.
+    - >-
+      That agility gives the production room for comic chaos without losing the family relationships at the center of
+      the show.
 - type: gallery
   mediaIds:
     - freaky-prod-5

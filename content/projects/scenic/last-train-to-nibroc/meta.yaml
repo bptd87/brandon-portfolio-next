@@ -23,8 +23,9 @@ year: 2016
 month: 6
 subcategory: Drama
 cover:
-  asset: portfolio/projects/2026/03/2016-the-last-train-to-nibroc-3-of-10-7894.webp
-  alt: Last Train to Nibroc scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-3-of-10-7894-558b9e2f.webp
+  alt: Scenic design for Last Train to Nibroc by Brandon PT Davis.
 team:
   - role: Playwright
     name: Arlene Hutton
@@ -39,9 +40,13 @@ team:
   - role: Director
     name: Janice Goldberg
 tags:
-  - drama
-  - okoboji-summer-theatre
-  - last-train-to-nibroc
-  - period-drama
+  - name: Drama
+    slug: drama
+  - name: Okoboji Summer Theatre
+    slug: okoboji-summer-theatre
+  - name: Last Train to Nibroc
+    slug: last-train-to-nibroc
+  - name: Period Drama
+    slug: period-drama
 links: []
 updatedAt: '2026-03-01T10:42:52.420651+00:00'

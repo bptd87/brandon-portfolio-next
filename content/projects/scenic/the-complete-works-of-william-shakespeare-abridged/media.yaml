@@ -2,33 +2,33 @@ gallery:
   - id: complete-cover
     kind: cover
     asset: >-
-      project-images/rescued/the-complete-works-of-william-shakespeare-abridged/the-complete-works-of-william-shakespeare-abridged-fcc6f3ed4f.jpg
-    alt: The Complete Works of William Shakespeare (abridged) scenic design cover image.
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-complete-works-of-william-shakespeare-abridged-fcc6f3ed4f-4c52fd98.jpg
+    alt: Scenic design for The Complete Works of William Shakespeare (abridged) by Brandon PT Davis.
   - id: complete-prod-1
     kind: production
     asset: >-
-      project-images/rescued/the-complete-works-of-william-shakespeare-abridged/the-complete-works-of-william-shakespeare-abridged-7160001f26.jpg
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-complete-works-of-william-shakespeare-abridged-7160001f26-b758f1f6.jpg
     alt: >-
       Production image from The Complete Works of William Shakespeare (abridged) showing the modular comic stage
       environment, scenic design by Brandon PT Davis.
   - id: complete-prod-2
     kind: production
     asset: >-
-      project-images/rescued/the-complete-works-of-william-shakespeare-abridged/the-complete-works-of-william-shakespeare-abridged-9ba7165f14.jpg
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-complete-works-of-william-shakespeare-abridged-9ba7165f14-036a08a1.jpg
     alt: >-
       Production still from The Complete Works of William Shakespeare (abridged) highlighting fast-paced theatrical
       transitions, scenic design by Brandon PT Davis.
   - id: complete-prod-3
     kind: production
     asset: >-
-      project-images/rescued/the-complete-works-of-william-shakespeare-abridged/the-complete-works-of-william-shakespeare-abridged-5f6ec9e90b.jpg
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-complete-works-of-william-shakespeare-abridged-5f6ec9e90b-ff89656e.jpg
     alt: >-
       Production image from The Complete Works of William Shakespeare (abridged) showing the comic ensemble within the
       scenic world, scenic design by Brandon PT Davis.
   - id: complete-prod-4
     kind: production
     asset: >-
-      project-images/rescued/the-complete-works-of-william-shakespeare-abridged/the-complete-works-of-william-shakespeare-abridged-b0e77e71fe.jpg
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-complete-works-of-william-shakespeare-abridged-b0e77e71fe-36ee44f9.jpg
     alt: >-
       Final production image from The Complete Works of William Shakespeare (abridged) emphasizing the playful modular
       environment and comic momentum, scenic design by Brandon PT Davis.

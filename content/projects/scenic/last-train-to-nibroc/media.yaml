@@ -1,65 +1,76 @@
 gallery:
   - id: nibroc-cover
     kind: cover
-    asset: portfolio/projects/2026/03/2016-the-last-train-to-nibroc-3-of-10-7894.webp
-    alt: Last Train to Nibroc scenic design cover image.
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-3-of-10-7894-558b9e2f.webp
+    alt: Scenic design for Last Train to Nibroc by Brandon PT Davis.
   - id: nibroc-prod-1
     kind: production
-    asset: portfolio/projects/2026/03/2016-the-last-train-to-nibroc-1-of-10-9188.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-1-of-10-9188-78d80ea0.webp
     alt: >-
       Production image from Last Train to Nibroc showing the intimate barn-wood framed stage, scenic design by Brandon
       PT Davis.
   - id: nibroc-prod-2
     kind: production
-    asset: portfolio/projects/2026/03/2016-the-last-train-to-nibroc-1-of-1-9386.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-1-of-1-9386-27475243.webp
     alt: >-
       Production image from Last Train to Nibroc highlighting the compressed proscenium and warm material palette,
       scenic design by Brandon PT Davis.
   - id: nibroc-prod-3
     kind: production
-    asset: portfolio/projects/2026/03/2016-the-last-train-to-nibroc-3-of-10-9188.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-3-of-10-9188-2c3b6171.webp
     alt: >-
       Production still from Last Train to Nibroc showing the environment's closeness and stillness, scenic design by
       Brandon PT Davis.
   - id: nibroc-prod-4
     kind: production
-    asset: portfolio/projects/2026/03/2016-the-last-train-to-nibroc-4-of-10-9386.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-4-of-10-9386-ed54be72.webp
     alt: >-
       Production image from Last Train to Nibroc emphasizing the raked stage and intimate playing space, scenic design
       by Brandon PT Davis.
   - id: nibroc-prod-5
     kind: production
-    asset: portfolio/projects/2026/03/2016-the-last-train-to-nibroc-5-of-10-9386.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-5-of-10-9386-3e89f0d9.webp
     alt: >-
       Production image from Last Train to Nibroc showing the long backdrop supporting fluid scene changes, scenic design
       by Brandon PT Davis.
   - id: nibroc-prod-6
     kind: production
-    asset: portfolio/projects/2026/03/2016-the-last-train-to-nibroc-6-of-10-9386.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-6-of-10-9386-d83750e4.webp
     alt: >-
       Production still from Last Train to Nibroc reinforcing the design's quiet emotional tone, scenic design by Brandon
       PT Davis.
   - id: nibroc-prod-7
     kind: production
-    asset: portfolio/projects/2026/03/2016-the-last-train-to-nibroc-7-of-10-9386.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-7-of-10-9386-fb7dcd85.webp
     alt: >-
       Production image from Last Train to Nibroc showing the architecture holding the characters gently, scenic design
       by Brandon PT Davis.
   - id: nibroc-render-1
     kind: rendering
-    asset: portfolio/projects/2026/03/2016-the-last-train-to-nibroc-9-of-10-9386.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-9-of-10-9386-66e1d692.webp
     alt: >-
       Rendering for Last Train to Nibroc exploring the compressed proscenium and barn-wood material language, scenic
       design by Brandon PT Davis.
   - id: nibroc-render-2
     kind: rendering
-    asset: portfolio/projects/2026/03/2016-the-last-train-to-nibroc-8-of-10-9386.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-8-of-10-9386-a2f7597b.webp
     alt: >-
       Rendering for Last Train to Nibroc showing the intimate scenic scale and backdrop system, scenic design by Brandon
       PT Davis.
   - id: nibroc-render-3
     kind: rendering
-    asset: portfolio/projects/2026/03/2016-the-last-train-to-nibroc-10-of-10-9386.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-the-last-train-to-nibroc-10-of-10-9386-3fe47120.webp
     alt: >-
       Final rendering for Last Train to Nibroc capturing the quiet, close scenic atmosphere, scenic design by Brandon PT
       Davis.

@@ -1,45 +1,53 @@
 gallery:
   - id: boeing-cover
     kind: cover
-    asset: project-images/project-90054-cover.webp
-    alt: Boeing, Boeing scenic design cover image.
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-cover-ff265a2b.webp
+    alt: Scenic design for Boeing, Boeing by Brandon PT Davis.
   - id: boeing-prod-1
     kind: production
-    asset: project-images/project-90054-gallery-150017.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-gallery-150017-1f2d32dc.webp
     alt: Production image from Boeing, Boeing showing the midcentury apartment interior, scenic design by Brandon PT Davis.
   - id: boeing-prod-2
     kind: production
-    asset: project-images/project-90054-gallery-150104.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-gallery-150104-e468bb20.webp
     alt: >-
       Performance image from Boeing, Boeing emphasizing the apartment layout and multiple entrances, scenic design by
       Brandon PT Davis.
   - id: boeing-render-1
     kind: rendering
-    asset: project-images/project-90054-gallery-150139.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90054-gallery-150139-425d2231.webp
     alt: >-
       Rendering for Boeing, Boeing exploring the polished Paris apartment and farce-driven door layout, scenic design by
       Brandon PT Davis.
   - id: boeing-prod-3
     kind: production
-    asset: project-images/project-90054-gallery-150141.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-gallery-150141-8576e570.webp
     alt: >-
       Production still from Boeing, Boeing highlighting the central living room composition, scenic design by Brandon PT
       Davis.
   - id: boeing-prod-4
     kind: production
-    asset: project-images/project-90054-gallery-150185.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-gallery-150185-8b4b4d28.webp
     alt: >-
       Scene from Boeing, Boeing showing actors moving through the apartment's choreographed doorways, scenic design by
       Brandon PT Davis.
   - id: boeing-prod-5
     kind: production
-    asset: project-images/project-90054-gallery-150243.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-gallery-150243-65d91900.webp
     alt: >-
       Production image from Boeing, Boeing with the apartment's furniture and graphic detail visible, scenic design by
       Brandon PT Davis.
   - id: boeing-prod-6
     kind: production
-    asset: project-images/project-90054-gallery-150251.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90054-gallery-150251-02683572.webp
     alt: >-
       Final production image from Boeing, Boeing showing the complete scenic environment, scenic design by Brandon PT
       Davis.

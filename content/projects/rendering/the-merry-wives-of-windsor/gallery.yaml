@@ -1,12 +1,31 @@
 images:
-  - asset: project-images/project-90053-gallery-150015.webp
-    alt: Scenic rendering for The Merry Wives of Windsor at Stephens College. View 1.
-  - asset: project-images/project-90053-gallery-150212.webp
-    alt: Scenic rendering for The Merry Wives of Windsor at Stephens College. View 2.
-  - asset: project-images/project-90053-gallery-150218.webp
-    alt: Scenic rendering for The Merry Wives of Windsor at Stephens College. View 3.
+  - asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90053-gallery-150015-31e01022.webp
+    alt: Rendering of the comic playing space for The Merry Wives of Windsor at Stephens College.
+  - asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90053-gallery-150212-1de109ac.webp
+    alt: Alternate rendering angle for The Merry Wives of Windsor, emphasizing shared comic space and circulation.
+  - asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90053-gallery-150218-e5e62fe2.webp
+    alt: Rendering perspective for The Merry Wives of Windsor showing depth, entrances, and ensemble pathways.
 designNotes: >-
-  Pre-production rendering study for The Merry Wives of Windsor — Stephens College (2022). Each frame is structured to
-  communicate mood, scale, and narrative focus without relying on technical jargon. Scenic design for Shakespeare's
-  comedy set in Windsor, England.
-bodySections: []
+  Rendering study for The Merry Wives of Windsor — Stephens College (2022). The images stay light on their feet,
+  emphasizing entrances, open playing space, and the social bounce that keeps the comedy moving.
+bodySections:
+  - heading: Comic Architecture
+    paragraphs:
+      - >-
+        The room needs enough structure to support disguise, interruption, and momentum, but it cannot become so heavy
+        that it slows the comedy down. The renderings therefore privilege openness, readable entrances, and a strong
+        sense of shared public space.
+      - >-
+        That balance helps the production keep its wit alive. The environment supports the schemes instead of competing
+        with them.
+  - heading: Social Energy in the Layout
+    paragraphs:
+      - >-
+        Shakespearean farce depends on who sees whom, who slips away, and how quickly the social picture can rearrange
+        itself. The renderings make that visible through circulation and sightline clarity.
+      - >-
+        Used this way, the images become more than mood boards. They help test how the architecture will carry comic
+        rhythm once actors and audience enter the space.

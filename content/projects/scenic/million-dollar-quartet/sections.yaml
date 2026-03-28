@@ -26,13 +26,14 @@
     - mdq-prod-4
     - mdq-prod-5
 - type: text
-  heading: Design Goal
+  heading: The Studio as Collaboration
   content:
     - >-
-      The goal was to honor the spirit of collaboration at the heart of the play. The space amplifies the relationships
-      in the room: musicians facing one another, sharing energy, finding rhythm, and pushing boundaries. The set becomes
-      not just a place to perform, but a portrait of how artists influence one another and, together, change the course
-      of American music.
+      The set was built to honor the jam-session energy at the heart of the piece. By keeping the musicians facing one
+      another and the room open, the design makes the performance feel shared, rhythmic, and alive.
+    - >-
+      It is not just a stage for the songs. It is a portrait of artists listening, pushing, and turning a recording
+      studio into a moment of music history.
 - type: gallery
   mediaIds:
     - mdq-prod-6

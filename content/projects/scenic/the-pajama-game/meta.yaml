@@ -23,8 +23,9 @@ year: 2019
 month: 6
 subcategory: Musical Theatre
 cover:
-  asset: project-images/project-90048-cover.webp
-  alt: The Pajama Game scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-cover-31192793.webp
+  alt: Scenic design for The Pajama Game by Brandon PT Davis.
 team:
   - role: Book By
     name: George Abbott & Richard Bissell
@@ -45,10 +46,14 @@ team:
   - role: Director
     name: Don Hill
 tags:
-  - musical-theatre
-  - university-of-california-irvine
-  - the-pajama-game
-  - mid-century-musical
+  - name: Musical Theatre
+    slug: musical-theatre
+  - name: University of California Irvine
+    slug: university-of-california-irvine
+  - name: The Pajama Game
+    slug: the-pajama-game
+  - name: Mid-Century Musical
+    slug: mid-century-musical
 links:
   - label: Listing
     url: https://drama.arts.uci.edu/events/pajama-game

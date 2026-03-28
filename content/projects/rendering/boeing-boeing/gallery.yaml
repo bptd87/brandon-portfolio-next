@@ -1,8 +1,27 @@
 images:
-  - asset: project-images/project-90054-gallery-150139.webp
-    alt: Scenic rendering for Boeing, Boeing at Stephens College. View 1.
+  - asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90054-gallery-150139-425d2231.webp
+    alt: Rendering of the Paris apartment for Boeing, Boeing at Stephens College.
 designNotes: >-
-  Scenic rendering series for Boeing, Boeing — Stephens College (2023). This rendering package supports early
-  collaboration by translating concept language into actionable visual cues. Scenic design for Marc Camoletti's French
-  farce about an American architect juggling three stewardess fiancées.
-bodySections: []
+  Rendering study for Boeing, Boeing — Stephens College (2023). The image is organized around doors, thresholds, and a
+  crisp domestic layout so the room can absorb escalating farce without ever becoming visually confusing.
+heroExcerpt: >-
+  The room has to read cleanly at a glance and still have enough friction in the details for the comedy to keep
+  escalating without confusion.
+bodySections:
+  - heading: Entrances as Choreography
+    paragraphs:
+      - >-
+        This kind of farce lives or dies on circulation, so the rendering has to make doors, thresholds, and sightlines
+        feel obvious and reliable. The audience should understand the room before the first scramble begins.
+      - >-
+        That clarity is what makes the comic timing work. Once the geography is legible, the pace can keep getting
+        faster without the set turning into visual noise.
+  - heading: A Room That Can Absorb Chaos
+    paragraphs:
+      - >-
+        The apartment needs enough polish to feel credible, but not so much preciousness that it breaks when the plot
+        starts piling on complications. The design keeps the domestic setting sturdy and practical.
+      - >-
+        In rendering terms, the job is to show a room that can take repeated collisions of character, timing, and
+        misunderstanding and still read as the same place.

@@ -1,63 +1,76 @@
 gallery:
   - id: mdq-cover
     kind: cover
-    asset: project-images/project-90087-cover.webp
-    alt: Million Dollar Quartet scenic design cover image.
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-cover-5a61d757.webp
+    alt: >-
+      Million Dollar Quartet scenic design cover at South Coast Repertory, shaping Sun Records as an intimate studio and
+      live music environment.
   - id: mdq-prod-1
     kind: production
-    asset: project-images/project-90087-gallery-150210.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150210-2ab544ca.webp
     alt: >-
       Cast blocking across the studio set architecture in Million Dollar Quartet at SCR, scenic design by Brandon PT
       Davis.
   - id: mdq-prod-3
     kind: production
-    asset: project-images/project-90087-gallery-150207.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150207-7d8a45e3.webp
     alt: >-
       Performance moment on the Sun Records-inspired set for Million Dollar Quartet at South Coast Repertory, scenic
       design by Brandon PT Davis.
   - id: mdq-prod-4
     kind: production
-    asset: project-images/project-90087-gallery-150223.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150223-755c8e5d.webp
     alt: >-
       Band-centered stage composition with warm practical lighting in Million Dollar Quartet, scenic design by Brandon
       PT Davis.
   - id: mdq-prod-5
     kind: production
-    asset: project-images/project-90087-gallery-150174.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150174-8f646b43.webp
     alt: Scene work on the vintage studio interior built for Million Dollar Quartet, scenic design by Brandon PT Davis.
   - id: mdq-prod-6
     kind: production
-    asset: project-images/project-90087-gallery-150067.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150067-01e01870.webp
     alt: >-
       Onstage action framed by the recording booth and studio details in Million Dollar Quartet, scenic design by
       Brandon PT Davis.
   - id: mdq-prod-7
     kind: production
-    asset: project-images/project-90087-gallery-150108.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150108-f491af26.webp
     alt: >-
       Wide audience-view perspective of the Million Dollar Quartet set at South Coast Repertory, scenic design by
       Brandon PT Davis.
   - id: mdq-prod-8
     kind: production
-    asset: project-images/project-90087-gallery-150190.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150190-7ee08c4c.webp
     alt: >-
       Production image highlighting the full studio footprint for Million Dollar Quartet, scenic design by Brandon PT
       Davis.
   - id: mdq-render-1
     kind: rendering
-    asset: project-images/project-90087-gallery-150244.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150244-8d464658.webp
     alt: >-
       Rendering study showing depth, instrument placement, and sightlines for Million Dollar Quartet, scenic design by
       Brandon PT Davis.
   - id: mdq-render-2
     kind: rendering
-    asset: project-images/project-90087-gallery-150087.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150087-7a630428.webp
     alt: >-
       Early rendering pass for Million Dollar Quartet emphasizing period texture and performance focus, scenic design by
       Brandon PT Davis.
   - id: mdq-render-3
     kind: rendering
-    asset: project-images/project-90087-gallery-150123.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90087-gallery-150123-58759f4e.webp
     alt: >-
       Concept rendering of the period recording studio environment for Million Dollar Quartet, scenic design by Brandon
       PT Davis.

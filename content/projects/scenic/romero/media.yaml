@@ -1,34 +1,41 @@
 gallery:
   - id: rom-cover
     kind: cover
-    asset: project-images/project-90077-cover.webp
-    alt: Romero scenic design cover image.
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-cover-176d0cf7.webp
+    alt: Romero scenic design cover at the University of Missouri, framing the world premiere as a ritual memory space.
   - id: rom-prod-1
     kind: production
-    asset: project-images/project-90077-gallery-150014.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-gallery-150014-a1fd754e.webp
     alt: Wide house perspective of the Romero set with layered playing spaces, scenic design by Brandon PT Davis.
   - id: rom-prod-2
     kind: production
-    asset: project-images/project-90077-gallery-150117.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-gallery-150117-05260bec.webp
     alt: Lighting and scenic texture interplay in a dramatic scene from Romero, scenic design by Brandon PT Davis.
   - id: rom-prod-3
     kind: production
-    asset: project-images/project-90077-gallery-150169.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-gallery-150169-c11924da.webp
     alt: Primary stage composition for Romero at University of Missouri, scenic design by Brandon PT Davis.
   - id: rom-prod-4
     kind: production
-    asset: project-images/project-90077-gallery-150192.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-gallery-150192-b5032774.webp
     alt: >-
       Scene transition across the central platform system in Romero at University of Missouri, scenic design by Brandon
       PT Davis.
   - id: rom-prod-5
     kind: production
-    asset: project-images/project-90077-gallery-150236.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-gallery-150236-9c607f1e.webp
     alt: >-
       Final production view of Romero showing the full environment and actor pathways, scenic design by Brandon PT
       Davis.
   - id: rom-prod-6
     kind: production
-    asset: project-images/project-90077-gallery-150246.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-gallery-150246-a5626620.webp
     alt: Actors positioned within the architectural and symbolic scenic world of Romero, scenic design by Brandon PT Davis.
 videos: []

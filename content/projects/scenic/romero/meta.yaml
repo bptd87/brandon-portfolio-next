@@ -7,10 +7,10 @@ featured: true
 excerpt: >-
   The world premiere of Romero was staged as a ritual container for memory, rupture, and spiritual reckoning rather than
   a literal historical reconstruction.
-seoTitle: Romero | Scenic Design by Brandon PT Davis
+seoTitle: Romero Scenic Design | University of Missouri
 seoDescription: >-
-  Scenic design for Romero at the University of Missouri, shaped as a ritual space for memory, grief, witness, and
-  spiritual rupture.
+  Scenic design for the world-premiere Romero at the University of Missouri, building a ritualized environment for
+  memory, witness, political violence, and spiritual reckoning.
 seoKeywords:
   - Romero scenic design
   - University of Missouri theatre
@@ -24,8 +24,9 @@ year: 2025
 month: 1
 subcategory: Drama
 cover:
-  asset: project-images/project-90077-cover.webp
-  alt: Romero scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-cover-176d0cf7.webp
+  alt: Romero scenic design cover at the University of Missouri, framing the world premiere as a ritual memory space.
 team:
   - role: Playwright
     name: Xiomara Cornejo
@@ -44,10 +45,14 @@ team:
   - role: Director
     name: David Crespy
 tags:
-  - drama
-  - world-premiere
-  - political-drama
-  - romero
+  - name: Drama
+    slug: drama
+  - name: World Premiere
+    slug: world-premiere
+  - name: Political Drama
+    slug: political-drama
+  - name: Romero
+    slug: romero
 links:
   - label: KBIA Interview
     url: >-

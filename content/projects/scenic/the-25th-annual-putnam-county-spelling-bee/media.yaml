@@ -1,38 +1,45 @@
 gallery:
   - id: spelling-cover
     kind: cover
-    asset: portfolio/projects/2026/02/2023-spellng-bee-stephens-college-6-of-6-5514.webp
-    alt: The 25th Annual Putnam County Spelling Bee scenic design cover image.
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-6-of-6-5514-9770ab58.webp
+    alt: Scenic design for The 25th Annual Putnam County Spelling Bee by Brandon PT Davis.
   - id: spelling-prod-1
     kind: production
-    asset: portfolio/projects/2026/02/2023-spellng-bee-stephens-college-5-of-6-7204.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-5-of-6-7204-f6fc8191.webp
     alt: >-
       Production image from The 25th Annual Putnam County Spelling Bee showing the gymnasium set, scenic design by
       Brandon PT Davis.
   - id: spelling-prod-2
     kind: production
-    asset: portfolio/projects/2026/02/2023-spellng-bee-stephens-college-4-of-6-7204.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-4-of-6-7204-0e56fab9.webp
     alt: Scene from Putnam County Spelling Bee framed by the competition setup, scenic design by Brandon PT Davis.
   - id: spelling-prod-3
     kind: production
-    asset: portfolio/projects/2026/02/2023-spellng-bee-stephens-college-1-of-6-7204.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-1-of-6-7204-2f449803.webp
     alt: >-
       Production still emphasizing the school-gym atmosphere in Putnam County Spelling Bee, scenic design by Brandon PT
       Davis.
   - id: spelling-prod-4
     kind: production
-    asset: portfolio/projects/2026/02/2023-spellng-bee-stephens-college-2-of-6-7204.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-2-of-6-7204-a8b5064f.webp
     alt: >-
       Performance image from Putnam County Spelling Bee showing the spelling platform and ensemble staging, scenic
       design by Brandon PT Davis.
   - id: spelling-prod-5
     kind: production
-    asset: portfolio/projects/2026/02/2023-spellng-bee-stephens-college-3-of-6-7204.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-3-of-6-7204-789e2b19.webp
     alt: >-
       Putnam County Spelling Bee production image highlighting the local sponsor details and gym setting, scenic design
       by Brandon PT Davis.
   - id: spelling-prod-6
     kind: production
-    asset: portfolio/projects/2026/02/2023-spellng-bee-stephens-college-6-of-6-7204.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-6-of-6-7204-e869600a.webp
     alt: Final production image from The 25th Annual Putnam County Spelling Bee, scenic design by Brandon PT Davis.
 videos: []

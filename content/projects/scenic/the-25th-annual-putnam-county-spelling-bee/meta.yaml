@@ -23,8 +23,9 @@ year: 2023
 month: 4
 subcategory: Musical Theatre
 cover:
-  asset: portfolio/projects/2026/02/2023-spellng-bee-stephens-college-6-of-6-5514.webp
-  alt: The 25th Annual Putnam County Spelling Bee scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-spellng-bee-stephens-college-6-of-6-5514-9770ab58.webp
+  alt: Scenic design for The 25th Annual Putnam County Spelling Bee by Brandon PT Davis.
 team:
   - role: Book By
     name: Rachael Sheinkin
@@ -37,9 +38,13 @@ team:
   - role: Scenic Design
     name: Brandon PT Davis
 tags:
-  - musical-theatre
-  - comedy
-  - stephens-college
-  - putnam-county-spelling-bee
+  - name: Musical Theatre
+    slug: musical-theatre
+  - name: Comedy
+    slug: comedy
+  - name: Stephens College
+    slug: stephens-college
+  - name: Putnam County Spelling Bee
+    slug: putnam-county-spelling-bee
 links: []
 updatedAt: '2026-02-27T10:50:09.45356+00:00'

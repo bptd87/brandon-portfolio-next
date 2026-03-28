@@ -1,8 +1,27 @@
 images:
-  - asset: project-images/project-90036-gallery-150134.webp
-    alt: Scenic rendering for An Inspector Calls at Okoboji Summer Theatre. View 1.
+  - asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90036-gallery-150134-a12bad84.webp
+    alt: Rendering of the dining room interior for An Inspector Calls at Okoboji Summer Theatre.
 designNotes: >-
-  Concept rendering package for An Inspector Calls — Okoboji Summer Theatre (2022). The visual approach prioritizes
-  atmosphere and material character while maintaining practical scenic readability. B. Priestley's "An Inspector Calls"
-  and.
-bodySections: []
+  Rendering study for An Inspector Calls — Okoboji Summer Theatre (2022). The images focus on social polish, material
+  restraint, and the kind of domestic order that can slowly turn accusatory once the room is under scrutiny.
+heroExcerpt: >-
+  The image needs to feel proper and controlled at first glance, then gradually reveal how brittle that order becomes
+  once the interrogation begins.
+bodySections:
+  - heading: Respectability as a Surface
+    paragraphs:
+      - >-
+        The room has to look socially complete: polished, stable, and carefully composed. That sense of order is
+        important because it gives the production something solid to disturb.
+      - >-
+        The rendering therefore resists melodrama and lets the unease emerge from proportion, arrangement, and the cold
+        clarity of the domestic setting.
+  - heading: Pressure in the Room
+    paragraphs:
+      - >-
+        As the evening darkens, the space should feel less like a home and more like a place where the family can no
+        longer hide from itself. The visual tension comes from how little the room can actually absorb.
+      - >-
+        That makes the design useful in production: it supports the shift from confidence to exposure without needing to
+        overstate the mood.

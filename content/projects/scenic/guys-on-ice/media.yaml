@@ -1,35 +1,44 @@
 gallery:
   - id: goi-cover
     kind: cover
-    asset: project-images/project-90045-cover.webp
-    alt: Guys on Ice scenic design cover image.
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-cover-ef6d8f84.webp
+    alt: >-
+      Guys on Ice scenic design cover at The Great American Melodrama, presenting a frozen-lake comic world with winter
+      texture.
   - id: goi-prod-1
     kind: production
-    asset: project-images/project-90045-gallery-150164.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-gallery-150164-90d3ad5f.webp
     alt: >-
       Audience perspective of the completed Guys on Ice set at The Great American Melodrama, scenic design by Brandon PT
       Davis.
   - id: goi-prod-2
     kind: production
-    asset: project-images/project-90045-gallery-150062.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-gallery-150062-599a4c3a.webp
     alt: Cast interaction framed by the cabin-inspired scenic world of Guys on Ice, scenic design by Brandon PT Davis.
   - id: goi-prod-3
     kind: production
-    asset: project-images/project-90045-gallery-150179.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-gallery-150179-ab370422.webp
     alt: Wide stage view showing environment and actor pathways in Guys on Ice, scenic design by Brandon PT Davis.
   - id: goi-prod-4
     kind: production
-    asset: project-images/project-90045-gallery-150163.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-gallery-150163-52e755c3.webp
     alt: Performance moment across the central scenic playing area in Guys on Ice, scenic design by Brandon PT Davis.
   - id: goi-prod-5
     kind: production
-    asset: project-images/project-90045-gallery-150156.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-gallery-150156-e63ffcd5.webp
     alt: >-
       Production image of Guys on Ice at The Great American Melodrama with full set context, scenic design by Brandon PT
       Davis.
   - id: goi-render-1
     kind: rendering
-    asset: project-images/project-90045-gallery-150050.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-gallery-150050-41a996ef.webp
     alt: >-
       Scenic rendering for Guys on Ice with focus on atmosphere, structure, and sightlines, scenic design by Brandon PT
       Davis.

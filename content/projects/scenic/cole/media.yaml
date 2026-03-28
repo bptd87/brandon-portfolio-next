@@ -1,38 +1,47 @@
 gallery:
   - id: cole-cover
     kind: cover
-    asset: portfolio/projects/2026/03/2023-cole-7-of-8-8632.webp
-    alt: Cole scenic design cover image.
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-7-of-8-8632-b71c63cf.webp
+    alt: Scenic design for Cole by Brandon PT Davis.
   - id: cole-prod-1
     kind: production
-    asset: portfolio/projects/2026/03/2023-cole-7-of-8-9492.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-7-of-8-9492-c82b3043.webp
     alt: Production image from Cole showing the jazz-age room and bar, scenic design by Brandon PT Davis.
   - id: cole-prod-2
     kind: production
-    asset: portfolio/projects/2026/03/2023-cole-1-of-8-9656.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-1-of-8-9656-a755fc11.webp
     alt: Scene from Cole framed by the cabaret environment, scenic design by Brandon PT Davis.
   - id: cole-prod-3
     kind: production
-    asset: portfolio/projects/2026/03/2023-cole-2-of-8-9656.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-2-of-8-9656-47f4560a.webp
     alt: Production still emphasizing the integrated band and room layout in Cole, scenic design by Brandon PT Davis.
   - id: cole-prod-4
     kind: production
-    asset: portfolio/projects/2026/03/2023-cole-4-of-8-9657.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-4-of-8-9657-dd7dff5f.webp
     alt: Performance image from Cole showing art deco-inspired geometry and proximity, scenic design by Brandon PT Davis.
   - id: cole-prod-5
     kind: production
-    asset: portfolio/projects/2026/03/2023-cole-5-of-8-9657.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-5-of-8-9657-742ca04d.webp
     alt: Production image from Cole highlighting choreography and microphone work, scenic design by Brandon PT Davis.
   - id: cole-prod-6
     kind: production
-    asset: portfolio/projects/2026/03/2023-cole-3-of-8-9657.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-3-of-8-9657-637dfce3.webp
     alt: Cole production still showing the room’s texture and proportion, scenic design by Brandon PT Davis.
   - id: cole-prod-7
     kind: production
-    asset: portfolio/projects/2026/03/2023-cole-6-of-8-9657.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-6-of-8-9657-61c79fc7.webp
     alt: Final production image from Cole, scenic design by Brandon PT Davis.
   - id: cole-render-1
     kind: rendering
-    asset: portfolio/projects/2026/03/2023-cole-8-of-8-9688.webp
+    asset: >-
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-cole-8-of-8-9688-141aefc1.webp
     alt: Rendering for Cole testing the jazz-age room, onstage band, and bar geometry, scenic design by Brandon PT Davis.
 videos: []

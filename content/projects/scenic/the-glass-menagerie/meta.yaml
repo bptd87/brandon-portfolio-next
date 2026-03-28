@@ -7,10 +7,10 @@ featured: true
 excerpt: >-
   A memory-driven Wingfield apartment for Maples Repertory Theatre, shaped to let fragility, longing, and escape coexist
   within the same haunted domestic space.
-seoTitle: The Glass Menagerie | Scenic Design by Brandon PT Davis
+seoTitle: The Glass Menagerie Scenic Design | Maples Repertory Theatre
 seoDescription: >-
-  Scenic design for The Glass Menagerie at Maples Repertory Theatre, shaped as a memory play environment that emphasizes
-  emotional geography, fragility, and the pull between domestic enclosure and imagined escape.
+  Scenic design for The Glass Menagerie at Maples Repertory Theatre, framing the Wingfield apartment as memory
+  architecture caught between domestic confinement, fragility, and escape.
 seoKeywords:
   - The Glass Menagerie
   - scenic design
@@ -25,8 +25,11 @@ year: 2025
 month: 10
 subcategory: Drama
 cover:
-  asset: project-images/project-90010-cover.webp
-  alt: The Glass Menagerie scenic design cover image
+  asset: >-
+    https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-cover-775dc22f.webp
+  alt: >-
+    The Glass Menagerie scenic design cover at Maples Repertory Theatre, framing the Wingfield apartment as memory
+    architecture.
 team:
   - role: By
     name: Tennessee Williams
@@ -41,12 +44,17 @@ team:
   - role: Sound Design
     name: Leo Basinger
 tags:
-  - drama
-  - memory-play
-  - regional-theatre
-  - the-glass-menagerie
+  - name: Drama
+    slug: drama
+  - name: Memory Play
+    slug: memory-play
+  - name: Regional Theatre
+    slug: regional-theatre
+  - name: The Glass Menagerie
+    slug: the-glass-menagerie
 links:
   - label: Maples Repertory Theatre Production
     url: https://maplesrep.com/the-glass-menagerie/
 publishedAt: '2026-02-19T11:01:51.231Z'
 updatedAt: '2026-02-19T11:01:51.231Z'
+createdAt: '2026-02-19T11:01:51.231Z'
