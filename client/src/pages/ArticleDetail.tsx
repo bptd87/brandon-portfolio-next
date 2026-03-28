@@ -285,6 +285,12 @@ function ArticleInlineVideo({ url, caption }: { url: string; caption?: string })
   );
 }
 
+function getArticleImageAspectRatio(display?: string) {
+  if (display === "artwork") return "4 / 5";
+  if (display === "infographic") return "4 / 3";
+  return "16 / 10";
+}
+
 function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
   const slug =
     slugProp ||
@@ -924,13 +930,16 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
                               key={index}
                               className="relative left-1/2 my-12 flex w-screen max-w-[68rem] -translate-x-1/2 flex-col items-center px-5 sm:px-6"
                             >
-                              <div className="overflow-hidden rounded-[0.8rem] bg-white/[0.02]">
-                                <img
+                              <div className="w-full overflow-hidden rounded-[0.8rem] bg-white/[0.02]">
+                                <ProgressiveImage
                                   src={getArticleMediaUrl(section.url)}
                                   alt={section.alt || section.caption || ''}
                                   loading="lazy"
-                                  decoding="async"
-                                  className="mx-auto max-h-[78vh] w-auto max-w-full cursor-pointer transition-opacity hover:opacity-90"
+                                  aspectRatio={getArticleImageAspectRatio(section.display)}
+                                  objectFit="contain"
+                                  enableScrollAnimation={false}
+                                  sizes="(min-width: 1280px) 1088px, 100vw"
+                                  className="mx-auto max-h-[78vh] cursor-pointer transition-opacity hover:opacity-90"
                                   onClick={() => openArticleLightboxAt(`image-${index}`)}
                                 />
                               </div>
@@ -949,12 +958,15 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
                               key={index}
                               className="mx-auto my-8 flex max-w-[58rem] flex-col items-center"
                             >
-                              <img
+                              <ProgressiveImage
                                 src={getArticleMediaUrl(section.url)}
                                 alt={section.alt || section.caption || ''}
                                 loading="lazy"
-                                decoding="async"
-                                className="mx-auto max-h-[78vh] w-auto max-w-full cursor-pointer transition-opacity hover:opacity-95"
+                                aspectRatio={getArticleImageAspectRatio(section.display)}
+                                objectFit="contain"
+                                enableScrollAnimation={false}
+                                sizes="(min-width: 1024px) 58rem, 100vw"
+                                className="mx-auto max-h-[78vh] cursor-pointer transition-opacity hover:opacity-95"
                                 onClick={() => openArticleLightboxAt(`image-${index}`)}
                               />
                               {(section.caption || section.alt) && (
@@ -968,12 +980,15 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
 
                         return (
                           <figure key={index} className="flex flex-col items-center rounded-xl overflow-hidden">
-                            <img
+                            <ProgressiveImage
                               src={getArticleMediaUrl(section.url)}
                               alt={section.alt || section.caption || ''}
                               loading="lazy"
-                              decoding="async"
-                              className="mx-auto max-h-[78vh] w-auto max-w-full cursor-pointer transition-opacity hover:opacity-90"
+                              aspectRatio={getArticleImageAspectRatio(section.display)}
+                              objectFit="contain"
+                              enableScrollAnimation={false}
+                              sizes="(min-width: 1024px) 58rem, 100vw"
+                              className="mx-auto max-h-[78vh] cursor-pointer transition-opacity hover:opacity-90"
                               onClick={() => openArticleLightboxAt(`image-${index}`)}
                             />
                             {(section.caption || section.alt) && (
@@ -1080,12 +1095,15 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
                                           : "w-[50vw] sm:w-[39vw] md:w-[calc((100%-1.5rem)/2)]"
                                     }`}
                                   >
-                                    <img
+                                    <ProgressiveImage
                                       src={getArticleMediaUrl(img.url)}
                                       alt={img.alt || img.caption || ''}
                                       loading="lazy"
-                                      decoding="async"
-                                      className="h-auto w-full cursor-pointer rounded-xl transition-opacity hover:opacity-90"
+                                      aspectRatio="4 / 3"
+                                      objectFit="cover"
+                                      enableScrollAnimation={false}
+                                      sizes="(min-width: 1024px) 34rem, 50vw"
+                                      className="cursor-pointer rounded-xl transition-opacity hover:opacity-90"
                                       onClick={() => openArticleLightboxAt(`gallery-${index}-${imgIndex}`)}
                                     />
                                     {img.caption && (

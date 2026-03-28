@@ -9,6 +9,7 @@ import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { Input } from "@/components/ui/input";
 import { getLocalTutorials } from "@shared/localStudio";
+import { ProgressiveImage } from "@/components/ProgressiveImage";
 
 const categories = [
   { slug: "getting-started", name: "Getting Started" },
@@ -362,13 +363,14 @@ export default function StudioTutorials() {
                       <Link key={tutorial.id} href={`/studio/tutorials/${slug}`} className="group block">
                         <div className="overflow-hidden rounded-[1.25rem] border border-border/20 bg-card/10 transition-colors hover:border-border/40">
                           <div className="relative aspect-[16/10] overflow-hidden">
-                            <img
+                            <ProgressiveImage
                               src={tutorial.cover_image}
                               alt={tutorial.title}
-                              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-                              onError={(e) => {
-                                (e.target as HTMLImageElement).style.display = "none";
-                              }}
+                              aspectRatio="16 / 10"
+                              objectFit="cover"
+                              sizes="(min-width: 1280px) 22rem, (min-width: 1024px) 30vw, 100vw"
+                              className="transition-transform duration-700 group-hover:scale-[1.02]"
+                              enableScrollAnimation={false}
                             />
                             <div className="absolute bottom-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-black/72 px-3 py-1.5 text-[0.74rem] font-medium text-white backdrop-blur-sm">
                               <Clock className="h-3.5 w-3.5" />
