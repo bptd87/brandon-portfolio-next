@@ -12,7 +12,6 @@ import { Sparkles, Copy, Check, ChevronLeft, ChevronRight, Link as LinkIcon, Pla
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
-import "yet-another-react-lightbox/styles.css";
 
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
@@ -21,7 +20,7 @@ import { getLocalArticleRecordBySlug, getLocalArticles } from "@shared/localArti
 import { getLocalScenicProjectBySlug } from "@shared/localScenicProjects";
 import DeferredYouTubeEmbed from "@/components/DeferredYouTubeEmbed";
 
-const Lightbox = dynamic(() => import("yet-another-react-lightbox"), {
+const Lightbox = dynamic(() => import("@/components/Lightbox").then((mod) => mod.Lightbox), {
   ssr: false,
 });
 
@@ -285,12 +284,6 @@ function ArticleInlineVideo({ url, caption }: { url: string; caption?: string })
   );
 }
 
-function getArticleImageAspectRatio(display?: string) {
-  if (display === "artwork") return "4 / 5";
-  if (display === "infographic") return "4 / 3";
-  return "16 / 10";
-}
-
 function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
   const slug =
     slugProp ||
@@ -302,9 +295,10 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
 
   const galleryRefs = useRef<Record<number, HTMLDivElement | null>>({});
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
-  const [lightboxImages, setLightboxImages] = useState<Array<{ src: string; alt?: string }>>([]);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [lightboxImages, setLightboxImages] = useState<
+    Array<{ imageUrl: string | null; caption: string | null; altText: string | null }>
+  >([]);
   const [linkCopied, setLinkCopied] = useState(false);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [audioDurationSeconds, setAudioDurationSeconds] = useState<number | null>(null);
@@ -594,9 +588,14 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
 
   const openArticleLightboxAt = (key: string) => {
     if (articleImageSlides.length === 0) return;
-    setLightboxImages(articleImageSlides.map(({ src, alt }) => ({ src, alt })));
+    setLightboxImages(
+      articleImageSlides.map(({ src, alt }) => ({
+        imageUrl: src,
+        caption: null,
+        altText: alt || null,
+      }))
+    );
     setLightboxIndex(imageIndexByKey.get(key) ?? 0);
-    setLightboxOpen(true);
   };
 
   const linkedScenicProjects = (article.linkedScenicProjectSlugs || [])
@@ -930,16 +929,14 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
                               key={index}
                               className="relative left-1/2 my-12 flex w-screen max-w-[68rem] -translate-x-1/2 flex-col items-center px-5 sm:px-6"
                             >
-                              <div className="w-full overflow-hidden rounded-[0.8rem] bg-white/[0.02]">
+                              <div className="w-full">
                                 <ProgressiveImage
                                   src={getArticleMediaUrl(section.url)}
                                   alt={section.alt || section.caption || ''}
                                   loading="lazy"
-                                  aspectRatio={getArticleImageAspectRatio(section.display)}
-                                  objectFit="contain"
                                   enableScrollAnimation={false}
                                   sizes="(min-width: 1280px) 1088px, 100vw"
-                                  className="mx-auto max-h-[78vh] cursor-pointer transition-opacity hover:opacity-90"
+                                  className="mx-auto max-h-[78vh] w-auto max-w-full cursor-pointer bg-white/[0.02] transition-opacity hover:opacity-90"
                                   onClick={() => openArticleLightboxAt(`image-${index}`)}
                                 />
                               </div>
@@ -962,11 +959,9 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
                                 src={getArticleMediaUrl(section.url)}
                                 alt={section.alt || section.caption || ''}
                                 loading="lazy"
-                                aspectRatio={getArticleImageAspectRatio(section.display)}
-                                objectFit="contain"
                                 enableScrollAnimation={false}
                                 sizes="(min-width: 1024px) 58rem, 100vw"
-                                className="mx-auto max-h-[78vh] cursor-pointer transition-opacity hover:opacity-95"
+                                className="mx-auto max-h-[78vh] w-auto max-w-full cursor-pointer bg-white/[0.02] transition-opacity hover:opacity-95"
                                 onClick={() => openArticleLightboxAt(`image-${index}`)}
                               />
                               {(section.caption || section.alt) && (
@@ -979,16 +974,14 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
                         }
 
                         return (
-                          <figure key={index} className="flex flex-col items-center rounded-xl overflow-hidden">
+                          <figure key={index} className="flex flex-col items-center">
                             <ProgressiveImage
                               src={getArticleMediaUrl(section.url)}
                               alt={section.alt || section.caption || ''}
                               loading="lazy"
-                              aspectRatio={getArticleImageAspectRatio(section.display)}
-                              objectFit="contain"
                               enableScrollAnimation={false}
                               sizes="(min-width: 1024px) 58rem, 100vw"
-                              className="mx-auto max-h-[78vh] cursor-pointer transition-opacity hover:opacity-90"
+                              className="mx-auto max-h-[78vh] w-auto max-w-full cursor-pointer bg-white/[0.02] transition-opacity hover:opacity-90"
                               onClick={() => openArticleLightboxAt(`image-${index}`)}
                             />
                             {(section.caption || section.alt) && (
@@ -1460,15 +1453,23 @@ function ArticleDetailContent({ slug: slugProp, params }: ArticleDetailProps) {
       `}</style>
 
       {/* Lightbox for image viewing */}
-      <Lightbox
-        open={lightboxOpen}
-        close={() => setLightboxOpen(false)}
-        index={lightboxIndex}
-        slides={lightboxImages}
-        styles={{
-          container: { backgroundColor: "rgba(0, 0, 0, 0.95)" },
-        }}
-      />
+      {lightboxIndex !== null && lightboxImages.length > 0 ? (
+        <Lightbox
+          images={lightboxImages}
+          currentIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+          onNext={() =>
+            setLightboxIndex((current) =>
+              current === null ? 0 : Math.min(current + 1, lightboxImages.length - 1)
+            )
+          }
+          onPrev={() =>
+            setLightboxIndex((current) =>
+              current === null ? 0 : Math.max(current - 1, 0)
+            )
+          }
+        />
+      ) : null}
     </div>
   );
 }
