@@ -1,9 +1,11 @@
+"use client";
+
 /**
  * Structured Data component for adding JSON-LD schema markup
  * Supports Person and Organization schemas for rich snippets in search results
  */
 
-import Script from "next/script";
+import { useEffect } from "react";
 
 interface PersonSchema {
   name: string;
@@ -514,7 +516,7 @@ export default function StructuredData({ type, person, organization, creativeWor
     return schema;
   };
 
-  const schemas = [];
+  const schemas: Record<string, unknown>[] = [];
 
   if ((type === 'Person' || type === 'Both') && person) {
     schemas.push(generatePersonSchema(person));
@@ -885,18 +887,22 @@ export default function StructuredData({ type, person, organization, creativeWor
     schemas.push(schema);
   }
 
-  return (
-    <>
-      {schemas.map((schema, index) => (
-        <Script
-          key={`${type}-${index}`}
-          id={`${type}-${index}-jsonld`}
-          type="application/ld+json"
-          strategy="beforeInteractive"
-        >
-          {JSON.stringify(schema).replace(/</g, "\\u003c")}
-        </Script>
-      ))}
-    </>
-  );
+  useEffect(() => {
+    const nodes = schemas.map((schema, index) => {
+      const script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.dataset.structuredData = `${type}-${index}`;
+      script.text = JSON.stringify(schema).replace(/</g, "\\u003c");
+      document.head.appendChild(script);
+      return script;
+    });
+
+    return () => {
+      for (const node of nodes) {
+        node.remove();
+      }
+    };
+  }, [schemas, type]);
+
+  return null;
 }

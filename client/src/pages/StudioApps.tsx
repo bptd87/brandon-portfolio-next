@@ -7,9 +7,8 @@ import { Link } from "wouter";
 import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { SEO } from "@/components/SEO";
-import StructuredData from "@/components/StructuredData";
 
-const apps = [
+const allApps = [
   {
     title: "Scenic 3D Converter (Mac)",
     description:
@@ -55,124 +54,19 @@ const apps = [
     category: "Reference",
     cta: "Open timeline",
   },
-  {
-    title: "Classical Orders",
-    description: "Reference guide for classical architecture, proportion, and the major column orders.",
-    image: "/assets/studio/studio-app-classical-orders.png",
-    href: "/studio/apps/classical-orders",
-    category: "Reference",
-    cta: "View page",
-    needsRebuild: true,
-  },
-  {
-    title: "Paint Finder",
-    description:
-      "Search and compare theatrical paint colors across manufacturers for scenic paint planning.",
-    image: "/assets/studio/studio-app-paint-finder.png",
-    href: "/studio/apps/paint-finder",
-    category: "Tool",
-    cta: "View tool",
-    needsRebuild: true,
-  },
 ];
 
 export default function StudioApps() {
+  const apps = allApps;
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title="Studio Apps for Scenic Design Workflow"
+        title="Studio Apps for Scenic Design"
         description="Production-focused calculators, reference tools, and utilities for scenic drafting, paint, modeling, and research."
         keywords="scenic design calculator, architecture scale converter, paint mixing calculator, Rosco paint, design history timeline, theatrical design tools, scenic design apps, web-based design tools"
         type="website"
         url="https://www.brandonptdavis.com/studio/apps"
-      />
-      <StructuredData
-        type="BreadcrumbList"
-        breadcrumbs={[
-          { name: "Home", url: "https://www.brandonptdavis.com" },
-          { name: "Studio", url: "https://www.brandonptdavis.com/studio" },
-          { name: "Apps", url: "https://www.brandonptdavis.com/studio/apps" },
-        ]}
-      />
-      <StructuredData
-        type="CollectionPage"
-        collectionPage={{
-          name: "Scenic Design Tools",
-          url: "https://www.brandonptdavis.com/studio/apps",
-          description: "Production-focused scenic design apps for drafting, scale, paint, modeling, and research.",
-          about: "Studio applications for scenic design workflow.",
-          primaryImageOfPage:
-            "https://www.brandonptdavis.com/assets/studio/studio-app-scenic-3d-converter.png",
-          mainEntity: {
-            name: "Studio Apps",
-            itemListElement: apps.map((app, index) => ({
-              position: index + 1,
-              name: app.title,
-              url: `https://www.brandonptdavis.com${app.href}`,
-              image: `https://www.brandonptdavis.com${app.image}`,
-            })),
-          },
-        }}
-      />
-      <StructuredData
-        type="SoftwareApplication"
-        softwareApplication={{
-          name: "Scenic 3D Converter for Vectorworks (Mac)",
-          description:
-            "Finder quick-action utility for converting 3D files into Vectorworks-friendly USD, USDZ, and 3DM outputs.",
-          applicationCategory: "GraphicsApplication",
-          operatingSystem: "macOS",
-          offers: {
-            price: "0",
-            priceCurrency: "USD",
-          },
-          url: "https://www.brandonptdavis.com/studio/apps/scenic-3d-converter",
-        }}
-      />
-      <StructuredData
-        type="SoftwareApplication"
-        softwareApplication={{
-          name: "Scale Calculator - Scenic Design Tool",
-          description:
-            "Convert between architectural and model scales. Essential for drafting and model building in theatrical design.",
-          applicationCategory: "DesignApplication",
-          operatingSystem: "Web",
-          offers: {
-            price: "0",
-            priceCurrency: "USD",
-          },
-          url: "https://www.brandonptdavis.com/studio/apps/scale-calculator",
-        }}
-      />
-      <StructuredData
-        type="SoftwareApplication"
-        softwareApplication={{
-          name: "Rosco Paint Calculator - Scenic Paint Mixing",
-          description:
-            "Professional scenic paint mixing calculator with advanced 5-step color matching engine for Rosco Off-Broadway paints.",
-          applicationCategory: "DesignApplication",
-          operatingSystem: "Web",
-          offers: {
-            price: "0",
-            priceCurrency: "USD",
-          },
-          url: "https://www.brandonptdavis.com/studio/apps/rosco-paint-calculator",
-        }}
-      />
-      <StructuredData
-        type="SoftwareApplication"
-        softwareApplication={{
-          name: "Design History Timeline - Architecture Reference",
-          description:
-            "Explore 30 major design periods from Ancient Egypt to Contemporary architecture with detailed information, color palettes, and key figures.",
-          applicationCategory: "EducationalApplication",
-          operatingSystem: "Web",
-          offers: {
-            price: "0",
-            priceCurrency: "USD",
-          },
-          url: "https://www.brandonptdavis.com/studio/apps/design-history-timeline",
-        }}
       />
 
       <Header />
@@ -193,11 +87,11 @@ export default function StudioApps() {
                 Studio Apps
               </p>
               <h1 className="mt-5 font-sans text-[clamp(3rem,6vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
-                Scenic design tools for drafting, paint, modeling, and research.
+                Scenic design tools for drafting, paint, modeling, and fast reference work.
               </h1>
               <p className="mx-auto mt-7 max-w-3xl text-[1.06rem] leading-8 text-foreground/62 md:text-[1.14rem]">
                 Practical calculators, reference tools, and utilities built for scenic workflow,
-                whether you are drafting at a desk, mixing paint in the shop, or checking dimensions on site.
+                whether you are drafting at a desk, mixing paint in the shop, or checking dimensions and design history on the fly.
               </p>
             </div>
 
@@ -245,11 +139,6 @@ export default function StudioApps() {
                       <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
                         {app.category}
                       </p>
-                      {app.needsRebuild ? (
-                        <p className="text-[11px] uppercase tracking-[0.18em] text-foreground/34">
-                          In progress
-                        </p>
-                      ) : null}
                     </div>
 
                     <h3 className="mt-3 font-sans text-[1.28rem] font-medium leading-[1.08] tracking-[-0.04em] text-foreground">

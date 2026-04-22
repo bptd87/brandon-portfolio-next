@@ -1,13 +1,17 @@
 import createMDX from "@next/mdx";
 import type { NextConfig } from "next";
+import { fileURLToPath } from "node:url";
 
 const withMDX = createMDX({
   extension: /\.mdx?$/,
 });
 
+const projectRoot = fileURLToPath(new URL(".", import.meta.url));
+
 const nextConfig: NextConfig = {
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   typedRoutes: false,
+  allowedDevOrigins: ["127.0.0.1", "localhost", "192.168.0.23"],
   images: {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1440, 1920],
@@ -30,7 +34,7 @@ const nextConfig: NextConfig = {
     ],
   },
   turbopack: {
-    root: __dirname,
+    root: projectRoot,
   },
   async headers() {
     return [

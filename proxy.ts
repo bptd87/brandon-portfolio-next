@@ -25,6 +25,23 @@ const LOW_VALUE_QUERY_PARAMS = new Set([
   "series",
 ]);
 
+function isLocalDevelopmentHost(host?: string | null) {
+  if (!host) return false;
+
+  const normalizedHost = host.toLowerCase();
+  const bareHost = normalizedHost.replace(/:\d+$/, "");
+
+  return (
+    normalizedHost.startsWith("localhost:") ||
+    normalizedHost === "localhost" ||
+    normalizedHost.startsWith("127.0.0.1:") ||
+    normalizedHost === "127.0.0.1" ||
+    normalizedHost.startsWith("[::1]:") ||
+    normalizedHost === "[::1]" ||
+    bareHost.endsWith(".local")
+  );
+}
+
 function hasLowValueArchiveQuery(searchParams: URLSearchParams) {
   for (const key of LOW_VALUE_QUERY_PARAMS) {
     if (searchParams.has(key)) return true;
@@ -113,7 +130,7 @@ export function proxy(request: NextRequest) {
     return buildRedirectResponse(request, legacyRedirectPath);
   }
 
-  if (requestHost && requestHost !== canonicalHost) {
+  if (requestHost && requestHost !== canonicalHost && !isLocalDevelopmentHost(requestHost)) {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.host = canonicalHost;
     redirectUrl.protocol = canonicalSiteUrl.protocol;
@@ -146,5 +163,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|.*\\..*).*)"],
+  matcher: ["/((?!api|_next|.*\\..*).*)"],
 };
