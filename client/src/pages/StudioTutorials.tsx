@@ -63,6 +63,29 @@ const SORT_OPTIONS: Array<{ key: SortKey; label: string }> = [
   { key: "duration", label: "Longest first" },
 ];
 
+const TUTORIAL_COVER_VARIANTS = {
+  "getting-started": [
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/getting-started-1.png",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/getting-started-2.png",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/getting-started-3.png",
+  ],
+  "2d-drafting": [
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/2d-drafting-1.png",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/2d-drafting-2.png",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/2d-drafting-3.png",
+  ],
+  "3d-modeling": [
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/3d-modeling-1.png",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/3d-modeling-2.png",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/3d-modeling-3.png",
+  ],
+  rendering: [
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/rendering-1.png",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/rendering-2.png",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/rendering-3.png",
+  ],
+} as const;
+
 const normalizeToken = (value: string | null | undefined) =>
   String(value || "")
     .trim()
@@ -70,6 +93,11 @@ const normalizeToken = (value: string | null | undefined) =>
     .replace(/&/g, "and")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
+
+const getStableVariantIndex = (value: string, total: number) => {
+  const hash = value.split("").reduce((sum, char) => sum + char.charCodeAt(0), 0);
+  return hash % total;
+};
 
 const getCategoryLabel = (value: string | null | undefined) => {
   const normalized = normalizeToken(value);
@@ -116,31 +144,14 @@ const formatDuration = (duration: TutorialCardItem["duration"]) => {
 
 const getTutorialCoverImage = (tutorial: TutorialCardItem) => {
   const category = normalizeToken(tutorial.category);
-
-  if (category === "2d-drafting") {
-    return {
-      src: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/cards/2d-drafting-abstract-v1.png",
-      alt: "Abstract tutorial cover for 2D drafting",
-    };
-  }
-
-  if (category === "3d-modeling") {
-    return {
-      src: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/cards/3d-modeling-abstract-v1.png",
-      alt: "Abstract tutorial cover for 3D modeling",
-    };
-  }
-
-  if (category === "rendering") {
-    return {
-      src: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/cards/rendering-abstract-v1.png",
-      alt: "Abstract tutorial cover for rendering",
-    };
-  }
+  const variants =
+    TUTORIAL_COVER_VARIANTS[category as keyof typeof TUTORIAL_COVER_VARIANTS] ||
+    TUTORIAL_COVER_VARIANTS["getting-started"];
+  const variantIndex = getStableVariantIndex(String(tutorial.slug || tutorial.id), variants.length);
 
   return {
-    src: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/cards/getting-started-abstract-v1.png",
-    alt: "Abstract tutorial cover for getting started",
+    src: variants[variantIndex],
+    alt: `Abstract tutorial cover for ${getCategoryLabel(tutorial.category)}`,
   };
 };
 

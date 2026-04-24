@@ -15,7 +15,7 @@ import {
   sortScenicProjectsChronologically,
   splitScenicShowcaseProjects,
 } from "@/lib/scenicShowcase";
-import { getLocalScenicProjects } from "@shared/localScenicProjects";
+import type { LocalScenicProject } from "@shared/localScenicProjects";
 import { getConfiguredSiteUrl } from "../../../lib/env/site";
 
 const homeLandingCopy = {
@@ -27,9 +27,9 @@ const homeLandingCopy = {
 
 const SITE_URL = getConfiguredSiteUrl();
 
-export default function Home() {
+export default function Home({ initialProjects }: { initialProjects: LocalScenicProject[] }) {
   const [, setLocation] = useLocation();
-  const projects = sortScenicProjectsChronologically(getLocalScenicProjects());
+  const projects = sortScenicProjectsChronologically(initialProjects);
   const projectsLoading = false;
   const { featuredProject, showcaseRailProjects, showcaseGridProjects } =
     splitScenicShowcaseProjects(projects);

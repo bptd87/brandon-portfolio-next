@@ -2,6 +2,8 @@ import { useLayoutEffect, useRef, useState } from "react";
 import type { CSSProperties, MouseEvent } from "react";
 import Image from "next/image";
 
+const isDevelopment = process.env.NODE_ENV === "development";
+
 export interface StickyShowcaseItem {
   id: number | string;
   slug: string;
@@ -66,6 +68,7 @@ function ShowcaseCard({
             src={item.coverImageUrl}
             alt={itemAlt(item.title)}
             fill
+            unoptimized={isDevelopment}
             quality={82}
             priority={eager}
             loading={eager ? "eager" : "lazy"}

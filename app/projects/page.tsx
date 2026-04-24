@@ -1,6 +1,7 @@
 import ProjectsPage from "../../client/src/pages/Projects";
 import { NextPathProvider } from "../../components/routing/NextPathProvider";
 import { buildPageMetadata } from "../../lib/metadata";
+import { getLocalScenicProjects } from "../../shared/localScenicProjects";
 
 export const dynamic = "force-static";
 
@@ -12,9 +13,11 @@ export const metadata = buildPageMetadata({
 });
 
 export default function Page() {
+  const projects = getLocalScenicProjects();
+
   return (
     <NextPathProvider currentPath="/projects">
-      <ProjectsPage />
+      <ProjectsPage initialProjects={projects} />
     </NextPathProvider>
   );
 }

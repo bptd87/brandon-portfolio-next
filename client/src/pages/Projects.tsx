@@ -32,7 +32,7 @@ import {
   scenicPortfolioLandingCopy,
   scenicShowcaseProps,
 } from "@/lib/scenicShowcase";
-import { getLocalScenicProjects } from "@shared/localScenicProjects";
+import type { LocalScenicProject } from "@shared/localScenicProjects";
 
 type SortKey = "newest" | "oldest" | "title" | "venue";
 type ViewMode = "grid" | "list";
@@ -153,7 +153,7 @@ function ProjectCard({
   );
 }
 
-export default function Projects() {
+export default function Projects({ initialProjects }: { initialProjects: LocalScenicProject[] }) {
   const [, setLocation] = useLocation();
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>("all");
   const [selectedVenue, setSelectedVenue] = useState<string>("all");
@@ -161,7 +161,7 @@ export default function Projects() {
   const [sortKey, setSortKey] = useState<SortKey>("newest");
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
 
-  const mergedProjects = useMemo(() => getLocalScenicProjects(), []);
+  const mergedProjects = useMemo(() => initialProjects, [initialProjects]);
   const isLoading = false;
 
   const subcategories = useMemo(() => {

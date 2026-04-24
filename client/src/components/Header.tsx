@@ -489,7 +489,7 @@ export default function Header() {
         onClose={() => setMobileMenuOpen(false)}
         onOpenSearch={() => setSearchOpen(true)}
       />
-      <SearchOverlay open={searchOpen} onOpenChange={setSearchOpen} />
+      {searchOpen ? <SearchOverlay open={searchOpen} onOpenChange={setSearchOpen} /> : null}
     </>
   );
 }

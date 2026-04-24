@@ -52,21 +52,21 @@ export default function BrandMark({ className }: BrandMarkProps) {
     >
       <defs>
         <radialGradient id={glowId} cx="50%" cy="48%" r="44%">
-          <stop offset="0%" stopColor="rgba(251,247,240,0.98)" />
-          <stop offset="18%" stopColor="rgba(239,231,224,0.92)" />
-          <stop offset="42%" stopColor="rgba(122,106,114,0.48)" />
-          <stop offset="68%" stopColor="rgba(46,38,44,0.16)" />
+          <stop offset="0%" stopColor="rgba(247,249,255,0.98)" />
+          <stop offset="18%" stopColor="rgba(224,232,245,0.9)" />
+          <stop offset="42%" stopColor="rgba(110,126,154,0.44)" />
+          <stop offset="68%" stopColor="rgba(28,34,48,0.16)" />
           <stop offset="100%" stopColor="rgba(10,10,14,0)" />
         </radialGradient>
         <radialGradient id={sphereId} cx="50%" cy="48%" r="56%">
-          <stop offset="0%" stopColor="rgba(255,251,246,0.42)" />
-          <stop offset="28%" stopColor="rgba(216,203,198,0.22)" />
-          <stop offset="58%" stopColor="rgba(87,72,78,0.14)" />
+          <stop offset="0%" stopColor="rgba(249,251,255,0.42)" />
+          <stop offset="28%" stopColor="rgba(201,212,232,0.22)" />
+          <stop offset="58%" stopColor="rgba(72,84,108,0.14)" />
           <stop offset="100%" stopColor="rgba(10,10,14,0)" />
         </radialGradient>
         <radialGradient id={bloomId} cx="50%" cy="48%" r="22%">
-          <stop offset="0%" stopColor="rgba(255,252,248,0.95)" />
-          <stop offset="100%" stopColor="rgba(255,252,248,0)" />
+          <stop offset="0%" stopColor="rgba(255,255,255,0.96)" />
+          <stop offset="100%" stopColor="rgba(255,255,255,0)" />
         </radialGradient>
         <filter id={blurId} x="-40%" y="-40%" width="180%" height="180%">
           <feGaussianBlur stdDeviation="6.5" />
@@ -90,7 +90,7 @@ export default function BrandMark({ className }: BrandMarkProps) {
           cx={dot.cx}
           cy={dot.cy}
           r={dot.r}
-          fill="#f7f4ef"
+          fill="#f4f7ff"
           opacity={dot.opacity}
         />
       ))}
