@@ -20,7 +20,7 @@ seoKeywords:
   - Michael Bennett
   - musical theatre history
 cover:
-  asset: /assets/articles/concept-musical-1970s/cover.webp
+  asset: https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/concept-musical-1970s/cover.webp
   alt: 'Warm theatrical montage cover featuring Stephen Sondheim, Harold Prince, Michael Bennett, and Bob Fosse.'
 tags:
   - concept-musical

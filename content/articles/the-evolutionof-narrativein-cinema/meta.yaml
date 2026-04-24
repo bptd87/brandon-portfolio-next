@@ -19,7 +19,7 @@ seoKeywords:
   - technicolor history
   - citizen kane cinematography
 cover:
-  asset: /assets/articles/evolution-narrative-cinema/cover.webp
+  asset: https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/evolution-narrative-cinema/cover.webp
   alt: 'Cinematic editorial cover showing the transition from silent film grammar to sound, color, and deep-focus cinema.'
 tags:
   - film-history

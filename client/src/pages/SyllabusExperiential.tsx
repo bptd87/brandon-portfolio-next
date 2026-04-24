@@ -147,7 +147,7 @@ export default function SyllabusExperiential() {
           <div className="overflow-hidden rounded-[1.5rem] border border-border/30 bg-card/20">
             <div className="relative aspect-square w-full">
               <Image
-                src="/assets/teaching/syllabus-experiential-art.png"
+                src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/teaching/syllabus-experiential-art.png"
                 alt="Experiential design syllabus artwork"
                 fill
                 quality={82}

@@ -69,8 +69,8 @@ const navigationCards = [
     href: "/creative-statement",
     label: "Process",
     image:
-      resolveBlobMediaUrl("/assets/about/about-process-art.png") ||
-      "/assets/about/about-process-art.png",
+      resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-process-art.png") ||
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-process-art.png",
     imageTitle: "Creative Statement",
   },
   {
@@ -79,8 +79,8 @@ const navigationCards = [
     href: "/resume",
     label: "Resume",
     image:
-      resolveBlobMediaUrl("/assets/about/about-resume-art.png") ||
-      "/assets/about/about-resume-art.png",
+      resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-resume-art.png") ||
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-resume-art.png",
   },
   {
     title: "Teaching Philosophy",
@@ -88,8 +88,8 @@ const navigationCards = [
     href: "/about/teaching",
     label: "Teaching",
     image:
-      resolveBlobMediaUrl("/assets/about/about-teaching-art.png") ||
-      "/assets/about/about-teaching-art.png",
+      resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-teaching-art.png") ||
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-teaching-art.png",
     imageTitle: "Teaching Philosophy",
   },
   {
@@ -99,8 +99,8 @@ const navigationCards = [
     href: "/about/collaborators",
     label: "Collaboration",
     image:
-      resolveBlobMediaUrl("/assets/about/about-collaborators-art.png") ||
-      "/assets/about/about-collaborators-art.png",
+      resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-collaborators-art.png") ||
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-collaborators-art.png",
   },
 ];
 

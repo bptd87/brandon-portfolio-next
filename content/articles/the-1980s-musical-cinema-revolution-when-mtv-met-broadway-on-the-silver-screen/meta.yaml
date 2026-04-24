@@ -19,7 +19,7 @@ seoKeywords:
   - Footloose musical
   - Disney Renaissance musical theatre
 cover:
-  asset: /assets/articles/musical-cinema-1980s/hero-art.jpeg
+  asset: https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/musical-cinema-1980s/hero-art.jpeg
   alt: 'Stylized 1980s musical-cinema collage with dancers, records, neon light, and theatrical motion.'
 tags:
   - musical-cinema

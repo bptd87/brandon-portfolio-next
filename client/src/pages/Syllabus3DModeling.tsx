@@ -164,7 +164,7 @@ export default function Syllabus3DModeling() {
           <div className="overflow-hidden rounded-[1.5rem] border border-border/30 bg-card/20">
             <div className="relative aspect-square w-full">
               <Image
-                src="/assets/teaching/syllabus-3d-modeling-art.png"
+                src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/teaching/syllabus-3d-modeling-art.png"
                 alt="3D modeling syllabus artwork"
                 fill
                 quality={82}
@@ -314,7 +314,7 @@ export default function Syllabus3DModeling() {
               <div className="grid gap-5 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:items-start">
                 <div className="relative aspect-square overflow-hidden rounded-[1.15rem] border border-border/35 bg-card/20">
                   <Image
-                    src="/assets/studio/studio-tutorials-cover.png"
+                    src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-tutorials-cover.png"
                     alt="Vectorworks tutorials used in THA 211"
                     fill
                     quality={80}

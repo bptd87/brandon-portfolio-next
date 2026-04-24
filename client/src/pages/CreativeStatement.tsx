@@ -197,7 +197,7 @@ export default function CreativeStatement() {
         <div className="mx-auto max-w-6xl">
           <div className="grid items-center gap-10 xl:grid-cols-[minmax(18rem,0.95fr)_minmax(0,1.05fr)]">
             <AboutVerticalArt
-              src="/assets/about/about-process-art.png"
+              src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-process-art.png"
               alt="Abstract creative statement artwork"
               sizes="(max-width: 1280px) 92vw, 34vw"
               maxWidthClassName="max-w-[28rem]"

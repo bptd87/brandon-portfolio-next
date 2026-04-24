@@ -519,7 +519,7 @@ export default function Resume() {
 
               <div className="w-full xl:justify-self-end">
                 <AboutVerticalArt
-                  src="/assets/about/about-resume-art.png"
+                  src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-resume-art.png"
                   alt="Abstract cyan resume artwork"
                   sizes="(max-width: 1280px) 92vw, 26rem"
                   className="xl:mx-0"

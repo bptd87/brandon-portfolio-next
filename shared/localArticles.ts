@@ -185,7 +185,7 @@ const articleFieldOverridesBySlug: Record<string, Partial<LocalArticle>> = {
     categoryName: "Tools & Technology",
     excerpt:
       "Explore how 20 different lighting styles transform AI-generated scenes in Sora and Midjourney, with practical prompt strategies for theatre designers and visual storytellers.",
-    coverImageUrl: "/assets/articles/lighting-styles-in-ai-models/cover-generated.png",
+    coverImageUrl: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/lighting-styles-in-ai-models/cover-generated.png",
     coverImageAlt:
       "A blank canvas on an easel in a hazy artist's studio, lit by a warm spotlight and cool window light.",
     seoTitle: "Lighting Styles in AI Models: How Lighting Changes Everything",
@@ -928,7 +928,7 @@ const visualLanguageArticle: LocalArticle = {
   excerpt:
     "How the elements and principles of design shape live performance before an audience understands the story intellectually.",
   coverImageUrl:
-    "/assets/articles/visual-language/cover.png",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/visual-language/cover.png",
   coverImageAlt:
     "Abstract scenic environment with layered architectural forms, a glowing focal portal, and a solitary figure establishing scale.",
   publishedAt: "2026-03-05",
@@ -1931,7 +1931,7 @@ const workingOffstageArticle: LocalArticle = {
   excerpt:
     "A practical essay on how scenic designers can expand into themed entertainment, architectural visualization, rendering, and other adjacent industries without abandoning theatre.",
   coverImageUrl:
-    "/assets/articles/working-offstage/cover.webp",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/working-offstage/cover.webp",
   coverImageAlt:
     "Abstract theatrical architecture opening into adjacent design worlds beyond the stage, with a solitary figure standing in a warm amber haze.",
   publishedAt: "2026-03-26",
@@ -2000,7 +2000,7 @@ const workingOffstageArticle: LocalArticle = {
     },
     {
       type: "image",
-      url: "/assets/articles/working-offstage/transfer-editorial.webp",
+      url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/working-offstage/transfer-editorial.webp",
       alt: "Atmospheric blue editorial artwork with layered translucent planes and luminous architectural openings suggesting expansion beyond a single path.",
       caption:
         "A broader career can still grow from the same core scenic instincts.",
@@ -2127,7 +2127,7 @@ const workingOffstageArticle: LocalArticle = {
     },
     {
       type: "image",
-      url: "/assets/articles/working-offstage/scope-editorial.webp",
+      url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/working-offstage/scope-editorial.webp",
       alt: "Warm charcoal editorial artwork of stacked translucent planes and shifting surfaces suggesting unseen layers of complexity inside a project.",
       caption:
         "Scope rarely appears all at once. It usually reveals itself in layers.",
@@ -2159,7 +2159,7 @@ const workingOffstageArticle: LocalArticle = {
     },
     {
       type: "image",
-      url: "/assets/articles/working-offstage/pricing-editorial.webp",
+      url: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/working-offstage/pricing-editorial.webp",
       alt: "Soft blue editorial artwork with measured horizontal bands and quiet shifts in light suggesting structure, calibration, and flexibility.",
       caption:
         "A useful range creates structure without pretending the work is fixed.",
@@ -2292,7 +2292,7 @@ const conceptMusicalArticle: LocalArticle = {
   title: "The Rise of the Concept Musical in the 1970s",
   excerpt:
     "A scenic-focused history of the concept musical and the artists who pushed Broadway away from tidy plots and toward thematic structure, fragmentation, and theatrical self-awareness.",
-  coverImageUrl: "/assets/articles/concept-musical-1970s/cover.webp",
+  coverImageUrl: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/concept-musical-1970s/cover.webp",
   coverImageAlt:
     "Warm theatrical montage cover featuring Stephen Sondheim, Harold Prince, Michael Bennett, and Bob Fosse.",
   publishedAt: "2025-03-05T10:56:06.270Z",
@@ -2325,7 +2325,7 @@ const britishMegamusicalArticle: LocalArticle = {
   title: "When Broadway Got Spectacular: The Rise of the British Megamusical",
   excerpt:
     "A scenic-focused look at how British megamusicals turned Broadway into a global entertainment machine through spectacle, branding, technology, and industrial-scale production.",
-  coverImageUrl: "/assets/articles/british-megamusical/cover.webp",
+  coverImageUrl: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/british-megamusical/cover.webp",
   coverImageAlt:
     "Warm cinematic megamusical cover with a chandelier, barricade imagery, and sweeping theatrical light.",
   publishedAt: "2025-03-10T09:55:44.718Z",
@@ -2359,7 +2359,7 @@ const evolutionNarrativeCinemaArticle: LocalArticle = {
   title: "The Evolution of Narrative in Cinema",
   excerpt:
     "A scenic-focused history of early film language, tracing how editing, framing, sound, color, and mise-en-scene reshaped visual storytelling before the 1940s.",
-  coverImageUrl: "/assets/articles/evolution-narrative-cinema/cover.webp",
+  coverImageUrl: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/evolution-narrative-cinema/cover.webp",
   coverImageAlt:
     "Cinematic editorial cover showing the transition from silent film grammar to sound, color, and deep-focus cinema.",
   publishedAt: "2025-01-31T00:00:00.000Z",
@@ -2391,7 +2391,7 @@ const musicalCinema1980sArticle: LocalArticle = {
   title: "The 1980s Musical Cinema Revolution",
   excerpt:
     "A scenic-focused study of how MTV aesthetics, youth-centered narratives, and cross-platform adaptation reshaped musical storytelling in the 1980s.",
-  coverImageUrl: "/assets/articles/musical-cinema-1980s/hero-art.jpeg",
+  coverImageUrl: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/musical-cinema-1980s/hero-art.jpeg",
   coverImageAlt:
     "Stylized 1980s musical-cinema collage with dancers, records, neon light, and theatrical motion.",
   publishedAt: "2025-03-16T02:22:53.114Z",

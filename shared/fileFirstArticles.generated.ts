@@ -59,7 +59,7 @@ export const fileFirstArticleFieldsBySlug = {
   "publishedAt": "2025-04-24T00:00:00+00:00",
   "updatedAt": "2026-02-12T15:04:17+00:00",
   "linkedScenicProjectSlugs": [],
-  "coverImageUrl": "/assets/articles/becoming-a-scenic-designer-a-comprehensive-guide/cover.webp"
+  "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/becoming-a-scenic-designer-a-comprehensive-guide/cover.webp"
 },
   "building-the-visual-world-art-direction-in-film-television": {
   "title": "Building the Visual World: Art Direction in Film & Television",
@@ -174,7 +174,7 @@ export const fileFirstArticleFieldsBySlug = {
   "sourcePublication": "Scenic Insights Archive",
   "sourceUrl": "https://ggjwk4vwfr.wixstudio.com/bptd/post/lighting-styles-in-ai-models-how-lighting-changes-everything",
   "linkedScenicProjectSlugs": [],
-  "coverImageUrl": "/assets/articles/lighting-styles-in-ai-models/cover-generated.png"
+  "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/lighting-styles-in-ai-models/cover-generated.png"
 },
   "minimalist-scenic-design-dominating-regional-theatres-in-2025": {
   "title": "Minimalist Scenic Design: Dominating Regional Theatres in 2025",
@@ -296,7 +296,7 @@ export const fileFirstArticleFieldsBySlug = {
   "readTime": 15,
   "publishedAt": "2025-03-16T02:22:53+00:00",
   "updatedAt": "2025-03-17T09:01:52+00:00",
-  "coverImageUrl": "/assets/articles/musical-cinema-1980s/hero-art.jpeg"
+  "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/musical-cinema-1980s/hero-art.jpeg"
 },
   "the-art-of-presenting-theatre-design-a-guide-for-designers": {
   "title": "The Art of Presenting Theatre Design: A Guide for Designers",
@@ -343,7 +343,7 @@ export const fileFirstArticleFieldsBySlug = {
   "readTime": 8,
   "publishedAt": "2025-01-31T00:00:00+00:00",
   "updatedAt": "2025-03-17T00:00:00+00:00",
-  "coverImageUrl": "/assets/articles/evolution-narrative-cinema/cover.webp"
+  "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/evolution-narrative-cinema/cover.webp"
 },
   "the-golden-age-of-broadway-a-defining-era-in-musical-theatre": {
   "title": "The Golden Age of Broadway: A Defining Era in Musical Theatre",
@@ -405,7 +405,7 @@ export const fileFirstArticleFieldsBySlug = {
     "slug": "design-communication",
     "order": 1
   },
-  "coverImageUrl": "/assets/articles/visual-language/cover.png"
+  "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/visual-language/cover.png"
 },
   "urinetown-scenic-design-building-a-dystopia-that-feels-uncomfortably-familiar": {
   "title": "Urinetown Scenic Design: Building a Dystopia That Feels Uncomfortably Familiar",
@@ -492,7 +492,7 @@ export const fileFirstArticleFieldsBySlug = {
   "sourcePublication": "Scenic Insights Archive",
   "sourceUrl": "https://ggjwk4vwfr.wixstudio.com/bptd/post/when-broadway-got-a-revolution-the-rise-of-the-concept-musical-in-the-1970s",
   "linkedScenicProjectSlugs": [],
-  "coverImageUrl": "/assets/articles/concept-musical-1970s/cover.webp"
+  "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/concept-musical-1970s/cover.webp"
 },
   "when-broadway-got-spectacular-the-rise-of-the-british-megamusical": {
   "title": "When Broadway Got Spectacular: The Rise of the British Megamusical",
@@ -509,7 +509,7 @@ export const fileFirstArticleFieldsBySlug = {
   "sourcePublication": "Scenic Insights Archive",
   "sourceUrl": "https://ggjwk4vwfr.wixstudio.com/bptd/post/when-broadway-got-spectacular-the-rise-of-the-british-megamusical",
   "linkedScenicProjectSlugs": [],
-  "coverImageUrl": "/assets/articles/british-megamusical/cover.webp"
+  "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/british-megamusical/cover.webp"
 },
   "working-offstage-expanding-a-scenic-design-career-beyond-theatre": {
   "title": "Working Offstage: Expanding a Scenic Design Career Beyond Theatre",
@@ -529,7 +529,7 @@ export const fileFirstArticleFieldsBySlug = {
     "slug": "process-and-practice",
     "order": 6
   },
-  "coverImageUrl": "/assets/articles/working-offstage/cover.webp"
+  "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/working-offstage/cover.webp"
 },
   "youre-wasting-my-time-a-scenic-design-lesson-in-growth-and-revision": {
   "title": "You're Wasting My Time! — A Scenic Design Lesson in Growth and Revision",

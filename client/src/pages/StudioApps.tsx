@@ -13,7 +13,7 @@ const allApps = [
     title: "Scenic 3D Converter (Mac)",
     description:
       "Finder quick action workflow to convert 3D files locally into Vectorworks-friendly USD, USDZ, and 3DM outputs.",
-    image: "/assets/studio/studio-app-scenic-3d-converter.png",
+    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-scenic-3d-converter.png",
     href: "/studio/apps/scenic-3d-converter",
     category: "Utility",
     cta: "Open tool",
@@ -22,7 +22,7 @@ const allApps = [
     title: "Scale Calculator",
     description:
       "Convert between architectural and model scales for drafting, model building, and production workflow.",
-    image: "/assets/studio/studio-app-scale-calculator.png",
+    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-scale-calculator.png",
     href: "/studio/apps/scale-calculator",
     category: "Calculator",
     cta: "Launch app",
@@ -31,7 +31,7 @@ const allApps = [
     title: "Dimension Reference",
     description:
       "Quick reference for standard dimensions and unit conversions in scenic and production design.",
-    image: "/assets/studio/studio-app-dimension-reference.png",
+    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-dimension-reference.png",
     href: "/studio/apps/dimension-reference",
     category: "Reference",
     cta: "Open reference",
@@ -40,7 +40,7 @@ const allApps = [
     title: "Rosco Paint Calculator",
     description:
       "Professional scenic paint mixing calculator for Rosco Off-Broadway paints and color matching workflows.",
-    image: "/assets/studio/studio-app-rosco-paint-calculator.png",
+    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-rosco-paint-calculator.png",
     href: "/studio/apps/rosco-paint-calculator",
     category: "Calculator",
     cta: "Launch app",
@@ -49,7 +49,7 @@ const allApps = [
     title: "Design History Timeline",
     description:
       "Explore major design periods with visual references, color palettes, and historical context.",
-    image: "/assets/studio/studio-app-design-history-timeline.png",
+    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-design-history-timeline.png",
     href: "/studio/apps/design-history-timeline",
     category: "Reference",
     cta: "Open timeline",
@@ -165,7 +165,7 @@ export default function StudioApps() {
               <div className="overflow-hidden rounded-[1.15rem] border border-border/18 bg-card/10">
                 <div className="relative aspect-square w-full">
                   <Image
-                    src="/assets/studio/studio-app-iphone-install.png"
+                    src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-iphone-install.png"
                     alt="Illustrative artwork showing how to save a website as an app on iPhone"
                     fill
                     quality={82}

@@ -15,27 +15,27 @@ const studioApps = [
   {
     title: "Scenic 3D Converter (Mac)",
     href: "/studio/apps/scenic-3d-converter",
-    image: "/assets/studio/studio-app-scenic-3d-converter.png",
+    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-scenic-3d-converter.png",
   },
   {
     title: "Scale Calculator",
     href: "/studio/apps/scale-calculator",
-    image: "/assets/studio/studio-app-scale-calculator.png",
+    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-scale-calculator.png",
   },
   {
     title: "Dimension Reference",
     href: "/studio/apps/dimension-reference",
-    image: "/assets/studio/studio-app-dimension-reference.png",
+    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-dimension-reference.png",
   },
   {
     title: "Rosco Paint Calculator",
     href: "/studio/apps/rosco-paint-calculator",
-    image: "/assets/studio/studio-app-rosco-paint-calculator.png",
+    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-rosco-paint-calculator.png",
   },
   {
     title: "Design History Timeline",
     href: "/studio/apps/design-history-timeline",
-    image: "/assets/studio/studio-app-design-history-timeline.png",
+    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-design-history-timeline.png",
   },
 ] as const;
 
@@ -72,7 +72,7 @@ export default function Page() {
               "Production-focused scenic design apps for drafting, scale, paint, modeling, and research.",
             about: "Studio applications for scenic design workflow.",
             primaryImageOfPage:
-              "https://www.brandonptdavis.com/assets/studio/studio-app-scenic-3d-converter.png",
+              "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-scenic-3d-converter.png",
             mainEntity: {
               "@type": "ItemList",
               name: "Studio Apps",

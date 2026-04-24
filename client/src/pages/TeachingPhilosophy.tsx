@@ -84,14 +84,14 @@ export default function TeachingPhilosophy() {
       description:
         "Themed entertainment, immersive environments, and commercial storytelling workflows for designers working beyond the stage.",
       href: "/syllabus/experiential-design",
-      image: "/assets/teaching/syllabus-experiential-art.png",
+      image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/teaching/syllabus-experiential-art.png",
     },
     {
       title: "3D Modeling and Rendering",
       description:
         "Vectorworks-based drafting, modeling, rendering, and documentation with an emphasis on professional scenic design workflow.",
       href: "/syllabus/3d-modeling",
-      image: "/assets/teaching/syllabus-3d-modeling-art.png",
+      image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/teaching/syllabus-3d-modeling-art.png",
     },
   ];
 
@@ -214,7 +214,7 @@ export default function TeachingPhilosophy() {
           </div>
 
           <AboutVerticalArt
-            src="/assets/about/about-teaching-art.png"
+            src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-teaching-art.png"
             alt="Abstract teaching philosophy artwork"
             sizes="(max-width: 1280px) 92vw, 34vw"
             maxWidthClassName="max-w-[28rem]"

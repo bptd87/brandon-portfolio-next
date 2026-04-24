@@ -17,7 +17,7 @@ const apps = [
     title: "Scenic 3D Converter (Mac)",
     description:
       "Finder quick action workflow to convert 3D files locally into Vectorworks-friendly USD, USDZ, and 3DM outputs.",
-    image: "/assets/studio/studio-app-scenic-3d-converter.png",
+    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-scenic-3d-converter.png",
     href: "/studio/apps/scenic-3d-converter",
     category: "Utility",
     cta: "Open tool",
@@ -26,7 +26,7 @@ const apps = [
     title: "Scale Calculator",
     description:
       "Convert between architectural and model scales for drafting, model building, and production workflow.",
-    image: "/assets/studio/studio-app-scale-calculator.png",
+    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-scale-calculator.png",
     href: "/studio/apps/scale-calculator",
     category: "Calculator",
     cta: "Launch app",
@@ -35,7 +35,7 @@ const apps = [
     title: "Dimension Reference",
     description:
       "Quick reference for standard dimensions and unit conversions in scenic and production design.",
-    image: "/assets/studio/studio-app-dimension-reference.png",
+    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-dimension-reference.png",
     href: "/studio/apps/dimension-reference",
     category: "Reference",
     cta: "Open reference",
@@ -44,7 +44,7 @@ const apps = [
     title: "Rosco Paint Calculator",
     description:
       "Professional scenic paint mixing calculator for Rosco Off-Broadway paints and color matching workflows.",
-    image: "/assets/studio/studio-app-rosco-paint-calculator.png",
+    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-rosco-paint-calculator.png",
     href: "/studio/apps/rosco-paint-calculator",
     category: "Calculator",
     cta: "Launch app",
@@ -59,7 +59,7 @@ const studioLinks = [
     imageTitle: "Articles",
     description: "Process notes, scenic design practice, drafting decisions, and production-facing writing.",
     cta: "Read articles",
-    image: "/assets/studio/studio-articles-cover.png",
+    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-articles-cover.png",
   },
   {
     title: "Tutorials",
@@ -68,7 +68,7 @@ const studioLinks = [
     imageTitle: "Tutorials",
     description: "Walkthroughs for drafting, rendering, and workflow built for scenic designers.",
     cta: "Watch tutorials",
-    image: "/assets/studio/studio-tutorials-cover.png",
+    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-tutorials-cover.png",
   },
   {
     title: "Scenic Directory",
@@ -77,7 +77,7 @@ const studioLinks = [
     imageTitle: "Scenic Directory",
     description: "A curated shelf of resources, archives, organizations, and research references.",
     cta: "Browse directory",
-    image: "/assets/studio/studio-directory-cover.png",
+    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-directory-cover.png",
   },
 ] as const;
 

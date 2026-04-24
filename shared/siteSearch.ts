@@ -319,7 +319,7 @@ function createProfileEntries() {
       description:
         "Production history, collaborators, teaching, and the broader professional record across theatre and related work.",
       meta: "Resume • Credits",
-      imageUrl: resolveBlobMediaUrl("/assets/about/about-resume-art.png") || "/assets/about/about-resume-art.png",
+      imageUrl: resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-resume-art.png") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-resume-art.png",
       bodyText: [
         voiceProfile.careerReality.workload,
         voiceProfile.careerReality.extensions,
@@ -344,7 +344,7 @@ function createProfileEntries() {
       description:
         "Teaching values, industry-facing classroom priorities, and how scenic design education connects to real production practice.",
       meta: "Teaching • Education",
-      imageUrl: resolveBlobMediaUrl("/assets/about/about-teaching-art.png") || "/assets/about/about-teaching-art.png",
+      imageUrl: resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-teaching-art.png") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-teaching-art.png",
       bodyText: [
         voiceProfile.teaching.philosophy,
         voiceProfile.teaching.gap,
@@ -369,7 +369,7 @@ function createProfileEntries() {
       description:
         "A concise view of Brandon's process, scenic design philosophy, collaboration values, and relationship to tools and storytelling.",
       meta: "Process • Philosophy",
-      imageUrl: resolveBlobMediaUrl("/assets/about/about-process-art.png") || "/assets/about/about-process-art.png",
+      imageUrl: resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-process-art.png") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-process-art.png",
       bodyText: [
         voiceProfile.process.startingPoint,
         voiceProfile.process.philosophy,

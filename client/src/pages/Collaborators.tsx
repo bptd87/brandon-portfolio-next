@@ -212,8 +212,8 @@ export default function Collaborators() {
                 <div className="relative aspect-square w-full">
                   <Image
                     src={
-                      resolveBlobMediaUrl("/assets/about/about-collaborators-art.png") ||
-                      "/assets/about/about-collaborators-art.png"
+                      resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-collaborators-art.png") ||
+                      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-collaborators-art.png"
                     }
                     alt="Abstract collaboration artwork"
                     fill
@@ -280,8 +280,8 @@ export default function Collaborators() {
                         <div className="relative aspect-[16/6] w-full">
                           <Image
                             src={
-                              resolveBlobMediaUrl("/assets/about/about-collaborators-art.png") ||
-                              "/assets/about/about-collaborators-art.png"
+                              resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-collaborators-art.png") ||
+                              "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-collaborators-art.png"
                             }
                             alt="Abstract collaboration artwork"
                             fill

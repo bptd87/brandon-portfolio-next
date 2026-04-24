@@ -118,7 +118,7 @@ export default function Links() {
   const [bioData] = useState<BioData>({
     name: "BRANDON PT DAVIS",
     tagline: "Scenic Designer",
-    profileImage: "/assets/studio/profile-image.jpeg",
+    profileImage: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/profile-image.jpeg",
   });
   const [displayLimit, setDisplayLimit] = useState(12);
   const [hasMore, setHasMore] = useState(true);

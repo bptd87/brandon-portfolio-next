@@ -76,17 +76,17 @@ export function GET() {
   const profileHeadshot =
     "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
   const aboutResumeArt = toAbsoluteImageUrl(
-    resolveBlobMediaUrl("/assets/about/about-resume-art.png") || "/assets/about/about-resume-art.png"
+    resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-resume-art.png") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-resume-art.png"
   );
   const aboutTeachingArt = toAbsoluteImageUrl(
-    resolveBlobMediaUrl("/assets/about/about-teaching-art.png") || "/assets/about/about-teaching-art.png"
+    resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-teaching-art.png") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-teaching-art.png"
   );
   const aboutProcessArt = toAbsoluteImageUrl(
-    resolveBlobMediaUrl("/assets/about/about-process-art.png") || "/assets/about/about-process-art.png"
+    resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-process-art.png") || "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-process-art.png"
   );
   const aboutCollaboratorsArt = toAbsoluteImageUrl(
-    resolveBlobMediaUrl("/assets/about/about-collaborators-art.png") ||
-      "/assets/about/about-collaborators-art.png"
+    resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-collaborators-art.png") ||
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-collaborators-art.png"
   );
 
   const entries = uniqueEntries([

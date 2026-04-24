@@ -22,8 +22,8 @@ import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 
 const PAGE_URL = "https://www.brandonptdavis.com/studio/apps/scenic-3d-converter";
-const PAGE_IMAGE = "https://www.brandonptdavis.com/assets/studio/scenic-3d-converter-card.webp";
-const PAGE_HERO_IMAGE = "https://www.brandonptdavis.com/assets/studio/scenic-3d-converter-hero.webp";
+const PAGE_IMAGE = "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/scenic-3d-converter-card.webp";
+const PAGE_HERO_IMAGE = "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/scenic-3d-converter-hero.webp";
 const DOWNLOAD_URL_ABS = "https://www.brandonptdavis.com/api/downloads/scenic-3d-converter";
 const PAGE_TITLE = "Scenic 3D Converter for Vectorworks (Mac) | Local Finder Quick Action";
 const PAGE_DESCRIPTION =
@@ -263,7 +263,7 @@ export default function Scenic3DConverter() {
 
               <div className="overflow-hidden rounded-[1.2rem] border border-border/18 bg-card/10">
                 <img
-                  src="/assets/studio/scenic-3d-converter-hero-art.png"
+                  src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/scenic-3d-converter-hero-art.png"
                   alt="Abstract scenic converter artwork"
                   className="aspect-[4/3] w-full object-cover"
                   loading="eager"
@@ -316,7 +316,7 @@ export default function Scenic3DConverter() {
             <AnimatedSection>
               <div className="overflow-hidden rounded-[1.1rem] border border-border/18 bg-card/10">
                 <img
-                  src="/assets/studio/scenic-3d-converter-modes-art.png"
+                  src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/scenic-3d-converter-modes-art.png"
                   alt="Abstract artwork suggesting multiple conversion paths"
                   className="aspect-[4/3] w-full object-cover"
                   loading="lazy"
@@ -445,7 +445,7 @@ export default function Scenic3DConverter() {
             <AnimatedSection delay={80}>
               <div className="overflow-hidden rounded-[1.1rem] border border-border/18 bg-card/10 xl:self-start">
                 <img
-                  src="/assets/studio/scenic-3d-converter-install-art.png"
+                  src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/scenic-3d-converter-install-art.png"
                   alt="Abstract artwork suggesting setup flow and local tooling"
                   className="aspect-[4/3] w-full object-cover"
                   loading="lazy"

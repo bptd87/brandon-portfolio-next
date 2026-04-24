@@ -80,7 +80,7 @@
   },
   {
     "type": "image",
-    "url": "/assets/articles/british-megamusical/andrew-lloyd-webber.jpg",
+    "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/british-megamusical/andrew-lloyd-webber.jpg",
     "alt": "Archival portrait of Andrew Lloyd Webber.",
     "caption": "Andrew Lloyd Webber"
   },
@@ -108,7 +108,7 @@
   },
   {
     "type": "image",
-    "url": "/assets/articles/british-megamusical/cameron-mackintosh.webp",
+    "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/british-megamusical/cameron-mackintosh.webp",
     "alt": "Archival portrait of producer Cameron Mackintosh in front of a Les Miserables sign.",
     "caption": "Cameron Mackintosh"
   },
@@ -127,7 +127,7 @@
   },
   {
     "type": "image",
-    "url": "/assets/articles/british-megamusical/boublil-schonberg.jpeg",
+    "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/british-megamusical/boublil-schonberg.jpeg",
     "alt": "Black-and-white portrait of Alain Boublil and Claude-Michel Schonberg.",
     "caption": "Alain Boublil and Claude-Michel Schonberg"
   },
@@ -270,7 +270,7 @@
   },
   {
     "type": "image",
-    "url": "/assets/articles/british-megamusical/cats-stage-design.jpg",
+    "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/british-megamusical/cats-stage-design.jpg",
     "alt": "Scenic design image from Cats showing a theatrical environment with a large moon and layered stage elements.",
     "caption": "Scenic design for Cats by John Napier"
   },

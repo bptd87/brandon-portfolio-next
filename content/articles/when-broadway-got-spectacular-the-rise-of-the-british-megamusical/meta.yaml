@@ -21,7 +21,7 @@ seoKeywords:
   - Cats musical
   - theatre spectacle
 cover:
-  asset: /assets/articles/british-megamusical/cover.webp
+  asset: https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/articles/british-megamusical/cover.webp
   alt: 'Warm cinematic megamusical cover with a chandelier, barricade imagery, and sweeping theatrical light.'
 tags:
   - broadway-history
