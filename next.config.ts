@@ -11,13 +11,14 @@ const projectRoot = fileURLToPath(new URL(".", import.meta.url));
 const nextConfig: NextConfig = {
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   typedRoutes: false,
+  outputFileTracingRoot: projectRoot,
   allowedDevOrigins: ["127.0.0.1", "localhost", "192.168.0.23"],
   images: {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1440, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 31536000,
-    qualities: [75, 82, 84],
+    qualities: [75, 80, 82, 84],
     remotePatterns: [
       {
         protocol: "https",
