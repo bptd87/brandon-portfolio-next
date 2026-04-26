@@ -5,7 +5,7 @@ import Image from "next/image";
 const isDevelopment = process.env.NODE_ENV === "development";
 
 export interface StickyShowcaseItem {
-  id: number | string;
+  id?: number | string;
   slug: string;
   title: string;
   client?: string | null;
@@ -70,7 +70,6 @@ function ShowcaseCard({
             fill
             unoptimized={isDevelopment}
             quality={82}
-            priority={eager}
             loading={eager ? "eager" : "lazy"}
             fetchPriority={fetchPriority}
             sizes={sizes}
@@ -114,7 +113,7 @@ export function StickyShowcase({
   title,
 }: StickyShowcaseProps) {
   const desktopItems = railItems.slice(0, 3);
-  const mobileItems = [featuredItem, ...railItems, ...(continuationItems || [])];
+  const mobileItems = [featuredItem, ...railItems];
   const stageRef = useRef<HTMLDivElement | null>(null);
   const leadSlotRef = useRef<HTMLDivElement | null>(null);
   const leadMediaRef = useRef<HTMLDivElement | null>(null);
@@ -335,7 +334,6 @@ export function StickyShowcase({
                       alt={itemAlt(featuredItem.title)}
                       fill
                       quality={84}
-                      priority
                       fetchPriority="high"
                       sizes="(max-width: 1024px) 100vw, 66vw"
                       className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"

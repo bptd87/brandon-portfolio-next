@@ -15,7 +15,7 @@ import {
   sortScenicProjectsChronologically,
   splitScenicShowcaseProjects,
 } from "@/lib/scenicShowcase";
-import type { LocalScenicProject } from "@shared/localScenicProjects";
+import type { ScenicProjectSummary } from "@shared/scenicProjectSummaries";
 import { getConfiguredSiteUrl } from "../../../lib/env/site";
 
 const homeLandingCopy = {
@@ -29,7 +29,7 @@ const SITE_URL = getConfiguredSiteUrl();
 const PROFILE_IMAGE_URL =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
 
-export default function Home({ initialProjects }: { initialProjects: LocalScenicProject[] }) {
+export default function Home({ initialProjects }: { initialProjects: ScenicProjectSummary[] }) {
   const [, setLocation] = useLocation();
   const projects = sortScenicProjectsChronologically(initialProjects);
   const projectsLoading = false;

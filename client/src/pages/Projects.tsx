@@ -32,7 +32,7 @@ import {
   scenicPortfolioLandingCopy,
   scenicShowcaseProps,
 } from "@/lib/scenicShowcase";
-import type { LocalScenicProject } from "@shared/localScenicProjects";
+import type { ScenicProjectSummary } from "@shared/scenicProjectSummaries";
 
 type SortKey = "newest" | "oldest" | "title" | "venue";
 type ViewMode = "grid" | "list";
@@ -66,34 +66,8 @@ const formatProjectDate = (project: any) => {
 
 const isNonEmptyString = (value: string | null | undefined): value is string => Boolean(value);
 
-const getDirectorLabel = (project: any) => {
-  let team: any = project.creativeTeam;
-
-  try {
-    if (typeof team === "string") {
-      team = JSON.parse(team);
-    }
-  } catch {
-    team = null;
-  }
-
-  if (Array.isArray(team)) {
-    const director = team.find((member) => {
-      const role = String(member?.role || "").toLowerCase();
-      return role === "director" || role.includes("director");
-    });
-
-    return director?.name ? `Dir. ${director.name}` : null;
-  }
-
-  if (team && typeof team === "object") {
-    const directorName = team.director;
-    return typeof directorName === "string" && directorName.trim()
-      ? `Dir. ${directorName.trim()}`
-      : null;
-  }
-
-  return null;
+const getDirectorLabel = (project: ScenicProjectSummary) => {
+  return project.directorName ? `Dir. ${project.directorName}` : null;
 };
 
 function ProjectCard({
@@ -153,7 +127,11 @@ function ProjectCard({
   );
 }
 
-export default function Projects({ initialProjects }: { initialProjects: LocalScenicProject[] }) {
+export default function Projects({
+  initialProjects,
+}: {
+  initialProjects: ScenicProjectSummary[];
+}) {
   const [, setLocation] = useLocation();
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>("all");
   const [selectedVenue, setSelectedVenue] = useState<string>("all");
