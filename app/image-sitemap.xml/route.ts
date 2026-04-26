@@ -1,15 +1,12 @@
 import { buildImageSitemap, xmlResponse } from "../../lib/seo/xml";
 import { absoluteUrl } from "../../lib/metadata";
-import { getLocalArticles } from "../../shared/localArticles";
 import { resolveBlobMediaUrl } from "../../shared/mediaBlob";
-import { assistantScenicDesignEntries } from "../../shared/localAssistantScenic";
 import {
   getLocalExperientialMediaItems,
   getLocalExperientialProjects,
   getLocalRenderingProjects,
 } from "../../shared/localPortfolios";
 import { getLocalScenicProjects } from "../../shared/localScenicProjects";
-import { getLocalTutorials } from "../../shared/localStudio";
 
 export const dynamic = "force-static";
 
@@ -39,39 +36,6 @@ function toAbsoluteImageUrl(url: string) {
   return url;
 }
 
-function articleBodyImages(article: ReturnType<typeof getLocalArticles>[number]): ImageEntry[] {
-  if (!Array.isArray(article.content)) return [];
-
-  const images: ImageEntry[] = [];
-
-  for (const block of article.content) {
-    if (!block || typeof block !== "object") continue;
-
-    if (typeof block.url === "string" && block.url) {
-      images.push({
-        pathname: `/articles/${article.slug}`,
-        imageUrl: toAbsoluteImageUrl(block.url),
-        title: article.title,
-        caption: block.caption || block.alt || article.excerpt,
-      });
-    }
-
-    if (Array.isArray(block.images)) {
-      for (const image of block.images) {
-        if (!image || typeof image !== "object" || typeof image.url !== "string" || !image.url) continue;
-        images.push({
-          pathname: `/articles/${article.slug}`,
-          imageUrl: toAbsoluteImageUrl(image.url),
-          title: article.title,
-          caption: image.caption || image.alt || article.excerpt,
-        });
-      }
-    }
-  }
-
-  return images;
-}
-
 export function GET() {
   const profileHeadshot =
     "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
@@ -88,8 +52,25 @@ export function GET() {
     resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-collaborators-art.png") ||
       "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-collaborators-art.png"
   );
+  const portfolioHomepageImages = getLocalScenicProjects()
+    .filter((project) => project.coverImageUrl)
+    .sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)))
+    .slice(0, 8)
+    .map((project) => ({
+      pathname: "/",
+      imageUrl: toAbsoluteImageUrl(project.coverImageUrl!),
+      title: "Brandon PT Davis Scenic Design Portfolio",
+      caption: `${project.title} scenic design by Brandon PT Davis.`,
+    }));
 
   const entries = uniqueEntries([
+    {
+      pathname: "/",
+      imageUrl: toAbsoluteImageUrl("/og-default.jpeg"),
+      title: "Brandon PT Davis Scenic Designer Portfolio",
+      caption: "Selected scenic design, rendering, and experiential design work by Brandon PT Davis.",
+    },
+    ...portfolioHomepageImages,
     {
       pathname: "/about",
       imageUrl: profileHeadshot,
@@ -120,20 +101,6 @@ export function GET() {
       title: "Collaborators",
       caption: "Collaborators page artwork for Brandon PT Davis.",
     },
-    ...getLocalArticles()
-      .flatMap((article) => [
-        ...(article.coverImageUrl
-          ? [
-              {
-                pathname: `/articles/${article.slug}`,
-                imageUrl: toAbsoluteImageUrl(article.coverImageUrl),
-                title: article.title,
-                caption: article.coverImageAlt || article.excerpt,
-              },
-            ]
-          : []),
-        ...articleBodyImages(article),
-      ]),
     ...getLocalScenicProjects().flatMap((project) => [
       ...(project.coverImageUrl
         ? [
@@ -178,7 +145,7 @@ export function GET() {
         ? [
             {
               pathname: `/projects/experiential/${project.slug}`,
-                imageUrl: toAbsoluteImageUrl(project.coverImageUrl),
+              imageUrl: toAbsoluteImageUrl(project.coverImageUrl),
               title: project.title,
               caption: project.summary || project.seoDescription,
             },
@@ -193,22 +160,6 @@ export function GET() {
         }))
       ),
     ]),
-    ...assistantScenicDesignEntries
-      .filter((entry) => entry.coverImageUrl)
-      .map((entry) => ({
-        pathname: "/assistant-scenic-design",
-        imageUrl: toAbsoluteImageUrl(entry.coverImageUrl),
-        title: entry.title,
-        caption: [entry.organization, entry.collaborator, entry.date.slice(0, 4)].filter(Boolean).join(" · "),
-      })),
-    ...getLocalTutorials()
-      .filter((tutorial) => tutorial.cover_image)
-      .map((tutorial) => ({
-        pathname: `/studio/tutorials/${tutorial.slug}`,
-        imageUrl: toAbsoluteImageUrl(String(tutorial.cover_image)),
-        title: tutorial.title,
-        caption: tutorial.description || tutorial.overview || tutorial.seo_description || tutorial.title,
-      })),
   ]);
 
   return xmlResponse(buildImageSitemap(entries));

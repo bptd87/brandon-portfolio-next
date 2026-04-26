@@ -6,7 +6,7 @@ import { getLocalScenicProjects } from "../shared/localScenicProjects";
 export const dynamic = "force-static";
 
 export const metadata = buildPageMetadata({
-  title: "Scenic Designer for Theatre, Rendering, and Experiential Work",
+  title: "Brandon PT Davis | Scenic Designer Portfolio",
   description:
     "Brandon PT Davis is a scenic designer creating theatre environments, concept renderings, and experiential design work for regional productions, universities, and branded spaces.",
   pathname: "/",

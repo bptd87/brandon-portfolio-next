@@ -26,6 +26,8 @@ const homeLandingCopy = {
 } as const;
 
 const SITE_URL = getConfiguredSiteUrl();
+const PROFILE_IMAGE_URL =
+  "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
 
 export default function Home({ initialProjects }: { initialProjects: LocalScenicProject[] }) {
   const [, setLocation] = useLocation();
@@ -91,7 +93,7 @@ export default function Home({ initialProjects }: { initialProjects: LocalScenic
           name: "Brandon PT Davis",
           jobTitle: "Scenic Designer",
           url: SITE_URL,
-          image: "https://www.brandonptdavis.com/android-chrome-512x512.png",
+          image: PROFILE_IMAGE_URL,
           description:
             "Union scenic designer based in Southern California with 130+ production credits across regional theatre, summer stock, and academic stages. Member of USA 829.",
           email: "info@brandonptdavis.com",
@@ -135,7 +137,7 @@ export default function Home({ initialProjects }: { initialProjects: LocalScenic
         organization={{
           name: "Brandon PT Davis Design",
           url: SITE_URL,
-          image: "https://www.brandonptdavis.com/android-chrome-512x512.png",
+          image: "https://www.brandonptdavis.com/og-default.jpeg",
           description:
             "Scenic design studio focused on story-driven environments for regional theatre, summer stock, and academic production.",
           founder: {
