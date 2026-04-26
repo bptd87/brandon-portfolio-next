@@ -1,0 +1,24 @@
+# Local-only environment files. Vercel should receive env vars from the
+# project dashboard, not from files uploaded by the CLI.
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# Local build/cache output
+.next
+dist
+build
+.cache
+
+# Dependencies and tool state
+node_modules
+.pnpm-store
+.vercel
+
+# Editor, OS, and logs
+.DS_Store
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
