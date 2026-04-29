@@ -21,7 +21,7 @@ export function GET() {
       description: tutorial.description || tutorial.overview || tutorial.seo_description || tutorial.title,
       thumbnailUrl: String(tutorial.cover_image),
       playerUrl: toYouTubeEmbedUrl(String(tutorial.video_url)),
-      publishedAt: tutorial.updated_at || tutorial.created_at,
+      publishedAt: tutorial.published_at || tutorial.created_at || tutorial.updated_at,
     }));
 
   return xmlResponse(buildVideoSitemap(entries));

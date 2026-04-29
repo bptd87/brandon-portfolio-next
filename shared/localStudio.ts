@@ -3,6 +3,10 @@ import {
   generatedLocalStudioDirectory,
   generatedLocalTutorials,
 } from "./localStudio.generated";
+import {
+  LEARNING_TUTORIAL_METADATA_BY_SLUG,
+  type LearningPortalTag,
+} from "./learningPortal";
 import { applyBlobMediaManifest } from "./mediaBlob";
 
 export type LocalTutorialResource = {
@@ -25,6 +29,7 @@ export type LocalTutorial = {
   difficulty?: string | null;
   duration?: number | string | null;
   created_at?: string | null;
+  published_at?: string | null;
   updated_at?: string | null;
   status?: string | null;
   featured?: boolean;
@@ -43,6 +48,7 @@ export type LocalTutorial = {
   overview?: string | null;
   video_url?: string | null;
   cover_image?: string | null;
+  tags?: LearningPortalTag[];
 };
 
 export type LocalCollaborator = {
@@ -134,11 +140,140 @@ const manualCollaborators: LocalCollaborator[] = [
 const normalizeYouTubeThumbnail = (value?: string | null) =>
   typeof value === "string" ? value.replace("/maxresdefault.jpg", "/hqdefault.jpg") : value;
 
-export function getLocalTutorials() {
-  return applyBlobMediaManifest(generatedLocalTutorials as LocalTutorial[]).map((tutorial) => ({
+const tutorialMetadataOverrides: Record<string, Partial<LocalTutorial>> = {
+  "2d-edit-modify-tricks": {
+    key_concepts: [
+      {
+        title: "MIRROR TOOL",
+        content:
+          "Creates mirrored geometry across a user-defined axis. Standard mode moves the selected object to the mirrored position, while Duplicate mode creates a reflected copy and leaves the original in place.",
+      },
+      {
+        title: "RESHAPE TOOL",
+        content:
+          "Edits polygon geometry directly through Move Polygon Handles, Move Edges Parallel, Add Vertex, and Delete Vertex modes. It is the main tool for adjusting existing 2D shapes without redrawing them.",
+      },
+      {
+        title: "OFFSET TOOL",
+        content:
+          "Creates parallel geometry from a selected object. Offset Distance uses a numerical value, while Offset by Points places the offset visually. The Tool bar controls whether the original is moved or duplicated.",
+      },
+      {
+        title: "SPLIT TOOL",
+        content:
+          "Divides selected 2D or 3D objects with Line Split, Point Split, or Trim mode. The mode determines whether the tool cuts along a drawn line, a point, or removes geometry in a chosen direction.",
+      },
+      {
+        title: "CONNECT/COMBINE TOOL",
+        content:
+          "Extends, connects, or combines linework depending on the selected Tool bar mode. The important decision is whether the result should remain separate line segments or become a single joined object.",
+      },
+      {
+        title: "ADD, CLIP, AND INTERSECT SURFACE",
+        content:
+          "Modify menu commands that use overlapping 2D polygons to create a new 2D shape. Add Surface merges selected shapes, Clip Surface removes one shape from another, and Intersect Surface keeps the overlapping region.",
+      },
+      {
+        title: "DUPLICATE ALONG PATH",
+        content:
+          "Edit menu command that distributes copies of an object along a straight or curved path with controls for number, fixed distance, offset, centering, and tangency.",
+      },
+    ],
+  },
+  "understanding-symbols": {
+    description:
+      "Learn how 2D symbols behave in Vectorworks, including Resource Manager color coding, placed instances, grouped symbols, page-based symbols, scaling, and symbol definition edits.",
+    learning_objectives: [
+      "Identify standard, grouped, and page-based 2D symbols in the Resource Manager",
+      "Create a symbol from 2D geometry using Modify > Create Symbol or the keyboard shortcut",
+      "Understand how a placed symbol instance differs from the stored symbol definition",
+      "Scale one symbol instance from the Object Info palette without changing the definition",
+      "Edit a symbol definition to update linked instances",
+      "Recognize when a grouped symbol converts to an independent group after placement",
+    ],
+    key_concepts: [
+      {
+        title: "2D SYMBOL",
+        content:
+          "A reusable symbol made from 2D geometry. The Resource Manager marks these symbols with a small 2, and the tutorial uses simple square symbols to demonstrate placement, scaling, and editing behavior.",
+      },
+      {
+        title: "SYMBOL INSTANCE",
+        content:
+          "A placed occurrence of a symbol in the drawing. Scaling an instance from the Object Info palette changes that placement, but it does not rewrite the symbol definition.",
+      },
+      {
+        title: "SYMBOL DEFINITION",
+        content:
+          "The stored source geometry behind linked symbol instances. Editing the definition changes linked instances together, which is why definition edits should be intentional.",
+      },
+      {
+        title: "GROUPED SYMBOL",
+        content:
+          "A symbol shown in blue in the Resource Manager. When placed, it converts into a group, so editing one placed group does not update another placed group.",
+      },
+      {
+        title: "PAGE-BASED SYMBOL",
+        content:
+          "A symbol shown in green in the Resource Manager. It responds to page scale and is useful for documentation graphics that need to stay readable on sheets.",
+      },
+    ],
+  },
+  "understanding-classes": {
+    related_tutorials: [
+      {
+        slug: "navigating-user-interface",
+        title: "Vectorworks Tutorial: Navigating the User Interface",
+      },
+      {
+        slug: "understanding-design-layers",
+        title: "Vectorworks Tutorial: Understanding Design Layers",
+      },
+      {
+        slug: "basics-tool-palette",
+        title: "Vectorworks Tutorial: Basics Tool Palette",
+      },
+    ],
+  },
+  "navigating-user-interface": {
+    related_tutorials: [
+      {
+        slug: "understanding-classes",
+        title: "Vectorworks Tutorial: Understanding Classes",
+      },
+      {
+        slug: "basics-tool-palette",
+        title: "Vectorworks Tutorial: Basics Tool Palette",
+      },
+      {
+        slug: "understanding-design-layers",
+        title: "Vectorworks Tutorial: Understanding Design Layers",
+      },
+    ],
+  },
+};
+
+const applyTutorialMetadataOverride = (tutorial: LocalTutorial): LocalTutorial => {
+  const articleMetadata = LEARNING_TUTORIAL_METADATA_BY_SLUG[tutorial.slug];
+  const override = tutorialMetadataOverrides[tutorial.slug];
+  if (!articleMetadata && !override) return tutorial;
+
+  return {
     ...tutorial,
-    cover_image: normalizeYouTubeThumbnail(tutorial.cover_image),
-  }));
+    ...articleMetadata,
+    ...override,
+    cover_image: override?.cover_image ?? tutorial.cover_image,
+    tags: override?.tags ?? articleMetadata?.tags ?? tutorial.tags,
+  };
+};
+
+export function getLocalTutorials() {
+  return applyBlobMediaManifest(generatedLocalTutorials as LocalTutorial[]).map((tutorial) =>
+    applyTutorialMetadataOverride({
+      ...tutorial,
+      cover_image: normalizeYouTubeThumbnail(tutorial.cover_image),
+    })
+  );
 }
 
 export function getLocalTutorialBySlug(slug?: string | null) {

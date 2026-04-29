@@ -10,6 +10,10 @@ import {
   getLocalArticles,
 } from "../../../shared/localArticles";
 import { resolveLegacyArticlePath } from "../../../shared/legacyRedirects";
+import {
+  LEARNING_PORTAL_ARTICLE_SLUG_SET,
+  RETIRED_LEARNING_ARTICLE_REDIRECTS,
+} from "../../../shared/learningPortal";
 
 type ArticlePageProps = {
   params: Promise<{
@@ -52,6 +56,16 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 
 export default async function Page({ params }: ArticlePageProps) {
   const { slug } = await params;
+  const retiredRedirect = RETIRED_LEARNING_ARTICLE_REDIRECTS[slug];
+
+  if (retiredRedirect) {
+    permanentRedirect(retiredRedirect);
+  }
+
+  if (LEARNING_PORTAL_ARTICLE_SLUG_SET.has(slug)) {
+    permanentRedirect(`/studio/tutorials/${slug}`);
+  }
+
   const article = getLocalArticleRecordBySlug(slug);
 
   if (!article) {

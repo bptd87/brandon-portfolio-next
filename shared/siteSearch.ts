@@ -1,4 +1,8 @@
 import { getLocalArticles } from "./localArticles";
+import {
+  LEARNING_PORTAL_ARTICLE_SLUG_SET,
+  RETIRED_LEARNING_ARTICLE_SLUG_SET,
+} from "./learningPortal";
 import { resolveBlobMediaUrl } from "./mediaBlob";
 import {
   assistantScenicDesignEntries,
@@ -540,30 +544,34 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
     })
   );
 
-  const articleEntries = getLocalArticles().map((article) =>
-    createEntry({
-      id: `article:${article.slug}`,
-      title: article.title,
-      href: `/articles/${article.slug}`,
-      section: "Writing",
-      kind: "Article",
-      description: article.excerpt,
-      meta: [article.categoryName, article.sourcePublication].filter(Boolean).join(" • "),
-      imageUrl: article.coverImageUrl,
-      featured: article.featured,
-      bodyText: extractArticleBodyText(article.content),
-      keywords: [
-        article.title,
-        article.slug,
-        article.excerpt,
-        article.categoryName,
-        article.seoTitle,
-        article.seoDescription,
-        article.sourcePublication,
-        ...(article.tags || []).flatMap((tag) => [tag.name, tag.slug]),
-      ],
-    })
-  );
+  const articleEntries = getLocalArticles()
+    .filter((article) => !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(article.slug))
+    .map((article) =>
+      createEntry({
+        id: `article:${article.slug}`,
+        title: article.title,
+        href: LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug)
+          ? `/studio/tutorials/${article.slug}`
+          : `/articles/${article.slug}`,
+        section: "Writing",
+        kind: LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug) ? "Learning Article" : "Article",
+        description: article.excerpt,
+        meta: [article.categoryName, article.sourcePublication].filter(Boolean).join(" • "),
+        imageUrl: article.coverImageUrl,
+        featured: article.featured,
+        bodyText: extractArticleBodyText(article.content),
+        keywords: [
+          article.title,
+          article.slug,
+          article.excerpt,
+          article.categoryName,
+          article.seoTitle,
+          article.seoDescription,
+          article.sourcePublication,
+          ...(article.tags || []).flatMap((tag) => [tag.name, tag.slug]),
+        ],
+      })
+    );
 
   const tutorialEntries = getLocalTutorials().map((tutorial) =>
     createEntry({
@@ -586,6 +594,7 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
         ...(tutorial.key_concepts || []).flatMap((concept) => [concept.title, concept.content]),
         ...(tutorial.pro_tips || []),
         ...(tutorial.related_resources || []).flatMap((resource) => [resource.title, resource.type]),
+        ...(tutorial.tags || []).flatMap((tag) => [tag.name, tag.slug]),
       ],
     })
   );

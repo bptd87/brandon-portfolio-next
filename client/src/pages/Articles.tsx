@@ -24,6 +24,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  LEARNING_PORTAL_ARTICLE_SLUG_SET,
+  RETIRED_LEARNING_ARTICLE_SLUG_SET,
+} from "@shared/learningPortal";
 import { getLocalArticles } from "@shared/localArticles";
 
 type ArticleCardItem = {
@@ -154,18 +158,21 @@ export default function Articles() {
 
   const allArticles = useMemo<ArticleCardItem[]>(
     () =>
-      getLocalArticles().map((article) => ({
-        id: article.id,
-        slug: article.slug,
-              title: decodeHTMLEntities(article.title),
-              excerpt: article.excerpt,
-              coverImageUrl: article.coverImageUrl,
-              coverImageAlt: article.coverImageAlt,
-              publishedAt: article.publishedAt,
-        createdAt: article.createdAt,
-        readTime: article.readTime,
-        categoryName: normalizeCategoryParam(article.categoryName || null),
-      })),
+      getLocalArticles()
+        .filter((article) => !LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug))
+        .filter((article) => !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(article.slug))
+        .map((article) => ({
+          id: article.id,
+          slug: article.slug,
+          title: decodeHTMLEntities(article.title),
+          excerpt: article.excerpt,
+          coverImageUrl: article.coverImageUrl,
+          coverImageAlt: article.coverImageAlt,
+          publishedAt: article.publishedAt,
+          createdAt: article.createdAt,
+          readTime: article.readTime,
+          categoryName: normalizeCategoryParam(article.categoryName || null),
+        })),
     []
   );
 

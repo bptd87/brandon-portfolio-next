@@ -5,7 +5,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ProgressiveImage } from '@/components/ProgressiveImage';
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { proxyImageUrl } from "@/lib/imageProxy";
 import { Sparkles, Copy, Check, ChevronLeft, ChevronRight, Link as LinkIcon, Play, Pause } from "lucide-react";
@@ -16,6 +15,10 @@ import { toast } from "sonner";
 import { SEO } from "@/components/SEO";
 import { formatUtcDate } from "@/lib/date-format";
 import { getLocalArticleRecordBySlug, getLocalArticles } from "@shared/localArticles";
+import {
+  LEARNING_PORTAL_ARTICLE_SLUG_SET,
+  RETIRED_LEARNING_ARTICLE_SLUG_SET,
+} from "@shared/learningPortal";
 import { getLocalScenicProjectBySlug } from "@shared/localScenicProjects";
 import DeferredYouTubeEmbed from "@/components/DeferredYouTubeEmbed";
 
@@ -605,7 +608,13 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
   const relatedCandidates = getLocalArticles()
     .map((candidate) => getLocalArticleRecordBySlug(candidate.slug))
     .filter((candidate): candidate is NonNullable<typeof article> => Boolean(candidate))
-    .filter((candidate) => candidate.id !== article.id);
+    .filter((candidate) => candidate.id !== article.id)
+    .filter((candidate) => !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(candidate.slug))
+    .filter(
+      (candidate) =>
+        LEARNING_PORTAL_ARTICLE_SLUG_SET.has(candidate.slug) ===
+        LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug)
+    );
 
   const sameSeries = article.series
     ? relatedCandidates.filter((candidate) => candidate.series?.slug === article.series?.slug)
@@ -628,6 +637,9 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
   const articleDescription =
     article.excerpt ||
     `${article.title} by Brandon PT Davis on scenic design, production thinking, and visual storytelling.`;
+  const isLearningPortalArticle = LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug);
+  const articleBasePath = isLearningPortalArticle ? "/studio/tutorials" : "/articles";
+  const articleUrl = `https://www.brandonptdavis.com${articleBasePath}/${article.slug}`;
 
   return (
     <div className="min-h-screen bg-background">
@@ -641,7 +653,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
         publishedTime={article.publishedAt ? new Date(article.publishedAt).toISOString() : undefined}
         modifiedTime={article.updatedAt ? new Date(article.updatedAt).toISOString() : undefined}
         keywords={articleKeywords}
-        url={`https://www.brandonptdavis.com/articles/${article.slug}`}
+        url={articleUrl}
       />
       <Header />
       <article className="py-12 md:py-16">
@@ -653,7 +665,11 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
               </time>
               {article.categoryName ? (
                 <Link
-                  href={`/articles?category=${encodeURIComponent(article.categoryName)}`}
+                  href={
+                    isLearningPortalArticle
+                      ? "/studio/tutorials"
+                      : `/articles?category=${encodeURIComponent(article.categoryName)}`
+                  }
                   className="transition-colors hover:text-white"
                 >
                   {article.categoryName}
@@ -1176,16 +1192,17 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
               {/* Tags Section */}
               {article.tags && article.tags.length > 0 && (
                 <div className="mx-auto mt-16 max-w-[54rem] border-t border-white/12 pt-12">
-                  <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white/48">Tagged With</h3>
+                  <h3 className="mb-4 font-sans text-[0.95rem] font-semibold uppercase tracking-[0.18em] text-white/48">
+                    Tagged With
+                  </h3>
                   <div className="flex flex-wrap gap-2">
                     {article.tags.map((tag: any) => (
-                      <Badge
+                      <span
                         key={tag.id}
-                        variant="outline"
-                        className="text-sm font-normal px-4 py-2 rounded-full"
+                        className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-[0.86rem] font-normal leading-none tracking-[-0.01em] text-white/64"
                       >
                         {tag.name}
-                      </Badge>
+                      </span>
                     ))}
                   </div>
                 </div>
@@ -1297,14 +1314,17 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
                     {article.series ? `More in ${article.series.name}` : "Keep reading"}
                   </h2>
                 </div>
-                <Link href="/articles" className="text-base text-white/72 transition-colors hover:text-white">
+                <Link
+                  href={articleBasePath}
+                  className="text-base text-white/72 transition-colors hover:text-white"
+                >
                   View all
                 </Link>
               </div>
 
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
                 {related.slice(0, 3).map((relatedArticle) => (
-                  <Link key={relatedArticle.id} href={`/articles/${relatedArticle.slug}`}>
+                  <Link key={relatedArticle.id} href={`${articleBasePath}/${relatedArticle.slug}`}>
                     <div className="group h-full cursor-pointer transition-all duration-300 hover:-translate-y-0.5">
                       {relatedArticle.coverImageUrl && (
                         <div className="aspect-square overflow-hidden rounded-xl bg-white/[0.02]">

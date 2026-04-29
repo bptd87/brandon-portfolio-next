@@ -5,6 +5,10 @@ import { SEO } from "@/components/SEO";
 import { formatUtcDate } from "@/lib/date-format";
 import { getProjectPath } from "@/lib/projectRoutes";
 import { getLocalArticles } from "@shared/localArticles";
+import {
+  LEARNING_PORTAL_ARTICLE_SLUG_SET,
+  RETIRED_LEARNING_ARTICLE_SLUG_SET,
+} from "@shared/learningPortal";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
 import { ArrowLeft, Briefcase, FileText } from "lucide-react";
 import { Link } from "wouter";
@@ -69,6 +73,7 @@ export default function TagDetail({ slug: slugProp, params }: TagDetailProps = {
     .sort((a, b) => getContentTimestamp(b) - getContentTimestamp(a));
 
   const articles = getLocalArticles()
+    .filter((article) => !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(article.slug))
     .filter((article) => (article.tags || []).some((tag) => tag.slug === normalizedSlug))
     .sort((a, b) => getContentTimestamp(b) - getContentTimestamp(a));
 
@@ -224,7 +229,15 @@ export default function TagDetail({ slug: slugProp, params }: TagDetailProps = {
 
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                   {articles.map((article) => (
-                    <Link key={article.id} href={`/articles/${article.slug}`} className="group block border-t border-white/10 pt-4">
+                    <Link
+                      key={article.id}
+                      href={
+                        LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug)
+                          ? `/studio/tutorials/${article.slug}`
+                          : `/articles/${article.slug}`
+                      }
+                      className="group block border-t border-white/10 pt-4"
+                    >
                       <div className="space-y-3">
                         <h3 className="font-sans text-[1.45rem] font-medium leading-[1.02] tracking-[-0.04em] text-foreground transition-colors group-hover:text-foreground/84">
                           {article.title}

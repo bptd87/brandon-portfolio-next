@@ -111,8 +111,8 @@ related_tutorials:
     title: 'Vectorworks Tutorial: Navigating the User Interface'
   - slug: understanding-design-layers
     title: 'Vectorworks Tutorial: Understanding Design Layers'
-  - slug: basic-2d-tools
-    title: 'Vectorworks 4: Basic 2D Tools'
+  - slug: basics-tool-palette
+    title: 'Vectorworks Tutorial: Basics Tool Palette'
 overview: >-
   This tutorial introduces classes as one of the most important organizational tools in Vectorworks. You'll learn how
   classes control graphic attributes, textures, and visibility—allowing you to show or hide specific elements of a

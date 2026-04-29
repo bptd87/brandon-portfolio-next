@@ -9,7 +9,6 @@ import {
   ChevronDown,
   LayoutGrid,
   List,
-  PlayCircle,
   Search,
   SlidersHorizontal,
 } from "lucide-react";
@@ -18,6 +17,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { formatUtcDate } from "@/lib/date-format";
 import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
@@ -26,6 +26,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  LEARNING_PORTAL_ARTICLE_CATEGORY_BY_SLUG,
+  LEARNING_PORTAL_ARTICLE_SLUG_SET,
+  type LearningPortalTag,
+} from "@shared/learningPortal";
+import { getLocalArticles } from "@shared/localArticles";
 import { getLocalTutorials } from "@shared/localStudio";
 
 type SortKey = "newest" | "alphabetical" | "duration";
@@ -40,8 +46,40 @@ type TutorialCardItem = {
   duration?: string | number | null;
   category?: string | null;
   difficulty?: string | null;
+  publishedAt?: string | null;
   createdAt?: string | null;
   updatedAt?: string | null;
+  tags?: LearningPortalTag[];
+};
+
+type LearningArticleItem = {
+  id: number | string;
+  slug: string;
+  title: string;
+  excerpt?: string | null;
+  coverImageUrl?: string | null;
+  coverImageAlt?: string | null;
+  publishedAt?: string | Date | null;
+  createdAt?: string | Date | null;
+  readTime?: number | null;
+  categoryName?: string | null;
+  tags?: LearningPortalTag[];
+};
+
+type LearningCardItem = {
+  id: string;
+  title: string;
+  summary: string;
+  href: string;
+  coverImageUrl?: string | null;
+  coverImageAlt: string;
+  categoryLabel: string;
+  difficultyLabel?: string | null;
+  metaLabel: string;
+  tags: LearningPortalTag[];
+  searchableText: string;
+  timestamp: number;
+  durationSort: number;
 };
 
 const CATEGORY_LABELS = [
@@ -59,7 +97,7 @@ const DIFFICULTY_LABELS = [
 
 const SORT_OPTIONS: Array<{ key: SortKey; label: string }> = [
   { key: "newest", label: "Newest first" },
-  { key: "alphabetical", label: "Tutorial title" },
+  { key: "alphabetical", label: "Article title" },
   { key: "duration", label: "Longest first" },
 ];
 
@@ -125,7 +163,16 @@ const getTutorialSummary = (tutorial: TutorialCardItem) => {
 };
 
 const getTutorialTimestamp = (tutorial: TutorialCardItem) =>
-  new Date(tutorial.updatedAt || tutorial.createdAt || 0).getTime();
+  new Date(tutorial.publishedAt || tutorial.createdAt || tutorial.updatedAt || 0).getTime();
+
+const getArticleTimestamp = (article: LearningArticleItem) =>
+  new Date(article.publishedAt || article.createdAt || 0).getTime();
+
+const formatLearningDate = (date: string | Date | null | undefined) =>
+  formatUtcDate(date, "short");
+
+const getTagNames = (tags: LearningPortalTag[] | null | undefined) =>
+  (tags || []).map((tag) => tag.name).filter(Boolean);
 
 const formatDuration = (duration: TutorialCardItem["duration"]) => {
   if (!duration) return "10 min";
@@ -142,6 +189,9 @@ const formatDuration = (duration: TutorialCardItem["duration"]) => {
   return `${Math.max(1, Math.floor(Number(duration) / 60))} min`;
 };
 
+const formatReadTime = (readTime: LearningArticleItem["readTime"]) =>
+  `${Math.max(1, Number(readTime || 5))} min read`;
+
 const getTutorialCoverImage = (tutorial: TutorialCardItem) => {
   const category = normalizeToken(tutorial.category);
   const variants =
@@ -155,42 +205,97 @@ const getTutorialCoverImage = (tutorial: TutorialCardItem) => {
   };
 };
 
-function TutorialGridCard({
-  tutorial,
-  href,
-}: {
-  tutorial: TutorialCardItem;
-  href: string;
-}) {
-  const cover = getTutorialCoverImage(tutorial);
-  const metadata = [
-    getCategoryLabel(tutorial.category),
-    getDifficultyLabel(tutorial.difficulty),
-    formatDuration(tutorial.duration),
-  ]
-    .filter(Boolean)
-    .join(" · ");
+function LearningGridCard({ item, eager }: { item: LearningCardItem; eager?: boolean }) {
+  const visibleTags = item.tags.slice(0, 3);
 
   return (
-    <a href={href} className="group block">
-      <div className="group">
-        <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-background/50">
+    <a href={item.href} className="group block">
+      <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-background/50">
+        {item.coverImageUrl ? (
           <Image
-            src={cover.src}
-            alt={cover.alt}
+            src={item.coverImageUrl}
+            alt={item.coverImageAlt}
             fill
-            quality={90}
+            quality={84}
             className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-            loading="lazy"
-            sizes="(min-width: 1280px) 29vw, (min-width: 768px) 30vw, 94vw"
+            loading={eager ? "eager" : "lazy"}
+            sizes="(min-width: 1280px) 22vw, (min-width: 768px) 30vw, 94vw"
           />
+        ) : (
+          <div className="h-full w-full bg-white/[0.04]" />
+        )}
+      </div>
+      <div className="pt-4">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/42">
+          {item.metaLabel}
+        </p>
+        <p className="mt-2 text-[1.02rem] font-normal tracking-[-0.02em] text-white/88">
+          {item.title}
+        </p>
+        {visibleTags.length > 0 ? (
+          <div className="mt-3 flex flex-wrap gap-2" aria-label={`Tags for ${item.title}`}>
+            {visibleTags.map((tag) => (
+              <span
+                key={tag.slug}
+                className="rounded-full border border-white/10 px-2.5 py-1 text-[0.72rem] leading-none text-white/48"
+              >
+                {tag.name}
+              </span>
+            ))}
+          </div>
+        ) : null}
+      </div>
+    </a>
+  );
+}
+
+function FeaturedLearningCard({ item }: { item: LearningCardItem }) {
+  const visibleTags = item.tags.slice(0, 4);
+
+  return (
+    <a href={item.href} className="group block">
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,0.65fr)] lg:items-end">
+        <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-background/50 md:aspect-[4/3] lg:aspect-[16/9]">
+          {item.coverImageUrl ? (
+            <Image
+              src={item.coverImageUrl}
+              alt={item.coverImageAlt}
+              fill
+              quality={86}
+              priority
+              sizes="(min-width: 1280px) 58vw, (min-width: 768px) 82vw, 94vw"
+              className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+            />
+          ) : (
+            <div className="h-full w-full bg-white/[0.04]" />
+          )}
         </div>
 
-        <div className="pt-4">
-          <p className="text-[1.02rem] font-normal tracking-[-0.02em] text-white/88">
-            {tutorial.title}
+        <div className="max-w-xl pb-1">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/42">
+            Latest · {item.metaLabel}
           </p>
-          <p className="mt-2 text-sm text-white/45">{metadata}</p>
+          <h2 className="mt-3 font-sans text-[clamp(1.9rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.055em] text-white">
+            {item.title}
+          </h2>
+          <p className="mt-4 text-[1rem] leading-7 text-white/58">{item.summary}</p>
+          {visibleTags.length > 0 ? (
+            <div className="mt-5">
+              <p className="font-sans text-[0.82rem] font-semibold uppercase tracking-[0.18em] text-white/38">
+                Tagged With
+              </p>
+              <div className="mt-3 flex flex-wrap gap-2" aria-label={`Tags for ${item.title}`}>
+                {visibleTags.map((tag) => (
+                  <span
+                    key={tag.slug}
+                    className="rounded-full border border-white/10 px-3 py-1.5 text-[0.78rem] leading-none text-white/52"
+                  >
+                    {tag.name}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
     </a>
@@ -216,21 +321,119 @@ export default function StudioTutorials() {
         duration: tutorial.duration,
         category: tutorial.category,
         difficulty: tutorial.difficulty,
+        publishedAt: tutorial.published_at,
         createdAt: tutorial.created_at,
         updatedAt: tutorial.updated_at,
+        tags: tutorial.tags || [],
       })),
     []
   );
 
+  const learningArticles = useMemo<LearningArticleItem[]>(() => {
+    return getLocalArticles()
+      .filter((article) => LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug))
+      .map((article) => ({
+        id: article.id,
+        slug: article.slug,
+        title: article.title,
+        excerpt: article.excerpt,
+        coverImageUrl: article.coverImageUrl,
+        coverImageAlt: article.coverImageAlt,
+        publishedAt: article.publishedAt,
+        createdAt: article.createdAt,
+        readTime: article.readTime,
+        categoryName: article.categoryName,
+        tags: article.tags || [],
+      }))
+      .sort((a, b) => getArticleTimestamp(b) - getArticleTimestamp(a));
+  }, []);
+
+  const combinedLearningItems = useMemo<LearningCardItem[]>(() => {
+    const tutorialItems = allTutorials.map((tutorial) => {
+      const cover = getTutorialCoverImage(tutorial);
+      const summary = getTutorialSummary(tutorial);
+      const categoryLabel = getCategoryLabel(tutorial.category);
+      const difficultyLabel = getDifficultyLabel(tutorial.difficulty);
+      const dateLabel = formatLearningDate(tutorial.publishedAt || tutorial.createdAt);
+      const tagNames = getTagNames(tutorial.tags);
+      const metaLabel = [
+        categoryLabel,
+        dateLabel,
+        difficultyLabel,
+        formatDuration(tutorial.duration),
+      ]
+        .filter(Boolean)
+        .join(" · ");
+
+      return {
+        id: `tutorial-${tutorial.slug}`,
+        title: tutorial.title,
+        summary,
+        href: `/studio/tutorials/${tutorial.slug}`,
+        coverImageUrl: cover.src,
+        coverImageAlt: cover.alt,
+        categoryLabel,
+        difficultyLabel,
+        metaLabel,
+        tags: tutorial.tags || [],
+        searchableText: [
+          tutorial.title,
+          summary,
+          tutorial.category,
+          tutorial.difficulty,
+          metaLabel,
+          ...tagNames,
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase(),
+        timestamp: getTutorialTimestamp(tutorial),
+        durationSort: Number(tutorial.duration || 0),
+      };
+    });
+
+    const articleItems = learningArticles.map((article) => {
+      const summary = article.excerpt || `${article.title} article guide for scenic design learning.`;
+      const categoryLabel =
+        LEARNING_PORTAL_ARTICLE_CATEGORY_BY_SLUG[article.slug] || article.categoryName || "Learning";
+      const dateLabel = formatLearningDate(article.publishedAt || article.createdAt);
+      const tagNames = getTagNames(article.tags);
+      const metaLabel = [categoryLabel, dateLabel, formatReadTime(article.readTime)]
+        .filter(Boolean)
+        .join(" · ");
+
+      return {
+        id: `article-${article.slug}`,
+        title: article.title,
+        summary,
+        href: `/studio/tutorials/${article.slug}`,
+        coverImageUrl: article.coverImageUrl,
+        coverImageAlt: article.coverImageAlt || `Cover image for ${article.title}`,
+        categoryLabel,
+        difficultyLabel: null,
+        metaLabel,
+        tags: article.tags || [],
+        searchableText: [article.title, summary, article.categoryName, metaLabel, ...tagNames]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase(),
+        timestamp: getArticleTimestamp(article),
+        durationSort: Number(article.readTime || 0) * 60,
+      };
+    });
+
+    return [...tutorialItems, ...articleItems].sort((a, b) => {
+      const timeCompare = b.timestamp - a.timestamp;
+      if (timeCompare !== 0) return timeCompare;
+      return a.title.localeCompare(b.title);
+    });
+  }, [allTutorials, learningArticles]);
+
   const categories = useMemo(() => {
     return Array.from(
-      new Set(
-        allTutorials
-          .map((tutorial) => getCategoryLabel(tutorial.category))
-          .filter((value): value is string => Boolean(value))
-      )
+      new Set(combinedLearningItems.map((item) => item.categoryLabel).filter(Boolean))
     ).sort((a, b) => a.localeCompare(b));
-  }, [allTutorials]);
+  }, [combinedLearningItems]);
 
   const difficulties = useMemo(() => {
     return Array.from(
@@ -242,34 +445,29 @@ export default function StudioTutorials() {
     ).sort((a, b) => a.localeCompare(b));
   }, [allTutorials]);
 
-  const filteredTutorials = useMemo(() => {
-    return allTutorials.filter((tutorial) => {
-      if (selectedCategory !== "all" && getCategoryLabel(tutorial.category) !== selectedCategory) {
+  const filteredLearningItems = useMemo(() => {
+    return combinedLearningItems.filter((item) => {
+      if (selectedCategory !== "all" && item.categoryLabel !== selectedCategory) {
         return false;
       }
 
-      if (selectedDifficulty !== "all" && getDifficultyLabel(tutorial.difficulty) !== selectedDifficulty) {
+      if (selectedDifficulty !== "all" && item.difficultyLabel !== selectedDifficulty) {
         return false;
       }
 
       if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase();
-        const haystack = [tutorial.title, tutorial.description, tutorial.category, tutorial.difficulty]
-          .filter(Boolean)
-          .join(" ")
-          .toLowerCase();
-
-        if (!haystack.includes(query)) {
+        if (!item.searchableText.includes(query)) {
           return false;
         }
       }
 
       return true;
     });
-  }, [allTutorials, searchQuery, selectedCategory, selectedDifficulty]);
+  }, [combinedLearningItems, searchQuery, selectedCategory, selectedDifficulty]);
 
-  const sortedTutorials = useMemo(() => {
-    const list = [...filteredTutorials];
+  const sortedLearningItems = useMemo(() => {
+    const list = [...filteredLearningItems];
 
     list.sort((a, b) => {
       if (sortKey === "alphabetical") {
@@ -277,33 +475,40 @@ export default function StudioTutorials() {
       }
 
       if (sortKey === "duration") {
-        return Number(b.duration || 0) - Number(a.duration || 0);
+        return b.durationSort - a.durationSort;
       }
 
-      const timeCompare = getTutorialTimestamp(b) - getTutorialTimestamp(a);
+      const timeCompare = b.timestamp - a.timestamp;
       if (timeCompare !== 0) return timeCompare;
       return a.title.localeCompare(b.title);
     });
 
     return list;
-  }, [filteredTutorials, sortKey]);
+  }, [filteredLearningItems, sortKey]);
+
+  const showFeaturedLearning =
+    viewMode === "grid" &&
+    selectedCategory === "all" &&
+    selectedDifficulty === "all" &&
+    !searchQuery.trim() &&
+    sortKey === "newest";
+  const featuredLearningItem = showFeaturedLearning ? sortedLearningItems[0] : null;
+  const gridLearningItems = featuredLearningItem ? sortedLearningItems.slice(1) : sortedLearningItems;
 
   const activeFilterCount =
     (selectedDifficulty !== "all" ? 1 : 0) + (searchQuery.trim() ? 1 : 0);
-  const currentHeading = selectedCategory !== "all" ? selectedCategory : "Tutorials";
+  const currentHeading = selectedCategory !== "all" ? selectedCategory : "Scenic Design Learning";
 
   const tutorialArchiveTitle =
     selectedCategory !== "all"
       ? `${selectedCategory} Tutorials | Brandon PT Davis`
-      : "Tutorials | Brandon PT Davis";
+      : "Scenic Design Learning | Brandon PT Davis";
   const tutorialArchiveDescription =
     selectedCategory !== "all"
       ? `Browse ${selectedCategory.toLowerCase()} tutorials by Brandon PT Davis, shaped for scenic drafting, modeling, rendering, and production workflow.`
-      : "Tutorial archive by Brandon PT Davis covering drafting, modeling, rendering, and Vectorworks workflow for scenic design.";
+      : "A scenic design learning portal by Brandon PT Davis, combining Vectorworks video lessons, article guides, drafting references, rendering workflows, and design process resources.";
   const tutorialCollectionName =
-    selectedCategory !== "all" ? `${selectedCategory} Tutorials` : "Tutorials";
-
-  const itemHref = (tutorial: TutorialCardItem) => `/studio/tutorials/${tutorial.slug}`;
+    selectedCategory !== "all" ? `${selectedCategory} Tutorials` : "Scenic Design Learning";
 
   return (
     <div className="min-h-screen bg-background">
@@ -330,14 +535,14 @@ export default function StudioTutorials() {
             selectedCategory !== "all"
               ? `${selectedCategory} tutorials by Brandon PT Davis.`
               : "Tutorial archive covering scenic drafting, modeling, rendering, and workflow.",
-          about: "Tutorial videos and walkthroughs by Brandon PT Davis.",
+          about: "Scenic design learning articles and tutorials by Brandon PT Davis.",
           mainEntity: {
             name: tutorialCollectionName,
-            itemListElement: sortedTutorials.slice(0, 24).map((tutorial, index) => ({
+            itemListElement: sortedLearningItems.slice(0, 24).map((item, index) => ({
               position: index + 1,
-              name: tutorial.title,
-              url: `https://www.brandonptdavis.com/studio/tutorials/${tutorial.slug}`,
-              datePublished: tutorial.createdAt || tutorial.updatedAt || undefined,
+              name: item.title,
+              url: `https://www.brandonptdavis.com${item.href}`,
+              datePublished: item.timestamp ? new Date(item.timestamp).toISOString() : undefined,
             })),
           },
         }}
@@ -353,8 +558,8 @@ export default function StudioTutorials() {
                 {currentHeading}
               </h1>
               <p className="mt-5 max-w-3xl text-[1rem] leading-7 text-white/58 md:text-[1.05rem]">
-                A tutorial archive moving toward a blog-style index: practical walkthroughs for scenic
-                drafting, modeling, rendering, and production workflow in Vectorworks.
+                Lessons, article guides, and references for scenic designers learning to draft,
+                model, render, present, and think through production work with more clarity.
               </p>
             </div>
 
@@ -393,7 +598,7 @@ export default function StudioTutorials() {
                 <div className="relative min-w-[16rem] flex-1 md:max-w-sm">
                   <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/42" />
                   <Input
-                    placeholder="Search tutorials"
+                    placeholder="Search learning"
                     value={searchQuery}
                     onChange={(event) => setSearchQuery(event.target.value)}
                     className="h-10 rounded-full border-border/50 bg-background pl-9 text-sm text-white placeholder:text-white/35"
@@ -422,7 +627,7 @@ export default function StudioTutorials() {
                     <div className="space-y-5">
                       <div className="flex items-center justify-between gap-3">
                         <div>
-                          <p className="text-sm font-medium text-white">Filter tutorials</p>
+                          <p className="text-sm font-medium text-white">Filter articles</p>
                           <p className="text-xs text-white/52">Refine by difficulty level.</p>
                         </div>
                         {selectedDifficulty !== "all" ? (
@@ -531,61 +736,68 @@ export default function StudioTutorials() {
           </div>
         </section>
 
-        {sortedTutorials.length > 0 ? (
+        {sortedLearningItems.length > 0 ? (
           <>
             <section className="pb-20 pt-12 md:pb-28 md:pt-14">
               <div className="container max-w-[88rem]">
                 {viewMode === "grid" ? (
-                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {sortedTutorials.map((tutorial) => {
-                      const href = itemHref(tutorial);
+                  <>
+                    {featuredLearningItem ? (
+                      <div className="mb-12 md:mb-16">
+                        <FeaturedLearningCard item={featuredLearningItem} />
+                      </div>
+                    ) : null}
 
-                      return (
-                        <div key={`${tutorial.id}-${selectedCategory}-${selectedDifficulty}-${sortKey}-${viewMode}`}>
-                          <TutorialGridCard tutorial={tutorial} href={href} />
-                        </div>
-                      );
-                    })}
-                  </div>
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                      {gridLearningItems.map((item, index) => (
+                        <LearningGridCard
+                          key={`${item.id}-${selectedCategory}-${selectedDifficulty}-${sortKey}-${viewMode}`}
+                          eager={!featuredLearningItem && index < 2}
+                          item={item}
+                        />
+                      ))}
+                    </div>
+                  </>
                 ) : (
                   <div className="border-t border-border/35">
-                    {sortedTutorials.map((tutorial) => {
-                      const href = itemHref(tutorial);
+                    {sortedLearningItems.map((item) => (
+                      <a
+                        key={`${item.id}-${selectedCategory}-${selectedDifficulty}-${sortKey}-${viewMode}`}
+                        href={item.href}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          setLocation(item.href);
+                        }}
+                        className="group grid gap-4 border-b border-border/35 py-5 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8"
+                      >
+                        <div className="space-y-2 text-sm text-white/48">
+                          <p className="text-white/82">{item.categoryLabel}</p>
+                          <p>{item.metaLabel}</p>
+                        </div>
 
-                      return (
-                        <a
-                          key={`${tutorial.id}-${selectedCategory}-${selectedDifficulty}-${sortKey}-${viewMode}`}
-                          href={href}
-                          onClick={(event) => {
-                            event.preventDefault();
-                            setLocation(href);
-                          }}
-                          className="group grid gap-4 border-b border-border/35 py-5 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8"
-                        >
-                          <div className="space-y-2 text-sm text-white/48">
-                            <p className="text-white/82">{getCategoryLabel(tutorial.category)}</p>
-                            <p>
-                              {[getDifficultyLabel(tutorial.difficulty), formatDuration(tutorial.duration)]
-                                .filter(Boolean)
-                                .join(" · ")}
-                            </p>
-                          </div>
-
-                          <div className="min-w-0">
-                            <p className="text-[1.12rem] font-normal tracking-[-0.025em] text-white/88">
-                              {tutorial.title}
-                            </p>
-                            <p className="mt-2 max-w-3xl text-sm leading-6 text-white/52">
-                              {getTutorialSummary(tutorial)}
-                            </p>
-                            <div className="mt-3 inline-flex items-center gap-2 text-sm text-white/52">
-                              <PlayCircle className="h-4 w-4" />
-                              Watch tutorial
+                        <div className="min-w-0">
+                          <p className="text-[1.12rem] font-normal tracking-[-0.025em] text-white/88">
+                            {item.title}
+                          </p>
+                          <p className="mt-2 max-w-3xl text-sm leading-6 text-white/52">
+                            {item.summary}
+                          </p>
+                          {item.tags.length > 0 ? (
+                            <div className="mt-3 flex flex-wrap gap-2" aria-label={`Tags for ${item.title}`}>
+                              {item.tags.slice(0, 4).map((tag) => (
+                                <span
+                                  key={tag.slug}
+                                  className="rounded-full border border-white/10 px-2.5 py-1 text-[0.72rem] leading-none text-white/48"
+                                >
+                                  {tag.name}
+                                </span>
+                              ))}
                             </div>
-                          </div>
-                        </a>
-                      );
-                    })}
+                          ) : null}
+                          <div className="mt-3 text-sm text-white/52">Read article</div>
+                        </div>
+                      </a>
+                    ))}
                   </div>
                 )}
               </div>
@@ -594,7 +806,7 @@ export default function StudioTutorials() {
         ) : (
           <section className="pb-24 pt-16">
             <div className="container max-w-[88rem] text-center">
-              <p className="text-white/55">No tutorials match the current filters.</p>
+              <p className="text-white/55">No learning articles match the current filters.</p>
             </div>
           </section>
         )}
