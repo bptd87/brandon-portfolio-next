@@ -206,8 +206,6 @@ const getTutorialCoverImage = (tutorial: TutorialCardItem) => {
 };
 
 function LearningGridCard({ item, eager }: { item: LearningCardItem; eager?: boolean }) {
-  const visibleTags = item.tags.slice(0, 3);
-
   return (
     <a href={item.href} className="group block">
       <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-background/50">
@@ -232,26 +230,12 @@ function LearningGridCard({ item, eager }: { item: LearningCardItem; eager?: boo
         <p className="mt-2 text-[1.02rem] font-normal tracking-[-0.02em] text-white/88">
           {item.title}
         </p>
-        {visibleTags.length > 0 ? (
-          <div className="mt-3 flex flex-wrap gap-2" aria-label={`Tags for ${item.title}`}>
-            {visibleTags.map((tag) => (
-              <span
-                key={tag.slug}
-                className="rounded-full border border-white/10 px-2.5 py-1 text-[0.72rem] leading-none text-white/48"
-              >
-                {tag.name}
-              </span>
-            ))}
-          </div>
-        ) : null}
       </div>
     </a>
   );
 }
 
 function FeaturedLearningCard({ item }: { item: LearningCardItem }) {
-  const visibleTags = item.tags.slice(0, 4);
-
   return (
     <a href={item.href} className="group block">
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,0.65fr)] lg:items-end">
@@ -279,23 +263,6 @@ function FeaturedLearningCard({ item }: { item: LearningCardItem }) {
             {item.title}
           </h2>
           <p className="mt-4 text-[1rem] leading-7 text-white/58">{item.summary}</p>
-          {visibleTags.length > 0 ? (
-            <div className="mt-5">
-              <p className="font-sans text-[0.82rem] font-semibold uppercase tracking-[0.18em] text-white/38">
-                Tagged With
-              </p>
-              <div className="mt-3 flex flex-wrap gap-2" aria-label={`Tags for ${item.title}`}>
-                {visibleTags.map((tag) => (
-                  <span
-                    key={tag.slug}
-                    className="rounded-full border border-white/10 px-3 py-1.5 text-[0.78rem] leading-none text-white/52"
-                  >
-                    {tag.name}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ) : null}
         </div>
       </div>
     </a>
@@ -782,18 +749,6 @@ export default function StudioTutorials() {
                           <p className="mt-2 max-w-3xl text-sm leading-6 text-white/52">
                             {item.summary}
                           </p>
-                          {item.tags.length > 0 ? (
-                            <div className="mt-3 flex flex-wrap gap-2" aria-label={`Tags for ${item.title}`}>
-                              {item.tags.slice(0, 4).map((tag) => (
-                                <span
-                                  key={tag.slug}
-                                  className="rounded-full border border-white/10 px-2.5 py-1 text-[0.72rem] leading-none text-white/48"
-                                >
-                                  {tag.name}
-                                </span>
-                              ))}
-                            </div>
-                          ) : null}
                           <div className="mt-3 text-sm text-white/52">Read article</div>
                         </div>
                       </a>

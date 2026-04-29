@@ -1480,18 +1480,6 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
               {tutorialSummary}
             </p>
 
-            {tutorial.tags && tutorial.tags.length > 0 ? (
-              <div className="mx-auto mt-6 flex max-w-[42rem] flex-wrap items-center justify-center gap-2">
-                {tutorial.tags.slice(0, 5).map((tag: any) => (
-                  <span
-                    key={tag.slug}
-                    className="rounded-full border border-white/12 px-3 py-1 text-[0.78rem] tracking-[-0.01em] text-white/52"
-                  >
-                    {tag.name}
-                  </span>
-                ))}
-              </div>
-            ) : null}
           </header>
 
           <div className="mx-auto mt-12 max-w-[88rem] overflow-hidden rounded-xl bg-white/[0.02]">
@@ -1900,24 +1888,6 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                       ))}
                     </div>
                   </section>
-                </div>
-              </section>
-            ) : null}
-
-            {tutorial.tags && tutorial.tags.length > 0 ? (
-              <section className="mt-20 border-t border-white/12 pt-10">
-                <h2 className="font-sans text-[0.95rem] font-semibold uppercase tracking-[0.18em] text-white/48">
-                  Tagged With
-                </h2>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {tutorial.tags.map((tag: any) => (
-                    <span
-                      key={tag.slug}
-                      className="rounded-full border border-white/14 px-4 py-2 text-sm font-normal text-white/66"
-                    >
-                      {tag.name}
-                    </span>
-                  ))}
                 </div>
               </section>
             ) : null}

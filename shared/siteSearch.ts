@@ -15,6 +15,7 @@ import {
 } from "./localPortfolios";
 import { getLocalScenicProjects } from "./localScenicProjects";
 import {
+  getLocalCollaborators,
   getLocalStudioDirectory,
   getLocalTutorials,
 } from "./localStudio";
@@ -49,17 +50,18 @@ function normalizeSearchValue(value: string) {
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[’‘]/g, "'")
     .replace(/[“”]/g, '"')
+    .toLowerCase()
     .replace(/&/g, " and ")
     .replace(/[^a-z0-9]+/g, " ")
     .replace(/\s+/g, " ")
-    .trim()
-    .toLowerCase();
+    .trim();
 }
 
 const SEARCH_STOPWORDS = new Set([
   "a",
   "an",
   "and",
+  "all",
   "are",
   "about",
   "best",
@@ -67,6 +69,7 @@ const SEARCH_STOPWORDS = new Set([
   "connect",
   "connected",
   "does",
+  "find",
   "for",
   "from",
   "how",
@@ -74,8 +77,17 @@ const SEARCH_STOPWORDS = new Set([
   "in",
   "is",
   "me",
+  "name",
+  "named",
+  "names",
   "of",
   "or",
+  "page",
+  "pages",
+  "result",
+  "results",
+  "search",
+  "show",
   "tell",
   "the",
   "their",
@@ -393,6 +405,252 @@ function createProfileEntries() {
   ];
 }
 
+function createStaticPageEntries() {
+  return [
+    createEntry({
+      id: "page:portfolio",
+      title: "Portfolio",
+      href: "/projects",
+      section: "Portfolio",
+      kind: "Portfolio Index",
+      description:
+        "Browse scenic design, rendering, and experiential design projects across Brandon PT Davis's body of work.",
+      meta: "Projects • Scenic Design • Rendering",
+      keywords: [
+        "portfolio",
+        "projects",
+        "scenic design portfolio",
+        "theatre design",
+        "rendering",
+        "experiential design",
+        "production design",
+      ],
+    }),
+    createEntry({
+      id: "page:scenic-projects",
+      title: "Scenic Design Projects",
+      href: "/projects/scenic-design",
+      section: "Portfolio",
+      kind: "Portfolio Collection",
+      description:
+        "Selected scenic design work for musicals, plays, Shakespeare, and new work.",
+      meta: "Scenic Design",
+      keywords: [
+        "scenic design",
+        "set design",
+        "theatre",
+        "musicals",
+        "plays",
+        "portfolio",
+      ],
+    }),
+    createEntry({
+      id: "page:rendering-projects",
+      title: "Theatre Renderings",
+      href: "/projects/rendering",
+      section: "Portfolio",
+      kind: "Portfolio Collection",
+      description:
+        "Rendering work and visual development studies for theatrical and scenic design.",
+      meta: "Rendering • Visualization",
+      keywords: [
+        "rendering",
+        "theatre renderings",
+        "visualization",
+        "concept art",
+        "scenic rendering",
+        "Twinmotion",
+        "Photoshop",
+        "Vectorworks",
+      ],
+    }),
+    createEntry({
+      id: "page:experiential-projects",
+      title: "Experiential Design",
+      href: "/projects/experiential",
+      section: "Portfolio",
+      kind: "Portfolio Collection",
+      description:
+        "Experiential design, live event, branded environment, and technical drawing work.",
+      meta: "Experiential • Live Events",
+      keywords: [
+        "experiential design",
+        "brand activation",
+        "live events",
+        "technical drawing",
+        "event design",
+        "branded environment",
+      ],
+    }),
+    createEntry({
+      id: "page:articles",
+      title: "Articles",
+      href: "/articles",
+      section: "Writing",
+      kind: "Article Archive",
+      description:
+        "Essays, interviews, profiles, and long-form writing around scenic design, process, rendering, and creative practice.",
+      meta: "Writing • Essays",
+      keywords: [
+        "articles",
+        "writing",
+        "essays",
+        "interviews",
+        "profiles",
+        "scenic design process",
+        "creative practice",
+      ],
+    }),
+    createEntry({
+      id: "page:collaborators",
+      title: "Collaborators & Directors",
+      href: "/about/collaborators",
+      section: "People",
+      kind: "People Directory",
+      description:
+        "Directors, designers, theatre companies, and recurring creative partners across Brandon PT Davis's work.",
+      meta: "People • Designers • Directors",
+      keywords: [
+        "collaborators",
+        "directors",
+        "designers",
+        "creative partners",
+        "creative team",
+        "theatre companies",
+        "design team",
+      ],
+    }),
+    createEntry({
+      id: "page:learning-portal",
+      title: "Scenic Design Learning Portal",
+      href: "/studio/tutorials",
+      section: "Studio",
+      kind: "Learning Archive",
+      description:
+        "Tutorials, article guides, Vectorworks lessons, drafting references, rendering workflows, and scenic design learning resources.",
+      meta: "Tutorials • Vectorworks • Articles",
+      keywords: [
+        "tutorials",
+        "learning portal",
+        "Vectorworks",
+        "drafting",
+        "rendering",
+        "scenic design tutorials",
+        "article tutorials",
+        "students",
+      ],
+    }),
+    createEntry({
+      id: "page:studio-apps",
+      title: "Studio Apps",
+      href: "/studio/apps",
+      section: "Studio",
+      kind: "Studio Tools",
+      description:
+        "Production-focused calculators, reference tools, and utilities for scenic drafting, paint, modeling, and research.",
+      meta: "Apps • Calculators • Tools",
+      keywords: [
+        "studio apps",
+        "scale calculator",
+        "paint calculator",
+        "dimension reference",
+        "scenic tools",
+        "drafting tools",
+      ],
+    }),
+    createEntry({
+      id: "page:studio-directory",
+      title: "Studio Directory",
+      href: "/studio/directory",
+      section: "Studio",
+      kind: "Resource Directory",
+      description:
+        "Outbound links to scenic design resources, software, suppliers, organizations, and theatre research references.",
+      meta: "Resources • Directory",
+      keywords: [
+        "directory",
+        "resources",
+        "suppliers",
+        "software",
+        "research",
+        "scenic design resources",
+      ],
+    }),
+    createEntry({
+      id: "page:contact",
+      title: "Contact Brandon PT Davis",
+      href: "/contact",
+      section: "People",
+      kind: "Contact",
+      description:
+        "Contact page for Brandon PT Davis, scenic designer and educator.",
+      meta: "Contact",
+      keywords: [
+        "contact",
+        "email",
+        "hire",
+        "collaboration",
+        "Brandon PT Davis contact",
+      ],
+    }),
+  ];
+}
+
+const collaboratorRoleLabels: Record<string, string> = {
+  director: "Director",
+  scenic_designer: "Scenic Designer",
+  costume_designer: "Costume Designer",
+  lighting_designer: "Lighting Designer",
+  sound_designer: "Sound Designer",
+  projection_designer: "Projection Designer",
+  theatre_company: "Theatre Company",
+  partner_company: "Partner Company",
+};
+
+const slugifySearchAnchor = (value: string) =>
+  normalizeSearchValue(value).replace(/\s+/g, "-");
+
+function createCollaboratorEntries() {
+  return getLocalCollaborators().map((collaborator) => {
+    const roleLabel =
+      collaboratorRoleLabels[String(collaborator.role || "")] ||
+      String(collaborator.role || "Collaborator").replace(/_/g, " ");
+    const href = `/about/collaborators#${slugifySearchAnchor(collaborator.name)}`;
+    const socialHandle = collaborator.instagramHandle
+      ? collaborator.instagramHandle.replace(/^@/, "")
+      : "";
+
+    return createEntry({
+      id: `collaborator:${collaborator.slug}`,
+      title: collaborator.name,
+      href,
+      section: "People",
+      kind: roleLabel,
+      description:
+        collaborator.bio ||
+        `${collaborator.name} is listed in the collaborator directory as a ${roleLabel.toLowerCase()}.`,
+      imageUrl: collaborator.coverImage || undefined,
+      featured: collaborator.featured,
+      bodyText: collaborator.bio || "",
+      keywords: [
+        collaborator.name,
+        collaborator.slug,
+        collaborator.role,
+        roleLabel,
+        collaborator.bio,
+        collaborator.website,
+        collaborator.portfolioUrl,
+        collaborator.instagramUrl,
+        socialHandle,
+        "collaborator",
+        "creative partner",
+        "designer",
+        "director",
+      ],
+    });
+  });
+}
+
 function buildSnippet(source: string | undefined, fallback: string, terms: string[]) {
   const body = collapseWhitespace(source || "");
   if (!body) return fallback;
@@ -439,7 +697,9 @@ function getEditDistance(a: string, b: string) {
 
 function isFuzzyTokenMatch(term: string, token: string) {
   if (!term || !token) return false;
-  if (token.includes(term) || term.includes(token)) return true;
+  if (token === term) return true;
+  if (term.length >= 3 && token.includes(term)) return true;
+  if (term.length >= 4 && token.length >= 4 && term.includes(token)) return true;
   if (Math.abs(term.length - token.length) > 2) return false;
   if (term.length < 4 || token.length < 4) return false;
   return getEditDistance(term, token) <= (term.length >= 8 ? 2 : 1);
@@ -452,13 +712,15 @@ function hasProfileIntent(normalizedQuery: string) {
 }
 
 function hasStudioIntent(normalizedQuery: string) {
-  return /(^|\s)(vectorworks|tutorial|studio|draft|drafting|render|rendering|model|modeling|tool|software|workflow)(\s|$)/.test(
+  return /(^|\s)(vectorworks|tutorial|tutorials|studio|draft|drafting|render|rendering|model|modeling|tool|tools|software|workflow|texture|textures|resource|resources|symbol|symbols|class|classes|layer|layers|dimension|dimensions|pdf|pdfs)(\s|$)/.test(
     normalizedQuery
   );
 }
 
 export function buildSiteSearchEntries(): SiteSearchEntry[] {
   const profileEntries = createProfileEntries();
+  const staticPageEntries = createStaticPageEntries();
+  const collaboratorEntries = createCollaboratorEntries();
   const scenicEntries = getLocalScenicProjects().map((project) =>
     createEntry({
       id: `scenic:${project.slug}`,
@@ -645,6 +907,8 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
 
   return [
     ...profileEntries,
+    ...staticPageEntries,
+    ...collaboratorEntries,
     ...scenicEntries,
     ...renderingEntries,
     ...experientialEntries,
