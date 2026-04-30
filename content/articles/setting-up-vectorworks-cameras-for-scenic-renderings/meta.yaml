@@ -1,0 +1,36 @@
+type: article
+slug: setting-up-vectorworks-cameras-for-scenic-renderings
+title: Setting Up Vectorworks Cameras for Scenic Renderings
+status: published
+featured: false
+excerpt: >-
+  A camera setup workflow for scenic renderings in Vectorworks: create a visualization layer, place the camera, frame the
+  shot, and turn the view into a renderable viewport.
+category: Tools & Technology
+seoTitle: 'Setting Up Vectorworks Cameras for Scenic Renderings'
+seoDescription: >-
+  A practical guide to setting up Vectorworks cameras for scenic design renderings, including lens choice, aspect ratio,
+  viewport scale, and rendering sheet setup.
+seoKeywords:
+  - Vectorworks camera setup
+  - scenic rendering camera
+  - Renderworks camera workflow
+  - theatre rendering
+  - Vectorworks viewport rendering
+cover:
+  asset: https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/camera-setup-poster.jpg
+  alt: Vectorworks top plan view showing a scenic model, camera position, and rendering setup interface.
+tags:
+  - vectorworks
+  - scenic-rendering
+  - cameras
+  - renderworks
+  - scenic-design
+readTime: 5
+publishedAt: '2026-03-15'
+updatedAt: '2026-04-29T00:00:00.000+00:00'
+linkedScenicProjectSlugs: []
+series:
+  name: Vectorworks Rendering
+  slug: vectorworks-rendering
+  order: 3

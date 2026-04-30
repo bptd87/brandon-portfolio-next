@@ -1,0 +1,36 @@
+type: article
+slug: lighting-and-render-styles-in-vectorworks
+title: Renderworks Settings and Lighting in Vectorworks
+status: published
+featured: false
+excerpt: >-
+  A scenic rendering workflow for comparing the same model across render looks, building a lighting layer, and choosing
+  Renderworks settings with intention.
+category: Tools & Technology
+seoTitle: 'Renderworks Settings and Lighting in Vectorworks'
+seoDescription: >-
+  Learn how to compare Vectorworks render styles, build a scenic lighting layer, and use Renderworks background, quality,
+  lighting, Redshift, and Realistic settings.
+seoKeywords:
+  - Vectorworks lighting setup
+  - Renderworks style
+  - Redshift Vectorworks
+  - Realistic Renderworks
+  - scenic rendering lighting
+cover:
+  asset: https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/render-tabs-cropped/custom-realistic-renderworks.jpg
+  alt: Carnegie Library scenic model rendered with a custom Realistic Renderworks style.
+tags:
+  - vectorworks
+  - scenic-rendering
+  - lighting
+  - redshift
+  - renderworks
+readTime: 7
+publishedAt: '2026-03-16'
+updatedAt: '2026-04-29T00:00:00.000+00:00'
+linkedScenicProjectSlugs: []
+series:
+  name: Vectorworks Rendering
+  slug: vectorworks-rendering
+  order: 4

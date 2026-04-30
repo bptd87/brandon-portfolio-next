@@ -6,11 +6,14 @@ import designingTheKellerHomeALookBackAtAllMySonsBlocks from "../content/article
 import empoweringTheatreStudentsWithComputerLiteracyBlocks from "../content/articles/empowering-theatre-students-with-computer-literacy/blocks.json";
 import framingTheMartyrScenicDesignAsMemoryWorkInRomeroBlocks from "../content/articles/framing-the-martyr-scenic-design-as-memory-work-in-romero/blocks.json";
 import howToCreateTrimProfilesInVectorworksUsingThePolylineToolBlocks from "../content/articles/how-to-create-trim-profiles-in-vectorworks-using-the-polyline-tool/blocks.json";
+import lightingAndRenderStylesInVectorworksBlocks from "../content/articles/lighting-and-render-styles-in-vectorworks/blocks.json";
 import lightingStylesInAiModelsBlocks from "../content/articles/lighting-styles-in-ai-models/blocks.json";
 import minimalistScenicDesignDominatingRegionalTheatresIn2025Blocks from "../content/articles/minimalist-scenic-design-dominating-regional-theatres-in-2025/blocks.json";
 import onlinePortfolioTheatricalDesign2026Blocks from "../content/articles/online-portfolio-theatrical-design-2026/blocks.json";
 import operasFoundationsTheEvolutionOfScenicDesignInOperaBlocks from "../content/articles/operas-foundations-the-evolution-of-scenic-design-in-opera/blocks.json";
+import publishingVectorworksRenderingsForPresentationBlocks from "../content/articles/publishing-vectorworks-renderings-for-presentation/blocks.json";
 import scenicDesignProcessBlocks from "../content/articles/scenic-design-process/blocks.json";
+import settingUpVectorworksCamerasForScenicRenderingsBlocks from "../content/articles/setting-up-vectorworks-cameras-for-scenic-renderings/blocks.json";
 import soraInTheStudioTestingAisPotentialForTheatricalDesignBlocks from "../content/articles/sora-in-the-studio-testing-ais-potential-for-theatrical-design/blocks.json";
 import studioGhibliInspiredImmersiveDiningExperienceBlocks from "../content/articles/studio-ghibli-inspired-immersive-dining-experience/blocks.json";
 import the1960sMusicalRevolutionWhenHollywoodsGoldenFormulaMetRockAndRebellionBlocks from "../content/articles/the-1960s-musical-revolution-when-hollywoods-golden-formula-met-rock-and-rebellion/blocks.json";
@@ -23,6 +26,7 @@ import theGoldenAgeOfCinemaMusicalsInTheSpotlightBlocks from "../content/article
 import theLightsWereAlreadyOnMaudeAdamsLegacyAtStephensCollegeBlocks from "../content/articles/the-lights-were-already-on-maude-adams-legacy-at-stephens-college/blocks.json";
 import theVisualLanguageOfScenicDesignBlocks from "../content/articles/the-visual-language-of-scenic-design/blocks.json";
 import urinetownScenicDesignBuildingADystopiaThatFeelsUncomfortablyFamiliarBlocks from "../content/articles/urinetown-scenic-design-building-a-dystopia-that-feels-uncomfortably-familiar/blocks.json";
+import vectorworksRenderingWorkflowFileSizeAndSpeedBlocks from "../content/articles/vectorworks-rendering-workflow-file-size-and-speed/blocks.json";
 import videoGameEnvironmentsLessonsForScenicDesignBlocks from "../content/articles/video-game-environments-lessons-for-scenic-design/blocks.json";
 import voyagelaRisingStarsInterviewBlocks from "../content/articles/voyagela-rising-stars-interview/blocks.json";
 import whatMakesAGoodScenicDesignRenderingBlocks from "../content/articles/what-makes-a-good-scenic-design-rendering/blocks.json";
@@ -159,6 +163,26 @@ export const fileFirstArticleFieldsBySlug = {
   "updatedAt": "2026-02-19T21:44:58.453271+00:00",
   "linkedScenicProjectSlugs": []
 },
+  "lighting-and-render-styles-in-vectorworks": {
+  "title": "Renderworks Settings and Lighting in Vectorworks",
+  "featured": false,
+  "excerpt": "A scenic rendering workflow for comparing the same model across render looks, building a lighting layer, and choosing Renderworks settings with intention.",
+  "categoryName": "Tools & Technology",
+  "coverImageAlt": "Carnegie Library scenic model rendered with a custom Realistic Renderworks style.",
+  "seoTitle": "Renderworks Settings and Lighting in Vectorworks",
+  "seoDescription": "Learn how to compare Vectorworks render styles, build a scenic lighting layer, and use Renderworks background, quality, lighting, Redshift, and Realistic settings.",
+  "seoKeywords": "Vectorworks lighting setup, Renderworks style, Redshift Vectorworks, Realistic Renderworks, scenic rendering lighting",
+  "readTime": 7,
+  "publishedAt": "2026-03-16",
+  "updatedAt": "2026-04-29T00:00:00.000+00:00",
+  "linkedScenicProjectSlugs": [],
+  "series": {
+    "name": "Vectorworks Rendering",
+    "slug": "vectorworks-rendering",
+    "order": 4
+  },
+  "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/render-tabs-cropped/custom-realistic-renderworks.jpg"
+},
   "lighting-styles-in-ai-models": {
   "title": "Lighting Styles in AI Models: How Lighting Changes Everything",
   "featured": false,
@@ -218,6 +242,26 @@ export const fileFirstArticleFieldsBySlug = {
   "updatedAt": "2026-02-12T15:04:14+00:00",
   "linkedScenicProjectSlugs": []
 },
+  "publishing-vectorworks-renderings-for-presentation": {
+  "title": "Publishing Vectorworks Renderings for Presentation",
+  "featured": false,
+  "excerpt": "A publishing workflow for exporting finished Vectorworks renderings as presentation-ready images without keeping heavy live viewports in the file.",
+  "categoryName": "Tools & Technology",
+  "coverImageAlt": "Vectorworks rendering sheet with a completed scenic rendering prepared for output.",
+  "seoTitle": "Publishing Vectorworks Renderings for Presentation",
+  "seoDescription": "Learn how to publish Vectorworks scenic renderings from viewports, choose image size and DPI, and prepare final files for Photoshop or presentation sharing.",
+  "seoKeywords": "publish Vectorworks rendering, Vectorworks viewport image export, scenic rendering presentation, Renderworks publishing, theatre design presentation",
+  "readTime": 4,
+  "publishedAt": "2026-03-17",
+  "updatedAt": "2026-04-29T00:00:00.000+00:00",
+  "linkedScenicProjectSlugs": [],
+  "series": {
+    "name": "Vectorworks Rendering",
+    "slug": "vectorworks-rendering",
+    "order": 5
+  },
+  "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/convert-bitmap-poster.jpg"
+},
   "scenic-design-process": {
   "title": "Navigating the Scenic Design Process: A Comprehensive Guide",
   "featured": false,
@@ -236,6 +280,26 @@ export const fileFirstArticleFieldsBySlug = {
     "slug": "process-and-practice",
     "order": 1
   }
+},
+  "setting-up-vectorworks-cameras-for-scenic-renderings": {
+  "title": "Setting Up Vectorworks Cameras for Scenic Renderings",
+  "featured": false,
+  "excerpt": "A camera setup workflow for scenic renderings in Vectorworks: create a visualization layer, place the camera, frame the shot, and turn the view into a renderable viewport.",
+  "categoryName": "Tools & Technology",
+  "coverImageAlt": "Vectorworks top plan view showing a scenic model, camera position, and rendering setup interface.",
+  "seoTitle": "Setting Up Vectorworks Cameras for Scenic Renderings",
+  "seoDescription": "A practical guide to setting up Vectorworks cameras for scenic design renderings, including lens choice, aspect ratio, viewport scale, and rendering sheet setup.",
+  "seoKeywords": "Vectorworks camera setup, scenic rendering camera, Renderworks camera workflow, theatre rendering, Vectorworks viewport rendering",
+  "readTime": 5,
+  "publishedAt": "2026-03-15",
+  "updatedAt": "2026-04-29T00:00:00.000+00:00",
+  "linkedScenicProjectSlugs": [],
+  "series": {
+    "name": "Vectorworks Rendering",
+    "slug": "vectorworks-rendering",
+    "order": 3
+  },
+  "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/camera-setup-poster.jpg"
 },
   "sora-in-the-studio-testing-ais-potential-for-theatrical-design": {
   "title": "Sora in the Studio: Testing AI's Potential for Theatrical Design",
@@ -428,6 +492,26 @@ export const fileFirstArticleFieldsBySlug = {
     "order": 5
   }
 },
+  "vectorworks-rendering-workflow-file-size-and-speed": {
+  "title": "Vectorworks Rendering Workflow: File Size and Speed",
+  "featured": false,
+  "excerpt": "A practical rendering workflow for keeping Vectorworks scenic files responsive by managing imported models, USDZ handoffs, mesh cleanup, texture size, and final output decisions.",
+  "categoryName": "Tools & Technology",
+  "coverImageAlt": "Abstract scenic rendering workflow moving from dense imported mesh geometry to a clean render-ready Vectorworks model.",
+  "seoTitle": "Vectorworks Rendering Workflow: File Size and Speed",
+  "seoDescription": "Learn how to keep Vectorworks scenic rendering files fast enough to work by managing SketchUp imports, USDZ handoffs, mesh cleanup, texture size, and bitmap publishing.",
+  "seoKeywords": "Vectorworks rendering workflow, Vectorworks file size, scenic design rendering, SketchUp import Vectorworks, USDZ Vectorworks, simplify mesh Vectorworks, Renderworks workflow",
+  "readTime": 7,
+  "publishedAt": "2026-03-14",
+  "updatedAt": "2026-04-29T00:00:00.000+00:00",
+  "linkedScenicProjectSlugs": [],
+  "series": {
+    "name": "Vectorworks Rendering",
+    "slug": "vectorworks-rendering",
+    "order": 2
+  },
+  "coverImageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/file-size-speed-workflow-cover.png"
+},
   "video-game-environments-lessons-for-scenic-design": {
   "title": "Video Game Environments: Lessons for Scenic Design",
   "featured": false,
@@ -472,9 +556,9 @@ export const fileFirstArticleFieldsBySlug = {
   "updatedAt": "2026-02-19T19:28:12.638+00:00",
   "linkedScenicProjectSlugs": [],
   "series": {
-    "name": "Design Communication",
-    "slug": "design-communication",
-    "order": 2
+    "name": "Vectorworks Rendering",
+    "slug": "vectorworks-rendering",
+    "order": 1
   }
 },
   "when-broadway-got-a-revolution-the-rise-of-the-concept-musical-in-the-1970s": {
@@ -561,11 +645,14 @@ export const fileFirstArticleContentBySlug = {
   "empowering-theatre-students-with-computer-literacy": empoweringTheatreStudentsWithComputerLiteracyBlocks,
   "framing-the-martyr-scenic-design-as-memory-work-in-romero": framingTheMartyrScenicDesignAsMemoryWorkInRomeroBlocks,
   "how-to-create-trim-profiles-in-vectorworks-using-the-polyline-tool": howToCreateTrimProfilesInVectorworksUsingThePolylineToolBlocks,
+  "lighting-and-render-styles-in-vectorworks": lightingAndRenderStylesInVectorworksBlocks,
   "lighting-styles-in-ai-models": lightingStylesInAiModelsBlocks,
   "minimalist-scenic-design-dominating-regional-theatres-in-2025": minimalistScenicDesignDominatingRegionalTheatresIn2025Blocks,
   "online-portfolio-theatrical-design-2026": onlinePortfolioTheatricalDesign2026Blocks,
   "operas-foundations-the-evolution-of-scenic-design-in-opera": operasFoundationsTheEvolutionOfScenicDesignInOperaBlocks,
+  "publishing-vectorworks-renderings-for-presentation": publishingVectorworksRenderingsForPresentationBlocks,
   "scenic-design-process": scenicDesignProcessBlocks,
+  "setting-up-vectorworks-cameras-for-scenic-renderings": settingUpVectorworksCamerasForScenicRenderingsBlocks,
   "sora-in-the-studio-testing-ais-potential-for-theatrical-design": soraInTheStudioTestingAisPotentialForTheatricalDesignBlocks,
   "studio-ghibli-inspired-immersive-dining-experience": studioGhibliInspiredImmersiveDiningExperienceBlocks,
   "the-1960s-musical-revolution-when-hollywoods-golden-formula-met-rock-and-rebellion": the1960sMusicalRevolutionWhenHollywoodsGoldenFormulaMetRockAndRebellionBlocks,
@@ -578,6 +665,7 @@ export const fileFirstArticleContentBySlug = {
   "the-lights-were-already-on-maude-adams-legacy-at-stephens-college": theLightsWereAlreadyOnMaudeAdamsLegacyAtStephensCollegeBlocks,
   "the-visual-language-of-scenic-design": theVisualLanguageOfScenicDesignBlocks,
   "urinetown-scenic-design-building-a-dystopia-that-feels-uncomfortably-familiar": urinetownScenicDesignBuildingADystopiaThatFeelsUncomfortablyFamiliarBlocks,
+  "vectorworks-rendering-workflow-file-size-and-speed": vectorworksRenderingWorkflowFileSizeAndSpeedBlocks,
   "video-game-environments-lessons-for-scenic-design": videoGameEnvironmentsLessonsForScenicDesignBlocks,
   "voyagela-rising-stars-interview": voyagelaRisingStarsInterviewBlocks,
   "what-makes-a-good-scenic-design-rendering": whatMakesAGoodScenicDesignRenderingBlocks,

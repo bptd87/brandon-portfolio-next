@@ -1,0 +1,123 @@
+[
+  {
+    "type": "paragraph",
+    "text": "A rendering workflow is a time-management system. In Vectorworks, the goal is not simply to make one final image look good; the file has to stay responsive while the scenic idea is still changing. If every orbit, texture swap, camera adjustment, or lighting test takes too long, the technology starts deciding how much design exploration is possible."
+  },
+  {
+    "type": "paragraph",
+    "text": "The healthiest workflow protects the hours that matter most: building the model, testing composition, assigning materials, and checking light. Rendering should be the result of those decisions, not the moment when the file suddenly becomes too heavy to keep working."
+  },
+  {
+    "type": "image",
+    "display": "infographic",
+    "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/rendering-workflow-time.jpg",
+    "alt": "Vectorworks rendering workflow diagram showing modeling as the largest time investment, followed by texturing, rendering setup, lighting, and post processing.",
+    "caption": "The rendering process usually spends more time on setup than on the final render button."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Imported models can steal the schedule"
+  },
+  {
+    "type": "paragraph",
+    "text": "Imported 3D models are often where a rendering file starts to slow down. SketchUp models are especially tempting because they can fill a scene quickly, but they often arrive with hidden costs: nested groups, excessive faces, repeated components, oversized textures, and object organization that was never built for a scenic Vectorworks file."
+  },
+  {
+    "type": "paragraph",
+    "text": "That does not make SketchUp models unusable. It means they need to be treated as source material, not finished scenery. A warehouse chair, window, molding profile, or prop may be useful as a reference, but the imported object should earn its place in the file. If it is too dense, too messy, or too texture-heavy, it will slow the rendering process before lighting even begins."
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "Use imported models for scale, shape, and reference value, then simplify aggressively.",
+      "Delete unseen backs, bottoms, nested leftovers, and excessive small geometry that the camera will never read.",
+      "Convert repeated objects into symbols so Vectorworks can reuse the resource instead of carrying separate copies.",
+      "Downsize texture maps before they become part of the working file."
+    ]
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Choose the handoff before import"
+  },
+  {
+    "type": "paragraph",
+    "text": "File cleanup starts before the model enters Vectorworks. If the import brings in every material folder, nested component, and mesh object exactly as it came from another program, the Vectorworks file inherits all of that weight. A better workflow decides what the model needs to become before it is imported."
+  },
+  {
+    "type": "setting_step",
+    "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/workbench-usd-export.png",
+    "imageAlt": "Finder view showing an optimized Vectorworks file, original Vectorworks file, and a USD export folder with textures.",
+    "caption": "A clean interchange step can separate the working Vectorworks file from the heavier source model.",
+    "title": "USD and USDZ are useful when the asset needs to travel cleanly",
+    "paragraphs": [
+      "With newer Vectorworks support for USD workflows, USD and USDZ become useful options when a model needs to travel between applications without dragging every part of the original file structure into the working document. USD can be a lighter interchange path when the priority is geometry. USDZ is helpful when the asset needs to keep textures and material references bundled together in a portable package.",
+      "USDZ is not magic cleanup. It will not turn a bad model into a good scenic asset by itself. The benefit is that it gives the designer a more controlled handoff: convert the source, inspect the result, then bring the object into Vectorworks only after the file format supports the kind of rendering work that needs to happen."
+    ]
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Simplify imported mesh objects before they become scenery"
+  },
+  {
+    "type": "paragraph",
+    "text": "After import, the model still needs a cleanup pass. Collapse unnecessary class clutter, simplify the mesh as far as the shape allows, ungroup only when it helps reveal usable geometry, and then save the result as a symbol if it will repeat. The point is not to erase detail. The point is to keep only the detail that supports the rendering."
+  },
+  {
+    "type": "video",
+    "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/video/articles/vectorworks-rendering-series/simplify-mesh.mp4",
+    "caption": "Autoplay clip: simplifying imported mesh geometry before saving the object back into the file."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Texture size should match the scenic need"
+  },
+  {
+    "type": "paragraph",
+    "text": "Most scenic renderings do not need every texture to be a 4K image. If a material is tiled across a large surface, a well-made 1024 or 2048 texture can often read clearly while keeping the model lighter. The goal is not maximum resolution everywhere. The goal is the right amount of information in the places the camera can actually see."
+  },
+  {
+    "type": "paragraph",
+    "text": "When a texture is only supporting a wall, floor, or distant scenic surface, downsize it before importing. JPEG is usually appropriate for compressed photographic texture maps. PNG is useful when transparency or lossless edges matter. The file should not pay for resolution the audience will never read."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Keep the working file for decisions"
+  },
+  {
+    "type": "paragraph",
+    "text": "The workflow file should stay focused on decisions that are still alive: model edits, texture changes, camera tests, lighting adjustments, and rendering style choices. Once the image moves into final presentation, publishing, or post-processing, that becomes a separate step with different priorities."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "A small utility can help before the next import"
+  },
+  {
+    "type": "paragraph",
+    "text": "The core habit is still file discipline inside Vectorworks. But if imported models keep becoming the slowest part of the workflow, it helps to add a cleanup step before the asset ever reaches the production file."
+  },
+  {
+    "type": "resource_callout",
+    "eyebrow": "Studio app",
+    "title": "Scenic 3D Converter",
+    "description": "A local Mac utility for converting 3D files into Vectorworks-friendly USD, USDZ, and 3DM outputs before those assets enter a production file.",
+    "href": "/studio/apps/scenic-3d-converter"
+  },
+  {
+    "type": "image",
+    "display": "infographic",
+    "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/scenic-3d-converter-modes-art.png",
+    "alt": "Scenic 3D Converter mode artwork showing USD, USDZ, and 3DM conversion options.",
+    "caption": "The converter is most useful before import: choose the output that matches the problem, then bring the cleaner asset into Vectorworks."
+  },
+  {
+    "type": "quote",
+    "text": "A fast rendering file is not less designed. It is designed so the next decision can still happen."
+  }
+]

@@ -1,0 +1,196 @@
+[
+  {
+    "type": "paragraph",
+    "text": "Lighting and render styles are easiest to judge when the model stays still. The same camera, same scenery, and same composition can reveal what each render choice actually changes: speed, contrast, material response, atmosphere, and focus."
+  },
+  {
+    "type": "paragraph",
+    "text": "The goal is not to make every render as heavy as possible. The goal is to choose the lightest setup that communicates the scenic idea clearly enough for the current stage of review."
+  },
+  {
+    "type": "media_tabs",
+    "eyebrow": "One Model, Five Reads",
+    "title": "Compare the render before committing to a style",
+    "intro": "Use the tabs to move through the same Carnegie Library model rendered five ways. Nothing changes except the render approach, which makes the differences easier to read.",
+    "items": [
+      {
+        "label": "Shaded",
+        "kicker": "Fast Review",
+        "title": "Shaded render",
+        "body": "Use Shaded view to check composition, camera height, and model form before spending time on texture or light calculation.",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/render-tabs-cropped/shaded-render.jpg",
+        "alt": "The Carnegie Library scenic model shown as a dark shaded render."
+      },
+      {
+        "label": "Final Quality",
+        "kicker": "Material Check",
+        "title": "Final quality without a lighting layer",
+        "body": "The model becomes clearer and the materials start to read, but the stage picture is still evenly weighted. This pass is useful for checking surfaces, not for directing the eye.",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/render-tabs-cropped/final-quality-no-lighting.jpg",
+        "alt": "The scenic model rendered in final quality without a dedicated lighting layer."
+      },
+      {
+        "label": "With Lighting",
+        "kicker": "Focus Pass",
+        "title": "Final quality with a lighting layer",
+        "body": "A lighting layer starts to create hierarchy. The focal area gains value contrast while the surrounding stage can fall away.",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/render-tabs-cropped/final-quality-with-lighting.jpg",
+        "alt": "The scenic model rendered with a lighting layer creating focus on the central area."
+      },
+      {
+        "label": "Redshift",
+        "kicker": "Production Render",
+        "title": "Custom Redshift",
+        "body": "Redshift can deepen contrast and support more complex lighting behavior. It is most useful when the file and hardware can afford the extra rendering work.",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/render-tabs-cropped/custom-redshift.jpg",
+        "alt": "The scenic model rendered with a custom Redshift style."
+      },
+      {
+        "label": "Realistic",
+        "kicker": "Scenic Baseline",
+        "title": "Custom Realistic Renderworks",
+        "body": "Realistic Renderworks gives a controlled scenic rendering with clear material response. It is often a practical choice when the goal is strong communication without overbuilding the render.",
+        "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/render-tabs-cropped/custom-realistic-renderworks.jpg",
+        "alt": "The scenic model rendered with a custom Realistic Renderworks style."
+      }
+    ]
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Build the lighting layer before polishing the style"
+  },
+  {
+    "type": "paragraph",
+    "text": "The workflow starts with a generic lighting layer, not a finished theatrical cue. A practical first pass is a grid of spotlights spaced roughly 4 feet apart, placed at a height that makes sense for the imagined venue, with the look height around 4 feet so light moves through the scenic volume."
+  },
+  {
+    "type": "paragraph",
+    "text": "After the grid exists, the useful move is subtraction. Remove lights that flatten the focal point, add front light only where the camera needs it, and name the lights clearly. The lighting layer should make the model easier to read before the Renderworks style asks for more render time."
+  },
+  {
+    "type": "video",
+    "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/video/articles/vectorworks-rendering-series/generic-lighting-setup.mp4",
+    "caption": "Autoplay clip: building a basic spotlight grid on a dedicated visualization layer."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Build a custom render setting for scenic design"
+  },
+  {
+    "type": "paragraph",
+    "text": "Once the lighting layer is doing useful work, the next step is not to pick a preset and hope. A custom Renderworks style lets the scenic designer decide how the image should calculate atmosphere, materials, shadows, indirect light, and render quality."
+  },
+  {
+    "type": "paragraph",
+    "text": "The process below follows the actual setup sequence: create the background, choose whether the style should use Redshift by Maxon or Realistic Renderworks, tune only the quality settings that change the read, then attach the background so the style can be reused across viewports."
+  },
+  {
+    "type": "setting_step",
+    "number": "01",
+    "title": "Start with the Renderworks background",
+    "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/settings-tabs/renderworks-background.png",
+    "imageAlt": "Vectorworks Edit Renderworks Background dialog set to a black one-color background.",
+    "caption": "A controlled background keeps the rendering from inheriting a distracting default environment.",
+    "paragraphs": [
+      "A Renderworks Background gives the style its environment. In this workflow, the black one-color background creates a clean theatre-like field so the set, material values, and lighting contrast can carry the image.",
+      "If the rendering needs fog or atmosphere, that choice should also be made here. Lit fog changes how light moves through the scene, so it belongs in the render setup rather than being treated like a cosmetic overlay."
+    ]
+  },
+  {
+    "type": "render_choice",
+    "number": "02",
+    "title": "Choose the engine: Redshift or Realistic Renderworks",
+    "intro": "This is the fork in the custom style. Redshift by Maxon and Realistic Renderworks are both valid options; the right choice depends on whether the image needs deeper lighting calculation or faster material communication.",
+    "compare": {
+      "eyebrow": "Lighting vs Texture",
+      "title": "Shaded helps judge the lighting; Realistic helps judge the texture",
+      "intro": "Drag the divider across the same model. Shaded is the faster read for light placement, value, and focus because it stays simple. Realistic Renderworks is the better read for texture, surface response, displacement, and material finish.",
+      "beforeLabel": "Shaded",
+      "afterLabel": "Realistic Renderworks",
+      "beforeUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/render-tabs-cropped/shaded-render.jpg",
+      "afterUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/render-tabs-cropped/custom-realistic-renderworks.jpg",
+      "beforeAlt": "The Carnegie Library scenic model shown in Shaded view.",
+      "afterAlt": "The Carnegie Library scenic model rendered with a custom Realistic Renderworks style."
+    },
+    "choices": [
+      {
+        "label": "Redshift by Maxon",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/settings-tabs/redshift-options.png",
+        "imageAlt": "Vectorworks Edit Renderworks Style Redshift options tab.",
+        "caption": "Redshift is the GPU-accelerated rendering option inside the custom Renderworks style.",
+        "paragraphs": [
+          "Choose Redshift when the scenic model needs richer light behavior, glow textures, blur, reflections, and a more complex sense of depth.",
+          "It is strongest for final presentation renders when the file is organized and the computer can afford the extra calculation. The benefit is not automatic beauty; it is more room for the engine to resolve light and material interaction."
+        ]
+      },
+      {
+        "label": "Realistic Renderworks",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/settings-tabs/realistic-options.png",
+        "imageAlt": "Vectorworks Edit Renderworks Style Realistic options tab.",
+        "caption": "Realistic Renderworks is often the practical baseline for scenic material studies and presentation drafts.",
+        "paragraphs": [
+          "Choose Realistic Renderworks when the rendering needs a clear read of shadows, texture maps, displacement, color, and camera effects without turning every test image into a long render.",
+          "It is often better for iteration, teaching, and quick design review because it communicates scenic materials quickly and consistently."
+        ]
+      }
+    ]
+  },
+  {
+    "type": "render_choice",
+    "number": "03",
+    "title": "Tune quality for the engine you chose",
+    "intro": "The quality pages are not a separate design idea. They are how the selected engine is tuned so the image spends render time where the camera can actually see the improvement.",
+    "choices": [
+      {
+        "label": "Redshift quality",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/settings-tabs/redshift-quality.png",
+        "imageAlt": "Vectorworks Edit Renderworks Style Redshift quality tab.",
+        "caption": "Redshift quality settings trade render time for cleaner curves, sampling, and lighting response.",
+        "paragraphs": [
+          "Very High curved geometry can help round scenic objects, railings, trim, and furniture read cleanly. Higher sampling can reduce noise in darker renders or scenes with more complex lighting.",
+          "Raise these settings because the camera can see the problem, not because the menu offers a higher value."
+        ]
+      },
+      {
+        "label": "Realistic quality",
+        "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/settings-tabs/realistic-quality.png",
+        "imageAlt": "Vectorworks Edit Renderworks Style Realistic quality tab.",
+        "caption": "Custom quality settings let Realistic Renderworks prioritize the parts of the image that matter.",
+        "paragraphs": [
+          "Clean curved geometry, stronger anti-aliasing, readable indirect light, and controlled soft shadows help the scenic model feel less mechanical.",
+          "Other settings can stay moderate. Low blurriness preserves texture information, medium displacement keeps surface relief visible, and limited reflections keep the render from spending time on effects that may not matter."
+        ]
+      }
+    ]
+  },
+  {
+    "type": "setting_step",
+    "number": "04",
+    "title": "Let the style interpret the lighting layer",
+    "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/settings-tabs/lighting-tab.png",
+    "imageAlt": "Vectorworks Edit Renderworks Style lighting tab showing indirect lighting and ambient occlusion settings.",
+    "caption": "The Lighting tab controls indirect light, ambient fill, and contact shadow inside the custom style.",
+    "paragraphs": [
+      "The Lighting tab determines how the render style reads the lighting layer. Normal indirect lighting with a few bounces lets light move through the scenic volume, while a small amount of ambient fill keeps dark areas readable without flattening the composition.",
+      "Ambient occlusion is especially useful in scenic renderings because it reinforces contact: where platforms meet the floor, where walls overlap, and where furniture sits inside the world of the set."
+    ]
+  },
+  {
+    "type": "setting_step",
+    "number": "05",
+    "title": "Save the background into the finished style",
+    "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/settings-tabs/style-background-tab.png",
+    "imageAlt": "Vectorworks Edit Renderworks Style background tab with a black Renderworks background assigned.",
+    "caption": "Assigning the background inside the style makes the custom render setting reusable.",
+    "paragraphs": [
+      "The last move is to attach the background to the Renderworks style itself. That turns the setup into a reusable custom render setting rather than a loose set of viewport choices that has to be rebuilt later.",
+      "For scenic design, that repeatability matters. The same style can support multiple cameras, model revisions, and presentation images while keeping the visual language consistent."
+    ]
+  },
+  {
+    "type": "quote",
+    "text": "A render style is useful when every setting has a job: reveal the form, support the materials, focus the eye, or save the file time."
+  }
+]

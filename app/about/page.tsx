@@ -1,6 +1,8 @@
 import AboutPage from "../../client/src/pages/About";
 import { NextPathProvider } from "../../components/routing/NextPathProvider";
-import { buildPageMetadata } from "../../lib/metadata";
+import { JsonLdScript } from "../../components/seo/JsonLdScript";
+import { absoluteUrl, buildPageMetadata } from "../../lib/metadata";
+import { getAboutProfilePageJsonLd, getBreadcrumbJsonLd } from "../../lib/seo/entities";
 
 export const dynamic = "force-static";
 
@@ -13,8 +15,18 @@ export const metadata = buildPageMetadata({
 
 export default function Page() {
   return (
-    <NextPathProvider currentPath="/about">
-      <AboutPage />
-    </NextPathProvider>
+    <>
+      <JsonLdScript id="about-profile-json-ld" data={getAboutProfilePageJsonLd()} />
+      <JsonLdScript
+        id="about-breadcrumb-json-ld"
+        data={getBreadcrumbJsonLd([
+          { name: "Home", url: absoluteUrl("/") },
+          { name: "About", url: absoluteUrl("/about") },
+        ])}
+      />
+      <NextPathProvider currentPath="/about">
+        <AboutPage />
+      </NextPathProvider>
+    </>
   );
 }

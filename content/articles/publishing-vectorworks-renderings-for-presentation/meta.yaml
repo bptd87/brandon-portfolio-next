@@ -1,0 +1,36 @@
+type: article
+slug: publishing-vectorworks-renderings-for-presentation
+title: Publishing Vectorworks Renderings for Presentation
+status: published
+featured: false
+excerpt: >-
+  A publishing workflow for exporting finished Vectorworks renderings as presentation-ready images without keeping heavy
+  live viewports in the file.
+category: Tools & Technology
+seoTitle: 'Publishing Vectorworks Renderings for Presentation'
+seoDescription: >-
+  Learn how to publish Vectorworks scenic renderings from viewports, choose image size and DPI, and prepare final files
+  for Photoshop or presentation sharing.
+seoKeywords:
+  - publish Vectorworks rendering
+  - Vectorworks viewport image export
+  - scenic rendering presentation
+  - Renderworks publishing
+  - theatre design presentation
+cover:
+  asset: https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/convert-bitmap-poster.jpg
+  alt: Vectorworks rendering sheet with a completed scenic rendering prepared for output.
+tags:
+  - vectorworks
+  - scenic-rendering
+  - presentation
+  - renderworks
+  - photoshop
+readTime: 4
+publishedAt: '2026-03-17'
+updatedAt: '2026-04-29T00:00:00.000+00:00'
+linkedScenicProjectSlugs: []
+series:
+  name: Vectorworks Rendering
+  slug: vectorworks-rendering
+  order: 5

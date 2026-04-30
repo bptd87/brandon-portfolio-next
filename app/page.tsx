@@ -1,6 +1,8 @@
 import HomePage from "../client/src/pages/Home";
 import { NextPathProvider } from "../components/routing/NextPathProvider";
-import { buildPageMetadata } from "../lib/metadata";
+import { JsonLdScript } from "../components/seo/JsonLdScript";
+import { absoluteUrl, buildPageMetadata } from "../lib/metadata";
+import { getBreadcrumbJsonLd } from "../lib/seo/entities";
 import { getLocalScenicProjects } from "../shared/localScenicProjects";
 import { toScenicProjectSummary } from "../shared/scenicProjectSummaries";
 
@@ -17,8 +19,14 @@ export default function Page() {
   const projects = getLocalScenicProjects().map(toScenicProjectSummary);
 
   return (
-    <NextPathProvider currentPath="/">
-      <HomePage initialProjects={projects} />
-    </NextPathProvider>
+    <>
+      <JsonLdScript
+        id="home-breadcrumb-json-ld"
+        data={getBreadcrumbJsonLd([{ name: "Home", url: absoluteUrl("/") }])}
+      />
+      <NextPathProvider currentPath="/">
+        <HomePage initialProjects={projects} />
+      </NextPathProvider>
+    </>
   );
 }

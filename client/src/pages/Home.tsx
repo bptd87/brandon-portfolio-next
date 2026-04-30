@@ -8,7 +8,6 @@ import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
 import { ProjectGridSkeleton } from "@/components/SkeletonLoaders";
 import { StickyShowcase } from "@/components/StickyShowcase";
-import StructuredData from "@/components/StructuredData";
 import { getProjectPath } from "@/lib/projectRoutes";
 import {
   scenicShowcaseProps,
@@ -16,7 +15,6 @@ import {
   splitScenicShowcaseProjects,
 } from "@/lib/scenicShowcase";
 import type { ScenicProjectSummary } from "@shared/scenicProjectSummaries";
-import { getConfiguredSiteUrl } from "../../../lib/env/site";
 
 const homeLandingCopy = {
   subtitle: "Brandon PT Davis",
@@ -24,10 +22,6 @@ const homeLandingCopy = {
   intro:
     "A portfolio of theatre environments, concept renderings, and experiential design work built around story, architecture, and the emotional logic of performance.",
 } as const;
-
-const SITE_URL = getConfiguredSiteUrl();
-const PROFILE_IMAGE_URL =
-  "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
 
 export default function Home({ initialProjects }: { initialProjects: ScenicProjectSummary[] }) {
   const [, setLocation] = useLocation();
@@ -87,100 +81,10 @@ export default function Home({ initialProjects }: { initialProjects: ScenicProje
 
   return (
     <>
-      <StructuredData
-        type="Both"
-        person={{
-          name: "Brandon PT Davis",
-          jobTitle: "Scenic Designer",
-          url: SITE_URL,
-          image: PROFILE_IMAGE_URL,
-          description:
-            "Union scenic designer based in Southern California with 130+ production credits across regional theatre, summer stock, and academic stages. Member of USA 829.",
-          email: "info@brandonptdavis.com",
-          address: {
-            addressLocality: "Irvine",
-            addressRegion: "CA",
-            addressCountry: "US",
-          },
-          sameAs: [
-            "https://www.instagram.com/brandonptdavisdesign",
-            "https://www.linkedin.com/in/brandonptdavis",
-            "https://www.youtube.com/@BrandonPTDavisDesign",
-            "https://www.facebook.com/BrandonPTDavisA",
-            "https://www.pinterest.com/BrandonPTDavis/",
-            "https://www.usa829.org/Member-Profile/MemberID/15357",
-          ],
-          alumniOf: [
-            {
-              name: "University of California, Irvine",
-              url: "https://www.uci.edu",
-            },
-            {
-              name: "Stephens College",
-              url: "https://www.stephens.edu",
-            },
-          ],
-          knowsAbout: [
-            "Scenic Design",
-            "Theatrical Design",
-            "Regional Theatre",
-            "Summer Stock Theatre",
-            "Academic Theatre",
-            "Concept Rendering",
-            "Vectorworks",
-            "Twinmotion",
-            "3D Modeling",
-            "Digital Drafting",
-            "Production Collaboration",
-          ],
-        }}
-        organization={{
-          name: "Brandon PT Davis Design",
-          url: SITE_URL,
-          image: "https://www.brandonptdavis.com/og-default.jpeg",
-          description:
-            "Scenic design studio focused on story-driven environments for regional theatre, summer stock, and academic production.",
-          founder: {
-            name: "Brandon PT Davis",
-            url: `${SITE_URL}/about`,
-          },
-          foundingDate: "2015",
-          email: "info@brandonptdavis.com",
-          address: {
-            addressLocality: "Irvine",
-            addressRegion: "CA",
-            addressCountry: "US",
-          },
-          sameAs: [
-            "https://www.instagram.com/brandonptdavisdesign",
-            "https://www.linkedin.com/in/brandonptdavis",
-            "https://www.youtube.com/@BrandonPTDavisDesign",
-            "https://www.facebook.com/BrandonPTDavisA",
-            "https://www.pinterest.com/BrandonPTDavis/",
-          ],
-        }}
-      />
-      <StructuredData
-        type="WebSite"
-        webSite={{
-          name: "Brandon PT Davis",
-          url: SITE_URL,
-          description: "Professional scenic designer creating story-driven theatrical environments.",
-          inLanguage: "en-US",
-          publisher: {
-            name: "Brandon PT Davis Design",
-            logo: "https://www.brandonptdavis.com/android-chrome-512x512.png",
-          },
-        }}
-      />
-      <StructuredData
-        type="BreadcrumbList"
-        breadcrumbs={[{ name: "Home", url: "https://www.brandonptdavis.com" }]}
-      />
       <SEO
         title="Brandon PT Davis | Scenic Designer"
-        description="Union scenic designer in Southern California creating story-driven environments for regional theatre, summer stock, and academic production."
-        keywords="scenic designer, scenic design portfolio, USA 829 scenic designer, Southern California scenic designer, regional theatre design, stage design, Brandon PT Davis"
+        description="San Diego-based union scenic designer creating story-driven environments for regional theatre, summer stock, and academic production."
+        keywords="scenic designer, scenic design portfolio, USA 829 scenic designer, San Diego scenic designer, Southern California scenic designer, regional theatre design, stage design, Brandon PT Davis"
         image={featuredProject?.coverImageUrl || undefined}
         imageAlt={
           featuredProject

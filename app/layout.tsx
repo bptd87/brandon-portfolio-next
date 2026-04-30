@@ -4,9 +4,15 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 import { LegacyProviders } from "../components/legacy/Providers";
+import { JsonLdScript } from "../components/seo/JsonLdScript";
 import { LegacyClientCleanup } from "../components/site/LegacyClientCleanup";
 import { PostHogAnalytics } from "../components/site/PostHogAnalytics";
 import { absoluteUrl, siteMetadata } from "../lib/metadata";
+import {
+  getBrandonOrganizationJsonLd,
+  getBrandonPersonJsonLd,
+  getWebsiteJsonLd,
+} from "../lib/seo/entities";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
@@ -84,7 +90,16 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <head />
+      <head>
+        <JsonLdScript
+          id="site-entity-json-ld"
+          data={[
+            getWebsiteJsonLd(),
+            getBrandonOrganizationJsonLd(),
+            getBrandonPersonJsonLd(),
+          ]}
+        />
+      </head>
       <body className="min-h-screen bg-gradient-premium">
         <LegacyClientCleanup />
         <PostHogAnalytics />

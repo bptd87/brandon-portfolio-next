@@ -1,0 +1,75 @@
+[
+  {
+    "type": "paragraph",
+    "text": "A rendering camera is a storytelling tool before it is a software object. It decides where the audience stands, what the image values, and how much of the scenic world is allowed into the frame."
+  },
+  {
+    "type": "paragraph",
+    "text": "In Vectorworks, the camera setup should be separated from the construction drawing logic. Documentation needs accuracy. Rendering needs a controlled view. Keeping those needs on a dedicated visualization layer makes the file easier to adjust without contaminating the drafting set."
+  },
+  {
+    "type": "video",
+    "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/video/articles/vectorworks-rendering-series/camera-setup.mov",
+    "caption": "Autoplay clip: placing and activating a Vectorworks camera before turning the view into a rendering viewport."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Create a rendering layer"
+  },
+  {
+    "type": "paragraph",
+    "text": "Begin with a dedicated layer for visualization elements. In the lecture file, that layer is named Scenic-LTG. The name is practical: cameras, lights, and rendering helpers can live there without interfering with the sheet layers, design layers, or construction drawings."
+  },
+  {
+    "type": "paragraph",
+    "text": "That separation also makes it easier to hide or revise rendering elements later. A camera should support the presentation image, not become accidental documentation."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Place the camera from the ground"
+  },
+  {
+    "type": "paragraph",
+    "text": "Select the Video Camera tool from the Visualization palette and place it near the ground in the area where the viewer should be standing. For many scenic renderings, a video camera lens between 15mm and 55mm gives enough flexibility to land around an effective 35mm point of view."
+  },
+  {
+    "type": "paragraph",
+    "text": "After placing the camera, activate it from the Object Info palette and adjust the view until the composition feels intentional. This is the moment to think like a designer, not a technician: where does the eye enter the frame, what is cropped out, and what emotional distance does the image create?"
+  },
+  {
+    "type": "image",
+    "display": "artwork",
+    "url": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/camera-setup-poster.jpg",
+    "alt": "Vectorworks top plan view with a camera placed in relation to a scenic model.",
+    "caption": "The camera is easier to control when it lives on a visualization layer rather than inside the drafting logic."
+  },
+  {
+    "type": "heading",
+    "level": 2,
+    "text": "Turn the camera view into a viewport"
+  },
+  {
+    "type": "paragraph",
+    "text": "Once the camera view is framed, create a viewport for the rendering. Naming matters here. A clear name such as R_1 | Rendering keeps the viewport readable when there are multiple images in progress."
+  },
+  {
+    "type": "paragraph",
+    "text": "For working renders, keep the scale modest. The lecture uses 1/4 inch equals 1 foot because it helps control rendering time while the image is still being tested. Large final output can come later, during publishing."
+  },
+  {
+    "type": "list",
+    "listType": "bullet",
+    "items": [
+      "Use a 2:3 aspect ratio when the rendering needs a strong presentation-card format.",
+      "Create a custom page size when the image needs exact proportions.",
+      "Uncheck Show Planar so the viewport does not display construction helpers that are not part of the rendering.",
+      "Create a new viewport for each additional camera instead of constantly overwriting the same view."
+    ]
+  },
+  {
+    "type": "quote",
+    "text": "The camera is where the rendering stops being a model screenshot and becomes a designed point of view."
+  }
+]

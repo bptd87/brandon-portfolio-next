@@ -1,9 +1,9 @@
 export const voiceProfile = {
   location: {
     summary:
-      "Brandon is based in Orange County, California, with Irvine serving as his current home base in Southern California.",
-    currentBase: "Irvine, California",
-    region: "Orange County, California",
+      "Brandon is based in San Diego, California, with a Southern California practice that supports regional theatre, academic production, and scenic design education.",
+    currentBase: "San Diego, California",
+    region: "San Diego, California",
     broaderRegion: "Southern California",
   },
 

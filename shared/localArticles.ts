@@ -2419,6 +2419,117 @@ const musicalCinema1980sArticle: LocalArticle = {
   content: musicalCinema1980sArticleBlocks as LocalArticle["content"],
 };
 
+const vectorworksRenderingTags = [
+  { id: 101001, name: "Vectorworks", slug: "vectorworks" },
+  { id: 101002, name: "Scenic Rendering", slug: "scenic-rendering" },
+  { id: 101003, name: "Renderworks", slug: "renderworks" },
+  { id: 101004, name: "Scenic Design", slug: "scenic-design" },
+];
+
+const vectorworksRenderingWorkflowArticle: LocalArticle = {
+  id: 100020,
+  slug: "vectorworks-rendering-workflow-file-size-and-speed",
+  title: "Vectorworks Rendering Workflow: File Size and Speed",
+  excerpt:
+    "A practical rendering workflow for keeping Vectorworks scenic files responsive through imported model cleanup, USDZ handoffs, texture size, and final output decisions.",
+  coverImageUrl: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/file-size-speed-workflow-cover.png",
+  coverImageAlt: "Abstract scenic rendering workflow moving from dense imported mesh geometry to a clean render-ready Vectorworks model.",
+  publishedAt: "2026-03-14",
+  updatedAt: "2026-04-29",
+  categoryName: "Tools & Technology",
+  seoTitle: "Vectorworks Rendering Workflow: File Size and Speed",
+  seoDescription:
+    "A practical Vectorworks rendering workflow for keeping scenic files responsive by managing SketchUp imports, USDZ handoffs, mesh cleanup, texture size, and bitmap publishing.",
+  tags: [
+    ...vectorworksRenderingTags,
+    { id: 101005, name: "File Optimization", slug: "file-optimization" },
+    { id: 101006, name: "SketchUp", slug: "sketchup" },
+    { id: 101007, name: "USDZ", slug: "usdz" },
+  ],
+  featured: false,
+  readTime: 7,
+  linkedScenicProjectSlugs: [],
+  series: { name: "Vectorworks Rendering", slug: "vectorworks-rendering", order: 2 },
+  content: [],
+};
+
+const vectorworksCameraSetupArticle: LocalArticle = {
+  id: 100021,
+  slug: "setting-up-vectorworks-cameras-for-scenic-renderings",
+  title: "Setting Up Vectorworks Cameras for Scenic Renderings",
+  excerpt:
+    "A camera setup workflow for scenic renderings in Vectorworks, from visualization layers to camera viewports.",
+  coverImageUrl: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/camera-setup-poster.jpg",
+  coverImageAlt: "Vectorworks camera setup over a scenic ground plan.",
+  publishedAt: "2026-03-15",
+  updatedAt: "2026-04-29",
+  categoryName: "Tools & Technology",
+  seoTitle: "Setting Up Vectorworks Cameras for Scenic Renderings",
+  seoDescription:
+    "A practical guide to setting up Vectorworks cameras for scenic design renderings, including lens choice, aspect ratio, viewport scale, and rendering sheet setup.",
+  tags: [
+    ...vectorworksRenderingTags,
+    { id: 101006, name: "Cameras", slug: "cameras" },
+  ],
+  featured: false,
+  readTime: 5,
+  linkedScenicProjectSlugs: [],
+  series: { name: "Vectorworks Rendering", slug: "vectorworks-rendering", order: 3 },
+  content: [],
+};
+
+const vectorworksLightingRenderStylesArticle: LocalArticle = {
+  id: 100022,
+  slug: "lighting-and-render-styles-in-vectorworks",
+  title: "Renderworks Settings and Lighting in Vectorworks",
+  excerpt:
+    "A scenic rendering workflow for comparing the same model across render looks, building a lighting layer, and choosing Renderworks settings with intention.",
+  coverImageUrl: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/render-tabs-cropped/custom-realistic-renderworks.jpg",
+  coverImageAlt: "Carnegie Library scenic model rendered with a custom Realistic Renderworks style.",
+  publishedAt: "2026-03-16",
+  updatedAt: "2026-04-29",
+  categoryName: "Tools & Technology",
+  seoTitle: "Lighting and Render Styles in Vectorworks",
+  seoDescription:
+    "Learn how to compare Vectorworks render styles, build a scenic lighting layer, and use Renderworks background, quality, lighting, Redshift, and Realistic settings.",
+  tags: [
+    ...vectorworksRenderingTags,
+    { id: 101007, name: "Lighting", slug: "lighting" },
+    { id: 101008, name: "Redshift", slug: "redshift" },
+  ],
+  featured: false,
+  readTime: 7,
+  linkedScenicProjectSlugs: [],
+  series: { name: "Vectorworks Rendering", slug: "vectorworks-rendering", order: 4 },
+  content: [],
+};
+
+const vectorworksPublishingRenderingsArticle: LocalArticle = {
+  id: 100023,
+  slug: "publishing-vectorworks-renderings-for-presentation",
+  title: "Publishing Vectorworks Renderings for Presentation",
+  excerpt:
+    "A publishing workflow for turning finished Vectorworks renderings into presentation-ready images.",
+  coverImageUrl: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/convert-bitmap-poster.jpg",
+  coverImageAlt: "Vectorworks rendering viewport prepared for publishing.",
+  publishedAt: "2026-03-17",
+  updatedAt: "2026-04-29",
+  categoryName: "Tools & Technology",
+  seoTitle: "Publishing Vectorworks Renderings for Presentation",
+  seoDescription:
+    "A practical Vectorworks publishing workflow for exporting scenic renderings from viewports, choosing image size and DPI, and preparing files for Photoshop or presentation.",
+  tags: [
+    ...vectorworksRenderingTags,
+    { id: 101009, name: "Presentation", slug: "presentation" },
+    { id: 101010, name: "Photoshop", slug: "photoshop" },
+  ],
+  featured: false,
+  readTime: 4,
+  linkedScenicProjectSlugs: [],
+  series: { name: "Vectorworks Rendering", slug: "vectorworks-rendering", order: 5 },
+  content: [],
+};
+
 const dbBackedArticles = (generatedLocalArticles as LocalArticle[]).map(mergeArticleSources);
 
 const baseArticles = dbBackedArticles.some((article) => article.slug === VOYAGELA_ARTICLE_SLUG)
@@ -2434,6 +2545,10 @@ const manualArticles: LocalArticle[] = [
   britishMegamusicalArticle,
   evolutionNarrativeCinemaArticle,
   musicalCinema1980sArticle,
+  vectorworksRenderingWorkflowArticle,
+  vectorworksCameraSetupArticle,
+  vectorworksLightingRenderStylesArticle,
+  vectorworksPublishingRenderingsArticle,
 ];
 
 const articlesWithManualEntries = [

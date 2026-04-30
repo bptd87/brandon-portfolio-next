@@ -9,11 +9,9 @@ import AboutNav from "@/components/AboutNav";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
-import StructuredData from "@/components/StructuredData";
 import { resolveBlobMediaUrl } from "@shared/mediaBlob";
 import { formatUtcDate } from "@/lib/date-format";
 import { getLocalArticles } from "@shared/localArticles";
-import { getConfiguredSiteUrl } from "../../../lib/env/site";
 
 const galleryImages = [
   {
@@ -128,8 +126,6 @@ const workingPrinciples = [
   },
 ];
 
-const SITE_URL = getConfiguredSiteUrl();
-
 export default function About() {
   const galleryRailRef = useRef<HTMLDivElement | null>(null);
   const galleryItemRefs = useRef<Array<HTMLDivElement | null>>([]);
@@ -194,90 +190,9 @@ export default function About() {
     <div className="min-h-screen bg-background">
       <SEO
         title="About Brandon PT Davis | Scenic Designer & Educator"
-        description="Southern California scenic designer with 130+ production credits across regional theatre, summer stock, and education. USA 829 member based in Orange County."
+        description="San Diego-based scenic designer with 130+ production credits across regional theatre, summer stock, and education. USA 829 member working across Southern California and beyond."
         url="https://www.brandonptdavis.com/about"
-        keywords="Brandon PT Davis scenic designer, USA 829 scenic designer, scenic designer California, Orange County scenic designer, scenic design educator, UC Irvine, regional theatre scenic design"
-      />
-      <StructuredData
-        type="Person"
-        person={{
-          name: "Brandon PT Davis",
-          jobTitle: "Scenic Designer",
-          url: `${SITE_URL}/about`,
-          image: "https://www.brandonptdavis.com/android-chrome-512x512.png",
-          description:
-            "Scenic designer and conceptual artist known for a dramaturgical approach to stage space, with work at South Coast Repertory and 130+ productions across regional theatre, contemporary drama, and classical repertoire. Member of USA 829.",
-          email: "info@brandonptdavis.com",
-          address: {
-            addressLocality: "Irvine",
-            addressRegion: "CA",
-            addressCountry: "US",
-          },
-          sameAs: [
-            "https://www.instagram.com/brandonptdavisdesign",
-            "https://www.linkedin.com/in/brandonptdavis",
-            "https://www.youtube.com/@BrandonPTDavisDesign",
-            "https://www.facebook.com/BrandonPTDavisA",
-            "https://www.pinterest.com/BrandonPTDavis/",
-            "https://www.usa829.org/Member-Profile/MemberID/15357",
-          ],
-          alumniOf: [
-            {
-              name: "University of California, Irvine",
-              url: "https://www.uci.edu",
-            },
-            {
-              name: "Stephens College",
-              url: "https://www.stephens.edu",
-            },
-          ],
-          knowsAbout: [
-            "Scenic Design",
-            "Conceptual Design",
-            "Regional Theatre",
-            "Contemporary Drama",
-            "Dramaturgical Design",
-            "Design Mentorship",
-            "Vectorworks",
-            "Twinmotion",
-            "3D Modeling",
-            "Digital Fabrication",
-            "Scenic Design Education",
-          ],
-        }}
-      />
-      <StructuredData
-        type="ProfilePage"
-        profilePage={{
-          url: `${SITE_URL}/about`,
-          name: "About Brandon PT Davis",
-          description:
-            "Profile of Brandon PT Davis, scenic designer and USA 829 member based in Southern California.",
-          primaryImageOfPage: ABOUT_HEADSHOT_URL,
-          mainEntity: {
-            name: "Brandon PT Davis",
-            jobTitle: "Scenic Designer",
-            url: `${SITE_URL}/about`,
-            image: ABOUT_HEADSHOT_URL,
-            description:
-              "Scenic designer and conceptual artist with 130+ production credits across regional theatre and academic stages.",
-            sameAs: [
-              "https://www.instagram.com/brandonptdavisdesign",
-              "https://www.linkedin.com/in/brandonptdavis",
-              "https://www.youtube.com/@BrandonPTDavisDesign",
-              "https://www.facebook.com/BrandonPTDavisA",
-              "https://www.pinterest.com/BrandonPTDavis/",
-              "https://www.usa829.org/Member-Profile/MemberID/15357",
-            ],
-          },
-        }}
-      />
-      <StructuredData
-        type="BreadcrumbList"
-        breadcrumbs={[
-          { name: "Home", url: SITE_URL },
-          { name: "About", url: `${SITE_URL}/about` },
-        ]}
+        keywords="Brandon PT Davis scenic designer, USA 829 scenic designer, San Diego scenic designer, scenic designer California, Southern California scenic designer, scenic design educator, UC Irvine, regional theatre scenic design"
       />
 
       <Header />
@@ -333,7 +248,7 @@ export default function About() {
                   design can shape rhythm, movement, and emotional tone within a production.
                 </p>
                 <p className="text-[1rem] leading-8 text-foreground/72 md:text-[1.08rem]">
-                  Based in Southern California, Brandon designs for regional theatres and academic
+                  Based in San Diego, California, Brandon designs for regional theatres and academic
                   institutions across the United States. Recent projects include <em>The Glass
                   Menagerie</em>, productions with the New Swan Shakespeare Festival, and work with
                   South Coast Repertory. He also completed his 40th scenic design at Okoboji Summer

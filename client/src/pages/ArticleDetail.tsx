@@ -7,7 +7,7 @@ import { ProgressiveImage } from '@/components/ProgressiveImage';
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { proxyImageUrl } from "@/lib/imageProxy";
-import { Sparkles, Copy, Check, ChevronLeft, ChevronRight, Link as LinkIcon, Play, Pause } from "lucide-react";
+import { Sparkles, Copy, Check, ChevronLeft, ChevronRight, Link as LinkIcon, Play, Pause, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -199,6 +199,18 @@ export default function ArticleDetail({ slug, article }: ArticleDetailProps = {}
   return <ArticleDetailContent slug={slug} article={article} />;
 }
 
+function getArticleVideoMimeType(url: string) {
+  const normalizedUrl = url.toLowerCase().split("?")[0] || "";
+  if (normalizedUrl.endsWith(".mov")) return "video/quicktime";
+  if (normalizedUrl.endsWith(".m4v")) return "video/x-m4v";
+  return "video/mp4";
+}
+
+function isArticleInlineVideoUrl(url: string) {
+  const normalizedUrl = url.toLowerCase().split("?")[0] || "";
+  return [".mp4", ".m4v", ".mov"].some((extension) => normalizedUrl.endsWith(extension));
+}
+
 function ArticleInlineVideo({ url, caption }: { url: string; caption?: string }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const frameRef = useRef<HTMLDivElement | null>(null);
@@ -210,8 +222,12 @@ function ArticleInlineVideo({ url, caption }: { url: string; caption?: string })
     if (!frame || !video) return;
 
     video.muted = true;
+    video.defaultMuted = true;
     video.playsInline = true;
     video.loop = true;
+    video.setAttribute("muted", "");
+    video.setAttribute("playsinline", "");
+    video.setAttribute("autoplay", "");
 
     const observer = new IntersectionObserver(
       async ([entry]) => {
@@ -266,13 +282,14 @@ function ArticleInlineVideo({ url, caption }: { url: string; caption?: string })
         <video
           ref={videoRef}
           className="aspect-[16/9] h-auto w-full bg-black object-cover"
+          autoPlay
           playsInline
           muted
           loop
-          preload="metadata"
+          preload="auto"
           controls
         >
-          <source src={url} type="video/mp4" />
+          <source src={url} type={getArticleVideoMimeType(url)} />
         </video>
         <button
           type="button"
@@ -289,6 +306,395 @@ function ArticleInlineVideo({ url, caption }: { url: string; caption?: string })
         </figcaption>
       )}
     </figure>
+  );
+}
+
+function ArticleImageCompare({ section }: { section: any }) {
+  const [divider, setDivider] = useState(50);
+  const beforeLabel = decodeHTMLEntities(section.beforeLabel || "Before");
+  const afterLabel = decodeHTMLEntities(section.afterLabel || "After");
+  const isNested = section.nested === true;
+
+  return (
+    <section
+      className={
+        isNested
+          ? "my-10"
+          : "relative left-1/2 my-16 w-screen max-w-[76rem] -translate-x-1/2 px-5 sm:px-6"
+      }
+    >
+      <div className={isNested ? "max-w-[62rem]" : "mx-auto max-w-[62rem]"}>
+        {section.eyebrow && (
+          <p className="mb-4 text-center text-[0.74rem] font-semibold uppercase tracking-[0.28em] text-white/36">
+            {decodeHTMLEntities(section.eyebrow)}
+          </p>
+        )}
+        {section.title && (
+          <h2 className="mx-auto mb-5 max-w-[44rem] text-center font-sans text-[clamp(2rem,3vw,3.05rem)] font-medium leading-[0.98] tracking-[-0.055em] text-white">
+            {decodeHTMLEntities(section.title)}
+          </h2>
+        )}
+        {section.intro && (
+          <p className="mx-auto mb-8 max-w-[44rem] text-center text-[1.02rem] leading-8 tracking-[-0.015em] text-white/66">
+            {decodeHTMLEntities(section.intro)}
+          </p>
+        )}
+
+        <div className="relative overflow-hidden rounded-[1rem] border border-white/10 bg-white/[0.03]">
+          <div className="relative aspect-[16/9]">
+            <img
+              src={getArticleMediaUrl(section.afterUrl)}
+              alt={section.afterAlt || afterLabel}
+              className="absolute inset-0 h-full w-full object-cover"
+              loading="lazy"
+            />
+            <img
+              src={getArticleMediaUrl(section.beforeUrl)}
+              alt={section.beforeAlt || beforeLabel}
+              className="absolute inset-0 h-full w-full object-cover"
+              loading="lazy"
+              style={{ clipPath: `inset(0 ${100 - divider}% 0 0)` }}
+            />
+            <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-between p-3 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white/86">
+              <span className="rounded-full bg-black/48 px-3 py-1 backdrop-blur">{beforeLabel}</span>
+              <span className="rounded-full bg-black/48 px-3 py-1 backdrop-blur">{afterLabel}</span>
+            </div>
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-y-0 w-px bg-white/90 shadow-[0_0_22px_rgba(255,255,255,0.45)]"
+              style={{ left: `${divider}%` }}
+            >
+              <span className="absolute left-1/2 top-1/2 grid h-9 w-9 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-white/40 bg-black/72 text-white shadow-2xl">
+                <span className="h-3 w-px bg-white/70" />
+              </span>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={divider}
+              aria-label={`Compare ${beforeLabel} and ${afterLabel}`}
+              onChange={(event) => setDivider(Number(event.target.value))}
+              className="absolute inset-0 h-full w-full cursor-ew-resize opacity-0"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ArticleSettingStep({
+  section,
+  onImageClick,
+}: {
+  section: any;
+  onImageClick?: () => void;
+}) {
+  const paragraphs = Array.isArray(section.paragraphs) ? section.paragraphs : [];
+
+  return (
+    <section className="relative left-1/2 my-10 w-screen max-w-[74rem] -translate-x-1/2 px-5 sm:px-6">
+      <div className="mx-auto grid max-w-[62rem] gap-8 border-t border-white/10 pt-10 md:grid-cols-[minmax(15rem,23rem)_minmax(0,1fr)] md:items-start">
+        <figure>
+          <ProgressiveImage
+            src={getArticleMediaUrl(section.imageUrl)}
+            alt={section.imageAlt || section.caption || section.title || ""}
+            loading="lazy"
+            enableScrollAnimation={false}
+            containerClassName="w-full"
+            sizes="(min-width: 1024px) 20rem, 100vw"
+            className="mx-auto max-h-[21rem] w-full cursor-pointer bg-transparent object-contain transition-opacity hover:opacity-95"
+            onClick={onImageClick}
+          />
+          {(section.caption || section.imageAlt) && (
+            <figcaption className="mt-3 text-[0.78rem] italic leading-5 text-white/58">
+              {decodeHTMLEntities(section.caption || section.imageAlt || "")}
+            </figcaption>
+          )}
+        </figure>
+        <div>
+          {section.number && (
+            <p className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/34">
+              Step {decodeHTMLEntities(section.number)}
+            </p>
+          )}
+          <h3 className="mb-5 font-sans text-[clamp(1.8rem,2.4vw,2.55rem)] font-medium leading-[0.98] tracking-[-0.055em] text-white">
+            {decodeHTMLEntities(section.title || "")}
+          </h3>
+          {paragraphs.map((paragraph: string, paragraphIndex: number) => (
+            <p
+              key={paragraphIndex}
+              className="mb-6 text-[1.02rem] leading-8 tracking-[-0.015em] text-white/74 last:mb-0"
+            >
+              {decodeHTMLEntities(paragraph)}
+            </p>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ArticleRenderChoice({
+  section,
+  onImageClick,
+}: {
+  section: any;
+  onImageClick?: (choiceIndex: number) => void;
+}) {
+  const choices = Array.isArray(section.choices) ? section.choices : [];
+  if (choices.length === 0) return null;
+
+  return (
+    <section className="relative left-1/2 my-12 w-screen max-w-[74rem] -translate-x-1/2 px-5 sm:px-6">
+      <div className="mx-auto max-w-[62rem] border-t border-white/10 pt-10">
+        {section.number && (
+          <p className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/34">
+            Step {decodeHTMLEntities(section.number)}
+          </p>
+        )}
+        <h3 className="mb-5 max-w-[42rem] font-sans text-[clamp(1.9rem,2.7vw,2.8rem)] font-medium leading-[0.98] tracking-[-0.058em] text-white">
+          {decodeHTMLEntities(section.title || "")}
+        </h3>
+        {section.intro && (
+          <p className="mb-9 max-w-[46rem] text-[1.02rem] leading-8 tracking-[-0.015em] text-white/70">
+            {decodeHTMLEntities(section.intro)}
+          </p>
+        )}
+
+        {section.compare && (
+          <ArticleImageCompare
+            section={{
+              ...section.compare,
+              nested: true,
+            }}
+          />
+        )}
+
+        <div className="space-y-9">
+          {choices.map((choice: any, choiceIndex: number) => {
+            const paragraphs = Array.isArray(choice.paragraphs) ? choice.paragraphs : [];
+            return (
+              <article
+                key={choice.label || choiceIndex}
+                className="grid gap-7 md:grid-cols-[minmax(13rem,19rem)_minmax(0,1fr)] md:items-start"
+              >
+                <figure>
+                  <ProgressiveImage
+                    src={getArticleMediaUrl(choice.imageUrl)}
+                    alt={choice.imageAlt || choice.caption || choice.label || ""}
+                    loading="lazy"
+                    enableScrollAnimation={false}
+                    containerClassName="w-full"
+                    sizes="(min-width: 1024px) 19rem, 100vw"
+                    className="mx-auto max-h-[20rem] w-full cursor-pointer bg-transparent object-contain transition-opacity hover:opacity-95"
+                    onClick={() => onImageClick?.(choiceIndex)}
+                  />
+                  {(choice.caption || choice.imageAlt) && (
+                    <figcaption className="mt-3 text-[0.76rem] italic leading-5 text-white/56">
+                      {decodeHTMLEntities(choice.caption || choice.imageAlt || "")}
+                    </figcaption>
+                  )}
+                </figure>
+                <div>
+                  <p className="mb-3 text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-white/34">
+                    Option {choiceIndex + 1}
+                  </p>
+                  <h4 className="mb-4 font-sans text-[clamp(1.45rem,2vw,2rem)] font-medium leading-[1] tracking-[-0.045em] text-white">
+                    {decodeHTMLEntities(choice.label || "")}
+                  </h4>
+                  {paragraphs.map((paragraph: string, paragraphIndex: number) => (
+                    <p
+                      key={paragraphIndex}
+                      className="mb-5 text-[1rem] leading-8 tracking-[-0.015em] text-white/72 last:mb-0"
+                    >
+                      {decodeHTMLEntities(paragraph)}
+                    </p>
+                  ))}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ArticleMediaTabs({ section }: { section: any }) {
+  const items = Array.isArray(section.items) ? section.items : [];
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeItem = items[activeIndex] || items[0];
+
+  if (!activeItem) return null;
+
+  const isSettingsLayout = section.layout === "settings";
+  const settingsRows = Array.isArray(activeItem.settings) ? activeItem.settings : [];
+  const activeParagraphs = Array.isArray(activeItem.paragraphs) ? activeItem.paragraphs : [];
+  const shouldCropImage = section.crop === "inset";
+
+  return (
+    <section className="relative left-1/2 my-16 w-screen max-w-[78rem] -translate-x-1/2 px-5 sm:px-6">
+      <div className="mx-auto max-w-[64rem]">
+        {section.eyebrow && (
+          <p className="mb-4 text-center text-[0.76rem] font-semibold uppercase tracking-[0.28em] text-white/36">
+            {decodeHTMLEntities(section.eyebrow)}
+          </p>
+        )}
+        {section.title && (
+          <h2 className="mx-auto mb-5 max-w-[48rem] text-center font-sans text-[clamp(2rem,3vw,3.2rem)] font-medium leading-[0.98] tracking-[-0.055em] text-white">
+            {decodeHTMLEntities(section.title)}
+          </h2>
+        )}
+        {section.intro && (
+          <p className="mx-auto mb-9 max-w-[42rem] text-center text-[1.02rem] leading-8 tracking-[-0.015em] text-white/62">
+            {decodeHTMLEntities(section.intro)}
+          </p>
+        )}
+        <div className="mx-auto flex w-fit max-w-full overflow-x-auto rounded-full border border-white/16 bg-white/[0.025] p-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {items.map((item: any, itemIndex: number) => {
+            const isActive = itemIndex === activeIndex;
+            return (
+              <button
+                key={item.id || item.label || itemIndex}
+                type="button"
+                onClick={() => setActiveIndex(itemIndex)}
+                className={`whitespace-nowrap rounded-full px-4 py-2 text-[0.9rem] tracking-[-0.025em] transition-colors ${
+                  isActive
+                    ? "bg-white text-black shadow-[0_0_24px_rgba(255,255,255,0.12)]"
+                    : "text-white/58 hover:bg-white/[0.06] hover:text-white"
+                }`}
+              >
+                {decodeHTMLEntities(item.label || item.title || `Item ${itemIndex + 1}`)}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {isSettingsLayout ? (
+        <div className="mx-auto mt-8 max-w-[70rem]">
+          <figure>
+            <div className="rounded-[1rem] border border-white/10 bg-white/[0.03] p-2">
+              <ProgressiveImage
+                src={getArticleMediaUrl(activeItem.url)}
+                alt={activeItem.alt || activeItem.title || section.title || ""}
+                loading="lazy"
+                enableScrollAnimation={false}
+                containerClassName="w-full"
+                sizes="(min-width: 1280px) 70rem, 100vw"
+                className="max-h-[46rem] w-full rounded-[0.75rem] bg-white/[0.02] object-contain"
+              />
+            </div>
+            {(activeItem.caption || activeItem.alt) && (
+              <figcaption className="mt-3 text-left text-[0.84rem] italic leading-6 text-white/58">
+                {decodeHTMLEntities(activeItem.caption || activeItem.alt || "")}
+              </figcaption>
+            )}
+          </figure>
+
+          <div className="mx-auto mt-10 max-w-[45rem]">
+            {activeItem.kicker && (
+              <p className="mb-4 text-[0.74rem] font-semibold uppercase tracking-[0.24em] text-white/36">
+                {decodeHTMLEntities(activeItem.kicker)}
+              </p>
+            )}
+            {activeItem.title && (
+              <h3 className="mb-5 font-sans text-[clamp(1.7rem,2.6vw,2.55rem)] font-medium leading-[1] tracking-[-0.052em] text-white">
+                {decodeHTMLEntities(activeItem.title)}
+              </h3>
+            )}
+            {activeItem.body && (
+              <p className="mb-7 text-[1.04rem] leading-8 tracking-[-0.015em] text-white/72">
+                {decodeHTMLEntities(activeItem.body)}
+              </p>
+            )}
+            {activeParagraphs.map((paragraph: string, paragraphIndex: number) => (
+              <p
+                key={paragraphIndex}
+                className="mb-7 text-[1.04rem] leading-8 tracking-[-0.015em] text-white/72 last:mb-0"
+              >
+                {decodeHTMLEntities(paragraph)}
+              </p>
+            ))}
+            {settingsRows.length > 0 && (
+              <div className="mt-10">
+                <p className="mb-3 text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-white/34">
+                  Reference values
+                </p>
+                <dl className="border-y border-white/10">
+                  {settingsRows.map((row: any, rowIndex: number) => (
+                    <div
+                      key={`${row.label || "setting"}-${rowIndex}`}
+                      className="grid gap-2 border-b border-white/10 py-4 last:border-b-0 sm:grid-cols-[8rem_1fr]"
+                    >
+                      <dt className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/38">
+                        {decodeHTMLEntities(row.label || "")}
+                      </dt>
+                      <dd className="text-[0.98rem] leading-7 tracking-[-0.012em] text-white/76">
+                        {decodeHTMLEntities(row.value || "")}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className="mx-auto mt-8 grid max-w-[70rem] gap-8">
+          <figure>
+            <ProgressiveImage
+              src={getArticleMediaUrl(activeItem.url)}
+              alt={activeItem.alt || activeItem.title || section.title || ""}
+              loading="lazy"
+              enableScrollAnimation={false}
+              containerClassName="w-full"
+              sizes="(min-width: 1280px) 70rem, 100vw"
+              className={`w-full bg-white/[0.02] object-cover ${
+                shouldCropImage ? "scale-[1.09]" : ""
+              }`}
+            />
+            {(activeItem.caption || activeItem.alt) && (
+              <figcaption className="mt-3 text-left text-[0.84rem] italic leading-6 text-white/58">
+                {decodeHTMLEntities(activeItem.caption || activeItem.alt || "")}
+              </figcaption>
+            )}
+          </figure>
+
+          <div className="mx-auto max-w-[48rem] text-center">
+            {activeItem.kicker && (
+              <p className="mb-4 text-[0.74rem] font-semibold uppercase tracking-[0.24em] text-white/36">
+                {decodeHTMLEntities(activeItem.kicker)}
+              </p>
+            )}
+            {activeItem.title && (
+              <h3 className="mb-4 font-sans text-[clamp(1.55rem,2.4vw,2.35rem)] font-medium leading-[1.02] tracking-[-0.045em] text-white">
+                {decodeHTMLEntities(activeItem.title)}
+              </h3>
+            )}
+            {activeItem.body && (
+              <p className="text-[1.02rem] leading-8 tracking-[-0.015em] text-white/68">
+                {decodeHTMLEntities(activeItem.body)}
+              </p>
+            )}
+            {Array.isArray(activeItem.points) && activeItem.points.length > 0 && (
+              <ul className="mt-6 space-y-3 text-left">
+                {activeItem.points.map((point: string, pointIndex: number) => (
+                  <li
+                    key={pointIndex}
+                    className="border-t border-white/10 pt-3 text-[0.98rem] leading-7 tracking-[-0.012em] text-white/64"
+                  >
+                    {decodeHTMLEntities(point)}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+      )}
+    </section>
   );
 }
 
@@ -570,6 +976,23 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
         key: `image-${sectionIndex}`,
         src: getArticleMediaUrl(section.url),
         alt: section.alt || section.caption || "",
+      });
+    }
+    if (section.type === "setting_step" && section.imageUrl) {
+      articleImageSlides.push({
+        key: `setting-step-${sectionIndex}`,
+        src: getArticleMediaUrl(section.imageUrl),
+        alt: section.imageAlt || section.caption || section.title || "",
+      });
+    }
+    if (section.type === "render_choice" && Array.isArray(section.choices)) {
+      section.choices.forEach((choice: any, choiceIndex: number) => {
+        if (!choice?.imageUrl) return;
+        articleImageSlides.push({
+          key: `render-choice-${sectionIndex}-${choiceIndex}`,
+          src: getArticleMediaUrl(choice.imageUrl),
+          alt: choice.imageAlt || choice.caption || choice.label || "",
+        });
       });
     }
     if (section.type === "gallery" && Array.isArray(section.images)) {
@@ -869,9 +1292,39 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
                         return (
                           <p
                             key={index}
-                            className="mb-8 text-[1.02rem] leading-[1.9] tracking-[-0.01em] text-white/80 [&_strong]:font-bold [&_strong]:text-white"
+                            className="mb-8 text-[1.02rem] leading-[1.9] tracking-[-0.01em] text-white/80 [&_a]:text-white [&_a]:underline [&_a]:decoration-white/28 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-white/70 [&_strong]:font-bold [&_strong]:text-white"
                             dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(section.text || section.content || '') }}
                           />
+                        );
+
+                      case 'resource_callout':
+                        return (
+                          <Link
+                            key={index}
+                            href={section.href || "#"}
+                            className="group my-10 block rounded-[1.1rem] border border-white/12 bg-white/[0.025] p-6 transition-colors hover:border-white/24 hover:bg-white/[0.045] md:p-7"
+                          >
+                            <div className="flex items-start justify-between gap-5">
+                              <div>
+                                {section.eyebrow && (
+                                  <p className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-white/38">
+                                    {decodeHTMLEntities(section.eyebrow)}
+                                  </p>
+                                )}
+                                <h3 className="font-sans text-[clamp(1.35rem,2vw,1.95rem)] font-medium leading-[1.02] tracking-[-0.045em] text-white">
+                                  {decodeHTMLEntities(section.title || "")}
+                                </h3>
+                                {section.description && (
+                                  <p className="mt-4 max-w-[42rem] text-[0.98rem] leading-7 tracking-[-0.01em] text-white/62">
+                                    {decodeHTMLEntities(section.description)}
+                                  </p>
+                                )}
+                              </div>
+                              <span className="mt-1 grid h-10 w-10 flex-none place-items-center rounded-full border border-white/12 text-white/58 transition-colors group-hover:border-white/28 group-hover:text-white">
+                                <ArrowUpRight className="h-4 w-4" />
+                              </span>
+                            </div>
+                          </Link>
                         );
 
                       case 'quote':
@@ -889,6 +1342,30 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
                               </footer>
                             )}
                           </blockquote>
+                        );
+
+                      case 'media_tabs':
+                        return <ArticleMediaTabs key={index} section={section} />;
+
+                      case 'image_compare':
+                        return <ArticleImageCompare key={index} section={section} />;
+
+                      case 'setting_step':
+                        return (
+                          <ArticleSettingStep
+                            key={index}
+                            section={section}
+                            onImageClick={() => openArticleLightboxAt(`setting-step-${index}`)}
+                          />
+                        );
+
+                      case 'render_choice':
+                        return (
+                          <ArticleRenderChoice
+                            key={index}
+                            section={section}
+                            onImageClick={(choiceIndex) => openArticleLightboxAt(`render-choice-${index}-${choiceIndex}`)}
+                          />
                         );
 
                       case 'image':
@@ -944,6 +1421,31 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
                           );
                         }
 
+                        if (section.display === 'settings') {
+                          return (
+                            <figure
+                              key={index}
+                              className="relative left-1/2 my-10 flex w-screen max-w-[64rem] -translate-x-1/2 flex-col items-center px-5 sm:px-6"
+                            >
+                              <ProgressiveImage
+                                src={getArticleMediaUrl(section.url)}
+                                alt={section.alt || section.caption || ''}
+                                loading="lazy"
+                                enableScrollAnimation={false}
+                                containerClassName="w-full"
+                                sizes="(min-width: 1024px) 64rem, 100vw"
+                                className="mx-auto max-h-[54rem] w-full cursor-pointer bg-transparent object-contain transition-opacity hover:opacity-95"
+                                onClick={() => openArticleLightboxAt(`image-${index}`)}
+                              />
+                              {(section.caption || section.alt) && (
+                                <figcaption className="mt-3 w-full max-w-[min(100%,46rem)] text-left text-[0.88rem] italic leading-6 text-white/72">
+                                  {decodeHTMLEntities(section.caption || section.alt || '')}
+                                </figcaption>
+                              )}
+                            </figure>
+                          );
+                        }
+
                         return (
                           <figure key={index} className="flex w-full flex-col items-center">
                             <ProgressiveImage
@@ -990,7 +1492,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
                       case 'video':
                         const videoUrl = section.url || '';
 
-                        if (videoUrl.toLowerCase().endsWith('.mp4')) {
+                        if (isArticleInlineVideoUrl(videoUrl)) {
                           return <ArticleInlineVideo key={index} url={videoUrl} caption={section.caption} />;
                         }
 

@@ -4,6 +4,7 @@ import { permanentRedirect } from "next/navigation";
 import ArticleDetailPage from "../../../client/src/pages/ArticleDetail";
 import { NextPathProvider } from "../../../components/routing/NextPathProvider";
 import { buildPageMetadata, stripHtml } from "../../../lib/metadata";
+import { BRANDON_ORGANIZATION_ID, BRANDON_PERSON_ID } from "../../../lib/seo/entities";
 import {
   getLocalArticleBySlug,
   getLocalArticleRecordBySlug,
@@ -84,13 +85,12 @@ export default async function Page({ params }: ArticlePageProps) {
     ? {
         "@context": "https://schema.org",
         "@type": "Article",
+        "@id": `https://www.brandonptdavis.com/articles/${article.slug}#article`,
         headline: article.title,
         description: articleDescription,
-        image: article.coverImageUrl || undefined,
+        image: article.coverImageUrl ? [article.coverImageUrl] : undefined,
         author: {
-          "@type": "Person",
-          name: "Brandon PT Davis",
-          url: "https://www.brandonptdavis.com/about",
+          "@id": BRANDON_PERSON_ID,
         },
         datePublished: article.publishedAt
           ? new Date(article.publishedAt).toISOString()
@@ -99,9 +99,11 @@ export default async function Page({ params }: ArticlePageProps) {
             : undefined,
         dateModified: article.updatedAt ? new Date(article.updatedAt).toISOString() : undefined,
         publisher: {
-          "@type": "Organization",
-          name: "Brandon PT Davis Design",
-          logo: "https://www.brandonptdavis.com/android-chrome-512x512.png",
+          "@id": BRANDON_ORGANIZATION_ID,
+        },
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": `https://www.brandonptdavis.com/articles/${article.slug}`,
         },
         url: `https://www.brandonptdavis.com/articles/${article.slug}`,
         keywords: article.seoKeywords || undefined,

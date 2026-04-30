@@ -300,8 +300,8 @@ function createProfileEntries() {
       section: "People",
       kind: "Profile",
       description:
-        "Biography, current base in Orange County, California, and the creative throughline connecting theatre, teaching, and experiential work.",
-      meta: "About • Scenic Designer • Irvine, CA",
+        "Biography, current base in San Diego, California, and the creative throughline connecting theatre, teaching, and experiential work.",
+      meta: "About • Scenic Designer • San Diego, CA",
       imageUrl: aboutImage,
       bodyText: [voiceProfile.location.summary, profileBody].join(" "),
       keywords: [
@@ -312,8 +312,7 @@ function createProfileEntries() {
         "where is Brandon located",
         "where does Brandon live",
         "Central Missouri",
-        "Irvine",
-        "Orange County",
+        "San Diego",
         "California",
         "Southern California",
         "scenic designer",

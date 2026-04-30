@@ -116,7 +116,7 @@ export const generatedLocalArticles = [
       },
       {
         "type": "paragraph",
-        "text": "Search Engine Optimization (SEO) might sound like marketing jargon, but it's simply the practice of making your website easier for search engines to find and understand. For theatrical designers, good SEO means showing up when someone searches for 'scenic designer Orange County' or 'theatrical set design portfolio.'"
+        "text": "Search Engine Optimization (SEO) might sound like marketing jargon, but it's simply the practice of making your website easier for search engines to find and understand. For theatrical designers, good SEO means showing up when someone searches for 'scenic designer San Diego' or 'theatrical set design portfolio.'"
       },
       {
         "type": "image",

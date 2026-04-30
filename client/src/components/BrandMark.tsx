@@ -8,15 +8,16 @@ type BrandMarkProps = {
 };
 
 type Dot = {
-  cx: number;
-  cy: number;
-  r: number;
-  opacity: number;
+  cx: string;
+  cy: string;
+  r: string;
+  opacity: string;
 };
 
 const GRID_RADIUS = 7;
 const GRID_STEP = 6.15;
 const CENTER = 64;
+const toSvgNumber = (value: number) => value.toFixed(4);
 
 const dots: Dot[] = [];
 
@@ -28,10 +29,10 @@ for (let row = -GRID_RADIUS; row <= GRID_RADIUS; row += 1) {
     if (normalized <= 0) continue;
 
     dots.push({
-      cx: CENTER + col * GRID_STEP,
-      cy: CENTER + row * GRID_STEP,
-      r: 0.45 + normalized * 1.75,
-      opacity: 0.08 + normalized * 0.86,
+      cx: toSvgNumber(CENTER + col * GRID_STEP),
+      cy: toSvgNumber(CENTER + row * GRID_STEP),
+      r: toSvgNumber(0.45 + normalized * 1.75),
+      opacity: toSvgNumber(0.08 + normalized * 0.86),
     });
   }
 }

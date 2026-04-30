@@ -1,0 +1,40 @@
+type: article
+slug: vectorworks-rendering-workflow-file-size-and-speed
+title: 'Vectorworks Rendering Workflow: File Size and Speed'
+status: published
+featured: false
+excerpt: >-
+  A practical rendering workflow for keeping Vectorworks scenic files responsive by managing imported models, USDZ
+  handoffs, mesh cleanup, texture size, and final output decisions.
+category: Tools & Technology
+seoTitle: 'Vectorworks Rendering Workflow: File Size and Speed'
+seoDescription: >-
+  Learn how to keep Vectorworks scenic rendering files fast enough to work by managing SketchUp imports, USDZ handoffs,
+  mesh cleanup, texture size, and bitmap publishing.
+seoKeywords:
+  - Vectorworks rendering workflow
+  - Vectorworks file size
+  - scenic design rendering
+  - SketchUp import Vectorworks
+  - USDZ Vectorworks
+  - simplify mesh Vectorworks
+  - Renderworks workflow
+cover:
+  asset: https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/articles/vectorworks-rendering-series/file-size-speed-workflow-cover.png
+  alt: Abstract scenic rendering workflow moving from dense imported mesh geometry to a clean render-ready Vectorworks model.
+tags:
+  - vectorworks
+  - scenic-rendering
+  - renderworks
+  - file-optimization
+  - sketchup
+  - usdz
+  - scenic-design
+readTime: 7
+publishedAt: '2026-03-14'
+updatedAt: '2026-04-29T00:00:00.000+00:00'
+linkedScenicProjectSlugs: []
+series:
+  name: Vectorworks Rendering
+  slug: vectorworks-rendering
+  order: 2

@@ -409,8 +409,8 @@ export default function Resume() {
     <>
       <SEO
         title="Resume & CV | Scenic Designer | 130+ Productions | USA 829"
-        description="130+ scenic design productions since 2009. MFA UC Irvine, BFA Stephens College, and USA 829 membership. Professional scenic designer based in Southern California."
-        keywords="scenic designer resume, theatrical designer cv, USA 829 member, scenic design portfolio, Brandon PT Davis production history, regional theatre designer, summer stock designer, California scenic designer, MFA UC Irvine"
+        description="130+ scenic design productions since 2009. MFA UC Irvine, BFA Stephens College, and USA 829 membership. Professional scenic designer based in San Diego, California."
+        keywords="scenic designer resume, theatrical designer cv, USA 829 member, scenic design portfolio, Brandon PT Davis production history, regional theatre designer, summer stock designer, San Diego scenic designer, California scenic designer, MFA UC Irvine"
         url="https://www.brandonptdavis.com/resume"
       />
       <StructuredData
@@ -430,7 +430,7 @@ export default function Resume() {
             "Professional scenic designer with over 130 realized productions across regional theatre, summer stock, and academic theatre. USA 829 member since 2023. BroadwayWorld Los Angeles Best Scenic Design Nominee (2026).",
           email: "info@brandonptdavis.com",
           address: {
-            addressLocality: "Irvine",
+            addressLocality: "San Diego",
             addressRegion: "CA",
             addressCountry: "US",
           },
