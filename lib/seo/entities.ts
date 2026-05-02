@@ -23,17 +23,40 @@ export function getBrandonPersonJsonLd() {
     "@id": BRANDON_PERSON_ID,
     name: "Brandon PT Davis",
     alternateName: ["Brandon Davis", "Brandon P. T. Davis"],
+    givenName: "Brandon",
+    familyName: "Davis",
     jobTitle: "Scenic Designer",
     url: absoluteUrl("/about"),
+    mainEntityOfPage: absoluteUrl("/about"),
     image: BRANDON_HEADSHOT_URL,
     description:
-      "San Diego-based union scenic designer with 130+ production credits across regional theatre, summer stock, and academic stages. Member of USA 829.",
+      "San Diego-based union scenic designer with 130+ production credits across regional theatre, summer stock, and academic stages. Member of United Scenic Artists Local USA 829.",
     email: "mailto:info@brandonptdavis.com",
     address: {
       "@type": "PostalAddress",
       addressLocality: "San Diego",
       addressRegion: "CA",
       addressCountry: "US",
+    },
+    hasOccupation: {
+      "@type": "Occupation",
+      name: "Scenic Designer",
+      occupationLocation: {
+        "@type": "City",
+        name: "San Diego",
+      },
+      skills: [
+        "Scenic design",
+        "Theatre set design",
+        "Concept rendering",
+        "Vectorworks drafting",
+        "3D scenic modeling",
+      ],
+    },
+    memberOf: {
+      "@type": "Organization",
+      name: "United Scenic Artists Local USA 829",
+      url: "https://www.usa829.org/",
     },
     sameAs: BRANDON_PROFILE_URLS,
     alumniOf: [
@@ -50,22 +73,33 @@ export function getBrandonPersonJsonLd() {
     ],
     knowsAbout: [
       "Scenic Design",
+      "Stage Design",
+      "Set Design",
       "Theatrical Design",
+      "Theatre Set Design",
       "Regional Theatre",
       "Concept Rendering",
+      "Scenic Rendering",
+      "Renderworks",
+      "Redshift",
       "Vectorworks",
       "Twinmotion",
       "3D Modeling",
       "Digital Drafting",
-      "Scenic Design Education",
+      "Production Design",
+      "Live Experience Design",
+      "San Diego Theatre",
     ],
+    worksFor: {
+      "@id": BRANDON_ORGANIZATION_ID,
+    },
   };
 }
 
 export function getBrandonOrganizationJsonLd() {
   return {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": ["Organization", "ProfessionalService"],
     "@id": BRANDON_ORGANIZATION_ID,
     name: "Brandon PT Davis Design",
     url: siteMetadata.siteUrl,
@@ -75,13 +109,30 @@ export function getBrandonOrganizationJsonLd() {
     },
     image: absoluteUrl("/og-default.jpeg"),
     description:
-      "Scenic design studio focused on story-driven environments for regional theatre, summer stock, academic production, and scenic design education.",
+      "Scenic design studio focused on story-driven environments, theatrical renderings, and production design work for regional theatre, summer stock, academic production, and live performance.",
     founder: {
       "@id": BRANDON_PERSON_ID,
     },
     foundingDate: "2015",
     email: "mailto:info@brandonptdavis.com",
     sameAs: BRANDON_PROFILE_URLS,
+    areaServed: [
+      {
+        "@type": "City",
+        name: "San Diego",
+      },
+      {
+        "@type": "Country",
+        name: "United States",
+      },
+    ],
+    serviceType: [
+      "Scenic design",
+      "Theatre set design",
+      "Concept rendering",
+      "Production design",
+      "Vectorworks drafting",
+    ],
     address: {
       "@type": "PostalAddress",
       addressLocality: "San Diego",

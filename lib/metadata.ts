@@ -6,7 +6,7 @@ export const siteMetadata = {
   siteUrl: getConfiguredSiteUrl(),
   title: "Brandon PT Davis | Scenic Designer",
   description:
-    "San Diego-based union scenic designer creating story-driven environments for regional theatre, summer stock, and academic production.",
+    "San Diego-based union scenic designer creating story-driven stage environments, theatrical renderings, and production design work for regional theatre and live performance.",
 };
 
 export function absoluteUrl(pathname: string) {

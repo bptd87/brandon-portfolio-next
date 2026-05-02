@@ -75,7 +75,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
 },
   "a-smalltowne-christmas": {
   "title": "A Smalltowne Christmas",
-  "excerpt": "A nostalgic holiday setting shaped around warmth, tradition, and small-town cheer, creating a festive world that supports community, memory, and seasonal spectacle.",
+  "excerpt": "A small-town holiday world built around gathering, music, and the kind of familiar public space that lets a community feel larger than the footprint of the set.",
   "subcategory": "Musical Theatre",
   "client": "Stephens College",
   "location": "Columbia, MO",
@@ -84,8 +84,8 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "status": "published",
   "featured": false,
   "seoTitle": "A Smalltowne Christmas | Scenic Design by Brandon PT Davis",
-  "seoDescription": "Scenic design for A Smalltowne Christmas at Stephens College, capturing the warmth, nostalgia, and festive spirit of a small-town holiday celebration.",
-  "seoKeywords": "A Smalltowne Christmas, scenic design, Stephens College, holiday musical, Brandon PT Davis",
+  "seoDescription": "Scenic design for A Smalltowne Christmas at Stephens College, using a flexible town-square environment to support music, choreography, and small-town holiday storytelling.",
+  "seoKeywords": "A Smalltowne Christmas, scenic design, Stephens College, holiday musical, town square set, Brandon PT Davis",
   "creativeTeam": [
     {
       "role": "Written By",
@@ -130,16 +130,20 @@ export const fileFirstScenicProjectFieldsBySlug = {
       "name": "Musical Theatre"
     },
     {
-      "slug": "holiday-musical",
-      "name": "Holiday Musical"
-    },
-    {
       "slug": "stephens-college",
       "name": "Stephens College"
     },
     {
-      "slug": "a-smalltowne-christmas",
-      "name": "A Smalltowne Christmas"
+      "slug": "holiday-design",
+      "name": "Holiday Design"
+    },
+    {
+      "slug": "community-space",
+      "name": "Community Space"
+    },
+    {
+      "slug": "musical-staging",
+      "name": "Musical Staging"
     }
   ],
   "links": [],
@@ -210,7 +214,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
 },
   "alls-well-that-ends-well": {
   "title": "All's Well That Ends Well",
-  "excerpt": "Drapery, heraldic detail, and operatic reveal carried this New Swan production between the ceremonial restraint of Roussillon and the warmer theatrical world of Florence.",
+  "excerpt": "A Shakespeare world built from fabric, heraldry, and reveal: courtly restraint in Roussillon opening into the warmer, more theatrical landscape of Florence.",
   "subcategory": "Shakespeare",
   "client": "New Swan Theatre Festival",
   "location": "Irvine, CA",
@@ -219,8 +223,8 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "status": "published",
   "featured": false,
   "seoTitle": "All's Well That Ends Well Scenic Design | New Swan Theatre Festival",
-  "seoDescription": "Scenic design for All's Well That Ends Well at New Swan Theatre Festival, using curtains, heraldic signage, stucco textures, and operatic transitions to shape Shakespeare’s shifting worlds.",
-  "seoKeywords": "All's Well That Ends Well, scenic design, New Swan Theatre Festival, Shakespeare, Brandon PT Davis, theatre design",
+  "seoDescription": "Scenic design for All's Well That Ends Well at New Swan Theatre Festival, using drapery, heraldic detail, stucco texture, and operatic reveal to move Shakespeare's comedy between Roussillon and Florence.",
+  "seoKeywords": "All's Well That Ends Well scenic design, New Swan Theatre Festival, Shakespeare scenic design, Brandon PT Davis, Irvine theatre design, festival theatre",
   "creativeTeam": [
     {
       "role": "By",
@@ -423,7 +427,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
 },
   "an-inspector-calls": {
   "title": "An Inspector Calls",
-  "excerpt": "The Birling home rendered as a composed domestic world built to fracture under pressure, with order, sightlines, and entrances serving the play’s moral unraveling.",
+  "excerpt": "A composed Birling dining room built to hold ceremony at first, then expose how quickly order, manners, and family authority can fracture under pressure.",
   "subcategory": "Drama",
   "client": "Okoboji Summer Theatre",
   "location": "Okoboji, IA",
@@ -432,7 +436,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "status": "published",
   "featured": false,
   "seoTitle": "An Inspector Calls | Scenic Design by Brandon PT Davis",
-  "seoDescription": "Scenic design for An Inspector Calls at Okoboji Summer Theatre, using period restraint, controlled entrances, and unstable domestic order to support Priestley’s moral thriller.",
+  "seoDescription": "Scenic design for An Inspector Calls at Okoboji Summer Theatre, using a composed period dining room, controlled entrances, and shifting sightlines to support Priestley's moral thriller.",
   "seoKeywords": "An Inspector Calls, scenic design, Okoboji Summer Theatre, J.B. Priestley, Brandon PT Davis, drama, theatre design",
   "creativeTeam": [
     {
@@ -622,7 +626,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
 },
   "bell-book-and-candle": {
   "title": "Bell, Book, and Candle",
-  "excerpt": "A grounded mid-century apartment for Bell, Book, and Candle, built to let wit, intimacy, and supernatural undertones emerge from a believable domestic interior.",
+  "excerpt": "A mid-century apartment designed to feel fully lived in before it becomes enchanted, letting the supernatural arrive through a room that already has weight, habits, and history.",
   "subcategory": "Comedy",
   "client": "Okoboji Summer Theatre",
   "clientUrl": "https://vacationokoboji.com/event/bell-book-and-candle/",
@@ -632,8 +636,8 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "status": "published",
   "featured": false,
   "seoTitle": "Bell, Book, and Candle Scenic Design | Okoboji Summer Theatre",
-  "seoDescription": "Scenic design for Bell, Book, and Candle at Okoboji Summer Theatre, built as a grounded mid-century apartment that supports intimacy, wit, and subtle magical undertones.",
-  "seoKeywords": "Bell, Book, and Candle, scenic design, Okoboji Summer Theatre, comedy, Brandon PT Davis, theatre design",
+  "seoDescription": "Scenic design for Bell, Book, and Candle at Okoboji Summer Theatre, grounding John Van Druten's comedy in a detailed mid-century apartment where practical domestic realism lets the magic arrive quietly.",
+  "seoKeywords": "Bell Book and Candle scenic design, Okoboji Summer Theatre, mid-century apartment set, John Van Druten, Brandon PT Davis, regional theatre design",
   "creativeTeam": [
     {
       "role": "Playwright",
@@ -689,7 +693,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
 },
   "bingo-the-winning-musical": {
   "title": "Bingo: The Winning Musical",
-  "excerpt": "A playful nautical world for Okoboji Summer Theatre, using lakeside color, retail-comedy brightness, and musical-theatre clarity to support the show's fast humor and local charm.",
+  "excerpt": "A bright Okoboji bingo hall with nautical references, clean graphic color, and enough open space to keep the musical comedy moving.",
   "subcategory": "Musical Theatre",
   "client": "Okoboji Summer Theatre",
   "location": "Okoboji, IA",
@@ -698,7 +702,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "status": "published",
   "featured": false,
   "seoTitle": "Bingo: The Winning Musical | Scenic Design by Brandon PT Davis",
-  "seoDescription": "Scenic design for Bingo: The Winning Musical at Okoboji Summer Theatre, blending nautical themes with playful color to capture the spirit of the Okoboji Lakes region.",
+  "seoDescription": "Scenic design for Bingo: The Winning Musical at Okoboji Summer Theatre, using nautical references, bright local color, and a clear musical-comedy layout.",
   "seoKeywords": "Bingo The Winning Musical, scenic design, Okoboji Summer Theatre, musical theatre, Brandon PT Davis",
   "creativeTeam": [
     {
@@ -1095,7 +1099,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
 },
   "freaky-friday": {
   "title": "Freaky Friday",
-  "excerpt": "A fast, flexible scenic system for Freaky Friday, designed to hold body-swap comedy, emotional reversals, and high-energy ensemble motion without losing clarity.",
+  "excerpt": "A quick-read scenic system for Freaky Friday, built around modular locations that let the body-swap logic stay clear while the musical keeps moving.",
   "subcategory": "Musical Theatre",
   "client": "Okoboji Summer Theatre",
   "clientUrl": "https://okobojisummertheatre.org/",
@@ -1105,7 +1109,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "status": "published",
   "featured": true,
   "seoTitle": "Freaky Friday Scenic Design | Okoboji Summer Theatre",
-  "seoDescription": "Scenic design for Freaky Friday at Okoboji Summer Theatre, using fast modular shifts and clear visual zones to support body-swap comedy, family conflict, and musical pace.",
+  "seoDescription": "Scenic design for Freaky Friday at Okoboji Summer Theatre, using modular locations and clear stage geography to keep body-swap comedy and musical transitions readable.",
   "seoKeywords": "Freaky Friday scenic design, musical theatre scenic design, Okoboji Summer Theatre, Brandon PT Davis",
   "creativeTeam": [
     {
@@ -1170,7 +1174,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
 },
   "guys-on-ice": {
   "title": "Guys on Ice",
-  "excerpt": "A playable frozen-lake environment for Guys on Ice, balancing broad musical comedy with the quiet sincerity of Midwestern winter life.",
+  "excerpt": "A frozen-lake stage picture for Guys on Ice, shaped by a clean horizon line, ice-fishing structure, and open negative space for musical comedy.",
   "subcategory": "Musical Theatre",
   "client": "The Great American Melodrama",
   "clientUrl": "https://sloreview.org/2025/02/15/guys-on-ice-is-warm-and-funny/",
@@ -1180,7 +1184,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "status": "published",
   "featured": true,
   "seoTitle": "Guys on Ice Scenic Design | The Great American Melodrama",
-  "seoDescription": "Scenic design for Guys on Ice at The Great American Melodrama, balancing a playable frozen-lake comedy world with Midwestern specificity, winter texture, and a clear performance environment.",
+  "seoDescription": "Scenic design for Guys on Ice at The Great American Melodrama, using ice-fishing architecture, Midwestern winter texture, and open space for comedy and music.",
   "seoKeywords": "Guys on Ice, scenic design, Great American Melodrama, musical comedy, Brandon PT Davis, theatre design",
   "creativeTeam": [
     {
@@ -1324,7 +1328,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
 },
   "last-train-to-nibroc": {
   "title": "Last Train to Nibroc",
-  "excerpt": "An intimate, warm playing space carved inside a much larger proscenium, using reclaimed barn wood, a slight rake, and a long backdrop to support closeness and quiet change in Last Train to Nibroc.",
+  "excerpt": "A smaller frame carved into a large proscenium with reclaimed Kentucky barn wood, a slight rake, and a 30-foot backdrop for Last Train to Nibroc.",
   "subcategory": "Drama",
   "client": "Okoboji Summer Theatre",
   "location": "Okoboji, IA",
@@ -1333,7 +1337,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "status": "published",
   "featured": false,
   "seoTitle": "Last Train to Nibroc | Scenic Design by Brandon PT Davis",
-  "seoDescription": "Scenic design for Last Train to Nibroc at Okoboji Summer Theatre, creating an intimate barn-wood frame inside a large proscenium to support closeness, memory, and gentle transition.",
+  "seoDescription": "Scenic design for Last Train to Nibroc at Okoboji Summer Theatre, using reclaimed Kentucky barn wood, a slight rake, and a long backdrop to compress a large stage into a closer playing space.",
   "seoKeywords": "Last Train to Nibroc, scenic design, Okoboji Summer Theatre, drama, Brandon PT Davis",
   "creativeTeam": [
     {
@@ -1528,7 +1532,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
 },
   "million-dollar-quartet": {
   "title": "Million Dollar Quartet",
-  "excerpt": "A co-scenic design for South Coast Repertory’s 2025 production of Million Dollar Quartet, built around the intimacy of Sun Records and the explosive energy of four artists changing music history together.",
+  "excerpt": "A co-scenic design for South Coast Repertory that treats Sun Records as both a working Memphis studio and the charged room where four musicians become larger than history.",
   "subcategory": "Musical Theatre",
   "client": "South Coast Repertory Theatre",
   "clientUrl": "https://www.scr.org/plays/productions/25-26-season/million-dollar-quartet/",
@@ -1538,8 +1542,8 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "status": "published",
   "featured": true,
   "seoTitle": "Million Dollar Quartet Scenic Design | South Coast Repertory",
-  "seoDescription": "Scenic design for South Coast Repertory's Million Dollar Quartet, shaping Sun Records as both an intimate studio and a mythic live music environment.",
-  "seoKeywords": "Million Dollar Quartet, scenic design, South Coast Repertory, musical theatre, Sun Records, Brandon PT Davis",
+  "seoDescription": "Co-scenic design for Million Dollar Quartet at South Coast Repertory, shaping Sun Records as an intimate recording studio, a live music engine, and a mythic room for Elvis Presley, Johnny Cash, Jerry Lee Lewis, and Carl Perkins.",
+  "seoKeywords": "Million Dollar Quartet scenic design, South Coast Repertory, Sun Records set design, musical theatre scenic design, Brandon PT Davis, Efren Delgadillo Jr",
   "creativeTeam": [
     {
       "role": "Book By",
@@ -1612,7 +1616,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
 },
   "much-ado-about-nothing": {
   "title": "Much Ado About Nothing",
-  "excerpt": "Shakespeare’s romantic comedy reframed through a wild-west visual world of saloon architecture, rough timber, and repertory-friendly frontier detail.",
+  "excerpt": "Shakespeare's romantic comedy reframed through western saloon architecture, rough timber, and frontier texture built to move quickly inside New Swan's repertory rhythm.",
   "subcategory": "Shakespeare",
   "client": "New Swan Theatre Festival",
   "clientUrl": "https://www.cultureoc.org/post/double-the-drama-new-swan-s-shakespeare-season-embraces-romance-wit-and-reinvention",
@@ -1622,8 +1626,8 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "status": "published",
   "featured": true,
   "seoTitle": "Much Ado About Nothing | Scenic Design by Brandon PT Davis",
-  "seoDescription": "Scenic design for Much Ado About Nothing at New Swan Theatre Festival, reimagining Shakespeare’s comedy through the language of the spaghetti western and the architecture of a frontier saloon.",
-  "seoKeywords": "Much Ado About Nothing, scenic design, New Swan Theatre Festival, Shakespeare, Brandon PT Davis, western scenic design",
+  "seoDescription": "Scenic design for Much Ado About Nothing at New Swan Theatre Festival, reimagining Shakespeare's comedy through western saloon architecture, frontier texture, and repertory-ready scenic detail.",
+  "seoKeywords": "Much Ado About Nothing scenic design, New Swan Theatre Festival, Shakespeare western design, Brandon PT Davis, Irvine Shakespeare, repertory scenic design",
   "creativeTeam": [
     {
       "role": "By",
@@ -1946,7 +1950,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
 },
   "the-25th-annual-putnam-county-spelling-bee": {
   "title": "The 25th Annual Putnam County Spelling Bee",
-  "excerpt": "A recognizable middle school gymnasium whose plainspoken details ground the awkward humor and surprising sincerity of Spelling Bee.",
+  "excerpt": "A middle school gym for Spelling Bee with a raised platform, competition banner, sponsor signage, and institutional modesty that lets the comedy stay human.",
   "subcategory": "Musical Theatre",
   "client": "Stephens College",
   "location": "Columbia, MO",
@@ -1955,7 +1959,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "status": "published",
   "featured": false,
   "seoTitle": "The 25th Annual Putnam County Spelling Bee | Scenic Design by Brandon PT Davis",
-  "seoDescription": "Scenic design for The 25th Annual Putnam County Spelling Bee at Stephens College, using a detailed middle school gymnasium to support comedy, competition, and emotional sincerity.",
+  "seoDescription": "Scenic design for The 25th Annual Putnam County Spelling Bee at Stephens College, using a raised gym platform, banner, chairs, tables, and sponsor signage to frame the competition.",
   "seoKeywords": "Putnam County Spelling Bee scenic design, Stephens College theatre, Brandon PT Davis, musical theatre scenic design, school gymnasium set",
   "creativeTeam": [
     {
@@ -2060,7 +2064,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
 },
   "the-complete-works-of-william-shakespeare-abridged": {
   "title": "The Complete Works of William Shakespeare (abridged)",
-  "excerpt": "A playful, modular comic set built for speed, theatrical irreverence, and rapid-fire transitions through Shakespeare’s canon.",
+  "excerpt": "A modular comic kit for Complete Works, built so actors could move quickly through Shakespearean references without the scenery slowing the joke.",
   "subcategory": "Comedy",
   "client": "Okoboji Summer Theatre",
   "location": "Okoboji, IA",
@@ -2069,7 +2073,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "status": "published",
   "featured": false,
   "seoTitle": "The Complete Works of William Shakespeare (abridged) | Scenic Design by Brandon PT Davis",
-  "seoDescription": "Scenic design for The Complete Works of William Shakespeare (abridged) at Okoboji Summer Theatre, featuring a playful and modular set built for fast transitions and comic energy.",
+  "seoDescription": "Scenic design for The Complete Works of William Shakespeare (abridged) at Okoboji Summer Theatre, using modular scenery and actor-friendly transformations for rapid comic shifts.",
   "seoKeywords": "The Complete Works of William Shakespeare abridged, scenic design, Okoboji Summer Theatre, comedy, Shakespeare, Brandon PT Davis",
   "creativeTeam": [
     {
@@ -2182,7 +2186,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
 },
   "the-glass-menagerie": {
   "title": "The Glass Menagerie",
-  "excerpt": "A memory-driven Wingfield apartment for Maples Repertory Theatre, shaped to let fragility, longing, and escape coexist within the same haunted domestic space.",
+  "excerpt": "A Wingfield apartment remembered rather than rebuilt: an elevated platform, brick fragments, and open thresholds holding family intimacy beside Tom's need to leave.",
   "subcategory": "Drama",
   "client": "Maples Repertory Theatre",
   "location": "Macon, MO",
@@ -2191,8 +2195,8 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "status": "published",
   "featured": true,
   "seoTitle": "The Glass Menagerie Scenic Design | Maples Repertory Theatre",
-  "seoDescription": "Scenic design for The Glass Menagerie at Maples Repertory Theatre, framing the Wingfield apartment as memory architecture caught between domestic confinement, fragility, and escape.",
-  "seoKeywords": "The Glass Menagerie, scenic design, Maples Repertory Theatre, Tennessee Williams, Brandon PT Davis, memory play, theatre design",
+  "seoDescription": "Scenic design for The Glass Menagerie at Maples Repertory Theatre, framing the Wingfield apartment as remembered space through an elevated platform, brick fragments, thresholds, and theatrical openness.",
+  "seoKeywords": "The Glass Menagerie scenic design, Maples Repertory Theatre, Tennessee Williams, Brandon PT Davis, memory play set design, regional theatre scenic design",
   "creativeTeam": [
     {
       "role": "By",
@@ -2250,7 +2254,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
 },
   "the-glass-menagerie-2011": {
   "title": "The Glass Menagerie",
-  "excerpt": "A memory-driven domestic environment shaped through scrim walls and a revealed cityscape, giving The Glass Menagerie a world suspended between fragile realism and the urge to escape.",
+  "excerpt": "A Glass Menagerie apartment shaped by scrim walls and a revealed city layer, letting the room shift between domestic enclosure and Tom's view beyond it.",
   "subcategory": "Drama",
   "client": "Okoboji Summer Theatre",
   "location": "Okoboji, IA",
@@ -2259,7 +2263,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "status": "published",
   "featured": false,
   "seoTitle": "The Glass Menagerie (2011) Scenic Design | Okoboji Summer Theatre",
-  "seoDescription": "Scenic design for the 2011 production of The Glass Menagerie at Okoboji Summer Theatre, using memory-inspired scrim walls and a revealed cityscape to reflect nostalgia and escape.",
+  "seoDescription": "Scenic design for the 2011 production of The Glass Menagerie at Okoboji Summer Theatre, using scrim walls and a revealed city layer to let the apartment feel enclosed and porous.",
   "seoKeywords": "The Glass Menagerie 2011, Tennessee Williams, scenic design, Okoboji Summer Theatre, Brandon PT Davis",
   "creativeTeam": [
     {
@@ -2311,7 +2315,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
 },
   "the-liar": {
   "title": "The Liar",
-  "excerpt": "A classical comic world built with elegance, color, and playful exaggeration, giving The Liar a refined environment that could support wit, deception, and fast-moving farce.",
+  "excerpt": "A polished social room for The Liar, arranged with crisp color, clear entrances, and enough order for every deception to disturb the frame.",
   "subcategory": "Comedy",
   "client": "Okoboji Summer Theatre",
   "location": "Okoboji, IA",
@@ -2320,7 +2324,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "status": "published",
   "featured": false,
   "seoTitle": "The Liar | Scenic Design by Brandon PT Davis",
-  "seoDescription": "Scenic design for The Liar at Okoboji Summer Theatre, blending classical elegance with bold playful elements to heighten the comedy's wit and charm.",
+  "seoDescription": "Scenic design for The Liar at Okoboji Summer Theatre, using crisp architecture, controlled color, and clean entrances to support deception, wit, and farce.",
   "seoKeywords": "The Liar, David Ives, Pierre Corneille, scenic design, Okoboji Summer Theatre, comedy, Brandon PT Davis",
   "creativeTeam": [
     {
@@ -2658,7 +2662,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
 },
   "the-penelopiad": {
   "title": "The Penelopiad",
-  "excerpt": "A ritual memory space for The Penelopiad, where Penelope and the maids testify within the same visual architecture, balancing epic framing with intimate address.",
+  "excerpt": "A shared ritual structure for The Penelopiad, giving Penelope and the maids layered places to testify, gather, separate, and reclaim the story.",
   "subcategory": "Drama",
   "client": "University of California Irvine",
   "location": "Irvine, CA",
@@ -2667,7 +2671,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "status": "published",
   "featured": true,
   "seoTitle": "The Penelopiad Scenic Design | UC Irvine",
-  "seoDescription": "Scenic design for The Penelopiad at University of California Irvine, building a ritual memory space for testimony, chorus visibility, and layered mythic staging.",
+  "seoDescription": "Scenic design for The Penelopiad at UC Irvine, using layered levels and open geometry to support testimony, chorus visibility, and mythic scale.",
   "seoKeywords": "The Penelopiad, scenic design, UC Irvine, Margaret Atwood, classical theatre, Brandon PT Davis",
   "creativeTeam": [
     {
@@ -2732,7 +2736,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
 },
   "tomas-and-the-library-lady": {
   "title": "Tomás and the Library Lady",
-  "excerpt": "Warm, legible spaces for Tomás and the Library Lady, designed to move between domestic reality and imaginative expansion while supporting bilingual storytelling and literacy.",
+  "excerpt": "Readable library and home frames for Tomás and the Library Lady, built so bilingual storytelling could move cleanly between daily life and imagination.",
   "subcategory": "Theatre for Young Audiences",
   "client": "Lake Dillon Theatre Company",
   "location": "Silverthorne, CO",
@@ -2741,7 +2745,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "status": "published",
   "featured": false,
   "seoTitle": "Tomás and the Library Lady | Scenic Design by Brandon PT Davis",
-  "seoDescription": "Scenic design for Tomás and the Library Lady at Lake Dillon Theatre Company, using warm, readable spaces and library motifs as portals into literacy, belonging, and imaginative growth.",
+  "seoDescription": "Scenic design for Tomás and the Library Lady at Lake Dillon Theatre Company, using clear library and home frames to support bilingual storytelling, literacy, and imaginative movement.",
   "seoKeywords": "Tomás and the Library Lady, scenic design, Lake Dillon Theatre Company, theatre for young audiences, bilingual theatre, Brandon PT Davis",
   "creativeTeam": [
     {
@@ -2948,7 +2952,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
 },
   "vanya-and-sonia-and-masha-and-spike": {
   "title": "Vanya and Sonia and Masha and Spike",
-  "excerpt": "A Bucks County porch that feels both sheltering and restrictive, giving Vanya and Sonia and Masha and Spike a nostalgic domestic frame for rivalry, wit, and longing.",
+  "excerpt": "A Bucks County porch that works as shelter, lookout, and waiting room for a family that knows the house too well and cannot quite leave it alone.",
   "subcategory": "Comedy",
   "client": "Stephens College",
   "location": "Columbia, MO",
@@ -2957,7 +2961,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "status": "published",
   "featured": false,
   "seoTitle": "Vanya and Sonia and Masha and Spike | Scenic Design by Brandon PT Davis",
-  "seoDescription": "Scenic design for Vanya and Sonia and Masha and Spike at Stephens College, using a Bucks County porch and warm domestic architecture to support nostalgia, comedy, and emotional tension.",
+  "seoDescription": "Scenic design for Vanya and Sonia and Masha and Spike at Stephens College, using a Bucks County porch, handmade garden detail, and clear entrances to support comedy and family tension.",
   "seoKeywords": "Vanya and Sonia and Masha and Spike, scenic design, Stephens College, comedy, Brandon PT Davis",
   "creativeTeam": [
     {
@@ -3196,7 +3200,7 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "aw-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90071-gallery-150229-a8aaa5e2.webp",
-    "altText": "Production image from All's Well That Ends Well at New Swan with cast and scenic world visible, scenic design by Brandon PT Davis.",
+    "altText": "Production image from All's Well That Ends Well at New Swan with cast framed by Brandon PT Davis's scenic design.",
     "kind": "production"
   }
 ],
@@ -3261,7 +3265,7 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "idiot-render-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/project-90038-gallery-150176-92a3fb6f.webp",
-    "altText": "Rendering for American Idiot exploring the Southern California concrete metaphor and industrial scenic world, scenic design by Brandon PT Davis.",
+    "altText": "Rendering for American Idiot exploring Southern California concrete, decay, and industrial scenic design by Brandon PT Davis.",
     "kind": "rendering"
   },
   {
@@ -3284,7 +3288,7 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "enemy-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2023-enemy-of-the-people-6-of-6-8866-f0c28220.webp",
-    "altText": "Production image from An Enemy of the People showing the grayscale scenic world, scenic design by Brandon PT Davis.",
+    "altText": "Production image from An Enemy of the People showing the grayscale scenic design by Brandon PT Davis.",
     "kind": "production"
   },
   {
@@ -3567,7 +3571,7 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "bingo-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/bingo-the-winning-musical-f0bb8f349b-4dab6b4f.jpg",
-    "altText": "Production image from Bingo: The Winning Musical showing the bright nautical-inspired scenic world, scenic design by Brandon PT Davis.",
+    "altText": "Production image from Bingo: The Winning Musical showing the bright nautical-inspired scenic design by Brandon PT Davis.",
     "kind": "production"
   },
   {
@@ -3797,7 +3801,7 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "company-prod-11",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90019-gallery-150240-c1ace8a3.webp",
-    "altText": "Final production image from Company showing the complete New York scenic world, scenic design by Brandon PT Davis.",
+    "altText": "Final production image from Company showing the complete New York exterior environment, scenic design by Brandon PT Davis.",
     "kind": "production"
   }
 ],
@@ -4022,7 +4026,7 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "goi-prod-2",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90045-gallery-150062-599a4c3a.webp",
-    "altText": "Cast interaction framed by the cabin-inspired scenic world of Guys on Ice, scenic design by Brandon PT Davis.",
+    "altText": "Cast interaction framed by the cabin-inspired ice-fishing design of Guys on Ice, scenic design by Brandon PT Davis.",
     "kind": "production"
   },
   {
@@ -4231,7 +4235,7 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "little-shop-prod-5",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2015-little-shop-of-horrors-6-of-9-1481-1c45a635.webp",
-    "altText": "Production image from Little Shop of Horrors reinforcing the claustrophobic tension of the small scenic world, scenic design by Brandon PT Davis.",
+    "altText": "Production image from Little Shop of Horrors reinforcing the claustrophobic flower shop design by Brandon PT Davis.",
     "kind": "production"
   },
   {
@@ -4548,7 +4552,7 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "parliament-prod-7",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-gallery-150202-8991ab50.webp",
-    "altText": "Production image from Parliament Square showing the scenic world pressing the political against the personal, scenic design by Brandon PT Davis.",
+    "altText": "Production image from Parliament Square showing circular stone path and political pressure, scenic design by Brandon PT Davis.",
     "kind": "production"
   },
   {
@@ -4562,7 +4566,7 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "parliament-prod-9",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90018-gallery-150214-db908fa1.webp",
-    "altText": "Production image from Parliament Square reinforcing the scenic world's tension between resilience and sacrifice, scenic design by Brandon PT Davis.",
+    "altText": "Production image from Parliament Square reinforcing the tension between resilience and sacrifice, scenic design by Brandon PT Davis.",
     "kind": "production"
   },
   {
@@ -4678,7 +4682,7 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "rom-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90077-gallery-150246-a5626620.webp",
-    "altText": "Actors positioned within the architectural and symbolic scenic world of Romero, scenic design by Brandon PT Davis.",
+    "altText": "Actors positioned within the architectural and symbolic design of Romero, scenic design by Brandon PT Davis.",
     "kind": "production"
   }
 ],
@@ -4810,7 +4814,7 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "complete-prod-3",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/the-complete-works-of-william-shakespeare-abridged-5f6ec9e90b-ff89656e.jpg",
-    "altText": "Production image from The Complete Works of William Shakespeare (abridged) showing the comic ensemble within the scenic world, scenic design by Brandon PT Davis.",
+    "altText": "Production image from The Complete Works of William Shakespeare (abridged) showing the comic ensemble inside the modular scenic design by Brandon PT Davis.",
     "kind": "production"
   },
   {
@@ -5065,7 +5069,7 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "lamancha-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2022-man-of-la-mancha-4-of-5-large-5474-4b8a4979.webp",
-    "altText": "Production still from The Man of La Mancha with actors and musicians inhabiting the scenic world, scenic design by Brandon PT Davis.",
+    "altText": "Production still from The Man of La Mancha with actors and musicians inside the warehouse-inspired scenic design by Brandon PT Davis.",
     "kind": "production"
   },
   {
@@ -5209,7 +5213,7 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "wives-prod-7",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150250-14ae5400.webp",
-    "altText": "Final production image from The Merry Wives of Windsor showing the complete scenic world, scenic design by Brandon PT Davis.",
+    "altText": "Final production image from The Merry Wives of Windsor showing the complete sitcom-inspired scenic design by Brandon PT Davis.",
     "kind": "production"
   }
 ],
@@ -5267,7 +5271,7 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "pajama-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90048-gallery-150113-f8ee0dbf.webp",
-    "altText": "Production image from The Pajama Game showing the scenic world supporting romance and labor conflict, scenic design by Brandon PT Davis.",
+    "altText": "Production image from The Pajama Game showing scenic design that supports romance and labor conflict, by Brandon PT Davis.",
     "kind": "production"
   },
   {
@@ -5395,7 +5399,7 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "penelopiad-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150232-69e3ddad.webp",
-    "altText": "Production image from The Penelopiad showing the scenic world supporting both epic framing and intimacy, scenic design by Brandon PT Davis.",
+    "altText": "Production image from The Penelopiad showing layered scenic design for epic framing and intimacy by Brandon PT Davis.",
     "kind": "production"
   },
   {
@@ -5432,7 +5436,7 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "tomas-prod-1",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90039-gallery-150021-8f3e3ec8.webp",
-    "altText": "Production image from Tomás and the Library Lady showing the welcoming scenic world, scenic design by Brandon PT Davis.",
+    "altText": "Production image from Tomás and the Library Lady showing the welcoming library design by Brandon PT Davis.",
     "kind": "production"
   },
   {
@@ -5604,7 +5608,7 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "urinetown-2021-prod-4",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/urinetown-2021-61fded10c7-8e6f48c3.jpeg",
-    "altText": "Final production image from the 2021 Urinetown showing the complete comic-dystopian scenic world, scenic design by Brandon PT Davis.",
+    "altText": "Final production image from the 2021 Urinetown showing the complete comic-dystopian scenic design by Brandon PT Davis.",
     "kind": "production"
   }
 ],
@@ -5655,7 +5659,7 @@ export const fileFirstScenicProjectMediaBySlug = {
     "id": "vanya-prod-6",
     "type": "image",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/2016-vanya-sonia-masha-and-spike-stephens-2-of-2-8670-9f110775.webp",
-    "altText": "Final production image from Vanya and Sonia and Masha and Spike showing the full domestic scenic world, scenic design by Brandon PT Davis.",
+    "altText": "Final production image from Vanya and Sonia and Masha and Spike showing the full domestic porch design by Brandon PT Davis.",
     "kind": "production"
   }
 ],
@@ -5709,9 +5713,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "a-smalltowne-christmas": [
   {
     "type": "text",
-    "heading": "Holiday Warmth and Small-Town Memory",
+    "heading": "A Town That Could Hold the Music",
     "content": [
-      "A Smalltowne Christmas was designed to capture the charm of a community gathering around shared holiday traditions. The scenic world leaned into familiarity, warmth, and seasonal texture, creating an environment where nostalgia and performance could live side by side without losing theatrical clarity."
+      "For A Smalltowne Christmas, I wanted the set to feel instantly recognizable without becoming a pile of holiday decoration. The production needed a place where community scenes, musical numbers, and sentimental moments could all happen without changing the rules of the space every time the story shifted.",
+      "The design works like a small public square: open enough for choreography, specific enough to tell the audience where they are, and warm enough to let the holiday tone arrive before anyone has to explain it."
     ]
   },
   {
@@ -5723,9 +5728,10 @@ export const fileFirstScenicProjectSectionsBySlug = {
   },
   {
     "type": "text",
-    "heading": "A Town Built for Gathering",
+    "heading": "Holiday Detail Without Losing the Stage",
     "content": [
-      "The design needed to balance festive spectacle with the intimacy of a small-town celebration. Rather than overwhelm the story with decoration, the goal was to create a setting that felt welcoming and communal, allowing the production's music, choreography, and seasonal sentiment to emerge inside a world of believable Christmas cheer."
+      "The danger with a Christmas show is that the scenery can start decorating instead of supporting. I tried to keep the visual language clear: familiar storefront texture, seasonal color, and enough architectural rhythm to frame the performers without crowding them.",
+      "What mattered most was making the space useful. The town had to feel friendly and lived-in, but it also had to leave room for entrances, music, and movement. That balance is where the scenic design becomes more than a backdrop; it gives the production a home base."
     ]
   },
   {
@@ -5792,7 +5798,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Curtains as Architecture",
     "content": [
-      "This production of All’s Well That Ends Well, directed by Rob Salas, was approached through an operatic lens. Rather than relying on heavy architecture, the design treated curtains as the primary engine of transformation, turning drapery into structure, threshold, and spectacle."
+      "For All's Well That Ends Well, the scenic language started with movement. New Swan's stage rewards clarity and speed, so the design used drapery as architecture: fabric became wall, threshold, reveal, and emotional temperature."
     ]
   },
   {
@@ -5806,8 +5812,8 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "From Roussillon to Florence",
     "content": [
-      "In Roussillon, blue drapes and heraldic signage established the French court with clarity and restraint. A pedestal used to present the rings gave the world a ceremonial anchor, something that could return throughout the play and accumulate meaning as the story moved through acts of promise, pursuit, and disguise.",
-      "When the action shifted to Florence, the curtains swept back to reveal stucco walls, vines, and topiary elements that instantly warmed the stage. The transition was not just scenic; it changed the emotional temperature of the play, opening a more playful and theatrical environment for romance, deception, and resolution."
+      "Roussillon needed a sense of order. Blue drapes, heraldic signage, and the ring pedestal gave that world ceremony without weighing down the stage. The court could feel formal, watched, and rule-bound while still staying nimble enough for the language and staging to lead.",
+      "Florence answered that restraint with warmth. When the curtains opened to stucco, vines, and garden detail, the play entered a more theatrical climate: less controlled, more romantic, and more willing to let disguise and desire reshape the room."
     ]
   },
   {
@@ -5821,8 +5827,8 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Reveal and Conceal",
     "content": [
-      "The design lets reveal and conceal do the storytelling. Each movement of the drapery feels precise and charged, carrying the grand, stylized rhythm of opera while still leaving room for actor movement and comedic clarity. The architecture stays intentionally light so the audience can feel the stage changing in front of them.",
-      "The result is a world that can move between courtly restraint and Mediterranean warmth without losing coherence. The production photographs show how fabric, signage, and garden detail worked together to create a stage picture that is both elegant and flexible, giving Shakespeare’s shifting worlds a clear visual logic without overbuilding them."
+      "The important action is not just where the curtains land, but what they allow the audience to understand. Reveal and conceal become part of the storytelling, giving the production a formal rhythm while keeping the architecture light.",
+      "That balance matters in Shakespeare. The world needs enough visual logic to orient the audience, but enough air for language, bodies, and comedy to keep changing the room."
     ]
   },
   {
@@ -5838,7 +5844,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Concrete Rebellion",
     "content": [
-      "For American Idiot on the Claire Trevor Theatre stage at UCI, the design channeled Green Day's raw energy into a visual world built on the tension between suburban monotony and urban decay, reimagined through a Southern California lens."
+      "For American Idiot on the Claire Trevor Theatre stage at UCI, the design pushed Green Day's raw energy through concrete, billboard residue, and Southern California sprawl. The set sits between suburban monotony and urban decay, giving the music a place that feels public, restless, and already breaking down."
     ]
   },
   {
@@ -5940,7 +5946,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Composure on the Surface",
     "content": [
-      "For An Inspector Calls, the scenic design framed the Birling household as outwardly composed yet structurally unstable. The room needed to project social confidence and domestic order at first glance, while quietly setting up the pressure points that would be exposed as the inspector’s revelations accumulated."
+      "For An Inspector Calls, the Birling dining room has to behave before it can break. I treated the room as a controlled social machine: furniture arranged for ceremony, entrances placed for interruption, and enough polish on the surface to make every revelation feel like damage. The audience should believe in the family's composure before the room starts helping dismantle it."
     ]
   },
   {
@@ -5954,7 +5960,8 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Interrogation Through Space",
     "content": [
-      "Sightlines, entrances, and the arrangement of furniture were all calibrated to support the play’s interrogation dynamics. The world had to accommodate drawing-room realism, but also gradually feel less like a protected domestic interior and more like a stage for moral accountability. That shift depended less on visual excess than on control, where people entered, where they could hide, and how the room held tension."
+      "The Inspector changes the room without moving the walls. Sightlines, chairs, and thresholds become tools for pressure: who can sit, who has to stand, who is watched, and who has nowhere useful to hide.",
+      "That is where the realism matters. The room stays believable, but the blocking slowly turns respectability into exposure."
     ]
   },
   {
@@ -5968,7 +5975,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "A House Built for Exposure",
     "content": [
-      "Period-informed detailing was used with restraint so atmosphere and composition could carry the central tension. The design needed to preserve the social polish of the setting while allowing the audience to feel the instability underneath it. As the evening progressed, the room itself began to feel complicit in the unraveling, an architecture of manners that could no longer protect the family from consequence."
+      "The detailing stays restrained so the room does not announce the critique too early. It begins as a good house with good manners, then becomes a place where manners cannot protect anyone. That restraint keeps the tension social and architectural instead of decorative."
     ]
   },
   {
@@ -5983,7 +5990,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "A Formal Interior",
     "content": [
-      "The setting for Angel Street centers on a Victorian drawing room shaped by period detail and domestic realism. The space reflects late nineteenth-century order, refinement, and social structure while accommodating the play's psychological tension."
+      "Angel Street needs a room that looks proper enough to be trusted. The Victorian drawing room is full, formal, and controlled: wainscoting, trim, stair, furnishings, and practical light all working together to make domestic order feel convincing before it starts to feel dangerous."
     ]
   },
   {
@@ -5997,7 +6004,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Observation and Enclosure",
     "content": [
-      "Architectural elements such as wainscoting, decorative trim, and a functional staircase establish a formal interior defined by control and observation. Period furnishings and practical lighting create a believable, lived-in environment. As the story progresses, the room's density and enclosure quietly reinforce a growing sense of confinement without relying on overt visual metaphor."
+      "The staircase matters because it gives the room a vertical threat. Someone can appear above, retreat, listen, or watch. The furniture keeps the room playable, but the architecture keeps reminding the audience that this is a home arranged around control."
     ]
   },
   {
@@ -6011,7 +6018,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "A Home Tightening Around Its Occupant",
     "content": [
-      "The design supports the performers by allowing shifts in power and perception to unfold within a stable, realistic setting. The drawing room becomes an active container for the narrative, where domestic order and manipulation coexist in plain sight."
+      "The room does not need to distort to become frightening. It stays realistic, which is the point. As the power shifts, the same doors, stairs, lamps, and furniture begin to feel less like comfort and more like evidence. That steadiness lets the psychological pressure build inside a space the audience already understands."
     ]
   },
   {
@@ -6034,7 +6041,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "A New York Walk-Up",
     "content": [
-      "The design for Barefoot in the Park centered on a compact New York walk-up that amplifies the play’s emotional temperature through scale, proximity, and verticality. Tight architectural boundaries and selective furnishing choices helped stage the couple’s shifting rhythms while preserving clarity for fast comic timing."
+      "Barefoot in the Park works best when the apartment is charming and impossible at the same time. I treated the walk-up as a pressure cooker: too many stairs before the front door, too little insulation from the city, and just enough room for newlywed optimism to collide with practical reality."
     ]
   },
   {
@@ -6048,7 +6055,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Geometry for Comedy",
     "content": [
-      "Rather than over-rendering period detail, the scenic approach prioritized playable geometry and social pressure. Doors, stairs, and window relationships all functioned as storytelling tools, giving actors clean pathways for entrances, reversals, and escalating comic friction."
+      "The floor plan carries the comedy. Doors, windows, and the apartment's tight circulation give actors clean pathways for entrances and reversals, but the proportions keep everyone a little too close. That closeness is where the play finds its spark."
     ]
   },
   {
@@ -6062,7 +6069,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "A Walk-Up with Pressure",
     "content": [
-      "The apartment needed to track the movement from romantic idealism to negotiated partnership without losing the wit of the play. The set works less as a realistic container than as a pressure system, shaping tempo, intimacy, and the comic stakes of everyday domestic life."
+      "The set lets the audience enjoy the apartment and question it at the same time. It is a love nest, a bad rental decision, and a comic obstacle course, which gives the relationship somewhere specific to grow up. The apartment stays funny because it is almost workable."
     ]
   },
   {
@@ -6086,7 +6093,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "A Room Built for Realism",
     "content": [
-      "The scenic design for Bell, Book and Candle, directed by Richard Biever, was rooted in realism. The goal was to create a fully realized apartment interior that felt lived-in, functional, and emotionally specific, an environment where the characters could exist naturally and the performances could carry the theatrical weight."
+      "For Bell, Book and Candle, the apartment needed to feel complete before it felt magical. If the room is believable first, the supernatural can enter more quietly and become stranger because it has something real to disturb."
     ]
   },
   {
@@ -6100,8 +6107,8 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Domestic Scale and Subtle Magic",
     "content": [
-      "The space was conceived as a complete room rather than a suggestion of one. Built-in bookshelves, practical doors, and defined wall planes established permanence and weight, while furniture placement supported blocking and sightlines without sacrificing the rhythms of everyday life.",
-      "Color shaped the atmosphere in quieter ways. The decision to use green walls gave the apartment warmth and personality without pushing it into stylization. That palette helped the set hold the play’s familiar wit and slight enchantment at the same time, keeping the world grounded while letting the supernatural elements live just beneath the surface."
+      "Built-in shelving, practical doors, and defined wall planes give the actors a room with rules. That domestic structure supports comedy, entrances, eavesdropping, and the casual rituals of people who know where everything lives.",
+      "The green walls do quiet dramatic work. They give the apartment personality and a faint charge without turning the world into fantasy, so the magic can slip in at the edges rather than announce itself as the whole idea."
     ]
   },
   {
@@ -6115,8 +6122,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "A Room with a Whisper of Magic",
     "content": [
-      "Textures and finishes keep the apartment grounded in believable mid-century domestic life, which gives the supernatural undertones somewhere solid to land.",
-      "Green walls, practical detail, and lived-in warmth keep the room human and specific, so the play's enchantment feels like it is slipping in through the edges instead of announcing itself."
+      "The magic works because the room stays human. Books, furniture, doors, and lived-in surfaces make the apartment feel occupied by real people, leaving the enchantment to appear through behavior, atmosphere, and small disruptions."
     ]
   },
   {
@@ -6137,7 +6143,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Okoboji Through a Playful Lens",
     "content": [
-      "For Bingo: The Winning Musical at Okoboji Summer Theatre, the scenic design pulled from the spirit of the Okoboji Lakes region rather than treating the world as a generic community-hall comedy. Nautical motifs, cheerful color, and a polished sense of playful charm helped the production feel rooted in place while still serving the heightened rhythm of musical theatre."
+      "For Bingo: The Winning Musical, I pulled the room toward Okoboji instead of a generic bingo hall. Nautical trim, bright lake color, and clean graphic shapes let the set feel local without becoming a postcard. The room should feel like a community space that has seen fundraisers, announcements, gossip, and one very serious night of bingo."
     ]
   },
   {
@@ -6152,7 +6158,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Camp, Community, and Pace",
     "content": [
-      "The goal was to support the show's lively pace with a world that was bright, legible, and theatrically generous. The design needed enough specificity to evoke the character of the region, but enough clarity and openness to keep musical storytelling moving cleanly. That balance between local flavor and compositional simplicity gave the production its buoyant comic energy."
+      "The musical needs a room that can take a joke quickly. The layout stays open for numbers and traffic, while the color and signage keep the comedy readable from the back row. I wanted the design to be cheerful without becoming busy, so the audience could always read the game, the relationships, and the escalating stakes. The fun comes from recognizing the room and then watching it get louder."
     ]
   }
 ],
@@ -6417,7 +6423,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Transformation in Motion",
     "content": [
-      "Freaky Friday required a scenic system capable of fast identity shifts, tonal contrast, and high-energy ensemble flow. The design strategy emphasized modular zones and legible transitions so the audience could instantly read changing contexts while performers maintained pace through musical numbers and dialogue scenes."
+      "Freaky Friday needs locations that read before the joke has to explain them. The design was built as a quick-change system, with modular scenic pieces and clear visual cues for home, school, and the public spaces the story keeps bouncing through. The audience has to track the body swap, so the scenery cannot make them work too hard to locate the scene."
     ]
   },
   {
@@ -6431,7 +6437,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Zones for Comedy and Pace",
     "content": [
-      "The visual language was built around contemporary domestic and school-world cues, with flexible units supporting both intimacy and spectacle. Scenic logic had to stay clear even as the show bounced between emotional sincerity, comic confusion, and ensemble-driven momentum."
+      "The body-swap premise only works if the audience always knows where they are. Each zone had to be simple enough to register instantly, but flexible enough to carry dance, dialogue, and fast reversals. That meant designing for rhythm as much as image: a table, portal, or unit could not just look right; it had to clear, pivot, and reset at musical speed."
     ]
   },
   {
@@ -6445,8 +6451,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "A Stage That Can Switch on Cue",
     "content": [
-      "The modular layout keeps the story moving fast, letting each location read instantly even as identities and emotional stakes flip underneath it.",
-      "That agility gives the production room for comic chaos without losing the family relationships at the center of the show."
+      "The set is less about transformation as spectacle and more about transformation as stage traffic. It gives the production a clean grammar for moving from one emotional temperature to another without losing the family story underneath. When the design is doing its job, the world keeps shifting while the audience stays focused on the people inside it."
     ]
   },
   {
@@ -6471,7 +6476,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "A Frozen-Lake Playing Space",
     "content": [
-      "For Guys on Ice, the scenic design focused on creating a playable frozen-lake environment that could support both broad comedy and moments of quiet sincerity. The composition balances a strong horizon line and open negative space with practical ice-fishing architecture so performers can move cleanly while the audience always reads relationship dynamics."
+      "For Guys on Ice, the first job was making the lake playable. A strong horizon line, ice-fishing structure, and open field of negative space gave the comedy room to breathe while keeping the men visibly isolated together. The lake had to feel broad, but the acting space still had to stay tight enough for friendship, frustration, and song."
     ]
   },
   {
@@ -6485,7 +6490,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Midwestern Winter Vernacular",
     "content": [
-      "Material and texture choices were built around Midwestern winter vernacular, with surfaces suggesting wear, weather, and local history rather than caricature. The design needed to feel specific to place and season while still supporting the comic energy of the piece."
+      "The texture needed to feel weathered, not cute. Surfaces suggest use, cold, and repetition: the kind of place where the ritual of fishing matters as much as the fish. I kept the details familiar and practical so the humor could come from behavior rather than scenic caricature."
     ]
   },
   {
@@ -6499,7 +6504,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Grounding the Lake",
     "content": [
-      "The larger goal was to ground the humor in a recognizable world. Keeping the environment legible and specific lets the production hold both the exaggerated rhythms of musical comedy and the quieter emotional texture of friendship, ritual, and community."
+      "Keeping the stage spare helps the humor land. The emptiness around the characters becomes part of the joke, but it also gives the quieter friendship moments somewhere to sit. The ice house, horizon, and open field do enough; the rest belongs to timing."
     ]
   },
   {
@@ -6534,7 +6539,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "A Modular Party",
     "content": [
-      "The set was built to feel like an immersive party. Pop Art motifs, geometric shapes, and vivid neon-inspired colors formed a modular world that transformed fluidly between scenes. Instead of medieval architecture, we leaned into a playful mashup, columns glowing in electric pinks, castle facades borrowing from record-sleeve graphics rather than stone."
+      "The set was built to feel like an immersive party. Pop Art motifs, geometric shapes, and vivid neon-inspired colors turned the stage into a modular performance space that could transform quickly between scenes. Instead of medieval architecture, we leaned into a playful mashup: columns glowing in electric pinks, castle facades borrowing from record-sleeve graphics rather than stone."
     ]
   },
   {
@@ -6549,7 +6554,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "heading": "Pop, Motion, and Queer Joy",
     "content": [
       "A custom high-saturation palette amplifies the show’s irreverent tone. Shifting panels, stylized platforms, and dynamic projection elements let each location evolve with the characters’ emotional arcs, creating a visual rhythm that matches the pulse of the Go-Go’s music.",
-      "The design honors transformation, identity, and freedom while keeping a pop sensibility that feels fresh and theatrical. Whether evoking a dance floor, a throne room, or a forest of fabulous confusion, the scenic world keeps its eye on the core: joy, rebellion, and love in all its forms.",
+      "The design keeps transformation, identity, and freedom in motion. Dance floor, throne room, and forest all share the same saturated vocabulary, so the show can shift location without losing its pulse: joy, rebellion, and love in full color.",
       "Ultimately, the set acts as a visual celebration of queerness, musical energy, and theatre’s power to transport. This is not nostalgia; it is momentum in full technicolor."
     ]
   },
@@ -6584,9 +6589,9 @@ export const fileFirstScenicProjectSectionsBySlug = {
   },
   {
     "type": "text",
-    "heading": "Warmth, Sightlines, and Quiet Tension",
+    "heading": "Rake, Wood, and Proximity",
     "content": [
-      "The stage was raked slightly to focus sightlines and give the environment a gentle push forward. It added subtle tension without feeling stylized. The barn wood brought warmth and history into the room, something grounded and honest that reflected the play's rural setting and emotional vulnerability."
+      "The slight rake helped focus the actors inside the smaller frame, giving the room a gentle forward pressure. Reclaimed Kentucky barn wood did the rest: it brought age, grain, and regional specificity without asking the set to illustrate every location literally. The material gave the play texture without stealing the quiet."
     ]
   },
   {
@@ -6600,7 +6605,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Travel, Memory, and Waiting",
     "content": [
-      "A 30-foot backdrop carried the journey between locations, allowing transitions to remain fluid without breaking the rhythm of the characters' conversations. This design wasn't about spectacle. It was about proximity. The architecture supported stillness, and the materials carried nostalgia without becoming sentimental."
+      "The 30-foot backdrop carried the sense of travel while the architecture stayed close. That let transitions happen without breaking the rhythm of the conversations, which is where the play lives. It is a small story in a large room, so the design works by reducing distance."
     ]
   },
   {
@@ -6639,7 +6644,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Pressure Inside the Shop",
     "content": [
-      "The flower shop sat inside a slightly compressed proscenium frame, giving the environment a boxed-in quality. That pressure mattered. Seymour's world needed to feel small before Audrey II made it feel dangerous. The palette stayed gritty and desaturated so the plant and costumes could carry visual contrast while the realism gave the horror weight."
+      "The flower shop sat inside a slightly compressed proscenium frame, giving the environment a boxed-in quality. That pressure mattered. Seymour's shop had to feel small before Audrey II made it dangerous. The palette stayed gritty and desaturated so the plant and costumes could carry visual contrast while the realism gave the horror weight."
     ]
   },
   {
@@ -6670,7 +6675,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "From Basement to Game Board",
     "content": [
-      "The scenic design for ¡LOTERIA: GAME ON! began in a familiar suburban basement family room, the kind of space where a young person might gather with family, retreat into imagination, and build a world of play from whatever is at hand. That realism provided the launch point for the evening, grounding the story before the design expanded into something brighter, faster, and more theatrical."
+      "¡LOTERIA: GAME ON! began in a familiar suburban basement family room, the kind of space where a young person might gather with family, retreat into imagination, and build a world of play from whatever is at hand. That realism provided the launch point for the evening, grounding the story before the design expanded into something brighter, faster, and more theatrical."
     ]
   },
   {
@@ -6726,7 +6731,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Inside Sun Records",
     "content": [
-      "The design invites audiences into Sun Records on the day Elvis Presley, Johnny Cash, Jerry Lee Lewis, and Carl Perkins came together for their legendary jam session. Collaborating with co-scenic designer Efren Delgadillo Jr., director James Moye, and associate director Kim Martin-Cotten, the work balances authenticity with theatricality, capturing both the intimacy of a Memphis studio and the explosive energy of rock and roll in the making."
+      "Million Dollar Quartet lives in the tension between a small working room and a massive cultural memory. The set needed to feel like Sun Records, but it also needed to carry the charge of watching Elvis Presley, Johnny Cash, Jerry Lee Lewis, and Carl Perkins collide in real time."
     ]
   },
   {
@@ -6740,8 +6745,8 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "The Room as Performance Engine",
     "content": [
-      "The environment stays detailed and grounded: wood floors, period recording equipment, and control-room windows lined with gold records. At the same time, theatrical elements heighten the musical impact. Chief among them is the illuminated SUN sign, drawn from Elvis concert signage, which lets the studio become both a place of work and a stage for myth.",
-      "That double identity was important. The room needed to hold the closeness of a rehearsal space while still supporting the heightened, public feeling of history happening in front of an audience."
+      "Working with co-scenic designer Efren Delgadillo Jr., the room stayed grounded in studio detail: wood floors, recording equipment, control-room glass, and the visual density of a place where people actually work. Those details keep the performers close to one another and close to the audience.",
+      "The theatrical heightening comes from letting the studio become a performance machine. The illuminated SUN sign gives the room a second identity, shifting it from workplace to myth without losing the intimacy that makes the music feel newly made."
     ]
   },
   {
@@ -6755,8 +6760,8 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "The Studio as Collaboration",
     "content": [
-      "The set was built to honor the jam-session energy at the heart of the piece. By keeping the musicians facing one another and the room open, the design makes the performance feel shared, rhythmic, and alive.",
-      "It is not just a stage for the songs. It is a portrait of artists listening, pushing, and turning a recording studio into a moment of music history."
+      "The strongest scenic choice was to protect the feeling of musicians listening to each other. The room stays open enough for the audience to watch the exchange: challenge, delight, rivalry, and timing.",
+      "It is not just a stage for songs. It is a room where artists push one another until a recording studio becomes a piece of music history."
     ]
   },
   {
@@ -6786,7 +6791,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Shakespeare Through a Western Lens",
     "content": [
-      "This Wild West–inspired production of Much Ado About Nothing, directed by Eli Simon, reimagined Shakespeare’s comedy through the lens of the spaghetti western. The design embraced the grit and romance of the American frontier while staying flexible enough to work within New Swan’s repertory conditions."
+      "Much Ado About Nothing became more useful to us when the western frame was treated as behavior, not decoration. The saloon gave the comedy a public room for watching, bluffing, teasing, and performing confidence."
     ]
   },
   {
@@ -6800,8 +6805,8 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Saloon Architecture and Frontier Texture",
     "content": [
-      "The primary backdrop was a saloon interior, with red wallpaper created using a hand-painted roller to achieve an authentic period texture. At the center stood a bar built from rough wood slabs and barrels, complete with swinging saloon doors, giving the stage a clear focal point that could be quickly struck or reconfigured as the story moved.",
-      "Antique signage, weathered finishes, and layered frontier details grounded the world in both history and cinematic influence. The environment needed to hold wit, pursuit, deception, and music without becoming overbuilt, so each scenic element had to do multiple jobs at once."
+      "The primary scenic gesture was a saloon interior built from rough timber, barrels, swinging doors, and red wallpaper rolled by hand for period texture. It created a recognizable social architecture without overbuilding the playing space.",
+      "That restraint was important for New Swan. The scenic pieces had to carry western atmosphere, support entrances and pursuit, and still disappear quickly enough for repertory life. Every object needed more than one job."
     ]
   },
   {
@@ -6815,7 +6820,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "A Frontier Stage for Banter",
     "content": [
-      "By merging Shakespeare’s battles of love and misunderstanding with the visual language of western cinema, the design creates a world that feels playful, textured, and theatrically legible. The saloon backdrop, bar, and signage invite the audience into a dust-filled landscape of gamblers, gunfighters, and lovers while still leaving space for performance to lead."
+      "The western language sharpened the comedy because it gave the characters a world of posing and reputation. The saloon, signage, and weathered surfaces invite the audience into a landscape of gamblers, gunfighters, and lovers, while the openness keeps the actors in charge."
     ]
   },
   {
@@ -6830,7 +6835,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "A Boutique Built for Farce",
     "content": [
-      "For Not Now, Darling at Okoboji Summer Theatre, the scenic design centered on a polished British boutique interior engineered for comic confusion. The world needed to feel elegant enough to support the play's upper-crust veneer, but also clear and nimble enough to sustain the speed, hiding, and rapid reversals that farce demands."
+      "For Not Now, Darling at Okoboji Summer Theatre, the boutique had to look polished enough to sell the upper-crust veneer, but clear and nimble enough for hiding, reversals, and exits to land at farce speed. I treated the room like a retail showroom with comic wiring underneath."
     ]
   },
   {
@@ -6846,7 +6851,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "heading": "Color, Precision, and Timing",
     "content": [
       "The palette leaned into Wes Anderson-inspired color relationships, using controlled contrast and visual polish to sharpen the heightened comedy without losing the setting's retail specificity. Doors and thresholds remained essential compositional devices, giving actors the clean entrances, exits, and near-misses that make this kind of comedy feel effortless when it is actually tightly engineered.",
-      "The design goal was to create a world that looked refined on the surface while functioning like a comic machine underneath. That balance between elegance and precision gave the production a lively visual rhythm and supported the play's escalating misunderstandings with architectural clarity."
+      "The boutique looks refined on the surface while functioning like a comic machine underneath. That balance between elegance and precision gave the production a lively visual rhythm and supported the play's escalating misunderstandings with architectural clarity. Farce needs beauty it can ruin."
     ]
   }
 ],
@@ -6883,7 +6888,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Public Space, Private Pressure",
     "content": [
-      "By keeping the design minimal, the focus stayed on action and the questions the play demands. Without ornamentation, the stage invited a meditative rhythm with a sharp edge of confrontation. The scenic world became more than backdrop: stone circle, textures of decay, and empty expanse together embodied sacrifice and resilience long after the final scene."
+      "By keeping the design minimal, the focus stayed on action and the questions the play demands. Without ornamentation, the stage invited a meditative rhythm with a sharp edge of confrontation. Stone circle, textures of decay, and empty expanse together carried sacrifice and resilience long after the final scene. The space resists comfort, which helps the audience stay with the political and personal cost of the act."
     ]
   },
   {
@@ -6908,7 +6913,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "A Penthouse as Emotional Armor",
     "content": [
-      "For Rich Girl at Okoboji Summer Theatre, the scenic design centered on a contemporary Manhattan penthouse that visually embodied privilege, polish, and emotional distance. The environment drew from high-end real estate staging and luxury interior publications: sleek lines, controlled color, and carefully selected furnishings that suggested generational wealth without clutter."
+      "For Rich Girl at Okoboji Summer Theatre, the Manhattan penthouse needed to feel polished before it felt personal. I drew from high-end real estate staging and luxury interior publications: sleek lines, controlled color, and carefully selected furnishings that suggested generational wealth without clutter."
     ]
   },
   {
@@ -6972,7 +6977,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Sacredness and Rupture",
     "content": [
-      "The scenic world emerged from the tension between sacredness and rupture. At the center stood a cruciform arch, part cathedral and part memory portal. Below it, a fractured platform and a textured black floor marked with five-point stars anchored the action in both earth and spirit.",
+      "The design emerged from the tension between sacredness and rupture. At the center stood a cruciform arch, part cathedral and part memory portal. Below it, a fractured platform and a textured black floor marked with five-point stars anchored the action in both earth and spirit.",
       "The play’s nonlinear structure demanded a space that could shift between a beach, a church, a war zone, and the afterlife without literal transitions. Projection surfaces echoed the altar at Hospital de la Divina Providencia, while lighting and media traced the line between past and present."
     ]
   },
@@ -7004,7 +7009,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "A School Gym with Stakes",
     "content": [
-      "For The 25th Annual Putnam County Spelling Bee at Stephens College, the scenic design transformed the stage into a recognizable middle school gymnasium, functional, slightly outdated, and brimming with community pride. The architecture leaned into wood-paneled walls, acoustic panels, mounted basketball hoops, and practical overhead fixtures to evoke the institutional tone of a multipurpose school space."
+      "For The 25th Annual Putnam County Spelling Bee, the room had to feel like a school gym that had hosted every kind of assembly before this one. Wood paneling, acoustic panels, basketball hoops, and practical fixtures gave the competition a modest institutional frame."
     ]
   },
   {
@@ -7033,7 +7038,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "heading": "Competition with Heart",
     "content": [
       "Material choices were intentionally straightforward: durable finishes, painted surfaces, and clear graphic elements that echoed the sincerity of a school environment. This grounded realism provided contrast to the musical’s vibrant costumes and emotional arcs.",
-      "The scenic design supported fast transitions and character-driven comedy while maintaining a cohesive visual world, nostalgic, playful, and rooted in everyday Americana."
+      "The plainness is the point. The gym gives the spellers a public room that is slightly too formal and slightly too ordinary, which is exactly where the awkwardness can become funny and then unexpectedly tender."
     ]
   },
   {
@@ -7078,7 +7083,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Absurdity in Plain Sight",
     "content": [
-      "The goal was to build an absurdist environment that could hold both comedy and unease. The world needed to feel visually coherent enough for the audience to enter it, but unstable enough to reflect the play's deeper concern with ritualized speech, failed understanding, and the breakdown of meaning itself."
+      "The room stays coherent enough for the audience to enter it, then slowly betrays that confidence. Proportion, furniture, and light keep the comedy in plain sight while letting the breakdown of language become spatial."
     ]
   },
   {
@@ -7099,7 +7104,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "A Modular World for Comic Velocity",
     "content": [
-      "For The Complete Works of William Shakespeare (abridged) at Okoboji Summer Theatre, the scenic design embraced the playful and irreverent spirit of the show. The set was conceived as a modular comic machine, able to pivot quickly through Shakespeare's iconic works without slowing the production's momentum or flattening its theatrical humor."
+      "For Complete Works, the set had to behave like a kit the actors could raid. The design gave them a fast, modular frame for parody, costume bits, signs, props, and sudden shifts in theatrical style. It needed enough Shakespearean flavor to set the table, but not so much architecture that the joke had to wait for the scenery."
     ]
   },
   {
@@ -7113,8 +7118,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Fast Transitions, Bold Compositions",
     "content": [
-      "Because the show depends on rapid-fire shifts in style, reference, and performance mode, the environment prioritized flexibility and legibility. Bold visual elements, clear staging zones, and a dynamic layout gave the actors room for physical comedy and improvisational energy while keeping the storytelling readable for the audience.",
-      "The goal was not to illustrate every Shakespearean world literally, but to provide a scenic structure that could absorb chaos, parody, and theatrical invention. That modularity let the production celebrate the speed, humor, and affectionate irreverence at the center of the piece."
+      "Instead of illustrating every play, the scenery created rules for speed: strong shapes, open pathways, and objects that could be grabbed, turned, and repurposed before the joke went cold. The pleasure is in watching the actors transform the same ingredients faster than the audience can fully settle into them. The design stays out of the way by giving the performers better toys and a clear field for chaos."
     ]
   },
   {
@@ -7167,7 +7171,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Memory as Space",
     "content": [
-      "This production of The Glass Menagerie was grounded in the idea of the memory play, not as a literal reconstruction of the Wingfield apartment, but as a fluid, impressionistic landscape shaped by Tom's recollection. From the outset, the design sought to feel unstable and permeable, allowing memory to drift, overlap, and distort rather than lock the play into a fixed domestic realism."
+      "For the Maples Rep Glass Menagerie, the apartment needed to feel remembered rather than rebuilt. The Wingfields have a home, but it is never fully sealed; the room keeps letting in the street, the past, and Tom's need to leave."
     ]
   },
   {
@@ -7181,8 +7185,8 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Platform and Threshold",
     "content": [
-      "The central scenic gesture was a large, elevated interior platform that defined the apartment's primary playing space. This platform functioned both practically and metaphorically: it created a clear home base for the action while reinforcing Tom's sense of entrapment within the last place he ever called home. The elevation subtly separated the family from the surrounding world, heightening the emotional pressure of scenes that unfold there.",
-      "Surrounding the platform, I developed a series of loosely defined architectural structures, brick fragments, doorways, and thresholds that suggested environment without enclosing it. These elements allowed actors to move freely through the space, supporting the play's fluid shifts between interior and exterior, past and present. The lack of complete walls was intentional; nothing in this world is fully contained."
+      "The elevated platform gives the family a clear domestic center. It is practical, but it also makes the apartment feel like a memory placed under pressure: defined, lifted, and just slightly apart from the world around it.",
+      "Around that center, brick fragments, doorways, and thresholds suggest architecture without closing the room. The lack of full walls is deliberate. Nothing in the play is fully contained, and the scenic world should not pretend otherwise."
     ]
   },
   {
@@ -7196,8 +7200,8 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Memory Made Physical",
     "content": [
-      "The memory wall became the clearest visual cue in the room, a collage of framed fragments from Tom and Laura's past. Kept deliberately vague, the images feel more like recollection than documentation, which suits a play where memory is always partial and a little unreliable.",
-      "The rest of the space stays open and responsive so lighting, movement, and performance can do their work. That balance lets the apartment hold intimacy, distance, and longing in the same frame without ever feeling overdesigned."
+      "The memory wall gives the room its clearest visual residue: framed fragments that feel closer to recollection than documentation. That looseness matters in a play where memory is vivid, partial, and not always trustworthy.",
+      "The rest of the space stays open enough for light and movement to keep changing its meaning. It can be home, street edge, memory, and escape route without needing to become a different set."
     ]
   },
   {
@@ -7222,9 +7226,9 @@ export const fileFirstScenicProjectSectionsBySlug = {
   "the-glass-menagerie-2011": [
   {
     "type": "text",
-    "heading": "A Memory Space for Longing and Escape",
+    "heading": "An Apartment That Could Become Transparent",
     "content": [
-      "This production of The Glass Menagerie was designed as a world shaped by memory rather than strict realism. The domestic environment needed to feel present enough for the family drama to land, but also unstable enough to suggest the emotional filtering of recollection, longing, and distance."
+      "In the 2011 Glass Menagerie, the scrim walls did the central work. The apartment could feel enclosed in one moment and then become porous as the city appeared through it, making Tom's need to leave visible inside the architecture. That transparency let memory arrive as a lighting event rather than a scenic change."
     ]
   },
   {
@@ -7238,7 +7242,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Scrim Walls and the City Beyond",
     "content": [
-      "Memory-inspired scrim walls allowed the apartment to feel both enclosed and permeable. As sightlines shifted, the city beyond could emerge through the scenic architecture, reinforcing the play's tension between confinement and escape. That revealed urban layer extended the emotional world of the family rather than acting as a simple background image."
+      "The city was not a backdrop pasted behind the room. It was a second layer waiting inside the image, revealed by light and sightline so the apartment could hold both confinement and distance. The family scenes still have a real room to play in, but the walls never let that room become permanent."
     ]
   },
   {
@@ -7252,7 +7256,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Memory Held in Suspension",
     "content": [
-      "The goal was to support Tennessee Williams' fragile emotional architecture with a setting that felt haunted by memory but still playable for intimate domestic scenes. The environment needed to hold nostalgia, pressure, and the desire to leave, allowing the scenic world to echo the play's central tension without overwhelming it."
+      "That permeability separated this production from a literal apartment. Domestic scale remained intact, but the edges could soften, disappear, or expose the larger city Tom is already imagining. The set held the family close while quietly making escape visible."
     ]
   }
 ],
@@ -7261,7 +7265,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Classical Elegance with Comic Lift",
     "content": [
-      "The Liar was approached as a classical comedy with enough visual elegance to support heightened language, but enough playfulness to keep the world active and theatrical. The scenic environment balanced refinement with exaggeration, giving the production a setting that could hold both period wit and farcical momentum."
+      "The Liar needs order because the plot is disorder. I treated the room as a polished social frame, with clear entrances, strong color, and enough symmetry to make each deception feel like it is disturbing something well arranged. The room gives the comedy manners before the characters start misusing them."
     ]
   },
   {
@@ -7275,7 +7279,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "A World for Wit and Deception",
     "content": [
-      "Because the play thrives on mistaken identity, verbal agility, and social performance, the design needed to feel orderly at first glance while still leaving room for comic disruption. Bold accents and carefully framed architecture helped make the environment feel lively rather than museum-like, allowing the comedy to stay buoyant and clear."
+      "The architecture had to stay crisp. If the room became too ornate, the language would have to fight it; if it became too plain, the period comedy would lose its lift. Color and proportion keep the play heightened without slowing the verbal pace."
     ]
   },
   {
@@ -7289,7 +7293,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Performance as Social Strategy",
     "content": [
-      "The goal was to create a setting that honored the classical source while giving the adaptation its own theatrical snap. The world needed to feel polished, quick, and welcoming to the audience, supporting the play's wit and charm without losing the precision that makes the farce land."
+      "The design gives the actors a room where manners, lies, and exits all have geometry. The comedy can move quickly because the audience always understands the rules of the space, even as the characters keep bending them. The room looks composed, which makes the unraveling funnier."
     ]
   },
   {
@@ -7376,7 +7380,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Nostalgia with a Pulse",
     "content": [
-      "I was not interested in parodying the decades. The goal was for the audience to recognize the space immediately and then feel it evolve. The gym became a container for memory, structured, familiar, and slowly shifting as the Wonderettes revisited who they were and who they became."
+      "I was not interested in parodying the decades. The audience should recognize the space immediately, then feel it evolve. The gym became a container for memory: structured, familiar, and slowly shifting as the Wonderettes revisited who they were and who they became."
     ]
   },
   {
@@ -7413,7 +7417,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "heading": "Color, Portals, and Transitions",
     "content": [
       "A central green wall with a circular portal created the primary visual anchor of the set, giving actors a clean, memorable entrance point at center while reinforcing the graphic, stylized tone of the world. To help the show feel more cinematic, each scene was marked by a different brightly colored door that could fly in, turning transitions into part of the theatrical joke rather than something to hide.",
-      "Those flown doors gave each location its own comic identity while keeping the stage open and flexible. The effect was playful and crisp: scenes could shift quickly, rhythms could stay alive, and the visual world kept reinforcing the sitcom energy of the production."
+      "Those flown doors gave each location its own comic identity while keeping the stage open and flexible. Scenes could shift quickly, rhythms could stay alive, and the sitcom energy stayed visible in the architecture itself."
     ]
   },
   {
@@ -7427,7 +7431,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Comic Mischief in Full View",
     "content": [
-      "The goal was to make the production feel nimble, campy, and audience-facing without losing the mechanics of Shakespeare’s comedy. Scenic composition had to support eavesdropping, concealment, and surprise, but it also needed to deliver a bold visual joke the moment a new scene arrived.",
+      "The production needed to feel nimble, campy, and audience-facing without losing the mechanics of Shakespeare's comedy. Scenic composition had to support eavesdropping, concealment, and surprise, but it also needed to deliver a bold visual joke the moment a new scene arrived.",
       "By combining the flown color doors, the central portal wall, and a heightened 1950s perspective, the set created a world that felt theatrical, witty, and immediately legible. The comedy could move fast, and the design moved with it."
     ]
   },
@@ -7467,7 +7471,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Romance and Labor in the Same Space",
     "content": [
-      "The story balances spirited romance with a sharp labor dispute, so the scenic world had to support both. Repeating structures and a vibrant factory palette suggested postwar optimism, while signage and movable units emphasized workplace mechanics and the conflict over fair wages driving the plot."
+      "The story balances spirited romance with a sharp labor dispute, so the set had to hold both the factory floor and the musical's buoyancy. Repeating structures and a vibrant palette suggested postwar optimism, while signage and movable units kept workplace mechanics and wage conflict visible. The factory needed to dance without forgetting that it was still a workplace."
     ]
   },
   {
@@ -7481,7 +7485,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Work, Play, and Friction",
     "content": [
-      "A modular approach supported dance-heavy staging, allowing rolling units to transform quickly from intimate encounters to full-ensemble numbers. The result was a world that felt playful yet pointed: period-authentic enough to ground the audience, theatrical enough to energize a story about love, labor, and finding joy amid conflict."
+      "A modular approach supported dance-heavy staging, allowing rolling units to transform quickly from intimate encounters to full-ensemble numbers. The result was a space that felt playful yet pointed: period-authentic enough to ground the audience, theatrical enough to energize a story about love, labor, and finding joy amid conflict."
     ]
   },
   {
@@ -7513,7 +7517,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "A Memory Space for Penelope and the Maids",
     "content": [
-      "The Penelopiad was conceived as a layered memory space where testimony, ritual, and counter-narrative could coexist. Rather than locating the story in a literal reconstruction of ancient Greece, the design framed the stage as a world of witness, one where Penelope and the maids could occupy the same visual architecture while speaking from different positions of power."
+      "For The Penelopiad, I focused on shared architecture rather than separate worlds. Penelope and the maids occupy the same structure, but the levels and open geometry keep shifting who appears centered, watched, or exposed. The set gives the story a place where memory and accusation can stand side by side."
     ]
   },
   {
@@ -7527,7 +7531,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Chorus Visibility and Flexible Geometry",
     "content": [
-      "A central concern was chorus visibility. The scenic composition needed to support group presence without flattening the action, so the environment used open geometry and layered playing levels that could expand into epic framing or compress into intimate address. That flexibility allowed the production to move fluidly between narrative distance and emotional immediacy."
+      "The chorus needed to remain visible without flattening the stage picture. Layered playing levels gave the maids room to gather as a group, break into individual address, and return as witnesses. That flexibility let the production move between epic scale and direct testimony without changing the basic rules of the space."
     ]
   },
   {
@@ -7541,7 +7545,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Witness and Counter-Witness",
     "content": [
-      "Material language balances austerity with symbolic texture, supporting the work's interrogation of authorship, gendered history, and inherited myth. The set functions as both container and witness, giving Penelope and the maids equal visual authority inside the same world while maintaining theatrical tension across the evening."
+      "The set keeps the argument physical. It lets testimony happen in the same place as memory, trial, and myth, so the evening can move between scale and intimacy without changing the basic structure. Penelope's story and the maids' story are never visually separate; they have to share the room."
     ]
   },
   {
@@ -7566,7 +7570,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Invitation Through Space",
     "content": [
-      "Tomás and the Library Lady was designed to honor storytelling as an act of invitation. The scenic approach created warm, readable spaces that support bilingual performance, audience access, and fluid movement between domestic reality and imaginative expansion."
+      "For Tomás and the Library Lady, the library could not feel precious. It needed to be clear, kind, and usable: a place a young audience can understand immediately, and a place the actors can move through in English, Spanish, reality, and imagination. The design had to invite attention without over-decorating discovery."
     ]
   },
   {
@@ -7580,7 +7584,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Libraries as Portals",
     "content": [
-      "Library architecture and visual motifs were treated as portals rather than static background. The goal was to give the production a sense of discovery while maintaining clarity for young audiences, creating an environment where movement, language, and image could work together without overcomplicating the stage picture."
+      "The architecture works through readable frames instead of heavy walls. That allows the library, home, and imagined stories to share the same stage language without confusing younger viewers. The audience can follow the shift because the rules stay simple: the room opens, and the story opens with it."
     ]
   },
   {
@@ -7594,7 +7598,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "A Room That Welcomes Discovery",
     "content": [
-      "The design reinforces the play’s core themes of literacy, belonging, and cultural memory. Warmth and legibility were essential, but so was the feeling that the world could open outward into imagination at any moment. The environment needed to welcome the audience in, then reward that openness with theatrical discovery."
+      "The design is about access. When the space opens, it is not just a visual effect; it makes learning, language, and belonging feel practical and close. That felt important for a TYA production: the stage should not just show a library, it should make the act of entering one feel possible."
     ]
   },
   {
@@ -7701,7 +7705,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Satire That Still Feels Close",
     "content": [
-      "The goal was to create a stage world that sharpened the musical's dystopian absurdity while giving performers a strong graphic environment to play against. By combining angular composition, raw surfaces, and symbolic lighting, the set reinforced the production's satirical critique without flattening its humor or musical vitality."
+      "Angular composition, raw surfaces, and symbolic lighting gave the performers a strong graphic environment to play against. The set sharpened the musical's dystopian absurdity without flattening its humor or musical vitality. The point was not to make poverty picturesque; it was to make the rules of the town feel physically rigged."
     ]
   }
 ],
@@ -7710,7 +7714,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "A Porch as Sanctuary and Constraint",
     "content": [
-      "For Vanya and Sonia and Masha and Spike at Stephens College, the scenic design drew from the architectural charm of a Bucks County country home, comfortable, rooted, and steeped in familiarity. The porch became the visual and dramaturgical anchor of the space, operating as both an extension of the interior and a threshold to the outside world."
+      "For Vanya and Sonia and Masha and Spike, the porch is the whole argument. It is part shelter, part lookout, and part waiting room for a family that knows the house too well. The architecture lets the characters remain attached to the home while constantly looking toward something outside it."
     ]
   },
   {
@@ -7722,9 +7726,9 @@ export const fileFirstScenicProjectSectionsBySlug = {
   },
   {
     "type": "text",
-    "heading": "Warmth, Detail, and Generational Weight",
+    "heading": "Porch, Bench, and Routine",
     "content": [
-      "The architecture leaned into traditional American detailing: warm wood tones, practical molding, and grounded proportions that suggested generational stability. A garden bench constructed from scrap lumber introduced a subtle handmade quality, underscoring the lived-in authenticity of the home and the play's quiet relationship to nostalgia."
+      "Traditional trim and wood tones establish the Bucks County frame, but the scrap-lumber garden bench is the useful detail. It keeps the home from feeling too polished and gives the porch a handmade, lived-with edge. That small imperfection matters in a comedy about people who are stuck with each other and the furniture of their past."
     ]
   },
   {
@@ -7738,7 +7742,7 @@ export const fileFirstScenicProjectSectionsBySlug = {
     "type": "text",
     "heading": "Comedy Inside a Fading House",
     "content": [
-      "Spatially, the design allowed for layered staging. Intimate conversations near the porch edge contrasted with broader ensemble moments in the shared living area. The environment held comedic energy without becoming caricature, instead providing a restrained, elegant frame that let Christopher Durang's humor and emotional undercurrents unfold naturally."
+      "The staging zones needed to handle small resentments and broad comic interruptions in the same breath. The porch edge, shared interior, and outside approach let the comedy enter the house before anyone is ready for it. The space stays comfortable, but never quite neutral."
     ]
   },
   {
@@ -8359,7 +8363,7 @@ export const fileFirstRenderingProjectContentBySlug = {
     {
       "heading": "A World You Can Enter",
       "paragraphs": [
-        "The goal was not just to make a fantasy interior look detailed. It was to make the room feel used. The carving, lantern placement, and surface wear all needed to suggest a place shaped by habit, memory, and folklore rather than ornament alone.",
+        "The room needs to feel used before it feels fantastical. Carving, lantern placement, and surface wear suggest a place shaped by habit, memory, and folklore rather than ornament alone.",
         "That matters in rendering work because a space feels believable when it seems to have a life before the frame and after it, not when every object is trying to announce the genre all at once."
       ]
     },

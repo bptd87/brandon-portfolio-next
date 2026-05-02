@@ -8,7 +8,6 @@ import { Lightbox } from "@/components/Lightbox";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import ScenicRenderingGallery from "@/components/ScenicRenderingGallery";
 import { SEO } from "@/components/SEO";
-import StructuredData from "@/components/StructuredData";
 import { CreditNameLinks } from "@/components/CreditNameLinks";
 import { formatUtcDate } from "@/lib/date-format";
 import { Button } from "@/components/ui/button";
@@ -365,80 +364,6 @@ export default function ScenicProjectDetail({
         keywords={scenicSeoKeywords}
         url={projectUrl}
       />
-      <StructuredData
-        type="BreadcrumbList"
-        breadcrumbs={[
-          { name: "Home", url: "https://www.brandonptdavis.com" },
-          { name: "Projects", url: "https://www.brandonptdavis.com/projects" },
-          { name: project.title, url: projectUrl },
-        ]}
-      />
-      <StructuredData
-        type="CreativeWork"
-        creativeWork={{
-          name: project.title,
-          description: scenicSeoDescription,
-          image: project.coverImageUrl || undefined,
-          creator: {
-            name: "Brandon PT Davis",
-            url: "https://www.brandonptdavis.com/about",
-          },
-          dateCreated: project.year ? `${project.year}-01-01` : undefined,
-          datePublished: project.publishedAt || undefined,
-          dateModified: project.updatedAt || undefined,
-          genre: project.subcategory || "Scenic Design",
-          keywords: scenicSeoKeywords.split(",").map((part) => part.trim()).filter(Boolean),
-          mainEntityOfPage: projectUrl,
-          url: projectUrl,
-          locationCreated: project.client
-            ? {
-                name: project.client,
-                ...(project.location
-                  ? {
-                      address: {
-                        addressLocality: project.location,
-                      },
-                    }
-                  : {}),
-              }
-            : undefined,
-          workExample:
-            imageMedia.slice(0, 12).map((item) => ({
-              type: "ImageObject" as const,
-              contentUrl: item.imageUrl,
-              caption: item.caption || undefined,
-              name: item.altText || `${project.title} scenic design image`,
-              description: item.caption || scenicSeoDescription,
-              thumbnailUrl: item.imageUrl,
-            })) || undefined,
-          contributor:
-            project.creativeTeam.map((member) => ({
-              type: "Person" as const,
-              name: member.name,
-              roleName: member.role,
-            })) || undefined,
-          isPartOf: {
-            name: "Scenic Design Portfolio",
-            url: "https://www.brandonptdavis.com/projects",
-          },
-          mentions: [
-            ...(relatedRenderingProject
-              ? [
-                  {
-                    type: "CreativeWork",
-                    name: `${relatedRenderingProject.title} rendering series`,
-                    url: `https://www.brandonptdavis.com/projects/rendering/${relatedRenderingProject.slug}`,
-                  },
-                ]
-              : []),
-            ...relatedArticles.slice(0, 3).map((article) => ({
-              type: "Article",
-              name: article.title,
-              url: `https://www.brandonptdavis.com/articles/${article.slug}`,
-            })),
-          ],
-        }}
-      />
       <Header />
 
       <main className="pb-20">
@@ -567,21 +492,58 @@ export default function ScenicProjectDetail({
                         );
                       }
 
+                      if (galleryItems.length === 1) {
+                        const item = galleryItems[0];
+
+                        return (
+                          <div className="relative left-1/2 w-screen max-w-[88rem] -translate-x-1/2 space-y-10 px-5 sm:px-8 md:space-y-12 lg:px-10">
+                            {getDisplayHeading(section.heading) ? (
+                              <h2 className="mx-auto max-w-[54rem] font-sans text-[clamp(2rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
+                                {getDisplayHeading(section.heading)}
+                              </h2>
+                            ) : null}
+                            <figure className="mx-auto w-full max-w-[80rem] space-y-3">
+                              <button
+                                type="button"
+                                onClick={() => openLightboxFor(item.id)}
+                                className="block w-full text-left"
+                              >
+                                <ProgressiveImage
+                                  src={item.imageUrl}
+                                  alt={item.altText}
+                                  className="block w-full rounded-xl object-cover transition-transform duration-500 hover:scale-[1.01]"
+                                  containerClassName="w-full"
+                                  sizes="(min-width: 1280px) 80rem, calc(100vw - 2.5rem)"
+                                  width={1800}
+                                  aspectRatio="16 / 9"
+                                  smartPosition
+                                />
+                              </button>
+                              {item.caption ? (
+                                <figcaption className="text-[0.92rem] leading-6 tracking-[-0.01em] text-white/56">
+                                  {item.caption}
+                                </figcaption>
+                              ) : null}
+                            </figure>
+                          </div>
+                        );
+                      }
+
                       const firstPair = galleryItems.slice(0, 2);
 
                       return (
-                        <div className="relative left-1/2 w-screen max-w-[72rem] -translate-x-1/2 px-8 sm:px-12 lg:px-16 space-y-10 md:space-y-12">
+                        <div className="relative left-1/2 w-screen max-w-[88rem] -translate-x-1/2 space-y-10 px-5 sm:px-8 md:space-y-12 lg:px-10">
                           {getDisplayHeading(section.heading) ? (
                             <h2 className="mx-auto max-w-[54rem] font-sans text-[clamp(2rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
                               {getDisplayHeading(section.heading)}
                             </h2>
                           ) : null}
                           {firstPair.length > 0 ? (
-                            <div className="grid items-end gap-8 md:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] md:gap-12">
+                            <div className="grid items-end gap-8 md:grid-cols-[minmax(0,1.55fr)_minmax(16rem,0.82fr)] md:gap-16 lg:gap-24">
                               {firstPair.map((item, itemIndex) => (
                                 <figure
                                   key={item.id}
-                                  className="self-end space-y-3"
+                                  className={`self-end space-y-3 ${itemIndex === 1 ? "md:pb-10 lg:pb-14" : ""}`}
                                 >
                                   <button
                                     type="button"
@@ -593,8 +555,12 @@ export default function ScenicProjectDetail({
                                       alt={item.altText}
                                       className="block w-full rounded-xl object-cover transition-transform duration-500 hover:scale-[1.01]"
                                       containerClassName="w-full"
-                                      sizes="(min-width: 1024px) 40vw, 100vw"
-                                      width={1400}
+                                      sizes={
+                                        itemIndex === 0
+                                          ? "(min-width: 1280px) 52rem, (min-width: 768px) 58vw, calc(100vw - 2.5rem)"
+                                          : "(min-width: 1280px) 28rem, (min-width: 768px) 32vw, calc(100vw - 2.5rem)"
+                                      }
+                                      width={itemIndex === 0 ? 1800 : 1100}
                                       aspectRatio="4 / 3"
                                     />
                                   </button>
