@@ -12,7 +12,7 @@ NEXT_PUBLIC_SITE_URL="https://www.brandonptdavis.com"
 ```
 
 `SITE_URL` is the server-side source of truth. `NEXT_PUBLIC_SITE_URL` is optional but useful for consistent client-side URLs and previews.
-When deployed on Vercel, the app also falls back to `NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL` and `VERCEL_PROJECT_PRODUCTION_URL` before using a preview deployment URL.
+Do not use Vercel deployment URL variables as the public canonical URL. Canonical tags, sitemaps, robots, and host redirects should resolve to `https://www.brandonptdavis.com` unless you intentionally change the primary domain.
 
 ### Search Console Verification
 
