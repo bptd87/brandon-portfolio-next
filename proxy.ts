@@ -12,6 +12,10 @@ const LEGACY_PATH_REDIRECTS = new Map<string, string>([
   ["/scenic-insights", "/articles"],
   ["/scenic-insights-all", "/articles"],
   ["/scenic-insights-design-philosophy", "/articles"],
+  ["/scenic-insights-technology-tutorials", "/studio/tutorials"],
+  ["/tags/stagescenela", "/articles"],
+  ["/tags/kenrick-fischer", "/projects"],
+  ["/tags/parliament-square", "/project/parliament-square"],
 ]);
 
 const LOW_VALUE_QUERY_PARAMS = new Set([
