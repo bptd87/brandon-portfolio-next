@@ -46,7 +46,6 @@ export async function generateStaticParams() {
   }
 
   return Array.from(tagSlugs)
-    .filter((slug) => getTagCounts(slug).totalItems >= INDEXABLE_TAG_MIN_ITEMS)
     .map((slug) => ({ slug }));
 }
 
@@ -70,7 +69,7 @@ export default async function Page({ params }: TagPageProps) {
   const normalizedSlug = slug.toLowerCase();
   const { totalItems } = getTagCounts(normalizedSlug);
 
-  if (totalItems < INDEXABLE_TAG_MIN_ITEMS) {
+  if (totalItems === 0) {
     const destination = resolveLegacyTagPath(slug);
     if (destination) {
       permanentRedirect(destination);
