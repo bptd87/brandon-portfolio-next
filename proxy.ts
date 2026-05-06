@@ -16,6 +16,14 @@ const LEGACY_PATH_REDIRECTS = new Map<string, string>([
   ["/tags/stagescenela", "/articles"],
   ["/tags/kenrick-fischer", "/projects"],
   ["/tags/parliament-square", "/project/parliament-square"],
+  [
+    "/news/scenic-design-for-okoboji-summer-theatre-summer-2025-season",
+    "/project/bell-book-and-candle",
+  ],
+  [
+    "/news/scenic-design-for-parliament-square-california-premiere-at-uci",
+    "/project/parliament-square",
+  ],
 ]);
 
 const LOW_VALUE_QUERY_PARAMS = new Set([
@@ -63,6 +71,10 @@ function stripLowValueArchiveQueries(url: URL) {
   }
 
   return changed;
+}
+
+function isSearchActionTemplateQuery(url: URL) {
+  return url.pathname === "/search" && url.searchParams.get("q") === "{search_term_string}";
 }
 
 function getLegacyRedirectPath(url: URL) {
@@ -129,6 +141,10 @@ export function proxy(request: NextRequest) {
   const canonicalHost = canonicalSiteUrl.host;
   const requestHost = request.headers.get("host");
   const legacyRedirectPath = getLegacyRedirectPath(request.nextUrl);
+
+  if (isSearchActionTemplateQuery(request.nextUrl)) {
+    return buildRedirectResponse(request, "/search");
+  }
 
   if (legacyRedirectPath) {
     return buildRedirectResponse(request, legacyRedirectPath);
