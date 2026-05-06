@@ -27,7 +27,8 @@ type VideoSitemapEntry = {
   title: string;
   description: string;
   thumbnailUrl: string;
-  playerUrl: string;
+  playerUrl?: string;
+  contentUrl?: string;
   publishedAt?: string | Date | null;
 };
 
@@ -164,7 +165,10 @@ export function buildVideoSitemap(entries: VideoSitemapEntry[]) {
         `<video:thumbnail_loc>${escapeXml(toAbsoluteAssetUrl(entry.thumbnailUrl))}</video:thumbnail_loc>`,
         `<video:title>${escapeXml(entry.title)}</video:title>`,
         `<video:description>${escapeXml(stripHtml(entry.description))}</video:description>`,
-        `<video:player_loc allow_embed="yes">${escapeXml(toAbsoluteAssetUrl(entry.playerUrl))}</video:player_loc>`,
+        entry.playerUrl
+          ? `<video:player_loc allow_embed="yes">${escapeXml(toAbsoluteAssetUrl(entry.playerUrl))}</video:player_loc>`
+          : "",
+        entry.contentUrl ? `<video:content_loc>${escapeXml(toAbsoluteAssetUrl(entry.contentUrl))}</video:content_loc>` : "",
         publishedAt ? `<video:publication_date>${escapeXml(publishedAt)}</video:publication_date>` : "",
         "<video:family_friendly>yes</video:family_friendly>",
         "</video:video>",

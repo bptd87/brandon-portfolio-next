@@ -98,11 +98,20 @@ function getLearningArticleJsonLd(article: NonNullable<ReturnType<typeof getLoca
 
   return {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
     "@id": `${url}#article`,
     headline: article.title,
     description: getArticleDescription(article),
-    image: article.coverImageUrl ? [article.coverImageUrl] : undefined,
+    image: article.coverImageUrl
+      ? [
+          {
+            "@type": "ImageObject",
+            url: article.coverImageUrl,
+            caption: article.coverImageAlt || `${article.title} learning article image.`,
+          },
+        ]
+      : undefined,
+    thumbnailUrl: article.coverImageUrl || undefined,
     author: {
       "@id": BRANDON_PERSON_ID,
     },
@@ -117,6 +126,11 @@ function getLearningArticleJsonLd(article: NonNullable<ReturnType<typeof getLoca
     },
     url,
     keywords: keywords || undefined,
+    articleSection: article.categoryName || "Scenic Design Learning",
+    isAccessibleForFree: true,
+    inLanguage: "en-US",
+    learningResourceType: "Article",
+    educationalUse: ["self study", "instruction"],
     isPartOf: article.series
       ? {
           "@type": "CreativeWorkSeries",
@@ -149,7 +163,16 @@ function getTutorialArticleJsonLd(tutorial: NonNullable<ReturnType<typeof getLoc
     "@id": `${url}#article`,
     headline: tutorial.title,
     description: getTutorialDescription(tutorial),
-    image: tutorial.cover_image ? [tutorial.cover_image] : undefined,
+    image: tutorial.cover_image
+      ? [
+          {
+            "@type": "ImageObject",
+            url: tutorial.cover_image,
+            caption: `${tutorial.title} tutorial cover image.`,
+          },
+        ]
+      : undefined,
+    thumbnailUrl: tutorial.cover_image || undefined,
     author: {
       "@id": BRANDON_PERSON_ID,
     },
@@ -164,6 +187,11 @@ function getTutorialArticleJsonLd(tutorial: NonNullable<ReturnType<typeof getLoc
     },
     url,
     keywords,
+    articleSection: tutorial.category || "Vectorworks Tutorials",
+    isAccessibleForFree: true,
+    inLanguage: "en-US",
+    learningResourceType: tutorial.video_url ? "Video tutorial" : "Tutorial",
+    educationalUse: ["self study", "instruction"],
     about: [
       tutorial.category ? { "@type": "Thing", name: tutorial.category } : null,
       ...tutorial.key_concepts.slice(0, 8).map((concept) => ({ "@type": "Thing", name: concept.title })),

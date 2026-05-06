@@ -81,14 +81,35 @@ export default async function Page({ params }: ArticlePageProps) {
     : article
       ? `${article.title} by Brandon PT Davis on scenic design, production thinking, and visual storytelling.`
       : undefined;
+  const articleKeywords = article
+    ? [
+        article.seoKeywords,
+        article.categoryName,
+        article.series?.name,
+        ...(article.tags?.map((tag) => tag.name) || []),
+        "Brandon PT Davis",
+        "scenic design",
+      ]
+        .filter(Boolean)
+        .join(", ")
+    : undefined;
   const articleJsonLd = article
     ? {
         "@context": "https://schema.org",
-        "@type": "Article",
+        "@type": "BlogPosting",
         "@id": `https://www.brandonptdavis.com/articles/${article.slug}#article`,
         headline: article.title,
         description: articleDescription,
-        image: article.coverImageUrl ? [article.coverImageUrl] : undefined,
+        image: article.coverImageUrl
+          ? [
+              {
+                "@type": "ImageObject",
+                url: article.coverImageUrl,
+                caption: article.coverImageAlt || `${article.title} article image.`,
+              },
+            ]
+          : undefined,
+        thumbnailUrl: article.coverImageUrl || undefined,
         author: {
           "@id": BRANDON_PERSON_ID,
         },
@@ -101,12 +122,20 @@ export default async function Page({ params }: ArticlePageProps) {
         publisher: {
           "@id": BRANDON_ORGANIZATION_ID,
         },
+        articleSection: article.categoryName || undefined,
+        isAccessibleForFree: true,
+        inLanguage: "en-US",
         mainEntityOfPage: {
           "@type": "WebPage",
           "@id": `https://www.brandonptdavis.com/articles/${article.slug}`,
         },
         url: `https://www.brandonptdavis.com/articles/${article.slug}`,
-        keywords: article.seoKeywords || undefined,
+        keywords: articleKeywords || undefined,
+        about: [
+          article.categoryName ? { "@type": "Thing", name: article.categoryName } : null,
+          article.series?.name ? { "@type": "Thing", name: article.series.name } : null,
+          ...(article.tags?.slice(0, 8).map((tag) => ({ "@type": "Thing", name: tag.name })) || []),
+        ].filter(Boolean),
       }
     : null;
   const breadcrumbJsonLd = article

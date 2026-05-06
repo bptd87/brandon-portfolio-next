@@ -27,6 +27,22 @@ export const metadata: Metadata = {
   publisher: "Brandon PT Davis",
   alternates: {
     canonical: absoluteUrl("/"),
+    types: {
+      "application/rss+xml": [
+        {
+          url: absoluteUrl("/articles/rss.xml"),
+          title: "Brandon PT Davis Articles",
+        },
+        {
+          url: absoluteUrl("/studio/tutorials/rss.xml"),
+          title: "Brandon PT Davis Studio Tutorials",
+        },
+        {
+          url: absoluteUrl("/projects/rss.xml"),
+          title: "Brandon PT Davis Projects",
+        },
+      ],
+    },
   },
   robots: {
     index: true,

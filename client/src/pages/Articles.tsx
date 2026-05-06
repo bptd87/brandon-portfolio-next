@@ -15,7 +15,6 @@ import {
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
-import StructuredData from "@/components/StructuredData";
 import { formatUtcDate, getUtcYear } from "@/lib/date-format";
 import {
   DropdownMenu,
@@ -253,19 +252,6 @@ export default function Articles() {
   ]
     .filter(Boolean)
     .join(", ");
-  const articleCollectionName =
-    selectedCategory !== "all"
-      ? `${selectedCategory} Articles`
-      : selectedYear !== "all"
-        ? `Articles from ${selectedYear}`
-        : "Articles";
-  const articleCollectionDescription =
-    selectedCategory !== "all"
-      ? `${selectedCategory} writing by Brandon PT Davis.`
-      : selectedYear !== "all"
-        ? `Article archive from ${selectedYear}.`
-        : "Article archive covering scenic design practice, production strategy, and theatre process.";
-
   const animateCardDeparture = async (target: HTMLElement) => {
     const card = target.querySelector(".transition-card") as HTMLElement | null;
     if (!card || typeof card.animate !== "function") return;
@@ -324,39 +310,6 @@ export default function Articles() {
         keywords={articleArchiveKeywords}
         url="https://www.brandonptdavis.com/articles"
       />
-      <StructuredData
-        type="BreadcrumbList"
-        breadcrumbs={[
-          { name: "Home", url: "https://www.brandonptdavis.com" },
-          { name: "Articles", url: "https://www.brandonptdavis.com/articles" },
-        ]}
-      />
-      <StructuredData
-        type="CollectionPage"
-        collectionPage={{
-          name: articleCollectionName,
-          url: "https://www.brandonptdavis.com/articles",
-          description: articleCollectionDescription,
-          about: "Scenic design writing and production insights by Brandon PT Davis.",
-          primaryImageOfPage: allArticles[0]?.coverImageUrl || undefined,
-          mainEntity: {
-            name: articleCollectionName,
-            itemListElement: sortedArticles.slice(0, 24).map((article, index) => ({
-              position: index + 1,
-              name: article.title,
-              url: `https://www.brandonptdavis.com/articles/${article.slug}`,
-              datePublished:
-                article.publishedAt instanceof Date
-                  ? article.publishedAt.toISOString()
-                  : article.createdAt instanceof Date
-                    ? article.createdAt.toISOString()
-                    : article.publishedAt || article.createdAt || undefined,
-              image: article.coverImageUrl || undefined,
-            })),
-          },
-        }}
-      />
-
       <Header />
 
       <main>

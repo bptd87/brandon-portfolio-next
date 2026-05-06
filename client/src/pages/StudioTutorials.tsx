@@ -16,7 +16,6 @@ import {
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
-import StructuredData from "@/components/StructuredData";
 import { formatUtcDate } from "@/lib/date-format";
 import { Input } from "@/components/ui/input";
 import {
@@ -474,9 +473,6 @@ export default function StudioTutorials() {
     selectedCategory !== "all"
       ? `Browse ${selectedCategory.toLowerCase()} tutorials by Brandon PT Davis, shaped for scenic drafting, modeling, rendering, and production workflow.`
       : "A scenic design learning portal by Brandon PT Davis, combining Vectorworks video lessons, article guides, drafting references, rendering workflows, and design process resources.";
-  const tutorialCollectionName =
-    selectedCategory !== "all" ? `${selectedCategory} Tutorials` : "Scenic Design Learning";
-
   return (
     <div className="min-h-screen bg-background">
       <SEO
@@ -485,36 +481,6 @@ export default function StudioTutorials() {
         keywords="vectorworks tutorials, scenic design tutorials, drafting tutorials, rendering tutorials, theatrical design workflow"
         url="https://www.brandonptdavis.com/studio/tutorials"
       />
-      <StructuredData
-        type="BreadcrumbList"
-        breadcrumbs={[
-          { name: "Home", url: "https://www.brandonptdavis.com" },
-          { name: "Studio", url: "https://www.brandonptdavis.com/studio" },
-          { name: "Tutorials", url: "https://www.brandonptdavis.com/studio/tutorials" },
-        ]}
-      />
-      <StructuredData
-        type="CollectionPage"
-        collectionPage={{
-          name: tutorialCollectionName,
-          url: "https://www.brandonptdavis.com/studio/tutorials",
-          description:
-            selectedCategory !== "all"
-              ? `${selectedCategory} tutorials by Brandon PT Davis.`
-              : "Tutorial archive covering scenic drafting, modeling, rendering, and workflow.",
-          about: "Scenic design learning articles and tutorials by Brandon PT Davis.",
-          mainEntity: {
-            name: tutorialCollectionName,
-            itemListElement: sortedLearningItems.slice(0, 24).map((item, index) => ({
-              position: index + 1,
-              name: item.title,
-              url: `https://www.brandonptdavis.com${item.href}`,
-              datePublished: item.timestamp ? new Date(item.timestamp).toISOString() : undefined,
-            })),
-          },
-        }}
-      />
-
       <Header />
 
       <main>

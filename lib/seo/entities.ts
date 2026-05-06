@@ -6,6 +6,8 @@ export const BRANDON_WEBSITE_ID = absoluteUrl("/#website");
 export const BRANDON_HEADSHOT_URL =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
 export const BRANDON_LOGO_URL = absoluteUrl("/android-chrome-512x512.png");
+export const BRANDON_VOYAGELA_PROFILE_URL =
+  "https://voyagela.com/interview/rising-stars-meet-brandon-pt-davis-of-irvine-ca/";
 
 export const BRANDON_PROFILE_URLS = [
   "https://www.instagram.com/brandonptdavisdesign",
@@ -16,7 +18,7 @@ export const BRANDON_PROFILE_URLS = [
   "https://www.usa829.org/Member-Profile/MemberID/15357",
 ] as const;
 
-export function getBrandonPersonJsonLd() {
+export function getBrandonPersonJsonLd(options: { includeProfileCitations?: boolean } = {}) {
   return {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -38,6 +40,26 @@ export function getBrandonPersonJsonLd() {
       addressRegion: "CA",
       addressCountry: "US",
     },
+    homeLocation: {
+      "@type": "City",
+      name: "San Diego",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "San Diego",
+        addressRegion: "CA",
+        addressCountry: "US",
+      },
+    },
+    workLocation: {
+      "@type": "City",
+      name: "San Diego",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "San Diego",
+        addressRegion: "CA",
+        addressCountry: "US",
+      },
+    },
     hasOccupation: {
       "@type": "Occupation",
       name: "Scenic Designer",
@@ -58,6 +80,30 @@ export function getBrandonPersonJsonLd() {
       name: "United Scenic Artists Local USA 829",
       url: "https://www.usa829.org/",
     },
+    subjectOf: options.includeProfileCitations
+      ? [
+          {
+            "@type": "Article",
+            name: "Rising Stars: Meet Brandon PT Davis",
+            url: BRANDON_VOYAGELA_PROFILE_URL,
+            publisher: {
+              "@type": "Organization",
+              name: "VoyageLA",
+              url: "https://voyagela.com/",
+            },
+          },
+          {
+            "@type": "ProfilePage",
+            name: "Brandon PT Davis USA 829 Member Profile",
+            url: "https://www.usa829.org/Member-Profile/MemberID/15357",
+            publisher: {
+              "@type": "Organization",
+              name: "United Scenic Artists Local USA 829",
+              url: "https://www.usa829.org/",
+            },
+          },
+        ]
+      : undefined,
     sameAs: BRANDON_PROFILE_URLS,
     alumniOf: [
       {
@@ -175,7 +221,7 @@ export function getAboutProfilePageJsonLd() {
     description:
       "Profile of Brandon PT Davis, scenic designer and USA 829 member based in San Diego, California.",
     primaryImageOfPage: BRANDON_HEADSHOT_URL,
-    mainEntity: getBrandonPersonJsonLd(),
+    mainEntity: getBrandonPersonJsonLd({ includeProfileCitations: true }),
   };
 }
 

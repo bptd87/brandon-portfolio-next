@@ -7,6 +7,9 @@ import {
   getLocalRenderingProjects,
 } from "../../shared/localPortfolios";
 import { getLocalScenicProjects } from "../../shared/localScenicProjects";
+import { getLocalArticles, type LocalArticle } from "../../shared/localArticles";
+import { getLocalTutorials } from "../../shared/localStudio";
+import { LEARNING_PORTAL_ARTICLE_SLUG_SET } from "../../shared/learningPortal";
 
 export const dynamic = "force-static";
 
@@ -36,6 +39,39 @@ function toAbsoluteImageUrl(url: string) {
   return url;
 }
 
+function isImageUrl(value: string) {
+  return /\.(avif|gif|jpe?g|png|webp)(\?|#|$)/i.test(value) || /\/images\//i.test(value);
+}
+
+function collectArticleImageUrls(article: LocalArticle) {
+  const urls = new Set<string>();
+  if (article.coverImageUrl) urls.add(article.coverImageUrl);
+
+  const visit = (value: unknown) => {
+    if (!value) return;
+    if (typeof value === "string") {
+      if (isImageUrl(value)) urls.add(value);
+      return;
+    }
+    if (Array.isArray(value)) {
+      value.forEach(visit);
+      return;
+    }
+    if (typeof value === "object") {
+      for (const [key, nestedValue] of Object.entries(value as Record<string, unknown>)) {
+        if (typeof nestedValue === "string" && /(?:image|thumbnail|cover|before|after|url)$/i.test(key) && isImageUrl(nestedValue)) {
+          urls.add(nestedValue);
+          continue;
+        }
+        visit(nestedValue);
+      }
+    }
+  };
+
+  visit(article.content);
+  return [...urls].map(toAbsoluteImageUrl);
+}
+
 export function GET() {
   const profileHeadshot =
     "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
@@ -61,6 +97,26 @@ export function GET() {
       imageUrl: toAbsoluteImageUrl(project.coverImageUrl!),
       title: "Brandon PT Davis Scenic Design Portfolio",
       caption: `${project.title} scenic design by Brandon PT Davis.`,
+    }));
+  const articleImages = getLocalArticles().flatMap((article) => {
+    const pathname = LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug)
+      ? `/studio/tutorials/${article.slug}`
+      : `/articles/${article.slug}`;
+
+    return collectArticleImageUrls(article).slice(0, 12).map((imageUrl, index) => ({
+      pathname,
+      imageUrl,
+      title: index === 0 ? article.title : `${article.title} article image`,
+      caption: index === 0 ? article.coverImageAlt || article.excerpt : article.excerpt,
+    }));
+  });
+  const tutorialImages = getLocalTutorials()
+    .filter((tutorial) => tutorial.cover_image)
+    .map((tutorial) => ({
+      pathname: `/studio/tutorials/${tutorial.slug}`,
+      imageUrl: toAbsoluteImageUrl(String(tutorial.cover_image)),
+      title: tutorial.title,
+      caption: tutorial.seo_description || tutorial.description || tutorial.overview || tutorial.title,
     }));
 
   const entries = uniqueEntries([
@@ -160,6 +216,8 @@ export function GET() {
         }))
       ),
     ]),
+    ...articleImages,
+    ...tutorialImages,
   ]);
 
   return xmlResponse(buildImageSitemap(entries));
