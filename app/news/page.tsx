@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { buildPageMetadata } from "../../lib/metadata";
 import { ASSISTANT_SCENIC_DESIGN_PATH } from "../../shared/localAssistantScenic";
-import { VOYAGELA_ARTICLE_PATH } from "../../shared/publicContent";
+import { VOYAGELA_EXTERNAL_URL } from "../../shared/publicContent";
 import Header from "../../components/site/Header";
 import Footer from "../../components/site/Footer";
 
@@ -44,17 +44,17 @@ export default function NewsArchivePage() {
                 </div>
               </Link>
 
-              <Link href={VOYAGELA_ARTICLE_PATH}>
+              <a href={VOYAGELA_EXTERNAL_URL} target="_blank" rel="noopener noreferrer">
                 <div className="cursor-pointer rounded-2xl border border-border/60 bg-card/20 p-6 text-left transition-colors hover:border-[#FF9800]/60">
                   <p className="mb-3 text-xs font-bold uppercase tracking-[0.24em] text-[#FF9800]">
-                    Articles
+                    VoyageLA
                   </p>
                   <h2 className="mb-2 text-2xl font-bold">VoyageLA Interview</h2>
                   <p className="text-sm leading-relaxed text-muted-foreground">
-                    Editorial/profile content has moved into Articles rather than staying in News.
+                    Read the Rising Stars profile on the original VoyageLA page.
                   </p>
                 </div>
-              </Link>
+              </a>
             </div>
           </div>
         </div>

@@ -19,6 +19,7 @@ import {
   getLocalStudioDirectory,
   getLocalTutorials,
 } from "./localStudio";
+import { productionEvents, upcomingProductions } from "./upcomingProductions";
 import { voiceProfile } from "./voiceProfile";
 
 export type SiteSearchSection = "Portfolio" | "Writing" | "Studio" | "People";
@@ -348,6 +349,44 @@ function createProfileEntries() {
         "workload",
         "productions per year",
         "Brandon PT Davis resume",
+      ],
+    }),
+    createEntry({
+      id: "profile:upcoming-productions",
+      title: "Upcoming Productions",
+      href: "/upcoming-productions",
+      section: "People",
+      kind: "Calendar",
+      description:
+        "Public production windows and upcoming scenic design commitments by Brandon PT Davis.",
+      meta: "Upcoming • 2026",
+      bodyText: upcomingProductions
+        .map((production) =>
+          [
+            production.title,
+            production.company,
+            production.venue,
+            production.director,
+            production.location.city,
+            production.location.region,
+          ].join(" ")
+        )
+        .join(" "),
+      keywords: [
+        "upcoming productions",
+        "calendar",
+        "2026",
+        "season",
+        "theatre calendar",
+        "Okoboji Summer Theatre",
+        "Maples Repertory Theatre",
+        "New Swan Shakespeare Festival",
+        "9 to 5",
+        "Never Can Say Goodbye",
+        "You're a Good Man Charlie Brown",
+        "Almost Heaven",
+        "Merry Wives of Windsor Cove",
+        "Romeo and Juliet",
       ],
     }),
     createEntry({
@@ -805,6 +844,32 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
     })
   );
 
+  const productionEventEntries = productionEvents.map((production) =>
+    createEntry({
+      id: `production-event:${production.id}`,
+      title: production.title,
+      href: `/upcoming-productions/${production.id}`,
+      section: "People",
+      kind: production.status === "archived" ? "Production Archive" : "Upcoming Production",
+      description: production.description,
+      meta: [production.company, production.venue, production.director].filter(Boolean).join(" • "),
+      imageUrl: production.imageUrl,
+      bodyText: [production.subtitle, ...production.body].join(" "),
+      keywords: [
+        production.title,
+        production.id,
+        production.subtitle,
+        production.company,
+        production.venue,
+        production.director,
+        production.location.city,
+        production.location.region,
+        production.sourceLabel,
+        production.portfolioLabel,
+      ],
+    })
+  );
+
   const articleEntries = getLocalArticles()
     .filter((article) => !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(article.slug))
     .map((article) =>
@@ -912,6 +977,7 @@ export function buildSiteSearchEntries(): SiteSearchEntry[] {
     ...renderingEntries,
     ...experientialEntries,
     ...brandEntries,
+    ...productionEventEntries,
     ...articleEntries,
     ...tutorialEntries,
     ...assistantEntries,

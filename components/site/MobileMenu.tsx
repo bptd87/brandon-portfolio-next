@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown, X } from "lucide-react";
+import BrandMark from "../../client/src/components/BrandMark";
 
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
+  onOpenSearch: () => void;
 }
 
 const PORTFOLIO_LINKS = [
@@ -19,6 +21,7 @@ const PORTFOLIO_LINKS = [
 
 const ABOUT_LINKS = [
   { label: "About", href: "/about" },
+  { label: "Upcoming Productions", href: "/upcoming-productions" },
   { label: "Resume / CV", href: "/resume" },
   { label: "Creative Statement", href: "/creative-statement" },
   { label: "Teaching Philosophy", href: "/about/teaching" },
@@ -89,7 +92,7 @@ function MenuSection({
   );
 }
 
-export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+export default function MobileMenu({ isOpen, onClose, onOpenSearch }: MobileMenuProps) {
   const pathname = usePathname() || "/";
   const [workOpen, setWorkOpen] = useState(true);
   const [aboutOpen, setAboutOpen] = useState(false);
@@ -111,6 +114,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     setWorkOpen(pathname.startsWith("/projects") || pathname.startsWith("/assistant-scenic-design"));
     setAboutOpen(
       pathname.startsWith("/about") ||
+        pathname.startsWith("/upcoming-productions") ||
         pathname.startsWith("/resume") ||
         pathname.startsWith("/creative-statement")
     );
@@ -131,12 +135,17 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       <div className="fixed inset-x-0 top-0 z-50 h-[100dvh] overflow-y-auto border-b border-border/35 bg-background/96 backdrop-blur-2xl">
         <div className="container flex min-h-full flex-col py-5">
           <div className="flex items-start justify-between gap-6 border-b border-border/35 pb-5">
-            <Link href="/" onClick={onClose} className="inline-flex flex-col leading-none">
-              <span className="text-[1.18rem] font-black tracking-[-0.055em] text-foreground">
-                BRANDON PT DAVIS
+            <Link href="/" onClick={onClose} className="inline-flex items-center gap-0 leading-none">
+              <span className="relative flex h-[3.2rem] w-[3.2rem] shrink-0 items-center justify-center">
+                <BrandMark className="h-full w-full" />
               </span>
-              <span className="mt-1 pl-[0.08rem] text-[9px] font-medium uppercase tracking-[0.24em] text-foreground/48">
-                SCENIC DESIGNER
+              <span className="-ml-[4px] flex min-w-0 flex-col items-start justify-center pt-[1px]">
+                <span className="text-[1.12rem] font-black tracking-[-0.055em] text-foreground">
+                  BRANDON PT DAVIS
+                </span>
+                <span className="mt-1 pl-[0.06rem] text-[8.5px] font-medium uppercase tracking-[0.28em] text-foreground/48">
+                  SCENIC DESIGN
+                </span>
               </span>
             </Link>
 
@@ -159,6 +168,18 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 Portfolio, studio resources, and professional information in one place.
               </p>
             </div>
+
+            <Link
+              href="#"
+              onClick={(event) => {
+                event.preventDefault();
+                onClose();
+                onOpenSearch();
+              }}
+              className="mb-6 inline-flex h-11 items-center justify-center rounded-full border border-border/45 px-5 text-sm font-medium tracking-[-0.01em] text-foreground/72 transition-colors hover:border-border hover:text-foreground"
+            >
+              Search Site
+            </Link>
 
             <nav className="space-y-2">
               <MenuSection

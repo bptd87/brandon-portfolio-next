@@ -1,11 +1,13 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Blocks,
   BookOpen,
+  CalendarDays,
   ChevronDown,
   FileImage,
   FileText,
@@ -14,13 +16,20 @@ import {
   Menu,
   PenTool,
   PlayCircle,
+  Search,
   Sparkles,
   UserRound,
   Users,
+  X,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
+import BrandMark from "../../client/src/components/BrandMark";
 import MobileMenu from "./MobileMenu";
+
+const SearchOverlay = dynamic(() => import("../../client/src/components/SearchOverlay"), {
+  ssr: false,
+});
 
 type MenuItem = {
   name: string;
@@ -131,6 +140,7 @@ export default function Header() {
   const [aboutOpen, setAboutOpen] = useState(false);
   const [studioOpen, setStudioOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollYRef = useRef(0);
 
@@ -185,6 +195,23 @@ export default function Header() {
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        setSearchOpen(true);
+      }
+
+      if (event.key === "/" && !(event.target instanceof HTMLInputElement) && !(event.target instanceof HTMLTextAreaElement)) {
+        event.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   const handlePortfolioMouseLeave = () => {
@@ -262,6 +289,12 @@ export default function Header() {
           icon: <UserRound className="h-4 w-4" />,
         },
         {
+          name: "Upcoming Productions",
+          path: "/upcoming-productions",
+          description: "Public production windows and scenic design commitments currently on the calendar.",
+          icon: <CalendarDays className="h-4 w-4" />,
+        },
+        {
           name: "Resume / CV",
           path: "/resume",
           description: "Production credits, teaching, training, and linked portfolio references.",
@@ -334,7 +367,10 @@ export default function Header() {
   const isPortfolioActive =
     isActive("/projects") || isActive("/assistant-scenic-design") || pathname.startsWith("/project/");
   const isAboutActive =
-    isActive("/about") || isActive("/resume") || isActive("/creative-statement");
+    isActive("/about") ||
+    isActive("/upcoming-productions") ||
+    isActive("/resume") ||
+    isActive("/creative-statement");
   const isStudioActive = isActive("/studio") || isActive("/articles");
 
   return (
@@ -347,12 +383,17 @@ export default function Header() {
       >
         <div className="container max-w-[88rem] py-4">
           <nav className="flex items-center justify-between gap-6">
-            <Link href="/" className="group inline-flex flex-col items-start leading-none transition-all">
-              <span className="text-[1.18rem] font-black tracking-[-0.055em] md:text-[1.22rem]">
-                BRANDON PT DAVIS
+            <Link href="/" className="group inline-flex items-center gap-0 leading-none transition-all">
+              <span className="relative flex h-[3.2rem] w-[3.2rem] shrink-0 items-center justify-center">
+                <BrandMark className="h-full w-full transition-transform duration-200 group-hover:scale-[1.02]" />
               </span>
-              <span className="mt-1 pl-[0.08rem] text-[9px] font-medium uppercase tracking-[0.24em] text-white/46 md:text-[9.5px]">
-                SCENIC DESIGNER
+              <span className="-ml-[4px] flex min-w-0 flex-col items-start justify-center pt-[1px]">
+                <span className="text-[1.12rem] font-black tracking-[-0.055em] md:text-[1.16rem]">
+                  BRANDON PT DAVIS
+                </span>
+                <span className="mt-1 pl-[0.06rem] text-[8.5px] font-medium uppercase tracking-[0.28em] text-white/46 md:text-[9px]">
+                  SCENIC DESIGN
+                </span>
               </span>
             </Link>
 
@@ -408,9 +449,22 @@ export default function Header() {
                     />
                   ) : null}
                 </div>
+
+                <button
+                  type="button"
+                  onClick={() => setSearchOpen((value) => !value)}
+                  aria-label="Search site"
+                  className="ml-1 inline-flex h-10 w-10 items-center justify-center text-white/58 transition-colors hover:text-white"
+                >
+                  {searchOpen ? (
+                    <X className="h-[1.05rem] w-[1.05rem]" />
+                  ) : (
+                    <Search className="h-[1.05rem] w-[1.05rem]" />
+                  )}
+                </button>
               </div>
 
-              <div className="ml-6 shrink-0">
+              <div className="ml-10 shrink-0">
                 <Link
                   href="/contact"
                   className="inline-flex h-10 items-center justify-center rounded-full border border-white/22 px-5 text-[0.9rem] font-medium tracking-[-0.02em] text-white transition-colors hover:border-white/36 hover:bg-white/[0.05]"
@@ -434,7 +488,12 @@ export default function Header() {
         </div>
       </header>
 
-      <MobileMenu isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+      <MobileMenu
+        isOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        onOpenSearch={() => setSearchOpen(true)}
+      />
+      {searchOpen ? <SearchOverlay open={searchOpen} onOpenChange={setSearchOpen} /> : null}
     </>
   );
 }

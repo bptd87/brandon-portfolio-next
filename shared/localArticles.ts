@@ -54,7 +54,8 @@ export interface LocalArticle {
 }
 
 export const VOYAGELA_ARTICLE_SLUG = "voyagela-rising-stars-interview";
-export const VOYAGELA_ARTICLE_PATH = `/articles/${VOYAGELA_ARTICLE_SLUG}`;
+export const VOYAGELA_EXTERNAL_URL =
+  "https://voyagela.com/interview/rising-stars-meet-brandon-pt-davis-of-irvine-ca/";
 
 const countWords = (value: string) => value.split(/\s+/).filter(Boolean).length;
 
@@ -847,78 +848,6 @@ const mergeArticleSources = (article: LocalArticle): LocalArticle => {
     content,
     audio: audioBySlug[article.slug] ?? article.audio,
   };
-};
-
-const voyageLaArticle: LocalArticle = {
-  id: 100003,
-  slug: VOYAGELA_ARTICLE_SLUG,
-  title: "VoyageLA: Rising Stars Interview",
-  excerpt:
-    "VoyageLA featured Brandon PT Davis in a Rising Stars profile focused on scenic design growth, artistic voice, and long-term career direction in Southern California.",
-  coverImageUrl:
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/local-articles/news-150001-cover-6b3d12c4.webp",
-  coverImageAlt: "VoyageLA Rising Stars interview feature",
-  publishedAt: "2026-02-10",
-  updatedAt: "2026-02-12",
-  createdAt: "2026-02-10",
-  categoryName: "Profiles & Interviews",
-  seoTitle: "VoyageLA Interview | Brandon PT Davis",
-  seoDescription:
-    "VoyageLA's Rising Stars interview with Brandon PT Davis on scenic design process, career development, and production-focused collaboration.",
-  sourcePublication: "VoyageLA",
-  sourceUrl: "https://voyagela.com/interview/rising-stars-meet-brandon-pt-davis-of-irvine-ca/",
-  tags: [],
-  featured: true,
-  content: [
-    {
-      type: "paragraph",
-      text:
-        "VoyageLA published a Rising Stars interview profiling Brandon PT Davis's path from regional theatre work to current scenic design and teaching practice. The feature works best as durable editorial context rather than time-sensitive news, so it now lives with the site's long-form article archive.",
-    },
-    {
-      type: "heading",
-      level: 2,
-      text: "Editorial context",
-    },
-    {
-      type: "paragraph",
-      text:
-        "The interview highlights a professional path shaped by scenic design, production collaboration, and a long-term interest in how environments support performance. It also offers a useful snapshot of how the larger body of work has been framed publicly outside the portfolio itself.",
-    },
-    {
-      type: "heading",
-      level: 2,
-      text: "Interview focus",
-    },
-    {
-      type: "paragraph",
-      text:
-        "The conversation centers on process, collaboration, and the working conditions that shape scenic design decisions in rehearsal, drafting, and production. It speaks less to one individual project than to the habits and values that organize the work across projects.",
-    },
-    {
-      type: "list",
-      listType: "bulleted",
-      items: [
-        "Career progression across regional and academic theatre",
-        "How storytelling goals shape scenic systems and material choices",
-        "Building a visible body of work through documented production practice",
-      ],
-    },
-    {
-      type: "heading",
-      level: 2,
-      text: "Original publication",
-    },
-    {
-      type: "paragraph",
-      text: "Read the full interview on VoyageLA for the original editorial presentation and Q&A.",
-    },
-    {
-      type: "html",
-      content:
-        '<p><a href="https://voyagela.com/interview/rising-stars-meet-brandon-pt-davis-of-irvine-ca/" target="_blank" rel="noopener noreferrer">Read the VoyageLA interview</a></p>',
-    },
-  ],
 };
 
 const visualLanguageArticle: LocalArticle = {
@@ -2530,14 +2459,15 @@ const vectorworksPublishingRenderingsArticle: LocalArticle = {
   content: [],
 };
 
-const dbBackedArticles = (generatedLocalArticles as LocalArticle[]).map(mergeArticleSources);
+const externalProfileArticleSlugs = new Set([VOYAGELA_ARTICLE_SLUG]);
 
-const baseArticles = dbBackedArticles.some((article) => article.slug === VOYAGELA_ARTICLE_SLUG)
-  ? dbBackedArticles
-  : [...dbBackedArticles, voyageLaArticle];
+const dbBackedArticles = (generatedLocalArticles as LocalArticle[])
+  .map(mergeArticleSources)
+  .filter((article) => !externalProfileArticleSlugs.has(article.slug));
+
+const baseArticles = dbBackedArticles;
 
 const manualArticles: LocalArticle[] = [
-  voyageLaArticle,
   visualLanguageArticle,
   ghibliImmersiveDiningArticle,
   workingOffstageArticle,
@@ -2570,9 +2500,6 @@ export const localArticles = articlesWithManualEntries
   }))
   .map((article) => applyBlobMediaManifest(article))
   .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
-
-export const voyageLaArticleRecord =
-  localArticles.find((article) => article.slug === VOYAGELA_ARTICLE_SLUG) || null;
 
 export function getLocalArticles() {
   return localArticles;

@@ -7,6 +7,7 @@ export default function AboutNav() {
 
   const navItems = [
     { path: "/about", label: "About" },
+    { path: "/upcoming-productions", label: "Upcoming" },
     { path: "/resume", label: "Resume" },
     { path: "/creative-statement", label: "Creative Statement" },
     { path: "/about/teaching", label: "Teaching Philosophy", aliases: ["/teaching-philosophy", "/about/philosophy"] },

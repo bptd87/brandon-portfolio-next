@@ -15,6 +15,11 @@ import {
   LEARNING_PORTAL_ARTICLE_SLUG_SET,
   RETIRED_LEARNING_ARTICLE_REDIRECTS,
 } from "../../../shared/learningPortal";
+import {
+  VOYAGELA_ARTICLE_SLUG,
+  VOYAGELA_EXTERNAL_URL,
+  VOYAGELA_PROFILE_TITLE,
+} from "../../../shared/publicContent";
 
 type ArticlePageProps = {
   params: Promise<{
@@ -26,11 +31,26 @@ export const dynamic = "force-static";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getLocalArticles().map((article) => ({ slug: article.slug }));
+  return [
+    ...getLocalArticles().map((article) => ({ slug: article.slug })),
+    { slug: VOYAGELA_ARTICLE_SLUG },
+  ];
 }
 
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
+
+  if (slug === VOYAGELA_ARTICLE_SLUG) {
+    return buildPageMetadata({
+      title: VOYAGELA_PROFILE_TITLE,
+      description:
+        "VoyageLA's Rising Stars interview with Brandon PT Davis now links to the original publication.",
+      pathname: `/articles/${slug}`,
+      noindex: true,
+      type: "article",
+    });
+  }
+
   const article = getLocalArticleBySlug(slug);
 
   if (!article) {
@@ -57,6 +77,11 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 
 export default async function Page({ params }: ArticlePageProps) {
   const { slug } = await params;
+
+  if (slug === VOYAGELA_ARTICLE_SLUG) {
+    permanentRedirect(VOYAGELA_EXTERNAL_URL);
+  }
+
   const retiredRedirect = RETIRED_LEARNING_ARTICLE_REDIRECTS[slug];
 
   if (retiredRedirect) {

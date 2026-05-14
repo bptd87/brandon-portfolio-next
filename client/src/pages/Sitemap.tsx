@@ -20,6 +20,7 @@ const sections = [
     title: "About",
     links: [
       { name: "About", href: "/about" },
+      { name: "Upcoming Productions", href: "/upcoming-productions" },
       { name: "Resume", href: "/resume" },
       { name: "Creative Statement", href: "/creative-statement" },
       { name: "Teaching Philosophy", href: "/about/teaching" },

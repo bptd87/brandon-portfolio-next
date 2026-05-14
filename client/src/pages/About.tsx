@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, ChevronLeft, ChevronRight, Mail } from "lucide-react";
+import { ArrowRight, Check, ChevronLeft, ChevronRight, Link2 } from "lucide-react";
 import Image from "next/image";
 import { Link } from "wouter";
 import { useEffect, useRef, useState } from "react";
@@ -11,7 +11,7 @@ import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
 import { resolveBlobMediaUrl } from "@shared/mediaBlob";
 import { formatUtcDate } from "@/lib/date-format";
-import { getLocalArticles } from "@shared/localArticles";
+import { getLocalArticles, VOYAGELA_ARTICLE_SLUG, VOYAGELA_EXTERNAL_URL } from "@shared/localArticles";
 
 const galleryImages = [
   {
@@ -61,15 +61,11 @@ const ABOUT_HEADSHOT_URL =
 
 const navigationCards = [
   {
-    title: "Creative Statement",
-    description:
-      "Process, design philosophy, and the principles that shape the work.",
-    href: "/creative-statement",
-    label: "Process",
-    image:
-      resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-process-art.png") ||
-      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-process-art.png",
-    imageTitle: "Creative Statement",
+    title: "Upcoming Productions",
+    description: "Current scenic design calendar, event pages, and selected production archive.",
+    href: "/upcoming-productions",
+    label: "Calendar",
+    image: "/upcoming-productions/upcoming-productions-hero.webp",
   },
   {
     title: "Resume & Credits",
@@ -79,6 +75,17 @@ const navigationCards = [
     image:
       resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-resume-art.png") ||
       "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-resume-art.png",
+  },
+  {
+    title: "Creative Statement",
+    description:
+      "Process, design philosophy, and the principles that shape the work.",
+    href: "/creative-statement",
+    label: "Process",
+    image:
+      resolveBlobMediaUrl("https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-process-art.png") ||
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-process-art.png",
+    imageTitle: "Creative Statement",
   },
   {
     title: "Teaching Philosophy",
@@ -126,18 +133,51 @@ const workingPrinciples = [
   },
 ];
 
+const voyageLaProfileCard = {
+  id: "voyagela-profile",
+  title: "VoyageLA: Rising Stars Interview",
+  excerpt:
+    "VoyageLA's Rising Stars profile on Brandon PT Davis, scenic design practice, collaboration, and building a visible body of work.",
+  categoryName: "Profiles & Interviews",
+  publishedAt: "2026-02-10",
+  coverImageUrl:
+    resolveBlobMediaUrl(
+      "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/local-articles/news-150001-cover-6b3d12c4.webp"
+    ) ||
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/local-articles/news-150001-cover-6b3d12c4.webp",
+  coverImageAlt: "VoyageLA Rising Stars interview feature",
+  href: VOYAGELA_EXTERNAL_URL,
+  external: true as const,
+};
+
 export default function About() {
   const galleryRailRef = useRef<HTMLDivElement | null>(null);
   const galleryItemRefs = useRef<Array<HTMLDivElement | null>>([]);
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
+  const [pageLinkCopied, setPageLinkCopied] = useState(false);
   const bioArticles = getLocalArticles()
     .filter(
       (article) =>
-        article.categoryName === "Profiles & Interviews" ||
-        article.tags?.some((tag) => tag.slug === "biography" || tag.slug === "profile" || tag.slug === "interview")
+        article.slug !== VOYAGELA_ARTICLE_SLUG &&
+        (article.categoryName === "Profiles & Interviews" ||
+          article.tags?.some((tag) => tag.slug === "biography" || tag.slug === "profile" || tag.slug === "interview"))
     )
     .sort((a, b) => new Date(b.publishedAt || b.createdAt || 0).getTime() - new Date(a.publishedAt || a.createdAt || 0).getTime())
     .slice(0, 4);
+  const bioArticleCards = [
+    voyageLaProfileCard,
+    ...bioArticles.map((article) => ({
+      id: article.id,
+      title: article.title,
+      excerpt: article.excerpt,
+      categoryName: article.categoryName,
+      publishedAt: article.publishedAt || article.createdAt || "",
+      coverImageUrl: article.coverImageUrl,
+      coverImageAlt: article.coverImageAlt || article.title,
+      href: `/articles/${article.slug}`,
+      external: false as const,
+    })),
+  ].slice(0, 4);
 
   const scrollGalleryBy = (direction: "prev" | "next") => {
     const nextIndex =
@@ -153,6 +193,20 @@ export default function About() {
       inline: "start",
       block: "nearest",
     });
+  };
+
+  const handleSharePage = async () => {
+    const path = "/about";
+    const url =
+      typeof window === "undefined" ? `https://www.brandonptdavis.com${path}` : `${window.location.origin}${path}`;
+
+    try {
+      await navigator.clipboard.writeText(url);
+      setPageLinkCopied(true);
+      window.setTimeout(() => setPageLinkCopied(false), 1800);
+    } catch {
+      setPageLinkCopied(false);
+    }
   };
 
   useEffect(() => {
@@ -199,7 +253,7 @@ export default function About() {
       <AboutNav />
 
       <main>
-        <section className="pb-14 pt-24 md:pb-16 md:pt-28">
+        <section className="pb-8 pt-24 md:pb-10 md:pt-28">
           <div className="container max-w-[88rem]">
             <div className="mx-auto max-w-4xl text-center">
               <div className="mx-auto max-w-3xl">
@@ -232,14 +286,24 @@ export default function About() {
                     />
                   </div>
                 </div>
+                <div className="mt-8 flex w-full justify-end border-t border-white/14 py-4 text-foreground/72">
+                  <button
+                    type="button"
+                    onClick={handleSharePage}
+                    className="inline-flex items-center justify-center gap-2 text-[0.98rem] tracking-[-0.02em] transition-colors hover:text-foreground"
+                  >
+                    {pageLinkCopied ? <Check className="h-4 w-4" /> : <Link2 className="h-4 w-4" />}
+                    <span>{pageLinkCopied ? "Link copied" : "Share"}</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="pb-16 pt-8 md:pb-20 md:pt-10">
+        <section className="pb-16 pt-0 md:pb-20">
           <div className="container max-w-[88rem]">
-            <div className="border-t border-border/20 pt-10">
+            <div>
               <div className="mx-auto max-w-3xl space-y-6">
                 <p className="text-[1rem] leading-8 text-foreground/78 md:text-[1.08rem]">
                   Brandon&apos;s approach combines traditional scenic craft with contemporary digital
@@ -359,11 +423,11 @@ export default function About() {
                 Learn More
               </p>
               <h2 className="mt-4 font-sans text-[clamp(2rem,4vw,3.3rem)] font-medium leading-[0.98] tracking-[-0.05em] text-foreground">
-                Process, teaching, and long-form context.
+                Process, productions, teaching, and long-form context.
               </h2>
             </div>
 
-            <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-5">
               {navigationCards.map((card) => (
                 <Link key={card.href} href={card.href} className="group block">
                   <div className="relative overflow-hidden rounded-[1.35rem] border border-border/40 bg-card/20">
@@ -406,7 +470,7 @@ export default function About() {
               ))}
             </div>
 
-            {bioArticles.length > 0 ? (
+            {bioArticleCards.length > 0 ? (
               <div className="mt-16 border-t border-border/25 pt-10">
                 <div className="mb-8 max-w-3xl">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
@@ -418,14 +482,14 @@ export default function About() {
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-2">
-                  {bioArticles.map((article) => (
-                    <Link key={article.id} href={`/articles/${article.slug}`} className="group block">
+                  {bioArticleCards.map((article) => {
+                    const articleCard = (
                       <div className="grid gap-5 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:items-start">
                         <div className="relative aspect-square overflow-hidden rounded-[1.15rem] border border-border/35 bg-card/20">
                           {article.coverImageUrl ? (
                             <Image
                               src={article.coverImageUrl}
-                              alt={article.coverImageAlt || article.title}
+                              alt={article.coverImageAlt}
                               fill
                               quality={80}
                               loading="lazy"
@@ -439,7 +503,7 @@ export default function About() {
                         <div className="pt-1">
                           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-foreground/50">
                             <span>{article.categoryName}</span>
-                            <span>{formatUtcDate(article.publishedAt || article.createdAt, "short")}</span>
+                            <span>{formatUtcDate(article.publishedAt, "short")}</span>
                           </div>
                           <h4 className="mt-3 font-sans text-[1.3rem] font-medium leading-[1.06] tracking-[-0.035em] text-foreground transition-colors group-hover:text-foreground/84">
                             {article.title}
@@ -449,8 +513,24 @@ export default function About() {
                           </p>
                         </div>
                       </div>
-                    </Link>
-                  ))}
+                    );
+
+                    return article.external ? (
+                      <a
+                        key={article.id}
+                        href={article.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group block"
+                      >
+                        {articleCard}
+                      </a>
+                    ) : (
+                      <Link key={article.id} href={article.href} className="group block">
+                        {articleCard}
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
             ) : null}
