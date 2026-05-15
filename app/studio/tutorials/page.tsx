@@ -17,6 +17,31 @@ export const metadata = buildPageMetadata({
   type: "article",
 });
 
+function toIsoDate(value?: string | Date | null) {
+  if (!value) return undefined;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? undefined : date.toISOString();
+}
+
+function getYouTubeId(url?: string | null) {
+  if (!url) return null;
+
+  try {
+    const parsedUrl = new URL(url);
+    if (parsedUrl.hostname.includes("youtu.be")) {
+      return parsedUrl.pathname.replace("/", "") || null;
+    }
+
+    if (parsedUrl.pathname.includes("/embed/")) {
+      return parsedUrl.pathname.split("/embed/")[1]?.split("/")[0] || null;
+    }
+
+    return parsedUrl.searchParams.get("v");
+  } catch {
+    return null;
+  }
+}
+
 export default function Page() {
   const learningArticles = getLocalArticles()
     .filter((article) => LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug))
@@ -27,15 +52,25 @@ export default function Page() {
       image: article.coverImageUrl || undefined,
       publishedAt: article.publishedAt || article.createdAt || undefined,
       type: "BlogPosting",
+      videoUrl: undefined,
+      embedUrl: undefined,
     }));
-  const videoTutorials = getLocalTutorials().map((tutorial) => ({
-    title: tutorial.title,
-    description: tutorial.seo_description || tutorial.description || tutorial.overview || tutorial.title,
-    href: `/studio/tutorials/${tutorial.slug}`,
-    image: tutorial.cover_image || undefined,
-    publishedAt: tutorial.published_at || tutorial.created_at || undefined,
-    type: tutorial.video_url ? "VideoObject" : "Article",
-  }));
+  const videoTutorials = getLocalTutorials().map((tutorial) => {
+    const publishedAt = toIsoDate(tutorial.published_at || tutorial.created_at || tutorial.updated_at);
+    const youtubeId = getYouTubeId(tutorial.video_url);
+    const hasCompleteVideoSchema = Boolean(tutorial.video_url && tutorial.cover_image && publishedAt);
+
+    return {
+      title: tutorial.title,
+      description: tutorial.seo_description || tutorial.description || tutorial.overview || tutorial.title,
+      href: `/studio/tutorials/${tutorial.slug}`,
+      image: tutorial.cover_image || undefined,
+      publishedAt,
+      type: hasCompleteVideoSchema ? "VideoObject" : "Article",
+      videoUrl: hasCompleteVideoSchema ? tutorial.video_url : undefined,
+      embedUrl: hasCompleteVideoSchema && youtubeId ? `https://www.youtube.com/embed/${youtubeId}` : undefined,
+    };
+  });
   const learningItems = [...learningArticles, ...videoTutorials].sort((a, b) => {
     const dateA = new Date(a.publishedAt || 0).getTime();
     const dateB = new Date(b.publishedAt || 0).getTime();
@@ -65,23 +100,41 @@ export default function Page() {
       name: "Latest scenic design learning articles and tutorials",
       itemListOrder: "https://schema.org/ItemListOrderDescending",
       numberOfItems: Math.min(learningItems.length, 24),
-      itemListElement: learningItems.slice(0, 24).map((item, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        url: absoluteUrl(item.href),
-        item: {
+      itemListElement: learningItems.slice(0, 24).map((item, index) => {
+        const itemUrl = absoluteUrl(item.href);
+        const baseItem = {
           "@type": item.type,
-          headline: stripHtml(item.title),
           name: stripHtml(item.title),
           description: stripHtml(item.description),
-          url: absoluteUrl(item.href),
-          image: item.image,
-          datePublished: item.publishedAt,
+          url: itemUrl,
           author: {
             "@id": BRANDON_PERSON_ID,
           },
-        },
-      })),
+        };
+        const structuredItem =
+          item.type === "VideoObject"
+            ? {
+                ...baseItem,
+                "@id": `${itemUrl}#video`,
+                thumbnailUrl: item.image ? [item.image] : undefined,
+                uploadDate: item.publishedAt,
+                contentUrl: item.videoUrl,
+                embedUrl: item.embedUrl,
+              }
+            : {
+                ...baseItem,
+                headline: stripHtml(item.title),
+                image: item.image,
+                datePublished: item.publishedAt,
+              };
+
+        return {
+          "@type": "ListItem",
+          position: index + 1,
+          url: itemUrl,
+          item: structuredItem,
+        };
+      }),
     },
   };
 

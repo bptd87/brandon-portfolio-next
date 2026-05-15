@@ -402,6 +402,7 @@ export type LocalExperientialProcessGalleryItem = {
   active: boolean;
   projectId: number | null;
   year: number | null;
+  month?: number | null;
   createdAt: string | null;
   images: Array<{
     id: number;
@@ -455,6 +456,7 @@ export type LocalExperientialProject = {
   seoTitle: string;
   seoDescription: string;
   year: number | null;
+  month: number | null;
   updatedAt: string | null;
   coverImageUrl: string;
   coverAltText: string;
@@ -656,6 +658,7 @@ type LocalExperientialProjectDefinition = {
   seoTitle?: string;
   seoDescription?: string;
   year?: number | null;
+  month?: number | null;
 };
 
 const EXPERIENTIAL_PROJECT_DEFINITIONS: LocalExperientialProjectDefinition[] = [
@@ -778,6 +781,8 @@ const EXPERIENTIAL_PROJECT_DEFINITIONS: LocalExperientialProjectDefinition[] = [
     slug: "park-and-shop",
     title: "Park & Shop",
     sampleSlugs: ["park-and-shop-concord-ca", "park-and-shop-technical-drawing"],
+    year: 2021,
+    month: 5,
     summary:
       "A retail environment package for Park & Shop that pairs concept renderings with technical drawing support, showing how presentation imagery and drafting documentation work together inside one project.",
     sections: [
@@ -801,6 +806,8 @@ const EXPERIENTIAL_PROJECT_DEFINITIONS: LocalExperientialProjectDefinition[] = [
     slug: "lysistrata-covid-documentation",
     title: "Lysistrata COVID Documentation",
     sampleSlugs: ["lysistrata-covid-documentation"],
+    year: 2024,
+    month: 4,
     summary:
       "A drafting and documentation package created to support staging clarity and evolving production requirements during COVID-era planning.",
     sections: [
@@ -824,6 +831,7 @@ const EXPERIENTIAL_PROJECT_DEFINITIONS: LocalExperientialProjectDefinition[] = [
     slug: "new-swan-venue-documentation",
     title: "New Swan Venue Documentation",
     sampleSlugs: ["new-swan-venue-documentation"],
+    year: 2020,
     summary:
       "Venue documentation for New Swan, capturing site conditions and technical information needed to support planning, coordination, and installation decisions.",
     sections: [
@@ -964,22 +972,27 @@ function getExperientialProjectTimestamp(input: {
   updatedAt?: string | null;
   createdAt?: string | null;
   year?: number | null;
+  month?: number | null;
 }) {
+  if (input.year) {
+    const monthIndex = input.month ? Math.max(0, Math.min(11, input.month - 1)) : 6;
+    return new Date(input.year, monthIndex, 1).getTime();
+  }
+
   const explicitDate = input.updatedAt || input.createdAt;
   if (explicitDate) {
     const timestamp = new Date(explicitDate).getTime();
     if (!Number.isNaN(timestamp)) return timestamp;
   }
 
-  if (input.year) return new Date(input.year, 6, 1).getTime();
   return 0;
 }
 
 function sortExperientialSamples(items: LocalExperientialSample[]) {
   return [...items].sort((a, b) => {
     const timeCompare =
-      getExperientialProjectTimestamp({ updatedAt: a.createdAt, year: a.year }) -
-      getExperientialProjectTimestamp({ updatedAt: b.createdAt, year: b.year });
+      getExperientialProjectTimestamp({ updatedAt: a.createdAt, year: a.year, month: a.month }) -
+      getExperientialProjectTimestamp({ updatedAt: b.createdAt, year: b.year, month: b.month });
 
     if (timeCompare !== 0) return timeCompare;
     return (a.sortOrder || 0) - (b.sortOrder || 0);
@@ -1063,6 +1076,7 @@ function buildLocalExperientialProjects(): LocalExperientialProject[] {
           .filter((value): value is number => typeof value === "number")
           .sort((a, b) => b - a)[0] ??
         null;
+      const derivedMonth = definition.month ?? null;
       const mediaTypes = (["live-events", "rendering", "technical-drawing"] as LocalExperientialCategory[]).filter(
         (category) => orderedSamples.some((sample) => sample.category === category)
       );
@@ -1078,6 +1092,7 @@ function buildLocalExperientialProjects(): LocalExperientialProject[] {
         seoTitle: definition.seoTitle || `${definition.title} | Experiential Design | Brandon PT Davis`,
         seoDescription,
         year: derivedYear,
+        month: derivedMonth,
         updatedAt: latestUpdatedAt,
         coverImageUrl,
         coverAltText,
@@ -1093,8 +1108,8 @@ function buildLocalExperientialProjects(): LocalExperientialProject[] {
 
   return projects.sort((a, b) => {
       const timeCompare =
-        getExperientialProjectTimestamp({ updatedAt: b.updatedAt, year: b.year }) -
-        getExperientialProjectTimestamp({ updatedAt: a.updatedAt, year: a.year });
+        getExperientialProjectTimestamp({ updatedAt: b.updatedAt, year: b.year, month: b.month }) -
+        getExperientialProjectTimestamp({ updatedAt: a.updatedAt, year: a.year, month: a.month });
 
       if (timeCompare !== 0) return timeCompare;
       return a.title.localeCompare(b.title);

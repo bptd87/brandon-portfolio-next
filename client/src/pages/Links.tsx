@@ -24,11 +24,64 @@ import {
 import { Link } from "wouter";
 
 import { SEO } from "@/components/SEO";
+import {
+  LEARNING_PORTAL_ARTICLE_SLUG_SET,
+  RETIRED_LEARNING_ARTICLE_SLUG_SET,
+} from "@shared/learningPortal";
 import { getLocalArticles } from "@shared/localArticles";
-import { getLocalExperientialProjectHref, getLocalExperientialProjects, getLocalRenderingProjects } from "@shared/localPortfolios";
+import { getLocalExperientialProjectHref, getLocalExperientialProjects } from "@shared/localPortfolios";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
+import { getLocalTutorials } from "@shared/localStudio";
 
 const PINNED_LINK_DATE = "9999-12-31T00:00:00.000Z";
+const ABOUT_HEADSHOT_URL =
+  "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
+
+const TUTORIAL_COVER_VARIANTS = {
+  "getting-started": [
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/getting-started-1.png",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/getting-started-2.png",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/getting-started-3.png",
+  ],
+  "2d-drafting": [
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/2d-drafting-1.png",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/2d-drafting-2.png",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/2d-drafting-3.png",
+  ],
+  "3d-modeling": [
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/3d-modeling-1.png",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/3d-modeling-2.png",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/3d-modeling-3.png",
+  ],
+  rendering: [
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/rendering-1.png",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/rendering-2.png",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/rendering-3.png",
+  ],
+} as const;
+
+const normalizeToken = (value: string | null | undefined) =>
+  String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+const getStableVariantIndex = (value: string, total: number) => {
+  const hash = value.split("").reduce((sum, char) => sum + char.charCodeAt(0), 0);
+  return hash % total;
+};
+
+const getTutorialCoverImage = (tutorial: { id: number | string; slug?: string | null; category?: string | null }) => {
+  const category = normalizeToken(tutorial.category);
+  const variants =
+    TUTORIAL_COVER_VARIANTS[category as keyof typeof TUTORIAL_COVER_VARIANTS] ||
+    TUTORIAL_COVER_VARIANTS["getting-started"];
+  const variantIndex = getStableVariantIndex(String(tutorial.slug || tutorial.id), variants.length);
+
+  return variants[variantIndex];
+};
 
 function PinterestIcon({ className }: { className?: string }) {
   return (
@@ -62,12 +115,14 @@ function FeedCard({
   image,
   isExternal,
   label,
+  priority,
   title,
 }: {
   href: string;
   image?: string | null;
   isExternal: boolean;
   label: string;
+  priority?: boolean;
   title: string;
 }) {
   const content = (
@@ -79,8 +134,10 @@ function FeedCard({
               src={image}
               alt={title}
               fill
-              quality={82}
+              unoptimized
               sizes="(max-width: 640px) 44vw, (max-width: 1024px) 28vw, 18vw"
+              loading={priority ? "eager" : "lazy"}
+              fetchPriority={priority ? "high" : "auto"}
               className="object-cover transition-transform duration-700 group-hover:scale-[1.035]"
             />
           </div>
@@ -118,9 +175,9 @@ export default function Links() {
   const [bioData] = useState<BioData>({
     name: "BRANDON PT DAVIS",
     tagline: "Scenic Designer",
-    profileImage: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/profile-image.jpeg",
+    profileImage: ABOUT_HEADSHOT_URL,
   });
-  const [displayLimit, setDisplayLimit] = useState(12);
+  const [displayLimit, setDisplayLimit] = useState(10);
   const [hasMore, setHasMore] = useState(true);
   const loaderRef = useRef<HTMLDivElement>(null);
 
@@ -129,10 +186,16 @@ export default function Links() {
   const items = useMemo(() => {
     const dashboardItems: DashboardItem[] = [];
     const scenicProjects = getLocalScenicProjects();
-    const renderingProjects = getLocalRenderingProjects().filter((project) => !project.galleryOnly);
     const experientialProjects = getLocalExperientialProjects();
-    const articles = getLocalArticles();
-    const tutorials: any[] = [];
+    const articles = getLocalArticles().filter(
+      (article) =>
+        !LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug) &&
+        !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(article.slug)
+    );
+    const learningArticles = getLocalArticles().filter((article) =>
+      LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug)
+    );
+    const tutorials = getLocalTutorials();
 
     const portfolioDate = (input: {
       updatedAt?: string | null;
@@ -141,18 +204,18 @@ export default function Links() {
       year?: number | null;
       month?: number | null;
     }) => {
-      const explicitDate = input.updatedAt || input.publishedAt || input.createdAt;
-      if (explicitDate) {
-        const date = new Date(explicitDate);
-        if (!Number.isNaN(date.getTime())) return date.toISOString();
-      }
-
       if (input.year && input.month) {
-        return new Date(input.year, input.month - 1, 15).toISOString();
+        return new Date(input.year, input.month - 1, 1).toISOString();
       }
 
       if (input.year) {
         return new Date(input.year, 6, 1).toISOString();
+      }
+
+      const explicitDate = input.publishedAt || input.createdAt || input.updatedAt;
+      if (explicitDate) {
+        const date = new Date(explicitDate);
+        if (!Number.isNaN(date.getTime())) return date.toISOString();
       }
 
       return new Date(0).toISOString();
@@ -160,36 +223,47 @@ export default function Links() {
 
     const pinnedLinks = [
       {
-        id: "bio-scenic-portfolio",
+        id: "bio-portfolio",
         type: "custom" as const,
-        title: "Scenic Portfolio",
-        subtitle: "Built productions",
+        title: "Portfolio",
+        subtitle: "Selected design work",
         url: "/projects",
         date: PINNED_LINK_DATE,
         icon: "briefcase",
-        label: "Scenic Portfolio",
+        label: "Portfolio",
         isPinned: true,
       },
       {
-        id: "bio-rendering-portfolio",
+        id: "bio-upcoming-productions",
         type: "custom" as const,
-        title: "Rendering Portfolio",
-        subtitle: "Concept and presentation work",
-        url: "/projects/rendering",
-        date: PINNED_LINK_DATE,
-        icon: "image",
-        label: "Rendering Portfolio",
-        isPinned: true,
-      },
-      {
-        id: "bio-experiential-portfolio",
-        type: "custom" as const,
-        title: "Experiential Portfolio",
-        subtitle: "Events, drawings, and activations",
-        url: "/projects/experiential",
+        title: "Upcoming Productions",
+        subtitle: "Current and archive pages",
+        url: "/upcoming-productions",
         date: PINNED_LINK_DATE,
         icon: "palette",
-        label: "Experiential Portfolio",
+        label: "Upcoming Productions",
+        isPinned: true,
+      },
+      {
+        id: "bio-articles",
+        type: "custom" as const,
+        title: "Articles",
+        subtitle: "Essays and process writing",
+        url: "/articles",
+        date: PINNED_LINK_DATE,
+        icon: "newspaper",
+        label: "Articles",
+        isPinned: true,
+      },
+      {
+        id: "bio-tutorials",
+        type: "custom" as const,
+        title: "Tutorials",
+        subtitle: "Vectorworks and studio guides",
+        url: "/studio/tutorials",
+        date: PINNED_LINK_DATE,
+        icon: "video",
+        label: "Tutorials",
         isPinned: true,
       },
       {
@@ -203,24 +277,13 @@ export default function Links() {
         label: "Resume",
         isPinned: true,
       },
-      {
-        id: "bio-studio",
-        type: "custom" as const,
-        title: "Studio",
-        subtitle: "Tools and tutorials",
-        url: "/studio",
-        date: PINNED_LINK_DATE,
-        icon: "video",
-        label: "Studio",
-        isPinned: true,
-      },
     ];
 
     dashboardItems.push(...pinnedLinks);
 
     scenicProjects.forEach((project) => {
       dashboardItems.push({
-        id: `scenic-${project.id}`,
+        id: `scenic-${project.slug}`,
         type: "project",
         title: project.title,
         subtitle: project.client || "Scenic Portfolio",
@@ -229,21 +292,6 @@ export default function Links() {
         date: portfolioDate(project),
         icon: "briefcase",
         label: "Scenic Project",
-        isPinned: false,
-      });
-    });
-
-    renderingProjects.forEach((project) => {
-      dashboardItems.push({
-        id: `rendering-${project.id}`,
-        type: "project",
-        title: project.title,
-        subtitle: project.client || "Rendering Portfolio",
-        url: `/projects/rendering/${project.slug}`,
-        image: project.coverImageUrl,
-        date: portfolioDate(project),
-        icon: "image",
-        label: "Rendering Project",
         isPinned: false,
       });
     });
@@ -265,7 +313,7 @@ export default function Links() {
         }).join(" + "),
         url: getLocalExperientialProjectHref(project),
         image: project.coverImageUrl,
-        date: portfolioDate({ updatedAt: project.updatedAt, year: project.year }),
+        date: portfolioDate({ updatedAt: project.updatedAt, year: project.year, month: project.month }),
         icon: "palette",
         label: "Experiential Project",
         isPinned: false,
@@ -288,16 +336,34 @@ export default function Links() {
       });
     });
 
-    tutorials.forEach((t: any) => {
-      const d = t.publishDate ? new Date(t.publishDate) : new Date(t.createdAt);
+    tutorials.forEach((t) => {
       dashboardItems.push({
         id: `tut-${t.id}`,
         type: "tutorial",
         title: t.title,
-        subtitle: "Tutorial",
+        subtitle: t.category || "Tutorial",
         url: `/studio/tutorials/${t.slug}`,
-        image: t.thumbnailUrl,
-        date: d.toISOString(),
+        image: getTutorialCoverImage(t),
+        date: portfolioDate({
+          publishedAt: t.published_at,
+          createdAt: t.created_at,
+          updatedAt: t.updated_at,
+        }),
+        icon: "video",
+        label: "Tutorial",
+        isPinned: false,
+      });
+    });
+
+    learningArticles.forEach((article) => {
+      dashboardItems.push({
+        id: `learn-${article.id}`,
+        type: "tutorial",
+        title: article.title,
+        subtitle: "Learning Guide",
+        url: `/studio/tutorials/${article.slug}`,
+        image: article.coverImageUrl,
+        date: portfolioDate(article),
         icon: "video",
         label: "Tutorial",
         isPinned: false,
@@ -307,7 +373,12 @@ export default function Links() {
     return dashboardItems.sort((a, b) => {
       if (a.isPinned && !b.isPinned) return -1;
       if (!a.isPinned && b.isPinned) return 1;
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
+      if (a.isPinned && b.isPinned) return 0;
+
+      const timeCompare = new Date(b.date).getTime() - new Date(a.date).getTime();
+      if (timeCompare !== 0) return timeCompare;
+
+      return a.title.localeCompare(b.title);
     });
   }, []);
 
@@ -389,7 +460,7 @@ export default function Links() {
                   priority
                   quality={82}
                   sizes="6rem"
-                  className="object-cover"
+                  className="translate-y-[16%] scale-[1.34] object-cover object-center"
                 />
               </div>
             </div>
@@ -500,11 +571,12 @@ export default function Links() {
           <div className="grid grid-cols-3 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {feedItems.map((item, index) => (
               <FeedCard
-                key={item.id}
+                key={`${item.id}-${item.url}`}
                 href={item.url}
                 image={item.image}
                 isExternal={item.url.startsWith("http")}
                 label={item.label || (item.type === "project" ? "Project" : item.type === "article" ? "Article" : item.type)}
+                priority={index < 5}
                 title={item.title}
               />
             ))}

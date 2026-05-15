@@ -10,6 +10,7 @@ import {
   Monitor, Store, Users, Home, Ruler
 } from "lucide-react";
 import { SEO } from "@/components/SEO";
+import { copyTextToClipboard } from "@/lib/clipboard";
 import { Link } from "wouter";
 
 interface DimensionItem {
@@ -250,7 +251,7 @@ export default function DimensionReference() {
     return filtered;
   }, [selectedCategory, searchQuery]);
 
-  const copyDimensions = (item: DimensionItem) => {
+  const copyDimensions = async (item: DimensionItem) => {
     const dims = [
       item.width ? `W: ${item.width}` : '',
       item.depth ? `D: ${item.depth}` : '',
@@ -258,9 +259,11 @@ export default function DimensionReference() {
       item.diameter ? `Dia: ${item.diameter}` : '',
     ].filter(Boolean).join(' × ');
     
-    navigator.clipboard.writeText(`${item.name}\n${dims}`);
-    setCopiedItem(item.name);
-    setTimeout(() => setCopiedItem(null), 2000);
+    const copied = await copyTextToClipboard(`${item.name}\n${dims}`);
+    if (copied) {
+      setCopiedItem(item.name);
+      setTimeout(() => setCopiedItem(null), 2000);
+    }
   };
 
   const scrollCategories = (direction: 'left' | 'right') => {

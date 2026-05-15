@@ -8,6 +8,7 @@ import { SEO } from "@/components/SEO";
 import DeferredYouTubeEmbed from "@/components/DeferredYouTubeEmbed";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getTutorialArticleBlueprint } from "@/data/tutorialArticleBlueprints";
+import { copyTextToClipboard } from "@/lib/clipboard";
 import { formatUtcDate } from "@/lib/date-format";
 import { getYouTubeThumbnail } from "@/lib/videoUtils";
 import { getLocalTutorialBySlug, getLocalTutorials } from "@shared/localStudio";
@@ -1391,11 +1392,11 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
   const quickReferenceItems = (tutorial.shortcuts || []).slice(0, 3);
 
   const handleShare = async () => {
-    try {
-      await navigator.clipboard.writeText(pageUrl);
+    const copied = await copyTextToClipboard(pageUrl);
+    if (copied) {
       setLinkCopied(true);
       window.setTimeout(() => setLinkCopied(false), 1800);
-    } catch {
+    } else {
       setLinkCopied(false);
     }
   };

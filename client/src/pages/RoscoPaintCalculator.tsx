@@ -6,6 +6,7 @@ import { ArrowLeft, Check, Copy, Palette, Sliders } from "lucide-react";
 import { Link } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { copyTextToClipboard } from "@/lib/clipboard";
 import { SEO } from "../components/SEO";
 
 interface RoscoPaint {
@@ -305,14 +306,16 @@ export default function RoscoPaintCalculator() {
     setInventory((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]));
   };
 
-  const copyRecipe = () => {
+  const copyRecipe = async () => {
     if (!result) return;
     const text = `Rosco recipe for ${targetColor}: ${result.recipe
       .map((recipe) => `${recipe.parts.toFixed(1)} parts ${recipe.paint.name}`)
       .join(", ")}`;
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    const copied = await copyTextToClipboard(text);
+    if (copied) {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
   };
 
   return (

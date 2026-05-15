@@ -6,6 +6,7 @@ import { Check, Link2 } from "lucide-react";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
+import { copyTextToClipboard } from "@/lib/clipboard";
 import {
   archivedProductionEvents,
   formatUpcomingDateRange,
@@ -113,11 +114,11 @@ export default function UpcomingProductions() {
     const url =
       typeof window === "undefined" ? `https://www.brandonptdavis.com${path}` : `${window.location.origin}${path}`;
 
-    try {
-      await navigator.clipboard.writeText(url);
+    const copied = await copyTextToClipboard(url);
+    if (copied) {
       setPageLinkCopied(true);
       window.setTimeout(() => setPageLinkCopied(false), 1800);
-    } catch {
+    } else {
       setPageLinkCopied(false);
     }
   };

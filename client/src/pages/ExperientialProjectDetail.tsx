@@ -12,6 +12,7 @@ import { ProgressiveImage } from "@/components/ProgressiveImage";
 import ScenicRenderingGallery from "@/components/ScenicRenderingGallery";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import { copyTextToClipboard } from "@/lib/clipboard";
 import {
   getLocalExperientialMediaItems,
   getLocalExperientialProjectBySlug,
@@ -292,11 +293,11 @@ export default function ExperientialProjectDetail({
     setLightboxIndex(nextIndex);
   };
   const handleCopyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(projectUrl);
+    const copied = await copyTextToClipboard(projectUrl);
+    if (copied) {
       setLinkCopied(true);
       window.setTimeout(() => setLinkCopied(false), 1800);
-    } catch {
+    } else {
       setLinkCopied(false);
     }
   };

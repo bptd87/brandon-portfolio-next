@@ -15,6 +15,7 @@ import {
   Ruler,
 } from "lucide-react";
 import { SEO } from "@/components/SEO";
+import { copyTextToClipboard } from "@/lib/clipboard";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Link } from "wouter";
@@ -108,13 +109,12 @@ export default function ScaleCalculator() {
   }, [resultMM, selectedPrinter]);
 
   const copyToClipboard = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
+    const copied = await copyTextToClipboard(text);
+    if (copied) {
       setCopied(true);
       toast.success("Copied to clipboard");
       setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
-      console.error("Failed to copy", error);
+    } else {
       toast.error("Failed to copy");
     }
   };

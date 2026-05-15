@@ -200,7 +200,8 @@ function getTutorialArticleJsonLd(tutorial: NonNullable<ReturnType<typeof getLoc
 }
 
 function getTutorialVideoJsonLd(tutorial: NonNullable<ReturnType<typeof getLocalTutorialBySlug>>) {
-  if (!tutorial.video_url || !tutorial.cover_image) return null;
+  const uploadDate = toIsoDate(tutorial.published_at || tutorial.created_at || tutorial.updated_at);
+  if (!tutorial.video_url || !tutorial.cover_image || !uploadDate) return null;
 
   const url = absoluteUrl(`/studio/tutorials/${tutorial.slug}`);
   const youTubeId = getYouTubeId(tutorial.video_url);
@@ -212,7 +213,7 @@ function getTutorialVideoJsonLd(tutorial: NonNullable<ReturnType<typeof getLocal
     name: tutorial.title,
     description: getTutorialDescription(tutorial),
     thumbnailUrl: [tutorial.cover_image],
-    uploadDate: toIsoDate(tutorial.published_at || tutorial.created_at),
+    uploadDate,
     duration: toIsoDuration(tutorial.duration),
     contentUrl: tutorial.video_url,
     embedUrl: youTubeId ? `https://www.youtube.com/embed/${youTubeId}` : undefined,

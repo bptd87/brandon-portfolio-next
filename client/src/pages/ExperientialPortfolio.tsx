@@ -39,12 +39,16 @@ const experientialPortfolioLandingCopy = {
 const SITE_URL = getConfiguredSiteUrl();
 
 function getExperientialProjectTimestamp(project: LocalExperientialProject) {
+  if (project.year) {
+    const monthIndex = project.month ? Math.max(0, Math.min(11, project.month - 1)) : 6;
+    return new Date(project.year, monthIndex, 1).getTime();
+  }
+
   if (project.updatedAt) {
     const timestamp = new Date(project.updatedAt).getTime();
     if (!Number.isNaN(timestamp)) return timestamp;
   }
 
-  if (project.year) return new Date(project.year, 6, 1).getTime();
   return 0;
 }
 

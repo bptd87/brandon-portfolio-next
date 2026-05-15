@@ -13,6 +13,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import { SEO } from "@/components/SEO";
+import { copyTextToClipboard } from "@/lib/clipboard";
 import { formatUtcDate } from "@/lib/date-format";
 import { getLocalArticleRecordBySlug, getLocalArticles } from "@shared/localArticles";
 import {
@@ -25,6 +26,9 @@ import DeferredYouTubeEmbed from "@/components/DeferredYouTubeEmbed";
 const Lightbox = dynamic(() => import("@/components/Lightbox").then((mod) => mod.Lightbox), {
   ssr: false,
 });
+
+const AUTHOR_HEADSHOT_URL =
+  "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
 
 const NAMED_HTML_ENTITIES: Record<string, string> = {
   amp: "&",
@@ -752,12 +756,12 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
 
   const handleShare = async () => {
     const url = window.location.href;
-    try {
-      await navigator.clipboard.writeText(url);
+    const copied = await copyTextToClipboard(url);
+    if (copied) {
       setLinkCopied(true);
       toast.success("Link copied to clipboard");
       window.setTimeout(() => setLinkCopied(false), 1800);
-    } catch {
+    } else {
       setLinkCopied(false);
     }
   };
@@ -1659,11 +1663,11 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
                                 variant="ghost"
                                 size="icon"
                                 className="h-8 w-8 text-white/56 hover:bg-white/[0.04] hover:text-white"
-                                onClick={() => {
+                                onClick={async () => {
                                   // Handle both flat (prompt) and nested (content) structures
                                   const text = section.prompt || section.content?.prompt || section.content || '';
-                                  navigator.clipboard.writeText(text);
-                                  toast.success("Prompt copied to clipboard!");
+                                  const copied = await copyTextToClipboard(text);
+                                  if (copied) toast.success("Prompt copied to clipboard!");
                                 }}
                               >
                                 <Copy className="h-4 w-4" />
@@ -1718,9 +1722,9 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
                   <div className="flex-shrink-0">
                     <div className="w-20 h-20 rounded-full overflow-hidden border border-border/60 shadow-lg">
                       <img
-                        src="/brandon%20pt%20davis.jpeg"
+                        src={AUTHOR_HEADSHOT_URL}
                         alt="Brandon PT Davis"
-                        className="w-full h-full object-cover"
+                        className="h-full w-full translate-y-[16%] scale-[1.34] object-cover object-center"
                         loading="lazy"
                       />
                     </div>
@@ -1729,7 +1733,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
                     <h3 className="mb-2 text-2xl font-sans font-normal tracking-[-0.04em]">Brandon PT Davis</h3>
                     <p className="mb-4 text-sm uppercase tracking-wider text-white/48">Scenic Designer</p>
                     <p className="mb-6 leading-relaxed text-white/80">
-                      Brandon PT Davis is a scenic designer based in Los Angeles.
+                      Brandon PT Davis is a scenic designer based in San Diego.
                       His work explores the intersection of physical space, digital technology, and narrative storytelling.
                     </p>
 

@@ -6,6 +6,7 @@ import { ArrowUpRight, Check, Link2 } from "lucide-react";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
+import { copyTextToClipboard } from "@/lib/clipboard";
 import { formatUpcomingDateRange, type UpcomingProduction } from "@shared/upcomingProductions";
 
 type UpcomingProductionDetailProps = {
@@ -61,11 +62,11 @@ export default function UpcomingProductionDetail({ production }: UpcomingProduct
   const handleShare = async () => {
     const url = typeof window === "undefined" ? pageUrl : window.location.href;
 
-    try {
-      await navigator.clipboard.writeText(url);
+    const copied = await copyTextToClipboard(url);
+    if (copied) {
       setLinkCopied(true);
       window.setTimeout(() => setLinkCopied(false), 1800);
-    } catch {
+    } else {
       setLinkCopied(false);
     }
   };

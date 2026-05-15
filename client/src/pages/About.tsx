@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
 import { resolveBlobMediaUrl } from "@shared/mediaBlob";
+import { copyTextToClipboard } from "@/lib/clipboard";
 import { formatUtcDate } from "@/lib/date-format";
 import { getLocalArticles, VOYAGELA_ARTICLE_SLUG, VOYAGELA_EXTERNAL_URL } from "@shared/localArticles";
 
@@ -200,11 +201,11 @@ export default function About() {
     const url =
       typeof window === "undefined" ? `https://www.brandonptdavis.com${path}` : `${window.location.origin}${path}`;
 
-    try {
-      await navigator.clipboard.writeText(url);
+    const copied = await copyTextToClipboard(url);
+    if (copied) {
       setPageLinkCopied(true);
       window.setTimeout(() => setPageLinkCopied(false), 1800);
-    } catch {
+    } else {
       setPageLinkCopied(false);
     }
   };

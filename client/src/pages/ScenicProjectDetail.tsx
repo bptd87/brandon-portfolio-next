@@ -9,6 +9,7 @@ import { ProgressiveImage } from "@/components/ProgressiveImage";
 import ScenicRenderingGallery from "@/components/ScenicRenderingGallery";
 import { SEO } from "@/components/SEO";
 import { CreditNameLinks } from "@/components/CreditNameLinks";
+import { copyTextToClipboard } from "@/lib/clipboard";
 import { formatUtcDate } from "@/lib/date-format";
 import { Button } from "@/components/ui/button";
 import { getLocalScenicProjectBySlug, getLocalScenicProjects, type LocalScenicProjectMedia } from "@shared/localScenicProjects";
@@ -159,11 +160,11 @@ export default function ScenicProjectDetail({
   };
 
   const handleCopyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(projectUrl);
+    const copied = await copyTextToClipboard(projectUrl);
+    if (copied) {
       setLinkCopied(true);
       window.setTimeout(() => setLinkCopied(false), 1800);
-    } catch {
+    } else {
       setLinkCopied(false);
     }
   };
