@@ -2,10 +2,10 @@ gallery:
   - id: gm-cover
     kind: cover
     asset: >-
-      /assets/projects/scenic/the-glass-menagerie/cover.webp
+      /assets/projects/scenic/the-glass-menagerie/glass-menagerie-maples-cover-2026.webp
     alt: >-
-      The Glass Menagerie scenic design cover at Maples Repertory Theatre, framing the Wingfield apartment as memory
-      architecture.
+      Laura and Tom framed by candlelight and the glass unicorn in The Glass Menagerie at Maples Repertory Theatre,
+      scenic design by Brandon PT Davis.
   - id: gm-prod-1
     kind: production
     asset: >-

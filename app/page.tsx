@@ -9,7 +9,10 @@ import {
   getBreadcrumbJsonLd,
 } from "../lib/seo/entities";
 import { getLocalScenicProjects } from "../shared/localScenicProjects";
-import { toScenicProjectSummary, type ScenicProjectSummary } from "../shared/scenicProjectSummaries";
+import {
+  toScenicProjectSummary,
+  type ScenicProjectSummary,
+} from "../shared/scenicProjectSummaries";
 
 export const dynamic = "force-static";
 
@@ -21,7 +24,9 @@ export const metadata = buildPageMetadata({
 });
 
 function getHomePageJsonLd(projects: ScenicProjectSummary[]) {
-  const featuredProjects = projects.filter((project) => project.coverImageUrl).slice(0, 12);
+  const featuredProjects = projects
+    .filter(project => project.coverImageUrl)
+    .slice(0, 12);
 
   return [
     {
@@ -31,7 +36,7 @@ function getHomePageJsonLd(projects: ScenicProjectSummary[]) {
       url: absoluteUrl("/"),
       name: "Brandon PT Davis | Scenic Designer Portfolio",
       description:
-        "Selected scenic design, theatrical rendering, studio writing, and production design work by Brandon PT Davis.",
+        "Selected scenic design projects, theatrical renderings, and production environments by Brandon PT Davis.",
       isPartOf: {
         "@id": BRANDON_WEBSITE_ID,
       },
@@ -68,7 +73,9 @@ function getHomePageJsonLd(projects: ScenicProjectSummary[]) {
             "@id": BRANDON_PERSON_ID,
           },
           genre: project.subcategory || "Scenic Design",
-          dateCreated: project.year ? `${project.year}-${String(project.month || 1).padStart(2, "0")}-01` : undefined,
+          dateCreated: project.year
+            ? `${project.year}-${String(project.month || 1).padStart(2, "0")}-01`
+            : undefined,
         },
       })),
     },

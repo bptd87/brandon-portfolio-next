@@ -10,17 +10,11 @@ import {
   RETIRED_LEARNING_ARTICLE_SLUG_SET,
 } from "@shared/learningPortal";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
-import { ArrowLeft, Briefcase, FileText } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
 import { Link } from "wouter";
 
 const INDEXABLE_TAG_MIN_ITEMS = 3;
-
-type TagPageSection = {
-  id: string;
-  label: string;
-  count: number;
-  icon: typeof Briefcase;
-};
 
 const slugify = (value: string) =>
   value
@@ -33,8 +27,26 @@ const unslugify = (value: string) =>
   value
     .split("-")
     .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
     .join(" ");
+
+const scenicCategoryCopy: Record<string, string> = {
+  comedy:
+    "Scenic design for comedy, farce, and heightened theatrical worlds, where architecture has to support timing, pressure, surprise, and pace.",
+  drama:
+    "Scenic design for dramatic work, built around memory, atmosphere, intimacy, and the emotional pressure of the room.",
+  shakespeare:
+    "Scenic design for Shakespeare and classical text, shaped for language, repertory movement, and strong theatrical worlds.",
+  "musical-theatre":
+    "Scenic design for musicals, built around rhythm, transitions, ensemble movement, and a clear visual world for song.",
+  "theatre-for-young-audiences":
+    "Scenic design for theatre for young audiences, balancing clarity, scale, imagination, and the speed of live storytelling.",
+};
+
+const getProjectVenueLabel = (project: {
+  client?: string | null;
+  venue?: string | null;
+}) => project.client || project.venue || null;
 
 const getContentTimestamp = (item: {
   publishedAt?: string | null;
@@ -59,7 +71,10 @@ type TagDetailProps = {
   };
 };
 
-export default function TagDetail({ slug: slugProp, params }: TagDetailProps = {}) {
+export default function TagDetail({
+  slug: slugProp,
+  params,
+}: TagDetailProps = {}) {
   const normalizedSlug = (
     slugProp ||
     params?.slug ||
@@ -69,30 +84,33 @@ export default function TagDetail({ slug: slugProp, params }: TagDetailProps = {
   ).toLowerCase();
 
   const projects = getLocalScenicProjects()
-    .filter((project) => project.tags.some((tag) => tag.slug === normalizedSlug))
+    .filter(project => project.tags.some(tag => tag.slug === normalizedSlug))
     .sort((a, b) => getContentTimestamp(b) - getContentTimestamp(a));
 
   const articles = getLocalArticles()
-    .filter((article) => !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(article.slug))
-    .filter((article) => (article.tags || []).some((tag) => tag.slug === normalizedSlug))
+    .filter(article => !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(article.slug))
+    .filter(article =>
+      (article.tags || []).some(tag => tag.slug === normalizedSlug)
+    )
     .sort((a, b) => getContentTimestamp(b) - getContentTimestamp(a));
 
   const firstProjectTag = projects
-    .flatMap((project) => project.tags)
-    .find((tag) => tag.slug === normalizedSlug);
+    .flatMap(project => project.tags)
+    .find(tag => tag.slug === normalizedSlug);
   const firstArticleTag = articles
-    .flatMap((article) => article.tags || [])
-    .find((tag) => tag.slug === normalizedSlug);
+    .flatMap(article => article.tags || [])
+    .find(tag => tag.slug === normalizedSlug);
 
-  const tagName = firstProjectTag?.name || firstArticleTag?.name || unslugify(normalizedSlug);
+  const tagName =
+    firstProjectTag?.name || firstArticleTag?.name || unslugify(normalizedSlug);
   const totalItems = projects.length + articles.length;
   const shouldNoindex = totalItems < INDEXABLE_TAG_MIN_ITEMS;
   const canonicalTagUrl = `https://www.brandonptdavis.com/tags/${normalizedSlug}`;
-
-  const sections: TagPageSection[] = [
-    { id: "projects", label: "Projects", count: projects.length, icon: Briefcase },
-    { id: "articles", label: "Articles", count: articles.length, icon: FileText },
-  ].filter((section) => section.count > 0);
+  const isScenicCategory =
+    Boolean(scenicCategoryCopy[normalizedSlug]) && projects.length > 0;
+  const pageDescription = isScenicCategory
+    ? scenicCategoryCopy[normalizedSlug]
+    : `Browse ${tagName} across scenic projects and writing by Brandon PT Davis.`;
 
   if (!normalizedSlug || totalItems === 0) {
     return (
@@ -108,10 +126,10 @@ export default function TagDetail({ slug: slugProp, params }: TagDetailProps = {
             </p>
             <div className="mt-8">
               <Link
-                href="/articles"
+                href="/projects"
                 className="inline-flex items-center rounded-full border border-white/12 px-4 py-2 text-[0.96rem] tracking-[-0.015em] text-foreground/72 transition-colors hover:border-white/20 hover:text-foreground"
               >
-                Browse Articles
+                Browse Scenic Design
               </Link>
             </div>
           </div>
@@ -123,8 +141,12 @@ export default function TagDetail({ slug: slugProp, params }: TagDetailProps = {
   return (
     <>
       <SEO
-        title={`${tagName} | Brandon PT Davis`}
-        description={`Browse all content tagged with ${tagName} across scenic projects and articles.`}
+        title={
+          isScenicCategory
+            ? `${tagName} Scenic Design | Brandon PT Davis`
+            : `${tagName} | Brandon PT Davis`
+        }
+        description={pageDescription}
         url={canonicalTagUrl}
         noindex={shouldNoindex}
       />
@@ -132,80 +154,77 @@ export default function TagDetail({ slug: slugProp, params }: TagDetailProps = {
       <div className="min-h-screen bg-background text-foreground">
         <Header />
 
-        <main className="pb-20 pt-10 md:pt-14">
-          <section className="container max-w-6xl">
-            <Link
-              href="/articles"
-              className="inline-flex items-center gap-2 text-[0.96rem] tracking-[-0.015em] text-foreground/56 transition-colors hover:text-foreground"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to Articles
-            </Link>
+        <main>
+          <section className="border-b border-border/40 pb-8 pt-24 md:pb-10 md:pt-28">
+            <div className="container max-w-[88rem]">
+              <Link
+                href="/projects"
+                className="inline-flex items-center gap-2 text-[0.96rem] tracking-[-0.015em] text-foreground/56 transition-colors hover:text-foreground"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Scenic Design
+              </Link>
 
-            <div className="mt-10 max-w-4xl border-t border-white/10 pt-10">
-              <p className="text-xs font-bold uppercase tracking-[0.28em] text-white/42">Tag Archive</p>
-              <h1 className="mt-4 max-w-[12ch] font-sans text-[clamp(2.8rem,6vw,5.4rem)] font-medium leading-[0.9] tracking-[-0.065em] text-foreground">
-                {tagName}
-              </h1>
-              <p className="mt-5 max-w-3xl text-[clamp(1.02rem,1.2vw,1.14rem)] leading-[1.72] tracking-[-0.014em] text-foreground/64">
-                {totalItems} {totalItems === 1 ? "item" : "items"} gathered across scenic projects and essays.
-              </p>
-            </div>
-
-            {sections.length > 0 ? (
-              <div className="mt-10 grid gap-3 border-t border-white/10 pt-6 sm:grid-cols-2">
-                {sections.map((section) => {
-                  const Icon = section.icon;
-                  return (
-                    <a
-                      key={section.id}
-                      href={`#${section.id}`}
-                      className="flex items-center justify-between border border-white/10 px-4 py-4 text-foreground/72 transition-colors hover:border-white/18 hover:text-foreground"
-                    >
-                      <span className="inline-flex items-center gap-3 text-[0.98rem] tracking-[-0.015em]">
-                        <Icon className="h-4 w-4" />
-                        {section.label}
-                      </span>
-                      <span className="text-sm text-foreground/46">{section.count}</span>
-                    </a>
-                  );
-                })}
+              <div className="mt-8 max-w-5xl">
+                <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.24em] text-white/42">
+                {isScenicCategory
+                  ? "Brandon PT Davis / Scenic Design"
+                  : "Brandon PT Davis"}
+                </p>
+                <h1 className="font-sans text-[clamp(3.2rem,7vw,7.1rem)] font-medium leading-[0.86] tracking-[-0.065em] text-white">
+                  {tagName}
+                </h1>
+                <p className="mt-7 max-w-3xl text-[1.02rem] leading-7 tracking-[-0.01em] text-white/62 md:text-[1.12rem]">
+                  {pageDescription}
+                </p>
               </div>
-            ) : null}
+
+              <div className="mt-10 border-t border-border/35 pt-5">
+                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.22em] text-white/42">
+                  {projects.length
+                    ? `${projects.length} scenic design ${projects.length === 1 ? "project" : "projects"}`
+                    : `${totalItems} ${totalItems === 1 ? "item" : "items"}`}
+                </p>
+              </div>
+            </div>
           </section>
 
-          <div className="container mt-16 max-w-6xl space-y-18">
+          <div className="container max-w-[88rem] space-y-18 pb-20 pt-12 md:pb-28 md:pt-14">
             {projects.length > 0 ? (
-              <section id="projects" className="border-t border-white/10 pt-8">
-                <div className="mb-8 flex items-center justify-between gap-6">
-                  <h2 className="font-sans text-[clamp(1.9rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.05em] text-foreground">
-                    Projects
-                  </h2>
-                  <div className="text-sm tracking-[0.08em] text-foreground/42">{projects.length}</div>
-                </div>
-
-                <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                  {projects.map((project) => (
-                    <Link key={project.id} href={getProjectPath(project)} className="group block">
-                      <div className="space-y-4">
+              <section id="projects">
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+                  {projects.map((project, index) => (
+                    <Link
+                      key={project.id}
+                      href={getProjectPath(project)}
+                      className="group block"
+                    >
+                      <div>
                         {project.coverImageUrl ? (
-                          <div className="overflow-hidden bg-black">
-                            <img
+                          <div className="relative aspect-[4/3] overflow-hidden bg-background/50">
+                            <Image
                               src={project.coverImageUrl}
-                              alt={project.title}
-                              className="aspect-[4/3] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                              alt={`${project.title} scenic design by Brandon PT Davis`}
+                              fill
+                              quality={82}
+                              priority={index < 2}
+                              loading={index < 2 ? "eager" : "lazy"}
+                              sizes="(max-width: 640px) 100vw, (max-width: 1536px) 50vw, 33vw"
+                              className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.02]"
                             />
                           </div>
                         ) : null}
 
-                        <div className="space-y-2">
-                          <h3 className="font-sans text-[1.6rem] font-medium leading-[1.02] tracking-[-0.04em] text-foreground transition-colors group-hover:text-foreground/84">
+                        <div className="pt-4">
+                          <h2 className="text-[clamp(1.08rem,1.35vw,1.38rem)] font-normal leading-[1.02] tracking-[-0.035em] text-white/90 transition-colors group-hover:text-white">
                             {project.title}
-                          </h3>
-                          <p className="text-[0.76rem] font-bold uppercase tracking-[0.24em] text-white/42">
-                            {[project.client, project.year].filter(Boolean).join("  ")}
+                          </h2>
+                          <p className="mt-2 text-sm tracking-[-0.01em] text-white/52">
+                            {[getProjectVenueLabel(project), project.year]
+                              .filter(Boolean)
+                              .join(" · ")}
                           </p>
-                          {project.excerpt ? (
+                          {!isScenicCategory && project.excerpt ? (
                             <p className="line-clamp-3 text-[0.98rem] leading-[1.7] tracking-[-0.012em] text-foreground/58">
                               {project.excerpt}
                             </p>
@@ -224,11 +243,13 @@ export default function TagDetail({ slug: slugProp, params }: TagDetailProps = {
                   <h2 className="font-sans text-[clamp(1.9rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.05em] text-foreground">
                     Articles
                   </h2>
-                  <div className="text-sm tracking-[0.08em] text-foreground/42">{articles.length}</div>
+                  <div className="text-sm tracking-[0.08em] text-foreground/42">
+                    {articles.length}
+                  </div>
                 </div>
 
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                  {articles.map((article) => (
+                  {articles.map(article => (
                     <Link
                       key={article.id}
                       href={

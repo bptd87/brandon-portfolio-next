@@ -1,9 +1,9 @@
 "use client";
 
-import { ArrowRight, Check, ChevronLeft, ChevronRight, Link2 } from "lucide-react";
+import { ArrowRight, Check, Link2 } from "lucide-react";
 import Image from "next/image";
 import { Link } from "wouter";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 import AboutNav from "@/components/AboutNav";
 import Footer from "@/components/Footer";
@@ -152,9 +152,6 @@ const voyageLaProfileCard = {
 };
 
 export default function About() {
-  const galleryRailRef = useRef<HTMLDivElement | null>(null);
-  const galleryItemRefs = useRef<Array<HTMLDivElement | null>>([]);
-  const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
   const [pageLinkCopied, setPageLinkCopied] = useState(false);
   const bioArticles = getLocalArticles()
     .filter(
@@ -180,22 +177,6 @@ export default function About() {
     })),
   ].slice(0, 4);
 
-  const scrollGalleryBy = (direction: "prev" | "next") => {
-    const nextIndex =
-      direction === "next"
-        ? Math.min(activeGalleryIndex + 1, galleryImages.length - 1)
-        : Math.max(activeGalleryIndex - 1, 0);
-
-    const target = galleryItemRefs.current[nextIndex];
-    if (!target) return;
-
-    target.scrollIntoView({
-      behavior: "smooth",
-      inline: "start",
-      block: "nearest",
-    });
-  };
-
   const handleSharePage = async () => {
     const path = "/about";
     const url =
@@ -210,37 +191,6 @@ export default function About() {
     }
   };
 
-  useEffect(() => {
-    const rail = galleryRailRef.current;
-    if (!rail) return;
-
-    const updateActiveIndex = () => {
-      const railLeft = rail.getBoundingClientRect().left;
-      let closestIndex = 0;
-      let closestDistance = Number.POSITIVE_INFINITY;
-
-      galleryItemRefs.current.forEach((item, index) => {
-        if (!item) return;
-        const distance = Math.abs(item.getBoundingClientRect().left - railLeft);
-        if (distance < closestDistance) {
-          closestDistance = distance;
-          closestIndex = index;
-        }
-      });
-
-      setActiveGalleryIndex(closestIndex);
-    };
-
-    updateActiveIndex();
-    rail.addEventListener("scroll", updateActiveIndex, { passive: true });
-    window.addEventListener("resize", updateActiveIndex);
-
-    return () => {
-      rail.removeEventListener("scroll", updateActiveIndex);
-      window.removeEventListener("resize", updateActiveIndex);
-    };
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
       <SEO
@@ -254,239 +204,232 @@ export default function About() {
       <AboutNav />
 
       <main>
-        <section className="pb-8 pt-24 md:pb-10 md:pt-28">
+        <section className="pb-10 pt-24 md:pb-12 md:pt-28">
           <div className="container max-w-[88rem]">
-            <div className="mx-auto max-w-4xl text-center">
-              <div className="mx-auto max-w-3xl">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
-                  About
-                </p>
-                <h1 className="mt-5 font-sans text-[clamp(2.8rem,5.8vw,5.15rem)] font-medium leading-[0.95] tracking-[-0.06em] text-foreground">
-                  Brandon PT Davis
-                </h1>
-                <p className="mx-auto mt-6 max-w-2xl text-[1.08rem] leading-8 text-foreground/72 md:text-[1.18rem]">
-                  Brandon PT Davis is a scenic designer whose work centers on creating expressive
-                  theatrical environments that support storytelling through space, composition, and
-                  collaboration.
-                </p>
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                About
+              </p>
+              <h1 className="mt-5 font-sans text-[clamp(3.2rem,7vw,7.1rem)] font-medium leading-[0.86] tracking-[-0.065em] text-foreground">
+                Brandon PT Davis
+              </h1>
+              <p className="mx-auto mt-7 max-w-2xl text-[1.04rem] leading-8 tracking-[-0.01em] text-foreground/68 md:text-[1.14rem]">
+                Scenic designer for theatre, memory, architecture, and live
+                performance. Based in San Diego, working across regional
+                theatre, summer stock, and academic production.
+              </p>
+            </div>
 
+            <div className="mx-auto mt-10 max-w-3xl md:mt-12">
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-card/20">
+                <Image
+                  src={ABOUT_HEADSHOT_URL}
+                  alt="Brandon PT Davis - Scenic Designer"
+                  fill
+                  priority
+                  fetchPriority="high"
+                  quality={84}
+                  sizes="(max-width: 768px) 92vw, 48rem"
+                  className="object-cover object-[50%_16%]"
+                />
               </div>
-
-              <div className="mx-auto mt-10 max-w-3xl md:mt-12">
-                <div className="overflow-hidden border border-border/40 bg-card/20">
-                  <div className="relative aspect-square w-full">
-                    <Image
-                      src={ABOUT_HEADSHOT_URL}
-                      alt="Brandon PT Davis - Scenic Designer"
-                      fill
-                      priority
-                      fetchPriority="high"
-                      quality={84}
-                      sizes="(max-width: 768px) 92vw, 48rem"
-                      className="object-cover object-top"
-                    />
-                  </div>
-                </div>
-                <div className="mt-8 flex w-full justify-end border-t border-white/14 py-4 text-foreground/72">
-                  <button
-                    type="button"
-                    onClick={handleSharePage}
-                    className="inline-flex items-center justify-center gap-2 text-[0.98rem] tracking-[-0.02em] transition-colors hover:text-foreground"
-                  >
-                    {pageLinkCopied ? <Check className="h-4 w-4" /> : <Link2 className="h-4 w-4" />}
-                    <span>{pageLinkCopied ? "Link copied" : "Share"}</span>
-                  </button>
-                </div>
+              <div className="mt-8 flex w-full justify-end border-t border-white/14 py-4 text-foreground/72">
+                <button
+                  type="button"
+                  onClick={handleSharePage}
+                  className="inline-flex items-center justify-center gap-2 text-[0.98rem] tracking-[-0.02em] transition-colors hover:text-foreground"
+                >
+                  {pageLinkCopied ? <Check className="h-4 w-4" /> : <Link2 className="h-4 w-4" />}
+                  <span>{pageLinkCopied ? "Link copied" : "Share"}</span>
+                </button>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="pb-16 pt-0 md:pb-20">
+        <section className="pb-16 md:pb-24">
           <div className="container max-w-[88rem]">
-            <div>
-              <div className="mx-auto max-w-3xl space-y-6">
+            <article className="mx-auto max-w-3xl border-t border-border/35 pt-10">
+              <div className="space-y-6">
                 <p className="text-[1rem] leading-8 text-foreground/78 md:text-[1.08rem]">
-                  Brandon&apos;s approach combines traditional scenic craft with contemporary digital
-                  visualization methods, allowing him to develop designs that are both conceptually
-                  clear and practically buildable. He is particularly interested in how scenic
-                  design can shape rhythm, movement, and emotional tone within a production.
+                  Brandon&apos;s work begins with the pressure of a room: how a
+                  space holds memory, how architecture shapes behavior, and how
+                  scenic design can give a production its physical rhythm. His
+                  practice combines traditional scenic craft with digital
+                  visualization, moving from research and spatial study into
+                  designs that are conceptually clear and practically buildable.
                 </p>
                 <p className="text-[1rem] leading-8 text-foreground/72 md:text-[1.08rem]">
-                  Based in San Diego, California, Brandon designs for regional theatres and academic
-                  institutions across the United States. Recent projects include <em>The Glass
-                  Menagerie</em>, productions with the New Swan Shakespeare Festival, and work with
-                  South Coast Repertory. He also completed his 40th scenic design at Okoboji Summer
-                  Theatre, marking a significant milestone in a career that has developed steadily
-                  through long-term collaborations and diverse repertory experiences.
-                </p>
-
-                <div className="py-10 text-center md:py-14">
-                  <blockquote className="mx-auto max-w-4xl font-sans text-[clamp(1.9rem,4vw,3.5rem)] font-medium leading-[1.14] tracking-[-0.045em] text-foreground">
-                    “Expressive theatrical environments that support storytelling through space,
-                    composition, and collaboration.”
-                  </blockquote>
-                </div>
-
-                <p className="text-[1rem] leading-8 text-foreground/72 md:text-[1.08rem]">
-                  His work spans musicals, classical plays, and new works, often incorporating
-                  flexible staging, projection surfaces, and symbolic architectural forms.
-                </p>
-                <p className="text-[1rem] leading-8 text-foreground/72 md:text-[1.08rem]">
-                  In addition to his professional design practice, Brandon has taught scenic design
-                  and rendering at the university level. His teaching emphasizes process, visual
-                  communication, and the importance of adaptability within the evolving landscape of
-                  theatre production. He continues to explore new workflows that integrate digital
-                  tools while maintaining a strong connection to the collaborative traditions of
-                  live performance.
+                  Based in San Diego, California, Brandon designs for regional
+                  theatres and academic institutions across the United States.
+                  Recent projects include <em>The Glass Menagerie</em>,
+                  productions with New Swan Shakespeare Festival, and work with
+                  South Coast Repertory. He also completed his 40th scenic
+                  design at Okoboji Summer Theatre, a milestone shaped by
+                  long-term collaboration and repertory experience.
                 </p>
               </div>
 
-              <div className="mx-auto mt-14 grid max-w-4xl gap-5 md:grid-cols-2">
-                <div className="rounded-[1.5rem] border border-border/40 bg-card/20 p-6">
+              <blockquote className="my-12 border-y border-border/35 py-8 font-sans text-[clamp(1.9rem,4vw,3.4rem)] font-medium leading-[1.05] tracking-[-0.055em] text-foreground md:my-14 md:py-10">
+                Expressive theatrical environments that support storytelling
+                through space, composition, and collaboration.
+              </blockquote>
+
+              <div className="space-y-6">
+                <p className="text-[1rem] leading-8 text-foreground/72 md:text-[1.08rem]">
+                  His work spans musicals, classical plays, new works, and
+                  contemporary drama, often using flexible staging, symbolic
+                  architecture, and visual restraint to clarify the emotional
+                  center of the production.
+                </p>
+                <p className="text-[1rem] leading-8 text-foreground/72 md:text-[1.08rem]">
+                  In addition to his professional design practice, Brandon has
+                  taught scenic design and rendering at the university level.
+                  His teaching emphasizes process, visual communication, and
+                  adaptability within the evolving landscape of theatre
+                  production.
+                </p>
+              </div>
+
+              <div className="mt-12 grid gap-8 border-y border-border/35 py-7 md:grid-cols-2">
+                <div>
                   <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
                     Education
                   </p>
-                  <div className="mt-5 space-y-5 text-[0.98rem] leading-7 text-foreground/62">
-                    <div>
-                      <p className="text-foreground/82">Master of Fine Arts</p>
+                  <div className="mt-5 divide-y divide-border/30 text-[0.98rem] leading-7 text-foreground/62">
+                    <div className="pb-5">
+                      <p className="text-foreground/84">Master of Fine Arts</p>
                       <p>Scenic Design, University of California, Irvine</p>
                     </div>
-                    <div className="border-t border-border/30 pt-5">
-                      <p className="text-foreground/82">Bachelor of Fine Arts</p>
+                    <div className="pt-5">
+                      <p className="text-foreground/84">Bachelor of Fine Arts</p>
                       <p>Theatre, Stephens College</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="rounded-[1.5rem] border border-border/40 bg-card/20 p-6">
+                <div>
                   <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
                     Practice
                   </p>
-                  <div className="mt-5 space-y-5 text-[0.98rem] leading-7 text-foreground/62">
-                    <div>
-                      <p className="text-foreground/82">Areas of Specialization</p>
+                  <div className="mt-5 divide-y divide-border/30 text-[0.98rem] leading-7 text-foreground/62">
+                    <div className="pb-5">
+                      <p className="text-foreground/84">Areas of Specialization</p>
                       <p>Scenic Design for Theatre</p>
                       <p>Digital Rendering and Visualization</p>
                       <p>Model Building and Drafting</p>
                     </div>
-                    <div className="border-t border-border/30 pt-5">
-                      <p className="text-foreground/82">Interests</p>
+                    <div className="pt-5">
+                      <p className="text-foreground/84">Interests</p>
                       <p>
-                        Theatre history, visual storytelling, rendering technologies,
-                        architecture, travel, and collaborative creative practice
+                        Theatre history, visual storytelling, rendering
+                        technologies, architecture, travel, and collaborative
+                        creative practice.
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
 
-        <section className="border-y border-border/35 py-16 md:py-20">
-          <div className="container max-w-[88rem]">
-            <div className="max-w-3xl">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
-                Working Approach
-              </p>
-              <h2 className="mt-4 font-sans text-[clamp(2rem,4vw,3.3rem)] font-medium leading-[0.98] tracking-[-0.05em] text-foreground">
-                A dramaturgical approach to scenic design.
-              </h2>
-              <p className="mt-5 text-[1rem] leading-7 text-foreground/60 md:text-[1.08rem]">
-                The strongest scenic work doesn&apos;t call attention to itself first. It builds the
-                conditions for story, movement, rhythm, and emotional focus.
-              </p>
-            </div>
-
-            <div className="mt-10 grid gap-5 lg:grid-cols-3">
-              {workingPrinciples.map((principle) => (
-                <div
-                  key={principle.title}
-                  className="rounded-[1.5rem] border border-border/40 bg-card/15 p-6 md:p-7"
-                >
-                  <h3 className="font-sans text-[1.35rem] font-medium tracking-[-0.03em] text-foreground">
-                    {principle.title}
-                  </h3>
-                  <p className="mt-4 text-[0.98rem] leading-7 text-foreground/58">
-                    {principle.description}
-                  </p>
+              <div className="mt-12 border-t border-border/35 pt-8">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                  Working Approach
+                </p>
+                <div className="mt-6 divide-y divide-border/30">
+                  {workingPrinciples.map((principle) => (
+                    <div
+                      key={principle.title}
+                      className="grid gap-3 py-5 md:grid-cols-[12rem_minmax(0,1fr)] md:gap-8"
+                    >
+                      <h2 className="font-sans text-[1.15rem] font-medium leading-[1.08] tracking-[-0.03em] text-foreground">
+                        {principle.title}
+                      </h2>
+                      <p className="text-[0.98rem] leading-7 text-foreground/60">
+                        {principle.description}
+                      </p>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+
+              <div className="mt-12 border-t border-border/35 pt-8">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                  Recent Notes
+                </p>
+                <div className="mt-5 divide-y divide-border/30 text-[0.98rem] leading-7 text-foreground/64">
+                  {recentMilestones.map((milestone) => (
+                    <p key={milestone} className="py-4">
+                      {milestone}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            </article>
           </div>
         </section>
 
-        <section className="py-16 md:py-20">
+        <section className="border-y border-border/35 py-14 md:py-20">
           <div className="container max-w-[88rem]">
             <div className="max-w-3xl">
               <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
-                Learn More
+                More Context
               </p>
               <h2 className="mt-4 font-sans text-[clamp(2rem,4vw,3.3rem)] font-medium leading-[0.98] tracking-[-0.05em] text-foreground">
-                Process, productions, teaching, and long-form context.
+                Process, productions, teaching, and collaboration.
               </h2>
             </div>
 
-            <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-5">
+            <div className="mt-10 divide-y divide-border/35 border-y border-border/35">
               {navigationCards.map((card) => (
-                <Link key={card.href} href={card.href} className="group block">
-                  <div className="relative overflow-hidden border border-border/40 bg-card/20">
-                    <div className="relative aspect-square w-full">
-                      <Image
-                        src={card.image}
-                        alt={card.title}
-                        fill
-                        unoptimized
-                        quality={82}
-                        loading="lazy"
-                        sizes="(max-width: 768px) 92vw, (max-width: 1280px) 46vw, 23vw"
-                        className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
-                      />
-                    </div>
-                    {card.imageTitle ? (
-                      <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-6 text-center">
-                        <div className="absolute inset-0 bg-black/12" />
-                        <p className="relative max-w-[10ch] font-sans text-[1.45rem] font-medium leading-[0.98] tracking-[-0.05em] text-white md:text-[1.65rem]">
-                          {card.imageTitle}
-                        </p>
-                      </div>
-                    ) : null}
+                <Link
+                  key={card.href}
+                  href={card.href}
+                  className="group grid gap-5 py-5 md:grid-cols-[12rem_minmax(0,1fr)_auto] md:items-center md:gap-8"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden bg-card/20">
+                    <Image
+                      src={card.image}
+                      alt={card.title}
+                      fill
+                      unoptimized
+                      quality={82}
+                      loading="lazy"
+                      sizes="(max-width: 768px) 92vw, 12rem"
+                      className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
+                    />
                   </div>
-                  <div className="pt-4">
-                    <p className="text-sm text-foreground/50">{card.label}</p>
-                    <div className="mt-2 flex items-start justify-between gap-3">
-                      <div className="space-y-2">
-                        <h3 className="font-sans text-[1.25rem] font-medium leading-[1.05] tracking-[-0.03em] text-foreground">
-                          {card.title}
-                        </h3>
-                        <p className="text-[0.96rem] leading-7 text-foreground/58">
-                          {card.description}
-                        </p>
-                      </div>
-                      <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-foreground/45 transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
-                    </div>
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/42">
+                      {card.label}
+                    </p>
+                    <h3 className="mt-2 font-sans text-[clamp(1.35rem,2.4vw,2rem)] font-medium leading-[1.02] tracking-[-0.045em] text-foreground">
+                      {card.title}
+                    </h3>
+                    <p className="mt-3 max-w-2xl text-[0.98rem] leading-7 text-foreground/58">
+                      {card.description}
+                    </p>
                   </div>
+                  <ArrowRight className="hidden h-5 w-5 text-foreground/45 transition-transform group-hover:translate-x-1 group-hover:text-foreground md:block" />
                 </Link>
               ))}
             </div>
 
             {bioArticleCards.length > 0 ? (
-              <div className="mt-16 border-t border-border/25 pt-10">
+              <div className="mt-14 border-t border-border/35 pt-9">
                 <div className="mb-8 max-w-3xl">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
-                    Bio Articles
+                    Profiles
                   </p>
                   <h3 className="mt-4 font-sans text-[clamp(1.6rem,3vw,2.4rem)] font-medium leading-[1] tracking-[-0.04em] text-foreground">
-                    Interviews, profiles, and longer-form writing around the work.
+                    Interviews and longer-form writing around the work.
                   </h3>
                 </div>
 
-                <div className="grid gap-6 md:grid-cols-2">
+                <div className="divide-y divide-border/35 border-y border-border/35">
                   {bioArticleCards.map((article) => {
                     const articleCard = (
-                      <div className="grid gap-5 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:items-start">
-                        <div className="relative aspect-square overflow-hidden border border-border/35 bg-card/20">
+                      <div className="group grid gap-5 py-5 sm:grid-cols-[9rem_minmax(0,1fr)_auto] sm:items-center">
+                        <div className="relative aspect-[4/3] overflow-hidden bg-card/20">
                           {article.coverImageUrl ? (
                             <Image
                               src={article.coverImageUrl}
@@ -494,14 +437,14 @@ export default function About() {
                               fill
                               quality={80}
                               loading="lazy"
-                              sizes="(max-width: 640px) 42vw, 8.5rem"
+                              sizes="(max-width: 640px) 92vw, 9rem"
                               className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                             />
                           ) : (
                             <div className="h-full w-full bg-muted" />
                           )}
                         </div>
-                        <div className="pt-1">
+                        <div>
                           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-foreground/50">
                             <span>{article.categoryName}</span>
                             <span>{formatUtcDate(article.publishedAt, "short")}</span>
@@ -509,10 +452,11 @@ export default function About() {
                           <h4 className="mt-3 font-sans text-[1.3rem] font-medium leading-[1.06] tracking-[-0.035em] text-foreground transition-colors group-hover:text-foreground/84">
                             {article.title}
                           </h4>
-                          <p className="mt-3 text-[0.97rem] leading-7 text-foreground/60">
+                          <p className="mt-3 max-w-2xl text-[0.97rem] leading-7 text-foreground/60">
                             {article.excerpt}
                           </p>
                         </div>
+                        <ArrowRight className="hidden h-4 w-4 text-foreground/42 transition-transform group-hover:translate-x-1 group-hover:text-foreground sm:block" />
                       </div>
                     );
 
@@ -522,12 +466,12 @@ export default function About() {
                         href={article.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group block"
+                        className="block"
                       >
                         {articleCard}
                       </a>
                     ) : (
-                      <Link key={article.id} href={article.href} className="group block">
+                      <Link key={article.id} href={article.href} className="block">
                         {articleCard}
                       </Link>
                     );
@@ -538,53 +482,30 @@ export default function About() {
           </div>
         </section>
 
-        <section className="border-t border-border/35 py-16 md:py-20">
+        <section className="border-t border-border/35 py-14 md:py-20">
           <div className="container max-w-[88rem]">
-            <div className="flex w-full items-center justify-center gap-2">
-              <div className="hidden items-center gap-2 md:flex">
-                <button
-                  type="button"
-                  onClick={() => scrollGalleryBy("prev")}
-                  disabled={activeGalleryIndex === 0}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/45 text-foreground/65 transition-colors hover:border-border hover:text-foreground"
-                  aria-label="Scroll gallery left"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => scrollGalleryBy("next")}
-                  disabled={activeGalleryIndex === galleryImages.length - 1}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/45 text-foreground/65 transition-colors hover:border-border hover:text-foreground"
-                  aria-label="Scroll gallery right"
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </button>
-              </div>
+            <div className="max-w-3xl">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                Personal Archive
+              </p>
+              <h2 className="mt-4 font-sans text-[clamp(1.8rem,3.5vw,3rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
+                People, classrooms, shops, and collaborations around the work.
+              </h2>
             </div>
 
-            <div
-              ref={galleryRailRef}
-              className="mt-10 flex snap-x snap-mandatory items-start gap-6 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-            >
-              {galleryImages.map((image, index) => (
-                <div
-                  key={image.url}
-                  ref={(node) => {
-                    galleryItemRefs.current[index] = node;
-                  }}
-                  className="w-[min(84vw,36rem)] shrink-0 snap-start sm:w-[min(64vw,30rem)] md:w-[calc((100%-3rem)/3)]"
-                >
-                  <div className="overflow-hidden bg-card/20">
+            <div className="mt-10 grid gap-x-6 gap-y-10 md:grid-cols-2 xl:grid-cols-3">
+              {galleryImages.map((image) => (
+                <div key={image.url}>
+                  <div className="relative aspect-[4/3] overflow-hidden bg-card/20">
                     <img
                       src={image.url}
                       alt={image.alt}
                       loading="lazy"
                       decoding="async"
-                      className="block h-auto w-full"
+                      className="h-full w-full object-cover"
                     />
                   </div>
-                  <p className="mt-3 max-w-[36rem] text-[0.98rem] leading-7 text-foreground/62">
+                  <p className="mt-3 max-w-[36rem] text-[0.95rem] leading-7 text-foreground/58">
                     {image.caption}
                   </p>
                 </div>

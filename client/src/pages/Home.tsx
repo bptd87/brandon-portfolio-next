@@ -1,9 +1,16 @@
 "use client";
 
 import Image from "next/image";
+import {
+  Drama,
+  Music,
+  Sparkles,
+  Theater,
+  UsersRound,
+  type LucideIcon,
+} from "lucide-react";
 import { useState } from "react";
 
-import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { SEO } from "@/components/SEO";
@@ -11,162 +18,60 @@ import { ProjectGridSkeleton } from "@/components/SkeletonLoaders";
 import { formatUtcDate } from "@/lib/date-format";
 import { getProjectPath } from "@/lib/projectRoutes";
 import { sortScenicProjectsChronologically } from "@/lib/scenicShowcase";
-import {
-  LEARNING_PORTAL_ARTICLE_CATEGORY_BY_SLUG,
-  LEARNING_PORTAL_ARTICLE_SLUG_SET,
-  RETIRED_LEARNING_ARTICLE_SLUG_SET,
-} from "@shared/learningPortal";
-import { getLocalArticles, type LocalArticle } from "@shared/localArticles";
-import {
-  getLocalExperientialProjectHref,
-  getLocalExperientialProjects,
-  getLocalRenderingProjects,
-} from "@shared/localPortfolios";
-import { getLocalTutorials, type LocalTutorial } from "@shared/localStudio";
 import type { ScenicProjectSummary } from "@shared/scenicProjectSummaries";
 import { upcomingProductions } from "@shared/upcomingProductions";
-import { Box, CalendarDays, ImageIcon, NotebookPen, Shapes } from "lucide-react";
-
-const homeLandingCopy = {
-  subtitle: "Brandon PT Davis",
-  title: "Scenic design, rendering, and learning resources shaped by story.",
-  intro:
-    "Based in San Diego, Brandon builds theatre environments, rendering studies, and practical learning resources for artists who care about story, clarity, and how an idea moves from sketch to stage.",
-} as const;
 
 const ABOUT_HEADSHOT_URL =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
+const HOME_CTA_IMAGE_URL =
+  "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150197-48389e80.webp";
 
-const homeCategories = [
-  {
-    title: "Scenic Design",
-    eyebrow: "Portfolio",
-    description: "Production environments for plays, musicals, Shakespeare, and regional theatre.",
-    href: "/projects",
-    Icon: ImageIcon,
-  },
-  {
-    title: "Rendering",
-    eyebrow: "Process",
-    description: "Concept images, visual studies, and presentation work.",
-    href: "/projects/rendering",
-    Icon: Box,
-  },
-  {
-    title: "Experiential",
-    eyebrow: "Environments",
-    description: "Brand, event, retail, and visualization case studies.",
-    href: "/projects/experiential",
-    Icon: Shapes,
-  },
-  {
-    title: "Upcoming",
-    eyebrow: "Calendar",
-    description: "Current and upcoming production work.",
-    href: "/upcoming-productions",
-    Icon: CalendarDays,
-  },
-  {
-    title: "Studio",
-    eyebrow: "Writing",
-    description: "Articles, tutorials, and studio resources.",
-    href: "/studio",
-    Icon: NotebookPen,
-  },
-] as const;
-
-type HomeCard = {
+const portfolioCategoryRows: Array<{
   title: string;
-  description: string;
-  eyebrow: string;
+  match: string[];
   href: string;
-  imageAlt: string;
-  imageUrl?: string | null;
-};
+  Icon: LucideIcon;
+}> = [
+  {
+    title: "Drama",
+    match: ["Drama"],
+    href: "/tags/drama",
+    Icon: Drama,
+  },
+  {
+    title: "Comedy",
+    match: ["Comedy"],
+    href: "/tags/comedy",
+    Icon: Theater,
+  },
+  {
+    title: "Shakespeare",
+    match: ["Shakespeare"],
+    href: "/tags/shakespeare",
+    Icon: Sparkles,
+  },
+  {
+    title: "Musical",
+    match: ["Musical Theatre"],
+    href: "/tags/musical-theatre",
+    Icon: Music,
+  },
+  {
+    title: "TYA",
+    match: ["Theatre for Young Audiences"],
+    href: "/tags/theatre-for-young-audiences",
+    Icon: UsersRound,
+  },
+];
 
-const TUTORIAL_COVER_VARIANTS = {
-  "getting-started": [
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/getting-started-1.png",
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/getting-started-2.png",
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/getting-started-3.png",
-  ],
-  "2d-drafting": [
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/2d-drafting-1.png",
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/2d-drafting-2.png",
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/2d-drafting-3.png",
-  ],
-  "3d-modeling": [
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/3d-modeling-1.png",
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/3d-modeling-2.png",
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/3d-modeling-3.png",
-  ],
-  rendering: [
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/rendering-1.png",
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/rendering-2.png",
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/rendering-3.png",
-  ],
-} as const;
-
-const normalizeToken = (value: string | null | undefined) =>
-  String(value || "")
-    .trim()
-    .toLowerCase()
-    .replace(/&/g, "and")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-
-const getStableVariantIndex = (value: string, total: number) => {
-  const hash = value.split("").reduce((sum, char) => sum + char.charCodeAt(0), 0);
-  return hash % total;
-};
-
-const getTutorialCoverImage = (tutorial: LocalTutorial) => {
-  const category = normalizeToken(tutorial.category);
-  const variants =
-    TUTORIAL_COVER_VARIANTS[category as keyof typeof TUTORIAL_COVER_VARIANTS] ||
-    TUTORIAL_COVER_VARIANTS["getting-started"];
-  const variantIndex = getStableVariantIndex(String(tutorial.slug || tutorial.id), variants.length);
-
-  return {
-    src: variants[variantIndex],
-    alt: `Abstract learning cover for ${tutorial.title}`,
-  };
-};
-
-const articleToCard = (article: LocalArticle): HomeCard => ({
-  title: article.title,
-  description: article.excerpt,
-  eyebrow: article.categoryName || "Article",
-  href: `/articles/${article.slug}`,
-  imageAlt: article.coverImageAlt || `${article.title} article cover`,
-  imageUrl: article.coverImageUrl,
-});
-
-const tutorialToCard = (tutorial: LocalTutorial): HomeCard => ({
-  title: tutorial.title,
-  description: tutorial.description || tutorial.overview || "A practical scenic design learning resource.",
-  eyebrow: tutorial.category || "Learning",
-  href: `/studio/tutorials/${tutorial.slug}`,
-  imageAlt: getTutorialCoverImage(tutorial).alt,
-  imageUrl: getTutorialCoverImage(tutorial).src,
-});
-
-const learningArticleToCard = (article: LocalArticle): HomeCard => ({
-  title: article.title,
-  description: article.excerpt,
-  eyebrow: LEARNING_PORTAL_ARTICLE_CATEGORY_BY_SLUG[article.slug] || article.categoryName || "Learning",
-  href: `/studio/tutorials/${article.slug}`,
-  imageAlt: article.coverImageAlt || `${article.title} learning article cover`,
-  imageUrl: article.coverImageUrl,
-});
-
-const publishedTime = (date?: string | null) => {
-  const time = new Date(date || 0).getTime();
-  return Number.isFinite(time) ? time : 0;
-};
-
-function RecentProductionHero({ projects }: { projects: ScenicProjectSummary[] }) {
-  const heroProjects = projects.filter((project) => project.coverImageUrl).slice(0, 5);
+function RecentProductionHero({
+  projects,
+}: {
+  projects: ScenicProjectSummary[];
+}) {
+  const heroProjects = projects
+    .filter(project => project.coverImageUrl)
+    .slice(0, 5);
   const [activeIndex, setActiveIndex] = useState(0);
   const activeProject = heroProjects[activeIndex] || heroProjects[0];
 
@@ -196,7 +101,7 @@ function RecentProductionHero({ projects }: { projects: ScenicProjectSummary[] }
 
       <div className="relative flex min-h-[calc(100svh-74px)] items-end px-[clamp(1.5rem,5vw,6rem)] pb-10 pt-14 md:pb-14">
         <div className="w-full">
-          <p className="mb-6 font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-white/58">
+          <p className="mb-5 font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-white/58">
             Recent Scenic Design
           </p>
 
@@ -232,11 +137,11 @@ function RecentProductionHero({ projects }: { projects: ScenicProjectSummary[] }
             <div className="max-w-xl">
               <p className="font-sans text-[0.95rem] leading-7 tracking-[-0.01em]">
                 {activeProject.client ? `${activeProject.client}. ` : ""}
-                {homeLandingCopy.intro}
+                Selected work from the current scenic design archive.
               </p>
             </div>
             <a
-              href="#recent-work"
+              href="#portfolio-categories"
               className="inline-flex w-fit items-center gap-3 font-sans text-sm font-medium uppercase tracking-[0.12em] text-white/72 transition-colors hover:text-white"
             >
               Scroll
@@ -251,217 +156,135 @@ function RecentProductionHero({ projects }: { projects: ScenicProjectSummary[] }
   );
 }
 
-function CategoryStripSection() {
+function PortfolioCategoryRows({
+  projects,
+}: {
+  projects: ScenicProjectSummary[];
+}) {
+  const rows = portfolioCategoryRows
+    .map(row => ({
+      ...row,
+      projects: projects
+        .filter(
+          project =>
+            project.coverImageUrl &&
+            row.match.includes(project.subcategory || "")
+        )
+        .slice(0, 8),
+    }))
+    .filter(row => row.projects.length);
+
+  if (!rows.length) return null;
+
   return (
-    <section className="border-b border-white/10 bg-background">
-      <div className="px-[clamp(1.5rem,5vw,6rem)]">
-        <div className="grid divide-y divide-white/10 border-x border-white/10 md:grid-cols-5 md:divide-x md:divide-y-0">
-          {homeCategories.map(({ Icon, description, eyebrow, href, title }) => (
-            <a
-              key={href}
-              href={href}
-              className="group min-h-[10.5rem] px-4 py-5 transition-colors hover:bg-white/[0.035] md:px-5 md:py-6"
-            >
-              <div className="flex h-full flex-col justify-between gap-5">
-                <div className="flex items-center justify-between gap-4">
-                  <Icon className="h-5 w-5 text-white/64 transition-colors group-hover:text-white" />
-                  <span className="font-sans text-[10px] font-semibold uppercase tracking-[0.2em] text-white/34">
-                    {eyebrow}
-                  </span>
-                </div>
+    <section
+      id="portfolio-categories"
+      className="border-t border-white/10 py-12 md:py-16"
+    >
+      <div className="mb-8 px-[clamp(1.5rem,5vw,6rem)]">
+        <p className="mb-3 font-sans text-[10px] font-semibold uppercase tracking-[0.24em] text-white/36">
+          Brandon PT Davis
+        </p>
+        <h2 className="max-w-3xl font-sans text-[clamp(1.35rem,2.2vw,2.05rem)] font-medium leading-[1.02] tracking-[-0.045em] text-white">
+          Scenic Design
+        </h2>
+        <p className="mt-4 max-w-2xl text-[0.95rem] leading-7 tracking-[-0.01em] text-white/52">
+          Production environments by Brandon PT Davis, organized across drama,
+          comedy, Shakespeare, musicals, and theatre for young audiences.
+        </p>
+      </div>
+
+      <div className="space-y-12 md:space-y-16">
+        {rows.map(row => {
+          const Icon = row.Icon;
+
+          return (
+            <div key={row.title}>
+              <div className="mb-5 flex items-end justify-between gap-5 border-t border-white/10 px-[clamp(1.5rem,5vw,6rem)] pt-5">
                 <div>
-                  <h2 className="font-sans text-[1.18rem] font-medium leading-[1.02] tracking-[-0.04em] text-white">
-                    {title}
-                  </h2>
-                  <p className="mt-3 max-w-[16rem] text-[0.88rem] leading-5 tracking-[-0.01em] text-white/46">
-                    {description}
-                  </p>
+                  <div className="mb-2 flex items-center gap-2 font-sans text-[10px] font-semibold uppercase tracking-[0.2em] text-white/38">
+                    <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+                    <span>Scenic Design</span>
+                    <span className="text-white/20">|</span>
+                    <span>Collection</span>
+                  </div>
+                  <h3 className="font-sans text-[clamp(1.35rem,2.3vw,2rem)] font-medium leading-[1.02] tracking-[-0.045em] text-white">
+                    {row.title}
+                  </h3>
+                </div>
+                <a
+                  href={row.href}
+                  aria-label={`View ${row.title}`}
+                  className="group inline-flex h-10 w-10 shrink-0 items-center justify-center text-2xl leading-none text-white/62 transition-colors hover:text-white"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="transition-transform group-hover:translate-x-1"
+                  >
+                    →
+                  </span>
+                </a>
+              </div>
+
+              <div className="overflow-x-auto overscroll-x-contain pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                <div className="flex gap-5 px-[clamp(1.5rem,5vw,6rem)]">
+                  {row.projects.map(project => (
+                    <a
+                      key={project.slug}
+                      href={getProjectPath(project)}
+                      className="group relative block w-[82vw] shrink-0 overflow-hidden bg-white/[0.035] md:w-[34rem] xl:w-[40rem]"
+                    >
+                      <ProgressiveImage
+                        src={project.coverImageUrl || ""}
+                        alt={`${project.title} scenic design by Brandon PT Davis`}
+                        aspectRatio="16 / 9"
+                        containerClassName="bg-white/[0.035]"
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]"
+                        sizes="(min-width: 1280px) 40rem, (min-width: 768px) 34rem, 82vw"
+                        width={980}
+                        enableScrollAnimation={false}
+                      />
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/72 via-black/12 to-transparent" />
+                      <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
+                        <h4 className="font-sans text-[1.02rem] font-medium leading-[1.04] tracking-[-0.035em] text-white md:text-[1.18rem]">
+                          {project.title}
+                        </h4>
+                        <p className="mt-1 text-[0.82rem] leading-5 text-white/62">
+                          {[project.client, project.year]
+                            .filter(Boolean)
+                            .join(" · ")}
+                        </p>
+                      </div>
+                    </a>
+                  ))}
+                  <a
+                    href={row.href}
+                    className="flex w-[13rem] shrink-0 items-center justify-center border border-white/12 px-5 text-center font-sans text-sm font-medium text-white/62 transition-colors hover:border-white/28 hover:text-white"
+                  >
+                    View {row.title}
+                    <span aria-hidden="true" className="ml-2">
+                      →
+                    </span>
+                  </a>
                 </div>
               </div>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+            </div>
+          );
+        })}
 
-function RecentWorkSection({ projects }: { projects: ScenicProjectSummary[] }) {
-  const recentProjects = projects.filter((project) => project.coverImageUrl).slice(0, 6);
-  if (!recentProjects.length) return null;
-
-  return (
-    <section id="recent-work" className="border-t border-white/10 py-16 md:py-24">
-      <div className="px-[clamp(1.5rem,5vw,6rem)]">
-        <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-3xl">
-            <p className="mb-4 font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-white/38">
-              Recent Production Work
-            </p>
-            <h2 className="font-sans text-[clamp(2rem,4vw,3.35rem)] font-medium leading-[0.96] tracking-[-0.055em] text-white">
-              Scenic design projects from the current archive.
-            </h2>
-          </div>
+        <div className="px-[clamp(1.5rem,5vw,6rem)]">
           <a
             href="/projects"
-            className="group inline-flex w-fit items-center gap-2 font-sans text-sm font-medium tracking-[-0.01em] text-white/76 transition-colors hover:text-white"
+            className="group inline-flex items-center gap-2 border-t border-white/12 pt-5 font-sans text-sm font-medium tracking-[-0.01em] text-white/76 transition-colors hover:text-white"
           >
-            View portfolio
-            <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
-              -&gt;
-            </span>
-          </a>
-        </div>
-
-        <div className="grid gap-x-6 gap-y-10 md:grid-cols-2 xl:grid-cols-3">
-          {recentProjects.map((project) => (
-            <a key={project.slug} href={getProjectPath(project)} className="group block border-t border-white/12 pt-4">
-              <ProgressiveImage
-                src={project.coverImageUrl || ""}
-                alt={`${project.title} scenic design by Brandon PT Davis`}
-                aspectRatio="16 / 10"
-                containerClassName="bg-white/[0.035]"
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]"
-                sizes="(min-width: 1280px) 31vw, (min-width: 768px) 48vw, 100vw"
-                width={900}
-                enableScrollAnimation={false}
-              />
-              <div className="mt-4 flex items-start justify-between gap-4">
-                <div>
-                  <h3 className="font-sans text-[1.22rem] font-medium leading-[1.05] tracking-[-0.04em] text-white">
-                    {project.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-6 text-white/48">
-                    {[project.client, project.year].filter(Boolean).join(" · ")}
-                  </p>
-                </div>
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function RenderingProcessSection() {
-  const renderingProjects = getLocalRenderingProjects()
-    .filter((project) => !project.galleryOnly && project.coverImageUrl)
-    .slice(0, 4);
-
-  if (!renderingProjects.length) return null;
-
-  return (
-    <section className="border-t border-white/10 py-16 md:py-24">
-      <div className="px-[clamp(1.5rem,5vw,6rem)]">
-        <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-3xl">
-            <p className="mb-4 font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-white/38">
-              Rendering / Process
-            </p>
-            <h2 className="font-sans text-[clamp(2rem,4vw,3.35rem)] font-medium leading-[0.96] tracking-[-0.055em] text-white">
-              Visual studies for atmosphere, scale, and production conversation.
-            </h2>
-          </div>
-          <a
-            href="/projects/rendering"
-            className="group inline-flex w-fit items-center gap-2 font-sans text-sm font-medium tracking-[-0.01em] text-white/76 transition-colors hover:text-white"
-          >
-            View rendering
-            <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
-              -&gt;
-            </span>
-          </a>
-        </div>
-
-        <div className="grid gap-x-6 gap-y-10 md:grid-cols-2 xl:grid-cols-4">
-          {renderingProjects.map((project) => (
-            <a
-              key={project.slug}
-              href={`/projects/rendering/${project.slug}`}
-              className="group block border-t border-white/12 pt-4"
+            View full scenic design portfolio
+            <span
+              aria-hidden="true"
+              className="transition-transform group-hover:translate-x-1"
             >
-              <ProgressiveImage
-                src={project.coverImageUrl || ""}
-                alt={`${project.title} rendering by Brandon PT Davis`}
-                aspectRatio="4 / 3"
-                containerClassName="bg-white/[0.035]"
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]"
-                sizes="(min-width: 1280px) 24vw, (min-width: 768px) 48vw, 100vw"
-                width={760}
-                enableScrollAnimation={false}
-              />
-              <h3 className="mt-4 font-sans text-[1.18rem] font-medium leading-[1.04] tracking-[-0.04em] text-white">
-                {project.title}
-              </h3>
-              <p className="mt-2 text-sm leading-6 text-white/48">
-                {[project.client, project.year].filter(Boolean).join(" · ")}
-              </p>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ExperientialSection() {
-  const experientialProjects = getLocalExperientialProjects()
-    .filter((project) => project.coverImageUrl)
-    .slice(0, 4);
-
-  if (!experientialProjects.length) return null;
-
-  return (
-    <section className="border-t border-white/10 py-16 md:py-24">
-      <div className="px-[clamp(1.5rem,5vw,6rem)]">
-        <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-3xl">
-            <p className="mb-4 font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-white/38">
-              Experiential Design
-            </p>
-            <h2 className="font-sans text-[clamp(2rem,4vw,3.35rem)] font-medium leading-[0.96] tracking-[-0.055em] text-white">
-              Brand environments, activations, and project-based visualization.
-            </h2>
-          </div>
-          <a
-            href="/projects/experiential"
-            className="group inline-flex w-fit items-center gap-2 font-sans text-sm font-medium tracking-[-0.01em] text-white/76 transition-colors hover:text-white"
-          >
-            View experiential
-            <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
-              -&gt;
+              →
             </span>
           </a>
-        </div>
-
-        <div className="grid gap-x-6 gap-y-10 md:grid-cols-2 xl:grid-cols-4">
-          {experientialProjects.map((project) => (
-            <a
-              key={project.slug}
-              href={getLocalExperientialProjectHref(project)}
-              className="group block border-t border-white/12 pt-4"
-            >
-              <ProgressiveImage
-                src={project.coverImageUrl}
-                alt={project.coverAltText}
-                aspectRatio="4 / 3"
-                containerClassName="bg-white/[0.035]"
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]"
-                sizes="(min-width: 1280px) 24vw, (min-width: 768px) 48vw, 100vw"
-                width={760}
-                enableScrollAnimation={false}
-              />
-              <h3 className="mt-4 font-sans text-[1.18rem] font-medium leading-[1.04] tracking-[-0.04em] text-white">
-                {project.title}
-              </h3>
-              <p className="mt-2 text-sm leading-6 text-white/48">
-                {[project.mediaTypes.map((type) => type.replace("-", " ")).join(" / "), project.year]
-                  .filter(Boolean)
-                  .join(" · ")}
-              </p>
-            </a>
-          ))}
         </div>
       </div>
     </section>
@@ -477,19 +300,26 @@ function BrandonSection() {
             Brandon PT Davis
           </p>
           <h2 className="font-sans text-[clamp(2.4rem,5vw,5rem)] font-medium leading-[0.94] tracking-[-0.065em] text-white">
-            A scenic designer building theatrical space around story, behavior, and clarity.
+            Scenic design as atmosphere, architecture, and human behavior.
           </h2>
           <p className="mt-7 max-w-2xl text-[1rem] leading-8 tracking-[-0.01em] text-white/58 md:text-[1.06rem]">
-            Based in San Diego, Brandon PT Davis creates scenic environments for regional theatre,
-            summer stock, academic production, and adjacent visual work. His practice moves between
-            production photography, drafting, research, and collaboration with directors and creative
-            teams.
+            Brandon's work starts with how people move through a room: what a
+            space remembers, what it hides, and how it shapes the rhythm of a
+            performance. The portfolio collects production environments,
+            renderings, and process images from regional theatre, summer stock,
+            and academic stages.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
-            <a href="/about" className="inline-flex h-11 items-center rounded-full border border-white/22 px-5 text-sm font-medium text-white transition-colors hover:border-white/36 hover:bg-white/[0.05]">
+            <a
+              href="/about"
+              className="inline-flex h-11 items-center rounded-full border border-white/22 px-5 text-sm font-medium text-white transition-colors hover:border-white/36 hover:bg-white/[0.05]"
+            >
               About Brandon
             </a>
-            <a href="/resume" className="inline-flex h-11 items-center rounded-full border border-white/12 px-5 text-sm font-medium text-white/64 transition-colors hover:border-white/24 hover:text-white">
+            <a
+              href="/resume"
+              className="inline-flex h-11 items-center rounded-full border border-white/12 px-5 text-sm font-medium text-white/64 transition-colors hover:border-white/24 hover:text-white"
+            >
               Resume / CV
             </a>
           </div>
@@ -525,16 +355,22 @@ function UpcomingSection() {
               Current scenic design calendar.
             </h2>
           </div>
-          <a href="/upcoming-productions" className="group inline-flex w-fit items-center gap-2 font-sans text-sm font-medium tracking-[-0.01em] text-white/76 transition-colors hover:text-white">
+          <a
+            href="/upcoming-productions"
+            className="group inline-flex w-fit items-center gap-2 font-sans text-sm font-medium tracking-[-0.01em] text-white/76 transition-colors hover:text-white"
+          >
             View calendar
-            <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
+            <span
+              aria-hidden="true"
+              className="transition-transform group-hover:translate-x-1"
+            >
               -&gt;
             </span>
           </a>
         </div>
 
         <div className="divide-y divide-white/12 border-y border-white/12">
-          {nextProductions.map((production) => (
+          {nextProductions.map(production => (
             <a
               key={production.id}
               href={`/upcoming-productions/${production.id}`}
@@ -549,7 +385,8 @@ function UpcomingSection() {
                 </p>
               </div>
               <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-white/46">
-                {formatUtcDate(production.startDate, "short")} - {formatUtcDate(production.endDate, "short")}
+                {formatUtcDate(production.startDate, "short")} -{" "}
+                {formatUtcDate(production.endDate, "short")}
               </p>
             </a>
           ))}
@@ -559,121 +396,55 @@ function UpcomingSection() {
   );
 }
 
-function HomeCardGrid({
-  description,
-  id,
-  items,
-  label,
-  linkHref,
-  linkLabel,
-  title,
-}: {
-  description: string;
-  id?: string;
-  items: HomeCard[];
-  label: string;
-  linkHref: string;
-  linkLabel: string;
-  title: string;
-}) {
-  if (!items.length) return null;
-
-  return (
-    <section id={id} className="border-t border-white/10 py-16 md:py-24">
-      <div className="container max-w-[88rem]">
-        <div className="mb-9 flex flex-col gap-5 md:mb-12 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-3xl">
-            <p className="mb-4 font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-white/38">
-              {label}
-            </p>
-            <h2 className="max-w-4xl font-sans text-[clamp(2rem,4vw,3.35rem)] font-medium leading-[0.96] tracking-[-0.055em] text-white">
-              {title}
-            </h2>
-            <p className="mt-5 max-w-2xl text-[1rem] leading-7 tracking-[-0.01em] text-white/52 md:text-[1.05rem]">
-              {description}
-            </p>
-          </div>
-          <a
-            href={linkHref}
-            className="group inline-flex w-fit items-center gap-2 font-sans text-sm font-medium tracking-[-0.01em] text-white/76 transition-colors hover:text-white"
-          >
-            {linkLabel}
-            <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
-              -&gt;
-            </span>
-          </a>
-        </div>
-
-        <div className="divide-y divide-white/12 border-y border-white/12">
-          {items.map((item) => {
-            return (
-              <a
-                key={item.href}
-                href={item.href}
-                className="group grid gap-5 py-5 transition-colors hover:bg-white/[0.025] md:grid-cols-[minmax(13rem,0.34fr)_minmax(0,1fr)] md:items-start md:gap-7"
-              >
-                {item.imageUrl ? (
-                  <ProgressiveImage
-                    src={item.imageUrl}
-                    alt={item.imageAlt}
-                    aspectRatio="4 / 3"
-                    containerClassName="bg-white/[0.035]"
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]"
-                    sizes="(min-width: 768px) 30vw, 100vw"
-                    width={620}
-                    enableScrollAnimation={false}
-                  />
-                ) : (
-                  <div className="relative aspect-[4/3] overflow-hidden bg-white/[0.035]" />
-                )}
-                <div className="md:pt-1">
-                  <p className="mb-3 font-sans text-[11px] font-semibold uppercase tracking-[0.22em] text-white/34">
-                    {item.eyebrow}
-                  </p>
-                  <h3 className="max-w-[42rem] font-sans text-[clamp(1.35rem,2.2vw,2.2rem)] font-normal leading-[1.02] tracking-[-0.05em] text-white">
-                    {item.title}
-                  </h3>
-                  <p className="mt-4 max-w-[42rem] text-[0.98rem] leading-7 tracking-[-0.01em] text-white/50">
-                    {item.description}
-                  </p>
-                </div>
-              </a>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function HomeCta() {
   return (
-    <section className="relative border-y border-border/25 px-6 py-20 md:py-24">
-      <div className="mx-auto max-w-6xl">
-        <div className="rounded-[2rem] border border-white/8 bg-white/[0.06] px-6 py-16 text-center md:px-12 md:py-20">
-          <h2 className="mx-auto max-w-4xl font-sans text-[clamp(2.4rem,4.5vw,4.4rem)] font-medium leading-[1.02] tracking-[-0.06em] text-foreground">
-            Start a project with a designer who can think concept through execution.
+    <section className="relative min-h-[72svh] overflow-hidden border-t border-white/10 bg-black">
+      <img
+        src={HOME_CTA_IMAGE_URL}
+        alt="The Merry Wives of Windsor scenic design detail by Brandon PT Davis"
+        className="absolute inset-0 h-full w-full object-cover"
+        loading="lazy"
+      />
+      <div className="absolute inset-0 bg-black/28" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.8)_0%,rgba(0,0,0,0.42)_36%,rgba(0,0,0,0.08)_72%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black via-black/42 to-transparent" />
+
+      <div className="relative flex min-h-[72svh] items-end px-[clamp(1.5rem,5vw,6rem)] pb-12 pt-24 md:pb-16">
+        <div className="max-w-3xl">
+          <p className="mb-4 font-sans text-[10px] font-semibold uppercase tracking-[0.26em] text-white/46">
+            Portfolio / Contact
+          </p>
+          <h2 className="font-sans text-[clamp(2.6rem,5.8vw,6.2rem)] font-medium leading-[0.9] tracking-[-0.07em] text-white">
+            Start with the space.
           </h2>
-          <div className="mt-10 flex justify-center">
+          <p className="mt-5 max-w-xl text-[0.98rem] leading-7 tracking-[-0.01em] text-white/64 md:text-[1.05rem]">
+            Explore the scenic design archive or start a conversation about a
+            production, collaboration, or upcoming design process.
+          </p>
+          <div className="mt-7 flex flex-wrap gap-x-8 gap-y-3">
             <a
               href="/contact"
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-white/10 px-5 font-sans text-[0.95rem] font-medium tracking-[-0.02em] text-foreground transition-colors hover:bg-white/14"
+              className="group inline-flex items-center gap-2 font-sans text-[1rem] font-medium tracking-[-0.02em] text-white/72 transition-colors hover:text-white"
             >
-              <span>Start a Project</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
+              Contact
+              <span
+                aria-hidden="true"
+                className="transition-transform group-hover:translate-x-1"
               >
-                <path d="M5 12h14" />
-                <path d="m12 5 7 7-7 7" />
-              </svg>
+                →
+              </span>
+            </a>
+            <a
+              href="/projects"
+              className="group inline-flex items-center gap-2 font-sans text-[1rem] font-medium tracking-[-0.02em] text-white/52 transition-colors hover:text-white"
+            >
+              View Portfolio
+              <span
+                aria-hidden="true"
+                className="transition-transform group-hover:translate-x-1"
+              >
+                →
+              </span>
             </a>
           </div>
         </div>
@@ -682,37 +453,15 @@ function HomeCta() {
   );
 }
 
-export default function Home({ initialProjects }: { initialProjects: ScenicProjectSummary[] }) {
+export default function Home({
+  initialProjects,
+}: {
+  initialProjects: ScenicProjectSummary[];
+}) {
   const projects = sortScenicProjectsChronologically(initialProjects);
   const projectsLoading = false;
-  const featuredProject = projects.find((project) => project.coverImageUrl) || projects[0];
-  const localArticles = getLocalArticles();
-  const articleCards = localArticles
-    .filter((article) => !LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug))
-    .filter((article) => !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(article.slug))
-    .slice(0, 6)
-    .map(articleToCard);
-  const tutorialCards = [
-    ...getLocalTutorials()
-      .filter((tutorial) => tutorial.status !== "draft")
-      .map((tutorial) => ({
-        card: tutorialToCard(tutorial),
-        timestamp: publishedTime(tutorial.published_at || tutorial.created_at || tutorial.updated_at),
-      })),
-    ...localArticles
-      .filter((article) => LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug))
-      .map((article) => ({
-        card: learningArticleToCard(article),
-        timestamp: publishedTime(article.publishedAt || article.createdAt || article.updatedAt),
-      })),
-  ]
-    .sort((a, b) => {
-      const timeCompare = b.timestamp - a.timestamp;
-      if (timeCompare !== 0) return timeCompare;
-      return a.card.title.localeCompare(b.card.title);
-    })
-    .slice(0, 6)
-    .map((item) => item.card);
+  const featuredProject =
+    projects.find(project => project.coverImageUrl) || projects[0];
   return (
     <>
       <SEO
@@ -736,38 +485,13 @@ export default function Home({ initialProjects }: { initialProjects: ScenicProje
         ) : featuredProject ? (
           <>
             <RecentProductionHero projects={projects} />
-            <CategoryStripSection />
-            <RecentWorkSection projects={projects} />
-            <RenderingProcessSection />
-            <ExperientialSection />
-            <UpcomingSection />
+            <PortfolioCategoryRows projects={projects} />
             <BrandonSection />
-
-            <HomeCardGrid
-              id="home-writing"
-              label="Writing"
-              title="Articles on process, theatre, and visual thinking."
-              description="Longer-form writing sits close to the portfolio: reflections on scenic design, production process, interviews, and the ideas behind the work."
-              linkHref="/articles"
-              linkLabel="View articles"
-              items={articleCards}
-            />
-
-            <HomeCardGrid
-              label="Learning"
-              title="Learning articles for scenic design and Vectorworks."
-              description="The learning portal brings tutorial-based articles, rendering workflows, and studio process notes into one place for students and working designers."
-              linkHref="/studio/tutorials"
-              linkLabel="View learning"
-              items={tutorialCards}
-            />
-
+            <UpcomingSection />
             <HomeCta />
           </>
         ) : null}
       </main>
-
-      <Footer />
     </>
   );
 }

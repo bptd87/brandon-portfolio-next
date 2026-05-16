@@ -2246,7 +2246,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "createdAt": "2026-02-19T11:01:51.231Z",
   "updatedAt": "2026-02-19T11:01:51.231Z",
   "publishedAt": "2026-02-19T11:01:51.231Z",
-  "coverImageUrl": "/assets/projects/scenic/the-glass-menagerie/cover.webp"
+  "coverImageUrl": "/assets/projects/scenic/the-glass-menagerie/glass-menagerie-maples-cover-2026.webp"
 },
   "the-glass-menagerie-2011": {
   "title": "The Glass Menagerie",
@@ -4862,8 +4862,8 @@ export const fileFirstScenicProjectMediaBySlug = {
   {
     "id": "gm-cover",
     "type": "image",
-    "imageUrl": "/assets/projects/scenic/the-glass-menagerie/cover.webp",
-    "altText": "The Glass Menagerie scenic design cover at Maples Repertory Theatre, framing the Wingfield apartment as memory architecture.",
+    "imageUrl": "/assets/projects/scenic/the-glass-menagerie/glass-menagerie-maples-cover-2026.webp",
+    "altText": "Laura and Tom framed by candlelight and the glass unicorn in The Glass Menagerie at Maples Repertory Theatre, scenic design by Brandon PT Davis.",
     "kind": "cover"
   },
   {
