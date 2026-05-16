@@ -21,7 +21,7 @@ function ProductionArt({
 }) {
   return (
     <div className="mx-auto mt-10 w-full max-w-[62rem]">
-      <div className="overflow-hidden rounded-xl bg-black">
+      <div className="overflow-hidden bg-black">
         <img
           src={production.imageUrl}
           alt={production.imageAlt}
@@ -151,7 +151,7 @@ export default function UpcomingProductions() {
               season dates.
             </p>
 
-            <div className="mt-10 w-full max-w-[62rem] overflow-hidden rounded-xl bg-black">
+            <div className="mt-10 w-full max-w-[62rem] overflow-hidden bg-black">
               <img
                 src="/upcoming-productions/upcoming-productions-hero.webp"
                 alt="Abstract stage calendar graphic for upcoming scenic design productions."

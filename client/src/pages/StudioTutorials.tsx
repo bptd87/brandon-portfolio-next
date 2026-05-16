@@ -207,7 +207,7 @@ const getTutorialCoverImage = (tutorial: TutorialCardItem) => {
 function LearningGridCard({ item, eager }: { item: LearningCardItem; eager?: boolean }) {
   return (
     <a href={item.href} className="group block">
-      <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-background/50">
+      <div className="relative aspect-[1/1] overflow-hidden bg-background/50">
         {item.coverImageUrl ? (
           <Image
             src={item.coverImageUrl}
@@ -238,7 +238,7 @@ function FeaturedLearningCard({ item }: { item: LearningCardItem }) {
   return (
     <a href={item.href} className="group block">
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,0.65fr)] lg:items-end">
-        <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-background/50 md:aspect-[4/3] lg:aspect-[16/9]">
+        <div className="relative aspect-[1/1] overflow-hidden bg-background/50 md:aspect-[4/3] lg:aspect-[16/9]">
           {item.coverImageUrl ? (
             <Image
               src={item.coverImageUrl}

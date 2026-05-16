@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc">
+  <title id="title">The Merry Wives of Windsor Cove abstract scenic graphic</title>
+  <desc id="desc">Coastal stage shapes and comic archways.</desc>
+  <rect width="1200" height="1200" fill="#0a0a0a"/>
+  <rect x="84" y="84" width="1032" height="1032" rx="34" fill="#111111" stroke="#2a2a2a" stroke-width="3"/>
+  <path d="M150 824h900v164H150z" fill="#171717"/>
+  <path d="M254 718c88-122 190-122 306 0s218 122 306 0" fill="none" stroke="#9fb3c8" stroke-width="22" stroke-linecap="round"/>
+  <path d="M296 770c76-80 152-80 228 0s152 80 228 0 152-80 228 0" fill="none" stroke="#d2b16d" stroke-width="16" stroke-linecap="round" opacity=".9"/>
+  <path d="M366 688V430h166v258" fill="none" stroke="#c47c63" stroke-width="24" stroke-linejoin="round"/>
+  <path d="M668 688V366h166v322" fill="none" stroke="#f5efe3" stroke-opacity=".55" stroke-width="24" stroke-linejoin="round"/>
+  <circle cx="882" cy="340" r="50" fill="#d2b16d" opacity=".82"/>
+  <path d="M300 908h600" stroke="#f5efe3" stroke-opacity=".14" stroke-width="12" stroke-linecap="round"/>
+</svg>

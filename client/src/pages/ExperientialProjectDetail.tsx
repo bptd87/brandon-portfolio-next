@@ -126,7 +126,7 @@ function SampleGallery({
           {galleryItems.map((image) => (
             <figure key={image.id} className="space-y-3">
               <button type="button" onClick={() => onOpenImage(image.id)} className="block w-full text-left">
-                <div className="flex aspect-square items-center justify-center overflow-hidden rounded-xl bg-white">
+                <div className="flex aspect-square items-center justify-center overflow-hidden bg-white">
                   <img
                     src={image.imageUrl}
                     alt={image.altText}
@@ -152,7 +152,7 @@ function SampleGallery({
       ) : galleryItems[0] ? (
         <figure className="space-y-3">
           <button type="button" onClick={() => onOpenImage(galleryItems[0].id)} className="block w-full text-left">
-            <div className="aspect-square overflow-hidden rounded-xl bg-black">
+            <div className="aspect-square overflow-hidden bg-black">
               <img
                 src={galleryItems[0].imageUrl}
                 alt={galleryItems[0].altText}
@@ -375,7 +375,7 @@ export default function ExperientialProjectDetail({
           <AnimatedSection>
             <div className="mx-auto w-full max-w-[62rem]">
               {project.coverImageUrl ? (
-                <div className="overflow-hidden rounded-xl bg-black">
+                <div className="overflow-hidden bg-black">
                   <button
                     type="button"
                     onClick={() => setLightboxIndex(heroImageIndex >= 0 ? heroImageIndex : 0)}
@@ -471,7 +471,7 @@ export default function ExperientialProjectDetail({
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
                   {moreExperientialProjects.map((item) => (
                     <Link key={item.slug} href={getLocalExperientialProjectHref(item)} className="group block">
-                      <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-black/85">
+                      <div className="relative aspect-[1/1] overflow-hidden bg-black/85">
                         {item.coverImageUrl ? (
                           <ProgressiveImage
                             src={item.coverImageUrl}

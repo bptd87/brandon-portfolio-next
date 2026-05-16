@@ -161,7 +161,7 @@ export default function Syllabus3DModeling() {
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-[1.5rem] border border-border/30 bg-card/20">
+          <div className="overflow-hidden border border-border/30 bg-card/20">
             <div className="relative aspect-square w-full">
               <Image
                 src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/teaching/syllabus-3d-modeling-art.png"
@@ -312,7 +312,7 @@ export default function Syllabus3DModeling() {
           <div className="mt-8 max-w-5xl">
             <Link href="/studio/tutorials" className="group block">
               <div className="grid gap-5 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:items-start">
-                <div className="relative aspect-square overflow-hidden rounded-[1.15rem] border border-border/35 bg-card/20">
+                <div className="relative aspect-square overflow-hidden border border-border/35 bg-card/20">
                   <Image
                     src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-tutorials-cover.png"
                     alt="Vectorworks tutorials used in THA 211"

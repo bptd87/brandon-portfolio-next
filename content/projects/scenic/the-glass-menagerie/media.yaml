@@ -2,7 +2,7 @@ gallery:
   - id: gm-cover
     kind: cover
     asset: >-
-      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90010-cover-775dc22f.webp
+      /assets/projects/scenic/the-glass-menagerie/cover.webp
     alt: >-
       The Glass Menagerie scenic design cover at Maples Repertory Theatre, framing the Wingfield apartment as memory
       architecture.

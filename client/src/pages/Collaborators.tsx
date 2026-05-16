@@ -208,7 +208,7 @@ export default function Collaborators() {
 
           <section className="mx-auto mt-14 max-w-[88rem] border-t border-border/25 pt-14">
             <div className="grid items-center gap-10 xl:grid-cols-[minmax(18rem,0.95fr)_minmax(0,1.05fr)]">
-              <div className="overflow-hidden rounded-[1.5rem] border border-border/30 bg-card/20">
+              <div className="overflow-hidden border border-border/30 bg-card/20">
                 <div className="relative aspect-square w-full">
                   <Image
                     src={
@@ -276,7 +276,7 @@ export default function Collaborators() {
                     </div>
 
                     {section.id === "companies" && (
-                      <div className="my-10 overflow-hidden rounded-[1.5rem] border border-border/30 bg-card/20">
+                      <div className="my-10 overflow-hidden border border-border/30 bg-card/20">
                         <div className="relative aspect-[16/6] w-full">
                           <Image
                             src={

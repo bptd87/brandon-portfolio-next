@@ -8,7 +8,7 @@ function ArticleCard({ article }: { article: LocalArticle }) {
 
   return (
     <Link href={getArticlePath(article.slug)} className="group block">
-      <article className="flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/[0.03] transition-all duration-300 hover:border-white/16 hover:bg-white/[0.045]">
+      <article className="flex h-full flex-col overflow-hidden border border-white/10 bg-white/[0.03] transition-all duration-300 hover:border-white/16 hover:bg-white/[0.045]">
         <div className="relative aspect-[4/3] overflow-hidden bg-black/40">
           {article.coverImageUrl ? (
             <img

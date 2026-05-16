@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc">
+  <title id="title">9 to 5 abstract scenic graphic</title>
+  <desc id="desc">Office geometry arranged as theatrical scenery.</desc>
+  <rect width="1200" height="1200" fill="#0a0a0a"/>
+  <rect x="84" y="84" width="1032" height="1032" rx="34" fill="#111111" stroke="#2a2a2a" stroke-width="3"/>
+  <path d="M150 824h900v164H150z" fill="#171717"/>
+  <rect x="322" y="330" width="556" height="420" rx="16" fill="none" stroke="#9fb3c8" stroke-width="24"/>
+  <path d="M322 466h556M458 330v420M742 330v420" stroke="#9fb3c8" stroke-width="18"/>
+  <path d="M278 750h644" stroke="#d2b16d" stroke-width="24" stroke-linecap="round"/>
+  <path d="M390 622h164M646 622h164" stroke="#c47c63" stroke-width="22" stroke-linecap="round"/>
+  <circle cx="600" cy="258" r="54" fill="#d2b16d" opacity=".84"/>
+  <path d="M300 908h600" stroke="#f5efe3" stroke-opacity=".14" stroke-width="12" stroke-linecap="round"/>
+</svg>

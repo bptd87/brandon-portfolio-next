@@ -2,8 +2,8 @@ gallery:
   - id: hoh-cover
     kind: cover
     asset: >-
-      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-cover-de6a3605.webp
-    alt: Scenic design for Head Over Heels by Brandon PT Davis.
+      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150097-e2770c1c.webp
+    alt: Production image from Head Over Heels showing the modular Arcadian world, scenic design by Brandon PT Davis.
   - id: hoh-prod-1
     kind: production
     asset: >-

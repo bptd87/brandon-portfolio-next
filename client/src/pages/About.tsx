@@ -273,7 +273,7 @@ export default function About() {
               </div>
 
               <div className="mx-auto mt-10 max-w-3xl md:mt-12">
-                <div className="overflow-hidden rounded-[1.75rem] border border-border/40 bg-card/20">
+                <div className="overflow-hidden border border-border/40 bg-card/20">
                   <div className="relative aspect-square w-full">
                     <Image
                       src={ABOUT_HEADSHOT_URL}
@@ -431,7 +431,7 @@ export default function About() {
             <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-5">
               {navigationCards.map((card) => (
                 <Link key={card.href} href={card.href} className="group block">
-                  <div className="relative overflow-hidden rounded-[1.35rem] border border-border/40 bg-card/20">
+                  <div className="relative overflow-hidden border border-border/40 bg-card/20">
                     <div className="relative aspect-square w-full">
                       <Image
                         src={card.image}
@@ -486,7 +486,7 @@ export default function About() {
                   {bioArticleCards.map((article) => {
                     const articleCard = (
                       <div className="grid gap-5 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:items-start">
-                        <div className="relative aspect-square overflow-hidden rounded-[1.15rem] border border-border/35 bg-card/20">
+                        <div className="relative aspect-square overflow-hidden border border-border/35 bg-card/20">
                           {article.coverImageUrl ? (
                             <Image
                               src={article.coverImageUrl}
@@ -575,7 +575,7 @@ export default function About() {
                   }}
                   className="w-[min(84vw,36rem)] shrink-0 snap-start sm:w-[min(64vw,30rem)] md:w-[calc((100%-3rem)/3)]"
                 >
-                  <div className="overflow-hidden rounded-[1.5rem] bg-card/20">
+                  <div className="overflow-hidden bg-card/20">
                     <img
                       src={image.url}
                       alt={image.alt}

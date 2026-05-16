@@ -1483,7 +1483,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
           </header>
 
-          <div className="mx-auto mt-12 max-w-[88rem] overflow-hidden rounded-xl bg-white/[0.02]">
+          <div className="mx-auto mt-12 max-w-[88rem] overflow-hidden bg-white/[0.02]">
             {videoId ? (
               <DeferredYouTubeEmbed videoId={videoId} title={tutorial.title} eagerPoster />
             ) : (
@@ -1915,7 +1915,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
                   return (
                     <Link key={card.href} href={card.href} className="group block">
-                      <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-background/50">
+                      <div className="relative aspect-[1/1] overflow-hidden bg-background/50">
                         <Image
                           src={card.cover.src}
                           alt={card.cover.alt}

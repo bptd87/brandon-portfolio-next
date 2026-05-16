@@ -377,7 +377,7 @@ export default function TeachingPhilosophy() {
                     href={card.href}
                     className="group block"
                   >
-                    <div className="relative aspect-square w-full overflow-hidden rounded-[1rem]">
+                    <div className="relative aspect-square w-full overflow-hidden">
                       <Image
                         src={card.image}
                         alt={card.title}
@@ -427,7 +427,7 @@ export default function TeachingPhilosophy() {
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               {featuredWork.map((project) => (
                 <Link key={project.id} href={getProjectHref(project)} className="group block">
-                  <div className="relative aspect-[3/2] w-full overflow-hidden rounded-[1rem]">
+                  <div className="relative aspect-[3/2] w-full overflow-hidden">
                     <Image
                       src={project.coverImageUrl || ""}
                       alt={project.title}

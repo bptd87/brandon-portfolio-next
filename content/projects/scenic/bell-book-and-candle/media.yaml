@@ -2,7 +2,7 @@ gallery:
   - id: bbc-cover
     kind: cover
     asset: >-
-      https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90016-cover-7a4ed712.webp
+      /assets/projects/scenic/bell-book-and-candle/cover.webp
     alt: >-
       Bell, Book, and Candle scenic design cover at Okoboji Summer Theatre, with a grounded mid-century apartment and
       subtle magical atmosphere.

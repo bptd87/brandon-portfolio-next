@@ -107,7 +107,7 @@ function ArticleGridCard({
     <a href={href} onClick={(event) => onNavigate(event, href)}>
       <div className="group">
         <div
-          className="transition-card relative aspect-[1/1] overflow-hidden rounded-xl bg-background/50"
+          className="transition-card relative aspect-[1/1] overflow-hidden bg-background/50"
           style={{ viewTransitionName: `article-card-${article.slug}` } as CSSProperties}
         >
           {article.coverImageUrl ? (

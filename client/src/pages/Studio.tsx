@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowRight, BookOpen, Calendar, Play, Wrench } from "lucide-react";
+import { ArrowRight, BookOpen, Calendar } from "lucide-react";
 import { Link } from "wouter";
 
 import { AnimatedSection } from "@/components/AnimatedSection";
@@ -10,6 +10,10 @@ import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { formatUtcDate } from "@/lib/date-format";
+import {
+  LEARNING_PORTAL_ARTICLE_SLUG_SET,
+  RETIRED_LEARNING_ARTICLE_SLUG_SET,
+} from "@shared/learningPortal";
 import { getLocalArticles } from "@shared/localArticles";
 
 const apps = [
@@ -53,6 +57,15 @@ const apps = [
 
 const studioLinks = [
   {
+    title: "Tutorials",
+    href: "/studio/tutorials",
+    category: "Learning",
+    imageTitle: "Tutorials",
+    description: "Vectorworks lessons and learning articles for scenic drafting, rendering, and workflow.",
+    cta: "Open tutorials",
+    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-tutorials-cover.png",
+  },
+  {
     title: "Articles",
     href: "/articles",
     category: "Writing",
@@ -62,39 +75,40 @@ const studioLinks = [
     image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-articles-cover.png",
   },
   {
-    title: "Tutorials",
-    href: "/studio/tutorials",
-    category: "Video",
-    imageTitle: "Tutorials",
-    description: "Walkthroughs for drafting, rendering, and workflow built for scenic designers.",
-    cta: "Watch tutorials",
-    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-tutorials-cover.png",
-  },
-  {
     title: "Scenic Directory",
     href: "/studio/directory",
     category: "Reference",
-    imageTitle: "Scenic Directory",
+    imageTitle: "Directory",
     description: "A curated shelf of resources, archives, organizations, and research references.",
     cta: "Browse directory",
     image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-directory-cover.png",
   },
 ] as const;
 
-function formatArticleDate(value?: string | null) {
+function formatArticleDate(value?: string | Date | null) {
   return formatUtcDate(value, "short");
+}
+
+function getArticleTimestamp(value?: string | Date | null) {
+  if (!value) return 0;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? 0 : date.getTime();
 }
 
 export default function Studio() {
   const articles = getLocalArticles();
-  const latestArticles = articles.slice(0, 3);
+  const latestArticles = articles
+    .filter((article) => !LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug))
+    .filter((article) => !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(article.slug))
+    .sort((a, b) => getArticleTimestamp(b.publishedAt || b.createdAt) - getArticleTimestamp(a.publishedAt || a.createdAt))
+    .slice(0, 3);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title="Scenic Design Education Studio | Free Tools & Tutorials"
-        description="Scenic design education hub with articles, Vectorworks tutorials, interactive tools, and curated references for theatre designers."
-        keywords="scenic design education, Vectorworks tutorials, scenic design tools, theatre design resources, stage design learning"
+        title="Studio | Scenic Design Articles, Tutorials & Tools"
+        description="Studio resources for scenic design, including articles, Vectorworks tutorials, practical tools, and curated references for theatre designers."
+        keywords="scenic design studio, Vectorworks tutorials, scenic design articles, scenic design tools, theatre design resources"
         type="website"
         url="https://www.brandonptdavis.com/studio"
       />
@@ -110,9 +124,9 @@ export default function Studio() {
         collectionPage={{
           name: "Scenic Design Studio",
           url: "https://www.brandonptdavis.com/studio",
-          description: "Studio hub for scenic design tools, tutorials, and articles.",
+          description: "Studio hub for scenic design tools, tutorials, articles, and references.",
           about: "Scenic design education and workflow resources by Brandon PT Davis.",
-          primaryImageOfPage: articles?.[0]?.coverImageUrl || undefined,
+          primaryImageOfPage: studioLinks[0].image,
           mainEntity: {
             name: "Studio Resources",
             itemListElement: [
@@ -120,12 +134,13 @@ export default function Studio() {
                 position: index + 1,
                 name: item.title,
                 url: `https://www.brandonptdavis.com${item.href}`,
+                image: item.image,
               })),
               ...apps.map((app, index) => ({
                 position: studioLinks.length + index + 1,
                 name: app.title,
                 url: `https://www.brandonptdavis.com${app.href}`,
-                image: `https://www.brandonptdavis.com${app.image}`,
+                image: app.image,
               })),
             ],
           },
@@ -145,7 +160,7 @@ export default function Studio() {
                 Scenic design resources for working practice.
               </h1>
               <p className="mx-auto mt-7 max-w-3xl text-[1.02rem] leading-8 text-foreground/62 md:text-[1.12rem]">
-                A studio index for articles, tutorials, and tools that support scenic drafting,
+                A studio index for tutorials, articles, and references that support scenic drafting,
                 research, rendering, and production workflow.
               </p>
             </div>
@@ -159,7 +174,7 @@ export default function Studio() {
                 Studio Index
               </p>
               <h2 className="mt-4 font-sans text-[clamp(2.1rem,4vw,3.2rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
-                Articles, tutorials, and references in one place.
+                Tutorials, articles, and references in one place.
               </h2>
             </div>
           </AnimatedSection>
@@ -169,7 +184,7 @@ export default function Studio() {
               <AnimatedSection key={item.title} delay={index * 70}>
                 <Link href={item.href} className="group block">
                   <article className="border-t border-border/14 pt-4">
-                    <div className="relative overflow-hidden rounded-[1rem] border border-border/16 bg-card/10">
+                    <div className="relative overflow-hidden border border-border/16 bg-card/10">
                       <div className="relative aspect-square w-full">
                         <Image
                           src={item.image}
@@ -180,15 +195,13 @@ export default function Studio() {
                           className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                         />
                       </div>
-                      {item.imageTitle ? (
-                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-6 text-center">
-                          <div className="absolute inset-0 bg-black/10" />
-                          <p className="relative max-w-[11ch] font-sans text-[1.55rem] font-medium leading-[0.94] tracking-[-0.055em] text-white md:text-[1.75rem]">
-                            {item.imageTitle}
-                          </p>
-                        </div>
-                      ) : null}
-                      <div className="pointer-events-none absolute inset-0 rounded-[1rem] ring-1 ring-inset ring-white/5" />
+                      <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-6 text-center">
+                        <div className="absolute inset-0 bg-black/10" />
+                        <p className="relative max-w-[11ch] font-sans text-[1.45rem] font-medium leading-[0.94] tracking-[-0.055em] text-white md:text-[1.6rem]">
+                          {item.imageTitle}
+                        </p>
+                      </div>
+                      <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/5" />
                     </div>
 
                     <div className="mt-4 flex items-center justify-between gap-3">
@@ -232,7 +245,7 @@ export default function Studio() {
               <AnimatedSection key={app.title} delay={index * 70}>
                 <Link href={app.href} className="group block">
                   <article className="border-t border-border/14 pt-4">
-                    <div className="relative overflow-hidden rounded-[1rem] border border-border/16 bg-card/10">
+                    <div className="relative overflow-hidden border border-border/16 bg-card/10">
                       <div className="relative aspect-square w-full">
                         <Image
                           src={app.image}
@@ -243,7 +256,7 @@ export default function Studio() {
                           className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                         />
                       </div>
-                      <div className="pointer-events-none absolute inset-0 rounded-[1rem] ring-1 ring-inset ring-white/5" />
+                      <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/5" />
                     </div>
 
                     <div className="mt-4 flex items-center justify-between gap-3">
@@ -298,7 +311,7 @@ export default function Studio() {
                 <AnimatedSection key={article.id} delay={index * 70}>
                   <Link href={`/articles/${article.slug}`} className="group block">
                     <article className="border-t border-border/14 pt-4">
-                      <div className="relative overflow-hidden rounded-[1rem] border border-border/16 bg-card/10">
+                      <div className="relative overflow-hidden border border-border/16 bg-card/10">
                         {article.coverImageUrl ? (
                           <div className="relative aspect-square w-full">
                             <Image
@@ -315,7 +328,7 @@ export default function Studio() {
                             <BookOpen className="h-10 w-10 text-foreground/28" />
                           </div>
                         )}
-                        <div className="pointer-events-none absolute inset-0 rounded-[1rem] ring-1 ring-inset ring-white/5" />
+                        <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/5" />
                       </div>
 
                       <div className="mt-4 flex items-center justify-between gap-3">

@@ -144,7 +144,7 @@ export default function SyllabusExperiential() {
 
       <section className="px-6 py-8 md:py-12">
         <div className="mx-auto grid max-w-[88rem] items-center gap-10 xl:grid-cols-[minmax(18rem,0.95fr)_minmax(0,1.05fr)]">
-          <div className="overflow-hidden rounded-[1.5rem] border border-border/30 bg-card/20">
+          <div className="overflow-hidden border border-border/30 bg-card/20">
             <div className="relative aspect-square w-full">
               <Image
                 src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/teaching/syllabus-experiential-art.png"
@@ -323,9 +323,9 @@ export default function SyllabusExperiential() {
             <div className="mt-10">
               <Link
                 href={`/articles/${featuredCourseArticle.slug}`}
-                className="group block overflow-hidden rounded-[1.75rem] border border-border/25 bg-card/10 transition-colors hover:border-border/40 hover:bg-card/14"
+                className="group block overflow-hidden border border-border/25 bg-card/10 transition-colors hover:border-border/40 hover:bg-card/14"
               >
-                <div className="overflow-hidden rounded-t-[1.75rem] border-b border-border/20 bg-card/20">
+                <div className="overflow-hidden border-b border-border/20 bg-card/20">
                   <div className="mx-auto max-w-6xl">
                     <div className="relative aspect-[16/8] w-full">
                       <Image
@@ -337,7 +337,7 @@ export default function SyllabusExperiential() {
                         fill
                         quality={82}
                         sizes="(max-width: 768px) 100vw, 72rem"
-                        className="rounded-t-[1.75rem] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                        className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                       />
                     </div>
                   </div>

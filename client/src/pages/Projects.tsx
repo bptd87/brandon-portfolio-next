@@ -87,7 +87,7 @@ function ProjectCard({
     <a href={href} onClick={(event) => onNavigate(event, href)}>
       <div className="group">
         <div
-          className="transition-card relative aspect-square overflow-hidden rounded-xl bg-background/50"
+          className="transition-card relative aspect-[4/3] overflow-hidden bg-background/50"
           style={{ viewTransitionName: `project-card-${project.slug}` } as CSSProperties}
         >
           {project.coverImageUrl ? (
@@ -103,18 +103,18 @@ function ProjectCard({
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 25vw, 20vw"
             />
           ) : (
-            <div className="aspect-square w-full bg-muted" />
+            <div className="aspect-[4/3] w-full bg-muted" />
           )}
         </div>
 
         <div className="pt-4">
-          <p className="text-[1.02rem] font-normal tracking-[-0.02em] text-white/88">
+          <p className="text-[clamp(1.08rem,1.35vw,1.38rem)] font-normal leading-[1.02] tracking-[-0.035em] text-white/90">
             {project.title}
           </p>
           {(getVenueLabel(project) || formatProjectDate(project)) ? (
             <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm tracking-[-0.01em]">
               {getVenueLabel(project) ? (
-                <span className="text-white/82">{getVenueLabel(project)}</span>
+                <span className="text-white/68">{getVenueLabel(project)}</span>
               ) : null}
               {formatProjectDate(project) ? (
                 <span className="text-white/42">{formatProjectDate(project)}</span>
@@ -232,7 +232,7 @@ export default function Projects({
   const pageTitle = scenicPortfolioLandingCopy.title;
   const pageSubtitle = scenicPortfolioLandingCopy.subtitle;
   const pageDescription =
-    "Use category, venue, and date filters to move through scenic design productions and compare venues, timelines, and production contexts.";
+    "Scenic design productions by Brandon PT Davis, spanning plays, musicals, Shakespeare, new work, and regional theatre environments.";
   const pageIntro = scenicPortfolioLandingCopy.intro;
   const scenicAlt = (title: string) => `${title} scenic design by Brandon PT Davis`;
   const selectedCategoryLabel =
@@ -245,12 +245,6 @@ export default function Projects({
         : selectedYear !== "all"
           ? selectedYear
           : pageTitle;
-  const currentHeadingMeta = [
-    selectedVenue !== "all" ? "Venue" : null,
-    selectedCategoryLabel ? "Category" : null,
-    selectedYear !== "all" ? "Date" : null,
-  ].filter(Boolean);
-
   const activeFilterCount =
     (selectedVenue !== "all" ? 1 : 0) + (selectedYear !== "all" ? 1 : 0);
   const scenicArchiveTitle =
@@ -428,17 +422,17 @@ export default function Projects({
       <main>
         <section className="border-b border-border/40 pb-8 pt-24 md:pb-10 md:pt-28">
           <div className="container max-w-[88rem]">
-            <div className="max-w-3xl">
+            <div className="max-w-5xl">
               {currentHeading === pageTitle ? (
                 <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.24em] text-white/42">
                   {pageSubtitle}
                 </p>
               ) : null}
-              <h1 className="font-sans text-[clamp(2.3rem,4.6vw,3.8rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
+              <h1 className="font-sans text-[clamp(3.2rem,7vw,7.1rem)] font-medium leading-[0.86] tracking-[-0.065em] text-white">
                 {currentHeading}
               </h1>
               {currentHeading === pageTitle ? (
-                <p className="mt-6 max-w-3xl text-[1rem] leading-7 text-white/58 md:text-[1.05rem]">
+                <p className="mt-7 max-w-3xl text-[1.02rem] leading-7 text-white/62 md:text-[1.12rem]">
                   {pageIntro}
                 </p>
               ) : null}
@@ -776,18 +770,18 @@ export default function Projects({
             <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
               About This Portfolio
             </p>
-            <div className="mt-4 grid gap-10 lg:grid-cols-2">
+            <div className="mt-4 grid gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(20rem,0.8fr)]">
               <div className="space-y-5">
                 <h2 className="font-sans text-[clamp(1.6rem,3vw,2.4rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-white">
-                  Scenic Design Portfolio in Practice
+                  Scenic design work, organized by production.
                 </h2>
-                <p className="max-w-3xl text-[1rem] leading-7 text-white/62 md:text-[1.05rem]">
+                <p className="max-w-3xl text-[1rem] leading-7 text-white/64 md:text-[1.05rem]">
                   As a USA 829 scenic designer, this portfolio documents production work across
                   regional theatre, summer stock, and academic performance. The material includes
                   concept development, drafting, white models, rendering studies, and realized
                   stage photography.
                 </p>
-                <p className="max-w-3xl text-[1rem] leading-7 text-white/55 md:text-[1.05rem]">
+                <p className="max-w-3xl text-[1rem] leading-7 text-white/56 md:text-[1.05rem]">
                   Each project begins with the script and the collaborative framework around it,
                   then moves through research, spatial study, drafting coordination, and production
                   execution. The aim is consistent: environments that support story, performer
@@ -795,18 +789,18 @@ export default function Projects({
                 </p>
               </div>
 
-              <div className="space-y-4 rounded-xl bg-card/20 p-6 md:p-8">
+              <div className="border-t border-border/35 pt-5 lg:border-t-0 lg:pt-0">
                 <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
                   Core Focus Areas
                 </h3>
-                <ul className="space-y-3 text-sm text-white/62 md:text-base">
-                  <li>Scenic design for plays and musicals</li>
-                  <li>Drafting and build documentation for production teams</li>
-                  <li>Rendering studies for visual communication and alignment</li>
-                  <li>Collaboration with lighting, costume, and technical teams</li>
-                  <li>Story-driven environments for live performance</li>
+                <ul className="mt-4 divide-y divide-border/35 text-sm text-white/64 md:text-base">
+                  <li className="py-3">Scenic design for plays and musicals</li>
+                  <li className="py-3">Drafting and build documentation for production teams</li>
+                  <li className="py-3">Rendering studies for visual communication and alignment</li>
+                  <li className="py-3">Collaboration with lighting, costume, and technical teams</li>
+                  <li className="py-3">Story-driven environments for live performance</li>
                 </ul>
-                <p className="pt-2 text-xs uppercase tracking-[0.18em] text-white/42">
+                <p className="pt-4 text-xs uppercase tracking-[0.18em] text-white/42">
                   USA 829 • Southern California • Available Nationally
                 </p>
               </div>

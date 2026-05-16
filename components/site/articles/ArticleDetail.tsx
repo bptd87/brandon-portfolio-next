@@ -123,7 +123,7 @@ function ArticleBody({ article }: { article: LocalArticle }) {
             );
           case "image":
             return (
-              <figure key={index} className="my-12 overflow-hidden rounded-[1.25rem] border border-white/10">
+              <figure key={index} className="my-12 overflow-hidden border border-white/10">
                 <img
                   src={block.url}
                   alt={block.alt || block.caption || ""}
@@ -145,7 +145,7 @@ function ArticleBody({ article }: { article: LocalArticle }) {
                   {(block.images || []).map((image: { url: string; alt?: string; caption?: string }, imageIndex: number) => (
                     <figure
                       key={imageIndex}
-                      className="overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/[0.03]"
+                      className="overflow-hidden border border-white/10 bg-white/[0.03]"
                     >
                       <img
                         src={image.url}
@@ -263,7 +263,7 @@ function RelatedProjectCard({ project }: { project: LocalScenicProject }) {
   return (
     <Link href={`/project/${project.slug}`} className="group block">
       <article className="flex gap-4 rounded-[1.25rem] border border-white/10 bg-white/[0.03] p-4 transition-colors hover:border-white/16 hover:bg-white/[0.045]">
-        <div className="h-24 w-24 flex-none overflow-hidden rounded-[0.95rem] bg-black/35">
+        <div className="h-24 w-24 flex-none overflow-hidden bg-black/35">
           {project.coverImageUrl ? (
             <img
               src={project.coverImageUrl}
@@ -324,7 +324,7 @@ export default function ArticleDetail({
           ) : null}
 
           {article.coverImageUrl ? (
-            <figure className="mx-auto mt-12 max-w-6xl overflow-hidden rounded-[1.5rem] border border-white/10 bg-black/30">
+            <figure className="mx-auto mt-12 max-w-6xl overflow-hidden border border-white/10 bg-black/30">
               <img
                 src={article.coverImageUrl}
                 alt={article.coverImageAlt || article.title}

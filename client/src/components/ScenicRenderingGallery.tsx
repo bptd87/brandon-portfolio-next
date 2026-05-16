@@ -60,11 +60,11 @@ export default function ScenicRenderingGallery({
               onClick={() => onOpen(item.id)}
               className="block w-full text-left"
             >
-              <div className={squareItems ? "aspect-square overflow-hidden rounded-xl" : ""}>
+              <div className={squareItems ? "aspect-square overflow-hidden" : ""}>
                 <img
                   src={item.imageUrl}
                   alt={item.altText}
-                  className={`block w-full rounded-xl object-cover transition-transform duration-500 hover:scale-[1.01] ${
+                  className={`block w-full object-cover transition-transform duration-500 hover:scale-[1.01] ${
                     squareItems ? "h-full" : ""
                   }`}
                 />

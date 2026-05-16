@@ -1,9 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { ChevronDown, X } from "lucide-react";
-import BrandMark from "./BrandMark";
+import { recentScenicProjects } from "./navigationData";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -134,17 +135,12 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }: MobileMenu
       <div className="fixed inset-x-0 top-0 z-50 h-[100dvh] overflow-y-auto border-b border-border/35 bg-background/96 backdrop-blur-2xl">
         <div className="container flex min-h-full flex-col py-5">
           <div className="flex items-start justify-between gap-6 border-b border-border/35 pb-5">
-            <Link href="/" onClick={onClose} className="inline-flex items-center gap-0 leading-none">
-              <span className="relative flex h-[3.2rem] w-[3.2rem] shrink-0 items-center justify-center">
-                <BrandMark className="h-full w-full" />
+            <Link href="/" onClick={onClose} className="inline-flex min-w-0 flex-col leading-none">
+              <span className="font-sans text-[1.42rem] font-black leading-[0.88] tracking-[-0.075em] text-foreground">
+                BRANDON PT DAVIS
               </span>
-              <span className="-ml-[4px] flex min-w-0 flex-col items-start justify-center pt-[1px]">
-                <span className="text-[1.12rem] font-black tracking-[-0.055em] text-foreground">
-                  BRANDON PT DAVIS
-                </span>
-                <span className="mt-1 pl-[0.06rem] text-[8.5px] font-medium uppercase tracking-[0.28em] text-foreground/48">
-                  SCENIC DESIGN
-                </span>
+              <span className="mt-1.5 font-sans text-[9px] font-semibold uppercase leading-none tracking-[0.34em] text-foreground/48">
+                SCENIC DESIGN
               </span>
             </Link>
 
@@ -206,6 +202,43 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }: MobileMenu
                 pathname={pathname}
               />
             </nav>
+
+            <div className="mt-9 border-t border-border/35 pt-5">
+              <div className="mb-4 flex items-center justify-between gap-4">
+                <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-foreground/42">
+                  Recent Scenic Design
+                </p>
+                <Link
+                  href="/projects"
+                  onClick={onClose}
+                  className="text-sm font-medium tracking-[-0.02em] text-foreground/58"
+                >
+                  Portfolio
+                </Link>
+              </div>
+              <div className="space-y-4">
+                {recentScenicProjects.map((project) => (
+                  <Link key={project.href} href={project.href} onClick={onClose} className="group grid grid-cols-[5.7rem_1fr] gap-4">
+                    <div className="relative aspect-[4/3] overflow-hidden rounded-[0.75rem] border border-border/35 bg-foreground/[0.035]">
+                      <Image
+                        src={project.imageUrl}
+                        alt={project.imageAlt}
+                        fill
+                        quality={74}
+                        sizes="96px"
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex min-w-0 flex-col justify-center">
+                      <p className="font-sans text-[1rem] font-medium leading-[1.08] tracking-[-0.035em] text-foreground">
+                        {project.title}
+                      </p>
+                      <p className="mt-1 text-xs leading-5 text-foreground/45">{project.meta}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
 
           <div className="mt-8 flex flex-col gap-3 border-t border-border/35 pt-5">

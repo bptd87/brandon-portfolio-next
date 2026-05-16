@@ -60,7 +60,7 @@ function ShowcaseCard({
     <a href={href} onClick={(event) => onNavigate(event, href)} className="group block">
       <div
         data-showcase-card-media="true"
-        className="transition-card relative aspect-square overflow-hidden rounded-xl bg-background/50"
+        className="transition-card relative aspect-[4/3] overflow-hidden bg-background/50"
         style={{ viewTransitionName: `project-card-${item.slug}` } as CSSProperties}
       >
         {item.coverImageUrl ? (
@@ -323,7 +323,7 @@ export function StickyShowcase({
               >
                 <div
                   ref={leadMediaRef}
-                  className={`transition-card relative aspect-[1/1] overflow-hidden rounded-xl bg-background/50 md:aspect-[4/3] ${
+                  className={`transition-card relative aspect-[1/1] overflow-hidden bg-background/50 md:aspect-[4/3] ${
                     leadAspectClassName || "lg:aspect-[16/9]"
                   }`}
                   style={{ viewTransitionName: `project-card-${featuredItem.slug}` } as CSSProperties}

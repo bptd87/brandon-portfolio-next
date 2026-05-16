@@ -2262,9 +2262,9 @@ const headOverHeelsProject: LocalScenicProject = {
   seoKeywords:
     "Head Over Heels scenic design, Theatre SilCo, Brandon PT Davis, musical theatre design, Go-Go's musical, club-inspired stage design",
   coverImageUrl:
-    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-cover-de6a3605.webp",
-  coverImagePosition: "center top",
-  coverImageFit: "contain",
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150097-e2770c1c.webp",
+  coverImagePosition: "center",
+  coverImageFit: "cover",
   creativeTeam: [
     { name: "Jeff Whitty", role: "Book By" },
     { name: "James Magruder", role: "Adapted By" },
@@ -2293,8 +2293,9 @@ const headOverHeelsProject: LocalScenicProject = {
       id: "hoh-cover",
       type: "image",
       imageUrl:
-        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-cover-de6a3605.webp",
-      altText: "Scenic design for Head Over Heels by Brandon PT Davis.",
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90044-gallery-150097-e2770c1c.webp",
+      altText:
+        "Production image from Head Over Heels showing the modular Arcadian world, scenic design by Brandon PT Davis.",
       kind: "cover",
     },
     {

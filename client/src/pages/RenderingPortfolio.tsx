@@ -1,16 +1,15 @@
 "use client";
 
+import { useState } from "react";
 import { Link } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
-import { RenderingFAQ } from "@/components/RenderingFAQ";
-import { useEffect } from "react";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
-import { formatUtcDate } from "@/lib/date-format";
-import { getLocalRenderingGallery, getLocalRenderingProjects } from "@shared/localPortfolios";
 import { getLocalArticles } from "@shared/localArticles";
+import { getLocalRenderingGallery, getLocalRenderingProjects } from "@shared/localPortfolios";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 
 const RENDERING_PORTFOLIO_URL = "https://www.brandonptdavis.com/projects/rendering";
 const RENDERING_PORTFOLIO_TITLE = "Scenic Rendering Portfolio | Brandon PT Davis";
@@ -30,10 +29,6 @@ const RENDERING_PORTFOLIO_KEYWORDS = [
 export default function RenderingPortfolio() {
   const projects = getLocalRenderingProjects().filter((project) => !project.galleryOnly);
   const galleryItems = getLocalRenderingGallery();
-  const renderingSeriesArticles = getLocalArticles()
-    .filter((article) => article.series?.slug === "design-communication")
-    .sort((a, b) => (a.series?.order || 0) - (b.series?.order || 0));
-
   const isLoading = false;
 
   // 1. Process Gallery Items (for the middle section)
@@ -45,6 +40,7 @@ export default function RenderingPortfolio() {
     slug: item.project?.slug || '',
     year: item.project?.year || null,
     client: item.project?.client,
+    excerpt: item.project?.excerpt || item.project?.designNotes,
     designNotes: item.project?.designNotes,
     images: (item.project?.images || []).map(img => ({
       id: img.id,
@@ -69,16 +65,25 @@ export default function RenderingPortfolio() {
     excerpt: p.excerpt
   })) || [];
 
-  const showcaseItems = [...featuredDisplayItems, ...galleryDisplayItems]
+  const allRenderingItems = [...featuredDisplayItems, ...galleryDisplayItems]
     .filter((item) => item.slug && item.imageUrl)
+    .filter((item, index, list) => list.findIndex((candidate) => candidate.slug === item.slug) === index);
+  const showcaseItems = allRenderingItems.slice(0, 5);
+  const relatedRenderingArticles = getLocalArticles()
+    .filter(
+      (article) =>
+        article.series?.slug === "vectorworks-rendering" ||
+        article.tags?.some((tag) => tag.slug === "scenic-rendering")
+    )
+    .sort((a, b) => {
+      const seriesOrder = (a.series?.order || 99) - (b.series?.order || 99);
+      if (seriesOrder !== 0) return seriesOrder;
+      return new Date(a.publishedAt).getTime() - new Date(b.publishedAt).getTime();
+    })
     .slice(0, 4);
-  const showcaseFeatured = showcaseItems[0];
-  const showcaseSupporting = showcaseItems.slice(1, 4);
-  const remainingFeaturedItems = featuredDisplayItems.filter(
-    (item) => !showcaseItems.some((showcaseItem) => showcaseItem.id === item.id)
-  );
+  const [activeShowcaseIndex, setActiveShowcaseIndex] = useState(0);
   const renderingPortfolioImage =
-    featuredDisplayItems[0]?.imageUrl || galleryDisplayItems[0]?.imageUrl || undefined;
+    allRenderingItems[0]?.imageUrl || undefined;
   const renderingPortfolioUpdatedDate = (projects || []).reduce((latest, project) => {
     const candidate = project.updatedAt || project.publishedAt || project.createdAt;
     if (!candidate) return latest;
@@ -87,7 +92,7 @@ export default function RenderingPortfolio() {
   }, "");
   const renderingPortfolioImages = Array.from(
     new Set(
-      [...featuredDisplayItems, ...galleryDisplayItems]
+      allRenderingItems
         .map((item) => item.imageUrl)
         .filter((value): value is string => Boolean(value))
     )
@@ -98,7 +103,7 @@ export default function RenderingPortfolio() {
         title={RENDERING_PORTFOLIO_TITLE}
         description={RENDERING_PORTFOLIO_DESCRIPTION}
         image={renderingPortfolioImage}
-        imageAlt={featuredDisplayItems[0]?.altText || galleryDisplayItems[0]?.altText || "Scenic rendering portfolio image"}
+        imageAlt={allRenderingItems[0]?.altText || "Scenic rendering portfolio image"}
         keywords={RENDERING_PORTFOLIO_KEYWORDS}
         url={RENDERING_PORTFOLIO_URL}
       />
@@ -120,7 +125,7 @@ export default function RenderingPortfolio() {
           primaryImageOfPage: renderingPortfolioImage,
           mainEntity: {
             name: "Rendering Projects",
-            itemListElement: [...featuredDisplayItems, ...galleryDisplayItems]
+            itemListElement: allRenderingItems
               .filter((item) => item.slug)
               .map((item, index) => ({
                 position: index + 1,
@@ -135,7 +140,7 @@ export default function RenderingPortfolio() {
       <StructuredData
         type="CreativeWork"
         creativeWork={{
-          name: "Scenic Renderings",
+          name: "Rendering",
           description: RENDERING_PORTFOLIO_DESCRIPTION,
           url: RENDERING_PORTFOLIO_URL,
           creator: {
@@ -149,7 +154,7 @@ export default function RenderingPortfolio() {
           dateModified: renderingPortfolioUpdatedDate || undefined,
           keywords: RENDERING_PORTFOLIO_KEYWORDS.split(", "),
           image: renderingPortfolioImages,
-          workExample: [...featuredDisplayItems, ...galleryDisplayItems]
+          workExample: allRenderingItems
             .filter((item) => item.imageUrl)
             .slice(0, 12)
             .map((item) => ({
@@ -162,87 +167,99 @@ export default function RenderingPortfolio() {
       />
       <Header />
 
-      <section className="pt-12 md:pt-16">
-        <div className="container max-w-[88rem]">
-          <div className="mx-auto max-w-5xl text-center">
-            <h1 className="font-sans text-[clamp(2.5rem,6vw,5.3rem)] font-normal leading-[0.94] tracking-[-0.06em] text-white">
-              Renderings
-            </h1>
-            <p className="mx-auto mt-6 max-w-[44rem] text-[clamp(1.04rem,1.7vw,1.5rem)] leading-[1.5] tracking-[-0.02em] text-white/76">
-              Pre-production renderings developed to clarify atmosphere, spatial rhythm, and visual intent
-              before teams move into drafting, budgeting, and fabrication.
-            </p>
+      {showcaseItems.length > 0 ? (
+        <section className="relative min-h-[calc(100svh-74px)] overflow-hidden border-b border-white/10 bg-background">
+          <div className="absolute inset-0">
+            {showcaseItems.map((item, index) => (
+              <img
+                key={item.slug}
+                src={item.imageUrl || ""}
+                alt={item.altText}
+                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out ${
+                  index === activeShowcaseIndex ? "opacity-100" : "opacity-0"
+                }`}
+                loading={index === 0 ? "eager" : "lazy"}
+                fetchPriority={index === 0 ? "high" : "auto"}
+              />
+            ))}
+            <div className="absolute inset-0 bg-black/12" />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.62)_0%,rgba(0,0,0,0.34)_36%,rgba(0,0,0,0.04)_74%)]" />
+            <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background/48 to-transparent" />
           </div>
-        </div>
-      </section>
 
-      {showcaseItems.length > 0 && (
-        <section className="pb-10 pt-14 md:pb-14 md:pt-16">
-          <div className="container max-w-[88rem]">
-            <div className="border-t border-white/12 pt-5">
-              <p className="text-[0.78rem] uppercase tracking-[0.24em] text-white/46">Concept Renderings</p>
-              <h2 className="mt-3 max-w-[18ch] font-sans text-[clamp(1.9rem,3vw,3.1rem)] font-normal leading-[0.98] tracking-[-0.05em] text-white">
-                Image-first concept work built to establish scenic tone and visual argument.
-              </h2>
-              <p className="mt-4 max-w-[42rem] text-[1rem] leading-8 text-white/72">
-                These featured renderings are closer to concept framing than documentation: atmosphere, material
-                language, and narrative tone established early enough to guide scenic design conversations.
-              </p>
-            </div>
+          <div className="relative flex min-h-[calc(100svh-74px)] items-end px-[clamp(1.5rem,5vw,6rem)] pb-10 pt-14 md:pb-14">
+            <div className="w-full">
+              <div className="max-w-[58rem]">
+                {showcaseItems.map((item, index) => {
+                  const active = index === activeShowcaseIndex;
 
-            <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
-              {showcaseItems.map((item) => (
-                <Link
-                  key={item.id}
-                  href={`/projects/rendering/${item.slug}`}
-                  className="group block"
+                  return (
+                    <a
+                      key={item.slug}
+                      href={`/projects/rendering/${item.slug}`}
+                      onMouseEnter={() => setActiveShowcaseIndex(index)}
+                      onFocus={() => setActiveShowcaseIndex(index)}
+                      className={`group block w-fit transition-colors ${
+                        active ? "text-white" : "text-white/58 hover:text-white"
+                      }`}
+                    >
+                      <span className="flex flex-wrap items-baseline gap-x-3">
+                        <span className="font-sans text-[clamp(1.8rem,4vw,4.15rem)] font-medium leading-[0.94] tracking-[-0.064em]">
+                          {item.title}
+                        </span>
+                        {item.year ? (
+                          <span className="font-sans text-[clamp(0.8rem,1.4vw,1.05rem)] font-semibold leading-none tracking-[0.04em] text-white/70">
+                            {item.year}
+                          </span>
+                        ) : null}
+                      </span>
+                    </a>
+                  );
+                })}
+              </div>
+
+              <div className="mt-8 flex justify-end text-white/64">
+                <a
+                  href="#rendering"
+                  className="inline-flex w-fit items-center gap-3 font-sans text-sm font-medium uppercase tracking-[0.12em] text-white/72 transition-colors hover:text-white"
                 >
-                  <div className="overflow-hidden rounded-xl bg-white/[0.02] p-3">
-                    <div className="flex h-[20rem] items-center justify-center md:h-[22rem]">
-                      <ProgressiveImage
-                        src={item.imageUrl!}
-                        alt={item.altText}
-                        className="max-h-full w-auto max-w-full rounded-lg object-contain transition-transform duration-500 group-hover:scale-[1.015]"
-                      />
-                    </div>
-                  </div>
-                  <div className="pt-3">
-                    <h3 className="text-[1.12rem] font-sans font-normal leading-[1.14] tracking-[-0.03em] text-white">
-                      {item.title}
-                    </h3>
-                    <p className="mt-1 text-[0.94rem] tracking-[-0.02em] text-white/52">
-                      {[item.client, item.year].filter(Boolean).join(" · ")}
-                    </p>
-                  </div>
-                </Link>
-              ))}
+                  Scroll
+                  <ArrowDown className="h-4 w-4" />
+                </a>
+              </div>
             </div>
           </div>
         </section>
-      )}
+      ) : null}
 
-      {remainingFeaturedItems.length > 0 && (
-        <section className="pb-8 pt-16 md:pb-12">
-          <div className="container max-w-[88rem]">
-            <div className="mb-8 flex items-end justify-between">
-              <h2 className="text-2xl font-sans font-normal tracking-[-0.05em] text-white md:text-3xl">
-                Scenic Design Renderings
-              </h2>
+      {allRenderingItems.length > 0 && (
+        <section id="rendering" className="scroll-mt-24 px-[clamp(1.5rem,5vw,6rem)] py-16 md:py-20">
+          <div className="mx-auto max-w-[96rem]">
+            <div className="border-t border-white/14 pt-5">
+              <div>
+                <h1 className="max-w-[12ch] font-sans text-[clamp(3rem,6vw,6rem)] font-normal leading-[0.86] tracking-[-0.074em] text-white">
+                  Rendering
+                </h1>
+                <p className="mt-6 max-w-[42rem] text-[1rem] leading-7 tracking-[-0.015em] text-white/62 md:text-[1.08rem]">
+                  Concept images, scenic studies, and production visualizations used to test
+                  atmosphere, scale, color, and story before the work reaches the stage.
+                </p>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {remainingFeaturedItems.map((item) => (
+            <div className="mt-12 space-y-14 md:space-y-16">
+              {allRenderingItems.map((item) => (
                 <Link
                   key={item.id}
                   href={`/projects/rendering/${item.slug}`}
-                  className="group block"
+                  className="group grid gap-5 border-t border-white/12 pt-5 md:grid-cols-[minmax(0,1.25fr)_minmax(18rem,0.55fr)] md:items-start"
                 >
-                  <div className="aspect-[16/10] overflow-hidden rounded-xl bg-white/[0.02]">
+                  <div className="aspect-[16/9] overflow-hidden bg-white/[0.02]">
                     {item.imageUrl ? (
                       <ProgressiveImage
                         src={item.imageUrl}
                         alt={item.altText}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.015]"
                       />
                     ) : (
                       <div className="flex h-full w-full items-center justify-center text-white/42">
@@ -250,56 +267,18 @@ export default function RenderingPortfolio() {
                       </div>
                     )}
                   </div>
-                  <div className="pt-4">
-                    <h3 className="text-[1.35rem] font-sans font-normal leading-[1.08] tracking-[-0.04em] text-white">
-                      {item.title}
-                    </h3>
-                    <p className="mt-2 text-[0.98rem] tracking-[-0.02em] text-white/54">
+                  <div className="md:pt-1">
+                    <p className="text-[0.82rem] uppercase tracking-[0.18em] text-white/42">
                       {[item.client, item.year].filter(Boolean).join(" · ")}
                     </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {galleryDisplayItems.length > 0 && (
-        <section className="border-t border-white/12 py-16 md:py-20">
-          <div className="container max-w-[88rem]">
-            <div className="mb-8 flex items-end justify-between">
-              <h2 className="text-2xl font-sans font-normal tracking-[-0.05em] text-white md:text-3xl">
-                Process and Alternate Views
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {galleryDisplayItems.map((item, index) => (
-                <Link
-                  key={item.id}
-                  href={`/projects/rendering/${item.slug}`}
-                  className="group block"
-                >
-                  <div className="space-y-4">
-                    <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-white/[0.02]">
-                      {item.imageUrl && (
-                        <ProgressiveImage
-                          src={item.imageUrl}
-                          alt={item.altText}
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                        />
-                      )}
-                      <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/12" />
-                    </div>
-                    <div>
-                      <h3 className="text-[1.25rem] font-sans font-normal leading-[1.12] tracking-[-0.04em] text-white">
-                        {item.title}
-                      </h3>
-                      <p className="mt-2 text-[0.98rem] tracking-[-0.02em] text-white/54">
-                        {[item.client, item.year].filter(Boolean).join(" · ")}
+                    <h3 className="mt-4 font-sans text-[clamp(1.8rem,3vw,3.35rem)] font-normal leading-[0.94] tracking-[-0.06em] text-white transition-colors group-hover:text-white/76">
+                      {item.title}
+                    </h3>
+                    {item.excerpt ? (
+                      <p className="mt-5 max-w-[30rem] text-[0.98rem] leading-7 tracking-[-0.02em] text-white/62">
+                        {item.excerpt}
                       </p>
-                    </div>
+                    ) : null}
                   </div>
                 </Link>
               ))}
@@ -308,83 +287,52 @@ export default function RenderingPortfolio() {
         </section>
       )}
 
-      <section className="border-t border-white/12 py-16 md:py-20">
-        <div className="container max-w-[88rem]">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
-            <div>
-              <h2 className="text-2xl font-sans font-normal tracking-[-0.05em] text-white md:text-3xl">
-                Rendering in Practice
-              </h2>
-              <p className="mt-5 max-w-[40rem] text-[1.04rem] leading-8 text-white/72">
-                These renderings are built to align collaborators before scenic decisions harden into drafting,
-                budgets, and construction. The focus is always readability: atmosphere, composition, material
-                hierarchy, and staging intent made clear early enough to shape the conversation.
+      {relatedRenderingArticles.length > 0 ? (
+        <section className="border-t border-white/12 px-[clamp(1.5rem,5vw,6rem)] py-16 md:py-20">
+          <div className="mx-auto max-w-[96rem]">
+            <div className="mb-10 max-w-3xl">
+              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/42">
+                Rendering Notes
               </p>
+              <h2 className="font-sans text-[clamp(2rem,4vw,4rem)] font-normal leading-[0.92] tracking-[-0.065em] text-white">
+                Process writing and Vectorworks rendering workflow.
+              </h2>
             </div>
-            <div className="max-w-[34rem]">
-              <ul className="space-y-3 text-[1rem] leading-7 text-white/68">
-                <li>Atmosphere and light studies for design alignment</li>
-                <li>Visual communication for directors and collaborators</li>
-                <li>Renderings that clarify scenic rhythm and staging focus</li>
-                <li>Alternate views and exploratory image sets for process review</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {renderingSeriesArticles.length > 0 && (
-        <section className="border-t border-white/12 py-16 md:py-20">
-          <div className="container max-w-[88rem]">
-            <div className="mb-8 flex items-end justify-between gap-6">
-              <div>
-                <p className="text-[0.78rem] uppercase tracking-[0.24em] text-white/46">
-                  Design Communication
-                </p>
-                <h2 className="mt-3 text-2xl font-sans font-normal tracking-[-0.05em] text-white md:text-3xl">
-                  Rendering articles connected to this body of work
-                </h2>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              {renderingSeriesArticles.map((article) => (
-                <Link key={article.id} href={`/articles/${article.slug}`} className="group block">
-                  <div className="grid gap-5 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:items-start">
-                    <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-white/[0.02]">
-                      {article.coverImageUrl ? (
-                        <ProgressiveImage
-                          src={article.coverImageUrl}
-                          alt={article.coverImageAlt || article.title}
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 8.5rem, 8.5rem"
-                        />
-                      ) : (
-                        <div className="h-full w-full bg-muted" />
-                      )}
-                    </div>
-                    <div className="pt-1">
-                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-white/52">
-                        <span>Part {article.series?.order}</span>
-                        <span>{article.categoryName}</span>
-                        {article.publishedAt ? <span>{formatUtcDate(article.publishedAt, "short")}</span> : null}
-                      </div>
-                      <h3 className="mt-3 text-[1.3rem] font-sans font-normal leading-[1.08] tracking-[-0.04em] text-white transition-colors group-hover:text-white/84">
-                        {article.title}
-                      </h3>
-                      <p className="mt-3 max-w-[34rem] text-[0.98rem] leading-7 tracking-[-0.02em] text-white/64">
-                        {article.excerpt}
-                      </p>
-                    </div>
+            <div className="grid gap-x-8 gap-y-10 md:grid-cols-2 xl:grid-cols-4">
+              {relatedRenderingArticles.map((article) => (
+                <Link
+                  key={article.slug}
+                  href={`/studio/tutorials/${article.slug}`}
+                  className="group block border-t border-white/12 pt-5"
+                >
+                  <div className="aspect-[4/3] overflow-hidden bg-white/[0.02]">
+                    <ProgressiveImage
+                      src={article.coverImageUrl}
+                      alt={article.coverImageAlt}
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                    />
+                  </div>
+                  <div className="pt-4">
+                    <p className="text-[0.78rem] uppercase tracking-[0.18em] text-white/42">
+                      {article.series?.name || article.categoryName}
+                    </p>
+                    <h3 className="mt-3 font-sans text-[1.32rem] font-normal leading-[1.02] tracking-[-0.04em] text-white transition-colors group-hover:text-white/72">
+                      {article.title}
+                    </h3>
+                    <p className="mt-4 text-[0.94rem] leading-6 tracking-[-0.01em] text-white/56">
+                      {article.excerpt}
+                    </p>
+                    <span className="mt-5 inline-flex items-center gap-2 text-[0.9rem] tracking-[-0.015em] text-white/68 transition-colors group-hover:text-white">
+                      Read tutorial
+                      <ArrowUpRight className="h-4 w-4" />
+                    </span>
                   </div>
                 </Link>
               ))}
             </div>
           </div>
         </section>
-      )}
-
-      <RenderingFAQ />
+      ) : null}
 
       <Footer />
     </div>

@@ -30,7 +30,7 @@ function PortfolioLinkCard({ production }: { production: UpcomingProduction }) {
         href={production.portfolioHref}
         className="group flex items-start gap-5"
       >
-        <div className="relative h-36 w-36 flex-none overflow-hidden rounded-xl bg-black/85">
+        <div className="relative h-36 w-36 flex-none overflow-hidden bg-black/85">
           <img
             src={production.imageUrl}
             alt={production.imageAlt}
@@ -100,7 +100,7 @@ export default function UpcomingProductionDetail({ production }: UpcomingProduct
               {production.subtitle}
             </p>
 
-            <div className="mx-auto mt-10 w-full max-w-[62rem] overflow-hidden rounded-xl bg-black">
+            <div className="mx-auto mt-10 w-full max-w-[62rem] overflow-hidden bg-black">
               <img
                 src={production.imageUrl}
                 alt={production.imageAlt}

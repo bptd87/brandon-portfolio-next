@@ -6,13 +6,16 @@ import Header from "@/components/Header";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Lightbox } from "@/components/Lightbox";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
-import ScenicRenderingGallery from "@/components/ScenicRenderingGallery";
 import { SEO } from "@/components/SEO";
 import { CreditNameLinks } from "@/components/CreditNameLinks";
 import { copyTextToClipboard } from "@/lib/clipboard";
 import { formatUtcDate } from "@/lib/date-format";
 import { Button } from "@/components/ui/button";
-import { getLocalScenicProjectBySlug, getLocalScenicProjects, type LocalScenicProjectMedia } from "@shared/localScenicProjects";
+import {
+  getLocalScenicProjectBySlug,
+  getLocalScenicProjects,
+  type LocalScenicProjectMedia,
+} from "@shared/localScenicProjects";
 import { getLocalArticles } from "@shared/localArticles";
 import { getLocalRenderingProjectForProduction } from "@shared/localPortfolios";
 import { Check, Link2 } from "lucide-react";
@@ -150,6 +153,25 @@ export default function ScenicProjectDetail({
       ? `${monthNames[project.month - 1]} ${project.year}`
       : `${project.year}`
     : null;
+  const directorCredit =
+    project.creativeTeam.find((member) => {
+      const role = member.role.toLowerCase().trim();
+      return (
+        role === "director" ||
+        role.includes("directed") ||
+        (role.includes("director") &&
+          !role.includes("associate") &&
+          !role.includes("music director"))
+      );
+    })?.name || null;
+  const productionRecordItems = [
+    project.client
+      ? { label: "Company", value: project.client, href: project.clientUrl || null }
+      : null,
+    project.location ? { label: "Location", value: project.location, href: null } : null,
+    projectDateLabel ? { label: "Date", value: projectDateLabel, href: null } : null,
+    directorCredit ? { label: "Director", value: directorCredit, href: null } : null,
+  ].filter(Boolean) as Array<{ label: string; value: string; href: string | null }>;
 
   const imageIndexById = new Map(imageMedia.map((item, index) => [item.id, index]));
 
@@ -201,24 +223,31 @@ export default function ScenicProjectDetail({
       if (normalized === "lyrics by") return 3;
       if (normalized === "music by") return 4;
       if (normalized.includes("original concept")) return 5;
-      if (normalized.includes("music director")) return 6;
-      if (normalized.includes("directed")) return 99;
-      if (normalized === "director" || (normalized.includes("director") && !normalized.includes("associate"))) return 99;
-      if (normalized.includes("associate director") || normalized.includes("choreo")) return 7;
-      if (normalized.includes("scenic")) return 8;
-      if (normalized.includes("costume")) return 9;
-      if (normalized.includes("lighting")) return 10;
-      if (normalized.includes("sound")) return 11;
-      if (normalized.includes("projection")) return 12;
-      if (normalized.includes("assistant")) return 13;
+      if (normalized.includes("directed")) return 6;
+      if (normalized === "director" || (normalized.includes("director") && !normalized.includes("associate") && !normalized.includes("music director"))) return 6;
+      if (normalized.includes("associate director")) return 7;
+      if (normalized.includes("choreo")) return 8;
+      if (normalized.includes("music director")) return 9;
+      if (normalized.includes("scenic")) return 10;
+      if (normalized.includes("costume")) return 11;
+      if (normalized.includes("lighting")) return 12;
+      if (normalized.includes("sound")) return 13;
+      if (normalized.includes("projection")) return 14;
+      if (normalized.includes("assistant")) return 15;
       return 50;
     };
 
-    return [...project.creativeTeam].sort((a, b) => {
-      const priorityDiff = rolePriority(a.role) - rolePriority(b.role);
-      if (priorityDiff !== 0) return priorityDiff;
-      return a.role.localeCompare(b.role);
-    });
+    return [...project.creativeTeam]
+      .filter((member) => {
+        const normalizedName = member.name.toLowerCase().trim();
+        const normalizedRole = member.role.toLowerCase().trim();
+        return !(normalizedName === "brandon pt davis" && normalizedRole.includes("scenic"));
+      })
+      .sort((a, b) => {
+        const priorityDiff = rolePriority(a.role) - rolePriority(b.role);
+        if (priorityDiff !== 0) return priorityDiff;
+        return a.role.localeCompare(b.role);
+      });
   }, [project.creativeTeam]);
 
   const moreScenicProjects = useMemo(() => {
@@ -280,29 +309,22 @@ export default function ScenicProjectDetail({
 
   const renderCreativeTeam = () => (
     <AnimatedSection>
-      <div className="pt-20 md:pt-28">
-        <div className="mx-auto w-full max-w-[24rem]">
-          <div className="space-y-6 text-center md:space-y-7">
-            <div className="space-y-2">
-              <span className="block font-sans text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-white/55">
-                Production
-              </span>
-              <span className="block font-sans text-[2.05rem] font-semibold uppercase tracking-[-0.03em] text-white md:text-[2.55rem]">
-                {project.title}
-              </span>
-            </div>
+      <div
+        id="project-credits"
+        className="relative left-1/2 w-screen max-w-[88rem] -translate-x-1/2 scroll-mt-28 px-5 pt-16 sm:px-8 md:pt-24 lg:px-10"
+      >
+        <div className="grid gap-8 border-y border-white/14 py-8 md:grid-cols-[minmax(12rem,0.45fr)_minmax(0,1fr)] md:gap-14 md:py-10">
+          <div>
+            <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-white/44">
+              Production Credits
+            </p>
+            <h2 className="mt-3 font-sans text-[clamp(1.75rem,3vw,3.1rem)] font-medium leading-[0.96] tracking-[-0.055em] text-white">
+              {project.title}
+            </h2>
+          </div>
+          <div className="grid gap-x-10 gap-y-5 sm:grid-cols-2">
             {creativeTeamGroups.map((member) => {
               const normalizedRole = member.role.toLowerCase().trim();
-              const isAuthorshipCredit =
-                normalizedRole.includes("book by") ||
-                normalizedRole.includes("written by") ||
-                normalizedRole === "by" ||
-                normalizedRole.includes("playwright") ||
-                normalizedRole.includes("created by") ||
-                normalizedRole.includes("adapted by") ||
-                normalizedRole === "music by" ||
-                normalizedRole === "lyrics by" ||
-                normalizedRole === "music and lyrics";
               const isDirectorCredit =
                 normalizedRole === "director" ||
                 normalizedRole.includes("directed") ||
@@ -311,22 +333,10 @@ export default function ScenicProjectDetail({
                   !normalizedRole.includes("music director"));
               const content = (
                 <>
-                  <span
-                    className={`block font-sans font-semibold uppercase tracking-[0.1em] text-white/58 ${
-                      isDirectorCredit ? "text-[0.82rem]" : "text-[0.68rem]"
-                    }`}
-                  >
+                  <span className="block text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-white/44">
                     {isDirectorCredit ? "Directed by" : member.role}
                   </span>
-                  <span
-                    className={`mt-2 block font-sans tracking-[-0.03em] text-white ${
-                      isDirectorCredit
-                        ? "text-[2.4rem] font-semibold leading-[1.02]"
-                        : isAuthorshipCredit
-                          ? "text-[1.28rem] font-semibold leading-[1.12]"
-                          : "text-[1.18rem] font-normal leading-[1.14]"
-                    }`}
-                  >
+                  <span className="mt-1.5 block text-[1rem] leading-snug tracking-[-0.02em] text-white/82">
                     {member.url ? (
                       <a
                         href={member.url}
@@ -346,7 +356,11 @@ export default function ScenicProjectDetail({
                 </>
               );
 
-              return <div key={`${member.role}-${member.name}`}>{content}</div>;
+              return (
+                <div key={`${member.role}-${member.name}`} className="min-w-0">
+                  {content}
+                </div>
+              );
             })}
           </div>
         </div>
@@ -368,74 +382,80 @@ export default function ScenicProjectDetail({
       <Header />
 
       <main className="pb-20">
-        <section className="px-6 pt-12 md:px-10 md:pt-16">
+        <section className="relative min-h-[calc(100svh-74px)] overflow-hidden border-b border-white/10 bg-black">
+          {project.coverImageUrl ? (
+            <img
+              src={project.coverImageUrl}
+              alt={`${project.title} scenic design cover image`}
+              className="absolute inset-0 h-full w-full object-cover"
+              style={{ objectPosition: project.coverImagePosition || "center" }}
+              loading="eager"
+              fetchPriority="high"
+            />
+          ) : null}
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.2)_52%,rgba(0,0,0,0.84)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.48)_0%,rgba(0,0,0,0.1)_58%,rgba(0,0,0,0.3)_100%)]" />
           <AnimatedSection>
-            <header className="mx-auto flex w-full max-w-[62rem] flex-col items-center text-center">
-              <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[0.98rem] tracking-[-0.02em] text-white/56">
-                {projectDateLabel ? <span>{projectDateLabel}</span> : null}
-                <span>{project.subcategory || "Scenic Design"}</span>
+            <header className="relative flex min-h-[calc(100svh-74px)] w-full items-end px-[clamp(1.5rem,5vw,5.5rem)] pb-10 pt-20 md:pb-16">
+              <div className="max-w-[76rem]">
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[0.82rem] font-semibold uppercase tracking-[0.16em] text-white/72">
+                  <span>{project.subcategory || "Scenic Design"}</span>
+                  {projectDateLabel ? <span>{projectDateLabel}</span> : null}
+                </div>
+                <h1 className="mt-5 max-w-[14ch] font-sans text-[clamp(3.1rem,7vw,7.4rem)] font-normal leading-[0.88] tracking-[-0.07em] text-white">
+                  {project.title}
+                </h1>
+                <p className="mt-7 max-w-[44rem] text-[clamp(1.02rem,1.35vw,1.28rem)] leading-[1.66] tracking-[-0.02em] text-white/82">
+                  {project.excerpt}
+                </p>
+                <nav
+                  aria-label="Project sections"
+                  className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-[0.94rem] tracking-[-0.02em] text-white/72"
+                >
+                  <a href="#project-process" className="transition-colors hover:text-white">
+                    Process
+                  </a>
+                  {project.creativeTeam.length > 0 ? (
+                    <a href="#project-credits" className="transition-colors hover:text-white">
+                      Credits
+                    </a>
+                  ) : null}
+                </nav>
               </div>
-              <h1 className="mt-8 max-w-[12ch] font-sans text-[clamp(3rem,7vw,6.4rem)] font-normal leading-[0.9] tracking-[-0.07em] text-white">
-                {project.title}
-              </h1>
-              <p className="mt-8 max-w-[42rem] text-[clamp(1.08rem,1.5vw,1.36rem)] leading-[1.72] tracking-[-0.02em] text-white/68">
-                {project.excerpt}
-              </p>
             </header>
           </AnimatedSection>
         </section>
 
-        <section className="px-6 pt-8 md:px-10 md:pt-10">
+        <section className="px-[clamp(1.5rem,5vw,5.5rem)]">
           <AnimatedSection>
-            <div className="mx-auto w-full max-w-[62rem]">
-              {project.coverImageUrl ? (
-                <div
-                  className="overflow-hidden rounded-xl bg-black"
-                  style={{
-                    maxHeight: "min(74vh,48rem)",
-                  }}
-                >
-                  <ProgressiveImage
-                    src={project.coverImageUrl}
-                    alt={`${project.title} scenic design cover image`}
-                    className="block w-full"
-                    containerClassName="w-full"
-                    objectFit={project.coverImageFit === "contain" ? "contain" : "cover"}
-                    loading="eager"
-                    fetchPriority="high"
-                    sizes="(min-width: 1200px) 62rem, calc(100vw - 3rem)"
-                    width={1600}
-                  />
-                </div>
-              ) : null}
-            </div>
-          </AnimatedSection>
-        </section>
-
-        <section className="px-6 pt-8 md:px-10">
-          <AnimatedSection>
-            <div className="mx-auto flex w-full max-w-[62rem] items-center justify-between gap-6 border-t border-white/14 py-4 text-white/72">
-              <div className="flex flex-wrap items-center gap-5">
-                {project.clientUrl ? (
-                  <a
-                    href={project.clientUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[0.98rem] tracking-[-0.02em] transition-colors hover:text-white"
-                  >
-                    {project.client}
-                  </a>
-                ) : project.client ? (
-                  <span className="text-[0.98rem] tracking-[-0.02em]">{project.client}</span>
-                ) : null}
-                {project.location ? (
-                  <span className="text-[0.98rem] tracking-[-0.02em] text-white/56">{project.location}</span>
-                ) : null}
-              </div>
+            <div className="mx-auto flex w-full max-w-[88rem] flex-col gap-6 border-b border-white/14 py-5 text-white md:flex-row md:items-start md:justify-between">
+              <dl className="grid flex-1 gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-4">
+                {productionRecordItems.map((item) => (
+                  <div key={item.label} className="space-y-1.5">
+                    <dt className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-white/42">
+                      {item.label}
+                    </dt>
+                    <dd className="text-[0.96rem] leading-snug tracking-[-0.02em] text-white/82">
+                      {item.href ? (
+                        <a
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="transition-colors hover:text-white"
+                        >
+                          {item.value}
+                        </a>
+                      ) : (
+                        item.value
+                      )}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
               <button
                 type="button"
                 onClick={handleCopyLink}
-                className="inline-flex items-center gap-2 text-[0.98rem] tracking-[-0.02em] transition-colors hover:text-white"
+                className="inline-flex items-center gap-2 self-start text-[0.96rem] tracking-[-0.02em] text-white/72 transition-colors hover:text-white"
               >
                 {linkCopied ? <Check className="h-4 w-4" /> : <Link2 className="h-4 w-4" />}
                 <span>{linkCopied ? "Link copied" : "Share"}</span>
@@ -444,7 +464,7 @@ export default function ScenicProjectDetail({
           </AnimatedSection>
         </section>
 
-        <section className="container max-w-5xl pt-14 md:pt-18">
+        <section id="project-process" className="container max-w-5xl scroll-mt-28 pt-14 md:pt-18">
           <div className="mx-auto max-w-[54rem] space-y-24 md:space-y-32">
             {project.sections.map((section, index) => (
               <div key={`${section.type}-${index}`} className="space-y-0">
@@ -477,22 +497,6 @@ export default function ScenicProjectDetail({
                           (item): item is LocalScenicProjectMedia & { imageUrl: string } =>
                             Boolean(item && item.type === "image" && item.imageUrl)
                         );
-                      const isRenderingGallery = galleryItems.length > 1 && galleryItems.every((item) => item.kind === "rendering");
-
-                      if (isRenderingGallery) {
-                        return (
-                          <ScenicRenderingGallery items={galleryItems} onOpen={openLightboxFor} visibleCount={2} />
-                        );
-                      }
-
-                      if (galleryItems.length > 2) {
-                        return (
-                          <div className="relative left-1/2 w-screen max-w-[88rem] -translate-x-1/2 px-6 sm:px-10 lg:px-14">
-                            <ScenicRenderingGallery items={galleryItems} onOpen={openLightboxFor} visibleCount={3} />
-                          </div>
-                        );
-                      }
-
                       if (galleryItems.length === 1) {
                         const item = galleryItems[0];
 
@@ -512,7 +516,7 @@ export default function ScenicProjectDetail({
                                 <ProgressiveImage
                                   src={item.imageUrl}
                                   alt={item.altText}
-                                  className="block w-full rounded-xl object-cover transition-transform duration-500 hover:scale-[1.01]"
+                                  className="block w-full object-cover transition-transform duration-500 hover:scale-[1.01]"
                                   containerClassName="w-full"
                                   sizes="(min-width: 1280px) 80rem, calc(100vw - 2.5rem)"
                                   width={1800}
@@ -531,6 +535,7 @@ export default function ScenicProjectDetail({
                       }
 
                       const firstPair = galleryItems.slice(0, 2);
+                      const remainingItems = galleryItems.slice(2);
 
                       return (
                         <div className="relative left-1/2 w-screen max-w-[88rem] -translate-x-1/2 space-y-10 px-5 sm:px-8 md:space-y-12 lg:px-10">
@@ -554,7 +559,7 @@ export default function ScenicProjectDetail({
                                     <ProgressiveImage
                                       src={item.imageUrl}
                                       alt={item.altText}
-                                      className="block w-full rounded-xl object-cover transition-transform duration-500 hover:scale-[1.01]"
+                                      className="block w-full object-cover transition-transform duration-500 hover:scale-[1.01]"
                                       containerClassName="w-full"
                                       sizes={
                                         itemIndex === 0
@@ -562,6 +567,34 @@ export default function ScenicProjectDetail({
                                           : "(min-width: 1280px) 28rem, (min-width: 768px) 32vw, calc(100vw - 2.5rem)"
                                       }
                                       width={itemIndex === 0 ? 1800 : 1100}
+                                      aspectRatio="4 / 3"
+                                    />
+                                  </button>
+                                  {item.caption ? (
+                                    <figcaption className="text-[0.92rem] leading-6 tracking-[-0.01em] text-white/56">
+                                      {item.caption}
+                                    </figcaption>
+                                  ) : null}
+                                </figure>
+                              ))}
+                            </div>
+                          ) : null}
+                          {remainingItems.length > 0 ? (
+                            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                              {remainingItems.map((item) => (
+                                <figure key={item.id} className="space-y-3">
+                                  <button
+                                    type="button"
+                                    onClick={() => openLightboxFor(item.id)}
+                                    className="block w-full text-left"
+                                  >
+                                    <ProgressiveImage
+                                      src={item.imageUrl}
+                                      alt={item.altText}
+                                      className="block w-full object-cover transition-transform duration-500 hover:scale-[1.01]"
+                                      containerClassName="w-full"
+                                      sizes="(min-width: 1024px) 28vw, (min-width: 768px) 46vw, calc(100vw - 2.5rem)"
+                                      width={1100}
                                       aspectRatio="4 / 3"
                                     />
                                   </button>
@@ -608,16 +641,16 @@ export default function ScenicProjectDetail({
             {(project.links?.length || relatedArticles.length > 0 || relatedRenderingProject) ? (
               <AnimatedSection>
                 <div className="pt-18 md:pt-24">
-                  <div className="mb-8 flex items-center justify-between gap-4">
+                  <div className="mb-8 flex items-center justify-between gap-4 border-t border-white/14 pt-6">
                     <p className="font-sans text-[1.15rem] tracking-[-0.02em] text-white">
-                      News, Reviews & Insights
+                      Related Project Links
                     </p>
                   </div>
                   <div className="grid gap-x-12 gap-y-8 md:grid-cols-2">
                     {relatedRenderingProject ? (
                       <Link key={relatedRenderingProject.slug} href={`/projects/rendering/${relatedRenderingProject.slug}`}>
                         <div className="group flex cursor-pointer items-start gap-5">
-                          <div className="relative h-36 w-36 flex-none overflow-hidden rounded-xl bg-black/85">
+                          <div className="relative h-36 w-36 flex-none overflow-hidden bg-black/85">
                             {relatedRenderingProject.coverImageUrl ? (
                               <ProgressiveImage
                                 src={relatedRenderingProject.coverImageUrl}
@@ -647,7 +680,7 @@ export default function ScenicProjectDetail({
                     {relatedArticles.map((article) => (
                       <Link key={article.slug} href={`/articles/${article.slug}`}>
                         <div className="group flex cursor-pointer items-start gap-5">
-                          <div className="relative h-36 w-36 flex-none overflow-hidden rounded-xl bg-black/85">
+                          <div className="relative h-36 w-36 flex-none overflow-hidden bg-black/85">
                             {article.coverImageUrl ? (
                               <ProgressiveImage
                                 src={article.coverImageUrl}
@@ -683,7 +716,7 @@ export default function ScenicProjectDetail({
                           rel="noopener noreferrer"
                           className="group flex items-start gap-5"
                         >
-                          <div className="relative h-36 w-36 flex-none overflow-hidden rounded-xl bg-black/85">
+                          <div className="relative h-36 w-36 flex-none overflow-hidden bg-black/85">
                             {previewImage?.imageUrl ? (
                               <ProgressiveImage
                                 src={previewImage.imageUrl}
@@ -702,7 +735,7 @@ export default function ScenicProjectDetail({
                               {link.label}
                             </h3>
                             <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-white/52">
-                              <span>News, Reviews & Insights</span>
+                              <span>Production Link</span>
                               {project.year ? <span>{project.year}</span> : null}
                             </div>
                           </div>
@@ -719,12 +752,12 @@ export default function ScenicProjectDetail({
                 <div className="pt-18 md:pt-24">
                   <div className="mb-12 h-px w-full bg-border/60" />
                   <p className="mb-8 font-sans text-[1.15rem] tracking-[-0.02em] text-white">
-                    All Scenic Designs
+                    More Scenic Designs
                   </p>
                   <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
                     {moreScenicProjects.map((item) => (
                       <Link key={item.slug} href={`/project/${item.slug}`} className="group block">
-                        <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-black/85">
+                        <div className="relative aspect-[4/3] overflow-hidden bg-black/85">
                           {item.coverImageUrl ? (
                             <ProgressiveImage
                               src={item.coverImageUrl}
@@ -733,7 +766,7 @@ export default function ScenicProjectDetail({
                               containerClassName="h-full w-full"
                               sizes="(min-width: 768px) 30vw, 96vw"
                               width={900}
-                              aspectRatio="1 / 1"
+                              aspectRatio="4 / 3"
                             />
                           ) : <div className="h-full w-full bg-muted" />}
                         </div>

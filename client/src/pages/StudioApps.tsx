@@ -121,7 +121,7 @@ export default function StudioApps() {
               <AnimatedSection key={app.title} delay={index * 70}>
                 <Link href={app.href} className="group block">
                   <article className="border-t border-border/14 pt-4">
-                    <div className="relative overflow-hidden rounded-[1rem] border border-border/16 bg-card/10">
+                    <div className="relative overflow-hidden border border-border/16 bg-card/10">
                       <div className="relative aspect-square w-full">
                         <Image
                           src={app.image}
@@ -132,7 +132,7 @@ export default function StudioApps() {
                           className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                         />
                       </div>
-                      <div className="pointer-events-none absolute inset-0 rounded-[1rem] ring-1 ring-inset ring-white/5" />
+                      <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/5" />
                     </div>
 
                     <div className="mt-4 flex items-center justify-between gap-3">
@@ -162,7 +162,7 @@ export default function StudioApps() {
         <section className="mx-auto mt-20 max-w-6xl border-t border-border/18 pt-16">
           <div className="grid gap-12 xl:grid-cols-[minmax(0,0.92fr)_minmax(0,1fr)] xl:items-center">
             <AnimatedSection>
-              <div className="overflow-hidden rounded-[1.15rem] border border-border/18 bg-card/10">
+              <div className="overflow-hidden border border-border/18 bg-card/10">
                 <div className="relative aspect-square w-full">
                   <Image
                     src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-iphone-install.png"

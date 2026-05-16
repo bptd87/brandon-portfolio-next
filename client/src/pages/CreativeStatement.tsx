@@ -377,7 +377,7 @@ export default function CreativeStatement() {
                   href={getProjectHref(project)}
                   className="group block w-[min(74vw,28rem)] shrink-0 snap-start md:w-[calc((100%_-_3rem)_/_3)]"
                 >
-                  <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[1rem]">
+                  <div className="relative aspect-[16/9] w-full overflow-hidden">
                     <Image
                       src={project.coverImageUrl || ""}
                       alt={project.title}

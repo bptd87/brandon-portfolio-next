@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc">
+  <title id="title">You're a Good Man Charlie Brown abstract scenic graphic</title>
+  <desc id="desc">Playground shapes arranged on a stage floor.</desc>
+  <rect width="1200" height="1200" fill="#0a0a0a"/>
+  <rect x="84" y="84" width="1032" height="1032" rx="34" fill="#111111" stroke="#2a2a2a" stroke-width="3"/>
+  <path d="M152 824h896v164H152z" fill="#171717"/>
+  <path d="M262 760 394 420l132 340" fill="none" stroke="#d2b16d" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M674 762V420h228v342" fill="none" stroke="#9fb3c8" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M332 598h492" stroke="#c47c63" stroke-width="24" stroke-linecap="round"/>
+  <circle cx="394" cy="386" r="54" fill="#d2b16d" opacity=".86"/>
+  <circle cx="902" cy="386" r="54" fill="#9fb3c8" opacity=".82"/>
+  <path d="M298 908h604" stroke="#f5efe3" stroke-opacity=".14" stroke-width="12" stroke-linecap="round"/>
+</svg>

@@ -156,7 +156,7 @@ export function ProgressiveImage({
     <div
       ref={imgRef}
       className={`
-        relative overflow-hidden rounded-[0.8rem]
+        relative overflow-hidden
         ${enableScrollAnimation ? 'transition-all duration-700 ease-out' : ''}
         ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
         ${containerClassName}
@@ -184,7 +184,6 @@ export function ProgressiveImage({
             w-full ${imageHeightClass}
             ${resolvedObjectFit === 'cover' ? 'object-cover' : 'object-contain'}
             ${smartPosition ? objectPosition : ''}
-            rounded-[0.8rem]
             opacity-100
             ${className}
           `}

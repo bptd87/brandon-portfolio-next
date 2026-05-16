@@ -382,7 +382,7 @@ export default function RenderingProjectDetail({
           <AnimatedSection>
             <div className="mx-auto w-full max-w-[62rem]">
               {renderings[0] ? (
-                <div className="cursor-pointer overflow-hidden rounded-xl bg-black" onClick={() => openLightbox(0)}>
+                <div className="cursor-pointer overflow-hidden bg-black" onClick={() => openLightbox(0)}>
                   <ProgressiveImage
                     src={renderings[0].imageUrl || ""}
                     alt={renderings[0].altText || `${project.title} rendering`}
@@ -480,7 +480,7 @@ export default function RenderingProjectDetail({
                     <div className="grid gap-x-12 gap-y-8 md:grid-cols-2">
                       {relatedArticles.map((article) => (
                         <Link key={article.id} href={`/articles/${article.slug}`} className="group flex items-start gap-5">
-                          <div className="relative h-36 w-36 flex-none overflow-hidden rounded-xl bg-black/85">
+                          <div className="relative h-36 w-36 flex-none overflow-hidden bg-black/85">
                             {article.coverImageUrl ? (
                               <ProgressiveImage
                                 src={article.coverImageUrl}
@@ -513,7 +513,7 @@ export default function RenderingProjectDetail({
                     </p>
                   </div>
                     <Link href={scenicProjectHref} className="group flex items-start gap-5">
-                      <div className="relative h-36 w-36 flex-none overflow-hidden rounded-xl bg-black/85">
+                      <div className="relative h-36 w-36 flex-none overflow-hidden bg-black/85">
                         {scenicProjectMatch.coverImageUrl ? (
                           <ProgressiveImage
                             src={scenicProjectMatch.coverImageUrl}
@@ -553,7 +553,7 @@ export default function RenderingProjectDetail({
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
                   {moreRenderingProjects.map((item: any) => (
                     <Link key={item.id} href={`${projectBasePath}/${item.slug}`} className="group block">
-                        <div className="relative aspect-[1/1] overflow-hidden rounded-xl bg-black/85">
+                        <div className="relative aspect-[1/1] overflow-hidden bg-black/85">
                           {item.coverImageUrl ? (
                             <ProgressiveImage
                               src={item.coverImageUrl}

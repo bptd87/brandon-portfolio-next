@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ProgressiveImage } from '@/components/ProgressiveImage';
@@ -344,7 +345,7 @@ function ArticleImageCompare({ section }: { section: any }) {
           </p>
         )}
 
-        <div className="relative overflow-hidden rounded-[1rem] border border-white/10 bg-white/[0.03]">
+        <div className="relative overflow-hidden border border-white/10 bg-white/[0.03]">
           <div className="relative aspect-[16/9]">
             <img
               src={getArticleMediaUrl(section.afterUrl)}
@@ -580,7 +581,7 @@ function ArticleMediaTabs({ section }: { section: any }) {
       {isSettingsLayout ? (
         <div className="mx-auto mt-8 max-w-[70rem]">
           <figure>
-            <div className="rounded-[1rem] border border-white/10 bg-white/[0.03] p-2">
+            <div className="border border-white/10 bg-white/[0.03] p-2">
               <ProgressiveImage
                 src={getArticleMediaUrl(activeItem.url)}
                 alt={activeItem.alt || activeItem.title || section.title || ""}
@@ -588,7 +589,7 @@ function ArticleMediaTabs({ section }: { section: any }) {
                 enableScrollAnimation={false}
                 containerClassName="w-full"
                 sizes="(min-width: 1280px) 70rem, 100vw"
-                className="max-h-[46rem] w-full rounded-[0.75rem] bg-white/[0.02] object-contain"
+                className="max-h-[46rem] w-full bg-white/[0.02] object-contain"
               />
             </div>
             {(activeItem.caption || activeItem.alt) && (
@@ -816,7 +817,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
       <div className="min-h-screen bg-background">
         <Header />
         <div className="container py-20 text-center">
-          <h1 className="text-4xl font-['Playfair_Display'] italic mb-4">Article Not Found</h1>
+          <h1 className="mb-4 font-sans text-4xl font-medium tracking-[-0.05em]">Article Not Found</h1>
           <p className="mb-8 text-white/62">The article you're looking for doesn't exist.</p>
           <Link href="/articles">
             <Button>Back to Articles</Button>
@@ -1124,18 +1125,20 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
             ) : null}
 
             {article.coverImageUrl && (
-              <div className="mx-auto mt-10 max-w-[88rem] overflow-hidden rounded-xl bg-white/[0.02]">
-                <ProgressiveImage
+              <div
+                className="relative mx-auto mt-10 aspect-video max-w-[88rem] overflow-hidden bg-white/[0.02]"
+                onClick={() => openArticleLightboxAt("cover")}
+              >
+                <Image
                   src={article.coverImageUrl}
                   alt={article.coverImageAlt || article.title}
+                  fill
+                  priority
+                  unoptimized
                   loading="eager"
                   fetchPriority="high"
-                  aspectRatio="16 / 9"
-                  objectFit="cover"
-                  enableScrollAnimation={false}
                   sizes="(min-width: 1280px) 1120px, 100vw"
-                  className="cursor-pointer"
-                  onClick={() => openArticleLightboxAt("cover")}
+                  className="cursor-pointer object-cover"
                 />
               </div>
             )}
@@ -1216,7 +1219,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
                   prose-ul:my-8 prose-ol:my-8 prose-ul:leading-[2] prose-ol:leading-[2] prose-ul:list-disc prose-ol:list-decimal prose-ul:pl-8 prose-ol:pl-8
                   prose-li:my-1.5 prose-li:text-[1.0625rem] prose-li:leading-[1.75] prose-li:ml-0
                   [&_ul]:list-disc [&_ol]:list-decimal [&_li]:list-item [&_li]:ml-0
-                  prose-img:rounded-xl prose-img:my-12
+                  prose-img:my-12
                   prose-figure:my-12
                   prose-figcaption:text-[0.88rem] prose-figcaption:italic prose-figcaption:text-white prose-figcaption:text-center prose-figcaption:mt-4
                   [&_iframe]:mx-auto [&_iframe]:w-full [&_iframe]:max-w-full [&_iframe]:my-12 [&_iframe]:rounded-xl [&_iframe]:aspect-[16/9] [&_iframe]:h-auto
@@ -1774,7 +1777,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
                       className={singleProject ? "lg:col-span-2 xl:col-span-1" : ""}
                     >
                       <div className="group h-full cursor-pointer transition-all duration-300 hover:-translate-y-0.5">
-                        <div className="aspect-square overflow-hidden rounded-xl bg-white/[0.02]">
+                        <div className="aspect-square overflow-hidden bg-white/[0.02]">
                           {project.coverImageUrl ? (
                             <img
                               src={project.coverImageUrl}
@@ -1833,7 +1836,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
                   <Link key={relatedArticle.id} href={`${articleBasePath}/${relatedArticle.slug}`}>
                     <div className="group h-full cursor-pointer transition-all duration-300 hover:-translate-y-0.5">
                       {relatedArticle.coverImageUrl && (
-                        <div className="aspect-square overflow-hidden rounded-xl bg-white/[0.02]">
+                        <div className="aspect-square overflow-hidden bg-white/[0.02]">
                           <img
                             src={relatedArticle.coverImageUrl}
                             alt={relatedArticle.coverImageAlt || decodeHTMLEntities(relatedArticle.title)}

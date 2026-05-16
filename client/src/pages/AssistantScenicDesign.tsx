@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { useRef } from "react";
+import { ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 
 import { AnimatedSection } from "@/components/AnimatedSection";
@@ -76,11 +75,29 @@ function getEntryExternalUrl(entry: (typeof assistantScenicDesignEntries)[number
 }
 
 function getEntryExternalLabel(entry: (typeof assistantScenicDesignEntries)[number]) {
-  return entry.externalUrl ? "External source" : "Jo Winiarski website";
+  return entry.externalUrl ? "Production page" : "Designer portfolio";
+}
+
+function getSelectedCreditNote(entry: (typeof assistantScenicDesignEntries)[number]) {
+  switch (entry.anchorId) {
+    case "the-play-that-goes-wrong-seattle-rep":
+      return "Supported a technically precise comedy environment where scenic mechanics, visual timing, and documentation all had to stay clear.";
+    case "the-book-club-play-cincinnati-playhouse":
+      return "Regional theatre support for a contemporary comedy, with assistant work focused on scenic communication and production follow-through.";
+    case "native-gardens-pioneer-theatre-company":
+      return "Drafting and spatial development support for a production built around neighboring homes, property lines, and contrasting exterior worlds.";
+    case "bottle-shock-the-musical":
+      return "World-premiere musical support in a developing production process where scenic information had to keep pace with new-work decisions.";
+    case "the-fears-signature-theatre":
+      return "Off-Broadway assistant work supporting design continuity, communication, and execution through a fast-moving production process.";
+    case "clue-on-stage-dallas-theater-center":
+      return "Assistant scenic support for a highly choreographed farce where layout, timing, and scenic documentation carried real production weight.";
+    default:
+      return entry.excerpt;
+  }
 }
 
 export default function AssistantScenicDesign() {
-  const utahGalleryRef = useRef<HTMLDivElement | null>(null);
   const entryBySlug = buildEntryMap();
 
   const highlightEntries = HIGHLIGHT_SLUGS.map((slug) => entryBySlug.get(slug)).filter(
@@ -109,21 +126,14 @@ export default function AssistantScenicDesign() {
   const assistantScenicContributors = Array.from(
     new Set(assistantScenicDesignEntries.map((entry) => entry.collaborator).filter(Boolean))
   );
-
-  const scrollUtahGallery = (direction: "prev" | "next") => {
-    const container = utahGalleryRef.current;
-    if (!container) return;
-    const firstFigure = container.querySelector("figure");
-    const figureWidth =
-      firstFigure instanceof HTMLElement
-        ? firstFigure.offsetWidth
-        : Math.round(container.clientWidth * 0.3);
-    const gap = 24;
-    container.scrollBy({
-      left: (figureWidth + gap) * (direction === "next" ? 1 : -1),
-      behavior: "smooth",
-    });
-  };
+  const leadHighlightEntry = highlightEntries[0] || utahEntries[0] || assistantScenicDesignEntries[0];
+  const leadUtahEntry =
+    utahEntries.find((entry) => entry.anchorId === "utah-shakespeare-festival-2023") ||
+    utahEntries[0] ||
+    null;
+  const supportingUtahEntries = leadUtahEntry
+    ? utahEntries.filter((entry) => entry.anchorId !== leadUtahEntry.anchorId)
+    : utahEntries.slice(1);
 
   return (
     <div className="min-h-screen bg-background">
@@ -195,25 +205,39 @@ export default function AssistantScenicDesign() {
       />
       <Header />
 
-      <section className="border-b border-border py-16 md:py-20">
-        <div className="container max-w-6xl">
+      <section className="relative min-h-[calc(100svh-74px)] overflow-hidden border-b border-border bg-black">
+        {leadHighlightEntry?.coverImageUrl ? (
+          <Image
+            src={leadHighlightEntry.coverImageUrl}
+            alt={leadHighlightEntry.coverImageAlt}
+            fill
+            priority
+            quality={88}
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        ) : null}
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.32)_48%,rgba(0,0,0,0.88)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.58)_0%,rgba(0,0,0,0.24)_48%,rgba(0,0,0,0.4)_100%)]" />
+        <div className="relative flex min-h-[calc(100svh-74px)] items-end px-[clamp(1.5rem,5vw,5.5rem)] pb-10 pt-24 md:pb-16">
           <AnimatedSection>
-            <div className="space-y-6 text-center">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
-                Portfolio
+            <div className="max-w-[72rem]">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/62">
+                Production Support
               </p>
-              <h1 className="mx-auto max-w-[12ch] font-sans text-[clamp(3rem,6vw,5.8rem)] font-medium leading-[0.92] tracking-[-0.07em] text-foreground">
+              <h1 className="mt-5 max-w-[12ch] font-sans text-[clamp(3.2rem,7vw,7.4rem)] font-medium leading-[0.88] tracking-[-0.075em] text-white">
                 Assistant Scenic Design
               </h1>
-              <p className="mx-auto max-w-[42rem] text-[clamp(1rem,1.35vw,1.22rem)] leading-[1.68] tracking-[-0.015em] text-foreground/66">
-                A companion portfolio of assistant scenic credits centered on drafting, design
-                coordination, repertory support, and production communication across regional
-                theatre, Off-Broadway, and long-term collaborations.
+              <p className="mt-7 max-w-[44rem] text-[clamp(1.03rem,1.35vw,1.28rem)] leading-[1.66] tracking-[-0.02em] text-white/78">
+                Assistant scenic credits across regional theatre, repertory seasons, new work,
+                musicals, comedy, and Off-Broadway production. This work reflects experience
+                supporting established scenic designers through drafting, model communication,
+                coordination, and production follow-through.
               </p>
-              <div className="pt-1">
+              <div className="mt-8">
                 <Link
                   href="/projects"
-                  className="inline-flex items-center gap-2 text-[0.92rem] tracking-[-0.015em] text-foreground/76 transition-colors hover:text-foreground"
+                  className="inline-flex items-center gap-2 text-[0.94rem] tracking-[-0.015em] text-white/76 transition-colors hover:text-white"
                 >
                   View Scenic Design Portfolio
                   <ArrowUpRight className="h-4 w-4" />
@@ -224,52 +248,60 @@ export default function AssistantScenicDesign() {
         </div>
       </section>
 
-      <section className="py-16 md:py-20">
-        <div className="container max-w-6xl">
+      <section className="py-16 md:py-24">
+        <div className="container max-w-[88rem]">
           <AnimatedSection>
-            <div className="mb-10 max-w-3xl">
+            <div className="mb-10 max-w-4xl">
               <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
                 Selected Credits
               </p>
               <h2 className="mb-4 font-sans text-[clamp(2.2rem,4vw,4rem)] font-medium leading-[0.94] tracking-[-0.06em] text-foreground">
-                Production support shaped by drafting, clarity, and follow-through.
+                Production support across demanding theatre processes.
               </h2>
               <p className="text-[1.02rem] leading-[1.75] tracking-[-0.01em] text-foreground/62">
-                A tighter selection of assistant scenic work across premieres, regional theatre,
-                and repertory seasons where scenic support was central to the process.
+                These selected credits show the range of assistant scenic work: precision comedy,
+                regional theatre, new musicals, Off-Broadway process, repertory pace, and production
+                teams that need clear scenic information from early design through technical rehearsal.
               </p>
             </div>
           </AnimatedSection>
 
-          <div className="grid gap-x-8 gap-y-12 lg:grid-cols-3 xl:gap-x-10">
-            {highlightEntries.map((entry) => {
+          <div className="space-y-16 md:space-y-20">
+            {highlightEntries.map((entry, index) => {
               const externalUrl = getEntryExternalUrl(entry);
+              const imageFirst = index % 2 === 0;
 
               return (
                 <AnimatedSection key={entry.anchorId}>
-                  <article id={entry.anchorId} className="group flex h-full flex-col">
-                    <div className="flex h-[18rem] items-end overflow-hidden rounded-[0.85rem] bg-black/70 md:h-[20rem] xl:h-[18.5rem]">
-                      <div className="relative h-full w-full">
+                  <article
+                    id={entry.anchorId}
+                    className="group grid gap-6 border-t border-white/12 pt-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(22rem,0.8fr)] lg:gap-12"
+                  >
+                    <div className={`${imageFirst ? "" : "lg:order-2"} overflow-hidden bg-black/70`}>
+                      <div className="relative aspect-[16/10] w-full lg:aspect-[16/9]">
                         <Image
                           src={entry.coverImageUrl}
                           alt={entry.coverImageAlt}
                           fill
                           quality={82}
-                          sizes="(max-width: 1024px) 92vw, 30vw"
-                          className="rounded-[0.85rem] object-contain object-bottom transition-transform duration-500 group-hover:scale-[1.015]"
+                          sizes="(max-width: 1024px) 100vw, 58vw"
+                          className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.015]"
                         />
                       </div>
                     </div>
-                    <div className="pt-4">
+                    <div className={`${imageFirst ? "" : "lg:order-1"} self-end lg:pb-1`}>
                       <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-foreground/40">
                         {entry.organization}
                       </p>
-                      <h3 className="mt-2 text-[1.5rem] font-sans font-medium leading-[1.02] tracking-[-0.045em] text-foreground">
+                      <h3 className="mt-3 font-sans text-[clamp(1.8rem,3vw,3.2rem)] font-medium leading-[0.96] tracking-[-0.055em] text-foreground">
                         {entry.title}
                       </h3>
-                      <p className="mt-3 max-w-[42rem] text-[0.98rem] leading-[1.72] tracking-[-0.01em] text-foreground/58">
+                      <p className="mt-5 max-w-[42rem] text-[0.94rem] leading-[1.65] tracking-[-0.01em] text-foreground/50">
                         Assistant scenic design with {entry.collaborator}, {formatDate(entry.date)}
                         {entry.location ? ` · ${entry.location}` : ""}.
+                      </p>
+                      <p className="mt-4 max-w-[42rem] text-[1rem] leading-[1.78] tracking-[-0.01em] text-foreground/64">
+                        {getSelectedCreditNote(entry)}
                       </p>
                       {externalUrl && (
                         <div className="mt-4">
@@ -294,7 +326,7 @@ export default function AssistantScenicDesign() {
       </section>
 
       <section className="border-t border-border py-16 md:py-20">
-        <div className="container max-w-6xl">
+        <div className="container max-w-[88rem]">
           <AnimatedSection>
             <div className="mb-10 max-w-4xl">
               <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
@@ -304,39 +336,76 @@ export default function AssistantScenicDesign() {
                 Five seasons of repertory collaboration.
               </h2>
               <p className="text-[1.02rem] leading-[1.75] tracking-[-0.01em] text-foreground/62">
-                A sustained assistant scenic collaboration with Jo Winiarski across five summer
-                seasons in Cedar City, supporting continuity, scale, and the pace of repertory
-                production.
+                The Utah Shakespeare Festival credits form the clearest through-line on this page:
+                five summer seasons supporting Jo Winiarski across rotating repertory productions,
+                shared production timelines, and multiple scenic worlds moving at once.
                 {utahMilestone ? ` ${trimCopy(utahMilestone.excerpt, 136)}` : ""}
               </p>
             </div>
           </AnimatedSection>
 
           <AnimatedSection>
-            <div className="relative">
-              <div className="overflow-hidden">
-                <div
-                  ref={utahGalleryRef}
-                  className="flex gap-8 overflow-x-auto px-[10vw] pb-4 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] md:px-[14vw]"
-                >
-                  {utahEntries.map((entry) => {
+            <div className="space-y-10">
+              {leadUtahEntry ? (
+                <figure id={leadUtahEntry.anchorId} className="grid gap-6 border-t border-white/12 pt-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(22rem,0.65fr)] lg:gap-12">
+                  <div className="overflow-hidden bg-black/70">
+                    <div className="relative aspect-[16/9] w-full lg:aspect-[16/8]">
+                      <Image
+                        src={leadUtahEntry.coverImageUrl}
+                        alt={leadUtahEntry.coverImageAlt}
+                        fill
+                        quality={86}
+                        sizes="(max-width: 1024px) 100vw, 62vw"
+                        className="object-cover"
+                      />
+                    </div>
+                  </div>
+                  <figcaption className="lg:pt-1">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-foreground/40">
+                      {new Date(leadUtahEntry.date).getFullYear()} Season
+                    </p>
+                    <h3 className="mt-3 font-sans text-[clamp(1.8rem,3vw,3.25rem)] font-medium leading-[0.95] tracking-[-0.055em] text-foreground">
+                      {leadUtahEntry.title}
+                    </h3>
+                    <p className="mt-5 max-w-[34rem] text-[1rem] leading-[1.75] tracking-[-0.01em] text-foreground/62">
+                      Assistant scenic design with {leadUtahEntry.collaborator}. {leadUtahEntry.excerpt}
+                    </p>
+                    {getEntryExternalUrl(leadUtahEntry) ? (
+                      <div className="mt-5">
+                        <a
+                          href={getEntryExternalUrl(leadUtahEntry) || "#"}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-[0.94rem] tracking-[-0.015em] text-foreground/76 transition-colors hover:text-foreground"
+                        >
+                          {getEntryExternalLabel(leadUtahEntry)}
+                          <ArrowUpRight className="h-4 w-4" />
+                        </a>
+                      </div>
+                    ) : null}
+                  </figcaption>
+                </figure>
+              ) : null}
+
+              <div className="grid gap-x-8 gap-y-12 md:grid-cols-2">
+                {supportingUtahEntries.map((entry) => {
                     const externalUrl = getEntryExternalUrl(entry);
 
                     return (
                       <figure
                         key={entry.anchorId}
                         id={entry.anchorId}
-                        className="w-[72vw] max-w-[52rem] flex-none snap-center md:w-[calc((100%-2rem)/3)] md:max-w-none"
+                        className="border-t border-white/12 pt-5"
                       >
-                        <div className="overflow-hidden rounded-[0.9rem] bg-black/70">
+                        <div className="overflow-hidden bg-black/70">
                           <div className="relative aspect-[16/10] w-full">
                             <Image
                               src={entry.coverImageUrl}
                               alt={entry.coverImageAlt}
                               fill
                               quality={82}
-                              sizes="(max-width: 768px) 72vw, 33vw"
-                              className="rounded-[0.9rem] object-contain"
+                              sizes="(max-width: 768px) 100vw, 48vw"
+                              className="object-cover"
                             />
                           </div>
                         </div>
@@ -370,40 +439,23 @@ export default function AssistantScenicDesign() {
                       </figure>
                     );
                   })}
-                </div>
               </div>
-              <button
-                type="button"
-                aria-label="Previous Utah Shakespeare images"
-                onClick={() => scrollUtahGallery("prev")}
-                className="hidden md:flex absolute left-[4.5rem] top-[42%] -translate-y-1/2 items-center justify-center text-white/76 transition-colors hover:text-white"
-              >
-                <ChevronLeft className="h-6 w-6" />
-              </button>
-              <button
-                type="button"
-                aria-label="Next Utah Shakespeare images"
-                onClick={() => scrollUtahGallery("next")}
-                className="hidden md:flex absolute right-[4.5rem] top-[42%] -translate-y-1/2 items-center justify-center text-white/76 transition-colors hover:text-white"
-              >
-                <ChevronRight className="h-6 w-6" />
-              </button>
             </div>
           </AnimatedSection>
         </div>
       </section>
 
       {additionalEntries.length > 0 && (
-        <section className="border-t border-border py-16 md:py-18">
-          <div className="container max-w-6xl">
+        <section className="border-t border-border py-16 md:py-20">
+          <div className="container max-w-[88rem]">
             <AnimatedSection>
               <div className="mb-8 max-w-3xl">
                 <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
                   Additional Credits
                 </p>
                 <p className="text-[1rem] leading-[1.72] tracking-[-0.01em] text-foreground/58">
-                  A broader list of assistant scenic credits kept visible here without competing
-                  with the main selection above.
+                  Additional assistant scenic credits across regional theatre, repertory production,
+                  drafting support, and long-term scenic collaboration.
                 </p>
               </div>
             </AnimatedSection>

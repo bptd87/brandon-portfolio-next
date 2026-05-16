@@ -243,7 +243,7 @@
   }
   
   .article-html-content .wp-block-heading {
-    @apply font-['Playfair_Display'] font-bold text-foreground;
+    @apply font-sans font-semibold text-foreground;
   }
   
   .article-html-content h2.wp-block-heading {
@@ -274,19 +274,19 @@
   
   /* Typography Hierarchy */
   h1 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'DM Sans', -apple-system, blinkmacsystemfont, sans-serif;
     font-size: clamp(2.5rem, 8vw, 6rem);
-    font-weight: 700;
+    font-weight: 500;
     line-height: 0.95;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.065em;
   }
 
   h2 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'DM Sans', -apple-system, blinkmacsystemfont, sans-serif;
     font-size: clamp(2rem, 5vw, 4rem);
-    font-weight: 700;
+    font-weight: 500;
     line-height: 1;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.055em;
   }
 
   h3 {
@@ -318,6 +318,26 @@
   svg {
     max-width: 100%;
     height: auto;
+  }
+
+  /* Keep photographic/site media square-edged while preserving circular UI avatars. */
+  img,
+  picture,
+  figure:has(> img),
+  figure:has(> picture),
+  button:has(> img),
+  button:has(> picture),
+  a:has(> img),
+  a:has(> picture),
+  div:has(> img),
+  div:has(> picture) {
+    border-radius: 0 !important;
+  }
+
+  .rounded-full,
+  .rounded-full:has(> img),
+  .rounded-full:has(> picture) {
+    border-radius: 9999px !important;
   }
   
   /* Scrollbar styling */
