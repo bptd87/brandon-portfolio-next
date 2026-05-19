@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { AnimatedSection } from "@/components/AnimatedSection";
 import StructuredData from "@/components/StructuredData";
 import { SEO } from "@/components/SEO";
 import DeferredYouTubeEmbed from "@/components/DeferredYouTubeEmbed";
@@ -1459,40 +1460,47 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
       <Header />
 
-      <article className="py-12 md:py-16">
+      <article className="overflow-hidden py-12 md:py-16">
         <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
-          <header className="mx-auto max-w-[62rem] text-center">
-            <div className="flex flex-wrap items-center justify-center gap-4 text-[0.92rem] tracking-[-0.015em] text-white/54">
-              {tutorialPublishedAt ? (
-                <time dateTime={new Date(tutorialPublishedAt).toISOString()}>
-                  {formatDate(tutorialPublishedAt)}
-                </time>
-              ) : null}
-              <span>{getCategoryLabel(tutorial.category)}</span>
-              <span>{formatDuration(tutorial.duration)}</span>
-              <span>{getDifficultyLabel(tutorial.difficulty)}</span>
-            </div>
+          <AnimatedSection>
+            <header className="mx-auto max-w-[62rem] text-center">
+              <div className="flex flex-wrap items-center justify-center gap-4 text-[0.92rem] tracking-[-0.015em] text-white/54">
+                {tutorialPublishedAt ? (
+                  <time dateTime={new Date(tutorialPublishedAt).toISOString()}>
+                    {formatDate(tutorialPublishedAt)}
+                  </time>
+                ) : null}
+                <span>{getCategoryLabel(tutorial.category)}</span>
+                <span>{formatDuration(tutorial.duration)}</span>
+                <span>{getDifficultyLabel(tutorial.difficulty)}</span>
+              </div>
 
-            <h1 className="mx-auto mt-5 max-w-[14ch] font-sans text-[clamp(2.7rem,5.8vw,5.8rem)] font-medium leading-[0.92] tracking-[-0.072em] text-white">
-              {tutorial.title}
-            </h1>
+              <h1 className="mx-auto mt-5 max-w-[14ch] font-sans text-[clamp(2.7rem,5.8vw,5.8rem)] font-medium leading-[0.92] tracking-[-0.072em] text-white">
+                {tutorial.title}
+              </h1>
 
-            <p className="mx-auto mt-5 max-w-[42rem] text-[clamp(1rem,1.45vw,1.32rem)] leading-[1.62] tracking-[-0.018em] text-white/68">
-              {tutorialSummary}
-            </p>
+              <p className="mx-auto mt-5 max-w-[42rem] text-[clamp(1rem,1.45vw,1.32rem)] leading-[1.62] tracking-[-0.018em] text-white/68">
+                {tutorialSummary}
+              </p>
+            </header>
+          </AnimatedSection>
 
-          </header>
-
-          <div className="mx-auto mt-12 max-w-[88rem] overflow-hidden bg-white/[0.02]">
+          <AnimatedSection
+            delay={140}
+            className="mx-auto mt-12 max-w-[88rem] overflow-hidden bg-white/[0.02]"
+          >
             {videoId ? (
               <DeferredYouTubeEmbed videoId={videoId} title={tutorial.title} eagerPoster />
             ) : (
               <div className="aspect-[16/9] bg-black/30" />
             )}
-          </div>
+          </AnimatedSection>
 
-          <div className="mx-auto mt-8 flex w-full max-w-[62rem] items-center justify-between gap-6 border-t border-white/14 pt-4 text-white/72">
-            <div className="flex flex-wrap items-center gap-4 sm:gap-5 text-[0.96rem] tracking-[-0.018em]">
+          <AnimatedSection
+            delay={260}
+            className="mx-auto mt-8 flex w-full max-w-[62rem] items-center justify-between gap-6 border-t border-white/14 pt-4 text-white/72"
+          >
+            <div className="flex flex-wrap items-center gap-4 text-[0.96rem] tracking-[-0.018em] sm:gap-5">
               <span>Video tutorial</span>
               <span className="text-white/42">/</span>
               <span>Vectorworks workflow reference</span>
@@ -1516,16 +1524,19 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                 <span>{linkCopied ? "Link copied" : "Share"}</span>
               </button>
             </div>
-          </div>
+          </AnimatedSection>
 
-          <div className="mx-auto mt-8 max-w-[50rem] rounded-[1.2rem] border border-white/10 bg-white/[0.03] px-5 py-4 md:px-6">
+          <AnimatedSection
+            delay={320}
+            className="mx-auto mt-8 max-w-[50rem] rounded-[1.2rem] border border-white/10 bg-white/[0.03] px-5 py-4 md:px-6"
+          >
             <p className="text-[0.78rem] uppercase tracking-[0.18em] text-white/38">What to notice</p>
             <p className="mt-2 text-[0.97rem] leading-7 tracking-[-0.01em] text-white/68">
               {whatToNotice}
             </p>
-          </div>
+          </AnimatedSection>
 
-          <div className="mx-auto mt-14 max-w-[50rem]">
+          <AnimatedSection delay={360} className="mx-auto mt-14 max-w-[50rem]">
             <section className="text-white/80">
               <p className="mb-8 text-[1.04rem] leading-[1.9] tracking-[-0.01em] md:text-[1.08rem]">
                 {articleLead}
@@ -1938,7 +1949,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
                 })}
               </div>
             </section>
-          </div>
+          </AnimatedSection>
         </div>
       </article>
 

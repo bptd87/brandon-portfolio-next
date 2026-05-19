@@ -1,71 +1,88 @@
 "use client";
 
 import Image from "next/image";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import { useState } from "react";
+import { Link } from "wouter";
+import { ArrowLeft, ArrowRight, Check, Download, Link2 } from "lucide-react";
+
 import AboutNav from "@/components/AboutNav";
-import AboutVerticalArt from "@/components/AboutVerticalArt";
+import { AnimatedSection } from "@/components/AnimatedSection";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
-import { resolveBlobMediaUrl } from "@shared/mediaBlob";
-import { ArrowRight, Download } from "lucide-react";
-import { Link } from "wouter";
-import { getLocalScenicProjects } from "@shared/localScenicProjects";
+import { copyTextToClipboard } from "@/lib/clipboard";
 
-const getProjectTimestamp = (project: any) => {
-  if (project.year) {
-    const monthIndex = project.month ? Math.max(project.month - 1, 0) : 6;
-    return new Date(project.year, monthIndex, 1).getTime();
-  }
+const TEACHING_HERO_IMAGE =
+  "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-teaching-art.png";
 
-  const fallback = project.updatedAt || project.publishedAt || project.createdAt;
-  return fallback ? new Date(fallback).getTime() : 0;
-};
+const teachingGallery = [
+  {
+    src: "/images/teaching-gallery/student-presentation-highres.jpeg",
+    alt: "Students standing beside a scenic design presentation monitor",
+    caption: "Student presentation and design conversation",
+  },
+  {
+    src: "/images/teaching-gallery/class-critique-highres.jpeg",
+    alt: "Students discussing design work during a studio critique",
+    caption: "Studio critique and peer response",
+  },
+  {
+    src: "/images/teaching-gallery/student-work-wall-highres.jpeg",
+    alt: "Student costume and scenic design artwork installed on a classroom wall",
+    caption: "Design process work across disciplines",
+  },
+  {
+    src: "/images/teaching-gallery/presentation-critique-highres.jpeg",
+    alt: "Student presenting a design diagram to a classroom group",
+    caption: "Presentation critique and design discussion",
+  },
+  {
+    src: "/images/teaching-gallery/drawing-studio-highres.jpeg",
+    alt: "Students drawing around a studio classroom table",
+    caption: "Drawing and observation in the studio",
+  },
+];
 
 export default function TeachingPhilosophy() {
-  const scenicDesignProjects = [...getLocalScenicProjects()]
-    .filter((project) => !!project.coverImageUrl)
-    .sort((a, b) => {
-      const timeCompare = getProjectTimestamp(b) - getProjectTimestamp(a);
-      if (timeCompare !== 0) return timeCompare;
-      return a.title.localeCompare(b.title);
-    });
+  const [linkCopied, setLinkCopied] = useState(false);
+  const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
 
-  const heroProject =
-    scenicDesignProjects.find((project) => project.featured) || scenicDesignProjects[0];
+  const activeGalleryImage = teachingGallery[activeGalleryIndex] || teachingGallery[0];
 
-  const featuredWork =
-    scenicDesignProjects.length > 0
-      ? [
-          scenicDesignProjects[Math.floor(scenicDesignProjects.length * 0.14)] || scenicDesignProjects[0],
-          scenicDesignProjects[Math.floor(scenicDesignProjects.length * 0.48)] || scenicDesignProjects[1],
-          scenicDesignProjects[Math.floor(scenicDesignProjects.length * 0.82)] || scenicDesignProjects[2],
-        ].filter(
-          (project, index, array) =>
-            project &&
-            !!project.slug &&
-            array.findIndex((item) => item?.id === project?.id) === index
-        )
-      : [];
-
-  const getProjectHref = (project: { discipline?: string | null; slug?: string | null }) => {
-    if (!project.slug) return "/projects";
-    return project.discipline === "rendering"
-      ? `/projects/rendering/${project.slug}`
-      : `/project/${project.slug}`;
+  const showPreviousImage = () => {
+    setActiveGalleryIndex((current) =>
+      current === 0 ? teachingGallery.length - 1 : current - 1
+    );
   };
 
-  const teachingValues = [
-    "Build visual rigor alongside professional fluency.",
-    "Teach process in a way that still leaves room for discovery.",
-    "Prepare students for theatre, entertainment, and adjacent industries.",
-  ];
+  const showNextImage = () => {
+    setActiveGalleryIndex((current) =>
+      current === teachingGallery.length - 1 ? 0 : current + 1
+    );
+  };
 
   const teachingExperience = [
-    "Stephens College, Lecturer (Remote), 2024 - 2025",
-    "Stephens College, Assistant Professor of Scenic Design, 2021 - 2024",
-    "University of Texas at El Paso, Visiting Assistant Professor, 2021",
-    "University of California, Irvine, Adjunct Lecturer and TA, 2017 - 2020",
+    {
+      institution: "Stephens College",
+      role: "Lecturer (Remote)",
+      years: "2024 - 2025",
+    },
+    {
+      institution: "Stephens College",
+      role: "Assistant Professor of Scenic Design",
+      years: "2021 - 2024",
+    },
+    {
+      institution: "University of Texas at El Paso",
+      role: "Visiting Assistant Professor",
+      years: "2021",
+    },
+    {
+      institution: "University of California, Irvine",
+      role: "Adjunct Lecturer and Teaching Assistant",
+      years: "2017 - 2020",
+    },
   ];
 
   const coursesTaught = [
@@ -84,16 +101,30 @@ export default function TeachingPhilosophy() {
       description:
         "Themed entertainment, immersive environments, and commercial storytelling workflows for designers working beyond the stage.",
       href: "/syllabus/experiential-design",
-      image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/teaching/syllabus-experiential-art.png",
+      image:
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/teaching/syllabus-experiential-art.png",
     },
     {
       title: "3D Modeling and Rendering",
       description:
         "Vectorworks-based drafting, modeling, rendering, and documentation with an emphasis on professional scenic design workflow.",
       href: "/syllabus/3d-modeling",
-      image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/teaching/syllabus-3d-modeling-art.png",
+      image:
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/teaching/syllabus-3d-modeling-art.png",
     },
   ];
+
+  const handleShare = async () => {
+    const path = "/about/teaching";
+    const url =
+      typeof window === "undefined" ? `https://www.brandonptdavis.com${path}` : `${window.location.origin}${path}`;
+
+    const copied = await copyTextToClipboard(url);
+    if (copied) {
+      setLinkCopied(true);
+      window.setTimeout(() => setLinkCopied(false), 1800);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -101,7 +132,7 @@ export default function TeachingPhilosophy() {
         title="Teaching Philosophy | Scenic Design Education"
         description="A teaching philosophy centered on scenic design process, professional practice, mentorship, and adaptable design pedagogy."
         keywords="teaching philosophy scenic design, scenic design education, theatre design pedagogy, vectorworks instruction, design mentorship, experiential design syllabus"
-        image={heroProject?.coverImageUrl ?? undefined}
+        image={TEACHING_HERO_IMAGE}
         url="https://www.brandonptdavis.com/about/teaching"
         type="article"
       />
@@ -157,239 +188,214 @@ export default function TeachingPhilosophy() {
           ],
         }}
       />
+
       <Header />
       <AboutNav />
 
-      <section className="px-6 pb-12 pt-24 md:pb-16 md:pt-28">
-        <div className="mx-auto max-w-5xl border-b border-border/25 pb-12">
-          <p className="text-center font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
-            Teaching Philosophy
-          </p>
-          <h1 className="mx-auto mt-6 max-w-5xl text-center font-sans text-[clamp(3rem,6vw,5.6rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
-            Teaching scenic design through process, rigor, and practice.
-          </h1>
-          <p className="mx-auto mt-8 max-w-3xl text-center text-[1.08rem] leading-8 text-foreground/60 md:text-[1.16rem]">
-            My classroom is built around visual storytelling, technical fluency, and the kind of
-            collaborative thinking students need in order to build sustainable creative lives.
-          </p>
-          <div className="mx-auto mt-10 max-w-4xl">
-            <p className="text-[1.18rem] leading-9 text-foreground/76 md:text-[1.3rem]">
-              I want students to leave with more than a polished project. They should understand
-              how to research, communicate, revise, draft, present, and collaborate with clarity.
-              Scenic design education works best when it prepares students for both artistic growth
-              and the realities of professional practice.
-            </p>
-          </div>
-        </div>
-      </section>
+      <main>
+        <article className="overflow-hidden py-12 md:py-16">
+          <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
+            <header className="mx-auto max-w-[62rem] text-center">
+              <AnimatedSection>
+                <div className="flex flex-wrap items-center justify-center gap-4 text-[0.92rem] tracking-[-0.015em] text-foreground/54">
+                  <span>Teaching Philosophy</span>
+                  <span>Scenic Design Education</span>
+                  <span>Brandon PT Davis</span>
+                </div>
 
-      <section className="px-6 py-8 md:py-12">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 xl:grid-cols-[minmax(0,1.05fr)_minmax(18rem,0.95fr)]">
-          <div className="max-w-2xl">
-            <h2 className="font-sans text-[clamp(2rem,4vw,3.35rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
-              A classroom shaped by structure, adaptability, and real-world design practice.
-            </h2>
-            <div className="mt-8 space-y-5">
-              <p className="text-[1.04rem] leading-8 text-foreground/64 md:text-[1.1rem]">
-                My teaching is rooted in theatre, but it speaks to a much wider creative landscape:
-                live performance, digital visualization, themed entertainment, and collaborative
-                design work that moves fluidly between concept and execution.
-              </p>
-              <p className="text-[1.04rem] leading-8 text-foreground/64 md:text-[1.1rem]">
-                I care about helping students become articulate designers who can generate ideas,
-                develop them rigorously, and adapt their process to the demands of different
-                collaborators, technologies, and production contexts.
-              </p>
-            </div>
-            <div className="mt-10 space-y-3 border-t border-border/25 pt-8">
-              {teachingValues.map((value) => (
-                <p
-                  key={value}
-                  className="font-sans text-[1rem] leading-7 tracking-[-0.02em] text-foreground/78"
-                >
-                  {value}
+                <h1 className="mx-auto mt-5 max-w-[15ch] font-sans text-[clamp(2.7rem,5.8vw,5.9rem)] font-medium leading-[0.92] tracking-[-0.072em] text-foreground">
+                  Teaching scenic design through process, rigor, and practice.
+                </h1>
+
+                <p className="mx-auto mt-5 max-w-[42rem] text-[clamp(1rem,1.45vw,1.34rem)] leading-[1.62] tracking-[-0.018em] text-foreground/68">
+                  My classroom is built around visual storytelling, technical fluency, and the kind
+                  of collaborative thinking students need in order to build sustainable creative
+                  lives.
                 </p>
-              ))}
-            </div>
-          </div>
+              </AnimatedSection>
 
-          <AboutVerticalArt
-            src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-teaching-art.png"
-            alt="Abstract teaching philosophy artwork"
-            sizes="(max-width: 1280px) 92vw, 34vw"
-            maxWidthClassName="max-w-[28rem]"
-          />
-        </div>
-      </section>
+              <AnimatedSection delay={140}>
+                <div className="group relative mx-auto mt-10 aspect-video max-w-[88rem] overflow-hidden bg-white/[0.02]">
+                  <Image
+                    src={TEACHING_HERO_IMAGE}
+                    alt="Abstract teaching philosophy artwork"
+                    fill
+                    priority
+                    quality={88}
+                    sizes="(min-width: 1280px) 1120px, 100vw"
+                    className="object-cover transition-[filter,transform] duration-[1200ms] ease-out group-hover:scale-[1.018] group-hover:brightness-110"
+                  />
+                </div>
+              </AnimatedSection>
 
-      <section className="px-6 py-18 md:py-22">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid items-start gap-12 md:grid-cols-[180px_1fr]">
-            <div className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40 md:sticky md:top-32">
-              Foundation
-            </div>
-            <div className="max-w-4xl space-y-8">
-              <p className="text-[1.14rem] leading-9 text-foreground/72 md:text-[1.22rem]">
-                I teach scenic design as both an artistic discipline and a professional framework.
-                Students need visual literacy, yes, but they also need to understand drafting,
-                communication, materials, and how design choices function inside an actual process.
-              </p>
-              <p className="text-[1.06rem] leading-8 text-foreground/60 md:text-[1.12rem]">
-                That foundation includes hand sketching, spatial thinking, historical and
-                dramaturgical research, and digital workflow. I want students to understand why a
-                method exists before they decide how to use it.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+              <AnimatedSection delay={260}>
+                <div className="mx-auto mt-8 flex w-full max-w-[62rem] items-center justify-between gap-6 border-t border-white/14 pt-4 text-foreground/72">
+                  <div className="flex flex-wrap items-center gap-4 text-[0.96rem] tracking-[-0.018em] sm:gap-5">
+                    <a
+                      href="/api/teaching-philosophy-pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 transition-colors hover:text-foreground"
+                    >
+                      <Download className="h-4 w-4" />
+                      <span>Download PDF</span>
+                    </a>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleShare}
+                    className="inline-flex items-center gap-2 text-[0.96rem] tracking-[-0.018em] transition-colors hover:text-foreground"
+                  >
+                    {linkCopied ? <Check className="h-4 w-4" /> : <Link2 className="h-4 w-4" />}
+                    <span>{linkCopied ? "Link copied" : "Share"}</span>
+                  </button>
+                </div>
+              </AnimatedSection>
+            </header>
 
-      <div className="px-6 py-16 md:py-18">
-        <div className="mx-auto max-w-4xl">
-          <blockquote className="border-l border-border/35 pl-8 md:pl-10">
-            <p className="font-sans text-[clamp(1.9rem,4vw,3.2rem)] font-medium leading-[1.08] tracking-[-0.05em] text-foreground/90">
-              "Students learn best when process becomes visible, repeatable, and flexible."
-            </p>
-          </blockquote>
-        </div>
-      </div>
+            <AnimatedSection delay={360} className="mx-auto mt-14 max-w-[54rem]">
+              <div className="space-y-8 text-[1.04rem] leading-[1.9] tracking-[-0.01em] text-foreground/76 md:text-[1.08rem]">
+                <p>
+                  I want students to leave with more than a polished project. They should
+                  understand how to research, communicate, revise, draft, present, and collaborate
+                  with clarity. Scenic design education works best when it prepares students for
+                  both artistic growth and the realities of professional practice.
+                </p>
 
-      <section className="px-6 py-18 md:py-22">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid items-start gap-12 md:grid-cols-[180px_1fr]">
-            <div className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40 md:sticky md:top-32">
-              Pedagogy
-            </div>
-            <div className="max-w-4xl space-y-8">
-              <p className="text-[1.14rem] leading-9 text-foreground/72 md:text-[1.22rem]">
-                Different students arrive with different strengths, anxieties, and ways of
-                learning. My pedagogy has to meet that reality. I use collaborative projects,
-                scaffolded assignments, visual examples, and direct feedback to help students build
-                confidence without lowering the level of rigor.
-              </p>
-              <p className="text-[1.06rem] leading-8 text-foreground/60 md:text-[1.12rem]">
-                Accessibility matters here too. I try to build courses that give students multiple
-                ways into the work, whether that means tactile making, digital tools, iterative
-                checkpoints, or supplemental material that helps them stay connected to the
-                process.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+                <p>
+                  My teaching is rooted in theatre, but it speaks to a much wider creative
+                  landscape: live performance, digital visualization, themed entertainment, and
+                  collaborative design work that moves fluidly between concept and execution. I care
+                  about helping students become articulate designers who can generate ideas, develop
+                  them rigorously, and adapt their process to different collaborators, technologies,
+                  and production contexts.
+                </p>
 
-      <section className="border-y border-border/25 px-6 py-18 md:py-22">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid items-start gap-12 md:grid-cols-[180px_1fr]">
-            <div className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40 md:sticky md:top-32">
-              Mentorship
-            </div>
-            <div className="max-w-5xl">
-              <div className="space-y-8">
-                <p className="text-[1.14rem] leading-9 text-foreground/72 md:text-[1.22rem]">
+                <blockquote className="my-12 border-y border-border/35 py-8 font-sans text-[clamp(1.9rem,4vw,3.4rem)] font-medium leading-[1.05] tracking-[-0.055em] text-foreground md:my-14 md:py-10">
+                  Students learn best when process becomes visible, repeatable, and flexible.
+                </blockquote>
+
+                <p>
+                  I teach scenic design as both an artistic discipline and a professional framework.
+                  Students need visual literacy, but they also need to understand drafting,
+                  communication, materials, and how design choices function inside an actual
+                  process. That foundation includes hand sketching, spatial thinking, historical and
+                  dramaturgical research, and digital workflow.
+                </p>
+
+                <p>
+                  I want students to understand why a method exists before they decide how to use
+                  it. A model, a rendering, a ground plan, and a research board are not isolated
+                  deliverables. They are different forms of communication inside the same design
+                  argument.
+                </p>
+
+                <p>
+                  Different students arrive with different strengths, anxieties, and ways of
+                  learning. My pedagogy has to meet that reality. I use collaborative projects,
+                  scaffolded assignments, visual examples, and direct feedback to help students
+                  build confidence without lowering the level of rigor.
+                </p>
+
+                <p>
+                  Accessibility matters here too. I try to build courses that give students
+                  multiple ways into the work, whether that means tactile making, digital tools,
+                  iterative checkpoints, or supplemental material that helps them stay connected to
+                  the process.
+                </p>
+
+                <blockquote className="my-12 border-l border-border/35 pl-7 font-sans text-[clamp(1.75rem,3vw,2.65rem)] font-medium leading-[1.12] tracking-[-0.05em] text-foreground/92 md:my-14 md:pl-9">
+                  A classroom should make room for discovery while still teaching students how to
+                  meet the demands of production.
+                </blockquote>
+
+                <p>
                   Mentorship is where teaching becomes long-term. I want students to leave with a
                   stronger sense of their own voice, but also with practical habits around
-                  communication, resilience, and self-advocacy.
+                  communication, resilience, and self-advocacy. I care about studio culture as much
+                  as curriculum. The most meaningful learning often happens in the environment we
+                  create around the work.
                 </p>
-                <p className="text-[1.06rem] leading-8 text-foreground/60 md:text-[1.12rem]">
-                  I care about studio culture as much as curriculum. The most meaningful learning
-                  often happens in the environments we create around the work, where students feel
-                  supported enough to take risks, revise honestly, and learn from each other.
+
+                <p>
+                  I think of teaching as research in public. The classroom is where I test new
+                  tools, update workflows, and ask how emerging technologies actually change what
+                  students need to know. That includes AI, rendering platforms, and visualization
+                  tools, but always with a critical lens.
+                </p>
+
+                <p>
+                  I want students to understand not just what a tool can produce, but how it affects
+                  authorship, taste, collaboration, and the larger design process. The goal is not
+                  to make students dependent on a specific workflow. The goal is to help them become
+                  designers who can think clearly through whatever workflow the room requires.
                 </p>
               </div>
+            </AnimatedSection>
 
-              <div className="mt-12 grid gap-6 md:grid-cols-2">
-                <div className="rounded-[1.5rem] border border-border/25 bg-card/10 p-6">
-                  <h3 className="font-sans text-[0.9rem] font-semibold uppercase tracking-[0.24em] text-foreground/40">
-                    Teaching Experience
-                  </h3>
-                  <div className="mt-6 space-y-4">
+            <section className="mx-auto mt-16 max-w-[54rem] border-t border-border/30 pt-10 md:mt-20 md:pt-12">
+              <div className="grid gap-12 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] md:gap-16">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                    Teaching Record
+                  </p>
+                  <div className="mt-7 space-y-6">
                     {teachingExperience.map((credit) => (
-                      <p key={credit} className="text-[1rem] leading-7 text-foreground/68">
-                        {credit}
-                      </p>
+                      <div key={`${credit.institution}-${credit.role}`} className="border-t border-border/20 pt-5 first:border-t-0 first:pt-0">
+                        <p className="font-sans text-[1.08rem] font-medium leading-7 tracking-[-0.025em] text-foreground/84">
+                          {credit.institution}
+                        </p>
+                        <p className="mt-1 text-[0.98rem] leading-7 text-foreground/54">
+                          {credit.role}, {credit.years}
+                        </p>
+                      </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="rounded-[1.5rem] border border-border/25 bg-card/10 p-6">
-                  <h3 className="font-sans text-[0.9rem] font-semibold uppercase tracking-[0.24em] text-foreground/40">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
                     Courses Taught
-                  </h3>
-                  <div className="mt-6 space-y-4">
+                  </p>
+                  <div className="mt-7 space-y-3 text-[1rem] leading-7 text-foreground/64">
                     {coursesTaught.map((course) => (
-                      <p key={course} className="text-[1rem] leading-7 text-foreground/68">
-                        {course}
-                      </p>
+                      <p key={course}>{course}</p>
                     ))}
                   </div>
                 </div>
               </div>
-            </div>
+            </section>
           </div>
-        </div>
-      </section>
+        </article>
 
-      <section className="px-6 py-18 md:py-22">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid items-start gap-12 md:grid-cols-[180px_1fr]">
-            <div className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40 md:sticky md:top-32">
-              Research
-            </div>
-            <div className="max-w-4xl space-y-8">
-              <p className="text-[1.14rem] leading-9 text-foreground/72 md:text-[1.22rem]">
-                I think of teaching as research in public. The classroom is where I test new tools,
-                update workflows, and ask how emerging technologies actually change what students
-                need to know.
+        <section className="border-t border-border/35 px-4 py-14 sm:px-6 md:py-20 lg:px-8">
+          <div className="mx-auto max-w-[1120px]">
+            <AnimatedSection className="max-w-3xl">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                Course Structures
               </p>
-              <p className="text-[1.06rem] leading-8 text-foreground/60 md:text-[1.12rem]">
-                That includes AI, rendering platforms, and visualization tools, but always with a
-                critical lens. I want students to understand not just what a tool can produce, but
-                how it affects authorship, taste, collaboration, and the larger design process.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+              <h2 className="mt-4 font-sans text-[clamp(1.8rem,3.5vw,3rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
+                Syllabi that translate the teaching philosophy into assignments and pacing.
+              </h2>
+            </AnimatedSection>
 
-      <section className="border-t border-border/25 px-6 py-18 md:py-22">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid items-start gap-12 md:grid-cols-[180px_1fr]">
-            <div className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40 md:sticky md:top-32">
-              Syllabi
-            </div>
-            <div>
-              <div className="max-w-3xl">
-                <h2 className="font-sans text-[clamp(2rem,4vw,3.2rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">
-                  Two course structures that show how I organize teaching in practice.
-                </h2>
-                <p className="mt-6 text-[1.04rem] leading-8 text-foreground/60 md:text-[1.1rem]">
-                  These syllabi translate the philosophy above into actual assignments, software
-                  workflows, and project pacing. They show how I balance conceptual thinking with
-                  technical fluency and professional expectations.
-                </p>
-              </div>
-
-              <div className="mt-10 grid gap-6 md:grid-cols-2">
-                {syllabusCards.map((card) => (
-                  <Link
-                    key={card.href}
-                    href={card.href}
-                    className="group block"
-                  >
-                    <div className="relative aspect-square w-full overflow-hidden">
+            <div className="mt-10 grid gap-6 md:grid-cols-2">
+              {syllabusCards.map((card, index) => (
+                <AnimatedSection key={card.href} delay={Math.min(index * 90, 220)}>
+                  <Link href={card.href} className="group block">
+                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-card/20">
                       <Image
                         src={card.image}
                         alt={card.title}
                         fill
                         quality={82}
                         sizes="(max-width: 768px) 92vw, 46vw"
-                        className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                        className="object-cover transition-[filter,transform] duration-700 group-hover:scale-[1.02] group-hover:brightness-110"
                       />
                     </div>
-                    <div className="mt-4 flex items-start justify-between gap-4">
+                    <div className="mt-4 flex items-start justify-between gap-4 border-t border-border/25 pt-4">
                       <div>
-                        <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.22em] text-foreground/38">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-foreground/38">
                           Syllabus
                         </p>
                         <h3 className="mt-2 font-sans text-[1.4rem] font-medium leading-[1.08] tracking-[-0.04em] text-foreground">
@@ -399,86 +405,105 @@ export default function TeachingPhilosophy() {
                           {card.description}
                         </p>
                       </div>
-                      <div className="mt-1 hidden h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border/35 text-foreground/56 transition-colors group-hover:border-border/55 group-hover:text-foreground md:inline-flex">
-                        <ArrowRight className="h-4 w-4" />
-                      </div>
+                      <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-foreground/45 transition-transform group-hover:translate-x-1 group-hover:text-foreground" />
                     </div>
                   </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {featuredWork.length > 0 && (
-        <section className="border-t border-border/25 px-6 py-18 md:py-22">
-          <div className="mx-auto max-w-6xl">
-            <div className="max-w-3xl">
-              <h2 className="font-sans text-[clamp(2rem,4vw,3.2rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">
-                Scenic design work that enters the classroom.
-              </h2>
-              <p className="mt-6 text-[1.04rem] leading-8 text-foreground/60 md:text-[1.1rem]">
-                Production work keeps the teaching current. These projects help shape conversations
-                around process, storytelling, drafting, collaboration, and presentation.
-              </p>
-            </div>
-
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {featuredWork.map((project) => (
-                <Link key={project.id} href={getProjectHref(project)} className="group block">
-                  <div className="relative aspect-[3/2] w-full overflow-hidden">
-                    <Image
-                      src={project.coverImageUrl || ""}
-                      alt={project.title}
-                      fill
-                      quality={82}
-                      sizes="(max-width: 768px) 92vw, 31vw"
-                      className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-                    />
-                  </div>
-                  <p className="mt-3 font-sans text-[1rem] leading-7 text-foreground/74 transition-colors group-hover:text-foreground">
-                    {project.title}
-                  </p>
-                  {project.client && (
-                    <p className="text-[0.95rem] leading-6 text-foreground/48 transition-colors group-hover:text-foreground/62">
-                      {project.client}
-                    </p>
-                  )}
-                </Link>
+                </AnimatedSection>
               ))}
             </div>
           </div>
         </section>
-      )}
 
-      <section className="border-y border-border/25 px-6 py-20 md:py-24">
-        <div className="mx-auto max-w-6xl">
-          <div className="rounded-[2rem] border border-white/8 bg-white/[0.06] px-6 py-16 text-center md:px-12 md:py-20">
-            <h2 className="mx-auto max-w-4xl font-sans text-[clamp(2.4rem,4.5vw,4.4rem)] font-medium leading-[1.02] tracking-[-0.06em] text-foreground">
-              See the scenic design work that informs the classroom.
-            </h2>
-            <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link
-                href="/projects"
-                className="inline-flex h-11 items-center gap-2 rounded-full bg-white px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-black transition-colors hover:bg-white/92"
-              >
-                <span>View Portfolio</span>
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <a
-                href="/api/teaching-philosophy-pdf"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex h-11 items-center gap-2 rounded-full bg-white/10 px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-foreground transition-colors hover:bg-white/14 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                <Download className="h-4 w-4" />
-                <span>Download Teaching Philosophy</span>
-              </a>
+        <section className="border-t border-border/35 px-4 py-14 sm:px-6 md:py-20 lg:px-8">
+          <div className="mx-auto max-w-[1120px]">
+            <div className="max-w-3xl">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                Teaching Studio
+              </p>
+              <h2 className="mt-4 font-sans text-[clamp(1.8rem,3.5vw,3rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
+                Classroom work, critiques, and student presentations.
+              </h2>
+            </div>
+
+            <div className="mt-10">
+              <figure>
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-card/20 md:aspect-[16/8.6]">
+                  <Image
+                    key={activeGalleryImage.src}
+                    src={activeGalleryImage.src}
+                    alt={activeGalleryImage.alt}
+                    fill
+                    quality={92}
+                    sizes="(min-width: 1280px) 1120px, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+
+                <figcaption className="mt-4 flex flex-col gap-4 border-t border-border/25 pt-4 text-foreground/58 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <p className="font-sans text-[1.04rem] font-medium leading-7 tracking-[-0.025em] text-foreground/80">
+                      {activeGalleryImage.caption}
+                    </p>
+                    <p className="mt-1 text-[0.88rem] leading-6 text-foreground/42">
+                      {String(activeGalleryIndex + 1).padStart(2, "0")} /{" "}
+                      {String(teachingGallery.length).padStart(2, "0")}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={showPreviousImage}
+                      className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/35 text-foreground/62 transition-colors hover:border-foreground/45 hover:text-foreground"
+                      aria-label="Previous teaching image"
+                    >
+                      <ArrowLeft className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={showNextImage}
+                      className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/35 text-foreground/62 transition-colors hover:border-foreground/45 hover:text-foreground"
+                      aria-label="Next teaching image"
+                    >
+                      <ArrowRight className="h-4 w-4" />
+                    </button>
+                  </div>
+                </figcaption>
+              </figure>
+
+              <div className="mt-5 flex gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {teachingGallery.map((image, index) => (
+                  <button
+                    key={image.src}
+                    type="button"
+                    onClick={() => setActiveGalleryIndex(index)}
+                    className={`group relative h-20 w-32 shrink-0 overflow-hidden border transition-colors sm:h-24 sm:w-40 ${
+                      index === activeGalleryIndex
+                        ? "border-foreground/70"
+                        : "border-border/25 hover:border-foreground/42"
+                    }`}
+                    aria-label={`Show ${image.caption}`}
+                    aria-current={index === activeGalleryIndex}
+                  >
+                    <Image
+                      src={image.src}
+                      alt=""
+                      fill
+                      quality={70}
+                      sizes="160px"
+                      className={`object-cover transition-[filter] duration-300 ${
+                        index === activeGalleryIndex
+                          ? "brightness-100"
+                          : "brightness-60 group-hover:brightness-90"
+                      }`}
+                    />
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>

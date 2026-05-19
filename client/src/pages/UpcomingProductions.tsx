@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Check, Link2 } from "lucide-react";
 
+import AboutNav from "@/components/AboutNav";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
@@ -135,6 +136,7 @@ export default function UpcomingProductions() {
       />
 
       <Header />
+      <AboutNav />
 
       <main className="pb-20">
         <section className="px-6 py-12 md:px-10 md:py-16">

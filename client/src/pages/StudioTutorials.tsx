@@ -15,6 +15,7 @@ import {
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { AnimatedSection } from "@/components/AnimatedSection";
 import { SEO } from "@/components/SEO";
 import { formatUtcDate } from "@/lib/date-format";
 import { Input } from "@/components/ui/input";
@@ -204,67 +205,88 @@ const getTutorialCoverImage = (tutorial: TutorialCardItem) => {
   };
 };
 
-function LearningGridCard({ item, eager }: { item: LearningCardItem; eager?: boolean }) {
+function LearningGridCard({
+  item,
+  eager,
+  stagger = 0,
+}: {
+  item: LearningCardItem;
+  eager?: boolean;
+  stagger?: number;
+}) {
   return (
-    <a href={item.href} className="group block">
-      <div className="relative aspect-[1/1] overflow-hidden bg-background/50">
-        {item.coverImageUrl ? (
-          <Image
-            src={item.coverImageUrl}
-            alt={item.coverImageAlt}
-            fill
-            quality={84}
-            className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-            loading={eager ? "eager" : "lazy"}
-            sizes="(min-width: 1280px) 22vw, (min-width: 768px) 30vw, 94vw"
-          />
-        ) : (
-          <div className="h-full w-full bg-white/[0.04]" />
-        )}
-      </div>
-      <div className="pt-4">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/42">
-          {item.metaLabel}
-        </p>
-        <p className="mt-2 text-[1.02rem] font-normal tracking-[-0.02em] text-white/88">
-          {item.title}
-        </p>
-      </div>
-    </a>
-  );
-}
-
-function FeaturedLearningCard({ item }: { item: LearningCardItem }) {
-  return (
-    <a href={item.href} className="group block">
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,0.65fr)] lg:items-end">
-        <div className="relative aspect-[1/1] overflow-hidden bg-background/50 md:aspect-[4/3] lg:aspect-[16/9]">
+    <AnimatedSection delay={Math.min(stagger * 70, 420)}>
+      <a href={item.href} className="group block">
+        <div className="relative aspect-[16/10] overflow-hidden bg-background/50">
           {item.coverImageUrl ? (
             <Image
               src={item.coverImageUrl}
               alt={item.coverImageAlt}
               fill
-              quality={86}
-              priority
-              sizes="(min-width: 1280px) 58vw, (min-width: 768px) 82vw, 94vw"
-              className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+              quality={84}
+              className="object-cover transition-[filter,transform] duration-[900ms] ease-out group-hover:scale-[1.04] group-hover:brightness-110"
+              loading={eager ? "eager" : "lazy"}
+              sizes="(min-width: 1280px) 29vw, (min-width: 768px) 30vw, 94vw"
             />
           ) : (
             <div className="h-full w-full bg-white/[0.04]" />
           )}
         </div>
-
-        <div className="max-w-xl pb-1">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/42">
-            Latest · {item.metaLabel}
+        <div className="pt-4">
+          <p className="text-[0.68rem] font-medium uppercase tracking-[0.2em] text-white/38">
+            {item.metaLabel}
           </p>
-          <h2 className="mt-3 font-sans text-[clamp(1.9rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.055em] text-white">
+          <p className="mt-2 max-w-[24rem] text-[1.08rem] font-normal leading-[1.08] tracking-[-0.035em] text-white/92 transition-transform duration-500 group-hover:translate-x-1">
             {item.title}
-          </h2>
-          <p className="mt-4 text-[1rem] leading-7 text-white/58">{item.summary}</p>
+          </p>
+          <p className="mt-3 line-clamp-2 max-w-[28rem] text-[0.94rem] leading-6 text-white/54">
+            {item.summary}
+          </p>
+          <span className="mt-5 block h-px w-full origin-left scale-x-0 bg-white/45 transition-transform duration-700 group-hover:scale-x-100" />
         </div>
-      </div>
-    </a>
+      </a>
+    </AnimatedSection>
+  );
+}
+
+function FeaturedLearningCard({ item }: { item: LearningCardItem }) {
+  return (
+    <AnimatedSection>
+      <a href={item.href} className="group block border-b border-white/12 pb-12 md:pb-16">
+        <div className="grid gap-6 md:grid-cols-[minmax(0,1.45fr)_minmax(20rem,0.75fr)] md:gap-10 md:items-end">
+          <div className="relative aspect-[16/9] overflow-hidden bg-background/50">
+            {item.coverImageUrl ? (
+              <Image
+                src={item.coverImageUrl}
+                alt={item.coverImageAlt}
+                fill
+                quality={86}
+                priority
+                sizes="(min-width: 1280px) 58vw, (min-width: 768px) 62vw, 100vw"
+                className="object-cover transition-[filter,transform] duration-[1200ms] ease-out group-hover:scale-[1.035] group-hover:brightness-110"
+              />
+            ) : (
+              <div className="h-full w-full bg-white/[0.04]" />
+            )}
+          </div>
+
+          <div className="flex min-h-full flex-col justify-end">
+            <p className="text-[0.68rem] font-medium uppercase tracking-[0.22em] text-white/38">
+              Featured Tutorial
+            </p>
+            <p className="mt-4 text-[0.75rem] uppercase tracking-[0.18em] text-white/44">
+              {item.metaLabel}
+            </p>
+            <h2 className="mt-3 max-w-[13ch] font-sans text-[clamp(2.1rem,4.8vw,4.8rem)] font-medium leading-[0.9] tracking-[-0.065em] text-white">
+              {item.title}
+            </h2>
+            <p className="mt-5 max-w-[34rem] text-[1rem] leading-7 text-white/62 md:text-[1.05rem]">
+              {item.summary}
+            </p>
+          </div>
+        </div>
+      </a>
+    </AnimatedSection>
   );
 }
 
@@ -486,17 +508,22 @@ export default function StudioTutorials() {
       <main>
         <section className="border-b border-border/40 pb-8 pt-24 md:pb-10 md:pt-28">
           <div className="container max-w-[88rem]">
-            <div className="max-w-3xl">
-              <h1 className="font-sans text-[clamp(2.3rem,4.6vw,3.8rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
-                {currentHeading}
-              </h1>
-              <p className="mt-5 max-w-3xl text-[1rem] leading-7 text-white/58 md:text-[1.05rem]">
-                Lessons, article guides, and references for scenic designers learning to draft,
-                model, render, present, and think through production work with more clarity.
-              </p>
-            </div>
+            <AnimatedSection>
+              <div className="max-w-3xl">
+                <h1 className="font-sans text-[clamp(2.3rem,4.6vw,3.8rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
+                  {currentHeading}
+                </h1>
+                <p className="mt-5 max-w-3xl text-[1rem] leading-7 text-white/58 md:text-[1.05rem]">
+                  Tutorials, article guides, and studio references for scenic designers learning to
+                  draft, model, render, present, and think through production work with more clarity.
+                </p>
+              </div>
+            </AnimatedSection>
 
-            <div className="mt-10 flex flex-col gap-5 border-t border-border/35 pt-5">
+            <AnimatedSection
+              delay={120}
+              className="mt-10 flex flex-col gap-5 border-t border-border/35 pt-5"
+            >
               <div className="overflow-x-auto md:overflow-visible">
                 <div className="flex min-w-max items-center gap-3 md:min-w-0 md:flex-wrap">
                   <button
@@ -665,7 +692,7 @@ export default function StudioTutorials() {
                   </button>
                 </div>
               </div>
-            </div>
+            </AnimatedSection>
           </div>
         </section>
 
@@ -681,43 +708,48 @@ export default function StudioTutorials() {
                       </div>
                     ) : null}
 
-                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
                       {gridLearningItems.map((item, index) => (
                         <LearningGridCard
                           key={`${item.id}-${selectedCategory}-${selectedDifficulty}-${sortKey}-${viewMode}`}
                           eager={!featuredLearningItem && index < 2}
                           item={item}
+                          stagger={index}
                         />
                       ))}
                     </div>
                   </>
                 ) : (
                   <div className="border-t border-border/35">
-                    {sortedLearningItems.map((item) => (
-                      <a
+                    {sortedLearningItems.map((item, index) => (
+                      <AnimatedSection
                         key={`${item.id}-${selectedCategory}-${selectedDifficulty}-${sortKey}-${viewMode}`}
-                        href={item.href}
-                        onClick={(event) => {
-                          event.preventDefault();
-                          setLocation(item.href);
-                        }}
-                        className="group grid gap-4 border-b border-border/35 py-5 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8"
+                        delay={Math.min(index * 55, 360)}
                       >
-                        <div className="space-y-2 text-sm text-white/48">
-                          <p className="text-white/82">{item.categoryLabel}</p>
-                          <p>{item.metaLabel}</p>
-                        </div>
+                        <a
+                          href={item.href}
+                          onClick={(event) => {
+                            event.preventDefault();
+                            setLocation(item.href);
+                          }}
+                          className="group grid gap-4 border-b border-border/35 py-5 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8"
+                        >
+                          <div className="space-y-2 text-sm text-white/48">
+                            <p className="text-white/82">{item.categoryLabel}</p>
+                            <p>{item.metaLabel}</p>
+                          </div>
 
-                        <div className="min-w-0">
-                          <p className="text-[1.12rem] font-normal tracking-[-0.025em] text-white/88">
-                            {item.title}
-                          </p>
-                          <p className="mt-2 max-w-3xl text-sm leading-6 text-white/52">
-                            {item.summary}
-                          </p>
-                          <div className="mt-3 text-sm text-white/52">Read article</div>
-                        </div>
-                      </a>
+                          <div className="min-w-0">
+                            <p className="text-[1.12rem] font-normal tracking-[-0.025em] text-white/88 transition-transform duration-500 group-hover:translate-x-1">
+                              {item.title}
+                            </p>
+                            <p className="mt-2 max-w-3xl text-sm leading-6 text-white/52">
+                              {item.summary}
+                            </p>
+                            <div className="mt-3 text-sm text-white/52">Open tutorial</div>
+                          </div>
+                        </a>
+                      </AnimatedSection>
                     ))}
                   </div>
                 )}
@@ -734,39 +766,39 @@ export default function StudioTutorials() {
 
         <section className="border-t border-border/35 py-16 md:py-20">
           <div className="container max-w-[88rem]">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
-              About These Tutorials
-            </p>
-            <div className="mt-4 grid gap-10 lg:grid-cols-2">
-              <div className="space-y-5">
-                <h2 className="font-sans text-[clamp(1.6rem,3vw,2.4rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-white">
-                  Tutorials as an archive, not just a training shelf.
-                </h2>
-                <p className="max-w-3xl text-[1rem] leading-7 text-white/62 md:text-[1.05rem]">
-                  This page is shifting toward the same editorial logic as the Articles archive:
-                  clearer indexing, cleaner filtering, and a format that can eventually support a
-                  more blog-like tutorial publishing rhythm.
-                </p>
-                <p className="max-w-3xl text-[1rem] leading-7 text-white/55 md:text-[1.05rem]">
-                  For now, the focus is on making the landing page feel more like an archive of
-                  posts and less like a separate app section, while still keeping the tutorials easy
-                  to browse by category, difficulty, and duration.
-                </p>
+            <AnimatedSection>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
+                Learning Paths
+              </p>
+              <div className="mt-6 grid border-t border-white/12 md:grid-cols-3">
+                {[
+                  [
+                    "Drafting",
+                    "Clean drawing habits, 2D organization, and scenic documentation workflows that support production communication.",
+                  ],
+                  [
+                    "Modeling",
+                    "Practical 3D processes for scenic designers moving from spatial ideas into working digital environments.",
+                  ],
+                  [
+                    "Rendering",
+                    "Presentation image workflows for atmosphere, light, materials, and visual storytelling in scenic design.",
+                  ],
+                ].map(([title, body]) => (
+                  <div
+                    key={title}
+                    className="border-b border-white/12 py-6 md:border-r md:px-6 md:first:pl-0 md:last:border-r-0 md:last:pr-0"
+                  >
+                    <h2 className="text-[1.1rem] font-normal leading-tight tracking-[-0.03em] text-white/90">
+                      {title}
+                    </h2>
+                    <p className="mt-3 max-w-[26rem] text-[0.94rem] leading-6 text-white/54">
+                      {body}
+                    </p>
+                  </div>
+                ))}
               </div>
-
-              <div className="space-y-4 rounded-xl bg-card/20 p-6 md:p-8">
-                <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
-                  Archive Direction
-                </h3>
-                <ul className="space-y-3 text-sm text-white/62 md:text-base">
-                  <li>Cleaner editorial landing page structure</li>
-                  <li>Archive-style grid and list views</li>
-                  <li>Category-led browsing like Articles</li>
-                  <li>Room for tutorial publishing to feel more like a blog</li>
-                  <li>Better alignment between writing and teaching sections</li>
-                </ul>
-              </div>
-            </div>
+            </AnimatedSection>
           </div>
         </section>
       </main>

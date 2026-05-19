@@ -1,11 +1,12 @@
 "use client";
 
-import { ArrowRight, Check, Link2 } from "lucide-react";
+import { ArrowRight, Check, ChevronLeft, ChevronRight, Link2 } from "lucide-react";
 import Image from "next/image";
 import { Link } from "wouter";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import AboutNav from "@/components/AboutNav";
+import { AnimatedSection } from "@/components/AnimatedSection";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
@@ -152,6 +153,9 @@ const voyageLaProfileCard = {
 };
 
 export default function About() {
+  const galleryRailRef = useRef<HTMLDivElement | null>(null);
+  const galleryItemRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
   const [pageLinkCopied, setPageLinkCopied] = useState(false);
   const bioArticles = getLocalArticles()
     .filter(
@@ -177,6 +181,22 @@ export default function About() {
     })),
   ].slice(0, 4);
 
+  const scrollGalleryBy = (direction: "prev" | "next") => {
+    const nextIndex =
+      direction === "next"
+        ? Math.min(activeGalleryIndex + 1, galleryImages.length - 1)
+        : Math.max(activeGalleryIndex - 1, 0);
+
+    const target = galleryItemRefs.current[nextIndex];
+    if (!target) return;
+
+    target.scrollIntoView({
+      behavior: "smooth",
+      inline: "start",
+      block: "nearest",
+    });
+  };
+
   const handleSharePage = async () => {
     const path = "/about";
     const url =
@@ -190,6 +210,37 @@ export default function About() {
       setPageLinkCopied(false);
     }
   };
+
+  useEffect(() => {
+    const rail = galleryRailRef.current;
+    if (!rail) return;
+
+    const updateActiveIndex = () => {
+      const railLeft = rail.getBoundingClientRect().left;
+      let closestIndex = 0;
+      let closestDistance = Number.POSITIVE_INFINITY;
+
+      galleryItemRefs.current.forEach((item, index) => {
+        if (!item) return;
+        const distance = Math.abs(item.getBoundingClientRect().left - railLeft);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      setActiveGalleryIndex(closestIndex);
+    };
+
+    updateActiveIndex();
+    rail.addEventListener("scroll", updateActiveIndex, { passive: true });
+    window.addEventListener("resize", updateActiveIndex);
+
+    return () => {
+      rail.removeEventListener("scroll", updateActiveIndex);
+      window.removeEventListener("resize", updateActiveIndex);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -206,21 +257,23 @@ export default function About() {
       <main>
         <section className="pb-10 pt-24 md:pb-12 md:pt-28">
           <div className="container max-w-[88rem]">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
-                About
-              </p>
-              <h1 className="mt-5 font-sans text-[clamp(3.2rem,7vw,7.1rem)] font-medium leading-[0.86] tracking-[-0.065em] text-foreground">
-                Brandon PT Davis
-              </h1>
-              <p className="mx-auto mt-7 max-w-2xl text-[1.04rem] leading-8 tracking-[-0.01em] text-foreground/68 md:text-[1.14rem]">
-                Scenic designer for theatre, memory, architecture, and live
-                performance. Based in San Diego, working across regional
-                theatre, summer stock, and academic production.
-              </p>
-            </div>
+            <AnimatedSection>
+              <div className="mx-auto max-w-3xl text-center">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                  About
+                </p>
+                <h1 className="mt-5 font-sans text-[clamp(3.2rem,7vw,7.1rem)] font-medium leading-[0.86] tracking-[-0.065em] text-foreground">
+                  Brandon PT Davis
+                </h1>
+                <p className="mx-auto mt-7 max-w-2xl text-[1.04rem] leading-8 tracking-[-0.01em] text-foreground/68 md:text-[1.14rem]">
+                  Scenic designer for theatre, memory, architecture, and live
+                  performance. Based in San Diego, working across regional
+                  theatre, summer stock, and academic production.
+                </p>
+              </div>
+            </AnimatedSection>
 
-            <div className="mx-auto mt-10 max-w-3xl md:mt-12">
+            <AnimatedSection delay={120} className="mx-auto mt-10 max-w-3xl md:mt-12">
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-card/20">
                 <Image
                   src={ABOUT_HEADSHOT_URL}
@@ -243,13 +296,14 @@ export default function About() {
                   <span>{pageLinkCopied ? "Link copied" : "Share"}</span>
                 </button>
               </div>
-            </div>
+            </AnimatedSection>
           </div>
         </section>
 
         <section className="pb-16 md:pb-24">
           <div className="container max-w-[88rem]">
-            <article className="mx-auto max-w-3xl border-t border-border/35 pt-10">
+            <AnimatedSection delay={180} className="mx-auto max-w-3xl">
+            <article className="border-t border-border/35 pt-10">
               <div className="space-y-6">
                 <p className="text-[1rem] leading-8 text-foreground/78 md:text-[1.08rem]">
                   Brandon&apos;s work begins with the pressure of a room: how a
@@ -365,57 +419,59 @@ export default function About() {
                 </div>
               </div>
             </article>
+            </AnimatedSection>
           </div>
         </section>
 
         <section className="border-y border-border/35 py-14 md:py-20">
           <div className="container max-w-[88rem]">
-            <div className="max-w-3xl">
+            <AnimatedSection className="max-w-3xl">
               <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
                 More Context
               </p>
               <h2 className="mt-4 font-sans text-[clamp(2rem,4vw,3.3rem)] font-medium leading-[0.98] tracking-[-0.05em] text-foreground">
                 Process, productions, teaching, and collaboration.
               </h2>
-            </div>
+            </AnimatedSection>
 
             <div className="mt-10 divide-y divide-border/35 border-y border-border/35">
-              {navigationCards.map((card) => (
-                <Link
-                  key={card.href}
-                  href={card.href}
-                  className="group grid gap-5 py-5 md:grid-cols-[12rem_minmax(0,1fr)_auto] md:items-center md:gap-8"
-                >
-                  <div className="relative aspect-[16/10] overflow-hidden bg-card/20">
-                    <Image
-                      src={card.image}
-                      alt={card.title}
-                      fill
-                      unoptimized
-                      quality={82}
-                      loading="lazy"
-                      sizes="(max-width: 768px) 92vw, 12rem"
-                      className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/42">
-                      {card.label}
-                    </p>
-                    <h3 className="mt-2 font-sans text-[clamp(1.35rem,2.4vw,2rem)] font-medium leading-[1.02] tracking-[-0.045em] text-foreground">
-                      {card.title}
-                    </h3>
-                    <p className="mt-3 max-w-2xl text-[0.98rem] leading-7 text-foreground/58">
-                      {card.description}
-                    </p>
-                  </div>
-                  <ArrowRight className="hidden h-5 w-5 text-foreground/45 transition-transform group-hover:translate-x-1 group-hover:text-foreground md:block" />
-                </Link>
+              {navigationCards.map((card, index) => (
+                <AnimatedSection key={card.href} delay={Math.min(index * 70, 300)}>
+                  <Link
+                    href={card.href}
+                    className="group grid gap-5 py-5 md:grid-cols-[12rem_minmax(0,1fr)_auto] md:items-center md:gap-8"
+                  >
+                    <div className="relative aspect-[16/10] overflow-hidden bg-card/20">
+                      <Image
+                        src={card.image}
+                        alt={card.title}
+                        fill
+                        unoptimized
+                        quality={82}
+                        loading="lazy"
+                        sizes="(max-width: 768px) 92vw, 12rem"
+                        className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
+                      />
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/42">
+                        {card.label}
+                      </p>
+                      <h3 className="mt-2 font-sans text-[clamp(1.35rem,2.4vw,2rem)] font-medium leading-[1.02] tracking-[-0.045em] text-foreground">
+                        {card.title}
+                      </h3>
+                      <p className="mt-3 max-w-2xl text-[0.98rem] leading-7 text-foreground/58">
+                        {card.description}
+                      </p>
+                    </div>
+                    <ArrowRight className="hidden h-5 w-5 text-foreground/45 transition-transform group-hover:translate-x-1 group-hover:text-foreground md:block" />
+                  </Link>
+                </AnimatedSection>
               ))}
             </div>
 
             {bioArticleCards.length > 0 ? (
-              <div className="mt-14 border-t border-border/35 pt-9">
+              <AnimatedSection delay={160} className="mt-14 border-t border-border/35 pt-9">
                 <div className="mb-8 max-w-3xl">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
                     Profiles
@@ -477,40 +533,73 @@ export default function About() {
                     );
                   })}
                 </div>
-              </div>
+              </AnimatedSection>
             ) : null}
           </div>
         </section>
 
         <section className="border-t border-border/35 py-14 md:py-20">
           <div className="container max-w-[88rem]">
-            <div className="max-w-3xl">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
-                Personal Archive
-              </p>
-              <h2 className="mt-4 font-sans text-[clamp(1.8rem,3.5vw,3rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
-                People, classrooms, shops, and collaborations around the work.
-              </h2>
-            </div>
+            <AnimatedSection className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <div className="max-w-3xl">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                  Personal Archive
+                </p>
+                <h2 className="mt-4 font-sans text-[clamp(1.8rem,3.5vw,3rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
+                  People, classrooms, shops, and collaborations around the work.
+                </h2>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => scrollGalleryBy("prev")}
+                  disabled={activeGalleryIndex === 0}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/45 text-foreground/65 transition-colors hover:border-border hover:text-foreground disabled:cursor-not-allowed disabled:opacity-35"
+                  aria-label="Scroll gallery left"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollGalleryBy("next")}
+                  disabled={activeGalleryIndex === galleryImages.length - 1}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/45 text-foreground/65 transition-colors hover:border-border hover:text-foreground disabled:cursor-not-allowed disabled:opacity-35"
+                  aria-label="Scroll gallery right"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              </div>
+            </AnimatedSection>
 
-            <div className="mt-10 grid gap-x-6 gap-y-10 md:grid-cols-2 xl:grid-cols-3">
-              {galleryImages.map((image) => (
-                <div key={image.url}>
-                  <div className="relative aspect-[4/3] overflow-hidden bg-card/20">
+            <AnimatedSection delay={140}>
+            <div
+              ref={galleryRailRef}
+              className="mt-10 flex snap-x snap-mandatory items-start gap-6 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              {galleryImages.map((image, index) => (
+                <div
+                  key={image.url}
+                  ref={(node) => {
+                    galleryItemRefs.current[index] = node;
+                  }}
+                  className="w-[min(84vw,36rem)] shrink-0 snap-start sm:w-[min(64vw,30rem)] md:w-[calc((100%-3rem)/3)]"
+                >
+                  <div className="overflow-hidden bg-card/20">
                     <img
                       src={image.url}
                       alt={image.alt}
                       loading="lazy"
                       decoding="async"
-                      className="h-full w-full object-cover"
+                      className="block h-auto w-full"
                     />
                   </div>
-                  <p className="mt-3 max-w-[36rem] text-[0.95rem] leading-7 text-foreground/58">
+                  <p className="mt-3 max-w-[36rem] text-[0.98rem] leading-7 text-foreground/62">
                     {image.caption}
                   </p>
                 </div>
               ))}
             </div>
+            </AnimatedSection>
           </div>
         </section>
       </main>

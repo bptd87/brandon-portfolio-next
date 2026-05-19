@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ArrowUpRight, Check, Link2 } from "lucide-react";
 
+import AboutNav from "@/components/AboutNav";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
@@ -84,6 +85,7 @@ export default function UpcomingProductionDetail({ production }: UpcomingProduct
       />
 
       <Header />
+      <AboutNav />
 
       <article className="pb-20 pt-12 md:pt-16">
         <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">

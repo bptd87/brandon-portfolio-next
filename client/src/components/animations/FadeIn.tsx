@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { ReactNode, useEffect, useRef, useState } from "react";
 
 interface FadeInProps {
     children: ReactNode;
@@ -18,6 +18,11 @@ export function FadeIn({
     direction = "up",
     fullWidth = false,
 }: FadeInProps) {
+    const ref = useRef<HTMLDivElement | null>(null);
+    const isInView = useInView(ref, { once: true, margin: "-50px" });
+    const prefersReducedMotion = useReducedMotion();
+    const [forceVisible, setForceVisible] = useState(false);
+
     const getInitial = () => {
         switch (direction) {
             case "up":
@@ -33,11 +38,21 @@ export function FadeIn({
         }
     };
 
+    useEffect(() => {
+        const fallbackDelay = Math.max(900, (delay + duration) * 1000 + 250);
+        const fallback = window.setTimeout(() => setForceVisible(true), fallbackDelay);
+
+        return () => window.clearTimeout(fallback);
+    }, [delay, duration]);
+
+    const visible = prefersReducedMotion || isInView || forceVisible;
+    const visibleState = { opacity: 1, x: 0, y: 0 };
+
     return (
         <motion.div
+            ref={ref}
             initial={getInitial()}
-            whileInView={{ opacity: 1, x: 0, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
+            animate={visible ? visibleState : getInitial()}
             transition={{ duration, delay, ease: "easeOut" }}
             className={`${fullWidth ? "w-full" : ""} ${className}`}
         >

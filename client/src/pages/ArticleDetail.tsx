@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { AnimatedSection } from "@/components/AnimatedSection";
 import { ProgressiveImage } from '@/components/ProgressiveImage';
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -1084,112 +1085,119 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
         url={articleUrl}
       />
       <Header />
-      <article className="py-12 md:py-16">
+      <article className="overflow-hidden py-12 md:py-16">
         <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
           <header className="mx-auto max-w-[62rem] text-center">
-            <div className="flex flex-wrap items-center justify-center gap-4 text-[0.92rem] tracking-[-0.015em] text-white/54">
-              <time dateTime={new Date(article.publishedAt || article.createdAt).toISOString()}>
-                {formatUtcDate(article.publishedAt || article.createdAt, "long")}
-              </time>
-              {article.categoryName ? (
-                <Link
-                  href={
-                    isLearningPortalArticle
-                      ? "/studio/tutorials"
-                      : `/articles?category=${encodeURIComponent(article.categoryName)}`
-                  }
-                  className="transition-colors hover:text-white"
-                >
-                  {article.categoryName}
-                </Link>
-              ) : null}
-              {article.series ? (
-                <span>{article.series.name}</span>
-              ) : null}
-            </div>
-
-            <h1 className="mx-auto mt-5 max-w-[15ch] font-sans text-[clamp(2.7rem,5.8vw,5.9rem)] font-medium leading-[0.92] tracking-[-0.072em] text-white">
-              {decodeHTMLEntities(article.title)}
-            </h1>
-
-            {article.excerpt && (
-              <p className="mx-auto mt-5 max-w-[42rem] text-[clamp(1rem,1.45vw,1.34rem)] leading-[1.62] tracking-[-0.018em] text-white/68">
-                {decodeHTMLEntities(article.excerpt)}
-              </p>
-            )}
-
-            {article.series ? (
-              <p className="mx-auto mt-5 max-w-[42rem] text-[0.88rem] font-medium uppercase tracking-[0.16em] text-white/42">
-                Part {article.series.order} of {article.series.name}
-              </p>
-            ) : null}
-
-            {article.coverImageUrl && (
-              <div
-                className="relative mx-auto mt-10 aspect-video max-w-[88rem] overflow-hidden bg-white/[0.02]"
-                onClick={() => openArticleLightboxAt("cover")}
-              >
-                <Image
-                  src={article.coverImageUrl}
-                  alt={article.coverImageAlt || article.title}
-                  fill
-                  priority
-                  unoptimized
-                  loading="eager"
-                  fetchPriority="high"
-                  sizes="(min-width: 1280px) 1120px, 100vw"
-                  className="cursor-pointer object-cover"
-                />
-              </div>
-            )}
-
-            <div className="mx-auto mt-8 flex w-full max-w-[62rem] items-center justify-between gap-6 border-t border-white/14 pt-4 text-white/72">
-              <div className="flex items-center gap-4 sm:gap-5">
-                {articleAudio ? (
-                  <>
-                    <audio
-                      ref={audioRef}
-                      preload="metadata"
-                      src={articleAudio.url}
-                      onLoadedMetadata={(event) => setAudioDurationSeconds(event.currentTarget.duration || null)}
-                      onTimeUpdate={(event) => setAudioCurrentTimeSeconds(event.currentTarget.currentTime || 0)}
-                      onEnded={() => {
-                        setIsAudioPlaying(false);
-                        setAudioCurrentTimeSeconds(0);
-                      }}
-                      onPause={() => setIsAudioPlaying(false)}
-                      onPlay={() => setIsAudioPlaying(true)}
-                    />
-                    <button
-                      type="button"
-                      onClick={handleAudioToggle}
-                      className="inline-flex items-center gap-3 text-[0.96rem] tracking-[-0.018em] transition-colors hover:text-white"
-                    >
-                      <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/18 bg-white/6">
-                        {isAudioPlaying ? <Pause className="h-3.5 w-3.5" /> : <Play className="ml-0.5 h-3.5 w-3.5" />}
-                      </span>
-                      <span>{articleAudio.label || "Listen to article"}</span>
-                    </button>
-                    {displayedAudioTime ? (
-                      <span className="text-[0.96rem] tracking-[-0.018em] text-white/62">
-                        {displayedAudioTime}
-                      </span>
-                    ) : null}
-                  </>
+            <AnimatedSection>
+              <div className="flex flex-wrap items-center justify-center gap-4 text-[0.92rem] tracking-[-0.015em] text-white/54">
+                <time dateTime={new Date(article.publishedAt || article.createdAt).toISOString()}>
+                  {formatUtcDate(article.publishedAt || article.createdAt, "long")}
+                </time>
+                {article.categoryName ? (
+                  <Link
+                    href={
+                      isLearningPortalArticle
+                        ? "/studio/tutorials"
+                        : `/articles?category=${encodeURIComponent(article.categoryName)}`
+                    }
+                    className="transition-colors hover:text-white"
+                  >
+                    {article.categoryName}
+                  </Link>
+                ) : null}
+                {article.series ? (
+                  <span>{article.series.name}</span>
                 ) : null}
               </div>
-              <button
-                type="button"
-                onClick={handleShare}
-                className="inline-flex items-center gap-2 text-[0.96rem] tracking-[-0.018em] transition-colors hover:text-white"
-              >
-                {linkCopied ? <Check className="h-4 w-4" /> : <LinkIcon className="h-4 w-4" />}
-                <span>{linkCopied ? "Link copied" : "Share"}</span>
-              </button>
-            </div>
+
+              <h1 className="mx-auto mt-5 max-w-[15ch] font-sans text-[clamp(2.7rem,5.8vw,5.9rem)] font-medium leading-[0.92] tracking-[-0.072em] text-white">
+                {decodeHTMLEntities(article.title)}
+              </h1>
+
+              {article.excerpt && (
+                <p className="mx-auto mt-5 max-w-[42rem] text-[clamp(1rem,1.45vw,1.34rem)] leading-[1.62] tracking-[-0.018em] text-white/68">
+                  {decodeHTMLEntities(article.excerpt)}
+                </p>
+              )}
+
+              {article.series ? (
+                <p className="mx-auto mt-5 max-w-[42rem] text-[0.88rem] font-medium uppercase tracking-[0.16em] text-white/42">
+                  Part {article.series.order} of {article.series.name}
+                </p>
+              ) : null}
+            </AnimatedSection>
+
+            {article.coverImageUrl && (
+              <AnimatedSection delay={140}>
+                <div
+                  className="group relative mx-auto mt-10 aspect-video max-w-[88rem] overflow-hidden bg-white/[0.02]"
+                  onClick={() => openArticleLightboxAt("cover")}
+                >
+                  <Image
+                    src={article.coverImageUrl}
+                    alt={article.coverImageAlt || article.title}
+                    fill
+                    priority
+                    unoptimized
+                    loading="eager"
+                    fetchPriority="high"
+                    sizes="(min-width: 1280px) 1120px, 100vw"
+                    className="cursor-pointer object-cover transition-[filter,transform] duration-[1200ms] ease-out group-hover:scale-[1.018] group-hover:brightness-110"
+                  />
+                </div>
+              </AnimatedSection>
+            )}
+
+            <AnimatedSection delay={260}>
+              <div className="mx-auto mt-8 flex w-full max-w-[62rem] items-center justify-between gap-6 border-t border-white/14 pt-4 text-white/72">
+                <div className="flex items-center gap-4 sm:gap-5">
+                  {articleAudio ? (
+                    <>
+                      <audio
+                        ref={audioRef}
+                        preload="metadata"
+                        src={articleAudio.url}
+                        onLoadedMetadata={(event) => setAudioDurationSeconds(event.currentTarget.duration || null)}
+                        onTimeUpdate={(event) => setAudioCurrentTimeSeconds(event.currentTarget.currentTime || 0)}
+                        onEnded={() => {
+                          setIsAudioPlaying(false);
+                          setAudioCurrentTimeSeconds(0);
+                        }}
+                        onPause={() => setIsAudioPlaying(false)}
+                        onPlay={() => setIsAudioPlaying(true)}
+                      />
+                      <button
+                        type="button"
+                        onClick={handleAudioToggle}
+                        className="inline-flex items-center gap-3 text-[0.96rem] tracking-[-0.018em] transition-colors hover:text-white"
+                      >
+                        <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/18 bg-white/6">
+                          {isAudioPlaying ? <Pause className="h-3.5 w-3.5" /> : <Play className="ml-0.5 h-3.5 w-3.5" />}
+                        </span>
+                        <span>{articleAudio.label || "Listen to article"}</span>
+                      </button>
+                      {displayedAudioTime ? (
+                        <span className="text-[0.96rem] tracking-[-0.018em] text-white/62">
+                          {displayedAudioTime}
+                        </span>
+                      ) : null}
+                    </>
+                  ) : null}
+                </div>
+                <button
+                  type="button"
+                  onClick={handleShare}
+                  className="inline-flex items-center gap-2 text-[0.96rem] tracking-[-0.018em] transition-colors hover:text-white"
+                >
+                  {linkCopied ? <Check className="h-4 w-4" /> : <LinkIcon className="h-4 w-4" />}
+                  <span>{linkCopied ? "Link copied" : "Share"}</span>
+                </button>
+              </div>
+            </AnimatedSection>
           </header>
 
-          <div className="mx-auto mt-14 max-w-[54rem]">
+          <AnimatedSection delay={360} className="mx-auto mt-14 max-w-[54rem]">
+          <div>
             <div className="min-w-0">
               <div className="relative">
                 <style>{`
@@ -1748,6 +1756,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
             </div>
 
           </div>
+          </AnimatedSection>
         </div>
       </article>
 

@@ -5,6 +5,7 @@ import { useLocation } from "wouter";
 import Image from "next/image";
 import {
   ArrowUpDown,
+  ArrowUpRight,
   Check,
   ChevronDown,
   LayoutGrid,
@@ -14,6 +15,7 @@ import {
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { AnimatedSection } from "@/components/AnimatedSection";
 import { SEO } from "@/components/SEO";
 import { formatUtcDate, getUtcYear } from "@/lib/date-format";
 import {
@@ -97,17 +99,24 @@ function ArticleGridCard({
   eager,
   href,
   onNavigate,
+  stagger = 0,
 }: {
   article: ArticleCardItem;
   eager?: boolean;
   href: string;
   onNavigate: (event: MouseEvent<HTMLAnchorElement>, href: string) => void;
+  stagger?: number;
 }) {
+  const meta = [article.categoryName, formatArticleDate(article), article.readTime ? `${article.readTime} min read` : null]
+    .filter(Boolean)
+    .join(" / ");
+
   return (
-    <a href={href} onClick={(event) => onNavigate(event, href)}>
-      <div className="group">
+    <AnimatedSection delay={Math.min(stagger * 70, 420)}>
+      <a href={href} onClick={(event) => onNavigate(event, href)} className="group block">
+      <div>
         <div
-          className="transition-card relative aspect-[1/1] overflow-hidden bg-background/50"
+          className="transition-card relative aspect-[16/10] overflow-hidden bg-background/50"
           style={{ viewTransitionName: `article-card-${article.slug}` } as CSSProperties}
         >
           {article.coverImageUrl ? (
@@ -116,7 +125,7 @@ function ArticleGridCard({
               alt={article.coverImageAlt || `Cover image for article: ${decodeHTMLEntities(article.title)}`}
               fill
               quality={82}
-              className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+              className="object-cover transition-[filter,transform] duration-[900ms] ease-out group-hover:scale-[1.04] group-hover:brightness-110"
               loading={eager ? "eager" : "lazy"}
               sizes="(min-width: 1280px) 29vw, (min-width: 768px) 30vw, 94vw"
             />
@@ -126,12 +135,86 @@ function ArticleGridCard({
         </div>
 
         <div className="pt-4">
-          <p className="text-[1.02rem] font-normal tracking-[-0.02em] text-white/88">
+          {meta ? (
+            <p className="mb-2 text-[0.68rem] font-medium uppercase tracking-[0.2em] text-white/38">
+              {meta}
+            </p>
+          ) : null}
+          <p className="max-w-[24rem] text-[1.08rem] font-normal leading-[1.08] tracking-[-0.035em] text-white/92 transition-transform duration-500 group-hover:translate-x-1">
             {decodeHTMLEntities(article.title)}
           </p>
+          {article.excerpt ? (
+            <p className="mt-3 line-clamp-2 max-w-[28rem] text-[0.94rem] leading-6 text-white/54">
+              {decodeHTMLEntities(article.excerpt)}
+            </p>
+          ) : null}
+          <span className="mt-5 block h-px w-full origin-left scale-x-0 bg-white/45 transition-transform duration-700 group-hover:scale-x-100" />
         </div>
       </div>
-    </a>
+      </a>
+    </AnimatedSection>
+  );
+}
+
+function FeaturedArticle({
+  article,
+  href,
+  onNavigate,
+}: {
+  article: ArticleCardItem;
+  href: string;
+  onNavigate: (event: MouseEvent<HTMLAnchorElement>, href: string) => void;
+}) {
+  const meta = [article.categoryName, formatArticleDate(article), article.readTime ? `${article.readTime} min read` : null]
+    .filter(Boolean)
+    .join(" / ");
+
+  return (
+    <AnimatedSection>
+      <a
+        href={href}
+        onClick={(event) => onNavigate(event, href)}
+        className="group grid gap-6 border-b border-white/12 pb-12 md:grid-cols-[minmax(0,1.45fr)_minmax(20rem,0.75fr)] md:gap-10 md:pb-16"
+      >
+      <div
+        className="transition-card relative aspect-[16/9] overflow-hidden bg-background/50"
+        style={{ viewTransitionName: `article-card-${article.slug}` } as CSSProperties}
+      >
+        {article.coverImageUrl ? (
+          <Image
+            src={article.coverImageUrl}
+            alt={article.coverImageAlt || `Cover image for article: ${decodeHTMLEntities(article.title)}`}
+            fill
+            priority
+            quality={88}
+            className="object-cover transition-[filter,transform] duration-[1200ms] ease-out group-hover:scale-[1.035] group-hover:brightness-110"
+            sizes="(min-width: 1280px) 58vw, (min-width: 768px) 62vw, 100vw"
+          />
+        ) : (
+          <div className="h-full w-full bg-muted" />
+        )}
+      </div>
+
+      <div className="flex min-h-full flex-col justify-end">
+        <p className="text-[0.68rem] font-medium uppercase tracking-[0.22em] text-white/38">
+          Featured Writing
+        </p>
+        {meta ? <p className="mt-4 text-[0.75rem] uppercase tracking-[0.18em] text-white/44">{meta}</p> : null}
+        <h2 className="mt-3 max-w-[13ch] font-sans text-[clamp(2.1rem,4.8vw,4.8rem)] font-medium leading-[0.9] tracking-[-0.065em] text-white">
+          {decodeHTMLEntities(article.title)}
+        </h2>
+        {article.excerpt ? (
+          <p className="mt-5 max-w-[34rem] text-[1rem] leading-7 text-white/62 md:text-[1.05rem]">
+            {decodeHTMLEntities(article.excerpt)}
+          </p>
+        ) : null}
+        <div className="mt-8 flex items-center gap-3 text-[0.95rem] text-white/72 transition-colors group-hover:text-white">
+          <span>Read article</span>
+          <ArrowUpRight className="h-4 w-4 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1" />
+        </div>
+      </div>
+      </a>
+    </AnimatedSection>
   );
 }
 
@@ -299,6 +382,9 @@ export default function Articles() {
   };
 
   const itemHref = (article: ArticleCardItem) => `/articles/${article.slug}`;
+  const showFeaturedArticle = viewMode === "grid" && isDefaultAllView && Boolean(sortedArticles[0]);
+  const featuredArticle = showFeaturedArticle ? sortedArticles[0] : null;
+  const displayedArticles = featuredArticle ? sortedArticles.slice(1) : sortedArticles;
 
   return (
     <div className="min-h-screen bg-background">
@@ -313,51 +399,64 @@ export default function Articles() {
       <Header />
 
       <main>
-        <section className="border-b border-border/40 pb-8 pt-24 md:pb-10 md:pt-28">
+        <section className="pb-8 pt-24 md:pb-10 md:pt-28">
           <div className="container max-w-[88rem]">
-            <div className="max-w-3xl">
-              <h1 className="font-sans text-[clamp(2.3rem,4.6vw,3.8rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
-                {currentHeading}
-              </h1>
-            </div>
+            <AnimatedSection>
+              <div className="grid gap-6 border-b border-white/12 pb-8 md:grid-cols-[minmax(0,0.72fr)_minmax(20rem,0.28fr)] md:items-end md:pb-10">
+                <div>
+                  <p className="mb-4 text-[0.72rem] font-medium uppercase tracking-[0.24em] text-white/38">
+                    Brandon PT Davis / Writing
+                  </p>
+                  <h1 className="font-sans text-[clamp(2.5rem,6vw,6.6rem)] font-medium leading-[0.88] tracking-[-0.075em] text-white">
+                    {currentHeading}
+                  </h1>
+                </div>
+                <p className="max-w-[28rem] text-[1rem] leading-7 text-white/62 md:text-[1.05rem]">
+                  Notes, essays, interviews, and production context from a scenic design practice.
+                  The writing sits close to the portfolio: process, taste, collaboration, and the
+                  work behind the image.
+                </p>
+              </div>
+            </AnimatedSection>
 
-            <div className="mt-10 flex flex-col gap-5 border-t border-border/35 pt-5">
-              <div className="overflow-x-auto md:overflow-visible">
-                <div className="flex min-w-max items-center gap-3 md:min-w-0 md:flex-wrap">
-                  <button
-                    type="button"
-                    onClick={() => setSelectedCategory("all")}
-                    className={`rounded-full border px-4 py-2 text-[0.92rem] transition-colors ${
-                      selectedCategory === "all"
-                        ? "border-white/30 bg-white/10 text-white"
-                        : "border-border/40 text-white/52 hover:border-border hover:text-white/80"
-                    }`}
-                  >
-                    All
-                  </button>
-                  {categories.map((category) => (
+            <AnimatedSection delay={120}>
+              <div className="mt-6 flex flex-col gap-5 md:mt-8">
+                <div className="overflow-x-auto md:overflow-visible">
+                  <div className="flex min-w-max items-center gap-5 md:min-w-0 md:flex-wrap">
                     <button
-                      key={category}
                       type="button"
-                      onClick={() => setSelectedCategory(category)}
-                      className={`rounded-full border px-4 py-2 text-[0.92rem] transition-colors ${
-                        selectedCategory === category
-                          ? "border-white/30 bg-white/10 text-white"
-                          : "border-border/40 text-white/52 hover:border-border hover:text-white/80"
+                      onClick={() => setSelectedCategory("all")}
+                      className={`border-b pb-2 text-[0.78rem] uppercase tracking-[0.18em] transition-colors ${
+                        selectedCategory === "all"
+                          ? "border-white text-white"
+                          : "border-transparent text-white/42 hover:border-white/30 hover:text-white/80"
                       }`}
                     >
-                      {category}
+                      All
                     </button>
-                  ))}
+                    {categories.map((category) => (
+                      <button
+                        key={category}
+                        type="button"
+                        onClick={() => setSelectedCategory(category)}
+                        className={`border-b pb-2 text-[0.78rem] uppercase tracking-[0.18em] transition-colors ${
+                          selectedCategory === category
+                            ? "border-white text-white"
+                            : "border-transparent text-white/42 hover:border-white/30 hover:text-white/80"
+                        }`}
+                      >
+                        {category}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex flex-wrap items-center gap-3">
+                <div className="flex flex-wrap items-center gap-3">
                 <Popover>
                   <PopoverTrigger asChild>
                     <button
                       type="button"
-                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-white/82 transition-colors hover:border-border hover:text-white"
+                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-white/72 transition-colors hover:border-border hover:text-white"
                     >
                       <SlidersHorizontal className="h-4 w-4" />
                       Filter
@@ -429,7 +528,7 @@ export default function Articles() {
                   <DropdownMenuTrigger asChild>
                     <button
                       type="button"
-                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-white/82 transition-colors hover:border-border hover:text-white"
+                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-white/72 transition-colors hover:border-border hover:text-white"
                     >
                       <ArrowUpDown className="h-4 w-4" />
                       Sort
@@ -479,40 +578,48 @@ export default function Articles() {
                     <List className="h-4 w-4" />
                   </button>
                 </div>
+                </div>
               </div>
-            </div>
+            </AnimatedSection>
           </div>
         </section>
 
         {sortedArticles.length > 0 ? (
           <>
-            <section className="pb-20 pt-12 md:pb-28 md:pt-14">
+            <section className="pb-20 pt-10 md:pb-28 md:pt-12">
               <div className="container max-w-[88rem]">
                 {viewMode === "grid" ? (
-                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {sortedArticles.map((article, index) => {
-                      const href = itemHref(article);
+                  <div className="space-y-10 md:space-y-14">
+                    {featuredArticle ? (
+                      <FeaturedArticle
+                        article={featuredArticle}
+                        href={itemHref(featuredArticle)}
+                        onNavigate={navigateWithTransition}
+                      />
+                    ) : null}
 
-                      return (
-                        <div key={`${article.id}-${selectedCategory}-${selectedYear}-${sortKey}-${viewMode}`}>
-                          <ArticleGridCard
-                            article={article}
-                            eager={index < 2}
-                            href={href}
-                            onNavigate={navigateWithTransition}
-                          />
-                          <div className="mt-2 text-sm text-white/45">
-                            {[article.categoryName, formatArticleDate(article)]
-                              .filter(Boolean)
-                              .join(" · ")}
-                          </div>
-                        </div>
-                      );
-                    })}
+                    {displayedArticles.length > 0 ? (
+                      <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+                        {displayedArticles.map((article, index) => {
+                          const href = itemHref(article);
+
+                          return (
+                            <ArticleGridCard
+                              key={`${article.id}-${selectedCategory}-${selectedYear}-${sortKey}-${viewMode}`}
+                              article={article}
+                              eager={!featuredArticle && index < 2}
+                              href={href}
+                              onNavigate={navigateWithTransition}
+                              stagger={index}
+                            />
+                          );
+                        })}
+                      </div>
+                    ) : null}
                   </div>
                 ) : (
                   <div className="border-t border-border/35">
-                    {sortedArticles.map((article, index) => {
+                    {sortedArticles.map((article) => {
                       const href = itemHref(article);
 
                       return (
@@ -520,28 +627,28 @@ export default function Articles() {
                           key={`${article.id}-${selectedCategory}-${selectedYear}-${sortKey}-${viewMode}`}
                           href={href}
                           onClick={(event) => navigateWithTransition(event, href)}
-                          className="group grid gap-4 border-b border-border/35 py-5 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8"
+                          className="group grid gap-4 border-b border-border/35 py-6 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8"
                         >
-                            <div className="space-y-2 text-sm text-white/48">
-                              <p className="text-white/82">{article.categoryName || "Article"}</p>
-                              <p>
-                                {[formatArticleDate(article), article.readTime ? `${article.readTime} min read` : null]
-                                  .filter(Boolean)
-                                  .join(" · ")}
-                              </p>
-                            </div>
+                          <div className="space-y-2 text-sm text-white/48">
+                            <p className="text-white/82">{article.categoryName || "Article"}</p>
+                            <p>
+                              {[formatArticleDate(article), article.readTime ? `${article.readTime} min read` : null]
+                                .filter(Boolean)
+                                .join(" · ")}
+                            </p>
+                          </div>
 
-                            <div className="min-w-0">
-                              <p className="text-[1.12rem] font-normal tracking-[-0.025em] text-white/88">
-                                {article.title}
+                          <div className="min-w-0">
+                            <p className="text-[1.25rem] font-normal leading-[1.05] tracking-[-0.04em] text-white/92 transition-transform duration-500 group-hover:translate-x-1">
+                              {article.title}
+                            </p>
+                            {article.excerpt ? (
+                              <p className="mt-2 max-w-3xl text-sm leading-6 text-white/52">
+                                {article.excerpt}
                               </p>
-                              {article.excerpt ? (
-                                <p className="mt-2 max-w-3xl text-sm leading-6 text-white/52">
-                                  {article.excerpt}
-                                </p>
-                              ) : null}
-                            </div>
-                          </a>
+                            ) : null}
+                          </div>
+                        </a>
                       );
                     })}
                   </div>
@@ -560,36 +667,23 @@ export default function Articles() {
         <section className="border-t border-border/35 py-16 md:py-20">
           <div className="container max-w-[88rem]">
             <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
-              About These Articles
+              Reading Paths
             </p>
-            <div className="mt-4 grid gap-10 lg:grid-cols-2">
-              <div className="space-y-5">
-                <h2 className="font-sans text-[clamp(1.6rem,3vw,2.4rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-white">
-                  Writing on process, criticism, and production.
-                </h2>
-                <p className="max-w-3xl text-[1rem] leading-7 text-white/62 md:text-[1.05rem]">
-                  This section gathers writing on scenic design practice, theatre process, and
-                  production analysis. Some pieces are essays; others are profiles, interviews, or
-                  published reflections tied to specific projects.
-                </p>
-                <p className="max-w-3xl text-[1rem] leading-7 text-white/55 md:text-[1.05rem]">
-                  Together they document how design ideas are researched, communicated, and carried
-                  into production, while also tracing the broader artistic questions behind the work.
-                </p>
-              </div>
-
-              <div className="space-y-4 rounded-xl bg-card/20 p-6 md:p-8">
-                <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
-                  Focus Areas
-                </h3>
-                <ul className="space-y-3 text-sm text-white/62 md:text-base">
-                  <li>Scenic design process and production method</li>
-                  <li>Design communication, drafting, and rendering workflow</li>
-                  <li>Critical writing on theatre and performance</li>
-                  <li>Editorial features, interviews, and profiles</li>
-                  <li>Context for the portfolio and the work behind it</li>
-                </ul>
-              </div>
+            <div className="mt-6 grid border-t border-white/12 md:grid-cols-3">
+              {[
+                ["Process", "How scenic ideas move from research, drafting, models, and rehearsal into a built production."],
+                ["Context", "Notes around theatre, performance culture, and the artistic questions behind the portfolio."],
+                ["Profiles", "Interviews, press, and editorial pieces that place the work inside a wider creative practice."],
+              ].map(([title, description]) => (
+                <div key={title} className="border-b border-white/12 py-6 md:border-r md:px-6 md:first:pl-0 md:last:border-r-0">
+                  <h2 className="text-[1.35rem] font-normal leading-none tracking-[-0.045em] text-white">
+                    {title}
+                  </h2>
+                  <p className="mt-4 max-w-[24rem] text-[0.98rem] leading-7 text-white/58">
+                    {description}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </section>

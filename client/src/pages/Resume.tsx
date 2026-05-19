@@ -7,12 +7,11 @@ import { Link } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AboutNav from "@/components/AboutNav";
-import AboutVerticalArt from "@/components/AboutVerticalArt";
+import { AnimatedSection } from "@/components/AnimatedSection";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
-import { resolveBlobMediaUrl } from "@shared/mediaBlob";
 
-import { Download, Award, GraduationCap, Users } from "lucide-react";
+import { ArrowRight, Download, Award, GraduationCap, Users } from "lucide-react";
 import { getLocalRenderingProjects } from "@shared/localPortfolios";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
 
@@ -41,6 +40,16 @@ type HoverPreview = {
 
 const LINE_CLASS =
   "text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4";
+
+const getProjectTimestamp = (project: any) => {
+  if (project.year) {
+    const monthIndex = project.month ? Math.max(project.month - 1, 0) : 6;
+    return new Date(project.year, monthIndex, 1).getTime();
+  }
+
+  const fallback = project.updatedAt || project.publishedAt || project.createdAt;
+  return fallback ? new Date(fallback).getTime() : 0;
+};
 
 type PortfolioLookupMaps = {
   byTitle: Map<string, PortfolioLink[]>;
@@ -143,6 +152,17 @@ function buildPortfolioLookup(): PortfolioLookupMaps {
 const PORTFOLIO_LOOKUP = buildPortfolioLookup();
 
 const SCENIC_CREDITS: ResumeYearSection[] = [
+  {
+    year: "2026",
+    credits: [
+      { title: "9 to 5", director: "Dir. Bernie Monroe", company: "Okoboji Summer Theatre" },
+      { title: "Never Can Say Goodbye", director: "Dir. Susie Dycus", company: "Okoboji Summer Theatre" },
+      { title: "You're a Good Man, Charlie Brown", director: "Dir. Brandon McShaffey", company: "Maples Repertory Theatre" },
+      { title: "Almost Heaven", director: "Dir. Trevor Belt", company: "Maples Repertory Theatre" },
+      { title: "Merry Wives of Windsor Cove", director: "Dir. Eli Simon", company: "New Swan Theatre Festival" },
+      { title: "Romeo and Juliet", director: "Dir. Rachel VanWormer", company: "New Swan Theatre Festival" },
+    ],
+  },
   {
     year: "2025",
     credits: [
@@ -363,6 +383,18 @@ export default function Resume() {
   ];
 
   const [hoverPreview, setHoverPreview] = useState<HoverPreview>(null);
+  const resumeHeroProjects = useMemo(
+    () =>
+      [...getLocalScenicProjects()]
+        .filter((project) => project.coverImageUrl && project.slug)
+        .sort((a, b) => {
+          const timeCompare = getProjectTimestamp(b) - getProjectTimestamp(a);
+          if (timeCompare !== 0) return timeCompare;
+          return a.title.localeCompare(b.title);
+        })
+        .slice(0, 5),
+    []
+  );
 
   const previewStyle = useMemo(() => {
     if (!hoverPreview) return null;
@@ -404,6 +436,9 @@ export default function Resume() {
           }
     );
   }
+
+  const getProjectHref = (project: { slug?: string | null }) =>
+    project.slug ? `/project/${project.slug}` : "/projects";
 
   return (
     <>
@@ -462,7 +497,7 @@ export default function Resume() {
 
       <section className="min-h-screen bg-background pb-20 pt-20">
         <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 lg:px-8">
-          <div className="mb-18">
+          <AnimatedSection className="mb-18">
             <div className="grid gap-10 border-b border-border/25 pb-12 xl:grid-cols-[minmax(0,1.12fr)_minmax(18rem,22rem)] xl:items-center">
               <div className="max-w-3xl xl:max-w-4xl">
                 <p className="text-[0.95rem] leading-7 text-foreground/72">Resume / CV</p>
@@ -496,18 +531,18 @@ export default function Resume() {
                 </div>
 
                 <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                  <div className="rounded-[1.2rem] border border-border/25 bg-card/10 px-4 py-3.5">
+                  <div className="border-t border-border/25 px-1 py-3.5">
                     <p className="text-[10px] uppercase tracking-[0.22em] text-foreground/38">Productions</p>
                     <p className="mt-2 inline-flex items-center gap-2 text-[0.98rem] font-medium text-foreground/82">
                       <Users className="h-4 w-4" />
                       130+
                     </p>
                   </div>
-                  <div className="rounded-[1.2rem] border border-border/25 bg-card/10 px-4 py-3.5">
+                  <div className="border-t border-border/25 px-1 py-3.5">
                     <p className="text-[10px] uppercase tracking-[0.22em] text-foreground/38">Union</p>
                     <p className="mt-2 text-[0.98rem] font-medium text-foreground/82">USA 829</p>
                   </div>
-                  <div className="rounded-[1.2rem] border border-border/25 bg-card/10 px-4 py-3.5">
+                  <div className="border-t border-border/25 px-1 py-3.5">
                     <p className="text-[10px] uppercase tracking-[0.22em] text-foreground/38">Training</p>
                     <p className="mt-2 inline-flex items-center gap-2 text-[0.98rem] font-medium text-foreground/82">
                       <GraduationCap className="h-4 w-4" />
@@ -518,17 +553,62 @@ export default function Resume() {
               </div>
 
               <div className="w-full xl:justify-self-end">
-                <AboutVerticalArt
-                  src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-resume-art.png"
-                  alt="Abstract cyan resume artwork"
-                  sizes="(max-width: 1280px) 92vw, 26rem"
-                  className="xl:mx-0"
-                />
+                {resumeHeroProjects[0] ? (
+                  <div className="space-y-3">
+                    <Link href={getProjectHref(resumeHeroProjects[0])} className="group block">
+                      <div className="relative aspect-[4/5] overflow-hidden bg-card/20">
+                        <Image
+                          src={resumeHeroProjects[0].coverImageUrl || ""}
+                          alt={`${resumeHeroProjects[0].title} scenic design production image`}
+                          fill
+                          priority
+                          quality={86}
+                          sizes="(max-width: 1280px) 92vw, 26rem"
+                          className="object-cover transition-[filter,transform] duration-[1200ms] ease-out group-hover:scale-[1.035] group-hover:brightness-110"
+                        />
+                      </div>
+                      <div className="mt-3 flex items-start justify-between gap-4 border-t border-border/25 pt-3">
+                        <div>
+                          <p className="text-[10px] uppercase tracking-[0.22em] text-foreground/38">
+                            Recent Portfolio
+                          </p>
+                          <p className="mt-2 text-[1rem] leading-tight tracking-[-0.03em] text-foreground/84">
+                            {resumeHeroProjects[0].title}
+                          </p>
+                        </div>
+                        <ArrowRight className="mt-1 h-4 w-4 text-foreground/45 transition-transform group-hover:translate-x-1 group-hover:text-foreground" />
+                      </div>
+                    </Link>
+
+                    <div className="grid grid-cols-4 gap-2">
+                      {resumeHeroProjects.slice(1, 5).map((project) => (
+                        <Link
+                          key={project.id}
+                          href={getProjectHref(project)}
+                          className="group block"
+                          aria-label={`Open ${project.title}`}
+                        >
+                          <div className="relative aspect-square overflow-hidden bg-card/20">
+                            <Image
+                              src={project.coverImageUrl || ""}
+                              alt={`${project.title} scenic design production image`}
+                              fill
+                              quality={72}
+                              loading="lazy"
+                              sizes="6rem"
+                              className="object-cover transition-[filter,transform] duration-700 group-hover:scale-[1.06] group-hover:brightness-110"
+                            />
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
               </div>
             </div>
-          </div>
+          </AnimatedSection>
 
-          <div className="mb-16">
+          <AnimatedSection delay={140} className="mb-16">
             <div className="flex items-end justify-between gap-6">
               <div>
                 <h2 className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
@@ -542,28 +622,34 @@ export default function Resume() {
             </div>
 
             <div className="mt-12 space-y-12">
-              {SCENIC_CREDITS.map((section) => (
-                <div key={section.year} className="border-t border-border/20 pt-6 md:pt-7">
-                  <h3 className="font-sans text-[1.28rem] font-medium tracking-[-0.03em] text-foreground/88">
-                    {section.year}
-                  </h3>
-                  <div className="mt-6 space-y-2 text-foreground/85">
-                    {section.credits.map((credit) => (
-                      <ScenicCreditRow
-                        key={`${section.year}-${credit.title}-${credit.company}`}
-                        credit={credit}
-                        onPreview={showPreview}
-                        onPreviewMove={movePreview}
-                        onPreviewLeave={() => setHoverPreview(null)}
-                      />
-                    ))}
+              {SCENIC_CREDITS.map((section, sectionIndex) => (
+                <AnimatedSection
+                  key={section.year}
+                  delay={Math.min(sectionIndex * 50, 300)}
+                  className="border-t border-border/20 pt-6 md:pt-7"
+                >
+                  <div className="grid gap-8 md:grid-cols-[13rem_minmax(0,1fr)] md:gap-16 lg:grid-cols-[15rem_minmax(0,1fr)]">
+                    <h3 className="font-sans text-[clamp(2.6rem,5vw,4.8rem)] font-medium leading-none tracking-[-0.07em] text-foreground/88 md:sticky md:top-28 md:self-start">
+                      {section.year}
+                    </h3>
+                    <div className="space-y-2 text-foreground/85">
+                      {section.credits.map((credit) => (
+                        <ScenicCreditRow
+                          key={`${section.year}-${credit.title}-${credit.company}`}
+                          credit={credit}
+                          onPreview={showPreview}
+                          onPreviewMove={movePreview}
+                          onPreviewLeave={() => setHoverPreview(null)}
+                        />
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </AnimatedSection>
               ))}
             </div>
-          </div>
+          </AnimatedSection>
 
-          <div className="mb-16">
+          <AnimatedSection className="mb-16">
             <h2 className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
               Earlier
             </h2>
@@ -579,18 +665,18 @@ export default function Resume() {
                 />
               ))}
             </div>
-          </div>
+          </AnimatedSection>
 
-          <div className="mb-16">
+          <AnimatedSection className="mb-16">
             <h2 className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
               Achievements & Education
             </h2>
 
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            <div className="mt-6 grid gap-x-6 gap-y-4 border-t border-border/20 pt-6 sm:grid-cols-2">
               {achievements.map((item, index) => (
                 <div
                   key={item}
-                  className="rounded-[1.25rem] border border-border/25 bg-card/10 px-4 py-3.5 text-foreground/82"
+                  className="border-b border-border/20 pb-4 text-foreground/82"
                 >
                   <p className="inline-flex items-start gap-2">
                     {index === 0 ? (
@@ -603,7 +689,7 @@ export default function Resume() {
                 </div>
               ))}
             </div>
-          </div>
+          </AnimatedSection>
         </div>
 
         {hoverPreview && previewStyle ? (

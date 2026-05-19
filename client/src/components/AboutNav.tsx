@@ -7,7 +7,7 @@ export default function AboutNav() {
 
   const navItems = [
     { path: "/about", label: "About" },
-    { path: "/upcoming-productions", label: "Upcoming" },
+    { path: "/upcoming-productions", label: "Upcoming Productions", matchPrefix: true },
     { path: "/resume", label: "Resume" },
     { path: "/creative-statement", label: "Creative Statement" },
     { path: "/about/teaching", label: "Teaching Philosophy", aliases: ["/teaching-philosophy", "/about/philosophy"] },
@@ -20,7 +20,10 @@ export default function AboutNav() {
         <div className="mx-auto max-w-5xl">
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
             {navItems.map((item) => {
-              const isActive = location === item.path || item.aliases?.includes(location);
+              const isActive =
+                location === item.path ||
+                item.aliases?.includes(location) ||
+                (item.matchPrefix && location.startsWith(`${item.path}/`));
               return (
                 <Link
                   key={item.path}

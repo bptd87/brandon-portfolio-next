@@ -89,23 +89,25 @@ function RecentProductionHero({
             quality={86}
             priority={index === 0}
             sizes="100vw"
-            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out ${
-              index === activeIndex ? "opacity-100" : "opacity-0"
+            className={`absolute inset-0 h-full w-full object-cover transition-[opacity,transform,filter] duration-[1200ms] ease-out motion-reduce:transition-none ${
+              index === activeIndex
+                ? "scale-100 opacity-100 brightness-105"
+                : "scale-[1.045] opacity-0 brightness-75"
             }`}
           />
         ))}
-        <div className="absolute inset-0 bg-black/10" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.58)_0%,rgba(0,0,0,0.3)_34%,rgba(0,0,0,0.02)_72%)]" />
+        <div className="absolute inset-0 bg-black/5" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.62)_0%,rgba(0,0,0,0.32)_34%,rgba(0,0,0,0.02)_72%)]" />
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background/46 to-transparent" />
       </div>
 
       <div className="relative flex min-h-[calc(100svh-74px)] items-end px-[clamp(1.5rem,5vw,6rem)] pb-10 pt-14 md:pb-14">
-        <div className="w-full">
+        <div className="w-full motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-700">
           <p className="mb-5 font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-white/58">
             Recent Scenic Design
           </p>
 
-          <div className="max-w-[49rem]">
+          <div className="max-w-[49rem] space-y-1">
             {heroProjects.map((project, index) => {
               const active = index === activeIndex;
               return (
@@ -114,12 +116,12 @@ function RecentProductionHero({
                   href={getProjectPath(project)}
                   onMouseEnter={() => setActiveIndex(index)}
                   onFocus={() => setActiveIndex(index)}
-                  className={`group block w-fit transition-colors ${
+                  className={`group relative block w-fit overflow-hidden pb-1 transition-colors duration-300 ${
                     active ? "text-white" : "text-white/58 hover:text-white"
                   }`}
                 >
                   <span className="flex flex-wrap items-baseline gap-x-3">
-                    <span className="font-sans text-[clamp(1.8rem,4vw,4.15rem)] font-medium leading-[0.94] tracking-[-0.064em]">
+                    <span className="font-sans text-[clamp(1.8rem,4vw,4.15rem)] font-medium leading-[0.94] tracking-[-0.064em] transition-transform duration-500 group-hover:translate-x-1 motion-reduce:transition-none">
                       {project.title}
                     </span>
                     {project.year ? (
@@ -128,6 +130,14 @@ function RecentProductionHero({
                       </span>
                     ) : null}
                   </span>
+                  <span
+                    aria-hidden="true"
+                    className={`absolute bottom-0 left-0 h-px bg-white transition-transform duration-500 ease-out motion-reduce:transition-none ${
+                      active
+                        ? "w-full scale-x-100"
+                        : "w-full origin-left scale-x-0 group-hover:scale-x-100"
+                    }`}
+                  />
                 </a>
               );
             })}
@@ -142,10 +152,13 @@ function RecentProductionHero({
             </div>
             <a
               href="#portfolio-categories"
-              className="inline-flex w-fit items-center gap-3 font-sans text-sm font-medium uppercase tracking-[0.12em] text-white/72 transition-colors hover:text-white"
+              className="group inline-flex w-fit items-center gap-3 font-sans text-sm font-medium uppercase tracking-[0.12em] text-white/72 transition-colors hover:text-white"
             >
               Scroll
-              <span aria-hidden="true" className="text-2xl leading-none">
+              <span
+                aria-hidden="true"
+                className="text-2xl leading-none transition-transform duration-500 group-hover:translate-y-1"
+              >
                 ↓
               </span>
             </a>
@@ -181,7 +194,7 @@ function PortfolioCategoryRows({
       id="portfolio-categories"
       className="border-t border-white/10 py-12 md:py-16"
     >
-      <div className="mb-8 px-[clamp(1.5rem,5vw,6rem)]">
+      <div className="mb-8 px-[clamp(1.5rem,5vw,6rem)] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3 motion-safe:duration-700">
         <p className="mb-3 font-sans text-[10px] font-semibold uppercase tracking-[0.24em] text-white/36">
           Brandon PT Davis
         </p>
@@ -239,22 +252,26 @@ function PortfolioCategoryRows({
                         alt={`${project.title} scenic design by Brandon PT Davis`}
                         aspectRatio="16 / 9"
                         containerClassName="bg-white/[0.035]"
-                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]"
+                        className="h-full w-full object-cover transition-[transform,filter] duration-[900ms] ease-out group-hover:scale-[1.04] group-hover:brightness-110 motion-reduce:transition-none"
                         sizes="(min-width: 1280px) 40rem, (min-width: 768px) 34rem, 82vw"
                         width={980}
                         enableScrollAnimation={false}
                       />
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/72 via-black/12 to-transparent" />
-                      <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/82 via-black/18 to-transparent opacity-90 transition-opacity duration-700 group-hover:opacity-100" />
+                      <div className="absolute inset-x-0 bottom-0 p-4 transition-transform duration-700 ease-out group-hover:-translate-y-1 md:p-5 motion-reduce:transition-none">
                         <h4 className="font-sans text-[1.02rem] font-medium leading-[1.04] tracking-[-0.035em] text-white md:text-[1.18rem]">
                           {project.title}
                         </h4>
-                        <p className="mt-1 text-[0.82rem] leading-5 text-white/62">
+                        <p className="mt-1 text-[0.82rem] leading-5 text-white/62 transition-opacity duration-500 group-hover:text-white/76">
                           {[project.client, project.year]
                             .filter(Boolean)
                             .join(" · ")}
                         </p>
                       </div>
+                      <span
+                        aria-hidden="true"
+                        className="absolute inset-x-5 bottom-4 h-px origin-left scale-x-0 bg-white/70 transition-transform duration-700 group-hover:scale-x-100"
+                      />
                     </a>
                   ))}
                   <a
@@ -309,28 +326,40 @@ function BrandonSection() {
             renderings, and process images from regional theatre, summer stock,
             and academic stages.
           </p>
-          <div className="mt-8 flex flex-wrap gap-4">
+          <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
             <a
               href="/about"
-              className="inline-flex h-11 items-center rounded-full border border-white/22 px-5 text-sm font-medium text-white transition-colors hover:border-white/36 hover:bg-white/[0.05]"
+              className="group inline-flex items-center gap-2 border-t border-white/18 pt-4 text-sm font-medium text-white/78 transition-colors hover:text-white"
             >
               About Brandon
+              <span
+                aria-hidden="true"
+                className="transition-transform group-hover:translate-x-1"
+              >
+                →
+              </span>
             </a>
             <a
               href="/resume"
-              className="inline-flex h-11 items-center rounded-full border border-white/12 px-5 text-sm font-medium text-white/64 transition-colors hover:border-white/24 hover:text-white"
+              className="group inline-flex items-center gap-2 border-t border-white/10 pt-4 text-sm font-medium text-white/58 transition-colors hover:text-white"
             >
               Resume / CV
+              <span
+                aria-hidden="true"
+                className="transition-transform group-hover:translate-x-1"
+              >
+                →
+              </span>
             </a>
           </div>
         </div>
 
-        <div className="relative overflow-hidden border border-white/10 bg-white/[0.035] lg:justify-self-end">
+        <div className="group relative overflow-hidden bg-white/[0.035] lg:justify-self-end">
           <div className="relative aspect-[4/3] w-full lg:w-[min(42vw,44rem)]">
             <img
               src={ABOUT_HEADSHOT_URL}
               alt="Brandon PT Davis - scenic designer"
-              className="h-full w-full object-cover object-[50%_16%]"
+              className="h-full w-full object-cover object-[50%_16%] transition-[transform,filter] duration-[900ms] ease-out group-hover:scale-[1.025] group-hover:brightness-110"
               loading="lazy"
             />
           </div>
@@ -374,10 +403,10 @@ function UpcomingSection() {
             <a
               key={production.id}
               href={`/upcoming-productions/${production.id}`}
-              className="grid gap-5 py-5 transition-colors hover:bg-white/[0.025] md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
+              className="group grid gap-5 py-5 transition-colors hover:bg-white/[0.025] md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
             >
               <div>
-                <p className="font-sans text-[1.45rem] font-medium leading-[1.02] tracking-[-0.05em] text-white md:text-[1.9rem]">
+                <p className="font-sans text-[1.45rem] font-medium leading-[1.02] tracking-[-0.05em] text-white transition-transform duration-500 group-hover:translate-x-1 md:text-[1.9rem]">
                   {production.title}
                 </p>
                 <p className="mt-2 text-sm leading-6 text-white/48">
@@ -398,11 +427,11 @@ function UpcomingSection() {
 
 function HomeCta() {
   return (
-    <section className="relative min-h-[72svh] overflow-hidden border-t border-white/10 bg-black">
+    <section className="group relative min-h-[72svh] overflow-hidden border-t border-white/10 bg-black">
       <img
         src={HOME_CTA_IMAGE_URL}
         alt="The Merry Wives of Windsor scenic design detail by Brandon PT Davis"
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.025]"
         loading="lazy"
       />
       <div className="absolute inset-0 bg-black/28" />

@@ -118,7 +118,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-gradient-premium">
         <LegacyClientCleanup />
-        <PostHogAnalytics />
+        {isProduction ? <PostHogAnalytics /> : null}
         <LegacyProviders>{children}</LegacyProviders>
         {isProduction ? <Analytics /> : null}
         {isProduction ? <SpeedInsights /> : null}
