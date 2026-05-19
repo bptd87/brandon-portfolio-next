@@ -72,10 +72,10 @@ export default function NotFound() {
             </div>
             <div className="border-t border-white/10 pt-5">
               <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
-                Studio
+                Publish
               </p>
               <p className="max-w-[20rem] text-[1rem] leading-[1.75] tracking-[-0.01em] text-foreground/62">
-                Articles, tutorials, tools, and scenic resources gathered into one working archive.
+                Articles, tutorials, and scenic resources gathered into one working archive.
               </p>
             </div>
             <div className="border-t border-white/10 pt-5">

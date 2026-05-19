@@ -387,7 +387,7 @@ export default function Articles() {
   const displayedArticles = featuredArticle ? sortedArticles.slice(1) : sortedArticles;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="publish-editorial min-h-screen bg-[#f1f0ec] text-[#111111]">
       <SEO
         title={articleArchiveTitle}
         description={articleArchiveDescription}

@@ -32,23 +32,29 @@ function DesktopMenuPanel({
   onClose,
   onMouseEnter,
   onMouseLeave,
+  tone = "dark",
 }: {
   groups: MenuGroup[];
   onClose: () => void;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
+  tone?: "dark" | "light";
 }) {
+  const isLight = tone === "light";
+
   return (
     <div
-      className="absolute inset-x-0 top-full min-h-[calc(100dvh-74px)] max-h-[calc(100dvh-74px)] overflow-y-auto border-b border-white/10 bg-background shadow-[0_30px_90px_rgba(0,0,0,0.45)] animate-in fade-in slide-in-from-top-2 duration-200"
+      className={`absolute inset-x-0 top-full min-h-[calc(100dvh-74px)] max-h-[calc(100dvh-74px)] overflow-y-auto border-b shadow-[0_30px_90px_rgba(0,0,0,0.22)] animate-in fade-in slide-in-from-top-2 duration-200 ${
+        isLight ? "border-black/10 bg-[#f1f0ec]" : "border-white/10 bg-background"
+      }`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
       <div className="px-[clamp(1.5rem,5vw,6rem)] py-10">
         <div className="grid gap-8 lg:grid-cols-3">
           {groups.map((group) => (
-            <div key={group.heading} className="border-t border-white/14 pt-3">
-              <p className="mb-5 font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-white/42">
+            <div key={group.heading} className={`border-t pt-3 ${isLight ? "border-black/14" : "border-white/14"}`}>
+              <p className={`mb-5 font-sans text-[11px] font-semibold uppercase tracking-[0.24em] ${isLight ? "text-black/42" : "text-white/42"}`}>
                 {group.heading}
               </p>
               <div className="space-y-2.5">
@@ -60,7 +66,11 @@ function DesktopMenuPanel({
                     aria-label={`${item.name}: ${item.description}`}
                     className="group block"
                   >
-                    <span className="block font-sans text-[1.04rem] font-medium leading-7 tracking-[-0.025em] text-white/82 transition-colors group-hover:text-white">
+                    <span
+                      className={`block font-sans text-[1.04rem] font-medium leading-7 tracking-[-0.025em] transition-colors ${
+                        isLight ? "text-black/78 group-hover:text-black" : "text-white/82 group-hover:text-white"
+                      }`}
+                    >
                       {item.name}
                     </span>
                   </Link>
@@ -70,15 +80,17 @@ function DesktopMenuPanel({
           ))}
         </div>
 
-        <div className="mt-12 border-t border-white/14 pt-5">
+        <div className={`mt-12 border-t pt-5 ${isLight ? "border-black/14" : "border-white/14"}`}>
           <div className="mb-5 flex items-center justify-between gap-4">
-            <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-white/42">
+            <p className={`font-sans text-[11px] font-semibold uppercase tracking-[0.24em] ${isLight ? "text-black/42" : "text-white/42"}`}>
               Recent Scenic Design Projects
             </p>
             <Link
               href="/projects"
               onClick={onClose}
-              className="text-[0.9rem] font-medium tracking-[-0.02em] text-white/58 transition-colors hover:text-white"
+              className={`text-[0.9rem] font-medium tracking-[-0.02em] transition-colors ${
+                isLight ? "text-black/58 hover:text-black" : "text-white/58 hover:text-white"
+              }`}
             >
               View portfolio
             </Link>
@@ -86,7 +98,7 @@ function DesktopMenuPanel({
           <div className="grid gap-5 md:grid-cols-3">
             {recentScenicProjects.map((project) => (
               <Link key={project.href} href={project.href} onClick={onClose} className="group block">
-                <div className="relative aspect-[16/9] overflow-hidden rounded-[0.85rem] border border-white/10 bg-white/[0.035]">
+                <div className={`relative aspect-[16/9] overflow-hidden rounded-[0.85rem] border ${isLight ? "border-black/10 bg-black/[0.035]" : "border-white/10 bg-white/[0.035]"}`}>
                   <Image
                     src={project.imageUrl}
                     alt={project.imageAlt}
@@ -97,10 +109,10 @@ function DesktopMenuPanel({
                   />
                 </div>
                 <div className="mt-3">
-                  <p className="font-sans text-[1rem] font-medium leading-[1.05] tracking-[-0.035em] text-white">
+                  <p className={`font-sans text-[1rem] font-medium leading-[1.05] tracking-[-0.035em] ${isLight ? "text-black" : "text-white"}`}>
                     {project.title}
                   </p>
-                  <p className="mt-1 text-[0.8rem] leading-5 text-white/42">{project.meta}</p>
+                  <p className={`mt-1 text-[0.8rem] leading-5 ${isLight ? "text-black/42" : "text-white/42"}`}>{project.meta}</p>
                 </div>
               </Link>
             ))}
@@ -111,13 +123,23 @@ function DesktopMenuPanel({
   );
 }
 
-function BrandLink({ centered = false }: { centered?: boolean }) {
+function BrandLink({ centered = false, tone = "dark" }: { centered?: boolean; tone?: "dark" | "light" }) {
+  const isLight = tone === "light";
+
   return (
     <Link href="/" className={`group inline-flex min-w-0 flex-col leading-none transition-all ${centered ? "justify-self-start lg:justify-self-center lg:items-center" : ""}`}>
-      <span className="font-sans text-[1.34rem] font-black leading-[0.88] tracking-[-0.075em] text-white transition-colors group-hover:text-white/78 md:text-[1.56rem]">
+      <span
+        className={`font-sans text-[1.34rem] font-black leading-[0.88] tracking-[-0.075em] transition-colors md:text-[1.56rem] ${
+          isLight ? "text-black group-hover:text-black/72" : "text-white group-hover:text-white/78"
+        }`}
+      >
         BRANDON PT DAVIS
       </span>
-      <span className="mt-1.5 font-sans text-[9px] font-semibold uppercase leading-none tracking-[0.34em] text-white/46 md:text-[9.5px]">
+      <span
+        className={`mt-1.5 font-sans text-[9px] font-semibold uppercase leading-none tracking-[0.34em] md:text-[9.5px] ${
+          isLight ? "text-black/48" : "text-white/46"
+        }`}
+      >
         SCENIC DESIGN
       </span>
     </Link>
@@ -132,6 +154,11 @@ export default function Header() {
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollYRef = useRef(0);
   const desktopMenuCloseTimeoutRef = useRef<number | null>(null);
+  const isEditorialRoute =
+    /^\/articles(?:\/|$)/.test(location) ||
+    /^\/studio\/tutorials(?:\/|$)/.test(location) ||
+    /^\/studio\/directory(?:\/|$)/.test(location);
+  const useLightChrome = isEditorialRoute;
 
   const headerRef = useRef<HTMLElement>(null);
 
@@ -254,9 +281,9 @@ export default function Header() {
       heading: "Profile",
       items: [
         {
-          name: "About",
+          name: "Profile",
           path: "/about",
-          description: "Background, current work, and the broader design perspective behind the site.",
+          description: "Biography, current work, and the broader design perspective behind the site.",
         },
         {
           name: "Upcoming Productions",
@@ -287,9 +314,9 @@ export default function Header() {
     },
   ];
 
-  const studioGroups: MenuGroup[] = [
+  const publishGroups: MenuGroup[] = [
     {
-      heading: "Publishing",
+      heading: "Publish",
       items: [
         {
           name: "Articles",
@@ -300,11 +327,6 @@ export default function Header() {
           name: "Tutorials",
           path: "/studio/tutorials",
           description: "Vectorworks instruction and workflow demonstrations used in teaching.",
-        },
-        {
-          name: "App Studio",
-          path: "/studio/apps",
-          description: "Interactive design tools, utilities, and small studio applications.",
         },
         {
           name: "Scenic Directory",
@@ -320,7 +342,11 @@ export default function Header() {
       <div className="h-[74px]" aria-hidden="true" />
       <header
         ref={headerRef}
-        className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-background/40 backdrop-blur-xl supports-[backdrop-filter]:bg-background/25 transition-all duration-300 ${
+        className={`fixed left-0 right-0 top-0 z-50 border-b backdrop-blur-xl transition-all duration-300 ${
+          useLightChrome
+            ? "border-black/10 bg-[#f1f0ec]/78 supports-[backdrop-filter]:bg-[#f1f0ec]/66"
+            : "border-white/10 bg-background/40 supports-[backdrop-filter]:bg-background/25"
+        } ${
           isVisible ? "translate-y-0" : "-translate-y-full"
         }`}
       >
@@ -334,7 +360,11 @@ export default function Header() {
                 onFocus={openDesktopMenu}
                 onClick={() => (desktopMenuOpen ? closeDesktopMenu() : openDesktopMenu())}
                 aria-expanded={desktopMenuOpen}
-                className="inline-flex h-10 items-center gap-4 text-[0.9rem] font-medium uppercase tracking-[0.08em] text-white/76 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/35"
+                className={`inline-flex h-10 items-center gap-4 text-[0.9rem] font-medium uppercase tracking-[0.08em] transition-colors focus-visible:outline-none focus-visible:ring-1 ${
+                  useLightChrome
+                    ? "text-black/72 hover:text-black focus-visible:ring-black/35"
+                    : "text-white/76 hover:text-white focus-visible:ring-white/35"
+                }`}
               >
                 <span className="relative h-3.5 w-6" aria-hidden="true">
                   <span
@@ -352,7 +382,7 @@ export default function Header() {
               </button>
             </div>
 
-            <BrandLink centered />
+            <BrandLink centered tone={useLightChrome ? "light" : "dark"} />
 
             <div className="hidden justify-end lg:flex">
               <div className="flex items-center gap-4">
@@ -360,7 +390,9 @@ export default function Header() {
                   type="button"
                   onClick={() => setSearchOpen((value) => !value)}
                   aria-label="Search site"
-                  className="inline-flex h-10 w-10 items-center justify-center text-white/58 transition-colors hover:text-white"
+                  className={`inline-flex h-10 w-10 items-center justify-center transition-colors ${
+                    useLightChrome ? "text-black/56 hover:text-black" : "text-white/58 hover:text-white"
+                  }`}
                 >
                   {searchOpen ? (
                     <X className="h-[1.05rem] w-[1.05rem]" />
@@ -370,7 +402,11 @@ export default function Header() {
                 </button>
                 <Link
                   href="/contact"
-                  className="inline-flex h-10 items-center justify-center rounded-full border border-white/22 px-5 text-[0.9rem] font-medium tracking-[-0.02em] text-white transition-colors hover:border-white/36 hover:bg-white/[0.05]"
+                  className={`inline-flex h-10 items-center justify-center rounded-full border px-5 text-[0.9rem] font-medium tracking-[-0.02em] transition-colors ${
+                    useLightChrome
+                      ? "border-black/22 text-black hover:border-black/38 hover:bg-black/[0.045]"
+                      : "border-white/22 text-white hover:border-white/36 hover:bg-white/[0.05]"
+                  }`}
                 >
                   Contact
                 </Link>
@@ -380,7 +416,11 @@ export default function Header() {
             <div className="flex items-center justify-end gap-4 lg:hidden">
               <button
                 onClick={() => setMobileMenuOpen(true)}
-                className="flex h-10 w-10 items-center justify-center rounded-lg transition-all hover:border hover:border-border hover:bg-foreground/10"
+                className={`flex h-10 w-10 items-center justify-center rounded-lg transition-all hover:border ${
+                  useLightChrome
+                    ? "text-black hover:border-black/18 hover:bg-black/[0.045]"
+                    : "hover:border-border hover:bg-foreground/10"
+                }`}
                 aria-label="Open menu"
               >
                 <Menu className="h-6 w-6" />
@@ -391,10 +431,11 @@ export default function Header() {
 
         {desktopMenuOpen ? (
           <DesktopMenuPanel
-            groups={[...portfolioGroups, ...aboutGroups, ...studioGroups]}
+            groups={[...portfolioGroups, ...aboutGroups, ...publishGroups]}
             onClose={closeDesktopMenu}
             onMouseEnter={openDesktopMenu}
             onMouseLeave={scheduleDesktopMenuClose}
+            tone={useLightChrome ? "light" : "dark"}
           />
         ) : null}
       </header>

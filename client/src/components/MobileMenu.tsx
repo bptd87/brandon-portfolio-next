@@ -20,7 +20,7 @@ const PORTFOLIO_LINKS = [
 ] as const;
 
 const ABOUT_LINKS = [
-  { label: "About", href: "/about" },
+  { label: "Profile", href: "/about" },
   { label: "Upcoming Productions", href: "/upcoming-productions" },
   { label: "Resume / CV", href: "/resume" },
   { label: "Creative Statement", href: "/creative-statement" },
@@ -28,10 +28,9 @@ const ABOUT_LINKS = [
   { label: "Collaborators", href: "/about/collaborators" },
 ] as const;
 
-const STUDIO_LINKS = [
+const PUBLISH_LINKS = [
   { label: "Articles", href: "/articles" },
   { label: "Tutorials", href: "/studio/tutorials" },
-  { label: "App Studio", href: "/studio/apps" },
   { label: "Scenic Directory", href: "/studio/directory" },
 ] as const;
 
@@ -96,7 +95,7 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }: MobileMenu
   const [pathname] = useLocation();
   const [workOpen, setWorkOpen] = useState(true);
   const [aboutOpen, setAboutOpen] = useState(false);
-  const [studioOpen, setStudioOpen] = useState(false);
+  const [publishOpen, setPublishOpen] = useState(false);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -118,7 +117,11 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }: MobileMenu
         pathname.startsWith("/resume") ||
         pathname.startsWith("/creative-statement")
     );
-    setStudioOpen(pathname.startsWith("/articles") || pathname.startsWith("/studio"));
+    setPublishOpen(
+      pathname.startsWith("/articles") ||
+        pathname.startsWith("/studio/tutorials") ||
+        pathname.startsWith("/studio/directory")
+    );
   }, [isOpen, pathname]);
 
   if (!isOpen) return null;
@@ -160,7 +163,7 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }: MobileMenu
                 Scenic Design by Brandon PT Davis
               </p>
               <p className="mt-3 text-sm leading-7 text-foreground/58">
-                Portfolio, studio resources, and professional information in one place.
+                Portfolio, profile, and published resources in one place.
               </p>
             </div>
 
@@ -187,17 +190,17 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }: MobileMenu
               />
               <MenuSection
                 isOpen={aboutOpen}
-                label="About"
+                label="Profile"
                 links={ABOUT_LINKS}
                 onToggle={() => setAboutOpen((value) => !value)}
                 onClose={onClose}
                 pathname={pathname}
               />
               <MenuSection
-                isOpen={studioOpen}
-                label="Studio"
-                links={STUDIO_LINKS}
-                onToggle={() => setStudioOpen((value) => !value)}
+                isOpen={publishOpen}
+                label="Publish"
+                links={PUBLISH_LINKS}
+                onToggle={() => setPublishOpen((value) => !value)}
                 onClose={onClose}
                 pathname={pathname}
               />

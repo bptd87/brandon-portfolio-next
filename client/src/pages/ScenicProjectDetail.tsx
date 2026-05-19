@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Lightbox } from "@/components/Lightbox";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
@@ -27,6 +28,8 @@ type ScenicProjectDetailProps = {
     slug?: string;
   };
 };
+
+type ImageOrientation = "landscape" | "portrait" | "square";
 
 function getEmbedUrl(url: string): string {
   if (!url) return "";
@@ -57,6 +60,29 @@ function getAutoEmbedUrl(url: string, autoplay: boolean): string {
     return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
   }
   return getEmbedUrl(url);
+}
+
+function useImageOrientation(src?: string | null): ImageOrientation {
+  const [orientation, setOrientation] = useState<ImageOrientation>("landscape");
+
+  useEffect(() => {
+    if (!src) return;
+
+    const image = new Image();
+    image.src = src;
+    image.onload = () => {
+      const ratio = image.naturalWidth / image.naturalHeight;
+      if (ratio > 1.08) {
+        setOrientation("landscape");
+      } else if (ratio < 0.92) {
+        setOrientation("portrait");
+      } else {
+        setOrientation("square");
+      }
+    };
+  }, [src]);
+
+  return orientation;
 }
 
 function AutoPlayEmbed({ url, title }: { url: string; title: string }) {
@@ -92,6 +118,138 @@ function AutoPlayEmbed({ url, title }: { url: string; title: string }) {
       </div>
     </div>
   );
+}
+
+function ProjectGalleryFigure({
+  item,
+  onOpen,
+  variant = "grid",
+}: {
+  item: LocalScenicProjectMedia & { imageUrl: string };
+  onOpen: () => void;
+  variant?: "single" | "lead" | "pair" | "grid";
+}) {
+  const orientation = useImageOrientation(item.imageUrl);
+  const isPortrait = item.display === "portrait" || orientation === "portrait";
+  const shouldContain = item.display === "contain" || item.display === "portrait" || isPortrait;
+  const isLead = variant === "lead";
+  const isSingle = variant === "single";
+  const aspectRatio = isPortrait
+    ? "3 / 4"
+    : orientation === "square"
+      ? "1 / 1"
+      : item.display === "full" || item.display === "wide" || isLead || isSingle
+        ? "16 / 9"
+        : "4 / 3";
+  const sizes = isSingle
+    ? "(min-width: 1280px) 80rem, calc(100vw - 2.5rem)"
+    : isLead
+      ? isPortrait
+        ? "(min-width: 1280px) 42rem, (min-width: 768px) 62vw, calc(100vw - 2.5rem)"
+        : "(min-width: 1280px) 88rem, calc(100vw - 2.5rem)"
+      : variant === "pair"
+        ? "(min-width: 1280px) 42rem, (min-width: 768px) 46vw, calc(100vw - 2.5rem)"
+        : "(min-width: 1024px) 28vw, (min-width: 768px) 46vw, calc(100vw - 2.5rem)";
+  const width = isLead || isSingle ? 1900 : variant === "pair" ? 1400 : 1100;
+
+  return (
+    <figure
+      className={`space-y-3 ${isPortrait && (isLead || isSingle) ? "mx-auto max-w-[42rem]" : ""}`}
+    >
+      <button type="button" onClick={onOpen} className="block w-full text-left">
+        <ProgressiveImage
+          src={item.imageUrl}
+          alt={item.altText}
+          className="block w-full object-cover transition-transform duration-500 hover:scale-[1.01]"
+          containerClassName="w-full"
+          sizes={sizes}
+          width={width}
+          aspectRatio={aspectRatio}
+          objectFit={shouldContain ? "contain" : "cover"}
+          smartPosition
+        />
+      </button>
+      {item.caption ? (
+        <figcaption className="text-[0.92rem] leading-6 tracking-[-0.01em] text-white/56">
+          {item.caption}
+        </figcaption>
+      ) : null}
+    </figure>
+  );
+}
+
+function getCreditRolePriority(role: string) {
+  const normalized = role.toLowerCase().trim();
+  if (
+    normalized.includes("book") ||
+    normalized === "by" ||
+    normalized.includes("written") ||
+    normalized.includes("playwright") ||
+    normalized.includes("adapted") ||
+    normalized.includes("conceived") ||
+    normalized.includes("created") ||
+    normalized.includes("composer") ||
+    normalized === "music" ||
+    normalized.includes("music by") ||
+    normalized.includes("lyrics") ||
+    normalized.includes("original concept")
+  ) {
+    return 0;
+  }
+  if (
+    normalized.includes("directed") ||
+    normalized === "director" ||
+    (normalized.includes("director") &&
+      !normalized.includes("associate") &&
+      !normalized.includes("music director"))
+  ) {
+    return 1;
+  }
+  if (normalized.includes("associate director")) return 2;
+  if (normalized.includes("choreo")) return 3;
+  if (normalized.includes("music director") || normalized.includes("music direction")) return 4;
+  if (normalized.includes("scenic")) return 5;
+  if (normalized.includes("costume")) return 6;
+  if (normalized.includes("lighting")) return 7;
+  if (normalized.includes("sound")) return 8;
+  if (normalized.includes("projection")) return 9;
+  if (normalized.includes("puppetry")) return 10;
+  if (normalized.includes("assistant")) return 11;
+  return 50;
+}
+
+function getCreditRoleLabel(role: string) {
+  const normalized = role.toLowerCase().trim();
+  if (normalized.includes("co-scenic")) return "Co-Scenic Design";
+  if (normalized.includes("scenic") && normalized.includes("lighting")) {
+    return "Scenic and Lighting Design";
+  }
+  if (normalized.includes("scenic")) return "Scenic Design";
+  if (normalized.includes("costume")) return "Costume Design";
+  if (normalized.includes("lighting")) return "Lighting Design";
+  if (normalized.includes("sound")) return "Sound Design";
+  if (normalized.includes("projection")) return "Projection Design";
+  if (normalized.includes("directed") && normalized.includes("choreo")) {
+    return "Direction and Choreography";
+  }
+  if (normalized === "director" || normalized === "directed by") return "Directed by";
+  if (normalized.includes("associate director")) return "Associate Direction";
+  if (normalized.includes("choreo")) return "Choreography";
+  if (normalized.includes("music director") || normalized.includes("music direction")) {
+    return "Music Direction";
+  }
+  if (normalized.includes("music and lyrics") || normalized.includes("music & lyrics")) {
+    return "Music and Lyrics";
+  }
+  if (normalized.includes("book") && normalized.includes("lyrics")) return "Book and Lyrics";
+  if (normalized.includes("book")) return "Book by";
+  if (normalized.includes("music by") || normalized === "music") return "Music by";
+  if (normalized.includes("lyrics")) return "Lyrics by";
+  if (normalized.includes("written")) return "Written by";
+  if (normalized.includes("adapted")) return "Adapted by";
+  if (normalized.includes("from the book")) return "From the book by";
+  if (normalized === "by" || normalized.includes("playwright")) return "Written by";
+  return role;
 }
 
 export default function ScenicProjectDetail({
@@ -214,40 +372,11 @@ export default function ScenicProjectDetail({
   }, [lastProductionGalleryIndex, project.sections]);
 
   const creativeTeamGroups = useMemo(() => {
-    const rolePriority = (role: string) => {
-      const normalized = role.toLowerCase().trim();
-      if (normalized.includes("music and lyrics")) return 0;
-      if (normalized.includes("book by")) return 0;
-      if (normalized.includes("written by") || normalized === "by" || normalized.includes("playwright") || normalized.includes("created by")) return 1;
-      if (normalized.includes("adapted by")) return 2;
-      if (normalized === "lyrics by") return 3;
-      if (normalized === "music by") return 4;
-      if (normalized.includes("original concept")) return 5;
-      if (normalized.includes("directed")) return 6;
-      if (normalized === "director" || (normalized.includes("director") && !normalized.includes("associate") && !normalized.includes("music director"))) return 6;
-      if (normalized.includes("associate director")) return 7;
-      if (normalized.includes("choreo")) return 8;
-      if (normalized.includes("music director")) return 9;
-      if (normalized.includes("scenic")) return 10;
-      if (normalized.includes("costume")) return 11;
-      if (normalized.includes("lighting")) return 12;
-      if (normalized.includes("sound")) return 13;
-      if (normalized.includes("projection")) return 14;
-      if (normalized.includes("assistant")) return 15;
-      return 50;
-    };
-
-    return [...project.creativeTeam]
-      .filter((member) => {
-        const normalizedName = member.name.toLowerCase().trim();
-        const normalizedRole = member.role.toLowerCase().trim();
-        return !(normalizedName === "brandon pt davis" && normalizedRole.includes("scenic"));
-      })
-      .sort((a, b) => {
-        const priorityDiff = rolePriority(a.role) - rolePriority(b.role);
-        if (priorityDiff !== 0) return priorityDiff;
-        return a.role.localeCompare(b.role);
-      });
+    return [...project.creativeTeam].sort((a, b) => {
+      const priorityDiff = getCreditRolePriority(a.role) - getCreditRolePriority(b.role);
+      if (priorityDiff !== 0) return priorityDiff;
+      return getCreditRoleLabel(a.role).localeCompare(getCreditRoleLabel(b.role));
+    });
   }, [project.creativeTeam]);
 
   const moreScenicProjects = useMemo(() => {
@@ -324,17 +453,11 @@ export default function ScenicProjectDetail({
           </div>
           <div className="grid gap-x-10 gap-y-5 sm:grid-cols-2">
             {creativeTeamGroups.map((member) => {
-              const normalizedRole = member.role.toLowerCase().trim();
-              const isDirectorCredit =
-                normalizedRole === "director" ||
-                normalizedRole.includes("directed") ||
-                (normalizedRole.includes("director") &&
-                  !normalizedRole.includes("associate") &&
-                  !normalizedRole.includes("music director"));
+              const roleLabel = getCreditRoleLabel(member.role);
               const content = (
                 <>
                   <span className="block text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-white/44">
-                    {isDirectorCredit ? "Directed by" : member.role}
+                    {roleLabel}
                   </span>
                   <span className="mt-1.5 block text-[1rem] leading-snug tracking-[-0.02em] text-white/82">
                     {member.url ? (
@@ -428,14 +551,14 @@ export default function ScenicProjectDetail({
 
         <section className="px-[clamp(1.5rem,5vw,5.5rem)]">
           <AnimatedSection>
-            <div className="mx-auto flex w-full max-w-[88rem] flex-col gap-6 border-b border-white/14 py-5 text-white md:flex-row md:items-start md:justify-between">
-              <dl className="grid flex-1 gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mx-auto flex w-full max-w-[88rem] flex-col gap-6 border-b border-white/14 py-5 text-white md:flex-row md:items-center md:justify-between">
+              <dl className="flex flex-1 flex-wrap items-center gap-x-7 gap-y-3">
                 {productionRecordItems.map((item) => (
-                  <div key={item.label} className="space-y-1.5">
-                    <dt className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-white/42">
+                  <div key={item.label} className="flex items-baseline gap-2">
+                    <dt className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-white/42">
                       {item.label}
                     </dt>
-                    <dd className="text-[0.96rem] leading-snug tracking-[-0.02em] text-white/82">
+                    <dd className="text-[0.94rem] leading-snug tracking-[-0.02em] text-white/80">
                       {item.href ? (
                         <a
                           href={item.href}
@@ -465,7 +588,7 @@ export default function ScenicProjectDetail({
         </section>
 
         <section id="project-process" className="container max-w-5xl scroll-mt-28 pt-14 md:pt-18">
-          <div className="mx-auto max-w-[54rem] space-y-24 md:space-y-32">
+          <div className="mx-auto max-w-[54rem] space-y-20 md:space-y-28">
             {project.sections.map((section, index) => (
               <div key={`${section.type}-${index}`} className="space-y-0">
                 <AnimatedSection>
@@ -480,7 +603,7 @@ export default function ScenicProjectDetail({
                         {section.content.map((paragraph, paragraphIndex) => (
                           <p
                             key={paragraphIndex}
-                            className="text-[1.03rem] leading-[1.9] tracking-[-0.01em] text-white/72"
+                            className="text-[1.04rem] leading-[1.9] tracking-[-0.01em] text-white/80"
                           >
                             {paragraph}
                           </p>
@@ -497,6 +620,10 @@ export default function ScenicProjectDetail({
                           (item): item is LocalScenicProjectMedia & { imageUrl: string } =>
                             Boolean(item && item.type === "image" && item.imageUrl)
                         );
+                      const forceGrid = section.layout === "grid";
+                      const forcePair = section.layout === "pair";
+                      const forceLead = section.layout === "lead";
+
                       if (galleryItems.length === 1) {
                         const item = galleryItems[0];
 
@@ -507,35 +634,17 @@ export default function ScenicProjectDetail({
                                 {getDisplayHeading(section.heading)}
                               </h2>
                             ) : null}
-                            <figure className="mx-auto w-full max-w-[80rem] space-y-3">
-                              <button
-                                type="button"
-                                onClick={() => openLightboxFor(item.id)}
-                                className="block w-full text-left"
-                              >
-                                <ProgressiveImage
-                                  src={item.imageUrl}
-                                  alt={item.altText}
-                                  className="block w-full object-cover transition-transform duration-500 hover:scale-[1.01]"
-                                  containerClassName="w-full"
-                                  sizes="(min-width: 1280px) 80rem, calc(100vw - 2.5rem)"
-                                  width={1800}
-                                  aspectRatio="16 / 9"
-                                  smartPosition
-                                />
-                              </button>
-                              {item.caption ? (
-                                <figcaption className="text-[0.92rem] leading-6 tracking-[-0.01em] text-white/56">
-                                  {item.caption}
-                                </figcaption>
-                              ) : null}
-                            </figure>
+                            <ProjectGalleryFigure
+                              item={item}
+                              variant="single"
+                              onOpen={() => openLightboxFor(item.id)}
+                            />
                           </div>
                         );
                       }
 
-                      const firstPair = galleryItems.slice(0, 2);
-                      const remainingItems = galleryItems.slice(2);
+                      const leadItem = forceGrid ? null : galleryItems[0];
+                      const remainingItems = forceGrid ? galleryItems : galleryItems.slice(1);
 
                       return (
                         <div className="relative left-1/2 w-screen max-w-[88rem] -translate-x-1/2 space-y-10 px-5 sm:px-8 md:space-y-12 lg:px-10">
@@ -544,66 +653,38 @@ export default function ScenicProjectDetail({
                               {getDisplayHeading(section.heading)}
                             </h2>
                           ) : null}
-                          {firstPair.length > 0 ? (
-                            <div className="grid items-end gap-8 md:grid-cols-[minmax(0,1.55fr)_minmax(16rem,0.82fr)] md:gap-16 lg:gap-24">
-                              {firstPair.map((item, itemIndex) => (
-                                <figure
+                          {(galleryItems.length === 2 || forcePair) && !forceLead && !forceGrid ? (
+                            <div className="grid gap-8 md:grid-cols-2">
+                              {galleryItems.map((item) => (
+                                <ProjectGalleryFigure
                                   key={item.id}
-                                  className={`self-end space-y-3 ${itemIndex === 1 ? "md:pb-10 lg:pb-14" : ""}`}
-                                >
-                                  <button
-                                    type="button"
-                                    onClick={() => openLightboxFor(item.id)}
-                                    className="block w-full text-left"
-                                  >
-                                    <ProgressiveImage
-                                      src={item.imageUrl}
-                                      alt={item.altText}
-                                      className="block w-full object-cover transition-transform duration-500 hover:scale-[1.01]"
-                                      containerClassName="w-full"
-                                      sizes={
-                                        itemIndex === 0
-                                          ? "(min-width: 1280px) 52rem, (min-width: 768px) 58vw, calc(100vw - 2.5rem)"
-                                          : "(min-width: 1280px) 28rem, (min-width: 768px) 32vw, calc(100vw - 2.5rem)"
-                                      }
-                                      width={itemIndex === 0 ? 1800 : 1100}
-                                      aspectRatio="4 / 3"
-                                    />
-                                  </button>
-                                  {item.caption ? (
-                                    <figcaption className="text-[0.92rem] leading-6 tracking-[-0.01em] text-white/56">
-                                      {item.caption}
-                                    </figcaption>
-                                  ) : null}
-                                </figure>
+                                  item={item}
+                                  variant="pair"
+                                  onOpen={() => openLightboxFor(item.id)}
+                                />
                               ))}
                             </div>
                           ) : null}
-                          {remainingItems.length > 0 ? (
-                            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                          {(galleryItems.length > 2 || forceLead) && leadItem && !forcePair ? (
+                            <ProjectGalleryFigure
+                              item={leadItem}
+                              variant="lead"
+                              onOpen={() => openLightboxFor(leadItem.id)}
+                            />
+                          ) : null}
+                          {(galleryItems.length > 2 || forceGrid) && remainingItems.length > 0 && !forcePair ? (
+                            <div className="flex flex-wrap justify-center gap-8">
                               {remainingItems.map((item) => (
-                                <figure key={item.id} className="space-y-3">
-                                  <button
-                                    type="button"
-                                    onClick={() => openLightboxFor(item.id)}
-                                    className="block w-full text-left"
-                                  >
-                                    <ProgressiveImage
-                                      src={item.imageUrl}
-                                      alt={item.altText}
-                                      className="block w-full object-cover transition-transform duration-500 hover:scale-[1.01]"
-                                      containerClassName="w-full"
-                                      sizes="(min-width: 1024px) 28vw, (min-width: 768px) 46vw, calc(100vw - 2.5rem)"
-                                      width={1100}
-                                      aspectRatio="4 / 3"
-                                    />
-                                  </button>
-                                  {item.caption ? (
-                                    <figcaption className="text-[0.92rem] leading-6 tracking-[-0.01em] text-white/56">
-                                      {item.caption}
-                                    </figcaption>
-                                  ) : null}
-                                </figure>
+                                <div
+                                  key={item.id}
+                                  className="w-full md:w-[calc((100%-2rem)/2)] lg:w-[calc((100%-4rem)/3)]"
+                                >
+                                  <ProjectGalleryFigure
+                                    item={item}
+                                    variant="grid"
+                                    onOpen={() => openLightboxFor(item.id)}
+                                  />
+                                </div>
                               ))}
                             </div>
                           ) : null}
@@ -617,7 +698,7 @@ export default function ScenicProjectDetail({
                       {section.content?.map((paragraph, paragraphIndex) => (
                         <p
                           key={paragraphIndex}
-                          className="text-[1.03rem] leading-[1.9] tracking-[-0.01em] text-white/72"
+                          className="text-[1.04rem] leading-[1.9] tracking-[-0.01em] text-white/80"
                         >
                           {paragraph}
                         </p>
@@ -637,111 +718,109 @@ export default function ScenicProjectDetail({
         </section>
 
         {(project.creativeTeam.length > 0 || project.links?.length || relatedArticles.length > 0 || relatedRenderingProject || moreScenicProjects.length > 0) ? (
-          <section className="container max-w-[88rem] pt-16 md:pt-20">
+          <section className="container max-w-[88rem] pt-14 md:pt-18">
             {(project.links?.length || relatedArticles.length > 0 || relatedRenderingProject) ? (
               <AnimatedSection>
-                <div className="pt-18 md:pt-24">
-                  <div className="mb-8 flex items-center justify-between gap-4 border-t border-white/14 pt-6">
-                    <p className="font-sans text-[1.15rem] tracking-[-0.02em] text-white">
-                      Related Project Links
+                <div className="border-t border-white/14 pt-7">
+                  <div className="mb-5 flex items-center justify-between gap-4">
+                    <p className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white/44">
+                      Project Links
                     </p>
                   </div>
-                  <div className="grid gap-x-12 gap-y-8 md:grid-cols-2">
+                  <div className="divide-y divide-white/10">
                     {relatedRenderingProject ? (
-                      <Link key={relatedRenderingProject.slug} href={`/projects/rendering/${relatedRenderingProject.slug}`}>
-                        <div className="group flex cursor-pointer items-start gap-5">
-                          <div className="relative h-36 w-36 flex-none overflow-hidden bg-black/85">
+                      <Link
+                        key={relatedRenderingProject.slug}
+                        href={`/projects/rendering/${relatedRenderingProject.slug}`}
+                        className="group grid gap-4 py-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
+                      >
+                        <div className="flex min-w-0 items-center gap-4">
+                          <div className="relative h-16 w-16 flex-none overflow-hidden bg-black/85">
                             {relatedRenderingProject.coverImageUrl ? (
                               <ProgressiveImage
                                 src={relatedRenderingProject.coverImageUrl}
                                 alt={`${relatedRenderingProject.title} rendering series cover image`}
                                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                                 containerClassName="h-full w-full"
-                                sizes="9rem"
-                                width={288}
+                                sizes="4rem"
+                                width={160}
                                 aspectRatio="1 / 1"
                               />
                             ) : null}
-                            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,31,71,0.08)_0%,rgba(22,64,133,0.16)_55%,rgba(10,18,38,0.42)_100%)]" />
                           </div>
-                          <div className="min-w-0 pt-1">
-                            <h3 className="text-[1.22rem] leading-[1.18] tracking-[-0.03em] text-white/92 transition-colors group-hover:text-white">
+                          <div className="min-w-0">
+                            <h3 className="text-[1.02rem] leading-snug tracking-[-0.02em] text-white/88 transition-colors group-hover:text-white">
                               {relatedRenderingProject.title}
                             </h3>
-                            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-white/52">
+                            <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.86rem] tracking-[-0.01em] text-white/48">
                               <span>Rendering Series</span>
                               {relatedRenderingProject.client ? <span>{relatedRenderingProject.client}</span> : null}
                               {relatedRenderingProject.year ? <span>{relatedRenderingProject.year}</span> : null}
                             </div>
                           </div>
                         </div>
+                        <span className="text-[0.86rem] tracking-[-0.01em] text-white/42 transition-colors group-hover:text-white/72">
+                          View
+                        </span>
                       </Link>
                     ) : null}
                     {relatedArticles.map((article) => (
-                      <Link key={article.slug} href={`/articles/${article.slug}`}>
-                        <div className="group flex cursor-pointer items-start gap-5">
-                          <div className="relative h-36 w-36 flex-none overflow-hidden bg-black/85">
+                      <Link
+                        key={article.slug}
+                        href={`/articles/${article.slug}`}
+                        className="group grid gap-4 py-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
+                      >
+                        <div className="flex min-w-0 items-center gap-4">
+                          <div className="relative h-16 w-16 flex-none overflow-hidden bg-black/85">
                             {article.coverImageUrl ? (
                               <ProgressiveImage
                                 src={article.coverImageUrl}
                                 alt={article.coverImageAlt || `${article.title} article cover image`}
                                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                                 containerClassName="h-full w-full"
-                                sizes="9rem"
-                                width={288}
+                                sizes="4rem"
+                                width={160}
                                 aspectRatio="1 / 1"
                               />
                             ) : null}
-                            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,31,71,0.08)_0%,rgba(22,64,133,0.16)_55%,rgba(10,18,38,0.42)_100%)]" />
                           </div>
-                          <div className="min-w-0 pt-1">
-                            <h3 className="text-[1.22rem] leading-[1.18] tracking-[-0.03em] text-white/92 transition-colors group-hover:text-white">
+                          <div className="min-w-0">
+                            <h3 className="text-[1.02rem] leading-snug tracking-[-0.02em] text-white/88 transition-colors group-hover:text-white">
                               {article.title}
                             </h3>
-                            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-white/52">
+                            <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.86rem] tracking-[-0.01em] text-white/48">
                               <span>{article.series?.name || article.categoryName}</span>
                               <span>{formatUtcDate(article.publishedAt, "short")}</span>
                             </div>
                           </div>
                         </div>
+                        <span className="text-[0.86rem] tracking-[-0.01em] text-white/42 transition-colors group-hover:text-white/72">
+                          Read
+                        </span>
                       </Link>
                     ))}
-                    {(project.links || []).map((link, linkIndex) => {
-                      const previewImage = productionImages[linkIndex % Math.max(productionImages.length, 1)];
-                      return (
+                    {(project.links || []).map((link) => (
                         <a
                           key={link.url}
                           href={link.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group flex items-start gap-5"
+                          className="group grid gap-4 py-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
                         >
-                          <div className="relative h-36 w-36 flex-none overflow-hidden bg-black/85">
-                            {previewImage?.imageUrl ? (
-                              <ProgressiveImage
-                                src={previewImage.imageUrl}
-                                alt={previewImage.altText || `${link.label} related coverage image`}
-                                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                                containerClassName="h-full w-full"
-                                sizes="9rem"
-                                width={288}
-                                aspectRatio="1 / 1"
-                              />
-                            ) : null}
-                            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,31,71,0.18)_0%,rgba(22,64,133,0.42)_55%,rgba(10,18,38,0.74)_100%)]" />
-                          </div>
-                          <div className="min-w-0 pt-1">
-                            <h3 className="text-[1.22rem] leading-[1.18] tracking-[-0.03em] text-white/92 transition-colors group-hover:text-white">
+                          <div className="min-w-0">
+                            <h3 className="text-[1.02rem] leading-snug tracking-[-0.02em] text-white/88 transition-colors group-hover:text-white">
                               {link.label}
                             </h3>
-                            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-white/52">
-                              <span>Production Link</span>
+                            <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.86rem] tracking-[-0.01em] text-white/48">
+                              <span>External Production Link</span>
                               {project.year ? <span>{project.year}</span> : null}
                             </div>
                           </div>
+                          <span className="text-[0.86rem] tracking-[-0.01em] text-white/42 transition-colors group-hover:text-white/72">
+                            Open
+                          </span>
                         </a>
-                      );
-                    })}
+                      ))}
                   </div>
                 </div>
               </AnimatedSection>
@@ -749,35 +828,29 @@ export default function ScenicProjectDetail({
 
             {moreScenicProjects.length > 0 ? (
               <AnimatedSection>
-                <div className="pt-18 md:pt-24">
-                  <div className="mb-12 h-px w-full bg-border/60" />
-                  <p className="mb-8 font-sans text-[1.15rem] tracking-[-0.02em] text-white">
+                <div className="pt-14 md:pt-18">
+                  <div className="mb-6 h-px w-full bg-border/60" />
+                  <p className="mb-5 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white/44">
                     More Scenic Designs
                   </p>
-                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
-                    {moreScenicProjects.map((item) => (
-                      <Link key={item.slug} href={`/project/${item.slug}`} className="group block">
-                        <div className="relative aspect-[4/3] overflow-hidden bg-black/85">
-                          {item.coverImageUrl ? (
-                            <ProgressiveImage
-                              src={item.coverImageUrl}
-                              alt={`${item.title} scenic design project cover image`}
-                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                              containerClassName="h-full w-full"
-                              sizes="(min-width: 768px) 30vw, 96vw"
-                              width={900}
-                              aspectRatio="4 / 3"
-                            />
-                          ) : <div className="h-full w-full bg-muted" />}
-                        </div>
-                        <div className="pt-3">
-                          <h3 className="text-[1.02rem] font-normal tracking-[-0.02em] text-white/88 transition-colors group-hover:text-white">
+                  <div className="grid gap-x-8 gap-y-0 border-y border-white/10 md:grid-cols-2">
+                    {moreScenicProjects.slice(0, 12).map((item) => (
+                      <Link
+                        key={item.slug}
+                        href={`/project/${item.slug}`}
+                        className="group grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-4 border-b border-white/10 py-4 last:border-b-0 md:[&:nth-last-child(-n+2)]:border-b-0"
+                      >
+                        <div className="min-w-0">
+                          <h3 className="truncate text-[1rem] font-normal tracking-[-0.02em] text-white/82 transition-colors group-hover:text-white">
                             {item.title}
                           </h3>
-                          <p className="mt-1.5 text-[0.92rem] tracking-[-0.01em] text-white/52">
+                          <p className="mt-1 text-[0.86rem] tracking-[-0.01em] text-white/45">
                             {[item.client || item.subcategory, item.year].filter(Boolean).join("  ")}
                           </p>
                         </div>
+                        <span className="text-[0.84rem] text-white/35 transition-colors group-hover:text-white/68">
+                          View
+                        </span>
                       </Link>
                     ))}
                   </div>
@@ -797,6 +870,7 @@ export default function ScenicProjectDetail({
           onPrev={() => setLightboxIndex((current) => (current === null ? current : Math.max(current - 1, 0)))}
         />
       ) : null}
+      <Footer />
     </div>
   );
 }

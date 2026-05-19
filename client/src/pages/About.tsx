@@ -245,7 +245,7 @@ export default function About() {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="About Brandon PT Davis | Scenic Designer & Educator"
+        title="Profile | Brandon PT Davis Scenic Designer & Educator"
         description="San Diego-based scenic designer with 130+ production credits across regional theatre, summer stock, and education. USA 829 member working across Southern California and beyond."
         url="https://www.brandonptdavis.com/about"
         keywords="Brandon PT Davis scenic designer, USA 829 scenic designer, San Diego scenic designer, scenic designer California, Southern California scenic designer, scenic design educator, UC Irvine, regional theatre scenic design"
@@ -260,7 +260,7 @@ export default function About() {
             <AnimatedSection>
               <div className="mx-auto max-w-3xl text-center">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
-                  About
+                  Profile
                 </p>
                 <h1 className="mt-5 font-sans text-[clamp(3.2rem,7vw,7.1rem)] font-medium leading-[0.86] tracking-[-0.065em] text-foreground">
                   Brandon PT Davis
@@ -427,10 +427,10 @@ export default function About() {
           <div className="container max-w-[88rem]">
             <AnimatedSection className="max-w-3xl">
               <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
-                More Context
+                  Profile Sections
               </p>
               <h2 className="mt-4 font-sans text-[clamp(2rem,4vw,3.3rem)] font-medium leading-[0.98] tracking-[-0.05em] text-foreground">
-                Process, productions, teaching, and collaboration.
+                Biography, productions, resume, teaching, and collaboration.
               </h2>
             </AnimatedSection>
 

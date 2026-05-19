@@ -39,7 +39,7 @@ type HoverPreview = {
 } | null;
 
 const LINE_CLASS =
-  "text-[1rem] leading-8 md:grid md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-x-4";
+  "grid gap-1 border-b border-border/12 py-2.5 text-[0.98rem] leading-7 last:border-b-0 md:grid-cols-[minmax(13rem,1.15fr)_minmax(10rem,0.78fr)_minmax(12rem,0.95fr)] md:items-baseline md:gap-x-8 lg:gap-x-12";
 
 const getProjectTimestamp = (project: any) => {
   if (project.year) {
@@ -362,7 +362,7 @@ function ScenicCreditRow({
   return (
     <Link
       href={linkedProject.href}
-      className={`${LINE_CLASS} group block cursor-pointer rounded-[0.35rem] transition-colors duration-200 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/25`}
+      className={`${LINE_CLASS} group -mx-2 cursor-pointer px-2 transition-colors duration-200 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/25`}
       onMouseEnter={(event) => onPreview(credit, event.clientX, event.clientY)}
       onMouseMove={(event) => onPreviewMove(credit, event.clientX, event.clientY)}
       onMouseLeave={onPreviewLeave}
@@ -496,7 +496,7 @@ export default function Resume() {
       <AboutNav />
 
       <section className="min-h-screen bg-background pb-20 pt-20">
-        <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="mb-18">
             <div className="grid gap-10 border-b border-border/25 pb-12 xl:grid-cols-[minmax(0,1.12fr)_minmax(18rem,22rem)] xl:items-center">
               <div className="max-w-3xl xl:max-w-4xl">
@@ -621,18 +621,18 @@ export default function Resume() {
               </div>
             </div>
 
-            <div className="mt-12 space-y-12">
+            <div className="mt-12 space-y-14">
               {SCENIC_CREDITS.map((section, sectionIndex) => (
                 <AnimatedSection
                   key={section.year}
                   delay={Math.min(sectionIndex * 50, 300)}
                   className="border-t border-border/20 pt-6 md:pt-7"
                 >
-                  <div className="grid gap-8 md:grid-cols-[13rem_minmax(0,1fr)] md:gap-16 lg:grid-cols-[15rem_minmax(0,1fr)]">
-                    <h3 className="font-sans text-[clamp(2.6rem,5vw,4.8rem)] font-medium leading-none tracking-[-0.07em] text-foreground/88 md:sticky md:top-28 md:self-start">
+                  <div className="grid gap-8 md:grid-cols-[11rem_minmax(0,1fr)] md:gap-20 lg:grid-cols-[12.5rem_minmax(0,1fr)] lg:gap-24">
+                    <h3 className="font-sans text-[clamp(2.5rem,4.6vw,4.6rem)] font-medium leading-none tracking-[-0.07em] text-foreground/88 md:sticky md:top-28 md:self-start">
                       {section.year}
                     </h3>
-                    <div className="space-y-2 text-foreground/85">
+                    <div className="text-foreground/85">
                       {section.credits.map((credit) => (
                         <ScenicCreditRow
                           key={`${section.year}-${credit.title}-${credit.company}`}
@@ -654,7 +654,7 @@ export default function Resume() {
               Earlier
             </h2>
 
-            <div className="mt-6 space-y-2 border-t border-border/20 pt-6 text-foreground/85 md:pt-7">
+            <div className="mt-6 border-t border-border/20 pt-6 text-foreground/85 md:pt-7">
               {EARLIER_CREDITS.map((credit) => (
                 <ScenicCreditRow
                   key={`${credit.title}-${credit.company}`}

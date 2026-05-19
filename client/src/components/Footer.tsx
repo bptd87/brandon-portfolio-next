@@ -14,18 +14,17 @@ const FOOTER_SECTIONS = [
     ],
   },
   {
-    title: "Studio",
+    title: "Publish",
     links: [
       { label: "Articles", href: "/articles", internal: true },
       { label: "Tutorials", href: "/studio/tutorials", internal: true },
-      { label: "App Studio", href: "/studio/apps", internal: true },
       { label: "Scenic Directory", href: "/studio/directory", internal: true },
     ],
   },
   {
     title: "Information",
     links: [
-      { label: "About", href: "/about", internal: true },
+      { label: "Profile", href: "/about", internal: true },
       { label: "Resume", href: "/resume", internal: true },
       { label: "Contact", href: "/contact", internal: true },
     ],

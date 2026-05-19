@@ -496,7 +496,7 @@ export default function StudioTutorials() {
       ? `Browse ${selectedCategory.toLowerCase()} tutorials by Brandon PT Davis, shaped for scenic drafting, modeling, rendering, and production workflow.`
       : "A scenic design learning portal by Brandon PT Davis, combining Vectorworks video lessons, article guides, drafting references, rendering workflows, and design process resources.";
   return (
-    <div className="min-h-screen bg-background">
+    <div className="publish-editorial min-h-screen bg-[#f1f0ec] text-[#111111]">
       <SEO
         title={tutorialArchiveTitle}
         description={tutorialArchiveDescription}

@@ -13,6 +13,7 @@ export type LocalScenicProjectMedia = {
   altText: string;
   caption?: string;
   kind?: "cover" | "production" | "rendering";
+  display?: "auto" | "contain" | "portrait" | "wide" | "full";
 };
 
 export type LocalScenicProjectTeamMember = {
@@ -36,6 +37,7 @@ export type LocalScenicProjectSection =
       type: "gallery";
       heading?: string;
       mediaIds: string[];
+      layout?: "auto" | "pair" | "lead" | "grid";
     }
   | {
       type: "video";
@@ -2324,6 +2326,7 @@ const headOverHeelsProject: LocalScenicProject = {
       altText:
         "Production still from Head Over Heels emphasizing club-inspired theatricality, scenic design by Brandon PT Davis.",
       kind: "production",
+      display: "contain",
     },
     {
       id: "hoh-prod-4",
@@ -2384,6 +2387,7 @@ const headOverHeelsProject: LocalScenicProject = {
     {
       type: "gallery",
       mediaIds: ["hoh-prod-3", "hoh-prod-4"],
+      layout: "pair",
     },
     {
       type: "text",
@@ -6705,6 +6709,7 @@ const allMySonsProject: LocalScenicProject = {
   coverImageUrl:
     "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90017-cover-aa4e4e0c.webp",
   creativeTeam: [
+    { name: "Arthur Miller", role: "Playwright" },
     { name: "Brandon PT Davis", role: "Scenic Designer" },
     { name: "Kate Wood", role: "Costume Designer" },
     { name: "Emily Swenson", role: "Lighting Designer" },
@@ -6911,6 +6916,7 @@ const theEffectOfGammaRaysProject: LocalScenicProject = {
       altText:
         "Production image from The Effect of Gamma Rays on Man-in-the-Moon Marigolds highlighting faded wallpaper and emotional erosion, scenic design by Brandon PT Davis.",
       kind: "production",
+      display: "portrait",
     },
     {
       id: "gamma-prod-3",
@@ -6942,6 +6948,7 @@ const theEffectOfGammaRaysProject: LocalScenicProject = {
     {
       type: "gallery",
       mediaIds: ["gamma-prod-1", "gamma-prod-2"],
+      layout: "pair",
     },
     {
       type: "text",
@@ -6953,6 +6960,7 @@ const theEffectOfGammaRaysProject: LocalScenicProject = {
     {
       type: "gallery",
       mediaIds: ["gamma-prod-3", "gamma-prod-4"],
+      layout: "pair",
     },
     {
       type: "text",
@@ -7018,12 +7026,19 @@ function mergeScenicCreativeTeam(
 ) {
   if (!nextTeam?.length) return currentTeam;
 
-  return nextTeam.map((member) => {
+  const mergedTeam = nextTeam.map((member) => {
     const existing = currentTeam.find(
       (currentMember) => currentMember.name === member.name && currentMember.role === member.role
     );
     return existing?.url && !member.url ? { ...member, url: existing.url } : member;
   });
+
+  const mergedKeys = new Set(mergedTeam.map((member) => member.name.toLowerCase().trim()));
+  const localOnlyMembers = currentTeam.filter((member) => {
+    return !mergedKeys.has(member.name.toLowerCase().trim());
+  });
+
+  return [...mergedTeam, ...localOnlyMembers];
 }
 
 function mergeScenicTags(

@@ -140,7 +140,7 @@ export default function TeachingPhilosophy() {
         type="BreadcrumbList"
         breadcrumbs={[
           { name: "Home", url: "https://www.brandonptdavis.com" },
-          { name: "About", url: "https://www.brandonptdavis.com/about" },
+          { name: "Profile", url: "https://www.brandonptdavis.com/about" },
           { name: "Teaching Philosophy", url: "https://www.brandonptdavis.com/about/teaching" },
         ]}
       />
@@ -333,20 +333,28 @@ export default function TeachingPhilosophy() {
               </div>
             </AnimatedSection>
 
-            <section className="mx-auto mt-16 max-w-[54rem] border-t border-border/30 pt-10 md:mt-20 md:pt-12">
-              <div className="grid gap-12 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] md:gap-16">
+            <section className="mx-auto mt-16 max-w-[54rem] border-y border-border/30 py-10 md:mt-20 md:py-12">
+              <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(14rem,0.9fr)] lg:gap-16">
                 <div>
                   <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
                     Teaching Record
                   </p>
-                  <div className="mt-7 space-y-6">
+                  <div className="mt-7 divide-y divide-border/22">
                     {teachingExperience.map((credit) => (
-                      <div key={`${credit.institution}-${credit.role}`} className="border-t border-border/20 pt-5 first:border-t-0 first:pt-0">
-                        <p className="font-sans text-[1.08rem] font-medium leading-7 tracking-[-0.025em] text-foreground/84">
-                          {credit.institution}
-                        </p>
-                        <p className="mt-1 text-[0.98rem] leading-7 text-foreground/54">
-                          {credit.role}, {credit.years}
+                      <div
+                        key={`${credit.institution}-${credit.role}`}
+                        className="grid gap-2 py-5 first:pt-0 last:pb-0 sm:grid-cols-[minmax(0,1fr)_7rem] sm:gap-8"
+                      >
+                        <div>
+                          <p className="font-sans text-[1.08rem] font-medium leading-7 tracking-[-0.025em] text-foreground/84">
+                            {credit.institution}
+                          </p>
+                          <p className="mt-1 text-[0.98rem] leading-7 text-foreground/54">
+                            {credit.role}
+                          </p>
+                        </div>
+                        <p className="text-[0.94rem] leading-7 text-foreground/44 sm:text-right">
+                          {credit.years}
                         </p>
                       </div>
                     ))}
@@ -357,9 +365,11 @@ export default function TeachingPhilosophy() {
                   <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
                     Courses Taught
                   </p>
-                  <div className="mt-7 space-y-3 text-[1rem] leading-7 text-foreground/64">
+                  <div className="mt-7 divide-y divide-border/20 text-[0.98rem] leading-7 text-foreground/62">
                     {coursesTaught.map((course) => (
-                      <p key={course}>{course}</p>
+                      <p key={course} className="py-3 first:pt-0 last:pb-0">
+                        {course}
+                      </p>
                     ))}
                   </div>
                 </div>

@@ -269,8 +269,8 @@ export default function Links() {
         icon: CalendarDays,
       },
       {
-        id: "studio",
-        title: "Studio",
+        id: "publish",
+        title: "Publish",
         subtitle: "Articles and tutorials",
         href: "/studio",
         icon: BookOpen,
@@ -395,7 +395,7 @@ export default function Links() {
             Brandon PT Davis
           </div>
           <p className="mx-auto mt-5 max-w-[25rem] text-[1rem] leading-7 text-foreground/58">
-            Portfolio, current productions, studio writing, and contact links collected for social profiles.
+            Portfolio, current productions, published writing, and contact links collected for social profiles.
           </p>
 
           <div className="mt-7 flex items-center justify-center gap-2.5">

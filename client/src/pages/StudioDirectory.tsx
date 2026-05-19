@@ -67,7 +67,7 @@ export default function StudioDirectory() {
   }, [filteredResources]);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="publish-editorial min-h-screen bg-[#f1f0ec] text-[#111111]">
       <SEO
         title="Scenic Design Resource Directory | Brandon PT Davis"
         description="A curated scenic design resource directory covering theatre organizations, archives, software, drafting references, and production suppliers."

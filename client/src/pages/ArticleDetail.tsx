@@ -1071,7 +1071,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
   const articleUrl = `https://www.brandonptdavis.com${articleBasePath}/${article.slug}`;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="publish-editorial min-h-screen bg-[#f1f0ec] text-[#111111]">
       <SEO
         title={`${article.title} | Brandon PT Davis`}
         description={articleDescription}
@@ -1085,7 +1085,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
         url={articleUrl}
       />
       <Header />
-      <article className="overflow-hidden py-12 md:py-16">
+      <article className="article-editorial overflow-hidden bg-[#f1f0ec] py-12 md:py-16">
         <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
           <header className="mx-auto max-w-[62rem] text-center">
             <AnimatedSection>
@@ -1761,7 +1761,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
       </article>
 
       {linkedScenicProjects.length > 0 && (
-        <section className={related.length > 0 ? "pb-10" : "pb-20"}>
+        <section className={`article-editorial bg-[#f1f0ec] ${related.length > 0 ? "pb-10" : "pb-20"}`}>
           <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
             <div className="border-t border-white/12 pt-12">
               <div className="mb-8 flex items-end justify-between">
@@ -1818,7 +1818,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
       )}
 
       {related.length > 0 && (
-        <section className="pb-20">
+        <section className="article-editorial bg-[#f1f0ec] pb-20">
           <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
             <div className="border-t border-white/12 pt-12">
               <div className="mb-8 flex items-end justify-between">
@@ -1885,6 +1885,86 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
       </div>
 
       <style>{`
+        /* Editorial paper mode: keeps article/detail pages in the site system while separating reading content from the black portfolio surfaces. */
+        .article-editorial {
+          color: #111111;
+        }
+
+        .article-editorial [class*="text-white"] {
+          color: rgba(17, 17, 17, 0.64) !important;
+        }
+
+        .article-editorial h1,
+        .article-editorial h1[class*="text-white"],
+        .article-editorial header h1,
+        .article-editorial h2,
+        .article-editorial h3,
+        .article-editorial h4,
+        .article-editorial h5,
+        .article-editorial h6,
+        .article-editorial [class*="text-white/98"],
+        .article-editorial [class*="text-white/92"],
+        .article-editorial [class*="text-white transition-colors"],
+        .article-editorial .prose strong,
+        .article-editorial strong {
+          color: #111111 !important;
+        }
+
+        .article-editorial p,
+        .article-editorial li,
+        .article-editorial dd {
+          color: rgba(17, 17, 17, 0.66) !important;
+        }
+
+        .article-editorial .article-content p,
+        .article-editorial .article-content li,
+        .article-editorial .article-html-content p {
+          color: rgba(17, 17, 17, 0.76) !important;
+        }
+
+        .article-editorial a {
+          color: rgba(17, 17, 17, 0.88) !important;
+          text-decoration-color: rgba(17, 17, 17, 0.32) !important;
+        }
+
+        .article-editorial a:hover,
+        .article-editorial button:hover {
+          color: #111111 !important;
+        }
+
+        .article-editorial [class*="border-white"] {
+          border-color: rgba(17, 17, 17, 0.13) !important;
+        }
+
+        .article-editorial [class*="bg-white"] {
+          background-color: transparent !important;
+        }
+
+        .article-editorial [class*="bg-black"] {
+          background-color: rgba(17, 17, 17, 0.86) !important;
+        }
+
+        .article-editorial [class*="decoration-white"] {
+          text-decoration-color: rgba(17, 17, 17, 0.32) !important;
+        }
+
+        .article-editorial .bg-white.text-black,
+        .article-editorial [class*="bg-white"].text-black {
+          background-color: #111111 !important;
+          color: #f1f0ec !important;
+        }
+
+        .article-editorial .article-content ul li::marker,
+        .article-editorial .article-content ol li::marker {
+          color: rgba(17, 17, 17, 0.5) !important;
+        }
+
+        .article-editorial .article-content img,
+        .article-editorial .article-content video,
+        .article-editorial .article-content iframe {
+          box-shadow: none;
+        }
+
         /* WordPress Gallery Styles - Horizontal Scroll */
         .article-content .wp-block-gallery,
         .article-content .blocks-gallery-grid {

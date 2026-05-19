@@ -17,9 +17,9 @@ const sections = [
     ],
   },
   {
-    title: "About",
+    title: "Profile",
     links: [
-      { name: "About", href: "/about" },
+      { name: "Profile", href: "/about" },
       { name: "Upcoming Productions", href: "/upcoming-productions" },
       { name: "Resume", href: "/resume" },
       { name: "Creative Statement", href: "/creative-statement" },
@@ -28,14 +28,18 @@ const sections = [
     ],
   },
   {
-    title: "Studio",
+    title: "Publish",
     links: [
-      { name: "Studio Home", href: "/studio" },
       { name: "Articles", href: "/articles" },
       { name: "Tutorials", href: "/studio/tutorials" },
-      { name: "Apps", href: "/studio/apps" },
-      { name: "Scenic 3D Converter (Mac)", href: "/studio/apps/scenic-3d-converter" },
       { name: "Scenic Directory", href: "/studio/directory" },
+    ],
+  },
+  {
+    title: "Tools",
+    links: [
+      { name: "Studio Apps", href: "/studio/apps" },
+      { name: "Scenic 3D Converter (Mac)", href: "/studio/apps/scenic-3d-converter" },
     ],
   },
   {
@@ -68,7 +72,7 @@ export default function Sitemap() {
     <>
       <SEO
         title="Sitemap | Brandon PT Davis"
-        description="Sitemap for Brandon PT Davis covering scenic design projects, renderings, articles, studio resources, teaching pages, and public site information."
+        description="Sitemap for Brandon PT Davis covering scenic design projects, profile pages, published resources, tools, and public site information."
         url="https://www.brandonptdavis.com/sitemap"
       />
       <StructuredData
@@ -84,7 +88,7 @@ export default function Sitemap() {
           name: "Sitemap",
           url: "https://www.brandonptdavis.com/sitemap",
           description:
-            "Complete navigation map of portfolio, assistant scenic design, articles, about, and studio pages.",
+            "Complete navigation map of portfolio, profile, publish, and studio tool pages.",
           mainEntity: {
             name: "Site Pages",
             itemListElement: allLinks.map((link, index) => ({

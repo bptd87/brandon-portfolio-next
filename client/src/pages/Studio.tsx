@@ -106,9 +106,9 @@ export default function Studio() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title="Studio | Scenic Design Articles, Tutorials & Tools"
-        description="Studio resources for scenic design, including articles, Vectorworks tutorials, practical tools, and curated references for theatre designers."
-        keywords="scenic design studio, Vectorworks tutorials, scenic design articles, scenic design tools, theatre design resources"
+        title="Publish | Scenic Design Articles, Tutorials & Directory"
+        description="Published scenic design resources by Brandon PT Davis, including articles, Vectorworks tutorials, and a curated scenic directory."
+        keywords="scenic design articles, Vectorworks tutorials, scenic design directory, theatre design resources, Brandon PT Davis publish"
         type="website"
         url="https://www.brandonptdavis.com/studio"
       />
@@ -116,19 +116,19 @@ export default function Studio() {
         type="BreadcrumbList"
         breadcrumbs={[
           { name: "Home", url: "https://www.brandonptdavis.com" },
-          { name: "Studio", url: "https://www.brandonptdavis.com/studio" },
+          { name: "Publish", url: "https://www.brandonptdavis.com/studio" },
         ]}
       />
       <StructuredData
         type="CollectionPage"
         collectionPage={{
-          name: "Scenic Design Studio",
+          name: "Scenic Design Publish Index",
           url: "https://www.brandonptdavis.com/studio",
-          description: "Studio hub for scenic design tools, tutorials, articles, and references.",
+          description: "Publish hub for scenic design articles, tutorials, and references.",
           about: "Scenic design education and workflow resources by Brandon PT Davis.",
           primaryImageOfPage: studioLinks[0].image,
           mainEntity: {
-            name: "Studio Resources",
+            name: "Published Resources",
             itemListElement: [
               ...studioLinks.map((item, index) => ({
                 position: index + 1,
@@ -154,13 +154,13 @@ export default function Studio() {
           <AnimatedSection>
             <div className="mx-auto max-w-4xl text-center">
               <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
-                Studio
+                Publish
               </p>
               <h1 className="mt-5 font-sans text-[clamp(3rem,6vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
-                Scenic design resources for working practice.
+                Scenic design writing, tutorials, and references.
               </h1>
               <p className="mx-auto mt-7 max-w-3xl text-[1.02rem] leading-8 text-foreground/62 md:text-[1.12rem]">
-                A studio index for tutorials, articles, and references that support scenic drafting,
+                A publish index for articles, tutorials, and references that support scenic drafting,
                 research, rendering, and production workflow.
               </p>
             </div>
@@ -171,10 +171,10 @@ export default function Studio() {
           <AnimatedSection>
             <div className="mx-auto max-w-3xl text-center">
               <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
-                Studio Index
+                Publish Index
               </p>
               <h2 className="mt-4 font-sans text-[clamp(2.1rem,4vw,3.2rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
-                Tutorials, articles, and references in one place.
+                Articles, tutorials, and references in one place.
               </h2>
             </div>
           </AnimatedSection>
@@ -232,10 +232,10 @@ export default function Studio() {
           <AnimatedSection>
             <div className="mx-auto max-w-3xl text-center">
               <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
-                App Studio
+                Studio Tools
               </p>
               <h2 className="mt-4 font-sans text-[clamp(2.1rem,4vw,3.2rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
-                Practical tools for scenic design workflow.
+                Practical utilities for scenic design workflow.
               </h2>
             </div>
           </AnimatedSection>
@@ -287,7 +287,7 @@ export default function Studio() {
               href="/studio/apps"
               className="inline-flex items-center gap-2 text-[0.95rem] font-medium text-foreground/62 transition-colors hover:text-foreground"
             >
-              View all studio tools
+              View all tools
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>

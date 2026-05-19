@@ -95,7 +95,7 @@ export default function CreativeStatement() {
         type="BreadcrumbList"
         breadcrumbs={[
           { name: "Home", url: "https://www.brandonptdavis.com" },
-          { name: "About", url: "https://www.brandonptdavis.com/about" },
+          { name: "Profile", url: "https://www.brandonptdavis.com/about" },
           { name: "Creative Statement", url: "https://www.brandonptdavis.com/creative-statement" },
         ]}
       />

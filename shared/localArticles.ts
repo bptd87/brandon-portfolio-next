@@ -2459,6 +2459,221 @@ const vectorworksPublishingRenderingsArticle: LocalArticle = {
   content: [],
 };
 
+const okobojiFortyShowsArticle: LocalArticle = {
+  id: 100024,
+  slug: "40-shows-at-okoboji-summer-theatre-a-scenic-design-milestone",
+  title: "40 Shows at Okoboji Summer Theatre: A Scenic Design Milestone",
+  excerpt:
+    "A personal reflection on forty scenic designs at Okoboji Summer Theatre, the rhythm of summer stock, and the collaborations that shaped a long creative relationship.",
+  coverImageUrl: "/images/articles/okoboji-40-shows/cover.jpeg",
+  coverImageAlt:
+    "A collage of scenic design production photographs from Brandon PT Davis's work at Okoboji Summer Theatre.",
+  publishedAt: "2025-08-01",
+  updatedAt: "2025-08-01",
+  createdAt: "2025-08-01",
+  categoryName: "Scenic Design",
+  seoTitle: "40 Shows at Okoboji Summer Theatre | Brandon PT Davis",
+  seoDescription:
+    "Brandon PT Davis reflects on forty scenic design productions at Okoboji Summer Theatre and the summer stock process that shaped his work.",
+  seoKeywords:
+    "Okoboji Summer Theatre, Brandon PT Davis, scenic design milestone, summer stock theatre, theatre design, scenic designer",
+  tags: [
+    { id: 1002401, name: "Scenic Design", slug: "scenic-design" },
+    { id: 1002402, name: "Okoboji Summer Theatre", slug: "okoboji-summer-theatre" },
+    { id: 1002403, name: "Summer Stock", slug: "summer-stock" },
+  ],
+  linkedScenicProjectSlugs: [
+    "bell-book-and-candle",
+    "deathtrap",
+    "how-to-succeed-in-business-without-really-trying",
+    "freaky-friday",
+    "the-music-man",
+    "dial-m-for-murder",
+  ],
+  content: [
+    {
+      type: "paragraph",
+      text: "There are some theatres that become part of your life story. For me, Okoboji Summer Theatre is one of them.",
+    },
+    {
+      type: "paragraph",
+      text: "Tonight marks my 40th scenic design at OST, a milestone that feels both surreal and deeply personal. What began in 2010 as a summer opportunity slowly became one of the defining creative relationships of my career. Over the years, I’ve designed comedies, dramas, thrillers, musicals, farces, Shakespeare, chamber pieces, and large-scale productions on this stage. Each one came with its own challenges, discoveries, and collaborations.",
+    },
+    {
+      type: "paragraph",
+      text: "Summer stock theatre has a rhythm unlike anything else. Productions move fast. Budgets are practical. Timelines are short. You learn to trust your instincts, solve problems quickly, and lean fully into collaboration. At Okoboji, that process has shaped me not only as a designer, but as an artist.",
+    },
+    {
+      type: "paragraph",
+      text: "Looking back across forty productions, I can trace my own growth as a designer through the variety of work produced at Okoboji. Some shows demanded spectacle and transformation, while others relied on simplicity, atmosphere, and precision. Designing everything from musicals and comedies to thrillers and dramas taught me how flexible scenic storytelling needs to be in summer stock theatre.",
+    },
+    {
+      type: "paragraph",
+      text: "Shows like Chicago, Little Shop of Horrors, Mamma Mia, Urinetown, Bright Star, and The Music Man each demanded entirely different visual languages and technical approaches. Productions like Deathtrap, Dial “M” for Murder, and An Inspector Calls reminded me how much atmosphere and tension can emerge from carefully controlled space. Other productions pushed me toward intimacy and restraint, asking the scenery to support performance and storytelling in quieter ways.",
+    },
+    {
+      type: "paragraph",
+      text: "What makes this milestone meaningful is not simply the number 40. It is the people behind those productions: directors, actors, technicians, stage managers, carpenters, painters, costume shops, lighting teams, musicians, and audiences who filled the theatre summer after summer. Theatre is temporary by nature. Sets disappear. Paint gets covered. Platforms are rebuilt. Yet somehow the experiences remain.",
+    },
+    {
+      type: "quote",
+      text: "One of the greatest gifts of summer theatre is repetition through reinvention.",
+    },
+    {
+      type: "paragraph",
+      text: "Returning to the same theatre year after year allows you to grow alongside the institution itself. You begin to understand the stage intimately — not just its dimensions, but its personality. You learn how audiences respond in the room. You discover how to push the space further each season.",
+    },
+    {
+      type: "heading",
+      level: 2,
+      text: "Every Okoboji Summer Theatre Production Since 2010",
+    },
+    {
+      type: "list",
+      listType: "bullet",
+      items: [
+        "The Effect of Gamma Rays (2010)",
+        "Steel Magnolias, The Glass Menagerie (2011)",
+        "Crimes of the Heart, The Liar, Chicago (2012)",
+        "Don’t Dress for Dinner, Bingo, Angel Street (2013)",
+        "Rich Girl, Complete Works of Shakespeare, Little Shop (2014)",
+        "On Thin Ice, Last Train to Nibroc, Barefoot in the Park (2015)",
+        "Spitfire Grill, A Murder is Announced, Cinderella (2016)",
+        "Not Now, Darling, Over the River, Millie (2018)",
+        "Happily Ever After, Living on Love, Mamma Mia (2019)",
+        "Clue, Wonderettes: Dream On, Urinetown (2021)",
+        "An Inspector Calls, Bright Star, Legally Blonde (2022)",
+        "Cole, Dial “M” for Murder, Wedding Singer (2023)",
+        "Baskerville, Freaky Friday, Barefoot in the Park, The Music Man (2024)",
+        "Bell, Book, and Candle, Deathtrap, How to Succeed in Business Without Really Trying (2025)",
+      ],
+    },
+    {
+      type: "paragraph",
+      text: "Forty productions later, I still feel grateful every time I walk into the scene shop or sit in the theatre before an audience arrives. That feeling has never really changed.",
+    },
+    {
+      type: "paragraph",
+      text: "Thank you, Okoboji.",
+    },
+  ],
+};
+
+const thirtyEightArticle: LocalArticle = {
+  id: 100025,
+  slug: "38-authenticity-and-grace",
+  title: "38",
+  excerpt:
+    "A birthday reflection on authenticity, grace, burnout, uncertainty, and becoming more fully yourself rather than reinventing for the sake of performance.",
+  coverImageUrl: "/images/articles/38-authenticity-and-grace/cover.jpeg",
+  coverImageAlt:
+    "A handwritten birthday note over a photograph of Brandon PT Davis and his partner standing near the ocean.",
+  publishedAt: "2025-06-05",
+  updatedAt: "2025-06-05",
+  createdAt: "2025-06-05",
+  categoryName: "Personal Essay",
+  seoTitle: "38 | Authenticity and Grace | Brandon PT Davis",
+  seoDescription:
+    "A personal birthday reflection from Brandon PT Davis on authenticity, grace, creativity, burnout, and becoming more fully yourself.",
+  seoKeywords:
+    "Brandon PT Davis, personal essay, authenticity, grace, creativity, scenic designer, birthday reflection",
+  tags: [
+    { id: 1002501, name: "Personal Essay", slug: "personal-essay" },
+    { id: 1002502, name: "Creativity", slug: "creativity" },
+    { id: 1002503, name: "Authenticity", slug: "authenticity" },
+  ],
+  content: [
+    {
+      type: "paragraph",
+      text: "June 5, 2025. I turned 38 today.",
+    },
+    {
+      type: "paragraph",
+      text: "Thank you to everyone who reached out, sent a message, called, or took a moment to say happy birthday. It genuinely meant a lot to me. As I get older, I find myself appreciating those moments of connection more and more.",
+    },
+    {
+      type: "paragraph",
+      text: "This past year has felt heavy in a lot of ways. Personally, professionally, politically — it feels like many of us are carrying around a constant sense of uncertainty. I don’t think I’m alone in feeling exhausted by the pace of everything. It has also been difficult watching the ongoing pressure placed on democracy, public discourse, and our ability to simply listen to one another with empathy.",
+    },
+    {
+      type: "paragraph",
+      text: "Through all of it, I’ve stayed immersed in design work. Scenic design continues to be the thing that grounds me creatively. Some days the work feels exhilarating — the kind of collaboration that reminds you exactly why you became an artist in the first place. Other days it can feel overwhelming, frustrating, or creatively draining. I think most artists live somewhere between those two realities more often than people realize.",
+    },
+    {
+      type: "paragraph",
+      text: "Lately, social media keeps pushing this idea that the answer to burnout is disappearance. Vanish for a month. Rebrand yourself. Reinvent everything. Return as a new person with a new aesthetic and a new strategy.",
+    },
+    {
+      type: "paragraph",
+      text: "I understand why that idea appeals to people, but honestly, I’m tired of treating life like a marketing campaign.",
+    },
+    {
+      type: "quote",
+      text: "I don’t really want to reinvent myself. I want to become more myself.",
+    },
+    {
+      type: "paragraph",
+      text: "That feels different.",
+    },
+    {
+      type: "paragraph",
+      text: "As I’ve gotten older, I’ve become less interested in performing a version of authenticity and more interested in actually practicing it. I want the work I make, the collaborations I build, and the relationships I maintain to come from a place that is honest and grounded. Not curated perfection. Not algorithmic performance. Just sincerity.",
+    },
+    {
+      type: "paragraph",
+      text: "Theatre has always taught me that audiences respond most strongly to truth. Not polish. Not spectacle alone. Truth. The same thing applies to people.",
+    },
+    {
+      type: "paragraph",
+      text: "Life is already difficult enough. Most people are carrying something invisible. A disappointment. A fear. Financial stress. Loneliness. Anxiety about the future. Grief. We do not always know what someone else is navigating when they walk into a room.",
+    },
+    {
+      type: "paragraph",
+      text: "So maybe the challenge is not reinvention.",
+    },
+    {
+      type: "paragraph",
+      text: "Maybe the challenge is grace.",
+    },
+    {
+      type: "paragraph",
+      text: "To be kinder to one another. To stay curious about people instead of immediately reducing them to labels or assumptions. To create art that asks questions instead of simply shouting answers. To allow ourselves to evolve without constantly branding every evolution as a transformation arc.",
+    },
+    {
+      type: "paragraph",
+      text: "At 38, I do not feel finished. I do not feel fully formed. In many ways, I feel more aware of how much there still is to learn — about art, collaboration, relationships, and myself.",
+    },
+    {
+      type: "paragraph",
+      text: "But I do know this:",
+    },
+    {
+      type: "list",
+      listType: "bullet",
+      items: [
+        "I still believe in storytelling.",
+        "I still believe in creativity.",
+        "I still believe authenticity matters.",
+      ],
+    },
+    {
+      type: "paragraph",
+      text: "Here’s to authenticity.",
+    },
+    {
+      type: "paragraph",
+      text: "Here’s to grace.",
+    },
+    {
+      type: "image",
+      url: "/images/articles/38-authenticity-and-grace/cover.jpeg",
+      alt: "A handwritten birthday note over a photograph of Brandon PT Davis and his partner standing near the ocean.",
+      caption: "A handwritten note for year 38.",
+      display: "settings",
+    },
+  ],
+};
+
 const externalProfileArticleSlugs = new Set([VOYAGELA_ARTICLE_SLUG]);
 
 const dbBackedArticles = (generatedLocalArticles as LocalArticle[])
@@ -2479,6 +2694,8 @@ const manualArticles: LocalArticle[] = [
   vectorworksCameraSetupArticle,
   vectorworksLightingRenderStylesArticle,
   vectorworksPublishingRenderingsArticle,
+  okobojiFortyShowsArticle,
+  thirtyEightArticle,
 ];
 
 const articlesWithManualEntries = [

@@ -136,7 +136,7 @@ export default function Collaborators() {
         type="BreadcrumbList"
         breadcrumbs={[
           { name: "Home", url: "https://www.brandonptdavis.com" },
-          { name: "About", url: "https://www.brandonptdavis.com/about" },
+          { name: "Profile", url: "https://www.brandonptdavis.com/about" },
           { name: "Collaborators", url: "https://www.brandonptdavis.com/about/collaborators" },
         ]}
       />
@@ -257,9 +257,10 @@ export default function Collaborators() {
                   the production cultures of the theatres and organizations making the work.
                 </p>
                 <p>
-                  This page is a clean index rather than a profile archive. It gathers the creative
-                  network around the portfolio so visitors can understand the broader ecology behind
-                  the work without turning the page into another portfolio grid.
+                  I think of this page as a map of those relationships. Some are long-running
+                  creative partnerships, some are production teams gathered for a single project,
+                  and some are theatres whose rooms have shaped how I think about process, trust,
+                  and shared visual language.
                 </p>
                 <blockquote className="my-12 border-y border-border/35 py-8 font-sans text-[clamp(1.9rem,4vw,3.35rem)] font-medium leading-[1.06] tracking-[-0.055em] text-foreground md:my-14 md:py-10">
                   The best rooms build a shared language before they build the world.
