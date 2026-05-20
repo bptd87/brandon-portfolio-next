@@ -102,6 +102,14 @@ tmp/
 temp/
 output/
 
+# Unused low-res teaching image duplicates
+client/public/images/teaching-gallery/class-critique.jpeg
+client/public/images/teaching-gallery/drawing-studio.jpeg
+client/public/images/teaching-gallery/remote-guest-critique.jpeg
+client/public/images/teaching-gallery/student-costume-and-scenic-work.jpeg
+client/public/images/teaching-gallery/student-presentation.jpeg
+client/public/images/teaching-gallery/student-scenic-renderings.jpeg
+
 # Database
 *.db
 *.sqlite
