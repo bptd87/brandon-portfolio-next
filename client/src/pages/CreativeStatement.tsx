@@ -289,7 +289,7 @@ export default function CreativeStatement() {
             <div className="mx-auto max-w-[1120px]">
               <AnimatedSection className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
                 <div className="max-w-3xl">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                  <p className="section-kicker text-foreground/45">
                     Work Behind The Statement
                   </p>
                   <h2 className="mt-4 font-sans text-[clamp(1.8rem,3.5vw,3rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">

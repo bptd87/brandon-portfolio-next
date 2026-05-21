@@ -152,13 +152,16 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
   const lastScrollYRef = useRef(0);
   const desktopMenuCloseTimeoutRef = useRef<number | null>(null);
   const isEditorialRoute =
     /^\/articles(?:\/|$)/.test(location) ||
     /^\/studio\/tutorials(?:\/|$)/.test(location) ||
     /^\/studio\/directory(?:\/|$)/.test(location);
+  const isHomeRoute = location === "/";
   const useLightChrome = isEditorialRoute;
+  const useImmersiveChrome = isHomeRoute && !desktopMenuOpen && !mobileMenuOpen && !searchOpen;
 
   const headerRef = useRef<HTMLElement>(null);
 
@@ -196,6 +199,7 @@ export default function Header() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
+      setIsScrolled(currentScrollY > 24);
 
       if (currentScrollY < 60) {
         setIsVisible(true);
@@ -210,6 +214,7 @@ export default function Header() {
     };
 
     lastScrollYRef.current = window.scrollY;
+    setIsScrolled(window.scrollY > 24);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -333,6 +338,11 @@ export default function Header() {
           path: "/studio/directory",
           description: "A curated directory of scenic resources, suppliers, archives, and software.",
         },
+        {
+          name: "Studio Apps",
+          path: "/studio/apps",
+          description: "Practical scenic design tools and workflow utilities.",
+        },
       ],
     },
   ];
@@ -345,7 +355,9 @@ export default function Header() {
         className={`fixed left-0 right-0 top-0 z-50 border-b backdrop-blur-xl transition-all duration-300 ${
           useLightChrome
             ? "border-black/10 bg-[#f1f0ec]/78 supports-[backdrop-filter]:bg-[#f1f0ec]/66"
-            : "border-white/10 bg-background/40 supports-[backdrop-filter]:bg-background/25"
+            : useImmersiveChrome && !isScrolled
+              ? "border-transparent bg-transparent shadow-none backdrop-blur-0"
+              : "border-white/10 bg-background/40 supports-[backdrop-filter]:bg-background/25"
         } ${
           isVisible ? "translate-y-0" : "-translate-y-full"
         }`}

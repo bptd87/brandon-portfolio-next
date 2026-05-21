@@ -207,7 +207,7 @@ export default function ArticleDetail({ slug, article }: ArticleDetailProps = {}
 
 function getArticleVideoMimeType(url: string) {
   const normalizedUrl = url.toLowerCase().split("?")[0] || "";
-  if (normalizedUrl.endsWith(".mov")) return "video/quicktime";
+  if (normalizedUrl.endsWith(".mov")) return undefined;
   if (normalizedUrl.endsWith(".m4v")) return "video/x-m4v";
   return "video/mp4";
 }
@@ -280,19 +280,19 @@ function ArticleInlineVideo({ url, caption }: { url: string; caption?: string })
   };
 
   return (
-    <figure className="my-12">
+    <figure className="article-inline-video my-16">
       <div
         ref={frameRef}
-        className="group relative overflow-hidden rounded-[1rem] bg-black shadow-2xl"
+        className="group relative mx-auto max-w-[64rem] overflow-hidden bg-transparent"
       >
         <video
           ref={videoRef}
-          className="aspect-[16/9] h-auto w-full bg-black object-cover"
+          className="aspect-[16/9] h-auto w-full bg-black object-contain"
           autoPlay
           playsInline
           muted
           loop
-          preload="auto"
+          preload="metadata"
           controls
         >
           <source src={url} type={getArticleVideoMimeType(url)} />
@@ -307,7 +307,7 @@ function ArticleInlineVideo({ url, caption }: { url: string; caption?: string })
         </button>
       </div>
       {caption && (
-        <figcaption className="mt-4 text-center text-[0.88rem] italic text-white">
+        <figcaption className="mx-auto mt-4 max-w-[46rem] text-center text-[0.88rem] italic leading-6 text-black/58">
           {decodeHTMLEntities(caption)}
         </figcaption>
       )}
@@ -1522,13 +1522,15 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
 
                         return (
                           <figure key={index} className="my-12">
-                            <DeferredYouTubeEmbed
-                              videoId={videoId || ""}
-                              title={section.caption || "Article video"}
-                              className="rounded-xl shadow-2xl"
-                            />
+                            <div className="mx-auto max-w-[64rem]">
+                              <DeferredYouTubeEmbed
+                                videoId={videoId || ""}
+                                title={section.caption || "Article video"}
+                                className="bg-transparent"
+                              />
+                            </div>
                             {section.caption && (
-                              <figcaption className="mt-4 text-center text-[0.88rem] italic text-white">
+                              <figcaption className="mx-auto mt-4 max-w-[46rem] text-center text-[0.88rem] italic leading-6 text-black/58">
                                 {decodeHTMLEntities(section.caption)}
                               </figcaption>
                             )}
@@ -1963,6 +1965,23 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
         .article-editorial .article-content video,
         .article-editorial .article-content iframe {
           box-shadow: none;
+        }
+
+        .article-editorial .article-inline-video {
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .article-editorial .article-inline-video > div {
+          border-radius: 0;
+          background: transparent !important;
+          box-shadow: none !important;
+        }
+
+        .article-editorial .article-inline-video video {
+          border-radius: 0 !important;
+          background: #050505 !important;
+          box-shadow: none !important;
         }
 
         /* WordPress Gallery Styles - Horizontal Scroll */

@@ -1,166 +1,204 @@
 "use client";
 
-import Image from "next/image";
-import {
-  Drama,
-  Music,
-  Sparkles,
-  Theater,
-  UsersRound,
-  type LucideIcon,
-} from "lucide-react";
-import { useState } from "react";
+import { useRef } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { SEO } from "@/components/SEO";
 import { ProjectGridSkeleton } from "@/components/SkeletonLoaders";
 import { formatUtcDate } from "@/lib/date-format";
 import { getProjectPath } from "@/lib/projectRoutes";
 import { sortScenicProjectsChronologically } from "@/lib/scenicShowcase";
+import {
+  LEARNING_PORTAL_ARTICLE_SLUG_SET,
+  RETIRED_LEARNING_ARTICLE_SLUG_SET,
+} from "@shared/learningPortal";
+import { getLocalArticles } from "@shared/localArticles";
+import { getLocalTutorials } from "@shared/localStudio";
 import type { ScenicProjectSummary } from "@shared/scenicProjectSummaries";
 import { upcomingProductions } from "@shared/upcomingProductions";
 
+const HOME_HERO_IMAGE_URL =
+  "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150232-69e3ddad.webp";
 const ABOUT_HEADSHOT_URL =
-  "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/about/page/Brandon%20PT%20Davis%20headshot%202026.webp";
+  "/images/about/page/brandon-pt-davis-about-home.jpg";
 const HOME_CTA_IMAGE_URL =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150197-48389e80.webp";
+
+type PublishCard = {
+  kind: "Article" | "Tutorial";
+  title: string;
+  description: string;
+  href: string;
+  image: string;
+  imageAlt: string;
+  timestamp: number;
+};
+
+const getPublishTimestamp = (...dates: Array<string | Date | null | undefined>) =>
+  Math.max(
+    ...dates.map(date => {
+      const time = new Date(date || 0).getTime();
+      return Number.isFinite(time) ? time : 0;
+    })
+  );
+
+const cleanPublishTitle = (title: string) =>
+  title
+    .replace(/^Vectorworks Tutorial:\s*/i, "")
+    .replace(/^Vectorworks Quick Tip:\s*/i, "")
+    .trim();
+
+const cleanPublishDescription = (value?: string | null) => {
+  const text = String(value || "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (!text) return "Studio notes, process writing, and practical scenic design resources.";
+  if (text.length <= 118) return text;
+  return `${text.slice(0, 115).trim()}...`;
+};
+
+const getHomePublishCards = (): PublishCard[] => {
+  const localArticles = getLocalArticles();
+
+  const articleCards = localArticles
+    .filter(article => !LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug))
+    .filter(article => !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(article.slug))
+    .map(article => ({
+      kind: "Article" as const,
+      title: cleanPublishTitle(article.title),
+      description: cleanPublishDescription(article.excerpt || article.seoDescription),
+      href: `/articles/${article.slug}`,
+      image: article.coverImageUrl,
+      imageAlt: article.coverImageAlt || `Cover image for ${article.title}`,
+      timestamp: getPublishTimestamp(article.publishedAt, article.updatedAt, article.createdAt),
+    }))
+    .filter(card => card.image)
+    .sort((a, b) => b.timestamp - a.timestamp)
+    .slice(0, 4);
+
+  const tutorialArticleCards = localArticles
+    .filter(article => LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug))
+    .map(article => ({
+      kind: "Tutorial" as const,
+      title: cleanPublishTitle(article.title),
+      description: cleanPublishDescription(article.excerpt || article.seoDescription),
+      href: `/studio/tutorials/${article.slug}`,
+      image: article.coverImageUrl,
+      imageAlt: article.coverImageAlt || `Cover image for ${article.title}`,
+      timestamp: getPublishTimestamp(article.publishedAt, article.updatedAt, article.createdAt),
+    }));
+
+  const tutorialCards = getLocalTutorials()
+    .filter(tutorial => (tutorial.status || "published") === "published")
+    .map(tutorial => ({
+      kind: "Tutorial" as const,
+      title: cleanPublishTitle(tutorial.title),
+      description: cleanPublishDescription(tutorial.description || tutorial.overview),
+      href: `/studio/tutorials/${tutorial.slug}`,
+      image:
+        tutorial.cover_image ||
+        "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/studio/tutorials/wide/rendering-1.png",
+      imageAlt: `Tutorial cover for ${cleanPublishTitle(tutorial.title)}`,
+      timestamp: getPublishTimestamp(
+        tutorial.published_at,
+        tutorial.updated_at,
+        tutorial.created_at
+      ),
+    }));
+
+  const latestTutorialCards = [...tutorialArticleCards, ...tutorialCards]
+    .filter(card => card.image)
+    .sort((a, b) => b.timestamp - a.timestamp)
+    .slice(0, 4);
+
+  return Array.from({ length: 4 }).flatMap((_, index) =>
+    [articleCards[index], latestTutorialCards[index]].filter(Boolean)
+  );
+};
 
 const portfolioCategoryRows: Array<{
   title: string;
   match: string[];
   href: string;
-  Icon: LucideIcon;
+  description: string;
 }> = [
   {
     title: "Drama",
     match: ["Drama"],
     href: "/tags/drama",
-    Icon: Drama,
+    description: "Rooms built for memory, pressure, and consequence.",
   },
   {
     title: "Comedy",
     match: ["Comedy"],
     href: "/tags/comedy",
-    Icon: Theater,
+    description: "Architecture for timing, surprise, and social pressure.",
+  },
+  {
+    title: "Musical Theatre",
+    match: ["Musical Theatre"],
+    href: "/tags/musical-theatre",
+    description: "Scenic worlds built for rhythm, transformation, and scale.",
   },
   {
     title: "Shakespeare",
     match: ["Shakespeare"],
     href: "/tags/shakespeare",
-    Icon: Sparkles,
-  },
-  {
-    title: "Musical",
-    match: ["Musical Theatre"],
-    href: "/tags/musical-theatre",
-    Icon: Music,
+    description: "Classic texts held inside contemporary theatrical space.",
   },
   {
     title: "TYA",
     match: ["Theatre for Young Audiences"],
     href: "/tags/theatre-for-young-audiences",
-    Icon: UsersRound,
+    description: "Clear visual worlds for wonder, play, and young audiences.",
   },
 ];
 
-function RecentProductionHero({
-  projects,
-}: {
-  projects: ScenicProjectSummary[];
-}) {
-  const heroProjects = projects
-    .filter(project => project.coverImageUrl)
-    .slice(0, 5);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const activeProject = heroProjects[activeIndex] || heroProjects[0];
-
-  if (!activeProject) return null;
-
+function HomeIntro() {
   return (
-    <section className="relative min-h-[calc(100svh-74px)] overflow-hidden border-b border-white/10 bg-background">
-      <div className="absolute inset-0">
-        {heroProjects.map((project, index) => (
-          <Image
-            key={project.slug}
-            src={project.coverImageUrl || ""}
-            alt={`${project.title} scenic design by Brandon PT Davis`}
-            fill
-            quality={86}
-            priority={index === 0}
-            sizes="100vw"
-            className={`absolute inset-0 h-full w-full object-cover transition-[opacity,transform,filter] duration-[1200ms] ease-out motion-reduce:transition-none ${
-              index === activeIndex
-                ? "scale-100 opacity-100 brightness-105"
-                : "scale-[1.045] opacity-0 brightness-75"
-            }`}
-          />
-        ))}
-        <div className="absolute inset-0 bg-black/5" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.62)_0%,rgba(0,0,0,0.32)_34%,rgba(0,0,0,0.02)_72%)]" />
-        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background/46 to-transparent" />
-      </div>
+    <section
+      id="portfolio-categories"
+      className="relative min-h-[calc(100svh-74px)] overflow-hidden bg-black"
+    >
+      <img
+        src={HOME_HERO_IMAGE_URL}
+        alt="Scenic rendering by Brandon PT Davis"
+        className="site-media-square absolute inset-0 h-full w-full object-cover object-center"
+        loading="eager"
+      />
+      <div className="absolute inset-0 bg-black/22" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.78)_0%,rgba(0,0,0,0.48)_34%,rgba(0,0,0,0.08)_72%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/74 via-black/24 to-transparent" />
 
-      <div className="relative flex min-h-[calc(100svh-74px)] items-end px-[clamp(1.5rem,5vw,6rem)] pb-10 pt-14 md:pb-14">
-        <div className="w-full motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:duration-700">
-          <p className="mb-5 font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-white/58">
-            Recent Scenic Design
+      <div className="relative flex min-h-[calc(100svh-74px)] items-center px-[clamp(1.5rem,5vw,6rem)] py-24">
+        <div className="relative z-10 max-w-[56rem] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-5 motion-safe:duration-700">
+          <p className="mb-7 font-sans text-[clamp(1rem,1.45vw,1.22rem)] font-medium leading-none tracking-[-0.035em] text-white/78">
+            Brandon PT Davis Scenic Design
           </p>
-
-          <div className="max-w-[49rem] space-y-1">
-            {heroProjects.map((project, index) => {
-              const active = index === activeIndex;
-              return (
-                <a
-                  key={project.slug}
-                  href={getProjectPath(project)}
-                  onMouseEnter={() => setActiveIndex(index)}
-                  onFocus={() => setActiveIndex(index)}
-                  className={`group relative block w-fit overflow-hidden pb-1 transition-colors duration-300 ${
-                    active ? "text-white" : "text-white/58 hover:text-white"
-                  }`}
-                >
-                  <span className="flex flex-wrap items-baseline gap-x-3">
-                    <span className="font-sans text-[clamp(1.8rem,4vw,4.15rem)] font-medium leading-[0.94] tracking-[-0.064em] transition-transform duration-500 group-hover:translate-x-1 motion-reduce:transition-none">
-                      {project.title}
-                    </span>
-                    {project.year ? (
-                      <span className="font-sans text-[clamp(0.8rem,1.4vw,1.05rem)] font-semibold leading-none tracking-[0.04em] text-white/70">
-                        {project.year}
-                      </span>
-                    ) : null}
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className={`absolute bottom-0 left-0 h-px bg-white transition-transform duration-500 ease-out motion-reduce:transition-none ${
-                      active
-                        ? "w-full scale-x-100"
-                        : "w-full origin-left scale-x-0 group-hover:scale-x-100"
-                    }`}
-                  />
-                </a>
-              );
-            })}
-          </div>
-
-          <div className="mt-8 flex flex-col gap-4 text-white/64 md:flex-row md:items-end md:justify-between">
-            <div className="max-w-xl">
-              <p className="font-sans text-[0.95rem] leading-7 tracking-[-0.01em]">
-                {activeProject.client ? `${activeProject.client}. ` : ""}
-                Selected work from the current scenic design archive.
-              </p>
-            </div>
+          <h1 className="max-w-[10ch] font-sans text-[clamp(3.4rem,8.2vw,8.8rem)] font-medium leading-[0.84] tracking-[-0.09em] text-white">
+            Space makes the story visible.
+          </h1>
+          <p className="mt-8 max-w-[40rem] font-sans text-[clamp(1.1rem,1.8vw,1.65rem)] font-medium leading-[1.2] tracking-[-0.045em] text-white/68 md:mt-10">
+            Scenic design for theatre, memory, and live performance. Production
+            photos are the entry point; the work is how a room holds behavior,
+            rhythm, and atmosphere.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
             <a
-              href="#portfolio-categories"
-              className="group inline-flex w-fit items-center gap-3 font-sans text-sm font-medium uppercase tracking-[0.12em] text-white/72 transition-colors hover:text-white"
+              href="#portfolio-index"
+              className="inline-flex h-11 items-center justify-center rounded-full bg-[#9d4edd] px-5 font-sans text-[0.98rem] font-medium tracking-[-0.02em] text-white transition-colors hover:bg-[#c77dff]"
             >
-              Scroll
-              <span
-                aria-hidden="true"
-                className="text-2xl leading-none transition-transform duration-500 group-hover:translate-y-1"
-              >
-                ↓
-              </span>
+              View portfolio
+            </a>
+            <a
+              href="/about"
+              className="inline-flex h-11 items-center justify-center rounded-full border border-[#9d4edd]/72 px-5 font-sans text-[0.98rem] font-medium tracking-[-0.02em] text-[#e0aaff] transition-colors hover:border-[#c77dff] hover:text-white"
+            >
+              About Brandon
             </a>
           </div>
         </div>
@@ -189,179 +227,166 @@ function PortfolioCategoryRows({
 
   if (!rows.length) return null;
 
+  const renderCategoryPanel = (
+    row: (typeof rows)[number],
+    options: { split?: boolean } = {}
+  ) => {
+    const leadProject = row.projects[0];
+    const isSplit = options.split === true;
+    const alignRight =
+      row.title === "Drama" ||
+      row.title === "Musical Theatre" ||
+      row.title === "TYA";
+    const contentAlignment = alignRight
+      ? "items-end text-right"
+      : "items-start text-left";
+    const overlayPosition = alignRight
+      ? "justify-end md:pr-[clamp(2rem,7vw,8rem)]"
+      : "justify-start md:pl-[clamp(2rem,7vw,8rem)]";
+    const overlayGradient = alignRight
+      ? "bg-[linear-gradient(90deg,rgba(0,0,0,0)_0%,rgba(0,0,0,0.14)_42%,rgba(0,0,0,0.58)_100%)]"
+      : "bg-[linear-gradient(90deg,rgba(0,0,0,0.58)_0%,rgba(0,0,0,0.14)_58%,rgba(0,0,0,0)_100%)]";
+
+    return (
+      <article
+        key={row.title}
+        className={`group relative overflow-hidden bg-[#f1f0ec] ${
+          isSplit ? "min-h-[78svh]" : "min-h-[94svh]"
+        }`}
+      >
+        {leadProject ? (
+          <a
+            href={getProjectPath(leadProject)}
+            className={`site-media-square relative block w-full overflow-hidden ${
+              isSplit ? "h-[78svh]" : "h-[94svh]"
+            }`}
+            aria-label={`${leadProject.title} scenic design by Brandon PT Davis`}
+          >
+            <img
+              src={leadProject.coverImageUrl || ""}
+              alt={`${leadProject.title} scenic design by Brandon PT Davis`}
+              className="site-media-square h-full w-full object-cover"
+              loading="lazy"
+            />
+          </a>
+        ) : null}
+
+        <div
+          className={`pointer-events-none absolute inset-0 ${overlayGradient}`}
+          aria-hidden="true"
+        />
+        <div
+          className={`absolute inset-0 flex items-center px-[clamp(1.5rem,5vw,6rem)] py-16 ${overlayPosition}`}
+        >
+          <div
+            className={`flex max-w-[min(34rem,88vw)] flex-col ${contentAlignment}`}
+          >
+            <h2
+              className={`font-sans font-semibold leading-[0.9] tracking-[-0.078em] text-white ${
+                isSplit
+                  ? "text-[clamp(2.45rem,4.5vw,4.6rem)]"
+                  : "text-[clamp(3rem,5.7vw,6.1rem)]"
+              }`}
+            >
+              {row.title}
+            </h2>
+            <p
+              className={`mt-4 font-sans font-medium leading-[1.16] tracking-[-0.045em] text-white/70 ${
+                isSplit
+                  ? "max-w-[27rem] text-[clamp(1rem,1.42vw,1.22rem)]"
+                  : "max-w-[34rem] text-[clamp(1.08rem,1.7vw,1.48rem)]"
+              }`}
+            >
+              {row.description}
+            </p>
+            <div
+              className={`pointer-events-auto mt-6 flex flex-wrap gap-3 ${
+                alignRight ? "justify-end" : "justify-start"
+              }`}
+            >
+              <a
+                href={row.href}
+                className="inline-flex h-10 items-center justify-center rounded-full bg-[#9d4edd] px-5 font-sans text-[0.95rem] font-medium tracking-[-0.02em] text-white transition-colors hover:bg-[#c77dff]"
+              >
+                View collection
+              </a>
+              {leadProject ? (
+                <a
+                  href={getProjectPath(leadProject)}
+                  className="inline-flex h-10 items-center justify-center rounded-full border border-[#9d4edd]/72 px-5 font-sans text-[0.95rem] font-medium tracking-[-0.02em] text-[#e0aaff] transition-colors hover:border-[#c77dff] hover:text-white"
+                >
+                  Featured project
+                </a>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      </article>
+    );
+  };
+
+  const fullWidthRows = rows.slice(0, 3);
+  const splitRows = rows.slice(3, 5);
+
   return (
     <section
-      id="portfolio-categories"
-      className="border-t border-white/10 py-12 md:py-16"
+      id="portfolio-index"
+      className="border-t border-black/10 bg-[#f1f0ec]"
     >
-      <div className="mb-8 px-[clamp(1.5rem,5vw,6rem)] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-3 motion-safe:duration-700">
-        <p className="mb-3 font-sans text-[10px] font-semibold uppercase tracking-[0.24em] text-white/36">
-          Brandon PT Davis
-        </p>
-        <h2 className="max-w-3xl font-sans text-[clamp(1.35rem,2.2vw,2.05rem)] font-medium leading-[1.02] tracking-[-0.045em] text-white">
-          Scenic Design
-        </h2>
-        <p className="mt-4 max-w-2xl text-[0.95rem] leading-7 tracking-[-0.01em] text-white/52">
-          Production environments by Brandon PT Davis, organized across drama,
-          comedy, Shakespeare, musicals, and theatre for young audiences.
-        </p>
+      <div className="space-y-4 px-[clamp(1rem,2vw,1.5rem)] py-[clamp(1rem,2vw,1.5rem)]">
+        {fullWidthRows.map(row => renderCategoryPanel(row))}
+
+        {splitRows.length ? (
+          <div className="grid gap-4 md:grid-cols-2">
+            {splitRows.map(row => renderCategoryPanel(row, { split: true }))}
+          </div>
+        ) : null}
       </div>
 
-      <div className="space-y-12 md:space-y-16">
-        {rows.map(row => {
-          const Icon = row.Icon;
-
-          return (
-            <div key={row.title}>
-              <div className="mb-5 flex items-end justify-between gap-5 border-t border-white/10 px-[clamp(1.5rem,5vw,6rem)] pt-5">
-                <div>
-                  <div className="mb-2 flex items-center gap-2 font-sans text-[10px] font-semibold uppercase tracking-[0.2em] text-white/38">
-                    <Icon className="h-3.5 w-3.5" aria-hidden="true" />
-                    <span>Scenic Design</span>
-                    <span className="text-white/20">|</span>
-                    <span>Collection</span>
-                  </div>
-                  <h3 className="font-sans text-[clamp(1.35rem,2.3vw,2rem)] font-medium leading-[1.02] tracking-[-0.045em] text-white">
-                    {row.title}
-                  </h3>
-                </div>
-                <a
-                  href={row.href}
-                  aria-label={`View ${row.title}`}
-                  className="group inline-flex h-10 w-10 shrink-0 items-center justify-center text-2xl leading-none text-white/62 transition-colors hover:text-white"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="transition-transform group-hover:translate-x-1"
-                  >
-                    →
-                  </span>
-                </a>
-              </div>
-
-              <div className="overflow-x-auto overscroll-x-contain pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                <div className="flex gap-5 px-[clamp(1.5rem,5vw,6rem)]">
-                  {row.projects.map(project => (
-                    <a
-                      key={project.slug}
-                      href={getProjectPath(project)}
-                      className="group relative block w-[82vw] shrink-0 overflow-hidden bg-white/[0.035] md:w-[34rem] xl:w-[40rem]"
-                    >
-                      <ProgressiveImage
-                        src={project.coverImageUrl || ""}
-                        alt={`${project.title} scenic design by Brandon PT Davis`}
-                        aspectRatio="16 / 9"
-                        containerClassName="bg-white/[0.035]"
-                        className="h-full w-full object-cover transition-[transform,filter] duration-[900ms] ease-out group-hover:scale-[1.04] group-hover:brightness-110 motion-reduce:transition-none"
-                        sizes="(min-width: 1280px) 40rem, (min-width: 768px) 34rem, 82vw"
-                        width={980}
-                        enableScrollAnimation={false}
-                      />
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/82 via-black/18 to-transparent opacity-90 transition-opacity duration-700 group-hover:opacity-100" />
-                      <div className="absolute inset-x-0 bottom-0 p-4 transition-transform duration-700 ease-out group-hover:-translate-y-1 md:p-5 motion-reduce:transition-none">
-                        <h4 className="font-sans text-[1.02rem] font-medium leading-[1.04] tracking-[-0.035em] text-white md:text-[1.18rem]">
-                          {project.title}
-                        </h4>
-                        <p className="mt-1 text-[0.82rem] leading-5 text-white/62 transition-opacity duration-500 group-hover:text-white/76">
-                          {[project.client, project.year]
-                            .filter(Boolean)
-                            .join(" · ")}
-                        </p>
-                      </div>
-                      <span
-                        aria-hidden="true"
-                        className="absolute inset-x-5 bottom-4 h-px origin-left scale-x-0 bg-white/70 transition-transform duration-700 group-hover:scale-x-100"
-                      />
-                    </a>
-                  ))}
-                  <a
-                    href={row.href}
-                    className="flex w-[13rem] shrink-0 items-center justify-center border border-white/12 px-5 text-center font-sans text-sm font-medium text-white/62 transition-colors hover:border-white/28 hover:text-white"
-                  >
-                    View {row.title}
-                    <span aria-hidden="true" className="ml-2">
-                      →
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-
-        <div className="px-[clamp(1.5rem,5vw,6rem)]">
-          <a
-            href="/projects"
-            className="group inline-flex items-center gap-2 border-t border-white/12 pt-5 font-sans text-sm font-medium tracking-[-0.01em] text-white/76 transition-colors hover:text-white"
-          >
-            View full scenic design portfolio
-            <span
-              aria-hidden="true"
-              className="transition-transform group-hover:translate-x-1"
-            >
-              →
-            </span>
-          </a>
-        </div>
-      </div>
     </section>
   );
 }
 
 function BrandonSection() {
   return (
-    <section className="border-t border-white/10 py-16 md:py-24">
-      <div className="grid gap-10 px-[clamp(1.5rem,5vw,6rem)] lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-end">
-        <div className="max-w-3xl">
-          <p className="mb-4 font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-white/38">
-            Brandon PT Davis
+    <section className="relative min-h-[82svh] overflow-hidden border-t border-black/10 bg-[#c66f46]">
+      <img
+        src={ABOUT_HEADSHOT_URL}
+        alt="Brandon PT Davis against an orange wall"
+        className="site-media-square absolute inset-0 h-full w-full object-cover object-center"
+        loading="lazy"
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(241,240,236,0.74)_0%,rgba(241,240,236,0.42)_35%,rgba(241,240,236,0.02)_68%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/18 to-transparent" />
+
+      <div className="relative flex min-h-[82svh] items-center px-[clamp(1.5rem,5vw,6rem)] py-20 md:py-28">
+        <div className="max-w-[48rem]">
+          <p className="mb-5 section-kicker text-black/48">
+            Profile
           </p>
-          <h2 className="font-sans text-[clamp(2.4rem,5vw,5rem)] font-medium leading-[0.94] tracking-[-0.065em] text-white">
+          <h2 className="font-sans text-[clamp(2.4rem,5.2vw,5.8rem)] font-medium leading-[0.92] tracking-[-0.07em] text-black">
             Scenic design as atmosphere, architecture, and human behavior.
           </h2>
-          <p className="mt-7 max-w-2xl text-[1rem] leading-8 tracking-[-0.01em] text-white/58 md:text-[1.06rem]">
+          <p className="mt-8 max-w-[56rem] text-[1rem] leading-8 tracking-[-0.01em] text-black/62 md:text-[1.08rem]">
             Brandon's work starts with how people move through a room: what a
             space remembers, what it hides, and how it shapes the rhythm of a
             performance. The portfolio collects production environments,
             renderings, and process images from regional theatre, summer stock,
             and academic stages.
           </p>
-          <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
+          <div className="mt-9 flex flex-wrap gap-3">
             <a
               href="/about"
-              className="group inline-flex items-center gap-2 border-t border-white/18 pt-4 text-sm font-medium text-white/78 transition-colors hover:text-white"
+              className="inline-flex h-10 items-center justify-center rounded-full bg-[#9d4edd] px-5 text-sm font-medium text-white transition-colors hover:bg-[#c77dff]"
             >
-              About Brandon
-              <span
-                aria-hidden="true"
-                className="transition-transform group-hover:translate-x-1"
-              >
-                →
-              </span>
+            About Brandon
             </a>
             <a
               href="/resume"
-              className="group inline-flex items-center gap-2 border-t border-white/10 pt-4 text-sm font-medium text-white/58 transition-colors hover:text-white"
+              className="inline-flex h-10 items-center justify-center rounded-full border border-[#9d4edd]/72 px-5 text-sm font-medium text-[#7b2cbf] transition-colors hover:border-[#7b2cbf] hover:text-black"
             >
               Resume / CV
-              <span
-                aria-hidden="true"
-                className="transition-transform group-hover:translate-x-1"
-              >
-                →
-              </span>
             </a>
-          </div>
-        </div>
-
-        <div className="group relative overflow-hidden bg-white/[0.035] lg:justify-self-end">
-          <div className="relative aspect-[4/3] w-full lg:w-[min(42vw,44rem)]">
-            <img
-              src={ABOUT_HEADSHOT_URL}
-              alt="Brandon PT Davis - scenic designer"
-              className="h-full w-full object-cover object-[50%_16%] transition-[transform,filter] duration-[900ms] ease-out group-hover:scale-[1.025] group-hover:brightness-110"
-              loading="lazy"
-            />
           </div>
         </div>
       </div>
@@ -373,20 +398,20 @@ function UpcomingSection() {
   const nextProductions = upcomingProductions.slice(0, 4);
 
   return (
-    <section className="border-t border-white/10 py-16 md:py-24">
+    <section className="border-t border-black/10 bg-[#f1f0ec] py-16 md:py-24">
       <div className="px-[clamp(1.5rem,5vw,6rem)]">
         <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div className="max-w-3xl">
-            <p className="mb-4 font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-white/38">
+            <p className="mb-4 section-kicker text-black/42">
               Upcoming Productions
             </p>
-            <h2 className="font-sans text-[clamp(2rem,4vw,3.35rem)] font-medium leading-[0.96] tracking-[-0.055em] text-white">
+            <h2 className="font-sans text-[clamp(2rem,4vw,3.35rem)] font-medium leading-[0.96] tracking-[-0.055em] text-black">
               Current scenic design calendar.
             </h2>
           </div>
           <a
             href="/upcoming-productions"
-            className="group inline-flex w-fit items-center gap-2 font-sans text-sm font-medium tracking-[-0.01em] text-white/76 transition-colors hover:text-white"
+            className="group inline-flex w-fit items-center gap-2 font-sans text-sm font-medium tracking-[-0.01em] text-[#7b2cbf] transition-colors hover:text-black"
           >
             View calendar
             <span
@@ -398,22 +423,22 @@ function UpcomingSection() {
           </a>
         </div>
 
-        <div className="divide-y divide-white/12 border-y border-white/12">
+        <div className="divide-y divide-black/12 border-y border-black/12">
           {nextProductions.map(production => (
             <a
               key={production.id}
               href={`/upcoming-productions/${production.id}`}
-              className="group grid gap-5 py-5 transition-colors hover:bg-white/[0.025] md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
+              className="group grid gap-5 py-5 transition-colors hover:bg-black/[0.035] md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
             >
               <div>
-                <p className="font-sans text-[1.45rem] font-medium leading-[1.02] tracking-[-0.05em] text-white transition-transform duration-500 group-hover:translate-x-1 md:text-[1.9rem]">
+                <p className="font-sans text-[1.45rem] font-medium leading-[1.02] tracking-[-0.05em] text-black transition-transform duration-500 group-hover:translate-x-1 md:text-[1.9rem]">
                   {production.title}
                 </p>
-                <p className="mt-2 text-sm leading-6 text-white/48">
+                <p className="mt-2 text-sm leading-6 text-black/52">
                   {production.company} · Directed by {production.director}
                 </p>
               </div>
-              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-white/46">
+              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-black/46">
                 {formatUtcDate(production.startDate, "short")} -{" "}
                 {formatUtcDate(production.endDate, "short")}
               </p>
@@ -425,13 +450,113 @@ function UpcomingSection() {
   );
 }
 
+function PublishSection() {
+  const publishCards = getHomePublishCards();
+  const cardsRef = useRef<HTMLDivElement | null>(null);
+  const scrollCards = (direction: "previous" | "next") => {
+    cardsRef.current?.scrollBy({
+      left: direction === "next" ? 760 : -760,
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    <section className="border-t border-black/10 bg-[#f1f0ec] py-16 md:py-24">
+      <div className="px-[clamp(1.5rem,5vw,6rem)]">
+        <div className="mb-10 grid gap-6 md:grid-cols-[minmax(0,0.72fr)_auto] md:items-end">
+          <div>
+            <p className="mb-4 section-kicker text-black/42">
+              Article + Tutorials
+            </p>
+            <h2 className="max-w-[13ch] bg-gradient-to-r from-[#0a4cff] via-[#7b2cbf] to-[#c77dff] bg-clip-text font-sans text-[clamp(2.4rem,5vw,5.3rem)] font-medium leading-[0.94] tracking-[-0.068em] text-transparent">
+              Notes from the studio.
+            </h2>
+          </div>
+          <div className="flex flex-wrap gap-3 md:justify-end">
+            <a
+              href="/articles"
+              className="inline-flex h-10 items-center justify-center rounded-full bg-[#9d4edd] px-5 font-sans text-sm font-medium tracking-[-0.02em] text-white transition-colors hover:bg-[#c77dff]"
+            >
+              Articles
+            </a>
+            <a
+              href="/studio/tutorials"
+              className="inline-flex h-10 items-center justify-center rounded-full border border-[#9d4edd]/72 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-[#7b2cbf] transition-colors hover:border-[#7b2cbf] hover:text-black"
+            >
+              Tutorials
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div
+        ref={cardsRef}
+        className="overflow-x-auto px-[clamp(1.5rem,5vw,6rem)] pb-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        <div className="flex min-w-max gap-5 pr-[clamp(1.5rem,5vw,6rem)]">
+          {publishCards.map(card => (
+            <a
+              key={`${card.kind}-${card.href}`}
+              href={card.href}
+              className="group relative flex h-[30rem] w-[min(21rem,78vw)] flex-col justify-end overflow-hidden rounded-[2rem] bg-black p-6 text-white shadow-[0_12px_28px_rgba(0,0,0,0.2)] ring-1 ring-black/[0.04] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_18px_38px_rgba(0,0,0,0.24)] md:w-[22rem]"
+              aria-label={`${card.kind}: ${card.title}`}
+            >
+              <img
+                src={card.image}
+                alt={card.imageAlt}
+                className="site-media-square absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.035]"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-black/18" />
+              <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/88 via-black/48 to-transparent" />
+              <div className="absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-black/28 to-transparent" />
+
+              <div className="relative z-10">
+                <p className="font-sans text-[0.74rem] font-semibold tracking-[-0.015em] text-white/68">
+                  {card.kind}
+                </p>
+                <h3 className="mt-3 max-w-[13ch] font-sans text-[1.64rem] font-medium leading-[0.98] tracking-[-0.055em] text-white">
+                  {card.title}
+                </h3>
+                <p className="mt-4 max-w-[18rem] text-[0.94rem] leading-6 tracking-[-0.012em] text-white/68">
+                  {card.description}
+                </p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div className="-mt-5 flex justify-end gap-3 px-[clamp(1.5rem,5vw,6rem)]">
+        <button
+          type="button"
+          onClick={() => scrollCards("previous")}
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/[0.08] text-black/62 transition-colors hover:bg-black hover:text-white"
+          aria-label="Previous studio cards"
+        >
+          <ChevronLeft className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
+        </button>
+        <button
+          type="button"
+          onClick={() => scrollCards("next")}
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/[0.12] text-black/72 transition-colors hover:bg-black hover:text-white"
+          aria-label="Next studio cards"
+        >
+          <ChevronRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
+        </button>
+      </div>
+
+    </section>
+  );
+}
+
 function HomeCta() {
   return (
     <section className="group relative min-h-[72svh] overflow-hidden border-t border-white/10 bg-black">
       <img
         src={HOME_CTA_IMAGE_URL}
         alt="The Merry Wives of Windsor scenic design detail by Brandon PT Davis"
-        className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.025]"
+        className="site-media-square absolute inset-0 h-full w-full object-cover"
         loading="lazy"
       />
       <div className="absolute inset-0 bg-black/28" />
@@ -440,7 +565,7 @@ function HomeCta() {
 
       <div className="relative flex min-h-[72svh] items-end px-[clamp(1.5rem,5vw,6rem)] pb-12 pt-24 md:pb-16">
         <div className="max-w-3xl">
-          <p className="mb-4 font-sans text-[10px] font-semibold uppercase tracking-[0.26em] text-white/46">
+          <p className="mb-4 section-kicker text-white/46">
             Portfolio / Contact
           </p>
           <h2 className="font-sans text-[clamp(2.6rem,5.8vw,6.2rem)] font-medium leading-[0.9] tracking-[-0.07em] text-white">
@@ -513,11 +638,15 @@ export default function Home({
           <ProjectGridSkeleton />
         ) : featuredProject ? (
           <>
-            <RecentProductionHero projects={projects} />
+            <HomeIntro />
             <PortfolioCategoryRows projects={projects} />
             <BrandonSection />
             <UpcomingSection />
+            <PublishSection />
             <HomeCta />
+            <div className="bg-black">
+              <Footer />
+            </div>
           </>
         ) : null}
       </main>

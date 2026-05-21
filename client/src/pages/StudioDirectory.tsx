@@ -125,7 +125,7 @@ export default function StudioDirectory() {
 
       <main className="px-6 pb-20 pt-24 md:pt-28">
         <section className="mx-auto max-w-5xl border-b border-border/25 pb-12">
-          <p className="text-center font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+          <p className="text-center section-kicker text-foreground/40">
             Studio Directory
           </p>
           <h1 className="mx-auto mt-6 max-w-5xl text-center font-sans text-[clamp(3rem,6vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">

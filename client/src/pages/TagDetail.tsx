@@ -1,5 +1,6 @@
 "use client";
 
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
 import { formatUtcDate } from "@/lib/date-format";
@@ -10,7 +11,14 @@ import {
   RETIRED_LEARNING_ARTICLE_SLUG_SET,
 } from "@shared/learningPortal";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
-import { ArrowLeft } from "lucide-react";
+import {
+  Drama,
+  Laugh,
+  Music,
+  Theater,
+  UsersRound,
+  type LucideIcon,
+} from "lucide-react";
 import Image from "next/image";
 import { Link } from "wouter";
 
@@ -42,6 +50,50 @@ const scenicCategoryCopy: Record<string, string> = {
   "theatre-for-young-audiences":
     "Scenic design for theatre for young audiences, balancing clarity, scale, imagination, and the speed of live storytelling.",
 };
+
+const scenicCategoryTaglines: Record<string, string> = {
+  comedy: "Timing, pressure, and the architecture of surprise.",
+  drama: "Rooms for memory, intimacy, and consequence.",
+  shakespeare: "Classic language held inside contemporary theatrical space.",
+  "musical-theatre": "Rhythm, transformation, and scenic scale.",
+  "theatre-for-young-audiences": "Clear worlds for wonder, play, and young audiences.",
+};
+
+const scenicCategoryIconMap: Record<string, LucideIcon> = {
+  drama: Drama,
+  comedy: Laugh,
+  shakespeare: Theater,
+  "musical-theatre": Music,
+  "theatre-for-young-audiences": UsersRound,
+};
+
+const scenicCategoryCards = [
+  {
+    slug: "drama",
+    title: "Drama",
+    description: "Memory, intimacy, pressure, and the rooms that hold consequence.",
+  },
+  {
+    slug: "comedy",
+    title: "Comedy",
+    description: "Timing, social pressure, surprise, and architecture that can turn fast.",
+  },
+  {
+    slug: "musical-theatre",
+    title: "Musical Theatre",
+    description: "Rhythm, transformation, ensemble movement, and scenic scale.",
+  },
+  {
+    slug: "shakespeare",
+    title: "Shakespeare",
+    description: "Classical language shaped through bold theatrical space.",
+  },
+  {
+    slug: "theatre-for-young-audiences",
+    title: "TYA",
+    description: "Clear worlds for wonder, play, and young audiences.",
+  },
+];
 
 const getProjectVenueLabel = (project: {
   client?: string | null;
@@ -111,6 +163,10 @@ export default function TagDetail({
   const pageDescription = isScenicCategory
     ? scenicCategoryCopy[normalizedSlug]
     : `Browse ${tagName} across scenic projects and writing by Brandon PT Davis.`;
+  const heroTagline = scenicCategoryTaglines[normalizedSlug] || pageDescription;
+  const getProjectPanelClass = (index: number) => {
+    return index % 3 === 0 ? "md:col-span-2" : "";
+  };
 
   if (!normalizedSlug || totalItems === 0) {
     return (
@@ -151,99 +207,121 @@ export default function TagDetail({
         noindex={shouldNoindex}
       />
 
-      <div className="min-h-screen bg-background text-foreground">
+      <div className="min-h-screen bg-[#111111] text-white">
         <Header />
 
         <main>
-          <section className="border-b border-border/40 pb-8 pt-24 md:pb-10 md:pt-28">
-            <div className="container max-w-[88rem]">
-              <Link
-                href="/projects"
-                className="inline-flex items-center gap-2 text-[0.96rem] tracking-[-0.015em] text-foreground/56 transition-colors hover:text-foreground"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Scenic Design
-              </Link>
-
-              <div className="mt-8 max-w-5xl">
-                <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.24em] text-white/42">
-                {isScenicCategory
-                  ? "Brandon PT Davis / Scenic Design"
-                  : "Brandon PT Davis"}
-                </p>
-                <h1 className="font-sans text-[clamp(3.2rem,7vw,7.1rem)] font-medium leading-[0.86] tracking-[-0.065em] text-white">
+          <section className="bg-black px-[clamp(1.5rem,5vw,6rem)] pb-18 pt-28 md:pb-24 md:pt-32">
+            <div className="mx-auto max-w-[88rem]">
+              <div className="mx-auto flex max-w-[52rem] flex-col items-center text-center">
+                <h1 className="font-sans text-[clamp(3.2rem,7vw,6.8rem)] font-medium leading-[0.88] tracking-[-0.08em] text-white">
                   {tagName}
                 </h1>
-                <p className="mt-7 max-w-3xl text-[1.02rem] leading-7 tracking-[-0.01em] text-white/62 md:text-[1.12rem]">
-                  {pageDescription}
-                </p>
-              </div>
-
-              <div className="mt-10 border-t border-border/35 pt-5">
-                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.22em] text-white/42">
-                  {projects.length
-                    ? `${projects.length} scenic design ${projects.length === 1 ? "project" : "projects"}`
-                    : `${totalItems} ${totalItems === 1 ? "item" : "items"}`}
+                <p className="mt-5 max-w-[38rem] bg-gradient-to-r from-[#2f6dff] via-[#9d4edd] to-[#d6a8ff] bg-clip-text font-sans text-[clamp(1.25rem,2.1vw,2rem)] font-medium leading-[1.08] tracking-[-0.055em] text-transparent">
+                  {heroTagline}
                 </p>
               </div>
             </div>
           </section>
 
-          <div className="container max-w-[88rem] space-y-18 pb-20 pt-12 md:pb-28 md:pt-14">
+          <div className="space-y-18 bg-[#111111] pb-20 md:pb-28">
             {projects.length > 0 ? (
-              <section id="projects">
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+              <section id="projects" className="px-[clamp(0.9rem,1.8vw,1.35rem)] py-[clamp(0.9rem,1.8vw,1.35rem)]">
+                <div className="grid grid-cols-1 gap-[clamp(0.9rem,1.8vw,1.35rem)] md:grid-cols-2">
                   {projects.map((project, index) => (
                     <Link
                       key={project.id}
                       href={getProjectPath(project)}
-                      className="group block"
+                      className={`group block ${getProjectPanelClass(index)}`}
                     >
-                      <div>
-                        {project.coverImageUrl ? (
-                          <div className="relative aspect-[4/3] overflow-hidden bg-background/50">
+                      <article className="bg-[#111111]">
+                        <div className="site-media-square relative aspect-[3/2] overflow-hidden bg-[#181818]">
+                          {project.coverImageUrl ? (
                             <Image
                               src={project.coverImageUrl}
                               alt={`${project.title} scenic design by Brandon PT Davis`}
                               fill
-                              quality={82}
+                              quality={86}
                               priority={index < 2}
                               loading={index < 2 ? "eager" : "lazy"}
-                              sizes="(max-width: 640px) 100vw, (max-width: 1536px) 50vw, 33vw"
-                              className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                              sizes={
+                                index % 3 === 0
+                                  ? "100vw"
+                                  : "(max-width: 768px) 100vw, 50vw"
+                              }
+                              className="site-media-square object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+                              style={{
+                                objectPosition: project.coverImagePosition || "center",
+                              }}
                             />
-                          </div>
-                        ) : null}
-
-                        <div className="pt-4">
-                          <h2 className="text-[clamp(1.08rem,1.35vw,1.38rem)] font-normal leading-[1.02] tracking-[-0.035em] text-white/90 transition-colors group-hover:text-white">
-                            {project.title}
-                          </h2>
-                          <p className="mt-2 text-sm tracking-[-0.01em] text-white/52">
-                            {[getProjectVenueLabel(project), project.year]
-                              .filter(Boolean)
-                              .join(" · ")}
-                          </p>
-                          {!isScenicCategory && project.excerpt ? (
-                            <p className="line-clamp-3 text-[0.98rem] leading-[1.7] tracking-[-0.012em] text-foreground/58">
-                              {project.excerpt}
-                            </p>
                           ) : null}
+                          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/82 via-black/32 to-transparent" />
+                          <div className="absolute inset-x-0 bottom-0 p-[clamp(1.15rem,2.2vw,2rem)]">
+                            <h2 className="font-sans text-[clamp(1.45rem,2.1vw,2.4rem)] font-medium leading-[0.96] tracking-[-0.055em] text-white transition-colors group-hover:text-white/80">
+                              {project.title}
+                            </h2>
+                            <p className="mt-1.5 font-sans text-[clamp(0.96rem,1.1vw,1.08rem)] font-medium leading-[1.25] tracking-[-0.025em] text-white/58">
+                              {getProjectVenueLabel(project) || "Scenic Design"}
+                            </p>
+                          </div>
                         </div>
-                      </div>
+                      </article>
                     </Link>
                   ))}
                 </div>
               </section>
             ) : null}
 
+            <section
+              aria-labelledby="scenic-category-navigation"
+              className="px-[clamp(1.5rem,5vw,6rem)] pt-6 md:pt-10"
+            >
+              <div className="mx-auto max-w-[88rem]">
+                <h2
+                  id="scenic-category-navigation"
+                  className="font-sans text-[clamp(2rem,4vw,3.7rem)] font-medium leading-[0.96] tracking-[-0.065em] text-white/56"
+                >
+                  Browse scenic design categories.
+                </h2>
+                <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+                  {scenicCategoryCards.map(category => {
+                    const Icon = scenicCategoryIconMap[category.slug] || Theater;
+                    const isActive = category.slug === normalizedSlug;
+
+                    return (
+                      <Link
+                        key={category.slug}
+                        href={`/tags/${category.slug}`}
+                        className={`group flex min-h-[17rem] flex-col rounded-lg border p-7 transition-colors ${
+                          isActive
+                            ? "border-white/18 bg-black text-white"
+                            : "border-white/8 bg-black/72 text-white hover:border-white/18 hover:bg-black"
+                        }`}
+                      >
+                        <Icon className="h-7 w-7 text-white/82" strokeWidth={1.75} />
+                        <h3 className="mt-10 font-sans text-[clamp(1.5rem,2vw,1.95rem)] font-medium leading-[0.98] tracking-[-0.055em] text-white">
+                          {category.title}
+                        </h3>
+                        <p className="mt-4 text-[0.98rem] leading-6 tracking-[-0.015em] text-white/58">
+                          {category.description}
+                        </p>
+                        <span className="mt-auto pt-6 text-[0.96rem] font-medium tracking-[-0.02em] text-[#63a4ff] transition-colors group-hover:text-[#c77dff]">
+                          View category
+                        </span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            </section>
+
             {articles.length > 0 ? (
-              <section id="articles" className="border-t border-white/10 pt-8">
+              <section id="articles" className="mx-auto max-w-[88rem] border-t border-white/10 px-[clamp(1.5rem,5vw,6rem)] pt-10">
                 <div className="mb-8 flex items-center justify-between gap-6">
-                  <h2 className="font-sans text-[clamp(1.9rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.05em] text-foreground">
+                  <h2 className="font-sans text-[clamp(1.9rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
                     Articles
                   </h2>
-                  <div className="text-sm tracking-[0.08em] text-foreground/42">
+                  <div className="text-sm tracking-[0.08em] text-white/42">
                     {articles.length}
                   </div>
                 </div>
@@ -260,11 +338,11 @@ export default function TagDetail({
                       className="group block border-t border-white/10 pt-4"
                     >
                       <div className="space-y-3">
-                        <h3 className="font-sans text-[1.45rem] font-medium leading-[1.02] tracking-[-0.04em] text-foreground transition-colors group-hover:text-foreground/84">
+                        <h3 className="font-sans text-[1.45rem] font-medium leading-[1.02] tracking-[-0.04em] text-white transition-colors group-hover:text-white/84">
                           {article.title}
                         </h3>
                         {article.excerpt ? (
-                          <p className="line-clamp-4 text-[0.98rem] leading-[1.72] tracking-[-0.012em] text-foreground/58">
+                          <p className="line-clamp-4 text-[0.98rem] leading-[1.72] tracking-[-0.012em] text-white/58">
                             {article.excerpt}
                           </p>
                         ) : null}
@@ -281,6 +359,7 @@ export default function TagDetail({
             ) : null}
           </div>
         </main>
+        <Footer />
       </div>
     </>
   );

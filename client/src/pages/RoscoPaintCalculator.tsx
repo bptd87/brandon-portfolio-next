@@ -336,7 +336,7 @@ export default function RoscoPaintCalculator() {
             </Link>
 
             <div className="mx-auto mt-6 max-w-4xl text-center md:mt-8">
-              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+              <p className="section-kicker text-foreground/40">
                 Rosco Paint Calculator
               </p>
               <h1 className="mt-4 font-sans text-[clamp(2.4rem,7vw,5rem)] font-medium leading-[0.95] tracking-[-0.065em] text-foreground">

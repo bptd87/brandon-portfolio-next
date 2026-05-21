@@ -195,7 +195,7 @@ export default function Collaborators() {
           <div className="mx-auto max-w-[1120px]">
             <header className="mx-auto max-w-[62rem] text-center">
               <AnimatedSection>
-                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+                <p className="section-kicker text-foreground/40">
                   Collaborators
                 </p>
                 <h1 className="mx-auto mt-6 max-w-[15ch] font-sans text-[clamp(3rem,6vw,5.8rem)] font-medium leading-[0.92] tracking-[-0.07em] text-foreground">
@@ -278,7 +278,7 @@ export default function Collaborators() {
                   <AnimatedSection delay={Math.min(index * 80, 220)}>
                     <div className="grid gap-8 border-b border-border/25 pb-8 md:grid-cols-[15rem_minmax(0,1fr)] md:gap-12">
                       <div>
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
+                        <p className="section-kicker text-foreground/42">
                           {String(section.items.length).padStart(2, "0")}
                         </p>
                         <h2 className="mt-3 font-sans text-[clamp(2.2rem,4.5vw,4.4rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">

@@ -23,7 +23,7 @@ export default function NotFound() {
         <section className="border-b border-border">
           <div className="container max-w-6xl py-20 md:py-28">
             <div className="max-w-4xl">
-              <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
+              <p className="mb-4 section-kicker text-foreground/42">
                 404
               </p>
               <h1 className="max-w-[11ch] font-sans text-[clamp(3.2rem,7vw,6.2rem)] font-medium leading-[0.92] tracking-[-0.075em] text-foreground">
@@ -63,7 +63,7 @@ export default function NotFound() {
         <section className="container max-w-6xl py-14 md:py-16">
           <div className="grid gap-10 md:grid-cols-3">
             <div className="border-t border-white/10 pt-5">
-              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
+              <p className="mb-3 section-kicker text-foreground/42">
                 Portfolio
               </p>
               <p className="max-w-[20rem] text-[1rem] leading-[1.75] tracking-[-0.01em] text-foreground/62">
@@ -71,7 +71,7 @@ export default function NotFound() {
               </p>
             </div>
             <div className="border-t border-white/10 pt-5">
-              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
+              <p className="mb-3 section-kicker text-foreground/42">
                 Publish
               </p>
               <p className="max-w-[20rem] text-[1rem] leading-[1.75] tracking-[-0.01em] text-foreground/62">
@@ -79,7 +79,7 @@ export default function NotFound() {
               </p>
             </div>
             <div className="border-t border-white/10 pt-5">
-              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
+              <p className="mb-3 section-kicker text-foreground/42">
                 Contact
               </p>
               <p className="max-w-[20rem] text-[1rem] leading-[1.75] tracking-[-0.01em] text-foreground/62">

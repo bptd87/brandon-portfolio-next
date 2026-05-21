@@ -223,7 +223,7 @@ export default function Scenic3DConverter() {
 
             <div className="mt-8 grid gap-10 xl:grid-cols-[minmax(0,1.02fr)_minmax(25rem,0.98fr)] xl:items-center">
               <div className="max-w-[40rem]">
-                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+                <p className="section-kicker text-foreground/40">
                   Studio App
                 </p>
                 <h1 className="mt-5 font-sans text-[clamp(3rem,6vw,5.25rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">

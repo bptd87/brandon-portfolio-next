@@ -31,10 +31,10 @@ const difficulties = [
 ];
 
 const articlePillTabsListClass =
-  "mx-auto inline-flex h-auto w-fit max-w-full flex-wrap items-center justify-center gap-1 rounded-full border border-white/14 bg-transparent p-1";
+  "mx-auto inline-flex h-auto w-fit max-w-full flex-wrap items-center justify-center gap-1 rounded-full border border-black/14 bg-transparent p-1";
 
 const articlePillTabsTriggerClass =
-  "h-auto flex-none rounded-full border-0 bg-transparent px-5 py-2.5 text-[0.95rem] font-normal tracking-[-0.018em] text-white/62 shadow-none transition-colors hover:text-white data-[state=active]:bg-white/[0.12] data-[state=active]:text-white data-[state=active]:shadow-none dark:data-[state=active]:bg-white/[0.12] dark:data-[state=active]:text-white";
+  "h-auto flex-none rounded-full border-0 bg-transparent px-5 py-2.5 text-[0.95rem] font-normal tracking-[-0.018em] text-black/62 shadow-none transition-colors hover:text-black data-[state=active]:bg-black/[0.08] data-[state=active]:text-black data-[state=active]:shadow-none";
 
 const TUTORIAL_COVER_VARIANTS = {
   "getting-started": [
@@ -1317,7 +1317,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
   if (error || !tutorial) {
     return (
-      <div className="min-h-screen bg-background text-foreground">
+      <div className="publish-editorial min-h-screen bg-[#f1f0ec] text-[#111111]">
         <Header />
         <div className="flex min-h-[70vh] items-center justify-center px-6">
           <div className="text-center">
@@ -1403,7 +1403,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="publish-editorial min-h-screen bg-[#f1f0ec] text-[#111111]">
       <SEO
         title={`${tutorial.title} | Brandon PT Davis`}
         description={tutorialSummary}
@@ -1460,7 +1460,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
       <Header />
 
-      <article className="overflow-hidden py-12 md:py-16">
+      <article className="overflow-hidden bg-[#f1f0ec] py-12 md:py-16">
         <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <header className="mx-auto max-w-[62rem] text-center">
@@ -1487,7 +1487,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
 
           <AnimatedSection
             delay={140}
-            className="mx-auto mt-12 max-w-[88rem] overflow-hidden bg-white/[0.02]"
+            className="mx-auto mt-12 max-w-[76rem] overflow-hidden bg-transparent"
           >
             {videoId ? (
               <DeferredYouTubeEmbed videoId={videoId} title={tutorial.title} eagerPoster />

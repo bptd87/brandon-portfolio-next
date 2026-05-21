@@ -259,7 +259,7 @@ export default function About() {
           <div className="container max-w-[88rem]">
             <AnimatedSection>
               <div className="mx-auto max-w-3xl text-center">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                <p className="section-kicker text-foreground/45">
                   Profile
                 </p>
                 <h1 className="mt-5 font-sans text-[clamp(3.2rem,7vw,7.1rem)] font-medium leading-[0.86] tracking-[-0.065em] text-foreground">
@@ -347,7 +347,7 @@ export default function About() {
 
               <div className="mt-12 grid gap-8 border-y border-border/35 py-7 md:grid-cols-2">
                 <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                  <p className="section-kicker text-foreground/45">
                     Education
                   </p>
                   <div className="mt-5 divide-y divide-border/30 text-[0.98rem] leading-7 text-foreground/62">
@@ -363,7 +363,7 @@ export default function About() {
                 </div>
 
                 <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                  <p className="section-kicker text-foreground/45">
                     Practice
                   </p>
                   <div className="mt-5 divide-y divide-border/30 text-[0.98rem] leading-7 text-foreground/62">
@@ -386,7 +386,7 @@ export default function About() {
               </div>
 
               <div className="mt-12 border-t border-border/35 pt-8">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                <p className="section-kicker text-foreground/45">
                   Working Approach
                 </p>
                 <div className="mt-6 divide-y divide-border/30">
@@ -407,7 +407,7 @@ export default function About() {
               </div>
 
               <div className="mt-12 border-t border-border/35 pt-8">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                <p className="section-kicker text-foreground/45">
                   Recent Notes
                 </p>
                 <div className="mt-5 divide-y divide-border/30 text-[0.98rem] leading-7 text-foreground/64">
@@ -426,7 +426,7 @@ export default function About() {
         <section className="border-y border-border/35 py-14 md:py-20">
           <div className="container max-w-[88rem]">
             <AnimatedSection className="max-w-3xl">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+              <p className="section-kicker text-foreground/45">
                   Profile Sections
               </p>
               <h2 className="mt-4 font-sans text-[clamp(2rem,4vw,3.3rem)] font-medium leading-[0.98] tracking-[-0.05em] text-foreground">
@@ -473,7 +473,7 @@ export default function About() {
             {bioArticleCards.length > 0 ? (
               <AnimatedSection delay={160} className="mt-14 border-t border-border/35 pt-9">
                 <div className="mb-8 max-w-3xl">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                  <p className="section-kicker text-foreground/45">
                     Profiles
                   </p>
                   <h3 className="mt-4 font-sans text-[clamp(1.6rem,3vw,2.4rem)] font-medium leading-[1] tracking-[-0.04em] text-foreground">
@@ -542,7 +542,7 @@ export default function About() {
           <div className="container max-w-[88rem]">
             <AnimatedSection className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
               <div className="max-w-3xl">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                <p className="section-kicker text-foreground/45">
                   Personal Archive
                 </p>
                 <h2 className="mt-4 font-sans text-[clamp(1.8rem,3.5vw,3rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">

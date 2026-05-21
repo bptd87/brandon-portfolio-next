@@ -1,23 +1,35 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import type { CSSProperties, MouseEvent } from "react";
 import { useLocation } from "wouter";
 import Image from "next/image";
 import {
   ArrowUpDown,
+  ArrowDownAZ,
+  Building2,
+  CalendarArrowDown,
+  CalendarArrowUp,
   Check,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Drama,
+  Laugh,
   LayoutGrid,
   List,
+  Music,
+  Rows3,
   SlidersHorizontal,
+  Theater,
+  UsersRound,
+  type LucideIcon,
 } from "lucide-react";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
 import { PortfolioGridSkeleton } from "@/components/SkeletonLoaders";
-import { StickyShowcase } from "@/components/StickyShowcase";
 import StructuredData from "@/components/StructuredData";
 import {
   DropdownMenu,
@@ -30,19 +42,44 @@ import { getProjectPath } from "@/lib/projectRoutes";
 import {
   getScenicProjectTimestamp,
   scenicPortfolioLandingCopy,
-  scenicShowcaseProps,
 } from "@/lib/scenicShowcase";
+import {
+  LEARNING_PORTAL_ARTICLE_SLUG_SET,
+  RETIRED_LEARNING_ARTICLE_SLUG_SET,
+} from "@shared/learningPortal";
+import { getLocalArticles } from "@shared/localArticles";
 import type { ScenicProjectSummary } from "@shared/scenicProjectSummaries";
 
 type SortKey = "newest" | "oldest" | "title" | "venue";
 type ViewMode = "grid" | "list";
+type ScenicArticleCard = {
+  title: string;
+  description: string;
+  href: string;
+  image: string;
+  imageAlt: string;
+  category: string;
+  timestamp: number;
+};
 
-const SORT_OPTIONS: Array<{ key: SortKey; label: string }> = [
-  { key: "newest", label: "Newest first" },
-  { key: "oldest", label: "Oldest first" },
-  { key: "title", label: "Production title" },
-  { key: "venue", label: "Venue" },
+const SORT_OPTIONS: Array<{ key: SortKey; label: string; icon: LucideIcon }> = [
+  { key: "newest", label: "Newest first", icon: CalendarArrowDown },
+  { key: "oldest", label: "Oldest first", icon: CalendarArrowUp },
+  { key: "title", label: "Production title", icon: ArrowDownAZ },
+  { key: "venue", label: "Venue", icon: Building2 },
 ];
+
+const CATEGORY_ICON_MAP: Record<string, LucideIcon> = {
+  comedy: Laugh,
+  drama: Drama,
+  musical: Music,
+  "musical theatre": Music,
+  "musical-theatre": Music,
+  shakespeare: Theater,
+  tya: UsersRound,
+  "theatre for young audiences": UsersRound,
+  "theatre-for-young-audiences": UsersRound,
+};
 
 const normalizeText = (value?: string | null) => {
   if (!value) return "";
@@ -70,24 +107,82 @@ const getDirectorLabel = (project: ScenicProjectSummary) => {
   return project.directorName ? `Dir. ${project.directorName}` : null;
 };
 
+const getCategoryIcon = (label: string) => {
+  return CATEGORY_ICON_MAP[normalizeText(label)] || Rows3;
+};
+
+const getArticleTimestamp = (...dates: Array<string | Date | null | undefined>) =>
+  Math.max(
+    ...dates.map(date => {
+      const time = new Date(date || 0).getTime();
+      return Number.isFinite(time) ? time : 0;
+    })
+  );
+
+const cleanArticleDescription = (value?: string | null) => {
+  const text = String(value || "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (!text) return "Scenic design writing on process, production, and visual storytelling.";
+  if (text.length <= 118) return text;
+  return `${text.slice(0, 115).trim()}...`;
+};
+
+const getScenicDesignArticleCards = (): ScenicArticleCard[] => {
+  return getLocalArticles()
+    .filter(article => !LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug))
+    .filter(article => !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(article.slug))
+    .filter(article => {
+      const category = normalizeText(article.categoryName);
+      const tags = (article.tags || []).map(tag => normalizeText(tag.name || tag.slug));
+      return (
+        category === "scenic design" ||
+        category === "design process" ||
+        tags.some(tag => tag.includes("scenic design") || tag.includes("process"))
+      );
+    })
+    .map(article => ({
+      title: article.title,
+      description: cleanArticleDescription(article.excerpt || article.seoDescription),
+      href: `/articles/${article.slug}`,
+      image: article.coverImageUrl,
+      imageAlt: article.coverImageAlt || `Cover image for ${article.title}`,
+      category: article.categoryName || "Scenic Design",
+      timestamp: getArticleTimestamp(article.publishedAt, article.updatedAt, article.createdAt),
+    }))
+    .filter(card => card.image)
+    .sort((a, b) => b.timestamp - a.timestamp)
+    .slice(0, 8);
+};
+
 function ProjectCard({
   href,
+  layoutClass,
   onNavigate,
   project,
   scenicAlt,
   eager,
+  sizes,
 }: {
   href: string;
+  layoutClass?: string;
   onNavigate: (event: MouseEvent<HTMLAnchorElement>, href: string) => void;
   project: any;
   scenicAlt: (title: string) => string;
   eager?: boolean;
+  sizes: string;
 }) {
   return (
-    <a href={href} onClick={(event) => onNavigate(event, href)}>
-      <div className="group">
+    <a
+      href={href}
+      onClick={(event) => onNavigate(event, href)}
+      className={`group block ${layoutClass || ""}`}
+    >
+      <article className="bg-[#111111]">
         <div
-          className="transition-card relative aspect-[4/3] overflow-hidden bg-background/50"
+          className="transition-card site-media-square relative aspect-[3/2] overflow-hidden bg-[#181818]"
           style={{ viewTransitionName: `project-card-${project.slug}` } as CSSProperties}
         >
           {project.coverImageUrl ? (
@@ -95,37 +190,44 @@ function ProjectCard({
               src={project.coverImageUrl}
               alt={scenicAlt(project.title)}
               fill
-              quality={82}
-              className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
+              quality={86}
+              className="site-media-square object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+              style={{
+                objectPosition: project.coverImagePosition || "center",
+              }}
               priority={Boolean(eager)}
               loading={eager ? "eager" : "lazy"}
               fetchPriority={eager ? "high" : "auto"}
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 25vw, 20vw"
+              sizes={sizes}
             />
           ) : (
-            <div className="aspect-[4/3] w-full bg-muted" />
+            <div className="aspect-[3/2] w-full bg-muted" />
           )}
-        </div>
 
-        <div className="pt-4">
-          <p className="text-[clamp(1.08rem,1.35vw,1.38rem)] font-normal leading-[1.02] tracking-[-0.035em] text-white/90">
-            {project.title}
-          </p>
-          {(getVenueLabel(project) || formatProjectDate(project)) ? (
-            <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm tracking-[-0.01em]">
-              {getVenueLabel(project) ? (
-                <span className="text-white/68">{getVenueLabel(project)}</span>
-              ) : null}
-              {formatProjectDate(project) ? (
-                <span className="text-white/42">{formatProjectDate(project)}</span>
-              ) : null}
-            </div>
-          ) : null}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/82 via-black/32 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 p-[clamp(1.15rem,2.2vw,2rem)]">
+            <h2 className="font-sans text-[clamp(1.45rem,2.1vw,2.4rem)] font-medium leading-[0.96] tracking-[-0.055em] text-white transition-colors group-hover:text-white/80">
+              {project.title}
+            </h2>
+            {getVenueLabel(project) ? (
+              <p className="mt-2 text-[clamp(0.9rem,1.05vw,1.08rem)] leading-tight tracking-[-0.025em] text-white/72">
+                {getVenueLabel(project)}
+              </p>
+            ) : null}
+          </div>
         </div>
-      </div>
+      </article>
     </a>
   );
 }
+
+const getProjectPanelClass = (index: number) => {
+  return index % 3 === 0 ? "md:col-span-2" : "";
+};
+
+const getProjectImageSizes = (index: number) => {
+  return index % 3 === 0 ? "100vw" : "(max-width: 768px) 100vw, 50vw";
+};
 
 export default function Projects({
   initialProjects,
@@ -138,9 +240,17 @@ export default function Projects({
   const [selectedYear, setSelectedYear] = useState<string>("all");
   const [sortKey, setSortKey] = useState<SortKey>("newest");
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
+  const articleCardsRef = useRef<HTMLDivElement | null>(null);
 
   const mergedProjects = useMemo(() => initialProjects, [initialProjects]);
   const isLoading = false;
+  const scenicArticleCards = useMemo(() => getScenicDesignArticleCards(), []);
+  const scrollArticleCards = (direction: "previous" | "next") => {
+    articleCardsRef.current?.scrollBy({
+      left: direction === "next" ? 760 : -760,
+      behavior: "smooth",
+    });
+  };
 
   const subcategories = useMemo(() => {
     if (!mergedProjects.length) return [] as Array<{ key: string; label: string }>;
@@ -271,16 +381,6 @@ export default function Projects({
         : selectedYear !== "all"
           ? `${selectedYear} Scenic Design Portfolio`
           : "Scenic Design Portfolio";
-  const isDefaultAllView =
-    selectedSubcategory === "all" &&
-    selectedVenue === "all" &&
-    selectedYear === "all" &&
-    sortKey === "newest";
-  const showShowcase = viewMode === "grid" && isDefaultAllView && sortedProjects.length >= 4;
-  const [featuredProject, ...remainingProjects] = sortedProjects;
-  const showcaseRailProjects = remainingProjects.slice(0, 3);
-  const showcaseGridProjects = remainingProjects.slice(3);
-
   const animateCardDeparture = async (target: HTMLElement) => {
     const card = target.querySelector(".transition-card") as HTMLElement | null;
     if (!card || typeof card.animate !== "function") return;
@@ -331,7 +431,7 @@ export default function Projects({
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#111111] text-white">
       <SEO
         title={scenicArchiveTitle}
         description={scenicArchiveDescription}
@@ -420,11 +520,11 @@ export default function Projects({
       <Header />
 
       <main>
-        <section className="border-b border-border/40 pb-8 pt-24 md:pb-10 md:pt-28">
+        <section className="border-b border-white/10 bg-black pb-8 pt-24 md:pb-10 md:pt-28">
           <div className="container max-w-[88rem]">
             <div className="max-w-5xl">
               {currentHeading === pageTitle ? (
-                <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.24em] text-white/42">
+                <p className="mb-5 section-kicker text-white/42">
                   {pageSubtitle}
                 </p>
               ) : null}
@@ -451,22 +551,28 @@ export default function Projects({
                           : "border-border/50 bg-background/70 text-white/70 hover:border-border hover:text-white"
                       }`}
                     >
+                      <Rows3 className="mr-2 h-4 w-4" />
                       All
                     </button>
-                    {subcategories.map((category) => (
-                      <button
-                        key={category.key}
-                        type="button"
-                        onClick={() => setSelectedSubcategory(category.key)}
-                        className={`inline-flex h-10 items-center whitespace-nowrap rounded-full border px-4 text-sm tracking-[-0.01em] transition-colors ${
-                          selectedSubcategory === category.key
-                            ? "border-foreground/20 bg-foreground text-background"
-                            : "border-border/50 bg-background/70 text-white/70 hover:border-border hover:text-white"
-                        }`}
-                      >
-                        {category.label}
-                      </button>
-                    ))}
+                    {subcategories.map((category) => {
+                      const CategoryIcon = getCategoryIcon(category.label);
+
+                      return (
+                        <button
+                          key={category.key}
+                          type="button"
+                          onClick={() => setSelectedSubcategory(category.key)}
+                          className={`inline-flex h-10 items-center whitespace-nowrap rounded-full border px-4 text-sm tracking-[-0.01em] transition-colors ${
+                            selectedSubcategory === category.key
+                              ? "border-foreground/20 bg-foreground text-background"
+                              : "border-border/50 bg-background/70 text-white/70 hover:border-border hover:text-white"
+                          }`}
+                        >
+                          <CategoryIcon className="mr-2 h-4 w-4" />
+                          {category.label}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -476,28 +582,34 @@ export default function Projects({
                   <button
                     type="button"
                     onClick={() => setSelectedSubcategory("all")}
-                    className={`text-[1.05rem] transition-colors ${
+                    className={`inline-flex items-center gap-2 text-[1.05rem] transition-colors ${
                       selectedSubcategory === "all"
                         ? "text-white"
                         : "text-white/52 hover:text-white/80"
                     }`}
                   >
+                    <Rows3 className="h-4 w-4" />
                     All
                   </button>
-                  {subcategories.map((category) => (
-                    <button
-                      key={category.key}
-                      type="button"
-                      onClick={() => setSelectedSubcategory(category.key)}
-                      className={`text-[1.05rem] transition-colors ${
-                        selectedSubcategory === category.key
-                          ? "text-white"
-                          : "text-white/52 hover:text-white/80"
-                      }`}
-                    >
-                      {category.label}
-                    </button>
-                  ))}
+                  {subcategories.map((category) => {
+                    const CategoryIcon = getCategoryIcon(category.label);
+
+                    return (
+                      <button
+                        key={category.key}
+                        type="button"
+                        onClick={() => setSelectedSubcategory(category.key)}
+                        className={`inline-flex items-center gap-2 text-[1.05rem] transition-colors ${
+                          selectedSubcategory === category.key
+                            ? "text-white"
+                            : "text-white/52 hover:text-white/80"
+                        }`}
+                      >
+                        <CategoryIcon className="h-4 w-4" />
+                        {category.label}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -625,16 +737,23 @@ export default function Projects({
                     align="end"
                     className="w-56 rounded-2xl border-border/60 bg-background/95 p-2"
                   >
-                    {SORT_OPTIONS.map((option) => (
-                      <DropdownMenuItem
-                        key={option.key}
-                        onClick={() => setSortKey(option.key)}
-                        className="flex items-center justify-between rounded-xl px-3 py-2 text-sm"
-                      >
-                        <span>{option.label}</span>
-                        {sortKey === option.key ? <Check className="h-4 w-4" /> : null}
-                      </DropdownMenuItem>
-                    ))}
+                    {SORT_OPTIONS.map((option) => {
+                      const SortIcon = option.icon;
+
+                      return (
+                        <DropdownMenuItem
+                          key={option.key}
+                          onClick={() => setSortKey(option.key)}
+                          className="flex items-center justify-between gap-3 rounded-xl px-3 py-2 text-sm"
+                        >
+                          <span className="inline-flex items-center gap-2">
+                            <SortIcon className="h-4 w-4 text-white/54" />
+                            {option.label}
+                          </span>
+                          {sortKey === option.key ? <Check className="h-4 w-4" /> : null}
+                        </DropdownMenuItem>
+                      );
+                    })}
                   </DropdownMenuContent>
                 </DropdownMenu>
 
@@ -683,80 +802,63 @@ export default function Projects({
         {isLoading ? (
           <PortfolioGridSkeleton />
         ) : sortedProjects.length > 0 ? (
-          <>
-            {showShowcase && featuredProject ? (
-              <>
-                <StickyShowcase
-                  continuationItems={showcaseGridProjects}
-                  featuredItem={featuredProject}
-                  itemAlt={scenicAlt}
-                  itemHref={getProjectPath}
-                  onNavigate={navigateWithTransition}
-                  railItems={showcaseRailProjects}
-                  title={featuredProject.title}
-                  {...scenicShowcaseProps}
-                />
-              </>
+          <section className="bg-[#111111] px-[clamp(0.9rem,1.8vw,1.35rem)] py-[clamp(0.9rem,1.8vw,1.35rem)] pb-20 md:pb-28">
+            {viewMode === "grid" ? (
+              <div className="grid grid-cols-1 gap-[clamp(0.9rem,1.8vw,1.35rem)] md:grid-cols-2">
+                {sortedProjects.map((project, index) => {
+                  const href = getProjectPath(project);
+
+                  return (
+                    <ProjectCard
+                      key={`${project.slug}-${index}`}
+                      eager={index < 2}
+                      href={href}
+                      layoutClass={getProjectPanelClass(index)}
+                      onNavigate={navigateWithTransition}
+                      project={project}
+                      scenicAlt={scenicAlt}
+                      sizes={getProjectImageSizes(index)}
+                    />
+                  );
+                })}
+              </div>
             ) : (
-              <section className="pb-20 pt-12 md:pb-28 md:pt-14">
-                <div className="container max-w-[88rem]">
-                  {viewMode === "grid" ? (
-                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
-                      {sortedProjects.map((project, index) => {
-                        const href = getProjectPath(project);
+              <div className="mx-auto max-w-[88rem] border-t border-white/12">
+                {sortedProjects.map((project, index) => {
+                  const href = getProjectPath(project);
+                  const directorLabel = getDirectorLabel(project);
 
-                        return (
-                          <ProjectCard
-                            key={project.slug}
-                            eager={index < 2}
-                            href={href}
-                            onNavigate={navigateWithTransition}
-                            project={project}
-                            scenicAlt={scenicAlt}
-                          />
-                        );
-                      })}
-                    </div>
-                  ) : (
-                    <div className="border-t border-border/35">
-                      {sortedProjects.map((project) => {
-                        const href = getProjectPath(project);
-                        const directorLabel = getDirectorLabel(project);
+                  return (
+                    <a
+                      key={`${project.slug}-${index}`}
+                      href={href}
+                      onClick={(event) => navigateWithTransition(event, href)}
+                      className="group grid gap-4 border-b border-white/12 py-5 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8"
+                    >
+                      <div className="space-y-2 text-sm text-white/48">
+                        <p className="text-white/82">{getVenueLabel(project)}</p>
+                        <p>{formatProjectDate(project) || "Date unavailable"}</p>
+                      </div>
 
-                        return (
-                          <a
-                            key={project.slug}
-                            href={href}
-                            onClick={(event) => navigateWithTransition(event, href)}
-                            className="group grid gap-4 border-b border-border/35 py-5 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8"
-                          >
-                            <div className="space-y-2 text-sm text-white/48">
-                              <p className="text-white/82">{getVenueLabel(project)}</p>
-                              <p>{formatProjectDate(project) || "Date unavailable"}</p>
-                            </div>
-
-                            <div className="min-w-0">
-                              <p className="text-[1.12rem] font-normal tracking-[-0.025em] text-white/88">
-                                {project.title}
-                              </p>
-                              {directorLabel ? (
-                                <p className="mt-2 text-sm leading-6 text-white/52">{directorLabel}</p>
-                              ) : null}
-                              {project.subcategory ? (
-                                <p className="mt-1 text-sm leading-6 text-white/38">{project.subcategory}</p>
-                              ) : null}
-                            </div>
-                          </a>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              </section>
+                      <div className="min-w-0">
+                        <p className="text-[1.12rem] font-normal tracking-[-0.025em] text-white/88">
+                          {project.title}
+                        </p>
+                        {directorLabel ? (
+                          <p className="mt-2 text-sm leading-6 text-white/52">{directorLabel}</p>
+                        ) : null}
+                        {project.subcategory ? (
+                          <p className="mt-1 text-sm leading-6 text-white/38">{project.subcategory}</p>
+                        ) : null}
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
             )}
-          </>
+          </section>
         ) : (
-          <section className="pb-24 pt-16">
+          <section className="bg-[#111111] pb-24 pt-16">
             <div className="container max-w-[88rem] text-center">
               <p className="text-white/55">
                 No scenic design productions match the current filters.
@@ -765,48 +867,145 @@ export default function Projects({
           </section>
         )}
 
-        <section className="border-t border-border/35 py-16 md:py-20">
+        <section className="border-t border-white/12 bg-[#111111] py-18 md:py-24">
           <div className="container max-w-[88rem]">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
-              About This Portfolio
-            </p>
-            <div className="mt-4 grid gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(20rem,0.8fr)]">
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(24rem,0.72fr)] lg:items-start">
               <div className="space-y-5">
-                <h2 className="font-sans text-[clamp(1.6rem,3vw,2.4rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-white">
-                  Scenic design work, organized by production.
-                </h2>
-                <p className="max-w-3xl text-[1rem] leading-7 text-white/64 md:text-[1.05rem]">
-                  As a USA 829 scenic designer, this portfolio documents production work across
-                  regional theatre, summer stock, and academic performance. The material includes
-                  concept development, drafting, white models, rendering studies, and realized
-                  stage photography.
+                <p className="text-[clamp(1.05rem,1.4vw,1.3rem)] font-medium leading-none tracking-[-0.035em] text-white/46">
+                  Portfolio notes
                 </p>
-                <p className="max-w-3xl text-[1rem] leading-7 text-white/56 md:text-[1.05rem]">
-                  Each project begins with the script and the collaborative framework around it,
-                  then moves through research, spatial study, drafting coordination, and production
-                  execution. The aim is consistent: environments that support story, performer
-                  movement, and audience focus.
+                <h2 className="max-w-3xl font-sans text-[clamp(2.4rem,5vw,5.2rem)] font-medium leading-[0.88] tracking-[-0.075em] text-white">
+                  Production images first. Process in context.
+                </h2>
+                <p className="max-w-3xl text-[1.05rem] leading-7 text-white/68 md:text-[1.15rem] md:leading-8">
+                  This archive is built around realized scenic design: the stage picture, the
+                  architecture of the room, and the way each environment supports the performer.
+                  Production photography leads because it shows scale, atmosphere, and how the
+                  design actually lives under light, movement, and audience focus.
+                </p>
+                <p className="max-w-3xl text-[1.05rem] leading-7 text-white/54 md:text-[1.15rem] md:leading-8">
+                  The filters are there for a working archive: move by genre, theatre company, or
+                  season, then open a project for credits, additional images, and design context.
+                  The goal is not just to show attractive photographs, but to make the thinking
+                  behind the work easy to enter.
                 </p>
               </div>
 
-              <div className="border-t border-border/35 pt-5 lg:border-t-0 lg:pt-0">
-                <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
-                  Core Focus Areas
-                </h3>
-                <ul className="mt-4 divide-y divide-border/35 text-sm text-white/64 md:text-base">
-                  <li className="py-3">Scenic design for plays and musicals</li>
-                  <li className="py-3">Drafting and build documentation for production teams</li>
-                  <li className="py-3">Rendering studies for visual communication and alignment</li>
-                  <li className="py-3">Collaboration with lighting, costume, and technical teams</li>
-                  <li className="py-3">Story-driven environments for live performance</li>
-                </ul>
-                <p className="pt-4 text-xs uppercase tracking-[0.18em] text-white/42">
-                  USA 829 • Southern California • Available Nationally
-                </p>
+              <div className="grid gap-3">
+                {[
+                  {
+                    icon: Drama,
+                    title: "Scenic design",
+                    copy: "Plays, musicals, Shakespeare, new work, and repertory production gathered as a visual archive.",
+                  },
+                  {
+                    icon: Rows3,
+                    title: "Production process",
+                    copy: "Research, drafting, rendering, model work, and build coordination are treated as part of the same design story.",
+                  },
+                  {
+                    icon: Building2,
+                    title: "Collaborative rooms",
+                    copy: "Each project reflects the directors, shops, performers, and production teams that shaped the final stage picture.",
+                  },
+                ].map(({ icon: Icon, title, copy }) => (
+                  <div
+                    key={title}
+                    className="rounded-[1.5rem] bg-black p-6 text-white shadow-[0_18px_54px_rgba(0,0,0,0.28)] ring-1 ring-white/[0.07]"
+                  >
+                    <Icon className="mb-8 h-7 w-7 text-white/82" strokeWidth={1.8} aria-hidden="true" />
+                    <h3 className="max-w-[14ch] font-sans text-[1.55rem] font-medium leading-[0.96] tracking-[-0.055em] text-white">
+                      {title}
+                    </h3>
+                    <p className="mt-4 max-w-md text-[0.98rem] leading-6 text-white/58">
+                      {copy}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </section>
+
+        {scenicArticleCards.length > 0 ? (
+          <section className="border-t border-white/12 bg-[#111111] py-16 md:py-24">
+            <div className="px-[clamp(1.5rem,5vw,6rem)]">
+              <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <p className="text-[clamp(1.05rem,1.4vw,1.3rem)] font-medium leading-none tracking-[-0.035em] text-white/46">
+                    Scenic design writing
+                  </p>
+                  <h2 className="mt-3 max-w-[13ch] bg-gradient-to-r from-[#2f6dff] via-[#9d4edd] to-[#d6a8ff] bg-clip-text font-sans text-[clamp(2.4rem,5.2vw,5.4rem)] font-medium leading-[0.9] tracking-[-0.075em] text-transparent">
+                    Notes behind the work.
+                  </h2>
+                </div>
+                <a
+                  href="/articles?category=Scenic%20Design"
+                  className="inline-flex h-11 w-fit items-center justify-center rounded-full border border-[#9d4edd]/72 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-[#e0aaff] transition-colors hover:border-[#c77dff] hover:text-white"
+                >
+                  View articles
+                </a>
+              </div>
+            </div>
+
+            <div
+              ref={articleCardsRef}
+              className="overflow-x-auto px-[clamp(1.5rem,5vw,6rem)] pb-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              <div className="flex min-w-max gap-5 pr-[clamp(1.5rem,5vw,6rem)]">
+                {scenicArticleCards.map(card => (
+                  <a
+                    key={card.href}
+                    href={card.href}
+                    className="group relative flex h-[30rem] w-[min(21rem,78vw)] flex-col justify-end overflow-hidden rounded-[2rem] bg-black p-6 text-white shadow-[0_20px_58px_rgba(0,0,0,0.32)] ring-1 ring-white/[0.06] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_26px_68px_rgba(0,0,0,0.4)] md:w-[22rem]"
+                    aria-label={`Article: ${card.title}`}
+                  >
+                    <img
+                      src={card.image}
+                      alt={card.imageAlt}
+                      className="site-media-square absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.035]"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-black/18" />
+                    <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/88 via-black/48 to-transparent" />
+                    <div className="absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-black/28 to-transparent" />
+
+                    <div className="relative z-10">
+                      <p className="font-sans text-[0.74rem] font-semibold tracking-[-0.015em] text-white/68">
+                        {card.category}
+                      </p>
+                      <h3 className="mt-3 max-w-[13ch] font-sans text-[1.64rem] font-medium leading-[0.98] tracking-[-0.055em] text-white">
+                        {card.title}
+                      </h3>
+                      <p className="mt-4 max-w-[18rem] text-[0.94rem] leading-6 tracking-[-0.012em] text-white/68">
+                        {card.description}
+                      </p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-3 px-[clamp(1.5rem,5vw,6rem)]">
+              <button
+                type="button"
+                onClick={() => scrollArticleCards("previous")}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/[0.08] text-white/62 transition-colors hover:bg-white hover:text-black"
+                aria-label="Previous scenic design articles"
+              >
+                <ChevronLeft className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollArticleCards("next")}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/[0.12] text-white/72 transition-colors hover:bg-white hover:text-black"
+                aria-label="Next scenic design articles"
+              >
+                <ChevronRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
+              </button>
+            </div>
+          </section>
+        ) : null}
       </main>
 
       <Footer />

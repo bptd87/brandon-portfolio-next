@@ -222,7 +222,7 @@ export default function AssistantScenicDesign() {
         <div className="relative flex min-h-[calc(100svh-74px)] items-end px-[clamp(1.5rem,5vw,5.5rem)] pb-10 pt-24 md:pb-16">
           <AnimatedSection>
             <div className="max-w-[72rem]">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/62">
+              <p className="section-kicker text-white/62">
                 Production Support
               </p>
               <h1 className="mt-5 max-w-[12ch] font-sans text-[clamp(3.2rem,7vw,7.4rem)] font-medium leading-[0.88] tracking-[-0.075em] text-white">
@@ -252,7 +252,7 @@ export default function AssistantScenicDesign() {
         <div className="container max-w-[88rem]">
           <AnimatedSection>
             <div className="mb-10 max-w-4xl">
-              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
+              <p className="mb-3 section-kicker text-foreground/42">
                 Selected Credits
               </p>
               <h2 className="mb-4 font-sans text-[clamp(2.2rem,4vw,4rem)] font-medium leading-[0.94] tracking-[-0.06em] text-foreground">
@@ -329,7 +329,7 @@ export default function AssistantScenicDesign() {
         <div className="container max-w-[88rem]">
           <AnimatedSection>
             <div className="mb-10 max-w-4xl">
-              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
+              <p className="mb-3 section-kicker text-foreground/42">
                 Utah Shakespeare Festival
               </p>
               <h2 className="mb-4 font-sans text-[clamp(2.1rem,3.8vw,3.6rem)] font-medium leading-[0.95] tracking-[-0.055em] text-foreground">
@@ -450,7 +450,7 @@ export default function AssistantScenicDesign() {
           <div className="container max-w-[88rem]">
             <AnimatedSection>
               <div className="mb-8 max-w-3xl">
-                <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
+                <p className="mb-3 section-kicker text-foreground/42">
                   Additional Credits
                 </p>
                 <p className="text-[1rem] leading-[1.72] tracking-[-0.01em] text-foreground/58">

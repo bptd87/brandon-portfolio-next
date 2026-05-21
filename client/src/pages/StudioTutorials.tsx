@@ -1,31 +1,29 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import { useLocation } from "wouter";
 import {
-  ArrowUpDown,
-  Check,
-  ChevronDown,
-  LayoutGrid,
-  List,
-  Search,
+  BookOpen,
+  BriefcaseBusiness,
+  FileText,
+  Layers3,
+  MonitorPlay,
+  PenTool,
+  Presentation,
+  Ruler,
   SlidersHorizontal,
+  Sparkles,
+  X,
+  type LucideIcon,
 } from "lucide-react";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { AnimatedSection } from "@/components/AnimatedSection";
+import { PublishingTopBar } from "@/components/PublishingTopBar";
 import { SEO } from "@/components/SEO";
 import { formatUtcDate } from "@/lib/date-format";
-import { Input } from "@/components/ui/input";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Dialog, DialogClose, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import {
   LEARNING_PORTAL_ARTICLE_CATEGORY_BY_SLUG,
   LEARNING_PORTAL_ARTICLE_SLUG_SET,
@@ -34,8 +32,7 @@ import {
 import { getLocalArticles } from "@shared/localArticles";
 import { getLocalTutorials } from "@shared/localStudio";
 
-type SortKey = "newest" | "alphabetical" | "duration";
-type ViewMode = "grid" | "list";
+const ITEMS_PER_PAGE = 8;
 
 type TutorialCardItem = {
   id: number | string;
@@ -95,11 +92,85 @@ const DIFFICULTY_LABELS = [
   { slug: "advanced", name: "Advanced" },
 ] as const;
 
-const SORT_OPTIONS: Array<{ key: SortKey; label: string }> = [
-  { key: "newest", label: "Newest first" },
-  { key: "alphabetical", label: "Article title" },
-  { key: "duration", label: "Longest first" },
-];
+type CategoryStyle = {
+  icon: LucideIcon;
+  color: string;
+  bg: string;
+  chip: string;
+};
+
+const LEARNING_CATEGORY_STYLES: Record<string, CategoryStyle> = {
+  "Getting Started": {
+    icon: BookOpen,
+    color: "text-[#5f16ff]",
+    bg: "bg-[#5f16ff]/12",
+    chip: "bg-[#5f16ff] text-white",
+  },
+  "2D Drafting": {
+    icon: Ruler,
+    color: "text-[#0057ff]",
+    bg: "bg-[#0057ff]/12",
+    chip: "bg-[#0057ff] text-white",
+  },
+  "3D Modeling": {
+    icon: Layers3,
+    color: "text-[#008c84]",
+    bg: "bg-[#008c84]/12",
+    chip: "bg-[#008c84] text-white",
+  },
+  Rendering: {
+    icon: MonitorPlay,
+    color: "text-[#e0007a]",
+    bg: "bg-[#e0007a]/12",
+    chip: "bg-[#e0007a] text-white",
+  },
+  "Design Communication": {
+    icon: Presentation,
+    color: "text-[#ff7a00]",
+    bg: "bg-[#ff7a00]/[0.14]",
+    chip: "bg-[#ff7a00] text-white",
+  },
+  "Career & Practice": {
+    icon: BriefcaseBusiness,
+    color: "text-[#c36a00]",
+    bg: "bg-[#ffb000]/20",
+    chip: "bg-[#ffb000] text-white",
+  },
+  "Design Process": {
+    icon: PenTool,
+    color: "text-[#5f16ff]",
+    bg: "bg-[#5f16ff]/12",
+    chip: "bg-[#5f16ff] text-white",
+  },
+  Portfolio: {
+    icon: FileText,
+    color: "text-[#008c84]",
+    bg: "bg-[#008c84]/12",
+    chip: "bg-[#008c84] text-white",
+  },
+  Technology: {
+    icon: Ruler,
+    color: "text-[#0057ff]",
+    bg: "bg-[#0057ff]/12",
+    chip: "bg-[#0057ff] text-white",
+  },
+  "Design Thinking": {
+    icon: Sparkles,
+    color: "text-[#ce2fff]",
+    bg: "bg-[#ce2fff]/[0.14]",
+    chip: "bg-[#ce2fff] text-white",
+  },
+};
+
+const DEFAULT_LEARNING_CATEGORY_STYLE: CategoryStyle = {
+  icon: Sparkles,
+  color: "text-[#006cff]",
+  bg: "bg-[#006cff]/12",
+  chip: "bg-[#006cff] text-white",
+};
+
+const getLearningCategoryStyle = (category: string | null | undefined) =>
+  LEARNING_CATEGORY_STYLES[category || ""] || DEFAULT_LEARNING_CATEGORY_STYLE;
 
 const TUTORIAL_COVER_VARIANTS = {
   "getting-started": [
@@ -208,23 +279,33 @@ const getTutorialCoverImage = (tutorial: TutorialCardItem) => {
 function LearningGridCard({
   item,
   eager,
+  onCategoryNavigate,
   stagger = 0,
 }: {
   item: LearningCardItem;
   eager?: boolean;
+  onCategoryNavigate: (category: string | null | undefined) => void;
   stagger?: number;
 }) {
+  const categoryStyle = getLearningCategoryStyle(item.categoryLabel);
+  const CategoryIcon = categoryStyle.icon;
+  const dateLabel = item.metaLabel.split(" · ")[1] || item.metaLabel;
+
   return (
     <AnimatedSection delay={Math.min(stagger * 70, 420)}>
-      <a href={item.href} className="group block">
-        <div className="relative aspect-[16/10] overflow-hidden bg-background/50">
+      <a
+        href={item.href}
+        className="group block h-full overflow-hidden rounded-[1.75rem] bg-white shadow-[0_14px_34px_rgba(17,17,17,0.07)] ring-1 ring-black/[0.04] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_22px_54px_rgba(17,17,17,0.11)]"
+      >
+        <div className="flex h-full flex-col">
+        <div className="publish-card-media relative aspect-[16/9] overflow-hidden bg-black/[0.04]">
           {item.coverImageUrl ? (
             <Image
               src={item.coverImageUrl}
               alt={item.coverImageAlt}
               fill
               quality={84}
-              className="object-cover transition-[filter,transform] duration-[900ms] ease-out group-hover:scale-[1.04] group-hover:brightness-110"
+              className="publish-card-image object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.035]"
               loading={eager ? "eager" : "lazy"}
               sizes="(min-width: 1280px) 29vw, (min-width: 768px) 30vw, 94vw"
             />
@@ -232,58 +313,36 @@ function LearningGridCard({
             <div className="h-full w-full bg-white/[0.04]" />
           )}
         </div>
-        <div className="pt-4">
-          <p className="text-[0.68rem] font-medium uppercase tracking-[0.2em] text-white/38">
-            {item.metaLabel}
-          </p>
-          <p className="mt-2 max-w-[24rem] text-[1.08rem] font-normal leading-[1.08] tracking-[-0.035em] text-white/92 transition-transform duration-500 group-hover:translate-x-1">
+        <div className="flex min-h-[13.75rem] flex-1 flex-col px-8 pb-8 pt-7">
+          <div className="mb-5 flex items-center gap-2">
+            <span
+              role="link"
+              tabIndex={0}
+              onClick={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                onCategoryNavigate(item.categoryLabel);
+              }}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  onCategoryNavigate(item.categoryLabel);
+                }
+              }}
+              className={`publish-category-chip inline-flex cursor-pointer items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[0.82rem] font-semibold leading-none tracking-[-0.015em] shadow-[0_5px_16px_rgba(17,17,17,0.12)] transition-transform hover:scale-[1.025] ${categoryStyle.chip}`}
+            >
+              <CategoryIcon className="h-4 w-4" strokeWidth={2.8} />
+              {item.categoryLabel}
+            </span>
+          </div>
+          <p className="max-w-[27rem] text-[1.55rem] font-semibold leading-[1.02] tracking-[-0.058em] text-[#111111] transition-colors duration-500 group-hover:text-[#7b2cff]">
             {item.title}
           </p>
-          <p className="mt-3 line-clamp-2 max-w-[28rem] text-[0.94rem] leading-6 text-white/54">
-            {item.summary}
-          </p>
-          <span className="mt-5 block h-px w-full origin-left scale-x-0 bg-white/45 transition-transform duration-700 group-hover:scale-x-100" />
+          <span className="mt-auto pt-8 text-[1rem] font-semibold tracking-[-0.025em] text-[#6f6b64]">
+            {dateLabel}
+          </span>
         </div>
-      </a>
-    </AnimatedSection>
-  );
-}
-
-function FeaturedLearningCard({ item }: { item: LearningCardItem }) {
-  return (
-    <AnimatedSection>
-      <a href={item.href} className="group block border-b border-white/12 pb-12 md:pb-16">
-        <div className="grid gap-6 md:grid-cols-[minmax(0,1.45fr)_minmax(20rem,0.75fr)] md:gap-10 md:items-end">
-          <div className="relative aspect-[16/9] overflow-hidden bg-background/50">
-            {item.coverImageUrl ? (
-              <Image
-                src={item.coverImageUrl}
-                alt={item.coverImageAlt}
-                fill
-                quality={86}
-                priority
-                sizes="(min-width: 1280px) 58vw, (min-width: 768px) 62vw, 100vw"
-                className="object-cover transition-[filter,transform] duration-[1200ms] ease-out group-hover:scale-[1.035] group-hover:brightness-110"
-              />
-            ) : (
-              <div className="h-full w-full bg-white/[0.04]" />
-            )}
-          </div>
-
-          <div className="flex min-h-full flex-col justify-end">
-            <p className="text-[0.68rem] font-medium uppercase tracking-[0.22em] text-white/38">
-              Featured Tutorial
-            </p>
-            <p className="mt-4 text-[0.75rem] uppercase tracking-[0.18em] text-white/44">
-              {item.metaLabel}
-            </p>
-            <h2 className="mt-3 max-w-[13ch] font-sans text-[clamp(2.1rem,4.8vw,4.8rem)] font-medium leading-[0.9] tracking-[-0.065em] text-white">
-              {item.title}
-            </h2>
-            <p className="mt-5 max-w-[34rem] text-[1rem] leading-7 text-white/62 md:text-[1.05rem]">
-              {item.summary}
-            </p>
-          </div>
         </div>
       </a>
     </AnimatedSection>
@@ -291,12 +350,10 @@ function FeaturedLearningCard({ item }: { item: LearningCardItem }) {
 }
 
 export default function StudioTutorials() {
-  const [, setLocation] = useLocation();
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [selectedDifficulty, setSelectedDifficulty] = useState<string>("all");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [sortKey, setSortKey] = useState<SortKey>("newest");
-  const [viewMode, setViewMode] = useState<ViewMode>("grid");
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [draftCategory, setDraftCategory] = useState(selectedCategory);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const allTutorials = useMemo<TutorialCardItem[]>(
     () =>
@@ -423,69 +480,71 @@ export default function StudioTutorials() {
     ).sort((a, b) => a.localeCompare(b));
   }, [combinedLearningItems]);
 
-  const difficulties = useMemo(() => {
-    return Array.from(
-      new Set(
-        allTutorials
-          .map((tutorial) => getDifficultyLabel(tutorial.difficulty))
-          .filter((value): value is string => Boolean(value))
-      )
-    ).sort((a, b) => a.localeCompare(b));
-  }, [allTutorials]);
-
   const filteredLearningItems = useMemo(() => {
     return combinedLearningItems.filter((item) => {
       if (selectedCategory !== "all" && item.categoryLabel !== selectedCategory) {
         return false;
       }
 
-      if (selectedDifficulty !== "all" && item.difficultyLabel !== selectedDifficulty) {
-        return false;
-      }
-
-      if (searchQuery.trim()) {
-        const query = searchQuery.toLowerCase();
-        if (!item.searchableText.includes(query)) {
-          return false;
-        }
-      }
-
       return true;
     });
-  }, [combinedLearningItems, searchQuery, selectedCategory, selectedDifficulty]);
+  }, [combinedLearningItems, selectedCategory]);
 
   const sortedLearningItems = useMemo(() => {
     const list = [...filteredLearningItems];
 
     list.sort((a, b) => {
-      if (sortKey === "alphabetical") {
-        return a.title.localeCompare(b.title);
-      }
-
-      if (sortKey === "duration") {
-        return b.durationSort - a.durationSort;
-      }
-
       const timeCompare = b.timestamp - a.timestamp;
       if (timeCompare !== 0) return timeCompare;
       return a.title.localeCompare(b.title);
     });
 
     return list;
-  }, [filteredLearningItems, sortKey]);
+  }, [filteredLearningItems]);
 
-  const showFeaturedLearning =
-    viewMode === "grid" &&
-    selectedCategory === "all" &&
-    selectedDifficulty === "all" &&
-    !searchQuery.trim() &&
-    sortKey === "newest";
-  const featuredLearningItem = showFeaturedLearning ? sortedLearningItems[0] : null;
-  const gridLearningItems = featuredLearningItem ? sortedLearningItems.slice(1) : sortedLearningItems;
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory]);
 
-  const activeFilterCount =
-    (selectedDifficulty !== "all" ? 1 : 0) + (searchQuery.trim() ? 1 : 0);
+  const totalPages = Math.max(1, Math.ceil(sortedLearningItems.length / ITEMS_PER_PAGE));
+  const pagedLearningItems = sortedLearningItems.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  useEffect(() => {
+    setCurrentPage((page) => Math.min(page, totalPages));
+  }, [totalPages]);
+
+  const activeFilterCount = selectedCategory !== "all" ? 1 : 0;
   const currentHeading = selectedCategory !== "all" ? selectedCategory : "Scenic Design Learning";
+
+  const openFilter = () => {
+    setDraftCategory(selectedCategory);
+    setFilterOpen(true);
+  };
+
+  const applyFilters = () => {
+    setSelectedCategory(draftCategory);
+    setFilterOpen(false);
+  };
+
+  const navigateToCategory = (category: string | null | undefined) => {
+    const nextCategory = category || "all";
+    setSelectedCategory(nextCategory);
+    if (typeof window !== "undefined") {
+      const query = nextCategory === "all" ? "" : `?category=${encodeURIComponent(nextCategory)}`;
+      window.history.pushState(null, "", `/studio/tutorials${query}`);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const changePage = (page: number) => {
+    setCurrentPage(page);
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   const tutorialArchiveTitle =
     selectedCategory !== "all"
@@ -504,273 +563,173 @@ export default function StudioTutorials() {
         url="https://www.brandonptdavis.com/studio/tutorials"
       />
       <Header />
+      <PublishingTopBar active="tutorials" />
 
       <main>
-        <section className="border-b border-border/40 pb-8 pt-24 md:pb-10 md:pt-28">
-          <div className="container max-w-[88rem]">
+        <section className="pb-8 pt-0 md:pb-12">
+          <div className="px-[clamp(1.5rem,5vw,6rem)]">
             <AnimatedSection>
-              <div className="max-w-3xl">
-                <h1 className="font-sans text-[clamp(2.3rem,4.6vw,3.8rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
+              <div className="mx-auto mt-14 grid max-w-[76rem] gap-6 border-b border-black/12 pb-8 md:mt-18 md:grid-cols-[minmax(0,0.72fr)_minmax(20rem,0.28fr)] md:items-end md:pb-10">
+                <div>
+                <p className="mb-5 text-[clamp(1.05rem,1.4vw,1.3rem)] font-medium leading-none tracking-[-0.035em] text-[#6f6b64]">
+                  Brandon PT Davis + Tutorials
+                </p>
+                <h1 className="font-sans text-[clamp(3.2rem,7vw,7.1rem)] font-medium leading-[0.86] tracking-[-0.075em] text-[#111111]">
                   {currentHeading}
                 </h1>
-                <p className="mt-5 max-w-3xl text-[1rem] leading-7 text-white/58 md:text-[1.05rem]">
+                </div>
+                <p className="max-w-[31rem] text-[1.05rem] leading-7 text-[#5d5851] md:text-[1.12rem]">
                   Tutorials, article guides, and studio references for scenic designers learning to
                   draft, model, render, present, and think through production work with more clarity.
                 </p>
               </div>
             </AnimatedSection>
-
-            <AnimatedSection
-              delay={120}
-              className="mt-10 flex flex-col gap-5 border-t border-border/35 pt-5"
-            >
-              <div className="overflow-x-auto md:overflow-visible">
-                <div className="flex min-w-max items-center gap-3 md:min-w-0 md:flex-wrap">
-                  <button
-                    type="button"
-                    onClick={() => setSelectedCategory("all")}
-                    className={`rounded-full border px-4 py-2 text-[0.92rem] transition-colors ${
-                      selectedCategory === "all"
-                        ? "border-white/30 bg-white/10 text-white"
-                        : "border-border/40 text-white/52 hover:border-border hover:text-white/80"
-                    }`}
-                  >
-                    All
-                  </button>
-                  {categories.map((category) => (
-                    <button
-                      key={category}
-                      type="button"
-                      onClick={() => setSelectedCategory(category)}
-                      className={`rounded-full border px-4 py-2 text-[0.92rem] transition-colors ${
-                        selectedCategory === category
-                          ? "border-white/30 bg-white/10 text-white"
-                          : "border-border/40 text-white/52 hover:border-border hover:text-white/80"
-                      }`}
-                    >
-                      {category}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-3">
-                <div className="relative min-w-[16rem] flex-1 md:max-w-sm">
-                  <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/42" />
-                  <Input
-                    placeholder="Search learning"
-                    value={searchQuery}
-                    onChange={(event) => setSearchQuery(event.target.value)}
-                    className="h-10 rounded-full border-border/50 bg-background pl-9 text-sm text-white placeholder:text-white/35"
-                  />
-                </div>
-
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <button
-                      type="button"
-                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-white/82 transition-colors hover:border-border hover:text-white"
-                    >
-                      <SlidersHorizontal className="h-4 w-4" />
-                      Filter
-                      {activeFilterCount > 0 ? (
-                        <span className="rounded-full bg-foreground px-2 py-0.5 text-[11px] font-medium leading-none text-background">
-                          {activeFilterCount}
-                        </span>
-                      ) : null}
-                    </button>
-                  </PopoverTrigger>
-                  <PopoverContent
-                    align="end"
-                    className="w-[min(24rem,calc(100vw-2rem))] rounded-3xl border-border/60 bg-background/95 p-5"
-                  >
-                    <div className="space-y-5">
-                      <div className="flex items-center justify-between gap-3">
-                        <div>
-                          <p className="text-sm font-medium text-white">Filter articles</p>
-                          <p className="text-xs text-white/52">Refine by difficulty level.</p>
-                        </div>
-                        {selectedDifficulty !== "all" ? (
-                          <button
-                            type="button"
-                            onClick={() => setSelectedDifficulty("all")}
-                            className="text-xs text-white/55 transition-colors hover:text-white"
-                          >
-                            Clear
-                          </button>
-                        ) : null}
-                      </div>
-
-                      <div className="space-y-2">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
-                          Difficulty
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          <button
-                            type="button"
-                            onClick={() => setSelectedDifficulty("all")}
-                            className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
-                              selectedDifficulty === "all"
-                                ? "border-white/30 bg-white/10 text-white"
-                                : "border-border/50 text-white/62 hover:border-border hover:text-white"
-                            }`}
-                          >
-                            All levels
-                          </button>
-                          {difficulties.map((difficulty) => (
-                            <button
-                              key={difficulty}
-                              type="button"
-                              onClick={() => setSelectedDifficulty(difficulty)}
-                              className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
-                                selectedDifficulty === difficulty
-                                  ? "border-white/30 bg-white/10 text-white"
-                                  : "border-border/50 text-white/62 hover:border-border hover:text-white"
-                              }`}
-                            >
-                              {difficulty}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </PopoverContent>
-                </Popover>
-
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <button
-                      type="button"
-                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-white/82 transition-colors hover:border-border hover:text-white"
-                    >
-                      <ArrowUpDown className="h-4 w-4" />
-                      Sort
-                      <ChevronDown className="h-4 w-4" />
-                    </button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent
-                    align="end"
-                    className="w-56 rounded-2xl border-border/60 bg-background/95 p-2"
-                  >
-                    {SORT_OPTIONS.map((option) => (
-                      <DropdownMenuItem
-                        key={option.key}
-                        onClick={() => setSortKey(option.key)}
-                        className="flex items-center justify-between rounded-xl px-3 py-2 text-sm"
-                      >
-                        <span>{option.label}</span>
-                        {sortKey === option.key ? <Check className="h-4 w-4" /> : null}
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-
-                <div className="inline-flex h-10 items-center rounded-full border border-border/50 p-1">
-                  <button
-                    type="button"
-                    onClick={() => setViewMode("grid")}
-                    className={`inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
-                      viewMode === "grid"
-                        ? "bg-foreground text-background"
-                        : "text-white/55 hover:text-white"
-                    }`}
-                    aria-label="Grid view"
-                  >
-                    <LayoutGrid className="h-4 w-4" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setViewMode("list")}
-                    className={`inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
-                      viewMode === "list"
-                        ? "bg-foreground text-background"
-                        : "text-white/55 hover:text-white"
-                    }`}
-                    aria-label="List view"
-                  >
-                    <List className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
-            </AnimatedSection>
           </div>
         </section>
+
+        <Dialog open={filterOpen} onOpenChange={setFilterOpen}>
+          <DialogContent
+            showCloseButton={false}
+            overlayClassName="bg-[#f1f0ec]/55 backdrop-blur-2xl"
+            className="max-h-[min(88vh,46rem)] max-w-[min(46rem,calc(100vw-2rem))] overflow-y-auto rounded-[1.7rem] border-0 bg-[#fbfaf7] p-8 text-[#111111] shadow-[0_35px_110px_rgba(17,17,17,0.24)] sm:p-10"
+          >
+            <DialogClose className="absolute left-6 top-6 inline-flex h-10 w-10 items-center justify-center rounded-full bg-black/[0.06] text-[#6f6b64] transition-colors hover:bg-black/[0.1] hover:text-[#111111]">
+              <X className="h-5 w-5" />
+              <span className="sr-only">Close filters</span>
+            </DialogClose>
+            <div className="pl-14 sm:pl-16">
+              <DialogTitle className="text-[clamp(2rem,4vw,3rem)] font-semibold leading-none tracking-[-0.06em]">
+                Filter by
+              </DialogTitle>
+            </div>
+
+            <div className="mt-10 space-y-9">
+              <div>
+                <p className="mb-4 text-[0.92rem] font-semibold tracking-[-0.02em] text-[#6f6b64]">Category</p>
+                <div className="flex flex-wrap gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setDraftCategory("all")}
+                    className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-[1rem] font-semibold tracking-[-0.025em] transition-colors ${
+                      draftCategory === "all"
+                        ? "bg-[#111111] text-[#fbfaf7]"
+                        : "bg-black/[0.055] text-[#24211f] hover:bg-black/[0.09]"
+                    }`}
+                  >
+                    <PenTool className="h-4 w-4" strokeWidth={2.8} />
+                    All
+                  </button>
+                  {categories.map((category) => {
+                    const categoryStyle = getLearningCategoryStyle(category);
+                    const CategoryIcon = categoryStyle.icon;
+                    return (
+                      <button
+                        key={category}
+                        type="button"
+                        onClick={() => setDraftCategory(category)}
+                        className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-[1rem] font-semibold tracking-[-0.025em] transition-colors ${
+                          draftCategory === category
+                            ? `${categoryStyle.bg} ${categoryStyle.color} ring-1 ring-current/25`
+                            : "bg-black/[0.055] text-[#24211f] hover:bg-black/[0.09]"
+                        }`}
+                      >
+                        <CategoryIcon className="h-4 w-4" strokeWidth={2.8} />
+                        {category}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={applyFilters}
+                  className="rounded-full bg-[#7b2cff] px-7 py-3 text-[1rem] font-semibold tracking-[-0.025em] text-white transition-colors hover:bg-[#6822e6]"
+                >
+                  Apply
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setDraftCategory("all");
+                  }}
+                  className="rounded-full bg-black/[0.055] px-5 py-3 text-[1rem] font-semibold tracking-[-0.025em] text-[#5d5851] transition-colors hover:bg-black/[0.09] hover:text-[#111111]"
+                >
+                  Clear
+                </button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
 
         {sortedLearningItems.length > 0 ? (
           <>
             <section className="pb-20 pt-12 md:pb-28 md:pt-14">
-              <div className="container max-w-[88rem]">
-                {viewMode === "grid" ? (
-                  <>
-                    {featuredLearningItem ? (
-                      <div className="mb-12 md:mb-16">
-                        <FeaturedLearningCard item={featuredLearningItem} />
-                      </div>
+              <div className="mx-auto max-w-[76rem] px-[clamp(1.5rem,5vw,6rem)]">
+                <div className="mb-8 flex items-center justify-start">
+                  <button
+                    type="button"
+                    onClick={openFilter}
+                    className="inline-flex h-11 items-center gap-2 rounded-full bg-[#fbfaf7] px-5 text-[0.95rem] font-semibold tracking-[-0.02em] text-[#111111] shadow-[0_8px_28px_rgba(17,17,17,0.08)] ring-1 ring-black/[0.08] transition-colors hover:bg-white"
+                  >
+                    <SlidersHorizontal className="h-4 w-4" />
+                    Filter
+                    {activeFilterCount > 0 ? (
+                      <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[#111111] px-1.5 text-[0.72rem] leading-none text-[#f1f0ec]">
+                        {activeFilterCount}
+                      </span>
                     ) : null}
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+                  {pagedLearningItems.map((item, index) => (
+                      <LearningGridCard
+                        key={`${item.id}-${selectedCategory}-${currentPage}`}
+                        eager={index < 2}
+                        item={item}
+                        onCategoryNavigate={navigateToCategory}
+                        stagger={index}
+                      />
+                  ))}
+                </div>
 
-                    <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-                      {gridLearningItems.map((item, index) => (
-                        <LearningGridCard
-                          key={`${item.id}-${selectedCategory}-${selectedDifficulty}-${sortKey}-${viewMode}`}
-                          eager={!featuredLearningItem && index < 2}
-                          item={item}
-                          stagger={index}
-                        />
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  <div className="border-t border-border/35">
-                    {sortedLearningItems.map((item, index) => (
-                      <AnimatedSection
-                        key={`${item.id}-${selectedCategory}-${selectedDifficulty}-${sortKey}-${viewMode}`}
-                        delay={Math.min(index * 55, 360)}
+                {totalPages > 1 ? (
+                  <div className="mt-12 flex items-center justify-center gap-2">
+                    {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+                      <button
+                        key={page}
+                        type="button"
+                        onClick={() => changePage(page)}
+                        className={`h-10 min-w-10 rounded-full px-3 text-[0.95rem] font-semibold tracking-[-0.02em] transition-colors ${
+                          currentPage === page
+                            ? "bg-[#111111] text-[#fbfaf7]"
+                            : "bg-[#fbfaf7] text-[#5d5851] shadow-sm ring-1 ring-black/[0.06] hover:text-[#111111]"
+                        }`}
                       >
-                        <a
-                          href={item.href}
-                          onClick={(event) => {
-                            event.preventDefault();
-                            setLocation(item.href);
-                          }}
-                          className="group grid gap-4 border-b border-border/35 py-5 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8"
-                        >
-                          <div className="space-y-2 text-sm text-white/48">
-                            <p className="text-white/82">{item.categoryLabel}</p>
-                            <p>{item.metaLabel}</p>
-                          </div>
-
-                          <div className="min-w-0">
-                            <p className="text-[1.12rem] font-normal tracking-[-0.025em] text-white/88 transition-transform duration-500 group-hover:translate-x-1">
-                              {item.title}
-                            </p>
-                            <p className="mt-2 max-w-3xl text-sm leading-6 text-white/52">
-                              {item.summary}
-                            </p>
-                            <div className="mt-3 text-sm text-white/52">Open tutorial</div>
-                          </div>
-                        </a>
-                      </AnimatedSection>
+                        {page}
+                      </button>
                     ))}
                   </div>
-                )}
+                ) : null}
               </div>
             </section>
           </>
         ) : (
           <section className="pb-24 pt-16">
             <div className="container max-w-[88rem] text-center">
-              <p className="text-white/55">No learning articles match the current filters.</p>
+              <p className="text-[#5d5851]">No learning articles match the current filters.</p>
             </div>
           </section>
         )}
 
-        <section className="border-t border-border/35 py-16 md:py-20">
+        <section className="border-t border-black/10 py-16 md:py-20">
           <div className="container max-w-[88rem]">
             <AnimatedSection>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
+              <p className="text-[clamp(1.05rem,1.4vw,1.3rem)] font-medium leading-none tracking-[-0.035em] text-[#6f6b64]">
                 Learning Paths
               </p>
-              <div className="mt-6 grid border-t border-white/12 md:grid-cols-3">
+              <div className="mt-6 grid border-t border-black/10 md:grid-cols-3">
                 {[
                   [
                     "Drafting",
@@ -787,12 +746,12 @@ export default function StudioTutorials() {
                 ].map(([title, body]) => (
                   <div
                     key={title}
-                    className="border-b border-white/12 py-6 md:border-r md:px-6 md:first:pl-0 md:last:border-r-0 md:last:pr-0"
+                    className="border-b border-black/10 py-6 md:border-r md:px-6 md:first:pl-0 md:last:border-r-0 md:last:pr-0"
                   >
-                    <h2 className="text-[1.1rem] font-normal leading-tight tracking-[-0.03em] text-white/90">
+                    <h2 className="text-[1.1rem] font-semibold leading-tight tracking-[-0.03em] text-[#111111]">
                       {title}
                     </h2>
-                    <p className="mt-3 max-w-[26rem] text-[0.94rem] leading-6 text-white/54">
+                    <p className="mt-3 max-w-[26rem] text-[0.94rem] leading-6 text-[#5d5851]">
                       {body}
                     </p>
                   </div>

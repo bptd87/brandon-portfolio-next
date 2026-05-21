@@ -320,7 +320,11 @@
     height: auto;
   }
 
-  /* Keep photographic/site media square-edged while preserving circular UI avatars. */
+  /* Soft media corners: more Apple-like product polish without rounding icons or UI chrome. */
+  :root {
+    --site-media-radius: clamp(0.85rem, 1.15vw, 1.35rem);
+  }
+
   img,
   picture,
   figure:has(> img),
@@ -331,13 +335,38 @@
   a:has(> picture),
   div:has(> img),
   div:has(> picture) {
-    border-radius: 0 !important;
+    border-radius: var(--site-media-radius) !important;
   }
 
   .rounded-full,
   .rounded-full:has(> img),
   .rounded-full:has(> picture) {
     border-radius: 9999px !important;
+  }
+
+  .site-media-square,
+  .site-media-square:has(> img),
+  .site-media-square:has(> picture),
+  .site-media-square img,
+  img.site-media-square {
+    border-radius: 0 !important;
+  }
+
+  .publish-card-media,
+  .publish-card-media:has(> img),
+  .publish-card-media:has(> picture) {
+    border-radius: 1.75rem 1.75rem 0 0 !important;
+  }
+
+  .publish-card-media img,
+  .publish-card-media picture,
+  img.publish-card-image {
+    border-radius: 0 !important;
+  }
+
+  .publish-category-chip,
+  .publish-category-chip svg {
+    color: #fff !important;
   }
   
   /* Scrollbar styling */
@@ -370,6 +399,17 @@
   .dark ::-webkit-scrollbar-thumb:hover {
     background: oklch(1 0 0 / 30%);
     background-clip: padding-box;
+  }
+}
+
+@layer components {
+  .section-kicker {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: clamp(1rem, 1.45vw, 1.22rem);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.035em;
+    text-transform: none;
   }
 }
 

@@ -153,7 +153,7 @@ export default function Studio() {
         <section className="mx-auto max-w-6xl border-b border-border/18 pb-14">
           <AnimatedSection>
             <div className="mx-auto max-w-4xl text-center">
-              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+              <p className="section-kicker text-foreground/40">
                 Publish
               </p>
               <h1 className="mt-5 font-sans text-[clamp(3rem,6vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
@@ -170,7 +170,7 @@ export default function Studio() {
         <section className="mx-auto mt-14 max-w-6xl">
           <AnimatedSection>
             <div className="mx-auto max-w-3xl text-center">
-              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+              <p className="section-kicker text-foreground/38">
                 Publish Index
               </p>
               <h2 className="mt-4 font-sans text-[clamp(2.1rem,4vw,3.2rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
@@ -231,7 +231,7 @@ export default function Studio() {
         <section className="mx-auto mt-20 max-w-6xl border-t border-border/18 pt-16">
           <AnimatedSection>
             <div className="mx-auto max-w-3xl text-center">
-              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+              <p className="section-kicker text-foreground/38">
                 Studio Tools
               </p>
               <h2 className="mt-4 font-sans text-[clamp(2.1rem,4vw,3.2rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">

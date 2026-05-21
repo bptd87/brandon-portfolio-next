@@ -119,7 +119,7 @@ export default function Syllabus3DModeling() {
 
       <section className="px-6 pb-12 pt-24 md:pb-16 md:pt-28">
         <div className="mx-auto max-w-5xl border-b border-border/25 pb-12">
-          <p className="text-center font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+          <p className="text-center section-kicker text-foreground/40">
             Course Syllabus
           </p>
           <h1 className="mx-auto mt-6 max-w-5xl text-center font-sans text-[clamp(3rem,6vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
@@ -180,7 +180,7 @@ export default function Syllabus3DModeling() {
       <section className="px-6 py-18 md:py-22">
         <div className="mx-auto max-w-[88rem]">
           <div className="grid items-start gap-12 md:grid-cols-[180px_1fr]">
-            <div className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40 md:sticky md:top-32">
+            <div className="section-kicker text-foreground/40 md:sticky md:top-32">
               Overview
             </div>
             <div className="max-w-4xl space-y-8">
@@ -298,7 +298,7 @@ export default function Syllabus3DModeling() {
       <section className="px-6 pb-4 pt-2 md:pb-6 md:pt-4">
         <div className="mx-auto max-w-[88rem] border-t border-border/20 pt-10">
           <div className="max-w-3xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+            <p className="section-kicker text-foreground/45">
               Related Tutorials
             </p>
             <h2 className="mt-4 font-sans text-[clamp(1.8rem,3.6vw,2.8rem)] font-medium leading-[1] tracking-[-0.045em] text-foreground">

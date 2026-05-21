@@ -83,7 +83,7 @@ export default function StudioApps() {
             </Link>
 
             <div className="mx-auto mt-8 max-w-5xl text-center">
-              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+              <p className="section-kicker text-foreground/40">
                 Studio Apps
               </p>
               <h1 className="mt-5 font-sans text-[clamp(3rem,6vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
@@ -107,7 +107,7 @@ export default function StudioApps() {
         <section className="mx-auto mt-14 max-w-6xl">
           <AnimatedSection>
             <div className="mx-auto max-w-3xl text-center">
-              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+              <p className="section-kicker text-foreground/38">
                 App Library
               </p>
               <h2 className="mt-4 font-sans text-[clamp(2.1rem,4vw,3.2rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
@@ -178,7 +178,7 @@ export default function StudioApps() {
 
             <AnimatedSection delay={80}>
               <div className="max-w-[40rem]">
-                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
+                <p className="section-kicker text-foreground/38">
                   iPhone Setup
                 </p>
                 <h2 className="mt-4 font-sans text-[clamp(2rem,3.8vw,3rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">

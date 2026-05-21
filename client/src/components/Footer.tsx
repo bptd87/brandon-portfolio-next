@@ -19,6 +19,7 @@ const FOOTER_SECTIONS = [
       { label: "Articles", href: "/articles", internal: true },
       { label: "Tutorials", href: "/studio/tutorials", internal: true },
       { label: "Scenic Directory", href: "/studio/directory", internal: true },
+      { label: "Studio Apps", href: "/studio/apps", internal: true },
     ],
   },
   {

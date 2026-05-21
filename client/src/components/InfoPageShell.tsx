@@ -44,7 +44,7 @@ export default function InfoPageShell({
         <section className="border-b border-border">
           <div className="container max-w-[88rem] py-16 md:py-20">
             <div className="max-w-4xl">
-              <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/42">
+              <p className="mb-4 section-kicker text-foreground/42">
                 Site Information
               </p>
               <h1 className="max-w-[12ch] font-sans text-[clamp(3rem,6vw,5.4rem)] font-medium leading-[0.92] tracking-[-0.07em] text-foreground">

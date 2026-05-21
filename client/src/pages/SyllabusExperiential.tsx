@@ -129,7 +129,7 @@ export default function SyllabusExperiential() {
 
       <section className="px-6 pb-12 pt-24 md:pb-16 md:pt-28">
         <div className="mx-auto max-w-5xl border-b border-border/25 pb-12">
-          <p className="text-center font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+          <p className="text-center section-kicker text-foreground/40">
             Course Syllabus
           </p>
           <h1 className="mx-auto mt-6 max-w-5xl text-center font-sans text-[clamp(3rem,6vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
@@ -189,7 +189,7 @@ export default function SyllabusExperiential() {
       <section className="px-6 py-18 md:py-22">
         <div className="mx-auto max-w-[88rem]">
           <div className="grid items-start gap-12 md:grid-cols-[180px_1fr]">
-            <div className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40 md:sticky md:top-32">
+            <div className="section-kicker text-foreground/40 md:sticky md:top-32">
               Overview
             </div>
             <div className="max-w-4xl space-y-8">
@@ -306,7 +306,7 @@ export default function SyllabusExperiential() {
         <section className="border-t border-border/25 px-6 py-18 md:py-22">
           <div className="mx-auto max-w-[88rem]">
             <div className="max-w-3xl">
-              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+              <p className="section-kicker text-foreground/40">
                 Featured Course Article
               </p>
               <h2 className="mt-5 font-sans text-[clamp(2rem,4vw,3.1rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">

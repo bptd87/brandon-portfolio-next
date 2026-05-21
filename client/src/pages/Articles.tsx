@@ -1,30 +1,31 @@
 "use client";
 
-import React, { useMemo, useState, type CSSProperties, type MouseEvent } from "react";
+import React, { useEffect, useMemo, useState, type CSSProperties, type MouseEvent } from "react";
 import { useLocation } from "wouter";
 import Image from "next/image";
 import {
-  ArrowUpDown,
-  ArrowUpRight,
-  Check,
-  ChevronDown,
-  LayoutGrid,
-  List,
+  BookOpen,
+  Brush,
+  Drama,
+  Layers3,
+  Palette,
+  PenLine,
+  Shapes,
   SlidersHorizontal,
+  Sparkles,
+  UserRound,
+  Wrench,
+  X,
+  type LucideIcon,
 } from "lucide-react";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { AnimatedSection } from "@/components/AnimatedSection";
+import { PublishingTopBar } from "@/components/PublishingTopBar";
 import { SEO } from "@/components/SEO";
-import { formatUtcDate, getUtcYear } from "@/lib/date-format";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { formatUtcDate } from "@/lib/date-format";
+import { Dialog, DialogClose, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import {
   LEARNING_PORTAL_ARTICLE_SLUG_SET,
   RETIRED_LEARNING_ARTICLE_SLUG_SET,
@@ -44,15 +45,7 @@ type ArticleCardItem = {
   categoryName?: string | null;
 };
 
-type SortKey = "newest" | "oldest" | "title" | "category";
-type ViewMode = "grid" | "list";
-
-const SORT_OPTIONS: Array<{ key: SortKey; label: string }> = [
-  { key: "newest", label: "Newest first" },
-  { key: "oldest", label: "Oldest first" },
-  { key: "title", label: "Article title" },
-  { key: "category", label: "Category" },
-];
+const ITEMS_PER_PAGE = 8;
 
 const decodeHTMLEntities = (text: string): string => {
   if (typeof document === "undefined") return text;
@@ -69,12 +62,6 @@ const formatArticleDate = (article: ArticleCardItem) => {
   const source = article.publishedAt || article.createdAt;
   if (!source) return null;
   return formatUtcDate(source, "short");
-};
-
-const getArticleYear = (article: ArticleCardItem) => {
-  const source = article.publishedAt || article.createdAt;
-  if (!source) return null;
-  return getUtcYear(source);
 };
 
 const normalizeCategoryParam = (value: string | null) => {
@@ -94,29 +81,109 @@ const normalizeCategoryParam = (value: string | null) => {
   }
 };
 
+type CategoryStyle = {
+  icon: LucideIcon;
+  color: string;
+  bg: string;
+  chip: string;
+};
+
+const CATEGORY_STYLES: Record<string, CategoryStyle> = {
+  "Design Process": {
+    icon: PenLine,
+    color: "text-[#5f16ff]",
+    bg: "bg-[#5f16ff]/12",
+    chip: "bg-[#5f16ff] text-white",
+  },
+  "Scenic Design": {
+    icon: Drama,
+    color: "text-[#111111]",
+    bg: "bg-black/[0.09]",
+    chip: "bg-[#111111] text-white",
+  },
+  "Tools & Technology": {
+    icon: Wrench,
+    color: "text-[#0057ff]",
+    bg: "bg-[#0057ff]/12",
+    chip: "bg-[#0057ff] text-white",
+  },
+  "Performance History & Culture": {
+    icon: BookOpen,
+    color: "text-[#c36a00]",
+    bg: "bg-[#ffb000]/20",
+    chip: "bg-[#ffb000] text-white",
+  },
+  "Profiles & Interviews": {
+    icon: UserRound,
+    color: "text-[#e0007a]",
+    bg: "bg-[#e0007a]/12",
+    chip: "bg-[#e0007a] text-white",
+  },
+  Rendering: {
+    icon: Layers3,
+    color: "text-[#008c84]",
+    bg: "bg-[#008c84]/12",
+    chip: "bg-[#008c84] text-white",
+  },
+  "Art Direction": {
+    icon: Palette,
+    color: "text-[#e25f00]",
+    bg: "bg-[#ff7a00]/[0.14]",
+    chip: "bg-[#ff7a00] text-white",
+  },
+  "Themed Entertainment": {
+    icon: Shapes,
+    color: "text-[#ce2fff]",
+    bg: "bg-[#ce2fff]/[0.14]",
+    chip: "bg-[#ce2fff] text-white",
+  },
+  "Personal Essay": {
+    icon: Brush,
+    color: "text-[#ff3b30]",
+    bg: "bg-[#ff3b30]/12",
+    chip: "bg-[#ff3b30] text-white",
+  },
+};
+
+const DEFAULT_CATEGORY_STYLE: CategoryStyle = {
+  icon: Sparkles,
+  color: "text-[#006cff]",
+  bg: "bg-[#006cff]/12",
+  chip: "bg-[#006cff] text-white",
+};
+
+const getCategoryStyle = (category: string | null | undefined) =>
+  CATEGORY_STYLES[category || ""] || DEFAULT_CATEGORY_STYLE;
+
 function ArticleGridCard({
   article,
   eager,
   href,
   onNavigate,
+  onCategoryNavigate,
   stagger = 0,
 }: {
   article: ArticleCardItem;
   eager?: boolean;
   href: string;
   onNavigate: (event: MouseEvent<HTMLAnchorElement>, href: string) => void;
+  onCategoryNavigate: (category: string | null | undefined) => void;
   stagger?: number;
 }) {
-  const meta = [article.categoryName, formatArticleDate(article), article.readTime ? `${article.readTime} min read` : null]
-    .filter(Boolean)
-    .join(" / ");
+  const categoryStyle = getCategoryStyle(article.categoryName);
+  const CategoryIcon = categoryStyle.icon;
+  const dateLabel = formatArticleDate(article);
 
   return (
     <AnimatedSection delay={Math.min(stagger * 70, 420)}>
-      <a href={href} onClick={(event) => onNavigate(event, href)} className="group block">
-      <div>
+      <a
+        href={href}
+        onClick={(event) => onNavigate(event, href)}
+        className="group block h-full overflow-hidden rounded-[1.75rem] bg-white shadow-[0_14px_34px_rgba(17,17,17,0.07)] ring-1 ring-black/[0.04] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_22px_54px_rgba(17,17,17,0.11)]"
+      >
+      <div className="flex h-full flex-col">
         <div
-          className="transition-card relative aspect-[16/10] overflow-hidden bg-background/50"
+          className="publish-card-media transition-card relative aspect-[16/9] overflow-hidden bg-black/[0.04]"
           style={{ viewTransitionName: `article-card-${article.slug}` } as CSSProperties}
         >
           {article.coverImageUrl ? (
@@ -125,7 +192,7 @@ function ArticleGridCard({
               alt={article.coverImageAlt || `Cover image for article: ${decodeHTMLEntities(article.title)}`}
               fill
               quality={82}
-              className="object-cover transition-[filter,transform] duration-[900ms] ease-out group-hover:scale-[1.04] group-hover:brightness-110"
+              className="publish-card-image object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.035]"
               loading={eager ? "eager" : "lazy"}
               sizes="(min-width: 1280px) 29vw, (min-width: 768px) 30vw, 94vw"
             />
@@ -134,83 +201,37 @@ function ArticleGridCard({
           )}
         </div>
 
-        <div className="pt-4">
-          {meta ? (
-            <p className="mb-2 text-[0.68rem] font-medium uppercase tracking-[0.2em] text-white/38">
-              {meta}
-            </p>
-          ) : null}
-          <p className="max-w-[24rem] text-[1.08rem] font-normal leading-[1.08] tracking-[-0.035em] text-white/92 transition-transform duration-500 group-hover:translate-x-1">
+        <div className="flex min-h-[13.75rem] flex-1 flex-col px-8 pb-8 pt-7">
+          <div className="mb-5 flex items-center gap-2">
+            <span
+              role="link"
+              tabIndex={0}
+              onClick={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                onCategoryNavigate(article.categoryName);
+              }}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  onCategoryNavigate(article.categoryName);
+                }
+              }}
+              className={`publish-category-chip inline-flex cursor-pointer items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[0.82rem] font-semibold leading-none tracking-[-0.015em] shadow-[0_5px_16px_rgba(17,17,17,0.12)] transition-transform hover:scale-[1.025] ${categoryStyle.chip}`}
+            >
+              <CategoryIcon className="h-4 w-4" strokeWidth={2.8} />
+              {article.categoryName || "Article"}
+            </span>
+          </div>
+          <p className="max-w-[27rem] text-[1.55rem] font-semibold leading-[1.02] tracking-[-0.058em] text-[#111111] transition-colors duration-500 group-hover:text-[#7b2cff]">
             {decodeHTMLEntities(article.title)}
           </p>
-          {article.excerpt ? (
-            <p className="mt-3 line-clamp-2 max-w-[28rem] text-[0.94rem] leading-6 text-white/54">
-              {decodeHTMLEntities(article.excerpt)}
-            </p>
+          {dateLabel ? (
+            <span className="mt-auto pt-8 text-[1rem] font-semibold tracking-[-0.025em] text-[#6f6b64]">
+              {dateLabel}
+            </span>
           ) : null}
-          <span className="mt-5 block h-px w-full origin-left scale-x-0 bg-white/45 transition-transform duration-700 group-hover:scale-x-100" />
-        </div>
-      </div>
-      </a>
-    </AnimatedSection>
-  );
-}
-
-function FeaturedArticle({
-  article,
-  href,
-  onNavigate,
-}: {
-  article: ArticleCardItem;
-  href: string;
-  onNavigate: (event: MouseEvent<HTMLAnchorElement>, href: string) => void;
-}) {
-  const meta = [article.categoryName, formatArticleDate(article), article.readTime ? `${article.readTime} min read` : null]
-    .filter(Boolean)
-    .join(" / ");
-
-  return (
-    <AnimatedSection>
-      <a
-        href={href}
-        onClick={(event) => onNavigate(event, href)}
-        className="group grid gap-6 border-b border-white/12 pb-12 md:grid-cols-[minmax(0,1.45fr)_minmax(20rem,0.75fr)] md:gap-10 md:pb-16"
-      >
-      <div
-        className="transition-card relative aspect-[16/9] overflow-hidden bg-background/50"
-        style={{ viewTransitionName: `article-card-${article.slug}` } as CSSProperties}
-      >
-        {article.coverImageUrl ? (
-          <Image
-            src={article.coverImageUrl}
-            alt={article.coverImageAlt || `Cover image for article: ${decodeHTMLEntities(article.title)}`}
-            fill
-            priority
-            quality={88}
-            className="object-cover transition-[filter,transform] duration-[1200ms] ease-out group-hover:scale-[1.035] group-hover:brightness-110"
-            sizes="(min-width: 1280px) 58vw, (min-width: 768px) 62vw, 100vw"
-          />
-        ) : (
-          <div className="h-full w-full bg-muted" />
-        )}
-      </div>
-
-      <div className="flex min-h-full flex-col justify-end">
-        <p className="text-[0.68rem] font-medium uppercase tracking-[0.22em] text-white/38">
-          Featured Writing
-        </p>
-        {meta ? <p className="mt-4 text-[0.75rem] uppercase tracking-[0.18em] text-white/44">{meta}</p> : null}
-        <h2 className="mt-3 max-w-[13ch] font-sans text-[clamp(2.1rem,4.8vw,4.8rem)] font-medium leading-[0.9] tracking-[-0.065em] text-white">
-          {decodeHTMLEntities(article.title)}
-        </h2>
-        {article.excerpt ? (
-          <p className="mt-5 max-w-[34rem] text-[1rem] leading-7 text-white/62 md:text-[1.05rem]">
-            {decodeHTMLEntities(article.excerpt)}
-          </p>
-        ) : null}
-        <div className="mt-8 flex items-center gap-3 text-[0.95rem] text-white/72 transition-colors group-hover:text-white">
-          <span>Read article</span>
-          <ArrowUpRight className="h-4 w-4 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1" />
         </div>
       </div>
       </a>
@@ -224,19 +245,9 @@ export default function Articles() {
     if (typeof window === "undefined") return "all";
     return normalizeCategoryParam(new URLSearchParams(window.location.search).get("category"));
   });
-  const [selectedYear, setSelectedYear] = useState<string>(() => {
-    if (typeof window === "undefined") return "all";
-    return new URLSearchParams(window.location.search).get("year") || "all";
-  });
-  const [sortKey, setSortKey] = useState<SortKey>(() => {
-    if (typeof window === "undefined") return "newest";
-    const value = new URLSearchParams(window.location.search).get("sort");
-    return value === "oldest" || value === "title" || value === "category" ? value : "newest";
-  });
-  const [viewMode, setViewMode] = useState<ViewMode>(() => {
-    if (typeof window === "undefined") return "grid";
-    return new URLSearchParams(window.location.search).get("view") === "list" ? "list" : "grid";
-  });
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [draftCategory, setDraftCategory] = useState(selectedCategory);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const allArticles = useMemo<ArticleCardItem[]>(
     () =>
@@ -264,74 +275,55 @@ export default function Articles() {
     ).sort((a, b) => a.localeCompare(b));
   }, [allArticles]);
 
-  const yearOptions = useMemo(() => {
-    return Array.from(
-      new Set(allArticles.map((article) => getArticleYear(article)).filter((value): value is string => Boolean(value)))
-    ).sort((a, b) => Number(b) - Number(a));
-  }, [allArticles]);
-
   const filteredArticles = useMemo(() => {
     return allArticles.filter((article) => {
       if (selectedCategory !== "all" && article.categoryName !== selectedCategory) {
         return false;
       }
 
-      if (selectedYear !== "all" && getArticleYear(article) !== selectedYear) {
-        return false;
-      }
-
       return true;
     });
-  }, [allArticles, selectedCategory, selectedYear]);
+  }, [allArticles, selectedCategory]);
 
   const sortedArticles = useMemo(() => {
     const list = [...filteredArticles];
 
     list.sort((a, b) => {
-      if (sortKey === "title") {
-        return a.title.localeCompare(b.title);
-      }
-
-      if (sortKey === "category") {
-        const categoryCompare = (a.categoryName || "").localeCompare(b.categoryName || "");
-        if (categoryCompare !== 0) return categoryCompare;
-        return getArticleTimestamp(b) - getArticleTimestamp(a);
-      }
-
       const timeCompare = getArticleTimestamp(b) - getArticleTimestamp(a);
-      if (timeCompare !== 0) {
-        return sortKey === "oldest" ? -timeCompare : timeCompare;
-      }
+      if (timeCompare !== 0) return timeCompare;
 
       return a.title.localeCompare(b.title);
     });
 
     return list;
-  }, [filteredArticles, sortKey]);
+  }, [filteredArticles]);
 
-  const activeFilterCount = (selectedYear !== "all" ? 1 : 0);
-  const isDefaultAllView =
-    selectedCategory === "all" && selectedYear === "all" && sortKey === "newest";
-  const currentHeading =
-    selectedCategory !== "all" ? selectedCategory : selectedYear !== "all" ? selectedYear : "Articles";
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory]);
+
+  const totalPages = Math.max(1, Math.ceil(sortedArticles.length / ITEMS_PER_PAGE));
+  const pagedArticles = sortedArticles.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+  useEffect(() => {
+    setCurrentPage((page) => Math.min(page, totalPages));
+  }, [totalPages]);
+  const activeFilterCount = selectedCategory !== "all" ? 1 : 0;
   const articleArchiveTitle =
     selectedCategory !== "all"
       ? `${selectedCategory} Articles | Brandon PT Davis`
-      : selectedYear !== "all"
-        ? `Articles from ${selectedYear} | Brandon PT Davis`
-        : "Scenic Design Articles | Brandon PT Davis";
+      : "Scenic Design Articles | Brandon PT Davis";
   const articleArchiveDescription =
     selectedCategory !== "all"
       ? `Read ${selectedCategory.toLowerCase()} articles by Brandon PT Davis, connecting scenic design, production thinking, and visual storytelling.`
-      : selectedYear !== "all"
-        ? `Browse Brandon PT Davis articles published in ${selectedYear}, covering scenic design, process, rendering, and theatre practice.`
-        : "Articles by Brandon PT Davis on scenic design, design process, rendering communication, themed entertainment, and performance culture.";
+      : "Articles by Brandon PT Davis on scenic design, design process, rendering communication, themed entertainment, and performance culture.";
   const articleArchiveKeywords = [
     "scenic design articles",
     "theatre design writing",
     "Brandon PT Davis articles",
     selectedCategory !== "all" ? selectedCategory : null,
-    selectedYear !== "all" ? `${selectedYear} theatre articles` : null,
   ]
     .filter(Boolean)
     .join(", ");
@@ -382,9 +374,33 @@ export default function Articles() {
   };
 
   const itemHref = (article: ArticleCardItem) => `/articles/${article.slug}`;
-  const showFeaturedArticle = viewMode === "grid" && isDefaultAllView && Boolean(sortedArticles[0]);
-  const featuredArticle = showFeaturedArticle ? sortedArticles[0] : null;
-  const displayedArticles = featuredArticle ? sortedArticles.slice(1) : sortedArticles;
+
+  const openFilter = () => {
+    setDraftCategory(selectedCategory);
+    setFilterOpen(true);
+  };
+
+  const applyFilters = () => {
+    setSelectedCategory(draftCategory);
+    setFilterOpen(false);
+  };
+
+  const navigateToCategory = (category: string | null | undefined) => {
+    const nextCategory = category || "all";
+    setSelectedCategory(nextCategory);
+    if (typeof window !== "undefined") {
+      const query = nextCategory === "all" ? "" : `?category=${encodeURIComponent(nextCategory)}`;
+      window.history.pushState(null, "", `/articles${query}`);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const changePage = (page: number) => {
+    setCurrentPage(page);
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   return (
     <div className="publish-editorial min-h-screen bg-[#f1f0ec] text-[#111111]">
@@ -397,289 +413,195 @@ export default function Articles() {
         url="https://www.brandonptdavis.com/articles"
       />
       <Header />
+      <PublishingTopBar active="articles" />
 
       <main>
-        <section className="pb-8 pt-24 md:pb-10 md:pt-28">
-          <div className="container max-w-[88rem]">
+        <section className="pb-8 pt-0 md:pb-12">
+          <div className="px-[clamp(1.5rem,5vw,6rem)]">
             <AnimatedSection>
-              <div className="grid gap-6 border-b border-white/12 pb-8 md:grid-cols-[minmax(0,0.72fr)_minmax(20rem,0.28fr)] md:items-end md:pb-10">
-                <div>
-                  <p className="mb-4 text-[0.72rem] font-medium uppercase tracking-[0.24em] text-white/38">
-                    Brandon PT Davis / Writing
-                  </p>
-                  <h1 className="font-sans text-[clamp(2.5rem,6vw,6.6rem)] font-medium leading-[0.88] tracking-[-0.075em] text-white">
-                    {currentHeading}
-                  </h1>
-                </div>
-                <p className="max-w-[28rem] text-[1rem] leading-7 text-white/62 md:text-[1.05rem]">
-                  Notes, essays, interviews, and production context from a scenic design practice.
-                  The writing sits close to the portfolio: process, taste, collaboration, and the
-                  work behind the image.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection delay={120}>
-              <div className="mt-6 flex flex-col gap-5 md:mt-8">
-                <div className="overflow-x-auto md:overflow-visible">
-                  <div className="flex min-w-max items-center gap-5 md:min-w-0 md:flex-wrap">
-                    <button
-                      type="button"
-                      onClick={() => setSelectedCategory("all")}
-                      className={`border-b pb-2 text-[0.78rem] uppercase tracking-[0.18em] transition-colors ${
-                        selectedCategory === "all"
-                          ? "border-white text-white"
-                          : "border-transparent text-white/42 hover:border-white/30 hover:text-white/80"
-                      }`}
-                    >
-                      All
-                    </button>
-                    {categories.map((category) => (
-                      <button
-                        key={category}
-                        type="button"
-                        onClick={() => setSelectedCategory(category)}
-                        className={`border-b pb-2 text-[0.78rem] uppercase tracking-[0.18em] transition-colors ${
-                          selectedCategory === category
-                            ? "border-white text-white"
-                            : "border-transparent text-white/42 hover:border-white/30 hover:text-white/80"
-                        }`}
-                      >
-                        {category}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-3">
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <button
-                      type="button"
-                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-white/72 transition-colors hover:border-border hover:text-white"
-                    >
-                      <SlidersHorizontal className="h-4 w-4" />
-                      Filter
-                      {activeFilterCount > 0 ? (
-                        <span className="rounded-full bg-foreground px-2 py-0.5 text-[11px] font-medium leading-none text-background">
-                          {activeFilterCount}
-                        </span>
-                      ) : null}
-                    </button>
-                  </PopoverTrigger>
-                  <PopoverContent
-                    align="end"
-                    className="w-[min(24rem,calc(100vw-2rem))] rounded-3xl border-border/60 bg-background/95 p-5"
-                  >
-                    <div className="space-y-5">
-                      <div className="flex items-center justify-between gap-3">
-                        <div>
-                          <p className="text-sm font-medium text-white">Filter articles</p>
-                          <p className="text-xs text-white/52">Refine by publication year.</p>
-                        </div>
-                        {selectedYear !== "all" && (
-                          <button
-                            type="button"
-                            onClick={() => setSelectedYear("all")}
-                            className="text-xs text-white/55 transition-colors hover:text-white"
-                          >
-                            Clear
-                          </button>
-                        )}
-                      </div>
-
-                      <div className="space-y-2">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
-                          Date
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          <button
-                            type="button"
-                            onClick={() => setSelectedYear("all")}
-                            className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
-                              selectedYear === "all"
-                                ? "border-white/30 bg-white/10 text-white"
-                                : "border-border/50 text-white/62 hover:border-border hover:text-white"
-                            }`}
-                          >
-                            All dates
-                          </button>
-                          {yearOptions.map((year) => (
-                            <button
-                              key={year}
-                              type="button"
-                              onClick={() => setSelectedYear(year)}
-                              className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
-                                selectedYear === year
-                                  ? "border-white/30 bg-white/10 text-white"
-                                  : "border-border/50 text-white/62 hover:border-border hover:text-white"
-                              }`}
-                            >
-                              {year}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </PopoverContent>
-                </Popover>
-
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <button
-                      type="button"
-                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 px-4 text-sm text-white/72 transition-colors hover:border-border hover:text-white"
-                    >
-                      <ArrowUpDown className="h-4 w-4" />
-                      Sort
-                      <ChevronDown className="h-4 w-4" />
-                    </button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent
-                    align="end"
-                    className="w-56 rounded-2xl border-border/60 bg-background/95 p-2"
-                  >
-                    {SORT_OPTIONS.map((option) => (
-                      <DropdownMenuItem
-                        key={option.key}
-                        onClick={() => setSortKey(option.key)}
-                        className="flex items-center justify-between rounded-xl px-3 py-2 text-sm"
-                      >
-                        <span>{option.label}</span>
-                        {sortKey === option.key ? <Check className="h-4 w-4" /> : null}
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-
-                <div className="inline-flex h-10 items-center rounded-full border border-border/50 p-1">
-                  <button
-                    type="button"
-                    onClick={() => setViewMode("grid")}
-                    className={`inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
-                      viewMode === "grid"
-                        ? "bg-foreground text-background"
-                        : "text-white/55 hover:text-white"
-                    }`}
-                    aria-label="Grid view"
-                  >
-                    <LayoutGrid className="h-4 w-4" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setViewMode("list")}
-                    className={`inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
-                      viewMode === "list"
-                        ? "bg-foreground text-background"
-                        : "text-white/55 hover:text-white"
-                    }`}
-                    aria-label="List view"
-                  >
-                    <List className="h-4 w-4" />
-                  </button>
-                </div>
-                </div>
+              <div className="mx-auto flex max-w-[62rem] flex-col items-center gap-8 py-12 md:gap-12 md:py-16">
+                <Image
+                  src="/images/publish/article-top.png"
+                  alt=""
+                  width={1960}
+                  height={484}
+                  priority
+                  className="site-media-square pointer-events-none h-auto w-full object-contain"
+                />
+                <h1 className="text-center font-sans text-[clamp(4rem,8.4vw,7.8rem)] font-semibold leading-[0.86] tracking-[-0.08em] text-[#111111]">
+                  Articles
+                </h1>
+                <Image
+                  src="/images/publish/article-bottom-v2.png"
+                  alt=""
+                  width={1960}
+                  height={484}
+                  priority
+                  className="site-media-square pointer-events-none h-auto w-full object-contain"
+                />
               </div>
             </AnimatedSection>
           </div>
         </section>
 
+        <Dialog open={filterOpen} onOpenChange={setFilterOpen}>
+          <DialogContent
+            showCloseButton={false}
+            overlayClassName="bg-[#f1f0ec]/55 backdrop-blur-2xl"
+            className="max-h-[min(88vh,44rem)] max-w-[min(46rem,calc(100vw-2rem))] overflow-y-auto rounded-[1.7rem] border-0 bg-[#fbfaf7] p-8 text-[#111111] shadow-[0_35px_110px_rgba(17,17,17,0.24)] sm:p-10"
+          >
+            <DialogClose className="absolute left-6 top-6 inline-flex h-10 w-10 items-center justify-center rounded-full bg-black/[0.06] text-[#6f6b64] transition-colors hover:bg-black/[0.1] hover:text-[#111111]">
+              <X className="h-5 w-5" />
+              <span className="sr-only">Close filters</span>
+            </DialogClose>
+            <div className="pl-14 sm:pl-16">
+              <DialogTitle className="text-[clamp(2rem,4vw,3rem)] font-semibold leading-none tracking-[-0.06em]">
+                Filter by
+              </DialogTitle>
+            </div>
+
+            <div className="mt-10 space-y-9">
+              <div>
+                <p className="mb-4 text-[0.92rem] font-semibold tracking-[-0.02em] text-[#6f6b64]">Category</p>
+                <div className="flex flex-wrap gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setDraftCategory("all")}
+                    className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-[1rem] font-semibold tracking-[-0.025em] transition-colors ${
+                      draftCategory === "all"
+                        ? "bg-[#111111] text-[#fbfaf7]"
+                        : "bg-black/[0.055] text-[#24211f] hover:bg-black/[0.09]"
+                    }`}
+                  >
+                    <Sparkles className="h-4 w-4" strokeWidth={2.8} />
+                    All
+                  </button>
+                  {categories.map((category) => {
+                    const categoryStyle = getCategoryStyle(category);
+                    const CategoryIcon = categoryStyle.icon;
+                    return (
+                      <button
+                        key={category}
+                        type="button"
+                        onClick={() => setDraftCategory(category)}
+                        className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-[1rem] font-semibold tracking-[-0.025em] transition-colors ${
+                          draftCategory === category
+                            ? `${categoryStyle.bg} ${categoryStyle.color} ring-1 ring-current/25`
+                            : "bg-black/[0.055] text-[#24211f] hover:bg-black/[0.09]"
+                        }`}
+                      >
+                        <CategoryIcon className="h-4 w-4" strokeWidth={2.8} />
+                        {category}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={applyFilters}
+                  className="rounded-full bg-[#7b2cff] px-7 py-3 text-[1rem] font-semibold tracking-[-0.025em] text-white transition-colors hover:bg-[#6822e6]"
+                >
+                  Apply
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setDraftCategory("all");
+                  }}
+                  className="rounded-full bg-black/[0.055] px-5 py-3 text-[1rem] font-semibold tracking-[-0.025em] text-[#5d5851] transition-colors hover:bg-black/[0.09] hover:text-[#111111]"
+                >
+                  Clear
+                </button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+
         {sortedArticles.length > 0 ? (
           <>
-            <section className="pb-20 pt-10 md:pb-28 md:pt-12">
-              <div className="container max-w-[88rem]">
-                {viewMode === "grid" ? (
-                  <div className="space-y-10 md:space-y-14">
-                    {featuredArticle ? (
-                      <FeaturedArticle
-                        article={featuredArticle}
-                        href={itemHref(featuredArticle)}
+            <section className="pb-20 pt-6 md:pb-28 md:pt-8">
+              <div className="mx-auto max-w-[76rem] px-[clamp(1.5rem,5vw,6rem)]">
+                <div className="mb-8 flex items-center justify-start">
+                  <button
+                    type="button"
+                    onClick={openFilter}
+                    className="inline-flex h-11 items-center gap-2 rounded-full bg-[#fbfaf7] px-5 text-[0.95rem] font-semibold tracking-[-0.02em] text-[#111111] shadow-[0_8px_28px_rgba(17,17,17,0.08)] ring-1 ring-black/[0.08] transition-colors hover:bg-white"
+                  >
+                    <SlidersHorizontal className="h-4 w-4" />
+                    Filter
+                    {activeFilterCount > 0 ? (
+                      <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[#111111] px-1.5 text-[0.72rem] leading-none text-[#f1f0ec]">
+                        {activeFilterCount}
+                      </span>
+                    ) : null}
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+                  {pagedArticles.map((article, index) => {
+                    const href = itemHref(article);
+
+                    return (
+                      <ArticleGridCard
+                        key={`${article.id}-${selectedCategory}-${currentPage}`}
+                        article={article}
+                        eager={index < 2}
+                        href={href}
                         onNavigate={navigateWithTransition}
+                        onCategoryNavigate={navigateToCategory}
+                        stagger={index}
                       />
-                    ) : null}
+                    );
+                  })}
+                </div>
 
-                    {displayedArticles.length > 0 ? (
-                      <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-                        {displayedArticles.map((article, index) => {
-                          const href = itemHref(article);
-
-                          return (
-                            <ArticleGridCard
-                              key={`${article.id}-${selectedCategory}-${selectedYear}-${sortKey}-${viewMode}`}
-                              article={article}
-                              eager={!featuredArticle && index < 2}
-                              href={href}
-                              onNavigate={navigateWithTransition}
-                              stagger={index}
-                            />
-                          );
-                        })}
-                      </div>
-                    ) : null}
+                {totalPages > 1 ? (
+                  <div className="mt-12 flex items-center justify-center gap-2">
+                    {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+                      <button
+                        key={page}
+                        type="button"
+                        onClick={() => changePage(page)}
+                        className={`h-10 min-w-10 rounded-full px-3 text-[0.95rem] font-semibold tracking-[-0.02em] transition-colors ${
+                          currentPage === page
+                            ? "bg-[#111111] text-[#fbfaf7]"
+                            : "bg-[#fbfaf7] text-[#5d5851] shadow-sm ring-1 ring-black/[0.06] hover:text-[#111111]"
+                        }`}
+                      >
+                        {page}
+                      </button>
+                    ))}
                   </div>
-                ) : (
-                  <div className="border-t border-border/35">
-                    {sortedArticles.map((article) => {
-                      const href = itemHref(article);
-
-                      return (
-                        <a
-                          key={`${article.id}-${selectedCategory}-${selectedYear}-${sortKey}-${viewMode}`}
-                          href={href}
-                          onClick={(event) => navigateWithTransition(event, href)}
-                          className="group grid gap-4 border-b border-border/35 py-6 md:grid-cols-[14rem_minmax(0,1fr)] md:gap-8"
-                        >
-                          <div className="space-y-2 text-sm text-white/48">
-                            <p className="text-white/82">{article.categoryName || "Article"}</p>
-                            <p>
-                              {[formatArticleDate(article), article.readTime ? `${article.readTime} min read` : null]
-                                .filter(Boolean)
-                                .join(" · ")}
-                            </p>
-                          </div>
-
-                          <div className="min-w-0">
-                            <p className="text-[1.25rem] font-normal leading-[1.05] tracking-[-0.04em] text-white/92 transition-transform duration-500 group-hover:translate-x-1">
-                              {article.title}
-                            </p>
-                            {article.excerpt ? (
-                              <p className="mt-2 max-w-3xl text-sm leading-6 text-white/52">
-                                {article.excerpt}
-                              </p>
-                            ) : null}
-                          </div>
-                        </a>
-                      );
-                    })}
-                  </div>
-                )}
+                ) : null}
               </div>
             </section>
           </>
         ) : (
           <section className="pb-24 pt-16">
             <div className="container max-w-[88rem] text-center">
-              <p className="text-white/55">No articles match the current filters.</p>
+              <p className="text-[#5d5851]">No articles match the current filters.</p>
             </div>
           </section>
         )}
 
-        <section className="border-t border-border/35 py-16 md:py-20">
+        <section className="border-t border-black/10 py-16 md:py-20">
           <div className="container max-w-[88rem]">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
+            <p className="text-[clamp(1.05rem,1.4vw,1.3rem)] font-medium leading-none tracking-[-0.035em] text-[#6f6b64]">
               Reading Paths
             </p>
-            <div className="mt-6 grid border-t border-white/12 md:grid-cols-3">
+            <div className="mt-6 grid border-t border-black/10 md:grid-cols-3">
               {[
                 ["Process", "How scenic ideas move from research, drafting, models, and rehearsal into a built production."],
                 ["Context", "Notes around theatre, performance culture, and the artistic questions behind the portfolio."],
                 ["Profiles", "Interviews, press, and editorial pieces that place the work inside a wider creative practice."],
               ].map(([title, description]) => (
-                <div key={title} className="border-b border-white/12 py-6 md:border-r md:px-6 md:first:pl-0 md:last:border-r-0">
-                  <h2 className="text-[1.35rem] font-normal leading-none tracking-[-0.045em] text-white">
+                <div key={title} className="border-b border-black/10 py-6 md:border-r md:px-6 md:first:pl-0 md:last:border-r-0">
+                  <h2 className="text-[1.35rem] font-semibold leading-none tracking-[-0.045em] text-[#111111]">
                     {title}
                   </h2>
-                  <p className="mt-4 max-w-[24rem] text-[0.98rem] leading-7 text-white/58">
+                  <p className="mt-4 max-w-[24rem] text-[0.98rem] leading-7 text-[#5d5851]">
                     {description}
                   </p>
                 </div>

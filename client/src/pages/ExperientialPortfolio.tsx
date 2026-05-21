@@ -1,14 +1,13 @@
 "use client";
 
-import { useMemo, type MouseEvent } from "react";
+import type { CSSProperties, MouseEvent } from "react";
 import { useLocation } from "wouter";
+import { Box, Layers3, Lightbulb, UsersRound } from "lucide-react";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
-import { StickyShowcase } from "@/components/StickyShowcase";
 import StructuredData from "@/components/StructuredData";
-import { scenicShowcaseProps, splitScenicShowcaseProjects } from "@/lib/scenicShowcase";
 import {
   getLocalExperientialProjectHref,
   getLocalExperientialProjects,
@@ -63,53 +62,13 @@ function sortExperientialProjectsChronologically(projects: LocalExperientialProj
 export default function ExperientialPortfolio() {
   const [, setLocation] = useLocation();
   const projects = sortExperientialProjectsChronologically(getLocalExperientialProjects());
-  const { featuredProject, showcaseRailProjects, showcaseGridProjects } =
-    splitScenicShowcaseProjects(projects);
+  const featuredProject = projects[0];
   const experientialAlt = (title: string) => `${title} experiential design by Brandon PT Davis`;
   const latestProjectUpdateDate = projects
     .map((project) => project.updatedAt)
     .filter((value): value is string => Boolean(value))
     .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())[0]
     ?.split("T")[0];
-  const showcaseFeaturedItem = useMemo(
-    () =>
-      featuredProject
-        ? {
-            id: featuredProject.slug,
-            slug: featuredProject.slug,
-            title: featuredProject.title,
-            client: undefined,
-            year: featuredProject.year,
-            coverImageUrl: featuredProject.coverImageUrl,
-          }
-        : null,
-    [featuredProject]
-  );
-  const showcaseRailItems = useMemo(
-    () =>
-      showcaseRailProjects.map((project) => ({
-        id: project.slug,
-        slug: project.slug,
-        title: project.title,
-        client: undefined,
-        year: project.year,
-        coverImageUrl: project.coverImageUrl,
-      })),
-    [showcaseRailProjects]
-  );
-  const showcaseContinuationItems = useMemo(
-    () =>
-      showcaseGridProjects.map((project) => ({
-        id: project.slug,
-        slug: project.slug,
-        title: project.title,
-        client: undefined,
-        year: project.year,
-        coverImageUrl: project.coverImageUrl,
-      })),
-    [showcaseGridProjects]
-  );
-
   const animateCardDeparture = async (target: HTMLElement) => {
     const card = target.querySelector(".transition-card") as HTMLElement | null;
     if (!card || typeof card.animate !== "function") return;
@@ -159,7 +118,7 @@ export default function ExperientialPortfolio() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#111111] text-white">
       <SEO
         title={EXPERIENTIAL_PORTFOLIO_TITLE}
         description={EXPERIENTIAL_PORTFOLIO_DESCRIPTION}
@@ -233,53 +192,91 @@ export default function ExperientialPortfolio() {
       <Header />
 
       <main>
-        <section className="border-b border-border/40 pb-8 pt-24 md:pb-10 md:pt-28">
-          <div className="container max-w-[88rem]">
-            <div className="max-w-3xl">
-              <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.24em] text-white/42">
+        <section className="border-b border-white/10 bg-black pb-8 pt-24 md:pb-10 md:pt-28">
+          <div className="px-[clamp(1.5rem,5vw,6rem)]">
+            <div className="max-w-5xl">
+              <p className="mb-5 text-[clamp(1.05rem,1.4vw,1.3rem)] font-medium leading-none tracking-[-0.035em] text-white/46">
                 {experientialPortfolioLandingCopy.subtitle}
               </p>
-              <h1 className="font-sans text-[clamp(2.3rem,4.6vw,3.8rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
+              <h1 className="font-sans text-[clamp(3.2rem,7vw,7.1rem)] font-medium leading-[0.86] tracking-[-0.065em] text-white">
                 {experientialPortfolioLandingCopy.title}
               </h1>
-              <p className="mt-6 max-w-3xl text-[1rem] leading-7 text-white/58 md:text-[1.05rem]">
+              <p className="mt-7 max-w-3xl text-[1.02rem] leading-7 text-white/62 md:text-[1.12rem]">
                 {experientialPortfolioLandingCopy.intro}
               </p>
             </div>
           </div>
         </section>
 
-        {showcaseFeaturedItem ? (
-          <StickyShowcase
-            continuationItems={showcaseContinuationItems}
-            featuredItem={showcaseFeaturedItem}
-            itemAlt={experientialAlt}
-            itemHref={(item) => getLocalExperientialProjectHref({ slug: item.slug })}
-            onNavigate={navigateWithTransition}
-            railItems={showcaseRailItems}
-            title={featuredProject.title}
-            {...scenicShowcaseProps}
-          />
+        {projects.length > 0 ? (
+          <section className="bg-[#111111] py-4 md:py-5">
+            <div className="grid w-full gap-4 px-[clamp(1rem,2vw,1.75rem)] md:grid-cols-2">
+              {projects.map((project, index) => {
+                const href = getLocalExperientialProjectHref(project);
+
+                return (
+                  <a
+                    key={project.slug}
+                    href={href}
+                    onClick={(event) => navigateWithTransition(event, href)}
+                    className={`group block ${index % 3 === 0 ? "md:col-span-2" : ""}`}
+                  >
+                    <article className="bg-[#111111]">
+                      <div
+                        className="transition-card site-media-square relative aspect-[3/2] overflow-hidden bg-[#181818]"
+                        style={{ viewTransitionName: `experiential-card-${project.slug}` } as CSSProperties}
+                      >
+                        {project.coverImageUrl ? (
+                          <img
+                            src={project.coverImageUrl}
+                            alt={experientialAlt(project.title)}
+                            className="site-media-square h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+                            loading={index < 3 ? "eager" : "lazy"}
+                            fetchPriority={index < 3 ? "high" : "auto"}
+                          />
+                        ) : (
+                          <div className="flex h-full w-full items-center justify-center text-white/42">
+                            Image unavailable
+                          </div>
+                        )}
+                        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/84 via-black/34 to-transparent" />
+                        <div className="absolute inset-x-0 bottom-0 p-[clamp(1.15rem,2.2vw,2rem)]">
+                          <h2 className="max-w-[14ch] font-sans text-[clamp(1.55rem,2.4vw,2.9rem)] font-medium leading-[0.96] tracking-[-0.06em] text-white transition-colors group-hover:text-white/80">
+                            {project.title}
+                          </h2>
+                          {project.year ? (
+                            <p className="mt-2 text-[clamp(0.9rem,1.05vw,1.08rem)] leading-tight tracking-[-0.025em] text-white/72">
+                              {project.year}
+                            </p>
+                          ) : null}
+                        </div>
+                      </div>
+                    </article>
+                  </a>
+                );
+              })}
+            </div>
+          </section>
         ) : null}
 
-        <section className="border-t border-border/40 py-16 md:py-20">
-          <div className="container max-w-[88rem]">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
-              About This Portfolio
-            </p>
-            <div className="mt-4 grid gap-10 lg:grid-cols-2">
+        <section className="border-t border-white/12 bg-[#111111] py-18 md:py-24">
+          <div className="px-[clamp(1.5rem,5vw,6rem)]">
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(24rem,0.72fr)] lg:items-start">
               <div className="space-y-5">
-                <h2 className="font-sans text-[clamp(1.6rem,3vw,2.4rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-white">
-                  Experiential Design in Practice
+                <p className="text-[clamp(1.05rem,1.4vw,1.3rem)] font-medium leading-none tracking-[-0.035em] text-white/46">
+                  Experiential notes
+                </p>
+                <h2 className="max-w-3xl font-sans text-[clamp(2.4rem,5vw,5.2rem)] font-medium leading-[0.88] tracking-[-0.075em] text-white">
+                  Case studies that connect concept to installation.
                 </h2>
-                <p className="max-w-3xl text-[1rem] leading-7 text-white/62 md:text-[1.05rem]">
+                <p className="max-w-3xl text-[1.05rem] leading-7 text-white/68 md:text-[1.15rem] md:leading-8">
                   This portfolio focuses on experiential projects that move between concept
                   visualization, client communication, production coordination, and finished
                   installation. The work includes renderings, technical drawing, and completed
                   project imagery presented together so each case study can show the full path
                   from proposal to built result.
                 </p>
-                <p className="max-w-3xl text-[1rem] leading-7 text-white/55 md:text-[1.05rem]">
+                <p className="max-w-3xl text-[1.05rem] leading-7 text-white/54 md:text-[1.15rem] md:leading-8">
                   Rather than splitting those assets into separate categories, these projects are
                   organized around the design problem itself. The goal is to show how visual
                   intent gets communicated early, translated into practical documentation, and
@@ -287,20 +284,42 @@ export default function ExperientialPortfolio() {
                 </p>
               </div>
 
-              <div className="space-y-4 rounded-xl bg-card/20 p-6 md:p-8">
-                <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
-                  Core Focus Areas
-                </h3>
-                <ul className="space-y-3 text-sm text-white/62 md:text-base">
-                  <li>Concept renderings for internal review, client presentations, and alignment</li>
-                  <li>Technical drawing that turns visual direction into buildable information</li>
-                  <li>Project storytelling that keeps design intent visible across phases</li>
-                  <li>Finished-work documentation that shows the installed experience in context</li>
-                  <li>Design support for branded environments, events, and spatial activations</li>
-                </ul>
-                <p className="pt-2 text-xs uppercase tracking-[0.18em] text-white/42">
-                  Concept to installation • Southern California • Available nationally
-                </p>
+              <div className="grid gap-3">
+                {[
+                  {
+                    icon: Lightbulb,
+                    title: "Concept direction",
+                    copy: "Renderings and mood studies for internal review, client presentation, and early alignment.",
+                  },
+                  {
+                    icon: Layers3,
+                    title: "Documentation",
+                    copy: "Technical drawing and spatial planning that turn visual direction into buildable information.",
+                  },
+                  {
+                    icon: UsersRound,
+                    title: "Audience experience",
+                    copy: "Finished-work documentation that shows how a concept becomes a real environment in context.",
+                  },
+                  {
+                    icon: Box,
+                    title: "Project storytelling",
+                    copy: "Case studies organized around the design problem rather than separated into media buckets.",
+                  },
+                ].map(({ icon: Icon, title, copy }) => (
+                  <div
+                    key={title}
+                    className="rounded-[1.5rem] bg-black p-6 text-white shadow-[0_18px_54px_rgba(0,0,0,0.28)] ring-1 ring-white/[0.07]"
+                  >
+                    <Icon className="mb-8 h-7 w-7 text-white/82" strokeWidth={1.8} aria-hidden="true" />
+                    <h3 className="max-w-[14ch] font-sans text-[1.55rem] font-medium leading-[0.96] tracking-[-0.055em] text-white">
+                      {title}
+                    </h3>
+                    <p className="mt-4 max-w-md text-[0.98rem] leading-6 text-white/58">
+                      {copy}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

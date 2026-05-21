@@ -336,7 +336,7 @@ export default function TeachingPhilosophy() {
             <section className="mx-auto mt-16 max-w-[54rem] border-y border-border/30 py-10 md:mt-20 md:py-12">
               <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(14rem,0.9fr)] lg:gap-16">
                 <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                  <p className="section-kicker text-foreground/45">
                     Teaching Record
                   </p>
                   <div className="mt-7 divide-y divide-border/22">
@@ -362,7 +362,7 @@ export default function TeachingPhilosophy() {
                 </div>
 
                 <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+                  <p className="section-kicker text-foreground/45">
                     Courses Taught
                   </p>
                   <div className="mt-7 divide-y divide-border/20 text-[0.98rem] leading-7 text-foreground/62">
@@ -381,7 +381,7 @@ export default function TeachingPhilosophy() {
         <section className="border-t border-border/35 px-4 py-14 sm:px-6 md:py-20 lg:px-8">
           <div className="mx-auto max-w-[1120px]">
             <AnimatedSection className="max-w-3xl">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+              <p className="section-kicker text-foreground/45">
                 Course Structures
               </p>
               <h2 className="mt-4 font-sans text-[clamp(1.8rem,3.5vw,3rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
@@ -427,7 +427,7 @@ export default function TeachingPhilosophy() {
         <section className="border-t border-border/35 px-4 py-14 sm:px-6 md:py-20 lg:px-8">
           <div className="mx-auto max-w-[1120px]">
             <div className="max-w-3xl">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/45">
+              <p className="section-kicker text-foreground/45">
                 Teaching Studio
               </p>
               <h2 className="mt-4 font-sans text-[clamp(1.8rem,3.5vw,3rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">

@@ -32,6 +32,7 @@ const PUBLISH_LINKS = [
   { label: "Articles", href: "/articles" },
   { label: "Tutorials", href: "/studio/tutorials" },
   { label: "Scenic Directory", href: "/studio/directory" },
+  { label: "Studio Apps", href: "/studio/apps" },
 ] as const;
 
 function MenuSection({
@@ -120,7 +121,8 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }: MobileMenu
     setPublishOpen(
       pathname.startsWith("/articles") ||
         pathname.startsWith("/studio/tutorials") ||
-        pathname.startsWith("/studio/directory")
+        pathname.startsWith("/studio/directory") ||
+        pathname.startsWith("/studio/apps")
     );
   }, [isOpen, pathname]);
 
