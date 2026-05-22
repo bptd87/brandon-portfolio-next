@@ -4,20 +4,24 @@ import { Search } from "lucide-react";
 
 type PublishingTopBarProps = {
   active: "articles" | "tutorials";
+  tone?: "light" | "dark";
 };
 
-export function PublishingTopBar({ active }: PublishingTopBarProps) {
+export function PublishingTopBar({ active, tone = "light" }: PublishingTopBarProps) {
+  const isDark = tone === "dark";
   const linkClass = (key: PublishingTopBarProps["active"]) =>
     `text-[0.95rem] tracking-[-0.025em] transition-colors ${
-      active === key ? "text-[#111111]" : "text-[#777169] hover:text-[#111111]"
+      active === key
+        ? isDark ? "text-white" : "text-[#111111]"
+        : isDark ? "text-white/52 hover:text-white" : "text-[#777169] hover:text-[#111111]"
     }`;
 
   return (
-    <div className="border-b border-black/[0.06] bg-[#f7f6f2]/90 backdrop-blur-xl">
+    <div className={`border-b backdrop-blur-xl ${isDark ? "border-white/[0.08] bg-[#070707]/88" : "border-black/[0.06] bg-[#f7f6f2]/90"}`}>
       <div className="mx-auto flex min-h-16 max-w-[76rem] flex-col gap-3 px-[clamp(1.5rem,5vw,6rem)] py-3 md:flex-row md:items-center md:justify-between md:gap-8">
         <a
           href="/studio"
-          className="text-[1.35rem] font-semibold leading-none tracking-[-0.045em] text-[#111111]"
+          className={`text-[1.35rem] font-semibold leading-none tracking-[-0.045em] ${isDark ? "text-white" : "text-[#111111]"}`}
         >
           Publish
         </a>
@@ -37,12 +41,16 @@ export function PublishingTopBar({ active }: PublishingTopBarProps) {
             method="get"
             className="relative w-full md:w-[15rem]"
           >
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#5d5851]" />
+            <Search className={`pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 ${isDark ? "text-white/46" : "text-[#5d5851]"}`} />
             <input
               name="q"
               type="search"
               placeholder="Search publish"
-              className="h-9 w-full rounded-full border-0 bg-black/[0.055] pl-9 pr-4 text-[0.9rem] font-medium tracking-[-0.02em] text-[#111111] outline-none placeholder:text-[#5d5851] focus:bg-white focus:ring-2 focus:ring-[#7b2cff]/30"
+              className={`h-9 w-full rounded-full border-0 pl-9 pr-4 text-[0.9rem] font-medium tracking-[-0.02em] outline-none focus:ring-2 focus:ring-[#7b2cff]/30 ${
+                isDark
+                  ? "bg-white/[0.08] text-white placeholder:text-white/46 focus:bg-white/[0.12]"
+                  : "bg-black/[0.055] text-[#111111] placeholder:text-[#5d5851] focus:bg-white"
+              }`}
             />
           </form>
         </div>

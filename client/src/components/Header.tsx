@@ -159,8 +159,16 @@ export default function Header() {
     /^\/articles(?:\/|$)/.test(location) ||
     /^\/studio\/tutorials(?:\/|$)/.test(location) ||
     /^\/studio\/directory(?:\/|$)/.test(location);
+  const isArticleDetailRoute = /^\/articles\/[^/]+/.test(location);
+  const isProfileLightRoute =
+    location === "/about" ||
+    location === "/resume" ||
+    location === "/creative-statement" ||
+    location === "/about/teaching" ||
+    location === "/about/collaborators" ||
+    location === "/upcoming-productions";
   const isHomeRoute = location === "/";
-  const useLightChrome = isEditorialRoute;
+  const useLightChrome = (isEditorialRoute && !isArticleDetailRoute) || isProfileLightRoute;
   const useImmersiveChrome = isHomeRoute && !desktopMenuOpen && !mobileMenuOpen && !searchOpen;
 
   const headerRef = useRef<HTMLElement>(null);

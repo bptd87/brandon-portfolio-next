@@ -4,12 +4,13 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { PublishingTopBar } from "@/components/PublishingTopBar";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { ProgressiveImage } from '@/components/ProgressiveImage';
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { proxyImageUrl } from "@/lib/imageProxy";
-import { Sparkles, Copy, Check, ChevronLeft, ChevronRight, Link as LinkIcon, Play, Pause, ArrowUpRight } from "lucide-react";
+import { Sparkles, Copy, Check, ChevronLeft, ChevronRight, Link as LinkIcon, Play, Pause, ArrowUpRight, Mail, Linkedin } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -196,13 +197,14 @@ const processHTMLImages = (html: string): string => {
 type ArticleDetailProps = {
   slug?: string;
   article?: ReturnType<typeof getLocalArticleRecordBySlug>;
+  variant?: "article" | "tutorial";
   params?: {
     slug?: string;
   };
 };
 
-export default function ArticleDetail({ slug, article }: ArticleDetailProps = {}) {
-  return <ArticleDetailContent slug={slug} article={article} />;
+export default function ArticleDetail({ slug, article, variant }: ArticleDetailProps = {}) {
+  return <ArticleDetailContent slug={slug} article={article} variant={variant} />;
 }
 
 function getArticleVideoMimeType(url: string) {
@@ -307,7 +309,7 @@ function ArticleInlineVideo({ url, caption }: { url: string; caption?: string })
         </button>
       </div>
       {caption && (
-        <figcaption className="mx-auto mt-4 max-w-[46rem] text-center text-[0.88rem] italic leading-6 text-black/58">
+        <figcaption className="mx-auto mt-4 max-w-[46rem] text-center text-[0.88rem] italic leading-6 text-white/58">
           {decodeHTMLEntities(caption)}
         </figcaption>
       )}
@@ -704,7 +706,7 @@ function ArticleMediaTabs({ section }: { section: any }) {
   );
 }
 
-function ArticleDetailContent({ slug: slugProp, article: initialArticle, params }: ArticleDetailProps) {
+function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant, params }: ArticleDetailProps) {
   const slug = slugProp || params?.slug || "";
   const article = initialArticle || getLocalArticleRecordBySlug(slug);
 
@@ -718,6 +720,20 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [audioDurationSeconds, setAudioDurationSeconds] = useState<number | null>(null);
   const [audioCurrentTimeSeconds, setAudioCurrentTimeSeconds] = useState(0);
+  const [heroScrollProgress, setHeroScrollProgress] = useState(0);
+  const [heroIntroProgress, setHeroIntroProgress] = useState(0);
+  const heroIntroProgressRef = useRef(0);
+  const introTouchYRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const updateHeroScrollProgress = () => {
+      setHeroScrollProgress(Math.min(Math.max(window.scrollY / 180, 0), 1));
+    };
+
+    updateHeroScrollProgress();
+    window.addEventListener("scroll", updateHeroScrollProgress, { passive: true });
+    return () => window.removeEventListener("scroll", updateHeroScrollProgress);
+  }, []);
 
   const scrollGallery = (sectionIndex: number, direction: "prev" | "next") => {
     const container = galleryRefs.current[sectionIndex];
@@ -1066,12 +1082,69 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
   const articleDescription =
     article.excerpt ||
     `${article.title} by Brandon PT Davis on scenic design, production thinking, and visual storytelling.`;
-  const isLearningPortalArticle = LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug);
+  const isLearningPortalArticle = variant === "tutorial" || LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug);
+  const isNarrativeArticle = !isLearningPortalArticle;
   const articleBasePath = isLearningPortalArticle ? "/studio/tutorials" : "/articles";
   const articleUrl = `https://www.brandonptdavis.com${articleBasePath}/${article.slug}`;
+  const encodedArticleUrl = encodeURIComponent(articleUrl);
+  const encodedArticleTitle = encodeURIComponent(decodeHTMLEntities(article.title));
+  const emailShareUrl = `mailto:?subject=${encodedArticleTitle}&body=${encodedArticleTitle}%0A%0A${encodedArticleUrl}`;
+  const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedArticleUrl}`;
+  const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedArticleUrl}`;
+  const heroProgress = Math.max(heroScrollProgress, heroIntroProgress);
+  const heroTitleProgress = Math.min(Math.max((heroProgress - 0.08) / 0.92, 0), 1);
+
+  useEffect(() => {
+    if (!isNarrativeArticle) return;
+
+    heroIntroProgressRef.current = 0;
+    setHeroIntroProgress(0);
+
+    const advanceIntro = (delta: number) => {
+      if (delta <= 0 || window.scrollY > 2 || heroIntroProgressRef.current >= 1) return false;
+
+      const nextProgress = Math.min(1, heroIntroProgressRef.current + delta / 420);
+      heroIntroProgressRef.current = nextProgress;
+      setHeroIntroProgress(nextProgress);
+      return true;
+    };
+
+    const handleWheel = (event: WheelEvent) => {
+      if (advanceIntro(event.deltaY)) {
+        event.preventDefault();
+      }
+    };
+
+    const handleTouchStart = (event: TouchEvent) => {
+      introTouchYRef.current = event.touches[0]?.clientY ?? null;
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      const currentY = event.touches[0]?.clientY;
+      const previousY = introTouchYRef.current;
+      if (currentY == null || previousY == null) return;
+
+      const delta = previousY - currentY;
+      introTouchYRef.current = currentY;
+
+      if (advanceIntro(delta)) {
+        event.preventDefault();
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, [article.slug, isNarrativeArticle]);
 
   return (
-    <div className="publish-editorial min-h-screen bg-[#f1f0ec] text-[#111111]">
+    <div className={isNarrativeArticle ? "min-h-screen bg-[#030303] text-white" : "publish-editorial min-h-screen bg-[#f1f0ec] text-[#111111]"}>
       <SEO
         title={`${article.title} | Brandon PT Davis`}
         description={articleDescription}
@@ -1085,52 +1158,84 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
         url={articleUrl}
       />
       <Header />
-      <article className="article-editorial overflow-hidden bg-[#f1f0ec] py-12 md:py-16">
-        <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
-          <header className="mx-auto max-w-[62rem] text-center">
-            <AnimatedSection>
-              <div className="flex flex-wrap items-center justify-center gap-4 text-[0.92rem] tracking-[-0.015em] text-white/54">
-                <time dateTime={new Date(article.publishedAt || article.createdAt).toISOString()}>
-                  {formatUtcDate(article.publishedAt || article.createdAt, "long")}
-                </time>
-                {article.categoryName ? (
-                  <Link
-                    href={
-                      isLearningPortalArticle
-                        ? "/studio/tutorials"
-                        : `/articles?category=${encodeURIComponent(article.categoryName)}`
-                    }
-                    className="transition-colors hover:text-white"
-                  >
-                    {article.categoryName}
-                  </Link>
-                ) : null}
-                {article.series ? (
-                  <span>{article.series.name}</span>
-                ) : null}
-              </div>
-
-              <h1 className="mx-auto mt-5 max-w-[15ch] font-sans text-[clamp(2.7rem,5.8vw,5.9rem)] font-medium leading-[0.92] tracking-[-0.072em] text-white">
-                {decodeHTMLEntities(article.title)}
-              </h1>
-
-              {article.excerpt && (
-                <p className="mx-auto mt-5 max-w-[42rem] text-[clamp(1rem,1.45vw,1.34rem)] leading-[1.62] tracking-[-0.018em] text-white/68">
-                  {decodeHTMLEntities(article.excerpt)}
-                </p>
-              )}
-
-              {article.series ? (
-                <p className="mx-auto mt-5 max-w-[42rem] text-[0.88rem] font-medium uppercase tracking-[0.16em] text-white/42">
-                  Part {article.series.order} of {article.series.name}
-                </p>
+      <PublishingTopBar active={isLearningPortalArticle ? "tutorials" : "articles"} tone={isNarrativeArticle ? "dark" : "light"} />
+      <article className={isNarrativeArticle ? "article-editorial overflow-hidden bg-[#030303] pb-16 md:pb-24" : "article-editorial article-editorial-light overflow-hidden bg-[#f1f0ec] pb-16 text-[#111111] md:pb-24"}>
+        {isNarrativeArticle ? (
+          <section className="relative min-h-[calc(100svh-8.5rem)] overflow-hidden bg-black">
+              {article.coverImageUrl ? (
+                <button
+                  type="button"
+                  aria-label="Open article image"
+                  className="absolute inset-0 block h-full w-full"
+                  onClick={() => openArticleLightboxAt("cover")}
+                >
+                  <Image
+                    src={article.coverImageUrl}
+                    alt={article.coverImageAlt || article.title}
+                    fill
+                    priority
+                    unoptimized
+                    loading="eager"
+                    fetchPriority="high"
+                    sizes="100vw"
+                    className="object-cover"
+                  />
+                </button>
               ) : null}
+              <div
+                className="absolute inset-0 transition-colors duration-200"
+                style={{ backgroundColor: `rgba(0, 0, 0, ${heroProgress * 0.58})` }}
+              />
+              <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/72 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-[#030303] via-[#030303]/68 to-transparent" />
+
+              <div className="relative z-10 flex min-h-[calc(100svh-8.5rem)] items-center justify-center px-[clamp(1.5rem,5vw,6rem)] py-20 text-center">
+                <div
+                  className="mx-auto max-w-[58rem] transition-opacity duration-150"
+                  style={{ opacity: heroTitleProgress }}
+                >
+                  <div className="mb-5 text-[0.86rem] font-semibold tracking-[-0.02em] text-white/72">
+                    Article
+                  </div>
+
+                  <h1 className="mx-auto max-w-[16ch] text-balance font-sans text-[clamp(2.35rem,4.7vw,5rem)] font-semibold leading-[0.94] tracking-[-0.072em] text-white drop-shadow-[0_0.08em_0.35em_rgba(0,0,0,0.42)]">
+                    {decodeHTMLEntities(article.title)}
+                  </h1>
+
+                  {article.excerpt && (
+                    <p className="mx-auto mt-6 max-w-[40rem] text-balance text-[clamp(1rem,1.38vw,1.28rem)] font-medium leading-[1.34] tracking-[-0.032em] text-white/84 drop-shadow-[0_0.08em_0.35em_rgba(0,0,0,0.45)]">
+                      {decodeHTMLEntities(article.excerpt)}
+                    </p>
+                  )}
+                </div>
+              </div>
+          </section>
+        ) : (
+          <section className="px-[clamp(1.5rem,5vw,6rem)] py-12 md:py-16">
+            <AnimatedSection>
+              <header className="mx-auto max-w-[62rem] text-center">
+                <div className="mb-5 text-[0.86rem] font-semibold tracking-[-0.02em] text-[#777169]">
+                  Tutorial
+                </div>
+
+                <h1 className="mx-auto max-w-[15ch] text-balance font-sans text-[clamp(2.45rem,5.1vw,5.35rem)] font-semibold leading-[0.94] tracking-[-0.074em] text-[#111111]">
+                  {decodeHTMLEntities(article.title)}
+                </h1>
+
+                {article.excerpt && (
+                  <p className="mx-auto mt-6 max-w-[42rem] text-balance text-[clamp(1rem,1.4vw,1.28rem)] font-medium leading-[1.5] tracking-[-0.028em] text-[#5f5a52]">
+                    {decodeHTMLEntities(article.excerpt)}
+                  </p>
+                )}
+              </header>
             </AnimatedSection>
 
-            {article.coverImageUrl && (
-              <AnimatedSection delay={140}>
-                <div
-                  className="group relative mx-auto mt-10 aspect-video max-w-[88rem] overflow-hidden bg-white/[0.02]"
+            {article.coverImageUrl ? (
+              <AnimatedSection delay={120}>
+                <button
+                  type="button"
+                  aria-label="Open tutorial article image"
+                  className="group relative mx-auto mt-10 block aspect-video w-full max-w-[88rem] overflow-hidden rounded-[1.4rem] bg-black/[0.04]"
                   onClick={() => openArticleLightboxAt("cover")}
                 >
                   <Image
@@ -1142,61 +1247,97 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
                     loading="eager"
                     fetchPriority="high"
                     sizes="(min-width: 1280px) 1120px, 100vw"
-                    className="cursor-pointer object-cover transition-[filter,transform] duration-[1200ms] ease-out group-hover:scale-[1.018] group-hover:brightness-110"
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.015]"
                   />
-                </div>
-              </AnimatedSection>
-            )}
-
-            <AnimatedSection delay={260}>
-              <div className="mx-auto mt-8 flex w-full max-w-[62rem] items-center justify-between gap-6 border-t border-white/14 pt-4 text-white/72">
-                <div className="flex items-center gap-4 sm:gap-5">
-                  {articleAudio ? (
-                    <>
-                      <audio
-                        ref={audioRef}
-                        preload="metadata"
-                        src={articleAudio.url}
-                        onLoadedMetadata={(event) => setAudioDurationSeconds(event.currentTarget.duration || null)}
-                        onTimeUpdate={(event) => setAudioCurrentTimeSeconds(event.currentTarget.currentTime || 0)}
-                        onEnded={() => {
-                          setIsAudioPlaying(false);
-                          setAudioCurrentTimeSeconds(0);
-                        }}
-                        onPause={() => setIsAudioPlaying(false)}
-                        onPlay={() => setIsAudioPlaying(true)}
-                      />
-                      <button
-                        type="button"
-                        onClick={handleAudioToggle}
-                        className="inline-flex items-center gap-3 text-[0.96rem] tracking-[-0.018em] transition-colors hover:text-white"
-                      >
-                        <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/18 bg-white/6">
-                          {isAudioPlaying ? <Pause className="h-3.5 w-3.5" /> : <Play className="ml-0.5 h-3.5 w-3.5" />}
-                        </span>
-                        <span>{articleAudio.label || "Listen to article"}</span>
-                      </button>
-                      {displayedAudioTime ? (
-                        <span className="text-[0.96rem] tracking-[-0.018em] text-white/62">
-                          {displayedAudioTime}
-                        </span>
-                      ) : null}
-                    </>
-                  ) : null}
-                </div>
-                <button
-                  type="button"
-                  onClick={handleShare}
-                  className="inline-flex items-center gap-2 text-[0.96rem] tracking-[-0.018em] transition-colors hover:text-white"
-                >
-                  {linkCopied ? <Check className="h-4 w-4" /> : <LinkIcon className="h-4 w-4" />}
-                  <span>{linkCopied ? "Link copied" : "Share"}</span>
                 </button>
-              </div>
-            </AnimatedSection>
-          </header>
+              </AnimatedSection>
+            ) : null}
+          </section>
+        )}
 
-          <AnimatedSection delay={360} className="mx-auto mt-14 max-w-[54rem]">
+        <section className="px-[clamp(1.5rem,5vw,6rem)] py-10 md:py-14">
+          <div className={`mx-auto flex max-w-[44rem] items-center justify-between gap-5 border-y py-4 ${isNarrativeArticle ? "border-white/16" : "border-black/10"}`}>
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.98rem] font-semibold tracking-[-0.025em]">
+              {article.categoryName ? (
+                <Link
+                  href={isLearningPortalArticle ? "/studio/tutorials" : `/articles?category=${encodeURIComponent(article.categoryName)}`}
+                  className="rounded-full bg-[#a64dff] px-4 py-1.5 text-white no-underline transition-colors hover:bg-[#b86aff]"
+                >
+                  {article.categoryName}
+                </Link>
+              ) : null}
+              <time
+                dateTime={new Date(article.publishedAt || article.createdAt).toISOString()}
+                className={isNarrativeArticle ? "text-white/54" : "text-[#777169]"}
+              >
+                {formatUtcDate(article.publishedAt || article.createdAt, "long")}
+              </time>
+            </div>
+            <div className="flex shrink-0 items-center gap-2">
+              {articleAudio ? (
+                <>
+                  <audio
+                    ref={audioRef}
+                    preload="metadata"
+                    src={articleAudio.url}
+                    onLoadedMetadata={(event) => setAudioDurationSeconds(event.currentTarget.duration || null)}
+                    onTimeUpdate={(event) => setAudioCurrentTimeSeconds(event.currentTarget.currentTime || 0)}
+                    onEnded={() => {
+                      setIsAudioPlaying(false);
+                      setAudioCurrentTimeSeconds(0);
+                    }}
+                    onPause={() => setIsAudioPlaying(false)}
+                    onPlay={() => setIsAudioPlaying(true)}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAudioToggle}
+                    aria-label={isAudioPlaying ? "Pause article audio" : "Play article audio"}
+                    className={`inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors ${isNarrativeArticle ? "text-white/56 hover:bg-white/[0.08] hover:text-white" : "text-black/48 hover:bg-black/[0.06] hover:text-black"}`}
+                  >
+                    {isAudioPlaying ? <Pause className="h-4 w-4" /> : <Play className="ml-0.5 h-4 w-4" />}
+                  </button>
+                </>
+              ) : null}
+              <button
+                type="button"
+                onClick={handleShare}
+                aria-label={linkCopied ? "Article link copied" : "Copy article link"}
+                className={`inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors ${isNarrativeArticle ? "text-white/56 hover:bg-white/[0.08] hover:text-white" : "text-black/48 hover:bg-black/[0.06] hover:text-black"}`}
+              >
+                {linkCopied ? <Check className="h-4 w-4" /> : <LinkIcon className="h-4 w-4" />}
+              </button>
+              <a
+                href={emailShareUrl}
+                aria-label="Share article by email"
+                className={`inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors ${isNarrativeArticle ? "text-white/56 hover:bg-white/[0.08] hover:text-white" : "text-black/48 hover:bg-black/[0.06] hover:text-black"}`}
+              >
+                <Mail className="h-4 w-4" />
+              </a>
+              <a
+                href={linkedInShareUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Share article on LinkedIn"
+                className={`inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors ${isNarrativeArticle ? "text-white/56 hover:bg-white/[0.08] hover:text-white" : "text-black/48 hover:bg-black/[0.06] hover:text-black"}`}
+              >
+                <Linkedin className="h-4 w-4" />
+              </a>
+              <a
+                href={facebookShareUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Share article on Facebook"
+                className={`inline-flex h-9 w-9 items-center justify-center rounded-full text-[1rem] font-semibold leading-none no-underline transition-colors ${isNarrativeArticle ? "text-white/56 hover:bg-white/[0.08] hover:text-white" : "text-black/48 hover:bg-black/[0.06] hover:text-black"}`}
+              >
+                f
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <div className="mx-auto w-full max-w-[960px] px-4 sm:px-6 lg:px-8">
+          <AnimatedSection delay={120} className="mx-auto max-w-[44rem]">
           <div>
             <div className="min-w-0">
               <div className="relative">
@@ -1236,6 +1377,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
                 >
                   {Array.isArray(processedSections) && (() => {
                     let h2Index = 0;
+                    let paragraphIndex = 0;
                     return processedSections.map((section: any, index: number) => {
                     switch (section.type) {
                       case 'update_note':
@@ -1304,10 +1446,16 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
                         }
 
                       case 'paragraph':
+                        const isOpeningParagraph = paragraphIndex === 0;
+                        paragraphIndex += 1;
                         return (
                           <p
                             key={index}
-                            className="mb-8 text-[1.02rem] leading-[1.9] tracking-[-0.01em] text-white/80 [&_a]:text-white [&_a]:underline [&_a]:decoration-white/28 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-white/70 [&_strong]:font-bold [&_strong]:text-white"
+                            className={`mb-8 text-[1.02rem] leading-[1.9] tracking-[-0.01em] text-white/80 [&_a]:text-white [&_a]:underline [&_a]:decoration-white/28 [&_a]:underline-offset-4 [&_a]:transition-colors hover:[&_a]:decoration-white/70 [&_strong]:font-bold [&_strong]:text-white ${
+                              isOpeningParagraph
+                                ? "first-letter:float-left first-letter:mr-3 first-letter:mt-2 first-letter:font-sans first-letter:text-[5.4rem] first-letter:font-semibold first-letter:leading-[0.78] first-letter:tracking-[-0.08em] first-letter:text-white"
+                                : ""
+                            }`}
                             dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(section.text || section.content || '') }}
                           />
                         );
@@ -1530,7 +1678,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
                               />
                             </div>
                             {section.caption && (
-                              <figcaption className="mx-auto mt-4 max-w-[46rem] text-center text-[0.88rem] italic leading-6 text-black/58">
+                              <figcaption className="mx-auto mt-4 max-w-[46rem] text-center text-[0.88rem] italic leading-6 text-white/58">
                                 {decodeHTMLEntities(section.caption)}
                               </figcaption>
                             )}
@@ -1710,15 +1858,15 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
 
               {/* Tags Section */}
               {article.tags && article.tags.length > 0 && (
-                <div className="mx-auto mt-16 max-w-[54rem] border-t border-white/12 pt-12">
-                  <h3 className="mb-4 font-sans text-[0.95rem] font-semibold uppercase tracking-[0.18em] text-white/48">
+                <div className={`mx-auto mt-16 max-w-[54rem] border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}>
+                  <h3 className={`mb-4 font-sans text-[0.95rem] font-semibold uppercase tracking-[0.18em] ${isNarrativeArticle ? "text-white/48" : "text-black/42"}`}>
                     Tagged With
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {article.tags.map((tag: any) => (
                       <span
                         key={tag.id}
-                        className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-[0.86rem] font-normal leading-none tracking-[-0.01em] text-white/64"
+                        className={`rounded-full border px-4 py-2 text-[0.86rem] font-normal leading-none tracking-[-0.01em] ${isNarrativeArticle ? "border-white/10 bg-white/[0.03] text-white/64" : "border-black/10 bg-black/[0.035] text-black/58"}`}
                       >
                         {tag.name}
                       </span>
@@ -1730,7 +1878,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
 
 
               {/* Author Bio with Engagement */}
-              <div className="mx-auto mt-16 max-w-[54rem] border-t border-white/12 pt-12">
+              <div className={`mx-auto mt-16 max-w-[54rem] border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}>
                 <div className="flex items-start gap-6">
                   <div className="flex-shrink-0">
                     <div className="w-20 h-20 rounded-full overflow-hidden border border-border/60 shadow-lg">
@@ -1744,8 +1892,8 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
                   </div>
                   <div className="flex-1">
                     <h3 className="mb-2 text-2xl font-sans font-normal tracking-[-0.04em]">Brandon PT Davis</h3>
-                    <p className="mb-4 text-sm uppercase tracking-wider text-white/48">Scenic Designer</p>
-                    <p className="mb-6 leading-relaxed text-white/80">
+                    <p className={`mb-4 text-sm uppercase tracking-wider ${isNarrativeArticle ? "text-white/48" : "text-black/42"}`}>Scenic Designer</p>
+                    <p className={`mb-6 leading-relaxed ${isNarrativeArticle ? "text-white/80" : "text-black/64"}`}>
                       Brandon PT Davis is a scenic designer based in San Diego.
                       His work explores the intersection of physical space, digital technology, and narrative storytelling.
                     </p>
@@ -1763,15 +1911,15 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
       </article>
 
       {linkedScenicProjects.length > 0 && (
-        <section className={`article-editorial bg-[#f1f0ec] ${related.length > 0 ? "pb-10" : "pb-20"}`}>
+        <section className={`${isNarrativeArticle ? "article-editorial bg-[#030303]" : "article-editorial article-editorial-light bg-[#f1f0ec] text-[#111111]"} ${related.length > 0 ? "pb-10" : "pb-20"}`}>
           <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
-            <div className="border-t border-white/12 pt-12">
+            <div className={`border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}>
               <div className="mb-8 flex items-end justify-between">
                 <div>
-                  <p className="mb-3 text-[0.72rem] font-medium uppercase tracking-[0.2em] text-white/40">
+                  <p className={`mb-3 text-[0.72rem] font-medium uppercase tracking-[0.2em] ${isNarrativeArticle ? "text-white/40" : "text-black/42"}`}>
                     Scenic Design Project
                   </p>
-                  <h2 className="text-2xl md:text-3xl font-sans font-normal tracking-[-0.05em] text-white">
+                  <h2 className={`text-2xl md:text-3xl font-sans font-normal tracking-[-0.05em] ${isNarrativeArticle ? "text-white" : "text-[#111111]"}`}>
                     Related production
                   </h2>
                 </div>
@@ -1800,10 +1948,10 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
                         </div>
 
                         <div className="pt-4">
-                          <h3 className={`${singleProject ? "line-clamp-2 text-[1.35rem]" : "line-clamp-3 text-[1.45rem]"} mb-3 font-sans font-normal leading-[1.12] tracking-[-0.04em] text-white transition-colors group-hover:text-white/82`}>
+                          <h3 className={`${singleProject ? "line-clamp-2 text-[1.35rem]" : "line-clamp-3 text-[1.45rem]"} mb-3 font-sans font-normal leading-[1.12] tracking-[-0.04em] transition-colors ${isNarrativeArticle ? "text-white group-hover:text-white/82" : "text-[#111111] group-hover:text-black/72"}`}>
                             {project.title}
                           </h3>
-                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.95rem] tracking-[-0.015em] text-white/52">
+                          <div className={`flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.95rem] tracking-[-0.015em] ${isNarrativeArticle ? "text-white/52" : "text-black/52"}`}>
                             <span>{project.subcategory || "Scenic Design"}</span>
                             {project.client ? <span>{project.client}</span> : null}
                             {project.year ? <span>{project.year}</span> : null}
@@ -1820,23 +1968,23 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
       )}
 
       {related.length > 0 && (
-        <section className="article-editorial bg-[#f1f0ec] pb-20">
+        <section className={`${isNarrativeArticle ? "article-editorial bg-[#030303]" : "article-editorial article-editorial-light bg-[#f1f0ec] text-[#111111]"} pb-20`}>
           <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
-            <div className="border-t border-white/12 pt-12">
+            <div className={`border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}>
               <div className="mb-8 flex items-end justify-between">
                 <div>
                   {article.series ? (
-                    <p className="mb-3 text-[0.72rem] font-medium uppercase tracking-[0.2em] text-white/40">
+                    <p className={`mb-3 text-[0.72rem] font-medium uppercase tracking-[0.2em] ${isNarrativeArticle ? "text-white/40" : "text-black/42"}`}>
                       Collection
                     </p>
                   ) : null}
-                  <h2 className="text-2xl md:text-3xl font-sans font-normal tracking-[-0.05em]">
+                  <h2 className={`text-2xl md:text-3xl font-sans font-normal tracking-[-0.05em] ${isNarrativeArticle ? "text-white" : "text-[#111111]"}`}>
                     {article.series ? `More in ${article.series.name}` : "Keep reading"}
                   </h2>
                 </div>
                 <Link
                   href={articleBasePath}
-                  className="text-base text-white/72 transition-colors hover:text-white"
+                  className={`text-base transition-colors ${isNarrativeArticle ? "text-white/72 hover:text-white" : "text-black/58 hover:text-black"}`}
                 >
                   View all
                 </Link>
@@ -1858,11 +2006,11 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
                       )}
 
                       <div className="pt-4">
-                        <h3 className="mb-3 text-[1.45rem] font-sans font-normal leading-[1.12] tracking-[-0.04em] text-white transition-colors line-clamp-3 group-hover:text-white/82">
+                        <h3 className={`mb-3 text-[1.45rem] font-sans font-normal leading-[1.12] tracking-[-0.04em] transition-colors line-clamp-3 ${isNarrativeArticle ? "text-white group-hover:text-white/82" : "text-[#111111] group-hover:text-black/72"}`}>
                           {decodeHTMLEntities(relatedArticle.title)}
                         </h3>
 
-                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.95rem] tracking-[-0.015em] text-white/52">
+                        <div className={`flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.95rem] tracking-[-0.015em] ${isNarrativeArticle ? "text-white/52" : "text-black/52"}`}>
                           {relatedArticle.categoryName && <span>{relatedArticle.categoryName}</span>}
                           <span>{formatUtcDate(relatedArticle.publishedAt, "short")}</span>
                           {relatedArticle.readTime && (
@@ -1882,83 +2030,51 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
         </section>
       )}
 
-      <div className="relative z-20 bg-background">
+      <div className={`relative z-20 ${isNarrativeArticle ? "bg-background" : "bg-[#f1f0ec]"}`}>
         <Footer />
       </div>
 
       <style>{`
-        /* Editorial paper mode: keeps article/detail pages in the site system while separating reading content from the black portfolio surfaces. */
+        /* Narrative article mode: black editorial pages separate essays from the white tutorial system. */
         .article-editorial {
+          color: #ffffff;
+        }
+
+        .article-editorial-light {
           color: #111111;
         }
 
-        .article-editorial [class*="text-white"] {
-          color: rgba(17, 17, 17, 0.64) !important;
+        .article-editorial-light .article-content,
+        .article-editorial-light .article-content p,
+        .article-editorial-light .article-content li,
+        .article-editorial-light .article-content figcaption {
+          color: rgba(17, 17, 17, 0.72) !important;
         }
 
-        .article-editorial h1,
-        .article-editorial h1[class*="text-white"],
-        .article-editorial header h1,
-        .article-editorial h2,
-        .article-editorial h3,
-        .article-editorial h4,
-        .article-editorial h5,
-        .article-editorial h6,
-        .article-editorial [class*="text-white/98"],
-        .article-editorial [class*="text-white/92"],
-        .article-editorial [class*="text-white transition-colors"],
-        .article-editorial .prose strong,
-        .article-editorial strong {
+        .article-editorial-light .article-content h2,
+        .article-editorial-light .article-content h3,
+        .article-editorial-light .article-content h4,
+        .article-editorial-light .article-content strong {
           color: #111111 !important;
         }
 
-        .article-editorial p,
-        .article-editorial li,
-        .article-editorial dd {
-          color: rgba(17, 17, 17, 0.66) !important;
-        }
-
-        .article-editorial .article-content p,
-        .article-editorial .article-content li,
-        .article-editorial .article-html-content p {
-          color: rgba(17, 17, 17, 0.76) !important;
-        }
-
-        .article-editorial a {
-          color: rgba(17, 17, 17, 0.88) !important;
-          text-decoration-color: rgba(17, 17, 17, 0.32) !important;
-        }
-
-        .article-editorial a:hover,
-        .article-editorial button:hover {
+        .article-editorial-light .article-content a {
           color: #111111 !important;
-        }
-
-        .article-editorial [class*="border-white"] {
-          border-color: rgba(17, 17, 17, 0.13) !important;
-        }
-
-        .article-editorial [class*="bg-white"] {
-          background-color: transparent !important;
-        }
-
-        .article-editorial [class*="bg-black"] {
-          background-color: rgba(17, 17, 17, 0.86) !important;
-        }
-
-        .article-editorial [class*="decoration-white"] {
           text-decoration-color: rgba(17, 17, 17, 0.32) !important;
         }
 
-        .article-editorial .bg-white.text-black,
-        .article-editorial [class*="bg-white"].text-black {
-          background-color: #111111 !important;
-          color: #f1f0ec !important;
+        .article-editorial-light .article-content p::first-letter {
+          color: #111111 !important;
         }
 
         .article-editorial .article-content ul li::marker,
         .article-editorial .article-content ol li::marker {
-          color: rgba(17, 17, 17, 0.5) !important;
+          color: rgba(255,255,255,0.55) !important;
+        }
+
+        .article-editorial-light .article-content ul li::marker,
+        .article-editorial-light .article-content ol li::marker {
+          color: rgba(17,17,17,0.45) !important;
         }
 
         .article-editorial .article-content img,
@@ -2021,7 +2137,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, params 
 
         /* WordPress Image Styles - Beveled */
         .article-content img {
-          border-radius: 0.75rem !important;
+          border-radius: 0 !important;
         }
 
         /* Scrollbar Styling */

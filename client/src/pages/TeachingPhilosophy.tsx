@@ -3,15 +3,15 @@
 import Image from "next/image";
 import { useState } from "react";
 import { Link } from "wouter";
-import { ArrowLeft, ArrowRight, Check, Download, Link2 } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import AboutNav from "@/components/AboutNav";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import ProfileSectionHero from "@/components/ProfileSectionHero";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
-import { copyTextToClipboard } from "@/lib/clipboard";
 
 const TEACHING_HERO_IMAGE =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/about-teaching-art.png";
@@ -45,7 +45,6 @@ const teachingGallery = [
 ];
 
 export default function TeachingPhilosophy() {
-  const [linkCopied, setLinkCopied] = useState(false);
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
 
   const activeGalleryImage = teachingGallery[activeGalleryIndex] || teachingGallery[0];
@@ -114,20 +113,8 @@ export default function TeachingPhilosophy() {
     },
   ];
 
-  const handleShare = async () => {
-    const path = "/about/teaching";
-    const url =
-      typeof window === "undefined" ? `https://www.brandonptdavis.com${path}` : `${window.location.origin}${path}`;
-
-    const copied = await copyTextToClipboard(url);
-    if (copied) {
-      setLinkCopied(true);
-      window.setTimeout(() => setLinkCopied(false), 1800);
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-background">
+    <div className="about-profile-light min-h-screen bg-[#f1f0ec] text-[#111111]">
       <SEO
         title="Teaching Philosophy | Scenic Design Education"
         description="A teaching philosophy centered on scenic design process, professional practice, mentorship, and adaptable design pedagogy."
@@ -193,63 +180,24 @@ export default function TeachingPhilosophy() {
       <AboutNav />
 
       <main>
+        <ProfileSectionHero
+          canonicalPath="/about/teaching"
+          description="A teaching practice centered on process, rigor, visual communication, and the habits students need for professional collaboration."
+          imageAlt="Graduation cap icon for teaching philosophy"
+          imageSrc="/images/about/icons/teaching-icon.png"
+          title="Teaching Philosophy"
+          updatedAt="May 22, 2026"
+        />
+
         <article className="overflow-hidden py-12 md:py-16">
           <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
             <header className="mx-auto max-w-[62rem] text-center">
               <AnimatedSection>
-                <div className="flex flex-wrap items-center justify-center gap-4 text-[0.92rem] tracking-[-0.015em] text-foreground/54">
-                  <span>Teaching Philosophy</span>
-                  <span>Scenic Design Education</span>
-                  <span>Brandon PT Davis</span>
-                </div>
-
-                <h1 className="mx-auto mt-5 max-w-[15ch] font-sans text-[clamp(2.7rem,5.8vw,5.9rem)] font-medium leading-[0.92] tracking-[-0.072em] text-foreground">
-                  Teaching scenic design through process, rigor, and practice.
-                </h1>
-
-                <p className="mx-auto mt-5 max-w-[42rem] text-[clamp(1rem,1.45vw,1.34rem)] leading-[1.62] tracking-[-0.018em] text-foreground/68">
+                <p className="mx-auto max-w-[42rem] text-[clamp(1rem,1.45vw,1.34rem)] leading-[1.62] tracking-[-0.018em] text-foreground/68">
                   My classroom is built around visual storytelling, technical fluency, and the kind
                   of collaborative thinking students need in order to build sustainable creative
                   lives.
                 </p>
-              </AnimatedSection>
-
-              <AnimatedSection delay={140}>
-                <div className="group relative mx-auto mt-10 aspect-video max-w-[88rem] overflow-hidden bg-white/[0.02]">
-                  <Image
-                    src={TEACHING_HERO_IMAGE}
-                    alt="Abstract teaching philosophy artwork"
-                    fill
-                    priority
-                    quality={88}
-                    sizes="(min-width: 1280px) 1120px, 100vw"
-                    className="object-cover transition-[filter,transform] duration-[1200ms] ease-out group-hover:scale-[1.018] group-hover:brightness-110"
-                  />
-                </div>
-              </AnimatedSection>
-
-              <AnimatedSection delay={260}>
-                <div className="mx-auto mt-8 flex w-full max-w-[62rem] items-center justify-between gap-6 border-t border-white/14 pt-4 text-foreground/72">
-                  <div className="flex flex-wrap items-center gap-4 text-[0.96rem] tracking-[-0.018em] sm:gap-5">
-                    <a
-                      href="/api/teaching-philosophy-pdf"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 transition-colors hover:text-foreground"
-                    >
-                      <Download className="h-4 w-4" />
-                      <span>Download PDF</span>
-                    </a>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={handleShare}
-                    className="inline-flex items-center gap-2 text-[0.96rem] tracking-[-0.018em] transition-colors hover:text-foreground"
-                  >
-                    {linkCopied ? <Check className="h-4 w-4" /> : <Link2 className="h-4 w-4" />}
-                    <span>{linkCopied ? "Link copied" : "Share"}</span>
-                  </button>
-                </div>
               </AnimatedSection>
             </header>
 
@@ -515,7 +463,7 @@ export default function TeachingPhilosophy() {
         </section>
       </main>
 
-      <Footer />
+      <Footer tone="light" />
     </div>
   );
 }

@@ -321,7 +321,7 @@ export default async function Page({ params }: TutorialPageProps) {
         <>
           <JsonLdScript id={`studio-article-${slug}-json-ld`} data={articleJsonLd} />
           <NextPathProvider currentPath={`/studio/tutorials/${slug}`}>
-            <ArticleDetailPage slug={slug} article={article} />
+            <ArticleDetailPage slug={slug} article={article} variant="tutorial" />
           </NextPathProvider>
         </>
       );

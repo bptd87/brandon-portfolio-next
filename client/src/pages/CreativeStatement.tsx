@@ -1,17 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 import { Link } from "wouter";
-import { Check, ChevronLeft, ChevronRight, Link2 } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import AboutNav from "@/components/AboutNav";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import ProfileSectionHero from "@/components/ProfileSectionHero";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
-import { copyTextToClipboard } from "@/lib/clipboard";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
 
 const getProjectTimestamp = (project: any) => {
@@ -26,7 +26,6 @@ const getProjectTimestamp = (project: any) => {
 
 export default function CreativeStatement() {
   const galleryRailRef = useRef<HTMLDivElement | null>(null);
-  const [linkCopied, setLinkCopied] = useState(false);
 
   const scenicDesignProjects = useMemo(
     () =>
@@ -69,20 +68,8 @@ export default function CreativeStatement() {
       : `/project/${project.slug}`;
   };
 
-  const handleShare = async () => {
-    const path = "/creative-statement";
-    const url =
-      typeof window === "undefined" ? `https://www.brandonptdavis.com${path}` : `${window.location.origin}${path}`;
-
-    const copied = await copyTextToClipboard(url);
-    if (copied) {
-      setLinkCopied(true);
-      window.setTimeout(() => setLinkCopied(false), 1800);
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-background">
+    <div className="about-profile-light min-h-screen bg-[#f1f0ec] text-[#111111]">
       <SEO
         title="Creative Design Statement | Scenic Design Philosophy"
         description="Exploring architecture, history, and storytelling through scenic design. A creative statement centered on narrative space, dramaturgy, and production collaboration."
@@ -145,59 +132,24 @@ export default function CreativeStatement() {
       <AboutNav />
 
       <main>
+        <ProfileSectionHero
+          canonicalPath="/creative-statement"
+          description="A statement on scenic design as spatial storytelling, collaboration, architecture, history, and theatrical memory."
+          imageAlt="Notebook icon for creative statement"
+          imageSrc="/images/about/icons/creative-statement-icon.png"
+          title="Creative Statement"
+          updatedAt="May 22, 2026"
+        />
+
         <article className="overflow-hidden py-12 md:py-16">
           <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
             <header className="mx-auto max-w-[62rem] text-center">
               <AnimatedSection>
-                <div className="flex flex-wrap items-center justify-center gap-4 text-[0.92rem] tracking-[-0.015em] text-foreground/54">
-                  <span>Creative Statement</span>
-                  <span>Scenic Design Philosophy</span>
-                  <span>Brandon PT Davis</span>
-                </div>
-
-                <h1 className="mx-auto mt-5 max-w-[15ch] font-sans text-[clamp(2.7rem,5.8vw,5.9rem)] font-medium leading-[0.92] tracking-[-0.072em] text-foreground">
-                  Architecture, history, and narrative storytelling.
-                </h1>
-
-                <p className="mx-auto mt-5 max-w-[42rem] text-[clamp(1rem,1.45vw,1.34rem)] leading-[1.62] tracking-[-0.018em] text-foreground/68">
+                <p className="mx-auto max-w-[42rem] text-[clamp(1rem,1.45vw,1.34rem)] leading-[1.62] tracking-[-0.018em] text-foreground/68">
                   My scenic design practice sits at the intersection of architecture, historical
                   thinking, and story-led space making. I am most interested in work where design
                   becomes part of how a production resonates, not just how it looks.
                 </p>
-              </AnimatedSection>
-
-              {heroProject?.coverImageUrl ? (
-                <AnimatedSection delay={140}>
-                  <div className="group relative mx-auto mt-10 aspect-video max-w-[88rem] overflow-hidden bg-white/[0.02]">
-                    <Image
-                      src={heroProject.coverImageUrl}
-                      alt={`${heroProject.title} scenic design production image`}
-                      fill
-                      priority
-                      quality={88}
-                      sizes="(min-width: 1280px) 1120px, 100vw"
-                      className="object-cover transition-[filter,transform] duration-[1200ms] ease-out group-hover:scale-[1.018] group-hover:brightness-110"
-                    />
-                  </div>
-                </AnimatedSection>
-              ) : null}
-
-              <AnimatedSection delay={260}>
-                <div className="mx-auto mt-8 flex w-full max-w-[62rem] items-center justify-between gap-6 border-t border-white/14 pt-4 text-foreground/72">
-                  <div className="flex flex-wrap items-center gap-4 text-[0.96rem] tracking-[-0.018em] sm:gap-5">
-                    <span>Statement</span>
-                    <span className="text-foreground/42">/</span>
-                    <span>Scenic design practice</span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={handleShare}
-                    className="inline-flex items-center gap-2 text-[0.96rem] tracking-[-0.018em] transition-colors hover:text-foreground"
-                  >
-                    {linkCopied ? <Check className="h-4 w-4" /> : <Link2 className="h-4 w-4" />}
-                    <span>{linkCopied ? "Link copied" : "Share"}</span>
-                  </button>
-                </div>
               </AnimatedSection>
             </header>
 
@@ -354,7 +306,7 @@ export default function CreativeStatement() {
         ) : null}
       </main>
 
-      <Footer />
+      <Footer tone="light" />
     </div>
   );
 }

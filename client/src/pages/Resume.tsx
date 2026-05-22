@@ -8,10 +8,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AboutNav from "@/components/AboutNav";
 import { AnimatedSection } from "@/components/AnimatedSection";
+import ProfileSectionHero from "@/components/ProfileSectionHero";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 
-import { ArrowRight, Download, Award, GraduationCap, Users } from "lucide-react";
+import { Download, Award, GraduationCap, Users } from "lucide-react";
 import { getLocalRenderingProjects } from "@shared/localPortfolios";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
 
@@ -383,18 +384,6 @@ export default function Resume() {
   ];
 
   const [hoverPreview, setHoverPreview] = useState<HoverPreview>(null);
-  const resumeHeroProjects = useMemo(
-    () =>
-      [...getLocalScenicProjects()]
-        .filter((project) => project.coverImageUrl && project.slug)
-        .sort((a, b) => {
-          const timeCompare = getProjectTimestamp(b) - getProjectTimestamp(a);
-          if (timeCompare !== 0) return timeCompare;
-          return a.title.localeCompare(b.title);
-        })
-        .slice(0, 5),
-    []
-  );
 
   const previewStyle = useMemo(() => {
     if (!hoverPreview) return null;
@@ -437,11 +426,8 @@ export default function Resume() {
     );
   }
 
-  const getProjectHref = (project: { slug?: string | null }) =>
-    project.slug ? `/project/${project.slug}` : "/projects";
-
   return (
-    <>
+    <div className="about-profile-light min-h-screen bg-[#f1f0ec] text-[#111111]">
       <SEO
         title="Resume & CV | Scenic Designer | 130+ Productions | USA 829"
         description="130+ scenic design productions since 2009. MFA UC Irvine, BFA Stephens College, and USA 829 membership. Professional scenic designer based in San Diego, California."
@@ -495,21 +481,28 @@ export default function Resume() {
       <Header />
       <AboutNav />
 
-      <section className="min-h-screen bg-background pb-20 pt-20">
+      <ProfileSectionHero
+        canonicalPath="/resume"
+        description="A production record across scenic design, assistant scenic design, rendering, teaching, and related creative practice."
+        imageAlt="File archive icon for resume and production credits"
+        imageSrc="/images/about/icons/resume-icon.png"
+        title="Resume & Credits"
+        updatedAt="May 22, 2026"
+      />
+
+      <section className="about-profile-light min-h-screen bg-[#f1f0ec] pb-20 pt-16 text-[#111111]">
         <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="mb-18">
-            <div className="grid gap-10 border-b border-border/25 pb-12 xl:grid-cols-[minmax(0,1.12fr)_minmax(18rem,22rem)] xl:items-center">
-              <div className="max-w-3xl xl:max-w-4xl">
-                <p className="text-[0.95rem] leading-7 text-foreground/72">Resume / CV</p>
-                <h1 className="mt-6 max-w-4xl font-sans text-[clamp(3rem,6.4vw,5.85rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
-                  Resume, CV, and selected production credits.
-                </h1>
-                <p className="mt-7 max-w-3xl text-[1.05rem] leading-8 text-foreground/60 md:text-[1.12rem]">
-                  Scenic design credits across regional theatre, summer stock, academic production,
-                  and new work development, with resume and CV downloads for a fuller professional record.
-                </p>
-
-                <div className="mt-8 flex flex-wrap items-center gap-4 text-[0.95rem] text-foreground/72">
+            <div className="border-b border-border/25 pb-12">
+              <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+                <div className="max-w-3xl">
+                  <p className="text-[1.05rem] leading-8 text-foreground/62 md:text-[1.12rem]">
+                    Scenic design credits across regional theatre, summer stock, academic
+                    production, and new work development, with resume and CV downloads for a fuller
+                    professional record.
+                  </p>
+                </div>
+                <div className="flex flex-wrap items-center gap-4 text-[0.95rem] text-foreground/72">
                   <a
                     href="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/pdf/downloads/resume/kzofqparnjqauvwm-8d5c0155c1-c3638d1b.pdf"
                     target="_blank"
@@ -529,81 +522,27 @@ export default function Resume() {
                     CV
                   </a>
                 </div>
-
-                <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                  <div className="border-t border-border/25 px-1 py-3.5">
-                    <p className="text-[10px] uppercase tracking-[0.22em] text-foreground/38">Productions</p>
-                    <p className="mt-2 inline-flex items-center gap-2 text-[0.98rem] font-medium text-foreground/82">
-                      <Users className="h-4 w-4" />
-                      130+
-                    </p>
-                  </div>
-                  <div className="border-t border-border/25 px-1 py-3.5">
-                    <p className="text-[10px] uppercase tracking-[0.22em] text-foreground/38">Union</p>
-                    <p className="mt-2 text-[0.98rem] font-medium text-foreground/82">USA 829</p>
-                  </div>
-                  <div className="border-t border-border/25 px-1 py-3.5">
-                    <p className="text-[10px] uppercase tracking-[0.22em] text-foreground/38">Training</p>
-                    <p className="mt-2 inline-flex items-center gap-2 text-[0.98rem] font-medium text-foreground/82">
-                      <GraduationCap className="h-4 w-4" />
-                      MFA Scenic Design
-                    </p>
-                  </div>
-                </div>
               </div>
 
-              <div className="w-full xl:justify-self-end">
-                {resumeHeroProjects[0] ? (
-                  <div className="space-y-3">
-                    <Link href={getProjectHref(resumeHeroProjects[0])} className="group block">
-                      <div className="relative aspect-[4/5] overflow-hidden bg-card/20">
-                        <Image
-                          src={resumeHeroProjects[0].coverImageUrl || ""}
-                          alt={`${resumeHeroProjects[0].title} scenic design production image`}
-                          fill
-                          priority
-                          quality={86}
-                          sizes="(max-width: 1280px) 92vw, 26rem"
-                          className="object-cover transition-[filter,transform] duration-[1200ms] ease-out group-hover:scale-[1.035] group-hover:brightness-110"
-                        />
-                      </div>
-                      <div className="mt-3 flex items-start justify-between gap-4 border-t border-border/25 pt-3">
-                        <div>
-                          <p className="text-[10px] uppercase tracking-[0.22em] text-foreground/38">
-                            Recent Portfolio
-                          </p>
-                          <p className="mt-2 text-[1rem] leading-tight tracking-[-0.03em] text-foreground/84">
-                            {resumeHeroProjects[0].title}
-                          </p>
-                        </div>
-                        <ArrowRight className="mt-1 h-4 w-4 text-foreground/45 transition-transform group-hover:translate-x-1 group-hover:text-foreground" />
-                      </div>
-                    </Link>
-
-                    <div className="grid grid-cols-4 gap-2">
-                      {resumeHeroProjects.slice(1, 5).map((project) => (
-                        <Link
-                          key={project.id}
-                          href={getProjectHref(project)}
-                          className="group block"
-                          aria-label={`Open ${project.title}`}
-                        >
-                          <div className="relative aspect-square overflow-hidden bg-card/20">
-                            <Image
-                              src={project.coverImageUrl || ""}
-                              alt={`${project.title} scenic design production image`}
-                              fill
-                              quality={72}
-                              loading="lazy"
-                              sizes="6rem"
-                              className="object-cover transition-[filter,transform] duration-700 group-hover:scale-[1.06] group-hover:brightness-110"
-                            />
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                ) : null}
+              <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                <div className="border-t border-border/25 px-1 py-3.5">
+                  <p className="text-[10px] uppercase tracking-[0.22em] text-foreground/38">Productions</p>
+                  <p className="mt-2 inline-flex items-center gap-2 text-[0.98rem] font-medium text-foreground/82">
+                    <Users className="h-4 w-4" />
+                    130+
+                  </p>
+                </div>
+                <div className="border-t border-border/25 px-1 py-3.5">
+                  <p className="text-[10px] uppercase tracking-[0.22em] text-foreground/38">Union</p>
+                  <p className="mt-2 text-[0.98rem] font-medium text-foreground/82">USA 829</p>
+                </div>
+                <div className="border-t border-border/25 px-1 py-3.5">
+                  <p className="text-[10px] uppercase tracking-[0.22em] text-foreground/38">Training</p>
+                  <p className="mt-2 inline-flex items-center gap-2 text-[0.98rem] font-medium text-foreground/82">
+                    <GraduationCap className="h-4 w-4" />
+                    MFA Scenic Design
+                  </p>
+                </div>
               </div>
             </div>
           </AnimatedSection>
@@ -711,7 +650,7 @@ export default function Resume() {
         ) : null}
       </section>
 
-      <Footer />
-    </>
+      <Footer tone="light" />
+    </div>
   );
 }

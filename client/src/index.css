@@ -185,6 +185,19 @@
   --chart-5: oklch(0.2 0.2 250);
 }
 
+.about-profile-light {
+  --background: #f1f0ec;
+  --foreground: #111111;
+  --card: rgba(17, 17, 17, 0.06);
+  --card-foreground: #111111;
+  --popover: rgba(255, 255, 255, 0.9);
+  --popover-foreground: #111111;
+  --muted: rgba(17, 17, 17, 0.08);
+  --muted-foreground: rgba(17, 17, 17, 0.58);
+  --border: rgba(17, 17, 17, 0.14);
+  --input: rgba(17, 17, 17, 0.12);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -349,6 +362,12 @@
   .site-media-square:has(> picture),
   .site-media-square img,
   img.site-media-square {
+    border-radius: 0 !important;
+  }
+
+  .project-hero-media,
+  .project-hero-media img,
+  img.project-hero-media {
     border-radius: 0 !important;
   }
 
@@ -697,6 +716,19 @@
     transform: translateX(-10%) scaleX(0.94);
     opacity: 0.1;
   }
+}
+
+@keyframes renderingProgress {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.rendering-progress-fill {
+  animation: renderingProgress 5.2s linear forwards;
 }
 
 .hero-stage-panel {

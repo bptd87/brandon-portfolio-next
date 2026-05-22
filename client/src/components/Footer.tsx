@@ -65,15 +65,27 @@ function PinterestIcon({ className }: { className?: string }) {
   );
 }
 
-export default function Footer() {
+export default function Footer({ tone = "dark" }: { tone?: "dark" | "light" }) {
+  const isLight = tone === "light";
+
   return (
-    <footer className="mt-24 border-t border-border/50">
+    <footer
+      className={`mt-24 border-t ${
+        isLight
+          ? "border-black/10 bg-[#f1f0ec] text-[#111111] [--background:#f1f0ec] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]"
+          : "border-white/10 bg-[#070707] text-white [--background:#070707] [--border:rgba(255,255,255,0.15)] [--foreground:#ffffff]"
+      }`}
+    >
       <div className="container max-w-[88rem] py-14 md:py-16">
         <div className="grid gap-12 py-2 md:grid-cols-[minmax(0,1fr)_auto] md:gap-16">
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
             {FOOTER_SECTIONS.map((section) => (
               <div key={section.title}>
-                <h3 className="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-white/42">
+                <h3
+                  className={`mb-4 text-[11px] font-medium uppercase tracking-[0.22em] ${
+                    isLight ? "text-black/42" : "text-white/42"
+                  }`}
+                >
                   {section.title}
                 </h3>
                 <ul className="space-y-3">
@@ -82,14 +94,18 @@ export default function Footer() {
                       {item.internal ? (
                         <Link
                           href={item.href}
-                          className="text-sm text-white/68 transition-colors hover:text-white"
+                          className={`text-sm transition-colors ${
+                            isLight ? "text-black/62 hover:text-black" : "text-white/68 hover:text-white"
+                          }`}
                         >
                           {item.label}
                         </Link>
                       ) : (
                         <a
                           href={item.href}
-                          className="text-sm text-white/68 transition-colors hover:text-white"
+                          className={`text-sm transition-colors ${
+                            isLight ? "text-black/62 hover:text-black" : "text-white/68 hover:text-white"
+                          }`}
                         >
                           {item.label}
                         </a>
@@ -103,8 +119,14 @@ export default function Footer() {
 
           <div className="space-y-5 md:min-w-[16rem]">
             <div>
-              <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-white/42">Connect</p>
-              <p className="mt-2 text-sm leading-7 text-white/68">
+              <p
+                className={`text-[11px] font-medium uppercase tracking-[0.22em] ${
+                  isLight ? "text-black/42" : "text-white/42"
+                }`}
+              >
+                Connect
+              </p>
+              <p className={`mt-2 text-sm leading-7 ${isLight ? "text-black/62" : "text-white/68"}`}>
                 Follow current work, studio updates, and professional contact points.
               </p>
             </div>
@@ -117,7 +139,11 @@ export default function Footer() {
                     href={item.href}
                     target={item.href.startsWith("mailto:") ? undefined : "_blank"}
                     rel={item.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/60 bg-background/50 text-white/68 transition-colors hover:border-white/18 hover:text-white"
+                    className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition-colors ${
+                      isLight
+                        ? "border-black/14 bg-black/[0.035] text-black/62 hover:border-black/28 hover:text-black"
+                        : "border-border/60 bg-background/50 text-white/68 hover:border-white/18 hover:text-white"
+                    }`}
                     title={item.label}
                   >
                     <Icon className="h-4 w-4" />
@@ -128,7 +154,11 @@ export default function Footer() {
                 href="https://www.pinterest.com/BrandonPTDavis/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/60 bg-background/50 text-white/68 transition-colors hover:border-white/18 hover:text-white"
+                className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition-colors ${
+                  isLight
+                    ? "border-black/14 bg-black/[0.035] text-black/62 hover:border-black/28 hover:text-black"
+                    : "border-border/60 bg-background/50 text-white/68 hover:border-white/18 hover:text-white"
+                }`}
                 title="Pinterest"
               >
                 <PinterestIcon className="h-4 w-4" />
@@ -137,22 +167,26 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 border-t border-border/40 pt-6 text-sm text-white/62 md:flex-row md:items-center md:justify-between">
+        <div
+          className={`flex flex-col gap-4 border-t pt-6 text-sm md:flex-row md:items-center md:justify-between ${
+            isLight ? "border-black/10 text-black/58" : "border-border/40 text-white/62"
+          }`}
+        >
           <p>© {COPYRIGHT_YEAR} Brandon PT Davis. All rights reserved.</p>
           <div className="flex flex-wrap gap-5">
-            <Link href="/privacy" className="transition-colors hover:text-white">
+            <Link href="/privacy" className={`transition-colors ${isLight ? "hover:text-black" : "hover:text-white"}`}>
               Privacy
             </Link>
-            <Link href="/terms" className="transition-colors hover:text-white">
+            <Link href="/terms" className={`transition-colors ${isLight ? "hover:text-black" : "hover:text-white"}`}>
               Terms
             </Link>
-            <Link href="/faq" className="transition-colors hover:text-white">
+            <Link href="/faq" className={`transition-colors ${isLight ? "hover:text-black" : "hover:text-white"}`}>
               FAQ
             </Link>
-            <Link href="/accessibility" className="transition-colors hover:text-white">
+            <Link href="/accessibility" className={`transition-colors ${isLight ? "hover:text-black" : "hover:text-white"}`}>
               Accessibility
             </Link>
-            <Link href="/sitemap" className="transition-colors hover:text-white">
+            <Link href="/sitemap" className={`transition-colors ${isLight ? "hover:text-black" : "hover:text-white"}`}>
               Sitemap
             </Link>
           </div>

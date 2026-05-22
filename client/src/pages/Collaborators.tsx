@@ -1,16 +1,15 @@
 "use client";
 
-import Image from "next/image";
-import { useMemo, useState } from "react";
-import { Check, Instagram, Link2 } from "lucide-react";
+import { useMemo } from "react";
+import { Instagram, Link2 } from "lucide-react";
 
 import AboutNav from "@/components/AboutNav";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import ProfileSectionHero from "@/components/ProfileSectionHero";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
-import { copyTextToClipboard } from "@/lib/clipboard";
 import { resolveBlobMediaUrl } from "@shared/mediaBlob";
 import {
   getLocalCollaboratorPortfolioUrlByName,
@@ -55,7 +54,6 @@ const getCollaboratorUrl = (collaborator: LocalCollaborator) =>
   null;
 
 export default function Collaborators() {
-  const [linkCopied, setLinkCopied] = useState(false);
   const allCollaborators = getLocalCollaborators();
 
   const groupedCollaborators = useMemo(() => {
@@ -109,22 +107,8 @@ export default function Collaborators() {
     [allCollaborators]
   );
 
-  const handleShare = async () => {
-    const path = "/about/collaborators";
-    const url =
-      typeof window === "undefined"
-        ? `https://www.brandonptdavis.com${path}`
-        : `${window.location.origin}${path}`;
-
-    const copied = await copyTextToClipboard(url);
-    if (copied) {
-      setLinkCopied(true);
-      window.setTimeout(() => setLinkCopied(false), 1800);
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-background">
+    <div className="about-profile-light min-h-screen bg-[#f1f0ec] text-[#111111]">
       <SEO
         title="Collaborators and Creative Partners"
         description="Directors, designers, theatre companies, and recurring creative partners who have collaborated with Brandon PT Davis on scenic design productions."
@@ -191,61 +175,23 @@ export default function Collaborators() {
       <AboutNav />
 
       <main>
+        <ProfileSectionHero
+          canonicalPath="/about/collaborators"
+          description="A directory of creative partners, directors, designers, companies, and recurring production relationships."
+          imageAlt="Collaboration icon for creative partners"
+          imageSrc="/images/about/icons/collaboration-icon.png"
+          title="Collaborators"
+          updatedAt="May 22, 2026"
+        />
+
         <article className="overflow-hidden px-4 py-12 sm:px-6 md:py-16 lg:px-8">
           <div className="mx-auto max-w-[1120px]">
             <header className="mx-auto max-w-[62rem] text-center">
               <AnimatedSection>
-                <p className="section-kicker text-foreground/40">
-                  Collaborators
-                </p>
-                <h1 className="mx-auto mt-6 max-w-[15ch] font-sans text-[clamp(3rem,6vw,5.8rem)] font-medium leading-[0.92] tracking-[-0.07em] text-foreground">
-                  The work is shaped by the room.
-                </h1>
                 <p className="mx-auto mt-6 max-w-[42rem] text-[clamp(1rem,1.45vw,1.32rem)] leading-[1.62] tracking-[-0.018em] text-foreground/66">
                   Scenic design is never solitary. These are directors, designers, companies, and
                   recurring creative partners connected to the productions and process.
                 </p>
-              </AnimatedSection>
-
-              <AnimatedSection delay={140}>
-                <div className="group relative mx-auto mt-10 aspect-video max-w-[88rem] overflow-hidden bg-white/[0.02]">
-                  <Image
-                    src={COLLABORATORS_IMAGE}
-                    alt="Abstract collaboration artwork"
-                    fill
-                    priority
-                    unoptimized
-                    quality={88}
-                    sizes="(min-width: 1280px) 1120px, 100vw"
-                    className="object-cover transition-[filter,transform] duration-[1200ms] ease-out group-hover:scale-[1.018] group-hover:brightness-110"
-                  />
-                </div>
-              </AnimatedSection>
-
-              <AnimatedSection delay={260}>
-                <div className="mx-auto mt-8 flex w-full max-w-[62rem] flex-col gap-4 border-t border-white/14 pt-4 text-foreground/72 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[0.94rem] tracking-[-0.018em] sm:justify-start">
-                    {groupedCollaborators.map((section) =>
-                      section.items.length ? (
-                        <a
-                          key={section.id}
-                          href={`#${section.id}`}
-                          className="transition-colors hover:text-foreground"
-                        >
-                          {section.title}
-                        </a>
-                      ) : null
-                    )}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={handleShare}
-                    className="inline-flex items-center justify-center gap-2 text-[0.96rem] tracking-[-0.018em] transition-colors hover:text-foreground"
-                  >
-                    {linkCopied ? <Check className="h-4 w-4" /> : <Link2 className="h-4 w-4" />}
-                    <span>{linkCopied ? "Link copied" : "Share"}</span>
-                  </button>
-                </div>
               </AnimatedSection>
             </header>
 
@@ -360,7 +306,7 @@ export default function Collaborators() {
         </section>
       </main>
 
-      <Footer />
+      <Footer tone="light" />
     </div>
   );
 }
