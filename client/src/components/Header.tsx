@@ -5,7 +5,6 @@ import Image from "next/image";
 import { Link, useLocation } from "wouter";
 import { useState, useRef, useEffect } from "react";
 import {
-  Menu,
   Search,
   X,
 } from "lucide-react";
@@ -44,20 +43,20 @@ function DesktopMenuPanel({
 
   return (
     <div
-      className={`absolute inset-x-0 top-full min-h-[calc(100dvh-74px)] max-h-[calc(100dvh-74px)] overflow-y-auto border-b shadow-[0_30px_90px_rgba(0,0,0,0.22)] animate-in fade-in slide-in-from-top-2 duration-200 ${
-        isLight ? "border-black/10 bg-[#f1f0ec]" : "border-white/10 bg-background"
+      className={`absolute inset-x-[clamp(1rem,4vw,4rem)] top-[calc(100%+0.9rem)] overflow-hidden rounded-[1.35rem] border shadow-[0_34px_110px_rgba(0,0,0,0.34)] animate-in fade-in slide-in-from-top-2 duration-200 ${
+        isLight ? "border-black/10 bg-[#f1f0ec]/96" : "border-white/10 bg-[#080808]/96"
       }`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="px-[clamp(1.5rem,5vw,6rem)] py-10">
-        <div className="grid gap-8 lg:grid-cols-3">
+      <div className="px-[clamp(1.35rem,4vw,3.5rem)] py-7">
+        <div className="grid gap-7 lg:grid-cols-3">
           {groups.map((group) => (
             <div key={group.heading} className={`border-t pt-3 ${isLight ? "border-black/14" : "border-white/14"}`}>
-              <p className={`mb-5 font-sans text-[11px] font-semibold uppercase tracking-[0.24em] ${isLight ? "text-black/42" : "text-white/42"}`}>
+              <p className={`mb-4 font-sans text-[11px] font-semibold uppercase tracking-[0.24em] ${isLight ? "text-black/42" : "text-white/42"}`}>
                 {group.heading}
               </p>
-              <div className="space-y-2.5">
+              <div className="space-y-2">
                 {group.items.map((item) => (
                   <Link
                     key={item.path}
@@ -67,7 +66,7 @@ function DesktopMenuPanel({
                     className="group block"
                   >
                     <span
-                      className={`block font-sans text-[1.04rem] font-medium leading-7 tracking-[-0.025em] transition-colors ${
+                      className={`block font-sans text-[1rem] font-medium leading-6 tracking-[-0.025em] transition-colors ${
                         isLight ? "text-black/78 group-hover:text-black" : "text-white/82 group-hover:text-white"
                       }`}
                     >
@@ -80,8 +79,8 @@ function DesktopMenuPanel({
           ))}
         </div>
 
-        <div className={`mt-12 border-t pt-5 ${isLight ? "border-black/14" : "border-white/14"}`}>
-          <div className="mb-5 flex items-center justify-between gap-4">
+        <div className={`mt-8 border-t pt-4 ${isLight ? "border-black/14" : "border-white/14"}`}>
+          <div className="mb-4 flex items-center justify-between gap-4">
             <p className={`font-sans text-[11px] font-semibold uppercase tracking-[0.24em] ${isLight ? "text-black/42" : "text-white/42"}`}>
               Recent Scenic Design Projects
             </p>
@@ -95,7 +94,7 @@ function DesktopMenuPanel({
               View portfolio
             </Link>
           </div>
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-3">
             {recentScenicProjects.map((project) => (
               <Link key={project.href} href={project.href} onClick={onClose} className="group block">
                 <div className={`relative aspect-[16/9] overflow-hidden rounded-[0.85rem] border ${isLight ? "border-black/10 bg-black/[0.035]" : "border-white/10 bg-white/[0.035]"}`}>
@@ -108,11 +107,11 @@ function DesktopMenuPanel({
                     className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                   />
                 </div>
-                <div className="mt-3">
+                <div className="mt-2.5">
                   <p className={`font-sans text-[1rem] font-medium leading-[1.05] tracking-[-0.035em] ${isLight ? "text-black" : "text-white"}`}>
                     {project.title}
                   </p>
-                  <p className={`mt-1 text-[0.8rem] leading-5 ${isLight ? "text-black/42" : "text-white/42"}`}>{project.meta}</p>
+                  <p className={`mt-1 text-[0.78rem] leading-4 ${isLight ? "text-black/42" : "text-white/42"}`}>{project.meta}</p>
                 </div>
               </Link>
             ))}
@@ -166,7 +165,7 @@ export default function Header() {
     location === "/creative-statement" ||
     location === "/about/teaching" ||
     location === "/about/collaborators" ||
-    location === "/upcoming-productions";
+    /^\/upcoming-productions(?:\/|$)/.test(location);
   const isHomeRoute = location === "/";
   const useLightChrome = (isEditorialRoute && !isArticleDetailRoute) || isProfileLightRoute;
   const useImmersiveChrome = isHomeRoute && !desktopMenuOpen && !mobileMenuOpen && !searchOpen;
@@ -358,6 +357,16 @@ export default function Header() {
   return (
     <>
       <div className="h-[74px]" aria-hidden="true" />
+      {desktopMenuOpen ? (
+        <button
+          type="button"
+          className={`fixed inset-x-0 bottom-0 top-[74px] z-40 cursor-default animate-in fade-in duration-200 ${
+            useLightChrome ? "bg-[#f1f0ec]/38 backdrop-blur-sm" : "bg-black/24 backdrop-blur-sm"
+          }`}
+          onClick={closeDesktopMenu}
+          aria-label="Close navigation menu"
+        />
+      ) : null}
       <header
         ref={headerRef}
         className={`fixed left-0 right-0 top-0 z-50 border-b backdrop-blur-xl transition-all duration-300 ${
@@ -435,15 +444,21 @@ export default function Header() {
 
             <div className="flex items-center justify-end gap-4 lg:hidden">
               <button
+                type="button"
                 onClick={() => setMobileMenuOpen(true)}
-                className={`flex h-10 w-10 items-center justify-center rounded-lg transition-all hover:border ${
+                aria-expanded={mobileMenuOpen}
+                className={`inline-flex h-11 items-center gap-3 rounded-full px-1.5 text-[0.78rem] font-medium uppercase tracking-[0.08em] transition-colors ${
                   useLightChrome
-                    ? "text-black hover:border-black/18 hover:bg-black/[0.045]"
-                    : "hover:border-border hover:bg-foreground/10"
+                    ? "text-black/72 hover:text-black"
+                    : "text-white/76 hover:text-white"
                 }`}
                 aria-label="Open menu"
               >
-                <Menu className="h-6 w-6" />
+                <span className="relative h-3.5 w-6" aria-hidden="true">
+                  <span className="absolute left-0 top-0 h-px w-6 bg-current" />
+                  <span className="absolute bottom-0 left-0 h-px w-6 bg-current" />
+                </span>
+                <span className="hidden min-[420px]:inline">Menu</span>
               </button>
             </div>
           </nav>

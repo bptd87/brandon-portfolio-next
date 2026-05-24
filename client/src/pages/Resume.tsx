@@ -12,7 +12,7 @@ import ProfileSectionHero from "@/components/ProfileSectionHero";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 
-import { Download, Award, GraduationCap, Users } from "lucide-react";
+import { Download, Award, Users } from "lucide-react";
 import { getLocalRenderingProjects } from "@shared/localPortfolios";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
 
@@ -40,7 +40,10 @@ type HoverPreview = {
 } | null;
 
 const LINE_CLASS =
-  "grid gap-1 border-b border-border/12 py-2.5 text-[0.98rem] leading-7 last:border-b-0 md:grid-cols-[minmax(13rem,1.15fr)_minmax(10rem,0.78fr)_minmax(12rem,0.95fr)] md:items-baseline md:gap-x-8 lg:gap-x-12";
+  "grid gap-1 border-b border-black/10 py-3.5 text-[1.02rem] leading-7 last:border-b-0 md:grid-cols-[minmax(13rem,1.1fr)_minmax(10rem,0.75fr)_minmax(12rem,0.95fr)] md:items-baseline md:gap-x-8 lg:gap-x-14";
+
+const USA_829_LOGO_SRC = "/images/about/icons/usa-829-logo.png";
+const UCI_LOGO_SRC = "/images/about/icons/uci-logo-real.png";
 
 const getProjectTimestamp = (project: any) => {
   if (project.year) {
@@ -363,7 +366,7 @@ function ScenicCreditRow({
   return (
     <Link
       href={linkedProject.href}
-      className={`${LINE_CLASS} group -mx-2 cursor-pointer px-2 transition-colors duration-200 hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/25`}
+      className={`${LINE_CLASS} group -mx-2 cursor-pointer px-2 transition-colors duration-200 hover:bg-black/[0.025] hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black/20`}
       onMouseEnter={(event) => onPreview(credit, event.clientX, event.clientY)}
       onMouseMove={(event) => onPreviewMove(credit, event.clientX, event.clientY)}
       onMouseLeave={onPreviewLeave}
@@ -388,8 +391,8 @@ export default function Resume() {
   const previewStyle = useMemo(() => {
     if (!hoverPreview) return null;
 
-    const previewWidth = 276;
-    const previewHeight = 190;
+    const previewWidth = 420;
+    const previewHeight = 236;
     const gutter = 26;
     const maxX = Math.max(gutter, window.innerWidth - previewWidth - gutter);
     const maxY = Math.max(gutter, window.innerHeight - previewHeight - gutter);
@@ -490,10 +493,10 @@ export default function Resume() {
         updatedAt="May 22, 2026"
       />
 
-      <section className="about-profile-light min-h-screen bg-[#f1f0ec] pb-20 pt-16 text-[#111111]">
+      <section className="about-profile-light min-h-screen bg-[#f1f0ec] pb-20 pt-12 text-[#111111]">
         <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="mb-18">
-            <div className="border-b border-border/25 pb-12">
+            <div className="border-b border-black/10 pb-12">
               <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
                 <div className="max-w-3xl">
                   <p className="text-[1.05rem] leading-8 text-foreground/62 md:text-[1.12rem]">
@@ -516,7 +519,7 @@ export default function Resume() {
                     href="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/pdf/downloads/resume/msmkrdmbsoqtuyko-58989945e6-d6f5c926.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex h-11 items-center gap-2 rounded-full bg-white/10 px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-foreground transition-colors hover:bg-white/14"
+                    className="inline-flex h-11 items-center gap-2 rounded-full border border-black/14 bg-white px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-foreground transition-colors hover:bg-black/[0.04]"
                   >
                     <Download className="h-4 w-4" />
                     CV
@@ -524,25 +527,82 @@ export default function Resume() {
                 </div>
               </div>
 
-              <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                <div className="border-t border-border/25 px-1 py-3.5">
-                  <p className="text-[10px] uppercase tracking-[0.22em] text-foreground/38">Productions</p>
-                  <p className="mt-2 inline-flex items-center gap-2 text-[0.98rem] font-medium text-foreground/82">
-                    <Users className="h-4 w-4" />
-                    130+
+              <div className="mt-10 grid gap-6 lg:grid-cols-3 xl:gap-7">
+                <article className="group relative isolate flex min-h-[17rem] flex-col overflow-hidden rounded-[1.7rem] bg-black p-6 text-white shadow-[0_22px_58px_rgba(0,0,0,0.14)] ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-1 md:p-7">
+                  <div
+                    className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_82%_20%,rgba(255,211,75,0.13),transparent_48%)]"
+                    aria-hidden="true"
+                  />
+                  <div className="relative z-10 flex h-20 items-center">
+                    <div className="relative h-16 w-16 opacity-95 transition-transform duration-500 group-hover:scale-[1.045] md:h-[4.5rem] md:w-[4.5rem]">
+                      <Image
+                        src={UCI_LOGO_SRC}
+                        alt="University of California, Irvine seal"
+                        fill
+                        sizes="5rem"
+                        className="object-contain drop-shadow-[0_14px_24px_rgba(0,0,0,0.35)]"
+                      />
+                    </div>
+                  </div>
+                  <p className="mt-7 text-[0.95rem] font-medium tracking-[-0.03em] text-white/45">
+                    Education
                   </p>
-                </div>
-                <div className="border-t border-border/25 px-1 py-3.5">
-                  <p className="text-[10px] uppercase tracking-[0.22em] text-foreground/38">Union</p>
-                  <p className="mt-2 text-[0.98rem] font-medium text-foreground/82">USA 829</p>
-                </div>
-                <div className="border-t border-border/25 px-1 py-3.5">
-                  <p className="text-[10px] uppercase tracking-[0.22em] text-foreground/38">Training</p>
-                  <p className="mt-2 inline-flex items-center gap-2 text-[0.98rem] font-medium text-foreground/82">
-                    <GraduationCap className="h-4 w-4" />
+                  <p className="mt-3 text-[clamp(1.35rem,1.75vw,1.7rem)] font-semibold leading-[1.02] tracking-[-0.055em] text-white">
                     MFA Scenic Design
                   </p>
-                </div>
+                  <p className="mt-3 max-w-[17rem] text-[0.98rem] font-medium leading-6 tracking-[-0.025em] text-white/58">
+                    University of California, Irvine.
+                  </p>
+                </article>
+
+                <article className="group relative isolate flex min-h-[17rem] flex-col overflow-hidden rounded-[1.7rem] bg-black p-6 text-white shadow-[0_22px_58px_rgba(0,0,0,0.14)] ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-1 md:p-7">
+                  <div
+                    className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_82%_20%,rgba(150,80,255,0.16),transparent_48%)]"
+                    aria-hidden="true"
+                  />
+                  <div className="relative z-10 flex h-20 items-center">
+                    <div className="relative h-16 w-36 opacity-95 transition-transform duration-500 group-hover:scale-[1.045] md:h-[4.5rem] md:w-40">
+                      <Image
+                        src={USA_829_LOGO_SRC}
+                        alt="United Scenic Artists Local USA 829 logo"
+                        fill
+                        sizes="10rem"
+                        className="object-contain drop-shadow-[0_14px_24px_rgba(0,0,0,0.35)]"
+                      />
+                    </div>
+                  </div>
+                  <p className="mt-7 text-[0.95rem] font-medium tracking-[-0.03em] text-white/45">
+                    Union
+                  </p>
+                  <p className="mt-3 max-w-[19rem] text-[clamp(1.35rem,1.75vw,1.7rem)] font-semibold leading-[1.02] tracking-[-0.055em] text-white">
+                    United Scenic Artists Local USA 829
+                  </p>
+                  <p className="mt-3 max-w-[18rem] text-[0.98rem] font-medium leading-6 tracking-[-0.025em] text-white/58">
+                    Professional scenic design membership since 2023.
+                  </p>
+                </article>
+
+                <article className="relative isolate flex min-h-[17rem] flex-col overflow-hidden rounded-[1.7rem] bg-black p-6 text-white shadow-[0_22px_58px_rgba(0,0,0,0.14)] ring-1 ring-black/5 md:p-7">
+                  <div
+                    className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_82%_20%,rgba(82,63,255,0.16),transparent_48%)]"
+                    aria-hidden="true"
+                  />
+                  <div className="relative z-10 flex h-20 items-center gap-2">
+                    <p className="text-[3.45rem] font-semibold leading-none tracking-[-0.075em] text-white md:text-[3.9rem]">
+                      130+
+                    </p>
+                    <Users className="mt-5 h-6 w-6 text-white/45" />
+                  </div>
+                  <p className="mt-7 text-[0.95rem] font-medium tracking-[-0.03em] text-white/45">
+                    Production Count
+                  </p>
+                  <p className="mt-3 text-[clamp(1.35rem,1.75vw,1.7rem)] font-semibold leading-[1.02] tracking-[-0.055em] text-white">
+                    Realized scenic designs
+                  </p>
+                  <p className="mt-3 max-w-[18rem] text-[0.98rem] font-medium leading-6 tracking-[-0.025em] text-white/58">
+                    Across regional theatre, summer stock, and academic production.
+                  </p>
+                </article>
               </div>
             </div>
           </AnimatedSection>
@@ -550,7 +610,7 @@ export default function Resume() {
           <AnimatedSection delay={140} className="mb-16">
             <div className="flex items-end justify-between gap-6">
               <div>
-                <h2 className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+                <h2 className="font-sans text-[1.2rem] font-medium tracking-[-0.04em] text-foreground/58">
                   Selected Scenic Design
                 </h2>
                 <p className="mt-4 max-w-2xl text-[0.98rem] leading-7 text-foreground/58">
@@ -560,12 +620,12 @@ export default function Resume() {
               </div>
             </div>
 
-            <div className="mt-12 space-y-14">
+            <div className="mt-12 space-y-16 md:space-y-20">
               {SCENIC_CREDITS.map((section, sectionIndex) => (
                 <AnimatedSection
                   key={section.year}
                   delay={Math.min(sectionIndex * 50, 300)}
-                  className="border-t border-border/20 pt-6 md:pt-7"
+                  className="border-t border-black/10 pt-7 md:pt-8"
                 >
                   <div className="grid gap-8 md:grid-cols-[11rem_minmax(0,1fr)] md:gap-20 lg:grid-cols-[12.5rem_minmax(0,1fr)] lg:gap-24">
                     <h3 className="font-sans text-[clamp(2.5rem,4.6vw,4.6rem)] font-medium leading-none tracking-[-0.07em] text-foreground/88 md:sticky md:top-28 md:self-start">
@@ -589,11 +649,11 @@ export default function Resume() {
           </AnimatedSection>
 
           <AnimatedSection className="mb-16">
-            <h2 className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+            <h2 className="font-sans text-[1.2rem] font-medium tracking-[-0.04em] text-foreground/58">
               Earlier
             </h2>
 
-            <div className="mt-6 border-t border-border/20 pt-6 text-foreground/85 md:pt-7">
+            <div className="mt-6 border-t border-black/10 pt-6 text-foreground/85 md:pt-7">
               {EARLIER_CREDITS.map((credit) => (
                 <ScenicCreditRow
                   key={`${credit.title}-${credit.company}`}
@@ -607,15 +667,15 @@ export default function Resume() {
           </AnimatedSection>
 
           <AnimatedSection className="mb-16">
-            <h2 className="font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-foreground/40">
+            <h2 className="font-sans text-[1.2rem] font-medium tracking-[-0.04em] text-foreground/58">
               Achievements & Education
             </h2>
 
-            <div className="mt-6 grid gap-x-6 gap-y-4 border-t border-border/20 pt-6 sm:grid-cols-2">
+            <div className="mt-6 grid gap-x-6 gap-y-4 border-t border-black/10 pt-6 sm:grid-cols-2">
               {achievements.map((item, index) => (
                 <div
                   key={item}
-                  className="border-b border-border/20 pb-4 text-foreground/82"
+                  className="border-b border-black/10 pb-4 text-foreground/82"
                 >
                   <p className="inline-flex items-start gap-2">
                     {index === 0 ? (
@@ -633,17 +693,17 @@ export default function Resume() {
 
         {hoverPreview && previewStyle ? (
           <div
-            className="pointer-events-none fixed z-50 hidden w-[15rem] overflow-hidden rounded-[0.72rem] border border-white/10 bg-black/88 shadow-[0_22px_50px_rgba(0,0,0,0.45)] backdrop-blur-sm lg:block"
+            className="pointer-events-none fixed z-50 hidden w-[26rem] overflow-hidden rounded-[1rem] border border-black/10 bg-black shadow-[0_24px_60px_rgba(0,0,0,0.28)] lg:block"
             style={previewStyle}
           >
-            <div className="relative aspect-square w-full overflow-hidden">
+            <div className="relative aspect-[16/9] w-full overflow-hidden">
               <Image
                 src={hoverPreview.previewImage}
                 alt={`${hoverPreview.title} scenic preview`}
                 fill
                 quality={78}
-                sizes="15rem"
-                className="object-cover"
+                sizes="26rem"
+                className="object-cover object-center"
               />
             </div>
           </div>

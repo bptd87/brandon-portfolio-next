@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { Instagram, Link2 } from "lucide-react";
+import { ArrowRight, ExternalLink, Instagram, Link2 } from "lucide-react";
 
 import AboutNav from "@/components/AboutNav";
 import { AnimatedSection } from "@/components/AnimatedSection";
@@ -11,6 +11,7 @@ import ProfileSectionHero from "@/components/ProfileSectionHero";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { resolveBlobMediaUrl } from "@shared/mediaBlob";
+import { VOYAGELA_EXTERNAL_URL } from "@shared/publicContent";
 import {
   getLocalCollaboratorPortfolioUrlByName,
   getLocalCollaborators,
@@ -52,6 +53,31 @@ const getCollaboratorUrl = (collaborator: LocalCollaborator) =>
   collaborator.website ||
   collaborator.portfolioUrl ||
   null;
+
+const groupStyles: Record<
+  "directors" | "designers" | "companies",
+  {
+    eyebrow: string;
+    body: string;
+    cardClassName: string;
+  }
+> = {
+  directors: {
+    eyebrow: "Production rooms",
+    body: "Directors shape the first conversation around rhythm, story, and audience. These collaborations hold the dramaturgical frame that scenic design responds to.",
+    cardClassName: "bg-[#111111] text-white shadow-[0_28px_80px_rgba(17,17,17,0.16)]",
+  },
+  designers: {
+    eyebrow: "Design language",
+    body: "Design collaborators give the room its shared vocabulary. Costume, light, sound, projection, and scenic ideas become stronger when they are tuned together.",
+    cardClassName: "bg-white text-[#111111] shadow-[0_22px_70px_rgba(17,17,17,0.08)] ring-1 ring-black/[0.035]",
+  },
+  companies: {
+    eyebrow: "Producing homes",
+    body: "Theatres and institutions shape the tempo of the work: the shops, schedules, audiences, and production cultures where ideas become physical.",
+    cardClassName: "bg-[#f7f6f2] text-[#111111] shadow-[0_20px_62px_rgba(17,17,17,0.07)] ring-1 ring-black/[0.035]",
+  },
+};
 
 export default function Collaborators() {
   const allCollaborators = getLocalCollaborators();
@@ -184,60 +210,136 @@ export default function Collaborators() {
           updatedAt="May 22, 2026"
         />
 
-        <article className="overflow-hidden px-4 py-12 sm:px-6 md:py-16 lg:px-8">
-          <div className="mx-auto max-w-[1120px]">
-            <header className="mx-auto max-w-[62rem] text-center">
-              <AnimatedSection>
-                <p className="mx-auto mt-6 max-w-[42rem] text-[clamp(1rem,1.45vw,1.32rem)] leading-[1.62] tracking-[-0.018em] text-foreground/66">
-                  Scenic design is never solitary. These are directors, designers, companies, and
-                  recurring creative partners connected to the productions and process.
-                </p>
-              </AnimatedSection>
-            </header>
-
-            <AnimatedSection delay={360} className="mx-auto mt-14 max-w-[54rem]">
-              <div className="space-y-8 text-[1.04rem] leading-[1.9] tracking-[-0.01em] text-foreground/76 md:text-[1.08rem]">
+        <article className="overflow-hidden bg-[#f1f0ec] px-[clamp(1.5rem,5vw,6rem)] py-12 md:py-18">
+          <div className="mx-auto max-w-[74rem]">
+            <AnimatedSection className="mx-auto max-w-[58rem]">
+              <div className="space-y-7 text-[clamp(1.18rem,1.65vw,1.55rem)] leading-[1.48] tracking-[-0.045em] text-[#111111]/78">
                 <p>
-                  Collaboration gives scenic design its shape. A production becomes specific through
-                  conversations with directors, the pressure and generosity of a design team, and
-                  the production cultures of the theatres and organizations making the work.
+                  Scenic design becomes legible through collaboration. The strongest rooms begin
+                  with trust: directors naming the emotional architecture of a production,
+                  designers building a shared visual language, and theatres making enough space for
+                  practical decisions to become expressive ones.
                 </p>
                 <p>
-                  I think of this page as a map of those relationships. Some are long-running
-                  creative partnerships, some are production teams gathered for a single project,
-                  and some are theatres whose rooms have shaped how I think about process, trust,
-                  and shared visual language.
+                  This page collects the people, design teams, and producing homes that recur
+                  around the work. It is part directory, part relationship map, and part record of
+                  the rooms that have shaped how I think about space, process, and theatrical
+                  memory.
                 </p>
-                <blockquote className="my-12 border-y border-border/35 py-8 font-sans text-[clamp(1.9rem,4vw,3.35rem)] font-medium leading-[1.06] tracking-[-0.055em] text-foreground md:my-14 md:py-10">
+                <blockquote className="py-8 font-sans text-[clamp(2.45rem,5.4vw,6.25rem)] font-medium leading-[0.92] tracking-[-0.082em] text-transparent bg-[linear-gradient(105deg,#2458ff_0%,#8d42df_48%,#c477ff_100%)] bg-clip-text md:py-10">
                   The best rooms build a shared language before they build the world.
                 </blockquote>
               </div>
             </AnimatedSection>
+
+            <AnimatedSection delay={120}>
+              <a
+                href={VOYAGELA_EXTERNAL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group mx-auto mt-6 grid max-w-[58rem] gap-6 rounded-[1.65rem] bg-white/82 p-6 shadow-[0_18px_54px_rgba(17,17,17,0.055)] transition duration-500 hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_24px_68px_rgba(17,17,17,0.085)] md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:p-7"
+              >
+                <div>
+                  <p className="text-[0.98rem] font-medium tracking-[-0.025em] text-[#111111]/46">
+                    Profile context
+                  </p>
+                  <h2 className="mt-2 font-sans text-[clamp(1.85rem,3vw,2.8rem)] font-medium leading-[0.98] tracking-[-0.065em] text-[#111111]">
+                    VoyageLA: Rising Stars Interview
+                  </h2>
+                  <p className="mt-3 max-w-2xl text-[1rem] leading-6 tracking-[-0.025em] text-[#111111]/58">
+                    A press profile connected to the creative practice, with more interviews and
+                    academic profiles to collect here as they publish.
+                  </p>
+                </div>
+                <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[#111111]/18 px-5 py-3 text-[0.95rem] font-medium tracking-[-0.02em] text-[#111111]/70 transition-colors group-hover:border-[#111111]/42 group-hover:text-[#111111]">
+                  Read profile
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </a>
+            </AnimatedSection>
           </div>
         </article>
 
-        <section className="border-t border-border/35 px-4 py-14 sm:px-6 md:py-20 lg:px-8">
-          <div className="mx-auto max-w-[1120px] space-y-18 md:space-y-24">
+        <section className="overflow-hidden bg-[#e9e8e3] py-16 md:py-24">
+          <div className="px-[clamp(1.5rem,5vw,6rem)]">
+            <AnimatedSection>
+              <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+                <div className="max-w-4xl">
+                  <p className="mb-4 text-[1.15rem] font-medium tracking-[-0.035em] text-[#111111]/54">
+                    Collaboration index
+                  </p>
+                  <h2 className="font-sans text-[clamp(2.45rem,5vw,5.8rem)] font-medium leading-[0.9] tracking-[-0.082em] text-[#111111]">
+                    Creative partners, design rooms, and producing homes.
+                  </h2>
+                </div>
+              </div>
+            </AnimatedSection>
+          </div>
+
+          <div className="mt-10 overflow-x-auto px-[clamp(1.5rem,5vw,6rem)] pb-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex min-w-max gap-5 pr-[clamp(1.5rem,5vw,6rem)]">
+              {groupedCollaborators.map((section, index) => {
+                const style = groupStyles[section.id as "directors" | "designers" | "companies"];
+
+                return (
+                  <AnimatedSection
+                    key={section.id}
+                    delay={Math.min(index * 90, 220)}
+                    className="w-[min(25rem,82vw)] shrink-0 md:w-[27rem]"
+                  >
+                    <a
+                      href={`#${section.id}`}
+                      className={`group flex h-[25rem] flex-col rounded-[2rem] p-7 transition duration-500 hover:-translate-y-1 ${style.cardClassName}`}
+                    >
+                      <div>
+                        <p className="text-[0.98rem] font-medium tracking-[-0.025em] opacity-55">
+                          {style.eyebrow}
+                        </p>
+                        <h3 className="mt-4 max-w-[16rem] font-sans text-[clamp(2.3rem,3.2vw,3.25rem)] font-medium leading-[0.9] tracking-[-0.075em]">
+                          {section.title}
+                        </h3>
+                        <p className="mt-5 max-w-[19rem] text-[1rem] leading-6 tracking-[-0.025em] opacity-62">
+                          {style.body}
+                        </p>
+                      </div>
+                      <div className="mt-auto flex items-center justify-between">
+                        <span className="text-[0.98rem] font-medium tracking-[-0.02em] opacity-58">
+                          {section.items.length} entries
+                        </span>
+                        <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-current/10 transition-transform group-hover:scale-105">
+                          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                        </span>
+                      </div>
+                    </a>
+                  </AnimatedSection>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-[#f1f0ec] px-[clamp(1.5rem,5vw,6rem)] py-16 md:py-24">
+          <div className="mx-auto max-w-[74rem] space-y-16 md:space-y-20">
             {groupedCollaborators.map((section, index) =>
               section.items.length ? (
-                <section key={section.id} id={section.id} className="scroll-mt-32">
+                <section key={section.id} id={section.id} className="scroll-mt-36">
                   <AnimatedSection delay={Math.min(index * 80, 220)}>
-                    <div className="grid gap-8 border-b border-border/25 pb-8 md:grid-cols-[15rem_minmax(0,1fr)] md:gap-12">
+                    <div className="grid gap-6 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] md:items-end">
                       <div>
-                        <p className="section-kicker text-foreground/42">
-                          {String(section.items.length).padStart(2, "0")}
+                        <p className="text-[1.08rem] font-medium tracking-[-0.035em] text-[#111111]/48">
+                          {groupStyles[section.id as "directors" | "designers" | "companies"].eyebrow}
                         </p>
-                        <h2 className="mt-3 font-sans text-[clamp(2.2rem,4.5vw,4.4rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
+                        <h2 className="mt-3 font-sans text-[clamp(2.55rem,5.2vw,5.9rem)] font-medium leading-[0.88] tracking-[-0.082em] text-[#111111]">
                           {section.title}
                         </h2>
                       </div>
-                      <p className="max-w-[42rem] text-[1.02rem] leading-8 tracking-[-0.015em] text-foreground/58">
+                      <p className="max-w-[39rem] text-[1.08rem] leading-7 tracking-[-0.025em] text-[#111111]/58 md:justify-self-end">
                         {section.description}
                       </p>
                     </div>
                   </AnimatedSection>
 
-                  <div className="mt-8 grid gap-x-10 gap-y-0 md:grid-cols-2 xl:grid-cols-3">
+                  <div className="mt-9 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
                     {section.items.map((collaborator) => {
                       const website = getCollaboratorUrl(collaborator);
                       const instagramLabel = (
@@ -248,52 +350,49 @@ export default function Collaborators() {
                       return (
                         <article
                           key={collaborator.id}
-                          className="border-t border-border/20 py-5"
+                          className="group rounded-[1.25rem] bg-white/76 p-5 shadow-[0_12px_38px_rgba(17,17,17,0.045)] ring-1 ring-black/[0.025] transition duration-300 hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_20px_54px_rgba(17,17,17,0.075)]"
                         >
-                          <h3 className="font-sans text-[1.08rem] font-medium leading-[1.2] tracking-[-0.035em] text-foreground">
-                            {website ? (
-                              <a
-                                href={website}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="transition-colors hover:text-foreground/72"
-                              >
+                          <div className="flex items-start justify-between gap-4">
+                            <div>
+                              <h3 className="font-sans text-[1.2rem] font-medium leading-[1.05] tracking-[-0.045em] text-[#111111]">
                                 {collaborator.name}
-                              </a>
-                            ) : (
-                              collaborator.name
-                            )}
-                          </h3>
+                              </h3>
 
-                          {section.id === "designers" && role ? (
-                            <p className="mt-1 text-[0.88rem] leading-6 text-foreground/42">
-                              {role}
-                            </p>
-                          ) : null}
+                              {role ? (
+                                <p className="mt-2 text-[0.92rem] leading-5 tracking-[-0.02em] text-[#111111]/46">
+                                  {role}
+                                </p>
+                              ) : null}
+                            </div>
 
-                          <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1">
-                            {website ? (
-                              <a
-                                href={website}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1.5 text-[0.82rem] font-medium text-foreground/46 transition-colors hover:text-foreground"
-                              >
-                                <Link2 className="h-3.5 w-3.5" />
-                                <span>Website</span>
-                              </a>
-                            ) : null}
-                            {collaborator.instagramUrl ? (
-                              <a
-                                href={collaborator.instagramUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1.5 text-[0.82rem] font-medium text-foreground/46 transition-colors hover:text-foreground"
-                              >
-                                <Instagram className="h-3.5 w-3.5" />
-                                <span>@{instagramLabel}</span>
-                              </a>
-                            ) : null}
+                            <div className="flex shrink-0 items-center gap-1.5 text-[#111111]/42">
+                              {website ? (
+                                <a
+                                  href={website}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-black/5 hover:text-[#111111]"
+                                  aria-label={`${collaborator.name} website`}
+                                >
+                                  <Link2 className="h-4 w-4" />
+                                </a>
+                              ) : null}
+                              {collaborator.instagramUrl ? (
+                                <a
+                                  href={collaborator.instagramUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-black/5 hover:text-[#111111]"
+                                  aria-label={`${collaborator.name} Instagram`}
+                                  title={`@${instagramLabel}`}
+                                >
+                                  <Instagram className="h-4 w-4" />
+                                </a>
+                              ) : null}
+                              {website ? (
+                                <ExternalLink className="hidden h-4 w-4 opacity-0 transition-opacity group-hover:opacity-45 md:block" />
+                              ) : null}
+                            </div>
                           </div>
                         </article>
                       );

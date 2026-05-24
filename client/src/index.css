@@ -727,8 +727,26 @@
   }
 }
 
+@keyframes productionExploreScroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
 .rendering-progress-fill {
   animation: renderingProgress 5.2s linear forwards;
+}
+
+.production-explore-track {
+  animation: productionExploreScroll 46s linear infinite;
+  padding-inline: max(1.5rem, calc((100vw - 88rem) / 2 + 2.5rem));
+}
+
+.production-explore-track:hover {
+  animation-play-state: paused;
 }
 
 .hero-stage-panel {
@@ -747,6 +765,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hero-stage-sweep {
+    animation: none;
+  }
+
+  .production-explore-track {
     animation: none;
   }
 }

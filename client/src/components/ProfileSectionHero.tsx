@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Check, Facebook, Link2, Linkedin, Mail } from "lucide-react";
 
 import { copyTextToClipboard } from "@/lib/clipboard";
@@ -17,6 +17,8 @@ type ProfileSectionHeroProps = {
   label?: string;
 };
 
+const SITE_URL = "https://www.brandonptdavis.com";
+
 export default function ProfileSectionHero({
   canonicalPath,
   description,
@@ -29,13 +31,8 @@ export default function ProfileSectionHero({
 }: ProfileSectionHeroProps) {
   const [linkCopied, setLinkCopied] = useState(false);
 
-  const pageUrl = useMemo(() => {
-    if (typeof window === "undefined") {
-      return `https://www.brandonptdavis.com${canonicalPath}`;
-    }
-
-    return `${window.location.origin}${canonicalPath}`;
-  }, [canonicalPath]);
+  const safeCanonicalPath = canonicalPath.startsWith("/") ? canonicalPath : `/${canonicalPath}`;
+  const pageUrl = `${SITE_URL}${safeCanonicalPath}`;
 
   const encodedTitle = encodeURIComponent(title);
   const encodedUrl = encodeURIComponent(pageUrl);
@@ -105,14 +102,18 @@ export default function ProfileSectionHero({
           </a>
         </div>
 
-        <div className="relative mt-8 h-[min(45vw,27rem)] min-h-[14rem] w-[min(76vw,40rem)]">
+        <div className="site-media-square relative isolate mt-8 h-[min(45vw,27rem)] min-h-[14rem] w-[min(76vw,40rem)]">
+          <div
+            className="pointer-events-none absolute inset-[18%] -z-10 rounded-full bg-[radial-gradient(circle,rgba(17,17,17,0.12)_0%,rgba(17,17,17,0.06)_34%,rgba(17,17,17,0)_70%)] blur-3xl"
+            aria-hidden="true"
+          />
           <Image
             src={imageSrc}
             alt={imageAlt}
             fill
             priority
             sizes="(min-width: 1024px) 40rem, 76vw"
-            className="object-contain drop-shadow-[0_32px_70px_rgba(17,17,17,0.2)]"
+            className="site-media-square object-contain mix-blend-multiply"
           />
         </div>
       </div>

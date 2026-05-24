@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
-import { ChevronDown, X } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { recentScenicProjects } from "./navigationData";
 
 interface MobileMenuProps {
@@ -51,24 +51,24 @@ function MenuSection({
   pathname: string;
 }) {
   return (
-    <div className="border-b border-border/35 pb-2">
+    <div className="border-b border-border/35 pb-3">
       <button
         type="button"
         onClick={onToggle}
-        className="flex w-full items-center justify-between gap-4 py-4 text-left"
+        className="flex w-full items-center justify-between gap-4 py-5 text-left"
       >
-        <span className="text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/55">
+        <span className="font-sans text-[1.72rem] font-semibold leading-none tracking-[-0.055em] text-foreground">
           {label}
         </span>
         <ChevronDown
-          className={`h-4 w-4 text-foreground/55 transition-transform duration-200 ${
+          className={`h-5 w-5 text-foreground/42 transition-transform duration-200 ${
             isOpen ? "rotate-180" : ""
           }`}
         />
       </button>
 
       {isOpen ? (
-        <div className="space-y-1 pb-3">
+        <div className="space-y-1 pb-4">
           {links.map((item) => {
             const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
             return (
@@ -76,10 +76,10 @@ function MenuSection({
                 key={item.href}
                 href={item.href}
                 onClick={onClose}
-                className={`block rounded-2xl px-3 py-3 text-[1.02rem] tracking-[-0.02em] transition-colors ${
+                className={`block rounded-[1rem] px-1 py-2.5 font-sans text-[1.25rem] font-medium leading-[1.05] tracking-[-0.04em] transition-colors ${
                   active
-                    ? "bg-foreground/[0.06] text-foreground"
-                    : "text-foreground/72 hover:bg-foreground/[0.04] hover:text-foreground"
+                    ? "text-foreground"
+                    : "text-foreground/58 hover:text-foreground"
                 }`}
               >
                 {item.label}
@@ -132,12 +132,12 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }: MobileMenu
     <>
       <button
         type="button"
-        className="fixed inset-0 z-40 bg-black/72 backdrop-blur-md"
+        className="fixed inset-0 z-40 bg-black/46 backdrop-blur-md"
         onClick={onClose}
         aria-label="Close mobile navigation"
       />
 
-      <div className="fixed inset-x-0 top-0 z-50 h-[100dvh] overflow-y-auto border-b border-border/35 bg-background/96 backdrop-blur-2xl">
+      <div className="fixed inset-x-0 top-0 z-50 h-[100dvh] overflow-y-auto border-b border-border/35 bg-background/94 backdrop-blur-2xl">
         <div className="container flex min-h-full flex-col py-5">
           <div className="flex items-start justify-between gap-6 border-b border-border/35 pb-5">
             <Link href="/" onClick={onClose} className="inline-flex min-w-0 flex-col leading-none">
@@ -152,20 +152,21 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }: MobileMenu
             <button
               type="button"
               onClick={onClose}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/45 text-foreground/72 transition-colors hover:border-border hover:text-foreground"
+              className="inline-flex h-11 items-center gap-3 rounded-full px-1.5 text-[0.78rem] font-medium uppercase tracking-[0.08em] text-foreground/72 transition-colors hover:text-foreground"
               aria-label="Close menu"
             >
-              <X className="h-5 w-5" />
+              <span className="relative h-3.5 w-6" aria-hidden="true">
+                <span className="absolute left-0 top-0 h-px w-6 translate-y-[6px] rotate-45 bg-current" />
+                <span className="absolute bottom-0 left-0 h-px w-6 -translate-y-[7px] -rotate-45 bg-current" />
+              </span>
+              <span>Close</span>
             </button>
           </div>
 
           <div className="flex-1 pt-6">
-            <div className="mb-8 max-w-xs">
-              <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-foreground/42">
-                Scenic Design by Brandon PT Davis
-              </p>
-              <p className="mt-3 text-sm leading-7 text-foreground/58">
-                Portfolio, profile, and published resources in one place.
+            <div className="mb-7">
+              <p className="font-sans text-[2.1rem] font-semibold leading-[0.98] tracking-[-0.065em] text-foreground">
+                Portfolio, profile, and published work.
               </p>
             </div>
 
@@ -176,7 +177,7 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }: MobileMenu
                 onClose();
                 onOpenSearch();
               }}
-              className="mb-6 inline-flex h-11 items-center justify-center rounded-full border border-border/45 px-5 text-sm font-medium tracking-[-0.01em] text-foreground/72 transition-colors hover:border-border hover:text-foreground"
+              className="mb-6 inline-flex h-12 items-center justify-center rounded-full border border-border/45 px-5 text-[1rem] font-medium tracking-[-0.02em] text-foreground/72 transition-colors hover:border-border hover:text-foreground"
             >
               Search Site
             </Link>
@@ -210,7 +211,7 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }: MobileMenu
 
             <div className="mt-9 border-t border-border/35 pt-5">
               <div className="mb-4 flex items-center justify-between gap-4">
-                <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-foreground/42">
+                <p className="font-sans text-[1rem] font-medium tracking-[-0.02em] text-foreground/48">
                   Recent Scenic Design
                 </p>
                 <Link
@@ -221,9 +222,9 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }: MobileMenu
                   Portfolio
                 </Link>
               </div>
-              <div className="space-y-4">
-                {recentScenicProjects.map((project) => (
-                  <Link key={project.href} href={project.href} onClick={onClose} className="group grid grid-cols-[5.7rem_1fr] gap-4">
+              <div className="grid grid-cols-2 gap-3">
+                {recentScenicProjects.slice(0, 2).map((project) => (
+                  <Link key={project.href} href={project.href} onClick={onClose} className="group block">
                     <div className="relative aspect-[4/3] overflow-hidden rounded-[0.75rem] border border-border/35 bg-foreground/[0.035]">
                       <Image
                         src={project.imageUrl}
@@ -233,12 +234,6 @@ export default function MobileMenu({ isOpen, onClose, onOpenSearch }: MobileMenu
                         sizes="96px"
                         className="object-cover"
                       />
-                    </div>
-                    <div className="flex min-w-0 flex-col justify-center">
-                      <p className="font-sans text-[1rem] font-medium leading-[1.08] tracking-[-0.035em] text-foreground">
-                        {project.title}
-                      </p>
-                      <p className="mt-1 text-xs leading-5 text-foreground/45">{project.meta}</p>
                     </div>
                   </Link>
                 ))}

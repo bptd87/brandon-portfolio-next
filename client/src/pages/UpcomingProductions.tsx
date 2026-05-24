@@ -1,6 +1,6 @@
 "use client";
 
-import { Link2 } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 import AboutNav from "@/components/AboutNav";
 import Footer from "@/components/Footer";
@@ -14,73 +14,78 @@ import {
   upcomingProductions,
 } from "@shared/upcomingProductions";
 
-function ProductionArt({
+function ProductionCard({
+  index,
   production,
 }: {
+  index: number;
   production: UpcomingProduction;
 }) {
+  const imageFirst = index % 2 === 0;
+
   return (
-    <div className="mx-auto mt-8 w-full max-w-[62rem]">
-      <div className="overflow-hidden bg-black">
+    <a
+      href={`/upcoming-productions/${production.id}`}
+      className="group grid overflow-hidden rounded-[1.7rem] bg-white shadow-[0_18px_55px_rgba(20,18,15,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_30px_80px_rgba(20,18,15,0.13)] lg:grid-cols-2"
+    >
+      <div className={`site-media-square overflow-hidden bg-black ${imageFirst ? "" : "lg:order-2"}`}>
         <img
           src={production.imageUrl}
           alt={production.imageAlt}
           loading="lazy"
-          className="aspect-[16/9] h-auto w-full object-cover object-center"
+          className="site-media-square aspect-[16/9] h-full w-full object-cover transition duration-500 group-hover:scale-[1.018] lg:aspect-auto"
         />
       </div>
-      <div className="mt-5 flex justify-end text-foreground/62">
-        <a
-          href={`/upcoming-productions/${production.id}`}
-          className="inline-flex items-center gap-2 text-[0.98rem] tracking-[-0.02em] transition-colors hover:text-foreground"
-        >
-          <Link2 className="h-4 w-4" aria-hidden="true" />
-          {production.company}
-        </a>
+      <div className="flex min-h-[25rem] flex-col justify-between p-7 md:p-9 lg:min-h-[31rem] lg:p-12">
+        <div>
+          <p className="text-[0.95rem] font-medium tracking-[-0.02em] text-[#111111]/48">
+            {formatUpcomingDateRange(production)}
+          </p>
+          <h2 className="mt-5 max-w-[12ch] font-sans text-[clamp(2.75rem,5.2vw,6rem)] font-medium leading-[0.9] tracking-[-0.08em] text-[#111111]">
+            {production.title}
+          </h2>
+          <p className="mt-5 max-w-[30rem] text-[clamp(1.08rem,1.6vw,1.35rem)] leading-[1.25] tracking-[-0.04em] text-[#111111]/62">
+            {production.subtitle}
+          </p>
+          <p className="mt-6 max-w-[34rem] text-[1.02rem] leading-[1.58] tracking-[-0.015em] text-[#111111]/64">
+            {production.description}
+          </p>
+        </div>
+
+        <div className="mt-10 flex items-center justify-between gap-4 border-t border-[#111111]/10 pt-5">
+          <span className="min-w-0 truncate text-[0.96rem] font-medium tracking-[-0.02em] text-[#111111]/68">
+            {production.company}
+          </span>
+          <ArrowUpRight
+            className="h-4 w-4 shrink-0 text-[#7b2cff] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+            aria-hidden="true"
+          />
+        </div>
       </div>
-    </div>
+    </a>
   );
 }
 
-function ProductionArticle({
-  idPrefix,
-  production,
-}: {
-  idPrefix: "upcoming" | "past";
-  production: UpcomingProduction;
-}) {
+function UpcomingProductionCards() {
   return (
-    <article
-      className="py-12 text-center md:py-[4.5rem]"
-      id={`${idPrefix}-${production.id}`}
-    >
-      <header className="mx-auto max-w-[62rem]">
-        <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[0.98rem] tracking-[-0.02em] text-foreground/52">
-          <span>{formatUpcomingDateRange(production)}</span>
+    <section className="px-5 pb-12 pt-2 md:px-8 md:pb-16">
+      <div className="mx-auto max-w-[88rem]">
+        <div className="mb-7 md:mb-9">
+          <p className="text-[1.14rem] tracking-[-0.04em] text-[#111111]/54">
+            2026 season
+          </p>
+          <h2 className="mt-2 max-w-[12ch] bg-gradient-to-r from-[#2458ff] via-[#7b2cff] to-[#c77dff] bg-clip-text font-sans text-[clamp(2.9rem,6vw,6rem)] font-medium leading-[0.9] tracking-[-0.08em] text-transparent">
+            The season ahead.
+          </h2>
         </div>
-        <h2 className="mx-auto mt-6 max-w-[12ch] font-sans text-[clamp(3rem,7vw,6.4rem)] font-normal leading-[0.9] tracking-[-0.07em] text-foreground">
-          {production.title}
-        </h2>
-        <p className="mx-auto mt-4 max-w-[42rem] text-[clamp(1.08rem,1.5vw,1.36rem)] leading-[1.55] tracking-[-0.02em] text-foreground/62">
-          {production.subtitle}
-        </p>
-      </header>
 
-      <ProductionArt production={production} />
-
-      <div className="mx-auto mt-10 max-w-[54rem] text-left">
-        <div className="space-y-6">
-          {production.body.map((paragraph) => (
-            <p
-              key={paragraph}
-              className="text-[1.03rem] leading-[1.78] tracking-[-0.01em] text-foreground/72"
-            >
-              {paragraph}
-            </p>
+        <div className="grid gap-5 md:gap-6">
+          {upcomingProductions.map((production, index) => (
+            <ProductionCard key={production.id} index={index} production={production} />
           ))}
         </div>
       </div>
-    </article>
+    </section>
   );
 }
 
@@ -94,12 +99,12 @@ function ProductionSectionHeader({
   description: string;
 }) {
   return (
-    <header className="mx-auto max-w-[62rem] py-12 text-center md:py-14">
-      <div className="text-[0.98rem] tracking-[-0.02em] text-foreground/52">{eyebrow}</div>
-      <h2 className="mx-auto mt-5 max-w-[12ch] font-sans text-[clamp(2.8rem,5.5vw,5.6rem)] font-normal leading-[0.9] tracking-[-0.07em] text-foreground">
+    <header className="mx-auto max-w-[58rem] py-10 text-center md:py-12">
+      <div className="text-[1.1rem] tracking-[-0.035em] text-[#111111]/52">{eyebrow}</div>
+      <h2 className="mx-auto mt-4 max-w-[12ch] font-sans text-[clamp(2.5rem,5vw,4.8rem)] font-medium leading-[0.92] tracking-[-0.075em] text-[#111111]">
         {title}
       </h2>
-      <p className="mx-auto mt-5 max-w-[42rem] text-[clamp(1.05rem,1.35vw,1.24rem)] leading-[1.58] tracking-[-0.02em] text-foreground/62">
+      <p className="mx-auto mt-4 max-w-[34rem] text-[clamp(1rem,1.22vw,1.14rem)] leading-[1.4] tracking-[-0.025em] text-[#111111]/62">
         {description}
       </p>
     </header>
@@ -123,33 +128,29 @@ export default function UpcomingProductions() {
 
       <ProfileSectionHero
         canonicalPath="/upcoming-productions"
-        description="Upcoming productions, archive links, and current scenic design work organized by season."
-        descriptionClassName="!max-w-[34rem]"
+        description="Current and archived scenic design productions, gathered as a working calendar of upcoming shows and production records."
+        descriptionClassName="!max-w-[31rem] !leading-[1.22]"
         imageAlt="Calendar and stage marquee icon for upcoming productions"
         imageSrc="/images/about/icons/upcoming-icon.png"
         title="Upcoming Productions"
         updatedAt="May 22, 2026"
       />
 
-      <main className="bg-[#f1f0ec] pb-20 pt-10">
-        <section className="px-6 md:px-10">
-          <div className="mx-auto w-full max-w-[72rem]">
-            {upcomingProductions.map((production) => (
-              <ProductionArticle key={production.id} idPrefix="upcoming" production={production} />
-            ))}
-          </div>
-        </section>
+      <main className="bg-[#f1f0ec] pb-20 pt-6">
+        <UpcomingProductionCards />
 
         <section className="px-6 pt-8 md:px-10 md:pt-10">
-          <div className="mx-auto w-full max-w-[72rem]">
+          <div className="mx-auto w-full max-w-[88rem]">
             <ProductionSectionHeader
-              eyebrow="Production Archive"
+              eyebrow="Archive"
               title="Past Productions"
               description="Selected production archives that connect public event pages to the full scenic design portfolio."
             />
-            {archivedProductionEvents.map((production) => (
-              <ProductionArticle key={production.id} idPrefix="past" production={production} />
-            ))}
+            <div className="grid gap-5 md:gap-6">
+              {archivedProductionEvents.map((production, index) => (
+                <ProductionCard key={production.id} index={index} production={production} />
+              ))}
+            </div>
           </div>
         </section>
       </main>

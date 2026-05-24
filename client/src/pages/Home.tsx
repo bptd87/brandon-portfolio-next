@@ -1,13 +1,12 @@
 "use client";
 
 import { useRef } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SEO } from "@/components/SEO";
 import { ProjectGridSkeleton } from "@/components/SkeletonLoaders";
-import { formatUtcDate } from "@/lib/date-format";
 import { getProjectPath } from "@/lib/projectRoutes";
 import { sortScenicProjectsChronologically } from "@/lib/scenicShowcase";
 import {
@@ -17,7 +16,10 @@ import {
 import { getLocalArticles } from "@shared/localArticles";
 import { getLocalTutorials } from "@shared/localStudio";
 import type { ScenicProjectSummary } from "@shared/scenicProjectSummaries";
-import { upcomingProductions } from "@shared/upcomingProductions";
+import {
+  formatUpcomingDateRange,
+  upcomingProductions,
+} from "@shared/upcomingProductions";
 
 const HOME_HERO_IMAGE_URL =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150232-69e3ddad.webp";
@@ -396,55 +398,102 @@ function BrandonSection() {
 
 function UpcomingSection() {
   const nextProductions = upcomingProductions.slice(0, 4);
+  const cardsRef = useRef<HTMLDivElement | null>(null);
+  const scrollCards = (direction: "previous" | "next") => {
+    cardsRef.current?.scrollBy({
+      left: direction === "next" ? 620 : -620,
+      behavior: "smooth",
+    });
+  };
 
   return (
-    <section className="border-t border-black/10 bg-[#f1f0ec] py-16 md:py-24">
+    <section className="bg-[#f1f0ec] pb-20 pt-16 md:pb-28 md:pt-24">
       <div className="px-[clamp(1.5rem,5vw,6rem)]">
-        <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+        <div className="mb-10 grid gap-6 md:grid-cols-[minmax(0,0.72fr)_auto] md:items-end">
           <div className="max-w-3xl">
-            <p className="mb-4 section-kicker text-black/42">
+            <p className="mb-4 text-[clamp(1.05rem,1.35vw,1.22rem)] font-medium leading-none tracking-[-0.04em] text-black/48">
               Upcoming Productions
             </p>
-            <h2 className="font-sans text-[clamp(2rem,4vw,3.35rem)] font-medium leading-[0.96] tracking-[-0.055em] text-black">
-              Current scenic design calendar.
+            <h2 className="max-w-[12ch] bg-gradient-to-r from-[#0a4cff] via-[#7b2cbf] to-[#c77dff] bg-clip-text font-sans text-[clamp(2.4rem,5vw,5.3rem)] font-medium leading-[0.94] tracking-[-0.068em] text-transparent">
+              The season ahead.
             </h2>
           </div>
           <a
             href="/upcoming-productions"
-            className="group inline-flex w-fit items-center gap-2 font-sans text-sm font-medium tracking-[-0.01em] text-[#7b2cbf] transition-colors hover:text-black"
+            className="inline-flex h-10 w-fit items-center justify-center rounded-full border border-[#9d4edd]/72 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-[#7b2cbf] transition-colors hover:border-[#7b2cbf] hover:text-black md:justify-self-end"
           >
             View calendar
-            <span
-              aria-hidden="true"
-              className="transition-transform group-hover:translate-x-1"
-            >
-              -&gt;
-            </span>
           </a>
         </div>
+      </div>
 
-        <div className="divide-y divide-black/12 border-y border-black/12">
-          {nextProductions.map(production => (
+      <div
+        ref={cardsRef}
+        className="overflow-x-auto px-[clamp(1.5rem,5vw,6rem)] pb-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        <div className="flex min-w-max gap-5 pr-[clamp(1.5rem,5vw,6rem)]">
+          {nextProductions.map((production, index) => (
             <a
               key={production.id}
               href={`/upcoming-productions/${production.id}`}
-              className="group grid gap-5 py-5 transition-colors hover:bg-black/[0.035] md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
+              className="group relative block w-[min(25rem,82vw)] overflow-hidden rounded-[1.7rem] bg-black ring-1 ring-black/[0.04] transition duration-300 hover:-translate-y-1 md:w-[29rem]"
             >
-              <div>
-                <p className="font-sans text-[1.45rem] font-medium leading-[1.02] tracking-[-0.05em] text-black transition-transform duration-500 group-hover:translate-x-1 md:text-[1.9rem]">
-                  {production.title}
-                </p>
-                <p className="mt-2 text-sm leading-6 text-black/52">
-                  {production.company} · Directed by {production.director}
-                </p>
+              <img
+                src={production.imageUrl}
+                alt={production.imageAlt}
+                loading={index === 0 ? "eager" : "lazy"}
+                className="aspect-square h-full w-full object-cover opacity-[0.92] transition duration-500 group-hover:scale-[1.018] group-hover:opacity-100"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.24)_46%,rgba(0,0,0,0.82)_100%)]" />
+
+              <div className="absolute inset-0 flex flex-col justify-between p-7 text-white md:p-8">
+                <div>
+                  <p className="text-[0.92rem] font-medium tracking-[-0.02em] text-white/72">
+                    {formatUpcomingDateRange(production)}
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="max-w-[11ch] font-sans text-[clamp(2.15rem,4vw,4rem)] font-medium leading-[0.9] tracking-[-0.08em] text-white">
+                    {production.title}
+                  </h3>
+                  <p className="mt-4 max-w-[25rem] text-[0.98rem] leading-[1.42] tracking-[-0.02em] text-white/72">
+                    {production.subtitle}
+                  </p>
+
+                  <div className="mt-6 flex items-center justify-between gap-4 border-t border-white/22 pt-4">
+                    <span className="min-w-0 truncate text-[0.95rem] font-medium tracking-[-0.02em] text-white/76">
+                      {production.company}
+                    </span>
+                    <ArrowUpRight
+                      className="h-4 w-4 shrink-0 text-white transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                      aria-hidden="true"
+                    />
+                  </div>
+                </div>
               </div>
-              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-black/46">
-                {formatUtcDate(production.startDate, "short")} -{" "}
-                {formatUtcDate(production.endDate, "short")}
-              </p>
             </a>
           ))}
         </div>
+      </div>
+
+      <div className="-mt-1 flex justify-end gap-3 px-[clamp(1.5rem,5vw,6rem)]">
+        <button
+          type="button"
+          onClick={() => scrollCards("previous")}
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/[0.08] text-black/62 transition-colors hover:bg-black hover:text-white"
+          aria-label="Previous upcoming production cards"
+        >
+          <ChevronLeft className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
+        </button>
+        <button
+          type="button"
+          onClick={() => scrollCards("next")}
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/[0.12] text-black/72 transition-colors hover:bg-black hover:text-white"
+          aria-label="Next upcoming production cards"
+        >
+          <ChevronRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
+        </button>
       </div>
     </section>
   );
@@ -461,7 +510,7 @@ function PublishSection() {
   };
 
   return (
-    <section className="border-t border-black/10 bg-[#f1f0ec] py-16 md:py-24">
+    <section className="bg-[#f1f0ec] py-16 md:py-24">
       <div className="px-[clamp(1.5rem,5vw,6rem)]">
         <div className="mb-10 grid gap-6 md:grid-cols-[minmax(0,0.72fr)_auto] md:items-end">
           <div>
