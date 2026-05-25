@@ -28,18 +28,23 @@ const sections = [
     ],
   },
   {
-    title: "Publish",
+    title: "Publish & Studio",
     links: [
+      { name: "Studio", href: "/studio" },
       { name: "Articles", href: "/articles" },
       { name: "Tutorials", href: "/studio/tutorials" },
       { name: "Scenic Directory", href: "/studio/directory" },
+      { name: "Studio Apps", href: "/studio/apps" },
     ],
   },
   {
-    title: "Tools",
+    title: "Studio Tools",
     links: [
-      { name: "Studio Apps", href: "/studio/apps" },
-      { name: "Scenic 3D Converter (Mac)", href: "/studio/apps/scenic-3d-converter" },
+      { name: "Scale Calculator", href: "/studio/apps/scale-calculator" },
+      { name: "Dimension Reference", href: "/studio/apps/dimension-reference" },
+      { name: "Rosco Paint Calculator", href: "/studio/apps/rosco-paint-calculator" },
+      { name: "Design History Timeline", href: "/studio/apps/design-history-timeline" },
+      { name: "Scenic 3D Converter", href: "/studio/apps/scenic-3d-converter" },
     ],
   },
   {
@@ -47,15 +52,18 @@ const sections = [
     links: [
       { name: "Home", href: "/" },
       { name: "Contact", href: "/contact" },
+      { name: "Search", href: "/search" },
       { name: "FAQ", href: "/faq" },
       { name: "Privacy Policy", href: "/privacy" },
       { name: "Terms of Service", href: "/terms" },
       { name: "Accessibility", href: "/accessibility" },
+      { name: "Sitemap", href: "/sitemap" },
     ],
   },
   {
-    title: "RSS Feeds",
+    title: "Feeds & XML Sitemaps",
     links: [
+      { name: "XML Sitemap", href: "/sitemap.xml" },
       { name: "Projects RSS", href: "/projects/rss.xml" },
       { name: "Articles RSS", href: "/articles/rss.xml" },
       { name: "Tutorials RSS", href: "/studio/tutorials/rss.xml" },
@@ -102,29 +110,29 @@ export default function Sitemap() {
 
       <InfoPageShell
         title="Sitemap"
-        intro="A complete navigation map of the current portfolio, studio, archive, and information pages."
+        intro="A current navigation map of the portfolio, profile, publishing, studio tool, and information pages."
         currentPath="/sitemap"
       >
         <div className="grid gap-x-12 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
           {sections.map((section) => (
-            <section key={section.title} className="border-t border-white/10 pt-5">
-              <h2 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/42">
+            <section key={section.title} className="border-t border-black/10 pt-5">
+              <h2 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-black/42">
                 {section.title}
               </h2>
               <ul className="space-y-3">
                 {section.links.map((link) => (
                   <li key={link.href}>
-                    {section.title === "RSS Feeds" ? (
+                    {section.title === "Feeds & XML Sitemaps" ? (
                       <a
                         href={link.href}
-                        className="text-[1rem] leading-[1.65] tracking-[-0.01em] text-white/72 transition-colors hover:text-white"
+                        className="text-[1rem] leading-[1.65] tracking-[-0.01em] text-black/68 transition-colors hover:text-black"
                       >
                         {link.name}
                       </a>
                     ) : (
                       <Link
                         href={link.href}
-                        className="text-[1rem] leading-[1.65] tracking-[-0.01em] text-white/72 transition-colors hover:text-white"
+                        className="text-[1rem] leading-[1.65] tracking-[-0.01em] text-black/68 transition-colors hover:text-black"
                       >
                         {link.name}
                       </Link>

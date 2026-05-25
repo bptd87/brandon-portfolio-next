@@ -18,7 +18,7 @@ export default function SearchPage() {
   }, [initialQuery]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-[#f1f0ec] text-[#1d1d1f]">
       <SEO
         title="Search the Site | Brandon PT Davis"
         description="Search projects, articles, collaborators, tutorials, and design credits across the Brandon PT Davis site."
@@ -28,22 +28,23 @@ export default function SearchPage() {
 
       <Header />
 
-      <main className="min-h-[60vh]" />
-
-      <SearchOverlay
-        open={open}
-        initialQuery={initialQuery}
-        onOpenChange={(nextOpen) => {
-          setOpen(nextOpen);
-          if (!nextOpen) {
-            if (window.history.length > 1) {
-              router.back();
-            } else {
-              router.push("/");
+      <main>
+        <SearchOverlay
+          open={open}
+          initialQuery={initialQuery}
+          variant="page"
+          onOpenChange={(nextOpen) => {
+            setOpen(nextOpen);
+            if (!nextOpen) {
+              if (window.history.length > 1) {
+                router.back();
+              } else {
+                router.push("/");
+              }
             }
-          }
-        }}
-      />
+          }}
+        />
+      </main>
     </div>
   );
 }

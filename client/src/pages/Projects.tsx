@@ -2,8 +2,8 @@
 
 import { useMemo, useRef, useState } from "react";
 import type { CSSProperties, MouseEvent } from "react";
-import { useLocation } from "wouter";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import {
   ArrowUpDown,
   ArrowDownAZ,
@@ -234,7 +234,7 @@ export default function Projects({
 }: {
   initialProjects: ScenicProjectSummary[];
 }) {
-  const [, setLocation] = useLocation();
+  const router = useRouter();
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>("all");
   const [selectedVenue, setSelectedVenue] = useState<string>("all");
   const [selectedYear, setSelectedYear] = useState<string>("all");
@@ -414,7 +414,7 @@ export default function Projects({
 
     event.preventDefault();
     const anchor = event.currentTarget;
-    const navigate = () => setLocation(href);
+    const navigate = () => router.push(href);
     const performNavigation = async () => {
       await animateCardDeparture(anchor);
       navigate();

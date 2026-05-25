@@ -54,7 +54,7 @@ export default function Accessibility() {
       >
         <div className="max-w-4xl">
           {sections.map((section) => (
-            <section key={section.title} className="border-t border-white/10 py-8 first:pt-0">
+            <section key={section.title} className="border-t border-black/10 py-8 first:pt-0">
               <h2 className="mb-4 font-sans text-[clamp(1.55rem,2.3vw,2.2rem)] font-medium leading-[1] tracking-[-0.045em] text-foreground">
                 {section.title}
               </h2>
@@ -68,7 +68,7 @@ export default function Accessibility() {
                         If you encounter an accessibility issue, contact{" "}
                         <a
                           href="mailto:info@brandonptdavis.com"
-                          className="text-foreground underline decoration-white/20 underline-offset-4 hover:decoration-white/50"
+                          className="text-foreground underline decoration-black/20 underline-offset-4 hover:decoration-black/50"
                         >
                           info@brandonptdavis.com
                         </a>{" "}

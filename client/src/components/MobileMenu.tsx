@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "wouter";
+import { Link } from "wouter";
 import { ChevronDown } from "lucide-react";
 import { recentScenicProjects } from "./navigationData";
 
@@ -93,7 +94,7 @@ function MenuSection({
 }
 
 export default function MobileMenu({ isOpen, onClose, onOpenSearch }: MobileMenuProps) {
-  const [pathname] = useLocation();
+  const pathname = usePathname() || "/";
   const [workOpen, setWorkOpen] = useState(true);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [publishOpen, setPublishOpen] = useState(false);

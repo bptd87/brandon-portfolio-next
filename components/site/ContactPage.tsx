@@ -8,8 +8,8 @@ import { Button } from "../../client/src/components/ui/button";
 import { Input } from "../../client/src/components/ui/input";
 import { Label } from "../../client/src/components/ui/label";
 import { Textarea } from "../../client/src/components/ui/textarea";
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "../../client/src/components/Header";
+import Footer from "../../client/src/components/Footer";
 
 function PinterestIcon({ className }: { className?: string }) {
   return (
@@ -80,45 +80,64 @@ export function ContactPage() {
     }
   }
 
+  const mailtoHref = `mailto:info@brandonptdavis.com?subject=${encodeURIComponent(
+    formData.subject || "Scenic design inquiry"
+  )}&body=${encodeURIComponent(
+    `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
+  )}`;
+
   return (
-    <div className="min-h-screen bg-[#0b0b0d] text-white">
+    <div className="about-profile-light min-h-screen bg-white text-[#111111]">
       <Header />
 
-      <main className="container pb-20 pt-24 md:pb-28 md:pt-28">
-        <section className="border-b border-white/10 pb-10 md:pb-12">
+      <main className="container max-w-[88rem] pb-20 pt-24 md:pb-28 md:pt-28">
+        <section className="border-b border-black/10 pb-10 md:pb-12">
           <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-5 text-[11px] font-medium uppercase tracking-[0.24em] text-white/45">
+            <div className="mb-5 text-[11px] font-medium uppercase tracking-[0.24em] text-black/42">
               Contact
             </div>
-            <h1 className="font-sans text-[clamp(2.7rem,6vw,5.8rem)] font-medium leading-[0.94] tracking-[-0.06em] text-white">
+            <h1 className="font-sans text-[clamp(2.7rem,6vw,5.8rem)] font-medium leading-[0.94] tracking-[-0.06em] text-[#111111]">
               Start a scenic design conversation.
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-[1rem] leading-7 text-white/58 md:text-[1.08rem]">
+            <p className="mx-auto mt-6 max-w-2xl text-[1rem] leading-7 text-black/62 md:text-[1.08rem]">
               Scenic design, rendering, teaching, and collaboration inquiries are welcome. Share
               the production, venue, timeline, and design goals, and I&apos;ll respond with a clear
               next step.
             </p>
+            <a
+              href="mailto:info@brandonptdavis.com"
+              className="mt-7 inline-flex h-11 items-center justify-center rounded-full border border-black/14 bg-white px-5 text-[0.95rem] font-medium tracking-[-0.02em] text-[#111111] transition-colors hover:bg-black/[0.04]"
+            >
+              <Mail className="mr-2 h-4 w-4" />
+              info@brandonptdavis.com
+            </a>
           </div>
         </section>
 
         <section className="pt-10 md:pt-12">
           <div className="mx-auto max-w-3xl">
             {status === "success" ? (
-              <div className="mb-6 rounded-2xl border border-emerald-400/25 bg-emerald-500/10 p-4 text-sm font-medium text-emerald-200">
+              <div className="mb-6 rounded-2xl border border-emerald-700/20 bg-emerald-100/70 p-4 text-sm font-medium text-emerald-900">
                 Message sent. Thanks for reaching out.
               </div>
             ) : null}
             {status === "error" ? (
-              <div className="mb-6 rounded-2xl border border-rose-400/25 bg-rose-500/10 p-4 text-sm font-medium text-rose-200">
-                {errorMessage || "Failed to send message. Please try again."}
+              <div className="mb-6 rounded-2xl border border-rose-700/20 bg-rose-100/70 p-4 text-sm font-medium text-rose-950">
+                <p>{errorMessage || "Failed to send message. Please try again."}</p>
+                <a
+                  href={mailtoHref}
+                  className="mt-3 inline-flex text-rose-950 underline decoration-rose-950/25 underline-offset-4 transition-colors hover:decoration-rose-950"
+                >
+                  Send this message by email instead.
+                </a>
               </div>
             ) : null}
 
-            <div className="mb-8 border-b border-white/8 pb-5">
-              <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-white/42">
+            <div className="mb-8 border-b border-black/10 pb-5">
+              <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-black/42">
                 Inquiry Form
               </p>
-              <p className="mt-3 max-w-2xl text-sm leading-6 text-white/54">
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-black/56">
                 Include the production, venue, schedule, and scope if you know them. More context
                 helps me respond with the right next step more quickly.
               </p>
@@ -127,7 +146,7 @@ export function ContactPage() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div className="space-y-2">
-                  <Label htmlFor="name" className="font-medium text-white/78">
+                  <Label htmlFor="name" className="font-medium text-black/74">
                     Your Name
                   </Label>
                   <Input
@@ -135,13 +154,13 @@ export function ContactPage() {
                     value={formData.name}
                     onChange={(event) => setFormData((current) => ({ ...current, name: event.target.value }))}
                     placeholder="Brandon Davis"
-                    className="h-14 rounded-2xl border border-white/10 bg-[#171717] px-4 text-base text-white placeholder:text-white/25"
+                    className="h-14 rounded-xl border border-black/14 bg-white px-4 text-base text-[#111111] placeholder:text-black/32"
                     required
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="font-medium text-white/78">
+                  <Label htmlFor="email" className="font-medium text-black/74">
                     Email Address
                   </Label>
                   <Input
@@ -150,14 +169,14 @@ export function ContactPage() {
                     value={formData.email}
                     onChange={(event) => setFormData((current) => ({ ...current, email: event.target.value }))}
                     placeholder="hello@example.com"
-                    className="h-14 rounded-2xl border border-white/10 bg-[#171717] px-4 text-base text-white placeholder:text-white/25"
+                    className="h-14 rounded-xl border border-black/14 bg-white px-4 text-base text-[#111111] placeholder:text-black/32"
                     required
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="subject" className="font-medium text-white/78">
+                <Label htmlFor="subject" className="font-medium text-black/74">
                   Subject
                 </Label>
                 <Input
@@ -165,13 +184,13 @@ export function ContactPage() {
                   value={formData.subject}
                   onChange={(event) => setFormData((current) => ({ ...current, subject: event.target.value }))}
                   placeholder="What's this about?"
-                  className="h-14 rounded-2xl border border-white/10 bg-[#171717] px-4 text-base text-white placeholder:text-white/25"
+                  className="h-14 rounded-xl border border-black/14 bg-white px-4 text-base text-[#111111] placeholder:text-black/32"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="message" className="font-medium text-white/78">
+                <Label htmlFor="message" className="font-medium text-black/74">
                   Your Message
                 </Label>
                 <Textarea
@@ -179,10 +198,10 @@ export function ContactPage() {
                   value={formData.message}
                   onChange={(event) => setFormData((current) => ({ ...current, message: event.target.value }))}
                   placeholder="Tell me about the production, venue, timeline, and design goals..."
-                  className="min-h-[200px] resize-none rounded-[1.75rem] border border-white/10 bg-[#171717] px-4 py-4 text-base leading-7 text-white placeholder:text-white/25"
+                  className="min-h-[200px] resize-none rounded-xl border border-black/14 bg-white px-4 py-4 text-base leading-7 text-[#111111] placeholder:text-black/32"
                   required
                 />
-                <p className="text-xs text-white/42">
+                <p className="text-xs text-black/42">
                   Include schedule, venue, and budget parameters if known.
                 </p>
               </div>
@@ -191,33 +210,33 @@ export function ContactPage() {
                 type="submit"
                 size="lg"
                 disabled={isSubmitting}
-                className="h-14 w-full rounded-full bg-white px-10 text-base font-medium text-black hover:bg-white/92 md:w-auto"
+                className="h-14 w-full rounded-full bg-[#6f4bd8] px-10 text-base font-medium text-white hover:bg-[#5f3fc7] md:w-auto"
               >
                 {isSubmitting ? "Sending..." : "Send Message"}
                 <Send className="ml-2 h-5 w-5" />
               </Button>
             </form>
 
-            <div className="mt-14 border-t border-white/8 pt-6">
+            <div className="mt-14 border-t border-black/10 pt-6">
               <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
                 <div>
-                  <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-white/42">
+                  <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-black/42">
                     Contact
                   </p>
-                  <div className="mt-4 space-y-3 text-sm text-white/60">
-                    <a href="mailto:info@brandonptdavis.com" className="flex items-center gap-3 transition-colors hover:text-white">
+                  <div className="mt-4 space-y-3 text-sm text-black/62">
+                    <a href="mailto:info@brandonptdavis.com" className="flex items-center gap-3 transition-colors hover:text-black">
                       <Mail className="h-4 w-4" />
                       <span>info@brandonptdavis.com</span>
                     </a>
-                    <a href="https://instagram.com/brandonptdavisdesign" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 transition-colors hover:text-white">
+                    <a href="https://instagram.com/brandonptdavisdesign" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 transition-colors hover:text-black">
                       <Instagram className="h-4 w-4" />
                       <span>@brandonptdavisdesign</span>
                     </a>
-                    <a href="https://linkedin.com/in/brandonptdavis" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 transition-colors hover:text-white">
+                    <a href="https://linkedin.com/in/brandonptdavis" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 transition-colors hover:text-black">
                       <Linkedin className="h-4 w-4" />
                       <span>@brandonptdavis</span>
                     </a>
-                    <a href="https://www.pinterest.com/BrandonPTDavis/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 transition-colors hover:text-white">
+                    <a href="https://www.pinterest.com/BrandonPTDavis/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 transition-colors hover:text-black">
                       <PinterestIcon className="h-4 w-4" />
                       <span>@BrandonPTDavis</span>
                     </a>
@@ -225,10 +244,10 @@ export function ContactPage() {
                 </div>
 
                 <div>
-                  <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-white/42">
+                  <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-black/42">
                     Best to Include
                   </p>
-                  <ul className="mt-4 space-y-2 text-sm leading-6 text-white/58">
+                  <ul className="mt-4 space-y-2 text-sm leading-6 text-black/58">
                     <li>Production title and organization</li>
                     <li>Venue, city, and target dates</li>
                     <li>Scope of work and deliverables</li>
@@ -241,7 +260,7 @@ export function ContactPage() {
         </section>
       </main>
 
-      <Footer />
+      <Footer tone="light" />
     </div>
   );
 }

@@ -117,7 +117,7 @@ export default function UpcomingProductions() {
       <SEO
         title="Upcoming Productions | Brandon PT Davis"
         description="Upcoming scenic design productions by Brandon PT Davis, including 2026 work with Maples Repertory Theatre, New Swan Shakespeare Festival, and Okoboji Summer Theatre."
-        image="https://www.brandonptdavis.com/upcoming-productions/upcoming-productions-hero.webp"
+        image="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/upcoming-productions/upcoming-productions-hero.webp"
         imageAlt="Abstract stage calendar graphic for upcoming scenic design productions."
         url="https://www.brandonptdavis.com/upcoming-productions"
         keywords="Brandon PT Davis upcoming productions, scenic design 2026, Okoboji Summer Theatre, Maples Repertory Theatre, New Swan Shakespeare Festival"

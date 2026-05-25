@@ -2,7 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { Check, Link2 } from "lucide-react";
-import { Link, useLocation } from "wouter";
+import { usePathname, useRouter } from "next/navigation";
+import { Link } from "wouter";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { useEffect, useMemo, useState } from "react";
@@ -42,17 +43,17 @@ export default function RenderingProjectDetail({
   currentPath,
   params,
 }: RenderingProjectDetailProps = {}) {
-  const [location, setLocation] = useLocation();
+  const pathname = usePathname();
+  const router = useRouter();
   const resolvedPath =
     currentPath ||
-    location ||
-    (typeof window !== "undefined" ? window.location.pathname : "/projects/rendering");
+    pathname ||
+    "/projects/rendering";
   const normalizedSlug = String(
     slugProp ||
       params?.slug ||
-      (typeof window !== "undefined"
-        ? window.location.pathname.split("/").filter(Boolean).pop() || ""
-        : "")
+      pathname?.split("/").filter(Boolean).pop() ||
+      ""
   )
     .trim()
     .toLowerCase();
@@ -271,12 +272,12 @@ export default function RenderingProjectDetail({
       if (event.key !== "Escape") return;
       if (lightboxIndex !== null) return;
       event.preventDefault();
-      setLocation(isExperientialRendering ? "/projects/experiential" : "/projects/rendering");
+      router.push(isExperientialRendering ? "/projects/experiential" : "/projects/rendering");
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isExperientialRendering, lightboxIndex, setLocation]);
+  }, [isExperientialRendering, lightboxIndex, router]);
   const renderingSeoTitle = `${project.title} Rendering${project.client ? ` | ${project.client}` : ""} | Brandon PT Davis`;
   const renderingSeoKeywords = Array.from(
     new Set(

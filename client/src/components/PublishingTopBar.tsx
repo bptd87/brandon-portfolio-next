@@ -3,8 +3,8 @@
 import { Search } from "lucide-react";
 
 type PublishingTopBarProps = {
-  active: "articles" | "tutorials";
-  tone?: "light" | "dark";
+  active?: "articles" | "tutorials";
+  tone?: "light" | "dark" | "white";
 };
 
 export function PublishingTopBar({ active, tone = "light" }: PublishingTopBarProps) {
@@ -17,7 +17,13 @@ export function PublishingTopBar({ active, tone = "light" }: PublishingTopBarPro
     }`;
 
   return (
-    <div className={`border-b backdrop-blur-xl ${isDark ? "border-white/[0.08] bg-[#070707]/88" : "border-black/[0.06] bg-[#f7f6f2]/90"}`}>
+    <div
+      className={`sticky top-[72px] z-30 border-b backdrop-blur-xl ${
+        isDark
+          ? "border-white/[0.08] bg-[#070707]/88"
+          : "border-black/[0.06] bg-[#f1f0ec]/92"
+      }`}
+    >
       <div className="mx-auto flex min-h-16 max-w-[76rem] flex-col gap-3 px-[clamp(1.5rem,5vw,6rem)] py-3 md:flex-row md:items-center md:justify-between md:gap-8">
         <a
           href="/studio"
@@ -49,7 +55,7 @@ export function PublishingTopBar({ active, tone = "light" }: PublishingTopBarPro
               className={`h-9 w-full rounded-full border-0 pl-9 pr-4 text-[0.9rem] font-medium tracking-[-0.02em] outline-none focus:ring-2 focus:ring-[#7b2cff]/30 ${
                 isDark
                   ? "bg-white/[0.08] text-white placeholder:text-white/46 focus:bg-white/[0.12]"
-                  : "bg-black/[0.055] text-[#111111] placeholder:text-[#5d5851] focus:bg-white"
+                  : "bg-[#e5e3dc] text-[#111111] placeholder:text-[#5d5851] focus:bg-[#fbfaf7]"
               }`}
             />
           </form>

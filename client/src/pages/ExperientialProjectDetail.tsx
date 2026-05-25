@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Link, useLocation } from "wouter";
+import { usePathname } from "next/navigation";
+import { Link } from "wouter";
 import { Check, Link2, Play } from "lucide-react";
 
 import Footer from "@/components/Footer";
@@ -221,17 +222,16 @@ export default function ExperientialProjectDetail({
   currentPath,
   params,
 }: ExperientialProjectDetailProps = {}) {
-  const [location] = useLocation();
+  const pathname = usePathname();
   const resolvedPath =
     currentPath ||
-    location ||
-    (typeof window !== "undefined" ? window.location.pathname : "/projects/experiential");
+    pathname ||
+    "/projects/experiential";
   const normalizedSlug = String(
     slugProp ||
       params?.slug ||
-      (typeof window !== "undefined"
-        ? window.location.pathname.split("/").filter(Boolean).pop() || ""
-        : "")
+      pathname?.split("/").filter(Boolean).pop() ||
+      ""
   )
     .trim()
     .toLowerCase();

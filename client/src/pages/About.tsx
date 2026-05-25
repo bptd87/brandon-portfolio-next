@@ -57,7 +57,7 @@ const galleryImages = [
 ];
 
 const ABOUT_HEADSHOT_URL =
-  "/images/about/page/brandon-pt-davis-about-home.jpg";
+  "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/brandon-pt-davis-about-home.jpg";
 
 const navigationCards = [
   {

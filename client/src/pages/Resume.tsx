@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 import { Link } from "wouter";
 
@@ -9,6 +10,7 @@ import Footer from "@/components/Footer";
 import AboutNav from "@/components/AboutNav";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import ProfileSectionHero from "@/components/ProfileSectionHero";
+import SectionIntro from "@/components/SectionIntro";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 
@@ -43,7 +45,47 @@ const LINE_CLASS =
   "grid gap-1 border-b border-black/10 py-3.5 text-[1.02rem] leading-7 last:border-b-0 md:grid-cols-[minmax(13rem,1.1fr)_minmax(10rem,0.75fr)_minmax(12rem,0.95fr)] md:items-baseline md:gap-x-8 lg:gap-x-14";
 
 const USA_829_LOGO_SRC = "/images/about/icons/usa-829-logo.png";
-const UCI_LOGO_SRC = "/images/about/icons/uci-logo-real.png";
+const UCI_LOGO_SRC =
+  "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/uci-logo-real.png";
+const RESUME_METRIC_CARD_CLASS =
+  "group relative isolate flex min-h-[11.25rem] flex-col overflow-hidden rounded-[1.65rem] bg-black p-6 text-white shadow-[0_18px_46px_rgba(0,0,0,0.14)] ring-1 ring-white/10 transition-transform duration-300 hover:-translate-y-1 md:min-h-[11.75rem] md:p-7";
+const RESUME_METRIC_GLOW_CLASS =
+  "pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_16%_0%,rgba(255,255,255,0.06),transparent_32%),radial-gradient(circle_at_88%_4%,rgba(139,92,246,0.12),transparent_44%)]";
+const RESUME_METRIC_MARK_CLASS = "flex h-[3.35rem] items-start md:h-[3.5rem]";
+const RESUME_METRIC_LABEL_CLASS =
+  "text-[0.82rem] font-medium tracking-[-0.025em] text-white/45";
+const RESUME_METRIC_TITLE_CLASS =
+  "mt-2 text-[clamp(1.12rem,1.18vw,1.32rem)] font-semibold leading-[1.08] tracking-[-0.052em] text-white";
+const RESUME_METRIC_BODY_CLASS =
+  "mt-2 max-w-[17rem] text-[0.88rem] font-medium leading-[1.38] tracking-[-0.025em] text-white/58";
+
+type ResumeMetricCardProps = {
+  label: string;
+  title: string;
+  body: string;
+  children: ReactNode;
+  glow?: string;
+};
+
+function ResumeMetricCard({
+  label,
+  title,
+  body,
+  children,
+  glow = "",
+}: ResumeMetricCardProps) {
+  return (
+    <article className={RESUME_METRIC_CARD_CLASS}>
+      <div className={`${RESUME_METRIC_GLOW_CLASS} ${glow}`} aria-hidden="true" />
+      <div className={RESUME_METRIC_MARK_CLASS}>{children}</div>
+      <div className="mt-auto pt-5">
+        <p className={RESUME_METRIC_LABEL_CLASS}>{label}</p>
+        <h3 className={RESUME_METRIC_TITLE_CLASS}>{title}</h3>
+        <p className={RESUME_METRIC_BODY_CLASS}>{body}</p>
+      </div>
+    </article>
+  );
+}
 
 const getProjectTimestamp = (project: any) => {
   if (project.year) {
@@ -527,97 +569,66 @@ export default function Resume() {
                 </div>
               </div>
 
-              <div className="mt-10 grid gap-6 lg:grid-cols-3 xl:gap-7">
-                <article className="group relative isolate flex min-h-[17rem] flex-col overflow-hidden rounded-[1.7rem] bg-black p-6 text-white shadow-[0_22px_58px_rgba(0,0,0,0.14)] ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-1 md:p-7">
-                  <div
-                    className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_82%_20%,rgba(255,211,75,0.13),transparent_48%)]"
-                    aria-hidden="true"
-                  />
-                  <div className="relative z-10 flex h-20 items-center">
-                    <div className="relative h-16 w-16 opacity-95 transition-transform duration-500 group-hover:scale-[1.045] md:h-[4.5rem] md:w-[4.5rem]">
-                      <Image
-                        src={UCI_LOGO_SRC}
-                        alt="University of California, Irvine seal"
-                        fill
-                        sizes="5rem"
-                        className="object-contain drop-shadow-[0_14px_24px_rgba(0,0,0,0.35)]"
-                      />
-                    </div>
+              <div className="mt-10 grid gap-5 lg:grid-cols-3 xl:gap-6">
+                <ResumeMetricCard
+                  label="Education"
+                  title="MFA Scenic Design"
+                  body="University of California, Irvine."
+                  glow="bg-[radial-gradient(circle_at_18%_0%,rgba(255,214,72,0.12),transparent_42%),radial-gradient(circle_at_88%_8%,rgba(255,255,255,0.045),transparent_40%)]"
+                >
+                  <div className="relative h-12 w-12 opacity-95 transition-transform duration-500 group-hover:scale-[1.05] md:h-14 md:w-14">
+                    <Image
+                      src={UCI_LOGO_SRC}
+                      alt="University of California, Irvine seal"
+                      fill
+                      sizes="3.5rem"
+                      className="object-contain object-left-top drop-shadow-[0_10px_18px_rgba(0,0,0,0.35)]"
+                    />
                   </div>
-                  <p className="mt-7 text-[0.95rem] font-medium tracking-[-0.03em] text-white/45">
-                    Education
-                  </p>
-                  <p className="mt-3 text-[clamp(1.35rem,1.75vw,1.7rem)] font-semibold leading-[1.02] tracking-[-0.055em] text-white">
-                    MFA Scenic Design
-                  </p>
-                  <p className="mt-3 max-w-[17rem] text-[0.98rem] font-medium leading-6 tracking-[-0.025em] text-white/58">
-                    University of California, Irvine.
-                  </p>
-                </article>
+                </ResumeMetricCard>
 
-                <article className="group relative isolate flex min-h-[17rem] flex-col overflow-hidden rounded-[1.7rem] bg-black p-6 text-white shadow-[0_22px_58px_rgba(0,0,0,0.14)] ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-1 md:p-7">
-                  <div
-                    className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_82%_20%,rgba(150,80,255,0.16),transparent_48%)]"
-                    aria-hidden="true"
-                  />
-                  <div className="relative z-10 flex h-20 items-center">
-                    <div className="relative h-16 w-36 opacity-95 transition-transform duration-500 group-hover:scale-[1.045] md:h-[4.5rem] md:w-40">
-                      <Image
-                        src={USA_829_LOGO_SRC}
-                        alt="United Scenic Artists Local USA 829 logo"
-                        fill
-                        sizes="10rem"
-                        className="object-contain drop-shadow-[0_14px_24px_rgba(0,0,0,0.35)]"
-                      />
-                    </div>
+                <ResumeMetricCard
+                  label="Union"
+                  title="United Scenic Artists Local USA 829"
+                  body="Professional scenic design membership since 2023."
+                  glow="bg-[radial-gradient(circle_at_18%_0%,rgba(150,80,255,0.16),transparent_42%),radial-gradient(circle_at_88%_8%,rgba(255,255,255,0.04),transparent_40%)]"
+                >
+                  <div className="relative h-12 w-[6.5rem] opacity-95 transition-transform duration-500 group-hover:scale-[1.05] md:h-14 md:w-28">
+                    <Image
+                      src={USA_829_LOGO_SRC}
+                      alt="United Scenic Artists Local USA 829 logo"
+                      fill
+                      sizes="7rem"
+                      className="object-contain object-left-top drop-shadow-[0_10px_18px_rgba(0,0,0,0.35)]"
+                    />
                   </div>
-                  <p className="mt-7 text-[0.95rem] font-medium tracking-[-0.03em] text-white/45">
-                    Union
-                  </p>
-                  <p className="mt-3 max-w-[19rem] text-[clamp(1.35rem,1.75vw,1.7rem)] font-semibold leading-[1.02] tracking-[-0.055em] text-white">
-                    United Scenic Artists Local USA 829
-                  </p>
-                  <p className="mt-3 max-w-[18rem] text-[0.98rem] font-medium leading-6 tracking-[-0.025em] text-white/58">
-                    Professional scenic design membership since 2023.
-                  </p>
-                </article>
+                </ResumeMetricCard>
 
-                <article className="relative isolate flex min-h-[17rem] flex-col overflow-hidden rounded-[1.7rem] bg-black p-6 text-white shadow-[0_22px_58px_rgba(0,0,0,0.14)] ring-1 ring-black/5 md:p-7">
-                  <div
-                    className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_82%_20%,rgba(82,63,255,0.16),transparent_48%)]"
-                    aria-hidden="true"
-                  />
-                  <div className="relative z-10 flex h-20 items-center gap-2">
-                    <p className="text-[3.45rem] font-semibold leading-none tracking-[-0.075em] text-white md:text-[3.9rem]">
+                <ResumeMetricCard
+                  label="Production Count"
+                  title="Realized scenic designs"
+                  body="Across regional theatre, summer stock, and academic production."
+                  glow="bg-[radial-gradient(circle_at_18%_0%,rgba(82,63,255,0.16),transparent_42%),radial-gradient(circle_at_88%_8%,rgba(255,255,255,0.04),transparent_40%)]"
+                >
+                  <div className="flex items-start gap-2 text-white">
+                    <span className="text-[clamp(2.55rem,3.1vw,3rem)] font-semibold leading-[0.9] tracking-[-0.08em]">
                       130+
-                    </p>
-                    <Users className="mt-5 h-6 w-6 text-white/45" />
+                    </span>
+                    <Users className="mt-1.5 h-5 w-5 text-white/42" aria-hidden="true" />
                   </div>
-                  <p className="mt-7 text-[0.95rem] font-medium tracking-[-0.03em] text-white/45">
-                    Production Count
-                  </p>
-                  <p className="mt-3 text-[clamp(1.35rem,1.75vw,1.7rem)] font-semibold leading-[1.02] tracking-[-0.055em] text-white">
-                    Realized scenic designs
-                  </p>
-                  <p className="mt-3 max-w-[18rem] text-[0.98rem] font-medium leading-6 tracking-[-0.025em] text-white/58">
-                    Across regional theatre, summer stock, and academic production.
-                  </p>
-                </article>
+                </ResumeMetricCard>
               </div>
             </div>
           </AnimatedSection>
 
           <AnimatedSection delay={140} className="mb-16">
             <div className="flex items-end justify-between gap-6">
-              <div>
-                <h2 className="font-sans text-[1.2rem] font-medium tracking-[-0.04em] text-foreground/58">
-                  Selected Scenic Design
-                </h2>
-                <p className="mt-4 max-w-2xl text-[0.98rem] leading-7 text-foreground/58">
-                  Selected credits by year. Hover linked productions to preview the matching
-                  portfolio entry, then click through to the project page.
-                </p>
-              </div>
+              <SectionIntro
+                title="Selected Scenic Design"
+                description="Selected credits by year. Hover linked productions to preview the matching portfolio entry, then click through to the project page."
+                tone="profile"
+                size="compact"
+              />
             </div>
 
             <div className="mt-12 space-y-16 md:space-y-20">
@@ -649,9 +660,7 @@ export default function Resume() {
           </AnimatedSection>
 
           <AnimatedSection className="mb-16">
-            <h2 className="font-sans text-[1.2rem] font-medium tracking-[-0.04em] text-foreground/58">
-              Earlier
-            </h2>
+            <SectionIntro title="Earlier" tone="profile" size="compact" />
 
             <div className="mt-6 border-t border-black/10 pt-6 text-foreground/85 md:pt-7">
               {EARLIER_CREDITS.map((credit) => (

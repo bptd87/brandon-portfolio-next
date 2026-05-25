@@ -62,7 +62,7 @@ export default function DeferredYouTubeEmbed({
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-black/15" />
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="inline-flex items-center gap-3 rounded-full border border-white/20 bg-black/45 px-5 py-3 text-sm font-medium text-white backdrop-blur-sm transition-colors group-hover:border-white/35 group-hover:bg-black/55">
+        <span className="inline-flex items-center gap-3 rounded-full border border-white/20 bg-black/45 px-5 py-3 text-sm font-medium text-[#ffffff] backdrop-blur-sm transition-colors group-hover:border-white/35 group-hover:bg-black/55">
           <PlayCircle className="h-5 w-5" />
           Play video
         </span>

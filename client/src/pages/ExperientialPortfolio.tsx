@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties, MouseEvent } from "react";
-import { useLocation } from "wouter";
+import { useRouter } from "next/navigation";
 import { Box, Layers3, Lightbulb, UsersRound } from "lucide-react";
 
 import Footer from "@/components/Footer";
@@ -60,7 +60,7 @@ function sortExperientialProjectsChronologically(projects: LocalExperientialProj
 }
 
 export default function ExperientialPortfolio() {
-  const [, setLocation] = useLocation();
+  const router = useRouter();
   const projects = sortExperientialProjectsChronologically(getLocalExperientialProjects());
   const featuredProject = projects[0];
   const experientialAlt = (title: string) => `${title} experiential design by Brandon PT Davis`;
@@ -101,7 +101,7 @@ export default function ExperientialPortfolio() {
 
     event.preventDefault();
     const anchor = event.currentTarget;
-    const navigate = () => setLocation(href);
+    const navigate = () => router.push(href);
     const performNavigation = async () => {
       await animateCardDeparture(anchor);
       navigate();

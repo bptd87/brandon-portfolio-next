@@ -84,7 +84,7 @@ export default async function Page({ params }: ArticlePageProps) {
 
   const retiredRedirect = RETIRED_LEARNING_ARTICLE_REDIRECTS[slug];
 
-  if (retiredRedirect) {
+  if (retiredRedirect && retiredRedirect !== `/articles/${slug}`) {
     permanentRedirect(retiredRedirect);
   }
 

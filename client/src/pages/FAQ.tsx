@@ -103,12 +103,12 @@ export default function FAQ() {
         currentPath="/faq"
       >
         <div className="max-w-4xl">
-          <div className="border-t border-white/10">
+          <div className="border-t border-black/10">
             {faqs.map((faq, index) => {
               const isOpen = openIndex === index;
 
               return (
-                <div key={faq.question} className="border-b border-white/10">
+                <div key={faq.question} className="border-b border-black/10">
                   <button
                     type="button"
                     onClick={() => setOpenIndex(isOpen ? null : index)}
@@ -133,14 +133,14 @@ export default function FAQ() {
             })}
           </div>
 
-          <div className="mt-12 border-t border-white/10 pt-8">
+          <div className="mt-12 border-t border-black/10 pt-8">
             <p className="max-w-[38rem] text-[1rem] leading-[1.78] tracking-[-0.01em] text-foreground/62">
               Ready to discuss a production? Share the title, venue, and timeline to start a scenic
               design conversation.
             </p>
             <Link
               href="/contact"
-              className="mt-5 inline-flex items-center justify-center rounded-full border border-white/18 px-5 py-3 text-[0.88rem] font-medium tracking-[-0.01em] text-foreground transition-colors hover:border-white/28 hover:bg-white/6"
+              className="mt-5 inline-flex items-center justify-center rounded-full border border-black/14 px-5 py-3 text-[0.88rem] font-medium tracking-[-0.01em] text-foreground transition-colors hover:border-black/24 hover:bg-black/[0.04]"
             >
               Contact
             </Link>

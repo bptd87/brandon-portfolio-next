@@ -1,10 +1,8 @@
 export const LEARNING_PORTAL_ARTICLE_SLUGS = [
   "the-visual-language-of-scenic-design",
-  "becoming-a-scenic-designer-a-comprehensive-guide",
   "scenic-design-process",
   "online-portfolio-theatrical-design-2026",
   "computer-hardware-why-scenic-designers-and-all-theatre-designers-need-to-care",
-  "video-game-environments-lessons-for-scenic-design",
   "what-makes-a-good-scenic-design-rendering",
   "vectorworks-rendering-workflow-file-size-and-speed",
   "setting-up-vectorworks-cameras-for-scenic-renderings",
@@ -18,11 +16,9 @@ export const LEARNING_PORTAL_ARTICLE_SLUGS = [
 
 export const LEARNING_PORTAL_ARTICLE_CATEGORY_BY_SLUG: Record<string, string> = {
   "the-visual-language-of-scenic-design": "Design Communication",
-  "becoming-a-scenic-designer-a-comprehensive-guide": "Career & Practice",
   "scenic-design-process": "Design Process",
   "online-portfolio-theatrical-design-2026": "Portfolio",
   "computer-hardware-why-scenic-designers-and-all-theatre-designers-need-to-care": "Technology",
-  "video-game-environments-lessons-for-scenic-design": "Design Thinking",
   "what-makes-a-good-scenic-design-rendering": "Rendering",
   "vectorworks-rendering-workflow-file-size-and-speed": "Rendering",
   "setting-up-vectorworks-cameras-for-scenic-renderings": "Rendering",
@@ -37,8 +33,12 @@ export const LEARNING_PORTAL_ARTICLE_CATEGORY_BY_SLUG: Record<string, string> = 
 export const LEARNING_PORTAL_ARTICLE_SLUG_SET = new Set<string>(LEARNING_PORTAL_ARTICLE_SLUGS);
 
 export const RETIRED_LEARNING_ARTICLE_REDIRECTS: Record<string, string> = {
+  "becoming-a-scenic-designer-a-comprehensive-guide":
+    "/articles/becoming-a-scenic-designer-a-comprehensive-guide",
   "how-to-create-trim-profiles-in-vectorworks-using-the-polyline-tool":
     "/studio/tutorials/creating-trim-profiles-polyline",
+  "video-game-environments-lessons-for-scenic-design":
+    "/articles/video-game-environments-lessons-for-scenic-design",
 };
 
 export const RETIRED_LEARNING_ARTICLE_SLUG_SET = new Set<string>(

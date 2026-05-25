@@ -1,9 +1,10 @@
 "use client";
 
-import { Link, useLocation } from "wouter";
+import { usePathname } from "next/navigation";
+import { Link } from "wouter";
 
 export default function AboutNav() {
-  const [location] = useLocation();
+  const pathname = usePathname() || "/";
 
   const navItems = [
     { path: "/about", label: "Profile" },
@@ -36,9 +37,9 @@ export default function AboutNav() {
           <div className="flex min-w-max items-center gap-6 md:gap-8">
             {navItems.map((item) => {
               const isActive =
-                location === item.path ||
-                item.aliases?.includes(location) ||
-                (item.matchPrefix && location.startsWith(`${item.path}/`));
+                pathname === item.path ||
+                item.aliases?.includes(pathname) ||
+                (item.matchPrefix && pathname.startsWith(`${item.path}/`));
               return (
                 <Link
                   key={item.path}

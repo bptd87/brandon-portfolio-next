@@ -4,6 +4,7 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { AnimatedSection } from "@/components/AnimatedSection";
+import { PublishingTopBar } from "@/components/PublishingTopBar";
 import StructuredData from "@/components/StructuredData";
 import { SEO } from "@/components/SEO";
 import DeferredYouTubeEmbed from "@/components/DeferredYouTubeEmbed";
@@ -13,8 +14,8 @@ import { copyTextToClipboard } from "@/lib/clipboard";
 import { formatUtcDate } from "@/lib/date-format";
 import { getYouTubeThumbnail } from "@/lib/videoUtils";
 import { getLocalTutorialBySlug, getLocalTutorials } from "@shared/localStudio";
-import { ArrowLeft, ArrowRight, Check, ChevronLeft, ChevronRight, ExternalLink, Link2 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { ArrowLeft, ArrowRight, Check, ChevronLeft, ChevronRight, ExternalLink, Link2, Linkedin, Mail } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 
 const categories = [
@@ -163,7 +164,16 @@ const formatDate = (dateString: string | Date | undefined) => {
   return formatUtcDate(dateString, "long") || "";
 };
 
+const MIN_TUTORIAL_UPDATED_DATE = new Date("2025-05-01T00:00:00.000Z").getTime();
+
+const getDisplayUpdatedDate = (dateString: string | Date | null | undefined) => {
+  const timestamp = dateString ? new Date(dateString).getTime() : Number.NaN;
+  return new Date(Number.isFinite(timestamp) ? Math.max(timestamp, MIN_TUTORIAL_UPDATED_DATE) : MIN_TUTORIAL_UPDATED_DATE).toISOString();
+};
+
 const getTutorialCoverImage = (tutorial: any) => {
+  const videoThumbnail = getYouTubeThumbnail(tutorial.video_url || "");
+  const videoId = getYouTubeId(tutorial.video_url);
   const category = normalizeToken(tutorial.category);
   const variants =
     TUTORIAL_COVER_VARIANTS[category as keyof typeof TUTORIAL_COVER_VARIANTS] ||
@@ -171,8 +181,11 @@ const getTutorialCoverImage = (tutorial: any) => {
   const variantIndex = getStableVariantIndex(String(tutorial.slug || tutorial.id), variants.length);
 
   return {
-    src: variants[variantIndex],
-    alt: `Vectorworks ${getCategoryLabel(tutorial.category)} tutorial cover`,
+    src:
+      tutorial.cover_image ||
+      videoThumbnail ||
+      (videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : variants[variantIndex]),
+    alt: tutorial.title || `Vectorworks ${getCategoryLabel(tutorial.category)} tutorial cover`,
   };
 };
 
@@ -1308,6 +1321,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
   const tutorial = getLocalTutorialBySlug(slug);
   const [linkCopied, setLinkCopied] = useState(false);
   const [activeExamQuestion, setActiveExamQuestion] = useState(0);
+  const relatedTutorialRailRef = useRef<HTMLDivElement | null>(null);
 
   const articleBlueprint = tutorial ? getTutorialArticleBlueprint(tutorial.slug) : null;
   const overviewParagraphs = tutorial
@@ -1342,10 +1356,22 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
     getYouTubeThumbnail(tutorial.video_url || "") ||
     `https://img.youtube.com/vi/${videoId || ""}/hqdefault.jpg`;
   const tutorialSummary = articleBlueprint?.summary || getTutorialSummary(tutorial);
+  const tutorialDisplayTitle = tutorial.title
+    .replace(/^Vectorworks Tutorial:\s*/i, "")
+    .replace(/^Vectorworks Quick Tip:\s*/i, "")
+    .trim();
   const tutorialPublishedAt = tutorial.published_at || tutorial.created_at || tutorial.updated_at;
+  const tutorialUpdatedAt = getDisplayUpdatedDate(
+    tutorial.updated_at || tutorial.published_at || tutorial.created_at
+  );
   const structuredUploadDate =
     tutorialPublishedAt || "1970-01-01T00:00:00.000Z";
   const pageUrl = `https://www.brandonptdavis.com/studio/tutorials/${tutorial.slug}`;
+  const encodedPageUrl = encodeURIComponent(pageUrl);
+  const encodedTutorialTitle = encodeURIComponent(tutorialDisplayTitle);
+  const emailShareUrl = `mailto:?subject=${encodedTutorialTitle}&body=${encodedTutorialTitle}%0A%0A${encodedPageUrl}`;
+  const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedPageUrl}`;
+  const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedPageUrl}`;
   const tutorialTagNames = (tutorial.tags || []).map((tag: any) => tag.name).filter(Boolean);
   const tutorialKeywords = [
     tutorial.title,
@@ -1374,21 +1400,41 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
     "Trace first, then scale the geometry after the shape is resolved.";
   const relatedTutorialCards = useMemo(() => {
     const allTutorials = getLocalTutorials();
+    const explicitRelatedSlugs = new Set((tutorial.related_tutorials || []).map((related: any) => related.slug));
+    const toRelatedCard = (related: any, fallback?: any) => {
+      const tutorialCard = fallback || related;
+      return {
+        href: `/studio/tutorials/${tutorialCard.slug || related.slug}`,
+        title: String(tutorialCard.title || related.title || "")
+          .replace(/^Vectorworks Tutorial:\s*/i, "")
+          .replace(/^Vectorworks Quick Tip:\s*/i, "")
+          .trim(),
+        category: tutorialCard.category,
+        difficulty: tutorialCard.difficulty,
+        duration: tutorialCard.duration,
+        cover: getTutorialCoverImage(tutorialCard),
+      };
+    };
 
-    return (tutorial.related_tutorials || [])
+    const explicitCards = (tutorial.related_tutorials || [])
       .map((related: any) => {
         const match = allTutorials.find((item: any) => item.slug === related.slug);
-        const tutorialCard = match || related;
-        return {
-          href: `/studio/tutorials/${related.slug}`,
-          title: tutorialCard.title,
-          category: tutorialCard.category,
-          difficulty: tutorialCard.difficulty,
-          duration: tutorialCard.duration,
-          cover: getTutorialCoverImage(tutorialCard),
-        };
+        return toRelatedCard(related, match);
+      });
+
+    const fallbackCards = allTutorials
+      .filter((item: any) => item.slug !== tutorial.slug)
+      .filter((item: any) => !explicitRelatedSlugs.has(item.slug))
+      .sort((a: any, b: any) => {
+        const aMatchesCategory = normalizeToken(a.category) === normalizeToken(tutorial.category) ? 0 : 1;
+        const bMatchesCategory = normalizeToken(b.category) === normalizeToken(tutorial.category) ? 0 : 1;
+        return aMatchesCategory - bMatchesCategory;
       })
-      .slice(0, 4);
+      .map((item: any) => toRelatedCard(item));
+
+    return [...explicitCards, ...fallbackCards]
+      .filter((card, index, array) => array.findIndex((item) => item.href === card.href) === index)
+      .slice(0, 8);
   }, [tutorial]);
   const quickReferenceItems = (tutorial.shortcuts || []).slice(0, 3);
 
@@ -1402,6 +1448,13 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
     }
   };
 
+  const scrollRelatedTutorials = (direction: "previous" | "next") => {
+    relatedTutorialRailRef.current?.scrollBy({
+      left: direction === "next" ? 460 : -460,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div className="publish-editorial min-h-screen bg-[#f1f0ec] text-[#111111]">
       <SEO
@@ -1410,7 +1463,7 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
         image={tutorialThumbnail}
         type="article"
         publishedTime={tutorialPublishedAt ? new Date(tutorialPublishedAt).toISOString() : undefined}
-        modifiedTime={tutorialPublishedAt ? new Date(tutorialPublishedAt).toISOString() : undefined}
+        modifiedTime={tutorialUpdatedAt}
         keywords={tutorialKeywords}
         url={pageUrl}
       />
@@ -1459,79 +1512,99 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
       />
 
       <Header />
+      <PublishingTopBar active="tutorials" tone="white" />
 
-      <article className="overflow-hidden bg-[#f1f0ec] py-12 md:py-16">
-        <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
+      <article className="overflow-hidden bg-[#f1f0ec] pb-16 md:pb-24">
+        <div className="mx-auto w-full max-w-[1180px] px-5 pt-16 sm:px-8 md:pt-24 lg:px-10">
           <AnimatedSection>
-            <header className="mx-auto max-w-[62rem] text-center">
-              <div className="flex flex-wrap items-center justify-center gap-4 text-[0.92rem] tracking-[-0.015em] text-white/54">
-                {tutorialPublishedAt ? (
-                  <time dateTime={new Date(tutorialPublishedAt).toISOString()}>
-                    {formatDate(tutorialPublishedAt)}
-                  </time>
-                ) : null}
+            <header className="mx-auto max-w-[48rem] text-left">
+              <div className="text-[1rem] font-semibold leading-6 tracking-[-0.02em] text-[#6e6e73]">
+                <p className="text-[0.78rem] uppercase tracking-[0.06em]">Updated</p>
+                <time className="mt-1 block" dateTime={tutorialUpdatedAt}>
+                  {formatDate(tutorialUpdatedAt)}
+                </time>
+              </div>
+
+              <h1 className="mt-8 max-w-[13ch] font-sans text-[clamp(2.9rem,5.8vw,5.7rem)] font-semibold leading-[0.96] tracking-[-0.072em] text-[#1d1d1f]">
+                {tutorialDisplayTitle}
+              </h1>
+
+              <p className="mt-7 max-w-[43rem] text-[clamp(1.28rem,2.15vw,1.82rem)] font-semibold leading-[1.16] tracking-[-0.046em] text-[#1d1d1f]">
+                {tutorialSummary}
+              </p>
+
+              <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.96rem] font-semibold tracking-[-0.02em] text-[#6e6e73]">
                 <span>{getCategoryLabel(tutorial.category)}</span>
                 <span>{formatDuration(tutorial.duration)}</span>
                 <span>{getDifficultyLabel(tutorial.difficulty)}</span>
               </div>
 
-              <h1 className="mx-auto mt-5 max-w-[14ch] font-sans text-[clamp(2.7rem,5.8vw,5.8rem)] font-medium leading-[0.92] tracking-[-0.072em] text-white">
-                {tutorial.title}
-              </h1>
-
-              <p className="mx-auto mt-5 max-w-[42rem] text-[clamp(1rem,1.45vw,1.32rem)] leading-[1.62] tracking-[-0.018em] text-white/68">
-                {tutorialSummary}
-              </p>
+              <div className="mt-10 flex flex-wrap items-center gap-3 text-[#6e6e73]">
+                {tutorial.video_url ? (
+                  <a
+                    href={tutorial.video_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Open tutorial on YouTube"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-black/[0.05] hover:text-[#7b2cff]"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                ) : null}
+                <button
+                  type="button"
+                  onClick={handleShare}
+                  aria-label={linkCopied ? "Tutorial link copied" : "Copy tutorial link"}
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-black/[0.05] hover:text-[#7b2cff]"
+                >
+                  {linkCopied ? <Check className="h-4 w-4" /> : <Link2 className="h-4 w-4" />}
+                </button>
+                <a
+                  href={emailShareUrl}
+                  aria-label="Share tutorial by email"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-black/[0.05] hover:text-[#7b2cff]"
+                >
+                  <Mail className="h-4 w-4" />
+                </a>
+                <a
+                  href={linkedInShareUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Share tutorial on LinkedIn"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-black/[0.05] hover:text-[#7b2cff]"
+                >
+                  <Linkedin className="h-4 w-4" />
+                </a>
+                <a
+                  href={facebookShareUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Share tutorial on Facebook"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-[1rem] font-semibold leading-none no-underline transition-colors hover:bg-black/[0.05] hover:text-[#7b2cff]"
+                >
+                  f
+                </a>
+              </div>
             </header>
           </AnimatedSection>
 
           <AnimatedSection
             delay={140}
-            className="mx-auto mt-12 max-w-[76rem] overflow-hidden bg-transparent"
+            className="mx-auto mt-16 max-w-[68rem] overflow-hidden rounded-[1.7rem] bg-[#e5e3dc] shadow-[0_24px_70px_rgba(29,29,31,0.08)]"
           >
             {videoId ? (
               <DeferredYouTubeEmbed videoId={videoId} title={tutorial.title} eagerPoster />
             ) : (
-              <div className="aspect-[16/9] bg-black/30" />
+              <div className="aspect-[16/9] bg-[#dad8d0]" />
             )}
           </AnimatedSection>
 
           <AnimatedSection
             delay={260}
-            className="mx-auto mt-8 flex w-full max-w-[62rem] items-center justify-between gap-6 border-t border-white/14 pt-4 text-white/72"
+            className="mx-auto mt-10 max-w-[50rem] rounded-[1.2rem] border border-black/10 bg-[#fbfaf7] px-5 py-4 md:px-6"
           >
-            <div className="flex flex-wrap items-center gap-4 text-[0.96rem] tracking-[-0.018em] sm:gap-5">
-              <span>Video tutorial</span>
-              <span className="text-white/42">/</span>
-              <span>Vectorworks workflow reference</span>
-            </div>
-            <div className="flex items-center gap-5">
-              <a
-                href={tutorial.video_url || "#"}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-[0.96rem] tracking-[-0.018em] transition-colors hover:text-white"
-              >
-                <ExternalLink className="h-4 w-4" />
-                <span>YouTube</span>
-              </a>
-              <button
-                type="button"
-                onClick={handleShare}
-                className="inline-flex items-center gap-2 text-[0.96rem] tracking-[-0.018em] transition-colors hover:text-white"
-              >
-                {linkCopied ? <Check className="h-4 w-4" /> : <Link2 className="h-4 w-4" />}
-                <span>{linkCopied ? "Link copied" : "Share"}</span>
-              </button>
-            </div>
-          </AnimatedSection>
-
-          <AnimatedSection
-            delay={320}
-            className="mx-auto mt-8 max-w-[50rem] rounded-[1.2rem] border border-white/10 bg-white/[0.03] px-5 py-4 md:px-6"
-          >
-            <p className="text-[0.78rem] uppercase tracking-[0.18em] text-white/38">What to notice</p>
-            <p className="mt-2 text-[0.97rem] leading-7 tracking-[-0.01em] text-white/68">
+            <p className="text-[0.78rem] uppercase tracking-[0.18em] text-[#6e6e73]">What to notice</p>
+            <p className="mt-2 text-[0.97rem] leading-7 tracking-[-0.01em] text-[#424245]">
               {whatToNotice}
             </p>
           </AnimatedSection>
@@ -1904,56 +1977,94 @@ export default function TutorialDetail({ slug: slugProp, params }: TutorialDetai
               </section>
             ) : null}
 
-            <section className="mt-20 border-t border-white/12 pt-10">
-              <div className="max-w-[38rem]">
-                <h2 className="font-sans text-[clamp(1.75rem,2.2vw,2.2rem)] font-medium leading-[0.98] tracking-[-0.05em] text-white">
-                  Related content
-                </h2>
-                <p className="mt-3 text-[0.98rem] leading-7 text-white/62">
-                  Keep moving through the library with adjacent lessons that build on the same drafting habits.
-                </p>
-              </div>
+            <section className="mt-20 border-t border-black/10 pt-12">
+              <div className="relative left-1/2 w-screen max-w-[88rem] -translate-x-1/2 px-5 sm:px-8 lg:px-10">
+                <div className="mb-8 grid gap-5 md:grid-cols-[minmax(0,0.72fr)_auto] md:items-end">
+                  <div className="max-w-3xl">
+                    <p className="mb-4 text-[clamp(1.02rem,1.3vw,1.18rem)] font-medium leading-none tracking-[-0.04em] text-black/48">
+                      Scenic design tutorials
+                    </p>
+                    <h2 className="max-w-[12ch] bg-gradient-to-r from-[#0a4cff] via-[#7b2cbf] to-[#c77dff] bg-clip-text font-sans text-[clamp(2.2rem,4.6vw,4.7rem)] font-medium leading-[0.94] tracking-[-0.068em] text-transparent">
+                      Keep learning.
+                    </h2>
+                  </div>
+                  <Link
+                    href="/studio/tutorials/archive"
+                    className="inline-flex h-10 w-fit items-center justify-center rounded-full border border-[#9d4edd]/72 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-[#7b2cbf] transition-colors hover:border-[#7b2cbf] hover:text-black md:justify-self-end"
+                  >
+                    View tutorials
+                  </Link>
+                </div>
 
-              <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {relatedTutorialCards.map((card) => {
-                  const metadata = [
-                    getCategoryLabel(card.category),
-                    getDifficultyLabel(card.difficulty),
-                    formatDuration(card.duration),
-                  ]
-                    .filter(Boolean)
-                    .join(" · ");
+                <div
+                  ref={relatedTutorialRailRef}
+                  className="-mx-1 overflow-x-auto px-1 pb-10 pt-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                >
+                  <div className="flex min-w-max snap-x snap-mandatory gap-4 pr-5">
+                  {relatedTutorialCards.map((card) => {
+                    const metadata = [
+                      getCategoryLabel(card.category),
+                      getDifficultyLabel(card.difficulty),
+                      formatDuration(card.duration),
+                    ]
+                      .filter(Boolean)
+                      .join(" · ");
 
-                  return (
-                    <Link key={card.href} href={card.href} className="group block">
-                      <div className="relative aspect-[1/1] overflow-hidden bg-background/50">
-                        <Image
-                          src={card.cover.src}
-                          alt={card.cover.alt}
-                          fill
-                          quality={84}
-                          className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                          loading="lazy"
-                          sizes="(min-width: 1280px) 20vw, (min-width: 768px) 30vw, 94vw"
-                        />
-                      </div>
+                    return (
+                      <Link
+                        key={card.href}
+                        href={card.href}
+                        className="group w-[min(22rem,78vw)] flex-none snap-start overflow-hidden rounded-[1.15rem] border border-black/10 bg-[#fbfaf7] no-underline shadow-[0_8px_24px_rgba(29,29,31,0.035)] transition-transform duration-300 hover:-translate-y-0.5 md:w-[25rem]"
+                      >
+                        <div className="relative aspect-video overflow-hidden bg-[#e5e3dc]">
+                          <Image
+                            src={card.cover.src}
+                            alt={card.cover.alt}
+                            fill
+                            quality={84}
+                            className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                            loading="lazy"
+                            sizes="(min-width: 1024px) 25rem, 78vw"
+                          />
+                        </div>
 
-                      <div className="pt-4">
-                        <p className="text-[1.02rem] font-normal tracking-[-0.02em] text-white/88">
-                          {card.title}
-                        </p>
-                        <p className="mt-2 text-sm text-white/45">{metadata}</p>
-                      </div>
-                    </Link>
-                  );
-                })}
+                        <div className="flex min-h-[10.5rem] flex-col justify-between p-5 md:p-6">
+                          <p className="line-clamp-2 max-w-[20rem] font-sans text-[clamp(1.2rem,1.7vw,1.55rem)] font-semibold leading-[1.02] tracking-[-0.045em] text-[#1d1d1f] transition-colors group-hover:text-[#7b2cff]">
+                            {card.title}
+                          </p>
+                          <p className="mt-5 text-[0.88rem] font-semibold tracking-[-0.02em] text-[#6e6e73]">{metadata}</p>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                  </div>
+                </div>
+
+                <div className="-mt-5 flex justify-end gap-3">
+                  <button
+                    type="button"
+                    onClick={() => scrollRelatedTutorials("previous")}
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/[0.08] text-black/62 transition-colors hover:bg-black hover:text-white"
+                    aria-label="Previous tutorial cards"
+                  >
+                    <ChevronLeft className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => scrollRelatedTutorials("next")}
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/[0.12] text-black/72 transition-colors hover:bg-black hover:text-white"
+                    aria-label="Next tutorial cards"
+                  >
+                    <ChevronRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
+                  </button>
+                </div>
               </div>
             </section>
           </AnimatedSection>
         </div>
       </article>
 
-      <Footer />
+      <Footer tone="light" />
     </div>
   );
 }

@@ -103,6 +103,13 @@ const getHtmlTextContent = (html: string): string => {
     .trim();
 };
 
+const MIN_TUTORIAL_UPDATED_DATE = new Date("2025-05-01T00:00:00.000Z").getTime();
+
+const getDisplayUpdatedDate = (dateString: string | Date | null | undefined) => {
+  const timestamp = dateString ? new Date(dateString).getTime() : Number.NaN;
+  return new Date(Number.isFinite(timestamp) ? Math.max(timestamp, MIN_TUTORIAL_UPDATED_DATE) : MIN_TUTORIAL_UPDATED_DATE).toISOString();
+};
+
 const getImageAttribute = (tag: string, name: string) => {
   const match = tag.match(new RegExp(`${name}\\s*=\\s*(["'])(.*?)\\1`, "i"));
   if (match) return match[2];
@@ -712,6 +719,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
 
   const galleryRefs = useRef<Record<number, HTMLDivElement | null>>({});
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const relatedArticleRailRef = useRef<HTMLDivElement | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [lightboxImages, setLightboxImages] = useState<
     Array<{ imageUrl: string | null; caption: string | null; altText: string | null }>
@@ -759,6 +767,13 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
 
     container.scrollTo({
       left: figures[targetIndex].offsetLeft,
+      behavior: "smooth",
+    });
+  };
+
+  const scrollRelatedArticles = (direction: "previous" | "next") => {
+    relatedArticleRailRef.current?.scrollBy({
+      left: direction === "next" ? 460 : -460,
       behavior: "smooth",
     });
   };
@@ -1065,9 +1080,9 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
     ? relatedCandidates.filter((candidate) => candidate.series?.slug === article.series?.slug)
     : [];
   const sameCategory = relatedCandidates.filter((candidate) => candidate.categoryName === article.categoryName);
-  const related = [...sameSeries, ...sameCategory].filter(
+  const related = [...sameSeries, ...sameCategory, ...relatedCandidates].filter(
     (candidate, index, array) => array.findIndex((item) => item.id === candidate.id) === index
-  ).slice(0, 4);
+  ).slice(0, 8);
   const articleKeywords = article.seoKeywords
     ? article.seoKeywords
     : [
@@ -1086,6 +1101,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
   const isNarrativeArticle = !isLearningPortalArticle;
   const articleBasePath = isLearningPortalArticle ? "/studio/tutorials" : "/articles";
   const articleUrl = `https://www.brandonptdavis.com${articleBasePath}/${article.slug}`;
+  const articleDisplayUpdatedAt = getDisplayUpdatedDate(article.updatedAt || article.publishedAt || article.createdAt);
   const encodedArticleUrl = encodeURIComponent(articleUrl);
   const encodedArticleTitle = encodeURIComponent(decodeHTMLEntities(article.title));
   const emailShareUrl = `mailto:?subject=${encodedArticleTitle}&body=${encodedArticleTitle}%0A%0A${encodedArticleUrl}`;
@@ -1210,6 +1226,88 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
                 </div>
               </div>
           </section>
+        ) : isLearningPortalArticle ? (
+          <section className="px-5 pb-6 pt-16 sm:px-8 md:pt-24 lg:px-10">
+            <AnimatedSection>
+              <header className="mx-auto max-w-[48rem] text-left">
+                <div className="text-[1rem] font-semibold leading-6 tracking-[-0.02em] text-[#6e6e73]">
+                  <p className="text-[0.78rem] uppercase tracking-[0.06em]">Updated</p>
+                  <time className="mt-1 block" dateTime={articleDisplayUpdatedAt}>
+                    {formatUtcDate(articleDisplayUpdatedAt, "long")}
+                  </time>
+                </div>
+
+                <h1 className="mt-8 max-w-[13ch] text-balance font-sans text-[clamp(2.9rem,5.8vw,5.7rem)] font-semibold leading-[0.96] tracking-[-0.072em] text-[#1d1d1f]">
+                  {decodeHTMLEntities(article.title)}
+                </h1>
+
+                {article.excerpt && (
+                  <p className="mt-7 max-w-[43rem] text-balance text-[clamp(1.28rem,2.15vw,1.82rem)] font-semibold leading-[1.16] tracking-[-0.046em] text-[#1d1d1f]">
+                    {decodeHTMLEntities(article.excerpt)}
+                  </p>
+                )}
+
+                <div className="mt-10 flex flex-wrap items-center gap-3 text-[#6e6e73]">
+                  <button
+                    type="button"
+                    onClick={handleShare}
+                    aria-label={linkCopied ? "Article link copied" : "Copy article link"}
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-black/[0.05] hover:text-[#7b2cff]"
+                  >
+                    {linkCopied ? <Check className="h-4 w-4" /> : <LinkIcon className="h-4 w-4" />}
+                  </button>
+                  <a
+                    href={emailShareUrl}
+                    aria-label="Share article by email"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-black/[0.05] hover:text-[#7b2cff]"
+                  >
+                    <Mail className="h-4 w-4" />
+                  </a>
+                  <a
+                    href={linkedInShareUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Share article on LinkedIn"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors hover:bg-black/[0.05] hover:text-[#7b2cff]"
+                  >
+                    <Linkedin className="h-4 w-4" />
+                  </a>
+                  <a
+                    href={facebookShareUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Share article on Facebook"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full text-[1rem] font-semibold leading-none no-underline transition-colors hover:bg-black/[0.05] hover:text-[#7b2cff]"
+                  >
+                    f
+                  </a>
+                </div>
+              </header>
+            </AnimatedSection>
+
+            {article.coverImageUrl ? (
+              <AnimatedSection delay={120}>
+                <button
+                  type="button"
+                  aria-label="Open tutorial article image"
+                  className="group relative mx-auto mt-16 block aspect-video w-full max-w-[68rem] overflow-hidden rounded-[1.7rem] bg-[#e5e3dc] shadow-[0_24px_70px_rgba(29,29,31,0.08)]"
+                  onClick={() => openArticleLightboxAt("cover")}
+                >
+                  <Image
+                    src={article.coverImageUrl}
+                    alt={article.coverImageAlt || article.title}
+                    fill
+                    priority
+                    unoptimized
+                    loading="eager"
+                    fetchPriority="high"
+                    sizes="(min-width: 1280px) 1088px, calc(100vw - 2.5rem)"
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.015]"
+                  />
+                </button>
+              </AnimatedSection>
+            ) : null}
+          </section>
         ) : (
           <section className="px-[clamp(1.5rem,5vw,6rem)] py-12 md:py-16">
             <AnimatedSection>
@@ -1255,88 +1353,90 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
           </section>
         )}
 
-        <section className="px-[clamp(1.5rem,5vw,6rem)] py-10 md:py-14">
-          <div className={`mx-auto flex max-w-[44rem] items-center justify-between gap-5 border-y py-4 ${isNarrativeArticle ? "border-white/16" : "border-black/10"}`}>
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.98rem] font-semibold tracking-[-0.025em]">
-              {article.categoryName ? (
-                <Link
-                  href={isLearningPortalArticle ? "/studio/tutorials" : `/articles?category=${encodeURIComponent(article.categoryName)}`}
-                  className="rounded-full bg-[#a64dff] px-4 py-1.5 text-white no-underline transition-colors hover:bg-[#b86aff]"
-                >
-                  {article.categoryName}
-                </Link>
-              ) : null}
-              <time
-                dateTime={new Date(article.publishedAt || article.createdAt).toISOString()}
-                className={isNarrativeArticle ? "text-white/54" : "text-[#777169]"}
-              >
-                {formatUtcDate(article.publishedAt || article.createdAt, "long")}
-              </time>
-            </div>
-            <div className="flex shrink-0 items-center gap-2">
-              {articleAudio ? (
-                <>
-                  <audio
-                    ref={audioRef}
-                    preload="metadata"
-                    src={articleAudio.url}
-                    onLoadedMetadata={(event) => setAudioDurationSeconds(event.currentTarget.duration || null)}
-                    onTimeUpdate={(event) => setAudioCurrentTimeSeconds(event.currentTarget.currentTime || 0)}
-                    onEnded={() => {
-                      setIsAudioPlaying(false);
-                      setAudioCurrentTimeSeconds(0);
-                    }}
-                    onPause={() => setIsAudioPlaying(false)}
-                    onPlay={() => setIsAudioPlaying(true)}
-                  />
-                  <button
-                    type="button"
-                    onClick={handleAudioToggle}
-                    aria-label={isAudioPlaying ? "Pause article audio" : "Play article audio"}
-                    className={`inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors ${isNarrativeArticle ? "text-white/56 hover:bg-white/[0.08] hover:text-white" : "text-black/48 hover:bg-black/[0.06] hover:text-black"}`}
+        {!isLearningPortalArticle ? (
+          <section className="px-[clamp(1.5rem,5vw,6rem)] py-10 md:py-14">
+            <div className={`mx-auto flex max-w-[44rem] items-center justify-between gap-5 border-y py-4 ${isNarrativeArticle ? "border-white/16" : "border-black/10"}`}>
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.98rem] font-semibold tracking-[-0.025em]">
+                {article.categoryName ? (
+                  <Link
+                    href={`/articles?category=${encodeURIComponent(article.categoryName)}`}
+                    className="rounded-full bg-[#a64dff] px-4 py-1.5 text-white no-underline transition-colors hover:bg-[#b86aff]"
                   >
-                    {isAudioPlaying ? <Pause className="h-4 w-4" /> : <Play className="ml-0.5 h-4 w-4" />}
-                  </button>
-                </>
-              ) : null}
-              <button
-                type="button"
-                onClick={handleShare}
-                aria-label={linkCopied ? "Article link copied" : "Copy article link"}
-                className={`inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors ${isNarrativeArticle ? "text-white/56 hover:bg-white/[0.08] hover:text-white" : "text-black/48 hover:bg-black/[0.06] hover:text-black"}`}
-              >
-                {linkCopied ? <Check className="h-4 w-4" /> : <LinkIcon className="h-4 w-4" />}
-              </button>
-              <a
-                href={emailShareUrl}
-                aria-label="Share article by email"
-                className={`inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors ${isNarrativeArticle ? "text-white/56 hover:bg-white/[0.08] hover:text-white" : "text-black/48 hover:bg-black/[0.06] hover:text-black"}`}
-              >
-                <Mail className="h-4 w-4" />
-              </a>
-              <a
-                href={linkedInShareUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Share article on LinkedIn"
-                className={`inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors ${isNarrativeArticle ? "text-white/56 hover:bg-white/[0.08] hover:text-white" : "text-black/48 hover:bg-black/[0.06] hover:text-black"}`}
-              >
-                <Linkedin className="h-4 w-4" />
-              </a>
-              <a
-                href={facebookShareUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Share article on Facebook"
-                className={`inline-flex h-9 w-9 items-center justify-center rounded-full text-[1rem] font-semibold leading-none no-underline transition-colors ${isNarrativeArticle ? "text-white/56 hover:bg-white/[0.08] hover:text-white" : "text-black/48 hover:bg-black/[0.06] hover:text-black"}`}
-              >
-                f
-              </a>
+                    {article.categoryName}
+                  </Link>
+                ) : null}
+                <time
+                  dateTime={new Date(article.publishedAt || article.createdAt).toISOString()}
+                  className={isNarrativeArticle ? "text-white/54" : "text-[#777169]"}
+                >
+                  {formatUtcDate(article.publishedAt || article.createdAt, "long")}
+                </time>
+              </div>
+              <div className="flex shrink-0 items-center gap-2">
+                {articleAudio ? (
+                  <>
+                    <audio
+                      ref={audioRef}
+                      preload="metadata"
+                      src={articleAudio.url}
+                      onLoadedMetadata={(event) => setAudioDurationSeconds(event.currentTarget.duration || null)}
+                      onTimeUpdate={(event) => setAudioCurrentTimeSeconds(event.currentTarget.currentTime || 0)}
+                      onEnded={() => {
+                        setIsAudioPlaying(false);
+                        setAudioCurrentTimeSeconds(0);
+                      }}
+                      onPause={() => setIsAudioPlaying(false)}
+                      onPlay={() => setIsAudioPlaying(true)}
+                    />
+                    <button
+                      type="button"
+                      onClick={handleAudioToggle}
+                      aria-label={isAudioPlaying ? "Pause article audio" : "Play article audio"}
+                      className={`inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors ${isNarrativeArticle ? "text-white/56 hover:bg-white/[0.08] hover:text-white" : "text-black/48 hover:bg-black/[0.06] hover:text-black"}`}
+                    >
+                      {isAudioPlaying ? <Pause className="h-4 w-4" /> : <Play className="ml-0.5 h-4 w-4" />}
+                    </button>
+                  </>
+                ) : null}
+                <button
+                  type="button"
+                  onClick={handleShare}
+                  aria-label={linkCopied ? "Article link copied" : "Copy article link"}
+                  className={`inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors ${isNarrativeArticle ? "text-white/56 hover:bg-white/[0.08] hover:text-white" : "text-black/48 hover:bg-black/[0.06] hover:text-black"}`}
+                >
+                  {linkCopied ? <Check className="h-4 w-4" /> : <LinkIcon className="h-4 w-4" />}
+                </button>
+                <a
+                  href={emailShareUrl}
+                  aria-label="Share article by email"
+                  className={`inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors ${isNarrativeArticle ? "text-white/56 hover:bg-white/[0.08] hover:text-white" : "text-black/48 hover:bg-black/[0.06] hover:text-black"}`}
+                >
+                  <Mail className="h-4 w-4" />
+                </a>
+                <a
+                  href={linkedInShareUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Share article on LinkedIn"
+                  className={`inline-flex h-9 w-9 items-center justify-center rounded-full no-underline transition-colors ${isNarrativeArticle ? "text-white/56 hover:bg-white/[0.08] hover:text-white" : "text-black/48 hover:bg-black/[0.06] hover:text-black"}`}
+                >
+                  <Linkedin className="h-4 w-4" />
+                </a>
+                <a
+                  href={facebookShareUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Share article on Facebook"
+                  className={`inline-flex h-9 w-9 items-center justify-center rounded-full text-[1rem] font-semibold leading-none no-underline transition-colors ${isNarrativeArticle ? "text-white/56 hover:bg-white/[0.08] hover:text-white" : "text-black/48 hover:bg-black/[0.06] hover:text-black"}`}
+                >
+                  f
+                </a>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        ) : null}
 
-        <div className="mx-auto w-full max-w-[960px] px-4 sm:px-6 lg:px-8">
+        <div className={`mx-auto w-full max-w-[960px] px-4 sm:px-6 lg:px-8 ${isLearningPortalArticle ? "mt-14" : ""}`}>
           <AnimatedSection delay={120} className="mx-auto max-w-[44rem]">
           <div>
             <div className="min-w-0">
@@ -1968,62 +2068,97 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
       )}
 
       {related.length > 0 && (
-        <section className={`${isNarrativeArticle ? "article-editorial bg-[#030303]" : "article-editorial article-editorial-light bg-[#f1f0ec] text-[#111111]"} pb-20`}>
-          <div className="mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
+        <section className={`${isNarrativeArticle ? "article-editorial bg-[#030303] text-white" : "article-editorial article-editorial-light bg-[#f1f0ec] text-[#111111]"} pb-20`}>
+          <div className="mx-auto w-full max-w-[88rem] px-5 sm:px-8 lg:px-10">
             <div className={`border-t pt-12 ${isNarrativeArticle ? "border-white/12" : "border-black/10"}`}>
-              <div className="mb-8 flex items-end justify-between">
-                <div>
-                  {article.series ? (
-                    <p className={`mb-3 text-[0.72rem] font-medium uppercase tracking-[0.2em] ${isNarrativeArticle ? "text-white/40" : "text-black/42"}`}>
-                      Collection
-                    </p>
-                  ) : null}
-                  <h2 className={`text-2xl md:text-3xl font-sans font-normal tracking-[-0.05em] ${isNarrativeArticle ? "text-white" : "text-[#111111]"}`}>
-                    {article.series ? `More in ${article.series.name}` : "Keep reading"}
+              <div className="mb-8 grid gap-5 md:grid-cols-[minmax(0,0.72fr)_auto] md:items-end">
+                <div className="max-w-3xl">
+                  <p className={`mb-4 text-[clamp(1.02rem,1.3vw,1.18rem)] font-medium leading-none tracking-[-0.04em] ${isNarrativeArticle ? "text-white/44" : "text-black/48"}`}>
+                    {isLearningPortalArticle ? "Scenic design tutorials" : "Scenic design writing"}
+                  </p>
+                  <h2 className={`${isNarrativeArticle ? "text-white" : "bg-gradient-to-r from-[#0a4cff] via-[#7b2cbf] to-[#c77dff] bg-clip-text text-transparent"} max-w-[12ch] font-sans text-[clamp(2.2rem,4.6vw,4.7rem)] font-medium leading-[0.94] tracking-[-0.068em]`}>
+                    {isLearningPortalArticle ? "Keep learning." : article.series ? `More in ${article.series.name}` : "Keep reading."}
                   </h2>
                 </div>
                 <Link
-                  href={articleBasePath}
-                  className={`text-base transition-colors ${isNarrativeArticle ? "text-white/72 hover:text-white" : "text-black/58 hover:text-black"}`}
+                  href={isLearningPortalArticle ? "/studio/tutorials/archive" : articleBasePath}
+                  className={`${isNarrativeArticle ? "border-white/18 text-white/70 hover:border-white/36 hover:text-white" : "border-[#9d4edd]/72 text-[#7b2cbf] hover:border-[#7b2cbf] hover:text-black"} inline-flex h-10 w-fit items-center justify-center rounded-full border px-5 font-sans text-sm font-medium tracking-[-0.02em] transition-colors md:justify-self-end`}
                 >
-                  View all
+                  {isLearningPortalArticle ? "View tutorials" : "View articles"}
                 </Link>
               </div>
 
-              <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-                {related.slice(0, 3).map((relatedArticle) => (
-                  <Link key={relatedArticle.id} href={`${articleBasePath}/${relatedArticle.slug}`}>
-                    <div className="group h-full cursor-pointer transition-all duration-300 hover:-translate-y-0.5">
-                      {relatedArticle.coverImageUrl && (
-                        <div className="aspect-square overflow-hidden bg-white/[0.02]">
-                          <img
-                            src={relatedArticle.coverImageUrl}
-                            alt={relatedArticle.coverImageAlt || decodeHTMLEntities(relatedArticle.title)}
-                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                            loading="lazy"
-                          />
-                        </div>
-                      )}
+              <div
+                ref={relatedArticleRailRef}
+                className="-mx-1 overflow-x-auto px-1 pb-10 pt-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              >
+                <div className="flex min-w-max snap-x snap-mandatory gap-4 pr-5">
+                  {related.map((relatedArticle) => {
+                    const relatedTitle = decodeHTMLEntities(
+                      isLearningPortalArticle
+                        ? relatedArticle.title
+                            .replace(/^Vectorworks Tutorial:\s*/i, "")
+                            .replace(/^Vectorworks Quick Tip:\s*/i, "")
+                            .trim()
+                        : relatedArticle.title
+                    );
+                    const metadata = [
+                      relatedArticle.categoryName,
+                      formatUtcDate(relatedArticle.publishedAt, "short"),
+                      relatedArticle.readTime ? `${relatedArticle.readTime} min read` : null,
+                    ]
+                      .filter(Boolean)
+                      .join(" · ");
 
-                      <div className="pt-4">
-                        <h3 className={`mb-3 text-[1.45rem] font-sans font-normal leading-[1.12] tracking-[-0.04em] transition-colors line-clamp-3 ${isNarrativeArticle ? "text-white group-hover:text-white/82" : "text-[#111111] group-hover:text-black/72"}`}>
-                          {decodeHTMLEntities(relatedArticle.title)}
-                        </h3>
-
-                        <div className={`flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.95rem] tracking-[-0.015em] ${isNarrativeArticle ? "text-white/52" : "text-black/52"}`}>
-                          {relatedArticle.categoryName && <span>{relatedArticle.categoryName}</span>}
-                          <span>{formatUtcDate(relatedArticle.publishedAt, "short")}</span>
-                          {relatedArticle.readTime && (
-                            <>
-                              <span>•</span>
-                              <span>{relatedArticle.readTime} min read</span>
-                            </>
+                    return (
+                        <Link
+                          key={relatedArticle.id}
+                          href={`${articleBasePath}/${relatedArticle.slug}`}
+                          className={`${isNarrativeArticle ? "border-white/10 bg-[#0b0b0b] shadow-[0_8px_24px_rgba(0,0,0,0.24)]" : "border-black/10 bg-[#fbfaf7] shadow-[0_8px_24px_rgba(29,29,31,0.035)]"} group w-[min(22rem,78vw)] flex-none snap-start overflow-hidden rounded-[1.15rem] border no-underline transition-transform duration-300 hover:-translate-y-0.5 md:w-[25rem]`}
+                        >
+                          {relatedArticle.coverImageUrl && (
+                            <div
+                              className={`site-media-square relative aspect-video overflow-hidden rounded-none ${isNarrativeArticle ? "bg-white/[0.04]" : "bg-[#e5e3dc]"}`}
+                            >
+                              <img
+                                src={relatedArticle.coverImageUrl}
+                                alt={relatedArticle.coverImageAlt || decodeHTMLEntities(relatedArticle.title)}
+                                className="site-media-square h-full w-full rounded-none object-cover transition-transform duration-500 group-hover:scale-105"
+                                loading="lazy"
+                              />
+                            </div>
                           )}
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
+
+                          <div className="flex min-h-[10.5rem] flex-col justify-between p-5 md:p-6">
+                            <h3 className={`${isNarrativeArticle ? "text-white group-hover:text-white/82" : "text-[#1d1d1f] group-hover:text-[#7b2cff]"} line-clamp-2 max-w-[20rem] font-sans text-[clamp(1.2rem,1.7vw,1.55rem)] font-semibold leading-[1.02] tracking-[-0.045em] transition-colors`}>
+                              {relatedTitle}
+                            </h3>
+
+                            <p className={`${isNarrativeArticle ? "text-white/50" : "text-[#6e6e73]"} mt-5 text-[0.88rem] font-semibold tracking-[-0.02em]`}>{metadata}</p>
+                          </div>
+                        </Link>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="-mt-5 flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => scrollRelatedArticles("previous")}
+                  className={`${isNarrativeArticle ? "bg-white/[0.08] text-white/62 hover:bg-white hover:text-black" : "bg-black/[0.08] text-black/62 hover:bg-black hover:text-white"} inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors`}
+                  aria-label="Previous related article cards"
+                >
+                  <ChevronLeft className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollRelatedArticles("next")}
+                  className={`${isNarrativeArticle ? "bg-white/[0.12] text-white/72 hover:bg-white hover:text-black" : "bg-black/[0.12] text-black/72 hover:bg-black hover:text-white"} inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors`}
+                  aria-label="Next related article cards"
+                >
+                  <ChevronRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
+                </button>
               </div>
             </div>
           </div>
@@ -2031,7 +2166,7 @@ function ArticleDetailContent({ slug: slugProp, article: initialArticle, variant
       )}
 
       <div className={`relative z-20 ${isNarrativeArticle ? "bg-background" : "bg-[#f1f0ec]"}`}>
-        <Footer />
+        <Footer tone={isNarrativeArticle ? "dark" : "light"} />
       </div>
 
       <style>{`

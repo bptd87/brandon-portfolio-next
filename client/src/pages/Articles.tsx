@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useMemo, useState, type CSSProperties, type MouseEvent } from "react";
-import { useLocation } from "wouter";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import {
   BookOpen,
   Brush,
@@ -28,7 +28,7 @@ import { formatUtcDate } from "@/lib/date-format";
 import { Dialog, DialogClose, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import {
   LEARNING_PORTAL_ARTICLE_SLUG_SET,
-  RETIRED_LEARNING_ARTICLE_SLUG_SET,
+  RETIRED_LEARNING_ARTICLE_REDIRECTS,
 } from "@shared/learningPortal";
 import { getLocalArticles } from "@shared/localArticles";
 
@@ -161,26 +161,23 @@ function ArticleGridCard({
   href,
   onNavigate,
   onCategoryNavigate,
-  stagger = 0,
 }: {
   article: ArticleCardItem;
   eager?: boolean;
   href: string;
   onNavigate: (event: MouseEvent<HTMLAnchorElement>, href: string) => void;
   onCategoryNavigate: (category: string | null | undefined) => void;
-  stagger?: number;
 }) {
   const categoryStyle = getCategoryStyle(article.categoryName);
   const CategoryIcon = categoryStyle.icon;
   const dateLabel = formatArticleDate(article);
 
   return (
-    <AnimatedSection delay={Math.min(stagger * 70, 420)}>
-      <a
-        href={href}
-        onClick={(event) => onNavigate(event, href)}
-        className="group block h-full overflow-hidden rounded-[1.75rem] bg-white shadow-[0_14px_34px_rgba(17,17,17,0.07)] ring-1 ring-black/[0.04] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_22px_54px_rgba(17,17,17,0.11)]"
-      >
+    <a
+      href={href}
+      onClick={(event) => onNavigate(event, href)}
+      className="group block h-full overflow-hidden rounded-[1.75rem] bg-white shadow-[0_14px_34px_rgba(17,17,17,0.07)] ring-1 ring-black/[0.04] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_22px_54px_rgba(17,17,17,0.11)]"
+    >
       <div className="flex h-full flex-col">
         <div
           className="publish-card-media transition-card relative aspect-[16/9] overflow-hidden bg-black/[0.04]"
@@ -234,13 +231,12 @@ function ArticleGridCard({
           ) : null}
         </div>
       </div>
-      </a>
-    </AnimatedSection>
+    </a>
   );
 }
 
 export default function Articles() {
-  const [, setLocation] = useLocation();
+  const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState<string>(() => {
     if (typeof window === "undefined") return "all";
     return normalizeCategoryParam(new URLSearchParams(window.location.search).get("category"));
@@ -253,7 +249,10 @@ export default function Articles() {
     () =>
       getLocalArticles()
         .filter((article) => !LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug))
-        .filter((article) => !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(article.slug))
+        .filter((article) => {
+          const retiredRedirect = RETIRED_LEARNING_ARTICLE_REDIRECTS[article.slug];
+          return !retiredRedirect || retiredRedirect === `/articles/${article.slug}`;
+        })
         .map((article) => ({
           id: article.id,
           slug: article.slug,
@@ -358,7 +357,7 @@ export default function Articles() {
 
     event.preventDefault();
     const anchor = event.currentTarget;
-    const navigate = () => setLocation(href);
+    const navigate = () => router.push(href);
     const performNavigation = async () => {
       await animateCardDeparture(anchor);
       navigate();
@@ -421,7 +420,7 @@ export default function Articles() {
             <AnimatedSection>
               <div className="mx-auto flex max-w-[62rem] flex-col items-center gap-8 py-12 md:gap-12 md:py-16">
                 <Image
-                  src="/images/publish/article-top.png"
+                  src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/publish/article-top.png"
                   alt=""
                   width={1960}
                   height={484}
@@ -432,7 +431,7 @@ export default function Articles() {
                   Articles
                 </h1>
                 <Image
-                  src="/images/publish/article-bottom-v2.png"
+                  src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/publish/article-bottom-v2.png"
                   alt=""
                   width={1960}
                   height={484}
@@ -551,7 +550,6 @@ export default function Articles() {
                         href={href}
                         onNavigate={navigateWithTransition}
                         onCategoryNavigate={navigateToCategory}
-                        stagger={index}
                       />
                     );
                   })}
@@ -611,7 +609,7 @@ export default function Articles() {
         </section>
       </main>
 
-      <Footer />
+      <Footer tone="light" />
     </div>
   );
 }

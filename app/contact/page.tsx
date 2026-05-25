@@ -1,4 +1,5 @@
 import { ContactPage } from "../../components/site/ContactPage";
+import { NextPathProvider } from "../../components/routing/NextPathProvider";
 import { buildPageMetadata } from "../../lib/metadata";
 
 export const dynamic = "force-static";
@@ -11,5 +12,9 @@ export const metadata = buildPageMetadata({
 });
 
 export default function Contact() {
-  return <ContactPage />;
+  return (
+    <NextPathProvider currentPath="/contact">
+      <ContactPage />
+    </NextPathProvider>
+  );
 }

@@ -5,6 +5,7 @@
 # Build outputs
 dist/
 build/
+cache/
 *.dist
 
 # Environment variables
@@ -101,6 +102,16 @@ jspm_packages/
 tmp/
 temp/
 output/
+
+# Large media/archive folders that should not be scanned during agent recovery
+public/media/
+client/public/images/archive/
+client/public/images/archives/
+legacy/
+archive/
+archives/
+!app/studio/tutorials/archive/
+!app/studio/tutorials/archive/page.tsx
 
 # Unused low-res teaching image duplicates
 client/public/images/teaching-gallery/class-critique.jpeg

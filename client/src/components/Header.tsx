@@ -2,7 +2,8 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { Link, useLocation } from "wouter";
+import { usePathname } from "next/navigation";
+import { Link } from "wouter";
 import { useState, useRef, useEffect } from "react";
 import {
   Search,
@@ -146,7 +147,7 @@ function BrandLink({ centered = false, tone = "dark" }: { centered?: boolean; to
 }
 
 export default function Header() {
-  const [location] = useLocation();
+  const location = usePathname() || "/";
   const [desktopMenuOpen, setDesktopMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -155,19 +156,32 @@ export default function Header() {
   const lastScrollYRef = useRef(0);
   const desktopMenuCloseTimeoutRef = useRef<number | null>(null);
   const isEditorialRoute =
+    location === "/studio" ||
+    /^\/studio\/apps(?:\/|$)/.test(location) ||
     /^\/articles(?:\/|$)/.test(location) ||
     /^\/studio\/tutorials(?:\/|$)/.test(location) ||
     /^\/studio\/directory(?:\/|$)/.test(location);
   const isArticleDetailRoute = /^\/articles\/[^/]+/.test(location);
+  const isContactRoute = location === "/contact";
+  const isInfoRoute =
+    location === "/privacy" ||
+    location === "/terms" ||
+    location === "/faq" ||
+    location === "/accessibility" ||
+    location === "/sitemap";
   const isProfileLightRoute =
     location === "/about" ||
     location === "/resume" ||
+    isContactRoute ||
+    isInfoRoute ||
     location === "/creative-statement" ||
+    location === "/search" ||
     location === "/about/teaching" ||
     location === "/about/collaborators" ||
     /^\/upcoming-productions(?:\/|$)/.test(location);
   const isHomeRoute = location === "/";
   const useLightChrome = (isEditorialRoute && !isArticleDetailRoute) || isProfileLightRoute;
+  const useWhiteLightChrome = isContactRoute || isInfoRoute || location === "/studio" || /^\/studio\/apps(?:\/|$)/.test(location);
   const useImmersiveChrome = isHomeRoute && !desktopMenuOpen && !mobileMenuOpen && !searchOpen;
 
   const headerRef = useRef<HTMLElement>(null);
@@ -361,7 +375,9 @@ export default function Header() {
         <button
           type="button"
           className={`fixed inset-x-0 bottom-0 top-[74px] z-40 cursor-default animate-in fade-in duration-200 ${
-            useLightChrome ? "bg-[#f1f0ec]/38 backdrop-blur-sm" : "bg-black/24 backdrop-blur-sm"
+            useLightChrome
+              ? `${useWhiteLightChrome ? "bg-white/38" : "bg-[#f1f0ec]/38"} backdrop-blur-sm`
+              : "bg-black/24 backdrop-blur-sm"
           }`}
           onClick={closeDesktopMenu}
           aria-label="Close navigation menu"
@@ -371,7 +387,9 @@ export default function Header() {
         ref={headerRef}
         className={`fixed left-0 right-0 top-0 z-50 border-b backdrop-blur-xl transition-all duration-300 ${
           useLightChrome
-            ? "border-black/10 bg-[#f1f0ec]/78 supports-[backdrop-filter]:bg-[#f1f0ec]/66"
+            ? useWhiteLightChrome
+              ? "border-black/10 bg-white/82 supports-[backdrop-filter]:bg-white/72"
+              : "border-black/10 bg-[#f1f0ec]/78 supports-[backdrop-filter]:bg-[#f1f0ec]/66"
             : useImmersiveChrome && !isScrolled
               ? "border-transparent bg-transparent shadow-none backdrop-blur-0"
               : "border-white/10 bg-background/40 supports-[backdrop-filter]:bg-background/25"

@@ -24,7 +24,7 @@ import {
 const HOME_HERO_IMAGE_URL =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150232-69e3ddad.webp";
 const ABOUT_HEADSHOT_URL =
-  "/images/about/page/brandon-pt-davis-about-home.jpg";
+  "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/about/brandon-pt-davis-about-home.jpg";
 const HOME_CTA_IMAGE_URL =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90053-gallery-150197-48389e80.webp";
 

@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { Link, useLocation } from "wouter";
+import { usePathname, useRouter } from "next/navigation";
+import { Link } from "wouter";
 
 import Header from "@/components/Header";
 import {
@@ -25,14 +26,14 @@ export default function ExperientialSampleDetail({
   slug: slugProp,
   params,
 }: ExperientialSampleDetailProps = {}) {
-  const [, setLocation] = useLocation();
+  const pathname = usePathname();
+  const router = useRouter();
   const category = (categoryProp || params?.category) as LocalExperientialCategory;
   const slug = String(
     slugProp ||
       params?.slug ||
-      (typeof window !== "undefined"
-        ? window.location.pathname.split("/").filter(Boolean).pop() || ""
-        : "")
+      pathname?.split("/").filter(Boolean).pop() ||
+      ""
   )
     .trim()
     .toLowerCase();
@@ -41,8 +42,8 @@ export default function ExperientialSampleDetail({
 
   useEffect(() => {
     if (!project) return;
-    setLocation(getLocalExperientialProjectHref(project), { replace: true });
-  }, [project, setLocation]);
+    router.replace(getLocalExperientialProjectHref(project));
+  }, [project, router]);
 
   if (project) return null;
 

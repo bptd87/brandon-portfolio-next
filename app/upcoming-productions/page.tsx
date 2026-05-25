@@ -12,7 +12,8 @@ export const metadata = buildPageMetadata({
   description:
     "Upcoming scenic design productions and selected production archive pages by Brandon PT Davis.",
   pathname: "/upcoming-productions",
-  image: absoluteUrl("/upcoming-productions/upcoming-productions-hero.webp"),
+  image:
+    "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/upcoming-productions/upcoming-productions-hero.webp",
 });
 
 function getUpcomingProductionJsonLd() {
