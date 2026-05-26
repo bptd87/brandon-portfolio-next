@@ -1,19 +1,26 @@
 import type { MetadataRoute } from "next";
-import { absoluteUrl } from "../lib/metadata";
-import { getLocalArticles } from "../shared/localArticles";
+
+import { absoluteUrl } from "../../lib/metadata";
+import { getLocalArticles } from "../../shared/localArticles";
 import {
   LEARNING_PORTAL_ARTICLE_SLUG_SET,
   RETIRED_LEARNING_ARTICLE_SLUG_SET,
-} from "../shared/learningPortal";
+} from "../../shared/learningPortal";
 import {
   getLocalExperientialProjects,
   getLocalRenderingProjects,
-} from "../shared/localPortfolios";
-import { getLocalScenicProjects } from "../shared/localScenicProjects";
-import { getLocalTutorials } from "../shared/localStudio";
-import { productionEvents } from "../shared/upcomingProductions";
+} from "../../shared/localPortfolios";
+import { getLocalScenicProjects } from "../../shared/localScenicProjects";
+import { getLocalTutorials } from "../../shared/localStudio";
+import { productionEvents } from "../../shared/upcomingProductions";
 
-const STATIC_ROUTES: Array<{ pathname: string; priority?: number; changeFrequency?: MetadataRoute.Sitemap[number]["changeFrequency"] }> = [
+type SitemapEntry = MetadataRoute.Sitemap[number];
+
+const STATIC_ROUTES: Array<{
+  pathname: string;
+  priority?: number;
+  changeFrequency?: SitemapEntry["changeFrequency"];
+}> = [
   { pathname: "/", priority: 1, changeFrequency: "weekly" },
   { pathname: "/about", priority: 0.8, changeFrequency: "monthly" },
   { pathname: "/upcoming-productions", priority: 0.7, changeFrequency: "monthly" },
@@ -28,6 +35,7 @@ const STATIC_ROUTES: Array<{ pathname: string; priority?: number; changeFrequenc
   { pathname: "/articles", priority: 0.8, changeFrequency: "weekly" },
   { pathname: "/studio", priority: 0.8, changeFrequency: "weekly" },
   { pathname: "/studio/tutorials", priority: 0.7, changeFrequency: "weekly" },
+  { pathname: "/studio/tutorials/archive", priority: 0.6, changeFrequency: "weekly" },
   { pathname: "/studio/directory", priority: 0.6, changeFrequency: "weekly" },
   { pathname: "/studio/apps", priority: 0.6, changeFrequency: "monthly" },
   { pathname: "/studio/apps/scale-calculator", priority: 0.5, changeFrequency: "monthly" },
@@ -43,6 +51,7 @@ const STATIC_ROUTES: Array<{ pathname: string; priority?: number; changeFrequenc
   { pathname: "/privacy", priority: 0.2, changeFrequency: "yearly" },
   { pathname: "/terms", priority: 0.2, changeFrequency: "yearly" },
   { pathname: "/accessibility", priority: 0.3, changeFrequency: "yearly" },
+  { pathname: "/sitemap", priority: 0.3, changeFrequency: "monthly" },
 ];
 
 function toLastModified(...candidates: Array<string | number | null | undefined>) {
@@ -57,7 +66,7 @@ function toLastModified(...candidates: Array<string | number | null | undefined>
   return undefined;
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+function getSitemapEntries(): MetadataRoute.Sitemap {
   const staticEntries: MetadataRoute.Sitemap = STATIC_ROUTES.map((route) => ({
     url: absoluteUrl(route.pathname),
     changeFrequency: route.changeFrequency,
@@ -66,7 +75,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const scenicEntries: MetadataRoute.Sitemap = getLocalScenicProjects().map((project) => ({
     url: absoluteUrl(`/project/${project.slug}`),
-    lastModified: toLastModified(project.updatedAt, project.publishedAt, project.createdAt, project.year ? `${project.year}-01-01` : null),
+    lastModified: toLastModified(
+      project.updatedAt,
+      project.publishedAt,
+      project.createdAt,
+      project.year ? `${project.year}-01-01` : null,
+    ),
     changeFrequency: "monthly",
     priority: project.featured ? 0.8 : 0.7,
   }));
@@ -85,12 +99,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: project.featured ? 0.7 : 0.6,
   }));
 
-  const experientialProjectEntries: MetadataRoute.Sitemap = getLocalExperientialProjects().map((project) => ({
-    url: absoluteUrl(`/projects/experiential/${project.slug}`),
-    lastModified: toLastModified(project.updatedAt, project.year ? `${project.year}-01-01` : null),
-    changeFrequency: "monthly",
-    priority: 0.6,
-  }));
+  const experientialProjectEntries: MetadataRoute.Sitemap = getLocalExperientialProjects().map(
+    (project) => ({
+      url: absoluteUrl(`/projects/experiential/${project.slug}`),
+      lastModified: toLastModified(project.updatedAt, project.year ? `${project.year}-01-01` : null),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    }),
+  );
 
   const articleEntries: MetadataRoute.Sitemap = getLocalArticles()
     .filter((article) => !LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug))
@@ -113,7 +129,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const tutorialEntries: MetadataRoute.Sitemap = getLocalTutorials().map((tutorial) => ({
     url: absoluteUrl(`/studio/tutorials/${tutorial.slug}`),
-    lastModified: toLastModified(tutorial.published_at, tutorial.created_at, tutorial.updated_at),
+    lastModified: toLastModified(tutorial.updated_at, tutorial.published_at, tutorial.created_at),
     changeFrequency: "monthly",
     priority: tutorial.featured ? 0.6 : 0.5,
   }));
@@ -128,4 +144,50 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...learningArticleEntries,
     ...tutorialEntries,
   ];
+}
+
+function escapeXml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+function formatDate(date: SitemapEntry["lastModified"]) {
+  if (!date) return undefined;
+  const parsed = date instanceof Date ? date : new Date(date);
+  return Number.isNaN(parsed.getTime()) ? undefined : parsed.toISOString();
+}
+
+function renderSitemapXml(entries: MetadataRoute.Sitemap) {
+  const urls = entries
+    .map((entry) => {
+      const lastModified = formatDate(entry.lastModified);
+      const lines = [`  <loc>${escapeXml(entry.url)}</loc>`];
+
+      if (lastModified) lines.push(`  <lastmod>${lastModified}</lastmod>`);
+      if (entry.changeFrequency) lines.push(`  <changefreq>${entry.changeFrequency}</changefreq>`);
+      if (typeof entry.priority === "number") lines.push(`  <priority>${entry.priority}</priority>`);
+
+      return `<url>\n${lines.join("\n")}\n</url>`;
+    })
+    .join("\n");
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls}
+</urlset>
+`;
+}
+
+export function GET() {
+  return new Response(renderSitemapXml(getSitemapEntries()), {
+    headers: {
+      "Content-Type": "application/xml; charset=utf-8",
+      "Cache-Control": "public, max-age=0, must-revalidate",
+    },
+  });
 }

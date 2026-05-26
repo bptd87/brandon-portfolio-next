@@ -19,7 +19,7 @@ export const dynamic = "force-static";
 export const metadata = buildPageMetadata({
   title: "Brandon PT Davis | Scenic Designer Portfolio",
   description:
-    "Brandon PT Davis is a San Diego-based scenic designer creating theatre environments, concept renderings, and production design work for regional theatre and live performance.",
+    "Brandon PT Davis is a San Diego-based scenic designer creating theatre environments, renderings, and production design for theatre and live performance.",
   pathname: "/",
 });
 

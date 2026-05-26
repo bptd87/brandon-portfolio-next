@@ -147,7 +147,7 @@ export function getBrandonOrganizationJsonLd() {
     "@context": "https://schema.org",
     "@type": ["Organization", "ProfessionalService"],
     "@id": BRANDON_ORGANIZATION_ID,
-    name: "Brandon PT Davis Design",
+    name: siteMetadata.siteName,
     url: siteMetadata.siteUrl,
     logo: {
       "@type": "ImageObject",
