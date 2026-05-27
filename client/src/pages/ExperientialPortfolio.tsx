@@ -2,7 +2,7 @@
 
 import type { CSSProperties, MouseEvent } from "react";
 import { useRouter } from "next/navigation";
-import { Box, Layers3, Lightbulb, UsersRound } from "lucide-react";
+import { Box, Layers3, Lightbulb } from "lucide-react";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -22,18 +22,42 @@ const EXPERIENTIAL_PORTFOLIO_DESCRIPTION =
 const EXPERIENTIAL_PORTFOLIO_KEYWORDS = [
   "experiential design portfolio",
   "experiential project portfolio",
-  "brand environment designer",
+  "spatial design portfolio",
   "rendering and technical drawing portfolio",
   "event design case studies",
   "Brandon PT Davis",
 ].join(", ");
 
+const MEDIA_LABELS: Record<LocalExperientialProject["mediaTypes"][number], string> = {
+  rendering: "Rendering",
+  "technical-drawing": "Technical Drawing",
+  "live-events": "Finished Work",
+};
+
 const experientialPortfolioLandingCopy = {
   title: "Experiential Design",
-  subtitle: "Project-based concept, documentation, and built proof.",
+  subtitle: "Spatial work, renderings, drafting, and independent experiments.",
   intro:
-    "A selected body of experiential design work organized as case studies rather than separate media buckets. Renderings, technical drawing, and live documentation live together so each project can read from early concept through built outcome.",
+    "A focused archive of work adjacent to scenic design: open-air venues, brand environments, documentation, and visual studies.",
 } as const;
+
+const experientialContextCards = [
+  {
+    icon: Lightbulb,
+    title: "Spatial idea",
+    copy: "Projects begin with a clear visual premise: how the place should feel, where attention lands, and what the audience enters.",
+  },
+  {
+    icon: Layers3,
+    title: "Visual proof",
+    copy: "Renderings, walkthroughs, and drafting translate that premise into something clients, shops, and collaborators can read quickly.",
+  },
+  {
+    icon: Box,
+    title: "Built read",
+    copy: "Finished documentation shows whether the idea holds up in scale, movement, light, and real guest or audience flow.",
+  },
+] as const;
 
 const SITE_URL = getConfiguredSiteUrl();
 
@@ -57,6 +81,74 @@ function sortExperientialProjectsChronologically(projects: LocalExperientialProj
     if (timeCompare !== 0) return timeCompare;
     return a.title.localeCompare(b.title);
   });
+}
+
+function getProjectCardAspect(project: LocalExperientialProject, isFeatureCard: boolean) {
+  if (project.mediaTypes.includes("technical-drawing")) {
+    return "aspect-[3/2]";
+  }
+
+  if (project.mediaTypes.includes("live-events")) {
+    return "aspect-video";
+  }
+
+  return isFeatureCard ? "aspect-video" : "aspect-[3/2]";
+}
+
+function getProjectImageTreatment(project: LocalExperientialProject) {
+  const hasRendering = project.mediaTypes.includes("rendering");
+  const hasOnlyTechnicalDrawing = project.mediaTypes.includes("technical-drawing") && !hasRendering;
+
+  if (hasOnlyTechnicalDrawing) {
+    return {
+      frame: "bg-[#181818]",
+      image: "object-contain",
+    };
+  }
+
+  return {
+    frame: "bg-[#181818]",
+    image: "object-cover",
+  };
+}
+
+function getYoutubeId(url: string) {
+  try {
+    const parsed = new URL(url);
+    return parsed.searchParams.get("v") || parsed.pathname.split("/").filter(Boolean).pop() || "";
+  } catch {
+    return "";
+  }
+}
+
+function getYoutubeEmbedUrl(url: string) {
+  const videoId = getYoutubeId(url);
+  if (!videoId) return "";
+
+  try {
+    const params = new URLSearchParams({
+      autoplay: "1",
+      controls: "0",
+      disablekb: "1",
+      fs: "0",
+      iv_load_policy: "3",
+      loop: "1",
+      modestbranding: "1",
+      mute: "1",
+      playsinline: "1",
+      playlist: videoId,
+      rel: "0",
+    });
+
+    return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
+  } catch {
+    return "";
+  }
+}
+
+function getYoutubePosterUrl(url: string) {
+  const videoId = getYoutubeId(url);
+  return videoId ? `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg` : "";
 }
 
 export default function ExperientialPortfolio() {
@@ -193,9 +285,9 @@ export default function ExperientialPortfolio() {
 
       <main>
         <section className="border-b border-white/10 bg-black pb-8 pt-24 md:pb-10 md:pt-28">
-          <div className="px-[clamp(1.5rem,5vw,6rem)]">
+          <div className="container max-w-[88rem]">
             <div className="max-w-5xl">
-              <p className="mb-5 text-[clamp(1.05rem,1.4vw,1.3rem)] font-medium leading-none tracking-[-0.035em] text-white/46">
+              <p className="mb-5 section-kicker text-[#c9ff3d]/72">
                 {experientialPortfolioLandingCopy.subtitle}
               </p>
               <h1 className="font-sans text-[clamp(3.2rem,7vw,7.1rem)] font-medium leading-[0.86] tracking-[-0.065em] text-white">
@@ -205,32 +297,64 @@ export default function ExperientialPortfolio() {
                 {experientialPortfolioLandingCopy.intro}
               </p>
             </div>
+
+            <div className="mt-10 flex flex-col gap-4 border-t border-border/35 pt-5 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex min-w-0 flex-wrap items-center gap-x-6 gap-y-3 text-[1.02rem] text-white/52">
+                <span className="text-white">{projects.length} projects</span>
+                <span>Renderings</span>
+                <span>Technical drawing</span>
+                <span>Finished work</span>
+              </div>
+              <p className="text-sm uppercase tracking-[0.18em] text-[#c9ff3d]/72">
+                Selected work
+              </p>
+            </div>
           </div>
         </section>
 
         {projects.length > 0 ? (
-          <section className="bg-[#111111] py-4 md:py-5">
-            <div className="grid w-full gap-4 px-[clamp(1rem,2vw,1.75rem)] md:grid-cols-2">
+          <section className="bg-[#111111] px-[clamp(0.9rem,1.8vw,1.35rem)] py-[clamp(0.9rem,1.8vw,1.35rem)] pb-20 md:pb-28">
+            <div className="grid grid-cols-1 gap-[clamp(0.9rem,1.8vw,1.35rem)] md:grid-cols-2">
               {projects.map((project, index) => {
                 const href = getLocalExperientialProjectHref(project);
+                const isFeatureCard = index % 3 === 0;
+                const imageTreatment = getProjectImageTreatment(project);
 
                 return (
                   <a
                     key={project.slug}
                     href={href}
                     onClick={(event) => navigateWithTransition(event, href)}
-                    className={`group block ${index % 3 === 0 ? "md:col-span-2" : ""}`}
+                    className={`group block ${isFeatureCard ? "md:col-span-2" : ""}`}
                   >
                     <article className="bg-[#111111]">
                       <div
-                        className="transition-card site-media-square relative aspect-[3/2] overflow-hidden bg-[#181818]"
+                        className={`transition-card site-media-square relative overflow-hidden ${imageTreatment.frame} ${getProjectCardAspect(project, isFeatureCard)}`}
                         style={{ viewTransitionName: `experiential-card-${project.slug}` } as CSSProperties}
                       >
-                        {project.coverImageUrl ? (
+                        {project.coverVideoUrl ? (
+                          <>
+                            <img
+                              src={project.coverImageUrl || getYoutubePosterUrl(project.coverVideoUrl)}
+                              alt={`${project.title} video preview poster`}
+                              className="site-media-square h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+                              loading={index < 3 ? "eager" : "lazy"}
+                              fetchPriority={index < 3 ? "high" : "auto"}
+                            />
+                            <iframe
+                              src={getYoutubeEmbedUrl(project.coverVideoUrl)}
+                              title={`${project.title} video preview`}
+                              aria-label={`${project.title} video preview`}
+                              className="site-media-square pointer-events-none absolute left-1/2 top-1/2 h-full w-[120%] -translate-x-1/2 -translate-y-1/2 border-0"
+                              allow="autoplay; encrypted-media; picture-in-picture"
+                              loading="eager"
+                            />
+                          </>
+                        ) : project.coverImageUrl ? (
                           <img
                             src={project.coverImageUrl}
                             alt={experientialAlt(project.title)}
-                            className="site-media-square h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+                            className={`site-media-square h-full w-full object-center transition-transform duration-700 ease-out group-hover:scale-[1.025] ${imageTreatment.image}`}
                             loading={index < 3 ? "eager" : "lazy"}
                             fetchPriority={index < 3 ? "high" : "auto"}
                           />
@@ -239,16 +363,17 @@ export default function ExperientialPortfolio() {
                             Image unavailable
                           </div>
                         )}
-                        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/84 via-black/34 to-transparent" />
+                        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/82 via-black/32 to-transparent" />
                         <div className="absolute inset-x-0 bottom-0 p-[clamp(1.15rem,2.2vw,2rem)]">
-                          <h2 className="max-w-[14ch] font-sans text-[clamp(1.55rem,2.4vw,2.9rem)] font-medium leading-[0.96] tracking-[-0.06em] text-white transition-colors group-hover:text-white/80">
+                          <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.7rem] font-medium uppercase tracking-[0.16em] text-[#c9ff3d]/78">
+                            {project.mediaTypes.slice(0, 2).map((type) => (
+                              <span key={type}>{MEDIA_LABELS[type]}</span>
+                            ))}
+                            {project.year ? <span>{project.year}</span> : null}
+                          </div>
+                          <h2 className="font-sans text-[clamp(1.45rem,2.1vw,2.4rem)] font-medium leading-[0.96] tracking-[-0.055em] text-white transition-colors group-hover:text-white/80">
                             {project.title}
                           </h2>
-                          {project.year ? (
-                            <p className="mt-2 text-[clamp(0.9rem,1.05vw,1.08rem)] leading-tight tracking-[-0.025em] text-white/72">
-                              {project.year}
-                            </p>
-                          ) : null}
                         </div>
                       </div>
                     </article>
@@ -259,59 +384,27 @@ export default function ExperientialPortfolio() {
           </section>
         ) : null}
 
-        <section className="border-t border-white/12 bg-[#111111] py-18 md:py-24">
-          <div className="px-[clamp(1.5rem,5vw,6rem)]">
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(24rem,0.72fr)] lg:items-start">
-              <div className="space-y-5">
-                <p className="text-[clamp(1.05rem,1.4vw,1.3rem)] font-medium leading-none tracking-[-0.035em] text-white/46">
-                  Experiential notes
-                </p>
-                <h2 className="max-w-3xl font-sans text-[clamp(2.4rem,5vw,5.2rem)] font-medium leading-[0.88] tracking-[-0.075em] text-white">
-                  Case studies that connect concept to installation.
+        <section className="border-t border-white/12 bg-[#111111] py-16 md:py-22">
+          <div className="container max-w-[88rem]">
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(26rem,0.78fr)] lg:items-start">
+              <div>
+                <p className="section-kicker text-[#c9ff3d]/72">Portfolio context</p>
+                <h2 className="mt-4 max-w-3xl font-sans text-[clamp(2.35rem,5vw,5.05rem)] font-medium leading-[0.9] tracking-[-0.075em] text-white">
+                  Work that moves between concept and space.
                 </h2>
-                <p className="max-w-3xl text-[1.05rem] leading-7 text-white/68 md:text-[1.15rem] md:leading-8">
-                  This portfolio focuses on experiential projects that move between concept
-                  visualization, client communication, production coordination, and finished
-                  installation. The work includes renderings, technical drawing, and completed
-                  project imagery presented together so each case study can show the full path
-                  from proposal to built result.
-                </p>
-                <p className="max-w-3xl text-[1.05rem] leading-7 text-white/54 md:text-[1.15rem] md:leading-8">
-                  Rather than splitting those assets into separate categories, these projects are
-                  organized around the design problem itself. The goal is to show how visual
-                  intent gets communicated early, translated into practical documentation, and
-                  carried through into real-world audience experience.
+                <p className="mt-6 max-w-2xl text-[1.02rem] leading-7 text-white/58 md:text-[1.12rem] md:leading-8">
+                  This section sits near scenic design, but follows the project instead of the medium. Some entries are
+                  renderings, some are walkthroughs, some are documentation; the through-line is spatial thinking.
                 </p>
               </div>
 
               <div className="grid gap-3">
-                {[
-                  {
-                    icon: Lightbulb,
-                    title: "Concept direction",
-                    copy: "Renderings and mood studies for internal review, client presentation, and early alignment.",
-                  },
-                  {
-                    icon: Layers3,
-                    title: "Documentation",
-                    copy: "Technical drawing and spatial planning that turn visual direction into buildable information.",
-                  },
-                  {
-                    icon: UsersRound,
-                    title: "Audience experience",
-                    copy: "Finished-work documentation that shows how a concept becomes a real environment in context.",
-                  },
-                  {
-                    icon: Box,
-                    title: "Project storytelling",
-                    copy: "Case studies organized around the design problem rather than separated into media buckets.",
-                  },
-                ].map(({ icon: Icon, title, copy }) => (
+                {experientialContextCards.map(({ icon: Icon, title, copy }) => (
                   <div
                     key={title}
                     className="rounded-[1.5rem] bg-black p-6 text-white shadow-[0_18px_54px_rgba(0,0,0,0.28)] ring-1 ring-white/[0.07]"
                   >
-                    <Icon className="mb-8 h-7 w-7 text-white/82" strokeWidth={1.8} aria-hidden="true" />
+                    <Icon className="mb-8 h-7 w-7 text-[#c9ff3d]/82" strokeWidth={1.8} aria-hidden="true" />
                     <h3 className="max-w-[14ch] font-sans text-[1.55rem] font-medium leading-[0.96] tracking-[-0.055em] text-white">
                       {title}
                     </h3>

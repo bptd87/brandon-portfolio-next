@@ -1,10 +1,30 @@
+- slug: lysistrata-outdoor-renderings
+  category: rendering
+  categoryLabel: Rendering
+  title: Lysistrata Outdoor Renderings
+  description: >-
+    Renderings and walkthrough video for the outdoor UTEP production of Lysistrata, showing the Fox Fine Arts
+    courtyard as a scenic environment during COVID-era production planning.
+  asset: assets/projects/experiential/lysistrata-covid-documentation/lysistrata-utep-courtyard-rendering.jpeg
+  alt: Outdoor courtyard scenic rendering for Lysistrata at UTEP
+  videoUrl: https://www.youtube.com/watch?v=ZjGy_3Ipk_w
+  gallery:
+    - asset: assets/projects/experiential/lysistrata-covid-documentation/lysistrata-utep-courtyard-rendering.jpeg
+      alt: Outdoor courtyard scenic rendering for Lysistrata at UTEP
+      caption: Fox Fine Arts courtyard rendering for the outdoor Lysistrata production.
+    - asset: assets/projects/experiential/lysistrata-covid-documentation/lysistrata-utep-statue-rendering.jpeg
+      alt: Statue courtyard scenic rendering for Lysistrata at UTEP
+      caption: Rendering study showing the courtyard statuary and outdoor performance environment.
+    - asset: assets/projects/experiential/lysistrata-covid-documentation/lysistrata-utep-gallery-rendering.jpeg
+      alt: Upper gallery scenic rendering for Lysistrata at UTEP
+      caption: Rendering study using the Fox Fine Arts architecture and upper gallery as part of the scenic world.
 - slug: lysistrata-covid-documentation
   category: technical-drawing
   categoryLabel: Technical Drawing
   title: Lysistrata COVID Documentation
   description: >-
-    Documentation set for Lysistrata during COVID-era production planning, focused on adaptable staging information,
-    layout clarity, and evolving requirements.
+    COVID-era documentation set for the outdoor UTEP production of Lysistrata, focused on staging clarity, layout
+    information, and evolving pandemic production requirements.
   asset: about-images/experiential-process/technical-drawing/1771838895784-design_drafting_lysistrata_3.jpg
   alt: ''
   gallery:

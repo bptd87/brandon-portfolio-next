@@ -1,21 +1,22 @@
 type: project
 discipline: experiential
 slug: lysistrata-covid-documentation
-title: Lysistrata COVID Documentation
+title: Lysistrata Outdoor Scenic Design
 status: published
 featured: false
-year: 2024
+year: 2021
 month: 4
 excerpt: >-
-  A drafting and documentation package created to support staging clarity and evolving production requirements during
-  COVID-era planning.
-seoTitle: Lysistrata COVID Documentation | Experiential Design | Brandon PT Davis
+  Outdoor scenic design, renderings, walkthrough video, and COVID-era documentation for UTEP's first Department of
+  Theatre and Dance production during the pandemic.
+seoTitle: Lysistrata Outdoor Scenic Design | Experiential Design | Brandon PT Davis
 seoDescription: >-
-  A drafting and documentation package created to support staging clarity and evolving production requirements during
-  COVID-era planning.
+  Outdoor scenic design for Lysistrata at UTEP in 2021, including renderings, walkthrough video, and COVID-era
+  documentation for the department's first pandemic production.
 cover:
-  asset: portfolio/general/2026/02/design-drafting-lysistrata-2-0658.webp
-  alt: Lysistrata COVID Documentation
+  asset: assets/projects/experiential/lysistrata-covid-documentation/lysistrata-utep-courtyard-rendering.jpeg
+  alt: Outdoor courtyard rendering for Lysistrata at UTEP
 mediaTypes:
+  - rendering
   - technical-drawing
 updatedAt: '2026-02-23T09:28:17.949Z'

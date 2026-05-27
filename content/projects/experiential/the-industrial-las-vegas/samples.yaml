@@ -1,0 +1,22 @@
+- slug: the-industrial-walkthrough-1
+  category: live-events
+  categoryLabel: Live Events
+  title: The Industrial Walkthrough 1
+  description: >-
+    Walkthrough video for The Industrial, a Las Vegas event space, created through Brandon PT Davis's work with Adaptive
+    Design Services.
+  asset: https://i.ytimg.com/vi/8SG_gjUUU2A/hqdefault.jpg
+  alt: The Industrial Las Vegas event space walkthrough video thumbnail
+  videoUrl: https://www.youtube.com/watch?v=8SG_gjUUU2A
+  gallery: []
+- slug: the-industrial-walkthrough-2
+  category: live-events
+  categoryLabel: Live Events
+  title: The Industrial Walkthrough 2
+  description: >-
+    Second walkthrough video for The Industrial, showing the Las Vegas event space as a spatial and guest-experience
+    environment.
+  asset: https://i.ytimg.com/vi/bhsj4iqxmU0/hqdefault.jpg
+  alt: Second walkthrough video thumbnail for The Industrial Las Vegas event space
+  videoUrl: https://www.youtube.com/watch?v=bhsj4iqxmU0
+  gallery: []

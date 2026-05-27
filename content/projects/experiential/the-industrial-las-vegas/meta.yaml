@@ -1,0 +1,21 @@
+type: project
+discipline: experiential
+slug: the-industrial-las-vegas
+title: The Industrial Las Vegas
+status: published
+featured: false
+year: 2024
+month: 7
+excerpt: >-
+  Two walkthrough videos for The Industrial, a Las Vegas event space, created through my work with Adaptive Design
+  Services in July 2024.
+seoTitle: The Industrial Las Vegas | Experiential Design | Brandon PT Davis
+seoDescription: >-
+  Walkthrough videos for The Industrial, a Las Vegas event space, created through Brandon PT Davis's work with Adaptive
+  Design Services in July 2024.
+cover:
+  asset: https://i.ytimg.com/vi/8SG_gjUUU2A/hqdefault.jpg
+  alt: The Industrial Las Vegas event space walkthrough video thumbnail
+mediaTypes:
+  - live-events
+updatedAt: '2024-07-01T12:00:00.000Z'

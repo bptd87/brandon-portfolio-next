@@ -13,6 +13,7 @@ type ScenicRenderingGalleryProps = {
   onOpen: (mediaId: string) => void;
   visibleCount?: number;
   squareItems?: boolean;
+  containItems?: boolean;
 };
 
 export default function ScenicRenderingGallery({
@@ -20,6 +21,7 @@ export default function ScenicRenderingGallery({
   onOpen,
   visibleCount = 2,
   squareItems = false,
+  containItems = false,
 }: ScenicRenderingGalleryProps) {
   const [startIndex, setStartIndex] = useState(0);
   const canGoPrev = startIndex > 0;
@@ -27,6 +29,7 @@ export default function ScenicRenderingGallery({
   const canGoNext = startIndex < maxStart;
   const visibleItems = items.slice(startIndex, startIndex + visibleCount);
   const showControls = items.length > visibleCount;
+  const gridClass = visibleCount >= 4 ? "md:grid-cols-2" : visibleCount >= 3 ? "md:grid-cols-3" : "md:grid-cols-2";
 
   return (
     <div className="space-y-5">
@@ -52,7 +55,7 @@ export default function ScenicRenderingGallery({
           </button>
         </div>
       ) : null}
-      <div className={`grid gap-6 ${visibleCount >= 3 ? "md:grid-cols-3" : "md:grid-cols-2"}`}>
+      <div className={`grid gap-6 ${gridClass}`}>
         {visibleItems.map((item) => (
           <figure key={item.id} className="space-y-3">
             <button
@@ -60,12 +63,20 @@ export default function ScenicRenderingGallery({
               onClick={() => onOpen(item.id)}
               className="block w-full text-left"
             >
-              <div className={squareItems ? "aspect-square overflow-hidden" : ""}>
+              <div
+                className={
+                  squareItems
+                    ? "aspect-square overflow-hidden"
+                    : containItems
+                      ? "flex aspect-[3/2] items-center justify-center overflow-hidden rounded-[1.5rem] bg-black"
+                      : ""
+                }
+              >
                 <img
                   src={item.imageUrl}
                   alt={item.altText}
-                  className={`block w-full object-cover transition-transform duration-500 hover:scale-[1.01] ${
-                    squareItems ? "h-full" : ""
+                  className={`block w-full transition-transform duration-500 hover:scale-[1.01] ${
+                    squareItems ? "h-full object-cover" : containItems ? "h-full object-contain" : "object-cover"
                   }`}
                 />
               </div>

@@ -1377,6 +1377,38 @@ export const generatedExperientialProcessGallery = [
     "images": []
   },
   {
+    "id": 9020,
+    "category": "live-events",
+    "imageUrl": "https://i.ytimg.com/vi/8SG_gjUUU2A/hqdefault.jpg",
+    "videoUrl": "https://www.youtube.com/watch?v=8SG_gjUUU2A",
+    "altText": "The Industrial Las Vegas event space walkthrough video thumbnail",
+    "displayTitle": "The Industrial Walkthrough 1",
+    "description": "Walkthrough video for The Industrial, a Las Vegas event space, created through Brandon PT Davis's work with Adaptive Design Services.",
+    "sortOrder": 1,
+    "active": true,
+    "projectId": 9020,
+    "year": 2024,
+    "month": 7,
+    "createdAt": "2024-07-01T12:00:00.000Z",
+    "images": []
+  },
+  {
+    "id": 9021,
+    "category": "live-events",
+    "imageUrl": "https://i.ytimg.com/vi/bhsj4iqxmU0/hqdefault.jpg",
+    "videoUrl": "https://www.youtube.com/watch?v=bhsj4iqxmU0",
+    "altText": "Second walkthrough video thumbnail for The Industrial Las Vegas event space",
+    "displayTitle": "The Industrial Walkthrough 2",
+    "description": "Second walkthrough video for The Industrial, showing the Las Vegas event space as a spatial and guest-experience environment.",
+    "sortOrder": 2,
+    "active": true,
+    "projectId": 9020,
+    "year": 2024,
+    "month": 7,
+    "createdAt": "2024-07-01T12:00:00.000Z",
+    "images": []
+  },
+  {
     "id": 12,
     "category": "live-events",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771290240875-toyota-gold-cup-final-29-7a55189c.png",
@@ -1641,6 +1673,53 @@ export const generatedExperientialProcessGallery = [
     ]
   },
   {
+    "id": 9017,
+    "category": "rendering",
+    "imageUrl": "/assets/projects/experiential/lysistrata-covid-documentation/lysistrata-utep-courtyard-rendering.jpeg",
+    "videoUrl": "https://www.youtube.com/watch?v=ZjGy_3Ipk_w",
+    "altText": "Outdoor courtyard scenic rendering for Lysistrata at UTEP",
+    "displayTitle": "Lysistrata Outdoor Renderings",
+    "description": "Renderings and walkthrough video for the outdoor UTEP production of Lysistrata, showing the Fox Fine Arts courtyard as a scenic environment during COVID-era production planning.",
+    "sortOrder": 1,
+    "active": true,
+    "projectId": 14,
+    "year": 2021,
+    "month": 4,
+    "createdAt": "2021-04-01T12:00:00.000Z",
+    "images": [
+      {
+        "id": 90170,
+        "imageUrl": "/assets/projects/experiential/lysistrata-covid-documentation/lysistrata-utep-courtyard-rendering.jpeg",
+        "videoUrl": null,
+        "altText": "Outdoor courtyard scenic rendering for Lysistrata at UTEP",
+        "caption": "Fox Fine Arts courtyard rendering for the outdoor Lysistrata production.",
+        "title": "Fox Fine Arts courtyard rendering",
+        "sortOrder": 0,
+        "imageType": "rendering"
+      },
+      {
+        "id": 90171,
+        "imageUrl": "/assets/projects/experiential/lysistrata-covid-documentation/lysistrata-utep-statue-rendering.jpeg",
+        "videoUrl": null,
+        "altText": "Statue courtyard scenic rendering for Lysistrata at UTEP",
+        "caption": "Rendering study showing the courtyard statuary and outdoor performance environment.",
+        "title": "Courtyard statue rendering",
+        "sortOrder": 1,
+        "imageType": "rendering"
+      },
+      {
+        "id": 90172,
+        "imageUrl": "/assets/projects/experiential/lysistrata-covid-documentation/lysistrata-utep-gallery-rendering.jpeg",
+        "videoUrl": null,
+        "altText": "Upper gallery scenic rendering for Lysistrata at UTEP",
+        "caption": "Rendering study using the Fox Fine Arts architecture and upper gallery as part of the scenic world.",
+        "title": "Fox Fine Arts gallery rendering",
+        "sortOrder": 2,
+        "imageType": "rendering"
+      }
+    ]
+  },
+  {
     "id": 17,
     "category": "technical-drawing",
     "imageUrl": "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/generated-portfolios/1771838895784-design_drafting_lysistrata_3-8a5436de.jpg",
@@ -1692,6 +1771,63 @@ export const generatedExperientialProcessGallery = [
         "caption": "",
         "title": "",
         "sortOrder": 0,
+        "imageType": "rendering"
+      }
+    ]
+  },
+  {
+    "id": 9018,
+    "category": "rendering",
+    "imageUrl": "/assets/projects/experiential/new-swan-venue-documentation/new-swan-rendering-stage-entry.jpeg",
+    "videoUrl": null,
+    "altText": "New Swan rendering from the stage entry",
+    "displayTitle": "New Swan Renderings",
+    "description": "Renderings for New Swan, studying the open-air venue, audience relationship, seating, light, and architectural frame as a performance environment.",
+    "sortOrder": 2,
+    "active": true,
+    "projectId": 15,
+    "year": 2020,
+    "createdAt": "2026-05-27T00:00:00.000Z",
+    "slug": "new-swan-renderings",
+    "images": [
+      {
+        "id": 90180,
+        "imageUrl": "/assets/projects/experiential/new-swan-venue-documentation/new-swan-rendering-stage-entry.jpeg",
+        "videoUrl": null,
+        "altText": "New Swan rendering from the stage entry",
+        "caption": "",
+        "title": "",
+        "sortOrder": 0,
+        "imageType": "rendering"
+      },
+      {
+        "id": 90181,
+        "imageUrl": "/assets/projects/experiential/new-swan-venue-documentation/new-swan-rendering-overhead.jpeg",
+        "videoUrl": null,
+        "altText": "New Swan overhead rendering of the open-air venue",
+        "caption": "",
+        "title": "",
+        "sortOrder": 1,
+        "imageType": "rendering"
+      },
+      {
+        "id": 90182,
+        "imageUrl": "/assets/projects/experiential/new-swan-venue-documentation/new-swan-rendering-stage-view.jpeg",
+        "videoUrl": null,
+        "altText": "New Swan rendering from the audience bowl",
+        "caption": "",
+        "title": "",
+        "sortOrder": 2,
+        "imageType": "rendering"
+      },
+      {
+        "id": 90183,
+        "imageUrl": "/assets/projects/experiential/new-swan-venue-documentation/new-swan-rendering-seating-detail.jpeg",
+        "videoUrl": null,
+        "altText": "New Swan rendering of the seating and rail detail",
+        "caption": "",
+        "title": "",
+        "sortOrder": 3,
         "imageType": "rendering"
       }
     ]

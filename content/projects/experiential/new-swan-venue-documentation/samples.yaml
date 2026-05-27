@@ -1,3 +1,21 @@
+- slug: new-swan-renderings
+  category: rendering
+  categoryLabel: Rendering
+  title: New Swan Renderings
+  description: >-
+    Renderings for New Swan, studying the open-air venue, audience relationship, seating, light, and architectural
+    frame as a performance environment.
+  asset: assets/projects/experiential/new-swan-venue-documentation/new-swan-rendering-stage-entry.jpeg
+  alt: New Swan rendering from the stage entry
+  gallery:
+    - asset: assets/projects/experiential/new-swan-venue-documentation/new-swan-rendering-stage-entry.jpeg
+      alt: New Swan rendering from the stage entry
+    - asset: assets/projects/experiential/new-swan-venue-documentation/new-swan-rendering-overhead.jpeg
+      alt: New Swan overhead rendering of the open-air venue
+    - asset: assets/projects/experiential/new-swan-venue-documentation/new-swan-rendering-stage-view.jpeg
+      alt: New Swan rendering from the audience bowl
+    - asset: assets/projects/experiential/new-swan-venue-documentation/new-swan-rendering-seating-detail.jpeg
+      alt: New Swan rendering of the seating and rail detail
 - slug: new-swan-venue-documentation
   category: technical-drawing
   categoryLabel: Technical Drawing

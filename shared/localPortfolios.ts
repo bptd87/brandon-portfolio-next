@@ -459,6 +459,7 @@ export type LocalExperientialProject = {
   month: number | null;
   updatedAt: string | null;
   coverImageUrl: string;
+  coverVideoUrl?: string;
   coverAltText: string;
   mediaTypes: LocalExperientialCategory[];
   samples: LocalExperientialSample[];
@@ -630,13 +631,29 @@ const EXPERIENTIAL_SAMPLE_OVERRIDES: Record<
     description:
       "Promotional concept imagery for First Bank Lollipops, designed to translate a campaign idea into a clear visual moment.",
   },
+  "the-industrial-walkthrough-1": {
+    description:
+      "Walkthrough video for The Industrial, a Las Vegas event space, created through Brandon PT Davis's work with Adaptive Design Services.",
+  },
+  "the-industrial-walkthrough-2": {
+    description:
+      "Second walkthrough video for The Industrial, showing the Las Vegas event space as a spatial and guest-experience environment.",
+  },
   "park-and-shop-technical-drawing": {
     description:
       "Drafting sheets for Park & Shop, showing the documentation layer behind fixture layout, elevations, and fabrication-ready coordination.",
   },
+  "lysistrata-outdoor-renderings": {
+    description:
+      "Renderings and walkthrough video for the outdoor UTEP production of Lysistrata, showing the Fox Fine Arts courtyard as a scenic environment during COVID-era production planning.",
+  },
   "lysistrata-covid-documentation": {
     description:
-      "Documentation set for Lysistrata during COVID-era production planning, focused on adaptable staging information, layout clarity, and evolving requirements.",
+      "COVID-era documentation set for the outdoor UTEP production of Lysistrata, focused on staging clarity, layout information, and evolving pandemic production requirements.",
+  },
+  "new-swan-renderings": {
+    description:
+      "Renderings for New Swan, studying the open-air venue, audience relationship, seating, light, and architectural frame as a performance environment.",
   },
   "new-swan-venue-documentation": {
     description:
@@ -654,6 +671,9 @@ type LocalExperientialProjectDefinition = {
   sampleSlugs: string[];
   summary: string;
   heroSummary?: string;
+  coverImageUrl?: string;
+  coverVideoUrl?: string;
+  coverAltText?: string;
   sections: LocalExperientialProjectSection[];
   seoTitle?: string;
   seoDescription?: string;
@@ -704,6 +724,36 @@ const EXPERIENTIAL_PROJECT_DEFINITIONS: LocalExperientialProjectDefinition[] = [
         paragraphs: [
           "Live imagery completes the story by showing the work in actual venue conditions. Instead of treating renderings and event photos as separate portfolio buckets, the page frames them as parts of the same production arc.",
           "That project-by-project structure makes the experiential work read more like a design case study, which is the right lens for clients comparing concept intent with built outcome.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "the-industrial-las-vegas",
+    title: "The Industrial Las Vegas",
+    sampleSlugs: ["the-industrial-walkthrough-1", "the-industrial-walkthrough-2"],
+    summary:
+      "Two walkthrough videos for The Industrial, a Las Vegas event space, created through my work with Adaptive Design Services in July 2024.",
+    heroSummary:
+      "A July 2024 walkthrough-video project for The Industrial in Las Vegas, created through my work with Adaptive Design Services.",
+    coverImageUrl: "https://i.ytimg.com/vi/8SG_gjUUU2A/hqdefault.jpg",
+    coverVideoUrl: "https://www.youtube.com/watch?v=8SG_gjUUU2A",
+    coverAltText: "The Industrial Las Vegas event space walkthrough video thumbnail",
+    year: 2024,
+    month: 7,
+    sections: [
+      {
+        heading: "Walkthrough Documentation",
+        paragraphs: [
+          "The project is presented through two walkthrough videos of The Industrial, an event space in Las Vegas. The videos document the venue as a spatial experience rather than a still portfolio object.",
+          "Because this came through my work with Adaptive Design Services, the page keeps the credit and context clear while letting the walkthroughs carry the project visually.",
+        ],
+      },
+      {
+        heading: "Venue Experience",
+        paragraphs: [
+          "The value of the walkthrough format is movement: scale, circulation, lighting, and transitions are easier to understand when the viewer can move through the room.",
+          "For an experiential portfolio, that makes the project a useful counterpoint to rendering and drafting work because it shows how the space reads as a guest-facing environment.",
         ],
       },
     ],
@@ -804,49 +854,62 @@ const EXPERIENTIAL_PROJECT_DEFINITIONS: LocalExperientialProjectDefinition[] = [
   },
   {
     slug: "lysistrata-covid-documentation",
-    title: "Lysistrata COVID Documentation",
-    sampleSlugs: ["lysistrata-covid-documentation"],
-    year: 2024,
+    title: "Lysistrata Outdoor Scenic Design",
+    sampleSlugs: ["lysistrata-outdoor-renderings", "lysistrata-covid-documentation"],
+    year: 2021,
     month: 4,
     summary:
-      "A drafting and documentation package created to support staging clarity and evolving production requirements during COVID-era planning.",
+      "Outdoor scenic design, renderings, walkthrough video, and COVID-era documentation for UTEP's first Department of Theatre and Dance production during the pandemic.",
+    heroSummary:
+      "UTEP, 2021. Outdoor scenic design for the department's first pandemic-era production.",
+    coverImageUrl: "https://i.ytimg.com/vi/ZjGy_3Ipk_w/maxresdefault.jpg",
+    coverVideoUrl: "https://www.youtube.com/watch?v=ZjGy_3Ipk_w",
+    coverAltText: "Lysistrata outdoor scenic design walkthrough video thumbnail",
+    seoTitle: "Lysistrata Outdoor Scenic Design | Experiential Design | Brandon PT Davis",
+    seoDescription:
+      "Outdoor scenic design for Lysistrata at UTEP in 2021, including renderings, walkthrough video, and COVID-era documentation for the department's first pandemic production.",
     sections: [
       {
-        heading: "Documentation Under Constraint",
+        heading: "Outdoor Theatre Under Constraint",
         paragraphs: [
-          "This work is rooted in technical clarity. The drawings serve as communication tools for changing requirements, helping teams track layout decisions and production needs in a period where planning conditions were unusually fluid.",
-          "Framed as a project page, the documentation can carry context and intent rather than appearing as an isolated sheet set.",
+          "Outdoor scenic design for UTEP's first Department of Theatre and Dance production during the COVID pandemic.",
+          "The courtyard setting became part of the design problem. The architecture, sunlight, audience movement, and pandemic-era planning constraints all shaped how the world of the production could be imagined, drawn, and communicated.",
         ],
       },
       {
-        heading: "Why It Belongs Here",
+        heading: "Rendering, Walkthrough, Documentation",
         paragraphs: [
-          "Technical drawing samples deserve the same editorial framing as rendering or scenic work. The design value is not just in the sheet itself, but in the problem it helps a team solve.",
-          "Presenting this as a project makes that problem-solving role legible to clients who need coordination, not just images.",
+          "Renderings and walkthrough video for the Fox Fine Arts courtyard as a performance environment.",
+          "The COVID documentation still matters because it records the coordination layer behind the scenic idea. It is not separate from the design; it is part of how the design survived the conditions of that production moment.",
         ],
       },
     ],
   },
   {
     slug: "new-swan-venue-documentation",
-    title: "New Swan Venue Documentation",
-    sampleSlugs: ["new-swan-venue-documentation"],
+    title: "New Swan Renderings",
+    sampleSlugs: ["new-swan-renderings", "new-swan-venue-documentation"],
     year: 2020,
     summary:
-      "Venue documentation for New Swan, capturing site conditions and technical information needed to support planning, coordination, and installation decisions.",
+      "Renderings and venue documentation for New Swan, showing the open-air performance space as both image and technical environment.",
+    heroSummary:
+      "Renderings and venue documentation for an open-air performance environment.",
+    seoTitle: "New Swan Renderings | Experiential Design | Brandon PT Davis",
+    seoDescription:
+      "Renderings and venue documentation for New Swan, showing the open-air performance space as both image and technical environment.",
     sections: [
       {
-        heading: "Recording Existing Conditions",
+        heading: "Venue Study",
         paragraphs: [
-          "This project centers on clarity of information. Venue documentation supports downstream planning by turning existing conditions into something teams can actually work from.",
-          "The value of the page comes from pairing that documentation with a concise explanation of what the material is for and how it supports production decisions.",
+          "Renderings of the New Swan venue as an open-air performance environment.",
+          "The views study audience relationship, seating, light, circulation, and the architectural frame of the space.",
         ],
       },
       {
-        heading: "Editorial Framing for Technical Work",
+        heading: "Documentation",
         paragraphs: [
-          "Grouped inside an article-like project page, the drawings read as part of a process rather than as isolated technical artifacts.",
-          "That framing aligns the experiential portfolio with the rest of the site, where projects are presented as complete stories supported by images, text, and navigation structure.",
+          "Venue documentation records the technical information behind the space.",
+          "The documentation sits with the renderings so the project reads as both image and working environment.",
         ],
       },
     ],
@@ -1080,8 +1143,8 @@ function buildLocalExperientialProjects(): LocalExperientialProject[] {
       const mediaTypes = (["live-events", "rendering", "technical-drawing"] as LocalExperientialCategory[]).filter(
         (category) => orderedSamples.some((sample) => sample.category === category)
       );
-      const coverImageUrl = leadSample ? getLocalExperientialLeadImage(leadSample) : "";
-      const coverAltText = String(leadSample?.altText || leadSample?.displayTitle || definition.title).trim();
+      const coverImageUrl = definition.coverImageUrl || (leadSample ? getLocalExperientialLeadImage(leadSample) : "");
+      const coverAltText = String(definition.coverAltText || leadSample?.altText || leadSample?.displayTitle || definition.title).trim();
       const seoDescription = definition.seoDescription || definition.summary;
 
       return {
@@ -1095,6 +1158,7 @@ function buildLocalExperientialProjects(): LocalExperientialProject[] {
         month: derivedMonth,
         updatedAt: latestUpdatedAt,
         coverImageUrl,
+        coverVideoUrl: definition.coverVideoUrl,
         coverAltText,
         mediaTypes,
         samples: orderedSamples,

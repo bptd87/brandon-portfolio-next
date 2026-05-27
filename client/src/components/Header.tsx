@@ -123,7 +123,15 @@ function DesktopMenuPanel({
   );
 }
 
-function BrandLink({ centered = false, tone = "dark" }: { centered?: boolean; tone?: "dark" | "light" }) {
+function BrandLink({
+  centered = false,
+  descriptor = "SCENIC DESIGN",
+  tone = "dark",
+}: {
+  centered?: boolean;
+  descriptor?: string;
+  tone?: "dark" | "light";
+}) {
   const isLight = tone === "light";
 
   return (
@@ -140,7 +148,7 @@ function BrandLink({ centered = false, tone = "dark" }: { centered?: boolean; to
           isLight ? "text-black/48" : "text-white/46"
         }`}
       >
-        SCENIC DESIGN
+        {descriptor}
       </span>
     </Link>
   );
@@ -183,6 +191,11 @@ export default function Header() {
   const useLightChrome = (isEditorialRoute && !isArticleDetailRoute) || isProfileLightRoute;
   const useWhiteLightChrome = isContactRoute || isInfoRoute || location === "/studio" || /^\/studio\/apps(?:\/|$)/.test(location);
   const useImmersiveChrome = isHomeRoute && !desktopMenuOpen && !mobileMenuOpen && !searchOpen;
+  const brandDescriptor = /^\/projects\/experiential(?:\/|$)/.test(location)
+    ? "EXPERIENTIAL DESIGN"
+    : /^\/projects\/rendering(?:\/|$)/.test(location)
+      ? "RENDERING"
+      : "SCENIC DESIGN";
 
   const headerRef = useRef<HTMLElement>(null);
 
@@ -429,7 +442,7 @@ export default function Header() {
               </button>
             </div>
 
-            <BrandLink centered tone={useLightChrome ? "light" : "dark"} />
+            <BrandLink centered descriptor={brandDescriptor} tone={useLightChrome ? "light" : "dark"} />
 
             <div className="hidden justify-end lg:flex">
               <div className="flex items-center gap-4">

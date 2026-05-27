@@ -14,6 +14,11 @@ import {
   RETIRED_LEARNING_ARTICLE_SLUG_SET,
 } from "@shared/learningPortal";
 import { getLocalArticles } from "@shared/localArticles";
+import {
+  getLocalExperientialProjectHref,
+  getLocalExperientialProjects,
+  getLocalRenderingGallery,
+} from "@shared/localPortfolios";
 import { getLocalTutorials } from "@shared/localStudio";
 import type { ScenicProjectSummary } from "@shared/scenicProjectSummaries";
 import {
@@ -38,6 +43,14 @@ type PublishCard = {
   timestamp: number;
 };
 
+type HomeRenderingRailCard = {
+  href: string;
+  image: string;
+  imageAlt: string;
+  title: string;
+  meta: string;
+};
+
 const getPublishTimestamp = (...dates: Array<string | Date | null | undefined>) =>
   Math.max(
     ...dates.map(date => {
@@ -45,6 +58,26 @@ const getPublishTimestamp = (...dates: Array<string | Date | null | undefined>) 
       return Number.isFinite(time) ? time : 0;
     })
   );
+
+const getProjectTimestamp = (input: {
+  updatedAt?: string | null;
+  createdAt?: string | null;
+  year?: number | null;
+  month?: number | null;
+}) => {
+  if (input.year) {
+    const monthIndex = input.month ? Math.max(0, Math.min(11, input.month - 1)) : 6;
+    return new Date(input.year, monthIndex, 1).getTime();
+  }
+
+  const explicitDate = input.updatedAt || input.createdAt;
+  if (explicitDate) {
+    const timestamp = new Date(explicitDate).getTime();
+    if (Number.isFinite(timestamp)) return timestamp;
+  }
+
+  return 0;
+};
 
 const cleanPublishTitle = (title: string) =>
   title
@@ -191,7 +224,7 @@ function HomeIntro() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a
-              href="#portfolio-index"
+              href="/projects"
               className="inline-flex h-11 items-center justify-center rounded-full bg-[#9d4edd] px-5 font-sans text-[0.98rem] font-medium tracking-[-0.02em] text-white transition-colors hover:bg-[#c77dff]"
             >
               View portfolio
@@ -499,6 +532,137 @@ function UpcomingSection() {
   );
 }
 
+function HomeExperientialAndRenderingSection() {
+  const experientialProjects = getLocalExperientialProjects()
+    .filter(project => project.coverImageUrl)
+    .sort(
+      (a, b) =>
+        getProjectTimestamp({ updatedAt: b.updatedAt, year: b.year, month: b.month }) -
+        getProjectTimestamp({ updatedAt: a.updatedAt, year: a.year, month: a.month })
+    )
+    .slice(0, 4);
+  const renderingRailCards: HomeRenderingRailCard[] = getLocalRenderingGallery()
+    .map(item => ({
+      href: item.project?.slug ? `/projects/rendering/${item.project.slug}` : "",
+      image: item.project?.coverImageUrl || "",
+      imageAlt: item.altText || item.project?.title || "Scenic rendering by Brandon PT Davis",
+      title: item.displayTitle || item.project?.title || "Rendering study",
+      meta: [item.project?.client, item.project?.year].filter(Boolean).join(" / "),
+    }))
+    .filter(card => card.href && card.image)
+    .filter((card, index, list) => list.findIndex(candidate => candidate.href === card.href) === index)
+    .slice(0, 10);
+  const movingRenderingCards = [...renderingRailCards, ...renderingRailCards];
+
+  if (!experientialProjects.length && !renderingRailCards.length) return null;
+
+  return (
+    <section className="border-t border-black/10 bg-[#f1f0ec] py-12 text-black md:py-18">
+      <style>
+        {`
+          @keyframes home-rendering-rail {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+          }
+        `}
+      </style>
+
+      {experientialProjects.length ? (
+        <>
+          <div className="px-[clamp(1.5rem,5vw,6rem)]">
+            <div className="mb-6 grid gap-5 md:grid-cols-[minmax(0,0.72fr)_auto] md:items-end">
+            <div className="max-w-3xl">
+              <p className="mb-4 section-kicker text-black/42">
+                Experiential + Rendering Portfolio
+              </p>
+              <h2 className="max-w-[13ch] bg-gradient-to-r from-[#0a4cff] via-[#7b2cbf] to-[#c77dff] bg-clip-text font-sans text-[clamp(2.35rem,4.75vw,4.95rem)] font-medium leading-[1.02] tracking-[-0.055em] text-transparent">
+                Spatial work and visual studies.
+              </h2>
+            </div>
+            <div className="flex flex-wrap gap-3 md:justify-self-end">
+              <a
+                href="/projects/experiential"
+                className="inline-flex h-10 w-fit items-center justify-center rounded-full border border-[#9d4edd]/72 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-[#7b2cbf] transition-colors hover:border-[#7b2cbf] hover:text-black"
+              >
+                View experiential
+              </a>
+              <a
+                href="/projects/rendering"
+                className="inline-flex h-10 w-fit items-center justify-center rounded-full border border-[#9d4edd]/42 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-[#7b2cbf]/76 transition-colors hover:border-[#7b2cbf] hover:text-black"
+              >
+                View renderings
+              </a>
+            </div>
+          </div>
+          </div>
+
+          <div className="grid gap-3 px-[clamp(1rem,2vw,1.5rem)] md:grid-cols-2">
+            {experientialProjects.map((project, index) => (
+              <a
+                key={project.slug}
+                href={getLocalExperientialProjectHref(project)}
+                className="group relative block overflow-hidden bg-black ring-1 ring-black/[0.06] transition duration-300 hover:-translate-y-1"
+              >
+                <div className="site-media-square aspect-video overflow-hidden">
+                  <img
+                    src={project.coverImageUrl || ""}
+                    alt={project.coverAltText || `${project.title} experiential design by Brandon PT Davis`}
+                    className="site-media-square h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]"
+                    loading={index < 2 ? "eager" : "lazy"}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0.18)_48%,rgba(0,0,0,0.82)_100%)]" />
+                <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
+                  <p className="font-sans text-[0.74rem] font-semibold tracking-[-0.015em] text-white/68">
+                    Experiential Design
+                  </p>
+                  <h3 className="mt-3 max-w-[15ch] font-sans text-[clamp(1.55rem,2.4vw,2.45rem)] font-medium leading-[0.96] tracking-[-0.055em] text-white">
+                    {project.title}
+                  </h3>
+                </div>
+              </a>
+            ))}
+          </div>
+        </>
+      ) : null}
+
+      {renderingRailCards.length ? (
+        <div className={experientialProjects.length ? "mt-3" : ""}>
+          <div className="overflow-hidden">
+            <div className="flex w-max gap-3 px-[clamp(1rem,2vw,1.5rem)] motion-safe:animate-[home-rendering-rail_52s_linear_infinite] motion-safe:hover:[animation-play-state:paused]">
+              {movingRenderingCards.map((card, index) => (
+                <a
+                  key={`${card.href}-${index}`}
+                  href={card.href}
+                  className="group relative block w-[min(24rem,72vw)] shrink-0 overflow-hidden bg-black ring-1 ring-black/[0.06] md:w-[29rem]"
+                >
+                  <div className="site-media-square aspect-video overflow-hidden">
+                    <img
+                      src={card.image}
+                      alt={card.imageAlt}
+                      className="site-media-square h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]"
+                      loading={index < 4 ? "eager" : "lazy"}
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0.18)_48%,rgba(0,0,0,0.78)_100%)]" />
+                  <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
+                    <p className="font-sans text-[0.74rem] font-semibold tracking-[-0.015em] text-white/62">
+                      Rendering
+                    </p>
+                    <h3 className="mt-2 max-w-[14ch] font-sans text-[1.22rem] font-medium leading-[0.96] tracking-[-0.045em] text-white md:text-[1.35rem]">
+                      {card.title}
+                    </h3>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </section>
+  );
+}
+
 function PublishSection() {
   const publishCards = getHomePublishCards();
   const cardsRef = useRef<HTMLDivElement | null>(null);
@@ -691,6 +855,7 @@ export default function Home({
             <PortfolioCategoryRows projects={projects} />
             <BrandonSection />
             <UpcomingSection />
+            <HomeExperientialAndRenderingSection />
             <PublishSection />
             <HomeCta />
             <div className="bg-black">
