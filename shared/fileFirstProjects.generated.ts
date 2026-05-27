@@ -1520,7 +1520,7 @@ export const fileFirstScenicProjectFieldsBySlug = {
   "links": [
     {
       "label": "Mabelle Reynoso Play Page",
-      "url": "https://www.mabellereynoso.com/loteria-game-on"
+      "url": "https://www.mabellereynoso.com/loter%C3%ADa-game-on"
     }
   ],
   "updatedAt": "2026-02-12T15:03:56+00:00",
