@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Box, CalendarDays, ChevronLeft, ChevronRight } from "lucide-react";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -21,10 +21,7 @@ import {
 } from "@shared/localPortfolios";
 import { getLocalTutorials } from "@shared/localStudio";
 import type { ScenicProjectSummary } from "@shared/scenicProjectSummaries";
-import {
-  formatUpcomingDateRange,
-  upcomingProductions,
-} from "@shared/upcomingProductions";
+import { upcomingProductions } from "@shared/upcomingProductions";
 
 const HOME_HERO_IMAGE_URL =
   "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/migrated/supabase/scenic-projects/project-90051-gallery-150232-69e3ddad.webp";
@@ -377,7 +374,6 @@ function PortfolioCategoryRows({
           </div>
         ) : null}
       </div>
-
     </section>
   );
 }
@@ -396,9 +392,7 @@ function BrandonSection() {
 
       <div className="relative flex min-h-[82svh] items-center px-[clamp(1.5rem,5vw,6rem)] py-20 md:py-28">
         <div className="max-w-[48rem]">
-          <p className="mb-5 section-kicker text-black/48">
-            Profile
-          </p>
+          <p className="mb-5 section-kicker text-black/48">Profile</p>
           <h2 className="font-sans text-[clamp(2.4rem,5.2vw,5.8rem)] font-medium leading-[0.92] tracking-[-0.07em] text-black">
             Scenic design as atmosphere, architecture, and human behavior.
           </h2>
@@ -414,7 +408,7 @@ function BrandonSection() {
               href="/about"
               className="inline-flex h-10 items-center justify-center rounded-full bg-[#9d4edd] px-5 text-sm font-medium text-white transition-colors hover:bg-[#c77dff]"
             >
-            About Brandon
+              About Brandon
             </a>
             <a
               href="/resume"
@@ -430,134 +424,204 @@ function BrandonSection() {
 }
 
 function UpcomingSection() {
-  const nextProductions = upcomingProductions.slice(0, 4);
-  const cardsRef = useRef<HTMLDivElement | null>(null);
-  const scrollCards = (direction: "previous" | "next") => {
-    cardsRef.current?.scrollBy({
-      left: direction === "next" ? 620 : -620,
-      behavior: "smooth",
-    });
-  };
+  const nextProductions = upcomingProductions;
+  const [activeProductionIndex, setActiveProductionIndex] = useState(0);
+  const [productionWheelProgress, setProductionWheelProgress] = useState(0);
+  const [productionWheelOpacity, setProductionWheelOpacity] = useState(1);
+  const [productionWheelSpacing, setProductionWheelSpacing] = useState(148);
+  const [productionWheelPin, setProductionWheelPin] = useState<
+    "before" | "fixed" | "after"
+  >("before");
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const wheelStageRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const updateWheel = () => {
+      const section = sectionRef.current;
+      const stage = wheelStageRef.current;
+      if (!section || !stage) return;
+
+      const rect = section.getBoundingClientRect();
+      const scrollableDistance = Math.max(
+        1,
+        section.offsetHeight - window.innerHeight
+      );
+      const progress = Math.min(1, Math.max(0, -rect.top / scrollableDistance));
+      const exactIndex = progress * nextProductions.length;
+      const loopedIndex =
+        ((exactIndex % nextProductions.length) + nextProductions.length) %
+        nextProductions.length;
+      const exitFade = progress > 0.82 ? Math.max(0, (1 - progress) / 0.18) : 1;
+
+      setProductionWheelProgress(loopedIndex);
+      setProductionWheelOpacity(exitFade);
+      setActiveProductionIndex(
+        Math.round(loopedIndex) % nextProductions.length
+      );
+      setProductionWheelSpacing(
+        Math.min(200, Math.max(118, stage.clientHeight * 0.21))
+      );
+      setProductionWheelPin(
+        rect.top > 0
+          ? "before"
+          : rect.bottom < window.innerHeight
+            ? "after"
+            : "fixed"
+      );
+    };
+
+    updateWheel();
+    window.addEventListener("scroll", updateWheel, { passive: true });
+    window.addEventListener("resize", updateWheel);
+    return () => {
+      window.removeEventListener("scroll", updateWheel);
+      window.removeEventListener("resize", updateWheel);
+    };
+  }, [nextProductions.length]);
 
   return (
-    <section className="bg-[#f1f0ec] pb-20 pt-16 md:pb-28 md:pt-24">
-      <div className="px-[clamp(1.5rem,5vw,6rem)]">
-        <div className="mb-10 grid gap-6 md:grid-cols-[minmax(0,0.72fr)_auto] md:items-end">
-          <div className="max-w-3xl">
-            <p className="mb-4 text-[clamp(1.05rem,1.35vw,1.22rem)] font-medium leading-none tracking-[-0.04em] text-black/48">
-              Upcoming Productions
-            </p>
-            <h2 className="max-w-[12ch] bg-gradient-to-r from-[#0a4cff] via-[#7b2cbf] to-[#c77dff] bg-clip-text font-sans text-[clamp(2.4rem,5vw,5.3rem)] font-medium leading-[0.94] tracking-[-0.068em] text-transparent">
-              The season ahead.
-            </h2>
-          </div>
-          <a
-            href="/upcoming-productions"
-            className="inline-flex h-10 w-fit items-center justify-center rounded-full border border-[#9d4edd]/72 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-[#7b2cbf] transition-colors hover:border-[#7b2cbf] hover:text-black md:justify-self-end"
-          >
-            View calendar
-          </a>
-        </div>
-      </div>
-
+    <section
+      ref={sectionRef}
+      aria-label="Upcoming productions"
+      className="relative min-h-[520vh] bg-black text-white"
+    >
       <div
-        ref={cardsRef}
-        className="overflow-x-auto px-[clamp(1.5rem,5vw,6rem)] pb-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex h-screen flex-col overflow-hidden bg-black"
+        style={{
+          position: productionWheelPin === "fixed" ? "fixed" : "absolute",
+          top: productionWheelPin === "after" ? "auto" : 0,
+          bottom: productionWheelPin === "after" ? 0 : "auto",
+          left: 0,
+          right: 0,
+          opacity: productionWheelOpacity,
+          transition: "opacity 180ms ease",
+        }}
       >
-        <div className="flex min-w-max gap-5 pr-[clamp(1.5rem,5vw,6rem)]">
-          {nextProductions.map((production, index) => (
-            <a
-              key={production.id}
-              href={`/upcoming-productions/${production.id}`}
-              className="group relative block w-[min(25rem,82vw)] overflow-hidden rounded-[1.7rem] bg-black ring-1 ring-black/[0.04] transition duration-300 hover:-translate-y-1 md:w-[29rem]"
-            >
-              <img
-                src={production.imageUrl}
-                alt={production.imageAlt}
-                loading={index === 0 ? "eager" : "lazy"}
-                className="aspect-square h-full w-full object-cover opacity-[0.92] transition duration-500 group-hover:scale-[1.018] group-hover:opacity-100"
-              />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.24)_46%,rgba(0,0,0,0.82)_100%)]" />
-
-              <div className="absolute inset-0 flex flex-col justify-between p-7 text-white md:p-8">
-                <div>
-                  <p className="text-[0.92rem] font-medium tracking-[-0.02em] text-white/72">
-                    {formatUpcomingDateRange(production)}
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="max-w-[11ch] font-sans text-[clamp(2.15rem,4vw,4rem)] font-medium leading-[0.9] tracking-[-0.08em] text-white">
-                    {production.title}
-                  </h3>
-                  <p className="mt-4 max-w-[25rem] text-[0.98rem] leading-[1.42] tracking-[-0.02em] text-white/72">
-                    {production.subtitle}
-                  </p>
-
-                  <div className="mt-6 flex items-center justify-between gap-4 border-t border-white/22 pt-4">
-                    <span className="min-w-0 truncate text-[0.95rem] font-medium tracking-[-0.02em] text-white/76">
-                      {production.company}
-                    </span>
-                    <ArrowUpRight
-                      className="h-4 w-4 shrink-0 text-white transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                      aria-hidden="true"
-                    />
-                  </div>
-                </div>
-              </div>
-            </a>
-          ))}
+        <div className="pointer-events-none absolute left-1/2 top-0 z-20 w-[min(92vw,48rem)] -translate-x-1/2 px-[clamp(1.5rem,5vw,6rem)] pt-10 text-center md:pt-14">
+          <p className="section-kicker mb-4 text-white">
+            Upcoming Productions
+          </p>
+          <h2 className="mx-auto flex items-center justify-center gap-3 font-sans text-[clamp(2.25rem,4.4vw,4.65rem)] font-medium leading-[1] tracking-[-0.055em] text-white">
+            <CalendarDays
+              className="h-[0.82em] w-[0.82em] shrink-0"
+              strokeWidth={1.65}
+              aria-hidden="true"
+            />
+            <span>The season ahead.</span>
+          </h2>
         </div>
-      </div>
 
-      <div className="-mt-1 flex justify-end gap-3 px-[clamp(1.5rem,5vw,6rem)]">
-        <button
-          type="button"
-          onClick={() => scrollCards("previous")}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/[0.08] text-black/62 transition-colors hover:bg-black hover:text-white"
-          aria-label="Previous upcoming production cards"
+        <div
+          ref={wheelStageRef}
+          className="relative min-h-0 flex-1 overflow-hidden pt-16"
         >
-          <ChevronLeft className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
-        </button>
-        <button
-          type="button"
-          onClick={() => scrollCards("next")}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/[0.12] text-black/72 transition-colors hover:bg-black hover:text-white"
-          aria-label="Next upcoming production cards"
-        >
-          <ChevronRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
-        </button>
+          <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-36 bg-gradient-to-b from-black via-black/92 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-36 bg-gradient-to-t from-black via-black/92 to-transparent" />
+
+          <div
+            className="absolute inset-0"
+            style={{ perspective: "1250px", transformStyle: "preserve-3d" }}
+          >
+            {nextProductions.map((production, index) => {
+              const wheelLength = nextProductions.length;
+              let distance = index - productionWheelProgress;
+              if (distance > wheelLength / 2) distance -= wheelLength;
+              if (distance < -wheelLength / 2) distance += wheelLength;
+
+              const absDistance = Math.abs(distance);
+              const isActive = activeProductionIndex === index;
+              const isVisible = absDistance < 2.86;
+              const scale = Math.max(0.76, 1 - absDistance * 0.075);
+              const scaleY = Math.max(0.42, 1 - absDistance * 0.18);
+              const opacity = isActive
+                ? 1
+                : Math.max(0.1, 0.31 - absDistance * 0.045);
+              const arc = distance * 0.62;
+              const rotateX = distance * -23;
+              const skewX = distance * -5;
+              const translateY = Math.sin(arc) * productionWheelSpacing * 1.26;
+              const translateZ = (Math.cos(arc) - 1) * 320;
+              const isLongTitle = production.title.length > 22;
+              const isMediumTitle = production.title.length > 14;
+
+              return (
+                <a
+                  key={production.id}
+                  href={`/upcoming-productions/${production.id}`}
+                  aria-label={`View ${production.title}`}
+                  className="group absolute left-1/2 top-1/2 flex w-auto max-w-[88vw] items-center justify-center text-center"
+                  style={{
+                    opacity: isVisible ? opacity : 0,
+                    pointerEvents: isVisible ? "auto" : "none",
+                    transform: `translate(-50%, -50%) translateY(${translateY}px) translateZ(${translateZ}px) rotateX(${rotateX}deg) skewX(${skewX}deg) scale(${scale}) scaleY(${scaleY})`,
+                    transformStyle: "preserve-3d",
+                    transition: "opacity 160ms ease",
+                  }}
+                >
+                  <span
+                    className={`whitespace-nowrap font-sans font-medium uppercase leading-[0.78] tracking-[-0.078em] transition-colors duration-300 group-hover:text-white ${
+                      isLongTitle
+                        ? "text-[2.5rem] sm:text-[3.5rem] md:text-[4.7rem] lg:text-[5.8rem] xl:text-[6.6rem]"
+                        : isMediumTitle
+                          ? "text-[3rem] sm:text-[4.1rem] md:text-[5.3rem] lg:text-[6.6rem] xl:text-[7.5rem]"
+                          : "text-[3.45rem] sm:text-[4.9rem] md:text-[6.3rem] lg:text-[8rem] xl:text-[9rem]"
+                    } ${isActive ? "text-white" : "text-white/16"}`}
+                  >
+                    {production.title}
+                  </span>
+                </a>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </section>
   );
 }
-
 function HomeExperientialAndRenderingSection() {
   const experientialProjects = getLocalExperientialProjects()
     .filter(project => project.coverImageUrl)
     .sort(
       (a, b) =>
-        getProjectTimestamp({ updatedAt: b.updatedAt, year: b.year, month: b.month }) -
-        getProjectTimestamp({ updatedAt: a.updatedAt, year: a.year, month: a.month })
+        getProjectTimestamp({
+          updatedAt: b.updatedAt,
+          year: b.year,
+          month: b.month,
+        }) -
+        getProjectTimestamp({
+          updatedAt: a.updatedAt,
+          year: a.year,
+          month: a.month,
+        })
     )
     .slice(0, 4);
   const renderingRailCards: HomeRenderingRailCard[] = getLocalRenderingGallery()
     .map(item => ({
-      href: item.project?.slug ? `/projects/rendering/${item.project.slug}` : "",
+      href: item.project?.slug
+        ? `/projects/rendering/${item.project.slug}`
+        : "",
       image: item.project?.coverImageUrl || "",
-      imageAlt: item.altText || item.project?.title || "Scenic rendering by Brandon PT Davis",
+      imageAlt:
+        item.altText ||
+        item.project?.title ||
+        "Scenic rendering by Brandon PT Davis",
       title: item.displayTitle || item.project?.title || "Rendering study",
-      meta: [item.project?.client, item.project?.year].filter(Boolean).join(" / "),
+      meta: [item.project?.client, item.project?.year]
+        .filter(Boolean)
+        .join(" / "),
     }))
     .filter(card => card.href && card.image)
-    .filter((card, index, list) => list.findIndex(candidate => candidate.href === card.href) === index)
+    .filter(
+      (card, index, list) =>
+        list.findIndex(candidate => candidate.href === card.href) === index
+    )
     .slice(0, 10);
   const movingRenderingCards = [...renderingRailCards, ...renderingRailCards];
 
   if (!experientialProjects.length && !renderingRailCards.length) return null;
 
   return (
-    <section className="border-t border-black/10 bg-[#f1f0ec] py-12 text-black md:py-18">
+    <section className="bg-black py-12 text-white md:py-16">
       <style>
         {`
           @keyframes home-rendering-rail {
@@ -567,83 +631,83 @@ function HomeExperientialAndRenderingSection() {
         `}
       </style>
 
-      {experientialProjects.length ? (
-        <>
-          <div className="px-[clamp(1.5rem,5vw,6rem)]">
-            <div className="mb-6 grid gap-5 md:grid-cols-[minmax(0,0.72fr)_auto] md:items-end">
-            <div className="max-w-3xl">
-              <p className="mb-4 section-kicker text-black/42">
-                Experiential + Rendering Portfolio
-              </p>
-              <h2 className="max-w-[13ch] bg-gradient-to-r from-[#0a4cff] via-[#7b2cbf] to-[#c77dff] bg-clip-text font-sans text-[clamp(2.35rem,4.75vw,4.95rem)] font-medium leading-[1.02] tracking-[-0.055em] text-transparent">
-                Spatial work and visual studies.
-              </h2>
-            </div>
-            <div className="flex flex-wrap gap-3 md:justify-self-end">
-              <a
-                href="/projects/experiential"
-                className="inline-flex h-10 w-fit items-center justify-center rounded-full border border-[#9d4edd]/72 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-[#7b2cbf] transition-colors hover:border-[#7b2cbf] hover:text-black"
-              >
-                View experiential
-              </a>
-              <a
-                href="/projects/rendering"
-                className="inline-flex h-10 w-fit items-center justify-center rounded-full border border-[#9d4edd]/42 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-[#7b2cbf]/76 transition-colors hover:border-[#7b2cbf] hover:text-black"
-              >
-                View renderings
-              </a>
-            </div>
+      <div className="px-[clamp(1.5rem,5vw,6rem)]">
+        <div className="mx-auto mb-10 flex max-w-[70rem] flex-col items-center text-center">
+          <p className="section-kicker mb-4 text-white">
+            Rendering + Experiential Design
+          </p>
+          <h2 className="flex items-center justify-center gap-4 font-sans text-[clamp(2.35rem,4.8vw,5.15rem)] font-medium leading-[1] tracking-[-0.055em] text-white">
+            <Box
+              className="h-[0.78em] w-[0.78em] shrink-0"
+              strokeWidth={1.65}
+              aria-hidden="true"
+            />
+            <span>Spatial work and visual studies.</span>
+          </h2>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <a
+              href="/projects/experiential"
+              className="inline-flex h-10 w-fit items-center justify-center rounded-full border border-white/24 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-white/78 transition-colors hover:border-white hover:text-white"
+            >
+              View experiential
+            </a>
+            <a
+              href="/projects/rendering"
+              className="inline-flex h-10 w-fit items-center justify-center rounded-full border border-white/16 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-white/62 transition-colors hover:border-white hover:text-white"
+            >
+              View renderings
+            </a>
           </div>
-          </div>
+        </div>
+      </div>
 
-          <div className="grid gap-3 px-[clamp(1rem,2vw,1.5rem)] md:grid-cols-2">
-            {experientialProjects.map((project, index) => (
-              <a
-                key={project.slug}
-                href={getLocalExperientialProjectHref(project)}
-                className="group relative block overflow-hidden bg-black ring-1 ring-black/[0.06] transition duration-300 hover:-translate-y-1"
-              >
-                <div className="site-media-square aspect-video overflow-hidden">
-                  <img
-                    src={project.coverImageUrl || ""}
-                    alt={project.coverAltText || `${project.title} experiential design by Brandon PT Davis`}
-                    className="site-media-square h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]"
-                    loading={index < 2 ? "eager" : "lazy"}
-                  />
-                </div>
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0.18)_48%,rgba(0,0,0,0.82)_100%)]" />
-                <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
-                  <p className="font-sans text-[0.74rem] font-semibold tracking-[-0.015em] text-white/68">
-                    Experiential Design
-                  </p>
-                  <h3 className="mt-3 max-w-[15ch] font-sans text-[clamp(1.55rem,2.4vw,2.45rem)] font-medium leading-[0.96] tracking-[-0.055em] text-white">
-                    {project.title}
-                  </h3>
-                </div>
-              </a>
-            ))}
-          </div>
-        </>
+      {experientialProjects.length ? (
+        <div className="grid gap-3 px-[clamp(1rem,2vw,1.5rem)] md:grid-cols-2">
+          {experientialProjects.map((project, index) => (
+            <a
+              key={project.slug}
+              href={getLocalExperientialProjectHref(project)}
+              className="site-media-square group relative block aspect-[3/2] overflow-hidden rounded-none bg-white/[0.04] ring-1 ring-white/10 transition duration-300 hover:-translate-y-1"
+            >
+              <img
+                src={project.coverImageUrl || ""}
+                alt={
+                  project.coverAltText ||
+                  `${project.title} experiential design by Brandon PT Davis`
+                }
+                className="site-media-square h-full w-full rounded-none object-cover transition-transform duration-700 group-hover:scale-[1.025]"
+                loading={index < 2 ? "eager" : "lazy"}
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0.18)_48%,rgba(0,0,0,0.82)_100%)]" />
+              <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
+                <p className="font-sans text-[0.74rem] font-semibold tracking-[-0.015em] text-white/68">
+                  Experiential Design
+                </p>
+                <h3 className="mt-3 max-w-[15ch] font-sans text-[clamp(1.45rem,2.1vw,2.15rem)] font-medium leading-[0.96] tracking-[-0.055em] text-white">
+                  {project.title}
+                </h3>
+              </div>
+            </a>
+          ))}
+        </div>
       ) : null}
 
       {renderingRailCards.length ? (
         <div className={experientialProjects.length ? "mt-3" : ""}>
-          <div className="overflow-hidden">
-            <div className="flex w-max gap-3 px-[clamp(1rem,2vw,1.5rem)] motion-safe:animate-[home-rendering-rail_52s_linear_infinite] motion-safe:hover:[animation-play-state:paused]">
+          <div className="h-[8rem] overflow-hidden md:h-[11rem]">
+            <div className="flex h-full w-max gap-3 px-[clamp(1rem,2vw,1.5rem)] motion-safe:animate-[home-rendering-rail_52s_linear_infinite] motion-safe:hover:[animation-play-state:paused]">
               {movingRenderingCards.map((card, index) => (
                 <a
                   key={`${card.href}-${index}`}
                   href={card.href}
-                  className="group relative block w-[min(24rem,72vw)] shrink-0 overflow-hidden bg-black ring-1 ring-black/[0.06] md:w-[29rem]"
+                  className="site-media-square group relative block h-full w-[min(15.5rem,64vw)] shrink-0 overflow-hidden rounded-none bg-black ring-1 ring-white/10 md:w-[18rem]"
                 >
-                  <div className="site-media-square aspect-video overflow-hidden">
-                    <img
-                      src={card.image}
-                      alt={card.imageAlt}
-                      className="site-media-square h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]"
-                      loading={index < 4 ? "eager" : "lazy"}
-                    />
-                  </div>
+                  <img
+                    src={card.image}
+                    alt={card.imageAlt}
+                    className="site-media-square h-full w-full rounded-none object-cover transition-transform duration-700 group-hover:scale-[1.025]"
+                    loading={index < 4 ? "eager" : "lazy"}
+                  />
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0.18)_48%,rgba(0,0,0,0.78)_100%)]" />
                   <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
                     <p className="font-sans text-[0.74rem] font-semibold tracking-[-0.015em] text-white/62">
@@ -674,11 +738,11 @@ function PublishSection() {
   };
 
   return (
-    <section className="bg-[#f1f0ec] py-16 md:py-24">
+    <section className="bg-black py-16 text-white md:py-24">
       <div className="px-[clamp(1.5rem,5vw,6rem)]">
         <div className="mb-10 grid gap-6 md:grid-cols-[minmax(0,0.72fr)_auto] md:items-end">
           <div>
-            <p className="mb-4 section-kicker text-black/42">
+            <p className="mb-4 section-kicker text-white">
               Article + Tutorials
             </p>
             <h2 className="max-w-[13ch] bg-gradient-to-r from-[#0a4cff] via-[#7b2cbf] to-[#c77dff] bg-clip-text font-sans text-[clamp(2.4rem,5vw,5.3rem)] font-medium leading-[0.94] tracking-[-0.068em] text-transparent">
@@ -688,13 +752,13 @@ function PublishSection() {
           <div className="flex flex-wrap gap-3 md:justify-end">
             <a
               href="/articles"
-              className="inline-flex h-10 items-center justify-center rounded-full bg-[#9d4edd] px-5 font-sans text-sm font-medium tracking-[-0.02em] text-white transition-colors hover:bg-[#c77dff]"
+              className="inline-flex h-10 items-center justify-center rounded-full bg-white px-5 font-sans text-sm font-medium tracking-[-0.02em] text-black transition-colors hover:bg-white/86"
             >
               Articles
             </a>
             <a
               href="/studio/tutorials"
-              className="inline-flex h-10 items-center justify-center rounded-full border border-[#9d4edd]/72 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-[#7b2cbf] transition-colors hover:border-[#7b2cbf] hover:text-black"
+              className="inline-flex h-10 items-center justify-center rounded-full border border-white/24 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-white/72 transition-colors hover:border-white hover:text-white"
             >
               Tutorials
             </a>
@@ -744,28 +808,39 @@ function PublishSection() {
         <button
           type="button"
           onClick={() => scrollCards("previous")}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/[0.08] text-black/62 transition-colors hover:bg-black hover:text-white"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/[0.08] text-white/62 transition-colors hover:bg-white hover:text-black"
           aria-label="Previous studio cards"
         >
-          <ChevronLeft className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
+          <ChevronLeft
+            className="h-5 w-5"
+            strokeWidth={2.5}
+            aria-hidden="true"
+          />
         </button>
         <button
           type="button"
           onClick={() => scrollCards("next")}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/[0.12] text-black/72 transition-colors hover:bg-black hover:text-white"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/[0.12] text-white/72 transition-colors hover:bg-white hover:text-black"
           aria-label="Next studio cards"
         >
-          <ChevronRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
+          <ChevronRight
+            className="h-5 w-5"
+            strokeWidth={2.5}
+            aria-hidden="true"
+          />
         </button>
       </div>
-
     </section>
   );
 }
 
 function HomeCta() {
   return (
-    <section className="group relative min-h-[72svh] overflow-hidden border-t border-white/10 bg-black">
+    <section className="group relative min-h-[72svh] overflow-hidden bg-black">
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 z-10 h-28 bg-gradient-to-b from-black via-black/82 to-transparent"
+        aria-hidden="true"
+      />
       <img
         src={HOME_CTA_IMAGE_URL}
         alt="The Merry Wives of Windsor scenic design detail by Brandon PT Davis"

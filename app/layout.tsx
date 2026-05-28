@@ -5,6 +5,7 @@ import "./globals.css";
 
 import { LegacyProviders } from "../components/legacy/Providers";
 import { JsonLdScript } from "../components/seo/JsonLdScript";
+import { ContactOverlayProvider } from "../components/site/ContactOverlay";
 import { LegacyClientCleanup } from "../components/site/LegacyClientCleanup";
 import { PostHogAnalytics } from "../components/site/PostHogAnalytics";
 import { absoluteUrl, siteMetadata } from "../lib/metadata";
@@ -119,7 +120,9 @@ export default function RootLayout({
       <body className="min-h-screen bg-gradient-premium">
         <LegacyClientCleanup />
         {isProduction ? <PostHogAnalytics /> : null}
-        <LegacyProviders>{children}</LegacyProviders>
+        <LegacyProviders>
+          <ContactOverlayProvider>{children}</ContactOverlayProvider>
+        </LegacyProviders>
         {isProduction ? <Analytics /> : null}
         {isProduction ? <SpeedInsights /> : null}
       </body>

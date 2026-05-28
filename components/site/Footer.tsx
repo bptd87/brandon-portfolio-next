@@ -65,8 +65,8 @@ function PinterestIcon({ className }: { className?: string }) {
 
 export default function Footer() {
   return (
-    <footer className="mt-24 border-t border-border/50">
-      <div className="container max-w-[88rem] py-14 md:py-16">
+    <footer className="mt-0 border-t border-border/50">
+      <div className="container max-w-[88rem] pt-16 pb-14 md:pt-20 md:pb-16">
         <div className="grid gap-12 py-2 md:grid-cols-[minmax(0,1fr)_auto] md:gap-16">
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
             {FOOTER_SECTIONS.map((section) => (

@@ -25,7 +25,7 @@ export default function AboutNav() {
       aria-label="Profile section navigation"
       className="sticky top-[72px] z-30 border-b border-black/[0.06] bg-[#f7f6f2]/90 backdrop-blur-xl"
     >
-      <div className="mx-auto flex min-h-16 max-w-[76rem] flex-col gap-3 px-[clamp(1.5rem,5vw,6rem)] py-3 md:flex-row md:items-center md:justify-between md:gap-8">
+      <div className="flex min-h-16 flex-col gap-3 px-[clamp(1.5rem,5vw,6rem)] py-3 md:flex-row md:items-center md:justify-between md:gap-8">
         <Link
           href="/about"
           className="text-[1.35rem] font-semibold leading-none tracking-[-0.045em] text-[#111111]"

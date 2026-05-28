@@ -24,7 +24,7 @@ export function PublishingTopBar({ active, tone = "light" }: PublishingTopBarPro
           : "border-black/[0.06] bg-[#f1f0ec]/92"
       }`}
     >
-      <div className="mx-auto flex min-h-16 max-w-[76rem] flex-col gap-3 px-[clamp(1.5rem,5vw,6rem)] py-3 md:flex-row md:items-center md:justify-between md:gap-8">
+      <div className="flex min-h-16 flex-col gap-3 px-[clamp(1.5rem,5vw,6rem)] py-3 md:flex-row md:items-center md:justify-between md:gap-8">
         <a
           href="/studio"
           className={`text-[1.35rem] font-semibold leading-none tracking-[-0.045em] ${isDark ? "text-white" : "text-[#111111]"}`}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import type { CSSProperties, MouseEvent } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -12,8 +12,6 @@ import {
   CalendarArrowUp,
   Check,
   ChevronDown,
-  ChevronLeft,
-  ChevronRight,
   Drama,
   Laugh,
   LayoutGrid,
@@ -28,6 +26,7 @@ import {
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import PortfolioTopBar from "@/components/PortfolioTopBar";
 import { SEO } from "@/components/SEO";
 import { PortfolioGridSkeleton } from "@/components/SkeletonLoaders";
 import StructuredData from "@/components/StructuredData";
@@ -43,25 +42,10 @@ import {
   getScenicProjectTimestamp,
   scenicPortfolioLandingCopy,
 } from "@/lib/scenicShowcase";
-import {
-  LEARNING_PORTAL_ARTICLE_SLUG_SET,
-  RETIRED_LEARNING_ARTICLE_SLUG_SET,
-} from "@shared/learningPortal";
-import { getLocalArticles } from "@shared/localArticles";
 import type { ScenicProjectSummary } from "@shared/scenicProjectSummaries";
 
 type SortKey = "newest" | "oldest" | "title" | "venue";
 type ViewMode = "grid" | "list";
-type ScenicArticleCard = {
-  title: string;
-  description: string;
-  href: string;
-  image: string;
-  imageAlt: string;
-  category: string;
-  timestamp: number;
-};
-
 const SORT_OPTIONS: Array<{ key: SortKey; label: string; icon: LucideIcon }> = [
   { key: "newest", label: "Newest first", icon: CalendarArrowDown },
   { key: "oldest", label: "Oldest first", icon: CalendarArrowUp },
@@ -111,52 +95,6 @@ const getCategoryIcon = (label: string) => {
   return CATEGORY_ICON_MAP[normalizeText(label)] || Rows3;
 };
 
-const getArticleTimestamp = (...dates: Array<string | Date | null | undefined>) =>
-  Math.max(
-    ...dates.map(date => {
-      const time = new Date(date || 0).getTime();
-      return Number.isFinite(time) ? time : 0;
-    })
-  );
-
-const cleanArticleDescription = (value?: string | null) => {
-  const text = String(value || "")
-    .replace(/<[^>]+>/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-
-  if (!text) return "Scenic design writing on process, production, and visual storytelling.";
-  if (text.length <= 118) return text;
-  return `${text.slice(0, 115).trim()}...`;
-};
-
-const getScenicDesignArticleCards = (): ScenicArticleCard[] => {
-  return getLocalArticles()
-    .filter(article => !LEARNING_PORTAL_ARTICLE_SLUG_SET.has(article.slug))
-    .filter(article => !RETIRED_LEARNING_ARTICLE_SLUG_SET.has(article.slug))
-    .filter(article => {
-      const category = normalizeText(article.categoryName);
-      const tags = (article.tags || []).map(tag => normalizeText(tag.name || tag.slug));
-      return (
-        category === "scenic design" ||
-        category === "design process" ||
-        tags.some(tag => tag.includes("scenic design") || tag.includes("process"))
-      );
-    })
-    .map(article => ({
-      title: article.title,
-      description: cleanArticleDescription(article.excerpt || article.seoDescription),
-      href: `/articles/${article.slug}`,
-      image: article.coverImageUrl,
-      imageAlt: article.coverImageAlt || `Cover image for ${article.title}`,
-      category: article.categoryName || "Scenic Design",
-      timestamp: getArticleTimestamp(article.publishedAt, article.updatedAt, article.createdAt),
-    }))
-    .filter(card => card.image)
-    .sort((a, b) => b.timestamp - a.timestamp)
-    .slice(0, 8);
-};
-
 function ProjectCard({
   href,
   layoutClass,
@@ -178,11 +116,11 @@ function ProjectCard({
     <a
       href={href}
       onClick={(event) => onNavigate(event, href)}
-      className={`group block ${layoutClass || ""}`}
+      className={`group block border-b border-r border-white/12 ${layoutClass || ""}`}
     >
       <article className="bg-[#111111]">
         <div
-          className="transition-card site-media-square relative aspect-[3/2] overflow-hidden bg-[#181818]"
+          className="site-media-square relative aspect-[4/3] overflow-hidden bg-[#181818]"
           style={{ viewTransitionName: `project-card-${project.slug}` } as CSSProperties}
         >
           {project.coverImageUrl ? (
@@ -191,7 +129,7 @@ function ProjectCard({
               alt={scenicAlt(project.title)}
               fill
               quality={86}
-              className="site-media-square object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+              className="site-media-square object-cover object-center"
               style={{
                 objectPosition: project.coverImagePosition || "center",
               }}
@@ -201,16 +139,16 @@ function ProjectCard({
               sizes={sizes}
             />
           ) : (
-            <div className="aspect-[3/2] w-full bg-muted" />
+            <div className="aspect-[4/3] w-full bg-muted" />
           )}
-
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/82 via-black/32 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 p-[clamp(1.15rem,2.2vw,2rem)]">
-            <h2 className="font-sans text-[clamp(1.45rem,2.1vw,2.4rem)] font-medium leading-[0.96] tracking-[-0.055em] text-white transition-colors group-hover:text-white/80">
+        </div>
+        <div className="min-h-[8.5rem] border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white">
+          <div>
+            <h2 className="max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors group-hover:text-white/72">
               {project.title}
             </h2>
             {getVenueLabel(project) ? (
-              <p className="mt-2 text-[clamp(0.9rem,1.05vw,1.08rem)] leading-tight tracking-[-0.025em] text-white/72">
+              <p className="mt-2 max-w-[18ch] font-sans text-[0.94rem] leading-tight tracking-[-0.025em] text-white/52">
                 {getVenueLabel(project)}
               </p>
             ) : null}
@@ -222,11 +160,11 @@ function ProjectCard({
 }
 
 const getProjectPanelClass = (index: number) => {
-  return index % 3 === 0 ? "md:col-span-2" : "";
+  return index % 6 < 2 ? "md:col-span-2" : "";
 };
 
 const getProjectImageSizes = (index: number) => {
-  return index % 3 === 0 ? "100vw" : "(max-width: 768px) 100vw, 50vw";
+  return index % 6 < 2 ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 100vw, 25vw";
 };
 
 export default function Projects({
@@ -240,17 +178,9 @@ export default function Projects({
   const [selectedYear, setSelectedYear] = useState<string>("all");
   const [sortKey, setSortKey] = useState<SortKey>("newest");
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
-  const articleCardsRef = useRef<HTMLDivElement | null>(null);
 
   const mergedProjects = useMemo(() => initialProjects, [initialProjects]);
   const isLoading = false;
-  const scenicArticleCards = useMemo(() => getScenicDesignArticleCards(), []);
-  const scrollArticleCards = (direction: "previous" | "next") => {
-    articleCardsRef.current?.scrollBy({
-      left: direction === "next" ? 760 : -760,
-      behavior: "smooth",
-    });
-  };
 
   const subcategories = useMemo(() => {
     if (!mergedProjects.length) return [] as Array<{ key: string; label: string }>;
@@ -330,7 +260,6 @@ export default function Projects({
 
     return list;
   }, [filteredProjects, sortKey]);
-
   const latestProjectUpdate = sortedProjects
     .map((project: any) => project.updatedAt || project.publishedAt || project.createdAt)
     .filter(Boolean)
@@ -355,6 +284,7 @@ export default function Projects({
         : selectedYear !== "all"
           ? selectedYear
           : pageTitle;
+  const heroDisplayTitle = currentHeading;
   const activeFilterCount =
     (selectedVenue !== "all" ? 1 : 0) + (selectedYear !== "all" ? 1 : 0);
   const scenicArchiveTitle =
@@ -419,15 +349,7 @@ export default function Projects({
       await animateCardDeparture(anchor);
       navigate();
     };
-    const doc = document as Document & { startViewTransition?: (cb: () => void) => void };
-
-    if (doc.startViewTransition) {
-      doc.startViewTransition(() => {
-        void performNavigation();
-      });
-    } else {
-      void performNavigation();
-    }
+    void performNavigation();
   };
 
   return (
@@ -518,27 +440,30 @@ export default function Projects({
       />
 
       <Header />
+      <PortfolioTopBar />
 
       <main>
-        <section className="border-b border-white/10 bg-black pb-8 pt-24 md:pb-10 md:pt-28">
-          <div className="container max-w-[88rem]">
-            <div className="max-w-5xl">
-              {currentHeading === pageTitle ? (
-                <p className="mb-5 section-kicker text-white/42">
-                  {pageSubtitle}
-                </p>
-              ) : null}
-              <h1 className="font-sans text-[clamp(3.2rem,7vw,7.1rem)] font-medium leading-[0.86] tracking-[-0.065em] text-white">
-                {currentHeading}
+        <section className="bg-[#111111] pt-12 md:pt-16">
+          <div className="w-full">
+            <div className="px-[clamp(1.5rem,5vw,6rem)]">
+              <div className="mb-5 pb-4">
+                <div>
+                  <p className="max-w-2xl text-[0.95rem] leading-6 tracking-[-0.015em] text-white/54">
+                    {currentHeading === pageTitle ? pageSubtitle : pageTitle}
+                  </p>
+                  {currentHeading === pageTitle ? (
+                    <p className="mt-3 max-w-2xl text-[1rem] leading-6 text-white/58 md:text-[1.08rem]">
+                      {pageIntro}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+              <h1 className="font-sans text-[clamp(4.2rem,12vw,12.8rem)] font-medium leading-[0.82] tracking-[-0.07em] text-white">
+                {heroDisplayTitle}
               </h1>
-              {currentHeading === pageTitle ? (
-                <p className="mt-7 max-w-3xl text-[1.02rem] leading-7 text-white/62 md:text-[1.12rem]">
-                  {pageIntro}
-                </p>
-              ) : null}
             </div>
 
-            <div className="mt-10 flex flex-col gap-5 border-t border-border/35 pt-5 lg:flex-row lg:items-center lg:justify-between">
+            <div className="mt-6 flex flex-col gap-5 px-[clamp(1.5rem,5vw,6rem)] py-4 lg:flex-row lg:items-center lg:justify-between">
               <div className="md:hidden">
                 <div className="-mx-1 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                   <div className="flex min-w-max items-center gap-2 px-1">
@@ -787,7 +712,7 @@ export default function Projects({
             </div>
 
             {(selectedVenue !== "all" || selectedYear !== "all" || sortKey !== "newest") && (
-              <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-white/52">
+              <div className="flex flex-wrap items-center gap-3 px-[clamp(1.5rem,5vw,6rem)] py-3 text-sm text-white/52">
                 <span>{sortedProjects.length} productions</span>
                 {selectedVenue !== "all" ? <span>Venue: {selectedVenue}</span> : null}
                 {selectedYear !== "all" ? <span>Date: {selectedYear}</span> : null}
@@ -802,9 +727,9 @@ export default function Projects({
         {isLoading ? (
           <PortfolioGridSkeleton />
         ) : sortedProjects.length > 0 ? (
-          <section className="bg-[#111111] px-[clamp(0.9rem,1.8vw,1.35rem)] py-[clamp(0.9rem,1.8vw,1.35rem)] pb-20 md:pb-28">
+          <section className="border-t border-white/12 bg-[#111111]">
             {viewMode === "grid" ? (
-              <div className="grid grid-cols-1 gap-[clamp(0.9rem,1.8vw,1.35rem)] md:grid-cols-2">
+              <div className="grid grid-cols-1 border-l border-white/12 md:grid-cols-4">
                 {sortedProjects.map((project, index) => {
                   const href = getProjectPath(project);
 
@@ -867,145 +792,6 @@ export default function Projects({
           </section>
         )}
 
-        <section className="border-t border-white/12 bg-[#111111] py-18 md:py-24">
-          <div className="container max-w-[88rem]">
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(24rem,0.72fr)] lg:items-start">
-              <div className="space-y-5">
-                <p className="text-[clamp(1.05rem,1.4vw,1.3rem)] font-medium leading-none tracking-[-0.035em] text-white/46">
-                  Portfolio notes
-                </p>
-                <h2 className="max-w-3xl font-sans text-[clamp(2.4rem,5vw,5.2rem)] font-medium leading-[0.88] tracking-[-0.075em] text-white">
-                  Production images first. Process in context.
-                </h2>
-                <p className="max-w-3xl text-[1.05rem] leading-7 text-white/68 md:text-[1.15rem] md:leading-8">
-                  This archive is built around realized scenic design: the stage picture, the
-                  architecture of the room, and the way each environment supports the performer.
-                  Production photography leads because it shows scale, atmosphere, and how the
-                  design actually lives under light, movement, and audience focus.
-                </p>
-                <p className="max-w-3xl text-[1.05rem] leading-7 text-white/54 md:text-[1.15rem] md:leading-8">
-                  The filters are there for a working archive: move by genre, theatre company, or
-                  season, then open a project for credits, additional images, and design context.
-                  The goal is not just to show attractive photographs, but to make the thinking
-                  behind the work easy to enter.
-                </p>
-              </div>
-
-              <div className="grid gap-3">
-                {[
-                  {
-                    icon: Drama,
-                    title: "Scenic design",
-                    copy: "Plays, musicals, Shakespeare, new work, and repertory production gathered as a visual archive.",
-                  },
-                  {
-                    icon: Rows3,
-                    title: "Production process",
-                    copy: "Research, drafting, rendering, model work, and build coordination are treated as part of the same design story.",
-                  },
-                  {
-                    icon: Building2,
-                    title: "Collaborative rooms",
-                    copy: "Each project reflects the directors, shops, performers, and production teams that shaped the final stage picture.",
-                  },
-                ].map(({ icon: Icon, title, copy }) => (
-                  <div
-                    key={title}
-                    className="rounded-[1.5rem] bg-black p-6 text-white shadow-[0_18px_54px_rgba(0,0,0,0.28)] ring-1 ring-white/[0.07]"
-                  >
-                    <Icon className="mb-8 h-7 w-7 text-white/82" strokeWidth={1.8} aria-hidden="true" />
-                    <h3 className="max-w-[14ch] font-sans text-[1.55rem] font-medium leading-[0.96] tracking-[-0.055em] text-white">
-                      {title}
-                    </h3>
-                    <p className="mt-4 max-w-md text-[0.98rem] leading-6 text-white/58">
-                      {copy}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {scenicArticleCards.length > 0 ? (
-          <section className="border-t border-white/12 bg-[#111111] py-16 md:py-24">
-            <div className="px-[clamp(1.5rem,5vw,6rem)]">
-              <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                  <p className="text-[clamp(1.05rem,1.4vw,1.3rem)] font-medium leading-none tracking-[-0.035em] text-white/46">
-                    Scenic design writing
-                  </p>
-                  <h2 className="mt-3 max-w-[13ch] bg-gradient-to-r from-[#2f6dff] via-[#9d4edd] to-[#d6a8ff] bg-clip-text font-sans text-[clamp(2.4rem,5.2vw,5.4rem)] font-medium leading-[0.9] tracking-[-0.075em] text-transparent">
-                    Notes behind the work.
-                  </h2>
-                </div>
-                <a
-                  href="/articles?category=Scenic%20Design"
-                  className="inline-flex h-11 w-fit items-center justify-center rounded-full border border-[#9d4edd]/72 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-[#e0aaff] transition-colors hover:border-[#c77dff] hover:text-white"
-                >
-                  View articles
-                </a>
-              </div>
-            </div>
-
-            <div
-              ref={articleCardsRef}
-              className="overflow-x-auto px-[clamp(1.5rem,5vw,6rem)] pb-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-            >
-              <div className="flex min-w-max gap-5 pr-[clamp(1.5rem,5vw,6rem)]">
-                {scenicArticleCards.map(card => (
-                  <a
-                    key={card.href}
-                    href={card.href}
-                    className="group relative flex h-[30rem] w-[min(21rem,78vw)] flex-col justify-end overflow-hidden rounded-[2rem] bg-black p-6 text-white shadow-[0_20px_58px_rgba(0,0,0,0.32)] ring-1 ring-white/[0.06] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_26px_68px_rgba(0,0,0,0.4)] md:w-[22rem]"
-                    aria-label={`Article: ${card.title}`}
-                  >
-                    <img
-                      src={card.image}
-                      alt={card.imageAlt}
-                      className="site-media-square absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.035]"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-black/18" />
-                    <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/88 via-black/48 to-transparent" />
-                    <div className="absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-black/28 to-transparent" />
-
-                    <div className="relative z-10">
-                      <p className="font-sans text-[0.74rem] font-semibold tracking-[-0.015em] text-white/68">
-                        {card.category}
-                      </p>
-                      <h3 className="mt-3 max-w-[13ch] font-sans text-[1.64rem] font-medium leading-[0.98] tracking-[-0.055em] text-white">
-                        {card.title}
-                      </h3>
-                      <p className="mt-4 max-w-[18rem] text-[0.94rem] leading-6 tracking-[-0.012em] text-white/68">
-                        {card.description}
-                      </p>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex justify-end gap-3 px-[clamp(1.5rem,5vw,6rem)]">
-              <button
-                type="button"
-                onClick={() => scrollArticleCards("previous")}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/[0.08] text-white/62 transition-colors hover:bg-white hover:text-black"
-                aria-label="Previous scenic design articles"
-              >
-                <ChevronLeft className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                onClick={() => scrollArticleCards("next")}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/[0.12] text-white/72 transition-colors hover:bg-white hover:text-black"
-                aria-label="Next scenic design articles"
-              >
-                <ChevronRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
-              </button>
-            </div>
-          </section>
-        ) : null}
       </main>
 
       <Footer />

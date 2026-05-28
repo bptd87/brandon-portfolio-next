@@ -5,12 +5,9 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { AnimatedSection } from "@/components/AnimatedSection";
-import { Lightbox } from "@/components/Lightbox";
-import { ProgressiveImage } from "@/components/ProgressiveImage";
 import { SEO } from "@/components/SEO";
 import { CreditNameLinks } from "@/components/CreditNameLinks";
 import { copyTextToClipboard } from "@/lib/clipboard";
-import { formatUtcDate } from "@/lib/date-format";
 import { Button } from "@/components/ui/button";
 import {
   getLocalScenicProjectBySlug,
@@ -18,7 +15,7 @@ import {
   type LocalScenicProjectMedia,
 } from "@shared/localScenicProjects";
 import { getLocalArticles } from "@shared/localArticles";
-import { Check, ChevronLeft, ChevronRight, ExternalLink, Link2, Linkedin, Mail } from "lucide-react";
+import { Check, ChevronRight, ExternalLink, Link2, Linkedin, Mail } from "lucide-react";
 
 type ScenicProjectDetailProps = {
   slug?: string;
@@ -28,7 +25,34 @@ type ScenicProjectDetailProps = {
   };
 };
 
-type ImageOrientation = "landscape" | "portrait" | "square";
+type VisualImageMediaItem = {
+  mediaType: "image";
+  key: string;
+  id: string;
+  imageUrl: string;
+  altText: string;
+  caption?: string;
+  display?: LocalScenicProjectMedia["display"];
+  kind?: LocalScenicProjectMedia["kind"];
+};
+
+type VisualMediaItem =
+  | VisualImageMediaItem
+  | {
+      mediaType: "video";
+      key: string;
+      id: string;
+      videoUrl: string;
+      title: string;
+      caption?: string;
+    }
+  | {
+      mediaType: "renderingGallery";
+      key: string;
+      id: string;
+      items: VisualImageMediaItem[];
+      caption?: string;
+    };
 
 function getEmbedUrl(url: string): string {
   if (!url) return "";
@@ -61,29 +85,6 @@ function getAutoEmbedUrl(url: string, autoplay: boolean): string {
   return getEmbedUrl(url);
 }
 
-function useImageOrientation(src?: string | null): ImageOrientation {
-  const [orientation, setOrientation] = useState<ImageOrientation>("landscape");
-
-  useEffect(() => {
-    if (!src) return;
-
-    const image = new Image();
-    image.src = src;
-    image.onload = () => {
-      const ratio = image.naturalWidth / image.naturalHeight;
-      if (ratio > 1.08) {
-        setOrientation("landscape");
-      } else if (ratio < 0.92) {
-        setOrientation("portrait");
-      } else {
-        setOrientation("square");
-      }
-    };
-  }, [src]);
-
-  return orientation;
-}
-
 function AutoPlayEmbed({ url, title }: { url: string; title: string }) {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const [isInView, setIsInView] = useState(false);
@@ -104,8 +105,8 @@ function AutoPlayEmbed({ url, title }: { url: string; title: string }) {
   }, []);
 
   return (
-    <div ref={wrapperRef} className="overflow-hidden rounded-2xl bg-black shadow-lg">
-      <div className="relative h-[min(64vh,38rem)] w-full">
+    <div ref={wrapperRef} className="site-media-square overflow-hidden bg-black">
+      <div className="relative aspect-video w-full">
         <iframe
           key={isInView ? "autoplay" : "paused"}
           src={getAutoEmbedUrl(url, isInView)}
@@ -116,86 +117,6 @@ function AutoPlayEmbed({ url, title }: { url: string; title: string }) {
         />
       </div>
     </div>
-  );
-}
-
-function ProjectGalleryFigure({
-  item,
-  onOpen,
-  variant = "grid",
-}: {
-  item: LocalScenicProjectMedia & { imageUrl: string };
-  onOpen: () => void;
-  variant?: "single" | "lead" | "pair" | "grid" | "rail";
-}) {
-  const orientation = useImageOrientation(item.imageUrl);
-  const isPortrait = item.display === "portrait" || orientation === "portrait";
-  const shouldContain = item.display === "contain" || item.display === "portrait" || isPortrait;
-  const isLead = variant === "lead";
-  const isSingle = variant === "single";
-  const isRail = variant === "rail";
-  const aspectRatio = isPortrait
-    ? "3 / 4"
-    : orientation === "square"
-      ? "1 / 1"
-      : item.display === "full" || item.display === "wide" || isLead || isSingle
-        ? "16 / 9"
-        : "3 / 2";
-  const sizes = isSingle
-    ? "(min-width: 1280px) 80rem, calc(100vw - 2.5rem)"
-    : isLead
-      ? isPortrait
-        ? "(min-width: 1280px) 42rem, (min-width: 768px) 62vw, calc(100vw - 2.5rem)"
-        : "(min-width: 1280px) 88rem, calc(100vw - 2.5rem)"
-      : variant === "pair" || variant === "rail"
-        ? "(min-width: 1280px) 42rem, (min-width: 768px) 46vw, calc(100vw - 2.5rem)"
-        : "(min-width: 1024px) 28vw, (min-width: 768px) 46vw, calc(100vw - 2.5rem)";
-  const width = isLead || isSingle ? 1900 : variant === "pair" || variant === "rail" ? 1400 : 1100;
-
-  if (isRail) {
-    return (
-      <figure className="site-media-square shrink-0 space-y-3">
-        <button type="button" onClick={onOpen} className="site-media-square block text-left">
-          <img
-            src={item.imageUrl}
-            alt={item.altText}
-            className="site-media-square h-[clamp(16rem,32vw,30rem)] w-auto max-w-[84vw] bg-black object-contain transition-transform duration-500 hover:scale-[1.01]"
-            loading="lazy"
-            decoding="async"
-          />
-        </button>
-        {item.caption ? (
-          <figcaption className="max-w-[min(34rem,84vw)] text-[0.92rem] leading-6 tracking-[-0.01em] text-white/56">
-            {item.caption}
-          </figcaption>
-        ) : null}
-      </figure>
-    );
-  }
-
-  return (
-    <figure
-      className={`site-media-square space-y-3 ${isPortrait && (isLead || isSingle) ? "mx-auto max-w-[42rem]" : ""}`}
-    >
-      <button type="button" onClick={onOpen} className="site-media-square block w-full text-left">
-        <ProgressiveImage
-          src={item.imageUrl}
-          alt={item.altText}
-          className="site-media-square block w-full object-cover transition-transform duration-500 hover:scale-[1.01]"
-          containerClassName="site-media-square w-full"
-          sizes={sizes}
-          width={width}
-          aspectRatio={aspectRatio}
-          objectFit={shouldContain ? "contain" : "cover"}
-          smartPosition
-        />
-      </button>
-      {item.caption ? (
-        <figcaption className="text-[0.92rem] leading-6 tracking-[-0.01em] text-white/56">
-          {item.caption}
-        </figcaption>
-      ) : null}
-    </figure>
   );
 }
 
@@ -294,30 +215,13 @@ export default function ScenicProjectDetail({
     .trim()
     .toLowerCase();
   const project = getLocalScenicProjectBySlug(normalizedSlug);
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [linkCopied, setLinkCopied] = useState(false);
   const [heroScrollProgress, setHeroScrollProgress] = useState(0);
   const [heroIntroProgress, setHeroIntroProgress] = useState(0);
   const [activeRenderingIndex, setActiveRenderingIndex] = useState(0);
   const heroIntroProgressRef = useRef(0);
   const introTouchYRef = useRef<number | null>(null);
-  const moreScenicCardsRef = useRef<HTMLDivElement | null>(null);
-  const galleryRailRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const allScenicProjects = getLocalScenicProjects();
-
-  const scrollMoreScenicCards = (direction: "previous" | "next") => {
-    moreScenicCardsRef.current?.scrollBy({
-      left: direction === "next" ? 760 : -760,
-      behavior: "smooth",
-    });
-  };
-
-  const scrollGalleryRail = (key: string, direction: "previous" | "next") => {
-    galleryRailRefs.current[key]?.scrollBy({
-      left: direction === "next" ? 760 : -760,
-      behavior: "smooth",
-    });
-  };
 
   useEffect(() => {
     const updateHeroScrollProgress = () => {
@@ -376,15 +280,6 @@ export default function ScenicProjectDetail({
     };
   }, [normalizedSlug]);
 
-  const imageMedia = useMemo(
-    () => (project?.media || []).filter((item): item is LocalScenicProjectMedia & { imageUrl: string } => item.type === "image" && !!item.imageUrl),
-    [project]
-  );
-  const renderingMedia = useMemo(
-    () => imageMedia.filter((item) => item.kind === "rendering"),
-    [imageMedia]
-  );
-
   if (!project) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -404,19 +299,6 @@ export default function ScenicProjectDetail({
   const emailShareUrl = `mailto:?subject=${encodedProjectTitle}&body=${encodedProjectTitle}%0A%0A${encodedProjectUrl}`;
   const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedProjectUrl}`;
   const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedProjectUrl}`;
-  const lightboxImages = imageMedia.map((item) => ({
-    imageUrl: item.imageUrl || null,
-    caption: item.caption || null,
-    altText: item.altText || null,
-  }));
-  const imageIndexById = new Map(imageMedia.map((item, index) => [item.id, index]));
-
-  const openLightboxFor = (mediaId: string) => {
-    const index = imageIndexById.get(mediaId);
-    if (index === undefined) return;
-    setLightboxIndex(index);
-  };
-
   const handleCopyLink = async () => {
     const copied = await copyTextToClipboard(projectUrl);
     if (copied) {
@@ -427,48 +309,6 @@ export default function ScenicProjectDetail({
     }
   };
 
-  const productionGallerySectionIndexes: number[] = [];
-  (() => {
-    project.sections.forEach((section, index) => {
-      if (section.type !== "gallery") return;
-
-      const sectionItems = section.mediaIds
-        .map((mediaId) => project.media.find((entry) => entry.id === mediaId))
-        .filter(
-          (item): item is LocalScenicProjectMedia & { imageUrl: string } =>
-            Boolean(item && item.type === "image" && item.imageUrl)
-        );
-      const hasProductionImage = sectionItems.some((item) => item.kind === "production");
-      const hasRenderingImage = sectionItems.some((item) => item.kind === "rendering");
-
-      if (hasProductionImage && !hasRenderingImage) {
-        productionGallerySectionIndexes.push(index);
-      }
-    });
-  })();
-
-  const lastProductionGalleryIndex = useMemo(() => {
-    let found = -1;
-    project.sections.forEach((section, index) => {
-      if (
-        section.type === "gallery" &&
-        section.mediaIds.some((mediaId) => project.media.find((entry) => entry.id === mediaId)?.kind === "production")
-      ) {
-        found = index;
-      }
-    });
-    return found;
-  }, [project.media, project.sections]);
-
-  const creativeTeamInsertIndex = useMemo(() => {
-    if (lastProductionGalleryIndex < 0) return -1;
-    const nextSection = project.sections[lastProductionGalleryIndex + 1];
-    if (nextSection?.type === "text") {
-      return lastProductionGalleryIndex + 1;
-    }
-    return lastProductionGalleryIndex;
-  }, [lastProductionGalleryIndex, project.sections]);
-
   const creativeTeamGroups = useMemo(() => {
     return [...project.creativeTeam].sort((a, b) => {
       const priorityDiff = getCreditRolePriority(a.role) - getCreditRolePriority(b.role);
@@ -477,6 +317,13 @@ export default function ScenicProjectDetail({
     });
   }, [project.creativeTeam]);
 
+  const relatedArticles = useMemo(
+    () =>
+      getLocalArticles()
+        .filter((article) => (article.linkedScenicProjectSlugs || []).includes(project.slug))
+        .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()),
+    [project.slug]
+  );
   const moreScenicProjects = useMemo(() => {
     const getProjectTimestamp = (item: any) => {
       if (item.year) {
@@ -494,41 +341,9 @@ export default function ScenicProjectDetail({
         const timeCompare = getProjectTimestamp(b) - getProjectTimestamp(a);
         if (timeCompare !== 0) return timeCompare;
         return a.title.localeCompare(b.title);
-      });
+      })
+      .slice(0, 6);
   }, [allScenicProjects, project.slug, project.title]);
-
-  const relatedArticles = useMemo(
-    () =>
-      getLocalArticles()
-        .filter((article) => (article.linkedScenicProjectSlugs || []).includes(project.slug))
-        .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()),
-    [project.slug]
-  );
-  const renderingFeatureImages = useMemo(
-    () =>
-      renderingMedia.map((image) => ({
-        key: image.id,
-        imageUrl: image.imageUrl,
-        altText: image.altText || `${project.title} rendering image`,
-        caption: image.caption || "",
-      })),
-    [project.title, renderingMedia]
-  );
-
-  useEffect(() => {
-    setActiveRenderingIndex(0);
-  }, [project.slug]);
-
-  useEffect(() => {
-    if (renderingFeatureImages.length <= 1) return;
-
-    const timer = window.setTimeout(() => {
-      setActiveRenderingIndex((current) => (current + 1) % renderingFeatureImages.length);
-    }, 5200);
-
-    return () => window.clearTimeout(timer);
-  }, [activeRenderingIndex, renderingFeatureImages.length]);
-
   const scenicSeoTitle =
     project.seoTitle ||
     `${project.title} Scenic Design${project.client ? ` | ${project.client}` : ""} | Brandon PT Davis`;
@@ -551,61 +366,129 @@ export default function ScenicProjectDetail({
       .join(", ");
   const heroProgress = Math.max(heroScrollProgress, heroIntroProgress);
   const heroTitleProgress = Math.min(Math.max((heroProgress - 0.08) / 0.92, 0), 1);
-
-  const renderCreativeTeam = () => (
-    <AnimatedSection>
-      <div
-        id="project-credits"
-        className="relative left-1/2 w-screen -translate-x-1/2 scroll-mt-28 px-[clamp(1.5rem,5vw,5.5rem)] pt-16 md:pt-24"
-      >
-        <div className="mx-auto grid max-w-[54rem] gap-8 rounded-[1.8rem] bg-black px-6 py-8 shadow-[0_24px_70px_rgba(0,0,0,0.32)] md:px-8 md:py-10">
-          <div>
-            <p className="text-[clamp(1rem,1.35vw,1.22rem)] font-medium leading-none tracking-[-0.035em] text-white/46">
-              Production Credits
-            </p>
-            <h2 className="mt-3 max-w-[11ch] font-sans text-[clamp(2.1rem,4vw,4.35rem)] font-medium leading-[0.9] tracking-[-0.07em] text-white">
-              {project.title}
-            </h2>
-          </div>
-          <div className="grid gap-x-10 gap-y-5 border-t border-white/10 pt-6 sm:grid-cols-2">
-            {creativeTeamGroups.map((member) => {
-              const roleLabel = getCreditRoleLabel(member.role);
-              const content = (
-                <>
-                  <span className="block text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-white/38">
-                    {roleLabel}
-                  </span>
-                  <span className="mt-1.5 block text-[1.02rem] leading-snug tracking-[-0.02em] text-white/84">
-                    {member.url ? (
-                      <a
-                        href={member.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="transition-colors hover:text-white/78"
-                      >
-                        {member.name}
-                      </a>
-                    ) : (
-                      <CreditNameLinks
-                        name={member.name}
-                        className="transition-colors hover:text-white/78"
-                      />
-                    )}
-                  </span>
-                </>
-              );
-
-              return (
-                <div key={`${member.role}-${member.name}`} className="min-w-0">
-                  {content}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    </AnimatedSection>
+  const projectMetaItems = [
+    project.client ? { label: "Client", value: project.client } : null,
+    project.location ? { label: "Location", value: project.location } : null,
+    project.year ? { label: "Year", value: String(project.year) } : null,
+    project.subcategory ? { label: "Type", value: project.subcategory } : null,
+  ].filter((item): item is { label: string; value: string } => Boolean(item));
+  const projectInfoLinks = [
+    project.clientUrl
+      ? {
+          label: project.client || "Production page",
+          href: project.clientUrl,
+          kind: "Production",
+          external: true,
+        }
+      : null,
+    ...(project.links || []).map((link) => ({
+      label: link.label,
+      href: link.url,
+      kind: "Link",
+      external: true,
+    })),
+    ...relatedArticles.slice(0, 2).map((article) => ({
+      label: article.title,
+      href: `/articles/${article.slug}`,
+      kind: "Article",
+      external: false,
+    })),
+  ].filter(
+    (
+      item
+    ): item is {
+      label: string;
+      href: string;
+      kind: string;
+      external: boolean;
+    } => Boolean(item)
   );
+  const projectNarrativeSections = project.sections.flatMap((section) => {
+    if (section.type === "text" && section.content.length > 0) {
+      return [{ heading: getDisplayHeading(section.heading), content: section.content }];
+    }
+    if (section.type === "video" && section.content?.length) {
+      return [{ heading: getDisplayHeading(section.heading), content: section.content }];
+    }
+    return [];
+  });
+  const visualSections = project.sections.filter((section) => section.type !== "text");
+  const visualMediaItems: VisualMediaItem[] = visualSections.flatMap<VisualMediaItem>((section, sectionIndex) => {
+    if (section.type === "gallery") {
+      const galleryItems = section.mediaIds
+        .flatMap<VisualImageMediaItem>((mediaId, mediaIndex) => {
+          const item = project.media.find((entry) => entry.id === mediaId);
+          if (!item || item.type !== "image" || !item.imageUrl) return [];
+          return [
+            {
+              mediaType: "image" as const,
+              key: `${sectionIndex}-${mediaIndex}-${item.id}`,
+              id: item.id,
+              imageUrl: item.imageUrl,
+              altText: item.altText,
+              caption: item.caption,
+              display: item.display,
+              kind: item.kind,
+            },
+          ];
+        });
+
+      const isRenderingGallery =
+        galleryItems.length > 1 && galleryItems.every((item) => item.kind === "rendering");
+
+      if (isRenderingGallery) {
+        return [
+          {
+            mediaType: "renderingGallery" as const,
+            key: `${sectionIndex}-rendering-gallery`,
+            id: `${sectionIndex}-rendering-gallery`,
+            items: galleryItems,
+            caption: galleryItems.find((item) => item.caption)?.caption,
+          },
+        ];
+      }
+
+      return galleryItems;
+    }
+
+    if (section.type === "video") {
+      const media = project.media.find((entry) => entry.id === section.mediaId);
+      if (!media?.videoUrl) return [];
+      return [
+        {
+          mediaType: "video" as const,
+          key: `${sectionIndex}-${section.mediaId}`,
+          id: section.mediaId,
+          videoUrl: media.videoUrl,
+          title: `${project.title} walkthrough`,
+          caption: media.caption || getDisplayHeading(section.heading),
+        },
+      ];
+    }
+
+    return [];
+  });
+  const renderingGalleryItem = visualMediaItems.find(
+    (item): item is Extract<VisualMediaItem, { mediaType: "renderingGallery" }> =>
+      item.mediaType === "renderingGallery"
+  );
+  const renderingGalleryItems = renderingGalleryItem?.items || [];
+  const safeRenderingIndex =
+    renderingGalleryItems.length > 0 ? activeRenderingIndex % renderingGalleryItems.length : 0;
+
+  useEffect(() => {
+    setActiveRenderingIndex(0);
+  }, [project.slug]);
+
+  useEffect(() => {
+    if (renderingGalleryItems.length <= 1) return;
+
+    const timer = window.setTimeout(() => {
+      setActiveRenderingIndex((current) => (current + 1) % renderingGalleryItems.length);
+    }, 5200);
+
+    return () => window.clearTimeout(timer);
+  }, [activeRenderingIndex, renderingGalleryItems.length]);
 
   return (
     <div className="min-h-screen bg-[#111111] text-white">
@@ -655,45 +538,19 @@ export default function ScenicProjectDetail({
               <p className="mx-auto mt-7 max-w-[43rem] text-[clamp(1.02rem,1.35vw,1.28rem)] leading-[1.66] tracking-[-0.02em] text-white/82">
                 {project.excerpt}
               </p>
-            </div>
-          </header>
-        </section>
-
-        <section className="px-[clamp(1.5rem,5vw,5.5rem)] pt-28 md:pt-36">
-          <AnimatedSection>
-            <div className="mx-auto flex w-full max-w-[58rem] items-center justify-between gap-5 border-y border-white/16 py-4 text-white">
-              <div className="min-w-0 text-[0.98rem] font-semibold tracking-[-0.025em] text-white/72">
-                {project.client ? (
-                  project.clientUrl ? (
-                    <a
-                      href={project.clientUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex min-w-0 items-center gap-2 transition-colors hover:text-white"
-                    >
-                      <Link2 className="h-4 w-4 shrink-0" />
-                      <span className="truncate">{project.client}</span>
-                    </a>
-                  ) : (
-                    <span>{project.client}</span>
-                  )
-                ) : (
-                  <span>Scenic Design</span>
-                )}
-              </div>
-              <div className="flex shrink-0 items-center gap-2">
+              <div className="mt-6 flex items-center justify-center gap-2">
                 <button
                   type="button"
                   onClick={handleCopyLink}
                   aria-label={linkCopied ? "Project link copied" : "Copy project link"}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white/56 transition-colors hover:bg-white/[0.08] hover:text-white"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white/62 transition-colors hover:bg-white/[0.08] hover:text-white"
                 >
                   {linkCopied ? <Check className="h-4 w-4" /> : <Link2 className="h-4 w-4" />}
                 </button>
                 <a
                   href={emailShareUrl}
                   aria-label="Share project by email"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white/56 no-underline transition-colors hover:bg-white/[0.08] hover:text-white"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white/62 no-underline transition-colors hover:bg-white/[0.08] hover:text-white"
                 >
                   <Mail className="h-4 w-4" />
                 </a>
@@ -702,7 +559,7 @@ export default function ScenicProjectDetail({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Share project on LinkedIn"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white/56 no-underline transition-colors hover:bg-white/[0.08] hover:text-white"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white/62 no-underline transition-colors hover:bg-white/[0.08] hover:text-white"
                 >
                   <Linkedin className="h-4 w-4" />
                 </a>
@@ -711,530 +568,285 @@ export default function ScenicProjectDetail({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Share project on Facebook"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-[1rem] font-semibold leading-none text-white/56 no-underline transition-colors hover:bg-white/[0.08] hover:text-white"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-[1rem] font-semibold leading-none text-white/62 no-underline transition-colors hover:bg-white/[0.08] hover:text-white"
                 >
                   f
                 </a>
               </div>
             </div>
+          </header>
+        </section>
+
+        <section className="bg-[#111111] px-[clamp(1.5rem,5vw,5.5rem)] py-16 text-white md:py-20">
+          <AnimatedSection>
+            <div className="mx-auto grid w-full max-w-[96rem] gap-x-12 gap-y-12 text-[0.92rem] leading-[1.38] tracking-[-0.018em] md:grid-cols-[minmax(12rem,0.58fr)_minmax(24rem,1.08fr)_minmax(20rem,0.82fr)_minmax(14rem,0.52fr)]">
+              <div className="space-y-8">
+                <div>
+                  <p className="mb-5 text-[0.82rem] font-medium uppercase tracking-[0.08em]">
+                    Info
+                  </p>
+                  <p>{project.title}</p>
+                  {project.client ? <p>{project.client}</p> : null}
+                  {project.year ? <p>{project.year}</p> : null}
+                </div>
+                {projectMetaItems.length ? (
+                  <dl className="space-y-2">
+                    {projectMetaItems.map((item) => (
+                      <div key={item.label} className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-4">
+                        <dt>{item.label}:</dt>
+                        <dd>
+                          {item.value}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                ) : null}
+              </div>
+
+              <div>
+                <p className="mb-5 text-[0.82rem] font-medium uppercase tracking-[0.08em]">
+                  Description
+                </p>
+                <div className="space-y-6">
+                  {projectNarrativeSections.length ? (
+                    projectNarrativeSections.map((section, sectionIndex) => (
+                      <div key={`${section.heading || "description"}-${sectionIndex}`} className="space-y-3">
+                        {section.heading ? <p className="font-medium">{section.heading}</p> : null}
+                        {section.content.map((paragraph, paragraphIndex) => (
+                          <p key={paragraphIndex}>{paragraph}</p>
+                        ))}
+                      </div>
+                    ))
+                  ) : (
+                    <p>{project.excerpt}</p>
+                  )}
+                </div>
+              </div>
+
+              <div id="project-credits" className="scroll-mt-28">
+                <p className="mb-5 text-[0.82rem] font-medium uppercase tracking-[0.08em]">
+                  Credits
+                </p>
+                <div className="space-y-2">
+                  {creativeTeamGroups.map((member) => (
+                    <div
+                      key={`${member.role}-${member.name}`}
+                      className="grid min-w-0 grid-cols-[8.5rem_minmax(0,1fr)] gap-4"
+                    >
+                      <span>{getCreditRoleLabel(member.role)}:</span>
+                      <span>
+                        {member.url ? (
+                          <a
+                            href={member.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="underline decoration-white/30 underline-offset-2 transition-colors hover:decoration-white"
+                          >
+                            {member.name}
+                          </a>
+                        ) : (
+                          <CreditNameLinks
+                            name={member.name}
+                            className="underline decoration-white/30 underline-offset-2 transition-colors hover:decoration-white"
+                          />
+                        )}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <p className="mb-5 text-[0.82rem] font-medium uppercase tracking-[0.08em]">
+                  Tags
+                </p>
+                {project.tags.length ? (
+                  <div className="space-y-1.5">
+                    {project.tags.map((tag) => (
+                      <Link
+                        key={tag.slug}
+                        href={`/projects/tags/${tag.slug}`}
+                        className="block underline decoration-white/30 underline-offset-2 transition-colors hover:decoration-white"
+                      >
+                        {tag.name}
+                      </Link>
+                    ))}
+                  </div>
+                ) : null}
+
+                {projectInfoLinks.length ? (
+                  <div className="mt-9">
+                    <p className="mb-5 text-[0.82rem] font-medium uppercase tracking-[0.08em]">
+                      Links
+                    </p>
+                    <div className="space-y-3">
+                      {projectInfoLinks.map((link) =>
+                        link.external ? (
+                          <a
+                            key={`${link.kind}-${link.href}`}
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group flex items-start justify-between gap-3 underline decoration-white/30 underline-offset-2 transition-colors hover:decoration-white"
+                          >
+                            <span>{link.label}</span>
+                            <ExternalLink className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                          </a>
+                        ) : (
+                          <Link
+                            key={`${link.kind}-${link.href}`}
+                            href={link.href}
+                            className="group flex items-start justify-between gap-3 underline decoration-white/30 underline-offset-2 transition-colors hover:decoration-white"
+                          >
+                            <span>{link.label}</span>
+                            <ChevronRight className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                          </Link>
+                        )
+                      )}
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+            </div>
           </AnimatedSection>
         </section>
 
-        <section id="project-process" className="container max-w-5xl scroll-mt-28 pt-24 md:pt-32">
-          <div className="mx-auto max-w-[54rem] space-y-20 md:space-y-28">
-            {project.sections.map((section, index) => (
-              <div key={`${section.type}-${index}`} className="space-y-0">
-                <AnimatedSection>
-                  {section.type === "text" ? (
-                    <div className="space-y-5">
-                      {getDisplayHeading(section.heading) ? (
-                        <h2 className="font-sans text-[clamp(2rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
-                          {getDisplayHeading(section.heading)}
-                        </h2>
-                      ) : null}
-                      <div className="space-y-8">
-                        {section.content.map((paragraph, paragraphIndex) => (
-                          <p
-                            key={paragraphIndex}
-                            className="text-[1.04rem] leading-[1.9] tracking-[-0.01em] text-white/80"
-                          >
-                            {paragraph}
-                          </p>
-                        ))}
-                      </div>
-                    </div>
-                  ) : null}
+        <section id="project-process" className="scroll-mt-28 bg-[#111111] pb-[clamp(7rem,14vw,15rem)]">
+          <div className="relative left-1/2 w-screen -translate-x-1/2">
+            <div>
+              {visualMediaItems.map((item, index) => {
+                const isFullWidth =
+                  item.mediaType === "image" && (index === 0 || item.display === "full" || item.display === "wide");
+                const alignClass = isFullWidth
+                  ? "w-screen"
+                  : index % 2 === 0
+                    ? "ml-auto w-full md:w-[50vw]"
+                    : "mr-auto w-full md:w-[50vw]";
 
-                  {section.type === "gallery" ? (
-                    (() => {
-                      const galleryItems = section.mediaIds
-                        .map((mediaId) => project.media.find((entry) => entry.id === mediaId))
-                        .filter(
-                          (item): item is LocalScenicProjectMedia & { imageUrl: string } =>
-                            Boolean(item && item.type === "image" && item.imageUrl)
-                        );
-                      const isRenderingGallery =
-                        galleryItems.length > 0 && galleryItems.every((item) => item.kind === "rendering");
-                      if (isRenderingGallery) {
-                        const safeRenderingIndex =
-                          galleryItems.length > 0 ? activeRenderingIndex % galleryItems.length : 0;
-                        const activeGalleryRendering = galleryItems[safeRenderingIndex] || galleryItems[0];
-
-                        return (
-                          <div className="relative left-1/2 w-screen -translate-x-1/2">
-                            {getDisplayHeading(section.heading) ? (
-                              <div className="px-5 pb-8 sm:px-8 lg:px-10">
-                                <h2 className="mx-auto max-w-[54rem] font-sans text-[clamp(2rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
-                                  {getDisplayHeading(section.heading)}
-                                </h2>
-                              </div>
-                            ) : null}
-                            <figure className="site-media-square relative w-screen overflow-hidden bg-black">
-                              <div className="site-media-square relative aspect-video w-screen bg-black">
-                                {galleryItems.map((item, renderingIndex) => (
-                                  <button
-                                    key={item.id}
-                                    type="button"
-                                    onClick={() => openLightboxFor(item.id)}
-                                    className={`site-media-square absolute inset-0 block h-full w-full text-left transition-opacity duration-700 ${
-                                      renderingIndex === safeRenderingIndex ? "opacity-100" : "opacity-0"
-                                    }`}
-                                  >
-                                    <img
-                                      src={item.imageUrl}
-                                      alt={item.altText}
-                                      className="site-media-square absolute inset-0 h-full w-full bg-black object-cover"
-                                      loading={renderingIndex === 0 ? "eager" : "lazy"}
-                                      decoding={renderingIndex === 0 ? "sync" : "async"}
-                                    />
-                                  </button>
-                                ))}
-                                {galleryItems.length > 1 ? (
-                                  <div className="absolute bottom-7 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 rounded-full bg-black/38 px-3 py-2 backdrop-blur-md">
-                                    {galleryItems.map((item, renderingIndex) => (
-                                      <button
-                                        key={item.id}
-                                        type="button"
-                                        aria-label={`Show rendering image ${renderingIndex + 1}`}
-                                        onClick={() => setActiveRenderingIndex(renderingIndex)}
-                                        className={`h-1.5 overflow-hidden rounded-full transition-all duration-300 ${
-                                          renderingIndex === safeRenderingIndex
-                                            ? "w-12 bg-white/22"
-                                            : "w-2.5 bg-white/38 hover:bg-white/58"
-                                        }`}
-                                      >
-                                        {renderingIndex === safeRenderingIndex ? (
-                                          <span
-                                            key={`${item.id}-${safeRenderingIndex}`}
-                                            className="rendering-progress-fill block h-full rounded-full bg-white"
-                                          />
-                                        ) : null}
-                                      </button>
-                                    ))}
-                                  </div>
-                                ) : null}
-                              </div>
-                              {activeGalleryRendering?.caption ? (
-                                <figcaption className="mx-auto max-w-[58rem] px-5 pt-4 text-center text-[0.92rem] leading-6 tracking-[-0.01em] text-white/48">
-                                  {activeGalleryRendering.caption}
-                                </figcaption>
-                              ) : null}
-                            </figure>
-                          </div>
-                        );
-                      }
-
-                      const forceGrid = section.layout === "grid";
-                      const forcePair = section.layout === "pair";
-                      const forceLead = section.layout === "lead";
-                      const galleryRailKey = `gallery-${index}`;
-                      const isProductionOnlyGallery =
-                        galleryItems.length > 0 && galleryItems.every((item) => item.kind === "production");
-                      const isFinalProductionGallery =
-                        isProductionOnlyGallery &&
-                        index === lastProductionGalleryIndex &&
-                        productionGallerySectionIndexes.length > 1;
-
-                      if (
-                        isFinalProductionGallery &&
-                        galleryItems.length > 1 &&
-                        !forcePair &&
-                        !forceLead &&
-                        !forceGrid
-                      ) {
-                        const featureItem = galleryItems[0];
-                        const railItems = galleryItems.slice(1);
-
-                        return (
-                          <div className="relative left-1/2 w-screen -translate-x-1/2 space-y-10 px-[clamp(0.9rem,1.8vw,1.35rem)] md:space-y-12">
-                            {getDisplayHeading(section.heading) ? (
-                              <h2 className="mx-auto max-w-[54rem] font-sans text-[clamp(2rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
-                                {getDisplayHeading(section.heading)}
-                              </h2>
-                            ) : null}
-
-                            <ProjectGalleryFigure
-                              item={featureItem}
-                              variant="lead"
-                              onOpen={() => openLightboxFor(featureItem.id)}
-                            />
-
-                            <div className="space-y-5">
-                              <div
-                                ref={(element) => {
-                                  galleryRailRefs.current[galleryRailKey] = element;
-                                }}
-                                className="overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-                              >
-                                <div className="flex min-w-max gap-[clamp(0.9rem,1.8vw,1.35rem)] pr-[clamp(0.9rem,1.8vw,1.35rem)]">
-                                  {railItems.map((item) => (
-                                    <div key={item.id} className="shrink-0">
-                                      <ProjectGalleryFigure
-                                        item={item}
-                                        variant="rail"
-                                        onOpen={() => openLightboxFor(item.id)}
-                                      />
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                              {railItems.length > 1 ? (
-                                <div className="flex justify-end gap-3">
-                                  <button
-                                    type="button"
-                                    onClick={() => scrollGalleryRail(galleryRailKey, "previous")}
-                                    className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/[0.08] text-white/62 transition-colors hover:bg-white hover:text-black"
-                                    aria-label="Previous production images"
-                                  >
-                                    <ChevronLeft className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
-                                  </button>
-                                  <button
-                                    type="button"
-                                    onClick={() => scrollGalleryRail(galleryRailKey, "next")}
-                                    className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/[0.12] text-white/72 transition-colors hover:bg-white hover:text-black"
-                                    aria-label="Next production images"
-                                  >
-                                    <ChevronRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
-                                  </button>
-                                </div>
-                              ) : null}
-                            </div>
-                          </div>
-                        );
-                      }
-
-                      if (galleryItems.length === 1) {
-                        const item = galleryItems[0];
-
-                        return (
-                          <div className="relative left-1/2 w-screen -translate-x-1/2 space-y-10 px-[clamp(0.9rem,1.8vw,1.35rem)] md:space-y-12">
-                            {getDisplayHeading(section.heading) ? (
-                              <h2 className="mx-auto max-w-[54rem] font-sans text-[clamp(2rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
-                                {getDisplayHeading(section.heading)}
-                              </h2>
-                            ) : null}
-                            <ProjectGalleryFigure
-                              item={item}
-                              variant="single"
-                              onOpen={() => openLightboxFor(item.id)}
-                            />
-                          </div>
-                        );
-                      }
-
-                      if ((galleryItems.length === 2 || forcePair) && !forceLead && !forceGrid) {
-                        return (
-                          <div className="relative left-1/2 w-screen -translate-x-1/2 space-y-10 px-[clamp(0.9rem,1.8vw,1.35rem)] md:space-y-12">
-                            {getDisplayHeading(section.heading) ? (
-                              <h2 className="mx-auto max-w-[54rem] font-sans text-[clamp(2rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
-                                {getDisplayHeading(section.heading)}
-                              </h2>
-                            ) : null}
-                            <div className="grid gap-[clamp(0.9rem,1.8vw,1.35rem)] md:grid-cols-2">
-                              {galleryItems.map((item) => (
-                                <ProjectGalleryFigure
-                                  key={item.id}
-                                  item={item}
-                                  variant="pair"
-                                  onOpen={() => openLightboxFor(item.id)}
-                                />
-                              ))}
-                            </div>
-                          </div>
-                        );
-                      }
-
-                      const firstPairItems = galleryItems.slice(0, 2);
-                      const secondPairItems = galleryItems.slice(2, 4);
-                      const featureItem = galleryItems[4];
-                      const railItems = galleryItems.slice(5);
-
-                      return (
-                        <div className="relative left-1/2 w-screen -translate-x-1/2 space-y-10 px-[clamp(0.9rem,1.8vw,1.35rem)] md:space-y-12">
-                          {getDisplayHeading(section.heading) ? (
-                            <h2 className="mx-auto max-w-[54rem] font-sans text-[clamp(2rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
-                              {getDisplayHeading(section.heading)}
-                            </h2>
-                          ) : null}
-
-                          {firstPairItems.length > 0 ? (
-                            <div className="grid gap-[clamp(0.9rem,1.8vw,1.35rem)] md:grid-cols-2">
-                              {firstPairItems.map((item) => (
-                                <ProjectGalleryFigure
-                                  key={item.id}
-                                  item={item}
-                                  variant="pair"
-                                  onOpen={() => openLightboxFor(item.id)}
-                                />
-                              ))}
-                            </div>
-                          ) : null}
-
-                          {secondPairItems.length > 0 ? (
-                            secondPairItems.length === 1 ? (
-                              <ProjectGalleryFigure
-                                item={secondPairItems[0]}
-                                variant="lead"
-                                onOpen={() => openLightboxFor(secondPairItems[0].id)}
-                              />
-                            ) : (
-                              <div className="grid gap-[clamp(0.9rem,1.8vw,1.35rem)] md:grid-cols-2">
-                                {secondPairItems.map((item) => (
-                                  <ProjectGalleryFigure
-                                    key={item.id}
-                                    item={item}
-                                    variant="pair"
-                                    onOpen={() => openLightboxFor(item.id)}
-                                  />
-                                ))}
-                              </div>
-                            )
-                          ) : null}
-
-                          {featureItem ? (
-                            <ProjectGalleryFigure
-                              item={featureItem}
-                              variant="lead"
-                              onOpen={() => openLightboxFor(featureItem.id)}
-                            />
-                          ) : null}
-
-                          {railItems.length > 0 ? (
-                            <div className="space-y-5">
-                              <div
-                                ref={(element) => {
-                                  galleryRailRefs.current[galleryRailKey] = element;
-                                }}
-                                className="overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-                              >
-                                <div className="flex min-w-max gap-[clamp(0.9rem,1.8vw,1.35rem)] pr-[clamp(0.9rem,1.8vw,1.35rem)]">
-                                  {railItems.map((item) => (
-                                    <div key={item.id} className="shrink-0">
-                                      <ProjectGalleryFigure
-                                        item={item}
-                                        variant="rail"
-                                        onOpen={() => openLightboxFor(item.id)}
-                                      />
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                              {railItems.length > 1 ? (
-                                <div className="flex justify-end gap-3">
-                                  <button
-                                    type="button"
-                                    onClick={() => scrollGalleryRail(galleryRailKey, "previous")}
-                                    className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/[0.08] text-white/62 transition-colors hover:bg-white hover:text-black"
-                                    aria-label="Previous production images"
-                                  >
-                                    <ChevronLeft className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
-                                  </button>
-                                  <button
-                                    type="button"
-                                    onClick={() => scrollGalleryRail(galleryRailKey, "next")}
-                                    className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/[0.12] text-white/72 transition-colors hover:bg-white hover:text-black"
-                                    aria-label="Next production images"
-                                  >
-                                    <ChevronRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
-                                  </button>
-                                </div>
-                              ) : null}
-                            </div>
-                          ) : null}
+                return (
+                  <AnimatedSection key={item.key} className="site-media-square">
+                    <figure className="site-media-square space-y-4">
+                      {item.mediaType === "image" ? (
+                        <img
+                          src={item.imageUrl}
+                          alt={item.altText}
+                          className={`site-media-square block bg-[#111111] object-contain ${alignClass} ${
+                            isFullWidth ? "h-auto" : "aspect-[3/2]"
+                          }`}
+                          loading={index < 2 ? "eager" : "lazy"}
+                          decoding={index < 2 ? "sync" : "async"}
+                        />
+                      ) : item.mediaType === "video" ? (
+                        <div className={alignClass}>
+                          <AutoPlayEmbed url={item.videoUrl} title={item.title} />
                         </div>
-                      );
-                    })()
-                  ) : null}
+                      ) : (
+                        <div className={`site-media-square relative aspect-[3/2] overflow-hidden bg-black ${alignClass}`}>
+                          {item.items.map((rendering, renderingIndex) => (
+                            <img
+                              key={rendering.key}
+                              src={rendering.imageUrl}
+                              alt={rendering.altText}
+                              className={`site-media-square absolute inset-0 h-full w-full bg-black object-contain transition-opacity duration-700 ${
+                                renderingIndex === safeRenderingIndex ? "opacity-100" : "opacity-0"
+                              }`}
+                              loading={renderingIndex === 0 ? "eager" : "lazy"}
+                              decoding={renderingIndex === 0 ? "sync" : "async"}
+                            />
+                          ))}
 
-                  {section.type === "video" ? (
-                    <div className="space-y-5">
-                      {section.content?.map((paragraph, paragraphIndex) => (
-                        <p
-                          key={paragraphIndex}
-                          className="text-[1.04rem] leading-[1.9] tracking-[-0.01em] text-white/80"
+                          <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full bg-black/42 px-3 py-2 backdrop-blur-md">
+                            {item.items.map((rendering, renderingIndex) => (
+                              <button
+                                key={rendering.key}
+                                type="button"
+                                aria-label={`Show rendering ${renderingIndex + 1}`}
+                                onClick={() => setActiveRenderingIndex(renderingIndex)}
+                                className={`h-1.5 rounded-full transition-all duration-300 ${
+                                  renderingIndex === safeRenderingIndex
+                                    ? "w-10 bg-white"
+                                    : "w-2.5 bg-white/42 hover:bg-white/70"
+                                }`}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {item.caption ? (
+                        <figcaption
+                          className={`max-w-[44rem] px-[clamp(1.5rem,5vw,5.5rem)] text-[0.9rem] leading-6 tracking-[-0.01em] text-white/48 ${
+                            !isFullWidth && index % 2 === 0 ? "ml-auto md:w-[50vw]" : ""
+                          }`}
                         >
-                          {paragraph}
-                        </p>
-                      ))}
-                      {(() => {
-                        const media = project.media.find((entry) => entry.id === section.mediaId);
-                        if (!media?.videoUrl) return null;
-                        return <AutoPlayEmbed url={media.videoUrl} title={`${project.title} walkthrough`} />;
-                      })()}
-                    </div>
-                  ) : null}
-                </AnimatedSection>
-                {project.creativeTeam.length > 0 && index === creativeTeamInsertIndex ? renderCreativeTeam() : null}
-              </div>
-            ))}
+                          {item.caption}
+                        </figcaption>
+                      ) : null}
+                    </figure>
+                  </AnimatedSection>
+                );
+              })}
+            </div>
           </div>
         </section>
 
-        {(project.creativeTeam.length > 0 || project.links?.length || relatedArticles.length > 0 || moreScenicProjects.length > 0) ? (
-          <section className="container max-w-[88rem] pt-14 md:pt-18">
-            {(project.links?.length || relatedArticles.length > 0) ? (
-              <AnimatedSection className="mb-20 md:mb-28">
-                <div className="mx-auto max-w-[54rem] rounded-[1.55rem] bg-black px-6 py-7 shadow-[0_24px_70px_rgba(0,0,0,0.26)] md:px-8 md:py-8">
-                  <div className="mb-6 grid gap-3 border-b border-white/10 pb-6 md:grid-cols-[minmax(0,0.62fr)_minmax(18rem,0.38fr)] md:items-end">
-                    <div>
-                      <p className="text-[clamp(1rem,1.35vw,1.22rem)] font-medium leading-none tracking-[-0.035em] text-white/46">
-                        Project links
-                      </p>
-                      <h2 className="mt-3 font-sans text-[clamp(1.8rem,3vw,3.1rem)] font-medium leading-[0.92] tracking-[-0.065em] text-white">
-                        Related project context.
-                      </h2>
-                    </div>
-                    <p className="max-w-[23rem] text-[0.98rem] leading-6 tracking-[-0.02em] text-white/54 md:justify-self-end">
-                      Production pages and writing connected to this scenic design.
-                    </p>
-                  </div>
-                  <div className="divide-y divide-white/10">
-                    {relatedArticles.map((article) => (
-                      <Link
-                        key={article.slug}
-                        href={`/articles/${article.slug}`}
-                        className="group grid gap-4 py-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
-                      >
-                        <div className="min-w-0">
-                          <div className="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.82rem] font-medium tracking-[-0.01em] text-white/42">
-                            <span>Article</span>
-                            <span>{article.series?.name || article.categoryName}</span>
-                            <span>{formatUtcDate(article.publishedAt, "short")}</span>
-                          </div>
-                          <h3 className="text-[1.15rem] leading-snug tracking-[-0.035em] text-white/88 transition-colors group-hover:text-white md:text-[1.32rem]">
-                            {article.title}
-                          </h3>
-                        </div>
-                        <span className="inline-flex items-center gap-2 text-[0.9rem] tracking-[-0.01em] text-white/42 transition-colors group-hover:text-white/72">
-                          Read
-                          <ChevronRight className="h-4 w-4" aria-hidden="true" />
-                        </span>
-                      </Link>
-                    ))}
-                    {(project.links || []).map((link) => (
-                      <a
-                        key={link.url}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group grid gap-4 py-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
-                      >
-                        <div className="min-w-0">
-                          <div className="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.82rem] font-medium tracking-[-0.01em] text-white/42">
-                            <span>Production page</span>
-                            {project.year ? <span>{project.year}</span> : null}
-                          </div>
-                          <h3 className="text-[1.15rem] leading-snug tracking-[-0.035em] text-white/88 transition-colors group-hover:text-white md:text-[1.32rem]">
-                            {link.label}
-                          </h3>
-                        </div>
-                        <span className="inline-flex items-center gap-2 text-[0.9rem] tracking-[-0.01em] text-white/42 transition-colors group-hover:text-white/72">
-                          Open
-                          <ExternalLink className="h-4 w-4" aria-hidden="true" />
-                        </span>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </AnimatedSection>
-            ) : null}
-
-            {moreScenicProjects.length > 0 ? (
-              <AnimatedSection>
-                <div className="relative left-1/2 w-screen -translate-x-1/2 border-t border-white/12 bg-[#111111] py-16 md:py-24">
-                  <div className="px-[clamp(1.5rem,5vw,6rem)]">
-                    <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-                      <div>
-                        <p className="text-[clamp(1.05rem,1.4vw,1.3rem)] font-medium leading-none tracking-[-0.035em] text-white/46">
-                          Scenic design portfolio
-                        </p>
-                        <h2 className="mt-3 max-w-[12ch] bg-gradient-to-r from-[#2f6dff] via-[#9d4edd] to-[#d6a8ff] bg-clip-text pb-[0.08em] font-sans text-[clamp(2.4rem,5.2vw,5.4rem)] font-medium leading-[0.98] tracking-[-0.075em] text-transparent">
-                          More scenic design.
-                        </h2>
-                      </div>
-                      <Link
-                        href="/projects"
-                        className="inline-flex h-11 w-fit items-center justify-center rounded-full border border-[#9d4edd]/72 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-[#e0aaff] transition-colors hover:border-[#c77dff] hover:text-white"
-                      >
-                        View portfolio
-                      </Link>
-                    </div>
-                  </div>
-
-                  <div
-                    ref={moreScenicCardsRef}
-                    className="overflow-x-auto px-[clamp(1.5rem,5vw,6rem)] pb-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        {moreScenicProjects.length > 0 ? (
+          <section className="bg-[#111111] pt-16 text-white md:pt-24">
+            <AnimatedSection>
+              <div className="px-[clamp(1.5rem,5vw,6rem)] pb-10">
+                <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+                  <h2 className="max-w-[12ch] font-sans text-[clamp(2.6rem,5.6vw,6rem)] font-medium leading-[0.88] tracking-[-0.07em] text-white">
+                    More scenic design.
+                  </h2>
+                  <Link
+                    href="/projects"
+                    className="inline-flex h-11 w-fit items-center justify-center rounded-full border border-white/18 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-white/72 transition-colors hover:border-white/38 hover:text-white"
                   >
-                    <div className="flex min-w-max gap-5 pr-[clamp(1.5rem,5vw,6rem)]">
-                      {moreScenicProjects.slice(0, 12).map((item) => (
-                      <Link
-                        key={item.slug}
-                        href={`/project/${item.slug}`}
-                        className="group relative flex h-[30rem] w-[min(21rem,78vw)] flex-col justify-end overflow-hidden rounded-[2rem] bg-black p-6 text-white shadow-[0_20px_58px_rgba(0,0,0,0.32)] ring-1 ring-white/[0.06] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_26px_68px_rgba(0,0,0,0.4)] md:w-[22rem]"
-                        aria-label={`Scenic design project: ${item.title}`}
-                      >
-                        {item.coverImageUrl ? (
-                          <img
-                            src={item.coverImageUrl}
-                            alt={`${item.title} scenic design image`}
-                            className="site-media-square absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.035]"
-                            loading="lazy"
-                          />
-                        ) : null}
-                        <div className="absolute inset-0 bg-black/18" />
-                        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/88 via-black/48 to-transparent" />
-                        <div className="absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-black/28 to-transparent" />
+                    Portfolio index
+                  </Link>
+                </div>
+              </div>
 
-                        <div className="relative z-10">
-                          <p className="font-sans text-[0.74rem] font-semibold tracking-[-0.015em] text-white/68">
-                            {item.subcategory || "Scenic Design"}
-                          </p>
-                          <h3 className="mt-3 max-w-[13ch] font-sans text-[1.64rem] font-medium leading-[0.98] tracking-[-0.055em] text-white">
+              <div className="grid grid-cols-1 border-l border-white/12 md:grid-cols-4">
+                  {moreScenicProjects.map((item, index) => (
+                    <Link
+                      key={item.slug}
+                      href={`/project/${item.slug}`}
+                      className={`group block border-b border-r border-white/12 text-white ${
+                        index % 6 < 2 ? "md:col-span-2" : ""
+                      }`}
+                    >
+                      <article className="bg-[#111111]">
+                        <div className="site-media-square relative aspect-[4/3] overflow-hidden bg-[#181818]">
+                          {item.coverImageUrl ? (
+                            <img
+                              src={item.coverImageUrl}
+                              alt={`${item.title} scenic design cover image`}
+                              className="site-media-square h-full w-full object-cover transition-opacity duration-500 group-hover:opacity-[0.88]"
+                              loading="lazy"
+                            />
+                          ) : null}
+                        </div>
+                        <div className="min-h-[8.5rem] border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white">
+                          <h3 className="max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors group-hover:text-white/72">
                             {item.title}
                           </h3>
-                          <p className="mt-4 max-w-[18rem] text-[0.94rem] leading-6 tracking-[-0.012em] text-white/68">
-                            {[item.client || item.subcategory, item.year].filter(Boolean).join(" / ")}
-                          </p>
+                          {item.client ? (
+                            <p className="mt-2 max-w-[18ch] font-sans text-[0.94rem] leading-tight tracking-[-0.025em] text-white/52">
+                              {item.client}
+                            </p>
+                          ) : null}
                         </div>
-                      </Link>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="-mt-5 flex justify-end gap-3 px-[clamp(1.5rem,5vw,6rem)]">
-                    <button
-                      type="button"
-                      onClick={() => scrollMoreScenicCards("previous")}
-                      className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/[0.08] text-white/62 transition-colors hover:bg-white hover:text-black"
-                      aria-label="Previous scenic design projects"
-                    >
-                      <ChevronLeft className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => scrollMoreScenicCards("next")}
-                      className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/[0.12] text-white/72 transition-colors hover:bg-white hover:text-black"
-                      aria-label="Next scenic design projects"
-                    >
-                      <ChevronRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
-                    </button>
-                  </div>
+                      </article>
+                    </Link>
+                  ))}
                 </div>
-              </AnimatedSection>
-            ) : null}
+            </AnimatedSection>
           </section>
         ) : null}
+
       </main>
 
-      {lightboxIndex !== null ? (
-        <Lightbox
-          images={lightboxImages}
-          currentIndex={lightboxIndex}
-          onClose={() => setLightboxIndex(null)}
-          onNext={() => setLightboxIndex((current) => (current === null ? current : Math.min(current + 1, lightboxImages.length - 1)))}
-          onPrev={() => setLightboxIndex((current) => (current === null ? current : Math.max(current - 1, 0)))}
-        />
-      ) : null}
       <Footer />
     </div>
   );

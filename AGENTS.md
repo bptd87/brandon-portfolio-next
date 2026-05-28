@@ -8,7 +8,7 @@ This repository has triggered resource exhaustion during broad automated analysi
 - Read the smallest relevant files or file ranges before changing code.
 - Prefer known entry points from the user's request over repository-wide discovery.
 - Check config files first when diagnosing setup issues: `package.json`, `next.config.*`, `tsconfig.json`, `.gitignore`, and this file.
-- Do not run a full build until the repo is stable or the user explicitly asks for it.
+- Do not run a full build until the repo is stable, the user explicitly asks for it, or the task is a deploy/publish validation pass.
 - Do not refactor without a short plan and confirmation of scope.
 - Do not quarantine, delete, or reorganize files while the repo is in recovery mode.
 
@@ -42,5 +42,5 @@ This repository has triggered resource exhaustion during broad automated analysi
 - Keep browser verification to one route at a time, and avoid repeated screenshots on image-heavy pages unless the user explicitly asks.
 - Read only the newest relevant log lines, and stop if logs contain repeated large hydration or stack traces.
 - Stop local dev servers after crash triage unless the user is actively visually reviewing the page.
-- Use full builds only after targeted checks pass and the user is ready.
+- Use full production builds for deploy/publish validation once targeted checks pass or the user explicitly asks for the site to update.
 - If a command starts consuming excessive memory or time, stop and report the smallest useful next step.

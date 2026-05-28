@@ -7,6 +7,7 @@ import { Link } from "wouter";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import PortfolioTopBar from "@/components/PortfolioTopBar";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { formatUtcDate } from "@/lib/date-format";
@@ -204,8 +205,9 @@ export default function AssistantScenicDesign() {
         }}
       />
       <Header />
+      <PortfolioTopBar />
 
-      <section className="relative min-h-[calc(100svh-74px)] overflow-hidden border-b border-border bg-black">
+      <section className="relative min-h-[calc(100svh-138px)] overflow-hidden bg-black">
         {leadHighlightEntry?.coverImageUrl ? (
           <Image
             src={leadHighlightEntry.coverImageUrl}
@@ -219,7 +221,7 @@ export default function AssistantScenicDesign() {
         ) : null}
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.32)_48%,rgba(0,0,0,0.88)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.58)_0%,rgba(0,0,0,0.24)_48%,rgba(0,0,0,0.4)_100%)]" />
-        <div className="relative flex min-h-[calc(100svh-74px)] items-end px-[clamp(1.5rem,5vw,5.5rem)] pb-10 pt-24 md:pb-16">
+        <div className="relative flex min-h-[calc(100svh-138px)] items-end px-[clamp(1.5rem,5vw,6rem)] pb-10 pt-12 md:pb-16 md:pt-16">
           <AnimatedSection>
             <div className="max-w-[72rem]">
               <p className="section-kicker text-white/62">
