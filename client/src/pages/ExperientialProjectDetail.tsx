@@ -1,9 +1,9 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Link } from "wouter";
-import { Check, ChevronLeft, ChevronRight, Link2, Linkedin, Mail } from "lucide-react";
+import { Check, Link2, Linkedin, Mail } from "lucide-react";
 
 import DeferredYouTubeEmbed from "@/components/DeferredYouTubeEmbed";
 import Footer from "@/components/Footer";
@@ -11,7 +11,6 @@ import Header from "@/components/Header";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Lightbox } from "@/components/Lightbox";
 import { ProgressiveImage } from "@/components/ProgressiveImage";
-import ScenicRenderingGallery from "@/components/ScenicRenderingGallery";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { copyTextToClipboard } from "@/lib/clipboard";
@@ -55,27 +54,6 @@ function getYoutubeId(url: string) {
   } catch {
     return url.split("/").pop() || "";
   }
-}
-
-function getYoutubeBackgroundEmbedUrl(url: string) {
-  const videoId = getYoutubeId(url);
-  if (!videoId) return "";
-
-  const params = new URLSearchParams({
-    autoplay: "1",
-    controls: "0",
-    disablekb: "1",
-    fs: "0",
-    iv_load_policy: "3",
-    loop: "1",
-    modestbranding: "1",
-    mute: "1",
-    playsinline: "1",
-    playlist: videoId,
-    rel: "0",
-  });
-
-  return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
 }
 
 function getYoutubePosterUrl(url: string) {
@@ -127,57 +105,54 @@ function SampleGallery({
     sample.videoUrl && sample.category === "live-events"
       ? galleryItems.filter((image) => image.source === "attached")
       : galleryItems;
-  const nonTechnicalFrameClass = sample.category === "rendering" ? "aspect-[3/2] bg-black" : "aspect-video bg-black";
-  const nonTechnicalImageClass = sample.category === "rendering" ? "object-contain" : "object-cover";
+  const imageClass = sample.category === "rendering" || sample.category === "technical-drawing" ? "object-contain" : "object-cover";
+  const getFigureClass = (index: number) => {
+    const pattern = index % 4;
+    if (pattern === 1) return "md:ml-auto md:w-[58vw]";
+    if (pattern === 2) return "md:w-[50vw]";
+    if (pattern === 3) return "md:mx-auto md:w-[72vw]";
+    return "w-full";
+  };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-14 py-8 md:space-y-20 md:py-12">
       {sample.videoUrl ? (
-        <DeferredYouTubeEmbed
-          videoId={getYoutubeId(sample.videoUrl)}
-          title={sample.displayTitle}
-          className="overflow-hidden rounded-[1.5rem]"
-          eagerPoster
-          showLabel={false}
-        />
+        <div className="mx-auto w-full px-[clamp(1.5rem,5vw,6rem)]">
+          <DeferredYouTubeEmbed
+            videoId={getYoutubeId(sample.videoUrl)}
+            title={sample.displayTitle}
+            className="overflow-hidden rounded-none"
+            eagerPoster
+            showLabel={false}
+          />
+        </div>
       ) : null}
 
-      {sample.category === "technical-drawing" ? (
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-          {displayGalleryItems.map((image) => (
-            <figure key={image.id} className="site-media-square bg-transparent">
+      {displayGalleryItems.length > 0 ? (
+        <div className="space-y-14 md:space-y-20">
+          {displayGalleryItems.map((image, index) => (
+            <figure
+              key={image.id}
+              className={`bg-[#111111] px-[clamp(1.5rem,5vw,6rem)] ${getFigureClass(index)}`}
+            >
               <button type="button" onClick={() => onOpenImage(image.id)} className="block w-full text-left">
-                <div className="site-media-square flex aspect-[3/2] items-center justify-center overflow-hidden bg-black">
+                <div className="site-media-square flex min-h-[62vh] items-center justify-center overflow-hidden bg-[#111111] md:min-h-[72vh]">
                   <img
                     src={image.imageUrl}
                     alt={image.altText}
                     style={{ borderRadius: 0 }}
-                    className="site-media-square block h-full w-full bg-white object-contain shadow-[0_0_0_1px_rgba(255,255,255,0.16)] transition-opacity duration-500 hover:opacity-90"
+                    className={`site-media-square block h-full w-full transition-opacity duration-500 hover:opacity-90 ${imageClass}`}
                   />
                 </div>
               </button>
+              {image.caption ? (
+                <figcaption className="p-4 text-[0.92rem] leading-6 tracking-[-0.01em] text-white/56">
+                  {image.caption}
+                </figcaption>
+              ) : null}
             </figure>
           ))}
         </div>
-      ) : displayGalleryItems.length > 1 ? (
-        <ScenicRenderingGallery
-          items={displayGalleryItems}
-          onOpen={onOpenImage}
-          visibleCount={displayGalleryItems.length > 3 ? 4 : 3}
-          containItems
-        />
-      ) : displayGalleryItems[0] ? (
-        <figure className="space-y-3">
-          <button type="button" onClick={() => onOpenImage(displayGalleryItems[0].id)} className="block w-full text-left">
-            <div className={`overflow-hidden rounded-[1.5rem] ${nonTechnicalFrameClass}`}>
-              <img
-                src={displayGalleryItems[0].imageUrl}
-                alt={displayGalleryItems[0].altText}
-                className={`block h-full w-full transition-transform duration-500 hover:scale-[1.01] ${nonTechnicalImageClass}`}
-              />
-            </div>
-          </button>
-        </figure>
       ) : null}
     </div>
   );
@@ -196,22 +171,26 @@ function MediaSection({
 
   return (
     <AnimatedSection>
-      <div className="grid gap-8 border-t border-white/12 pt-10 md:grid-cols-[minmax(11rem,0.28fr)_minmax(0,1fr)] md:gap-12 md:pt-14">
-        <div className="md:sticky md:top-28 md:self-start">
-          <p className="mb-4 text-[0.76rem] font-medium uppercase tracking-[0.18em] text-[#c9ff3d]">
+      <div className="border-t border-white/12">
+        <div className="grid gap-6 px-[clamp(1.5rem,5vw,6rem)] py-10 md:grid-cols-[minmax(12rem,0.34fr)_minmax(0,1fr)] md:gap-12 md:py-14">
+          <div>
+            <p className="mb-4 text-[0.76rem] font-medium uppercase tracking-[0.18em] text-[#c9ff3d]">
             Project media
-          </p>
-          <h2 className="font-sans text-[clamp(1.85rem,2.7vw,2.8rem)] font-medium leading-[0.92] text-white">
-            {MEDIA_LABELS[category]}
-          </h2>
+            </p>
+            <h2 className="font-sans text-[clamp(2.2rem,4vw,4.8rem)] font-medium leading-[0.9] tracking-[-0.065em] text-white">
+              {MEDIA_LABELS[category]}
+            </h2>
+          </div>
         </div>
 
-        <div className="space-y-12 md:space-y-16">
+        <div>
           {samples.map((sample) => (
-            <div key={sample.id} className="space-y-5">
-              <h3 className="font-sans text-[clamp(1.35rem,2vw,1.95rem)] font-medium leading-[0.98] tracking-[-0.04em] text-white">
-                {sample.displayTitle}
-              </h3>
+            <div key={sample.id}>
+              <div className="border-y border-white/10 px-[clamp(1.5rem,5vw,6rem)] py-5">
+                <h3 className="font-sans text-[clamp(1.35rem,2vw,1.95rem)] font-medium leading-[0.98] tracking-[-0.04em] text-white">
+                  {sample.displayTitle}
+                </h3>
+              </div>
               <SampleGallery sample={sample} onOpenImage={onOpenImage} />
             </div>
           ))}
@@ -242,7 +221,6 @@ export default function ExperientialProjectDetail({
   const project = getLocalExperientialProjectBySlug(normalizedSlug);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [linkCopied, setLinkCopied] = useState(false);
-  const moreExperientialCardsRef = useRef<HTMLDivElement | null>(null);
 
   const allProjects = getLocalExperientialProjects();
   const galleryImages = useMemo(() => (project ? buildProjectGalleryImages(project) : []), [project]);
@@ -259,7 +237,8 @@ export default function ExperientialProjectDetail({
         const timeCompare = getProjectTimestamp(b) - getProjectTimestamp(a);
         if (timeCompare !== 0) return timeCompare;
         return a.title.localeCompare(b.title);
-      });
+      })
+      .slice(0, 6);
   }, [allProjects, project]);
 
   if (!project) {
@@ -294,12 +273,14 @@ export default function ExperientialProjectDetail({
   }));
   const projectDateLabel = project.year ? `${project.year}` : null;
   const mediaTypeLabel = project.mediaTypes.map((category) => MEDIA_LABELS[category]).join(" · ");
-  const scrollMoreExperientialCards = (direction: "previous" | "next") => {
-    moreExperientialCardsRef.current?.scrollBy({
-      left: direction === "next" ? 760 : -760,
-      behavior: "smooth",
-    });
-  };
+  const portfolioNoteSections = project.sections.length
+    ? project.sections
+    : [{ heading: "Project Note", paragraphs: [project.summary] }];
+  const portfolioTags = [
+    "Experiential Design",
+    ...project.mediaTypes.map((category) => MEDIA_LABELS[category]),
+    project.year ? String(project.year) : null,
+  ].filter((tag): tag is string => Boolean(tag));
   const openImageByKey = (key: string) => {
     const nextIndex = imageIndexByKey.get(key);
     if (nextIndex === undefined) return;
@@ -424,60 +405,72 @@ export default function ExperientialProjectDetail({
           </AnimatedSection>
         </section>
 
-        <section className="border-y border-white/12 bg-[#0d0d0d] px-[clamp(1.5rem,5vw,6rem)] py-6 md:py-7">
+        <section className="border-y border-white/12 bg-[#111111] px-[clamp(1.5rem,5vw,6rem)] py-16 text-white md:py-20">
           <AnimatedSection>
-            <div className="flex flex-wrap gap-x-8 gap-y-4">
-              {[
-                ["Role", "Scenic designer / artist"],
-                ["Media", mediaTypeLabel || "Case study"],
-                ["Context", project.year ? String(project.year) : "Project study"],
-              ].map(([label, value]) => (
-                <div key={label} className="min-w-[11rem]">
-                  <p className="text-[0.68rem] font-medium uppercase tracking-[0.18em] text-white/36">
-                    {label}
-                  </p>
-                  <p className="mt-2 font-sans text-[1rem] font-medium leading-tight text-white/82">
-                    {value}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </AnimatedSection>
-        </section>
-
-        {project.sections.length > 0 ? (
-          <section className="container max-w-6xl pt-10 md:pt-14">
-            <AnimatedSection>
-              <div className="mx-auto grid max-w-[72rem] gap-8 pt-10 md:grid-cols-[minmax(11rem,0.28fr)_minmax(0,1fr)] md:gap-12">
+            <div className="mx-auto grid w-full max-w-[96rem] gap-x-12 gap-y-12 text-[0.92rem] leading-[1.38] tracking-[-0.018em] md:grid-cols-[minmax(12rem,0.58fr)_minmax(24rem,1.08fr)_minmax(14rem,0.52fr)]">
+              <div className="space-y-8">
                 <div>
-                  <p className="mb-4 text-[0.76rem] font-medium uppercase tracking-[0.18em] text-[#c9ff3d]">
-                    Project note
+                  <p className="mb-5 text-[0.82rem] font-medium uppercase tracking-[0.08em] text-[#c9ff3d]">
+                    Info
                   </p>
-                  <h2 className="font-sans text-[clamp(1.85rem,2.7vw,2.8rem)] font-medium leading-[0.92] text-white">
-                    Context
-                  </h2>
+                  <p>{project.title}</p>
+                  {projectDateLabel ? <p>{projectDateLabel}</p> : null}
                 </div>
-                <div className="grid gap-8 md:grid-cols-2">
-                  {project.sections.slice(0, 2).map((section) => (
-                    <div key={section.heading} className="space-y-3">
-                      <h3 className="font-sans text-[1.15rem] font-medium leading-tight text-white">
+                <dl className="space-y-2">
+                  <div className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-4">
+                    <dt>Role:</dt>
+                    <dd>Scenic designer / artist</dd>
+                  </div>
+                  <div className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-4">
+                    <dt>Media:</dt>
+                    <dd>{mediaTypeLabel || "Project"}</dd>
+                  </div>
+                  {projectDateLabel ? (
+                    <div className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-4">
+                      <dt>Year:</dt>
+                      <dd>{projectDateLabel}</dd>
+                    </div>
+                  ) : null}
+                </dl>
+              </div>
+
+              <div>
+                <p className="mb-5 text-[0.82rem] font-medium uppercase tracking-[0.08em] text-[#c9ff3d]">
+                  Description
+                </p>
+                <div className="space-y-8">
+                  {portfolioNoteSections.map((section, sectionIndex) => (
+                    <div key={`${section.heading}-${sectionIndex}`} className="space-y-5">
+                      <p className="font-medium text-white">
                         {section.heading}
-                      </h3>
-                      {section.paragraphs[0] ? (
-                        <p className="max-w-xl text-[0.98rem] leading-7 tracking-[-0.01em] text-white/62">
-                          {section.paragraphs[0]}
+                      </p>
+                      {section.paragraphs.map((paragraph, paragraphIndex) => (
+                        <p key={paragraphIndex} className="text-white/72">
+                          {paragraph}
                         </p>
-                      ) : null}
+                      ))}
                     </div>
                   ))}
                 </div>
               </div>
-            </AnimatedSection>
-          </section>
-        ) : null}
 
-        <section className="container max-w-6xl pt-12 pb-16 md:pt-16 md:pb-24">
-          <div className="mx-auto max-w-[72rem] space-y-20 md:space-y-24">
+              <div>
+                <p className="mb-5 text-[0.82rem] font-medium uppercase tracking-[0.08em] text-[#c9ff3d]">
+                  Tags
+                </p>
+                <div className="space-y-2">
+                  {portfolioTags.map((tag) => (
+                    <p key={tag} className="text-white/64">
+                      {tag}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+        </section>
+        <section className="bg-[#111111] pt-12 pb-0 md:pt-16">
+          <div>
             {project.renderings.length > 0 ? (
               <MediaSection category="rendering" samples={project.renderings} onOpenImage={openImageByKey} />
             ) : null}
@@ -497,76 +490,42 @@ export default function ExperientialProjectDetail({
         </section>
 
         {moreExperientialProjects.length > 0 ? (
-          <section>
+          <section className="bg-[#111111] pt-16 text-white md:pt-24">
             <AnimatedSection>
-              <div className="relative left-1/2 w-screen -translate-x-1/2 border-t border-white/12 bg-[#070707] pt-8 pb-12 md:pt-10 md:pb-16">
-                <div className="px-[clamp(1.5rem,5vw,6rem)]">
-                  <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-                    <div>
-                      <p className="text-[0.78rem] font-medium uppercase tracking-[0.18em] text-[#c9ff3d]">
-                        More experiential
-                      </p>
-                      <h2 className="mt-3 max-w-[13ch] font-sans text-[clamp(2.4rem,5.2vw,5.4rem)] font-medium leading-[0.94] text-white">
-                        More spatial work.
-                      </h2>
-                    </div>
-                    <Link
-                      href="/projects/experiential"
-                      className="inline-flex h-11 w-fit items-center justify-center rounded-full border border-white/22 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-white/72 transition-colors hover:border-[#c9ff3d]/80 hover:text-white"
-                    >
-                      View experiential
-                    </Link>
-                  </div>
+              <div className="px-[clamp(1.5rem,5vw,6rem)] pb-10">
+                <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+                  <h2 className="max-w-[12ch] font-sans text-[clamp(2.6rem,5.6vw,6rem)] font-medium leading-[0.88] tracking-[-0.07em] text-white">
+                    More experiential.
+                  </h2>
+                  <Link
+                    href="/projects/experiential"
+                    className="inline-flex h-11 w-fit items-center justify-center rounded-full border border-white/18 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-white/72 transition-colors hover:border-white/38 hover:text-white"
+                  >
+                    Experiential index
+                  </Link>
                 </div>
+              </div>
 
-                <div
-                  ref={moreExperientialCardsRef}
-                  className="overflow-x-auto px-[clamp(1.5rem,5vw,6rem)] pb-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-                >
-                  <div className="flex min-w-max gap-5 pr-[clamp(1.5rem,5vw,6rem)]">
-                    {moreExperientialProjects.slice(0, 12).map((item) => {
-                      const isLive = item.mediaTypes.includes("live-events");
-                      const frameClass = isLive ? "bg-black/85" : "bg-black/85";
-                      const hasRendering = item.mediaTypes.includes("rendering");
-                      const hasOnlyTechnical = item.mediaTypes.includes("technical-drawing") && !hasRendering;
-                      const imageClass = hasRendering ? "object-contain" : "object-cover";
+              <div className="grid grid-cols-1 border-l border-white/12 md:grid-cols-4">
+                    {moreExperientialProjects.map((item, index) => {
+                      const previewImageUrl = item.coverImageUrl || (item.coverVideoUrl ? getYoutubePosterUrl(item.coverVideoUrl) : "");
 
                       return (
                         <Link
                           key={item.slug}
                           href={getLocalExperientialProjectHref(item)}
-                          className="group relative flex h-[30rem] w-[min(24rem,82vw)] flex-col justify-end overflow-hidden rounded-[2rem] bg-black text-white shadow-[0_20px_58px_rgba(0,0,0,0.32)] ring-1 ring-white/[0.06] transition-transform duration-500 hover:-translate-y-1 hover:shadow-[0_26px_68px_rgba(0,0,0,0.4)] md:w-[25rem]"
+                          className={`group block border-b border-r border-white/12 text-white ${
+                            index % 6 < 2 ? "md:col-span-2" : ""
+                          }`}
                           aria-label={`Experiential design project: ${item.title}`}
                         >
-                          <div className={`absolute inset-x-0 top-0 flex h-[70%] items-center justify-center overflow-hidden ${frameClass}`}>
-                            {item.coverVideoUrl ? (
-                              <>
-                                <img
-                                  src={item.coverImageUrl || getYoutubePosterUrl(item.coverVideoUrl)}
-                                  alt={`${item.title} video preview poster`}
-                                  className="site-media-square h-full w-full object-cover"
-                                  loading="eager"
-                                />
-                                <iframe
-                                  src={getYoutubeBackgroundEmbedUrl(item.coverVideoUrl)}
-                                  title={`${item.title} video preview`}
-                                  aria-label={`${item.title} video preview`}
-                                  className="site-media-square pointer-events-none absolute left-1/2 top-1/2 h-[125%] w-[190%] -translate-x-1/2 -translate-y-1/2 border-0"
-                                  allow="autoplay; encrypted-media; picture-in-picture"
-                                  loading="eager"
-                                />
-                              </>
-                            ) : item.coverImageUrl ? (
-                              <ProgressiveImage
-                                src={item.coverImageUrl}
+                          <div className="site-media-square relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-none bg-[#181818]">
+                            {previewImageUrl ? (
+                              <img
+                                src={previewImageUrl}
                                 alt={`${item.title} experiential design preview image`}
-                                className={`h-full w-full transition-transform duration-700 group-hover:scale-[1.035] ${
-                                  hasOnlyTechnical ? "site-media-square bg-white shadow-[0_0_0_1px_rgba(255,255,255,0.16)]" : ""
-                                } ${imageClass}`}
-                                containerClassName={`h-full w-full ${hasOnlyTechnical ? "site-media-square" : ""}`}
-                                sizes="(max-width: 768px) 82vw, 25rem"
-                                width={1000}
-                                aspectRatio="3 / 2"
+                                className="site-media-square block h-full w-full rounded-none object-cover transition-opacity duration-500 group-hover:opacity-90"
+                                loading="lazy"
                               />
                             ) : (
                               <div className="flex h-full w-full items-center justify-center bg-[#111111]">
@@ -576,44 +535,20 @@ export default function ExperientialProjectDetail({
                               </div>
                             )}
                           </div>
-                          <div className="absolute inset-x-0 bottom-0 h-[44%] bg-gradient-to-t from-black via-black/96 to-transparent" />
-                          <div className="absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-black/24 to-transparent" />
-
-                          <div className="relative z-10 p-6">
-                            <p className="font-sans text-[0.74rem] font-semibold tracking-[-0.015em] text-[#c9ff3d]/82">
+                          <div className="min-h-[8.5rem] border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white">
+                              <h3 className="max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors group-hover:text-white/72">
+                                {item.title}
+                              </h3>
+                            <p className="mt-2 max-w-[18ch] font-sans text-[0.94rem] leading-tight tracking-[-0.025em] text-white/52">
                               {[item.mediaTypes.map((category) => MEDIA_LABELS[category]).join(" / "), item.year]
                                 .filter(Boolean)
-                                .join(" / ")}
+                                .join("  ")}
                             </p>
-                            <h3 className="mt-3 max-w-[14ch] font-sans text-[1.7rem] font-medium leading-[0.96] tracking-[-0.055em] text-white">
-                              {item.title}
-                            </h3>
                           </div>
                         </Link>
                       );
                     })}
                   </div>
-                </div>
-
-                <div className="-mt-5 flex justify-end gap-3 px-[clamp(1.5rem,5vw,6rem)]">
-                  <button
-                    type="button"
-                    onClick={() => scrollMoreExperientialCards("previous")}
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/[0.08] text-white/62 transition-colors hover:bg-white hover:text-black"
-                    aria-label="Previous experiential projects"
-                  >
-                    <ChevronLeft className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => scrollMoreExperientialCards("next")}
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/[0.12] text-white/72 transition-colors hover:bg-white hover:text-black"
-                    aria-label="Next experiential projects"
-                  >
-                    <ChevronRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
-                  </button>
-                </div>
-              </div>
             </AnimatedSection>
           </section>
         ) : null}
@@ -631,7 +566,7 @@ export default function ExperientialProjectDetail({
         />
       ) : null}
 
-      <Footer className="!mt-0" />
+      <Footer />
     </div>
   );
 }

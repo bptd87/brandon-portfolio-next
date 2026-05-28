@@ -70,13 +70,13 @@ export default function Footer({ tone = "dark", className = "" }: { tone?: "dark
 
   return (
     <footer
-      className={`mt-24 border-t ${
+      className={`mt-0 border-t ${
         isLight
           ? "border-black/10 bg-[#f1f0ec] text-[#111111] [--background:#f1f0ec] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]"
           : "border-white/10 bg-[#070707] text-white [--background:#070707] [--border:rgba(255,255,255,0.15)] [--foreground:#ffffff]"
       } ${className}`}
     >
-      <div className="container max-w-[88rem] py-14 md:py-16">
+      <div className="container max-w-[88rem] pt-16 pb-14 md:pt-20 md:pb-16">
         <div className="grid gap-12 py-2 md:grid-cols-[minmax(0,1fr)_auto] md:gap-16">
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
             {FOOTER_SECTIONS.map((section) => (

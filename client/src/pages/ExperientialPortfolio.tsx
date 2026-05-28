@@ -2,10 +2,10 @@
 
 import type { CSSProperties, MouseEvent } from "react";
 import { useRouter } from "next/navigation";
-import { Box, Layers3, Lightbulb } from "lucide-react";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import PortfolioTopBar from "@/components/PortfolioTopBar";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import {
@@ -41,24 +41,6 @@ const experientialPortfolioLandingCopy = {
     "A focused archive of work adjacent to scenic design: open-air venues, brand environments, documentation, and visual studies.",
 } as const;
 
-const experientialContextCards = [
-  {
-    icon: Lightbulb,
-    title: "Spatial idea",
-    copy: "Projects begin with a clear visual premise: how the place should feel, where attention lands, and what the audience enters.",
-  },
-  {
-    icon: Layers3,
-    title: "Visual proof",
-    copy: "Renderings, walkthroughs, and drafting translate that premise into something clients, shops, and collaborators can read quickly.",
-  },
-  {
-    icon: Box,
-    title: "Built read",
-    copy: "Finished documentation shows whether the idea holds up in scale, movement, light, and real guest or audience flow.",
-  },
-] as const;
-
 const SITE_URL = getConfiguredSiteUrl();
 
 function getExperientialProjectTimestamp(project: LocalExperientialProject) {
@@ -83,29 +65,13 @@ function sortExperientialProjectsChronologically(projects: LocalExperientialProj
   });
 }
 
-function getProjectCardAspect(project: LocalExperientialProject, isFeatureCard: boolean) {
-  if (project.mediaTypes.includes("technical-drawing")) {
-    return "aspect-[3/2]";
-  }
-
-  if (project.mediaTypes.includes("live-events")) {
-    return "aspect-video";
-  }
-
-  return isFeatureCard ? "aspect-video" : "aspect-[3/2]";
+function getProjectCardAspect(project: LocalExperientialProject) {
+  void project;
+  return "aspect-[4/3]";
 }
 
 function getProjectImageTreatment(project: LocalExperientialProject) {
-  const hasRendering = project.mediaTypes.includes("rendering");
-  const hasOnlyTechnicalDrawing = project.mediaTypes.includes("technical-drawing") && !hasRendering;
-
-  if (hasOnlyTechnicalDrawing) {
-    return {
-      frame: "bg-[#181818]",
-      image: "object-contain",
-    };
-  }
-
+  void project;
   return {
     frame: "bg-[#181818]",
     image: "object-cover",
@@ -198,15 +164,7 @@ export default function ExperientialPortfolio() {
       await animateCardDeparture(anchor);
       navigate();
     };
-    const doc = document as Document & { startViewTransition?: (cb: () => void) => void };
-
-    if (doc.startViewTransition) {
-      doc.startViewTransition(() => {
-        void performNavigation();
-      });
-    } else {
-      void performNavigation();
-    }
+    void performNavigation();
   };
 
   return (
@@ -282,42 +240,34 @@ export default function ExperientialPortfolio() {
       />
 
       <Header />
+      <PortfolioTopBar />
 
       <main>
-        <section className="border-b border-white/10 bg-black pb-8 pt-24 md:pb-10 md:pt-28">
-          <div className="container max-w-[88rem]">
-            <div className="max-w-5xl">
-              <p className="mb-5 section-kicker text-[#c9ff3d]/72">
-                {experientialPortfolioLandingCopy.subtitle}
-              </p>
-              <h1 className="font-sans text-[clamp(3.2rem,7vw,7.1rem)] font-medium leading-[0.86] tracking-[-0.065em] text-white">
-                {experientialPortfolioLandingCopy.title}
-              </h1>
-              <p className="mt-7 max-w-3xl text-[1.02rem] leading-7 text-white/62 md:text-[1.12rem]">
-                {experientialPortfolioLandingCopy.intro}
-              </p>
+        <section className="flex min-h-[min(72svh,46rem)] items-center justify-center bg-[#111111] px-[clamp(1.5rem,5vw,5.5rem)] py-14 text-center text-white md:py-16">
+          <header className="mx-auto max-w-[66rem]">
+            <p className="text-[0.82rem] font-medium tracking-[-0.01em] text-[#c9ff3d]">
+              {projects.length} projects / Selected work
+            </p>
+            <h1 className="mx-auto mt-4 max-w-[12ch] font-sans text-[clamp(3rem,6.2vw,6.4rem)] font-normal leading-[0.9] tracking-[-0.07em] text-white">
+              {experientialPortfolioLandingCopy.title}
+            </h1>
+            <p className="mx-auto mt-5 max-w-[39rem] text-[clamp(1rem,1.2vw,1.18rem)] leading-[1.58] tracking-[-0.02em] text-white/78">
+              {experientialPortfolioLandingCopy.intro}
+            </p>
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[0.92rem] tracking-[-0.018em] text-white/52">
+              <span>Renderings</span>
+              <span>Technical drawing</span>
+              <span>Finished work</span>
             </div>
-
-            <div className="mt-10 flex flex-col gap-4 border-t border-border/35 pt-5 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex min-w-0 flex-wrap items-center gap-x-6 gap-y-3 text-[1.02rem] text-white/52">
-                <span className="text-white">{projects.length} projects</span>
-                <span>Renderings</span>
-                <span>Technical drawing</span>
-                <span>Finished work</span>
-              </div>
-              <p className="text-sm uppercase tracking-[0.18em] text-[#c9ff3d]/72">
-                Selected work
-              </p>
-            </div>
-          </div>
+          </header>
         </section>
 
         {projects.length > 0 ? (
-          <section className="bg-[#111111] px-[clamp(0.9rem,1.8vw,1.35rem)] py-[clamp(0.9rem,1.8vw,1.35rem)] pb-20 md:pb-28">
-            <div className="grid grid-cols-1 gap-[clamp(0.9rem,1.8vw,1.35rem)] md:grid-cols-2">
+          <section className="border-t border-white/12 bg-[#111111]">
+            <div className="grid grid-cols-1 border-l border-white/12 md:grid-cols-4">
               {projects.map((project, index) => {
                 const href = getLocalExperientialProjectHref(project);
-                const isFeatureCard = index % 3 === 0;
+                const isFeatureCard = index % 6 < 2;
                 const imageTreatment = getProjectImageTreatment(project);
 
                 return (
@@ -325,11 +275,11 @@ export default function ExperientialPortfolio() {
                     key={project.slug}
                     href={href}
                     onClick={(event) => navigateWithTransition(event, href)}
-                    className={`group block ${isFeatureCard ? "md:col-span-2" : ""}`}
+                    className={`group block border-b border-r border-white/12 ${isFeatureCard ? "md:col-span-2" : ""}`}
                   >
                     <article className="bg-[#111111]">
                       <div
-                        className={`transition-card site-media-square relative overflow-hidden ${imageTreatment.frame} ${getProjectCardAspect(project, isFeatureCard)}`}
+                        className={`transition-card site-media-square relative overflow-hidden ${imageTreatment.frame} ${getProjectCardAspect(project)}`}
                         style={{ viewTransitionName: `experiential-card-${project.slug}` } as CSSProperties}
                       >
                         {project.coverVideoUrl ? (
@@ -337,7 +287,7 @@ export default function ExperientialPortfolio() {
                             <img
                               src={project.coverImageUrl || getYoutubePosterUrl(project.coverVideoUrl)}
                               alt={`${project.title} video preview poster`}
-                              className="site-media-square h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+                              className="site-media-square h-full w-full object-cover object-center transition-opacity duration-500 group-hover:opacity-90"
                               loading={index < 3 ? "eager" : "lazy"}
                               fetchPriority={index < 3 ? "high" : "auto"}
                             />
@@ -354,7 +304,7 @@ export default function ExperientialPortfolio() {
                           <img
                             src={project.coverImageUrl}
                             alt={experientialAlt(project.title)}
-                            className={`site-media-square h-full w-full object-center transition-transform duration-700 ease-out group-hover:scale-[1.025] ${imageTreatment.image}`}
+                            className={`site-media-square h-full w-full object-center transition-opacity duration-500 group-hover:opacity-90 ${imageTreatment.image}`}
                             loading={index < 3 ? "eager" : "lazy"}
                             fetchPriority={index < 3 ? "high" : "auto"}
                           />
@@ -363,18 +313,23 @@ export default function ExperientialPortfolio() {
                             Image unavailable
                           </div>
                         )}
-                        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/82 via-black/32 to-transparent" />
-                        <div className="absolute inset-x-0 bottom-0 p-[clamp(1.15rem,2.2vw,2rem)]">
-                          <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.7rem] font-medium uppercase tracking-[0.16em] text-[#c9ff3d]/78">
+                      </div>
+                      <div className="grid min-h-[8.5rem] gap-3 border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white md:grid-cols-[minmax(0,1fr)_auto]">
+                        <div>
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.72rem] font-medium uppercase leading-none tracking-[0.12em] text-[#c9ff3d]">
                             {project.mediaTypes.slice(0, 2).map((type) => (
                               <span key={type}>{MEDIA_LABELS[type]}</span>
                             ))}
-                            {project.year ? <span>{project.year}</span> : null}
                           </div>
-                          <h2 className="font-sans text-[clamp(1.45rem,2.1vw,2.4rem)] font-medium leading-[0.96] tracking-[-0.055em] text-white transition-colors group-hover:text-white/80">
+                          <h2 className="mt-2 max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors group-hover:text-white/72">
                             {project.title}
                           </h2>
                         </div>
+                        {project.year ? (
+                          <p className="font-sans text-[clamp(1.3rem,2vw,2.1rem)] font-normal leading-none tracking-[-0.055em] text-[#c9ff3d]/82">
+                            {project.year}
+                          </p>
+                        ) : null}
                       </div>
                     </article>
                   </a>
@@ -383,40 +338,6 @@ export default function ExperientialPortfolio() {
             </div>
           </section>
         ) : null}
-
-        <section className="border-t border-white/12 bg-[#111111] py-16 md:py-22">
-          <div className="container max-w-[88rem]">
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(26rem,0.78fr)] lg:items-start">
-              <div>
-                <p className="section-kicker text-[#c9ff3d]/72">Portfolio context</p>
-                <h2 className="mt-4 max-w-3xl font-sans text-[clamp(2.35rem,5vw,5.05rem)] font-medium leading-[0.9] tracking-[-0.075em] text-white">
-                  Work that moves between concept and space.
-                </h2>
-                <p className="mt-6 max-w-2xl text-[1.02rem] leading-7 text-white/58 md:text-[1.12rem] md:leading-8">
-                  This section sits near scenic design, but follows the project instead of the medium. Some entries are
-                  renderings, some are walkthroughs, some are documentation; the through-line is spatial thinking.
-                </p>
-              </div>
-
-              <div className="grid gap-3">
-                {experientialContextCards.map(({ icon: Icon, title, copy }) => (
-                  <div
-                    key={title}
-                    className="rounded-[1.5rem] bg-black p-6 text-white shadow-[0_18px_54px_rgba(0,0,0,0.28)] ring-1 ring-white/[0.07]"
-                  >
-                    <Icon className="mb-8 h-7 w-7 text-[#c9ff3d]/82" strokeWidth={1.8} aria-hidden="true" />
-                    <h3 className="max-w-[14ch] font-sans text-[1.55rem] font-medium leading-[0.96] tracking-[-0.055em] text-white">
-                      {title}
-                    </h3>
-                    <p className="mt-4 max-w-md text-[0.98rem] leading-6 text-white/58">
-                      {copy}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
 
         <Footer />
       </main>

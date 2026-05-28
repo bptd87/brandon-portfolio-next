@@ -1,24 +1,19 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Check, Link2 } from "lucide-react";
+import { Check, Link2, Linkedin, Mail } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { Link } from "wouter";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { useEffect, useMemo, useState } from "react";
 import { AnimatedSection } from "@/components/AnimatedSection";
-import { Lightbox } from "@/components/Lightbox";
-import { ProgressiveImage } from "@/components/ProgressiveImage";
-import { AnimatePresence } from "framer-motion";
 import { SEO } from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import { copyTextToClipboard } from "@/lib/clipboard";
-import { formatUtcDate } from "@/lib/date-format";
 import { getLocalRenderingGallery, getLocalRenderingProjectBySlug, getLocalRenderingProjects } from "@shared/localPortfolios";
 import { getLocalArticles } from "@shared/localArticles";
 import { getLocalScenicProjects } from "@shared/localScenicProjects";
-import ScenicRenderingGallery from "@/components/ScenicRenderingGallery";
 
 type RenderingProjectDetailProps = {
   slug?: string;
@@ -71,8 +66,6 @@ export default function RenderingProjectDetail({
   const projectUpdatedDate = project?.updatedAt
     ? new Date(project.updatedAt).toISOString().split('T')[0]
     : undefined;
-
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [linkCopied, setLinkCopied] = useState(false);
 
   if (!project) {
@@ -149,15 +142,9 @@ export default function RenderingProjectDetail({
         const timeCompare = getProjectTimestamp(b) - getProjectTimestamp(a);
         if (timeCompare !== 0) return timeCompare;
         return a.title.localeCompare(b.title);
-      });
+      })
+      .slice(0, 6);
   }, [project.slug]);
-
-  // Prepare lightbox images
-  const lightboxImages = renderings.map(img => ({
-    imageUrl: img.imageUrl,
-    caption: img.caption,
-    altText: img.altText
-  }));
 
   const heroDescription = (() => {
     const customHeroExcerpt = String(project.heroExcerpt || "").trim();
@@ -211,6 +198,53 @@ export default function RenderingProjectDetail({
       ? `${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][project.month - 1]} ${project.year}`
       : `${project.year}`
     : null;
+  const emailShareUrl = `mailto:?subject=${encodeURIComponent(project.title)}&body=${encodeURIComponent(
+    `${project.title}\n\n${projectUrl || ""}`
+  )}`;
+  const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(projectUrl || "")}`;
+  const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(projectUrl || "")}`;
+  const renderingDescriptionParagraphs = [
+    heroDescription,
+    ...renderingBodySections.flatMap((section) => section.paragraphs),
+  ].filter((paragraph, index, paragraphs): paragraph is string => {
+    if (!paragraph) return false;
+    return paragraphs.indexOf(paragraph) === index;
+  });
+  const renderingTags = Array.from(
+    new Set(
+      [
+        isExperientialRendering ? "Experiential Rendering" : "Rendering",
+        project.client,
+        project.location,
+        ...(project.seoKeywords || "")
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter(Boolean),
+      ].filter(Boolean)
+    )
+  ).slice(0, 10);
+  const portfolioNoteLinks = [
+    scenicProjectHref && scenicProjectMatch
+      ? {
+          label: scenicProjectMatch.title,
+          href: scenicProjectHref,
+          meta: "Scenic Design Project",
+        }
+      : null,
+    ...relatedArticles.slice(0, 2).map((article) => ({
+      label: article.title,
+      href: `/articles/${article.slug}`,
+      meta: article.series?.name || article.categoryName,
+    })),
+  ].filter((item): item is { label: string; href: string; meta: string } => Boolean(item));
+  const portfolioNoteSections = renderingBodySections.length
+    ? renderingBodySections
+    : [
+        {
+          heading: "Rendering Note",
+          paragraphs: renderingDescriptionParagraphs,
+        },
+      ];
 
   // Generate SEO-optimized description from excerpt or designNotes
   const seoDescription = project.excerpt || project.designNotes?.substring(0, 160) ||
@@ -228,35 +262,6 @@ export default function RenderingProjectDetail({
       thumbnailUrl: img.imageUrl || undefined,
       encodingFormat: img.imageUrl ? inferEncodingFormat(img.imageUrl) : undefined,
     }));
-
-  const openLightbox = (index: number) => {
-    setLightboxIndex(index);
-  };
-
-  const imageIndexById = new Map(renderings.map((item, index) => [String(item.id), index]));
-
-  const openLightboxFor = (mediaId: string) => {
-    const index = imageIndexById.get(mediaId);
-    if (index === undefined) return;
-    setLightboxIndex(index);
-  };
-
-  const closeLightbox = () => {
-    setLightboxIndex(null);
-  };
-
-  const nextImage = () => {
-    if (lightboxIndex !== null && lightboxIndex < lightboxImages.length - 1) {
-      setLightboxIndex(lightboxIndex + 1);
-    }
-  };
-
-  const prevImage = () => {
-    if (lightboxIndex !== null && lightboxIndex > 0) {
-      setLightboxIndex(lightboxIndex - 1);
-    }
-  };
-
   const handleCopyLink = async () => {
     const copied = await copyTextToClipboard(projectUrl || "");
     if (copied) {
@@ -270,14 +275,13 @@ export default function RenderingProjectDetail({
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
-      if (lightboxIndex !== null) return;
       event.preventDefault();
       router.push(isExperientialRendering ? "/projects/experiential" : "/projects/rendering");
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isExperientialRendering, lightboxIndex, router]);
+  }, [isExperientialRendering, router]);
   const renderingSeoTitle = `${project.title} Rendering${project.client ? ` | ${project.client}` : ""} | Brandon PT Davis`;
   const renderingSeoKeywords = Array.from(
     new Set(
@@ -359,240 +363,232 @@ export default function RenderingProjectDetail({
         }}
       />
       <Header />
-      <main className="pb-20">
-        <section className="px-6 pt-12 md:px-10 md:pt-16">
+      <main className="bg-[#111111]">
+        <section className="flex min-h-[min(72svh,46rem)] items-center justify-center bg-[#111111] px-[clamp(1.5rem,5vw,5.5rem)] py-14 text-center text-white md:py-16">
           <AnimatedSection>
-            <header className="mx-auto flex w-full max-w-[62rem] flex-col items-center text-center">
-              <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[0.98rem] tracking-[-0.02em] text-white/56">
-                {projectDateLabel ? <span>{projectDateLabel}</span> : null}
-                <span>{isExperientialRendering ? "Experiential Rendering" : "Rendering"}</span>
-              </div>
-              <h1 className="mt-8 max-w-[12ch] font-sans text-[clamp(3rem,7vw,6.4rem)] font-normal leading-[0.9] tracking-[-0.07em] text-white">
+            <header className="mx-auto max-w-[66rem]">
+              <p className="text-[0.82rem] font-medium tracking-[-0.01em] text-white/72">
+                {isExperientialRendering ? "Experiential Rendering" : "Rendering"}
+              </p>
+              <h1 className="mx-auto mt-4 max-w-[13ch] font-sans text-[clamp(3rem,6.2vw,6.4rem)] font-normal leading-[0.9] tracking-[-0.07em] text-white">
                 {project.title}
               </h1>
               {heroDescription ? (
-                <p className="mt-8 max-w-[42rem] text-[clamp(1.08rem,1.5vw,1.36rem)] leading-[1.72] tracking-[-0.02em] text-white/68">
+                <p className="mx-auto mt-5 max-w-[39rem] text-[clamp(1rem,1.2vw,1.18rem)] leading-[1.58] tracking-[-0.02em] text-white/78">
                   {heroDescription}
                 </p>
               ) : null}
+              <nav aria-label="Share this rendering" className="mt-5 flex items-center justify-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleCopyLink}
+                  aria-label={linkCopied ? "Rendering link copied" : "Copy rendering link"}
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white/62 transition-colors hover:bg-white/[0.08] hover:text-white"
+                >
+                  {linkCopied ? <Check className="h-4 w-4" /> : <Link2 className="h-4 w-4" />}
+                </button>
+                <a
+                  href={emailShareUrl}
+                  aria-label="Share rendering by email"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white/62 no-underline transition-colors hover:bg-white/[0.08] hover:text-white"
+                >
+                  <Mail className="h-4 w-4" />
+                </a>
+                <a
+                  href={linkedInShareUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Share rendering on LinkedIn"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white/62 no-underline transition-colors hover:bg-white/[0.08] hover:text-white"
+                >
+                  <Linkedin className="h-4 w-4" />
+                </a>
+                <a
+                  href={facebookShareUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Share rendering on Facebook"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-[1rem] font-semibold leading-none text-white/62 no-underline transition-colors hover:bg-white/[0.08] hover:text-white"
+                >
+                  f
+                </a>
+              </nav>
             </header>
           </AnimatedSection>
         </section>
 
-        <section className="px-6 pt-8 md:px-10 md:pt-10">
+        <section className="border-t border-white/10 bg-[#111111] px-[clamp(1.5rem,5vw,5.5rem)] py-16 text-white md:py-20">
           <AnimatedSection>
-            <div className="mx-auto w-full max-w-[62rem]">
-              {renderings[0] ? (
-                <div className="cursor-pointer overflow-hidden bg-black" onClick={() => openLightbox(0)}>
-                  <ProgressiveImage
-                    src={renderings[0].imageUrl || ""}
-                    alt={renderings[0].altText || `${project.title} rendering`}
-                    className="block w-full max-h-[min(74vh,48rem)] object-contain"
-                    objectFit="contain"
-                    loading="eager"
-                    fetchPriority="high"
-                    sizes="(max-width: 768px) 100vw, 62rem"
-                  />
-                </div>
-              ) : null}
-            </div>
-          </AnimatedSection>
-        </section>
-
-        <section className="px-6 pt-8 md:px-10">
-          <AnimatedSection>
-            <div className="mx-auto flex w-full max-w-[62rem] items-center justify-between gap-6 border-t border-white/14 py-4 text-white/72">
-              <div className="flex flex-wrap items-center gap-5">
-                {project.client ? (
-                  <span className="text-[0.98rem] tracking-[-0.02em]">{project.client}</span>
-                ) : null}
-                {project.location ? (
-                  <span className="text-[0.98rem] tracking-[-0.02em] text-white/56">{project.location}</span>
-                ) : null}
+            <div className="mx-auto grid w-full max-w-[96rem] gap-x-12 gap-y-12 text-[0.92rem] leading-[1.38] tracking-[-0.018em] md:grid-cols-[minmax(12rem,0.58fr)_minmax(24rem,1.08fr)_minmax(18rem,0.72fr)_minmax(14rem,0.52fr)]">
+              <div className="space-y-8">
+                <p className="mb-5 text-[0.82rem] font-medium uppercase tracking-[0.08em]">
+                  Info
+                </p>
+                <p>{project.title}</p>
+                {project.client ? <p>{project.client}</p> : null}
+                {projectDateLabel ? <p>{projectDateLabel}</p> : null}
+                <dl className="space-y-2">
+                  <div className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-4">
+                    <dt>Type:</dt>
+                    <dd>{isExperientialRendering ? "Experiential Rendering" : "Rendering"}</dd>
+                  </div>
+                  {project.client ? (
+                    <div className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-4">
+                      <dt>Company:</dt>
+                      <dd>{project.client}</dd>
+                    </div>
+                  ) : null}
+                  {project.location ? (
+                    <div className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-4">
+                      <dt>Location:</dt>
+                      <dd>{project.location}</dd>
+                    </div>
+                  ) : null}
+                  {projectDateLabel ? (
+                    <div className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-4">
+                      <dt>Date:</dt>
+                      <dd>{projectDateLabel}</dd>
+                    </div>
+                  ) : null}
+                </dl>
               </div>
-              <div className="flex items-center gap-5">
-                <button
-                  type="button"
-                  onClick={handleCopyLink}
-                  className="inline-flex items-center gap-2 text-[0.98rem] tracking-[-0.02em] transition-colors hover:text-white"
-                >
-                  {linkCopied ? <Check className="h-4 w-4" /> : <Link2 className="h-4 w-4" />}
-                  <span>{linkCopied ? "Link copied" : "Share"}</span>
-                </button>
-              </div>
-            </div>
-          </AnimatedSection>
-        </section>
 
-        <section className="container max-w-5xl pt-14 md:pt-18">
-          <div className="mx-auto max-w-[54rem] space-y-24 md:space-y-32">
-            {renderingBodySections.length > 0 ? (
-              <AnimatedSection>
-                <div className="space-y-16 md:space-y-20">
-                  {renderingBodySections.map((section, index) => (
-                    <div key={`${section.heading}-${index}`} className="space-y-5">
-                      <h2 className="font-sans text-[clamp(2rem,3vw,3rem)] font-medium leading-[0.96] tracking-[-0.05em] text-white">
-                        {section.heading}
-                      </h2>
-                      <div className="space-y-8">
-                        {section.paragraphs.map((paragraph, paragraphIndex) => (
-                          <p
-                            key={`${section.heading}-${paragraphIndex}`}
-                            className="text-[1.03rem] leading-[1.9] tracking-[-0.01em] text-white/72"
-                          >
-                            {paragraph}
-                          </p>
-                        ))}
-                      </div>
+              <div>
+                <p className="mb-5 text-[0.82rem] font-medium uppercase tracking-[0.08em]">
+                  Description
+                </p>
+                <div className="space-y-8">
+                  {portfolioNoteSections.map((section, sectionIndex) => (
+                    <div key={`${section.heading}-${sectionIndex}`} className="space-y-5">
+                      <p className="font-medium">{section.heading}</p>
+                      {section.paragraphs.map((paragraph, paragraphIndex) => (
+                        <p key={paragraphIndex}>{paragraph}</p>
+                      ))}
                     </div>
                   ))}
                 </div>
-              </AnimatedSection>
-            ) : null}
+              </div>
 
-            {renderings.length > 1 ? (
-              <AnimatedSection>
-                <ScenicRenderingGallery
-                  items={renderings.slice(1).map((image) => ({
-                    id: String(image.id),
-                    imageUrl: image.imageUrl || "",
-                    altText: image.altText || `${project.title} rendering`,
-                    caption: image.caption || undefined,
-                  }))}
-                  onOpen={openLightboxFor}
-                  visibleCount={2}
-                />
-              </AnimatedSection>
-            ) : null}
-
-          </div>
-        </section>
-
-        {(relatedArticles.length > 0 || (scenicProjectHref && scenicProjectMatch)) ? (
-          <section className="container max-w-[88rem] pt-18 md:pt-24">
-            <AnimatedSection>
               <div>
-                <div className="mb-12 h-px w-full bg-border/60" />
-                {relatedArticles.length > 0 ? (
-                  <div className="mb-14">
-                    <p className="mb-8 font-sans text-[1.15rem] tracking-[-0.02em] text-white">
-                      Related Reading
+                <p className="mb-5 text-[0.82rem] font-medium uppercase tracking-[0.08em]">
+                  Tags
+                </p>
+                <div className="space-y-2">
+                  {renderingTags.map((tag) => (
+                    <p key={tag} className="text-white/64">
+                      {tag}
                     </p>
-                    <div className="grid gap-x-12 gap-y-8 md:grid-cols-2">
-                      {relatedArticles.map((article) => (
-                        <Link key={article.id} href={`/articles/${article.slug}`} className="group flex items-start gap-5">
-                          <div className="relative h-36 w-36 flex-none overflow-hidden bg-black/85">
-                            {article.coverImageUrl ? (
-                              <ProgressiveImage
-                                src={article.coverImageUrl}
-                                alt={article.coverImageAlt || `${article.title} article cover image`}
-                                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                                sizes="9rem"
-                              />
-                            ) : null}
-                            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,31,71,0.08)_0%,rgba(22,64,133,0.16)_55%,rgba(10,18,38,0.42)_100%)]" />
-                          </div>
-                          <div className="min-w-0 pt-1">
-                            <h3 className="text-[1.22rem] leading-[1.18] tracking-[-0.03em] text-white/92 transition-colors group-hover:text-white">
-                              {article.title}
-                            </h3>
-                            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-white/52">
-                              <span>{article.series?.name || article.categoryName}</span>
-                              <span>{formatUtcDate(article.publishedAt, "short")}</span>
-                            </div>
-                          </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                {portfolioNoteLinks.length > 0 ? (
+                  <>
+                    <p className="mb-5 text-[0.82rem] font-medium uppercase tracking-[0.08em]">
+                      Links
+                    </p>
+                    <div className="space-y-5">
+                      {portfolioNoteLinks.map((item) => (
+                        <Link key={item.href} href={item.href} className="block underline decoration-white/48 underline-offset-4">
+                          {item.label}
                         </Link>
                       ))}
                     </div>
-                  </div>
-                ) : null}
-                {scenicProjectHref && scenicProjectMatch ? (
-                <div className="grid gap-x-12 gap-y-8 md:grid-cols-1">
-                  <div className="mb-8 flex items-center justify-between gap-4">
-                    <p className="font-sans text-[1.15rem] tracking-[-0.02em] text-white">
-                      Scenic Design Project
-                    </p>
-                  </div>
-                    <Link href={scenicProjectHref} className="group flex items-start gap-5">
-                      <div className="relative h-36 w-36 flex-none overflow-hidden bg-black/85">
-                        {scenicProjectMatch.coverImageUrl ? (
-                          <ProgressiveImage
-                            src={scenicProjectMatch.coverImageUrl}
-                            alt={`${scenicProjectMatch.title} scenic design project cover image`}
-                            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                            sizes="9rem"
-                          />
-                        ) : null}
-                        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,31,71,0.18)_0%,rgba(22,64,133,0.42)_55%,rgba(10,18,38,0.74)_100%)]" />
-                      </div>
-                      <div className="min-w-0 pt-1">
-                        <h3 className="text-[1.22rem] leading-[1.18] tracking-[-0.03em] text-white/92 transition-colors group-hover:text-white">
-                          {scenicProjectMatch.title}
-                        </h3>
-                        <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.88rem] tracking-[-0.01em] text-white/52">
-                          <span>Scenic Design Project</span>
-                          {scenicProjectMatch.client ? <span>{scenicProjectMatch.client}</span> : null}
-                          {scenicProjectMatch.year ? <span>{scenicProjectMatch.year}</span> : null}
-                        </div>
-                      </div>
-                    </Link>
-                </div>
+                  </>
                 ) : null}
               </div>
-            </AnimatedSection>
-          </section>
-        ) : null}
+            </div>
+          </AnimatedSection>
+        </section>
+
+        <section className="bg-[#111111]">
+          <div className="relative flex min-h-screen items-center justify-center overflow-hidden">
+            {renderings[0] ? (
+              <img
+                src={renderings[0].imageUrl || ""}
+                alt={renderings[0].altText || `${project.title} rendering`}
+                className="site-media-square max-h-screen w-full object-contain"
+                loading="eager"
+                fetchPriority="high"
+              />
+            ) : null}
+          </div>
+            {renderings.length > 1 ? (
+              <div className="grid grid-cols-1 border-t border-white/10 md:grid-cols-2">
+                  {renderings.slice(1).map((image) => (
+                    <figure key={image.id} className="border-b border-r border-white/10">
+                      <div className="flex min-h-[70vh] items-center justify-center overflow-hidden bg-[#111111]">
+                        <img
+                          src={image.imageUrl || ""}
+                          alt={image.altText || `${project.title} rendering`}
+                          className="site-media-square h-full w-full object-contain"
+                          loading="lazy"
+                        />
+                      </div>
+                      {image.caption ? (
+                        <figcaption className="p-4 text-[0.92rem] leading-6 tracking-[-0.01em] text-white/56">
+                          {image.caption}
+                        </figcaption>
+                      ) : null}
+                    </figure>
+                  ))}
+                </div>
+            ) : null}
+        </section>
 
         {moreRenderingProjects.length > 0 ? (
-          <section className="container max-w-[88rem] pt-18 md:pt-24">
+          <section className="bg-[#111111] pt-16 text-white md:pt-24">
             <AnimatedSection>
-              <div>
-                <div className="mb-12 h-px w-full bg-border/60" />
-                <p className="mb-8 font-sans text-[1.15rem] tracking-[-0.02em] text-white">
-                  All Renderings
-                </p>
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
-                  {moreRenderingProjects.map((item: any) => (
-                    <Link key={item.id} href={`${projectBasePath}/${item.slug}`} className="group block">
-                        <div className="relative aspect-[1/1] overflow-hidden bg-black/85">
+              <div className="px-[clamp(1.5rem,5vw,6rem)] pb-10">
+                <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+                  <h2 className="max-w-[12ch] font-sans text-[clamp(2.6rem,5.6vw,6rem)] font-medium leading-[0.88] tracking-[-0.07em] text-white">
+                    More rendering.
+                  </h2>
+                  <Link
+                    href="/projects/rendering"
+                    className="inline-flex h-11 w-fit items-center justify-center rounded-full border border-white/18 px-5 font-sans text-sm font-medium tracking-[-0.02em] text-white/72 transition-colors hover:border-white/38 hover:text-white"
+                  >
+                    Rendering index
+                  </Link>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 border-l border-white/12 md:grid-cols-4">
+                  {moreRenderingProjects.map((item: any, index: number) => (
+                    <Link
+                      key={item.slug}
+                      href={`${projectBasePath}/${item.slug}`}
+                      className={`group block border-b border-r border-white/12 text-white ${
+                        index % 6 < 2 ? "md:col-span-2" : ""
+                      }`}
+                    >
+                        <div className="site-media-square relative aspect-[4/3] overflow-hidden rounded-none bg-[#181818]">
                           {item.coverImageUrl ? (
-                            <ProgressiveImage
+                            <img
                               src={item.coverImageUrl}
                               alt={`${item.title} rendering preview image`}
-                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                              className="site-media-square block h-full w-full rounded-none object-cover transition-opacity duration-500 group-hover:opacity-90"
+                              loading="lazy"
                             />
                           ) : <div className="h-full w-full bg-muted" />}
                         </div>
-                        <div className="pt-3">
-                          <h3 className="text-[1.02rem] font-normal tracking-[-0.02em] text-white/88 transition-colors group-hover:text-white">
+                        <div className="min-h-[8.5rem] border-t border-white/12 p-[clamp(0.9rem,1.5vw,1.2rem)] text-white">
+                          <h3 className="max-w-[18ch] font-sans text-[clamp(1.2rem,1.7vw,1.8rem)] font-medium leading-[0.95] tracking-[-0.055em] text-white transition-colors group-hover:text-white/72">
                             {item.title}
                           </h3>
-                          <p className="mt-1.5 text-[0.92rem] tracking-[-0.01em] text-white/52">
+                          <p className="mt-2 max-w-[18ch] font-sans text-[0.94rem] leading-tight tracking-[-0.025em] text-white/52">
                             {[item.client, item.year].filter(Boolean).join("  ")}
                           </p>
                         </div>
                     </Link>
                   ))}
                 </div>
-              </div>
             </AnimatedSection>
           </section>
         ) : null}
       </main>
 
-      {/* Lightbox */}
-      <AnimatePresence>
-        {lightboxIndex !== null && (
-          <Lightbox
-            images={lightboxImages}
-            currentIndex={lightboxIndex}
-            onClose={closeLightbox}
-            onNext={nextImage}
-            onPrev={prevImage}
-          />
-        )}
-      </AnimatePresence>
       <Footer />
     </div>
   );
