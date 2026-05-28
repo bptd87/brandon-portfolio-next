@@ -1,8 +1,13 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
+import {
+  getStoredAnalyticsConsent,
+  subscribeToAnalyticsConsent,
+  type AnalyticsConsent,
+} from "../../lib/analytics/consent";
 import {
   capturePostHogEvent,
   getDocumentTitle,
@@ -34,14 +39,26 @@ function getSlug(pathname: string) {
 export function PostHogAnalytics() {
   const pathname = usePathname() || "/";
   const lastTrackedPath = useRef<string>("");
+  const [consent, setConsent] = useState<AnalyticsConsent | null>(null);
 
   useEffect(() => {
-    if (!isPostHogConfigured()) return;
-    initPostHog();
+    setConsent(getStoredAnalyticsConsent());
+    return subscribeToAnalyticsConsent(setConsent);
   }, []);
 
   useEffect(() => {
-    if (!isPostHogConfigured() || lastTrackedPath.current === pathname) return;
+    if (consent !== "accepted" || !isPostHogConfigured()) return;
+    initPostHog();
+  }, [consent]);
+
+  useEffect(() => {
+    if (
+      consent !== "accepted" ||
+      !isPostHogConfigured() ||
+      lastTrackedPath.current === pathname
+    ) {
+      return;
+    }
 
     lastTrackedPath.current = pathname;
 
@@ -90,7 +107,7 @@ export function PostHogAnalytics() {
       project_title: pageTitle,
       portfolio_type: getPortfolioType(pathname),
     });
-  }, [pathname]);
+  }, [consent, pathname]);
 
   return null;
 }
