@@ -413,24 +413,25 @@ export default function ScenicProjectDetail({
     return [];
   });
   const visualSections = project.sections.filter((section) => section.type !== "text");
-  const visualMediaItems: VisualMediaItem[] = visualSections.flatMap((section, sectionIndex) => {
+  const visualMediaItems: VisualMediaItem[] = visualSections.flatMap<VisualMediaItem>((section, sectionIndex) => {
     if (section.type === "gallery") {
       const galleryItems = section.mediaIds
-        .map((mediaId, mediaIndex) => {
+        .flatMap<VisualImageMediaItem>((mediaId, mediaIndex) => {
           const item = project.media.find((entry) => entry.id === mediaId);
-          if (!item || item.type !== "image" || !item.imageUrl) return null;
-          return {
-            mediaType: "image" as const,
-            key: `${sectionIndex}-${mediaIndex}-${item.id}`,
-            id: item.id,
-            imageUrl: item.imageUrl,
-            altText: item.altText,
-            caption: item.caption,
-            display: item.display,
-            kind: item.kind,
-          };
-        })
-        .filter((item): item is VisualImageMediaItem => Boolean(item));
+          if (!item || item.type !== "image" || !item.imageUrl) return [];
+          return [
+            {
+              mediaType: "image" as const,
+              key: `${sectionIndex}-${mediaIndex}-${item.id}`,
+              id: item.id,
+              imageUrl: item.imageUrl,
+              altText: item.altText,
+              caption: item.caption,
+              display: item.display,
+              kind: item.kind,
+            },
+          ];
+        });
 
       const isRenderingGallery =
         galleryItems.length > 1 && galleryItems.every((item) => item.kind === "rendering");
