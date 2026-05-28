@@ -172,13 +172,19 @@ export function getBrandonOrganizationJsonLd() {
         name: "United States",
       },
     ],
-    serviceType: [
+    makesOffer: [
       "Scenic design",
       "Theatre set design",
       "Concept rendering",
       "Production design",
       "Vectorworks drafting",
-    ],
+    ].map((serviceName) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: serviceName,
+      },
+    })),
     address: {
       "@type": "PostalAddress",
       addressLocality: "San Diego",

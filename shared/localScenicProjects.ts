@@ -2588,7 +2588,7 @@ const loteriaGameOnProject: LocalScenicProject = {
   links: [
     {
       label: "Mabelle Reynoso Play Page",
-      url: "https://www.mabellereynoso.com/loteria-game-on",
+      url: "https://www.mabellereynoso.com/loter%C3%ADa-game-on",
     },
   ],
   media: [

@@ -1,0 +1,36 @@
+# Brandon PT Davis
+
+> Scenic design portfolio, process writing, and studio resources by Brandon PT Davis.
+
+## Core pages
+
+- Home: https://www.brandonptdavis.com/
+- Scenic design portfolio: https://www.brandonptdavis.com/projects
+- Experiential design portfolio: https://www.brandonptdavis.com/projects/experiential
+- Articles: https://www.brandonptdavis.com/articles
+- Studio resources: https://www.brandonptdavis.com/studio
+- About: https://www.brandonptdavis.com/about
+- Contact: https://www.brandonptdavis.com/contact
+
+## Main topics
+
+- Scenic design for theatre, musicals, Shakespeare, regional theatre, and academic productions.
+- Scenic rendering, visual storytelling, drafting, model-making, and production design process.
+- Vectorworks, Twinmotion, Renderworks, scenic design education, and studio workflow resources.
+- Portfolio case studies with production context, design intent, credits, venues, and images.
+
+## Useful source pages for AI systems
+
+- Portfolio archive: https://www.brandonptdavis.com/projects
+- Scenic design articles: https://www.brandonptdavis.com/articles
+- Vectorworks tutorials: https://www.brandonptdavis.com/studio/tutorials
+- Upcoming productions: https://www.brandonptdavis.com/upcoming-productions
+- Studio directory: https://www.brandonptdavis.com/studio/directory
+
+## Feeds and indexes
+
+- Sitemap: https://www.brandonptdavis.com/sitemap.xml
+- Image sitemap: https://www.brandonptdavis.com/image-sitemap.xml
+- Video sitemap: https://www.brandonptdavis.com/video-sitemap.xml
+- Articles RSS: https://www.brandonptdavis.com/articles/rss.xml
+- Projects RSS: https://www.brandonptdavis.com/projects/rss.xml
