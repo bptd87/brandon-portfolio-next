@@ -163,9 +163,9 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const lastScrollYRef = useRef(0);
   const desktopMenuCloseTimeoutRef = useRef<number | null>(null);
+  const isStudioAppsRoute = /^\/studio\/apps(?:\/|$)/.test(location);
   const isEditorialRoute =
     location === "/studio" ||
-    /^\/studio\/apps(?:\/|$)/.test(location) ||
     /^\/articles(?:\/|$)/.test(location) ||
     /^\/studio\/tutorials(?:\/|$)/.test(location) ||
     /^\/studio\/directory(?:\/|$)/.test(location);
@@ -188,8 +188,9 @@ export default function Header() {
     location === "/about/collaborators" ||
     /^\/upcoming-productions(?:\/|$)/.test(location);
   const isHomeRoute = location === "/";
-  const useLightChrome = (isEditorialRoute && !isArticleDetailRoute) || isProfileLightRoute;
-  const useWhiteLightChrome = isContactRoute || isInfoRoute || location === "/studio" || /^\/studio\/apps(?:\/|$)/.test(location);
+  const useLightChrome =
+    !isStudioAppsRoute && ((isEditorialRoute && !isArticleDetailRoute) || isProfileLightRoute);
+  const useWhiteLightChrome = isContactRoute || isInfoRoute || location === "/studio";
   const useImmersiveChrome = isHomeRoute && !desktopMenuOpen && !mobileMenuOpen && !searchOpen;
   const brandDescriptor = /^\/projects\/experiential(?:\/|$)/.test(location)
     ? "EXPERIENTIAL DESIGN"

@@ -1,11 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, Check, Copy, Palette, Sliders } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowLeft, Check, Copy, Palette, Sliders, X } from "lucide-react";
 import { Link } from "wouter";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { copyTextToClipboard } from "@/lib/clipboard";
 import { SEO } from "../components/SEO";
 
@@ -17,39 +14,37 @@ interface RoscoPaint {
 }
 
 const ROSCO_PAINTS: RoscoPaint[] = [
-  { id: "5330", name: "White", hex: "#FFFFFF", rgb: [255, 255, 255] },
-  { id: "5340", name: "Chrome Yellow", hex: "#FFD700", rgb: [255, 215, 0] },
-  { id: "5341", name: "Yellow Ochre", hex: "#CC8833", rgb: [204, 136, 51] },
-  { id: "5342", name: "Raw Sienna", hex: "#C17A3A", rgb: [193, 122, 58] },
-  { id: "5343", name: "Burnt Sienna", hex: "#8B4513", rgb: [139, 69, 19] },
-  { id: "5344", name: "Burnt Umber", hex: "#5C3317", rgb: [92, 51, 23] },
-  { id: "5345", name: "Raw Umber", hex: "#6B4423", rgb: [107, 68, 35] },
-  { id: "5350", name: "Paynes Grey", hex: "#536878", rgb: [83, 104, 120] },
-  { id: "5352", name: "Black", hex: "#1A1A1A", rgb: [26, 26, 26] },
-  { id: "5355", name: "Cerulean Blue", hex: "#2A52BE", rgb: [42, 82, 190] },
-  { id: "5357", name: "Prussian Blue", hex: "#003153", rgb: [0, 49, 83] },
-  { id: "5358", name: "Pthalo Blue", hex: "#000F89", rgb: [0, 15, 137] },
-  { id: "5359", name: "Ultramarine Blue", hex: "#4166F5", rgb: [65, 102, 245] },
-  { id: "5360", name: "Violet", hex: "#8B00FF", rgb: [139, 0, 255] },
-  { id: "5363", name: "Purple", hex: "#660099", rgb: [102, 0, 153] },
-  { id: "5365", name: "Crimson", hex: "#DC143C", rgb: [220, 20, 60] },
-  { id: "5367", name: "Fire Red", hex: "#E92207", rgb: [233, 34, 7] },
-  { id: "5369", name: "Magenta", hex: "#FF00FF", rgb: [255, 0, 255] },
-  { id: "5370", name: "Burgundy", hex: "#800020", rgb: [128, 0, 32] },
-  { id: "5371", name: "Red Oxide", hex: "#A0522D", rgb: [160, 82, 45] },
-  { id: "5373", name: "Orange", hex: "#FF6600", rgb: [255, 102, 0] },
-  { id: "5375", name: "Chrome Orange", hex: "#FF7F00", rgb: [255, 127, 0] },
-  { id: "5380", name: "Lemon Yellow", hex: "#FFF44F", rgb: [255, 244, 79] },
-  { id: "5381", name: "Chrome Green", hex: "#00A86B", rgb: [0, 168, 107] },
-  { id: "5385", name: "Pthalo Green", hex: "#123524", rgb: [18, 53, 36] },
-  { id: "5387", name: "Ultramarine Green", hex: "#00693E", rgb: [0, 105, 62] },
-  { id: "5388", name: "Viridian Green", hex: "#40826D", rgb: [64, 130, 109] },
-  { id: "5389", name: "Emerald Green", hex: "#50C878", rgb: [80, 200, 120] },
-  { id: "5390", name: "Turquoise", hex: "#40E0D0", rgb: [64, 224, 208] },
-  { id: "5391", name: "Aqua", hex: "#00FFFF", rgb: [0, 255, 255] },
-  { id: "5392", name: "Navy Blue", hex: "#000080", rgb: [0, 0, 128] },
-  { id: "5395", name: "Van Dyke Brown", hex: "#3D2B1F", rgb: [61, 43, 31] },
+  { id: "05350", name: "White", hex: "#F7F4EA", rgb: [247, 244, 234] },
+  { id: "05351", name: "White White", hex: "#FFFFFF", rgb: [255, 255, 255] },
+  { id: "05366", name: "Lemon Yellow", hex: "#F7D822", rgb: [247, 216, 34] },
+  { id: "05372", name: "Sky Blue", hex: "#48A7C7", rgb: [72, 167, 199] },
+  { id: "05365", name: "Chrome Oxide Green", hex: "#0A563C", rgb: [10, 86, 60] },
+  { id: "05352", name: "Black", hex: "#141914", rgb: [20, 25, 20] },
+  { id: "05367", name: "Golden Yellow", hex: "#EFA31B", rgb: [239, 163, 27] },
+  { id: "05373", name: "Pthalo Blue", hex: "#244A83", rgb: [36, 74, 131] },
+  { id: "05353", name: "Yellow Ochre", hex: "#A77922", rgb: [167, 121, 34] },
+  { id: "05385", name: "Silver", hex: "#8F9186", rgb: [143, 145, 134] },
+  { id: "05363", name: "Orange", hex: "#F26722", rgb: [242, 103, 34] },
+  { id: "05359", name: "Ultramarine Blue", hex: "#283B80", rgb: [40, 59, 128] },
+  { id: "05355", name: "Raw Sienna", hex: "#81741E", rgb: [129, 116, 30] },
+  { id: "05386", name: "Copper", hex: "#7D4B2F", rgb: [125, 75, 47] },
+  { id: "05360", name: "Fire Red", hex: "#DF3B27", rgb: [223, 59, 39] },
+  { id: "05368", name: "Purple", hex: "#25305D", rgb: [37, 48, 93] },
+  { id: "05356", name: "Burnt Sienna", hex: "#87422D", rgb: [135, 66, 45] },
+  { id: "05384", name: "Gold", hex: "#A8852E", rgb: [168, 133, 46] },
+  { id: "05361", name: "Deep Red", hex: "#B42C3B", rgb: [180, 44, 59] },
+  { id: "05364", name: "Emerald Green", hex: "#2BB23C", rgb: [43, 178, 60] },
+  { id: "05354", name: "Burnt Umber", hex: "#3E2A21", rgb: [62, 42, 33] },
+  { id: "05383", name: "Bright Gold", hex: "#9A832D", rgb: [154, 131, 45] },
+  { id: "05369", name: "Magenta", hex: "#B33B8F", rgb: [179, 59, 143] },
+  { id: "05371", name: "Pthalo Green", hex: "#007F67", rgb: [0, 127, 103] },
+  { id: "05357", name: "Raw Umber", hex: "#4B4735", rgb: [75, 71, 53] },
+  { id: "05387", name: "Antique Gold", hex: "#56543A", rgb: [86, 84, 58] },
 ];
+
+const ROSCO_PALETTE_SWATCHES = ROSCO_PAINTS.filter(
+  (paint) => paint.id !== "05350" && paint.id !== "05351"
+);
 
 function rgbToLab(rgb: [number, number, number]): [number, number, number] {
   let [r, g, b] = rgb.map((value) => value / 255);
@@ -76,6 +71,17 @@ function hexToRgb(hex: string): [number, number, number] {
   return result
     ? [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)]
     : [0, 0, 0];
+}
+
+function getReadableTextColor(hex: string): "#000000" | "#FFFFFF" {
+  const [r, g, b] = hexToRgb(hex).map((value) => {
+    const channel = value / 255;
+    return channel <= 0.03928
+      ? channel / 12.92
+      : Math.pow((channel + 0.055) / 1.055, 2.4);
+  });
+  const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  return luminance > 0.48 ? "#000000" : "#FFFFFF";
 }
 
 function rgbToHex(rgb: [number, number, number]): string {
@@ -223,8 +229,8 @@ function calculateRecipe(targetHex: string, paintSet: RoscoPaint[] = ROSCO_PAINT
   }
 
   if (bestRecipe.length > 0) {
-    const white = paintSet.find((paint) => paint.id === "5330");
-    const black = paintSet.find((paint) => paint.id === "5352");
+    const white = paintSet.find((paint) => paint.id === "05350");
+    const black = paintSet.find((paint) => paint.id === "05352");
 
     if (white) {
       for (let w = 1; w <= 8; w++) {
@@ -278,10 +284,10 @@ export default function RoscoPaintCalculator() {
   const [targetColor, setTargetColor] = useState("#8B4789");
   const [result, setResult] = useState<RecipeResult | null>(null);
   const [copied, setCopied] = useState(false);
+  const [copiedList, setCopiedList] = useState(false);
   const [inventory, setInventory] = useState<string[]>([]);
-  const [showLibrary, setShowLibrary] = useState(false);
-  const [showInventory, setShowInventory] = useState(false);
   const [inStockOnly, setInStockOnly] = useState(false);
+  const [panelOpen, setPanelOpen] = useState<"directions" | "library" | "inventory" | null>(null);
 
   useEffect(() => {
     const saved = localStorage.getItem("rosco_inventory_v1");
@@ -318,259 +324,385 @@ export default function RoscoPaintCalculator() {
     }
   };
 
+  const copyPaintList = async () => {
+    const text = [
+      "Rosco Off Broadway Paint Palette",
+      ...ROSCO_PALETTE_SWATCHES.map(
+        (paint) =>
+          `${paint.id}\t${paint.name}\t${paint.hex}\tRGB ${paint.rgb.join(", ")}`
+      ),
+    ].join("\n");
+    const copied = await copyTextToClipboard(text);
+    if (copied) {
+      setCopiedList(true);
+      setTimeout(() => setCopiedList(false), 2000);
+    }
+  };
+
+  const updateTargetHex = (value: string) => {
+    const hex = value.replace(/#/g, "").replace(/[^0-9a-fA-F]/g, "").slice(0, 6);
+    setTargetColor(`#${hex}`.toUpperCase());
+  };
+
+  const validTargetColor = /^#[0-9A-F]{6}$/i.test(targetColor);
+  const displayTargetColor = validTargetColor ? targetColor : "#000000";
+  const achievedColor = result?.achievedColor ?? "#000000";
+  const accuracyValue = result ? result.accuracy.toFixed(1) : "--";
+  const mixTextColor = getReadableTextColor(achievedColor);
+  const mixMutedColor =
+    mixTextColor === "#000000" ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.64)";
+  const mixLineColor =
+    mixTextColor === "#000000" ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.22)";
+
   return (
-    <>
+    <div className="h-[100dvh] overflow-hidden bg-[#f3eee4] text-black">
       <SEO title="Rosco Paint Calculator" description="Professional scenic paint calculator and Rosco color mixing tool." />
 
-      <div className="min-h-screen bg-background text-foreground">
-        <Header />
-
-        <main className="px-4 pb-24 pt-22 sm:px-6 md:pt-28">
-          <section className="mx-auto max-w-6xl border-b border-border/18 pb-10 md:pb-12">
+      <main className="studio-app-main box-border h-full overflow-hidden px-3 pb-3 pt-[calc(env(safe-area-inset-top)+0.55rem)] sm:px-4 md:px-5">
+        <section className="relative mx-auto flex h-full max-w-[29rem] flex-col overflow-hidden">
+          <header className="studio-app-mobile-topbar grid h-11 shrink-0 grid-cols-[1fr_auto_1fr] items-center">
             <Link
               href="/studio/apps"
-              className="inline-flex items-center gap-2 text-[0.92rem] font-medium text-foreground/56 transition-colors hover:text-foreground"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#ff5f57] text-[#65110f] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.18),0_10px_24px_rgba(255,95,87,0.18)]"
+              aria-label="Back to Studio Apps"
             >
               <ArrowLeft className="h-4 w-4" />
-              Back to Studio Apps
             </Link>
-
-            <div className="mx-auto mt-6 max-w-4xl text-center md:mt-8">
-              <p className="section-kicker text-foreground/40">
-                Rosco Paint Calculator
-              </p>
-              <h1 className="mt-4 font-sans text-[clamp(2.4rem,7vw,5rem)] font-medium leading-[0.95] tracking-[-0.065em] text-foreground">
-                Mix scenic paint colors with a practical production workflow.
-              </h1>
-              <p className="mx-auto mt-5 max-w-3xl text-[0.98rem] leading-7 text-foreground/60 md:text-[1.08rem] md:leading-8">
-                Choose a target color, generate a Rosco Off-Broadway recipe, and optionally limit
-                results to the paints already on hand in your stock.
+            <div className="text-center">
+              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-black/50">
+                Rosco
               </p>
             </div>
-          </section>
+          </header>
 
-          <section className="mx-auto mt-8 max-w-4xl md:mt-10">
-            <div className="space-y-5">
-              <div className="rounded-[1.2rem] bg-[#1b1b1d] p-4 md:rounded-[1.4rem] md:p-5">
-                <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2 text-foreground/58">
-                    <Palette className="h-4 w-4" />
-                    <span className="text-[0.8rem] font-medium uppercase tracking-[0.16em]">
-                      Target Color
-                    </span>
-                  </div>
-                  <button
-                    onClick={() => setInStockOnly(!inStockOnly)}
-                    className={`rounded-full px-4 py-2 text-[0.72rem] font-medium uppercase tracking-[0.16em] transition-colors ${
-                      inStockOnly ? "bg-white text-black" : "bg-black/28 text-foreground/60 hover:text-foreground"
-                    }`}
+          <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-hidden pt-1">
+            <section
+              className="relative flex min-h-[11rem] flex-[0.72] flex-col overflow-hidden rounded-[0.45rem] border border-black/10 p-4 shadow-[0_24px_70px_rgba(58,45,31,0.16),inset_0_1px_rgba(255,255,255,0.22)]"
+              style={{ backgroundColor: achievedColor, color: mixTextColor }}
+            >
+              <div
+                className="pointer-events-none absolute inset-x-8 top-0 h-px"
+                style={{ backgroundColor: mixTextColor === "#000000" ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.28)" }}
+              />
+              <div
+                className="pointer-events-none absolute bottom-0 left-0 right-0 h-px"
+                style={{ backgroundColor: mixLineColor }}
+              />
+
+              <div className="flex items-start justify-between gap-4">
+                <div className="min-w-0">
+                  <p
+                    className="text-[0.7rem] font-semibold uppercase tracking-[0.13em]"
+                    style={{ color: mixMutedColor }}
                   >
-                    {inStockOnly ? "Using inventory" : "Full catalog"}
+                    Color mix
+                  </p>
+                </div>
+                <div className="flex shrink-0 items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => setPanelOpen("directions")}
+                    className="h-8 border border-[#d75f13] bg-[#e86f1c] px-2.5 text-[0.62rem] font-semibold uppercase tracking-[0.1em] text-black shadow-none"
+                  >
+                    Directions
                   </button>
-                </div>
-
-                <div className="mt-5 rounded-[1rem] border border-white/7 bg-black/28 p-4">
-                  <input
-                    type="color"
-                    value={targetColor}
-                    onChange={(e) => setTargetColor(e.target.value)}
-                    className="h-16 w-full cursor-pointer rounded-[0.85rem] border-0 bg-transparent"
-                    title="Choose target color"
-                  />
-                  <input
-                    type="text"
-                    value={targetColor}
-                    onChange={(e) => setTargetColor(e.target.value)}
-                    className="mt-3 w-full rounded-[0.85rem] border border-white/7 bg-black/28 px-4 py-3 text-center font-mono uppercase text-foreground"
-                    placeholder="#000000"
-                  />
-                </div>
-
-                {result ? (
-                  <div className="mt-5 rounded-[1rem] bg-black/28 p-4">
-                    <div className="flex items-center justify-between gap-3">
-                      <div>
-                        <p className="text-[0.74rem] uppercase tracking-[0.18em] text-foreground/38">
-                          Accuracy
-                        </p>
-                        <p className="mt-2 text-[1.45rem] font-medium text-foreground">
-                          {result.accuracy.toFixed(1)}%
-                        </p>
-                      </div>
-                      <button
-                        onClick={copyRecipe}
-                        className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-4 py-3 text-[0.78rem] font-medium uppercase tracking-[0.16em] text-black transition-colors hover:bg-white/90"
-                      >
-                        {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                        {copied ? "Copied" : "Copy recipe"}
-                      </button>
-                    </div>
-                    <p className="mt-2 text-[0.9rem] text-foreground/56">
-                      Delta E: {result.deltaE.toFixed(2)}
-                    </p>
-                  </div>
-                ) : null}
-
-                <div className="mt-5 border-t border-white/8 pt-5">
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    <button
-                      onClick={() => setShowLibrary(!showLibrary)}
-                      className="flex w-full items-center justify-center gap-2 rounded-full bg-black/18 px-4 py-3 text-[0.78rem] font-medium uppercase tracking-[0.16em] text-foreground/70 transition-colors hover:text-foreground"
-                    >
-                      <Palette className="h-4 w-4" />
-                      {showLibrary ? "Hide paint library" : "Open paint library"}
-                    </button>
-
-                    <button
-                      onClick={() => setShowInventory(!showInventory)}
-                      className="flex w-full items-center justify-center gap-2 rounded-full bg-black/18 px-4 py-3 text-[0.78rem] font-medium uppercase tracking-[0.16em] text-foreground/70 transition-colors hover:text-foreground"
-                    >
-                      <Sliders className="h-4 w-4" />
-                      {showInventory ? "Hide inventory" : "Manage inventory"}
-                    </button>
-                  </div>
-
-                  <AnimatePresence>
-                    {showLibrary ? (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="mt-4 border-t border-white/8 pt-4">
-                          <div className="mb-3 flex items-center justify-between">
-                            <p className="text-[0.78rem] font-medium uppercase tracking-[0.16em] text-foreground/44">
-                              Rosco Library
-                            </p>
-                            <span className="text-[0.78rem] text-foreground/36">{ROSCO_PAINTS.length}</span>
-                          </div>
-
-                          <div className="grid grid-cols-5 gap-2">
-                            {ROSCO_PAINTS.map((paint) => (
-                              <button
-                                key={paint.id}
-                                onClick={() => setTargetColor(paint.hex)}
-                                className="aspect-square rounded-[0.7rem] border border-white/8 transition-transform hover:scale-105"
-                                style={{ backgroundColor: paint.hex }}
-                                title={`${paint.name} (${paint.id})`}
-                              />
-                            ))}
-                          </div>
-                        </div>
-                      </motion.div>
-                    ) : null}
-                  </AnimatePresence>
-
-                  <AnimatePresence>
-                    {showInventory ? (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="mt-4 border-t border-white/8 pt-4">
-                          <div className="grid max-h-[320px] grid-cols-2 gap-2 overflow-y-auto pr-1">
-                            {ROSCO_PAINTS.map((paint) => (
-                              <button
-                                key={paint.id}
-                                onClick={() => toggleInventoryItem(paint.id)}
-                                className={`flex items-center gap-2 rounded-[0.8rem] px-3 py-3 text-left text-[0.78rem] transition-colors ${
-                                  inventory.includes(paint.id)
-                                    ? "bg-white text-black"
-                                    : "bg-black/28 text-foreground/60 hover:text-foreground"
-                                }`}
-                              >
-                                <div className="h-3 w-3 shrink-0 rounded-full" style={{ backgroundColor: paint.hex }} />
-                                <span className="truncate">{paint.name}</span>
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                      </motion.div>
-                    ) : null}
-                  </AnimatePresence>
+                  <button
+                    type="button"
+                    onClick={copyRecipe}
+                    disabled={!result}
+                    className="flex h-8 w-8 shrink-0 items-center justify-center border shadow-[0_10px_18px_rgba(38,30,20,0.18)] transition-opacity hover:opacity-90 disabled:opacity-35"
+                    style={{
+                      backgroundColor: mixTextColor,
+                      borderColor: mixLineColor,
+                      color: achievedColor,
+                    }}
+                    aria-label="Copy recipe"
+                  >
+                    {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                  </button>
                 </div>
               </div>
 
-              {result ? (
-                <div className="rounded-[1.2rem] bg-[#1b1b1d] p-4 md:rounded-[1.4rem] md:p-6">
-                    <div className="flex flex-col gap-4 border-b border-white/8 pb-5 sm:flex-row sm:items-start sm:justify-between">
-                      <div>
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
-                          Mixing Recipe
-                        </p>
-                        <p className="mt-3 text-[1rem] leading-7 text-foreground/62">
-                          Suggested Rosco Off-Broadway mix for the selected target color.
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-5 space-y-5">
-                      <div className="space-y-4">
-                        <div className="grid grid-cols-2 gap-3">
-                          <div className="rounded-[1rem] border border-white/7 bg-black/24 p-3">
-                            <div
-                              className="h-28 rounded-[0.85rem]"
-                              style={{ backgroundColor: targetColor }}
-                            />
-                            <p className="mt-3 text-[0.74rem] uppercase tracking-[0.18em] text-foreground/38">
-                              Target
-                            </p>
-                            <p className="mt-1 font-mono text-[0.92rem] text-foreground/76">
-                              {targetColor}
-                            </p>
-                          </div>
-
-                          <div className="rounded-[1rem] border border-white/7 bg-black/24 p-3">
-                            <div
-                              className="h-28 rounded-[0.85rem]"
-                              style={{ backgroundColor: result.achievedColor }}
-                            />
-                            <p className="mt-3 text-[0.74rem] uppercase tracking-[0.18em] text-foreground/38">
-                              Result
-                            </p>
-                            <p className="mt-1 font-mono text-[0.92rem] text-foreground/76">
-                              {result.achievedColor}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="space-y-3 border-t border-white/8 pt-5">
-                        {result.recipe.map((recipe, index) => (
-                          <div
-                            key={index}
-                            className="flex items-center gap-3 rounded-[1rem] bg-black/28 p-3"
-                          >
-                            <div
-                              className="h-10 w-10 shrink-0 rounded-[0.8rem] border border-white/7"
-                              style={{ backgroundColor: recipe.paint.hex }}
-                            />
-                            <div className="min-w-0 flex-1">
-                              <p className="text-[0.96rem] font-medium text-foreground">
-                                {recipe.paint.name}
-                              </p>
-                              <p className="mt-1 text-[0.74rem] font-mono text-foreground/42">
-                                RGB {recipe.paint.rgb.join(", ")}
-                              </p>
-                            </div>
-                            <div className="text-[1rem] font-medium text-foreground/74">
-                              {recipe.parts.toFixed(1)} pt
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+              <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_5.8rem] gap-3 pt-[clamp(1.7rem,3.6dvh,2.8rem)]">
+                <div className="min-w-0">
+                  <p
+                    className="block max-w-full overflow-hidden whitespace-nowrap font-sans text-[clamp(4.8rem,18vw,6.45rem)] font-semibold leading-[0.84] tracking-normal tabular-nums"
+                    style={{ color: mixTextColor }}
+                  >
+                    {accuracyValue}%
+                  </p>
+                  <p
+                    className="font-sans text-[clamp(2.1rem,8vw,2.85rem)] font-semibold leading-none tracking-normal"
+                    style={{ color: mixTextColor }}
+                  >
+                    match
+                  </p>
                 </div>
-              ) : null}
-            </div>
-          </section>
-        </main>
 
-        <Footer />
-      </div>
-    </>
+                <div className="flex items-end justify-end pb-1">
+                  <p
+                    className="max-w-[5.6rem] text-right font-mono text-[0.62rem] font-semibold uppercase leading-4 tracking-[0.08em]"
+                    style={{ color: mixMutedColor }}
+                  >
+                    Mix<br />
+                    {achievedColor}
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <div
+              className="relative grid h-12 grid-cols-2 border border-black/10 bg-[#e7dfd0] p-1 text-left shadow-[inset_0_1px_rgba(255,255,255,0.62)]"
+              role="group"
+              aria-label="Paint source"
+            >
+              <span
+                className={`pointer-events-none absolute bottom-1 left-1 top-1 w-[calc(50%-0.25rem)] bg-black shadow-[0_10px_22px_rgba(38,30,20,0.16)] transition-transform ${
+                  inStockOnly ? "translate-x-[calc(100%+0.5rem)]" : "translate-x-0"
+                }`}
+              />
+              <button
+                type="button"
+                onClick={() => setInStockOnly(false)}
+                aria-pressed={!inStockOnly}
+                className={`relative z-10 flex items-center justify-center text-[0.72rem] font-semibold uppercase tracking-[0.1em] ${
+                  !inStockOnly ? "text-[#f8f1e6]" : "text-black/48"
+                }`}
+              >
+                Full Catalog
+              </button>
+              <button
+                type="button"
+                onClick={() => setInStockOnly(true)}
+                aria-pressed={inStockOnly}
+                className={`relative z-10 flex items-center justify-center text-[0.72rem] font-semibold uppercase tracking-[0.1em] ${
+                  inStockOnly ? "text-[#f8f1e6]" : "text-black/48"
+                }`}
+              >
+                Inventory
+              </button>
+            </div>
+
+            <section className="rounded-[0.38rem] border border-black/10 bg-[#fbf7ef] p-3 shadow-[0_10px_30px_rgba(58,45,31,0.08),inset_0_1px_rgba(255,255,255,0.68)]">
+              <div className="mb-2 flex items-center gap-2 text-black/46">
+                <Palette className="h-4 w-4" />
+                <p className="text-[0.7rem] font-semibold uppercase tracking-[0.12em]">
+                  Target
+                </p>
+              </div>
+
+              <div className="grid grid-cols-[minmax(0,1fr)_4.2rem] gap-3">
+                <input
+                  type="text"
+                  value={targetColor}
+                  onChange={(event) => updateTargetHex(event.target.value)}
+                  onFocus={(event) => event.currentTarget.select()}
+                  inputMode="text"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  spellCheck={false}
+                  className="h-12 rounded-[0.18rem] border border-black/10 bg-[#ece5d7] px-4 text-center font-mono text-[1.25rem] font-semibold uppercase tracking-normal text-black placeholder:text-black/22 focus:outline-none focus:ring-2 focus:ring-[#e86f1c]/70"
+                  placeholder="#000000"
+                  aria-label="Target color hex"
+                />
+                <label className="relative block h-12 cursor-pointer border border-black/10 bg-[#ece5d7] p-1.5">
+                  <input
+                    type="color"
+                    value={displayTargetColor}
+                    onChange={(event) => setTargetColor(event.target.value.toUpperCase())}
+                    className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                    aria-label="Choose target color"
+                  />
+                  <span
+                    className="block h-full border border-black/10"
+                    style={{ backgroundColor: displayTargetColor }}
+                  />
+                </label>
+              </div>
+            </section>
+
+            <section className="flex min-h-0 flex-1 flex-col rounded-[0.38rem] border border-black/10 bg-[#fbf7ef] p-3 shadow-[0_10px_30px_rgba(58,45,31,0.08),inset_0_1px_rgba(255,255,255,0.68)]">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2 text-black/46">
+                  <Sliders className="h-4 w-4" />
+                  <p className="text-[0.7rem] font-semibold uppercase tracking-[0.12em]">
+                    Recipe
+                  </p>
+                </div>
+                <p className="text-[0.64rem] font-semibold uppercase tracking-[0.1em] text-black/38">
+                  {result ? `DE ${result.deltaE.toFixed(2)}` : "No match"}
+                </p>
+              </div>
+
+              <div className="mt-2 min-h-0 flex-1 space-y-2 overflow-y-auto pr-1">
+                {result && result.recipe.length > 0 ? (
+                  result.recipe.map((recipe) => (
+                    <div
+                      key={recipe.paint.id}
+                      className="grid grid-cols-[2.35rem_minmax(0,1fr)_3.5rem] items-center gap-2 border border-black/8 bg-[#ece5d7] p-2"
+                    >
+                      <div
+                        className="h-8 border border-black/10"
+                        style={{ backgroundColor: recipe.paint.hex }}
+                      />
+                      <div className="min-w-0">
+                        <p className="truncate text-[0.84rem] font-semibold leading-none text-black">
+                          {recipe.paint.name}
+                        </p>
+                        <p className="mt-1 font-mono text-[0.62rem] text-black/42">
+                          {recipe.paint.id}
+                        </p>
+                      </div>
+                      <p className="text-right text-[0.86rem] font-semibold text-black/72">
+                        {recipe.parts.toFixed(1)} pt
+                      </p>
+                    </div>
+                  ))
+                ) : (
+                  <div className="flex h-full items-center justify-center border border-black/8 bg-[#ece5d7] px-4 text-center text-[0.86rem] font-medium leading-5 text-black/52">
+                    Add inventory or switch to the full catalog to generate a mix.
+                  </div>
+                )}
+              </div>
+            </section>
+
+            <section className="grid grid-cols-2 gap-2 rounded-[0.38rem] border border-black/10 bg-[#fbf7ef] p-2 shadow-[0_10px_30px_rgba(58,45,31,0.08),inset_0_1px_rgba(255,255,255,0.68)]">
+              <button
+                type="button"
+                onClick={() => setPanelOpen("library")}
+                className="flex h-10 items-center justify-center gap-2 bg-black px-3 text-[0.7rem] font-semibold uppercase tracking-[0.1em] text-[#f8f1e6]"
+              >
+                <Palette className="h-3.5 w-3.5" />
+                Library
+              </button>
+              <button
+                type="button"
+                onClick={() => setPanelOpen("inventory")}
+                className="flex h-10 items-center justify-center gap-2 bg-black px-3 text-[0.7rem] font-semibold uppercase tracking-[0.1em] text-[#f8f1e6]"
+              >
+                <Sliders className="h-3.5 w-3.5" />
+                Stock {inventory.length}
+              </button>
+            </section>
+          </div>
+
+          {panelOpen ? (
+            <div className="absolute inset-0 z-20 flex items-end bg-[#f3eee4]/78 p-3 backdrop-blur-sm">
+              <section className="flex max-h-[86%] w-full flex-col border border-black/12 bg-[#fbf7ef] p-4 shadow-[0_24px_70px_rgba(58,45,31,0.22)]">
+                <div className="flex items-start justify-between gap-4 border-b border-black/10 pb-3">
+                  <div>
+                    <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#e86f1c]">
+                      {panelOpen === "directions"
+                        ? "Directions"
+                        : panelOpen === "library"
+                          ? "Paint Library"
+                          : "Inventory"}
+                    </p>
+                    <h2 className="mt-1 text-[1.25rem] font-semibold leading-none tracking-[-0.04em] text-black">
+                      {panelOpen === "directions"
+                        ? "Fast paint mix."
+                        : panelOpen === "library"
+                          ? "Choose target color."
+                          : "Manage stock."}
+                    </h2>
+                  </div>
+                  <div className="flex shrink-0 items-center gap-2">
+                    {panelOpen === "library" ? (
+                      <button
+                        type="button"
+                        onClick={copyPaintList}
+                        className="flex h-8 items-center gap-1.5 bg-black px-3 text-[0.62rem] font-semibold uppercase tracking-[0.1em] text-[#f8f1e6]"
+                      >
+                        {copiedList ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                        {copiedList ? "Copied" : "Copy list"}
+                      </button>
+                    ) : null}
+                    <button
+                      type="button"
+                      onClick={() => setPanelOpen(null)}
+                      className="flex h-8 w-8 items-center justify-center border border-black/12 bg-[#ece5d7] text-black"
+                      aria-label="Close panel"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+
+                {panelOpen === "directions" ? (
+                  <div className="grid gap-3 pt-3 text-[0.88rem] font-medium leading-5 tracking-normal text-black/68">
+                    <p>Pick a target color with the swatch or hex field.</p>
+                    <p>Use the full catalog, or switch to inventory after adding the paints you have on hand.</p>
+                    <p>Copy the recipe and treat the match score as a starting point for shop testing.</p>
+                  </div>
+                ) : null}
+
+                {panelOpen === "library" ? (
+                  <div className="min-h-0 overflow-y-auto pt-3">
+                    <div className="grid grid-cols-4 gap-2">
+                      {ROSCO_PALETTE_SWATCHES.map((paint) => (
+                        <button
+                          key={paint.id}
+                          type="button"
+                          onClick={() => {
+                            setTargetColor(paint.hex);
+                            setPanelOpen(null);
+                          }}
+                          className="border border-black/10 bg-[#ece5d7] p-1.5 text-left"
+                          title={`${paint.name} (${paint.id})`}
+                        >
+                          <span
+                            className="block aspect-square border border-black/10"
+                            style={{ backgroundColor: paint.hex }}
+                          />
+                          <span className="mt-1 block truncate text-[0.56rem] font-semibold uppercase tracking-[0.06em] text-black/48">
+                            {paint.id}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+
+                {panelOpen === "inventory" ? (
+                  <div className="min-h-0 overflow-y-auto pt-3">
+                    <div className="grid grid-cols-2 gap-2">
+                      {ROSCO_PALETTE_SWATCHES.map((paint) => {
+                        const selected = inventory.includes(paint.id);
+                        return (
+                          <button
+                            key={paint.id}
+                            type="button"
+                            onClick={() => toggleInventoryItem(paint.id)}
+                            aria-pressed={selected}
+                            className={`grid grid-cols-[1.35rem_minmax(0,1fr)] items-center gap-2 border p-2 text-left ${
+                              selected
+                                ? "border-[#e86f1c] bg-[#e86f1c] text-black"
+                                : "border-black/10 bg-[#ece5d7] text-black"
+                            }`}
+                          >
+                            <span
+                              className="h-5 border border-black/14"
+                              style={{ backgroundColor: paint.hex }}
+                            />
+                            <span className="min-w-0">
+                              <span className="block truncate text-[0.7rem] font-semibold leading-none">
+                                {paint.name}
+                              </span>
+                              <span className="mt-1 block font-mono text-[0.58rem] text-black/42">
+                                {paint.id}
+                              </span>
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : null}
+              </section>
+            </div>
+          ) : null}
+        </section>
+      </main>
+    </div>
   );
 }

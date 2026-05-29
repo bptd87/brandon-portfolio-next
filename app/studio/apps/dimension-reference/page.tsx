@@ -4,12 +4,29 @@ import { buildPageMetadata } from "../../../../lib/metadata";
 
 export const dynamic = "force-static";
 
-export const metadata = buildPageMetadata({
-  title: "Dimension Reference for Scenic, Event, and Exhibit Design",
-  description:
-    "Reference dimensions for furniture, theatre, events, exhibits, and architecture in a fast mobile-friendly lookup tool.",
-  pathname: "/studio/apps/dimension-reference",
-});
+export const metadata = {
+  ...buildPageMetadata({
+    title: "Dimension Reference for Scenic, Event, and Exhibit Design",
+    description:
+      "Reference dimensions for furniture, theatre, events, exhibits, and architecture in a fast mobile-friendly lookup tool.",
+    pathname: "/studio/apps/dimension-reference",
+    image: "/assets/studio-apps/icons/dimension-reference.jpg",
+  }),
+  appleWebApp: {
+    capable: true,
+    title: "Dimensions",
+    statusBarStyle: "default",
+  },
+  icons: {
+    apple: [
+      {
+        url: "/assets/studio-apps/icons/dimension-reference-touch.png",
+        sizes: "180x180",
+        type: "image/png",
+      },
+    ],
+  },
+};
 
 export default function Page() {
   return (

@@ -1,10 +1,10 @@
 "use client";
 
 import { useMemo, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, MapPin, Search, Palette, Users, Landmark, ChevronDown, Shuffle } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import { ArrowLeft, Check, Copy, MapPin, Palette, Search, Shuffle } from 'lucide-react';
+import { SEO } from '@/components/SEO';
+import { copyTextToClipboard } from '@/lib/clipboard';
+import { Link } from 'wouter';
 
 interface DesignPeriod {
   id: string;
@@ -462,24 +462,34 @@ const ERA_OPTIONS: Array<{ id: EraFilter; label: string; matches: (period: Desig
 
 
 export default function DesignHistoryTimeline() {
-  const [expandedId, setExpandedId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedEra, setSelectedEra] = useState<EraFilter>('all');
+  const [selectedPeriodId, setSelectedPeriodId] = useState(DESIGN_PERIODS[0]?.id ?? '');
+  const [copied, setCopied] = useState(false);
 
   const activeEra = ERA_OPTIONS.find((option) => option.id === selectedEra) || ERA_OPTIONS[0];
 
   const filteredPeriods = useMemo(() => {
+    const normalizedQuery = searchQuery.trim().toLowerCase();
+
     return DESIGN_PERIODS.filter((period) => {
       const matchesSearch =
-        searchQuery === '' ||
-        period.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        period.region.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        period.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        period.characteristics.some((c) => c.toLowerCase().includes(searchQuery.toLowerCase()));
+        normalizedQuery === '' ||
+        period.name.toLowerCase().includes(normalizedQuery) ||
+        period.region.toLowerCase().includes(normalizedQuery) ||
+        period.description.toLowerCase().includes(normalizedQuery) ||
+        period.characteristics.some((c) => c.toLowerCase().includes(normalizedQuery)) ||
+        period.keyFigures?.some((figure) => figure.toLowerCase().includes(normalizedQuery)) ||
+        period.notableWorks?.some((work) => work.toLowerCase().includes(normalizedQuery));
 
       return matchesSearch && activeEra.matches(period);
     });
   }, [activeEra, searchQuery]);
+
+  const selectedPeriod =
+    filteredPeriods.find((period) => period.id === selectedPeriodId) ??
+    filteredPeriods[0] ??
+    null;
 
   const formatYear = (year: number | null) => {
     if (year === null) return 'Present';
@@ -487,319 +497,255 @@ export default function DesignHistoryTimeline() {
     return year.toString();
   };
 
-  const toggleExpand = (id: string) => {
-    setExpandedId(expandedId === id ? null : id);
+  const yearRange = selectedPeriod
+    ? `${formatYear(selectedPeriod.startYear)} - ${formatYear(selectedPeriod.endYear)}`
+    : 'No period';
+
+  const copySelectedPeriod = async () => {
+    if (!selectedPeriod) return;
+
+    const copiedText = await copyTextToClipboard(
+      `${selectedPeriod.name} (${yearRange}) - ${selectedPeriod.region}. ${selectedPeriod.description}`
+    );
+
+    if (copiedText) {
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1200);
+    }
   };
 
   const openRandomPeriod = () => {
     if (filteredPeriods.length === 0) return;
     const randomPeriod = filteredPeriods[Math.floor(Math.random() * filteredPeriods.length)];
-    setExpandedId(randomPeriod.id);
+    setSelectedPeriodId(randomPeriod.id);
     if (typeof window !== 'undefined') {
       requestAnimationFrame(() => {
         document.getElementById(`design-period-${randomPeriod.id}`)?.scrollIntoView({
           behavior: 'smooth',
-          block: 'center',
+          block: 'nearest',
         });
       });
     }
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <main>
-        <section className="border-b border-border/35 pb-10 pt-24 md:pb-12 md:pt-28">
-          <div className="container max-w-5xl">
-            <div className="max-w-3xl">
-              <div className="mb-5 flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.24em] text-foreground/45">
-                <Calendar className="h-3.5 w-3.5" />
-                Design History Timeline
-              </div>
-              <h1 className="font-sans text-[clamp(2.5rem,6vw,5rem)] font-medium leading-[0.94] tracking-[-0.06em] text-foreground">
-                Design periods, references, and historical context for interiors and architecture.
-              </h1>
-              <p className="mt-6 max-w-2xl text-[1rem] leading-7 text-foreground/60 md:text-[1.05rem]">
-                A working reference library for architectural and interior design history. Search by
-                movement, region, or characteristic, then open any period for palette, figures, notable works, and visual reference.
-              </p>
-            </div>
+    <div className="h-[100dvh] overflow-hidden bg-[#f3eee4] text-black">
+      <SEO
+        title="Design History Timeline"
+        description="A mobile studio reference for design periods, palettes, regions, figures, and historical context."
+      />
 
-            <div className="mt-10 border-t border-border/35 pt-5">
-              <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
-                <label className="relative block">
-                <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground/40" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search periods, regions, or characteristics"
-                  className="h-12 w-full rounded-full border border-border/45 bg-[#111111] pl-11 pr-4 text-sm text-foreground placeholder:text-foreground/35 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-foreground/25"
-                />
-                </label>
+      <main className="studio-app-main box-border h-full overflow-hidden px-3 pb-3 pt-[calc(env(safe-area-inset-top)+0.55rem)] sm:px-4 md:px-5">
+        <section className="relative mx-auto flex h-full max-w-[29rem] flex-col overflow-hidden">
+          <header className="studio-app-mobile-topbar grid h-11 shrink-0 grid-cols-[1fr_auto_1fr] items-center">
+            <Link
+              href="/studio/apps"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#ff5f57] text-[#65110f] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.18),0_10px_24px_rgba(255,95,87,0.18)]"
+              aria-label="Back to Studio Apps"
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </Link>
+            <p className="text-center text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-black/50">
+              History
+            </p>
+            <button
+              type="button"
+              onClick={copySelectedPeriod}
+              className="ml-auto flex h-8 w-8 items-center justify-center bg-black text-white shadow-[0_10px_24px_rgba(0,0,0,0.14)] transition-opacity hover:opacity-88"
+              aria-label="Copy selected period"
+            >
+              {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+            </button>
+          </header>
 
-                <div className="flex items-center justify-between gap-4 md:justify-end">
-                  <p className="text-sm text-foreground/45">{filteredPeriods.length} periods</p>
-                  <div className="flex items-center gap-4">
-                    {searchQuery || selectedEra !== 'all' ? (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSearchQuery('');
-                          setSelectedEra('all');
-                        }}
-                        className="text-sm text-foreground/55 transition-colors hover:text-foreground"
-                      >
-                        Reset
-                      </button>
-                    ) : null}
-                    <button
-                      type="button"
-                      onClick={openRandomPeriod}
-                      className="inline-flex h-10 items-center gap-2 rounded-full border border-border/45 bg-[#111111] px-4 text-sm text-foreground/78 transition-colors hover:border-foreground/18 hover:text-foreground"
-                    >
-                      <Shuffle className="h-4 w-4" />
-                      Surprise me
-                    </button>
+          <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-hidden pt-1">
+            <section className="shrink-0 overflow-hidden border border-black/10 bg-[#fbf7ef] shadow-[0_24px_70px_rgba(58,45,31,0.16),inset_0_1px_rgba(255,255,255,0.75)]">
+              {selectedPeriod ? (
+                <>
+                  <div className="grid grid-cols-[8.1rem_minmax(0,1fr)] gap-3 p-3">
+                    <div className="aspect-[4/5] overflow-hidden border border-black/10 bg-[#ebe5d8]">
+                      <img
+                        src={selectedPeriod.imageUrl}
+                        alt={selectedPeriod.name}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-[#f26a1b]">
+                        {yearRange}
+                      </div>
+                      <h1 className="mt-2 font-sans text-[clamp(1.8rem,7vw,3.15rem)] font-semibold leading-[0.92] tracking-[-0.07em] text-black">
+                        {selectedPeriod.name}
+                      </h1>
+                      <div className="mt-2 flex items-center gap-1.5 text-[0.72rem] font-semibold tracking-[-0.02em] text-black/46">
+                        <MapPin className="h-3.5 w-3.5" />
+                        <span className="truncate">{selectedPeriod.region}</span>
+                      </div>
+                      <p className="mt-3 max-h-[4.25rem] overflow-hidden text-[0.78rem] font-medium leading-snug tracking-[-0.02em] text-black/58">
+                        {selectedPeriod.description}
+                      </p>
+                    </div>
                   </div>
+
+                  <div className="border-t border-black/10 px-3 py-2">
+                    <div className="flex items-center gap-2">
+                      <Palette className="h-3.5 w-3.5 text-black/35" />
+                      <div className="flex min-w-0 flex-1 gap-1.5">
+                        {selectedPeriod.colors.slice(0, 5).map((color) => (
+                          <span
+                            key={color}
+                            className="h-5 flex-1 border border-black/10"
+                            style={{ backgroundColor: color }}
+                            aria-label={color}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <div className="mt-2 flex gap-1.5 overflow-x-auto pb-1">
+                      {selectedPeriod.characteristics.map((characteristic) => (
+                        <span
+                          key={characteristic}
+                          className="shrink-0 bg-[#ebe5d8] px-2 py-1 text-[0.58rem] font-semibold uppercase tracking-[0.13em] text-black/48"
+                        >
+                          {characteristic}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="grid min-h-[13rem] place-items-center p-6 text-center text-black/45">
+                  No period selected
                 </div>
+              )}
+            </section>
+
+            <section className="shrink-0 border border-black/10 bg-[#fbf7ef] p-3 shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
+              <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-2">
+                <label className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 border border-black/10 bg-[#f3eee4] px-3">
+                  <Search className="h-4 w-4 text-black/46" />
+                  <input
+                    type="search"
+                    value={searchQuery}
+                    onChange={(event) => setSearchQuery(event.target.value)}
+                    placeholder="Search period, region, figure"
+                    className="h-11 min-w-0 bg-transparent text-[0.92rem] font-medium tracking-[-0.02em] text-black outline-none placeholder:text-black/34"
+                    aria-label="Search design history"
+                  />
+                </label>
+                <button
+                  type="button"
+                  onClick={openRandomPeriod}
+                  className="flex h-11 items-center gap-2 bg-[#f26a1b] px-3 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-black transition-opacity hover:opacity-88"
+                >
+                  <Shuffle className="h-4 w-4" />
+                  Pick
+                </button>
               </div>
 
-              <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
+              <div className="mt-2 flex gap-2 overflow-x-auto pb-1">
                 {ERA_OPTIONS.map((option) => (
                   <button
                     key={option.id}
                     type="button"
-                    onClick={() => setSelectedEra(option.id)}
-                    className={`whitespace-nowrap rounded-full border px-4 py-2 text-[0.86rem] transition-colors ${
+                    onClick={() => {
+                      setSelectedEra(option.id);
+                      setSelectedPeriodId('');
+                    }}
+                    className={`h-8 shrink-0 border px-3 text-[0.58rem] font-semibold uppercase tracking-[0.13em] transition-colors ${
                       selectedEra === option.id
-                        ? 'border-foreground/20 bg-foreground text-background'
-                        : 'border-border/45 bg-[#111111] text-foreground/58 hover:border-foreground/18 hover:text-foreground'
+                        ? 'border-black bg-black text-white'
+                        : 'border-black/10 bg-[#ebe5d8] text-black/48 hover:bg-[#f3eee4]'
                     }`}
                   >
                     {option.label}
                   </button>
                 ))}
               </div>
-            </div>
-          </div>
-        </section>
+            </section>
 
-        <section className="pb-20 pt-8 md:pb-28 md:pt-10">
-          <div className="container max-w-5xl">
-            <div className="space-y-4">
-              {filteredPeriods.map((period, index) => {
-                const isExpanded = expandedId === period.id;
-
-                return (
-                  <motion.div
-                    key={period.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.015 }}
-                    className="relative"
-                    id={`design-period-${period.id}`}
+            <section className="flex min-h-0 flex-1 flex-col border border-black/10 bg-[#fbf7ef] shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
+              <div className="grid shrink-0 grid-cols-[1fr_auto] items-center gap-3 border-b border-black/10 px-3 py-2">
+                <p className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-black/44">
+                  {filteredPeriods.length} periods
+                </p>
+                {(searchQuery || selectedEra !== 'all') ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSearchQuery('');
+                      setSelectedEra('all');
+                      setSelectedPeriodId(DESIGN_PERIODS[0]?.id ?? '');
+                    }}
+                    className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-black/42 transition-colors hover:text-black"
                   >
+                    Reset
+                  </button>
+                ) : (
+                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-black/38">
+                    Tap to view
+                  </p>
+                )}
+              </div>
+
+              <div className="min-h-0 flex-1 overflow-y-auto">
+                {filteredPeriods.map((period) => {
+                  const isSelected = selectedPeriod?.id === period.id;
+                  const range = `${formatYear(period.startYear)} - ${formatYear(period.endYear)}`;
+
+                  return (
                     <button
-                      onClick={() => toggleExpand(period.id)}
-                      className={`w-full overflow-hidden rounded-[1.6rem] border bg-[#1f1f1f] text-left transition-colors ${
-                        isExpanded
-                          ? 'border-foreground/22'
-                          : 'border-border/45 hover:border-foreground/18'
+                      key={period.id}
+                      id={`design-period-${period.id}`}
+                      type="button"
+                      onClick={() => setSelectedPeriodId(period.id)}
+                      className={`grid w-full grid-cols-[4.75rem_minmax(0,1fr)] gap-3 border-b border-black/10 px-3 py-3 text-left transition-colors ${
+                        isSelected ? 'bg-[#f3eee4]' : 'hover:bg-[#f3eee4]'
                       }`}
                     >
-                      <div className="grid gap-5 p-4 sm:p-5 md:grid-cols-[8.5rem_minmax(0,1fr)_auto] md:items-center md:gap-6">
-                        <div className="aspect-square w-full overflow-hidden rounded-2xl bg-black/20 md:w-[8.5rem]">
-                          <img
-                            src={period.imageUrl}
-                            alt={period.name}
-                            className="h-full w-full object-cover"
-                          />
-                        </div>
-
-                        <div className="min-w-0">
-                          <div className="mb-2 text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/42">
-                            {formatYear(period.startYear)} - {formatYear(period.endYear)}
-                          </div>
-                          <h2 className="font-sans text-[1.4rem] font-medium tracking-[-0.04em] text-foreground md:text-[1.7rem]">
-                            {period.name}
-                          </h2>
-                          <div className="mt-2 flex items-center gap-2 text-sm text-foreground/54">
-                            <MapPin className="h-3.5 w-3.5" />
-                            <span className="truncate">{period.region}</span>
-                          </div>
-                          <p className="mt-4 max-w-2xl text-sm leading-6 text-foreground/58 md:text-[0.98rem]">
-                            {period.description}
-                          </p>
-
-                          <div className="mt-4 flex flex-wrap gap-2">
-                            {period.colors.slice(0, 5).map((color, i) => (
-                              <div
-                                key={i}
-                                className="h-7 w-7 rounded-full border border-white/10"
-                                style={{ backgroundColor: color }}
-                                aria-hidden="true"
-                              />
-                            ))}
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-between gap-4 md:block">
-                          <div className="flex flex-wrap gap-2 md:justify-end">
-                            {period.characteristics.slice(0, 2).map((characteristic) => (
-                              <span
-                                key={characteristic}
-                                className="rounded-full border border-white/8 bg-black/20 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-foreground/52"
-                              >
-                                {characteristic}
-                              </span>
-                            ))}
-                          </div>
-
-                          <motion.div
-                            animate={{ rotate: isExpanded ? 180 : 0 }}
-                            transition={{ duration: 0.25 }}
-                            className="md:mt-8"
-                          >
-                            <ChevronDown className="h-5 w-5 text-foreground/40" />
-                          </motion.div>
-                        </div>
+                      <div className="aspect-[4/3] overflow-hidden border border-black/10 bg-[#ebe5d8]">
+                        <img
+                          src={period.imageUrl}
+                          alt=""
+                          className="h-full w-full object-cover"
+                        />
                       </div>
+                      <span className="min-w-0">
+                        <span className="block truncate text-[0.62rem] font-semibold uppercase tracking-[0.15em] text-[#f26a1b]">
+                          {range}
+                        </span>
+                        <span className="mt-1 block truncate text-[1.02rem] font-semibold leading-none tracking-[-0.04em] text-black">
+                          {period.name}
+                        </span>
+                        <span className="mt-1.5 block truncate text-[0.74rem] font-medium tracking-[-0.02em] text-black/48">
+                          {period.region}
+                        </span>
+                        <span className="mt-2 flex gap-1">
+                          {period.colors.slice(0, 5).map((color) => (
+                            <span
+                              key={color}
+                              className="h-2.5 flex-1 border border-black/10"
+                              style={{ backgroundColor: color }}
+                            />
+                          ))}
+                        </span>
+                      </span>
                     </button>
+                  );
+                })}
 
-                    <AnimatePresence initial={false}>
-                      {isExpanded && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.28, ease: 'easeInOut' }}
-                          className="overflow-hidden"
-                        >
-                          <div className="mt-3 rounded-[1.6rem] border border-border/45 bg-[#1f1f1f] p-4 sm:p-5 md:p-6">
-                            <div className="grid gap-6 md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
-                              <div className="space-y-6">
-                                <div>
-                                  <div className="mb-3 flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/42">
-                                    <Palette className="h-3.5 w-3.5" />
-                                    Palette
-                                  </div>
-                                  <div className="grid grid-cols-5 gap-2">
-                                    {period.colors.map((color, colorIndex) => (
-                                      <div key={colorIndex} className="space-y-2">
-                                        <div
-                                          className="aspect-square rounded-xl border border-white/10"
-                                          style={{ backgroundColor: color }}
-                                        />
-                                        <p className="text-center text-[10px] uppercase tracking-[0.12em] text-foreground/42">
-                                          {color}
-                                        </p>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-
-                                <div>
-                                  <div className="mb-3 text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/42">
-                                    Characteristics
-                                  </div>
-                                  <div className="flex flex-wrap gap-2">
-                                    {period.characteristics.map((char) => (
-                                      <span
-                                        key={char}
-                                        className="rounded-full border border-white/8 bg-black/20 px-3 py-1.5 text-sm text-foreground/70"
-                                      >
-                                        {char}
-                                      </span>
-                                    ))}
-                                  </div>
-                                </div>
-
-                                {period.gallery && period.gallery.length > 0 ? (
-                                  <div>
-                                    <div className="mb-3 text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/42">
-                                      Reference images
-                                    </div>
-                                    <div className="grid gap-3 sm:grid-cols-2">
-                                      {period.gallery.slice(0, 2).map((imageUrl, idx) => (
-                                        <div
-                                          key={idx}
-                                          className="aspect-square overflow-hidden rounded-2xl border border-white/10 bg-black/20"
-                                        >
-                                          <img
-                                            src={imageUrl}
-                                            alt={`${period.name} reference ${idx + 1}`}
-                                            className="h-full w-full object-cover"
-                                          />
-                                        </div>
-                                      ))}
-                                    </div>
-                                  </div>
-                                ) : null}
-                              </div>
-
-                              <div className="space-y-6">
-                                {period.keyFigures && period.keyFigures.length > 0 ? (
-                                  <div>
-                                    <div className="mb-3 flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/42">
-                                      <Users className="h-3.5 w-3.5" />
-                                      Key figures
-                                    </div>
-                                    <div className="space-y-2 border-t border-border/35 pt-3">
-                                      {period.keyFigures.map((figure) => (
-                                        <p key={figure} className="text-sm leading-6 text-foreground/68">
-                                          {figure}
-                                        </p>
-                                      ))}
-                                    </div>
-                                  </div>
-                                ) : null}
-
-                                {period.notableWorks && period.notableWorks.length > 0 ? (
-                                  <div>
-                                    <div className="mb-3 flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/42">
-                                      <Landmark className="h-3.5 w-3.5" />
-                                      Notable works
-                                    </div>
-                                    <div className="space-y-2 border-t border-border/35 pt-3">
-                                      {period.notableWorks.map((work) => (
-                                        <p key={work} className="text-sm leading-6 text-foreground/68">
-                                          {work}
-                                        </p>
-                                      ))}
-                                    </div>
-                                  </div>
-                                ) : null}
-
-                                <div>
-                                  <div className="mb-3 text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/42">
-                                    Overview
-                                  </div>
-                                  <p className="text-sm leading-7 text-foreground/62 md:text-[0.98rem]">
-                                    {period.description}
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </motion.div>
-                );
-              })}
-
-              {filteredPeriods.length === 0 && (
-                <div className="py-16 text-center text-foreground/55">
-                  No periods found matching your search
-                </div>
-              )}
-            </div>
+                {filteredPeriods.length === 0 ? (
+                  <div className="grid min-h-[14rem] place-items-center px-6 text-center">
+                    <p className="text-[0.95rem] font-medium tracking-[-0.02em] text-black/46">
+                      No periods found for "{searchQuery}"
+                    </p>
+                  </div>
+                ) : null}
+              </div>
+            </section>
           </div>
         </section>
       </main>
-
-      <Footer />
     </div>
   );
 }

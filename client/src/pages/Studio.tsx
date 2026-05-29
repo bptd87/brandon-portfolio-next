@@ -1,7 +1,13 @@
 "use client";
 
-import { useMemo, useRef } from "react";
-import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  ExternalLink,
+  X,
+} from "lucide-react";
 import { Link } from "wouter";
 
 import { AnimatedSection } from "@/components/AnimatedSection";
@@ -19,42 +25,83 @@ import { getLocalArticles } from "@shared/localArticles";
 
 const apps = [
   {
-    title: "Scenic 3D Converter (Mac)",
+    title: "Scenic 3D Converter",
+    shortTitle: "3D Convert",
     description:
-      "Finder quick action workflow to convert 3D files locally into Vectorworks-friendly USD, USDZ, and 3DM outputs.",
-    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-scenic-3d-converter.png",
+      "A Mac utility for preparing 3D files for scenic workflows, with exports aimed at Vectorworks-friendly USD, USDZ, and 3DM handoffs.",
+    image: "/assets/studio-apps/icons/scenic-3d-converter.jpg",
     href: "/studio/apps/scenic-3d-converter",
-    category: "Utility",
-    cta: "Open tool",
+    category: "Mac Tool",
+    tone: "Download",
+    cta: "View Mac download",
+    launchMode: "page",
   },
   {
     title: "Scale Calculator",
+    shortTitle: "Scale",
     description:
-      "Convert between architectural and model scales for drafting, model building, and production workflow.",
-    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-scale-calculator.png",
+      "Convert architectural and scenic dimensions into model-scale millimeters for 3D printing, drafting, and physical model making.",
+    image: "/assets/studio-apps/icons/scale-calculator.jpg",
     href: "/studio/apps/scale-calculator",
     category: "Calculator",
+    tone: "Mobile tool",
     cta: "Launch app",
+    launchMode: "app",
   },
   {
     title: "Dimension Reference",
+    shortTitle: "Dims",
     description:
       "Quick reference for standard dimensions and unit conversions in scenic and production design.",
-    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-dimension-reference.png",
+    image: "/assets/studio-apps/icons/dimension-reference.jpg",
     href: "/studio/apps/dimension-reference",
     category: "Reference",
+    tone: "Shop reference",
     cta: "Open reference",
+    launchMode: "app",
   },
   {
     title: "Rosco Paint Calculator",
+    shortTitle: "Rosco",
     description:
       "Professional scenic paint mixing calculator for Rosco Off-Broadway paints and color matching workflows.",
-    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-rosco-paint-calculator.png",
+    image: "/assets/studio-apps/icons/rosco-paint-calculator.jpg",
     href: "/studio/apps/rosco-paint-calculator",
     category: "Calculator",
+    tone: "Paint shop",
     cta: "Launch app",
+    launchMode: "app",
+  },
+  {
+    title: "Commercial Paint Matcher",
+    shortTitle: "Paint Match",
+    description:
+      "Match sampled colors against Sherwin-Williams, Benjamin Moore, and BEHR libraries with brand filters and copyable color data.",
+    image: "/assets/studio-apps/icons/commercial-paint-matcher.jpg",
+    href: "/studio/apps/commercial-paint-matcher",
+    category: "Matcher",
+    tone: "Paint library",
+    cta: "Launch app",
+    launchMode: "app",
+  },
+  {
+    title: "Design History Timeline",
+    shortTitle: "History",
+    description:
+      "Explore major design periods with visual references, color palettes, and historical context.",
+    image: "/assets/studio-apps/icons/design-history-timeline.jpg",
+    href: "/studio/apps/design-history-timeline",
+    category: "Reference",
+    tone: "Research",
+    cta: "Open timeline",
+    launchMode: "app",
   },
 ] as const;
+
+type StudioTool = (typeof apps)[number];
+
+const studioToolCardClass =
+  "group flex h-full min-h-[32rem] w-full flex-col overflow-hidden rounded-none border-b border-r border-black/10 bg-[#f4f5f7] p-0 text-left [border-radius:0] transition-colors hover:bg-white md:min-h-[36rem]";
 
 const studioLinks = [
   {
@@ -94,7 +141,9 @@ function getArticleTimestamp(value?: string | Date | null) {
 
 export default function Studio() {
   const recentCardsRef = useRef<HTMLDivElement | null>(null);
-  const appCardsRef = useRef<HTMLDivElement | null>(null);
+  const closeTimerRef = useRef<number | null>(null);
+  const [activeApp, setActiveApp] = useState<StudioTool | null>(null);
+  const [isAppClosing, setIsAppClosing] = useState(false);
   const latestArticles = useMemo(
     () =>
       getLocalArticles()
@@ -110,12 +159,95 @@ export default function Studio() {
       behavior: "smooth",
     });
   };
-  const scrollAppCards = (direction: "previous" | "next") => {
-    appCardsRef.current?.scrollBy({
-      left: direction === "next" ? 620 : -620,
-      behavior: "smooth",
-    });
-  };
+
+  function openStudioApp(app: StudioTool) {
+    if (app.launchMode === "page") {
+      window.location.href = app.href;
+      return;
+    }
+
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 767px)").matches
+    ) {
+      window.location.href = app.href;
+      return;
+    }
+
+    if (closeTimerRef.current) {
+      window.clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+
+    setIsAppClosing(false);
+    setActiveApp(app);
+  }
+
+  function closeStudioApp() {
+    if (!activeApp || isAppClosing) return;
+
+    setIsAppClosing(true);
+    closeTimerRef.current = window.setTimeout(() => {
+      setActiveApp(null);
+      setIsAppClosing(false);
+      closeTimerRef.current = null;
+    }, 220);
+  }
+
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!activeApp) return;
+
+    const scrollY = window.scrollY;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+    const originalHtmlHeight = document.documentElement.style.height;
+    const originalHtmlOverscrollBehavior =
+      document.documentElement.style.overscrollBehavior;
+    const originalOverflow = document.body.style.overflow;
+    const originalBodyPosition = document.body.style.position;
+    const originalBodyTop = document.body.style.top;
+    const originalBodyLeft = document.body.style.left;
+    const originalBodyRight = document.body.style.right;
+    const originalBodyWidth = document.body.style.width;
+    const originalBodyOverscrollBehavior = document.body.style.overscrollBehavior;
+
+    document.documentElement.style.overflow = "hidden";
+    document.documentElement.style.height = "100%";
+    document.documentElement.style.overscrollBehavior = "none";
+    document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
+    document.body.style.overscrollBehavior = "none";
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") closeStudioApp();
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.documentElement.style.overflow = originalHtmlOverflow;
+      document.documentElement.style.height = originalHtmlHeight;
+      document.documentElement.style.overscrollBehavior =
+        originalHtmlOverscrollBehavior;
+      document.body.style.overflow = originalOverflow;
+      document.body.style.position = originalBodyPosition;
+      document.body.style.top = originalBodyTop;
+      document.body.style.left = originalBodyLeft;
+      document.body.style.right = originalBodyRight;
+      document.body.style.width = originalBodyWidth;
+      document.body.style.overscrollBehavior = originalBodyOverscrollBehavior;
+      window.scrollTo(0, scrollY);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activeApp]);
 
   return (
     <div className="min-h-screen bg-[#f1f0ec] text-[#111111] [--background:#f1f0ec] [--border:rgba(17,17,17,0.14)] [--foreground:#111111]">
@@ -164,7 +296,7 @@ export default function Studio() {
       <Header />
       <PublishingTopBar tone="white" />
 
-      <main className="pb-24">
+      <main className="pb-0">
         <section className="mx-auto max-w-[76rem] border-b border-black/10 px-[clamp(1.5rem,5vw,6rem)] py-16 md:py-20">
           <AnimatedSection>
             <div className="mx-auto max-w-4xl text-center">
@@ -312,7 +444,7 @@ export default function Studio() {
           )}
         </section>
 
-        <section className="bg-[#f1f0ec] pb-20 pt-16 md:pb-28 md:pt-24">
+        <section className="bg-[#f1f0ec] pt-16 md:pt-24">
           <div className="px-[clamp(1.5rem,5vw,6rem)]">
             <div className="mb-10 grid gap-6 md:grid-cols-[minmax(0,0.72fr)_auto] md:items-end">
               <div className="max-w-3xl">
@@ -332,78 +464,141 @@ export default function Studio() {
             </div>
           </div>
 
-          <div
-            ref={appCardsRef}
-            className="overflow-x-auto px-[clamp(1.5rem,5vw,6rem)] pb-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          >
-            <div className="flex min-w-max gap-5 pr-[clamp(1.5rem,5vw,6rem)]">
-              {apps.map((app, index) => (
-                <Link
-                  key={app.href}
-                  href={app.href}
-                  className="group relative block w-[min(25rem,82vw)] overflow-hidden rounded-[1.7rem] bg-black ring-1 ring-black/[0.04] transition duration-300 hover:-translate-y-1 md:w-[29rem]"
-                >
-                  <img
-                    src={app.image}
-                    alt={app.title}
-                    loading={index === 0 ? "eager" : "lazy"}
-                    className="aspect-square h-full w-full object-cover opacity-[0.92] transition duration-500 group-hover:scale-[1.018] group-hover:opacity-100"
-                  />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.24)_46%,rgba(0,0,0,0.82)_100%)]" />
-
-                  <div className="absolute inset-0 flex flex-col justify-between p-7 text-white md:p-8">
-                    <div>
-                      <p className="text-[0.92rem] font-medium tracking-[-0.02em] text-white/72">
-                        {app.category}
-                      </p>
-                    </div>
-
-                    <div>
-                      <h3 className="max-w-[11ch] font-sans text-[clamp(2.15rem,4vw,4rem)] font-medium leading-[0.9] tracking-[-0.08em] text-white">
-                        {app.title}
-                      </h3>
-                      <p className="mt-4 max-w-[25rem] text-[0.98rem] leading-[1.42] tracking-[-0.02em] text-white/72">
-                        {app.description}
-                      </p>
-
-                      <div className="mt-6 flex items-center justify-between gap-4 border-t border-white/22 pt-4">
-                        <span className="min-w-0 truncate text-[0.95rem] font-medium tracking-[-0.02em] text-white/76">
-                          {app.cta}
-                        </span>
-                        <ArrowUpRight
-                          className="h-4 w-4 shrink-0 text-white transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                          aria-hidden="true"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div className="-mt-1 flex justify-end gap-3 px-[clamp(1.5rem,5vw,6rem)]">
-            <button
-              type="button"
-              onClick={() => scrollAppCards("previous")}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/[0.08] text-black/62 transition-colors hover:bg-black hover:text-white"
-              aria-label="Previous studio app cards"
-            >
-              <ChevronLeft className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollAppCards("next")}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/[0.12] text-black/72 transition-colors hover:bg-black hover:text-white"
-              aria-label="Next studio app cards"
-            >
-              <ChevronRight className="h-5 w-5" strokeWidth={2.5} aria-hidden="true" />
-            </button>
+          <div className="grid border-y border-black/10 [grid-auto-rows:1fr] md:grid-cols-2 xl:grid-cols-3">
+            {apps.map((app, index) => (
+              <AnimatedSection key={app.href} className="h-full">
+                {app.launchMode === "page" ? (
+                  <Link href={app.href} className={studioToolCardClass}>
+                    <StudioToolCardContent app={app} index={index} />
+                  </Link>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => openStudioApp(app)}
+                    className={studioToolCardClass}
+                  >
+                    <StudioToolCardContent app={app} index={index} />
+                  </button>
+                )}
+              </AnimatedSection>
+            ))}
           </div>
         </section>
       </main>
 
       <Footer tone="light" />
+      <StudioAppScreen
+        app={activeApp}
+        isClosing={isAppClosing}
+        onBack={closeStudioApp}
+      />
+    </div>
+  );
+}
+
+function StudioToolCardContent({
+  app,
+  index,
+}: {
+  app: StudioTool;
+  index: number;
+}) {
+  return (
+    <>
+      <div className="site-media-square aspect-square w-full overflow-hidden rounded-none border-b border-black/10 bg-black [border-radius:0]">
+        <img
+          src={app.image}
+          alt={app.title}
+          loading={index === 0 ? "eager" : "lazy"}
+          className="site-media-square h-full w-full rounded-none object-cover [border-radius:0]"
+        />
+      </div>
+
+      <div className="flex flex-1 flex-col px-5 py-6 md:px-7 md:py-8">
+        <div className="mb-7 flex items-center justify-between gap-4">
+          <p className="text-[0.72rem] font-semibold uppercase leading-none tracking-[0.26em] text-black/46">
+            {app.category} / {app.tone}
+          </p>
+          <span className="text-[0.72rem] font-semibold leading-none tracking-[0.26em] text-black/28">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+        </div>
+
+        <h3 className="max-w-[10ch] font-sans text-[clamp(2.35rem,5.8vw,4.65rem)] font-medium leading-[0.86] tracking-[-0.085em] text-black">
+          {app.title}
+        </h3>
+        <p className="mt-5 max-w-[34rem] text-[1rem] leading-[1.42] tracking-[-0.025em] text-black/58 md:text-[1.08rem]">
+          {app.description}
+        </p>
+
+        <div className="mt-auto flex items-center justify-between gap-4 pt-9 text-[1rem] font-medium tracking-[-0.03em] text-black/68 transition-colors group-hover:text-black">
+          <span>{app.cta}</span>
+          <ArrowUpRight
+            className="h-4 w-4 shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+            aria-hidden="true"
+          />
+        </div>
+      </div>
+    </>
+  );
+}
+
+function StudioAppScreen({
+  app,
+  isClosing,
+  onBack,
+}: {
+  app: StudioTool | null;
+  isClosing: boolean;
+  onBack: () => void;
+}) {
+  if (!app) return null;
+
+  const frameSrc = `${app.href}?studioFrame=1`;
+
+  return (
+    <div
+      className="studio-app-overlay fixed inset-0 z-[120] flex flex-col overflow-hidden bg-[#f3eee4] text-black md:grid md:place-items-center md:bg-black/72 md:p-6"
+      data-state={isClosing ? "closing" : "open"}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${app.title} app screen`}
+    >
+      <div className="studio-app-shell flex min-h-0 flex-1 flex-col overflow-hidden bg-[#f3eee4] md:h-[min(54rem,88vh)] md:w-full md:max-w-[28rem] md:flex-none md:rounded-[2.4rem] md:border md:border-black/12 md:shadow-[0_34px_140px_rgba(0,0,0,0.42)]">
+        <div className="grid h-14 shrink-0 grid-cols-[1fr_auto_1fr] items-center border-b border-black/10 bg-[#fbf7ef] px-4 shadow-[inset_0_1px_rgba(255,255,255,0.68)]">
+          <button
+            type="button"
+            onClick={onBack}
+            className="flex h-7 w-7 items-center justify-center rounded-full bg-[#ff5f57] text-[#6f1512] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.16)] transition-transform hover:scale-105"
+            aria-label="Back to Studio"
+          >
+            <X className="h-3.5 w-3.5 opacity-0 transition-opacity hover:opacity-70" />
+          </button>
+          <div className="text-center">
+            <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-black/54">
+              {app.shortTitle}
+            </p>
+          </div>
+          <a
+            href={app.href}
+            className="ml-auto flex h-8 w-8 items-center justify-center rounded-full text-black/46 transition-colors hover:bg-black/6 hover:text-black"
+            aria-label={`Open ${app.title} as full page`}
+          >
+            <ExternalLink className="h-4 w-4" />
+          </a>
+        </div>
+
+        <div className="min-h-0 flex-1 bg-[#f3eee4]">
+          <iframe
+            key={app.href}
+            title={app.title}
+            src={frameSrc}
+            className="studio-app-iframe h-full w-full border-0 bg-[#f3eee4]"
+            loading="lazy"
+            allow="clipboard-write"
+          />
+        </div>
+      </div>
     </div>
   );
 }

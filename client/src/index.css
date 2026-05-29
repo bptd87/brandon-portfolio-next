@@ -764,6 +764,113 @@
   will-change: transform, opacity;
 }
 
+html[data-studio-frame="true"] body {
+  background: #f3eee4;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+html[data-studio-frame="true"] {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+html[data-studio-frame="true"] header,
+html[data-studio-frame="true"] footer,
+html[data-studio-frame="true"] .studio-app-mobile-topbar,
+html[data-studio-frame="true"] [aria-label="Analytics consent"] {
+  display: none !important;
+}
+
+html[data-studio-frame="true"] main {
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+}
+
+html[data-studio-frame="true"] main.studio-app-main {
+  padding-top: 0.55rem !important;
+  padding-bottom: 0.55rem !important;
+}
+
+.studio-app-overlay {
+  animation: studioAppOverlayIn 260ms ease both;
+  overscroll-behavior: contain;
+}
+
+.studio-app-overlay[data-state="closing"] {
+  animation: studioAppOverlayOut 180ms ease both;
+}
+
+.studio-app-shell {
+  animation: studioAppShellIn 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: center;
+  will-change: opacity, transform;
+}
+
+.studio-app-overlay[data-state="closing"] .studio-app-shell {
+  animation: studioAppShellOut 180ms ease both;
+}
+
+.studio-app-iframe {
+  animation: studioAppFrameIn 280ms ease 120ms both;
+}
+
+@keyframes studioAppOverlayIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes studioAppOverlayOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes studioAppShellIn {
+  from {
+    opacity: 0;
+    transform: translateY(2rem) scale(0.965);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes studioAppShellOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(1rem) scale(0.985);
+  }
+}
+
+@keyframes studioAppFrameIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-stage-sweep {
     animation: none;
@@ -771,5 +878,13 @@
 
   .production-explore-track {
     animation: none;
+  }
+
+  .studio-app-overlay,
+  .studio-app-shell,
+  .studio-app-iframe,
+  .studio-app-overlay[data-state="closing"],
+  .studio-app-overlay[data-state="closing"] .studio-app-shell {
+    animation: none !important;
   }
 }

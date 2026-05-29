@@ -1,11 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { Input } from "@/components/ui/input";
+import { useMemo, useState } from "react";
 import { 
-  Database, Search, Copy, Check, ChevronLeft, ChevronRight, ArrowLeft,
+  Database, Search, Copy, Check, ArrowLeft, SlidersHorizontal,
   Armchair, Table, Bed, Package, Layers,
   Monitor, Store, Users, Home, Ruler
 } from "lucide-react";
@@ -24,6 +21,8 @@ interface DimensionItem {
   jargon?: string;
   wireframe?: string;
 }
+
+type UnitMode = "imperial" | "metric";
 
 type CategoryKey = 
   | 'All Categories'
@@ -44,7 +43,13 @@ type CategoryKey =
   | 'Experiential - Activation'
   | 'Architecture - Circulation'
   | 'Architecture - Heights'
-  | 'Architecture - Counters';
+  | 'Architecture - Counters'
+  | 'Architecture - Doors & Openings'
+  | 'Architecture - Stairs & Ramps'
+  | 'Architecture - Restrooms'
+  | 'Architecture - Kitchens'
+  | 'Architecture - Workstations'
+  | 'Architecture - Parking & Exterior';
 
 const CATEGORY_ICONS: Record<string, any> = {
   'All Categories': Database,
@@ -66,6 +71,12 @@ const CATEGORY_ICONS: Record<string, any> = {
   'Architecture - Circulation': Users,
   'Architecture - Heights': Home,
   'Architecture - Counters': Table,
+  'Architecture - Doors & Openings': Layers,
+  'Architecture - Stairs & Ramps': Layers,
+  'Architecture - Restrooms': Users,
+  'Architecture - Kitchens': Table,
+  'Architecture - Workstations': Monitor,
+  'Architecture - Parking & Exterior': Store,
 };
 
 const CATEGORIES: CategoryKey[] = [
@@ -88,7 +99,19 @@ const CATEGORIES: CategoryKey[] = [
   'Architecture - Circulation',
   'Architecture - Heights',
   'Architecture - Counters',
+  'Architecture - Doors & Openings',
+  'Architecture - Stairs & Ramps',
+  'Architecture - Restrooms',
+  'Architecture - Kitchens',
+  'Architecture - Workstations',
+  'Architecture - Parking & Exterior',
 ];
+
+const CATEGORY_FILTERS = CATEGORIES.filter(
+  (category) => category !== "All Categories"
+) as CategoryKey[];
+
+const MM_PER_INCH = 25.4;
 
 const DIMENSIONS: DimensionItem[] = [
   // EXPERIENTIAL - EXHIBITION
@@ -209,6 +232,14 @@ const DIMENSIONS: DimensionItem[] = [
   { name: 'Corridor Width (Preferred)', category: 'Architecture - Circulation', width: '48" - 60"', notes: 'Comfortable two-way traffic' },
   { name: 'Doorway (ADA)', category: 'Architecture - Circulation', width: '36" (clear)', notes: 'Minimum clear opening' },
   { name: 'Wheelchair Turning Circle', category: 'Architecture - Circulation', diameter: '60"', notes: 'ADA requirement' },
+  { name: 'Accessible Route Width', category: 'Architecture - Circulation', width: '36" min clear', notes: 'Common accessible route minimum; verify local code' },
+  { name: 'Accessible Clear Floor Space', category: 'Architecture - Circulation', width: '30"', depth: '48"', notes: 'Forward or parallel wheelchair approach' },
+  { name: 'Passing Space', category: 'Architecture - Circulation', width: '60"', depth: '60"', notes: 'Typical wheelchair passing interval on narrow routes' },
+  { name: 'Residential Hallway', category: 'Architecture - Circulation', width: '36" - 42"', notes: 'Common residential corridor planning range' },
+  { name: 'Two-Person Corridor', category: 'Architecture - Circulation', width: '60" - 72"', notes: 'Comfortable two-way interior circulation' },
+  { name: 'Retail Aisle (Comfortable)', category: 'Architecture - Circulation', width: '48" - 60"', notes: 'Allows browsing and passing' },
+  { name: 'Queue Lane', category: 'Architecture - Circulation', width: '36" - 42"', notes: 'Single-file queuing or stanchion lane' },
+  { name: 'Furniture Passage', category: 'Architecture - Circulation', width: '30" - 36"', notes: 'Clear path between furniture pieces' },
 
   // ARCHITECTURE - HEIGHTS
   { name: 'Ceiling Height (Standard)', category: 'Architecture - Heights', height: '8\'-0" - 9\'-0"', notes: 'Residential' },
@@ -217,6 +248,14 @@ const DIMENSIONS: DimensionItem[] = [
   { name: 'Window Sill Height', category: 'Architecture - Heights', height: '30" - 36"', notes: 'Standard residential' },
   { name: 'Light Switch Height', category: 'Architecture - Heights', height: '48"', notes: 'ADA compliant' },
   { name: 'Outlet Height', category: 'Architecture - Heights', height: '12" - 18"', notes: 'Standard residential' },
+  { name: 'Thermostat Height', category: 'Architecture - Heights', height: '48" max reach', notes: 'Accessible forward reach reference' },
+  { name: 'Door Viewer / Peephole', category: 'Architecture - Heights', height: '43" - 60"', notes: 'Use lower height for accessible viewing' },
+  { name: 'Handrail Height', category: 'Architecture - Heights', height: '34" - 38"', notes: 'Measured above stair nosings or ramp surface' },
+  { name: 'Guardrail Height (Residential)', category: 'Architecture - Heights', height: '36" min', notes: 'Common residential guard height; verify jurisdiction' },
+  { name: 'Guardrail Height (Commercial)', category: 'Architecture - Heights', height: '42" min', notes: 'Common commercial guard height; verify jurisdiction' },
+  { name: 'Toilet Paper Dispenser', category: 'Architecture - Heights', height: '19" min', notes: 'Typical accessible dispenser height zone varies by condition' },
+  { name: 'Mirror Bottom Edge', category: 'Architecture - Heights', height: '40" max', notes: 'Accessible lavatory mirror reference' },
+  { name: 'Drinking Fountain Spout', category: 'Architecture - Heights', height: '36" max', notes: 'Accessible spout height reference' },
 
   // ARCHITECTURE - COUNTERS
   { name: 'Kitchen Counter Height', category: 'Architecture - Counters', height: '36"', depth: '24" - 25"', notes: 'Standard' },
@@ -224,239 +263,566 @@ const DIMENSIONS: DimensionItem[] = [
   { name: 'Bar Counter Height', category: 'Architecture - Counters', height: '42"', depth: '16" - 20"' },
   { name: 'Bathroom Vanity Height', category: 'Architecture - Counters', height: '32" - 36"', depth: '21" - 24"' },
   { name: 'Reception Desk Height', category: 'Architecture - Counters', height: '42" - 48"', depth: '24" - 30"', notes: 'Standing transaction' },
+  { name: 'Accessible Counter Segment', category: 'Architecture - Counters', height: '34" max', depth: '17" - 25"', notes: 'Accessible sales/service counter reference' },
+  { name: 'Desk / Work Surface', category: 'Architecture - Counters', height: '28" - 30"', depth: '24" - 30"', notes: 'Typical seated work height' },
+  { name: 'Standing Workbench', category: 'Architecture - Counters', height: '36" - 42"', depth: '24" - 36"', notes: 'Shop and production workbench range' },
+  { name: 'Transaction Counter Depth', category: 'Architecture - Counters', depth: '18" - 24"', height: '34" - 42"', notes: 'Use lower portion for accessible transactions' },
+  { name: 'Reception Counter Width', category: 'Architecture - Counters', width: '60" - 96"', depth: '24" - 30"', height: '42" - 48"', notes: 'Common small lobby desk' },
+
+  // ARCHITECTURE - DOORS & OPENINGS
+  { name: 'Interior Door Leaf', category: 'Architecture - Doors & Openings', width: '30" - 36"', height: '80"', depth: '1-3/8"', notes: 'Common interior swing door' },
+  { name: 'Accessible Door Clear Width', category: 'Architecture - Doors & Openings', width: '32" min clear', notes: 'Clear opening with door open 90 degrees' },
+  { name: 'Exterior Door Leaf', category: 'Architecture - Doors & Openings', width: '36"', height: '80" - 84"', depth: '1-3/4"', notes: 'Common exterior swing door' },
+  { name: 'Double Door Pair', category: 'Architecture - Doors & Openings', width: '60" - 72"', height: '80" - 96"', notes: 'Pair of 30" to 36" leaves' },
+  { name: 'Pocket Door', category: 'Architecture - Doors & Openings', width: '30" - 36"', height: '80"', notes: 'Pocket cavity usually about twice door width' },
+  { name: 'Sliding Glass Door', category: 'Architecture - Doors & Openings', width: '60" - 96"', height: '80"', notes: 'Common residential patio opening' },
+  { name: 'Storefront Entry Door', category: 'Architecture - Doors & Openings', width: '36"', height: '84" - 96"', notes: 'Commercial aluminum entrance range' },
+  { name: 'Door Pull Side Clearance', category: 'Architecture - Doors & Openings', width: '18" min latch side', notes: 'Common accessible maneuvering clearance reference' },
+  { name: 'Cased Opening', category: 'Architecture - Doors & Openings', width: '36" - 72"', height: '80" - 96"', notes: 'Open passage without leaf' },
+  { name: 'Garage Door (Single)', category: 'Architecture - Doors & Openings', width: '8\'-0" - 9\'-0"', height: '7\'-0" - 8\'-0"', notes: 'Common residential single bay' },
+  { name: 'Garage Door (Double)', category: 'Architecture - Doors & Openings', width: '16\'-0"', height: '7\'-0" - 8\'-0"', notes: 'Common residential double bay' },
+
+  // ARCHITECTURE - STAIRS & RAMPS
+  { name: 'Residential Stair Riser', category: 'Architecture - Stairs & Ramps', height: '7-3/4" max', notes: 'IRC residential maximum riser reference' },
+  { name: 'Residential Stair Tread', category: 'Architecture - Stairs & Ramps', depth: '10" min', notes: 'IRC residential minimum tread reference' },
+  { name: 'Comfort Stair Riser', category: 'Architecture - Stairs & Ramps', height: '6-1/2" - 7"', notes: 'Comfortable theatrical/architectural planning range' },
+  { name: 'Comfort Stair Tread', category: 'Architecture - Stairs & Ramps', depth: '11" - 12"', notes: 'Comfortable planning range' },
+  { name: 'Stair Width (Residential)', category: 'Architecture - Stairs & Ramps', width: '36" min', notes: 'Common residential minimum clear width' },
+  { name: 'Stair Width (Public)', category: 'Architecture - Stairs & Ramps', width: '44" min typical', notes: 'Common egress stair reference; verify local code' },
+  { name: 'Stair Landing Depth', category: 'Architecture - Stairs & Ramps', depth: '36" min', notes: 'Common residential landing depth reference' },
+  { name: 'Ramp Running Slope', category: 'Architecture - Stairs & Ramps', depth: '1:12 max', notes: 'Accessible ramp slope reference' },
+  { name: 'Ramp Clear Width', category: 'Architecture - Stairs & Ramps', width: '36" min clear', notes: 'Accessible ramp run clear width reference' },
+  { name: 'Ramp Landing', category: 'Architecture - Stairs & Ramps', width: '36" min', depth: '60" min', notes: 'Accessible ramp landing reference' },
+  { name: 'Curb Ramp Width', category: 'Architecture - Stairs & Ramps', width: '36" min clear', notes: 'Accessible curb ramp reference' },
+  { name: 'Handrail Extension', category: 'Architecture - Stairs & Ramps', depth: '12" min', notes: 'Extension beyond top riser or ramp run reference' },
+  { name: 'Guard Opening', category: 'Architecture - Stairs & Ramps', width: '4" sphere max', notes: 'Common guard infill opening reference' },
+
+  // ARCHITECTURE - RESTROOMS
+  { name: 'Toilet Room (Single User)', category: 'Architecture - Restrooms', width: '5\'-0" min', depth: '7\'-0" min', notes: 'Common accessible single-user planning module' },
+  { name: 'Accessible Toilet Clearance', category: 'Architecture - Restrooms', width: '60" min', depth: '56" - 59" min', notes: 'Depth varies by wall-hung or floor-mounted fixture' },
+  { name: 'Water Closet Centerline', category: 'Architecture - Restrooms', width: '16" - 18"', notes: 'From side wall to fixture centerline' },
+  { name: 'Toilet Seat Height', category: 'Architecture - Restrooms', height: '17" - 19"', notes: 'Accessible water closet seat height reference' },
+  { name: 'Lavatory Height', category: 'Architecture - Restrooms', height: '34" max', depth: '17" - 25"', notes: 'Accessible lavatory rim/counter reference' },
+  { name: 'Lavatory Knee Clearance', category: 'Architecture - Restrooms', height: '27" min', depth: '8" min', notes: 'Accessible knee clearance reference' },
+  { name: 'Grab Bar Side Wall', category: 'Architecture - Restrooms', width: '42" min', height: '33" - 36"', notes: 'Accessible side grab bar reference' },
+  { name: 'Grab Bar Rear Wall', category: 'Architecture - Restrooms', width: '36" min', height: '33" - 36"', notes: 'Accessible rear grab bar reference' },
+  { name: 'Ambulatory Stall', category: 'Architecture - Restrooms', width: '35" - 37"', depth: '60" min', notes: 'Ambulatory accessible compartment range' },
+  { name: 'Standard Toilet Stall', category: 'Architecture - Restrooms', width: '36"', depth: '60"', notes: 'Common non-accessible compartment' },
+  { name: 'Accessible Toilet Stall', category: 'Architecture - Restrooms', width: '60" min', depth: '56" - 59" min', notes: 'Compartment depth varies by fixture type' },
+  { name: 'Urinal Rim Height', category: 'Architecture - Restrooms', height: '17" max', notes: 'Accessible urinal rim height reference' },
+  { name: 'Shower Transfer Seat', category: 'Architecture - Restrooms', width: '15" - 16"', depth: '15" - 16"', height: '17" - 19"', notes: 'Accessible shower seat reference' },
+
+  // ARCHITECTURE - KITCHENS
+  { name: 'Base Cabinet Depth', category: 'Architecture - Kitchens', depth: '24"', height: '34-1/2"', notes: 'Cabinet height before countertop' },
+  { name: 'Wall Cabinet Depth', category: 'Architecture - Kitchens', depth: '12" - 15"', height: '30" - 42"', notes: 'Common upper cabinet range' },
+  { name: 'Countertop Overhang', category: 'Architecture - Kitchens', depth: '1" - 1-1/2"', notes: 'Typical front overhang' },
+  { name: 'Island Seating Overhang', category: 'Architecture - Kitchens', depth: '12" - 15"', notes: 'Knee space for stools' },
+  { name: 'Kitchen Work Aisle', category: 'Architecture - Kitchens', width: '42" - 48"', notes: 'One-cook to two-cook planning range' },
+  { name: 'Walkway Behind Island Seating', category: 'Architecture - Kitchens', width: '44" - 60"', notes: 'Depends on traffic and stool use' },
+  { name: 'Dishwasher Opening', category: 'Architecture - Kitchens', width: '24"', depth: '24"', height: '34" - 35"', notes: 'Standard dishwasher bay' },
+  { name: 'Range / Cooktop Width', category: 'Architecture - Kitchens', width: '30" - 36"', depth: '24" - 28"', notes: 'Common residential appliance range' },
+  { name: 'Refrigerator Bay', category: 'Architecture - Kitchens', width: '36" - 42"', depth: '30" - 36"', height: '70" - 84"', notes: 'Varies by appliance type' },
+  { name: 'Toe Kick', category: 'Architecture - Kitchens', height: '4"', depth: '3"', notes: 'Typical cabinet toe recess' },
+
+  // ARCHITECTURE - WORKSTATIONS
+  { name: 'Office Desk', category: 'Architecture - Workstations', width: '48" - 72"', depth: '24" - 30"', height: '29" - 30"', notes: 'Typical task desk' },
+  { name: 'Executive Desk', category: 'Architecture - Workstations', width: '72" - 84"', depth: '30" - 36"', height: '29" - 30"', notes: 'Larger private office desk' },
+  { name: 'Open Office Workstation', category: 'Architecture - Workstations', width: '60" - 72"', depth: '60" - 72"', notes: 'Common systems furniture footprint' },
+  { name: 'Conference Table Seat', category: 'Architecture - Workstations', width: '30" min per person', depth: '36" - 48"', notes: 'Table planning module per seated person' },
+  { name: 'Conference Room Clearance', category: 'Architecture - Workstations', width: '36" - 48"', notes: 'Clearance around table edge' },
+  { name: 'Task Chair Footprint', category: 'Architecture - Workstations', width: '26" - 30"', depth: '26" - 30"', notes: 'Rolling office chair planning footprint' },
+  { name: 'File Cabinet (Lateral)', category: 'Architecture - Workstations', width: '30" - 42"', depth: '18" - 20"', height: '28" - 67"', notes: 'Two to five drawer range' },
+  { name: 'File Cabinet (Vertical)', category: 'Architecture - Workstations', width: '15" - 18"', depth: '25" - 28"', height: '28" - 52"', notes: 'Letter/legal vertical cabinet' },
+
+  // ARCHITECTURE - PARKING & EXTERIOR
+  { name: 'Parking Stall (Standard)', category: 'Architecture - Parking & Exterior', width: '8\'-6" - 9\'-0"', depth: '18\'-0" - 20\'-0"', notes: 'Common surface parking range' },
+  { name: 'Accessible Parking Stall', category: 'Architecture - Parking & Exterior', width: '96" min', depth: '18\'-0" typical', notes: 'Access aisle required; verify local code' },
+  { name: 'Accessible Parking Access Aisle', category: 'Architecture - Parking & Exterior', width: '60" min', notes: 'Van aisles may require more width by condition' },
+  { name: 'Van Accessible Parking Stall', category: 'Architecture - Parking & Exterior', width: '132" min', depth: '18\'-0" typical', notes: 'Alternative layouts may combine stall and aisle differently' },
+  { name: 'Sidewalk Width', category: 'Architecture - Parking & Exterior', width: '48" - 60"', notes: 'Comfortable pedestrian path range' },
+  { name: 'Accessible Exterior Route', category: 'Architecture - Parking & Exterior', width: '36" min clear', notes: 'Accessible route clear width reference' },
+  { name: 'Curb Height', category: 'Architecture - Parking & Exterior', height: '6" typical', notes: 'Common parking/site curb height' },
+  { name: 'Bike Parking Space', category: 'Architecture - Parking & Exterior', width: '24"', depth: '72"', notes: 'Single bicycle footprint reference' },
 ];
 
+function getItemKey(item: DimensionItem) {
+  return `${item.category}:${item.name}`;
+}
+
+function formatMetricNumber(totalMillimeters: number) {
+  if (totalMillimeters >= 1000) {
+    return `${(totalMillimeters / 1000)
+      .toFixed(2)
+      .replace(/\.00$/, "")
+      .replace(/(\.\d)0$/, "$1")}m`;
+  }
+
+  return `${Math.round(totalMillimeters)}mm`;
+}
+
+function parseInches(rawValue = "0") {
+  const trimmedValue = rawValue.trim();
+  if (!trimmedValue) return 0;
+
+  if (trimmedValue.includes("/")) {
+    const [wholeValue, fractionValue] = trimmedValue.split(" ");
+    const [numerator, denominator] = (fractionValue ?? wholeValue)
+      .split("/")
+      .map(Number);
+    const whole = fractionValue ? Number(wholeValue) : 0;
+    return whole + numerator / denominator;
+  }
+
+  return Number(trimmedValue);
+}
+
+function formatDimensionValue(value: string, unitMode: UnitMode) {
+  if (unitMode === "imperial" || /(?:mm|cm|meter|metre)/i.test(value)) {
+    return value;
+  }
+
+  return value
+    .replace(/(\d+(?:\.\d+)?)'\s*-?\s*((?:\d+\s+)?\d*(?:\.\d+)?(?:\/\d+)?)?"/g, (
+      _match,
+      feetValue: string,
+      inchesValue: string
+    ) => {
+      const totalInches = Number(feetValue) * 12 + parseInches(inchesValue);
+      return formatMetricNumber(totalInches * MM_PER_INCH);
+    })
+    .replace(/((?:\d+\s+)?\d+(?:\.\d+)?(?:\/\d+)?)"/g, (_match, inchesValue: string) =>
+      formatMetricNumber(parseInches(inchesValue) * MM_PER_INCH)
+    )
+    .replace(/(\d+(?:\.\d+)?)'\b/g, (_match, feetValue: string) =>
+      formatMetricNumber(Number(feetValue) * 12 * MM_PER_INCH)
+    );
+}
+
+function getDimensionParts(item: DimensionItem, unitMode: UnitMode = "imperial") {
+  return [
+    item.width ? { label: "Width", value: formatDimensionValue(item.width, unitMode) } : null,
+    item.depth ? { label: "Depth", value: formatDimensionValue(item.depth, unitMode) } : null,
+    item.height ? { label: "Height", value: formatDimensionValue(item.height, unitMode) } : null,
+    item.diameter
+      ? { label: "Diameter", value: formatDimensionValue(item.diameter, unitMode) }
+      : null,
+  ].filter(Boolean) as Array<{ label: string; value: string }>;
+}
+
+function formatDimensionLine(item: DimensionItem, unitMode: UnitMode = "imperial") {
+  return getDimensionParts(item, unitMode)
+    .map((part) => `${part.label[0]}: ${part.value}`)
+    .join(" / ");
+}
+
+function getReferenceTag(item: DimensionItem | null) {
+  if (!item) return "Reference";
+
+  const referenceText = `${item.name} ${item.category} ${item.notes ?? ""}`.toLowerCase();
+  if (referenceText.includes("ada") || referenceText.includes("accessible")) {
+    return "ADA check";
+  }
+  if (referenceText.includes("irc") || referenceText.includes("code")) {
+    return "Code check";
+  }
+  if (item.category.startsWith("Architecture")) return "Planning ref";
+  if (item.category.startsWith("Theatre")) return "Scenic ref";
+  if (item.category.startsWith("Event")) return "Event ref";
+  if (item.category.startsWith("Experiential")) return "Expo ref";
+  return "Typical ref";
+}
+
+function getCopyText(item: DimensionItem, unitMode: UnitMode) {
+  const dimensionLine = formatDimensionLine(item, unitMode);
+  return `${item.name} - ${dimensionLine}`;
+}
+
+function getCategoryLabel(category: CategoryKey) {
+  if (category === "All Categories") return "All";
+  return category.split(" - ")[1] ?? category;
+}
+
+function getCategoryButtonLabel(category: CategoryKey) {
+  if (category === "All Categories") return "All";
+
+  const [group, label] = category.split(" - ");
+  if (group === "Furniture") return `Furn ${label}`;
+  if (group === "Theatre") return `Stage ${label}`;
+  if (group === "Event") return `Event ${label}`;
+  if (group === "Architecture") return `Arch ${label}`;
+  return label ?? category;
+}
+
+function formatCategoryFilterLabel(selectedCategories: CategoryKey[]) {
+  if (selectedCategories.length === CATEGORY_FILTERS.length) {
+    return "All categories";
+  }
+
+  if (selectedCategories.length === 0) return "No categories";
+  if (selectedCategories.length === 1) {
+    return getCategoryLabel(selectedCategories[0]);
+  }
+
+  return `${selectedCategories.length} categories`;
+}
+
 export default function DimensionReference() {
-  const [selectedCategory, setSelectedCategory] = useState<CategoryKey>('All Categories');
+  const [selectedCategories, setSelectedCategories] =
+    useState<CategoryKey[]>(CATEGORY_FILTERS);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedItemKey, setSelectedItemKey] = useState<string | null>(null);
   const [copiedItem, setCopiedItem] = useState<string | null>(null);
+  const [unitMode, setUnitMode] = useState<UnitMode>("imperial");
 
   const filteredDimensions = useMemo(() => {
     let filtered = DIMENSIONS;
-    
-    if (selectedCategory !== 'All Categories') {
-      filtered = filtered.filter(item => item.category === selectedCategory);
-    }
-    
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(item =>
-        item.name.toLowerCase().includes(query) ||
-        item.category.toLowerCase().includes(query) ||
-        item.notes?.toLowerCase().includes(query) ||
-        item.jargon?.toLowerCase().includes(query)
+
+    if (selectedCategories.length !== CATEGORY_FILTERS.length) {
+      filtered = filtered.filter((item) =>
+        selectedCategories.includes(item.category as CategoryKey)
       );
     }
-    
+
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(
+        (item) =>
+          item.name.toLowerCase().includes(query) ||
+          item.category.toLowerCase().includes(query) ||
+          item.notes?.toLowerCase().includes(query) ||
+          item.jargon?.toLowerCase().includes(query)
+      );
+    }
+
     return filtered;
-  }, [selectedCategory, searchQuery]);
+  }, [selectedCategories, searchQuery]);
 
-  const copyDimensions = async (item: DimensionItem) => {
-    const dims = [
-      item.width ? `W: ${item.width}` : '',
-      item.depth ? `D: ${item.depth}` : '',
-      item.height ? `H: ${item.height}` : '',
-      item.diameter ? `Dia: ${item.diameter}` : '',
-    ].filter(Boolean).join(' × ');
-    
-    const copied = await copyTextToClipboard(`${item.name}\n${dims}`);
+  const selectedDimension =
+    filteredDimensions.find((item) => getItemKey(item) === selectedItemKey) ??
+    filteredDimensions[0] ??
+    null;
+
+  const copyDimensions = async (item: DimensionItem | null) => {
+    if (!item) return;
+
+    const copied = await copyTextToClipboard(getCopyText(item, unitMode));
+
     if (copied) {
-      setCopiedItem(item.name);
-      setTimeout(() => setCopiedItem(null), 2000);
+      setSelectedItemKey(getItemKey(item));
+      setCopiedItem(getItemKey(item));
+      window.setTimeout(() => setCopiedItem(null), 1200);
     }
   };
 
-  const scrollCategories = (direction: 'left' | 'right') => {
-    const container = document.getElementById('category-scroll');
-    if (container) {
-      const scrollAmount = 200;
-      container.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
-      });
-    }
-  };
+  function toggleCategory(category: CategoryKey) {
+    setSelectedCategories((currentCategories) =>
+      currentCategories.includes(category)
+        ? currentCategories.filter((currentCategory) => currentCategory !== category)
+        : [...currentCategories, category]
+    );
+    setSelectedItemKey(null);
+  }
+
+  function selectAllCategories() {
+    setSelectedCategories(CATEGORY_FILTERS);
+    setSelectedItemKey(null);
+  }
+
+  function deselectAllCategories() {
+    setSelectedCategories([]);
+    setSelectedItemKey(null);
+  }
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="h-[100dvh] overflow-hidden bg-[#f3eee4] text-black">
       <SEO
         title="Dimension Reference | Scenic Design Standards"
-        description="Reference dimensions for furniture, theatre, experiential design, events, and architecture in a cleaner mobile-friendly lookup tool."
+        description="Reference dimensions for furniture, theatre, experiential design, events, and architecture in a mobile studio lookup tool."
       />
-      <Header />
 
-      <main className="px-4 pb-24 pt-22 sm:px-6 md:pt-28">
-      <section className="mx-auto max-w-6xl border-b border-border/18 pb-10 md:pb-12">
-        <Link
-          href="/studio/apps"
-          className="inline-flex items-center gap-2 text-[0.92rem] font-medium text-foreground/56 transition-colors hover:text-foreground"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to Studio Apps
-        </Link>
-
-        <div className="mx-auto mt-6 max-w-4xl text-center md:mt-8">
-          <p className="section-kicker text-foreground/40">
-            Dimension Reference
-          </p>
-          <h1 className="mt-4 font-sans text-[clamp(2.4rem,7vw,5rem)] font-medium leading-[0.95] tracking-[-0.065em] text-foreground">
-            Standard dimensions for scenic, event, exhibit, and architectural work.
-          </h1>
-          <p className="mx-auto mt-5 max-w-3xl text-[0.98rem] leading-7 text-foreground/60 md:text-[1.08rem] md:leading-8">
-            A quick mobile-friendly lookup tool for common furniture, theatre, exhibit, event, and
-            architectural dimensions.
-          </p>
-        </div>
-      </section>
-
-      <section className="mx-auto mt-8 max-w-6xl md:mt-10">
-        <div className="px-1 py-1 sm:px-0 md:py-0">
-        <div className="mb-5 md:mb-6">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <Input
-              type="text"
-              placeholder="Search dimensions..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="h-12 rounded-full border-transparent bg-black/18 pl-10 shadow-none"
-            />
-          </div>
-        </div>
-
-        <div className="mb-6 relative md:mb-8">
-          <button
-            className="absolute left-0 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-background/80 text-foreground/54 backdrop-blur-sm transition-colors hover:text-foreground"
-            onClick={() => scrollCategories('left')}
-            aria-label="Scroll categories left"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-          
-          <div 
-            id="category-scroll"
-            className="flex flex-nowrap gap-2 overflow-x-auto scrollbar-hide px-10"
-            style={{ 
-              scrollbarWidth: 'none', 
-              msOverflowStyle: 'none'
-            }}
-          >
-            {CATEGORIES.map((category) => {
-              const Icon = CATEGORY_ICONS[category];
-              const isActive = selectedCategory === category;
-              
-              return (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-[0.8rem] font-medium whitespace-nowrap transition-colors shrink-0 ${
-                    isActive
-                      ? 'bg-white text-black'
-                      : 'border border-white/8 bg-black/14 text-foreground/54 hover:text-foreground'
-                  }`}
-                >
-                  <Icon className="w-4 h-4" />
-                  {category}
-                </button>
-              );
-            })}
-          </div>
-
-          <button
-            className="absolute right-0 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-background/80 text-foreground/54 backdrop-blur-sm transition-colors hover:text-foreground"
-            onClick={() => scrollCategories('right')}
-            aria-label="Scroll categories right"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
-
-        <div className="mb-5 text-sm text-foreground/44">
-          {filteredDimensions.length} {filteredDimensions.length === 1 ? 'item' : 'items'} found
-        </div>
-
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
-          {filteredDimensions.map((item, index) => (
-            <div
-              key={index}
-              className="rounded-[1.15rem] bg-[#242424] p-4 transition-colors md:p-5"
+      <main className="studio-app-main box-border h-full overflow-hidden px-3 pb-3 pt-[calc(env(safe-area-inset-top)+0.55rem)] sm:px-4 md:px-5">
+        <section className="relative mx-auto flex h-full max-w-[29rem] flex-col overflow-hidden">
+          <header className="studio-app-mobile-topbar grid h-11 shrink-0 grid-cols-[1fr_auto_1fr] items-center">
+            <Link
+              href="/studio/apps"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#ff5f57] text-[#65110f] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.18),0_10px_24px_rgba(255,95,87,0.18)]"
+              aria-label="Back to Studio Apps"
             >
-                <div className="flex items-start justify-between mb-3">
+              <ArrowLeft className="h-4 w-4" />
+            </Link>
+            <p className="text-center text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-black/50">
+              Dims
+            </p>
+            <button
+              type="button"
+              onClick={() => copyDimensions(selectedDimension)}
+              className="ml-auto flex h-8 w-8 items-center justify-center bg-black text-white shadow-[0_10px_24px_rgba(0,0,0,0.14)] transition-opacity hover:opacity-88"
+              aria-label="Copy selected dimension"
+            >
+              {selectedDimension &&
+              copiedItem === getItemKey(selectedDimension) ? (
+                <Check className="h-4 w-4" />
+              ) : (
+                <Copy className="h-4 w-4" />
+              )}
+            </button>
+          </header>
+
+          <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-hidden pt-1">
+            <section className="relative flex min-h-[13.25rem] shrink-0 flex-col justify-between overflow-hidden rounded-[0.45rem] border border-black/10 bg-[#fbf7ef] p-3 shadow-[0_24px_70px_rgba(58,45,31,0.16),inset_0_1px_rgba(255,255,255,0.75)]">
+              <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-foreground/36">{item.category}</p>
-                  <h3 className="mt-2 font-sans text-[1.15rem] font-medium leading-[1.15] tracking-[-0.03em] text-foreground">{item.name}</h3>
+                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-black/42">
+                    Dimension Reference
+                  </p>
+                  <div className="mt-2 flex flex-wrap items-center gap-2">
+                    <p className="text-[0.78rem] font-semibold uppercase tracking-[0.16em] text-[#f26a1b]">
+                      {selectedDimension
+                        ? getCategoryLabel(selectedDimension.category as CategoryKey)
+                        : "No result"}
+                    </p>
+                    <span className="bg-[#ebe5d8] px-2 py-1 text-[0.58rem] font-semibold uppercase tracking-[0.16em] text-black/46">
+                      {getReferenceTag(selectedDimension)}
+                    </span>
+                  </div>
                 </div>
+                <div className="flex h-12 w-12 items-center justify-center bg-black text-white shadow-[0_12px_28px_rgba(0,0,0,0.14)]">
+                  <Ruler className="h-5 w-5" />
+                </div>
+              </div>
+
+              <div>
+                <h1 className="max-w-[12ch] font-sans text-[clamp(2rem,8vw,3.45rem)] font-semibold leading-[0.9] tracking-[-0.07em] text-black">
+                  {selectedDimension?.name ?? "No dimensions"}
+                </h1>
+                {selectedDimension ? (
+                  <>
+                    <div className="mt-3 grid grid-cols-2 gap-2">
+                      {getDimensionParts(selectedDimension, unitMode).map((part) => (
+                        <div
+                          key={part.label}
+                          className="border border-black/10 bg-[#ebe5d8] px-3 py-1.5"
+                        >
+                          <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-black/42">
+                            {part.label}
+                          </p>
+                          <p className="mt-1 text-[1rem] font-semibold leading-none tracking-[-0.035em] text-black">
+                            {part.value}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                    {selectedDimension.notes ? (
+                      <p className="mt-2 max-h-9 overflow-hidden text-[0.72rem] font-medium leading-snug tracking-[-0.02em] text-black/52">
+                        {selectedDimension.notes}
+                      </p>
+                    ) : null}
+                  </>
+                ) : null}
+              </div>
+            </section>
+
+            <section className="shrink-0 border border-black/10 bg-[#fbf7ef] p-3 shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
+              <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-2">
+                <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 border border-black/10 bg-[#f3eee4] px-3">
+                  <Search className="h-4 w-4 text-black/46" />
+                  <input
+                    type="search"
+                    value={searchQuery}
+                    onChange={(event) => setSearchQuery(event.target.value)}
+                    placeholder="Search dimensions"
+                    className="h-11 min-w-0 bg-transparent text-[0.95rem] font-medium tracking-[-0.02em] text-black outline-none placeholder:text-black/34"
+                    aria-label="Search dimensions"
+                  />
+                </div>
+
                 <button
-                  onClick={() => copyDimensions(item)}
-                  className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/6 text-foreground/60 transition-colors hover:bg-white/12 hover:text-foreground"
-                  title="Copy Dimensions"
+                  type="button"
+                  onClick={() => setFiltersOpen((isOpen) => !isOpen)}
+                  className="flex h-11 items-center gap-2 bg-[#f26a1b] px-3 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-black transition-opacity hover:opacity-88"
                 >
-                  {copiedItem === item.name ? (
-                    <Check className="w-4 h-4 text-green-500" />
-                  ) : (
-                    <Copy className="w-4 h-4" />
-                  )}
+                  <SlidersHorizontal className="h-4 w-4" />
+                  Filter
                 </button>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 mb-3 pt-4 border-t border-white/8">
-                {item.width && (
-                  <div>
-                    <span className="text-[10px] text-foreground/38 block mb-1 uppercase tracking-[0.16em]">Width</span>
-                    <span className="font-medium text-sm text-foreground/78">{item.width}</span>
-                  </div>
-                )}
-                {item.depth && (
-                  <div>
-                    <span className="text-[10px] text-foreground/38 block mb-1 uppercase tracking-[0.16em]">Depth</span>
-                    <span className="font-medium text-sm text-foreground/78">{item.depth}</span>
-                  </div>
-                )}
-                {item.height && (
-                  <div>
-                    <span className="text-[10px] text-foreground/38 block mb-1 uppercase tracking-[0.16em]">Height</span>
-                    <span className="font-medium text-sm text-foreground/78">{item.height}</span>
-                  </div>
-                )}
-                {item.diameter && (
-                  <div>
-                    <span className="text-[10px] text-foreground/38 block mb-1 uppercase tracking-[0.16em]">Diameter</span>
-                    <span className="font-medium text-sm text-foreground/78">{item.diameter}</span>
-                  </div>
-                )}
+              <div className="mt-2 grid grid-cols-2 border border-black/10 bg-[#ebe5d8] p-1">
+                <p className="flex h-8 items-center px-2 text-[0.58rem] font-semibold uppercase tracking-[0.16em] text-black/38">
+                  Units
+                </p>
+                <div className="grid grid-cols-2 border border-black/10 bg-[#ebe5d8] p-1">
+                  {(["imperial", "metric"] as UnitMode[]).map((mode) => (
+                    <button
+                      key={mode}
+                      type="button"
+                      onClick={() => setUnitMode(mode)}
+                      className={`h-8 text-[0.6rem] font-semibold uppercase tracking-[0.16em] transition-colors ${
+                        unitMode === mode
+                          ? "bg-black text-white"
+                          : "text-black/48 hover:bg-[#f3eee4]"
+                      }`}
+                      aria-pressed={unitMode === mode}
+                    >
+                      {mode}
+                    </button>
+                  ))}
+                </div>
               </div>
 
-                {(item.notes || item.jargon) && (
-                  <div className="border-t border-white/8 pt-3 text-xs space-y-2">
-                    {item.notes && (
-                      <p className="text-foreground/54 leading-6">
-                        <span className="font-semibold text-foreground/72 mr-1 uppercase tracking-[0.14em]">Note</span>
-                        {item.notes}
-                      </p>
-                    )}
-                    {item.jargon && (
-                      <p className="text-foreground/50 italic leading-6">
-                        <span className="font-semibold text-foreground/68 mr-1 uppercase tracking-[0.14em]">AKA</span>
-                        {item.jargon}
-                      </p>
-                    )}
+              {filtersOpen ? (
+                <div className="mt-3 border-t border-black/10 pt-3">
+                  <div className="mb-2 grid grid-cols-[1fr_auto_auto] items-center gap-2">
+                    <p className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-black/42">
+                      {selectedCategories.length} active
+                    </p>
+                    <button
+                      type="button"
+                      onClick={selectAllCategories}
+                      className="h-8 border border-black/10 px-3 text-[0.58rem] font-semibold uppercase tracking-[0.14em] text-black/52 transition-colors hover:bg-[#ebe5d8]"
+                    >
+                      Select all
+                    </button>
+                    <button
+                      type="button"
+                      onClick={deselectAllCategories}
+                      className="h-8 bg-black px-3 text-[0.58rem] font-semibold uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-85"
+                    >
+                      Deselect all
+                    </button>
                   </div>
-                )}
-            </div>
-          ))}
-        </div>
+                  <div className="grid max-h-[10.5rem] gap-2 overflow-y-auto pr-1">
+                    {CATEGORY_FILTERS.map((category) => {
+                      const Icon = CATEGORY_ICONS[category];
+                      const checked = selectedCategories.includes(category);
+                      const count = DIMENSIONS.filter(
+                        (item) => item.category === category
+                      ).length;
 
-        {filteredDimensions.length === 0 && (
-          <div className="text-center py-20">
-            <Database className="w-12 h-12 mx-auto mb-4 opacity-20" />
-            <p className="text-foreground/52">No dimensions found matching "{searchQuery}"</p>
+                      return (
+                        <label
+                          key={category}
+                          className="grid cursor-pointer grid-cols-[auto_auto_minmax(0,1fr)_auto] items-center gap-3 border border-black/10 bg-[#f3eee4] px-3 py-3 text-black"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={checked}
+                            onChange={() => toggleCategory(category)}
+                            className="sr-only"
+                          />
+                          <span
+                            className={`flex h-5 w-5 items-center justify-center border ${
+                              checked
+                                ? "border-[#f26a1b] bg-[#f26a1b]"
+                                : "border-black/24 bg-transparent"
+                            }`}
+                            aria-hidden="true"
+                          >
+                            {checked ? <Check className="h-3.5 w-3.5 text-black" /> : null}
+                          </span>
+                          <Icon className="h-4 w-4 text-black/48" />
+                          <span className="truncate text-[0.8rem] font-semibold uppercase tracking-[0.13em] text-black/70">
+                            {getCategoryButtonLabel(category)}
+                          </span>
+                          <span className="text-[0.78rem] font-semibold tracking-[-0.02em] text-black/38">
+                            {count}
+                          </span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : (
+                <p className="mt-3 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-black/42">
+                  {formatCategoryFilterLabel(selectedCategories)} / tap filter to choose reference groups
+                </p>
+              )}
+            </section>
+
+            <section className="flex min-h-0 flex-1 flex-col border border-black/10 bg-[#fbf7ef] shadow-[0_10px_30px_rgba(0,0,0,0.06)]">
+              <div className="grid shrink-0 grid-cols-[1fr_auto] items-center gap-3 border-b border-black/10 px-3 py-2">
+                <div className="flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-black/44">
+                  <Database className="h-4 w-4" />
+                  {filteredDimensions.length}{" "}
+                  {filteredDimensions.length === 1 ? "item" : "items"}
+                </div>
+                <p className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-black/38">
+                  Tap to view
+                </p>
+              </div>
+
+              <div className="min-h-0 flex-1 overflow-y-auto">
+                {filteredDimensions.map((item) => {
+                  const itemKey = getItemKey(item);
+                  const isSelected = selectedDimension
+                    ? getItemKey(selectedDimension) === itemKey
+                    : false;
+
+                  return (
+                    <div
+                      key={itemKey}
+                      className={`grid grid-cols-[minmax(0,1fr)_4.2rem] border-b border-black/10 ${
+                        isSelected ? "bg-[#f3eee4]" : "hover:bg-[#f3eee4]"
+                      }`}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setSelectedItemKey(itemKey)}
+                        className="min-w-0 px-3 py-3 text-left"
+                      >
+                        <div className="flex items-start gap-3">
+                          <span
+                            className={`mt-1 h-3 w-3 shrink-0 ${
+                              isSelected ? "bg-[#f26a1b]" : "bg-black"
+                            }`}
+                            aria-hidden="true"
+                          />
+                          <span className="min-w-0">
+                            <span className="block truncate text-[1rem] font-semibold leading-none tracking-[-0.04em] text-black">
+                              {item.name}
+                            </span>
+                            <span className="mt-2 block truncate text-[0.74rem] font-medium tracking-[-0.02em] text-black/48">
+                              {item.category}
+                            </span>
+                            <span className="mt-2 block truncate font-mono text-[0.76rem] font-semibold tracking-[-0.03em] text-black/62">
+                              {formatDimensionLine(item, unitMode)}
+                            </span>
+                          </span>
+                        </div>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => copyDimensions(item)}
+                        className="flex items-center justify-center border-l border-black/10 text-black transition-colors hover:bg-[#ede6d8]"
+                        aria-label={`Copy ${item.name} dimensions`}
+                      >
+                        {copiedItem === itemKey ? (
+                          <Check className="h-4 w-4 text-[#f26a1b]" />
+                        ) : (
+                          <Copy className="h-4 w-4 text-black/44" />
+                        )}
+                      </button>
+                    </div>
+                  );
+                })}
+
+                {filteredDimensions.length === 0 ? (
+                  <div className="grid min-h-[14rem] place-items-center px-6 text-center">
+                    <div>
+                      <Database className="mx-auto h-10 w-10 text-black/18" />
+                      <p className="mt-4 text-[0.95rem] font-medium tracking-[-0.02em] text-black/46">
+                        {selectedCategories.length === 0
+                          ? "No reference groups selected"
+                          : `No dimensions found for "${searchQuery}"`}
+                      </p>
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+            </section>
           </div>
-        )}
-        </div>
-      </section>
+        </section>
       </main>
-
-      <Footer />
     </div>
   );
 }

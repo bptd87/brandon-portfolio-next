@@ -3,7 +3,7 @@
 import { Search } from "lucide-react";
 
 type PublishingTopBarProps = {
-  active?: "articles" | "tutorials";
+  active?: "articles" | "tutorials" | "apps" | "directory";
   tone?: "light" | "dark" | "white";
 };
 
@@ -33,12 +33,18 @@ export function PublishingTopBar({ active, tone = "light" }: PublishingTopBarPro
         </a>
 
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-8">
-          <nav className="flex items-center gap-6">
+          <nav className="flex flex-wrap items-center gap-x-6 gap-y-2">
             <a href="/articles" className={linkClass("articles")}>
               Articles
             </a>
             <a href="/studio/tutorials" className={linkClass("tutorials")}>
               Tutorials
+            </a>
+            <a href="/studio/apps" className={linkClass("apps")}>
+              Studio Apps
+            </a>
+            <a href="/studio/directory" className={linkClass("directory")}>
+              Scenic Directory
             </a>
           </nav>
 

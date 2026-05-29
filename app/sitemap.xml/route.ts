@@ -42,6 +42,7 @@ const STATIC_ROUTES: Array<{
   { pathname: "/studio/apps/dimension-reference", priority: 0.5, changeFrequency: "monthly" },
   { pathname: "/studio/apps/design-history-timeline", priority: 0.5, changeFrequency: "monthly" },
   { pathname: "/studio/apps/rosco-paint-calculator", priority: 0.5, changeFrequency: "monthly" },
+  { pathname: "/studio/apps/commercial-paint-matcher", priority: 0.5, changeFrequency: "monthly" },
   { pathname: "/studio/apps/scenic-3d-converter", priority: 0.5, changeFrequency: "monthly" },
   { pathname: "/contact", priority: 0.6, changeFrequency: "monthly" },
   { pathname: "/links", priority: 0.4, changeFrequency: "monthly" },

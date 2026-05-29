@@ -43,6 +43,7 @@ const sections = [
       { name: "Scale Calculator", href: "/studio/apps/scale-calculator" },
       { name: "Dimension Reference", href: "/studio/apps/dimension-reference" },
       { name: "Rosco Paint Calculator", href: "/studio/apps/rosco-paint-calculator" },
+      { name: "Commercial Paint Matcher", href: "/studio/apps/commercial-paint-matcher" },
       { name: "Design History Timeline", href: "/studio/apps/design-history-timeline" },
       { name: "Scenic 3D Converter", href: "/studio/apps/scenic-3d-converter" },
     ],

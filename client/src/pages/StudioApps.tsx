@@ -1,66 +1,196 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { PublishingTopBar } from "@/components/PublishingTopBar";
 import { Link } from "wouter";
-import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
+import {
+  ArrowRight,
+  ExternalLink,
+  Smartphone,
+  X,
+} from "lucide-react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { SEO } from "@/components/SEO";
 
-const allApps = [
-  {
-    title: "Scenic 3D Converter (Mac)",
-    description:
-      "Finder quick action workflow to convert 3D files locally into Vectorworks-friendly USD, USDZ, and 3DM outputs.",
-    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-scenic-3d-converter.png",
-    href: "/studio/apps/scenic-3d-converter",
-    category: "Utility",
-    cta: "Open tool",
-  },
+type StudioApp = {
+  title: string;
+  shortTitle: string;
+  description: string;
+  image: string;
+  screenImage?: string;
+  href: string;
+  category: string;
+  tone: string;
+  accent: string;
+};
+
+const converterTool: StudioApp = {
+  title: "Scenic 3D Converter",
+  shortTitle: "3D Convert",
+  description:
+    "A Mac utility for preparing 3D files for scenic workflows, with exports aimed at Vectorworks-friendly USD, USDZ, and 3DM handoffs.",
+  image: "/assets/studio-apps/icons/scenic-3d-converter.jpg",
+  href: "/studio/apps/scenic-3d-converter",
+  category: "Mac Tool",
+  tone: "Download",
+  accent: "from-[#5f7cff] to-[#9dd6ff]",
+};
+
+const allApps: StudioApp[] = [
   {
     title: "Scale Calculator",
+    shortTitle: "Scale",
     description:
-      "Convert between architectural and model scales for drafting, model building, and production workflow.",
-    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-scale-calculator.png",
+      "Convert architectural and scenic dimensions into model-scale millimeters for 3D printing, drafting, and physical model making.",
+    image: "/assets/studio-apps/icons/scale-calculator.jpg",
+    screenImage: "/assets/studio-apps/scale-app-iphone.png",
     href: "/studio/apps/scale-calculator",
     category: "Calculator",
-    cta: "Launch app",
+    tone: "Mobile tool",
+    accent: "from-[#ffffff] to-[#8f8f8f]",
   },
   {
     title: "Dimension Reference",
+    shortTitle: "Dims",
     description:
       "Quick reference for standard dimensions and unit conversions in scenic and production design.",
-    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-dimension-reference.png",
+    image: "/assets/studio-apps/icons/dimension-reference.jpg",
     href: "/studio/apps/dimension-reference",
     category: "Reference",
-    cta: "Open reference",
+    tone: "Shop reference",
+    accent: "from-[#c9ff3d] to-[#58d68d]",
   },
   {
     title: "Rosco Paint Calculator",
+    shortTitle: "Rosco",
     description:
       "Professional scenic paint mixing calculator for Rosco Off-Broadway paints and color matching workflows.",
-    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-rosco-paint-calculator.png",
+    image: "/assets/studio-apps/icons/rosco-paint-calculator.jpg",
     href: "/studio/apps/rosco-paint-calculator",
     category: "Calculator",
-    cta: "Launch app",
+    tone: "Paint shop",
+    accent: "from-[#ff5f57] to-[#ffd166]",
+  },
+  {
+    title: "Commercial Paint Matcher",
+    shortTitle: "Paint Match",
+    description:
+      "Match sampled colors against Sherwin-Williams, Benjamin Moore, and BEHR libraries with brand filters and copyable color data.",
+    image: "/assets/studio-apps/icons/commercial-paint-matcher.jpg",
+    href: "/studio/apps/commercial-paint-matcher",
+    category: "Matcher",
+    tone: "Paint library",
+    accent: "from-[#f3eee4] to-[#7a8076]",
   },
   {
     title: "Design History Timeline",
+    shortTitle: "History",
     description:
       "Explore major design periods with visual references, color palettes, and historical context.",
-    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-design-history-timeline.png",
+    image: "/assets/studio-apps/icons/design-history-timeline.jpg",
     href: "/studio/apps/design-history-timeline",
     category: "Reference",
-    cta: "Open timeline",
+    tone: "Research",
+    accent: "from-[#b597ff] to-[#ff9bd2]",
   },
 ];
 
 export default function StudioApps() {
   const apps = allApps;
+  const [activeApp, setActiveApp] = useState<StudioApp | null>(null);
+  const [isAppClosing, setIsAppClosing] = useState(false);
+  const closeTimerRef = useRef<number | null>(null);
+  const featuredApp = useMemo(() => apps[0], [apps]);
+
+  function openStudioApp(app: StudioApp) {
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 767px)").matches
+    ) {
+      window.location.href = app.href;
+      return;
+    }
+
+    if (closeTimerRef.current) {
+      window.clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+
+    setIsAppClosing(false);
+    setActiveApp(app);
+  }
+
+  function closeStudioApp() {
+    if (!activeApp || isAppClosing) return;
+
+    setIsAppClosing(true);
+    closeTimerRef.current = window.setTimeout(() => {
+      setActiveApp(null);
+      setIsAppClosing(false);
+      closeTimerRef.current = null;
+    }, 220);
+  }
+
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!activeApp) return;
+
+    const scrollY = window.scrollY;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+    const originalHtmlHeight = document.documentElement.style.height;
+    const originalHtmlOverscrollBehavior =
+      document.documentElement.style.overscrollBehavior;
+    const originalOverflow = document.body.style.overflow;
+    const originalBodyPosition = document.body.style.position;
+    const originalBodyTop = document.body.style.top;
+    const originalBodyLeft = document.body.style.left;
+    const originalBodyRight = document.body.style.right;
+    const originalBodyWidth = document.body.style.width;
+    const originalBodyOverscrollBehavior = document.body.style.overscrollBehavior;
+
+    document.documentElement.style.overflow = "hidden";
+    document.documentElement.style.height = "100%";
+    document.documentElement.style.overscrollBehavior = "none";
+    document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
+    document.body.style.overscrollBehavior = "none";
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") closeStudioApp();
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.documentElement.style.overflow = originalHtmlOverflow;
+      document.documentElement.style.height = originalHtmlHeight;
+      document.documentElement.style.overscrollBehavior =
+        originalHtmlOverscrollBehavior;
+      document.body.style.overflow = originalOverflow;
+      document.body.style.position = originalBodyPosition;
+      document.body.style.top = originalBodyTop;
+      document.body.style.left = originalBodyLeft;
+      document.body.style.right = originalBodyRight;
+      document.body.style.width = originalBodyWidth;
+      document.body.style.overscrollBehavior = originalBodyOverscrollBehavior;
+      window.scrollTo(0, scrollY);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activeApp]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-[#080808] text-white">
       <SEO
         title="Studio Apps for Scenic Design"
         description="Production-focused calculators, reference tools, and utilities for scenic drafting, paint, modeling, and research."
@@ -70,189 +200,273 @@ export default function StudioApps() {
       />
 
       <Header />
+      <PublishingTopBar active="apps" tone="dark" />
 
-      <main className="px-6 pb-24 pt-24 md:pt-28">
-        <section className="mx-auto max-w-6xl border-b border-border/18 pb-14">
+      <main className="pb-0">
+        <section className="bg-[#080808] px-5 pb-14 pt-10 text-white md:px-8 md:pb-20 md:pt-14">
           <AnimatedSection>
-            <Link
-              href="/studio"
-              className="inline-flex items-center gap-2 text-[0.92rem] font-medium text-foreground/56 transition-colors hover:text-foreground"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to Studio
-            </Link>
-
-            <div className="mx-auto mt-8 max-w-5xl text-center">
-              <p className="section-kicker text-foreground/40">
-                Studio Apps
-              </p>
-              <h1 className="mt-5 font-sans text-[clamp(3rem,6vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.065em] text-foreground">
-                Scenic design tools for drafting, paint, modeling, and fast reference work.
-              </h1>
-              <p className="mx-auto mt-7 max-w-3xl text-[1.06rem] leading-8 text-foreground/62 md:text-[1.14rem]">
-                Practical calculators, reference tools, and utilities built for scenic workflow,
-                whether you are drafting at a desk, mixing paint in the shop, or checking dimensions and design history on the fly.
-              </p>
-            </div>
-
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-[0.95rem] text-foreground/56">
-              <div>{apps.length} apps</div>
-              <div>Mobile-friendly</div>
-              <div>Production-focused</div>
-              <div>Browser-based + Mac utilities</div>
+            <div className="mx-auto max-w-[88rem]">
+              <div className="grid gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(22rem,0.58fr)] lg:items-end">
+                <div>
+                  <p className="section-kicker text-white/38">Studio Apps</p>
+                  <h1 className="mt-5 max-w-[11ch] font-sans text-[clamp(4rem,11vw,10.5rem)] font-medium leading-[0.82] tracking-[-0.085em] text-white">
+                    Scenic tools for fast studio work.
+                  </h1>
+                </div>
+                <div className="max-w-[34rem] lg:justify-self-end">
+                  <p className="text-[clamp(1.08rem,1.55vw,1.4rem)] font-medium leading-[1.35] tracking-[-0.04em] text-white/66">
+                    Five mobile studio tools for scale conversion, 3D printing,
+                    paint, reference, and research, plus a Mac converter for 3D
+                    handoffs when the workflow needs to leave the browser.
+                  </p>
+                  <div className="mt-7 grid grid-cols-3 gap-3 text-center">
+                    {["Scale", "Paint", "Reference"].map(
+                      (item) => (
+                        <div
+                          key={item}
+                          className="rounded-[1.25rem] border border-white/10 bg-white/[0.055] px-3 py-4 shadow-[0_18px_48px_rgba(0,0,0,0.24)]"
+                        >
+                          <p className="text-[0.72rem] font-medium uppercase tracking-[0.14em] text-white/44">
+                            {item}
+                          </p>
+                        </div>
+                      )
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </AnimatedSection>
         </section>
 
-        <section className="mx-auto mt-14 max-w-6xl">
-          <AnimatedSection>
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="section-kicker text-foreground/38">
-                App Library
-              </p>
-              <h2 className="mt-4 font-sans text-[clamp(2.1rem,4vw,3.2rem)] font-medium leading-[1] tracking-[-0.05em] text-foreground">
-                Practical tools for production-ready scenic workflow.
-              </h2>
-            </div>
-          </AnimatedSection>
+        <section className="border-y border-white/10 bg-[#111111] px-5 py-12 text-white md:px-8 md:py-16">
+          <div className="mx-auto grid max-w-[88rem] gap-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] lg:items-center">
+            <AnimatedSection>
+              <div>
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 text-[0.78rem] font-medium uppercase tracking-[0.16em] text-white/52">
+                  <Smartphone className="h-4 w-4" />
+                  Mobile Studio Tool
+                </div>
+                <h2 className="mt-7 max-w-[9ch] font-sans text-[clamp(2.8rem,7vw,7.4rem)] font-medium leading-[0.84] tracking-[-0.085em] text-white">
+                  Scale checks for the printer bed.
+                </h2>
+                <p className="mt-7 max-w-xl text-[1rem] leading-7 tracking-[-0.015em] text-white/58">
+                  The scale calculator is built for architectural and scenic
+                  model making: turn full-size feet and inches into millimeters,
+                  then check whether the part fits a common 3D printer bed.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => openStudioApp(featuredApp)}
+                  className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-white px-6 text-[0.95rem] font-medium tracking-[-0.02em] text-black transition-opacity hover:opacity-90"
+                >
+                  Launch {featuredApp.shortTitle}
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </button>
+              </div>
+            </AnimatedSection>
 
-          <div className="mt-10 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <AnimatedSection delay={90}>
+              <button
+                type="button"
+                onClick={() => openStudioApp(featuredApp)}
+                className="group mx-auto block w-full max-w-[28rem] text-left"
+              >
+                <div className="relative mx-auto aspect-[768/1572] max-w-[24rem] overflow-hidden shadow-[0_34px_120px_rgba(0,0,0,0.68)]">
+                  <Image
+                    src={featuredApp.screenImage ?? featuredApp.image}
+                    alt={`${featuredApp.title} screen`}
+                    fill
+                    quality={92}
+                    sizes="(max-width: 768px) 78vw, 24rem"
+                    className="object-contain"
+                  />
+                </div>
+              </button>
+            </AnimatedSection>
+          </div>
+        </section>
+
+        <section className="bg-[#f4f5f7] px-0 text-[#111111]">
+          <div className="grid border-b border-black/8 [grid-auto-rows:1fr] md:grid-cols-2 lg:grid-cols-3">
             {apps.map((app, index) => (
-              <AnimatedSection key={app.title} delay={index * 70}>
-                <Link href={app.href} className="group block">
-                  <article className="border-t border-border/14 pt-4">
-                    <div className="relative overflow-hidden border border-border/16 bg-card/10">
-                      <div className="relative aspect-square w-full">
-                        <Image
-                          src={app.image}
-                          alt={app.title}
-                          fill
-                          quality={82}
-                          sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 22vw"
-                          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                        />
-                      </div>
-                      <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/5" />
-                    </div>
+              <AnimatedSection key={app.title} className="h-full" delay={index * 55}>
+                <button
+                  type="button"
+                  onClick={() => openStudioApp(app)}
+                  className="group flex h-full min-h-[23rem] w-full flex-col overflow-hidden rounded-none border-b border-r border-t border-black/8 bg-[#f4f5f7] p-0 text-left [border-radius:0] transition-colors hover:bg-white md:min-h-[27rem]"
+                >
+                  <div className="site-media-square relative aspect-square w-full overflow-hidden rounded-none border-b border-black/8 bg-black [border-radius:0]">
+                    <Image
+                      src={app.image}
+                      alt=""
+                      fill
+                      quality={88}
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="site-media-square object-cover"
+                    />
+                  </div>
 
-                    <div className="mt-4 flex items-center justify-between gap-3">
-                      <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
-                        {app.category}
-                      </p>
-                    </div>
-
-                    <h3 className="mt-3 font-sans text-[1.28rem] font-medium leading-[1.08] tracking-[-0.04em] text-foreground">
+                  <div className="flex flex-1 flex-col p-5 pt-6 md:p-6 md:pt-7">
+                    <p className="text-[0.72rem] font-medium uppercase tracking-[0.18em] text-black/42">
+                      {app.category} / {app.tone}
+                    </p>
+                    <h3 className="mt-3 max-w-[10ch] font-sans text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[0.9] tracking-[-0.075em] text-[#111111]">
                       {app.title}
                     </h3>
-                    <p className="mt-3 max-w-[34rem] text-[0.93rem] leading-6 text-foreground/60">
+                    <p className="mt-4 max-w-[28rem] text-[0.96rem] leading-6 tracking-[-0.015em] text-black/54">
                       {app.description}
                     </p>
-
-                    <div className="mt-4 inline-flex items-center gap-2 text-[0.9rem] font-medium text-foreground/68 transition-colors group-hover:text-foreground">
-                      {app.cta}
+                    <div className="mt-auto inline-flex items-center gap-2 pt-6 text-[0.95rem] font-medium tracking-[-0.02em] text-black/62 transition-colors group-hover:text-black">
+                      Open tool
                       <ArrowRight className="h-4 w-4" />
                     </div>
-                  </article>
-                </Link>
+                  </div>
+                </button>
               </AnimatedSection>
             ))}
           </div>
         </section>
 
-        <section className="mx-auto mt-20 max-w-6xl border-t border-border/18 pt-16">
-          <div className="grid gap-12 xl:grid-cols-[minmax(0,0.92fr)_minmax(0,1fr)] xl:items-center">
-            <AnimatedSection>
-              <div className="overflow-hidden border border-border/18 bg-card/10">
-                <div className="relative aspect-square w-full">
-                  <Image
-                    src="https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-iphone-install.png"
-                    alt="Illustrative artwork showing how to save a website as an app on iPhone"
-                    fill
-                    quality={82}
-                    sizes="(max-width: 1280px) 92vw, 42vw"
-                    className="object-cover"
-                  />
-                </div>
+        <section className="border-t border-white/10 bg-[#080808] px-5 py-14 text-white md:px-8 md:py-18">
+          <AnimatedSection>
+            <div className="mx-auto grid max-w-[88rem] overflow-hidden rounded-[2rem] border border-white/12 bg-white/[0.045] p-0 shadow-[0_34px_120px_rgba(0,0,0,0.38)] md:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] md:items-stretch">
+              <div className="site-media-square relative min-h-[18rem] overflow-hidden rounded-none bg-black [border-radius:0] md:min-h-[24rem]">
+                <Image
+                  src={converterTool.image}
+                  alt={converterTool.title}
+                  fill
+                  quality={84}
+                  sizes="(max-width: 768px) 100vw, 42rem"
+                  className="site-media-square object-cover opacity-80"
+                />
               </div>
-            </AnimatedSection>
 
-            <AnimatedSection delay={80}>
-              <div className="max-w-[40rem]">
-                <p className="section-kicker text-foreground/38">
-                  iPhone Setup
-                </p>
-                <h2 className="mt-4 font-sans text-[clamp(2rem,3.8vw,3rem)] font-medium leading-[1.02] tracking-[-0.05em] text-foreground">
-                  Save any Studio tool to your home screen like an app.
-                </h2>
-                <div className="mt-8 space-y-5">
-                  <div className="grid grid-cols-[32px_minmax(0,1fr)] gap-4 border-t border-border/16 pt-5">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-[0.85rem] font-medium text-foreground/72">
-                      1
-                    </div>
-                    <p className="pt-1 text-[1rem] leading-7 text-foreground/64">
-                      Open any Studio tool in Safari on your iPhone.
-                    </p>
-                  </div>
-                  <div className="grid grid-cols-[32px_minmax(0,1fr)] gap-4 border-t border-border/16 pt-5">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-[0.85rem] font-medium text-foreground/72">
-                      2
-                    </div>
-                    <p className="pt-1 text-[1rem] leading-7 text-foreground/64">
-                      Tap the Share button, then choose Add to Home Screen.
-                    </p>
-                  </div>
-                  <div className="grid grid-cols-[32px_minmax(0,1fr)] gap-4 border-t border-border/16 pt-5">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-[0.85rem] font-medium text-foreground/72">
-                      3
-                    </div>
-                    <p className="pt-1 text-[1rem] leading-7 text-foreground/64">
-                      Name it, save it, and reopen it from your home screen whenever you need it.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="mt-8 border-t border-border/16 pt-5">
-                  <p className="text-[0.98rem] leading-7 text-foreground/62">
-                    This is the fastest way to keep scale, paint, and reference tools handy during
-                    build, paint, and tech.
+              <div className="flex flex-col justify-between px-5 py-8 md:px-8 md:py-10">
+                <div>
+                  <p className="section-kicker text-white/38">
+                    {converterTool.category}
+                  </p>
+                  <h2 className="mt-5 max-w-[9ch] font-sans text-[clamp(2.9rem,7vw,6.8rem)] font-medium leading-[0.84] tracking-[-0.08em] text-white">
+                    {converterTool.title}
+                  </h2>
+                  <p className="mt-7 max-w-2xl text-[1rem] leading-7 tracking-[-0.015em] text-white/58">
+                    {converterTool.description}
                   </p>
                 </div>
-              </div>
-            </AnimatedSection>
-          </div>
-        </section>
 
-        <section className="mx-auto mt-18 max-w-6xl border-t border-border/18 pt-16">
-          <AnimatedSection>
-            <div className="rounded-[2rem] bg-white/8 px-6 py-14 text-center md:px-12 md:py-16">
-              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground/38">
-                Studio Workflow
-              </p>
-              <h2 className="mx-auto mt-5 max-w-3xl font-sans text-[clamp(2.3rem,4.5vw,4rem)] font-medium leading-[1.02] tracking-[-0.055em] text-foreground">
-                Use the tools that support research, drafting, paint, and day-to-day production.
-              </h2>
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                 <Link
-                  href="/studio/directory"
-                  className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-[0.95rem] font-medium text-black transition-colors hover:bg-white/90"
+                  href={converterTool.href}
+                  className="mt-8 inline-flex h-12 w-fit items-center justify-center rounded-full bg-white px-6 text-[0.95rem] font-medium tracking-[-0.02em] text-black transition-opacity hover:opacity-90"
                 >
-                  Open scenic toolkit
-                  <ExternalLink className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="/studio/tutorials"
-                  className="inline-flex items-center gap-2 rounded-full bg-white/10 px-5 py-3 text-[0.95rem] font-medium text-foreground transition-colors hover:bg-white/14"
-                >
-                  Watch tutorials
-                  <ArrowRight className="h-4 w-4" />
+                  View Mac download
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </div>
             </div>
           </AnimatedSection>
         </section>
+
+        <section className="bg-[#111111] px-5 py-16 text-white md:px-8 md:py-20">
+          <div className="mx-auto grid max-w-[88rem] gap-10 md:grid-cols-[minmax(0,0.82fr)_minmax(0,1fr)] md:items-end">
+            <AnimatedSection>
+              <div>
+                <p className="section-kicker text-white/38">Home Screen</p>
+                <h2 className="mt-5 max-w-[11ch] font-sans text-[clamp(2.8rem,7vw,6.6rem)] font-medium leading-[0.84] tracking-[-0.08em] text-white">
+                  Save the tools you use most.
+                </h2>
+              </div>
+            </AnimatedSection>
+            <AnimatedSection delay={80}>
+              <div className="grid gap-3 text-[1rem] leading-7 tracking-[-0.015em] text-white/58 sm:grid-cols-3">
+                {[
+                  "Open a Studio tool in Safari.",
+                  "Tap Share, then Add to Home Screen.",
+                  "Use it from the shop, classroom, or rehearsal room.",
+                ].map((step, index) => (
+                  <div
+                    key={step}
+                    className="border-t border-white/12 pt-4"
+                  >
+                    <p className="mb-5 text-[0.76rem] font-medium uppercase tracking-[0.18em] text-white/34">
+                      0{index + 1}
+                    </p>
+                    <p>{step}</p>
+                  </div>
+                ))}
+              </div>
+            </AnimatedSection>
+          </div>
+        </section>
       </main>
 
       <Footer />
+
+      <StudioAppScreen
+        app={activeApp}
+        isClosing={isAppClosing}
+        onBack={closeStudioApp}
+      />
+    </div>
+  );
+}
+
+function StudioAppScreen({
+  app,
+  isClosing,
+  onBack,
+}: {
+  app: StudioApp | null;
+  isClosing: boolean;
+  onBack: () => void;
+}) {
+  if (!app) return null;
+
+  const frameSrc = `${app.href}?studioFrame=1`;
+
+  return (
+    <div
+      className="studio-app-overlay fixed inset-0 z-[120] flex flex-col overflow-hidden bg-[#f3eee4] text-black md:grid md:place-items-center md:bg-black/72 md:p-6"
+      data-state={isClosing ? "closing" : "open"}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${app.title} app screen`}
+    >
+      <div className="studio-app-shell flex min-h-0 flex-1 flex-col overflow-hidden bg-[#f3eee4] md:h-[min(54rem,88vh)] md:w-full md:max-w-[28rem] md:flex-none md:rounded-[2.4rem] md:border md:border-black/12 md:shadow-[0_34px_140px_rgba(0,0,0,0.42)]">
+        <div className="grid h-14 shrink-0 grid-cols-[1fr_auto_1fr] items-center border-b border-black/10 bg-[#fbf7ef] px-4 shadow-[inset_0_1px_rgba(255,255,255,0.68)]">
+          <button
+            type="button"
+            onClick={onBack}
+            className="flex h-7 w-7 items-center justify-center rounded-full bg-[#ff5f57] text-[#6f1512] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.16)] transition-transform hover:scale-105"
+            aria-label="Back to Studio Apps"
+          >
+            <X className="h-3.5 w-3.5 opacity-0 transition-opacity hover:opacity-70" />
+          </button>
+          <div className="text-center">
+            <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-black/54">
+              {app.shortTitle}
+            </p>
+          </div>
+          <a
+            href={app.href}
+            className="ml-auto flex h-8 w-8 items-center justify-center rounded-full text-black/46 transition-colors hover:bg-black/6 hover:text-black"
+            aria-label={`Open ${app.title} as full page`}
+          >
+            <ExternalLink className="h-4 w-4" />
+          </a>
+        </div>
+
+        <div className="min-h-0 flex-1 bg-[#f3eee4]">
+          <iframe
+            key={app.href}
+            title={app.title}
+            src={frameSrc}
+            className="studio-app-iframe h-full w-full border-0 bg-[#f3eee4]"
+            loading="lazy"
+            allow="clipboard-write"
+          />
+        </div>
+      </div>
     </div>
   );
 }

@@ -7,37 +7,101 @@ export const dynamic = "force-static";
 export const metadata = buildPageMetadata({
   title: "Studio Apps for Scenic Design Workflow",
   description:
-    "Production-focused calculators, reference tools, and utilities for scenic drafting, paint, modeling, and research.",
+    "Production-focused studio tools for architectural scale conversion, 3D printing, scenic paint, model making, drafting, and research.",
   pathname: "/studio/apps",
+  image: "/assets/studio-apps/icons/scale-calculator.jpg",
 });
 
 const studioApps = [
   {
-    title: "Scenic 3D Converter (Mac)",
+    name: "Scenic 3D Converter",
+    description:
+      "Mac utility for converting 3D files into Vectorworks-friendly USD, USDZ, and 3DM outputs.",
     href: "/studio/apps/scenic-3d-converter",
-    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-scenic-3d-converter.png",
+    image: "/assets/studio-apps/icons/scenic-3d-converter.jpg",
+    applicationCategory: "GraphicsApplication",
+    operatingSystem: "macOS",
   },
   {
-    title: "Scale Calculator",
+    name: "Architectural Scale Calculator for 3D Printing",
+    description:
+      "Convert full-size architectural and scenic dimensions into model scale millimeters for 3D printing, model making, and drafting.",
     href: "/studio/apps/scale-calculator",
-    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-scale-calculator.png",
+    image: "/assets/studio-apps/icons/scale-calculator.jpg",
+    applicationCategory: "DesignApplication",
+    operatingSystem: "Web",
   },
   {
-    title: "Dimension Reference",
+    name: "Dimension Reference",
+    description:
+      "Quick reference for standard scenic, architectural, shop, furniture, and production dimensions.",
     href: "/studio/apps/dimension-reference",
-    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-dimension-reference.png",
+    image: "/assets/studio-apps/icons/dimension-reference.jpg",
+    applicationCategory: "ReferenceApplication",
+    operatingSystem: "Web",
   },
   {
-    title: "Rosco Paint Calculator",
+    name: "Rosco Paint Calculator",
+    description:
+      "Scenic paint calculator for Rosco Off-Broadway colors, surface coverage, and paint shop mix planning.",
     href: "/studio/apps/rosco-paint-calculator",
-    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-rosco-paint-calculator.png",
+    image: "/assets/studio-apps/icons/rosco-paint-calculator.jpg",
+    applicationCategory: "DesignApplication",
+    operatingSystem: "Web",
   },
   {
-    title: "Design History Timeline",
+    name: "Commercial Paint Matcher",
+    description:
+      "Match sampled colors against Sherwin-Williams, Benjamin Moore, and BEHR libraries with brand filters and copyable color data.",
+    href: "/studio/apps/commercial-paint-matcher",
+    image: "/assets/studio-apps/icons/commercial-paint-matcher.jpg",
+    applicationCategory: "DesignApplication",
+    operatingSystem: "Web",
+  },
+  {
+    name: "Design History Timeline",
+    description:
+      "Explore major design periods with visual references, color palettes, key figures, and architectural history context.",
     href: "/studio/apps/design-history-timeline",
-    image: "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-design-history-timeline.png",
+    image: "/assets/studio-apps/icons/design-history-timeline.jpg",
+    applicationCategory: "EducationalApplication",
+    operatingSystem: "Web",
   },
 ] as const;
+
+const siteUrl = "https://www.brandonptdavis.com";
+
+function absoluteUrl(path: string) {
+  return path.startsWith("http") ? path : `${siteUrl}${path}`;
+}
+
+function softwareApplicationSchema(app: (typeof studioApps)[number]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: app.name,
+    description: app.description,
+    applicationCategory: app.applicationCategory,
+    operatingSystem: app.operatingSystem,
+    image: absoluteUrl(app.image),
+    url: absoluteUrl(app.href),
+    author: {
+      "@type": "Person",
+      name: "Brandon PT Davis",
+      url: siteUrl,
+    },
+    publisher: {
+      "@type": "Person",
+      name: "Brandon PT Davis",
+      url: siteUrl,
+    },
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+  };
+}
 
 function jsonLd(data: unknown) {
   return JSON.stringify(data).replace(/</g, "\\u003c");
@@ -66,91 +130,36 @@ export default function Page() {
           __html: jsonLd({
             "@context": "https://schema.org",
             "@type": "CollectionPage",
-            name: "Scenic Design Tools",
-            url: "https://www.brandonptdavis.com/studio/apps",
+            name: "Studio Apps for Scenic Design Workflow",
+            url: `${siteUrl}/studio/apps`,
             description:
-              "Production-focused scenic design apps for drafting, scale, paint, modeling, and research.",
-            about: "Studio applications for scenic design workflow.",
-            primaryImageOfPage:
-              "https://mpdddsg3xfx9bmy7.public.blob.vercel-storage.com/images/site-assets/assets/studio/studio-app-scenic-3d-converter.png",
+              "Production-focused studio tools for architectural scale conversion, 3D printing, scenic paint, model making, drafting, and research.",
+            about: [
+              "Scenic design workflow",
+              "Architectural scale conversion",
+              "3D printing model scale calculator",
+              "Scenic paint and drafting tools",
+            ],
+            primaryImageOfPage: absoluteUrl("/assets/studio-apps/icons/scale-calculator.jpg"),
             mainEntity: {
               "@type": "ItemList",
               name: "Studio Apps",
               itemListElement: studioApps.map((app, index) => ({
                 "@type": "ListItem",
                 position: index + 1,
-                name: app.title,
-                url: `https://www.brandonptdavis.com${app.href}`,
-                image: `https://www.brandonptdavis.com${app.image}`,
+                item: softwareApplicationSchema(app),
               })),
             },
           }),
         }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: jsonLd({
-            "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            name: "Scenic 3D Converter for Vectorworks (Mac)",
-            description:
-              "Finder quick-action utility for converting 3D files into Vectorworks-friendly USD, USDZ, and 3DM outputs.",
-            applicationCategory: "GraphicsApplication",
-            operatingSystem: "macOS",
-            offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-            url: "https://www.brandonptdavis.com/studio/apps/scenic-3d-converter",
-          }),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: jsonLd({
-            "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            name: "Scale Calculator - Scenic Design Tool",
-            description:
-              "Convert between architectural and model scales. Essential for drafting and model building in theatrical design.",
-            applicationCategory: "DesignApplication",
-            operatingSystem: "Web",
-            offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-            url: "https://www.brandonptdavis.com/studio/apps/scale-calculator",
-          }),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: jsonLd({
-            "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            name: "Rosco Paint Calculator - Scenic Paint Mixing",
-            description:
-              "Professional scenic paint mixing calculator with advanced 5-step color matching engine for Rosco Off-Broadway paints.",
-            applicationCategory: "DesignApplication",
-            operatingSystem: "Web",
-            offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-            url: "https://www.brandonptdavis.com/studio/apps/rosco-paint-calculator",
-          }),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: jsonLd({
-            "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            name: "Design History Timeline - Architecture Reference",
-            description:
-              "Explore major design periods from Ancient Egypt to Contemporary architecture with detailed information, color palettes, and key figures.",
-            applicationCategory: "EducationalApplication",
-            operatingSystem: "Web",
-            offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-            url: "https://www.brandonptdavis.com/studio/apps/design-history-timeline",
-          }),
-        }}
-      />
+      {studioApps.map((app) => (
+        <script
+          key={app.href}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLd(softwareApplicationSchema(app)) }}
+        />
+      ))}
       <NextPathProvider currentPath="/studio/apps">
         <StudioAppsPage />
       </NextPathProvider>

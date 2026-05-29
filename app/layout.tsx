@@ -9,6 +9,7 @@ import { AnalyticsConsentBanner } from "../components/site/AnalyticsConsentBanne
 import { ContactOverlayProvider } from "../components/site/ContactOverlay";
 import { LegacyClientCleanup } from "../components/site/LegacyClientCleanup";
 import { PostHogAnalytics } from "../components/site/PostHogAnalytics";
+import { StudioFrameMode } from "../components/site/StudioFrameMode";
 import { absoluteUrl, siteMetadata } from "../lib/metadata";
 import {
   getBrandonOrganizationJsonLd,
@@ -119,6 +120,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-gradient-premium">
+        <StudioFrameMode />
         <LegacyClientCleanup />
         {isProduction ? <PostHogAnalytics /> : null}
         <LegacyProviders>

@@ -2,6 +2,7 @@
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { PublishingTopBar } from "@/components/PublishingTopBar";
 import { ExternalLink, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { SEO } from "@/components/SEO";
@@ -122,8 +123,9 @@ export default function StudioDirectory() {
       />
 
       <Header />
+      <PublishingTopBar active="directory" tone="white" />
 
-      <main className="px-6 pb-20 pt-24 md:pt-28">
+      <main className="px-6 pb-20 pt-12 md:pt-16">
         <section className="mx-auto max-w-5xl border-b border-border/25 pb-12">
           <p className="text-center section-kicker text-foreground/40">
             Studio Directory
