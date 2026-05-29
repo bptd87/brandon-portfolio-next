@@ -14,7 +14,7 @@ export const BRAND_FILTERS: PaintBrand[] = ["Sherwin-Williams", "Benjamin Moore"
 
 export const COMMERCIAL_PAINT_COUNTS: Record<PaintBrand, number> = {"Sherwin-Williams":1526,"Benjamin Moore":3919,"BEHR":4699};
 
-export const COMMERCIAL_PAINTS: CommercialPaint[] = [
+const COMMERCIAL_PAINTS_JSON = String.raw`[
   {"id":"sw-1-0","brand":"Sherwin-Williams","code":"SW 1","name":"Mulberry Silk","hex":"#94766C","rgb":[148,118,108],"family":"Terracotta"},
   {"id":"sw-2-1","brand":"Sherwin-Williams","code":"SW 2","name":"Chelsea Mauve","hex":"#BEAC9F","rgb":[190,172,159],"family":"Terracotta"},
   {"id":"sw-3-2","brand":"Sherwin-Williams","code":"SW 3","name":"Cabbage Rose","hex":"#C59F91","rgb":[197,159,145],"family":"Terracotta"},
@@ -10159,4 +10159,6 @@ export const COMMERCIAL_PAINTS: CommercialPaint[] = [
   {"id":"behr-yl-w7-4696","brand":"BEHR","code":"YL-W7","name":"Smooth Silk","hex":"#F7EDD7","rgb":[247,237,215],"family":"Gold"},
   {"id":"behr-yl-w8-4697","brand":"BEHR","code":"YL-W8","name":"Yucca White","hex":"#F4F1D8","rgb":[244,241,216],"family":"Yellow"},
   {"id":"behr-yl-w9-4698","brand":"BEHR","code":"YL-W9","name":"Spun Cotton","hex":"#F9F7E8","rgb":[249,247,232],"family":"Yellow"}
-];
+]`;
+
+export const COMMERCIAL_PAINTS = JSON.parse(COMMERCIAL_PAINTS_JSON) as CommercialPaint[];
